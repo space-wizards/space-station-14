@@ -135,7 +135,8 @@
   description: A tiny piece of syndicate soap.
   components:
   - type: Sprite
-    state: syndie-soaplet
+    layers:
+    - state: syndie-soaplet
   - type: Slippery
     paralyzeTime: 5
     launchForwardsMultiplier: 2.5

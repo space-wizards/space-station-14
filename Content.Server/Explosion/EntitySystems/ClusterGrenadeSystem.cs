@@ -60,7 +60,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnClugTrigger(Entity<ClusterGrenadeComponent> clug, TriggerEvent args)
+    private void OnClugTrigger(Entity<ClusterGrenadeComponent> clug, ref TriggerEvent args)
     {
         var component = clug.Comp;
         component.CountDown = true;
@@ -72,7 +72,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         base.Update(frameTime);
         var query = EntityQueryEnumerator<ClusterGrenadeComponent>();
 
-        while (query.MoveNext(out Entity<ClusterGrenadeComponent> clug))
+        while (query.MoveNext(out var uid, out var clug))
         {
             if (clug.CountDown && clug.UnspawnedCount > 0)
             {
@@ -81,7 +81,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                 var segmentAngle = 360 / grenadesInserted;
                 var bombletDelay = 0f;
 
-                while (TryGetGrenade(clug, out var grenade))
+                while (TryGetGrenade(uid, clug, out var grenade))
                 {
                     // var distance = random.NextFloat() * _throwDistance;
                     var angleMin = segmentAngle * thrownCount;
@@ -91,17 +91,21 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                         angle = _random.NextAngle();
                     thrownCount++;
 
-                    if (clug.GrenadeType == "shoot")
-                        ShootProjectile(grenade, angle, clug, uid);
-
-                    if (clug.GrenadeType == "throw")
-                        ThrowGrenade(grenade, angle, clug);
+                    switch (clug.GrenadeType)
+                    {
+                        case "shoot":
+                            ShootProjectile(grenade, angle, clug, uid);
+                            break;
+                        case "throw":
+                            ThrowGrenade(grenade, angle, clug);
+                            break;
+                    }
 
                     // give an active timer trigger to the contained grenades when they get launched
                     if (clug.TriggerBomblets)
                     {
                         bombletDelay += _random.NextFloat(clug.BombletDelayMin, clug.BombletDelayMax);
-                        var bomblet = grenade.EnsureComponent<ActiveTimerTriggerComponent>();
+                        var bomblet = EnsureComp<ActiveTimerTriggerComponent>(grenade);
                         bomblet.TimeRemaining = (clug.MinimumDelay + bombletDelay);
                         var ev = new ActiveTimerTriggerEvent(grenade, uid);
                         RaiseLocalEvent(uid, ref ev);
@@ -128,15 +132,14 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         else _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized() * clug.Distance, clug.Velocity);
     }
 
-    private bool TryGetGrenade(Entity<ClusterGrenadeComponent> ent, out EntityUid grenade)
+    private bool TryGetGrenade(EntityUid clugUid, ClusterGrenadeComponent component, out EntityUid grenade)
     {
         grenade = default;
-        var component = ent.Comp;
 
         if (component.UnspawnedCount > 0)
         {
             component.UnspawnedCount--;
-            grenade = EntityManager.SpawnEntity(component.FillPrototype, Transform(ent).MapPosition);
+            grenade = EntityManager.SpawnEntity(component.FillPrototype, Transform(clugUid).MapPosition);
             return true;
         }
 
@@ -154,12 +157,12 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         return false;
     }
 
-    private void UpdateAppearance(Entity<ClusterGrenadeComponent> ent)
+    private void UpdateAppearance(Entity<ClusterGrenadeComponent> clug)
     {
-        var component = ent.Comp;
-        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+        var component = clug.Comp;
+        if (!TryComp<AppearanceComponent>(clug, out var appearance))
             return;
 
-        _appearance.SetData(ent, ClusterGrenadeVisuals.GrenadesCounter, component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount, appearance);
+        _appearance.SetData(clug, ClusterGrenadeVisuals.GrenadesCounter, component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount, appearance);
     }
 }

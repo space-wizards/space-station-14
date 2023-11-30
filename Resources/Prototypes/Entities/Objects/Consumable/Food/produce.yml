@@ -361,40 +361,6 @@
     launchForwardsMultiplier: 2
 
 - type: entity
-  name: banana peel
-  suffix: Explosive
-  parent: TrashBananaPeel
-  id: TrashBananaPeelExplosive
-  components:
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/banana.rsi
-      layers:
-      - state: peel
-      - state: primed
-        shader: unshaded
-    - type: TriggerOnSlip
-    - type: ExplodeOnTrigger
-    - type: Explosive
-      explosionType: Default
-      maxIntensity: 3.4
-      intensitySlope: 3
-      totalIntensity: 20
-      canCreateVacuum: false
-    - type: DeleteOnTrigger
-    - type: AnimationPlayer
-    - type: Damageable
-      damageContainer: Inorganic
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-        - !type:TriggerBehavior
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-
-- type: entity
   name: carrot
   parent: FoodProduceBase
   id: FoodCarrot

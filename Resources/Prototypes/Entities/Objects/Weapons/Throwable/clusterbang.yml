@@ -203,13 +203,14 @@
 
 - type: entity
   parent: SoapSyndie
-  id: SlipocalypseClusterBang
-  name: slipocalypse clusterbang
+  id: SlipocalypseClusterSoap
+  name: slipocalypse clustersoap
   description: Spreads small pieces of syndicate soap over an area upon landing on the floor.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Grenades/clusterbang.rsi
-    state: base-3
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    layers:
+    - state: syndie-4
   - type: Appearance
   - type: ClusterGrenade
     fillPrototype: SoapletSyndie
