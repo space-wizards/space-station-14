@@ -2,7 +2,7 @@
   parent: ClothingBeltStorageBase
   id: ClothingBeltStorageWaistbag
   name: leather waist bag
-  description: A leather waist bag meant for carrying tiny items.
+  description: A leather waist bag meant for carrying small items.
   components:
   - type: Sprite
     sprite: Clothing/Belt/waistbag_leather.rsi
@@ -10,7 +10,7 @@
     sprite: Clothing/Belt/waistbag_leather.rsi
   - type: Storage
     maxSlots: 4
-    maxItemSize: Tiny
+    maxItemSize: Small
 
 #Colorization on worn items doesn't work. If this ever gets fixed, you can duplicate this entry and change the color on the sprite to add color variants.
 #- type: entity
