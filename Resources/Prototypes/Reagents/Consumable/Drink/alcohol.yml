@@ -1254,6 +1254,18 @@
         amount: 0.15
 
 - type: reagent
+  id: TheMartinez
+  name: reagent-name-the-martinez
+  parent: BaseAlcohol
+  desc: reagent-desc-the-martinez
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: themartinez
+  color: "#75b1f0"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/the_martinez.rsi
+    state: icon
+
+- type: reagent
   id: ThreeMileIsland
   name: reagent-name-three-mile-island
   parent: BaseAlcohol
@@ -1367,6 +1379,23 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.07
+
+- type: reagent
+  id: WhiteGilgamesh
+  name: reagent-name-white-gilgamesh
+  parent: BaseDrink
+  desc: reagent-desc-white-gilgamesh
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: white-gilgamesh
+  color: "#e5d27e"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
 
 - type: reagent
   id: WhiteRussian
