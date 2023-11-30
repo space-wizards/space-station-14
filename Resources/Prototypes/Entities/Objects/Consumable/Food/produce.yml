@@ -482,12 +482,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 22
+        maxVol: 18
         reagents:
         - ReagentId: Vitamin
           Quantity: 4
-        - ReagentId: Enzyme
-          Quantity: 2 #2/5 of whole cheese
         - ReagentId: Milk
           Quantity: 16
   - type: Sprite
@@ -497,7 +495,7 @@
   - type: Extractable
     juiceSolution:
       reagents:
-      - ReagentId: Moonshine
+      - ReagentId: Sake #the best drink while watching moon
         Quantity: 10
   - type: Tag
     tags:

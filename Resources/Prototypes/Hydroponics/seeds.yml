@@ -141,7 +141,7 @@
   packetPrototype: LemonSeeds
   productPrototypes:
     - FoodLemon
-- mutationPrototypes:
+  mutationPrototypes:
     - lemoon
   harvestRepeat: Repeat
   lifespan: 55
@@ -181,10 +181,6 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
-    Enzyme:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 40
     Milk:
       Min: 8
       Max: 20
