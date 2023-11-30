@@ -216,6 +216,7 @@ namespace Content.IntegrationTests.Tests
         {
             var settings = new PoolSettings { Connected = true, Dirty = true };
             await using var pair = await PoolManager.GetServerClient(settings);
+            var mapManager = pair.Server.ResolveDependency<IMapManager>();
             var server = pair.Server;
             var client = pair.Client;
 
@@ -245,8 +246,15 @@ namespace Content.IntegrationTests.Tests
                 .Select(p => p.ID)
                 .ToList();
 
-            var mapId = await pair.CreateTestMap();
-            var coords = mapId.MapCoords;
+            protoIds.Sort();
+            var mapId = MapId.Nullspace;
+
+            await server.WaitPost(() =>
+            {
+               mapId = mapManager.CreateMap();
+            });
+
+            var coords = new MapCoordinates(Vector2.Zero, mapId);
 
             await pair.RunTicksSync(3);
 
@@ -273,7 +281,9 @@ namespace Content.IntegrationTests.Tests
 
                     if (client.EntMan.EntityCount != clientCount)
                     {
-                        Assert.Fail($"Client prototype {protoId} failed on deleting itself");
+                        Assert.Fail($"Client prototype {protoId} failed on deleting itself\n" +
+                                    $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
+                                    $"Server was {count}.");
                     }
                     continue;
                 }
@@ -286,7 +296,9 @@ namespace Content.IntegrationTests.Tests
 
                 if (client.EntMan.EntityCount <= clientCount)
                 {
-                    Assert.Fail($"Client prototype {protoId} failed on spawning as entity count didn't increase");
+                    Assert.Fail($"Client prototype {protoId} failed on spawning as entity count didn't increase" +
+                                $"Expected at least {clientCount} and found {client.EntMan.EntityCount}. " +
+                                $"Server was {count}");
                 }
 
                 await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
@@ -300,7 +312,9 @@ namespace Content.IntegrationTests.Tests
 
                 if (client.EntMan.EntityCount != clientCount)
                 {
-                    Assert.Fail($"Client prototype {protoId} failed on deletion count didn't reset properly");
+                    Assert.Fail($"Client prototype {protoId} failed on deletion count didn't reset properly:\n" +
+                                $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
+                                $"Server was {count}.");
                 }
             }
 
