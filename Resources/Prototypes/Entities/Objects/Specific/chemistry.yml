@@ -399,11 +399,11 @@
     solutions:
       injector:
         maxVol: 10
-        minTransferAmount: 5
-        maxTransferAmount: 10
         canReact: false
   - type: Injector
     injectOnly: false
+    minTransferAmount: 5
+    maxTransferAmount: 10
   - type: Tag
     tags:
     - Syringe
