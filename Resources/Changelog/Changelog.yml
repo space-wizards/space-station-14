@@ -1,4 +1,61 @@
 Entries:
+- author: Gotimanga
+  changes:
+  - {message: Winter coats now have hoods, type: Add}
+  id: 4733
+  time: '2023-09-02T17:10:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix context menu not opening if you toggled combat mode immediately
+      prior., type: Fix}
+  id: 4734
+  time: '2023-09-02T20:16:34.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed devouring as a dragon showing multiple popups., type: Fix}
+  id: 4735
+  time: '2023-09-03T01:59:36.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Technology Disks now sell for considerably less., type: Tweak}
+  id: 4736
+  time: '2023-09-03T02:31:53.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Microwaves now become bloodstained if you microwave animals inside
+      of them. Who was doing this?', type: Add}
+  id: 4737
+  time: '2023-09-03T04:03:05.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The HAMTR and Vim now have builtin scrubbers to remove the risk of carbon
+      dioxide poisoning., type: Tweak}
+  id: 4738
+  time: '2023-09-03T06:30:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Fix fulton parenting, also fix it not checking if the target is reachable.',
+    type: Fix}
+  - {message: Added fultons to salvage vendor., type: Add}
+  - {message: Make fultons easy to craft temporarily to get better feedback on it
+      for expeditions., type: Tweak}
+  id: 4739
+  time: '2023-09-03T12:18:09.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added spoons and forks to the dinnerware vendor!, type: Add}
+  id: 4740
+  time: '2023-09-03T14:22:28.0000000+00:00'
+- author: Diebek
+  changes:
+  - {message: Updated Taxibot sprites., type: Tweak}
+  id: 4741
+  time: '2023-09-03T14:31:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Portable generators no longer rotate with the camera., type: Tweak}
+  id: 4742
+  time: '2023-09-03T17:55:42.0000000+00:00'
 - author: Jark255
   changes:
   - message: The firmware bug that wiped critical system parts of pAI alongside the
@@ -3766,3 +3823,20 @@ Entries:
     type: Fix
   id: 5209
   time: '2023-11-30T16:29:34.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Nuclear operative agents now spawn with a PDA that can scan for injuries.,
+    type: Add}
+  id: 5230
+  time: '2023-11-30T21:39:08.0000000+00:00'
+- author: Rainfey
+  changes:
+  - {message: Agent ID not longer resets name when changing its appearance, type: Fix}
+  id: 5231
+  time: '2023-11-30T21:42:44.0000000+00:00'
+- author: eddiedd
+  changes:
+  - {message: 'Lemon has been discovered a mutation species, lemoon, which could be
+      grind for milk', type: Add}
+  id: 5232
+  time: '2023-11-30T21:44:23.0000000+00:00'
