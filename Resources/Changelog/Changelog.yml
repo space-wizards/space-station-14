@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - message: Portable generators no longer rotate with the camera.
-    type: Tweak
-  id: 4742
-  time: '2023-09-03T17:55:42.0000000+00:00'
 - author: Jark255
   changes:
   - message: The firmware bug that wiped critical system parts of pAI alongside the
@@ -3606,3 +3600,14 @@ Entries:
     type: Add
   id: 5208
   time: '2023-11-30T16:15:55.0000000+00:00'
+- author: Dexler
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D \u0444\u0438\u043B\
+      \u044C\u0442\u0440 \u043A\u043E\u043D\u0441\u043E\u043B\u0438 \u043A\u0440\u0438\
+      \u043C\u0438\u043D\u0430\u043B\u044C\u043D\u044B\u0445 \u0437\u0430\u043F\u0438\
+      \u0441\u0435\u0439 (\u0432\u0435\u0440\u0445\u043D\u0438\u0439/\u043D\u0438\u0436\
+      \u043D\u0438\u0439 \u0440\u0435\u0433\u0438\u0441\u0442\u0440, \u0431\u0443\u043A\
+      \u0432\u044B \u0435/\u0451)."
+    type: Fix
+  id: 5209
+  time: '2023-11-30T16:29:34.0000000+00:00'
