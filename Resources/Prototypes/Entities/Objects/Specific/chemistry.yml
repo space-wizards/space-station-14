@@ -387,10 +387,11 @@
   id: SyringeCryostasis
   parent: BaseSyringe
   name: cryostasis syringe
-  description: A syringe used to contain chemicals or solutions without reactions.
+  description: A syringe used to contain chemicals or solutions without reactions. 
   components:
   - type: Sprite
     state: cryo_base
+    map: ["enum.SolutionContainerLayers.Base"]
   - type: Icon
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: cryo_base
@@ -400,9 +401,9 @@
         maxVol: 10
         minTransferAmount: 5
         maxTransferAmount: 10
+        canReact: false
   - type: Injector
     injectOnly: false
-    canReact: false
   - type: Tag
     tags:
     - Syringe
