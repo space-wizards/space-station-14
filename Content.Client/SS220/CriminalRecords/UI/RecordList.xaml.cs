@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Content.Client.SS220.CriminalRecords.UI;
 
@@ -21,6 +22,7 @@ public sealed partial class RecordList : ScrollContainer
 
     private readonly Color _defaultEntryColor = Color.FromHex("#1C1C21");
     private readonly Color _altEntryColor = Color.FromHex("#151519");
+    private readonly Regex _recordNameRegex = new Regex(@"(?i)ё");
 
     public string Filter = "";
     public List<string> ExtraFilters = new();
@@ -44,6 +46,7 @@ public sealed partial class RecordList : ScrollContainer
     private const string NoDeraptmentGroupId = "NoDepartment";
     private const string CryodGroupId = "Cryod";
     private const string CriminalGroupId = "Criminal";
+    private const string RecordNameReplacement = "е";
 
     private static readonly HashSet<string> DepartmentBlacklist = new()
     {
@@ -220,19 +223,24 @@ public sealed partial class RecordList : ScrollContainer
         if (string.IsNullOrWhiteSpace(filter))
             return true;
 
-        if (record.DNA.Contains(filter))
+        if (record.DNA.Contains(filter, StringComparison.OrdinalIgnoreCase))
         {
             match = FilterMatchType.DNA;
             return true;
         }
 
-        if (record.Fingerprints.Contains(filter))
+        if (record.Fingerprints.Contains(filter, StringComparison.OrdinalIgnoreCase))
         {
             match = FilterMatchType.Fingerprint;
             return true;
         }
 
-        if (record.Name.Contains(filter))
+        // YEAH IT'S REGEX TIME!!!
+        // We are replacing any matching "ё" by a "е" character in both filter and record.Name and then check if it passes.
+        // May be inefficient because of regex, but it'll work.
+        var convertedRecordName = _recordNameRegex.Replace(record.Name, RecordNameReplacement);
+        var convertedFilter = _recordNameRegex.Replace(filter, RecordNameReplacement);
+        if (convertedRecordName.Contains(convertedFilter, StringComparison.OrdinalIgnoreCase))
             return true;
 
         return false;
