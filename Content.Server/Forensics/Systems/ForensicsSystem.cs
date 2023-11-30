@@ -152,21 +152,4 @@ namespace Content.Server.Forensics
             recipientComp.DNAs.Add(component.DNA);
         }
     }
-
-    /// <summary>
-    /// An event to apply DNA evidence from a donor onto some recipient.
-    /// </summary>
-    [ByRefEvent]
-    public record struct TransferDnaEvent()
-    {
-        /// <summary>
-        /// The entity donating the DNA.
-        /// </summary>
-        public EntityUid Donor;
-
-        /// <summary>
-        /// The entity receiving the DNA.
-        /// </summary>
-        public EntityUid Recipient;
-    }
 }

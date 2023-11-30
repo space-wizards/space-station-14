@@ -15,7 +15,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Stacks;
 using Robust.Shared.Player;
-using Content.Server.Forensics;
+using Content.Shared.Forensics;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
