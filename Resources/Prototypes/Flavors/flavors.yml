@@ -310,6 +310,11 @@
   description: flavor-complex-peas
 
 - type: flavor
+  id: lemoon
+  flavorType: Complex
+  description: flavor-complex-lemoon
+
+- type: flavor
   id: pineapple
   flavorType: Complex
   description: flavor-complex-pineapple

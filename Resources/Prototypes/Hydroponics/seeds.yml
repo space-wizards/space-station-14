@@ -141,6 +141,8 @@
   packetPrototype: LemonSeeds
   productPrototypes:
     - FoodLemon
+  mutationPrototypes:
+    - lemoon
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
@@ -157,6 +159,32 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+
+- type: seed
+  id: lemoon
+  name: seeds-lemoon-name
+  noun: seeds-noun-seeds
+  displayName: seeds-lemoon-display-name
+  plantRsi: Objects/Specific/Hydroponics/lemoon.rsi
+  packetPrototype: LemoonSeeds
+  productPrototypes:
+    - FoodLemoon
+  harvestRepeat: Repeat
+  lifespan: 90
+  maturation: 8
+  production: 6
+  yield: 4
+  potency: 1
+  idealLight: 8
+  chemicals:
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Milk:
+      Min: 8
+      Max: 20
+      PotencyDivisor: 5
 
 - type: seed
   id: lime
