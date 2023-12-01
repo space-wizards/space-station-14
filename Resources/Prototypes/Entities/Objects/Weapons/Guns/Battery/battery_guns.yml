@@ -94,7 +94,7 @@
 - type: entity
   name: svalinn laser pistol
   parent: BaseWeaponPowerCellSmall
-  id: LaserPistolSvalinn
+  id: WeaponLaserSvalinn
   description: A cheap and widely used laser pistol.
   components:
   - type: Sprite
