@@ -429,7 +429,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/possum.rsi
+    sprite: Mobs/Animals/possum_old.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: possum_old
