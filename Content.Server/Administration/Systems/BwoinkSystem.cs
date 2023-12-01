@@ -429,13 +429,13 @@ namespace Content.Server.Administration.Systems
                     // If _overrideClientName is set, we generate a new message with the override name. The admins name will still be the original name for the webhooks.
                     if (_overrideClientName != string.Empty)
                     {
-                        var overrideMsgText = senderAdmin switch
+                        var overrideMsgText = senderAdmin switch // Theres probably a better way to do this.
                         {
                             var x when x is not null && x.Flags == AdminFlags.Adminhelp =>
                                 $"[color=purple]{_overrideClientName}[/color]: {escapedText}",
                             var x when x is not null && x.HasFlag(AdminFlags.Adminhelp) =>
                                 $"[color=red]{_overrideClientName}[/color]: {escapedText}",
-                            _ => $"{senderSession.Name}: {escapedText}", // Theres probably a better way to do this.
+                            _ => $"{senderSession.Name}: {escapedText}", // Not an admin, name is not overriden.
                         };
                         RaiseNetworkEvent(new BwoinkTextMessage(message.UserId, senderSession.UserId, overrideMsgText), session.ConnectedClient);
                     }
