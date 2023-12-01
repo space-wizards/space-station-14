@@ -39,6 +39,7 @@ marking-HumanHairBuzzcut = Buzzcut
 marking-HumanHairCia = CIA
 marking-HumanHairClassicAfro = Classic Afro
 marking-HumanHairClassicBigAfro = Classic Big Afro
+marking-HumanHairClassicBusiness = Classic Business Hair
 marking-HumanHairClassicCia = Classic CIA
 marking-HumanHairClassicFloorlengthBedhead = Classic Floorlength Bedhead
 marking-HumanHairClassicModern = Classic Modern
