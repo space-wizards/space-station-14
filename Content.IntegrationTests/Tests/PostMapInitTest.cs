@@ -60,8 +60,7 @@ namespace Content.IntegrationTests.Tests
             "Saltern",
             "Core",
             "Marathon",
-            // Kettle was derotated in favor of Gemini station.
-            // "Kettle",
+            "Kettle",
             "Gemini",
             "MeteorArena",
             "Atlas"
