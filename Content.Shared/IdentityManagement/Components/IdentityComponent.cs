@@ -26,15 +26,17 @@ public sealed class IdentityRepresentation
 {
     public string TrueName;
     public Gender TrueGender;
+    public string? TrueJob;
 
     public string AgeString;
 
     public string? PresumedName;
     public string? PresumedJob;
 
-    public IdentityRepresentation(string trueName, Gender trueGender, string ageString, string? presumedName=null, string? presumedJob=null)
+    public IdentityRepresentation(string trueName, string? trueJob, Gender trueGender, string ageString, string? presumedName=null, string? presumedJob=null)
     {
         TrueName = trueName;
+        TrueJob = trueJob;
         TrueGender = trueGender;
 
         AgeString = ageString;
@@ -43,11 +45,22 @@ public sealed class IdentityRepresentation
         PresumedName = presumedName;
     }
 
-    public string ToStringKnown(bool trueName)
+    public string ToStringKnown(bool showTrueIdentity)
     {
-        return trueName
-            ? TrueName
-            : PresumedName ?? ToStringUnknown();
+        string? nameToShow;
+        string? jobToShow;
+        if (showTrueIdentity)
+        {
+            nameToShow = TrueName;
+            jobToShow = TrueJob;
+        }
+        else
+        {
+            nameToShow = PresumedName ?? ToStringUnknown();
+            jobToShow = PresumedJob;
+        }
+        jobToShow = jobToShow != null ? $" ({jobToShow})" : "";
+        return nameToShow + jobToShow;
     }
 
     /// <summary>
@@ -67,6 +80,6 @@ public sealed class IdentityRepresentation
         // i.e. 'young assistant man' or 'old cargo technician person' or 'middle-aged captain'
         return PresumedJob is null
             ? $"{AgeString} {genderString}"
-            : $"{AgeString} {PresumedJob} {genderString}";
+            : $"{AgeString} {PresumedJob.ToLowerInvariant()} {genderString}";
     }
 }

@@ -1,6 +1,8 @@
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Humanoid;
+using Content.Server.Station.Systems;
+using Content.Server.StationRecords.Systems;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
@@ -8,6 +10,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.StationRecords;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 
@@ -22,6 +25,8 @@ public class IdentitySystem : SharedIdentitySystem
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly StationRecordsSystem _stationRecordsSystem = default!;
 
     private HashSet<EntityUid> _queuedIdentityUpdates = new();
 
@@ -33,6 +38,7 @@ public class IdentitySystem : SharedIdentitySystem
         SubscribeLocalEvent<IdentityComponent, DidEquipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, RecordModifiedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -136,8 +142,9 @@ public class IdentitySystem : SharedIdentitySystem
 
         var ageString = _humanoid.GetAgeRepresentation(species, age);
         var trueName = Name(target);
+        var trueJob = GetJobTitle(target, trueName);
         if (!Resolve(target, ref inventory, false))
-            return new(trueName, gender, ageString, string.Empty);
+            return new(trueName, trueJob, gender, ageString, string.Empty);
 
         string? presumedJob = null;
         string? presumedName = null;
@@ -146,11 +153,32 @@ public class IdentitySystem : SharedIdentitySystem
         if (_idCard.TryFindIdCard(target, out var id))
         {
             presumedName = string.IsNullOrWhiteSpace(id.Comp.FullName) ? null : id.Comp.FullName;
-            presumedJob = id.Comp.JobTitle?.ToLowerInvariant();
+            presumedJob = id.Comp.JobTitle;
         }
 
         // If it didn't find a job, that's fine.
-        return new(trueName, gender, ageString, presumedName, presumedJob);
+        return new(trueName, trueJob, gender, ageString, presumedName, presumedJob);
+    }
+
+    /// <summary>
+    /// Based on the station the target is on, get their job title (if any) from the station records.
+    /// </summary>
+    private string? GetJobTitle(EntityUid target, string trueName)
+    {
+        var station = _stationSystem.GetOwningStation(target);
+        if (station == null)
+        {
+            return null;
+        }
+        foreach (var record in _stationRecordsSystem.GetRecordsOfType<GeneralStationRecord>(station.Value))
+        {
+            var item = record.Item2;
+            if (item.Name == trueName)
+            {
+                return item.JobTitle;
+            }
+        }
+        return null;
     }
 
     #endregion
