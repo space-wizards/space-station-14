@@ -7,6 +7,7 @@ using Robust.Server.Audio;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Components;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Player;
@@ -53,20 +54,37 @@ public sealed class PlayGlobalAudioCommand : IConsoleCommand
             shell.WriteLine("Looks like audio stream used and cached.");
         }
 
-        var broadcastFilter = Filter.Broadcast();
+        Filter filter;
 
-        shell.WriteLine($"Playing filter to {broadcastFilter.Count} players");
+        if (args.Length > 2 && args[2] == "local")
+        {
+            filter = Filter.SinglePlayer(shell.Player!);
+        }
+        else
+        {
+            filter = Filter.Broadcast();
+        }
 
-        var audio = audioSystem.PlayGlobal(fileName, broadcastFilter, true);
+        shell.WriteLine($"Playing filter to {filter.Count} players");
 
-        shell.WriteLine($"Audio excluded entities: {audio?.Component.ExcludedEntity}");
-        shell.WriteLine($"Audio included entities: {audio?.Component.IncludedEntities}");
+        var audio = audioSystem.PlayGlobal(fileName, filter, true);
+        var audioMetadata = entManager.GetComponent<MetaDataComponent>(audio!.Value.Entity);
+
+        shell.WriteLine($"Shell entity is {shell.Player!.AttachedEntity} / netuid {entManager.GetNetEntity(shell.Player!.AttachedEntity)}");
+        shell.WriteLine($"Audio entityuid {audio!.Value.Entity} / netuid {entManager.GetNetEntity(audio!.Value.Entity)}");
+        shell.WriteLine($"Audio excluded entities: {audio.Value.Component.ExcludedEntity}");
+        shell.WriteLine($"Audio included entities: {string.Join(", ", audio.Value.Component.IncludedEntities!.Select(o => entManager.ToPrettyString(o)))}");
         shell.WriteLine($"Audio start: {audio?.Component.AudioStart}");
         shell.WriteLine($"Audio global: {audio?.Component.Global}");
         shell.WriteLine($"Audio paused: {entManager.IsPaused(audio?.Entity)}");
         shell.WriteLine($"Audio lifetime: {entManager.GetComponent<TimedDespawnComponent>(audio!.Value.Entity).Lifetime}");
         shell.WriteLine($"Can get state: {entManager.CanGetComponentState(entManager.EventBus, audio.Value.Component, shell.Player!)}");
-        shell.WriteLine($"Session specific: {entManager.GetComponent<MetaDataComponent>(audio.Value.Entity).SessionSpecific}");
+        shell.WriteLine($"Session specific: {(audioMetadata.Flags & MetaDataFlags.SessionSpecific) != 0x0}");
+        shell.WriteLine($"Audio specific: {entManager.GetComponent<AudioComponent>(audio.Value.Entity).SessionSpecific}");
+
+        shell.WriteLine($"Audio dirty tick is {audioMetadata.LastModifiedTick} spawn tick is {audioMetadata.CreationTick} current tick is {IoCManager.Resolve<IGameTiming>().CurTick}");
+
+        shell.WriteLine($"Session overrides: {string.Join(", ", entManager.System<PvsOverrideSystem>().GetSessionOverrides(shell.Player!))}");
 
         if (args.Length > 1 && args[1] == "true")
         {
@@ -79,6 +97,11 @@ public sealed class PlayGlobalAudioCommand : IConsoleCommand
             var WEH = entManager.GetComponent<TimedDespawnComponent>(audio.Value.Entity);
             WEH.Lifetime = 20f;
         }
+
+        Timer.Spawn(2, () =>
+        {
+            shell.WriteLine($"Audio deleted: {entManager.Deleted(audio.Value.Entity)}");
+        });
     }
 }
 
