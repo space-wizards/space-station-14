@@ -1,9 +1,4 @@
 Entries:
-- author: Gotimanga
-  changes:
-  - {message: Winter coats now have hoods, type: Add}
-  id: 4733
-  time: '2023-09-02T17:10:19.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix context menu not opening if you toggled combat mode immediately
@@ -2899,3 +2894,8 @@ Entries:
       grind for milk', type: Add}
   id: 5232
   time: '2023-11-30T21:44:23.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The senior physician beret now matches their outfit more., type: Tweak}
+  id: 5233
+  time: '2023-12-01T08:34:08.0000000+00:00'
