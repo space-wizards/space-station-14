@@ -27138,6 +27138,48 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
+- proto: ClothingOuterSanta
+  entities:
+  - uid: 108
+    components:
+    - pos: -11.396052,16.59143
+      parent: 31
+      type: Transform
+  - uid: 4166
+    components:
+    - pos: -11.396052,16.59143
+      parent: 31
+      type: Transform
+  - uid: 4457
+    components:
+    - pos: -11.396052,16.59143
+      parent: 31
+      type: Transform
+  - uid: 8422
+    components:
+    - pos: -11.396052,16.59143
+      parent: 31
+      type: Transform
+  - uid: 8447
+    components:
+    - pos: -11.396052,16.59143
+      parent: 31
+      type: Transform
+  - uid: 11334
+    components:
+    - pos: -11.396052,16.59143
+      parent: 31
+      type: Transform
+  - uid: 11335
+    components:
+    - pos: -11.396052,16.59143
+      parent: 31
+      type: Transform
+  - uid: 11336
+    components:
+    - pos: -11.396052,16.59143
+      parent: 31
+      type: Transform
 - proto: ClothingOuterVestHazard
   entities:
   - uid: 10789
@@ -32359,7 +32401,7 @@ entities:
     - pos: 38.5,-5.5
       parent: 31
       type: Transform
-    - secondsUntilStateChange: -1318.383
+    - secondsUntilStateChange: -1361.5829
       state: Closing
       type: Door
   - uid: 4019
@@ -33489,6 +33531,13 @@ entities:
   - uid: 10815
     components:
     - pos: 4.1304145,-33.0152
+      parent: 31
+      type: Transform
+- proto: FloraTreeChristmas02
+  entities:
+  - uid: 160
+    components:
+    - pos: -2.5446205,0.6875
       parent: 31
       type: Transform
 - proto: FloraTreeLarge05
@@ -48114,11 +48163,6 @@ entities:
     - pos: 8.54651,-28.293444
       parent: 31
       type: Transform
-  - uid: 8447
-    components:
-    - pos: -1.4903483,1.69441
-      parent: 31
-      type: Transform
   - uid: 8725
     components:
     - pos: -36.511345,-29.258835
@@ -51248,13 +51292,6 @@ entities:
       pos: -21.5,9.5
       parent: 31
       type: Transform
-  - uid: 4457
-    components:
-    - pos: -1.5,1.5
-      parent: 31
-      type: Transform
-    - powerLoad: 0
-      type: ApcPowerReceiver
   - uid: 4602
     components:
     - pos: 59.5,4.5
@@ -59363,11 +59400,6 @@ entities:
     - pos: 11.5,-23.5
       parent: 31
       type: Transform
-  - uid: 4166
-    components:
-    - pos: -1.5,1.5
-      parent: 31
-      type: Transform
   - uid: 4250
     components:
     - pos: 10.5,-24.5
@@ -60589,14 +60621,6 @@ entities:
       type: Transform
 - proto: VendingMachineCigs
   entities:
-  - uid: 108
-    components:
-    - flags: SessionSpecific
-      name: cigarette machine
-      type: MetaData
-    - pos: -2.5,1.5
-      parent: 31
-      type: Transform
   - uid: 473
     components:
     - flags: SessionSpecific
@@ -60917,13 +60941,6 @@ entities:
     - flags: SessionSpecific
       type: MetaData
     - pos: 26.5,6.5
-      parent: 31
-      type: Transform
-  - uid: 8422
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: -3.5,1.5
       parent: 31
       type: Transform
 - proto: VendingMachineSovietSoda
