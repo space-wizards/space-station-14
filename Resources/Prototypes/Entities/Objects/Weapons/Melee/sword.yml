@@ -14,7 +14,7 @@
     damage:
       types:
         Piercing: 4
-        Slash: 20 #"cmon, it has to be at least BETTER than the rest." "yeah I agree... literally the second worst sword we have.."
+        Slash: 16 #"cmon, it has to be at least BETTER than the rest." "yeah I agree... literally the second worst sword we have.."
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Reflect
