@@ -1,9 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: Technology Disks now sell for considerably less., type: Tweak}
-  id: 4736
-  time: '2023-09-03T02:31:53.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Microwaves now become bloodstained if you microwave animals inside
@@ -2902,3 +2897,8 @@ Entries:
   - {message: Nukies have exchanged microbomb implants for Death Acidifiers., type: Tweak}
   id: 5235
   time: '2023-12-01T20:14:45.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Tacos can be eaten by Lizards now. It's fricken Taco Tuesday!, type: Fix}
+  id: 5236
+  time: '2023-12-01T22:27:09.0000000+00:00'
