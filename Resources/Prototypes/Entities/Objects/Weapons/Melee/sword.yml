@@ -72,8 +72,7 @@
     wideAnimationRotation: -60
     damage:
       types:
-        Burn: 10
-        Slash: 25
+        Slash: 30
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/energykatana.rsi
