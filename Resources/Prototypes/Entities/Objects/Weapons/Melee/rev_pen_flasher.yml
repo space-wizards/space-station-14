@@ -1,9 +1,7 @@
 ﻿- type: entity
   parent: Pen
   id: FlashPen
-  name: pen
-  description: A dark ink pen.
-  suffix: Revolutionary
+  suffix: flash pen
   components:
   - type: Flash
   - type: LimitedCharges
@@ -15,9 +13,6 @@
       types:
         Blunt: 0 # melee weapon to allow flashing individual targets
     angle: 10
-  - type: Item
-    size: Small
-    sprite: Objects/Weapons/Melee/flash.rsi
   - type: ItemCooldown
   - type: StaticPrice
     price: 40
