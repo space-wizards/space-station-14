@@ -86,6 +86,7 @@
         amount: 2
       - id: ClothingOuterHardsuitBrigmedic
       - id: BoxSterileMask
+      - id: ClothingHeadHatBeretBrigmedic
       - id: ClothingOuterCoatAMG
       - id: ClothingUniformJumpsuitBrigmedic
       - id: ClothingUniformJumpskirtBrigmedic
