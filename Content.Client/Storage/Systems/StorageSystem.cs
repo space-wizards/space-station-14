@@ -1,28 +1,30 @@
-﻿using Content.Client.Animations;
+﻿using System.Linq;
+using Content.Client.Animations;
 using Content.Shared.Hands;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Storage.Systems;
 
-// TODO kill this is all horrid.
 public sealed class StorageSystem : SharedStorageSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityPickupAnimationSystem _entityPickupAnimation = default!;
 
-    private (EntityUid, StorageComponent)? _currentStorage;
+    private readonly List<Entity<StorageComponent>> _openStorages = new();
+    public int OpenStorageAmount => _openStorages.Count;
 
-    public event Action<EntityUid, StorageComponent>? StorageUpdated;
-    public event Action<EntityUid, StorageComponent>? StorageOpened;
-    public event Action<EntityUid, StorageComponent>? StorageClosed;
+    public event Action<Entity<StorageComponent>>? StorageUpdated;
+    public event Action<Entity<StorageComponent>?>? StorageOrderChanged;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<StorageComponent, ComponentShutdown>(OnShutdown);
         SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
         SubscribeNetworkEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
     }
@@ -30,31 +32,71 @@ public sealed class StorageSystem : SharedStorageSystem
     public override void UpdateUI(Entity<StorageComponent?> entity)
     {
         if (Resolve(entity.Owner, ref entity.Comp))
-            StorageUpdated?.Invoke(entity.Owner, entity.Comp);
+            StorageUpdated?.Invoke((entity, entity.Comp));
     }
 
     public void OpenStorageUI(EntityUid uid, StorageComponent component)
     {
-        if (_currentStorage is (var ent, { } comp))
-        {
-            //todo figure out how to make this more elegant
-            CloseStorageUI(ent, comp);
-        }
+        if (_openStorages.Contains((uid, component)))
+            return;
 
-        _currentStorage = (uid, component);
-        StorageOpened?.Invoke(uid, component);
+        ClearNonParentStorages(uid);
+        _openStorages.Add((uid, component));
+        Entity<StorageComponent>? last = _openStorages.LastOrDefault();
+        StorageOrderChanged?.Invoke(last);
     }
 
     public void CloseStorageUI(EntityUid uid, StorageComponent component)
     {
-        if (TryComp<UserInterfaceComponent>(uid, out var ui))
-            ui.OpenInterfaces.GetValueOrDefault(StorageComponent.StorageUiKey.Key)?.Close();
-
-        if (_currentStorage?.Item1 != uid)
+        if (!_openStorages.Contains((uid, component)))
             return;
-        _currentStorage = null;
 
-        StorageClosed?.Invoke(uid, component);
+        var storages = new ValueList<Entity<StorageComponent>>(_openStorages);
+        var reverseStorages = storages.Reverse();
+
+        foreach (var storage in reverseStorages)
+        {
+            CloseStorageBoundUserInterface(storage.Owner);
+            _openStorages.Remove(storage);
+            if (storage.Owner == uid)
+                break;
+        }
+
+        Entity<StorageComponent>? last = null;
+        if (_openStorages.Any())
+            last = _openStorages.LastOrDefault();
+        StorageOrderChanged?.Invoke(last);
+    }
+
+    private void ClearNonParentStorages(EntityUid uid)
+    {
+        var storages = new ValueList<Entity<StorageComponent>>(_openStorages);
+        var reverseStorages = storages.Reverse();
+
+        foreach (var storage in reverseStorages)
+        {
+            if (storage.Comp.Container.Contains(uid))
+                break;
+
+            CloseStorageBoundUserInterface(storage.Owner);
+            _openStorages.Remove(storage);
+        }
+    }
+
+    private void CloseStorageBoundUserInterface(Entity<UserInterfaceComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
+        if (entity.Comp.OpenInterfaces.GetValueOrDefault(StorageComponent.StorageUiKey.Key) is not { } bui)
+            return;
+
+        bui.Close();
+    }
+
+    private void OnShutdown(Entity<StorageComponent> ent, ref ComponentShutdown args)
+    {
+        CloseStorageUI(ent.Owner, ent.Comp);
     }
 
     /// <inheritdoc />

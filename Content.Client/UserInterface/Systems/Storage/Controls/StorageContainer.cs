@@ -41,6 +41,8 @@ public sealed class StorageContainer : BaseWindow
     private Texture? _blockedTexture;
     private readonly string _exitTexturePath = "Storage/exit";
     private Texture? _exitTexture;
+    private readonly string _backTexturePath = "Storage/back";
+    private Texture? _backTexture;
     private readonly string _sidebarTopTexturePath = "Storage/sidebar_top";
     private Texture? _sidebarTopTexture;
     private readonly string _sidebarMiddleTexturePath = "Storage/sidebar_mid";
@@ -121,6 +123,7 @@ public sealed class StorageContainer : BaseWindow
         _emptyTexture = Theme.ResolveTextureOrNull(_emptyTexturePath)?.Texture;
         _blockedTexture = Theme.ResolveTextureOrNull(_blockedTexturePath)?.Texture;
         _exitTexture = Theme.ResolveTextureOrNull(_exitTexturePath)?.Texture;
+        _backTexture = Theme.ResolveTextureOrNull(_backTexturePath)?.Texture;
         _sidebarTopTexture = Theme.ResolveTextureOrNull(_sidebarTopTexturePath)?.Texture;
         _sidebarMiddleTexture = Theme.ResolveTextureOrNull(_sidebarMiddleTexturePath)?.Texture;
         _sidebarBottomTexture = Theme.ResolveTextureOrNull(_sidebarBottomTexturePath)?.Texture;
@@ -144,6 +147,8 @@ public sealed class StorageContainer : BaseWindow
         var comp = entity.Comp;
         if (!comp.StorageGrid.Any())
             return;
+
+        _storageSystem ??= _entity.System<StorageSystem>();
 
         var boundingGrid = SharedStorageSystem.GetBoundingBox(comp.StorageGrid);
 
@@ -172,7 +177,9 @@ public sealed class StorageContainer : BaseWindow
         //todo this should change when there is a parent container to return to.
         var exitButton = new TextureButton
         {
-            TextureNormal = _exitTexture,
+            TextureNormal = _storageSystem.OpenStorageAmount == 1
+                ?_exitTexture
+                : _backTexture,
             Scale = new Vector2(2, 2),
         };
         exitButton.OnPressed += _ =>

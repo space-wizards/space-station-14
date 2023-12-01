@@ -106,11 +106,6 @@ namespace Content.Shared.Storage
         public SoundSpecifier? StorageCloseSound;
 
         [Serializable, NetSerializable]
-        public sealed class StorageInsertItemMessage : BoundUserInterfaceMessage
-        {
-        }
-
-        [Serializable, NetSerializable]
         public enum StorageUiKey
         {
             Key,

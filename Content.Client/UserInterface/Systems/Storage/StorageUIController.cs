@@ -27,14 +27,13 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IInputManager _input = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
     private HandsSystem? _hands;
 
     private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
     private StorageContainer? _container;
 
-    private Vector2? _lastContainerPosition { get; set; } = null;
+    private Vector2? _lastContainerPosition;
 
     private HotbarGui? Hotbar => UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
 
@@ -67,50 +66,48 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     public void OnSystemLoaded(StorageSystem system)
     {
         _input.FirstChanceOnKeyEvent += OnMiddleMouse;
-        system.StorageOpened += OnStorageOpened;
-        system.StorageClosed += OnStorageClosed;
         system.StorageUpdated += OnStorageUpdated;
+        system.StorageOrderChanged += OnStorageOrderChanged;
     }
 
     public void OnSystemUnloaded(StorageSystem system)
     {
         _input.FirstChanceOnKeyEvent -= OnMiddleMouse;
-        system.StorageOpened -= OnStorageOpened;
-        system.StorageClosed -= OnStorageClosed;
         system.StorageUpdated -= OnStorageUpdated;
+        system.StorageOrderChanged -= OnStorageOrderChanged;
     }
 
-    private void OnStorageOpened(EntityUid uid, StorageComponent component)
+    private void OnStorageOrderChanged(Entity<StorageComponent>? nullEnt)
     {
         if (_container == null)
             return;
 
-        _container.UpdateContainer((uid, component));
+        _container.UpdateContainer(nullEnt);
 
-        if (_lastContainerPosition == null)
-            _container.OpenCenteredAt(new Vector2(0.5f, 0.75f));
+        if (nullEnt is { } ent)
+        {
+            if (_lastContainerPosition == null)
+                _container.OpenCenteredAt(new Vector2(0.5f, 0.75f));
+            else
+            {
+                _container.Open();
+
+                if (!StaticStorageUIEnabled)
+                    LayoutContainer.SetPosition(_container, _lastContainerPosition.Value);
+            }
+
+            if (StaticStorageUIEnabled)
+            {
+                // we have to orphan it here because Open() sets the parent.
+                _container.Orphan();
+                Hotbar?.StorageContainer.AddChild(_container);
+            }
+        }
         else
         {
-            _container.Open();
-
-            if (!StaticStorageUIEnabled)
-                LayoutContainer.SetPosition(_container, _lastContainerPosition.Value);
+            _lastContainerPosition = _container.GlobalPosition;
+            _container.Close();
         }
-
-        if (StaticStorageUIEnabled)
-        {
-            _container.Orphan();
-            Hotbar?.StorageContainer.AddChild(_container);
-        }
-    }
-
-    private void OnStorageClosed(EntityUid uid, StorageComponent component)
-    {
-        if (_container == null)
-            return;
-
-        _lastContainerPosition = _container.GlobalPosition;
-        _container.Close();
     }
 
     private void OnStaticStorageChanged(bool obj)
@@ -187,12 +184,9 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             keyEvent.Handle();
     }
 
-    private void OnStorageUpdated(EntityUid uid, StorageComponent component)
+    private void OnStorageUpdated(Entity<StorageComponent> uid)
     {
-        if (_container == null)
-            return;
-
-        if (_container.StorageEntity != uid)
+        if (_container?.StorageEntity != uid)
             return;
 
         _container.BuildItemPieces();

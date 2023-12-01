@@ -46,6 +46,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected   readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
+    [Dependency] private   readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
@@ -71,7 +72,6 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, OpenStorageImplantEvent>(OnImplantActivate);
         SubscribeLocalEvent<StorageComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<StorageComponent, DestructionEventArgs>(OnDestroy);
-        SubscribeLocalEvent<StorageComponent, StorageComponent.StorageInsertItemMessage>(OnInsertItemMessage);
         SubscribeLocalEvent<StorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
         SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
 
@@ -327,6 +327,10 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!TryComp<StorageComponent>(uid, out var storageComp))
             return;
 
+        if (!_ui.TryGetUi(uid, StorageComponent.StorageUiKey.Key, out var bui) ||
+            !bui.SubscribedSessions.Contains(args.SenderSession))
+            return;
+
         if (!Exists(entity))
         {
             Log.Error($"Player {args.SenderSession} interacted with non-existent item {msg.InteractedItemUid} stored in {ToPrettyString(uid)}");
@@ -366,6 +370,10 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!TryComp<StorageComponent>(storageEnt, out var storageComp))
             return;
 
+        if (!_ui.TryGetUi(storageEnt, StorageComponent.StorageUiKey.Key, out var bui) ||
+            !bui.SubscribedSessions.Contains(args.SenderSession))
+            return;
+
         if (!Exists(itemEnt))
         {
             Log.Error($"Player {args.SenderSession} set location of non-existent item {msg.ItemEnt} stored in {ToPrettyString(storageEnt)}");
@@ -389,6 +397,10 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!TryComp<StorageComponent>(storageEnt, out var storageComp))
             return;
 
+        if (!_ui.TryGetUi(storageEnt, StorageComponent.StorageUiKey.Key, out var bui) ||
+            !bui.SubscribedSessions.Contains(args.SenderSession))
+            return;
+
         if (!Exists(itemEnt))
         {
             Log.Error($"Player {args.SenderSession} set location of non-existent item {msg.ItemEnt} stored in {ToPrettyString(storageEnt)}");
@@ -399,14 +411,6 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
 
         InsertAt((storageEnt, storageComp), (itemEnt, null), msg.Location, out _, player);
-    }
-
-    private void OnInsertItemMessage(EntityUid uid, StorageComponent storageComp, StorageComponent.StorageInsertItemMessage args)
-    {
-        if (args.Session.AttachedEntity == null)
-            return;
-
-        PlayerInsertHeldEntity(uid, args.Session.AttachedEntity.Value, storageComp);
     }
 
     private void OnBoundUIOpen(EntityUid uid, StorageComponent storageComp, BoundUIOpenedEvent args)
