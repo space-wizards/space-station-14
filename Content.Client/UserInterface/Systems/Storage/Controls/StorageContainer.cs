@@ -30,7 +30,6 @@ public sealed class StorageContainer : BaseWindow
     private readonly GridContainer _pieceGrid;
     private readonly GridContainer _backgroundGrid;
     private readonly GridContainer _sidebar;
-    private readonly Label _nameLabel;
 
     public event Action<GUIBoundKeyEventArgs, ItemGridPiece>? OnPiecePressed;
     public event Action<GUIBoundKeyEventArgs, ItemGridPiece>? OnPieceUnpressed;
@@ -61,13 +60,6 @@ public sealed class StorageContainer : BaseWindow
         OnThemeUpdated();
 
         MouseFilter = MouseFilterMode.Stop;
-
-        _nameLabel = new Label
-        {
-            ReservesSpace = true,
-            Visible = false,
-            HorizontalAlignment = HAlignment.Left
-        };
 
         _sidebar = new GridContainer
         {
@@ -108,8 +100,7 @@ public sealed class StorageContainer : BaseWindow
                             }
                         }
                     }
-                },
-                _nameLabel
+                }
             }
         };
 
@@ -136,8 +127,6 @@ public sealed class StorageContainer : BaseWindow
         StorageEntity = entity;
         if (entity == null)
             return;
-
-        _nameLabel.Text = _entity.GetComponent<MetaDataComponent>(entity.Value).EntityName;
 
         BuildGridRepresentation(entity.Value);
     }
@@ -174,7 +163,6 @@ public sealed class StorageContainer : BaseWindow
         #region Sidebar
         _sidebar.Children.Clear();
         _sidebar.Rows = boundingGrid.Height + 1;
-        //todo this should change when there is a parent container to return to.
         var exitButton = new TextureButton
         {
             TextureNormal = _storageSystem.OpenStorageAmount == 1
@@ -418,7 +406,6 @@ public sealed class StorageContainer : BaseWindow
 
         if (args.Function == ContentKeyFunctions.MoveStoredItem && StorageEntity != null)
         {
-            //todo de-dup this idk
             if (_handsSystem.GetActiveHandEntity() is { } handEntity &&
                 _storageSystem.CanInsert(StorageEntity.Value, handEntity, out _))
             {
