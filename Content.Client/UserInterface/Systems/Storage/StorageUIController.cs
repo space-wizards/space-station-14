@@ -12,7 +12,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Storage;
 using Robust.Client.Input;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
@@ -54,13 +53,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         base.Initialize();
 
         _configuration.OnValueChanged(CCVars.StaticStorageUI, OnStaticStorageChanged, true);
-
-        //EntityManager.EventBus.SubscribeLocalEvent<StorageComponent, ComponentShutdown>(OnStorageShutdown);
-    }
-
-    private void OnStorageShutdown(EntityUid uid, StorageComponent component, ComponentShutdown args)
-    {
-        //todo: close the storage window nerd
     }
 
     public void OnSystemLoaded(StorageSystem system)
@@ -84,10 +76,12 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
         _container.UpdateContainer(nullEnt);
 
-        if (nullEnt is { } ent)
+        if (nullEnt is { })
         {
             if (_lastContainerPosition == null)
+            {
                 _container.OpenCenteredAt(new Vector2(0.5f, 0.75f));
+            }
             else
             {
                 _container.Open();
@@ -203,6 +197,9 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         _container = container;
         container.OnPiecePressed += OnPiecePressed;
         container.OnPieceUnpressed += OnPieceUnpressed;
+
+        if (!StaticStorageUIEnabled)
+            _container.Orphan();
     }
 
     private void OnPiecePressed(GUIBoundKeyEventArgs args, ItemGridPiece control)
@@ -322,5 +319,8 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         base.FrameUpdate(args);
 
         _menuDragHelper.Update(args.DeltaSeconds);
+
+        if (!StaticStorageUIEnabled && _container?.Parent != null)
+            _lastContainerPosition = _container.GlobalPosition;
     }
 }

@@ -17,7 +17,6 @@ using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -44,7 +43,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
-    [Dependency] protected   readonly SharedTransformSystem _transform = default!;
+    [Dependency] protected   readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] private   readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
@@ -150,6 +149,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
 
         OpenStorageUI(uid, args.User, storageComp);
+        args.Handled = true;
     }
 
     /// <summary>
@@ -157,11 +157,11 @@ public abstract class SharedStorageSystem : EntitySystem
     /// </summary>
     private void OnImplantActivate(EntityUid uid, StorageComponent storageComp, OpenStorageImplantEvent args)
     {
-        // TODO: Make this an action or something.
-        if (args.Handled || !_xformQuery.TryGetComponent(uid, out var xform))
+        if (args.Handled)
             return;
 
-        OpenStorageUI(uid, xform.ParentUid, storageComp);
+        OpenStorageUI(uid, args.Performer, storageComp);
+        args.Handled = true;
     }
 
     /// <summary>
@@ -229,8 +229,8 @@ public abstract class SharedStorageSystem : EntitySystem
 
                 var position = EntityCoordinates.FromMap(
                     parent.IsValid() ? parent : uid,
-                    transformEnt.MapPosition,
-                    _transform
+                    TransformSystem.GetMapCoordinates(transformEnt),
+                    TransformSystem
                 );
 
                 args.Handled = true;
@@ -275,8 +275,8 @@ public abstract class SharedStorageSystem : EntitySystem
 
             var position = EntityCoordinates.FromMap(
                 xform.ParentUid.IsValid() ? xform.ParentUid : uid,
-                new MapCoordinates(_transform.GetWorldPosition(targetXform), targetXform.MapID),
-                _transform
+                new MapCoordinates(TransformSystem.GetWorldPosition(targetXform), targetXform.MapID),
+                TransformSystem
             );
 
             var angle = targetXform.LocalRotation;
@@ -289,7 +289,7 @@ public abstract class SharedStorageSystem : EntitySystem
             }
         }
 
-        // If we picked up atleast one thing, play a sound and do a cool animation!
+        // If we picked up at least one thing, play a sound and do a cool animation!
         if (successfullyInserted.Count > 0)
         {
             Audio.PlayPvs(component.StorageInsertSound, uid);
@@ -305,7 +305,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnDestroy(EntityUid uid, StorageComponent storageComp, DestructionEventArgs args)
     {
-        var coordinates = _transform.GetMoverCoordinates(uid);
+        var coordinates = TransformSystem.GetMoverCoordinates(uid);
 
         // Being destroyed so need to recalculate.
         _containerSystem.EmptyContainer(storageComp.Container, destination: coordinates);
@@ -318,7 +318,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// </summary>
     private void OnInteractWithItem(StorageInteractWithItemEvent msg, EntitySessionEventArgs args)
     {
-        if (args.SenderSession?.AttachedEntity is not { } player)
+        if (args.SenderSession.AttachedEntity is not { } player)
             return;
 
         var uid = GetEntity(msg.StorageUid);
@@ -424,6 +424,10 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnEntInserted(Entity<StorageComponent> entity, ref EntInsertedIntoContainerMessage args)
     {
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (entity.Comp.Container == null)
+            return;
+
         if (args.Container.ID != StorageComponent.ContainerId)
             return;
 
@@ -442,32 +446,24 @@ public abstract class SharedStorageSystem : EntitySystem
             }
         }
 
-        OnContainerModified(entity.Owner, entity.Comp, args);
+        UpdateAppearance((entity, entity.Comp, null));
+        UpdateUI((entity, entity.Comp));
     }
 
     private void OnEntRemoved(Entity<StorageComponent> entity, ref EntRemovedFromContainerMessage args)
     {
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (entity.Comp.Container == null)
+            return;
+
         if (args.Container.ID != StorageComponent.ContainerId)
             return;
 
         entity.Comp.StoredItems.Remove(GetNetEntity(args.Entity));
         Dirty(entity, entity.Comp);
 
-        OnContainerModified(entity.Owner, entity.Comp, args);
-    }
-
-    //todo we gotta remove this at some point, too
-    private void OnContainerModified(EntityUid uid, StorageComponent component, ContainerModifiedMessage args)
-    {
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (component.Container == null)
-            return;
-
-        if (args.Container.ID != StorageComponent.ContainerId)
-            return;
-
-        UpdateAppearance((uid, component, null));
-        UpdateUI((uid, component));
+        UpdateAppearance((entity, entity.Comp, null));
+        UpdateUI((entity, entity.Comp));
     }
 
     private void OnInsertAttempt(EntityUid uid, StorageComponent component, ContainerIsInsertingAttemptEvent args)
@@ -490,18 +486,8 @@ public abstract class SharedStorageSystem : EntitySystem
         if (storage.Container == null)
             return; // component hasn't yet been initialized.
 
-        int capacity;
-        int used;
-        if (storage.MaxSlots == null)
-        {
-            used = GetCumulativeItemSizes(uid, storage);
-            capacity = storage.MaxTotalWeight;
-        }
-        else
-        {
-            capacity = storage.MaxSlots.Value;
-            used = storage.Container.ContainedEntities.Count;
-        }
+        var capacity = storage.StorageGrid.GetArea();
+        var used = GetCumulativeItemAreas((uid, storage));
 
         _appearance.SetData(uid, StorageVisuals.StorageUsed, used, appearance);
         _appearance.SetData(uid, StorageVisuals.Capacity, capacity, appearance);
@@ -544,8 +530,17 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <param name="reason">If returning false, the reason displayed to the player</param>
     /// <param name="storageComp"></param>
     /// <param name="item"></param>
+    /// <param name="ignoreStacks"></param>
+    /// <param name="ignoreLocation"></param>
     /// <returns>true if it can be inserted, false otherwise</returns>
-    public bool CanInsert(EntityUid uid, EntityUid insertEnt, out string? reason, StorageComponent? storageComp = null, ItemComponent? item = null, bool ignoreStacks = false, bool ignoreLocation = false)
+    public bool CanInsert(
+        EntityUid uid,
+        EntityUid insertEnt,
+        out string? reason,
+        StorageComponent? storageComp = null,
+        ItemComponent? item = null,
+        bool ignoreStacks = false,
+        bool ignoreLocation = false)
     {
         if (!Resolve(uid, ref storageComp) || !Resolve(insertEnt, ref item, false))
         {
@@ -601,20 +596,6 @@ public abstract class SharedStorageSystem : EntitySystem
                 return false;
             }
         }
-
-        if (storageComp.MaxSlots != null)
-        {
-            if (storageComp.Container.ContainedEntities.Count >= storageComp.MaxSlots)
-            {
-                reason = "comp-storage-insufficient-capacity";
-                return false;
-            }
-        }/*
-        else if (_item.GetItemSizeWeight(item.Size) + GetCumulativeItemSizes(uid, storageComp) > storageComp.MaxTotalWeight)
-        {
-            reason = "comp-storage-insufficient-capacity";
-            return false;
-        }*/
 
         reason = null;
         return true;
@@ -807,27 +788,18 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(storageEnt, ref storageEnt.Comp) || !Resolve(itemEnt, ref itemEnt.Comp))
             return false;
 
-        var storageBounding = GetBoundingBox(storageEnt.Comp.StorageGrid);
+        var storageBounding = storageEnt.Comp.StorageGrid.GetBoundingBox();
 
-        //todo rotate 4 times in place
-        for (var angle = Angle.Zero; angle <= Angle.FromDegrees(360); angle += Angle.FromDegrees(90))
+        for (var y = storageBounding.Bottom; y <= storageBounding.Top; y++)
         {
-            var baseItemShape = _item.GetAdjustedItemShape(itemEnt, angle, Vector2i.Zero);
-            var itemBounding = GetBoundingBox(baseItemShape);
-
-            for (var y = storageBounding.Bottom; y <= storageBounding.Top; y++)
+            for (var x = storageBounding.Left; x <= storageBounding.Right; x++)
             {
-                if (y + itemBounding.Height > storageBounding.Top)
-                    break;
-
-                for (var x = storageBounding.Left; x <= storageBounding.Right; x++)
+                for (var angle = Angle.Zero; angle <= Angle.FromDegrees(360); angle += Math.PI / 2f)
                 {
-                    if (x + itemBounding.Width > storageBounding.Right)
-                        break;
-
-                    if (ItemFitsInGridLocation(itemEnt, storageEnt, new Vector2i(x, y), angle))
+                    var location = new ItemStorageLocation(angle, (x, y));
+                    if (ItemFitsInGridLocation(itemEnt, storageEnt, location))
                     {
-                        storageLocation = new ItemStorageLocation(angle, (x, y));
+                        storageLocation = location;
                         return true;
                     }
                 }
@@ -854,7 +826,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(itemEnt, ref itemEnt.Comp) || !Resolve(storageEnt, ref storageEnt.Comp))
             return false;
 
-        var gridBounds = GetBoundingBox(storageEnt.Comp.StorageGrid);
+        var gridBounds = storageEnt.Comp.StorageGrid.GetBoundingBox();
         if (!gridBounds.Contains(position))
             return false;
 
@@ -902,8 +874,10 @@ public abstract class SharedStorageSystem : EntitySystem
             if (ent == itemEnt.Owner)
                 continue;
 
-            //todo add a fucking trycomp for itemcomponent you stingy bitch
-            var adjustedShape = _item.GetAdjustedItemShape((ent, null), storedItem);
+            if (!_itemQuery.TryGetComponent(ent, out var itemComp))
+                continue;
+
+            var adjustedShape = _item.GetAdjustedItemShape((ent, itemComp), storedItem);
             foreach (var box in adjustedShape)
             {
                 if (box.Contains(location))
@@ -928,7 +902,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return uid.Comp.Container.ContainedEntities.Count < uid.Comp.MaxSlots || HasSpaceInStacks(uid);
         }
 
-        return GetCumulativeItemSizes(uid, uid.Comp) < uid.Comp.MaxTotalWeight || HasSpaceInStacks(uid);
+        return GetCumulativeItemAreas(uid) < uid.Comp.MaxTotalWeight || HasSpaceInStacks(uid);
     }
 
     private bool HasSpaceInStacks(Entity<StorageComponent?> uid, string? stackType = null)
@@ -956,17 +930,17 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <summary>
     /// Returns the sum of all the ItemSizes of the items inside of a storage.
     /// </summary>
-    public int GetCumulativeItemSizes(EntityUid uid, StorageComponent? component = null)
+    public int GetCumulativeItemAreas(Entity<StorageComponent?> entity)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(entity, ref entity.Comp))
             return 0;
 
         var sum = 0;
-        foreach (var item in component.Container.ContainedEntities)
+        foreach (var item in entity.Comp.Container.ContainedEntities)
         {
             if (!_itemQuery.TryGetComponent(item, out var itemComp))
                 continue;
-            sum += _item.GetItemSizeWeight(itemComp.Size);
+            sum += _item.GetItemShape((item, itemComp)).GetArea();
         }
 
         return sum;
@@ -1008,17 +982,4 @@ public abstract class SharedStorageSystem : EntitySystem
     /// </summary>
     public abstract void PlayPickupAnimation(EntityUid uid, EntityCoordinates initialCoordinates,
         EntityCoordinates finalCoordinates, Angle initialRotation, EntityUid? user = null);
-
-    //todo make an engine pr you bitch
-    public static Box2i GetBoundingBox(IReadOnlyList<Box2i> boxes)
-    {
-        if (boxes.Count == 0)
-            return new Box2i();
-
-        var minBottom = boxes.Min(x => x.Bottom);
-        var minLeft = boxes.Min(x => x.Left);
-        var maxTop = boxes.Max(x => x.Top);
-        var maxRight = boxes.Max(x => x.Right);
-        return new Box2i(new Vector2i(minLeft, minBottom), new Vector2i(maxRight, maxTop));
-    }
 }

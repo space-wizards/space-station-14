@@ -139,7 +139,7 @@ public sealed class StorageContainer : BaseWindow
 
         _storageSystem ??= _entity.System<StorageSystem>();
 
-        var boundingGrid = SharedStorageSystem.GetBoundingBox(comp.StorageGrid);
+        var boundingGrid = comp.StorageGrid.GetBoundingBox();
 
         _backgroundGrid.Children.Clear();
         _backgroundGrid.Rows = boundingGrid.Height + 1;
@@ -148,7 +148,7 @@ public sealed class StorageContainer : BaseWindow
         {
             for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
             {
-                var texture = comp.StorageGrid.Any(g => g.Contains(x, y))
+                var texture = comp.StorageGrid.Contains(x, y)
                     ? _emptyTexture
                     : _blockedTexture;
 
@@ -223,7 +223,7 @@ public sealed class StorageContainer : BaseWindow
         if (!storageComp.StorageGrid.Any())
             return;
 
-        var boundingGrid = SharedStorageSystem.GetBoundingBox(storageComp.StorageGrid);
+        var boundingGrid = storageComp.StorageGrid.GetBoundingBox();
         var size = _emptyTexture!.Size * 2;
 
         //todo. at some point, we may want to only rebuild the pieces that have actually received new data.
@@ -319,7 +319,7 @@ public sealed class StorageContainer : BaseWindow
             (currentEnt, itemComp),
             currentLocation.Rotation,
             origin);
-        var itemBounding = SharedStorageSystem.GetBoundingBox(itemShape);
+        var itemBounding = itemShape.GetBoundingBox();
 
         var validLocation = _storageSystem.ItemFitsInGridLocation(
             (currentEnt, itemComp),
@@ -333,7 +333,7 @@ public sealed class StorageContainer : BaseWindow
         {
             for (var x = itemBounding.Left; x <= itemBounding.Right; x++)
             {
-                if (TryGetBackgroundCell(x, y, out var cell) && itemShape.Any(b => b.Contains(x, y)))
+                if (TryGetBackgroundCell(x, y, out var cell) && itemShape.Contains(x, y))
                 {
                     cell.ModulateSelfOverride = validLocation ? validColor : Color.Red;
                 }
@@ -360,7 +360,7 @@ public sealed class StorageContainer : BaseWindow
         var origin = Vector2i.Zero;
 
         if (StorageEntity != null)
-            origin = SharedStorageSystem.GetBoundingBox(_entity.GetComponent<StorageComponent>(StorageEntity.Value).StorageGrid).BottomLeft;
+            origin = _entity.GetComponent<StorageComponent>(StorageEntity.Value).StorageGrid.GetBoundingBox().BottomLeft;
 
         var textureSize = (Vector2) _emptyTexture!.Size * 2;
         var position = ((UserInterfaceManager.MousePositionScaled.Position
@@ -377,7 +377,7 @@ public sealed class StorageContainer : BaseWindow
 
         if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComponent))
             return false;
-        var boundingBox = SharedStorageSystem.GetBoundingBox(storageComponent.StorageGrid);
+        var boundingBox = storageComponent.StorageGrid.GetBoundingBox();
         x -= boundingBox.Left;
         y -= boundingBox.Bottom;
 

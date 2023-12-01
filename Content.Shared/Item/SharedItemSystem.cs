@@ -172,7 +172,7 @@ public abstract class SharedItemSystem : EntitySystem
             return new Box2i[] { };
 
         var shapes = GetItemShape(entity);
-        var boundingShape = SharedStorageSystem.GetBoundingBox(shapes);
+        var boundingShape = shapes.GetBoundingBox();
         var boundingCenter = ((Box2) boundingShape).Center;
         var matty = Matrix3.CreateTransform(boundingCenter, rotation);
         var drift = boundingShape.BottomLeft - matty.TransformBox(boundingShape).BottomLeft;

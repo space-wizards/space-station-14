@@ -85,7 +85,7 @@ public sealed class ItemGridPiece : Control
             return;
 
         var adjustedShape = _itemSystem.GetAdjustedItemShape((Entity, null), Location.Rotation, Vector2i.Zero);
-        var boundingGrid = SharedStorageSystem.GetBoundingBox(adjustedShape);
+        var boundingGrid = adjustedShape.GetBoundingBox();
         var size = _centerTexture!.Size * 2 * UIScale;
 
         var hovering = !_storageController.IsDragging && UserInterfaceManager.CurrentlyHovered == this;
@@ -97,7 +97,7 @@ public sealed class ItemGridPiece : Control
         {
             for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
             {
-                if (!adjustedShape.Any(p => p.Contains(x, y)))
+                if (!adjustedShape.Contains(x, y))
                     continue;
 
                 var offset = size * 2 * new Vector2(x - boundingGrid.Left, y - boundingGrid.Bottom);
@@ -167,10 +167,10 @@ public sealed class ItemGridPiece : Control
 
     private Texture? GetTexture(IReadOnlyList<Box2i> boxes, Vector2i position, Direction corner)
     {
-        var top = !boxes.Any(b => b.Contains(position - Vector2i.Up));
-        var bottom = !boxes.Any(b => b.Contains(position - Vector2i.Down));
-        var left = !boxes.Any(b => b.Contains(position + Vector2i.Left));
-        var right = !boxes.Any(b => b.Contains(position + Vector2i.Right));
+        var top = !boxes.Contains(position - Vector2i.Up);
+        var bottom = !boxes.Contains(position - Vector2i.Down);
+        var left = !boxes.Contains(position + Vector2i.Left);
+        var right = !boxes.Contains(position + Vector2i.Right);
 
         switch (corner)
         {
@@ -213,7 +213,7 @@ public sealed class ItemGridPiece : Control
 
     public static Vector2 GetCenterOffset(Entity<ItemComponent?> entity, ItemStorageLocation location, IEntityManager entMan)
     {
-        var boxSize = SharedStorageSystem.GetBoundingBox(entMan.System<ItemSystem>().GetAdjustedItemShape(entity, location)).Size;
+        var boxSize = entMan.System<ItemSystem>().GetAdjustedItemShape(entity, location).GetBoundingBox().Size;
         var actualSize = new Vector2(boxSize.X + 1, boxSize.Y + 1);
         return actualSize * new Vector2i(8, 8);
     }

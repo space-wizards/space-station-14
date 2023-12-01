@@ -119,14 +119,14 @@ public sealed class StorageSystem : SharedStorageSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        if (finalCoords.InRange(EntityManager, _transform, initialCoords, 0.1f) ||
+        if (finalCoords.InRange(EntityManager, TransformSystem, initialCoords, 0.1f) ||
             !Exists(initialCoords.EntityId) || !Exists(finalCoords.EntityId))
         {
             return;
         }
 
-        var finalMapPos = finalCoords.ToMapPos(EntityManager, _transform);
-        var finalPos = _transform.GetInvWorldMatrix(initialCoords.EntityId).Transform(finalMapPos);
+        var finalMapPos = finalCoords.ToMapPos(EntityManager, TransformSystem);
+        var finalPos = TransformSystem.GetInvWorldMatrix(initialCoords.EntityId).Transform(finalMapPos);
 
         _entityPickupAnimation.AnimateEntityPickup(item, initialCoords, finalPos, initialAngle);
     }
