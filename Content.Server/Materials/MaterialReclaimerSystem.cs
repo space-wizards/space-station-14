@@ -234,7 +234,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             foreach (var (key, value) in composition.ChemicalComposition)
             {
                 // TODO use ReagentQuantity
-                totalChemicals.AddReagent(key, value * efficiency, false);
+                totalChemicals.AddReagent(key, value * efficiency, null);
             }
         }
 
@@ -245,7 +245,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             {
                 foreach (var quantity in solution.Contents)
                 {
-                    totalChemicals.AddReagent(quantity.Reagent.Prototype, quantity.Quantity * efficiency, false);
+                    totalChemicals.AddReagent(quantity.Reagent.Prototype, quantity.Quantity * efficiency, null);
                 }
             }
         }

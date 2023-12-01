@@ -48,7 +48,7 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
 
             var weak = component.WeakReagents.Contains(reagent);
             var quantity = (weak ? component.WeakReagentQuantity : component.ReagentQuantity) * mod;
-            solution.AddReagent(reagent, quantity);
+            solution.AddReagent(reagent, quantity, null);
 
             var foamEnt = Spawn("Foam", transform.Coordinates);
             var spreadAmount = weak ? component.WeakSpread : component.Spread;

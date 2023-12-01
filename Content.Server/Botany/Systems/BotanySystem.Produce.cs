@@ -21,7 +21,7 @@ public sealed partial class BotanySystem
                 amount += FixedPoint2.New(seed.Potency / quantity.PotencyDivisor);
             amount = FixedPoint2.New((int) MathHelper.Clamp(amount.Float(), quantity.Min, quantity.Max));
             solutionContainer.MaxVolume += amount;
-            solutionContainer.AddReagent(chem, amount);
+            solutionContainer.AddReagent(chem, amount, null);
         }
     }
 }

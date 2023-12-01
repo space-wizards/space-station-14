@@ -62,7 +62,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                     if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagent is not null)
                     {
                         Solution blood = new();
-                        blood.AddReagent(reclaimer.BloodReagent, 50);
+                        blood.AddReagent(reclaimer.BloodReagent, 50, null);
                         _puddleSystem.TrySpillAt(uid, blood, out _);
                     }
                     if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)

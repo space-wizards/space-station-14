@@ -38,6 +38,6 @@ public sealed class SolutionRandomFillSystem : EntitySystem
             return;
         }
 
-        target.AddReagent(reagent, quantity);
+        target.AddReagent(reagent, quantity, _proto);
     }
 }

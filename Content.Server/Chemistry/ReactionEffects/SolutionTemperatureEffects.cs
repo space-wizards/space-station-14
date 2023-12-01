@@ -107,12 +107,13 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (_delta < 0 && solution.Temperature <= _minTemp)
                 return;
 
-            var heatCap = solution.GetHeatCapacity(null);
+            var heatCap = solution.HeatCapacity;
             var deltaT = _scaled
                 ? _delta / heatCap * (float) args.Quantity
                 : _delta / heatCap;
 
             solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);
+            solution.ValidateTemperature(null);
         }
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

@@ -48,7 +48,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (solution.GetHeatCapacity(null) <= 0.0f)
+            if (solution.HeatCapacity <= 0.0f)
             {
                 if(quantity != 0.0f)
                 {

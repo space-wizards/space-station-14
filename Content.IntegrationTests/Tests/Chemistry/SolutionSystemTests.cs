@@ -253,10 +253,10 @@ public sealed class SolutionSystemTests
             var solutionTwo = new Solution("TestReagentB", FixedPoint2.New(100)) { Temperature = temp };
             solutionTwo.AddReagent("TestReagentC", FixedPoint2.New(100));
 
-            var thermalEnergyOne = solutionOne.GetHeatCapacity(protoMan) * solutionOne.Temperature;
-            var thermalEnergyTwo = solutionTwo.GetHeatCapacity(protoMan) * solutionTwo.Temperature;
+            var thermalEnergyOne = solutionOne.HeatCapacity * solutionOne.Temperature;
+            var thermalEnergyTwo = solutionTwo.HeatCapacity * solutionTwo.Temperature;
             solutionOne.AddSolution(solutionTwo, protoMan);
-            Assert.That(solutionOne.GetHeatCapacity(protoMan) * solutionOne.Temperature, Is.EqualTo(thermalEnergyOne + thermalEnergyTwo));
+            Assert.That(solutionOne.HeatCapacity * solutionOne.Temperature, Is.EqualTo(thermalEnergyOne + thermalEnergyTwo));
         });
 
         await pair.CleanReturnAsync();

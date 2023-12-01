@@ -80,11 +80,29 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("specificHeat")]
         public float SpecificHeat { get; private set; } = 1.0f;
 
+        /// <summary>
+        ///     Boiling point of the reagent.
+        /// </summary>
         [DataField("boilingPoint")]
-        public float? BoilingPoint { get; private set; }
+        public float BoilingPoint { get; private set; } = float.PositiveInfinity;
 
+        /// <summary>
+        ///     Melting point of the reagent.
+        /// </summary>
         [DataField("meltingPoint")]
-        public float? MeltingPoint { get; private set; }
+        public float MeltingPoint { get; private set; } = float.NegativeInfinity;
+
+        /// <summary>
+        ///     How much heat to boil an unit of the reagent.
+        /// </summary>
+        [DataField]
+        public float BoilingLatentHeat { get; private set; } = 1f;
+
+        /// <summary>
+        ///     How much heat to freeze an unit of the reagent.
+        /// </summary>
+        [DataField]
+        public float MeltingLatentHeat { get; private set; } = 1f;
 
         [DataField("metamorphicSprite")]
         public SpriteSpecifier? MetamorphicSprite { get; private set; } = null;

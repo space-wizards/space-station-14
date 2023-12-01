@@ -46,7 +46,7 @@ public sealed class ChemicalPuddleArtifactSystem : EntitySystem
         var amountPerChem = component.ChemicalSolution.MaxVolume / component.ChemAmount;
         foreach (var reagent in chemicalList)
         {
-            component.ChemicalSolution.AddReagent(reagent, amountPerChem);
+            component.ChemicalSolution.AddReagent(reagent, amountPerChem, null);
         }
 
         _puddle.TrySpillAt(uid, component.ChemicalSolution, out _);

@@ -52,7 +52,7 @@ namespace Content.Server.Body.Systems
                                 reagent = new(reagent.Reagent, delta.ReagentQuantity.Quantity);
 
                             _solutionContainerSystem.RemoveReagent(uid, stomachSolution, reagent);
-                            transferSolution.AddReagent(reagent);
+                            transferSolution.AddReagent(reagent, null);
                         }
 
                         queue.Add(delta);

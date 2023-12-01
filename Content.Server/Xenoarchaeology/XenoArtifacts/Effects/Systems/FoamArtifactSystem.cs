@@ -35,7 +35,7 @@ public sealed class FoamArtifactSystem : EntitySystem
         var sol = new Solution();
         var xform = Transform(uid);
         var range = (int) MathF.Round(MathHelper.Lerp(component.MinFoamAmount, component.MaxFoamAmount, _random.NextFloat(0, 1f)));
-        sol.AddReagent(component.SelectedReagent, component.ReagentAmount);
+        sol.AddReagent(component.SelectedReagent, component.ReagentAmount, null);
         var foamEnt = Spawn("Foam", xform.Coordinates);
         var spreadAmount = range * 4;
         _smoke.StartSmoke(foamEnt, sol, component.Duration, spreadAmount);

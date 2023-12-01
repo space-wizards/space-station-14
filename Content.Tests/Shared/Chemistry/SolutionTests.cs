@@ -407,7 +407,7 @@ public sealed class SolutionTests : ContentUnitTest
     public void EmptySolutionHasNoHeatCapacity()
     {
         var solution = new Solution();
-        Assert.That(solution.GetHeatCapacity(null), Is.EqualTo(0.0f));
+        Assert.That(solution.HeatCapacity, Is.EqualTo(0.0f));
     }
 
     [Test]

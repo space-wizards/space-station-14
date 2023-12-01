@@ -75,6 +75,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         foreach (var (name, solutionHolder) in component.Solutions)
         {
             solutionHolder.Name = name;
+            solutionHolder.UpdateHeatCapacity(_prototypeManager);
             solutionHolder.ValidateSolution();
             UpdateAppearance(uid, solutionHolder);
         }
@@ -351,15 +352,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         if (acceptedQuantity <= 0)
             return reagentQuantity.Quantity == 0;
 
-        if (temperature == null)
-        {
-            targetSolution.AddReagent(reagentQuantity.Reagent, acceptedQuantity);
-        }
-        else
-        {
-            var proto = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
-            targetSolution.AddReagent(proto, acceptedQuantity, temperature.Value, _prototypeManager);
-        }
+        targetSolution.AddReagent(reagentQuantity.Reagent, acceptedQuantity, _prototypeManager, temperature);
 
         UpdateChemicals(targetUid, targetSolution, true);
         return acceptedQuantity == reagentQuantity.Quantity;
@@ -707,7 +700,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         {
             var (reagent, _) = solution.Contents[i];
             var removedQuantity = solution.RemoveReagent(reagent, quantity);
-            removedSolution.AddReagent(reagent, removedQuantity);
+            removedSolution.AddReagent(reagent, removedQuantity, _prototypeManager);
         }
 
         UpdateChemicals(uid, solution);
@@ -807,6 +800,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             return;
 
         solution.Temperature = temperature;
+        solution.ValidateTemperature(_prototypeManager);
         UpdateChemicals(owner, solution, true);
     }
 
@@ -818,8 +812,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
     public void SetThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
     {
-        var heatCap = solution.GetHeatCapacity(_prototypeManager);
-        solution.Temperature = heatCap == 0 ? 0 : thermalEnergy / heatCap;
+        solution.SetTemperature(thermalEnergy, _prototypeManager);
         UpdateChemicals(owner, solution, true);
     }
 
@@ -831,11 +824,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
     public void AddThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
     {
-        if (thermalEnergy == 0.0f)
-            return;
-
-        var heatCap = solution.GetHeatCapacity(_prototypeManager);
-        solution.Temperature += heatCap == 0 ? 0 : thermalEnergy / heatCap;
+        solution.AdjustTemperature(thermalEnergy, _prototypeManager);
         UpdateChemicals(owner, solution, true);
     }
 

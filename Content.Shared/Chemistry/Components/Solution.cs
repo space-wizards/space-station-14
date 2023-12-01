@@ -56,6 +56,34 @@ namespace Content.Shared.Chemistry.Components
         public bool CanMix { get; set; } = false;
 
         /// <summary>
+        ///     If contents should boil instantly.
+        ///     True when theres enough latent heat as to boil all of the LowestBoilingPointReagent stored at once.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ShouldBoilInstantly = false;
+
+        /// <summary>
+        ///     If contents should freeze instantly.
+        ///     True when theres enough latent heat as to freeze all of the HighestMeltingPointReagent stored at once.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ShouldFreezeInstantly = false;
+
+        /// <summary>
+        ///     Latent heat of the solution stored to facilitate boiling reactions.
+        ///     Only so much reagent can boil as there is extra heat.
+        /// </summary
+        [ViewVariables] 
+        public float BoilingLatentHeat = 0;
+
+        /// <summary>
+        ///     Latent heat of the solution stored to facilitate freezing reactions.
+        ///     Only so much reagent can freeze as there is heat missing.
+        /// </summary
+        [ViewVariables] 
+        public float MeltingLatentHeat = 0;
+
+        /// <summary>
         ///     Volume needed to fill this container.
         /// </summary>
         [ViewVariables]
@@ -67,6 +95,26 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("temperature")]
         public float Temperature { get; set; } = 293.15f;
+
+        /// <summary>
+        ///     The total heat capacity of all reagents in the solution.
+        /// </summary>
+        [ViewVariables] 
+        public float HeatCapacity {get; private set;} = 0f;
+
+        /// <summary>
+        ///     Stores the reagent with the lowest boiling point for validating the temperature
+        ///     and processing how much latent heat the solution should have.
+        /// </summary
+        [ViewVariables]
+        private ReagentId? LowestBoilingPointReagent = null;
+
+        /// <summary>
+        ///     Stores the reagent with the highest melting point for validating the temperature
+        ///     and processing how much latent heat the solution should have.
+        /// </summary
+        [ViewVariables]
+        private ReagentId? HighestMeltingPointReagent = null;
 
         /// <summary>
         ///     The name of this solution, if it is contained in some <see cref="SolutionContainerManagerComponent"/>
@@ -82,38 +130,144 @@ namespace Content.Shared.Chemistry.Components
         }
 
         /// <summary>
-        ///     The total heat capacity of all reagents in the solution.
-        /// </summary>
-        [ViewVariables] private float _heatCapacity;
-
-        /// <summary>
-        ///     If true, then <see cref="_heatCapacity"/> needs to be recomputed.
-        /// </summary>
-        [ViewVariables] private bool _heatCapacityDirty = true;
-
-        public void UpdateHeatCapacity(IPrototypeManager? protoMan)
+        ///     Updates the heat capacity after adding or taking from the solution.
+        /// </summary
+        public void UpdateHeatCapacity(IPrototypeManager? protoMan = null)
         {
             IoCManager.Resolve(ref protoMan);
-            DebugTools.Assert(_heatCapacityDirty);
-            _heatCapacityDirty = false;
-            _heatCapacity = 0;
-            foreach (var (reagent, quantity) in Contents)
+            HeatCapacity = 0;
+            foreach(var(reagent, quantity) in Contents)
             {
-                _heatCapacity += (float) quantity *
-                                 protoMan.Index<ReagentPrototype>(reagent.Prototype).SpecificHeat;
+                var specificHeat = protoMan.Index<ReagentPrototype>(reagent.Prototype).SpecificHeat;
+                HeatCapacity += (float)quantity * specificHeat;
             }
         }
 
-        public float GetHeatCapacity(IPrototypeManager? protoMan)
+        /// <summary>
+        ///     Returns the total thermal energy the solution holds.
+        /// </summary
+        public float GetThermalEnergy()
         {
-            if (_heatCapacityDirty)
-                UpdateHeatCapacity(protoMan);
-            return _heatCapacity;
+            return HeatCapacity * Temperature;
         }
 
-        public float GetThermalEnergy(IPrototypeManager? protoMan)
+        /// <summary>
+        ///     Sets the temperature of the solution according to the amount of heat it should have.
+        /// </summary
+        public void SetTemperature(float thermalEnergy, IPrototypeManager? protoMan = null)
         {
-            return GetHeatCapacity(protoMan) * Temperature;
+            if(HeatCapacity == 0)
+                return;
+            Temperature = thermalEnergy / HeatCapacity; 
+            ValidateTemperature(protoMan);
+        }
+
+        /// <summary>
+        ///     Adjusts the temperature of the solution according the the amount of heat its given or taken.
+        /// </summary
+        public void AdjustTemperature(float thermalEnergy, IPrototypeManager? protoMan = null)
+        {
+            if(HeatCapacity == 0)
+                return;
+
+            if(thermalEnergy > 0)
+            {
+                MeltingLatentHeat = 0;
+                ShouldFreezeInstantly = false;
+            }
+            else
+            {
+                BoilingLatentHeat = 0;
+                ShouldBoilInstantly = false;
+            }
+
+            Temperature += thermalEnergy / HeatCapacity;
+            ValidateTemperature(protoMan);
+        }
+
+        /// <summary>
+        ///     Checks if the solution temperature doesn't surpass the melting and boiling points of the lowest reagent.
+        ///     E.g. As long as theres water in the solution it will not surpass 373.15K
+        /// </summary
+        public void ValidateTemperature(IPrototypeManager? protoMan = null)
+        {
+            IoCManager.Resolve(ref protoMan);
+            if(LowestBoilingPointReagent != null)
+            {
+                var boilingReagent = protoMan.Index<ReagentPrototype>(LowestBoilingPointReagent.Value.Prototype);
+                if(Temperature > boilingReagent.BoilingPoint)
+                {
+                    // Checks how much heat past the boiling point the solution has...
+                    var excessThermalEnergy = Temperature * HeatCapacity - boilingReagent.BoilingPoint * HeatCapacity;
+                    var quantity = GetReagent(LowestBoilingPointReagent.Value);
+                    // Maximum amount of energy that can be used to boil all of the reagent the solution contains.
+                    // Exists in case someone pours a bucketful of lava into a glass of water
+                    var maxLatentHeat = ((float)quantity.Quantity) * boilingReagent.BoilingLatentHeat;
+                    // Stores it in latent heat
+                    BoilingLatentHeat += excessThermalEnergy;
+                    if(BoilingLatentHeat > maxLatentHeat)
+                    {
+                        ShouldBoilInstantly = true;
+                        BoilingLatentHeat = maxLatentHeat;
+                    }
+                    else
+                    {
+                        ShouldBoilInstantly = false;
+                    }
+                    // Subtracts the excess energy from the temperature so it doesn't surpass the boiling point.
+                    Temperature += -excessThermalEnergy / HeatCapacity;
+                }
+            }
+            if(HighestMeltingPointReagent != null)
+            {
+                var meltingReagent = protoMan.Index<ReagentPrototype>(HighestMeltingPointReagent.Value.Prototype);
+                if(Temperature < meltingReagent.MeltingPoint)
+                {
+                    // Exact same logic as above but for cold.
+                    var excessThermalEnergy = meltingReagent.MeltingPoint * HeatCapacity - Temperature * HeatCapacity;
+                    var quantity = GetReagent(HighestMeltingPointReagent.Value);
+                    var maxLatentHeat = ((float)quantity.Quantity) * meltingReagent.MeltingLatentHeat;
+                    MeltingLatentHeat += excessThermalEnergy;
+                    if(MeltingLatentHeat >= maxLatentHeat)
+                    {
+                        ShouldFreezeInstantly = true;
+                        MeltingLatentHeat = maxLatentHeat;
+                    }
+                    else
+                    {
+                        ShouldFreezeInstantly = true;
+                    }
+                    Temperature += excessThermalEnergy / HeatCapacity;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Finds the reagents in the solution that contain the lowest boiling point and highest melting point.
+        ///     Used to validate the temperature and for phase transition reactions.
+        /// </summary>
+        private void UpdatePhaseTransitionReagents(IPrototypeManager? protoMan = null)
+        {
+            IoCManager.Resolve(ref protoMan);
+            
+            var curLowestBoilingPoint = float.PositiveInfinity;
+            var curHighestMeltingPoint = float.NegativeInfinity;
+
+            LowestBoilingPointReagent = null;
+            HighestMeltingPointReagent = null;
+
+            foreach(var(reagent, quantity) in Contents)
+            {
+                var proto = protoMan.Index<ReagentPrototype>(reagent.Prototype);
+                if(proto.BoilingPoint <= curLowestBoilingPoint)
+                {
+                    LowestBoilingPointReagent = reagent;
+                }
+                if(proto.MeltingPoint >= curHighestMeltingPoint)
+                {
+                    HighestMeltingPointReagent = reagent;
+                }
+            }
         }
 
         /// <summary>
@@ -138,7 +292,7 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="quantity">The quantity in milli-units.</param>
         public Solution(string prototype, FixedPoint2 quantity, ReagentData? data = null) : this()
         {
-            AddReagent(new ReagentId(prototype, data), quantity);
+            AddReagent(new ReagentId(prototype, data), quantity, null);
         }
 
         public Solution(IEnumerable<ReagentQuantity> reagents, bool setMaxVol = true)
@@ -152,16 +306,20 @@ namespace Content.Shared.Chemistry.Components
 
             if (setMaxVol)
                 MaxVolume = Volume;
-
+            
+            UpdateHeatCapacity(null);
+            UpdatePhaseTransitionReagents(null);
             ValidateSolution();
         }
 
         public Solution(Solution solution)
         {
             Volume = solution.Volume;
-            _heatCapacity = solution._heatCapacity;
-            _heatCapacityDirty = solution._heatCapacityDirty;
+            HeatCapacity = solution.HeatCapacity;
+            Temperature = solution.Temperature;
             Contents = solution.Contents.ShallowClone();
+            LowestBoilingPointReagent = solution.LowestBoilingPointReagent;
+            HighestMeltingPointReagent = solution.HighestMeltingPointReagent;
             ValidateSolution();
         }
 
@@ -185,13 +343,9 @@ namespace Content.Shared.Chemistry.Components
             DebugTools.Assert(Contents.Select(x => x.Reagent).ToHashSet().Count == Contents.Count);
 
             // If it isn't flagged as dirty, check heat capacity is correct.
-            if (!_heatCapacityDirty)
-            {
-                var cur = _heatCapacity;
-                _heatCapacityDirty = true;
-                UpdateHeatCapacity(null);
-                DebugTools.Assert(MathHelper.CloseTo(_heatCapacity, cur));
-            }
+            var cur = HeatCapacity;
+            UpdateHeatCapacity(null);
+            DebugTools.Assert(MathHelper.CloseTo(HeatCapacity, cur));
 #endif
         }
 
@@ -320,28 +474,27 @@ namespace Content.Shared.Chemistry.Components
         }
 
         /// <summary>
-        ///     Adds a given quantity of a reagent directly into the solution.
-        /// </summary>
-        /// <param name="prototype">The prototype ID of the reagent to add.</param>
-        /// <param name="quantity">The quantity in milli-units.</param>
-        public void AddReagent(string prototype, FixedPoint2 quantity, bool dirtyHeatCap = true)
-            => AddReagent(new ReagentId(prototype, null), quantity, dirtyHeatCap);
-
-        /// <summary>
-        ///     Adds a given quantity of a reagent directly into the solution.
-        /// </summary>
+        ///     Adds a reagent to a solution.
         /// <param name="id">The reagent to add.</param>
-        /// <param name="quantity">The quantity in milli-units.</param>
-        public void AddReagent(ReagentId id, FixedPoint2 quantity, bool dirtyHeatCap = true)
+        /// <param name="quantity">How much to add</param>
+        /// <param name="protoMan">Prototype manager, optional.</param>
+        /// <param name="temperature">Temperature of the reagent, optional.</param>
+        /// </summary>
+        public void AddReagent(ReagentId id, FixedPoint2 quantity, IPrototypeManager? protoMan = null, float? temperature = null)
         {
-            if (quantity <= 0)
-            {
-                DebugTools.Assert(quantity == 0, "Attempted to add negative reagent quantity");
-                return;
-            }
+            if(temperature == null)
+                temperature = 293.15f;
 
-            Volume += quantity;
-            _heatCapacityDirty |= dirtyHeatCap;
+            if(quantity <= 0)
+                return;
+            
+            var initialThermalEnergy = HeatCapacity * Temperature;
+
+            IoCManager.Resolve(ref protoMan);
+            var specificHeat = protoMan.Index<ReagentPrototype>(id.Prototype).SpecificHeat;
+            var addedThermalEnergy = specificHeat * quantity * temperature;
+
+            var foundReagent = false;
             for (var i = 0; i < Contents.Count; i++)
             {
                 var (reagent, existingQuantity) = Contents[i];
@@ -349,69 +502,43 @@ namespace Content.Shared.Chemistry.Components
                     continue;
 
                 Contents[i] = new ReagentQuantity(id, existingQuantity + quantity);
-                ValidateSolution();
-                return;
+                foundReagent = true;
+                break;
             }
+            if(!foundReagent)
+            {
+                Contents.Add(new ReagentQuantity(id, quantity));
+                UpdatePhaseTransitionReagents(protoMan);
+            }
+            
 
-            Contents.Add(new ReagentQuantity(id, quantity));
+            Volume += quantity;
+            UpdateHeatCapacity(protoMan);
+            if(temperature != Temperature || !foundReagent)
+            {
+                var newThermalEnergy = initialThermalEnergy + addedThermalEnergy;
+                SetTemperature((float)newThermalEnergy, protoMan);
+            }
             ValidateSolution();
         }
 
         /// <summary>
-        ///     Adds a given quantity of a reagent directly into the solution.
+        ///     Adds a reagent to a solution.
+        /// <param name="reagent">The reagent to add.</param>
+        /// <param name="protoMan">Prototype manager, optional.</param>
+        /// <param name="temperature">Temperature of the reagent, optional.</param>
         /// </summary>
-        /// <param name="reagentId">The reagent to add.</param>
-        /// <param name="quantity">The quantity in milli-units.</param>
-        public void AddReagent(ReagentPrototype proto, ReagentId reagentId, FixedPoint2 quantity)
-        {
-            AddReagent(reagentId, quantity, false);
-            _heatCapacity += quantity.Float() * proto.SpecificHeat;
-        }
-
-        public void AddReagent(ReagentQuantity reagentQuantity)
-            => AddReagent(reagentQuantity.Reagent, reagentQuantity.Quantity);
+        public void AddReagent(ReagentQuantity reagent, IPrototypeManager? protoMan = null, float? temperature = null)
+            => AddReagent(reagent.Reagent, reagent.Quantity, protoMan, temperature);
 
         /// <summary>
-        ///     Adds a given quantity of a reagent directly into the solution.
+        ///     Adds a reagent to a solution.
+        /// <param name="reagent">The reagent to add.</param>
+        /// <param name="protoMan">Prototype manager, optional.</param>
+        /// <param name="temperature">Temperature of the reagent, optional.</param>
         /// </summary>
-        /// <param name="proto">The prototype of the reagent to add.</param>
-        /// <param name="quantity">The quantity in milli-units.</param>
-        public void AddReagent(ReagentPrototype proto, FixedPoint2 quantity, float temperature, IPrototypeManager? protoMan, ReagentData? data = null)
-        {
-            if (_heatCapacityDirty)
-                UpdateHeatCapacity(protoMan);
-
-            var totalThermalEnergy = Temperature * _heatCapacity + temperature * proto.SpecificHeat;
-            AddReagent(new ReagentId(proto.ID, data), quantity);
-            Temperature = _heatCapacity == 0 ? 0 : totalThermalEnergy / _heatCapacity;
-        }
-
-
-        /// <summary>
-        ///     Scales the amount of solution by some integer quantity.
-        /// </summary>
-        /// <param name="scale">The scalar to modify the solution by.</param>
-        public void ScaleSolution(int scale)
-        {
-            if (scale == 1)
-                return;
-
-            if (scale <= 0)
-            {
-                RemoveAllSolution();
-                return;
-            }
-
-            _heatCapacity *= scale;
-            Volume *= scale;
-
-            for (int i = 0; i < Contents.Count; i++)
-            {
-                var old = Contents[i];
-                Contents[i] = new ReagentQuantity(old.Reagent, old.Quantity * scale);
-            }
-            ValidateSolution();
-        }
+        public void AddReagent(string prototype, FixedPoint2 quantity, IPrototypeManager? protoMan = null, float? temperature = null)
+            => AddReagent(new ReagentId(prototype, null), quantity, protoMan, temperature);
 
         /// <summary>
         ///     Scales the amount of solution.
@@ -442,7 +569,7 @@ namespace Content.Shared.Chemistry.Components
                 }
             }
 
-            _heatCapacityDirty = true;
+            UpdateHeatCapacity(null);
             ValidateSolution();
         }
 
@@ -464,18 +591,20 @@ namespace Content.Shared.Chemistry.Components
                     continue;
 
                 var newQuantity = curQuantity - toRemove.Quantity;
-                _heatCapacityDirty = true;
 
                 if (newQuantity <= 0)
                 {
                     Contents.RemoveSwap(i);
                     Volume -= curQuantity;
+                    UpdateHeatCapacity(null);
+                    UpdatePhaseTransitionReagents(null);
                     ValidateSolution();
                     return curQuantity;
                 }
 
                 Contents[i] = new ReagentQuantity(reagent, newQuantity);
                 Volume -= toRemove.Quantity;
+                UpdateHeatCapacity(null);
                 ValidateSolution();
                 return toRemove.Quantity;
             }
@@ -510,8 +639,7 @@ namespace Content.Shared.Chemistry.Components
         {
             Contents.Clear();
             Volume = FixedPoint2.Zero;
-            _heatCapacityDirty = false;
-            _heatCapacity = 0;
+            HeatCapacity = 0;
         }
 
         /// <summary>
@@ -540,7 +668,7 @@ namespace Content.Shared.Chemistry.Components
             // Then re-add the excluded reagents to the original solution.
             foreach (var reagent in excluded)
             {
-                AddReagent(reagent);
+                AddReagent(reagent, null);
             }
 
             return sol;
@@ -568,7 +696,7 @@ namespace Content.Shared.Chemistry.Components
             // Then re-add the excluded reagents to the original solution.
             foreach (var reagent in excluded)
             {
-                AddReagent(reagent);
+                AddReagent(reagent, null);
             }
 
             return sol;
@@ -628,10 +756,10 @@ namespace Content.Shared.Chemistry.Components
             DebugTools.Assert(remaining >= 0);
             DebugTools.Assert(remaining == 0 || Volume == FixedPoint2.Zero);
 
-            _heatCapacityDirty = true;
-            newSolution._heatCapacityDirty = true;
-
+            UpdateHeatCapacity(null);
             ValidateSolution();
+            newSolution.Temperature = Temperature;
+            newSolution.UpdateHeatCapacity(null);
             newSolution.ValidateSolution();
 
             return newSolution;
@@ -684,32 +812,20 @@ namespace Content.Shared.Chemistry.Components
             DebugTools.Assert(remaining >= 0);
             DebugTools.Assert(remaining == 0 || Volume == FixedPoint2.Zero);
 
-            _heatCapacityDirty = true;
+            UpdateHeatCapacity(null);
             ValidateSolution();
         }
 
-        public void AddSolution(Solution otherSolution, IPrototypeManager? protoMan)
+        public void AddSolution(Solution otherSolution, IPrototypeManager? protoMan = null)
         {
             if (otherSolution.Volume <= FixedPoint2.Zero)
                 return;
 
+            var totalThermalEnergy = GetThermalEnergy() + otherSolution.GetThermalEnergy();
+
             Volume += otherSolution.Volume;
 
-            var closeTemps = MathHelper.CloseTo(otherSolution.Temperature, Temperature);
-            float totalThermalEnergy = 0;
-            if (!closeTemps)
-            {
-                IoCManager.Resolve(ref protoMan);
-
-                if (_heatCapacityDirty)
-                    UpdateHeatCapacity(protoMan);
-
-                if (otherSolution._heatCapacityDirty)
-                    otherSolution.UpdateHeatCapacity(protoMan);
-
-                totalThermalEnergy = _heatCapacity * Temperature + otherSolution._heatCapacity * otherSolution.Temperature;
-            }
-
+            var addedReagents = false;
             for (var i = 0; i < otherSolution.Contents.Count; i++)
             {
                 var (otherReagent, otherQuantity) = otherSolution.Contents[i];
@@ -728,20 +844,22 @@ namespace Content.Shared.Chemistry.Components
 
                 if (!found)
                 {
+                    addedReagents = true;
                     Contents.Add(new ReagentQuantity(otherReagent, otherQuantity));
                 }
             }
 
-            _heatCapacity += otherSolution._heatCapacity;
-            if (closeTemps)
-                _heatCapacityDirty |= otherSolution._heatCapacityDirty;
-            else
-                Temperature = _heatCapacity == 0 ? 0 : totalThermalEnergy / _heatCapacity;
+            IoCManager.Resolve(ref protoMan);
 
+            if(addedReagents)
+                UpdatePhaseTransitionReagents(protoMan);
+            
+            UpdateHeatCapacity(protoMan);
+            SetTemperature(totalThermalEnergy, protoMan);
             ValidateSolution();
         }
 
-        public Color GetColorWithout(IPrototypeManager? protoMan, params string[] without)
+        public Color GetColorWithout(IPrototypeManager? protoMan = null, params string[] without)
         {
             if (Volume == FixedPoint2.Zero)
             {
@@ -779,12 +897,12 @@ namespace Content.Shared.Chemistry.Components
             return mixColor;
         }
 
-        public Color GetColor(IPrototypeManager? protoMan)
+        public Color GetColor(IPrototypeManager? protoMan = null)
         {
             return GetColorWithout(protoMan);
         }
 
-        public Color GetColorWithOnly(IPrototypeManager? protoMan, params string[] included)
+        public Color GetColorWithOnly(IPrototypeManager? protoMan = null, params string[] included)
         {
             if (Volume == FixedPoint2.Zero)
             {
@@ -839,7 +957,6 @@ namespace Content.Shared.Chemistry.Components
         {
             Volume = 0;
             RemoveAllSolution();
-            _heatCapacityDirty = true;
             Contents = new(reagents);
             foreach (var reagent in Contents)
             {
@@ -849,6 +966,9 @@ namespace Content.Shared.Chemistry.Components
             if (setMaxVol)
                 MaxVolume = Volume;
 
+            UpdateHeatCapacity(null);
+            UpdatePhaseTransitionReagents(null);
+            Temperature = 293.15f;
             ValidateSolution();
         }
 

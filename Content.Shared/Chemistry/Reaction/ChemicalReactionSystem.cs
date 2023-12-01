@@ -172,7 +172,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private List<string> PerformReaction(Solution solution, EntityUid owner, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
-            var energy = reaction.ConserveEnergy ? solution.GetThermalEnergy(_prototypeManager) : 0;
+            var energy = reaction.ConserveEnergy ? solution.GetThermalEnergy() : 0;
 
             //Remove reactants
             foreach (var reactant in reaction.Reactants)
@@ -189,14 +189,12 @@ namespace Content.Shared.Chemistry.Reaction
             foreach (var product in reaction.Products)
             {
                 products.Add(product.Key);
-                solution.AddReagent(product.Key, product.Value * unitReactions);
+                solution.AddReagent(new ReagentId(product.Key, null), product.Value * unitReactions, _prototypeManager);
             }
 
             if (reaction.ConserveEnergy)
             {
-                var newCap = solution.GetHeatCapacity(_prototypeManager);
-                if (newCap > 0)
-                    solution.Temperature = energy / newCap;
+                    solution.SetTemperature(energy, _prototypeManager);
             }
 
             OnReaction(solution, reaction, null, owner, unitReactions);

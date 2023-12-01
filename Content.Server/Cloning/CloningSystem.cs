@@ -353,7 +353,7 @@ namespace Content.Server.Cloning
             while (i < 1)
             {
                 tileMix?.AdjustMoles(Gas.Miasma, 6f);
-                bloodSolution.AddReagent("Blood", 50);
+                bloodSolution.AddReagent("Blood", 50, _prototype);
                 if (_robustRandom.Prob(0.2f))
                     i++;
             }

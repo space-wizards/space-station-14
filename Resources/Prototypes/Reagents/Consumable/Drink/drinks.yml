@@ -307,8 +307,11 @@
   flavor: water
   color: "#75b1f0"
   recognizable: true
-  boilingPoint: 100.0
-  meltingPoint: 0.0
+  boilingPoint: 373.15
+  meltingPoint: 273.15
+  boilingLatentHeat: 2260 #J/g as J/u  
+  meltingLatentHeat: 330
+  specificHeat: 4.184     #1 cal
   metabolisms:
     Drink:
       effects:

@@ -145,7 +145,7 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 amount = FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(id));
                 _solutionContainerSystem.RemoveReagent(container.Value, containerSolution, id, amount);
-                bufferSolution.AddReagent(id, amount);
+                bufferSolution.AddReagent(id, amount, null);
             }
 
             UpdateUiState(chemMaster, updateLabel: true);

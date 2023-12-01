@@ -118,7 +118,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
         private void UpdateThermalBox(Solution solution)
         {
             ThermalBox.DisposeAllChildren();
-            var heatCap = solution.GetHeatCapacity(null);
+            var heatCap = solution.HeatCapacity;
             var specificHeatLabel = new Label();
             specificHeatLabel.HorizontalExpand = true;
             specificHeatLabel.Margin = new Thickness(0, 1);
