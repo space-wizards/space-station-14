@@ -238,9 +238,6 @@
       - id: ClothingMaskNeckGaiter
         prob: 0.02
         orGroup: dressersecondloot
-      - id: ClothingHeadHatBeretBrigmedic
-        prob: 0.02
-        orGroup: dresserthirdloot
       - id: ClothingMaskGas
         prob: 0.008
         orGroup: dressersecondloot
