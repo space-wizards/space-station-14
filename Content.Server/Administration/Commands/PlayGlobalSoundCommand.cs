@@ -9,6 +9,8 @@ using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Spawners;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.Commands;
 
@@ -52,7 +54,28 @@ public sealed class PlayGlobalAudioCommand : IConsoleCommand
 
         shell.WriteLine($"Playing filter to {broadcastFilter.Count} players");
 
-        audioSystem.PlayGlobal(fileName, broadcastFilter, true);
+        var audio = audioSystem.PlayGlobal(fileName, broadcastFilter, true);
+
+        shell.WriteLine($"Audio excluded entities: {audio?.Component.ExcludedEntity}");
+        shell.WriteLine($"Audio included entities: {audio?.Component.IncludedEntities}");
+        shell.WriteLine($"Audio start: {audio?.Component.AudioStart}");
+        shell.WriteLine($"Audio global: {audio?.Component.Global}");
+        shell.WriteLine($"Audio paused: {entManager.IsPaused(audio?.Entity)}");
+        shell.WriteLine($"Audio lifetime: {entManager.GetComponent<TimedDespawnComponent>(audio!.Value.Entity).Lifetime}");
+        shell.WriteLine($"Can get state: {entManager.CanGetComponentState(entManager.EventBus, audio.Value.Component, shell.Player!)}");
+        shell.WriteLine($"Session specific: {entManager.GetComponent<MetaDataComponent>(audio.Value.Entity).SessionSpecific}");
+
+        if (args.Length > 1 && args[1] == "true")
+        {
+            var ent = audio.Value.Entity;
+            entManager.RemoveComponent<TimedDespawnComponent>(ent);
+            Timer.Spawn(600000, () => entManager.DeleteEntity(ent));
+        }
+        else
+        {
+            var WEH = entManager.GetComponent<TimedDespawnComponent>(audio.Value.Entity);
+            WEH.Lifetime = 20f;
+        }
     }
 }
 
