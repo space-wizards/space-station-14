@@ -32,6 +32,9 @@
   id: Balloon
 
 - type: Tag
+  id: BananaPeel
+
+- type: Tag
   id: BaseballBat
 
 - type: Tag
@@ -310,6 +313,9 @@
 
 - type: Tag
   id: ClownShoes
+
+- type: Tag
+  id: ClownSuit
 
 - type: Tag
   id: CluwneHorn
