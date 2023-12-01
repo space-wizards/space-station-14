@@ -58,11 +58,10 @@
         whitelist:
           tags:
             - PowerCell
+            - PowerCellSmall
   - type: Appearance
   - type: StaticPrice
     price: 500
-  - type: PowerCellSlot
-    cellSlotId: cell_slot
 
 - type: entity
   id: BaseWeaponBatterySmall
