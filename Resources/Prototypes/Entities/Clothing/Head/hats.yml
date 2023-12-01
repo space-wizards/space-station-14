@@ -113,14 +113,14 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatBeretBrigmedic
+  id: ClothingHeadHatBeretSeniorPhysician
   name: medical beret
   description: White beret, looks like a cream pie on the head.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/beret_brigmedic.rsi
+    sprite: Clothing/Head/Hats/beret_physician.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/beret_brigmedic.rsi
+    sprite: Clothing/Head/Hats/beret_physician.rsi
 
 - type: entity
   parent: ClothingHeadBase
