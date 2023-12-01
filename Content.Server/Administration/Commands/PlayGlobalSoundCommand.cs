@@ -69,7 +69,7 @@ public sealed class PlayGlobalAudioCommand : IConsoleCommand
         {
             var ent = audio.Value.Entity;
             entManager.RemoveComponent<TimedDespawnComponent>(ent);
-            Timer.Spawn(60000, () => entManager.DeleteEntity(ent));
+            Timer.Spawn(600000, () => entManager.DeleteEntity(ent));
         }
     }
 }
