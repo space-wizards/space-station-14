@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed devouring as a dragon showing multiple popups., type: Fix}
-  id: 4735
-  time: '2023-09-03T01:59:36.0000000+00:00'
 - author: Lank
   changes:
   - {message: Technology Disks now sell for considerably less., type: Tweak}
@@ -2899,3 +2894,11 @@ Entries:
     type: Tweak}
   id: 5234
   time: '2023-12-01T08:35:51.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Added the Death Acidifier, an implant that destroys your body and equipment
+      without harming allies.', type: Add}
+  - {message: Added the microbomb implanter back to nukie uplinks., type: Add}
+  - {message: Nukies have exchanged microbomb implants for Death Acidifiers., type: Tweak}
+  id: 5235
+  time: '2023-12-01T20:14:45.0000000+00:00'
