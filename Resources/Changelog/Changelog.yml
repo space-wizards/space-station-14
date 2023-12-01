@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix context menu not opening if you toggled combat mode immediately
-      prior., type: Fix}
-  id: 4734
-  time: '2023-09-02T20:16:34.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed devouring as a dragon showing multiple popups., type: Fix}
@@ -2899,3 +2893,9 @@ Entries:
   - {message: The senior physician beret now matches their outfit more., type: Tweak}
   id: 5233
   time: '2023-12-01T08:34:08.0000000+00:00'
+- author: enumerate0
+  changes:
+  - {message: 'Recognizable solutions now appear sorted by volume first, then by name',
+    type: Tweak}
+  id: 5234
+  time: '2023-12-01T08:35:51.0000000+00:00'
