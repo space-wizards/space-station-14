@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Audio;
 using Content.Shared.Administration;
 using Robust.Server.Audio;
+using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Console;
@@ -25,6 +26,7 @@ public sealed class PlayGlobalAudioCommand : IConsoleCommand
         var protoManager = IoCManager.Resolve<IPrototypeManager>();
         var resourceManager = IoCManager.Resolve<IResourceManager>();
         var audioSystem = entManager.System<AudioSystem>();
+        var pvsSystem = entManager.System<PvsOverrideSystem>();
         var fileName = args[0];
 
         shell.WriteLine($"Checking {fileName} global audio");
@@ -52,7 +54,13 @@ public sealed class PlayGlobalAudioCommand : IConsoleCommand
 
         shell.WriteLine($"Playing filter to {broadcastFilter.Count} players");
 
-        audioSystem.PlayGlobal(fileName, broadcastFilter, true);
+        var audio = audioSystem.PlayGlobal(fileName, broadcastFilter, true);
+
+        shell.WriteLine($"Audio excluded entities: {audio?.Component.ExcludedEntity}");
+        shell.WriteLine($"Audio included entities: {audio?.Component.IncludedEntities}");
+        shell.WriteLine($"Audio start: {audio?.Component.AudioStart}");
+        shell.WriteLine($"Audio global: {audio?.Component.Global}");
+        shell.WriteLine($"Audio paused: {entManager.IsPaused(audio?.Entity)}");
     }
 }
 
