@@ -61,9 +61,6 @@
   - type: Appearance
   - type: StaticPrice
     price: 500
-  - type: ContainerContainer
-    containers:
-      cell_slot: !type:ContainerSlot { }
   - type: PowerCellSlot
     cellSlotId: cell_slot
 
