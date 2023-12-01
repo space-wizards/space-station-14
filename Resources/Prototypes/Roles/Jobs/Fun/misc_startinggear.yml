@@ -327,7 +327,7 @@
 - type: startingGear
   id: HeadRevGear
   equipment:
-    pocket2: Flash
+    pocket2: FlashPen
 
 #Gladiator with spear
 - type: startingGear
