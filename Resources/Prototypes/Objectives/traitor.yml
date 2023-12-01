@@ -70,7 +70,7 @@
   noSpawn: true
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomPersonObjective
-  description: Do it however you like, just make sure they don't make it to centcom.
+  description: objective-condition-kill-person-description
   components:
   - type: Objective
     difficulty: 1.75
@@ -83,7 +83,7 @@
   noSpawn: true
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomHeadObjective
-  description: We need this head gone and you probably know why. Good luck, agent.
+  description: objective-condition-kill-head-desc
   components:
   - type: Objective
     # technically its still possible for KillRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
