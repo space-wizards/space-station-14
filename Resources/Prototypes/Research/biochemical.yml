@@ -15,6 +15,7 @@
   - HotplateMachineCircuitboard
   - ChemicalPayload
   - ClothingEyesGlassesChemical
+  - Jug
 
 - type: technology
   id: SurgicalTools
@@ -57,7 +58,6 @@
   cost: 7500
   recipeUnlocks:
   - BorgModuleDiagnosis
-  - BorgModuleTreatment
   - BorgModuleDefibrillator
 
 - type: technology
@@ -99,6 +99,7 @@
   recipeUnlocks:
   - ChemMasterMachineCircuitboard
   - ChemDispenserMachineCircuitboard
+  - BorgModuleAdvancedTreatment
   technologyPrerequisites:
   - Chemistry
 

@@ -1,6 +1,5 @@
 using Content.Client.Clothing;
 using Content.Client.Examine;
-using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
 using Content.Shared.Clothing.Components;
@@ -9,12 +8,13 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Storage;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Inventory
@@ -43,8 +43,8 @@ namespace Content.Client.Inventory
             UpdatesOutsidePrediction = true;
             base.Initialize();
 
-            SubscribeLocalEvent<InventorySlotsComponent, PlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<InventorySlotsComponent, PlayerDetachedEvent>(OnPlayerDetached);
+            SubscribeLocalEvent<InventorySlotsComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<InventorySlotsComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
             SubscribeLocalEvent<InventoryComponent, ComponentShutdown>(OnShutdown);
 
@@ -101,24 +101,24 @@ namespace Content.Client.Inventory
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
             var update = new SlotSpriteUpdate(args.Equipment, args.SlotGroup, args.Slot,
-                HasComp<ClientStorageComponent>(args.Equipment));
+                HasComp<StorageComponent>(args.Equipment));
             OnSpriteUpdate?.Invoke(update);
         }
 
         private void OnShutdown(EntityUid uid, InventoryComponent component, ComponentShutdown args)
         {
-            if (component.Owner != _playerManager.LocalPlayer?.ControlledEntity)
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
 
             OnUnlinkInventory?.Invoke();
         }
 
-        private void OnPlayerDetached(EntityUid uid, InventorySlotsComponent component, PlayerDetachedEvent args)
+        private void OnPlayerDetached(EntityUid uid, InventorySlotsComponent component, LocalPlayerDetachedEvent args)
         {
             OnUnlinkInventory?.Invoke();
         }
 
-        private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, PlayerAttachedEvent args)
+        private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, LocalPlayerAttachedEvent args)
         {
             if (TryGetSlots(uid, out var definitions))
             {
@@ -282,7 +282,7 @@ namespace Content.Client.Inventory
                 return;
 
             EntityManager.RaisePredictiveEvent(
-                new InteractInventorySlotEvent(item.Value, altInteract: false));
+                new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: false));
         }
 
         public void UIInventoryAltActivateItem(string slot, EntityUid uid)
@@ -290,7 +290,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(item.Value, altInteract: true));
+            EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
         }
 
         public sealed class SlotData

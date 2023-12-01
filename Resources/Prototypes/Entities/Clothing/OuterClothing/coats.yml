@@ -74,7 +74,7 @@
     sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterStorageToggleableBase
   id: ClothingOuterCoatJensen
   name: jensen coat
   description: A jensen coat.
@@ -83,6 +83,8 @@
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodChaplainHood
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -342,3 +344,14 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatSpaceAsshole
+  name: the coat of space asshole
+  description: And there he was...
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/space_asshole.rsi

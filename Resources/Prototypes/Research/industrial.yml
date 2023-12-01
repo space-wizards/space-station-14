@@ -1,4 +1,4 @@
-﻿# Tier 1
+# Tier 1
 
 - type: technology
   id: SalvageEquipment
@@ -54,6 +54,7 @@
   - AutolatheMachineCircuitboard
   - CircuitImprinterMachineCircuitboard
   - MaterialReclaimerMachineCircuitboard
+  - SheetifierMachineCircuitboard
 
 - type: technology
   id: PowerGeneration
@@ -86,6 +87,25 @@
   - BorgModuleGasAnalyzer
   - ThermomachineFreezerMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
+
+- type: technology
+  id: RipleyAPLU
+  name: research-technology-ripley-aplu
+  icon:
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: ripley
+  discipline: Industrial
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - RipleyHarness
+  - RipleyLArm
+  - RipleyRArm
+  - RipleyLLeg
+  - RipleyRLeg
+  - RipleyCentralElectronics
+  - RipleyPeripheralsElectronics
+  - MechEquipmentGrabber
 
 # Tier 2
 
@@ -131,25 +151,6 @@
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
   - MiniGravityGeneratorCircuitboard
-
-- type: technology
-  id: RipleyAPLU
-  name: research-technology-ripley-aplu
-  icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
-    state: ripley
-  discipline: Industrial
-  tier: 2
-  cost: 7500
-  recipeUnlocks:
-  - RipleyHarness
-  - RipleyLArm
-  - RipleyRArm
-  - RipleyLLeg
-  - RipleyRLeg
-  - RipleyCentralElectronics
-  - RipleyPeripheralsElectronics
-  - MechEquipmentGrabber
 
 - type: technology
   id: AdvancedAtmospherics
@@ -208,3 +209,17 @@
   - ClothingBackpackHolding
   - ClothingBackpackSatchelHolding
   - ClothingBackpackDuffelHolding
+
+- type: technology
+  id: PortableFission
+  name: research-technology-portable-fission
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: microreactor
+  discipline: Industrial
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - PowerCellMicroreactor
+  technologyPrerequisites:
+  - SuperPowercells

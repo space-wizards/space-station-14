@@ -67,9 +67,11 @@
     enabled: false
     usesApcPower: true
   - type: WiresPanel
+  - type: WiresPanelSecurity
+    securityLevel: maxSecurity
   - type: Wires
-    BoardName: wires-board-name-highsec
-    LayoutId: HighSec
+    boardName: wires-board-name-highsec
+    layoutId: HighSec
     alwaysRandomize: true
   - type: UserInterface
     interfaces:
@@ -92,3 +94,10 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
+  - type: Construction
+    graph: Airlock
+    node: highSecDoor
+  - type: Tag
+    tags:
+      - HighSecDoor
+      # This tag is used to nagivate the Airlock construction graph. It's needed because this construction graph is shared between Airlock, AirlockGlass, and HighSecDoor

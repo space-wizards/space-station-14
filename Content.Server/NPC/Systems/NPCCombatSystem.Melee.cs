@@ -3,6 +3,7 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Shared.CombatMode;
 using Content.Shared.NPC;
+using Content.Shared.NPC;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;

@@ -57,16 +57,41 @@
 
 - type: entity
   parent: BaseGameRule
-  id: Dragon
+  id: ClosetSkeleton
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    duration: 1
+  - type: RandomEntityStorageSpawnRule
+    prototype: MobSkeletonCloset
+
+- type: entity
+  parent: BaseGameRule
+  id: DragonSpawn
   noSpawn: true
   components:
   - type: StationEvent
     weight: 5
     duration: 1
     earliestStart: 45
+    reoccurrenceDelay: 60
     minimumPlayers: 20
   - type: RandomSpawnRule
     prototype: SpawnPointGhostDragon
+
+- type: entity
+  parent: BaseGameRule
+  id: NinjaSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    duration: 1
+    earliestStart: 30
+    reoccurrenceDelay: 60
+    minimumPlayers: 40
+  - type: NinjaSpawnRule
 
 - type: entity
   parent: BaseGameRule
@@ -152,16 +177,29 @@
   - type: VentCrittersRule
     entries:
     - id: MobMouse
-      prob: 0.015
+      prob: 0.02
     - id: MobMouse1
-      prob: 0.015
+      prob: 0.02
     - id: MobMouse2
-      prob: 0.015
-    - id: MobRatServant
-      prob: 0.015
+      prob: 0.02
     specialEntries:
     - id: SpawnPointGhostRatKing
       prob: 0.005
+
+- type: entity
+  id: CockroachMigration
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 5
+    duration: 50
+  - type: VentCrittersRule
+    entries:
+    - id: MobCockroach
+      prob: 0.03
+    - id: MobMothroach
+      prob: 0.008
 
 - type: entity
   id: PowerGridCheck
@@ -366,3 +404,18 @@
     earliestStart: 45
     minimumPlayers: 20
   - type: ImmovableRodRule
+
+- type: entity
+  noSpawn: true
+  parent: BaseGameRule
+  id: IonStorm
+  components:
+  - type: StationEvent
+    weight: 5
+    earliestStart: 20
+    reoccurrenceDelay: 60
+    startAnnouncement: station-event-ion-storm-start-announcement
+    startAudio:
+      path: /Audio/Announcements/ion_storm.ogg
+    duration: 1
+  - type: IonStormRule

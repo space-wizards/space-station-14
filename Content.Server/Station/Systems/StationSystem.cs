@@ -85,7 +85,7 @@ public sealed class StationSystem : EntitySystem
     {
         if (e.NewStatus == SessionStatus.Connected)
         {
-            RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), e.Session);
+            RaiseNetworkEvent(new StationsUpdatedEvent(GetNetEntitySet(GetStationsSet())), e.Session);
         }
     }
 
@@ -93,7 +93,7 @@ public sealed class StationSystem : EntitySystem
 
     private void OnStationAdd(EntityUid uid, StationDataComponent component, ComponentStartup args)
     {
-        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), Filter.Broadcast());
+        RaiseNetworkEvent(new StationsUpdatedEvent(GetNetEntitySet(GetStationsSet())), Filter.Broadcast());
 
         var metaData = MetaData(uid);
         RaiseLocalEvent(new StationInitializedEvent(uid));
@@ -108,7 +108,7 @@ public sealed class StationSystem : EntitySystem
             RemComp<StationMemberComponent>(grid);
         }
 
-        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), Filter.Broadcast());
+        RaiseNetworkEvent(new StationsUpdatedEvent(GetNetEntitySet(GetStationsSet())), Filter.Broadcast());
     }
 
     private void OnPreGameMapLoad(PreGameMapLoad ev)
@@ -239,7 +239,7 @@ public sealed class StationSystem : EntitySystem
 
         foreach (var gridUid in dataComponent.Grids)
         {
-            if (!_mapManager.TryGetGrid(gridUid, out var grid) ||
+            if (!TryComp(gridUid, out MapGridComponent? grid) ||
                 !xformQuery.TryGetComponent(gridUid, out var xform))
                 continue;
 
@@ -429,7 +429,7 @@ public sealed class StationSystem : EntitySystem
 
         if (xform.GridUid == EntityUid.Invalid)
         {
-            Logger.Debug("A");
+            Log.Debug("A");
             return null;
         }
 
@@ -438,12 +438,26 @@ public sealed class StationSystem : EntitySystem
 
     public List<EntityUid> GetStations()
     {
-        return EntityQuery<StationDataComponent>().Select(x => x.Owner).ToList();
+        var stations = new List<EntityUid>();
+        var query = EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            stations.Add(uid);
+        }
+
+        return stations;
     }
 
     public HashSet<EntityUid> GetStationsSet()
     {
-        return EntityQuery<StationDataComponent>().Select(x => x.Owner).ToHashSet();
+        var stations = new HashSet<EntityUid>();
+        var query = EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            stations.Add(uid);
+        }
+
+        return stations;
     }
 
     /// <summary>

@@ -196,7 +196,13 @@ public sealed class BluespaceLockerSystem : EntitySystem
             if (component.BluespaceLinks.Count < component.MinBluespaceLinks)
             {
                 // Get an shuffle the list of all EntityStorages
-                var storages = EntityQuery<EntityStorageComponent>().ToArray();
+                var storages = new List<Entity<EntityStorageComponent>>();
+                var query = EntityQueryEnumerator<EntityStorageComponent>();
+                while (query.MoveNext(out var uid, out var storage))
+                {
+                    storages.Add((uid, storage));
+                }
+
                 _robustRandom.Shuffle(storages);
 
                 // Add valid candidates till MinBluespaceLinks is met
@@ -284,7 +290,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         {
             EnsureComp<DoAfterComponent>(uid);
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.BehaviorProperties.Delay, new BluespaceLockerDoAfterEvent(), uid));
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.BehaviorProperties.Delay, new BluespaceLockerDoAfterEvent(), uid));
             return;
         }
 

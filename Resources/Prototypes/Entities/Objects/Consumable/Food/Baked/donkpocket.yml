@@ -16,10 +16,11 @@
         - ReagentId: Nutriment
           Quantity: 3
   - type: Item
-    size: 1
+    size: Tiny
   - type: Tag
     tags:
     - DonkPocket
+    - Meat
 
 # Donkpocket
 
@@ -57,7 +58,9 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 8
+        - ReagentId: Omnizine
+          Quantity: 2
 
 - type: entity
   name: dank-pocket

@@ -1,20 +1,22 @@
-using Content.Client.Storage;
 using Content.Shared.Interaction;
+using Content.Shared.Storage;
 using Robust.Shared.Containers;
 
 namespace Content.Client.Interactable
 {
     public sealed class InteractionSystem : SharedInteractionSystem
     {
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
         {
             if (!EntityManager.EntityExists(target))
                 return false;
 
-            if (!target.TryGetContainer(out var container))
+            if (!_container.TryGetContainingContainer(target, out var container))
                 return false;
 
-            if (!TryComp(container.Owner, out ClientStorageComponent? storage))
+            if (!HasComp<StorageComponent>(container.Owner))
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.

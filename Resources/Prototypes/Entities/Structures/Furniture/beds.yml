@@ -132,7 +132,7 @@
   - type: Damageable
     damageModifierSet: Web
   - type: Sprite
-    sprite: Structures/Furniture/Web/bed.rsi
+    sprite: Structures/Web/bed.rsi
     state: icon
   - type: Destructible
     thresholds:
@@ -150,3 +150,6 @@
           MaterialWebSilk:
             min: 1
             max: 1
+  - type: Construction
+    graph: WebStructures
+    node: bed

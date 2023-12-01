@@ -15,8 +15,8 @@ using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -36,15 +36,15 @@ namespace Content.Server.Atmos.EntitySystems
         [Robust.Shared.IoC.Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Robust.Shared.IoC.Dependency] private readonly ChunkingSystem _chunkingSys = default!;
 
-        private readonly Dictionary<IPlayerSession, Dictionary<EntityUid, HashSet<Vector2i>>> _lastSentChunks = new();
+        private readonly Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> _lastSentChunks = new();
 
         // Oh look its more duplicated decal system code!
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
             new DefaultObjectPool<HashSet<Vector2i>>(
                 new DefaultPooledObjectPolicy<HashSet<Vector2i>>(), 64);
-        private ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>> _chunkViewerPool =
-            new DefaultObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>>(
-                new DefaultPooledObjectPolicy<Dictionary<EntityUid, HashSet<Vector2i>>>(), 64);
+        private ObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>> _chunkViewerPool =
+            new DefaultObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>>(
+                new DefaultPooledObjectPolicy<Dictionary<NetEntity, HashSet<Vector2i>>>(), 64);
 
         /// <summary>
         ///     Overlay update interval, in seconds.
@@ -287,29 +287,28 @@ namespace Content.Server.Atmos.EntitySystems
             // Now we'll go through each player, then through each chunk in range of that player checking if the player is still in range
             // If they are, check if they need the new data to send (i.e. if there's an overlay for the gas).
             // Afterwards we reset all the chunk data for the next time we tick.
-            var players = _playerManager.ServerSessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
+            var players = _playerManager.Sessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
             var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };
             Parallel.ForEach(players, opts, p => UpdatePlayer(p, curTick));
         }
 
-        private void UpdatePlayer(IPlayerSession playerSession, GameTick curTick)
+        private void UpdatePlayer(ICommonSession playerSession, GameTick curTick)
         {
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var chunksInRange = _chunkingSys.GetChunksForSession(playerSession, ChunkSize, xformQuery, _chunkIndexPool, _chunkViewerPool);
+            var chunksInRange = _chunkingSys.GetChunksForSession(playerSession, ChunkSize, _chunkIndexPool, _chunkViewerPool);
             var previouslySent = _lastSentChunks[playerSession];
 
             var ev = new GasOverlayUpdateEvent();
 
-            foreach (var (grid, oldIndices) in previouslySent)
+            foreach (var (netGrid, oldIndices) in previouslySent)
             {
                 // Mark the whole grid as stale and flag for removal.
-                if (!chunksInRange.TryGetValue(grid, out var chunks))
+                if (!chunksInRange.TryGetValue(netGrid, out var chunks))
                 {
-                    previouslySent.Remove(grid);
+                    previouslySent.Remove(netGrid);
 
                     // If grid was deleted then don't worry about sending it to the client.
-                    if (_mapManager.IsGrid(grid))
-                        ev.RemovedChunks[grid] = oldIndices;
+                    if (!TryGetEntity(netGrid, out var gridId) || !_mapManager.IsGrid(gridId.Value))
+                        ev.RemovedChunks[netGrid] = oldIndices;
                     else
                     {
                         oldIndices.Clear();
@@ -330,19 +329,19 @@ namespace Content.Server.Atmos.EntitySystems
                 if (old.Count == 0)
                     _chunkIndexPool.Return(old);
                 else
-                    ev.RemovedChunks.Add(grid, old);
+                    ev.RemovedChunks.Add(netGrid, old);
             }
 
-            foreach (var (grid, gridChunks) in chunksInRange)
+            foreach (var (netGrid, gridChunks) in chunksInRange)
             {
                 // Not all grids have atmospheres.
-                if (!TryComp(grid, out GasTileOverlayComponent? overlay))
+                if (!TryGetEntity(netGrid, out var grid) || !TryComp(grid, out GasTileOverlayComponent? overlay))
                     continue;
 
                 List<GasOverlayChunk> dataToSend = new();
-                ev.UpdatedChunks[grid] = dataToSend;
+                ev.UpdatedChunks[netGrid] = dataToSend;
 
-                previouslySent.TryGetValue(grid, out var previousChunks);
+                previouslySent.TryGetValue(netGrid, out var previousChunks);
 
                 foreach (var index in gridChunks)
                 {
@@ -359,7 +358,7 @@ namespace Content.Server.Atmos.EntitySystems
                     dataToSend.Add(value);
                 }
 
-                previouslySent[grid] = gridChunks;
+                previouslySent[netGrid] = gridChunks;
                 if (previousChunks != null)
                 {
                     previousChunks.Clear();

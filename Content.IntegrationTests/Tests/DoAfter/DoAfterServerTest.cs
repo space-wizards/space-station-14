@@ -73,7 +73,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
             {
                 var tickTime = 1.0f / timing.TickRate;
                 var mob = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
-                var args = new DoAfterArgs(mob, tickTime / 2, ev, null) { Broadcast = true };
+                var args = new DoAfterArgs(entityManager, mob, tickTime / 2, ev, null) { Broadcast = true };
 #pragma warning disable NUnit2045 // Interdependent assertions.
                 Assert.That(doAfterSystem.TryStartDoAfter(args));
                 Assert.That(ev.Cancelled, Is.False);
@@ -101,7 +101,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 var tickTime = 1.0f / timing.TickRate;
 
                 var mob = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
-                var args = new DoAfterArgs(mob, tickTime * 2, ev, null) { Broadcast = true };
+                var args = new DoAfterArgs(entityManager, mob, tickTime * 2, ev, null) { Broadcast = true };
 
                 if (!doAfterSystem.TryStartDoAfter(args, out var id))
                 {

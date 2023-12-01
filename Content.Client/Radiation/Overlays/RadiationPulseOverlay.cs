@@ -1,8 +1,8 @@
-using System.Linq;
 using System.Numerics;
 using Content.Shared.Radiation.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.Graphics;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -80,11 +80,10 @@ namespace Content.Client.Radiation.Overlays
 
             var currentEyeLoc = currentEye.Position;
 
-            var pulses = _entityManager.EntityQuery<RadiationPulseComponent>();
-            foreach (var pulse in pulses) //Add all pulses that are not added yet but qualify
+            var pulses = _entityManager.EntityQueryEnumerator<RadiationPulseComponent>();
+            //Add all pulses that are not added yet but qualify
+            while (pulses.MoveNext(out var pulseEntity, out var pulse))
             {
-                var pulseEntity = pulse.Owner;
-
                 if (!_pulses.ContainsKey(pulseEntity) && PulseQualifies(pulseEntity, currentEyeLoc))
                 {
                     _pulses.Add(

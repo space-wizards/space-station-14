@@ -11,6 +11,8 @@
       path: /Audio/Effects/singularity.ogg
   - type: Physics
     bodyType: Dynamic
+    bodyStatus: InAir
+  - type: CanMoveInAir
   - type: EventHorizon # To make the singularity consume things.
     radius: 0.5
     canBreachContainment: false

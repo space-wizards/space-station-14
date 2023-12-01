@@ -124,6 +124,8 @@
       entity: !type:BoardNodeEntity { container: board }
       edges:
         - to: monitorUnsecured
+          conditions:
+            - !type:AllWiresCut {}
           steps:
             - tool: Screwing
 

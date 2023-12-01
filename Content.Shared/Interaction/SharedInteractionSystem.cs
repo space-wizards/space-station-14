@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -7,7 +6,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
-using Content.Shared.Ghost;
+using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
@@ -28,7 +27,6 @@ using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -36,7 +34,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -99,7 +97,6 @@ namespace Content.Shared.Interaction
                     new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<SharedInteractionSystem>();
 
-            InitializeRelay();
             InitializeBlocking();
         }
 
@@ -205,8 +202,10 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
         {
+            var item = GetEntity(msg.ItemUid);
+
             // client sanitization
-            if (!TryComp(msg.ItemUid, out TransformComponent? itemXform) || !ValidateClientInput(args.SenderSession, itemXform.Coordinates, msg.ItemUid, out var user))
+            if (!TryComp(item, out TransformComponent? itemXform) || !ValidateClientInput(args.SenderSession, itemXform.Coordinates, item, out var user))
             {
                 Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
                 return;
@@ -219,10 +218,10 @@ namespace Content.Shared.Interaction
 
             if (msg.AltInteract)
                 // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
-                UserInteraction(user.Value, itemXform.Coordinates, msg.ItemUid, msg.AltInteract);
+                UserInteraction(user.Value, itemXform.Coordinates, item, msg.AltInteract);
             else
                 // User used 'E'. We want to activate it, not simulate clicking on the item
-                InteractionActivate(user.Value, msg.ItemUid);
+                InteractionActivate(user.Value, item);
         }
 
         public bool HandleAltUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
@@ -261,6 +260,35 @@ namespace Content.Shared.Interaction
         }
 
         /// <summary>
+        ///     Returns true if the specified entity should hand interact with the target instead of attacking
+        /// </summary>
+        /// <param name="user">The user interacting in combat mode</param>
+        /// <param name="target">The target of the interaction</param>
+        /// <returns></returns>
+        public bool CombatModeCanHandInteract(EntityUid user, EntityUid? target)
+        {
+            // Always allow attack in these cases
+            if (target == null || !TryComp<HandsComponent>(user, out var hands) || hands.ActiveHand?.HeldEntity is not null)
+                return false;
+
+            // Only eat input if:
+            // - Target isn't an item
+            // - Target doesn't cancel should-interact event
+            // This is intended to allow items to be picked up in combat mode,
+            // but to also allow items to force attacks anyway (like mobs which are items, e.g. mice)
+            if (!HasComp<ItemComponent>(target))
+                return false;
+
+            var combatEv = new CombatModeShouldHandInteractEvent();
+            RaiseLocalEvent(target.Value, ref combatEv);
+
+            if (combatEv.Cancelled)
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
         ///     Resolves user interactions with objects.
         /// </summary>
         /// <remarks>
@@ -283,7 +311,8 @@ namespace Content.Shared.Interaction
                 // TODO this needs to be handled better. This probably bypasses many complex can-interact checks in weird roundabout ways.
                 if (_actionBlockerSystem.CanInteract(user, target))
                 {
-                    UserInteraction(relay.RelayEntity.Value, coordinates, target, altInteract, checkCanInteract, checkAccess, checkCanUse);
+                    UserInteraction(relay.RelayEntity.Value, coordinates, target, altInteract, checkCanInteract,
+                        checkAccess, checkCanUse);
                     return;
                 }
             }
@@ -291,10 +320,10 @@ namespace Content.Shared.Interaction
             if (target != null && Deleted(target.Value))
                 return;
 
-            if (!altInteract && TryComp(user, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (!altInteract && TryComp<CombatModeComponent>(user, out var combatMode) && combatMode.IsInCombatMode)
             {
-                // Eat the input
-                return;
+                if (!CombatModeCanHandInteract(user, target))
+                    return;
             }
 
             if (!ValidateInteractAndFace(user, coordinates))
@@ -324,7 +353,7 @@ namespace Content.Shared.Interaction
                 : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // Does the user have hands?
-            if (!TryComp(user, out HandsComponent? hands) || hands.ActiveHand == null)
+            if (!TryComp<HandsComponent>(user, out var hands) || hands.ActiveHand == null)
             {
                 var ev = new InteractNoHandEvent(user, target, coordinates);
                 RaiseLocalEvent(user, ev);
@@ -339,6 +368,8 @@ namespace Content.Shared.Interaction
             }
 
             // empty-hand interactions
+            // combat mode hand interactions will always be true here -- since
+            // they check this earlier before returning in
             if (hands.ActiveHandEntity is not { } held)
             {
                 if (inRangeUnobstructed && target != null)
@@ -380,6 +411,15 @@ namespace Content.Shared.Interaction
 
         public void InteractHand(EntityUid user, EntityUid target)
         {
+            // allow for special logic before main interaction
+            var ev = new BeforeInteractHandEvent(target);
+            RaiseLocalEvent(user, ev);
+            if (ev.Handled)
+            {
+                _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}, but it was handled by another system");
+                return;
+            }
+
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message, true);
@@ -422,7 +462,8 @@ namespace Content.Shared.Interaction
             if (coordinates.GetMapId(EntityManager) != Transform(user).MapID)
                 return false;
 
-            _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
+            if (!HasComp<NoRotateOnInteractComponent>(user))
+                _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
 
             return true;
         }
@@ -1084,7 +1125,7 @@ namespace Content.Shared.Interaction
                 return false;
             }
 
-            if (uid.IsClientSide())
+            if (IsClientSide(uid))
             {
                 Logger.WarningS("system.interaction",
                     $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
@@ -1139,17 +1180,25 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that was interacted with.
         /// </summary>
-        public EntityUid ItemUid { get; }
+        public NetEntity ItemUid { get; }
 
         /// <summary>
         ///     Whether the interaction used the alt-modifier to trigger alternative interactions.
         /// </summary>
         public bool AltInteract { get; }
 
-        public InteractInventorySlotEvent(EntityUid itemUid, bool altInteract = false)
+        public InteractInventorySlotEvent(NetEntity itemUid, bool altInteract = false)
         {
             ItemUid = itemUid;
             AltInteract = altInteract;
         }
     }
+
+    /// <summary>
+    ///     Raised directed by-ref on an item to determine if hand interactions should go through.
+    ///     Defaults to allowing hand interactions to go through. Cancel to force the item to be attacked instead.
+    /// </summary>
+    /// <param name="Cancelled">Whether the hand interaction should be cancelled.</param>
+    [ByRefEvent]
+    public record struct CombatModeShouldHandInteractEvent(bool Cancelled = false);
 }

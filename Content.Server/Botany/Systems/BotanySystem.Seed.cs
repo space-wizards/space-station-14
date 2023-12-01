@@ -1,34 +1,41 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Botany.Components;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Botany;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Botany.Systems;
 
 public sealed partial class BotanySystem : EntitySystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
+    [Dependency] private readonly CollisionWakeSystem _colWakeSystem = default!;
+    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
 
     public override void Initialize()
     {
@@ -155,7 +162,7 @@ public sealed partial class BotanySystem : EntitySystem
             var product = _robustRandom.Pick(proto.ProductPrototypes);
 
             var entity = Spawn(product, position);
-            entity.RandomOffset(0.25f);
+            _randomHelper.RandomOffset(entity, 0.25f);
             products.Add(entity);
 
             var produce = EnsureComp<ProduceComponent>(entity);
@@ -175,18 +182,26 @@ public sealed partial class BotanySystem : EntitySystem
 
             if (proto.Bioluminescent)
             {
-                var light = EnsureComp<PointLightComponent>(entity);
-                light.Radius = proto.BioluminescentRadius;
-                light.Color = proto.BioluminescentColor;
-                light.CastShadows = false; // this is expensive, and botanists make lots of plants
-                Dirty(light);
+                var light = _light.EnsureLight(entity);
+                _light.SetRadius(entity, proto.BioluminescentRadius, light);
+                _light.SetColor(entity, proto.BioluminescentColor, light);
+                // TODO: Ayo why you copy-pasting code between here and plantholder?
+                _light.SetCastShadows(entity, false, light); // this is expensive, and botanists make lots of plants
             }
 
             if (proto.Slip)
             {
                 var slippery = EnsureComp<SlipperyComponent>(entity);
-                EntityManager.Dirty(slippery);
+                Dirty(entity, slippery);
                 EnsureComp<StepTriggerComponent>(entity);
+                // Need a fixture with a slip layer in order to actually do the slipping
+                var fixtures = EnsureComp<FixturesComponent>(entity);
+                var body = EnsureComp<PhysicsComponent>(entity);
+                var shape = fixtures.Fixtures["fix1"].Shape;
+                _fixtureSystem.TryCreateFixture(entity, shape, "slips", 1, false, (int) CollisionGroup.SlipLayer, manager: fixtures, body: body);
+                // Need to disable collision wake so that mobs can collide with and slip on it
+                var collisionWake = EnsureComp<CollisionWakeComponent>(entity);
+                _colWakeSystem.SetEnabled(entity, false, collisionWake);
             }
         }
 

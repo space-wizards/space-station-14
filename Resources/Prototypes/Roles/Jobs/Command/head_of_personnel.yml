@@ -44,9 +44,16 @@
   - Salvage
   - Security
   - Brig
+  - Lawyer
   - Cargo
   - Atmospherics
   - Medical
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: HoPGear
@@ -57,6 +64,7 @@
     head: ClothingHeadHatHopcap
     id: HoPPDA
     ears: ClothingHeadsetAltCommand
-  innerclothingskirt: ClothingUniformJumpskirtHoP
+    belt: BoxFolderClipboard
+  innerClothingSkirt: ClothingUniformJumpskirtHoP
   satchel: ClothingBackpackSatchelHOPFilled
   duffelbag: ClothingBackpackDuffelHOPFilled

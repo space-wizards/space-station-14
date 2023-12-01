@@ -1,11 +1,12 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
 using Content.Server.Radio.EntitySystems;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
@@ -147,14 +148,14 @@ namespace Content.Server.Explosion.EntitySystems
             if (!TryComp<TransformComponent>(uid, out var xform))
                 return;
 
-            _body.GibBody(xform.ParentUid, deleteItems: component.DeleteItems);
+            _body.GibBody(xform.ParentUid, true, deleteItems: component.DeleteItems);
 
             args.Handled = true;
         }
 
         private void HandleRattleTrigger(EntityUid uid, RattleComponent component, TriggerEvent args)
         {
-            if (!TryComp<SubdermalImplantComponent?>(uid, out var implanted))
+            if (!TryComp<SubdermalImplantComponent>(uid, out var implanted))
                 return;
 
             if (implanted.ImplantedEntity == null)
@@ -221,6 +222,14 @@ namespace Content.Server.Explosion.EntitySystems
             return triggerEvent.Handled;
         }
 
+        public void TryDelay(EntityUid uid, float amount, ActiveTimerTriggerComponent? comp = null)
+        {
+            if (!Resolve(uid, ref comp, false))
+                return;
+
+            comp.TimeRemaining += amount;
+        }
+
         public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound)
         {
             if (delay <= 0)
@@ -236,7 +245,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (user != null)
             {
                 // Check if entity is bomb/mod. grenade/etc
-                if (_container.TryGetContainer(uid, "payload", out IContainer? container) &&
+                if (_container.TryGetContainer(uid, "payload", out BaseContainer? container) &&
                     container.ContainedEntities.Count > 0 &&
                     TryComp(container.ContainedEntities[0], out ChemicalPayloadComponent? chemicalPayloadComponent))
                 {

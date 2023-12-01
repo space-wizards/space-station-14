@@ -1,8 +1,9 @@
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -74,7 +75,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!Resolve(uid, ref component))
                 return false;
 
-            if (!EligibleEntity(target, _entMan))
+            if (!EligibleEntity(target, _entMan, component))
                 return false;
 
             if (TryComp(uid, out UseDelayComponent? delayComp) && _useDelay.IsDelayed(uid, delayComp))
@@ -84,7 +85,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (target == user)
                 msgFormat = "hypospray-component-inject-self-message";
-            else if (EligibleEntity(user, _entMan) && _interaction.TryRollClumsy(user, component.ClumsyFailChance))
+            else if (EligibleEntity(user, _entMan, component) && _interaction.TryRollClumsy(user, component.ClumsyFailChance))
             {
                 msgFormat = "hypospray-component-inject-self-clumsy-message";
                 target = user;
@@ -143,13 +144,15 @@ namespace Content.Server.Chemistry.EntitySystems
             return true;
         }
 
-        static bool EligibleEntity([NotNullWhen(true)] EntityUid? entity, IEntityManager entMan)
+        static bool EligibleEntity([NotNullWhen(true)] EntityUid? entity, IEntityManager entMan, HyposprayComponent component)
         {
             // TODO: Does checking for BodyComponent make sense as a "can be hypospray'd" tag?
             // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.
-
-            return entMan.HasComponent<SolutionContainerManagerComponent>(entity)
-                && entMan.HasComponent<MobStateComponent>(entity);
+            // But this is 14, we dont do what SS13 does just because SS13 does it.
+            return component.OnlyMobs
+                ? entMan.HasComponent<SolutionContainerManagerComponent>(entity) &&
+                  entMan.HasComponent<MobStateComponent>(entity)
+                : entMan.HasComponent<SolutionContainerManagerComponent>(entity);
         }
     }
 }

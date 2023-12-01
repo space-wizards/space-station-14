@@ -150,7 +150,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             DirtyUI(uid, thermoMachine);
         }
 
-        private void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermoMachine, ServerUserInterfaceComponent? ui=null)
+        private void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermoMachine, UserInterfaceComponent? ui=null)
         {
             if (!Resolve(uid, ref thermoMachine, ref ui, false))
                 return;

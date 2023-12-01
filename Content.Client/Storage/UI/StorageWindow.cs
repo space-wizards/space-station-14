@@ -1,27 +1,32 @@
 using System.Numerics;
-using Robust.Client.GameObjects;
+using Content.Client.Items.Systems;
+using Content.Client.Message;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Item;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Client.UserInterface;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
-using static Content.Shared.Storage.SharedStorageComponent;
+using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Storage.UI
 {
     /// <summary>
     /// GUI class for client storage component
     /// </summary>
-    public sealed class StorageWindow : DefaultWindow
+    public sealed class StorageWindow : FancyWindow
     {
-        private IEntityManager _entityManager;
+        private readonly IEntityManager _entityManager;
 
-        private readonly Label _information;
+        private readonly SharedStorageSystem _storage;
+        private readonly ItemSystem _item;
+
+        private readonly RichTextLabel _information;
         public readonly ContainerButton StorageContainerButton;
         public readonly ListContainer EntityList;
         private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
@@ -30,6 +35,8 @@ namespace Content.Client.Storage.UI
         public StorageWindow(IEntityManager entityManager)
         {
             _entityManager = entityManager;
+            _storage = _entityManager.System<SharedStorageSystem>();
+            _item = _entityManager.System<ItemSystem>();
             SetSize = new Vector2(240, 320);
             Title = Loc.GetString("comp-storage-window-title");
             RectClipContent = true;
@@ -40,7 +47,7 @@ namespace Content.Client.Storage.UI
                 MouseFilter = MouseFilterMode.Pass,
             };
 
-            Contents.AddChild(StorageContainerButton);
+            ContentsContainer.AddChild(StorageContainerButton);
 
             var innerContainerButton = new PanelContainer
             {
@@ -53,15 +60,19 @@ namespace Content.Client.Storage.UI
             {
                 Orientation = LayoutOrientation.Vertical,
                 MouseFilter = MouseFilterMode.Ignore,
+                Margin = new Thickness(5),
             };
 
             StorageContainerButton.AddChild(vBox);
 
-            _information = new Label
+            _information = new RichTextLabel
             {
-                Text = Loc.GetString("comp-storage-window-volume", ("itemCount", 0), ("usedVolume", 0), ("maxVolume", 0)),
                 VerticalAlignment = VAlignment.Center
             };
+            _information.SetMessage(Loc.GetString("comp-storage-window-weight",
+                ("weight", 0),
+                ("maxWeight", 0),
+                ("size", _item.GetItemSizeLocale(SharedStorageSystem.DefaultStorageMaxItemSize))));
 
             vBox.AddChild(_information);
 
@@ -86,20 +97,37 @@ namespace Content.Client.Storage.UI
         /// <summary>
         /// Loops through stored entities creating buttons for each, updates information labels
         /// </summary>
-        public void BuildEntityList(StorageBoundUserInterfaceState state)
+        public void BuildEntityList(EntityUid entity, StorageComponent component)
         {
-            var list = state.StoredEntities.ConvertAll(uid => new EntityListData(uid));
+            var storedCount = component.Container.ContainedEntities.Count;
+            var list = new List<EntityListData>(storedCount);
+
+            foreach (var uid in component.Container.ContainedEntities)
+            {
+                list.Add(new EntityListData(uid));
+            }
+
             EntityList.PopulateList(list);
 
-            //Sets information about entire storage container current capacity
-            if (state.StorageCapacityMax != 0)
+            SetStorageInformation((entity, component));
+        }
+
+        private void SetStorageInformation(Entity<StorageComponent> uid)
+        {
+            //todo: text is the straight agenda. What about anything else?
+            if (uid.Comp.MaxSlots == null)
             {
-                _information.Text = Loc.GetString("comp-storage-window-volume", ("itemCount", state.StoredEntities.Count),
-                    ("usedVolume", state.StorageSizeUsed), ("maxVolume", state.StorageCapacityMax));
+                _information.SetMarkup(Loc.GetString("comp-storage-window-weight",
+                    ("weight", _storage.GetCumulativeItemSizes(uid, uid.Comp)),
+                    ("maxWeight", uid.Comp.MaxTotalWeight),
+                    ("size", _item.GetItemSizeLocale(_storage.GetMaxItemSize((uid, uid.Comp))))));
             }
             else
             {
-                _information.Text = Loc.GetString("comp-storage-window-volume-unlimited", ("itemCount", state.StoredEntities.Count));
+                _information.SetMarkup(Loc.GetString("comp-storage-window-slots",
+                    ("itemCount", uid.Comp.Container.ContainedEntities.Count),
+                    ("maxCount", uid.Comp.MaxSlots),
+                    ("size", _item.GetItemSizeLocale(_storage.GetMaxItemSize((uid, uid.Comp))))));
             }
         }
 
@@ -112,10 +140,9 @@ namespace Content.Client.Storage.UI
                 || !_entityManager.EntityExists(entity))
                 return;
 
-            _entityManager.TryGetComponent(entity, out ItemComponent? item);
             _entityManager.TryGetComponent(entity, out StackComponent? stack);
+            _entityManager.TryGetComponent(entity, out ItemComponent? item);
             var count = stack?.Count ?? 1;
-            var size = item?.Size;
 
             var spriteView = new SpriteView
             {
@@ -137,12 +164,14 @@ namespace Content.Client.Storage.UI
                             HorizontalExpand = true,
                             ClipText = true,
                             Text = _entityManager.GetComponent<MetaDataComponent>(Identity.Entity(entity, _entityManager)).EntityName +
-                                   (count > 1 ? $" x {count}" : string.Empty),
+                                   (count > 1 ? $" x {count}" : string.Empty)
                         },
                         new Label
                         {
                             Align = Label.AlignMode.Right,
-                            Text = size.ToString() ?? Loc.GetString("comp-storage-no-item-size"),
+                            Text = item?.Size != null
+                                ? $"{_item.GetItemSizeWeight(item.Size)}"
+                                : Loc.GetString("comp-storage-no-item-size")
                         }
                     }
             });

@@ -1,9 +1,10 @@
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Explosion;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Storage;
 
 namespace Content.Server.Inventory
 {
@@ -15,9 +16,24 @@ namespace Content.Server.Inventory
         {
             base.Initialize();
 
+            SubscribeLocalEvent<InventoryComponent, BeforeExplodeEvent>(OnExploded);
+
             SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
 
             SubscribeNetworkEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
+        }
+
+        private void OnExploded(Entity<InventoryComponent> ent, ref BeforeExplodeEvent args)
+        {
+            if (!TryGetContainerSlotEnumerator(ent, out var slots, ent.Comp))
+                return;
+
+            // explode each item in their inventory too
+            while (slots.MoveNext(out var slot))
+            {
+                if (slot.ContainedEntity != null)
+                    args.Contents.Add(slot.ContainedEntity.Value);
+            }
         }
 
         private void OnUseInHand(EntityUid uid, ClothingComponent component, UseInHandEvent args)
@@ -33,7 +49,7 @@ namespace Content.Server.Inventory
             if (args.SenderSession.AttachedEntity is not { Valid: true } uid)
                     return;
 
-            if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<ServerStorageComponent>(entityUid, out var storageComponent))
+            if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<StorageComponent>(entityUid, out var storageComponent))
             {
                 _storageSystem.OpenStorageUI(entityUid.Value, uid, storageComponent);
             }

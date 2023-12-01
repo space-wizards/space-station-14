@@ -10,9 +10,9 @@ public sealed class InstrumentBandRequestBuiMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class InstrumentBandResponseBuiMessage : BoundUserInterfaceMessage
 {
-    public (EntityUid, string)[] Nearby { get; set; }
+    public (NetEntity, string)[] Nearby { get; set; }
 
-    public InstrumentBandResponseBuiMessage((EntityUid, string)[] nearby)
+    public InstrumentBandResponseBuiMessage((NetEntity, string)[] nearby)
     {
         Nearby = nearby;
     }

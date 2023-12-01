@@ -12,6 +12,7 @@ public sealed class UseDelaySystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<UseDelayComponent, AfterAutoHandleStateEvent>(OnHandleState);
         SubscribeLocalEvent<UseDelayComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
@@ -23,9 +24,6 @@ public sealed class UseDelaySystem : EntitySystem
         Dirty(uid, component);
     }
 
-    /// <summary>
-    /// Tries to start the active delay if possible.
-    /// </summary>
     public bool TryUseDelay(EntityUid uid, UseDelayComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
@@ -47,6 +45,14 @@ public sealed class UseDelaySystem : EntitySystem
         Dirty(uid, cooldown);
 
         return true;
+    }
+
+    private void OnHandleState(EntityUid uid, UseDelayComponent component, ref AfterAutoHandleStateEvent args)
+    {
+        if (component.DelayEndTime == null)
+            _activeDelays.Remove(component);
+        else
+            _activeDelays.Add(component);
     }
 
     /// <summary>
@@ -82,6 +88,7 @@ public sealed class UseDelaySystem : EntitySystem
         if (!Resolve(uid, ref component, false))
             return;
 
+        cooldown.CooldownStart = currentTime;
         component.DelayEndTime = MathHelper.Max(_gameTiming.CurTime + component.Delay, component.DelayEndTime);
         // TODO just merge these components?
         var cooldown = EnsureComp<ItemCooldownComponent>(uid);

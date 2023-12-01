@@ -18,22 +18,24 @@ namespace Content.Client.Administration.UI.CustomControls
     public sealed partial class PlayerListControl : BoxContainer
     {
         private readonly AdminSystem _adminSystem;
-        private readonly VerbSystem _verbSystem;
 
         private List<PlayerInfo> _playerList = new();
         private readonly List<PlayerInfo> _sortedPlayerList = new();
 
-        public event Action<PlayerInfo?>? OnSelectionChanged;
+        public event Action<PlayerInfo>? OnSelectionChanged;
         public IReadOnlyList<PlayerInfo> PlayerInfo => _playerList;
 
         public Func<PlayerInfo, string, string>? OverrideText;
         public Comparison<PlayerInfo>? Comparison;
 
+        private IEntityManager _entManager;
+        private IUserInterfaceManager _uiManager;
+
         public PlayerListControl()
         {
-            _adminSystem = EntitySystem.Get<AdminSystem>();
-            _verbSystem = EntitySystem.Get<VerbSystem>();
-            IoCManager.InjectDependencies(this);
+            _entManager = IoCManager.Resolve<IEntityManager>();
+            _uiManager = IoCManager.Resolve<IUserInterfaceManager>();
+            _adminSystem = _entManager.System<AdminSystem>();
             RobustXamlLoader.Load(this);
             // Fill the Option data
             PlayerListContainer.ItemPressed += PlayerListItemPressed;
@@ -44,9 +46,9 @@ namespace Content.Client.Administration.UI.CustomControls
             BackgroundPanel.PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)};
         }
 
-        private void PlayerListItemPressed(BaseButton.ButtonEventArgs args, ListData data)
+        private void PlayerListItemPressed(BaseButton.ButtonEventArgs? args, ListData? data)
         {
-            if (data is not PlayerListData {Info: var selectedPlayer})
+            if (args == null || data is not PlayerListData {Info: var selectedPlayer})
                 return;
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
@@ -56,9 +58,9 @@ namespace Content.Client.Administration.UI.CustomControls
                 if (OverrideText != null && args.Button.Children.FirstOrDefault()?.Children?.FirstOrDefault() is Label label)
                     label.Text = GetText(selectedPlayer);
             }
-            else if (args.Event.Function == EngineKeyFunctions.UseSecondary && selectedPlayer.EntityUid != null)
+            else if (args.Event.Function == EngineKeyFunctions.UseSecondary && selectedPlayer.NetEntity != null)
             {
-                IoCManager.Resolve<IUserInterfaceManager>().GetUIController<VerbMenuUIController>().OpenVerbMenu(selectedPlayer.EntityUid.Value);
+                _uiManager.GetUIController<VerbMenuUIController>().OpenVerbMenu(selectedPlayer.NetEntity.Value, true);
             }
         }
 

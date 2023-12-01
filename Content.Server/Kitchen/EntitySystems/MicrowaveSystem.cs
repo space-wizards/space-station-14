@@ -1,15 +1,19 @@
 using System.Linq;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
+using Content.Server.DeviceNetwork;
 using Content.Server.Hands.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
@@ -33,7 +37,9 @@ namespace Content.Server.Kitchen.EntitySystems
     {
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
+        [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly PowerReceiverSystem _power = default!;
         [Dependency] private readonly RecipeManager _recipeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -49,6 +55,7 @@ namespace Content.Server.Kitchen.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<MicrowaveComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
             SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
@@ -56,6 +63,8 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<MicrowaveComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<MicrowaveComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<MicrowaveComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+
+            SubscribeLocalEvent<MicrowaveComponent, SignalReceivedEvent>(OnSignalReceived);
 
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u, c, m) => Wzhzhzh(u, c, m.Session.AttachedEntity));
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectMessage);
@@ -113,6 +122,8 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe)
         {
+            // TODO Turn recipe.IngredientsReagents into a ReagentQuantity[]
+
             var totalReagentsToRemove = new Dictionary<string, FixedPoint2>(recipe.IngredientsReagents);
 
             // this is spaghetti ngl
@@ -130,10 +141,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         if (!totalReagentsToRemove.ContainsKey(reagent))
                             continue;
 
-                        if (!solution.ContainsReagent(reagent))
-                            continue;
-
-                        var quant = solution.GetReagentQuantity(reagent);
+                        var quant = solution.GetTotalPrototypeQuantity(reagent);
 
                         if (quant >= totalReagentsToRemove[reagent])
                         {
@@ -145,7 +153,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             totalReagentsToRemove[reagent] -= quant;
                         }
 
-                        _solutionContainer.TryRemoveReagent(item, solution, reagent, quant);
+                        _solutionContainer.RemoveReagent(item, solution, reagent, quant);
                     }
                 }
             }
@@ -173,9 +181,15 @@ namespace Content.Server.Kitchen.EntitySystems
             }
         }
 
-        private void OnInit(EntityUid uid, MicrowaveComponent component, ComponentInit ags)
+        private void OnInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
         {
-            component.Storage = _container.EnsureContainer<Container>(uid, "microwave_entity_container");
+            // this really does have to be in ComponentInit
+            ent.Comp.Storage = _container.EnsureContainer<Container>(ent, "microwave_entity_container");
+        }
+
+        private void OnMapInit(Entity<MicrowaveComponent> ent, ref MapInitEvent args)
+        {
+            _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort);
         }
 
         private void OnSuicide(EntityUid uid, MicrowaveComponent component, SuicideEvent args)
@@ -193,11 +207,6 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 foreach (var part in headSlots)
                 {
-                    if (!_bodySystem.OrphanPart(part.Id, part.Component))
-                    {
-                        continue;
-                    }
-
                     component.Storage.Insert(part.Id);
                     headCount++;
                 }
@@ -283,14 +292,25 @@ namespace Content.Server.Kitchen.EntitySystems
             args.AddPercentageUpgrade("microwave-component-upgrade-cook-time", component.CookTimeMultiplier);
         }
 
+        private void OnSignalReceived(Entity<MicrowaveComponent> ent, ref SignalReceivedEvent args)
+        {
+            if (args.Port != ent.Comp.OnPort)
+                return;
+
+            if (ent.Comp.Broken || !_power.IsPowered(ent))
+                return;
+
+            Wzhzhzh(ent.Owner, ent.Comp, null);
+        }
+
         public void UpdateUserInterfaceState(EntityUid uid, MicrowaveComponent component)
         {
             var ui = _userInterface.GetUiOrNull(uid, MicrowaveUiKey.Key);
             if (ui == null)
                 return;
 
-            UserInterfaceSystem.SetUiState(ui, new MicrowaveUpdateUserInterfaceState(
-                component.Storage.ContainedEntities.ToArray(),
+            _userInterface.SetUiState(ui, new MicrowaveUpdateUserInterfaceState(
+                GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
                 HasComp<ActiveMicrowaveComponent>(uid),
                 component.CurrentCookTimeButtonIndex,
                 component.CurrentCookTimerTime
@@ -324,6 +344,8 @@ namespace Content.Server.Kitchen.EntitySystems
 
             var solidsDict = new Dictionary<string, int>();
             var reagentDict = new Dictionary<string, FixedPoint2>();
+            // TODO use lists of Reagent quantities instead of reagent prototype ids.
+
             foreach (var item in component.Storage.ContainedEntities)
             {
                 // special behavior when being microwaved ;)
@@ -370,12 +392,12 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 foreach (var (_, solution) in solMan.Solutions)
                 {
-                    foreach (var reagent in solution.Contents)
+                    foreach (var (reagent, quantity) in solution.Contents)
                     {
-                        if (reagentDict.ContainsKey(reagent.ReagentId))
-                            reagentDict[reagent.ReagentId] += reagent.Quantity;
+                        if (reagentDict.ContainsKey(reagent.Prototype))
+                            reagentDict[reagent.Prototype] += quantity;
                         else
-                            reagentDict.Add(reagent.ReagentId, reagent.Quantity);
+                            reagentDict.Add(reagent.Prototype, quantity);
                     }
                 }
             }
@@ -417,6 +439,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             foreach (var reagent in recipe.IngredientsReagents)
             {
+                // TODO Turn recipe.IngredientsReagents into a ReagentQuantity[]
                 if (!reagents.ContainsKey(reagent.Key))
                     return (recipe, 0);
 
@@ -480,7 +503,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid))
                 return;
 
-            component.Storage.Remove(args.EntityID);
+            component.Storage.Remove(EntityManager.GetEntity(args.EntityID));
             UpdateUserInterfaceState(uid, component);
         }
 

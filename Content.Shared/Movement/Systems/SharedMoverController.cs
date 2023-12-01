@@ -1,8 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
 using Content.Shared.Gravity;
 using Content.Shared.Inventory;
 using Content.Shared.Maps;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Pulling.Components;
@@ -12,15 +16,11 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
-using Content.Shared.Mobs.Systems;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Systems;
-using Content.Shared.Bed.Sleep;
 
 namespace Content.Shared.Movement.Systems
 {
@@ -53,6 +53,8 @@ namespace Content.Shared.Movement.Systems
         protected EntityQuery<RelayInputMoverComponent> RelayQuery;
         protected EntityQuery<SharedPullableComponent> PullableQuery;
         protected EntityQuery<TransformComponent> XformQuery;
+        protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
+        protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -83,10 +85,10 @@ namespace Content.Shared.Movement.Systems
             RelayQuery = GetEntityQuery<RelayInputMoverComponent>();
             PullableQuery = GetEntityQuery<SharedPullableComponent>();
             XformQuery = GetEntityQuery<TransformComponent>();
+            NoRotateQuery = GetEntityQuery<NoRotateOnMoveComponent>();
+            CanMoveInAirQuery = GetEntityQuery<CanMoveInAirComponent>();
 
-            InitializeFootsteps();
             InitializeInput();
-            InitializeMob();
             InitializeRelay();
             _configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
             _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
@@ -150,27 +152,16 @@ namespace Content.Shared.Movement.Systems
             LerpRotation(uid, mover, frameTime);
 
             if (!canMove
-                || physicsComponent.BodyStatus != BodyStatus.OnGround
+                || physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid)
                 || PullableQuery.TryGetComponent(uid, out var pullable) && pullable.BeingPulled)
             {
                 UsedMobMovement[uid] = false;
                 return;
             }
 
-            // Get current tile def for things like speed/weightless mods
-            ContentTileDefinition? tileDef = null;
-
-            if (_mapManager.TryFindGridAt(xform.MapPosition, out var grid, out var gridComp)
-                && _mapSystem.TryGetTileRef(grid, gridComp, xform.Coordinates, out var tile))
-            {
-                tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-            }
 
             UsedMobMovement[uid] = true;
             // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
-
-            // We differentiate between grav/other sources of weightless for tiles which want to use weightless accel (like ice)
-            // but don't care about requiring touching etc
             var weightless = _gravity.IsWeightless(physicsUid, physicsComponent, xform);
             var (walkDir, sprintDir) = GetVelocityInput(mover);
             var touching = false;
@@ -191,6 +182,18 @@ namespace Content.Shared.Movement.Systems
                     if (!touching && TryComp<MobMoverComponent>(uid, out var mobMover))
                         touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, physicsUid, physicsComponent);
                 }
+            }
+
+            // Get current tile def for things like speed/friction mods
+            ContentTileDefinition? tileDef = null;
+
+            // Don't bother getting the tiledef here if we're weightless or in-air
+            // since no tile-based modifiers should be applying in that situation
+            if (_mapManager.TryFindGridAt(xform.MapPosition, out var grid, out var gridComp)
+                && _mapSystem.TryGetTileRef(grid, gridComp, xform.Coordinates, out var tile)
+                && !(weightless || physicsComponent.BodyStatus == BodyStatus.InAir))
+            {
+                tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
             }
 
             // Regular movement.
@@ -243,10 +246,13 @@ namespace Content.Shared.Movement.Systems
 
             if (worldTotal != Vector2.Zero)
             {
-                var worldRot = _transform.GetWorldRotation(xform);
-                _transform.SetLocalRotation(xform, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot);
-                // TODO apparently this results in a duplicate move event because "This should have its event run during
-                // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
+                if (!NoRotateQuery.HasComponent(uid))
+                {
+                    // TODO apparently this results in a duplicate move event because "This should have its event run during
+                    // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
+                    var worldRot = _transform.GetWorldRotation(xform);
+                    _transform.SetLocalRotation(xform, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot);
+                }
 
                 if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&
                     TryGetSound(weightless, uid, mover, mobMover, xform, out var sound, tileDef: tileDef))
@@ -432,14 +438,14 @@ namespace Content.Shared.Movement.Systems
 
             if (TryComp<FootstepModifierComponent>(uid, out var moverModifier))
             {
-                sound = moverModifier.Sound;
+                sound = moverModifier.FootstepSoundCollection;
                 return true;
             }
 
             if (_inventory.TryGetSlotEntity(uid, "shoes", out var shoes) &&
                 TryComp<FootstepModifierComponent>(shoes, out var modifier))
             {
-                sound = modifier.Sound;
+                sound = modifier.FootstepSoundCollection;
                 return true;
             }
 
@@ -460,7 +466,7 @@ namespace Content.Shared.Movement.Systems
             {
                 if (TryComp<FootstepModifierComponent>(xform.MapUid, out var modifier))
                 {
-                    sound = modifier.Sound;
+                    sound = modifier.FootstepSoundCollection;
                     return true;
                 }
 
@@ -486,7 +492,7 @@ namespace Content.Shared.Movement.Systems
 
                 if (TryComp<FootstepModifierComponent>(maybeFootstep, out var footstep))
                 {
-                    sound = footstep.Sound;
+                    sound = footstep.FootstepSoundCollection;
                     return true;
                 }
             }

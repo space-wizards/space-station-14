@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
+using Content.Shared.Objectives.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -17,7 +18,7 @@ namespace Content.Server.Objectives.Commands
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             if (player == null || !_players.TryGetSessionByUsername(args[0], out player))
             {
                 shell.WriteError(LocalizationManager.GetString("shell-target-player-does-not-exist"));
@@ -25,7 +26,7 @@ namespace Content.Server.Objectives.Commands
             }
 
             var minds = _entities.System<SharedMindSystem>();
-            if (!minds.TryGetMind(player, out _, out var mind))
+            if (!minds.TryGetMind(player, out var mindId, out var mind))
             {
                 shell.WriteError(LocalizationManager.GetString("shell-target-entity-does-not-have-message", ("missing", "mind")));
                 return;
@@ -38,9 +39,20 @@ namespace Content.Server.Objectives.Commands
                 shell.WriteLine("None.");
             }
 
+            var objectivesSystem = _entities.System<SharedObjectivesSystem>();
             for (var i = 0; i < objectives.Count; i++)
             {
-                shell.WriteLine($"- [{i}] {objectives[i].Conditions[0].Title}");
+                var info = objectivesSystem.GetInfo(objectives[i], mindId, mind);
+                if (info == null)
+                {
+                    shell.WriteLine($"- [{i}] {objectives[i]} - INVALID");
+                }
+                else
+                {
+
+                    var progress = (int) (info.Value.Progress * 100f);
+                    shell.WriteLine($"- [{i}] {objectives[i]} ({info.Value.Title}) ({progress}%)");
+                }
             }
         }
 

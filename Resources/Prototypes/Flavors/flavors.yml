@@ -170,6 +170,11 @@
   description: flavor-base-syrupy
 
 - type: flavor
+  id: clean
+  flavorType: Base
+  description: flavor-base-clean
+
+- type: flavor
   id: nothing
   flavorType: Complex
   description: flavor-complex-nothing
@@ -223,6 +228,11 @@
   id: egg
   flavorType: Complex
   description: flavor-complex-egg
+
+- type: flavor
+  id: raw-egg
+  flavorType: Complex
+  description: flavor-complex-raw-egg
 
 - type: flavor
   id: bacon
@@ -730,6 +740,11 @@
   description: flavor-complex-grape
 
 - type: flavor
+  id: berry
+  flavorType: Complex
+  description: flavor-complex-berry
+
+- type: flavor
   id: garlic
   flavorType: Complex
   description: flavor-complex-garlic
@@ -833,3 +848,18 @@
   id: spaceshroomcooked
   flavorType: Complex
   description: flavor-complex-spaceshroom-cooked
+  
+- type: flavor
+  id: lostfriendship
+  flavorType: Complex
+  description: flavor-complex-lost-friendship
+
+- type: flavor
+  id: pumpkin
+  flavorType: Complex
+  description: flavor-complex-pumpkin
+
+- type: flavor
+  id: punishment
+  flavorType: Complex
+  description: flavor-complex-punishment

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Toolshed;
@@ -59,7 +59,7 @@ public sealed class SolutionCommand : ToolshedCommand
         }
         else if (amount < 0)
         {
-            _solutionContainer.TryRemoveReagent(input.Owner, input.Solution, name.Value.ID, -amount);
+            _solutionContainer.RemoveReagent(input.Owner, input.Solution, name.Value.ID, -amount);
         }
 
         return input;
