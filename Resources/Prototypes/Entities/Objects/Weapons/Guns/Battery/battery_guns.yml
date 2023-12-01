@@ -33,7 +33,7 @@
 
 - type: entity
   id: BaseWeaponPowerCell
-  parent: [ BaseItem, PowerCellSlotSmallItem ]
+  parent: BaseItem
   abstract: true
   components:
   - type: Sprite
@@ -55,9 +55,17 @@
         startingItem: PowerCellSmall
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
   - type: Appearance
   - type: StaticPrice
     price: 500
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot { }
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
 
 - type: entity
   id: BaseWeaponBatterySmall
