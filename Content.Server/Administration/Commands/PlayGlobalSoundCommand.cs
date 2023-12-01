@@ -12,6 +12,7 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Spawners;
+using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Administration.Commands;
@@ -64,12 +65,19 @@ public sealed class PlayGlobalAudioCommand : IConsoleCommand
         shell.WriteLine($"Audio global: {audio?.Component.Global}");
         shell.WriteLine($"Audio paused: {entManager.IsPaused(audio?.Entity)}");
         shell.WriteLine($"Audio lifetime: {entManager.GetComponent<TimedDespawnComponent>(audio!.Value.Entity).Lifetime}");
+        shell.WriteLine($"Can get state: {entManager.CanGetComponentState(entManager.EventBus, audio.Value.Component, shell.Player!)}");
+        shell.WriteLine($"Session specific: {entManager.GetComponent<MetaDataComponent>(audio.Value.Entity).SessionSpecific}");
 
         if (args.Length > 1 && args[1] == "true")
         {
             var ent = audio.Value.Entity;
             entManager.RemoveComponent<TimedDespawnComponent>(ent);
             Timer.Spawn(600000, () => entManager.DeleteEntity(ent));
+        }
+        else
+        {
+            var WEH = entManager.GetComponent<TimedDespawnComponent>(audio.Value.Entity);
+            WEH.Lifetime = 20f;
         }
     }
 }
