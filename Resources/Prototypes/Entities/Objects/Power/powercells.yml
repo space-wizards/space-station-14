@@ -28,6 +28,7 @@
   - type: Tag
     tags:
       - DroneUsable
+      - PowerCell
   - type: Appearance
   - type: PowerCellVisuals
   - type: Riggable
