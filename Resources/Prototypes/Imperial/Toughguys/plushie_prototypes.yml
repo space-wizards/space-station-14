@@ -13,6 +13,38 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieSO
+  name: Sakura Fireinside
+  description: #none
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_SO
+  - type: StaticPrice
+    price: 299
+  - type: Storage
+    capacity: 5
+  - type: UserInterface
+    interfaces:
+      - key: enum.StorageUiKey.Key
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+
+# Cadet, do you know how a flash device works?
+- type: entity
+  parent: PlushieSO
+  id: PlushieSOGift
+  suffix: COMMUNITY,TOY,GIFT
+  components:
+  - type: StorageFill
+    contents:
+    - id: Flash
+
+- type: entity
+  parent: BasePlushie
   id: PlushieChemist
   name: Sarah Morningstar
   description: The most furious follower of the great god Kum'Ar. So furious that even the toy seems to be saturated with drugs... NanoTrasen, seriously?

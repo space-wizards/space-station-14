@@ -14,6 +14,7 @@
         - PlushieCPGift
         - PlushieBartenderGift
         - PlushieChemistGift
+        - PlushieSOGift
       rareChance: 0.25
       prototypes:
         - PlushieCapitan
@@ -26,5 +27,6 @@
         - PlushieSientist
         - PlushieSurgeon
         - PlushieBartender
+        - PlushieSO
       chance: 0.65
       offset: 0.10
