@@ -9,6 +9,8 @@ using Content.Shared.Projectiles;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -145,14 +147,13 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         if (value)
         {
             if (Timing.IsFirstTimePredicted)
-                component.Stream = _audio.PlayPredicted(component.ReelSound, uid, user);
+                component.Stream = _audio.PlayPredicted(component.ReelSound, uid, user)?.Entity;
         }
         else
         {
             if (Timing.IsFirstTimePredicted)
             {
-                component.Stream?.Stop();
-                component.Stream = null;
+                component.Stream = _audio.Stop(component.Stream);
             }
         }
 
@@ -173,8 +174,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
                 if (Timing.IsFirstTimePredicted)
                 {
                     // Just in case.
-                    grappling.Stream?.Stop();
-                    grappling.Stream = null;
+                    grappling.Stream = _audio.Stop(grappling.Stream);
                 }
 
                 continue;

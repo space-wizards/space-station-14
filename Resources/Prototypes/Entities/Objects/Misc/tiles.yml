@@ -290,6 +290,54 @@
   - type: Stack
     stackType: FloorTileBlue
 
+- type: entity
+  name: mining tile
+  parent: FloorTileItemBase
+  id: FloorTileItemMining
+  components:
+  - type: Sprite
+    state: mining
+  - type: Item
+    heldPrefix: mining
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorMining
+  - type: Stack
+    stackType: FloorTileMining
+
+- type: entity
+  name: dark mining tile
+  parent: FloorTileItemBase
+  id: FloorTileItemMiningDark
+  components:
+  - type: Sprite
+    state: miningdark
+  - type: Item
+    heldPrefix: miningdark
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorMiningDark
+  - type: Stack
+    stackType: FloorTileMiningDark
+
+- type: entity
+  name: light mining tile
+  parent: FloorTileItemBase
+  id: FloorTileItemMiningLight
+  components:
+  - type: Sprite
+    state: mininglight
+  - type: Item
+    heldPrefix: mininglight
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorMiningLight
+  - type: Stack
+    stackType: FloorTileMiningLight
+    
 # Departamental
 - type: entity
   name: freezer tile

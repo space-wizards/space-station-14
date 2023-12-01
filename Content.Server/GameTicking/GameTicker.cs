@@ -19,6 +19,8 @@ using Content.Shared.Roles;
 using Robust.Server;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -61,6 +63,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly PlayTimeTrackingSystem _playTimeTrackings = default!;
         [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
         [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StationJobsSystem _stationJobs = default!;
         [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;

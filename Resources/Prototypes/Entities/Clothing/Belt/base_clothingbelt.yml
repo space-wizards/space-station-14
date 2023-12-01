@@ -34,3 +34,17 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
+
+- type: entity
+  abstract: true
+  parent: ClothingBeltBase
+  id: ClothingBeltAmmoProviderBase
+  components: 
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+  - type: Item
+    size: Ginormous
+  - type: ContainerContainer
+    containers: 
+      ballistic-ammo: !type:Container
+      
