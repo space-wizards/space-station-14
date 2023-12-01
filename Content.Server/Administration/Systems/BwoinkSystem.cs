@@ -46,6 +46,7 @@ namespace Content.Server.Administration.Systems
         private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
         private readonly HashSet<NetUserId> _processingChannels = new();
         private readonly Dictionary<NetUserId, (TimeSpan Timestamp, bool Typing)> _typingUpdateTimestamps = new();
+        private string _overrideClientName = string.Empty;
 
         // Max embed description length is 4096, according to https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
         // Keep small margin, just to be safe
@@ -67,12 +68,18 @@ namespace Content.Server.Administration.Systems
             _config.OnValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
             _config.OnValueChanged(CCVars.DiscordAHelpAvatar, OnAvatarChanged, true);
             _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
+            _config.OnValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
             _maxAdditionalChars = GenerateAHelpMessage("", "", true).Length;
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
             SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
+        }
+
+        private void OnOverrideChanged(string obj)
+        {
+            _overrideClientName = obj;
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -418,7 +425,23 @@ namespace Content.Server.Administration.Systems
             if (_playerManager.TryGetSessionById(message.UserId, out var session))
             {
                 if (!admins.Contains(session.ConnectedClient))
-                    RaiseNetworkEvent(msg, session.ConnectedClient);
+                {
+                    // If _overrideClientName is set, we generate a new message with the override name. The admins name will still be the original name for the webhooks.
+                    if (_overrideClientName != string.Empty)
+                    {
+                        var overrideMsgText = senderAdmin switch
+                        {
+                            var x when x is not null && x.Flags == AdminFlags.Adminhelp =>
+                                $"[color=purple]{_overrideClientName}[/color]: {escapedText}",
+                            var x when x is not null && x.HasFlag(AdminFlags.Adminhelp) =>
+                                $"[color=red]{_overrideClientName}[/color]: {escapedText}",
+                            _ => $"{senderSession.Name}: {escapedText}", // Theres probably a better way to do this.
+                        };
+                        RaiseNetworkEvent(new BwoinkTextMessage(message.UserId, senderSession.UserId, overrideMsgText), session.ConnectedClient);
+                    }
+                    else
+                        RaiseNetworkEvent(msg, session.ConnectedClient);
+                }
             }
 
             var sendsWebhook = _webhookUrl != string.Empty;
