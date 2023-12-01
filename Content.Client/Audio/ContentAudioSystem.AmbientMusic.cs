@@ -9,6 +9,7 @@ using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -59,12 +60,6 @@ public sealed partial class ContentAudioSystem
 
     private void InitializeAmbientMusic()
     {
-        // TODO: Shitty preload
-        foreach (var audio in _proto.Index<SoundCollectionPrototype>("AmbienceSpace").PickFiles)
-        {
-            _resource.GetResource<AudioResource>(audio.ToString());
-        }
-
         _configManager.OnValueChanged(CCVars.AmbientMusicVolume, AmbienceCVarChanged, true);
         _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("audio.ambience");
 
@@ -170,11 +165,16 @@ public sealed partial class ContentAudioSystem
             return;
         }
 
-        var isDone = !Exists(_ambientMusicStream);
+        bool? isDone = null;
+
+        if (TryComp(_ambientMusicStream, out AudioComponent? audioComp))
+        {
+            isDone = !audioComp.Playing;
+        }
 
         if (_interruptable)
         {
-            var player = _player.LocalPlayer?.ControlledEntity;
+            var player = _player.LocalSession?.AttachedEntity;
 
             if (player == null || _musicProto == null || !_rules.IsTrue(player.Value, _proto.Index<RulesPrototype>(_musicProto.Rules)))
             {

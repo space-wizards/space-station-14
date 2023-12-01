@@ -38,6 +38,39 @@
       "name": "blue"
     },
     {
+      "name": "mining"
+    },
+    {
+      "name": "mining-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "mining-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "miningdark"
+    },
+    {
+      "name": "miningdark-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "miningdark-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "mininglight"
+    },
+    {
+      "name": "mininglight-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "mininglight-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "clown"
     },
     {
