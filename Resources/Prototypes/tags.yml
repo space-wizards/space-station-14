@@ -234,7 +234,7 @@
 
 - type: Tag
   id: CanPilot
-  
+
 - type: Tag
   id: CannonRestrict
 
@@ -373,6 +373,9 @@
 
 - type: Tag
   id: CubanCarp
+
+- type: Tag
+  id: DeathAcidifier
 
 - type: Tag
   id: Debug

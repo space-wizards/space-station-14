@@ -259,6 +259,28 @@
 
 - type: entity
   parent: BaseSubdermalImplant
+  id: DeathAcidifierImplant
+  name: death-acidifier implant
+  description: This implant melts the user and their equipment upon death.
+  noSpawn: true
+  components:
+  - type: SubdermalImplant
+    permanent: true
+    implantAction: ActionActivateDeathAcidifier
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Dead
+  - type: TriggerImplantAction
+  - type: GibOnTrigger
+    deleteItems: true
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
+    - DeathAcidifier
+
+- type: entity
+  parent: BaseSubdermalImplant
   id: DeathRattleImplant
   name: death rattle implant
   description: This implant will inform the Syndicate radio channel should the user fall into critical condition or die.

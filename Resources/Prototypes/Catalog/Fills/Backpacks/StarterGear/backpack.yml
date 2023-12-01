@@ -331,7 +331,7 @@
         - id: ToolDebug # spanish army knife
         - id: WelderExperimental
         - id: Hypospray
-        - id: MicroBombImplanter # crew will try to steal their amazing hardsuits
+        - id: DeathAcidifierImplanter # crew will try to steal their amazing hardsuits
         - id: FreedomImplanter
 
 # Cargo
