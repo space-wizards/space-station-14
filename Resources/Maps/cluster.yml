@@ -22076,6 +22076,21 @@ entities:
       type: Transform
 - proto: Carpet
   entities:
+  - uid: 1894
+    components:
+    - pos: -6.5,14.5
+      parent: 1
+      type: Transform
+  - uid: 1895
+    components:
+    - pos: -5.5,14.5
+      parent: 1
+      type: Transform
+  - uid: 1921
+    components:
+    - pos: -5.5,13.5
+      parent: 1
+      type: Transform
   - uid: 5022
     components:
     - pos: 2.5,10.5
@@ -22218,6 +22233,11 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 28.5,17.5
+      parent: 1
+      type: Transform
+  - uid: 8931
+    components:
+    - pos: -6.5,13.5
       parent: 1
       type: Transform
   - uid: 12438
@@ -25471,24 +25491,6 @@ entities:
       pos: 13.5,-5.5
       parent: 1
       type: Transform
-  - uid: 1893
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -6.5,14.5
-      parent: 1
-      type: Transform
-  - uid: 1894
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -6.5,13.5
-      parent: 1
-      type: Transform
-  - uid: 1895
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -6.5,12.5
-      parent: 1
-      type: Transform
   - uid: 1899
     components:
     - rot: 3.141592653589793 rad
@@ -27723,6 +27725,48 @@ entities:
   - uid: 8800
     components:
     - pos: -39.356712,-24.532705
+      parent: 1
+      type: Transform
+- proto: ClothingOuterSanta
+  entities:
+  - uid: 8934
+    components:
+    - pos: 19.401697,12.696105
+      parent: 1
+      type: Transform
+  - uid: 9050
+    components:
+    - pos: 19.401697,12.696105
+      parent: 1
+      type: Transform
+  - uid: 9051
+    components:
+    - pos: 19.401697,12.696105
+      parent: 1
+      type: Transform
+  - uid: 9201
+    components:
+    - pos: 19.401697,12.696105
+      parent: 1
+      type: Transform
+  - uid: 9254
+    components:
+    - pos: 19.604822,12.571105
+      parent: 1
+      type: Transform
+  - uid: 9255
+    components:
+    - pos: 19.604822,12.571105
+      parent: 1
+      type: Transform
+  - uid: 9308
+    components:
+    - pos: 19.604822,12.571105
+      parent: 1
+      type: Transform
+  - uid: 9309
+    components:
+    - pos: 19.604822,12.571105
       parent: 1
       type: Transform
 - proto: ClothingOuterWinterCap
@@ -35703,6 +35747,13 @@ entities:
   - uid: 8729
     components:
     - pos: -41.48384,-17.49998
+      parent: 1
+      type: Transform
+- proto: FloraTreeChristmas02
+  entities:
+  - uid: 1893
+    components:
+    - pos: -5.782357,13.644654
       parent: 1
       type: Transform
 - proto: FluteInstrument
@@ -56193,11 +56244,6 @@ entities:
     - pos: 22.5,-0.5
       parent: 1
       type: Transform
-  - uid: 9255
-    components:
-    - pos: -36.5,-9.5
-      parent: 1
-      type: Transform
   - uid: 9329
     components:
     - pos: -13.5,27.5
@@ -60438,6 +60484,11 @@ entities:
       pos: -40.5,-9.5
       parent: 1
       type: Transform
+  - uid: 8933
+    components:
+    - pos: 19.5,12.5
+      parent: 1
+      type: Transform
   - uid: 9130
     components:
     - rot: -1.5707963267948966 rad
@@ -60447,11 +60498,6 @@ entities:
   - uid: 9134
     components:
     - pos: 20.5,-18.5
-      parent: 1
-      type: Transform
-  - uid: 9254
-    components:
-    - pos: -36.5,-9.5
       parent: 1
       type: Transform
   - uid: 9314
@@ -61197,11 +61243,6 @@ entities:
   - uid: 11741
     components:
     - pos: -2.5,16.5
-      parent: 1
-      type: Transform
-  - uid: 11742
-    components:
-    - pos: -5.5,13.5
       parent: 1
       type: Transform
   - uid: 11743
@@ -70545,6 +70586,13 @@ entities:
     - flags: SessionSpecific
       type: MetaData
     - pos: -7.5,-24.5
+      parent: 1
+      type: Transform
+- proto: VendingMachineCuraDrobe
+  entities:
+  - uid: 7562
+    components:
+    - pos: -36.5,-9.5
       parent: 1
       type: Transform
 - proto: VendingMachineDetDrobe
