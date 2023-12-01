@@ -65,7 +65,7 @@ public sealed partial class RevolutionaryRuleComponent : Component
     [DataField]
     public List<EntProtoId> StartingGear = new()
     {
-        "Flash",
+        "FlashPen",
         "ClothingEyesGlassesSunglasses"
     };
 
