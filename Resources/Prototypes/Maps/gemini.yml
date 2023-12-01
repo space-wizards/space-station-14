@@ -4,7 +4,7 @@
   mapPath: /Maps/gemini.yml
   minPlayers: 35
   stations:
-    Kettle:
+    Gemini:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -65,4 +65,3 @@
             Clown: [ 1, 2 ]
             Mime: [ 1, 2 ]
             Musician: [ 1, 2 ]
-            
