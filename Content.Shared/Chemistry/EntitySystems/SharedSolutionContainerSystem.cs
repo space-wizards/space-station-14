@@ -12,6 +12,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -683,7 +684,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
             ("desc", primary.LocalizedPhysicalDescription)));
 
-        var reagentPrototypes = solution.GetReagentPrototypes(_prototypeManager);
+        var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
 
         // Sort the reagents by amount, descending then alphabetically
         var sortedReagentPrototypes = reagentPrototypes
@@ -778,7 +779,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         msg.AddMarkup(Loc.GetString("scannable-solution-main-text"));
 
-        var reagentPrototypes = solution.GetReagentPrototypes(_prototypeManager);
+        var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
 
         // Sort the reagents by amount, descending then alphabetically
         var sortedReagentPrototypes = reagentPrototypes
