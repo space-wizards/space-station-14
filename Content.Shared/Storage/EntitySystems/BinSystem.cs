@@ -1,10 +1,13 @@
 ﻿using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Storage.Components;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -31,6 +34,13 @@ public sealed class BinSystem : EntitySystem
         SubscribeLocalEvent<BinComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
         SubscribeLocalEvent<BinComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<BinComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
+        SubscribeLocalEvent<BinComponent, GetVerbsEvent<AlternativeVerb>>(OnAltInteractHand);
+        SubscribeLocalEvent<BinComponent, ExaminedEvent>(OnExamined);
+    }
+
+    private void OnExamined(EntityUid uid, BinComponent component, ExaminedEvent args)
+    {
+        args.PushText(Loc.GetString("bin-component-on-examine-text", ("count", component.Items.Count)));
     }
 
     private void OnStartup(EntityUid uid, BinComponent component, ComponentStartup args)
@@ -74,6 +84,20 @@ public sealed class BinSystem : EntitySystem
         _admin.Add(LogType.Pickup, LogImpact.Low,
             $"{ToPrettyString(uid):player} removed {ToPrettyString(toGrab.Value)} from bin {ToPrettyString(uid)}.");
         args.Handled = true;
+    }
+
+    /// <summary>
+    /// Alt interact acts the same as interacting with your hands normally, but allows fallback interaction if the item
+    /// has priority. E.g. a water cup on a water cooler fills itself on a normal click,
+    /// but you can use alternative interactions to restock the cup bin
+    /// </summary>
+    private void OnAltInteractHand(EntityUid uid, BinComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (args.Using != null)
+        {
+            var canReach = args.CanAccess && args.CanInteract;
+            OnAfterInteractUsing(uid, component, new AfterInteractUsingEvent(args.User, (EntityUid) args.Using, args.Target, EntityCoordinates.Invalid, canReach));
+        }
     }
 
     private void OnAfterInteractUsing(EntityUid uid, BinComponent component, AfterInteractUsingEvent args)
