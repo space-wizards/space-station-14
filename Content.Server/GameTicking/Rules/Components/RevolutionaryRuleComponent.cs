@@ -12,10 +12,10 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class RevolutionaryRuleComponent : Component
 {
     /// <summary>
-    /// When the round will if all the command are dead (Incase they are in space)
+    /// When the round will end if all the command or head revs are dead (or exiled)
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan CommandCheck;
+    public TimeSpan RoundCheck;
 
     /// <summary>
     /// The amount of time between each check for command check.
@@ -73,5 +73,19 @@ public sealed partial class RevolutionaryRuleComponent : Component
     /// The time it takes after the last head is killed for the shuttle to arrive.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan ShuttleCallTime = TimeSpan.FromMinutes(5);
+    public TimeSpan ShuttleCallTime = TimeSpan.FromMinutes(3);
+
+    /// <summary>
+    /// The text that will be sent to the shuttle when it is called.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public string ShuttleCallText = "rev-heads-were-killed-shuttle-call-text";
+
+    /// <summary>
+    /// Sender of the shuttle call text.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public string ShuttleCallTextSender = "comms-console-announcement-title-centcom";
+
+
 }

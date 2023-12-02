@@ -70,7 +70,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
-        component.CommandCheck = _timing.CurTime + component.TimerWait;
+        component.RoundCheck = _timing.CurTime + component.TimerWait;
     }
 
     /// <summary>
@@ -79,13 +79,19 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
-        if (component.CommandCheck <= _timing.CurTime)
+        if (component.RoundCheck <= _timing.CurTime)
         {
-            component.CommandCheck = _timing.CurTime + component.TimerWait;
+            component.RoundCheck = _timing.CurTime + component.TimerWait;
 
             if (CheckCommandLose())
             {
-                _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime);
+                _roundEnd.DoRoundEndBehavior(RoundEndBehavior.InstantEnd, _timing.CurTime);
+                GameTicker.EndGameRule(uid, gameRule);
+            }
+
+            if (CheckRevsLose())
+            {
+                _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime, component.ShuttleCallTextSender, component.ShuttleCallText, "rev-lose");
                 GameTicker.EndGameRule(uid, gameRule);
             }
         }
@@ -296,7 +302,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         // If no Head Revs are alive all normal Revs will lose their Rev status and rejoin Nanotrasen
-        if (_antagSelection.IsGroupDead(headRevList, false))
+        if (_antagSelection.IsGroupDead(headRevList, true))
         {
             var rev = AllEntityQuery<RevolutionaryComponent>();
             while (rev.MoveNext(out var uid, out _))

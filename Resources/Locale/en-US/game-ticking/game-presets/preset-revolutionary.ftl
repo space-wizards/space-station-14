@@ -50,6 +50,8 @@ rev-stalemate = All of the Head Revs and Command died. It's a draw.
 
 rev-reverse-stalemate = Both Command and Head Revs survived.
 
+rev-heads-were-killed-shuttle-call-text = The Head Revolutionaries were killed! The shuttle has been called. ETA: {$time} {$units}
+
 rev-headrev-count = {$initialCount ->
     [one] There was one Head Revolutionary:
     *[other] There were {$initialCount} Head Revolutionaries:
