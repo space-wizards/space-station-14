@@ -26,7 +26,6 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
-        Heat: 0.2
         Radiation: 0.5
         Stamina: 0.3
 
@@ -56,7 +55,6 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
-        Heat: 0.2
         Radiation: 0.5
         Stamina: 0.3
 
@@ -86,7 +84,7 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
-        Heat: 0.2
+        Heat: 0.8
         Radiation: 0.5
         Stamina: 0.3
 
@@ -116,7 +114,7 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
-        Heat: 0.2
+        Heat: 0.8
         Radiation: 0.5
         Stamina: 0.3
 
@@ -146,7 +144,7 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
-        Heat: 0.2
+        Heat: 0.8
         Radiation: 0.4
         Caustic: 0.5
         Stamina: 0.3

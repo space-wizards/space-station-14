@@ -4,8 +4,8 @@
   parent: MedicalPDA
   id: MedicalPDAAgent
   name: "КПК врача синдиката"
-  description: "Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!"
-  suffix: Агент, Щитспавн, Ebent
+  description: Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!
+  suffix: Shitspawn, Ebent, Агент
   components:
   - type: Pda
     id: AgentIDCardCmd
@@ -15,6 +15,7 @@
   description: "Надежный фонарь, используемый синдикатом."
   parent: FlashlightSeclite
   id: FlashlightSecliteSyndicate
+  suffix: Shitspawn, Ebent
 
 - type: entity
   name: "рюкзак синдиката"
@@ -42,7 +43,7 @@
 - type: entity
   parent: ClothingBeltSyndieHolster
   id: ClothingBeltSyndieHolsterPython
-  suffix: Shitspawn
+  suffix: Shitspawn, Ebent, Python
   name: плечевая кобура синдиката
   components:
   - type: StorageFill
@@ -53,13 +54,13 @@
 - type: entity
   name: "фонарик СССП"
   description: "Надежный фонарь, используемый СССП."
-  suffix: Ebent
+  suffix: Shitspawn, Ebent
   parent: FlashlightSeclite
   id: FlashlightSecliteUssp
 
 - type: entity
   name: табельный револьвер СССП
-  suffix: Ebent
+  suffix: Shitspawn, Ebent
   parent: WeaponRevolverInspector
   id: WeaponRevolverInspectorUssp
   description: Стандартый револьвер армии СССП. Его предком является наган, но за годы он был доработан настолько, что от оригинала мало что осталось.
@@ -68,7 +69,7 @@
   parent: ClothingBeltMercWebbing
   id: ClothingBeltUsspWebbing
   name: РПС СССП
-  suffix: Ebent
+  suffix: Shitspawn, Ebent
   description: "Идеально подходит для хранения всего: от патронов до оружия и предметов боевой необходимости."
 
 - type: entity
@@ -76,17 +77,21 @@
   id: ClothingShoesBootsMagUssp
   name: магнитные ботинки СССП
   description: Созданные по технологии реверс-инжиниринга магнитные ботинки. Собственность СССП.
-  suffix: Ebent
+  suffix: Shitspawn, Ebent
   components:
   - type: Sprite
     sprite: SS220/Clothing/Shoes/Boots/magboots-ussp.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+    enabled: false
     
 - type: entity
   name: энергетическая сабля 
   parent: BaseItem
   id: EnergySaberNT
   description: Передовое оружие NanoTrasen для ведения ближнего боя. 
-  suffix: Ebent
+  suffix: Shitspawn, Ebent
   components:
   - type: EnergySword
     litDamageBonus:
@@ -137,3 +142,32 @@
     malus: 0
   - type: Reflect
     enabled: false
+
+- type: entity
+  parent: ClothingShoesBootsMagSyndie
+  id: ClothingShoesBootsMagSyndieEbent
+  name: кроваво-красные магнитные сапоги
+  description: Созданные по технологии реверс-инжиниринга магнитные ботинки с встроенными ускорителями.
+  suffix: Shitspawn, Ebent
+  components:
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+    enabled: false
+
+- type: entity
+  parent: ClothingOuterHardsuitSyndieElite
+  id: ClothingOuterHardsuitSyndieEliteEbent
+  name: элитный скафандр Синдиката
+  description: Элитная версия кроваво-красного скафандра, отличающаяся повышенным бронированием и огнеупорностью. Собственность Мародёров Горлекса.
+  suffix: Shitspawn, Ebent
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Radiation: 0.25
+        Caustic: 0.5
+        Stamina: 0.1

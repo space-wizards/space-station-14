@@ -5,7 +5,7 @@
   parent: LockerCaptain
   id: LockerEbentIronSquadLeader
   name: "шкаф командира Железного Отряда"
-  suffix: Filled, Shitspawn, Ebent
+  suffix: Shitspawn, Ebent, Filled
   components:
   - type: AccessReader
     access: []
@@ -52,10 +52,10 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackSupaSyndicateLeader
-    shoes: ClothingShoesBootsMagSyndie
+    shoes: ClothingShoesBootsMagSyndieEbent
     mask: ClothingMaskGasSyndicate
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitSyndieElite
+    outerClothing: ClothingOuterHardsuitSyndieEliteEbent
     suitstorage: YellowOxygenTankFilled
     id: SyndiPDAAgentLeader
     ears: ClothingHeadsetAltSyndicateEbent
@@ -66,7 +66,7 @@
 - type: entity
   id: RandomHumanoidSpawnerEbentIronSquadLeader
   name: Спавнер лидера Железного Отряда
-  suffix: Ebent
+  suffix: Shitspawn, Ebent, ЕСквад
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -118,7 +118,7 @@
   id: SyndiPDAAgentLeader
   name: "КПК синдиката"
   description: "Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!"
-  suffix: Агент, Щитспавн, Ebent
+  suffix: Shitspawn, Ebent, Агент
   components:
   - type: Pda
     id: AgentIDCardCmdLeader
@@ -128,7 +128,7 @@
   parent: LockerChiefEngineer
   id: LockerEbentIronSquadEngineer
   name: "шкаф инженера Железного Отряда"
-  suffix: Filled, Shitspawn, Ebent
+  suffix: Shitspawn, Ebent, Filled
   components:
   - type: AccessReader
     access: []
@@ -168,8 +168,9 @@
       - id: MagazinePistolSubMachineGun
         amount: 2
       - id: CombatMedipen
-      - id: EnergySwordDouble
+      - id: EnergySword
       - id: RCD
+      - id: EnergyShield
       - id: RCDAmmo
         amount: 3
 
@@ -178,10 +179,10 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitChiefEngineerSyndie
     back: ClothingBackpackSupaSyndicateEngineer
-    shoes: ClothingShoesBootsMagSyndie
+    shoes: ClothingShoesBootsMagSyndieEbent
     mask: ClothingMaskGasSyndicate
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitSyndieElite
+    outerClothing: ClothingOuterHardsuitSyndieEliteEbent
     suitstorage: YellowOxygenTankFilled
     id: SyndiPDAAgentEngineer
     ears: ClothingHeadsetAltSyndicateEbent
@@ -192,7 +193,7 @@
 - type: entity
   id: RandomHumanoidSpawnerEbentIronSquadEngineer
   name: Спавнер инженера Железного Отряда
-  suffix: Ebent
+  suffix: Shitspawn, Ebent, ЕСквад
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -244,7 +245,7 @@
   id: SyndiPDAAgentEngineer
   name: "КПК синдиката"
   description: "Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!"
-  suffix: Агент, Щитспавн, Ebent
+  suffix: Shitspawn, Ebent, Агент
   components:
   - type: Pda
     id: AgentIDCardCmdEngineer
@@ -254,7 +255,7 @@
   parent: LockerMedical
   id: LockerEbentIronSquadCorpsman
   name: "шкаф медика Железного Отряда"
-  suffix: Filled, Shitspawn, Ebent
+  suffix: Shitspawn, Ebent, Filled
   components:
   - type: AccessReader
     access: []
@@ -295,10 +296,10 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitParamedicSyndie
     back: ClothingBackpackSupaSyndicateCorpsman
-    shoes: ClothingShoesBootsMagSyndie
+    shoes: ClothingShoesBootsMagSyndieEbent
     mask: ClothingMaskGasSyndicate
     gloves: ClothingHandsGlovesNitrile
-    outerClothing: ClothingOuterHardsuitSyndieElite
+    outerClothing: ClothingOuterHardsuitSyndieEliteEbent
     suitstorage: YellowOxygenTankFilled
     id: SyndiPDAAgentCorpsman
     ears: ClothingHeadsetAltSyndicateEbent
@@ -309,7 +310,7 @@
 - type: entity
   id: RandomHumanoidSpawnerEbentIronSquadCorpsman
   name: Спавнер полевого медика Железного Отряда
-  suffix: Ebent
+  suffix: Shitspawn, Ebent, ЕСквад
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -354,7 +355,7 @@
 - type: entity
   parent: AgentIDCard
   id: AgentIDCardCmdCorpsman
-  suffix: Агент, Щитспавн, Ebent
+  suffix: Shitspawn, Ebent, Агент
   name: ID карта пассажира
   components:
   - type: PresetIdCard
@@ -375,7 +376,7 @@
   parent: LockerChiefMedicalOfficer
   id: LockerEbentIronSquadCMO
   name: "шкаф главврача Железного Отряда"
-  suffix: Filled, Shitspawn, Ebent
+  suffix: Shitspawn, Ebent, Filled
   components:
   - type: AccessReader
     access: []
@@ -417,19 +418,20 @@
       - id: MagazinePistolSubMachineGun
         amount: 2
       - id: CombatMedipen
-      - id: EnergySwordDouble
+      - id: EnergySword
       - id: BoxDeathRattleImplants
       - id: SyndiHypo
+      - id: EnergyShield
 
 - type: startingGear
   id: EbentIronSquadCMOGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackSupaSyndicateCMO
-    shoes: ClothingShoesBootsMagSyndie
+    shoes: ClothingShoesBootsMagSyndieEbent
     mask: ClothingMaskGasSyndicate
     gloves: ClothingHandsGlovesNitrile
-    outerClothing: ClothingOuterHardsuitSyndieElite
+    outerClothing: ClothingOuterHardsuitSyndieEliteEbent
     suitstorage: YellowOxygenTankFilled
     id: SyndiPDAAgentCMO
     ears: ClothingHeadsetAltSyndicateEbent
@@ -440,7 +442,7 @@
 - type: entity
   id: RandomHumanoidSpawnerEbentIronSquadCMO
   name: Спавнер главврача Железного Отряда
-  suffix: Ebent
+  suffix: Shitspawn, Ebent, ЕСквад
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -481,7 +483,7 @@
 - type: entity
   parent: AgentIDCard
   id: AgentIDCardCmdCMO
-  suffix: Агент, Щитспавн, Ebent
+  suffix: Shitspawn, Ebent, Агент
   name: ID карта пассажира
   components:
   - type: PresetIdCard
@@ -492,7 +494,7 @@
   id: SyndiPDAAgentCMO
   name: "КПК синдиката"
   description: "Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!"
-  suffix: Агент, Щитспавн, Ebent
+  suffix: Shitspawn, Ebent, Агент
   components:
   - type: Pda
     id: AgentIDCardCmdCMO
@@ -502,7 +504,7 @@
   parent: LockerSyndicatePersonal
   id: LockerEbentIronSquadTrooper
   name: "шкаф бойца Железного Отряда"
-  suffix: Filled, Shitspawn, Ebent
+  suffix: Shitspawn, Ebent, Filled
   components:
   - type: AccessReader
     access: []
@@ -541,10 +543,10 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackSupaSyndicateTrooper
-    shoes: ClothingShoesBootsMagSyndie
+    shoes: ClothingShoesBootsMagSyndieEbent
     mask: ClothingMaskGasSyndicate
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitSyndieElite
+    outerClothing: ClothingOuterHardsuitSyndieEliteEbent
     suitstorage: YellowOxygenTankFilled
     id: SyndiPDAAgent
     ears: ClothingHeadsetAltSyndicateEbent
@@ -555,7 +557,7 @@
 - type: entity
   id: RandomHumanoidSpawnerEbentIronSquadTrooper
   name: Спавнер бойца Железного Отряда
-  suffix: Ebent
+  suffix: Shitspawn, Ebent, ЕСквад
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -600,7 +602,7 @@
 - type: entity
   parent: AgentIDCard
   id: AgentIDCardCmd
-  suffix: Агент, Щитспавн, Ebent
+  suffix: Shitspawn, Ebent, Агент
   name: ID карта пассажира
   components:
   - type: PresetIdCard
@@ -611,7 +613,7 @@
   id: SyndiPDAAgent
   name: "КПК синдиката"
   description: "Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!"
-  suffix: Агент, Щитспавн, Ebent
+  suffix: Shitspawn, Ebent, Агент
   components:
   - type: Pda
     id: AgentIDCardCmd

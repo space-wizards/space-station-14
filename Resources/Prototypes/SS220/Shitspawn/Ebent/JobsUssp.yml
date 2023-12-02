@@ -3,7 +3,7 @@
 - type: entity
   parent: ClothingBeltUsspWebbing
   id: ClothingBeltUsspWebbingFilled
-  suffix: Ebent, СССП, Заполненный
+  suffix: Shitspawn, Ebent, СССП, Filled
   components:
   - type: StorageFill
     contents:
@@ -15,9 +15,11 @@
     - id: Stimpack
 
 - type: entity
+  name: рюкзак СССП
+  description: Стандартный рюкзак Красной Армии СССП.
   parent: ClothingBackpackUSSP
   id: ClothingBackpackUSSPFilled
-  suffix: Ebent, СССП, Заполненный
+  suffix: Shitspawn, Ebent, СССП, Filled
   components:
     - type: StorageFill
       contents:
@@ -35,7 +37,7 @@
   parent: UsspCloset
   id: LockerEbentUSSPLeader
   name: "шкаф маршала СССП"
-  suffix: Ebent
+  suffix: Shitspawn, Ebent, СССП, Filled
   components:
   - type: AccessReader
     access: []
@@ -69,7 +71,7 @@
 - type: entity
   id: RandomHumanoidSpawnerEbentUSSPLeader
   name: Спавнер Маршала СССП
-  suffix: Ebent
+  suffix: Shitspawn, Ebent, СССП, ЕСквад
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -105,7 +107,7 @@
 - type: entity
   parent: UsspIDCard
   id: UsspIDCardCmdLeader
-  suffix: СССП, Ebent
+  suffix: Shitspawn, Ebent, СССП
   components:
   - type: PresetIdCard
     job: USSPLeader
@@ -113,7 +115,7 @@
 - type: entity
   parent: UsspPDA
   id: UsspPDALeader
-  suffix: СССП, Ebent
+  suffix: Shitspawn, Ebent, СССП
   components:
   - type: Pda
     id: UsspIDCardCmdLeader
@@ -123,7 +125,7 @@
   parent: UsspCloset
   id: LockerEbentUSSPEngineer
   name: "шкаф заслуженного инженера СССП"
-  suffix: Filled, Ebent, СССП
+  suffix: Shitspawn, Ebent, СССП, Filled
   components:
   - type: AccessReader
     access: []
@@ -157,7 +159,7 @@
 - type: entity
   id: RandomHumanoidSpawnerEbentUSSPEngineer
   name: Спавнер заслуженного инженера СССП
-  suffix: Ebent
+  suffix: Shitspawn, Ebent, СССП, ЕСквад
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -193,7 +195,7 @@
 - type: entity
   parent: UsspIDCard
   id: UsspIDCardCmdEngineer
-  suffix: СССП, Ebent
+  suffix: Shitspawn, Ebent, СССП
   components:
   - type: PresetIdCard
     job: USSPEngineer
@@ -201,7 +203,7 @@
 - type: entity
   parent: UsspPDA
   id: UsspPDAEngineer
-  suffix: СССП, Ebent
+  suffix: Shitspawn, Ebent, СССП
   components:
   - type: Pda
     id: UsspIDCardCmdEngineer
@@ -211,7 +213,7 @@
   parent: UsspCloset
   id: LockerEbentUSSPCorpsman
   name: "шкаф полевого врача СССП"
-  suffix: Ebent, СССП
+  suffix: Shitspawn, Ebent, СССП, Filled
   components:
   - type: AccessReader
     access: []
@@ -245,7 +247,7 @@
 - type: entity
   id: RandomHumanoidSpawnerEbentUSSPCorpsman
   name: Спавнер полевого медика СССП
-  suffix: Ebent
+  suffix: Shitspawn, Ebent, СССП, ЕСквад
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -285,7 +287,7 @@
 - type: entity
   parent: UsspIDCard
   id: UsspIDCardCorpsman
-  suffix: СССП, Ebent
+  suffix: Shitspawn, Ebent, СССП
   components:
   - type: PresetIdCard
     job: USSPCorpsman
@@ -293,7 +295,7 @@
 - type: entity
   parent: UsspMedicalPDA
   id: UsspPDACorpsman
-  suffix: СССП, Ebent
+  suffix: Shitspawn, Ebent, СССП
   components:
   - type: Pda
     id: UsspIDCardCorpsman
@@ -303,7 +305,7 @@
   parent: UsspCloset
   id: LockerEbentUSSPCMO
   name: "шкаф народного врача СССП"
-  suffix: Filled, Ebent, СССП
+  suffix: Shitspawn, Ebent, СССП, Filled
   components:
   - type: AccessReader
     access: []
@@ -337,7 +339,7 @@
 - type: entity
   id: RandomHumanoidSpawnerEbentUSSPCMO
   name: Спавнер народного врача СССП
-  suffix: Ebent
+  suffix: Shitspawn, Ebent, СССП, ЕСквад
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -373,7 +375,7 @@
 - type: entity
   parent: UsspIDCard
   id: UsspIDCardCmdCMO
-  suffix: СССП, Ebent
+  suffix: Shitspawn, Ebent, СССП
   components:
   - type: PresetIdCard
     job: USSPCMO
@@ -381,7 +383,7 @@
 - type: entity
   parent: UsspMedicalPDA
   id: UsspPDACMO
-  suffix: СССП, Ebent
+  suffix: Shitspawn, Ebent, СССП
   components:
   - type: Pda
     id: UsspIDCardCmdCMO
@@ -391,7 +393,7 @@
   parent: UsspCloset
   id: LockerEbentUSSPTrooper
   name: "шкаф красноармейца"
-  suffix: Filled, Ebent, СССП
+  suffix: Shitspawn, Ebent, СССП, Filled
   components:
   - type: AccessReader
     access: []
@@ -425,7 +427,7 @@
 - type: entity
   id: RandomHumanoidSpawnerEbentUSSPTrooper
   name: Спавнер красноармейца
-  suffix: Ebent
+  suffix: Shitspawn, Ebent, СССП, ЕСквад
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -465,7 +467,7 @@
 - type: entity
   parent: UsspIDCard
   id: UsspIDCardFighter
-  suffix: СССП, Ebent
+  suffix: Shitspawn, Ebent, СССП
   components:
   - type: PresetIdCard
     job: USSPFighter
@@ -473,7 +475,7 @@
 - type: entity
   parent: UsspPDA
   id: UsspPDAFighter
-  suffix: СССП, Ebent
+  suffix: Shitspawn, Ebent, СССП
   components:
   - type: Pda
     id: UsspIDCardFighter
