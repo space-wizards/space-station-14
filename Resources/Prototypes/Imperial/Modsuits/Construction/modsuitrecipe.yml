@@ -43,7 +43,7 @@
   objectType: Item
 
 - type: construction
-  name: Р.И.ГУтилизатора
+  name: Р.И.Г Утилизатора
   id: ModsuitSalvage
   graph: ModsuitSalvage
   startNode: start
@@ -65,7 +65,7 @@
   objectType: Item
 
 - type: construction
-  name: Р.И.ГСлужбы безопасности
+  name: Охранный Р.И.Г
   id: ModsuitSecurity
   graph: ModsuitSecurity
   startNode: start
@@ -87,7 +87,7 @@
   objectType: Item
 
 - type: construction
-  name: Р.И.ГГлавного врача
+  name: Р.И.Г Главного врача
   id: ModsuitRescue
   graph: ModsuitRescue
   startNode: start
@@ -98,7 +98,7 @@
   objectType: Item
 
 - type: construction
-  name: Р.И.ГКапитана
+  name: Р.И.Г Капитана
   id: ModsuitMagnate
   graph: ModsuitMagnate
   startNode: start
@@ -109,7 +109,7 @@
   objectType: Item
 
 - type: construction
-  name: Р.И.ГГлавы Службы Безопасности
+  name: Гвардейский Р.И.Г
   id: ModsuitHOS
   graph: ModsuitHOS
   startNode: start
