@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Portable generators no longer rotate with the camera., type: Tweak}
-  id: 4742
-  time: '2023-09-03T17:55:42.0000000+00:00'
 - author: Jark255
   changes:
   - {message: The firmware bug that wiped critical system parts of pAI alongside the
@@ -2901,3 +2896,8 @@ Entries:
     type: Tweak}
   id: 5241
   time: '2023-12-02T17:01:58.0000000+00:00'
+- author: Cohnway
+  changes:
+  - {message: Remilia's sprite made larger and more detailed, type: Tweak}
+  id: 5242
+  time: '2023-12-02T17:12:32.0000000+00:00'
