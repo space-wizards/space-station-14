@@ -761,6 +761,9 @@ public abstract class SharedStorageSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Attempts to set the location of an item already inside of a storage container.
+    /// </summary>
     public bool TrySetItemStorageLocation(Entity<ItemComponent?> itemEnt, Entity<StorageComponent?> storageEnt, ItemStorageLocation location)
     {
         if (!Resolve(itemEnt, ref itemEnt.Comp) || !Resolve(storageEnt, ref storageEnt.Comp))
@@ -777,6 +780,10 @@ public abstract class SharedStorageSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Tries to find the first available spot on a storage grid.
+    /// starts at the top-left and goes right and down.
+    /// </summary>
     public bool TryGetAvailableGridSpace(
         Entity<StorageComponent?> storageEnt,
         Entity<ItemComponent?> itemEnt,
@@ -808,6 +815,9 @@ public abstract class SharedStorageSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Checks if an item fits into a specific spot on a storage grid.
+    /// </summary>
     public bool ItemFitsInGridLocation(
         Entity<ItemComponent?> itemEnt,
         Entity<StorageComponent?> storageEnt,
@@ -816,6 +826,9 @@ public abstract class SharedStorageSystem : EntitySystem
         return ItemFitsInGridLocation(itemEnt, storageEnt, location.Position, location.Rotation);
     }
 
+    /// <summary>
+    /// Checks if an item fits into a specific spot on a storage grid.
+    /// </summary>
     public bool ItemFitsInGridLocation(
         Entity<ItemComponent?> itemEnt,
         Entity<StorageComponent?> storageEnt,
@@ -848,6 +861,9 @@ public abstract class SharedStorageSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Checks if a space on a grid is valid and not occupied by any other pieces.
+    /// </summary>
     public bool IsGridSpaceEmpty(Entity<ItemComponent?> itemEnt, Entity<StorageComponent?> storageEnt, Vector2i location)
     {
         if (!Resolve(storageEnt, ref storageEnt.Comp))

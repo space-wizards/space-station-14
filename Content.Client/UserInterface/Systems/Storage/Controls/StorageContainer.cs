@@ -7,7 +7,6 @@ using Content.Client.Storage.Systems;
 using Content.Shared.Input;
 using Content.Shared.Item;
 using Content.Shared.Storage;
-using Content.Shared.Storage.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -412,11 +411,18 @@ public sealed class StorageContainer : BaseWindow
                 var pos = GetMouseGridPieceLocation((handEntity, null),
                     new ItemStorageLocation(_storageController.DraggingRotation, Vector2i.Zero));
 
-                _entity.RaisePredictiveEvent(new StorageInsertItemIntoLocationEvent(
-                    _entity.GetNetEntity(handEntity),
-                    _entity.GetNetEntity(StorageEntity.Value),
-                    new ItemStorageLocation(_storageController.DraggingRotation, pos)));
-                args.Handle();
+                var insertLocation = new ItemStorageLocation(_storageController.DraggingRotation, pos);
+                if (_storageSystem.ItemFitsInGridLocation(
+                        (handEntity, null),
+                        (StorageEntity.Value, null),
+                        insertLocation))
+                {
+                    _entity.RaisePredictiveEvent(new StorageInsertItemIntoLocationEvent(
+                        _entity.GetNetEntity(handEntity),
+                        _entity.GetNetEntity(StorageEntity.Value),
+                        insertLocation));
+                    args.Handle();
+                }
             }
         }
     }

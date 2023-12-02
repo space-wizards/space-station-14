@@ -3,7 +3,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.Examine;
 using Content.Shared.Storage;
-using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -153,6 +152,9 @@ public abstract class SharedItemSystem : EntitySystem
         return GetSizePrototype(size).Weight;
     }
 
+    /// <summary>
+    /// Gets the default shape of an item.
+    /// </summary>
     public IReadOnlyList<Box2i> GetItemShape(Entity<ItemComponent?> uid)
     {
         if (!Resolve(uid, ref uid.Comp))
@@ -161,16 +163,25 @@ public abstract class SharedItemSystem : EntitySystem
         return uid.Comp.Shape ?? GetSizePrototype(uid.Comp.Size).DefaultShape;
     }
 
+    /// <summary>
+    /// Gets the default shape of an item.
+    /// </summary>
     public IReadOnlyList<Box2i> GetItemShape(ItemComponent component)
     {
         return component.Shape ?? GetSizePrototype(component.Size).DefaultShape;
     }
 
+    /// <summary>
+    /// Gets the shape of an item, adjusting for rotation and offset.
+    /// </summary>
     public IReadOnlyList<Box2i> GetAdjustedItemShape(Entity<ItemComponent?> entity, ItemStorageLocation location)
     {
         return GetAdjustedItemShape(entity, location.Rotation, location.Position);
     }
 
+    /// <summary>
+    /// Gets the shape of an item, adjusting for rotation and offset.
+    /// </summary>
     public IReadOnlyList<Box2i> GetAdjustedItemShape(Entity<ItemComponent?> entity, Angle rotation, Vector2i position)
     {
         if (!Resolve(entity, ref entity.Comp))
