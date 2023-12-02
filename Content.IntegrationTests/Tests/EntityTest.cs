@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using Content.Server.Humanoid.Components;
 using Content.Shared.Coordinates;
+using Content.Shared.Prototypes;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -183,7 +186,7 @@ namespace Content.IntegrationTests.Tests
                     var query = entityMan.AllEntityQueryEnumerator<TComp>();
                     while (query.MoveNext(out var uid, out var meta))
                         yield return (uid, meta);
-                };
+                }
 
                 var entityMetas = Query<MetaDataComponent>(sEntMan).ToList();
                 foreach (var (uid, meta) in entityMetas)
@@ -198,6 +201,126 @@ namespace Content.IntegrationTests.Tests
             await pair.CleanReturnAsync();
         }
 
+        /// <summary>
+        /// This test checks that spawning and deleting an entity doesn't somehow create other unrelated entities.
+        /// </summary>
+        /// <remarks>
+        /// Unless an entity is intentionally designed to spawn other entities (e.g., mob spawners), they should
+        /// generally not spawn unrelated / detached entities. Any entities that do get spawned should be parented to
+        /// the spawned entity (e.g., in a container). If an entity needs to spawn an entity somewhere in null-space,
+        /// it should delete that entity when it is no longer required. This test mainly exists to prevent "entity leak"
+        /// bugs, where spawning some entity starts spawning unrelated entities in null space.
+        /// </remarks>
+        [Test]
+        public async Task SpawnAndDeleteEntityCountTest()
+        {
+            var settings = new PoolSettings { Connected = true, Dirty = true };
+            await using var pair = await PoolManager.GetServerClient(settings);
+            var mapManager = pair.Server.ResolveDependency<IMapManager>();
+            var server = pair.Server;
+            var client = pair.Client;
+
+            var excluded = new[]
+            {
+                "MapGrid",
+                "StationEvent",
+                "TimedDespawn",
+
+                // Spawner entities
+                "DragonRift",
+                "RandomHumanoidSpawner",
+                "RandomSpawner",
+                "ConditionalSpawner",
+                "GhostRoleMobSpawner",
+                "NukeOperativeSpawner",
+                "TimedSpawner",
+            };
+
+            Assert.That(server.CfgMan.GetCVar(CVars.NetPVS), Is.False);
+
+            var protoIds = server.ProtoMan
+                .EnumeratePrototypes<EntityPrototype>()
+                .Where(p => !p.Abstract)
+                .Where(p => !pair.IsTestPrototype(p))
+                .Where(p => !excluded.Any(p.Components.ContainsKey))
+                .Select(p => p.ID)
+                .ToList();
+
+            protoIds.Sort();
+            var mapId = MapId.Nullspace;
+
+            await server.WaitPost(() =>
+            {
+               mapId = mapManager.CreateMap();
+            });
+
+            var coords = new MapCoordinates(Vector2.Zero, mapId);
+
+            await pair.RunTicksSync(3);
+
+            foreach (var protoId in protoIds)
+            {
+                // TODO fix ninja
+                // Currently ninja fails to equip their own loadout.
+                if (protoId == "MobHumanSpaceNinja")
+                    continue;
+
+                var count = server.EntMan.EntityCount;
+                var clientCount = client.EntMan.EntityCount;
+                EntityUid uid = default;
+                await server.WaitPost(() => uid = server.EntMan.SpawnEntity(protoId, coords));
+                await pair.RunTicksSync(3);
+
+                // If the entity deleted itself, check that it didn't spawn other entities
+                if (!server.EntMan.EntityExists(uid))
+                {
+                    if (server.EntMan.EntityCount != count)
+                    {
+                        Assert.Fail($"Server prototype {protoId} failed on deleting itself");
+                    }
+
+                    if (client.EntMan.EntityCount != clientCount)
+                    {
+                        Assert.Fail($"Client prototype {protoId} failed on deleting itself\n" +
+                                    $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
+                                    $"Server was {count}.");
+                    }
+                    continue;
+                }
+
+                // Check that the number of entities has increased.
+                if (server.EntMan.EntityCount <= count)
+                {
+                    Assert.Fail($"Server prototype {protoId} failed on spawning as entity count didn't increase");
+                }
+
+                if (client.EntMan.EntityCount <= clientCount)
+                {
+                    Assert.Fail($"Client prototype {protoId} failed on spawning as entity count didn't increase" +
+                                $"Expected at least {clientCount} and found {client.EntMan.EntityCount}. " +
+                                $"Server was {count}");
+                }
+
+                await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
+                await pair.RunTicksSync(3);
+
+                // Check that the number of entities has gone back to the original value.
+                if (server.EntMan.EntityCount != count)
+                {
+                    Assert.Fail($"Server prototype {protoId} failed on deletion count didn't reset properly");
+                }
+
+                if (client.EntMan.EntityCount != clientCount)
+                {
+                    Assert.Fail($"Client prototype {protoId} failed on deletion count didn't reset properly:\n" +
+                                $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
+                                $"Server was {count}.");
+                }
+            }
+
+            await pair.CleanReturnAsync();
+        }
+
         [Test]
         public async Task AllComponentsOneToOneDeleteTest()
         {
@@ -207,7 +330,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionExposeData",
                 "DebugExceptionInitialize",
                 "DebugExceptionStartup",
-                "GridFillComponent",
+                "GridFill",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
                 "Broadphase",

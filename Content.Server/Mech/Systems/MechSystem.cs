@@ -20,6 +20,7 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.Mech.Systems;
 
@@ -32,6 +33,7 @@ public sealed partial class MechSystem : SharedMechSystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -44,8 +46,6 @@ public sealed partial class MechSystem : SharedMechSystem
         base.Initialize();
 
         _sawmill = Logger.GetSawmill("mech");
-
-        InitializeFiltering();
 
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
@@ -66,6 +66,8 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
         SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
+
+        SubscribeLocalEvent<MechAirComponent, GetFilterAirEvent>(OnGetFilterAir);
 
         #region Equipment UI message relays
         SubscribeLocalEvent<MechComponent, MechGrabberEjectMessage>(ReceiveEquipmentUiMesssages);
@@ -420,6 +422,18 @@ public sealed partial class MechSystem : SharedMechSystem
         args.Gas = mech.Airtight ? mechAir.Air : _atmosphere.GetContainingMixture(component.Mech);
 
         args.Handled = true;
+    }
+
+    private void OnGetFilterAir(EntityUid uid, MechAirComponent comp, ref GetFilterAirEvent args)
+    {
+        if (args.Air != null)
+            return;
+
+        // only airtight mechs get internal air
+        if (!TryComp<MechComponent>(uid, out var mech) || !mech.Airtight)
+            return;
+
+        args.Air = comp.Air;
     }
     #endregion
 }

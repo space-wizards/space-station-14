@@ -24,6 +24,7 @@ using Robust.Shared.Physics.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -148,7 +149,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (!TryComp<TransformComponent>(uid, out var xform))
                 return;
 
-            _body.GibBody(xform.ParentUid, deleteItems: component.DeleteItems);
+            _body.GibBody(xform.ParentUid, true, deleteItems: component.DeleteItems);
 
             args.Handled = true;
         }

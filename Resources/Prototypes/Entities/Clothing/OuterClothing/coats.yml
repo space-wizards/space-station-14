@@ -344,3 +344,14 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatSpaceAsshole
+  name: the coat of space asshole
+  description: And there he was...
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/space_asshole.rsi

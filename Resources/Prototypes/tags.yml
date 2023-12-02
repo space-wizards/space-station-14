@@ -3,7 +3,7 @@
 
 - type: Tag
   id: AirAlarmElectronics
-  
+
 - type: Tag
   id: Airlock
 
@@ -236,6 +236,9 @@
   id: CanPilot
 
 - type: Tag
+  id: CannonRestrict
+
+- type: Tag
   id: CannotSuicide
 
 - type: Tag
@@ -372,6 +375,9 @@
   id: CubanCarp
 
 - type: Tag
+  id: DeathAcidifier
+
+- type: Tag
   id: Debug
 
 - type: Tag
@@ -403,6 +409,9 @@
 
 - type: Tag
   id: Donut
+
+- type: Tag
+  id: DrinkCan
 
 - type: Tag
   id: DrinkSpaceGlue
@@ -493,7 +502,7 @@
 
 - type: Tag
   id: GeigerCounter
-  
+
 - type: Tag
   id: GlassAirlock
 
@@ -562,7 +571,7 @@
 
 - type: Tag
   id: HighRiskItem
-  
+
 - type: Tag
   id: HighSecDoor
 
@@ -640,6 +649,9 @@
 
 - type: Tag
   id: Lemon
+
+- type: Tag
+  id: LightReplacer
 
 - type: Tag
   id: Lime
@@ -837,6 +849,12 @@
   id: PlushieSharkGrey
 
 - type: Tag
+  id: Potato
+
+- type: Tag
+  id: PotatoBattery
+
+- type: Tag
   id: PowerCellSmall
 
 - type: Tag
@@ -922,6 +940,9 @@
   id: SkeletonMotorcycleKeys
 
 - type: Tag
+  id: SmallAIChip
+
+- type: Tag
   id: SmallMech
 
 - type: Tag
@@ -956,6 +977,9 @@
 
 - type: Tag
   id: SpeedLoaderRifle
+
+- type: Tag
+  id: SpiderCraft
 
 - type: Tag
   id: SpreaderIgnore
@@ -1007,6 +1031,9 @@
 
 - type: Tag
   id: Toolbox
+
+- type: Tag
+  id: Torch
 
 - type: Tag
   id: Trash

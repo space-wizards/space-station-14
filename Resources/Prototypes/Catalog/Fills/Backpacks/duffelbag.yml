@@ -14,21 +14,21 @@
       - id: Scalpel
 
 - type: entity
-  id: ClothingBackpackDuffelCBURN
-  parent: ClothingBackpackDuffel
-  name: CBURN duffel bag
-  description: A duffel bag containing a variety of biological containment equipment.
+  id: ClothingBackpackDuffelCBURNFilled
+  parent: ClothingBackpackDuffelCBURN
+  suffix: Filled
   components:
   - type: StorageFill
     contents:
-      - id: WeaponShotgunDoubleBarreled
-      - id: BoxShotgunIncendiary
-        amount: 2
-      - id: GrenadeFlashBang
-        amount: 2
-      - id: PillAmbuzolPlus
-      - id: PillAmbuzol
-        amount: 4
+    - id: BoxSurvivalEngineering
+    - id: WeaponShotgunDoubleBarreled
+    - id: BoxShotgunIncendiary
+      amount: 2
+    - id: GrenadeFlashBang
+      amount: 2
+    - id: PillAmbuzolPlus
+    - id: PillAmbuzol
+      amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
@@ -198,6 +198,8 @@
   name: syndicate pyjama duffel bag
   description: Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
   components:
+  - type: Storage
+    maxTotalWeight: 44
   - type: StorageFill
     contents:
       - id: ClothingUniformJumpsuitPyjamaSyndicateRed
@@ -293,7 +295,7 @@
       - id: BoxSurvivalSyndicate
       - id: WeaponPistolViper
       - id: PinpointerNuclear
-      - id: MicroBombImplanter
+      - id: DeathAcidifierImplanter
 
 
 - type: entity
@@ -304,6 +306,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SyndiHypo
       - id: BoxSurvivalSyndicate
       - id: SawAdvanced
       - id: Cautery
@@ -312,7 +315,7 @@
       - id: PinpointerNuclear
       - id: HandheldHealthAnalyzer
       - id: CombatMedipen
-      - id: MicroBombImplanter
+      - id: DeathAcidifierImplanter
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle

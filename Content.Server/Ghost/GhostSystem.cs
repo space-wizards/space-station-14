@@ -6,7 +6,6 @@ using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
 using Content.Shared.Actions;
-using Content.Shared.Administration;
 using Content.Shared.Examine;
 using Content.Shared.Eye;
 using Content.Shared.Follower;
@@ -16,13 +15,12 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
-using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Console;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
@@ -297,8 +295,7 @@ namespace Content.Server.Ghost
 
             while (allQuery.MoveNext(out var uid, out var warp))
             {
-                if (warp.Location != null)
-                    yield return new GhostWarp(GetNetEntity(uid), warp.Location, true);
+                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true);
             }
         }
 
@@ -356,30 +353,6 @@ namespace Content.Server.Ghost
             RaiseLocalEvent(target, ghostBoo, true);
 
             return ghostBoo.Handled;
-        }
-    }
-
-    [AnyCommand]
-    public sealed class ToggleGhostVisibility : IConsoleCommand
-    {
-        public string Command => "toggleghosts";
-        public string Description => "Toggles ghost visibility";
-        public string Help => $"{Command}";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
-        {
-            if (shell.Player == null)
-                shell.WriteLine("You can only toggle ghost visibility on a client.");
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            var uid = shell.Player?.AttachedEntity;
-            if (uid == null
-                || !entityManager.HasComponent<GhostComponent>(uid)
-                || !entityManager.TryGetComponent<EyeComponent>(uid, out var eyeComponent))
-                return;
-
-            entityManager.System<EyeSystem>().SetVisibilityMask(uid.Value, eyeComponent.VisibilityMask ^ (int) VisibilityFlags.Ghost, eyeComponent);
         }
     }
 }

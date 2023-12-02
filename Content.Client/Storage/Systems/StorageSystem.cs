@@ -23,10 +23,10 @@ public sealed class StorageSystem : SharedStorageSystem
         SubscribeNetworkEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
     }
 
-    public override void UpdateUI(EntityUid uid, StorageComponent component)
+    public override void UpdateUI(Entity<StorageComponent?> entity)
     {
-        // Should we wrap this in some prediction call maybe?
-        StorageUpdated?.Invoke(uid, component);
+        if (Resolve(entity.Owner, ref entity.Comp))
+            StorageUpdated?.Invoke(entity.Owner, entity.Comp);
     }
 
     /// <inheritdoc />

@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.UI
 {
@@ -13,7 +14,8 @@ namespace Content.Client.Chat.UI
         {
             Emote,
             Say,
-            Whisper
+            Whisper,
+            Looc
         }
 
         /// <summary>
@@ -60,12 +62,15 @@ namespace Content.Client.Chat.UI
                 case SpeechType.Whisper:
                     return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, "whisperBox");
 
+                case SpeechType.Looc:
+                    return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, "emoteBox", Color.FromHex("#48d1cc"));
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        public SpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechStyleClass)
+        public SpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechStyleClass, Color? fontColor = null)
         {
             _chatManager = chatManager;
             _senderEntity = senderEntity;
@@ -75,7 +80,7 @@ namespace Content.Client.Chat.UI
             // Use text clipping so new messages don't overlap old ones being pushed up.
             RectClipContent = true;
 
-            var bubble = BuildBubble(text, speechStyleClass);
+            var bubble = BuildBubble(text, speechStyleClass, fontColor);
 
             AddChild(bubble);
 
@@ -86,7 +91,7 @@ namespace Content.Client.Chat.UI
             _verticalOffsetAchieved = -ContentSize.Y;
         }
 
-        protected abstract Control BuildBubble(string text, string speechStyleClass);
+        protected abstract Control BuildBubble(string text, string speechStyleClass, Color? fontColor = null);
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
@@ -164,18 +169,29 @@ namespace Content.Client.Chat.UI
 
     public sealed class TextSpeechBubble : SpeechBubble
     {
-        public TextSpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechStyleClass)
-            : base(text, senderEntity, eyeManager, chatManager, entityManager, speechStyleClass)
+        public TextSpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechStyleClass, Color? fontColor = null)
+            : base(text, senderEntity, eyeManager, chatManager, entityManager, speechStyleClass, fontColor)
         {
         }
 
-        protected override Control BuildBubble(string text, string speechStyleClass)
+        protected override Control BuildBubble(string text, string speechStyleClass, Color? fontColor = null)
         {
             var label = new RichTextLabel
             {
                 MaxWidth = 256,
             };
-            label.SetMessage(text);
+
+            if (fontColor != null)
+            {
+                var msg = new FormattedMessage();
+                msg.PushColor(fontColor.Value);
+                msg.AddMarkup(text);
+                label.SetMessage(msg);
+            }
+            else
+            {
+                label.SetMessage(text);
+            }
 
             var panel = new PanelContainer
             {

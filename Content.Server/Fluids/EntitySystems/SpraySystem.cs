@@ -12,6 +12,8 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Vapor;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -130,14 +132,15 @@ public sealed class SpraySystem : EntitySystem
 
             // Add the solution to the vapor and actually send the thing
             var vaporComponent = Comp<VaporComponent>(vapor);
-            _vapor.TryAddSolution(vaporComponent, newSolution);
+            var ent = (vapor, vaporComponent);
+            _vapor.TryAddSolution(ent, newSolution);
 
             // impulse direction is defined in world-coordinates, not local coordinates
             var impulseDirection = rotation.ToVec();
             var time = diffLength / component.SprayVelocity;
             cooldownTime = MathF.Max(time, cooldownTime);
 
-            _vapor.Start(vaporComponent, vaporXform, impulseDirection * diffLength, component.SprayVelocity, target, time, args.User);
+            _vapor.Start(ent, vaporXform, impulseDirection * diffLength, component.SprayVelocity, target, time, args.User);
 
             if (TryComp<PhysicsComponent>(args.User, out var body))
             {

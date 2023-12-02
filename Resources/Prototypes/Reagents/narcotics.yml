@@ -250,6 +250,24 @@
         time: 5
         refresh: false
 
+- type: reagent
+  id: Bananadine
+  name: reagent-name-bananadine
+  group: Narcotics
+  desc: reagent-desc-bananadine
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: bitter
+  color: "#ffff00"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+
 # Probably replace this one with sleeping chem when putting someone in a comatose state is easier
 - type: reagent
   id: Nocturine

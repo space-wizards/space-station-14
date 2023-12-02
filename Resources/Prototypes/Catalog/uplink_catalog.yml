@@ -92,7 +92,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword_double.rsi, state: icon }
   productEntity: EnergySwordDouble
   cost:
-    Telecrystal: 16
+    Telecrystal: 20 #(Originally 16)
   categories:
   - UplinkWeapons
   conditions:
@@ -199,7 +199,7 @@
   description: uplink-c4-desc
   productEntity: C4
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkExplosives
 
@@ -224,7 +224,7 @@
   description: uplink-c4-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateC4tBundle
   cost:
-    Telecrystal: 20
+    Telecrystal: 12 #you're buying bulk so its a 25% discount
   categories:
   - UplinkExplosives
 
@@ -563,6 +563,26 @@
     - UplinkImplants
 
 - type: listing
+  id: UplinkMicroBombImplanter
+  name: uplink-micro-bomb-implanter-name
+  description: uplink-micro-bomb-implanter-desc
+  icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: explosive }
+  productEntity: MicroBombImplanter
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkImplants
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+
+- type: listing
   id: UplinkMacroBombImplanter
   name: uplink-macro-bomb-implanter-name
   description: uplink-macro-bomb-implanter-desc
@@ -581,6 +601,17 @@
       blacklist:
         components:
           - SurplusBundle
+
+- type: listing
+  id: UplinkDeathAcidifierImplanter
+  name: uplink-death-acidifier-implant-name
+  description: uplink-death-acidifier-implant-desc
+  icon: { sprite: /Textures/Objects/Magic/magicactions.rsi, state: gib }
+  productEntity: DeathAcidifierImplanter
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkImplants
 
 - type: listing
   id: UplinkUplinkImplanter # uplink uplink real
@@ -987,7 +1018,7 @@
   description: uplink-proximity-mine-desc
   productEntity: WetFloorSignMineExplosive
   cost:
-    Telecrystal: 4
+    Telecrystal: 5 # was 4, with my buff made it 5 to be closer to minibomb -panzer
   categories:
   - UplinkJob
   conditions:
@@ -1132,6 +1163,16 @@
   productEntity: CigPackSyndicate
   cost:
     Telecrystal: 2
+  categories:
+  - UplinkMisc
+
+- type: listing
+  id: UplinkSnackBox
+  name: uplink-snack-box-name
+  description: uplink-snack-box-desc
+  productEntity: HappyHonkNukieSnacks
+  cost:
+    Telecrystal: 1
   categories:
   - UplinkMisc
 

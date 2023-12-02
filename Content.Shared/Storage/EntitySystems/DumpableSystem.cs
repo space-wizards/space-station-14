@@ -5,6 +5,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Placeable;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -133,7 +135,7 @@ public sealed class DumpableSystem : EntitySystem
         foreach (var entity in dumpQueue)
         {
             var transform = Transform(entity);
-            _container.AttachParentToContainerOrGrid(transform);
+            _container.AttachParentToContainerOrGrid((entity, transform));
             _transformSystem.SetLocalPositionRotation(transform, transform.LocalPosition + _random.NextVector2Box() / 2, _random.NextAngle());
         }
 
