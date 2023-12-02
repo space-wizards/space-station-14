@@ -1,10 +1,4 @@
 Entries:
-- author: Jark255
-  changes:
-  - {message: The firmware bug that wiped critical system parts of pAI alongside the
-      module itself is now fixed., type: Fix}
-  id: 4743
-  time: '2023-09-03T18:32:41.0000000+00:00'
 - author: KingFroozy
   changes:
   - {message: Added Chief Engineer's Turtleneck. You can find it in their locker or
@@ -2901,3 +2895,8 @@ Entries:
   - {message: Remilia's sprite made larger and more detailed, type: Tweak}
   id: 5242
   time: '2023-12-02T17:12:32.0000000+00:00'
+- author: Minty642
+  changes:
+  - {message: Ash can now be created by burning oil., type: Add}
+  id: 5243
+  time: '2023-12-02T17:15:12.0000000+00:00'
