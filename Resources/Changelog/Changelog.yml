@@ -1,10 +1,4 @@
 Entries:
-- author: KingFroozy
-  changes:
-  - {message: Added Chief Engineer's Turtleneck. You can find it in their locker or
-      sew it at the Uniform Printer!, type: Add}
-  id: 4744
-  time: '2023-09-03T18:38:28.0000000+00:00'
 - author: FinnishPaladin
   changes:
   - {message: The station's bardrobes have been stocked with new darker coloured aprons!,
@@ -2900,3 +2894,9 @@ Entries:
   - {message: Ash can now be created by burning oil., type: Add}
   id: 5243
   time: '2023-12-02T17:15:12.0000000+00:00'
+- author: enumerate0
+  changes:
+  - {message: 'Added sound effects for throwing/inserting into disposals, and when
+      missing a throw.', type: Add}
+  id: 5244
+  time: '2023-12-02T17:19:32.0000000+00:00'
