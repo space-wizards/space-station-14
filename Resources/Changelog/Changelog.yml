@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Added spoons and forks to the dinnerware vendor!, type: Add}
-  id: 4740
-  time: '2023-09-03T14:22:28.0000000+00:00'
 - author: Diebek
   changes:
   - {message: Updated Taxibot sprites., type: Tweak}
@@ -2898,3 +2893,9 @@ Entries:
   - {message: Mothroaches and rats cannot pull items anymore., type: Tweak}
   id: 5239
   time: '2023-12-02T16:45:07.0000000+00:00'
+- author: Moomoobeef
+  changes:
+  - {message: 'Added sodium polyacrylate, an industrial desiccant. You probably should
+      not consume this.', type: Add}
+  id: 5240
+  time: '2023-12-02T16:58:34.0000000+00:00'
