@@ -27,21 +27,16 @@ namespace Content.Shared.Storage
         public Container Container = default!;
 
         /// <summary>
-        /// A limit for the cumulative ItemSize weights that can be inserted in this storage.
-        /// If MaxSlots is not null, then this is ignored.
+        /// A dictionary storing each entity to its position within the storage grid.
         /// </summary>
-        //todo kill
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public int MaxTotalWeight;
-
-        //todo more doc
-        //todo this could be a hashset instead of a dict
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         public Dictionary<NetEntity, ItemStorageLocation> StoredItems = new();
 
-        //todo doc
+        /// <summary>
+        /// A list of boxes that comprise a combined grid that determines the location that items can be stored.
+        /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public List<Box2i> StorageGrid = new();
+        public List<Box2i> Grid = new();
 
         /// <summary>
         /// The maximum size item that can be inserted into this storage,
@@ -49,12 +44,6 @@ namespace Content.Shared.Storage
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         [Access(typeof(SharedStorageSystem))]
         public ProtoId<ItemSizePrototype>? MaxItemSize;
-
-        /// <summary>
-        /// The max number of entities that can be inserted into this storage.
-        /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public int? MaxSlots;
 
         // TODO: Make area insert its own component.
         [DataField("quickInsert")]

@@ -153,13 +153,13 @@
     tags: [] # ignore "WhitelistChameleon" tag
   - type: StorageFill
     contents:
+      - id: ClothingOuterArmorBasic
       - id: ClothingHeadHatCentcom
       - id: ClothingEyesGlassesSunglasses
       - id: ClothingUniformJumpsuitCentcomOfficial
       - id: ClothingShoesBootsJack
       - id: ClothingHandsGlovesColorBlack
       - id: ClothingHeadsetAltCentComFake
-      - id: ClothingOuterArmorBasic
       - id: Paper
       - id: Pen
       - id: CentcomPDAFake

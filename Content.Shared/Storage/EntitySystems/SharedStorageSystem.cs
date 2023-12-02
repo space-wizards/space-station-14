@@ -36,7 +36,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] private   readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] protected readonly SharedEntityStorageSystem EntityStorage = default!;
     [Dependency] private   readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] protected readonly SharedItemSystem ItemSystem = default!;
     [Dependency] private   readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private   readonly SharedHandsSystem _sharedHandsSystem = default!;
     [Dependency] private   readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -91,7 +91,6 @@ public abstract class SharedStorageSystem : EntitySystem
         UpdateAppearance((uid, storageComp, null));
     }
 
-    //todo: this shit doesn't work for multiple clients. FUCK!
     public virtual void UpdateUI(Entity<StorageComponent?> entity) {}
 
     public virtual void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false) { }
@@ -486,7 +485,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (storage.Container == null)
             return; // component hasn't yet been initialized.
 
-        var capacity = storage.StorageGrid.GetArea();
+        var capacity = storage.Grid.GetArea();
         var used = GetCumulativeItemAreas((uid, storage));
 
         _appearance.SetData(uid, StorageVisuals.StorageUsed, used, appearance);
@@ -574,15 +573,15 @@ public abstract class SharedStorageSystem : EntitySystem
             return true;
         }
 
-        var maxSize = _item.GetSizePrototype(GetMaxItemSize((uid, storageComp)));
-        if (_item.GetSizePrototype(item.Size) > maxSize)
+        var maxSize = ItemSystem.GetSizePrototype(GetMaxItemSize((uid, storageComp)));
+        if (ItemSystem.GetSizePrototype(item.Size) > maxSize)
         {
             reason = "comp-storage-too-big";
             return false;
         }
 
         if (TryComp<StorageComponent>(insertEnt, out var insertStorage)
-            && _item.GetSizePrototype(GetMaxItemSize((insertEnt, insertStorage))) >= maxSize)
+            && ItemSystem.GetSizePrototype(GetMaxItemSize((insertEnt, insertStorage))) >= maxSize)
         {
             reason = "comp-storage-too-big";
             return false;
@@ -788,7 +787,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(storageEnt, ref storageEnt.Comp) || !Resolve(itemEnt, ref itemEnt.Comp))
             return false;
 
-        var storageBounding = storageEnt.Comp.StorageGrid.GetBoundingBox();
+        var storageBounding = storageEnt.Comp.Grid.GetBoundingBox();
 
         for (var y = storageBounding.Bottom; y <= storageBounding.Top; y++)
         {
@@ -826,11 +825,11 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(itemEnt, ref itemEnt.Comp) || !Resolve(storageEnt, ref storageEnt.Comp))
             return false;
 
-        var gridBounds = storageEnt.Comp.StorageGrid.GetBoundingBox();
+        var gridBounds = storageEnt.Comp.Grid.GetBoundingBox();
         if (!gridBounds.Contains(position))
             return false;
 
-        var itemShape = _item.GetAdjustedItemShape(itemEnt, rotation, position);
+        var itemShape = ItemSystem.GetAdjustedItemShape(itemEnt, rotation, position);
 
         foreach (var box in itemShape)
         {
@@ -855,7 +854,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
 
         var validGrid = false;
-        foreach (var grid in storageEnt.Comp.StorageGrid)
+        foreach (var grid in storageEnt.Comp.Grid)
         {
             if (grid.Contains(location))
             {
@@ -877,7 +876,7 @@ public abstract class SharedStorageSystem : EntitySystem
             if (!_itemQuery.TryGetComponent(ent, out var itemComp))
                 continue;
 
-            var adjustedShape = _item.GetAdjustedItemShape((ent, itemComp), storedItem);
+            var adjustedShape = ItemSystem.GetAdjustedItemShape((ent, itemComp), storedItem);
             foreach (var box in adjustedShape)
             {
                 if (box.Contains(location))
@@ -896,13 +895,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(uid, ref uid.Comp))
             return false;
 
-        //todo maybe this shouldn't be authoritative over weight? idk.
-        if (uid.Comp.MaxSlots != null)
-        {
-            return uid.Comp.Container.ContainedEntities.Count < uid.Comp.MaxSlots || HasSpaceInStacks(uid);
-        }
-
-        return GetCumulativeItemAreas(uid) < uid.Comp.MaxTotalWeight || HasSpaceInStacks(uid);
+        return GetCumulativeItemAreas(uid) < uid.Comp.Grid.GetArea() || HasSpaceInStacks(uid);
     }
 
     private bool HasSpaceInStacks(Entity<StorageComponent?> uid, string? stackType = null)
@@ -940,7 +933,7 @@ public abstract class SharedStorageSystem : EntitySystem
         {
             if (!_itemQuery.TryGetComponent(item, out var itemComp))
                 continue;
-            sum += _item.GetItemShape((item, itemComp)).GetArea();
+            sum += ItemSystem.GetItemShape((item, itemComp)).GetArea();
         }
 
         return sum;
@@ -957,7 +950,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         if (!_itemQuery.TryGetComponent(uid, out var item))
             return DefaultStorageMaxItemSize;
-        var size = _item.GetSizePrototype(item.Size);
+        var size = ItemSystem.GetSizePrototype(item.Size);
 
         // if there is no max item size specified, the value used
         // is one below the item size of the storage entity, clamped at ItemSize.Tiny

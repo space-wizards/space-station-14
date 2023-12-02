@@ -43,7 +43,7 @@
       Steel: 50
   - type: SpaceGarbage
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,4,1
   - type: Item
     size: Small
@@ -109,7 +109,7 @@
       Steel: 50
   - type: SpaceGarbage
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,4,1
   - type: Item
     size: Small

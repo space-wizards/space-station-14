@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,6,1
   - type: Item
     size: Small
@@ -83,7 +83,7 @@
     heldPrefix: matchbox
     size: Small
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,2,1
   - type: StorageFill
     contents:

@@ -41,7 +41,7 @@
   id: ClothingShoesStorageBase
   components:
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,1,1
     maxItemSize: Normal
   - type: ContainerContainer

@@ -27,7 +27,7 @@ public sealed partial class ItemSizePrototype : IPrototype, IComparable<ItemSize
     /// <summary>
     /// The default inventory shape associated with this item size.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public IReadOnlyList<Box2i> DefaultShape = new List<Box2i>();
 
     public int CompareTo(ItemSizePrototype? other)

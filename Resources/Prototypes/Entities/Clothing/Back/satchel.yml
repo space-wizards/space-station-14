@@ -171,5 +171,5 @@
     size: Ginormous
   - type: Storage
     maxItemSize: Huge
-    storageGrid:
+    grid:
     - 0,0,19,9

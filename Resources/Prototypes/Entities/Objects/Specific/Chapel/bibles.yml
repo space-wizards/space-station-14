@@ -37,7 +37,7 @@
     slots:
     - Belt
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,0,1
   - type: UserInterface
     interfaces:

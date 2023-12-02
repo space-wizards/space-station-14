@@ -8,13 +8,12 @@
   - type: Item
     sprite: Objects/Storage/boxes.rsi
     size: Large
-    shapeOverride:
-    - 0, 0, 2, 2
+    shape:
+    - 0,0,2,2
   - type: Storage
-    maxTotalWeight: 8
     maxItemSize: Small
-    storageGrid:
-    - 0, 0, 2, 2
+    grid:
+    - 0,0,2,2
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

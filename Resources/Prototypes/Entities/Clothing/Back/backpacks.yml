@@ -14,10 +14,9 @@
     slots:
     - back
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,6,3
     maxItemSize: Huge
-    maxTotalWeight: 28
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -199,7 +198,8 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
-    maxTotalWeight: 44
+    grid:
+    - 0,0,10,3
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -266,7 +266,7 @@
     size: Ginormous
   - type: Storage
     maxItemSize: Huge
-    storageGrid:
+    grid:
     - 0,0,19,9
 
 - type: entity
@@ -290,7 +290,7 @@
   suffix: Debug
   components:
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,3,3
     - 5,0,7,2
     - 0,5,7,5
@@ -306,7 +306,7 @@
   suffix: Debug
   components:
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,39,24
 
 - type: entity
@@ -317,7 +317,7 @@
   suffix: Debug
   components:
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,0,3
     - 0,0,2,0
     - 0,3,2,3
@@ -338,5 +338,5 @@
   suffix: Debug
   components:
   - type: Storage
-    storageGrid:
+    grid:
     - 5,5,11,8

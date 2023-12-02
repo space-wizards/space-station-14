@@ -197,7 +197,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/chefhat.rsi
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,0,0
   - type: UserInterface
     interfaces:
@@ -755,7 +755,7 @@
     size: Small
     sprite: Clothing/Head/Hats/magician.rsi
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,0,0
   - type: UserInterface
     interfaces:

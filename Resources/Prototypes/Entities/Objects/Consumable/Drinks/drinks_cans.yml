@@ -403,9 +403,8 @@
   - type: Item
     size: Normal
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,5,1
-    maxSlots: 6
     whitelist:
       tags:
         - Cola

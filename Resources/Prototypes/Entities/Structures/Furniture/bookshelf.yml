@@ -47,8 +47,8 @@
   - type: Pullable
   - type: Occluder
   - type: Storage
-    storageGrid:
-    - 0,0,7,3
+    grid:
+    - 0,0,15,3
     maxItemSize: Normal
     whitelist:
       tags:

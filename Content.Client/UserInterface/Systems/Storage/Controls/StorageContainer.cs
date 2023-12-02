@@ -134,12 +134,12 @@ public sealed class StorageContainer : BaseWindow
     private void BuildGridRepresentation(Entity<StorageComponent> entity)
     {
         var comp = entity.Comp;
-        if (!comp.StorageGrid.Any())
+        if (!comp.Grid.Any())
             return;
 
         _storageSystem ??= _entity.System<StorageSystem>();
 
-        var boundingGrid = comp.StorageGrid.GetBoundingBox();
+        var boundingGrid = comp.Grid.GetBoundingBox();
 
         _backgroundGrid.Children.Clear();
         _backgroundGrid.Rows = boundingGrid.Height + 1;
@@ -148,7 +148,7 @@ public sealed class StorageContainer : BaseWindow
         {
             for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
             {
-                var texture = comp.StorageGrid.Contains(x, y)
+                var texture = comp.Grid.Contains(x, y)
                     ? _emptyTexture
                     : _blockedTexture;
 
@@ -220,10 +220,10 @@ public sealed class StorageContainer : BaseWindow
         if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComp))
             return;
 
-        if (!storageComp.StorageGrid.Any())
+        if (!storageComp.Grid.Any())
             return;
 
-        var boundingGrid = storageComp.StorageGrid.GetBoundingBox();
+        var boundingGrid = storageComp.Grid.GetBoundingBox();
         var size = _emptyTexture!.Size * 2;
 
         //todo. at some point, we may want to only rebuild the pieces that have actually received new data.
@@ -360,7 +360,7 @@ public sealed class StorageContainer : BaseWindow
         var origin = Vector2i.Zero;
 
         if (StorageEntity != null)
-            origin = _entity.GetComponent<StorageComponent>(StorageEntity.Value).StorageGrid.GetBoundingBox().BottomLeft;
+            origin = _entity.GetComponent<StorageComponent>(StorageEntity.Value).Grid.GetBoundingBox().BottomLeft;
 
         var textureSize = (Vector2) _emptyTexture!.Size * 2;
         var position = ((UserInterfaceManager.MousePositionScaled.Position
@@ -377,7 +377,7 @@ public sealed class StorageContainer : BaseWindow
 
         if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComponent))
             return false;
-        var boundingBox = storageComponent.StorageGrid.GetBoundingBox();
+        var boundingBox = storageComponent.Grid.GetBoundingBox();
         x -= boundingBox.Left;
         y -= boundingBox.Bottom;
 

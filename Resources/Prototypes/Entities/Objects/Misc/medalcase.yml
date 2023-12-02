@@ -11,7 +11,7 @@
     sprite: Objects/Storage/medalcase.rsi
     size: Normal
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,7,1
   - type: StorageFill
     contents:

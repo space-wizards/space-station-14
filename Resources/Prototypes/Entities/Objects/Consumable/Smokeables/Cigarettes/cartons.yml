@@ -14,7 +14,7 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     size: Normal
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,5,1
   - type: StorageFill
     contents:

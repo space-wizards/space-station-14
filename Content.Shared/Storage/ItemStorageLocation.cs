@@ -32,11 +32,6 @@ public partial record struct ItemStorageLocation
         Position = position;
     }
 
-    public void Rotate(Angle theta)
-    {
-        Rotation += theta;
-    }
-
     public bool Equals(ItemStorageLocation? other)
     {
         return Rotation == other?.Rotation &&

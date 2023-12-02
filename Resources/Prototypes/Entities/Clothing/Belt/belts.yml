@@ -391,7 +391,8 @@
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
   - type: Storage
-    maxSlots: 1
+    grid:
+    - 0,0,1,1
     whitelist:
       tags:
         - CaptainSabre
@@ -449,7 +450,8 @@
   - type: Clothing
     sprite: Clothing/Belt/holster.rsi
   - type: Storage
-    maxSlots: 3
+    grid:
+    - 0,0,3,1
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -554,7 +556,8 @@
   - type: Clothing
     sprite: Clothing/Belt/wand.rsi
   - type: Storage
-    maxSlots: 8
+    grid:
+    - 0,0,15,1
     whitelist:
       tags:
       - WizardWand

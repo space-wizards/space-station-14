@@ -158,7 +158,12 @@ public abstract class SharedItemSystem : EntitySystem
         if (!Resolve(uid, ref uid.Comp))
             return new Box2i[] { };
 
-        return uid.Comp.ShapeOverride ?? GetSizePrototype(uid.Comp.Size).DefaultShape;
+        return uid.Comp.Shape ?? GetSizePrototype(uid.Comp.Size).DefaultShape;
+    }
+
+    public IReadOnlyList<Box2i> GetItemShape(ItemComponent component)
+    {
+        return component.Shape ?? GetSizePrototype(component.Size).DefaultShape;
     }
 
     public IReadOnlyList<Box2i> GetAdjustedItemShape(Entity<ItemComponent?> entity, ItemStorageLocation location)

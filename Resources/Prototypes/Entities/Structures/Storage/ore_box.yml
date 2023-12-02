@@ -50,7 +50,7 @@
           True: { visible: false }
           False: { visible: true }
   - type: Storage
-    storageGrid:
+    grid:
     - 0,0,9,5
     maxItemSize: Normal
     storageOpenSound: /Audio/Effects/closetopen.ogg

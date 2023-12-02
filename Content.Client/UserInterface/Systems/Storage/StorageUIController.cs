@@ -76,7 +76,10 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
         _container.UpdateContainer(nullEnt);
 
-        if (nullEnt is { })
+        if (IsDragging)
+            _menuDragHelper.EndDrag();
+
+        if (nullEnt is not null)
         {
             if (_lastContainerPosition == null)
             {
