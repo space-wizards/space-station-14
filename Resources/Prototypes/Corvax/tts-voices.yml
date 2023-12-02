@@ -237,6 +237,27 @@
   id: ulfric
 
 - type: ttsVoice
+  name: Астрид
+  description: Голос персонажа Астрид из игры TES 5 Skyrim
+  sex: Female
+  speaker: astrid
+  id: astrid
+
+- type: ttsVoice
+  name: Мавен Чёрный Вереск
+  description: Голос персонажа Мавен Чёрный Вереск из игры TES 5 Skyrim
+  sex: Female
+  speaker: maven
+  id: maven
+
+- type: ttsVoice
+  name: Назир
+  description: Голос персонажа Назир из игры TES 5 Skyrim
+  sex: Male
+  speaker: nazir
+  id: nazir
+
+- type: ttsVoice
   name: GLaDOS
   description: Голос персонажа GLaDOS из игры Portal 2
   sex: Female
@@ -503,6 +524,13 @@
   id: skippy
 
 - type: ttsVoice
+  name: Джеки Уэллс
+  description: Голос персонажа Джеки Уэллс из игры Cyberpunk 2077
+  sex: Male
+  speaker: jackie
+  id: jackie
+
+- type: ttsVoice
   name: Сержант Дорнан
   description: Голос персонажа Сержант Дорнан из игры Fallout 2
   sex: Male
@@ -546,8 +574,36 @@
 
 - type: ttsVoice
   name: Добрая Талия
-  description: Голос персонажа Добрая Талияиз игры Dungeons 3
+  description: Голос персонажа Добрая Талия из игры Dungeons 3
   sex: Female
   speaker: good_thalya
   id: good_thalya
+
+- type: ttsVoice
+  name: Злая Талия
+  description: Голос персонажа Злая Талия из игры Dungeons 3
+  sex: Female
+  speaker: evil_thalya
+  id: evil_thalya
+
+- type: ttsVoice
+  name: Чувак
+  description: Голос персонажа Чувак из игры Postal 2
+  sex: Male
+  speaker: dude
+  id: dude
+
+- type: ttsVoice
+  name: Андуин Ринн
+  description: Голос персонажа Андуин Ринн из игры Hearthstone
+  sex: Male
+  speaker: anduin
+  id: anduin
+
+- type: ttsVoice
+  name: Бру'кан
+  description: Голос персонажа Бру'кан из игры Hearthstone
+  sex: Male
+  speaker: brukan
+  id: brukan
 
