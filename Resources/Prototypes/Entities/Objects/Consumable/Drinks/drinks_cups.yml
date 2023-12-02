@@ -318,5 +318,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: icon-
+  - type: Tag
+    tags:
+    - Trash
   - type: TrashOnSolutionEmpty
     solution: drink
