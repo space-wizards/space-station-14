@@ -51,3 +51,12 @@
     visualType: LargeCaution
   products:
     ChlorineTrifluoride: 4
+
+- type: reaction
+  id: Ash
+  minTemp: 520
+  reactants:
+    Oil:
+      amount: 1
+  products:
+    Ash: 1
