@@ -1,10 +1,4 @@
 Entries:
-- author: Endecc
-  changes:
-  - message: Secure crates are now craftable with 5 steel and 2 LV cable
-    type: Add
-  id: 4775
-  time: '2023-09-07T00:25:25.0000000+00:00'
 - author: lzk228
   changes:
   - message: Grog recipe now requires sugar.
@@ -3624,3 +3618,19 @@ Entries:
     type: Fix
   id: 5234
   time: '2023-12-02T13:59:00.0000000+00:00'
+- author: VladIsLove-e
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5235
+  time: '2023-12-02T20:06:03.0000000+00:00'
