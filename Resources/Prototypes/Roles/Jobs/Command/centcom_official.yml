@@ -24,3 +24,37 @@
     ears: ClothingHeadsetAltCentCom
     pocket1: BoxFolderBlack
     pocket2: PenCentcom
+
+- type: job
+  id: CentralCommandRep
+  name: job-name-centcomrep
+  description: job-description-centcomrep
+  playTimeTracker: JobCentralCommandRepresentative
+  setPreference: true
+  startingGear: CentcomRepGear
+  icon: "JobIconNanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+
+- type: startingGear
+  id: CentcomRepGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficer
+    back: ClothingBackpackCaptain
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatCentcom
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesHop
+    outerClothing: ClothingOuterArmorBasic
+    belt: BoxFolderClipboard
+    id: CentcomPDA
+    ears: ClothingHeadsetAltCentCom
+    pocket1: WeaponDisabler
+    pocket2: PenCentcom
+  satchel: ClothingBackpackSatchelCaptain
+  duffelbag: ClothingBackpackDuffelCaptain
