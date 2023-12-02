@@ -1,10 +1,4 @@
 Entries:
-- author: FinnishPaladin
-  changes:
-  - {message: The station's bardrobes have been stocked with new darker coloured aprons!,
-    type: Add}
-  id: 4745
-  time: '2023-09-03T21:27:19.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Changed a bunch of events to be more common., type: Tweak}
@@ -2900,3 +2894,8 @@ Entries:
       missing a throw.', type: Add}
   id: 5244
   time: '2023-12-02T17:19:32.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed ninja calling in a dragon not actually spawning a dragon., type: Fix}
+  id: 5245
+  time: '2023-12-02T20:41:36.0000000+00:00'
