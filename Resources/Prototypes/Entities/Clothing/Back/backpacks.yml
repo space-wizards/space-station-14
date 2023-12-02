@@ -27,6 +27,14 @@
   # to prevent bag open/honk spam
   - type: UseDelay
     delay: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+    worn: true # only apply to the bag itself and items inside, not the wearer
+    examine: explosion-resistance-contents-coefficient-value
+  # to show explosion resistance examine
+  - type: GroupExamine
+  - type: Armor
+    modifiers: {}
 
 - type: entity
   parent: ClothingBackpack
