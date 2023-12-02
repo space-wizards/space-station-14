@@ -1,9 +1,4 @@
 Entries:
-- author: Diebek
-  changes:
-  - {message: Updated Taxibot sprites., type: Tweak}
-  id: 4741
-  time: '2023-09-03T14:31:24.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Portable generators no longer rotate with the camera., type: Tweak}
@@ -2899,3 +2894,10 @@ Entries:
       not consume this.', type: Add}
   id: 5240
   time: '2023-12-02T16:58:34.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Ambrosia Deus and Koibeans's chemical amounts have been reduced., type: Tweak}
+  - {message: Plant chemical mutations can no longer produce any reagent in the game.,
+    type: Tweak}
+  id: 5241
+  time: '2023-12-02T17:01:58.0000000+00:00'
