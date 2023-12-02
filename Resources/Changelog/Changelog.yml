@@ -1,13 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Fix fulton parenting, also fix it not checking if the target is reachable.',
-    type: Fix}
-  - {message: Added fultons to salvage vendor., type: Add}
-  - {message: Make fultons easy to craft temporarily to get better feedback on it
-      for expeditions., type: Tweak}
-  id: 4739
-  time: '2023-09-03T12:18:09.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Added spoons and forks to the dinnerware vendor!, type: Add}
@@ -2900,3 +2891,10 @@ Entries:
   - {message: Potentially fix audio filters., type: Fix}
   id: 5238
   time: '2023-12-02T08:47:41.0000000+00:00'
+- author: EEASAS
+  changes:
+  - {message: 'Mothroaches have been vaccinated to be weaker and slower. Also, they
+      are more valuable!', type: Tweak}
+  - {message: Mothroaches and rats cannot pull items anymore., type: Tweak}
+  id: 5239
+  time: '2023-12-02T16:45:07.0000000+00:00'
