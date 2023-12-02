@@ -172,8 +172,8 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 6
-        Caustic: 6
+        Heat: 7.5
+        Caustic: 7.5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -677,12 +677,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 19
+        maxVol: 24
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
         - ReagentId: SpaceLube
-          Quantity: 10
+          Quantity: 15
         - ReagentId: Vitamin
           Quantity: 4
   - type: Sprite
@@ -1242,10 +1242,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 22
+        maxVol: 20
         reagents:
         - ReagentId: Omnizine
-          Quantity: 5
+          Quantity: 3
         - ReagentId: SpaceDrugs
           Quantity: 5
         - ReagentId: Nutriment
@@ -1398,19 +1398,19 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 9
+        maxVol: 7
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
         - ReagentId: CarpoToxin
-          Quantity: 4
+          Quantity: 2
   - type: Produce
     seedId: koibean
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: CarpoToxin
-        Quantity: 4
+        Quantity: 2
 
 - type: entity
   name: watermelon
