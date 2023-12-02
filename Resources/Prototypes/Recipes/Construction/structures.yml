@@ -1075,7 +1075,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/secret_door.rsi
+    sprite: Imperial/SecretDoor/secret_door.rsi #imperial
     state: closed
   conditions:
     - !type:TileNotBlocked
