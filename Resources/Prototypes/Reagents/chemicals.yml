@@ -80,3 +80,21 @@
         conditions:
         - !type:ReagentThreshold
           min: 5
+
+- type: reagent
+  id: SodiumPolyacrylate
+  name: reagent-name-sodium-polyacrylate
+  desc: reagent-desc-sodium-polyacrylate
+  flavor: bitter
+  physicalDesc: reagent-physical-desc-grainy
+  color: "#F0F0F0"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:SatiateThirst
+        factor: -5 # This is basically industrial dessicant
+      - !type:PopupMessage
+        visualType: MediumCaution
+        type: Local
+        messages: [ "generic-reagent-effect-parched" ]
+        probability: 0.1
