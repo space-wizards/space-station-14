@@ -683,10 +683,18 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
             ("desc", primary.LocalizedPhysicalDescription)));
 
+        var reagentPrototypes = solution.GetReagentPrototypes(_prototypeManager);
+
+        // Sort the reagents by amount, descending then alphabetically
+        var sortedReagentPrototypes = reagentPrototypes
+            .OrderByDescending(pair => pair.Value.Value)
+            .ThenBy(pair => pair.Key.LocalizedName);
+
         // Add descriptions of immediately recognizable reagents, like water or beer
         var recognized = new List<ReagentPrototype>();
-        foreach (var proto in solution.GetReagentPrototypes(PrototypeManager).Keys)
+        foreach (var keyValuePair in sortedReagentPrototypes)
         {
+            var proto = keyValuePair.Key;
             if (!proto.Recognizable)
             {
                 continue;
@@ -770,7 +778,14 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         msg.AddMarkup(Loc.GetString("scannable-solution-main-text"));
 
-        foreach (var (proto, quantity) in solution.GetReagentPrototypes(PrototypeManager))
+        var reagentPrototypes = solution.GetReagentPrototypes(_prototypeManager);
+
+        // Sort the reagents by amount, descending then alphabetically
+        var sortedReagentPrototypes = reagentPrototypes
+            .OrderByDescending(pair => pair.Value.Value)
+            .ThenBy(pair => pair.Key.LocalizedName);
+
+        foreach (var (proto, quantity) in sortedReagentPrototypes)
         {
             msg.PushNewline();
             msg.AddMarkup(Loc.GetString("scannable-solution-chemical"
