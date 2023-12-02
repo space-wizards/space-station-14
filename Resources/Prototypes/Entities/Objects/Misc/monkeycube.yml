@@ -32,6 +32,41 @@
   - type: Tag
     tags:
     - MonkeyCube
+-
+- type: entity
+  parent: BoxCardboard
+  name: kobold cube box
+  id: KoboldCubeBox
+  description: Condensed kobolds in a cube. Just add water!
+  components:
+  - type: StorageFill
+    contents:
+      - id: KoboldCubeWrapped
+        amount: 6
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box
+
+- type: entity
+  parent: BaseItem
+  name: monkey cube
+  suffix: Wrapped
+  id: MonkeyCubeWrapped
+  description: Unwrap this to get a monkey cube.
+  components:
+  - type: Item
+    size: Tiny
+  - type: SpawnItemsOnUse
+    items:
+      - id: MonkeyCube
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: wrapper
+  - type: Tag
+    tags:
+    - MonkeyCube
 
 - type: entity
   parent: BoxCardboard
