@@ -47,7 +47,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         if (_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(owner, out var powerMonitoringConsole))
             NavMap.PowerMonitoringConsole = powerMonitoringConsole;
 
-        // Set nva map grid uid
+        // Set nav map grid uid
         if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
         {
             NavMap.MapUid = xform.GridUid;
@@ -127,15 +127,23 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         (double totalSources,
         double totalBatteryUsage,
         double totalLoads,
-        PowerMonitoringConsoleEntry[] allEntries,
-        PowerMonitoringConsoleEntry[] focusSources,
-        PowerMonitoringConsoleEntry[] focusLoads,
-        PowerMonitoringFlags flags,
+        List<PowerMonitoringConsoleEntry> allEntries,
+        List<PowerMonitoringConsoleEntry> focusSources,
+        List<PowerMonitoringConsoleEntry> focusLoads,
         EntityCoordinates? monitorCoords)
     {
+        if (_owner == null)
+            return;
+
         if (!_entManager.TryGetComponent<MapGridComponent>(NavMap.MapUid, out var _))
             return;
 
+        // Sort all devices alphabetically by their entity name (not by power usage; otherwise their position on the UI will shift)
+        //allEntries.Sort(AlphabeticalSort);
+        //focusSources.Sort(AlphabeticalSort);
+        //focusLoads.Sort(AlphabeticalSort);
+
+        // Update tracked entries
         UpdateTrackedEntities();
 
         // Reset nav map values
@@ -201,7 +209,10 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         }
 
         // Update system warnings
-        UpdateWarningLabel(flags);
+        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(_owner.Value, out var console))
+            return;
+
+        UpdateWarningLabel(console.Flags);
     }
 
     private void AddTrackedEntityToNavMap(EntityUid uid, EntityCoordinates coords, NavMapTrackableComponent component, bool useDarkColors = false)
@@ -262,6 +273,14 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             // Request update from power monitoring system
             RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_focusEntity), GetCurrentPowerMonitoringConsoleGroup());
         }
+    }
+
+    private int AlphabeticalSort(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)
+    {
+        var nameX = _entManager.GetComponent<MetaDataComponent>(_entManager.GetEntity(x.NetEntity)).EntityName;
+        var nameY = _entManager.GetComponent<MetaDataComponent>(_entManager.GetEntity(y.NetEntity)).EntityName;
+
+        return nameX.CompareTo(nameY);
     }
 }
 

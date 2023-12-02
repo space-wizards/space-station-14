@@ -29,10 +29,15 @@ public sealed partial class PowerMonitoringDeviceComponent : SharedPowerMonitori
     public List<string>? LoadNodes;
 
     /// <summary>
-    ///     Indicates whether the entity should be grouped with alike entities that are connected
+    ///     This entity will be grouped with entities that have the same collection name
     /// </summary>
-    [DataField("joinAlikeEntities")]
-    public bool JoinAlikeEntities = false;
+    [DataField("collectionName")]
+    public string CollectionName = string.Empty;
+
+    /// <summary>
+    ///     Indicates whether the entity is/should be part of a collection
+    /// </summary>
+    public bool IsCollectionMasterOrChild { get { return CollectionName != string.Empty; } }
 
     /// <summary>
     ///     Specifies the uid of the master that represents this entity
@@ -41,7 +46,7 @@ public sealed partial class PowerMonitoringDeviceComponent : SharedPowerMonitori
     ///     Used when grouping multiple entities into a single power monitoring console entry
     /// </remarks>
     [ViewVariables]
-    public EntityUid MasterUid;
+    public EntityUid CollectionMaster;
 
     /// <summary>
     ///     Indicates if this entity represents a group of entities
@@ -50,7 +55,7 @@ public sealed partial class PowerMonitoringDeviceComponent : SharedPowerMonitori
     ///     Used when grouping multiple entities into a single power monitoring console entry
     /// </remarks>
     [ViewVariables]
-    public bool IsMaster { get { return Owner == MasterUid; } }
+    public bool IsCollectionMaster { get { return Owner == CollectionMaster; } }
 
     /// <summary>
     ///     A list of other entities that are to be represented by this entity

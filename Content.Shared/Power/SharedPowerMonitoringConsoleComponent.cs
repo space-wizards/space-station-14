@@ -10,13 +10,35 @@ namespace Content.Shared.Power;
 [Access(typeof(SharedPowerMonitoringConsoleSystem))]
 public sealed partial class PowerMonitoringConsoleComponent : Component
 {
+    /// <summary>
+    /// The EntityUid of the device that is the console's current focus
+    /// </summary>
     public EntityUid? Focus;
 
+    /// <summary>
+    /// The group that the device that is the console's current focus belongs to
+    /// </summary>
+    public PowerMonitoringConsoleGroup? FocusGroup;
+
+    /// <summary>
+    /// A dictionary of the all the nav map chunks that contain anchored power cables
+    /// </summary>
     [ViewVariables, AutoNetworkedField]
     public Dictionary<Vector2i, PowerCableChunk> AllChunks = new();
 
+    /// <summary>
+    /// A dictionary of the all the nav map chunks that contain anchored power cables
+    /// that are directly connected to the console's current focus
+    /// </summary>
     [ViewVariables, AutoNetworkedField]
     public Dictionary<Vector2i, PowerCableChunk> FocusChunks = new();
+
+    /// <summary>
+    /// A list of flags relating to currently active events of interest to the console.
+    /// E.g., power sinks, power net anomalies
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public PowerMonitoringFlags Flags = PowerMonitoringFlags.None;
 }
 
 [Serializable, NetSerializable]
@@ -25,7 +47,7 @@ public sealed class PowerCableChunk
     public readonly Vector2i Origin;
 
     /// <summary>
-    /// Bitmask for power cables, 1 for occupied and 0 for empty.
+    /// Bitmask dictionary for power cables, 1 for occupied and 0 for empty.
     /// </summary>
     public Dictionary<CableType, int> PowerCableData;
 
@@ -48,7 +70,6 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
     public PowerMonitoringConsoleEntry[] AllEntries;
     public PowerMonitoringConsoleEntry[] FocusSources;
     public PowerMonitoringConsoleEntry[] FocusLoads;
-    public PowerMonitoringFlags Flags;
 
     public PowerMonitoringConsoleBoundInterfaceState
         (double totalSources,
@@ -56,8 +77,7 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
         double totalLoads,
         PowerMonitoringConsoleEntry[] allEntries,
         PowerMonitoringConsoleEntry[] focusSources,
-        PowerMonitoringConsoleEntry[] focusLoads,
-        PowerMonitoringFlags flags)
+        PowerMonitoringConsoleEntry[] focusLoads)
     {
         TotalSources = totalSources;
         TotalBatteryUsage = totalBatteryUsage;
@@ -65,7 +85,6 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
         AllEntries = allEntries;
         FocusSources = focusSources;
         FocusLoads = focusLoads;
-        Flags = flags;
     }
 }
 

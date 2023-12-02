@@ -17,6 +17,7 @@ using Robust.Shared.Timing;
 using System.Linq;
 using System.Numerics;
 using JetBrains.Annotations;
+using Robust.Shared.Collections;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -310,6 +311,8 @@ public sealed partial class NavMapControl : MapGridControl
         // Draw walls
         if (TileGrid != null && TileGrid.Any() && !HiddenLineGroups.Contains(NavMapLineGroup.Wall))
         {
+            var edges = new ValueList<Vector2>();
+
             foreach ((var chunk, var chunkedLines) in TileGrid)
             {
                 var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
@@ -322,17 +325,29 @@ public sealed partial class NavMapControl : MapGridControl
 
                 foreach (var chunkedLine in chunkedLines)
                 {
-                    handle.DrawLine
-                    (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
-                    Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
-                    chunkedLine.Color);
+                    var start = Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
+                    var end = Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
+
+                    edges.Add(start);
+                    edges.Add(end);
+
+
+                    //handle.DrawLine
+                    //    (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
+                    //    Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
+                    //    chunkedLine.Color);
                 }
             }
+
+            if (edges.Any())
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, Color.Magenta);
         }
 
         // Draw full cable network
         if (PowerCableNetwork != null && PowerCableNetwork.Any())
         {
+            var edges = new ValueList<Vector2>();
+
             foreach ((var chunk, var chunkedLines) in PowerCableNetwork)
             {
                 var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
@@ -366,18 +381,29 @@ public sealed partial class NavMapControl : MapGridControl
 
                     else
                     {
-                        handle.DrawLine
-                            (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
-                            Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
-                            chunkedLine.Color);
+                        var start = Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
+                        var end = Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
+
+                        edges.Add(start);
+                        edges.Add(end);
+
+                        //handle.DrawLine
+                        //    (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
+                        //    Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
+                        //    chunkedLine.Color);
                     }
                 }
             }
+
+            if (edges.Any())
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, Color.Magenta);
         }
 
         // Draw focus network
         if (FocusCableNetwork != null && FocusCableNetwork.Any())
         {
+            var edges = new ValueList<Vector2>();
+
             foreach ((var chunk, var chunkedLines) in FocusCableNetwork)
             {
                 var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
@@ -411,13 +437,23 @@ public sealed partial class NavMapControl : MapGridControl
 
                     else
                     {
-                        handle.DrawLine
-                            (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
-                            Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
-                            chunkedLine.Color);
+                        var start = Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
+                        var end = Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
+
+                        edges.Add(start);
+                        edges.Add(end);
+
+
+                        //handle.DrawLine
+                        //    (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
+                        //    Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
+                        //    chunkedLine.Color);
                     }
                 }
             }
+
+            if (edges.Any())
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, Color.Magenta);
         }
 
         var curTime = Timing.RealTime;
@@ -513,7 +549,6 @@ public sealed partial class NavMapControl : MapGridControl
 
         if (PowerMonitoringConsole == null)
             return;
-        Logger.Debug("any true: " + PowerMonitoringConsole.FocusChunks.Any());
 
         FocusCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.FocusChunks, _grid);
         PowerCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.AllChunks, _grid, PowerMonitoringConsole.FocusChunks.Any());

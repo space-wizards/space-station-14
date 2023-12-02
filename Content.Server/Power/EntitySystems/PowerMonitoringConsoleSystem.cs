@@ -13,9 +13,7 @@ using Robust.Server.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
@@ -25,17 +23,22 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 {
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly SharedMapSystem _sharedMapSystem = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
     private Dictionary<EntityUid, List<(EntityUid, PowerMonitoringDeviceComponent)>> _gridDevices = new();
-    private Dictionary<EntProtoId, Dictionary<EntityUid, EntityCoordinates>> _groupableEntityCoords = new();
+    private Dictionary<string, Dictionary<EntityUid, EntityCoordinates>> _groupableEntityCoords = new();
     private Dictionary<EntityUid, PowerMonitoringDeviceComponent> _masterDevices = new();
     private Dictionary<EntityUid, Dictionary<Vector2i, PowerCableChunk>> _gridPowerCableChunks = new();
 
-    private bool _powerNetAbnormalities = false;
+    //private bool _powerNetAbnormalities = false;
     private const float RoguePowerConsumerThreshold = 100000;
 
+    // To remove
     private bool _rebuildingFocusNetwork = false;
     private bool _focusNetworkToBeRebuilt = false;
+
+    private float _updateTimer = 1.0f;
+    private const float UpdateTime = 1.0f;
 
     public override void Initialize()
     {
@@ -48,10 +51,61 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         SubscribeLocalEvent<GameRuleEndedEvent>(OnPowerGridCheckEnded);
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, RequestPowerMonitoringUpdateMessage>(OnUpdateRequestReceived);
 
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, BoundUIClosedEvent>(OnBoundUIClosed);
+
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
         SubscribeLocalEvent<CableComponent, CableAnchorStateChangedEvent>(OnCableAnchorStateChanged);
         SubscribeLocalEvent<PowerMonitoringDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchoringChanged);
         SubscribeLocalEvent<PowerMonitoringDeviceComponent, NodeGroupsRebuilt>(OnNodeGroupRebuilt);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        _updateTimer += frameTime;
+
+        if (_updateTimer >= UpdateTime)
+        {
+            _updateTimer -= UpdateTime;
+
+            foreach (var session in _trackedSessions)
+            {
+                var uis = _userInterfaceSystem.GetAllUIsForSession(session);
+
+                if (uis == null)
+                    continue;
+
+                foreach (var ui in uis)
+                {
+                    if (ui.UiKey is PowerMonitoringConsoleUiKey)
+                    {
+                        if (!EntityManager.TryGetComponent<PowerMonitoringConsoleComponent>(ui.Owner, out var console))
+                            continue;
+
+                        var consoleXform = Transform(ui.Owner);
+
+                        if (consoleXform?.GridUid == null)
+                            continue;
+
+                        if (!_gridDevices.TryGetValue(consoleXform.GridUid.Value, out var gridDevices))
+                            continue;
+
+                        foreach ((var ent, var device) in gridDevices)
+                        {
+                            // Ignore joint, non-master entities
+                            if (device.IsCollectionMasterOrChild && !device.IsCollectionMaster)
+                                continue;
+
+                            _pvsOverride.AddSessionOverride(EntityManager.GetNetEntity(ent), session, false);
+                        }
+
+                        UpdateUIState(ui.Owner, console, console.Focus, console.FocusGroup, session);
+                    }
+                }
+            }
+        }
     }
 
     public void UpdateUIState
@@ -87,11 +141,10 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         var allEntries = new List<PowerMonitoringConsoleEntry>();
         var sourcesForFocus = new List<PowerMonitoringConsoleEntry>();
         var loadsForFocus = new List<PowerMonitoringConsoleEntry>();
-        var flags = PowerMonitoringFlags.None;
+        var flags = powerMonitoringConsole.Flags;
 
-        // Check if the power grid check event is in-progress
-        if (_powerNetAbnormalities)
-            flags |= PowerMonitoringFlags.PowerNetAbnormalities;
+        // Reset RoguePowerConsumer flag
+        powerMonitoringConsole.Flags &= ~PowerMonitoringFlags.RoguePowerConsumer;
 
         // Record the load value of all non-tracked power consumers on the same grid as the console
         var powerConsumerQuery = AllEntityQuery<PowerConsumerComponent, TransformComponent>();
@@ -105,16 +158,19 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             // Flag an alert if power consumption is ridiculous
             if (powerConsumer.ReceivedPower >= RoguePowerConsumerThreshold)
-                flags |= PowerMonitoringFlags.RoguePowerConsumer;
+                powerMonitoringConsole.Flags |= PowerMonitoringFlags.RoguePowerConsumer;
 
             totalLoads += powerConsumer.DrawRate;
         }
+
+        if (powerMonitoringConsole.Flags != flags)
+            Dirty(uid, powerMonitoringConsole);
 
         // Loop over all tracked devices
         foreach ((var ent, var device) in gridDevices)
         {
             // Ignore joint, non-master entities
-            if (device.JoinAlikeEntities && !device.IsMaster)
+            if (device.IsCollectionMasterOrChild && !device.IsCollectionMaster)
                 continue;
 
             // Ignore unachored devices or those on another grid to the console
@@ -188,11 +244,6 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
         powerMonitoringConsole.Focus = focus;
 
-        // Sort all found devices alphabetically (not by power usage; otherwise their position on the UI will shift)
-        allEntries.Sort(AlphabeticalSort);
-        sourcesForFocus.Sort(AlphabeticalSort);
-        loadsForFocus.Sort(AlphabeticalSort);
-
         // Set the UI state
         _userInterfaceSystem.SetUiState(bui,
             new PowerMonitoringConsoleBoundInterfaceState
@@ -201,8 +252,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                 totalLoads,
                 allEntries.ToArray(),
                 sourcesForFocus.ToArray(),
-                loadsForFocus.ToArray(),
-                flags),
+                loadsForFocus.ToArray()),
             session);
     }
 
@@ -255,7 +305,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         }
 
         // Master devices add the power values from all entities they represent (if applicable)
-        if (device.JoinAlikeEntities && device.IsMaster)
+        if (device.IsCollectionMasterOrChild && device.IsCollectionMaster)
         {
             foreach (var child in device.ChildEntities)
             {
@@ -264,7 +314,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
                 // Safeguard to prevent infinite loops
                 if (!TryComp<PowerMonitoringDeviceComponent>(child, out var childDevice) ||
-                    (childDevice.IsMaster && childDevice.ChildEntities.Contains(uid)))
+                    (childDevice.IsCollectionMaster && childDevice.ChildEntities.Contains(uid)))
                     continue;
 
                 var childPowerValue = GetPrimaryPowerValues(child, childDevice, out var childPowerSupplied, out var childPowerUsage, out var childBatteryUsage);
@@ -302,8 +352,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
                 // Combine entities represented by an master into a single entry
-                if (entDevice.JoinAlikeEntities && !entDevice.IsMaster)
-                    ent = entDevice.MasterUid;
+                if (entDevice.IsCollectionMasterOrChild && !entDevice.IsCollectionMaster)
+                    ent = entDevice.CollectionMaster;
 
                 if (indexedSources.TryGetValue(ent, out var entry))
                 {
@@ -332,8 +382,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
                 // Combine entities represented by an master into a single entry
-                if (entDevice.JoinAlikeEntities && !entDevice.IsMaster)
-                    ent = entDevice.MasterUid;
+                if (entDevice.IsCollectionMasterOrChild && !entDevice.IsCollectionMaster)
+                    ent = entDevice.CollectionMaster;
 
                 if (indexedSources.TryGetValue(ent, out var entry))
                 {
@@ -375,11 +425,11 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
         var powerUsage = battery.CurrentReceiving;
 
-        if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device) && device.IsMaster)
+        if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device) && device.IsCollectionMaster)
         {
             foreach (var child in device.ChildEntities)
             {
-                if (TryComp<PowerNetworkBatteryComponent>(uid, out var childBattery))
+                if (TryComp<PowerNetworkBatteryComponent>(child, out var childBattery))
                     powerUsage += childBattery.CurrentReceiving;
             }
         }
@@ -413,8 +463,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
                 // Combine entities represented by an master into a single entry
-                if (entDevice.JoinAlikeEntities && !entDevice.IsMaster)
-                    ent = entDevice.MasterUid;
+                if (entDevice.IsCollectionMasterOrChild && !entDevice.IsCollectionMaster)
+                    ent = entDevice.CollectionMaster;
 
                 if (indexedLoads.TryGetValue(ent, out var entry))
                 {
@@ -443,8 +493,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
                 // Combine entities represented by an master into a single entry
-                if (entDevice.JoinAlikeEntities && !entDevice.IsMaster)
-                    ent = entDevice.MasterUid;
+                if (entDevice.IsCollectionMasterOrChild && !entDevice.IsCollectionMaster)
+                    ent = entDevice.CollectionMaster;
 
                 if (indexedLoads.TryGetValue(ent, out var entry))
                 {
@@ -473,14 +523,14 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         else if (TryComp<PowerSupplierComponent>(uid, out var entSupplier))
             supplying = entSupplier.CurrentSupply;
 
-        if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device) && device.IsMaster)
+        if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device) && device.IsCollectionMaster)
         {
             foreach (var child in device.ChildEntities)
             {
-                if (TryComp<PowerNetworkBatteryComponent>(uid, out var childBattery))
+                if (TryComp<PowerNetworkBatteryComponent>(child, out var childBattery))
                     supplying += childBattery.CurrentSupply;
 
-                else if (TryComp<PowerSupplierComponent>(uid, out var childSupplier))
+                else if (TryComp<PowerSupplierComponent>(child, out var childSupplier))
                     supplying += childSupplier.CurrentSupply;
             }
         }
@@ -498,25 +548,5 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         component.FocusChunks.Clear();
 
         Dirty(uid, component);
-    }
-
-    private bool TryGetEntProtoId(EntityUid uid, [NotNullWhen(true)] out EntProtoId? entProtoId)
-    {
-        entProtoId = null;
-        var protoId = MetaData(uid)?.EntityPrototype?.ID;
-
-        if (protoId == null)
-            return false;
-
-        entProtoId = (EntProtoId) protoId;
-        return true;
-    }
-
-    private int AlphabeticalSort(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)
-    {
-        var nameX = MetaData(EntityManager.GetEntity(x.NetEntity)).EntityName;
-        var nameY = MetaData(EntityManager.GetEntity(y.NetEntity)).EntityName;
-
-        return nameX.CompareTo(nameY);
     }
 }

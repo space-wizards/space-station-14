@@ -19,12 +19,12 @@ public sealed partial class PowerMonitoringWindow
 
     private void UpdateAllConsoleEntries
         (BoxContainer masterContainer,
-        PowerMonitoringConsoleEntry[] entries,
-        PowerMonitoringConsoleEntry[]? focusSources,
-        PowerMonitoringConsoleEntry[]? focusLoads)
+        List<PowerMonitoringConsoleEntry> entries,
+        List<PowerMonitoringConsoleEntry>? focusSources,
+        List<PowerMonitoringConsoleEntry>? focusLoads)
     {
         // Remove excess children
-        while (masterContainer.ChildCount > entries.Length)
+        while (masterContainer.ChildCount > entries.Count)
         {
             masterContainer.RemoveChild(masterContainer.GetChild(masterContainer.ChildCount - 1));
         }
@@ -33,7 +33,7 @@ public sealed partial class PowerMonitoringWindow
             return;
 
         // Add missing children
-        while (masterContainer.ChildCount < entries.Length)
+        while (masterContainer.ChildCount < entries.Count)
         {
             // Basic entry
             var entry = entries[masterContainer.ChildCount];
@@ -123,7 +123,7 @@ public sealed partial class PowerMonitoringWindow
         button.PowerValue.Text = Loc.GetString("power-monitoring-window-value", ("value", entry.PowerValue));
     }
 
-    private void UpdateEntrySourcesAndLoads(BoxContainer masterContainer, BoxContainer currentContainer, PowerMonitoringConsoleEntry[]? entries, SpriteSpecifier.Texture icon)
+    private void UpdateEntrySourcesAndLoads(BoxContainer masterContainer, BoxContainer currentContainer, List<PowerMonitoringConsoleEntry>? entries, SpriteSpecifier.Texture icon)
     {
         if (currentContainer == null)
             return;
@@ -135,13 +135,13 @@ public sealed partial class PowerMonitoringWindow
         }
 
         // Remove excess children
-        while (currentContainer.ChildCount > entries.Length)
+        while (currentContainer.ChildCount > entries.Count)
         {
             currentContainer.RemoveChild(currentContainer.GetChild(currentContainer.ChildCount - 1));
         }
 
         // Add missing children
-        while (currentContainer.ChildCount < entries.Length)
+        while (currentContainer.ChildCount < entries.Count)
         {
             var entry = entries[currentContainer.ChildCount];
             var subEntry = new PowerMonitoringWindowSubEntry(entry);

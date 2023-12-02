@@ -91,8 +91,6 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
     private List<Node> FloodFillNode(Node rootNode)
     {
-        Logger.Debug("flooding nodes");
-
         // Slower than the normal node flood fill, but re-using the FloodGen field was causing issues
         var allNodes = new HashSet<Node>();
         var stack = new Stack<Node>();
@@ -110,7 +108,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
                 stack.Push(reachable);
             }
         }
-        Logger.Debug("got nodes: " + allNodes.Count);
+
         return allNodes.ToList();
     }
 }

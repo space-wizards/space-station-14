@@ -2,7 +2,7 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Power.Components;
 using Content.Shared.Pinpointer;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Map;
 using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
@@ -10,9 +10,9 @@ namespace Content.Server.Power.EntitySystems;
 internal sealed partial class PowerMonitoringConsoleSystem
 {
     // Groups an entity based on its prototype
-    private void AssignEntityToMasterGroup(EntityUid uid, PowerMonitoringDeviceComponent component)
+    private void AssignEntityToMasterGroup(EntityUid uid, PowerMonitoringDeviceComponent component, EntityCoordinates coords)
     {
-        if (!component.JoinAlikeEntities)
+        if (!component.IsCollectionMasterOrChild)
             return;
 
         var protoId = MetaData(uid).EntityPrototype?.ID;
@@ -20,23 +20,21 @@ internal sealed partial class PowerMonitoringConsoleSystem
         if (protoId == null)
             return;
 
-        var entProtoId = (EntProtoId) protoId;
+        if (!_groupableEntityCoords.ContainsKey(component.CollectionName))
+            _groupableEntityCoords[component.CollectionName] = new();
 
-        if (!_groupableEntityCoords.ContainsKey(entProtoId))
-            _groupableEntityCoords[entProtoId] = new();
-
-        _groupableEntityCoords[entProtoId].Add(uid, Transform(uid).Coordinates);
+        _groupableEntityCoords[component.CollectionName].Add(uid, coords);
     }
 
     // Remove an entity from consideration for master assignment
     private void RemoveEntityFromMasterGroup(EntityUid uid, PowerMonitoringDeviceComponent component)
     {
-        if (!component.JoinAlikeEntities)
+        if (!component.IsCollectionMasterOrChild)
             return;
 
         _masterDevices.Remove(uid);
 
-        component.MasterUid = new EntityUid();
+        component.CollectionMaster = new EntityUid();
         component.ChildEntities.Clear();
 
         if (TryComp<NavMapTrackableComponent>(uid, out var trackable))
@@ -45,23 +43,23 @@ internal sealed partial class PowerMonitoringConsoleSystem
             Dirty(uid, trackable);
         }
 
-        if (!TryGetEntProtoId(uid, out var entProtoId) || !_groupableEntityCoords.ContainsKey(entProtoId.Value))
+        if (!_groupableEntityCoords.ContainsKey(component.CollectionName))
             return;
 
-        _groupableEntityCoords[entProtoId.Value].Remove(uid);
+        _groupableEntityCoords[component.CollectionName].Remove(uid);
     }
 
     // Designates entities as 'masters' on a per prototype and per load network basis
     // Entities which share this prototype and sit on the same load network are assigned
     // to the master that represents this device for this network. In this way you
     // can have one device represent multiple identical, connected devices
-    private void AssignMastersToEntities(EntProtoId entProtoId)
+    private void AssignMastersToEntities(string collectionName)
     {
         // Retrieve all devices of the specified prototype
-        if (!_groupableEntityCoords.TryGetValue(entProtoId, out var devices) || !devices.Any())
+        if (!_groupableEntityCoords.TryGetValue(collectionName, out var devices) || !devices.Any())
             return;
 
-        var currentMaster = devices.Last().Key;
+        var currentMaster = EntityUid.Invalid;
 
         // Note: the first device found on a given network is dubbed its master
         foreach ((var ent, var coords) in devices)
@@ -83,19 +81,19 @@ internal sealed partial class PowerMonitoringConsoleSystem
                 !container.Nodes.TryGetValue(device.LoadNode, out var loadNode) ||
                 !loadNode.ReachableNodes.Any())
             {
-                device.MasterUid = ent;
+                device.CollectionMaster = ent;
                 _masterDevices.TryAdd(ent, device);
 
                 continue;
             }
 
             // If the device has been assigned to the current master, continue on
-            if (device.MasterUid == currentMaster)
+            if (device.CollectionMaster.IsValid() && device.CollectionMaster == currentMaster)
                 continue;
 
             // Dub this device an master
             currentMaster = ent;
-            device.MasterUid = ent;
+            device.CollectionMaster = ent;
             _masterDevices.TryAdd(ent, device);
 
             // Check all other devices to see if this master should represent them
@@ -118,7 +116,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
                     _masterDevices.Remove(otherEnt);
 
                     device.ChildEntities.Add(otherEnt);
-                    otherDevice.MasterUid = ent;
+                    otherDevice.CollectionMaster = ent;
 
                     // Update the master and device NavMapTrackableComponent
                     if (trackable != null)

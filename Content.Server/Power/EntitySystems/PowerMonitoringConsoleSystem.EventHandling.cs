@@ -1,17 +1,21 @@
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
+using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using Robust.Server.GameStates;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
 
 internal sealed partial class PowerMonitoringConsoleSystem
 {
+    private HashSet<ICommonSession> _trackedSessions = new();
+
     private void OnComponentStartup(EntityUid uid, PowerMonitoringConsoleComponent component, ComponentStartup args)
     {
         var xform = Transform(uid);
@@ -30,12 +34,10 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
     private void OnDeviceAnchoringChanged(EntityUid uid, PowerMonitoringDeviceComponent component, AnchorStateChangedEvent args)
     {
-        var gridUid = Transform(uid).GridUid;
+        var xfrom = Transform(uid);
+        var gridUid = xfrom.GridUid;
 
         if (gridUid == null)
-            return;
-
-        if (!TryGetEntProtoId(uid, out var entProtoId))
             return;
 
         if (!_gridDevices.TryGetValue(gridUid.Value, out var _))
@@ -45,10 +47,10 @@ internal sealed partial class PowerMonitoringConsoleSystem
         {
             _gridDevices[gridUid.Value].Add((uid, component));
 
-            if (component.JoinAlikeEntities)
+            if (component.IsCollectionMasterOrChild)
             {
-                AssignEntityToMasterGroup(uid, component);
-                AssignMastersToEntities(entProtoId.Value);
+                AssignEntityToMasterGroup(uid, component, xfrom.Coordinates);
+                AssignMastersToEntities(component.CollectionName);
             }
         }
 
@@ -56,10 +58,10 @@ internal sealed partial class PowerMonitoringConsoleSystem
         {
             _gridDevices[gridUid.Value].Remove((uid, component));
 
-            if (component.JoinAlikeEntities)
+            if (component.IsCollectionMasterOrChild)
             {
                 RemoveEntityFromMasterGroup(uid, component);
-                AssignMastersToEntities(entProtoId.Value);
+                AssignMastersToEntities(component.CollectionName);
             }
         }
     }
@@ -102,8 +104,8 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
     public void OnNodeGroupRebuilt(EntityUid uid, PowerMonitoringDeviceComponent component, NodeGroupsRebuilt args)
     {
-        if (component.JoinAlikeEntities && TryGetEntProtoId(uid, out var entProtoId))
-            AssignMastersToEntities(entProtoId.Value);
+        if (component.IsCollectionMasterOrChild)
+            AssignMastersToEntities(component.CollectionName);
 
         if (_rebuildingFocusNetwork)
             return;
@@ -140,7 +142,6 @@ internal sealed partial class PowerMonitoringConsoleSystem
                 // This is handled when/if the node network is rebuilt 
             }
 
-            var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
             var allGrids = args.NewGrids.ToList();
 
             if (!allGrids.Contains(args.Grid))
@@ -150,39 +151,51 @@ internal sealed partial class PowerMonitoringConsoleSystem
             foreach (var grid in allGrids)
                 RefreshPowerCableGrid(grid, Comp<MapGridComponent>(grid));
 
-            // Update power monitoring consoles on the updated grid
+            // Update power monitoring consoles that stand on an updated grid
+            var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
             while (query.MoveNext(out var ent, out var console, out var entXform))
             {
-                foreach (var grid in allGrids)
-                {
-                    if (!_gridPowerCableChunks.TryGetValue(grid, out var allChunks))
-                        continue;
+                if (entXform.GridUid == null || !entXform.Anchored)
+                    continue;
 
-                    if (entXform.GridUid != grid)
-                        continue;
+                if (!allGrids.Contains(entXform.GridUid.Value))
+                    continue;
 
-                    console.AllChunks = allChunks;
-                    Dirty(ent, console);
-                }
+                if (!_gridPowerCableChunks.TryGetValue(entXform.GridUid.Value, out var allChunks))
+                    continue;
+
+                console.AllChunks = allChunks;
+                Dirty(ent, console);
             }
         }
     }
 
-    // Sends the list of tracked power monitoring devices to all player sessions with one or more power monitoring consoles open
-    // This expansion of PVS is needed so that the metadata and sprite data for these device are available to the the player
+    // Sends the list of tracked power monitoring devices to player sessions with one or more power monitoring consoles open
+    // This expansion of PVS is needed so that meta and sprite data for these device are available to the the player
     // Out-of-range devices will be automatically removed from the player PVS when the UI closes
     private void OnExpandPvsEvent(ref ExpandPvsEvent ev)
     {
-        var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var _, out var xform))
-        {
-            if (xform.GridUid == null)
-                continue;
+        if (!_trackedSessions.Contains(ev.Session))
+            return;
 
-            // Only players with the power monitoring console UI open will have their PVS expanded
-            // Note: only one player may have a given console's UI open at a time 
-            if (_userInterfaceSystem.SessionHasOpenUi(ent, PowerMonitoringConsoleUiKey.Key, ev.Session))
+        var uis = _userInterfaceSystem.GetAllUIsForSession(ev.Session);
+
+        if (uis == null)
+            return;
+
+        var checkedGrids = new List<EntityUid>();
+
+        foreach (var ui in uis)
+        {
+            if (ui.UiKey is PowerMonitoringConsoleUiKey)
             {
+                var xform = Transform(ui.Owner);
+
+                if (xform.GridUid == null || checkedGrids.Contains(xform.GridUid.Value))
+                    continue;
+
+                checkedGrids.Add(xform.GridUid.Value);
+
                 if (!_gridDevices.TryGetValue(xform.GridUid.Value, out var gridDevices))
                     continue;
 
@@ -191,33 +204,80 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
                 foreach ((var gridEnt, var device) in gridDevices)
                 {
-                    // Skip entities which are represented by a master
+                    // Skip entities which are represented by a collection master
                     // This will cut down the number of entities that need to be added
-                    if (device.JoinAlikeEntities && !device.IsMaster)
+                    if (device.IsCollectionMasterOrChild && !device.IsCollectionMaster)
                         continue;
 
                     ev.Entities.Add(gridEnt);
                 }
-
-                break;
             }
         }
     }
 
+    private void OnBoundUIOpened(EntityUid uid, PowerMonitoringConsoleComponent component, BoundUIOpenedEvent args)
+    {
+        _trackedSessions.Add(args.Session);
+    }
+
+    private void OnBoundUIClosed(EntityUid uid, PowerMonitoringConsoleComponent component, BoundUIClosedEvent args)
+    {
+        var uis = _userInterfaceSystem.GetAllUIsForSession(args.Session);
+
+        if (uis != null)
+        {
+            foreach (var ui in uis)
+            {
+                if (ui.UiKey is PowerMonitoringConsoleUiKey)
+                    return;
+            }
+        }
+
+        _trackedSessions.Remove(args.Session);
+    }
+
     private void OnUpdateRequestReceived(EntityUid uid, PowerMonitoringConsoleComponent component, RequestPowerMonitoringUpdateMessage args)
     {
-        UpdateUIState(uid, component, GetEntity(args.FocusDevice), args.FocusGroup, args.Session);
+        var focus = EntityManager.GetEntity(args.FocusDevice);
+
+        if (component.Focus != focus)
+        {
+            component.Focus = focus;
+            _focusNetworkToBeRebuilt = true;
+        }
+
+        component.FocusGroup = args.FocusGroup;
     }
 
     private void OnPowerGridCheckStarted(ref GameRuleStartedEvent ev)
     {
-        if (HasComp<PowerGridCheckRuleComponent>(ev.RuleEntity))
-            _powerNetAbnormalities = true;
+        if (!TryComp<PowerGridCheckRuleComponent>(ev.RuleEntity, out var rule))
+            return;
+
+        var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var console, out var xform))
+        {
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == rule.AffectedStation)
+            {
+                console.Flags |= PowerMonitoringFlags.PowerNetAbnormalities;
+                Dirty(uid, console);
+            }
+        }
     }
 
     private void OnPowerGridCheckEnded(ref GameRuleEndedEvent ev)
     {
-        if (HasComp<PowerGridCheckRuleComponent>(ev.RuleEntity))
-            _powerNetAbnormalities = false;
+        if (!TryComp<PowerGridCheckRuleComponent>(ev.RuleEntity, out var rule))
+            return;
+
+        var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var console, out var xform))
+        {
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == rule.AffectedStation)
+            {
+                console.Flags &= ~PowerMonitoringFlags.PowerNetAbnormalities;
+                Dirty(uid, console);
+            }
+        }
     }
 }

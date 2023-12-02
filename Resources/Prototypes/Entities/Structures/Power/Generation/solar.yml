@@ -39,7 +39,7 @@
   - type: PowerMonitoringDevice
     group: Generator
     loadNode: output
-    joinAlikeEntities: true
+    collectionName: SolarPanel
   - type: NavMapTrackable
     texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
     color: Purple
