@@ -41,6 +41,9 @@ namespace Content.Server.Decals
         private static readonly Vector2 _boundsMinExpansion = new(0.01f, 0.01f);
         private static readonly Vector2 _boundsMaxExpansion = new(1.01f, 1.01f);
 
+        private UpdatePlayerJob _updateJob;
+        private List<ICommonSession> _sessions = new();
+
         // If this ever gets parallelised then you'll want to increase the pooled count.
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
             new DefaultObjectPool<HashSet<Vector2i>>(
@@ -53,6 +56,12 @@ namespace Content.Server.Decals
         public override void Initialize()
         {
             base.Initialize();
+
+            _updateJob = new UpdatePlayerJob()
+            {
+                System = this,
+                Sessions = _sessions,
+            };
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
@@ -428,9 +437,18 @@ namespace Content.Server.Decals
 
             if (PvsEnabled)
             {
-                var players = _playerManager.Sessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
-                var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };
-                Parallel.ForEach(players, opts, UpdatePlayer);
+                _sessions.Clear();
+
+                foreach (var session in _playerManager.Sessions)
+                {
+                    if (session.Status != SessionStatus.InGame)
+                        continue;
+
+                    _sessions.Add(session);
+                }
+
+                if (_sessions.Count > 0)
+                    _parMan.ProcessNow(_updateJob, _sessions.Count);
             }
 
             _dirtyChunks.Clear();
@@ -564,5 +582,26 @@ namespace Content.Server.Decals
             ReturnToPool(updatedChunks);
             ReturnToPool(staleChunks);
         }
+
+        #region Jobs
+
+        /// <summary>
+        /// Updates per-player data for decals.
+        /// </summary>
+        private record struct UpdatePlayerJob : IParallelRobustJob
+        {
+            public int BatchSize => 2;
+
+            public DecalSystem System;
+
+            public List<ICommonSession> Sessions;
+
+            public void Execute(int index)
+            {
+                System.UpdatePlayer(Sessions[index]);
+            }
+        }
+
+        #endregion
     }
 }
