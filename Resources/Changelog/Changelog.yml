@@ -1,11 +1,4 @@
 Entries:
-- author: potato1234x
-  changes:
-  - message: Added back the old glass tiles while keeping the new ones as a fancier
-      alternative.
-    type: Add
-  id: 4774
-  time: '2023-09-06T21:41:53.0000000+00:00'
 - author: Endecc
   changes:
   - message: Secure crates are now craftable with 5 steel and 2 LV cable
@@ -3606,3 +3599,28 @@ Entries:
     type: Tweak
   id: 5233
   time: '2023-11-30T23:06:30.0000000+00:00'
+- author: Nonne
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E 8 \u043D\u043E\
+      \u0432\u044B\u0445 \u0433\u043E\u043B\u043E\u0441\u043E\u0432 \u0427\u0443\u0432\
+      \u0430\u043A, \u0410\u0441\u0442\u0440\u0438\u0434, \u041C\u0430\u0432\u0435\
+      \u043D \u0427\u0451\u0440\u043D\u044B\u0439 \u0412\u0435\u0440\u0435\u0441\u043A\
+      , \u041D\u0430\u0437\u0438\u0440, \u0414\u0436\u0435\u043A\u0438 \u0423\u044D\
+      \u043B\u043B\u0441, \u0417\u043B\u0430\u044F \u0422\u0430\u043B\u0438\u044F\
+      , \u0410\u043D\u0434\u0443\u0438\u043D \u0420\u0438\u043D\u043D \u0438 \u0411\
+      \u0440\u0443\u043A\u0430\u043D."
+    type: Add
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5234
+  time: '2023-12-02T13:59:00.0000000+00:00'
