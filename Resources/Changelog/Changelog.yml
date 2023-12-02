@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Microwaves now become bloodstained if you microwave animals inside
-      of them. Who was doing this?', type: Add}
-  id: 4737
-  time: '2023-09-03T04:03:05.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: The HAMTR and Vim now have builtin scrubbers to remove the risk of carbon
@@ -2902,3 +2896,8 @@ Entries:
   - {message: Tacos can be eaten by Lizards now. It's fricken Taco Tuesday!, type: Fix}
   id: 5236
   time: '2023-12-01T22:27:09.0000000+00:00'
+- author: Rainbeon
+  changes:
+  - {message: Cyborgs can now speak while in a Critical state., type: Tweak}
+  id: 5237
+  time: '2023-12-02T00:25:20.0000000+00:00'
