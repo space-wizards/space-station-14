@@ -208,7 +208,7 @@
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
     state: stalagmite5
-    
+
 - type: entity
   parent: FloraStalagmite1
   id: FloraStalagmite6
@@ -456,28 +456,28 @@
   components:
   - type: Sprite
     state: tree02
-    
+
 - type: entity
   parent: ShadowTree01
   id: ShadowTree03
   components:
   - type: Sprite
     state: tree03
-    
+
 - type: entity
   parent: ShadowTree01
   id: ShadowTree04
   components:
   - type: Sprite
     state: tree04
-    
+
 - type: entity
   parent: ShadowTree01
   id: ShadowTree05
   components:
   - type: Sprite
     state: tree05
-    
+
 - type: entity
   parent: ShadowTree01
   id: ShadowTree06
