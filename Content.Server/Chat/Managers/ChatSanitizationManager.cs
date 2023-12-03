@@ -28,9 +28,11 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "T_T", "chatsan-cries" },
         { "Т_Т", "chatsan-cries" }, // cyrillic T
         { "=_(", "chatsan-cries" },
-        { "!с", "chatsan-laughs" },
+        { "!см", "chatsan-laughs" },
+        { "!св", "chatsan-whistle" },
         { "!в", "chatsan-sighs" },
         { "!х", "chatsan-claps" },
+        { "!п", "chatsan-cries" },
         { "!щ", "chatsan-snaps" },
         //imperial rus replace end @keeyn
         // I could've done this with regex, but felt it wasn't the right idea.
