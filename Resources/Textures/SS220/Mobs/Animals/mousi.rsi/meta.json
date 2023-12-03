@@ -1,0 +1,28 @@
+{
+  "version": 1,
+    "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+    "copyright": "Made by Meower / Whitly for SS220",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "running",
+      "directions": 4
+    },
+    {
+      "name": "running-unshaded",
+      "directions": 4
+    },
+    {
+      "name": "dead"
+    },
+    {
+      "name": "sleeping"
+    },
+    {
+      "name": "crit"
+    }
+  ]
+}

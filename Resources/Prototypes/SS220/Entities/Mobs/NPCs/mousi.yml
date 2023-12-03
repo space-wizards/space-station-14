@@ -1,0 +1,191 @@
+# EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: entity
+  id: LeftHandMousi
+  name: animal hands
+  parent: [PartAnimal, BaseLeftHand]
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: "l_hand"
+  - type: BodyPart
+    partType: Hand
+    symmetry: Left
+
+- type: entity
+  id: RightHandMousi
+  name: animal hands
+  parent: [PartAnimal, BaseRightHand]
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: "r_hand"
+  - type: BodyPart
+    partType: Hand
+    symmetry: Right
+
+- type: body
+  id: Mousi
+  name: "Mousi"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - l-hand
+      - r-hand
+      - legs
+      organs:
+        lungs: OrganAnimalLungs
+        stomach: OrganAnimalStomach
+        liver: OrganAnimalLiver
+        heart: OrganAnimalHeart
+        kidneys: OrganAnimalKidneys
+    l-hand:
+      part: LeftHandMousi
+    r-hand:
+      part: RightHandMousi
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal
+
+- type: inventoryTemplate
+  id: mousi
+  slots:
+  - name: ears
+    slotTexture: ears
+    slotFlags: EARS
+    slotGroup: MainHotbar
+    stripTime: 3
+    uiWindowPos: 1,2
+    strippingWindowPos: 1,2
+    displayName: Ears
+  - name: mask
+    slotTexture: mask
+    slotFlags: MASK
+    uiWindowPos: 1,1
+    strippingWindowPos: 1,1
+    displayName: Mask
+  - name: id
+    slotTexture: id
+    slotFlags: IDCARD
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 2,1
+    strippingWindowPos: 2,4
+    displayName: ID
+
+- type: entity
+  name: Мауси
+  id: MobMousi
+  parent: SimpleMobBase
+  description: Пиип?...
+  components:
+  - type: NameIdentifier
+  - type: Stripping
+  - type: Strippable
+  - type: CombatMode
+  - type: Inventory
+    templateId: mousi
+    speciesId: mousi
+  - type: InventorySlots
+  - type: NpcFactionMember
+    factions:
+      - Mouse
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.25
+    damageRecovery:
+      types:
+        Asphyxiation: -0.25
+  - type: Hunger
+    baseDecayRate: 0.1
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: InteractionPopup
+    successChance: 0.8
+    interactSuccessString: hugging-success-generic-mousi
+    interactFailureString: hugging-failure-generic-mousi
+    messagePerceivedByOthers: hugging-success-generic-mousi-others
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound: /Audio/Animals/fox_squeak.ogg
+    interactFailureSound: /Audio/Effects/thudswoosh.ogg
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: SS220/Mobs/Animals/mousi.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: running
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: running-unshaded
+      shader: unshaded
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: running
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      200: Dead
+  - type: Stamina
+    critThreshold: 100
+  - type: Bloodstream
+    bloodMaxVolume: 250
+  - type: Hands
+  - type: Speech
+    speechSounds: Squeak
+    speechVerb: SmallMob
+  - type: Body
+    prototype: Mousi
+    requiredLegs: 1
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 5
+  - type: Puller
+  - type: Vocal
+    sounds:
+      Male: Mouse
+      Female: Mouse
+      Unsexed: Mouse
+  - type: TTS
+    voice: mana
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    name: Мауси
+    description: Вы большая, человекоподобная мышь.
+  - type: GhostTakeoverAvailable
