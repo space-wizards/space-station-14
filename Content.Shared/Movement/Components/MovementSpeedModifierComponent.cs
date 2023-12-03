@@ -34,7 +34,7 @@ namespace Content.Shared.Movement.Components
         public float SprintSpeedModifier = 1.0f;
 
         [AutoNetworkedField, ViewVariables]
-        public float WeightlessModifierModifier = 1.0f;
+        public float WeightlessMultiplier = 1.0f;
 
         [AutoNetworkedField, ViewVariables]
         public float AccelerationModifier = 1.0f;
@@ -142,7 +142,7 @@ namespace Content.Shared.Movement.Components
         public float CurrentSprintSpeed => SprintSpeedModifier * BaseSprintSpeed;
 
         [ViewVariables]
-        public float CurrentWeightlessModifier => WeightlessModifierModifier * WeightlessModifier;
+        public float CurrentWeightlessModifier => WeightlessMultiplier * WeightlessModifier;
 
         [ViewVariables]
         public float CurrentAcceleration => AccelerationModifier * Acceleration;

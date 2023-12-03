@@ -21,12 +21,12 @@ namespace Content.Shared.Movement.Systems
 
             if (MathHelper.CloseTo(ev.WalkSpeedModifier, move.WalkSpeedModifier) &&
                 MathHelper.CloseTo(ev.SprintSpeedModifier, move.SprintSpeedModifier) &&
-                MathHelper.CloseTo(ev.WeightlessModifier, move.WeightlessModifierModifier))
+                MathHelper.CloseTo(ev.WeightlessModifier, move.WeightlessMultiplier))
                 return;
 
             move.WalkSpeedModifier = ev.WalkSpeedModifier;
             move.SprintSpeedModifier = ev.SprintSpeedModifier;
-            move.WeightlessModifierModifier = ev.WeightlessModifier;
+            move.WeightlessMultiplier = ev.WeightlessModifier;
             Dirty(uid, move);
         }
 
