@@ -55,13 +55,6 @@
     tags:
     - ModsuitControlStart
   - type: Appearance
-  - type: ContainerContainer
-    containers:
-      cell_slot: !type:ContainerSlot
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
   - type: MechAssemblyVisuals
     statePrefix: CORE-equip
   - type: Construction
@@ -83,15 +76,6 @@
   - type: Tag
     tags:
     - ModsuitControlEnd
-  - type: PowerCellSlot
-    cellSlotId: cell_slot
-  - type: ContainerContainer
-    containers:
-      cell_slot: !type:ContainerSlot
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
   - type: Item
     size: 60000
 

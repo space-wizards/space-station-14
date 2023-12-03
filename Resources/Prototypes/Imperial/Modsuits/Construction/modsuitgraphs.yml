@@ -6,14 +6,6 @@
     edges:
     - to: modsuitconstructed
       steps:
-      - component: PowerCell
-        name: батарейку
-        doAfter: 1
-        store: battery-container
-        icon:
-          sprite: Objects/Power/power_cells.rsi
-          state: small
-
       - tag: ModsuitHelmet
         name: шлем РИГ-а
         doAfter: 2

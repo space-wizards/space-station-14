@@ -88,7 +88,7 @@
     sprite: Imperial/Modsuits/constructing_modsuit.rsi
     state: mod-core
   product: CrateModsuitsScience
-  cost: 2500
+  cost: 1750
   category: Engineering
   group: market
 
