@@ -150,6 +150,7 @@
             Slash: 7.5
             Heat: 7.5
             Blunt: -1
+            Structural: 10
     litDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
@@ -174,8 +175,8 @@
   - type: EnergySword
     litDamageBonus:
         types:
-            Slash: 17
-            Heat: 17
+            Slash: 15
+            Heat: 15
             Structural: 20
             Blunt: -4.5
     litDisarmMalus: 0.7
@@ -202,7 +203,26 @@
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
   - type: Reflect
     enabled: true
-    reflectProb: .75
+    reflects: Energy
+    reflectProb: .95
     spread: 75
+  - type: Blocking
+    passiveBlockModifier:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.3
+        Heat: 0.3
+        Stamina: 0.3
+    activeBlockModifier:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.6
+        Stamina: 0.6
+      flatReductions:
+        Heat: 1
+        Piercing: 1
   - type: UseDelay
     delay: 1

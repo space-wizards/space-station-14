@@ -129,6 +129,13 @@
         component: StaminaModifier
         time: 3
         type: Add
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 1
+        reagent: ChloralHydrate
+        amount: -3
     Medicine:
       metabolismRate: 1.0
       effects:

@@ -187,7 +187,7 @@
   - type: MeleeChemicalInjector
     transferAmount: 6
     solution: food
-    pierceArmor: true # We do a little trolling
+    pierceArmor: false
   - type: Extractable
     grindableSolutionName: food
 
