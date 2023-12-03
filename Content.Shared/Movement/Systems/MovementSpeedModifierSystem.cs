@@ -54,13 +54,9 @@ namespace Content.Shared.Movement.Systems
         /// <summary>
         /// Allows the changing of weightless speed & acceleration.
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="weightlessModifier"></param>
-        /// <param name="weightlessAcceleration"></param>
-        /// <param name="move"></param>
         public void ChangeWeightlessSpeed(EntityUid uid, float weightlessModifier, float weightlessAcceleration, MovementSpeedModifierComponent? move = null)
         {
-            if (!Resolve(uid, ref move, false))
+            if (!Resolve(uid, ref move))
                 return;
 
             move.WeightlessModifier = weightlessModifier;
@@ -72,13 +68,9 @@ namespace Content.Shared.Movement.Systems
         /// <summary>
         /// Allows the changing of weightless friction
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="weightlessFriction"></param>
-        /// <param name="weightlessFrictionNoInput"></param>
-        /// <param name="move"></param>
         public void ChangeWeightlessFriction(EntityUid uid, float weightlessFriction, float weightlessFrictionNoInput, MovementSpeedModifierComponent? move = null)
         {
-            if (!Resolve(uid, ref move, false))
+            if (!Resolve(uid, ref move))
                 return;
 
             move.WeightlessFriction = weightlessFriction;
