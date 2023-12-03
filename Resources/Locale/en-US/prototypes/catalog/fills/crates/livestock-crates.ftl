@@ -37,7 +37,7 @@ ent-CrateNPCGorilla = Gorilla crate
 ent-CrateNPCMonkeyCube = Monkey cube crate
     .desc = A crate containing three boxes of monkey cubes.
 
-ent-CrateNPCMonkeyCube = Monkey cube crate
+ent-CrateNPCKoboldCube = Kobold cube crate
     .desc = A crate containing three boxes of kobold cubes.
 
 ent-CrateNPCMouse = Mice crate

@@ -49,16 +49,16 @@
 
 - type: entity
   parent: BaseItem
-  name: monkey cube
+  name: kobold cube
   suffix: Wrapped
-  id: MonkeyCubeWrapped
-  description: Unwrap this to get a monkey cube.
+  id: KoboldCubeWrapped
+  description: Unwrap this to get a kobold cube.
   components:
   - type: Item
     size: Tiny
   - type: SpawnItemsOnUse
     items:
-      - id: MonkeyCube
+      - id: KoboldCube
     sound:
       path: /Audio/Effects/unwrap.ogg
   - type: Sprite
