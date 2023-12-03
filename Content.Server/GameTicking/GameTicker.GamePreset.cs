@@ -260,15 +260,13 @@ namespace Content.Server.GameTicking
                     //todo: what if they dont breathe lol
                     //cry deeply
 
-                    FixedPoint2 dealtDamage;
-                    if (TryComp<DamageableComponent>(playerEntity, out var damageableComp))
+                    FixedPoint2 dealtDamage = 200;
+                    if (TryComp<DamageableComponent>(playerEntity, out var damageable))
                     {
-                        TryComp<MobThresholdsComponent>(playerEntity, out var thresholdsComponent);
-                        var playerDeadThreshold = _mobThresholdSystem.GetThresholdForState((EntityUid) playerEntity, MobState.Dead, thresholdsComponent);
-                        dealtDamage = playerDeadThreshold - damageableComp.TotalDamage;
+                        TryComp<MobThresholdsComponent>(playerEntity, out var thresholds);
+                        var playerDeadThreshold = _mobThresholdSystem.GetThresholdForState((EntityUid) playerEntity, MobState.Dead, thresholds);
+                        dealtDamage = playerDeadThreshold > 0 ? playerDeadThreshold - damageable.TotalDamage : 200;
                     }
-                    else
-                        dealtDamage = 200;
 
                     DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), dealtDamage);
 
