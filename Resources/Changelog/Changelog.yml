@@ -1,9 +1,4 @@
 Entries:
-- author: qwerltaz
-  changes:
-  - {message: Air vents and scrubbers can be welded to stop gas flow., type: Add}
-  id: 4747
-  time: '2023-09-04T04:23:39.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix crusher showing popups on 1-handed swings., type: Fix}
@@ -2900,3 +2895,9 @@ Entries:
       anywhere from 0 to 60 seconds to explode., type: Add}
   id: 5246
   time: '2023-12-03T02:21:51.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Replaced the Engivend's individual inflatables with the boxed version.,
+    type: Tweak}
+  id: 5247
+  time: '2023-12-03T03:54:00.0000000+00:00'
