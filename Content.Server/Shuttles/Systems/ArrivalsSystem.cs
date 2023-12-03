@@ -36,7 +36,6 @@ public sealed class ArrivalsSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IConsoleHost _console = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -194,7 +193,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 sourceMap = station == null ? null : Transform(station.Value)?.MapUid;
                 arrivalsDelay += RoundStartFTLDuration;
                 component.FirstRun = false;
-                payload.Add("DestMap", args.TargetCoordinates.GetMapUid(_entityManager));
+                payload.Add("DestMap", Transform(args.TargetCoordinates.EntityId).MapUid);
                 payload.Add("DestTimer", ftlTime);
             }
             else
