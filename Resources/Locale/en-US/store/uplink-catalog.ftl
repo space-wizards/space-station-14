@@ -153,6 +153,12 @@ uplink-uplink-implanter-desc = Stealthily order equipment without the need for a
 uplink-deathrattle-implant-name = Box Of Deathrattle Implants
 uplink-deathrattle-implant-desc = A box containing enough deathrattle implants for the whole squad. Relays a message containing your position to the syndicate channel when you go into a critical state or die.
 
+uplink-death-acidifier-implant-name = Death Acidifier Implant
+uplink-death-acidifier-implant-desc = Completely melts the user and their equipment on use or death.
+
+uplink-micro-bomb-implanter-name = Micro Bomb Implanter
+uplink-micro-bomb-implanter-desc = Explode on death or manual activation with this implant. Destroys the body with all equipment.
+
 # Bundles
 uplink-emp-kit-name = Electrical Disruptor Kit
 uplink-emp-kit-desc = The ultimate reversal on energy-based weaponry: Disables disablers, stuns stunbatons, discharges laser guns! Contains 3 EMP grenades and an EMP implanter. Note: Does not disrupt actual firearms.

@@ -44,6 +44,9 @@
           Quantity: 4
   - type: Item
     sprite: Objects/Consumable/Food/taco.rsi
+  - type: Tag
+    tags:
+      - Meat
 
 - type: entity
   name: beef taco
@@ -145,3 +148,20 @@
         - ReagentId: Vitamin
           Quantity: 6
 
+- type: entity
+  name: soft taco
+  parent: FoodMealBase
+  id: FoodMealSoftTaco
+  description: Take a bite!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - tomato
+      - meaty
+      - onion
+  - type: Sprite
+    state: softtaco
+  - type: Tag
+    tags:
+      - Meat
