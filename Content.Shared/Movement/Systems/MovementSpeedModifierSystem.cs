@@ -87,7 +87,6 @@ namespace Content.Shared.Movement.Systems
             Dirty(uid, move);
         }
 
-        // We might want to create separate RefreshMovementFrictionModifiersEvent and RefreshMovementFrictionModifiers function that will call it
         public void ChangeFriction(EntityUid uid, float friction, float? frictionNoInput, float acceleration, MovementSpeedModifierComponent? move = null)
         {
             if (!Resolve(uid, ref move, false))
