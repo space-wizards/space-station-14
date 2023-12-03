@@ -25,11 +25,36 @@ namespace Content.Shared.Movement.Components
         public const float DefaultBaseWalkSpeed = 2.5f;
         public const float DefaultBaseSprintSpeed = 4.5f;
 
+        # region Modifiers
+
         [AutoNetworkedField, ViewVariables]
         public float WalkSpeedModifier = 1.0f;
 
         [AutoNetworkedField, ViewVariables]
         public float SprintSpeedModifier = 1.0f;
+
+        [AutoNetworkedField, ViewVariables]
+        public float WeightlessModifierModifier = 1.0f;
+
+        [AutoNetworkedField, ViewVariables]
+        public float AccelerationModifier = 1.0f;
+
+        [AutoNetworkedField, ViewVariables]
+        public float WeightlessAccelerationModifier = 1.0f;
+
+        [AutoNetworkedField, ViewVariables]
+        public float FrictionModifier = 1.0f;
+
+        [AutoNetworkedField, ViewVariables]
+        public float FrictionNoInputModifier = 1.0f;
+
+        [AutoNetworkedField, ViewVariables]
+        public float WeightlessFrictionModifier = 1.0f;
+
+        [AutoNetworkedField, ViewVariables]
+        public float WeightlessFrictionNoInputModifier = 1.0f;
+
+        # endregion Modifiers
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float _baseWalkSpeedVV
@@ -108,9 +133,35 @@ namespace Content.Shared.Movement.Components
         [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
         public float BaseSprintSpeed { get; set; } = DefaultBaseSprintSpeed;
 
+        # region Current values (with modifiers included)
+
         [ViewVariables]
         public float CurrentWalkSpeed => WalkSpeedModifier * BaseWalkSpeed;
+
         [ViewVariables]
         public float CurrentSprintSpeed => SprintSpeedModifier * BaseSprintSpeed;
+
+        [ViewVariables]
+        public float CurrentWeightlessModifier => WeightlessModifierModifier * WeightlessModifier;
+
+        [ViewVariables]
+        public float CurrentAcceleration => AccelerationModifier * Acceleration;
+
+        [ViewVariables]
+        public float CurrentWeightlessAcceleration => WeightlessAccelerationModifier * WeightlessAcceleration;
+
+        [ViewVariables]
+        public float CurrentFriction => FrictionModifier * Friction;
+
+        [ViewVariables]
+        public float? CurrentFrictionNoInput => FrictionNoInputModifier * FrictionNoInput;
+
+        [ViewVariables]
+        public float CurrentWeightlessFriction => WeightlessFrictionModifier * WeightlessFriction;
+
+        [ViewVariables]
+        public float CurrentWeightlessFrictionNoInput => WeightlessFrictionNoInputModifier * WeightlessFrictionNoInput;
+
+        # endregion Current values
     }
 }

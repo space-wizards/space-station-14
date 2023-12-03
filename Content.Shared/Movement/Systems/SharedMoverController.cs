@@ -220,26 +220,26 @@ namespace Content.Shared.Movement.Systems
             if (weightless)
             {
                 if (worldTotal != Vector2.Zero && touching)
-                    friction = moveSpeedComponent?.WeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
+                    friction = moveSpeedComponent?.CurrentWeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
                 else
-                    friction = moveSpeedComponent?.WeightlessFrictionNoInput ?? MovementSpeedModifierComponent.DefaultWeightlessFrictionNoInput;
+                    friction = moveSpeedComponent?.CurrentWeightlessFrictionNoInput ?? MovementSpeedModifierComponent.DefaultWeightlessFrictionNoInput;
 
-                weightlessModifier = moveSpeedComponent?.WeightlessModifier ?? MovementSpeedModifierComponent.DefaultWeightlessModifier;
-                accel = moveSpeedComponent?.WeightlessAcceleration ?? MovementSpeedModifierComponent.DefaultWeightlessAcceleration;
+                weightlessModifier = moveSpeedComponent?.CurrentWeightlessModifier ?? MovementSpeedModifierComponent.DefaultWeightlessModifier;
+                accel = moveSpeedComponent?.CurrentWeightlessAcceleration ?? MovementSpeedModifierComponent.DefaultWeightlessAcceleration;
             }
             else
             {
-                if (worldTotal != Vector2.Zero || moveSpeedComponent?.FrictionNoInput == null)
+                if (worldTotal != Vector2.Zero || moveSpeedComponent?.CurrentFrictionNoInput == null)
                 {
-                    friction = tileDef?.MobFriction ?? moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction;
+                    friction = tileDef?.MobFriction ?? moveSpeedComponent?.CurrentFriction ?? MovementSpeedModifierComponent.DefaultFriction;
                 }
                 else
                 {
-                    friction = tileDef?.MobFrictionNoInput ?? moveSpeedComponent.FrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput;
+                    friction = tileDef?.MobFrictionNoInput ?? moveSpeedComponent.CurrentFrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput;
                 }
 
                 weightlessModifier = 1f;
-                accel = tileDef?.MobAcceleration ?? moveSpeedComponent?.Acceleration ?? MovementSpeedModifierComponent.DefaultAcceleration;
+                accel = tileDef?.MobAcceleration ?? moveSpeedComponent?.CurrentAcceleration ?? MovementSpeedModifierComponent.DefaultAcceleration;
             }
 
             var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
