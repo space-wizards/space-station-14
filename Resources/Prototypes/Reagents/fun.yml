@@ -196,7 +196,7 @@
       - !type:HealthChange
         damage:
           types:
-             Slash : 3.5
+             Slash : 10
       - !type:PopupMessage
         type: Local
         visualType: LargeCaution
