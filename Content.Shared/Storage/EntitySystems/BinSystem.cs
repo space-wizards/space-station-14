@@ -96,23 +96,28 @@ public sealed class BinSystem : EntitySystem
         if (args.Using != null)
         {
             var canReach = args.CanAccess && args.CanInteract;
-            OnAfterInteractUsing(uid, component, new AfterInteractUsingEvent(args.User, (EntityUid) args.Using, args.Target, EntityCoordinates.Invalid, canReach));
+            InsertIntoBin(args.User, args.Target, (EntityUid) args.Using, component, false, canReach);
         }
     }
 
     private void OnAfterInteractUsing(EntityUid uid, BinComponent component, AfterInteractUsingEvent args)
     {
-        if (args.Handled || !args.CanReach)
+        InsertIntoBin(args.User, uid, args.Used, component, args.Handled, args.CanReach);
+        args.Handled = true;
+    }
+
+    private void InsertIntoBin(EntityUid user, EntityUid target, EntityUid itemInHand, BinComponent component, bool handled, bool canReach)
+    {
+        if (handled || !canReach)
             return;
 
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        if (!TryInsertIntoBin(uid, args.Used, component))
+        if (!TryInsertIntoBin(target, itemInHand, component))
             return;
 
-        _admin.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(uid):player} inserted {ToPrettyString(args.User)} into bin {ToPrettyString(uid)}.");
-        args.Handled = true;
+        _admin.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(target):player} inserted {ToPrettyString(user)} into bin {ToPrettyString(target)}.");
     }
 
     /// <summary>
