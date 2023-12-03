@@ -1,18 +1,4 @@
 Entries:
-- author: Varen
-  changes:
-  - message: FTL transit on damaged shuttles is not lethal anymore, but passengers
-      should still hold on tight and remain inside the vehicle.
-    type: Tweak
-  id: 4778
-  time: '2023-09-07T02:13:32.0000000+00:00'
-- author: Vasilis
-  changes:
-  - message: Hyposprays can inject their solutions back into beakers/jugs/whatever
-      can hold the solution.
-    type: Tweak
-  id: 4779
-  time: '2023-09-07T16:49:02.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Bananium's radiation intensity increases in large stacks now.
@@ -3643,3 +3629,26 @@ Entries:
     type: Add
   id: 5237
   time: '2023-12-03T10:58:52.0000000+00:00'
+- author: ZoNeSRuS
+  changes:
+  - message: "nerf \u0434\u0430\u0431\u043B\u0441\u0432\u043E\u0440\u0434\u0430."
+    type: Tweak
+  - message: "buf \u042D\u043D\u0435\u0440\u0433\u043E\u043C\u0435\u0447\u0430."
+    type: Tweak
+  - message: "nerf \u0441\u043C\u0435\u0440\u0442\u043E\u043A\u0440\u0430\u043F\u0438\
+      \u0432\u0430."
+    type: Tweak
+  - message: "buf \u0421\u0442\u0438\u043C\u043F\u0430\u043A\u0438."
+    type: Tweak
+  - message: "nerf \u0422\u0430\u0437\u0435\u0440\u044B."
+    type: Tweak
+  id: 5238
+  time: '2023-12-03T13:14:48.0000000+00:00'
+- author: Dexler
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0437\u0430\
+      \u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0435 \"\u041E\u0433\u043D\u0435\u043D\
+      \u043D\u044B\u0439 \u0448\u0430\u0440\"."
+    type: Fix
+  id: 5239
+  time: '2023-12-03T13:14:31.0000000+00:00'
