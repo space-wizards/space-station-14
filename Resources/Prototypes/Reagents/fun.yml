@@ -181,11 +181,11 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: false
-        ignoreResistances: true
+        scaleByQuantity: true
+        ignoreResistances: false
         damage:
           types:
-            Slash: 5
+            Slash: 0.5
       - !type:Emote
         emote: Scream
         probability: 0.7
@@ -196,7 +196,7 @@
       - !type:HealthChange
         damage:
           types:
-             Slash : 10
+             Slash : 9
       - !type:PopupMessage
         type: Local
         visualType: LargeCaution
