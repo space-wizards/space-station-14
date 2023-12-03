@@ -11,7 +11,6 @@
     access: []
   - type: StorageFill
     contents:
-    - id: EnergySword
     - id: ClothingHeadHatChameleon
     - id: ClothingUniformJumpsuitPyjamaSyndicateRed
     - id: ClothingUniformJumpsuitPyjamaSyndicatePink
@@ -93,13 +92,8 @@
   playTimeTracker: IronSquadLeader
   setPreference: false
   canBeAntag: false
-  accessGroups:
-  - Command
   access:
-  - Maintenance
-  - External
   - NuclearOperative
-  - Bar
 
 - type: playTimeTracker
   id: IronSquadLeader
@@ -134,7 +128,6 @@
     access: []
   - type: StorageFill
     contents:
-    - id: EnergySword
     - id: ClothingHeadHatChameleon
     - id: ClothingUniformJumpsuitPyjamaSyndicateRed
     - id: ClothingUniformJumpsuitPyjamaSyndicatePink
@@ -392,9 +385,6 @@
     - id: ClothingMaskNeckGaiter
     - id: ClothingUniformJumpskirtOperative
     - id: ClothingUniformJumpsuitOperative
-    - id: CloningPodMachineCircuitboard
-    - id: CloningConsoleComputerCircuitboard
-    - id: EnergySword
 
 - type: entity
   name: "рюкзак синдиката"
