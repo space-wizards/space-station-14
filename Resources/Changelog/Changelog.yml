@@ -1,10 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - message: Grog recipe now requires sugar.
-    type: Tweak
-  id: 4776
-  time: '2023-09-07T00:32:24.0000000+00:00'
 - author: Velcroboy
   changes:
   - message: Chef Velcroboy has been in the kitchen messin around with the botanicals.
@@ -3634,3 +3628,19 @@ Entries:
     type: Fix
   id: 5235
   time: '2023-12-02T20:06:03.0000000+00:00'
+- author: VladIsLove-e
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5236
+  time: '2023-12-03T10:39:40.0000000+00:00'
