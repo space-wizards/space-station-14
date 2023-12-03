@@ -1,9 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Changed a bunch of events to be more common., type: Tweak}
-  id: 4746
-  time: '2023-09-04T03:38:23.0000000+00:00'
 - author: qwerltaz
   changes:
   - {message: Air vents and scrubbers can be welded to stop gas flow., type: Add}
@@ -2899,3 +2894,9 @@ Entries:
   - {message: Fixed ninja calling in a dragon not actually spawning a dragon., type: Fix}
   id: 5245
   time: '2023-12-02T20:41:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Improvised explosive devices now have unreliable timers that can take
+      anywhere from 0 to 60 seconds to explode., type: Add}
+  id: 5246
+  time: '2023-12-03T02:21:51.0000000+00:00'
