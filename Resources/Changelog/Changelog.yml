@@ -1,12 +1,4 @@
 Entries:
-- author: Velcroboy
-  changes:
-  - message: Chef Velcroboy has been in the kitchen messin around with the botanicals.
-      New recipes have been developed for some extra "special" brownies. Careful with
-      these...
-    type: Add
-  id: 4777
-  time: '2023-09-07T01:21:14.0000000+00:00'
 - author: Varen
   changes:
   - message: FTL transit on damaged shuttles is not lethal anymore, but passengers
@@ -3644,3 +3636,10 @@ Entries:
     type: Fix
   id: 5236
   time: '2023-12-03T10:39:40.0000000+00:00'
+- author: Meower
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u041C\u0430\u0443\
+      \u0441\u0438"
+    type: Add
+  id: 5237
+  time: '2023-12-03T10:58:52.0000000+00:00'
