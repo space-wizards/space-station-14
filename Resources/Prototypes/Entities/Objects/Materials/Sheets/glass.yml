@@ -176,7 +176,6 @@
   - type: Stack
     stackType: ReinforcedGlass
     count: 1
-    node: SheetGlass
   - type: Extractable
     grindableSolutionName: rglass
   - type: SolutionContainerManager
