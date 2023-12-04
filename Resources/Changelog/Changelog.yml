@@ -1,12 +1,6 @@
 Entries:
 - author: deltanedas
   changes:
-  - {message: Armed nuclear bombs now have warning lights. Set off a nuke and watch
-      the light spin!!!, type: Tweak}
-  id: 4759
-  time: '2023-09-04T14:14:10.0000000+00:00'
-- author: deltanedas
-  changes:
   - {message: A fracture in bluespace is now causing spacemen that hitchhike on shuttles
       to be gibbed before and after FTL travel. Keep legs inside the vehicle at all
       times., type: Tweak}
@@ -2906,3 +2900,13 @@ Entries:
   - {message: Pun Pun can become a revolutionary again, type: Tweak}
   id: 5258
   time: '2023-12-04T23:09:36.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: 'Speech bubbles now display the name of whatever or whoever spoke them!
+      The options menu has a setting to disable this outright, or add a background
+      to the name for the sake of accessibility, for anyone who would like those options.',
+    type: Add}
+  - {message: The bubbles associated with emotes and LOOC now display exactly what
+      the associated message prints in your chatbox., type: Tweak}
+  id: 5259
+  time: '2023-12-04T23:10:49.0000000+00:00'
