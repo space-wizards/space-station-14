@@ -532,6 +532,7 @@
     - CannotSuicide
     - Hamster
     - VimPilot
+  - type: AlwaysRevolutionaryConvertible
   - type: Flashable
 
 - type: entity
