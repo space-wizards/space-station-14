@@ -517,7 +517,7 @@
     damageCoefficient: 0.5
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: ClothingBeltMilitaryWebbing
   id: ClothingBeltMilitaryWebbingMed
   name: medical chest rig
   description: A set of tactical webbing worn by Gorlex Marauder medic operatives.
