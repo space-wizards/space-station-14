@@ -2,7 +2,7 @@
   parent: BaseItem
   id: BlankHandyFlag
   name: blank handheld flag
-  description: "Some piece of white cloth wound on a stick. Definitely not handheld flag of France."
+  description: "Some piece of white cloth wound on a stick."
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/blank_handy_flag.rsi
@@ -26,14 +26,14 @@
   parent: BaseItem
   id: SyndieHandyFlag
   name: Syndicate handheld flag
-  description: "For truly rebel patriots. Death to NT!"
+  description: "For truly rebellious patriots. Death to NT!"
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/syndie_handy_flag.rsi
     state: icon
   - type: Item
     sprite: Objects/Misc/Handy_Flags/syndie_handy_flag.rsi
-    
+
 - type: entity
   parent: BaseItem
   id: LGBTQHandyFlag
@@ -45,7 +45,7 @@
     state: icon
   - type: Item
     sprite: Objects/Misc/Handy_Flags/lgbtq_handy_flag.rsi
-    
+
 - type: entity
   parent: BaseItem
   id: PirateHandyFlag
