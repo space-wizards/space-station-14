@@ -2,7 +2,9 @@ using System.Linq;
 using Content.IntegrationTests.Tests.Construction.Interaction;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.IntegrationTests.Tests.Weldable;
+using Content.Shared.Tools.Components;
 using Content.Server.Tools.Components;
+using Content.Shared.DoAfter;
 
 namespace Content.IntegrationTests.Tests.DoAfter;
 
@@ -50,10 +52,10 @@ public sealed class DoAfterCancellationTests : InteractionTest
         await StartConstruction(WallConstruction.Wall);
         await Interact(Steel, 5, awaitDoAfters: false);
         await CancelDoAfters();
-        Assert.That(Target.HasValue && Target.Value.IsClientSide());
 
         await Interact(Steel, 5);
-        AssertPrototype(WallConstruction.Girder);
+        ClientAssertPrototype(WallConstruction.Girder, ClientTarget);
+        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
         await Interact(Steel, 5, awaitDoAfters: false);
         await CancelDoAfters();
         AssertPrototype(WallConstruction.Girder);
@@ -84,7 +86,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         await AssertTile(Floor);
 
         // Second DoAfter cancels the first.
-        await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
+        await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.GetEntity(Player), SEntMan.GetCoordinates(TargetCoords), SEntMan.GetEntity(Target)));
         Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
         await AssertTile(Floor);
 
@@ -100,11 +102,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         await SpawnTarget(WeldableTests.Locker);
         var comp = Comp<WeldableComponent>();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(comp.Weldable, Is.True);
-            Assert.That(comp.IsWelded, Is.False);
-        });
+        Assert.That(comp.IsWelded, Is.False);
 
         await Interact(Weld, awaitDoAfters: false);
         await RunTicks(1);
@@ -116,7 +114,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
 
         // Second DoAfter cancels the first.
         // Not using helper, because it runs too many ticks & causes the do-after to finish.
-        await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
+        await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.GetEntity(Player), SEntMan.GetCoordinates(TargetCoords), SEntMan.GetEntity(Target)));
         Assert.Multiple(() =>
         {
             Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
@@ -139,7 +137,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
             Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
             Assert.That(comp.IsWelded, Is.True);
         });
-        await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
+        await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.GetEntity(Player), SEntMan.GetCoordinates(TargetCoords), SEntMan.GetEntity(Target)));
         Assert.Multiple(() =>
         {
             Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));

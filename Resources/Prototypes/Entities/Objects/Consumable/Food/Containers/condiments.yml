@@ -13,7 +13,7 @@
     sprite: Objects/Consumable/Food/condiments.rsi
   - type: Icon
     sprite: Objects/Consumable/Food/condiments.rsi
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: food
   - type: SpaceGarbage
   - type: StaticPrice
@@ -31,7 +31,8 @@
   - type: Drink
     solution: food
     refillable: false
-    openSounds:
+  - type: Openable
+    sound:
       collection: packetOpenSounds
   # Since this one is closed, the only way to insert liquid is with a syringe.
   - type: InjectableSolution
@@ -372,7 +373,8 @@
   components:
   - type: Drink
     solution: food
-    openSounds:
+  - type: Openable
+    sound:
       collection: pop
   - type: SolutionContainerManager
     solutions:
@@ -417,6 +419,9 @@
       visible: true
   - type: Icon
     state: bottle-coldsauce
+  - type: Tag
+    tags:
+      - Coldsauce
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -483,6 +488,9 @@
       visible: true
   - type: Icon
     state: bottle-hotsauce
+  - type: Tag
+    tags:
+      - Hotsauce
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -505,6 +513,9 @@
       visible: true
   - type: Icon
     state: bottle-ketchup
+  - type: Tag
+    tags:
+      - Ketchup
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -528,6 +539,9 @@
   # So there's no error.
   - type: Icon
     state: bottle-ketchup
+  - type: Tag
+    tags:
+      - BBQsauce
 
 # Shakers
 
@@ -540,7 +554,6 @@
   components:
   - type: Drink
     solution: food
-    isOpen: true
   - type: SolutionContainerManager
     solutions:
       food:

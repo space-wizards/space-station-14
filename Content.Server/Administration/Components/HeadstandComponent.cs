@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Server.Administration.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class HeadstandComponent : SharedHeadstandComponent
+public sealed partial class HeadstandComponent : SharedHeadstandComponent
 {
 
 }

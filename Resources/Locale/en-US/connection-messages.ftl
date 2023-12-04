@@ -10,20 +10,22 @@ whitelist-playercount-invalid = {$min ->
 }
 whitelist-not-whitelisted-rp = You are not whitelisted. To become whitelisted, visit our Discord (which can be found at https://spacestation14.io) and check the #rp-whitelist channel.
 
-command-whitelistadd-description = Adds the player with the given username to the server whitelist.
-command-whitelistadd-help = whitelistadd <username>
-command-whitelistadd-existing = {$username} is already on the whitelist!
-command-whitelistadd-added = {$username} added to the whitelist
-command-whitelistadd-not-found = Unable to find '{$username}'
+cmd-whitelistadd-desc = Adds the player with the given username to the server whitelist.
+cmd-whitelistadd-help = Usage: whitelistadd <username>
+cmd-whitelistadd-existing = {$username} is already on the whitelist!
+cmd-whitelistadd-added = {$username} added to the whitelist
+cmd-whitelistadd-not-found = Unable to find '{$username}'
+cmd-whitelistadd-arg-player = [player]
 
-command-whitelistremove-description = Removes the player with the given username from the server whitelist.
-command-whitelistremove-help = whitelistremove <username>
-command-whitelistremove-existing = {$username} is not on the whitelist!
-command-whitelistremove-removed = {$username} removed from the whitelist
-command-whitelistremove-not-found = Unable to find '{$username}'
+cmd-whitelistremove-desc = Removes the player with the given username from the server whitelist.
+cmd-whitelistremove-help = Usage: whitelistremove <username>
+cmd-whitelistremove-existing = {$username} is not on the whitelist!
+cmd-whitelistremove-removed = {$username} removed from the whitelist
+cmd-whitelistremove-not-found = Unable to find '{$username}'
+cmd-whitelistremove-arg-player = [player]
 
-command-kicknonwhitelisted-description = Kicks all non-whitelisted players from the server.
-command-kicknonwhitelisted-help = kicknonwhitelisted
+cmd-kicknonwhitelisted-desc = Kicks all non-whitelisted players from the server.
+cmd-kicknonwhitelisted-help = Usage: kicknonwhitelisted
 
 ban-banned-permanent = This ban will only be removed via appeal.
 ban-banned-permanent-appeal = This ban will only be removed via appeal. You can appeal at {$link}
@@ -33,7 +35,7 @@ ban-banned-2 = The ban reason is: "{$reason}"
 ban-banned-3 = Attempts to circumvent this ban such as creating a new account will be logged.
 
 soft-player-cap-full = The server is full!
-panic-bunker-account-denied = This server is in panic bunker mode. New connections are not being accepted at this time. Try again later
-panic-bunker-account-denied-reason = This server is in panic bunker mode and you were rejected. Reason: "{$reason}"
-panic-bunker-account-reason-account = The account's age must be older than {$minutes} minutes
-panic-bunker-account-reason-overall = The account's overall playtime must be greater than {$hours} hours
+panic-bunker-account-denied = This server is in panic bunker mode, often enabled as a precaution against raids. New connections by accounts not meeting certain requirements are temporarily not accepted. Try again later
+panic-bunker-account-denied-reason = This server is in panic bunker mode, often enabled as a precaution against raids. New connections by accounts not meeting certain requirements are temporarily not accepted. Try again later. Reason: "{$reason}"
+panic-bunker-account-reason-account = Your Space Station 14 account is too new. It must be older than {$minutes} minutes
+panic-bunker-account-reason-overall = Your overall playtime on the server must be greater than {$hours} hours

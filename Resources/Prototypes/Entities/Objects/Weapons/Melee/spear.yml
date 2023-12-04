@@ -28,19 +28,26 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
-    state: spear
+    layers:
+    - state: spear
+    - state: spear1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 12
     angle: 0
     animation: WeaponArcThrust
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
   - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 15
   - type: Item
-    size: 95
+    size: Ginormous
   - type: Clothing
     quickEquip: false
     slots:
@@ -52,15 +59,18 @@
   - type: SolutionContainerManager
     solutions:
       melee:
-        maxVol: 5
+        maxVol: 2
   - type: MeleeChemicalInjector
     solution: melee
   - type: RefillableSolution
     solution: melee
   - type: InjectableSolution
     solution: melee
+  - type: SolutionInjectOnCollide
+    transferAmount: 2
+    blockSlots: NONE
   - type: SolutionTransfer
-    maxTransferAmount: 5
+    maxTransferAmount: 2
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
@@ -94,6 +104,12 @@
     damage:
       types:
         Blunt: 5
+  - type: UseDelay
+    delay: 1
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: spear
 
 - type: entity
   name: reinforced spear
@@ -104,6 +120,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/reinforced_spear.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 15
@@ -123,6 +140,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_spear.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 18
@@ -142,6 +160,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/uranium_spear.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 10
@@ -153,3 +172,14 @@
         Radiation: 9
   - type: Construction
     graph: SpearUranium
+
+- type: entity
+  name: bone spear
+  parent: Spear
+  id: SpearBone
+  description: A spear made of bones.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/bone_spear.rsi
+  - type: Construction
+    graph: SpearBone

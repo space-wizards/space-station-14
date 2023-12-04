@@ -1,15 +1,17 @@
 using System.Linq;
 using Content.Server.Construction.Components;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Construction.Components;
 using Content.Shared.Exchanger;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 using Content.Shared.Wires;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Collections;
 
 namespace Content.Server.Construction;
@@ -32,31 +34,36 @@ public sealed class PartExchangerSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, PartExchangerComponent component, DoAfterEvent args)
     {
-        component.AudioStream?.Stop();
-        if (args.Cancelled || args.Handled || args.Args.Target == null)
+        if (args.Cancelled)
+        {
+            component.AudioStream = _audio.Stop(component.AudioStream);
+            return;
+        }
+
+        if (args.Handled || args.Args.Target == null)
             return;
 
-        if (!TryComp<ServerStorageComponent>(uid, out var storage) || storage.Storage == null)
+        if (!TryComp<StorageComponent>(uid, out var storage) || storage.Container == null)
             return; //the parts are stored in here
 
         var machinePartQuery = GetEntityQuery<MachinePartComponent>();
-        var machineParts = new List<MachinePartComponent>();
+        var machineParts = new List<(EntityUid, MachinePartComponent)>();
 
-        foreach (var item in storage.Storage.ContainedEntities) //get parts in RPED
+        foreach (var item in storage.Container.ContainedEntities) //get parts in RPED
         {
             if (machinePartQuery.TryGetComponent(item, out var part))
-                machineParts.Add(part);
+                machineParts.Add((item, part));
         }
 
-        TryExchangeMachineParts(args.Args.Target.Value, storage, machineParts);
-        TryConstructMachineParts(args.Args.Target.Value, storage, machineParts);
+        TryExchangeMachineParts(args.Args.Target.Value, uid, machineParts);
+        TryConstructMachineParts(args.Args.Target.Value, uid, machineParts);
 
         args.Handled = true;
     }
 
-    private void TryExchangeMachineParts(EntityUid uid, ServerStorageComponent storage, List<MachinePartComponent> machineParts)
+    private void TryExchangeMachineParts(EntityUid uid, EntityUid storageUid, List<(EntityUid part, MachinePartComponent partComp)> machineParts)
     {
-        if (!TryComp<MachineComponent>(uid, out var machine) || storage.Storage == null)
+        if (!TryComp<MachineComponent>(uid, out var machine))
             return;
 
         var machinePartQuery = GetEntityQuery<MachinePartComponent>();
@@ -69,37 +76,36 @@ public sealed class PartExchangerSystem : EntitySystem
         {
             if (machinePartQuery.TryGetComponent(item, out var part))
             {
-                machineParts.Add(part);
+                machineParts.Add((item, part));
                 _container.RemoveEntity(uid, item);
             }
         }
 
-        machineParts.Sort((x, y) => y.Rating.CompareTo(x.Rating));
+        machineParts.Sort((x, y) => y.partComp.Rating.CompareTo(x.partComp.Rating));
 
-        var updatedParts = new List<MachinePartComponent>();
+        var updatedParts = new List<(EntityUid part, MachinePartComponent partComp)>();
         foreach (var (type, amount) in macBoardComp.Requirements)
         {
-            var target = machineParts.Where(p => p.PartType == type).Take(amount);
+            var target = machineParts.Where(p => p.partComp.PartType == type).Take(amount);
             updatedParts.AddRange(target);
         }
         foreach (var part in updatedParts)
         {
-            machine.PartContainer.Insert(part.Owner, EntityManager);
+            machine.PartContainer.Insert(part.part, EntityManager);
             machineParts.Remove(part);
         }
 
         //put the unused parts back into rped. (this also does the "swapping")
-        foreach (var unused in machineParts)
+        foreach (var (unused, _) in machineParts)
         {
-            storage.Storage.Insert(unused.Owner);
-            _storage.Insert(uid, unused.Owner, null, false);
+            _storage.Insert(storageUid, unused, out _, playSound: false);
         }
         _construction.RefreshParts(uid, machine);
     }
 
-    private void TryConstructMachineParts(EntityUid uid, ServerStorageComponent storage, List<MachinePartComponent> machineParts)
+    private void TryConstructMachineParts(EntityUid uid, EntityUid storageEnt, List<(EntityUid part, MachinePartComponent partComp)> machineParts)
     {
-        if (!TryComp<MachineFrameComponent>(uid, out var machine) || storage.Storage == null)
+        if (!TryComp<MachineFrameComponent>(uid, out var machine))
             return;
 
         var machinePartQuery = GetEntityQuery<MachinePartComponent>();
@@ -112,38 +118,38 @@ public sealed class PartExchangerSystem : EntitySystem
         {
             if (machinePartQuery.TryGetComponent(item, out var part))
             {
-                machineParts.Add(part);
+                machineParts.Add((item, part));
                 _container.RemoveEntity(uid, item);
                 machine.Progress[part.PartType]--;
             }
         }
 
-        machineParts.Sort((x, y) => y.Rating.CompareTo(x.Rating));
+        machineParts.Sort((x, y) => y.partComp.Rating.CompareTo(x.partComp.Rating));
 
-        var updatedParts = new List<MachinePartComponent>();
+        var updatedParts = new List<(EntityUid part, MachinePartComponent partComp)>();
         foreach (var (type, amount) in macBoardComp.Requirements)
         {
-            var target = machineParts.Where(p => p.PartType == type).Take(amount);
+            var target = machineParts.Where(p => p.partComp.PartType == type).Take(amount);
             updatedParts.AddRange(target);
         }
-        foreach (var part in updatedParts)
+        foreach (var pair in updatedParts)
         {
+            var part = pair.partComp;
+            var partEnt = pair.part;
+
             if (!machine.Requirements.ContainsKey(part.PartType))
                 continue;
 
-            machine.PartContainer.Insert(part.Owner, EntityManager);
+            machine.PartContainer.Insert(partEnt, EntityManager);
             machine.Progress[part.PartType]++;
-            machineParts.Remove(part);
+            machineParts.Remove(pair);
         }
 
         //put the unused parts back into rped. (this also does the "swapping")
-        foreach (var unused in machineParts)
+        foreach (var (unused, _) in machineParts)
         {
-            storage.Storage.Insert(unused.Owner);
-            _storage.Insert(uid, unused.Owner, null, false);
+            _storage.Insert(storageEnt, unused, out _, playSound: false);
         }
-
-
     }
 
     private void OnAfterInteract(EntityUid uid, PartExchangerComponent component, AfterInteractEvent args)
@@ -164,13 +170,12 @@ public sealed class PartExchangerSystem : EntitySystem
             return;
         }
 
-        component.AudioStream = _audio.PlayPvs(component.ExchangeSound, uid);
+        component.AudioStream = _audio.PlayPvs(component.ExchangeSound, uid).Value.Entity;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.ExchangeDuration, new ExchangerDoAfterEvent(), uid, target: args.Target, used: uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ExchangeDuration, new ExchangerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true
         });
     }
-
 }

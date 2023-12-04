@@ -28,9 +28,10 @@
             True: { visible: true }
             False: { visible: false }
     - type: Item
-      size: 50
+      size: Normal
     - type: ItemCooldown
     - type: Speech
+      speechVerb: Robotic
     - type: Defibrillator
       zapHeal:
         types:

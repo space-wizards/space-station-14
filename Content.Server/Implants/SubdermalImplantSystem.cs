@@ -1,21 +1,24 @@
 ﻿using Content.Server.Cuffs;
+using Content.Server.Humanoid;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Server.Polymorph.Systems;
+using Content.Shared.Preferences;
 
 namespace Content.Server.Implants;
 
 public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
     [Dependency] private readonly CuffableSystem _cuffable = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly PolymorphSystem _polymorph = default!;
 
     public override void Initialize()
     {
@@ -69,19 +72,16 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
     private void OnDnaScramblerImplant(EntityUid uid, SubdermalImplantComponent component, UseDnaScramblerImplantEvent args)
     {
-        if (component.ImplantedEntity == null)
+        if (component.ImplantedEntity is not { } ent)
             return;
 
-        var newIdentity = _polymorph.PolymorphEntity(component.ImplantedEntity.Value, "Scrambled");
-
-        //checks if someone is trying to use a dna scrambler implant while already scrambled
-        if (newIdentity == null)
+        if (TryComp<HumanoidAppearanceComponent>(ent, out var humanoid))
         {
-            _popup.PopupEntity(Loc.GetString("scramble-attempt-while-scrambled-popup"), component.ImplantedEntity.Value, component.ImplantedEntity.Value);
-            return;
+            var newProfile = HumanoidCharacterProfile.RandomWithSpecies(humanoid.Species);
+            _humanoidAppearance.LoadProfile(ent, newProfile, humanoid);
+            _metaData.SetEntityName(ent, newProfile.Name);
+            _popup.PopupEntity(Loc.GetString("scramble-implant-activated-popup"), ent, ent);
         }
-
-        _popup.PopupEntity(Loc.GetString("scramble-implant-activated-popup", ("identity", newIdentity.Value)), newIdentity.Value, newIdentity.Value);
 
         args.Handled = true;
         QueueDel(uid);

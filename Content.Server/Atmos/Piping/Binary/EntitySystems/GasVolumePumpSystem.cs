@@ -9,9 +9,8 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
-using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
-using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -19,6 +18,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -33,6 +33,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
 
         public override void Initialize()
@@ -58,7 +59,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnExamined(EntityUid uid, GasVolumePumpComponent pump, ExaminedEvent args)
         {
-            if (!EntityManager.GetComponent<TransformComponent>(pump.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!EntityManager.GetComponent<TransformComponent>(uid).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             if (Loc.TryGetString("gas-volume-pump-system-examined", out var str,
@@ -83,23 +84,33 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             var inputStartingPressure = inlet.Air.Pressure;
             var outputStartingPressure = outlet.Air.Pressure;
 
+            var previouslyBlocked = pump.Blocked;
+            pump.Blocked = false;
+
             // Pump mechanism won't do anything if the pressure is too high/too low unless you overclock it.
             if ((inputStartingPressure < pump.LowerThreshold) || (outputStartingPressure > pump.HigherThreshold) && !pump.Overclocked)
-                return;
+            {
+                pump.Blocked = true;
+            }
 
             // Overclocked pumps can only force gas a certain amount.
             if ((outputStartingPressure - inputStartingPressure > pump.OverclockThreshold) && pump.Overclocked)
+            {
+                pump.Blocked = true;
+            }
+
+            if (previouslyBlocked != pump.Blocked)
+                UpdateAppearance(uid, pump);
+            if (pump.Blocked)
                 return;
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var removed = inlet.Air.RemoveVolume((float)(pump.TransferRate * args.dt));
+            var removed = inlet.Air.RemoveVolume(pump.TransferRate * args.dt);
 
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)
             {
-                var transform = Transform(uid);
-                var indices = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-                var tile = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
+                var tile = _atmosphereSystem.GetTileMixture(uid, excite: true);
 
                 if (tile != null)
                 {
@@ -128,14 +139,14 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            if (EntityManager.GetComponent<TransformComponent>(pump.Owner).Anchored)
+            if (Transform(uid).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasVolumePumpUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, pump);
             }
             else
             {
-                args.User.PopupMessageCursor(Loc.GetString("comp-gas-pump-ui-needs-anchor"));
+                _popup.PopupCursor(Loc.GetString("comp-gas-pump-ui-needs-anchor"), args.User);
             }
 
             args.Handled = true;
@@ -164,7 +175,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             _userInterfaceSystem.TrySetUiState(uid, GasVolumePumpUiKey.Key,
-                new GasVolumePumpBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(pump.Owner).EntityName, pump.TransferRate, pump.Enabled));
+                new GasVolumePumpBoundUserInterfaceState(Name(uid), pump.TransferRate, pump.Enabled));
         }
 
         private void UpdateAppearance(EntityUid uid, GasVolumePumpComponent? pump = null, AppearanceComponent? appearance = null)
@@ -172,7 +183,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!Resolve(uid, ref pump, ref appearance, false))
                 return;
 
-            _appearance.SetData(uid, PumpVisuals.Enabled, pump.Enabled, appearance);
+            if (!pump.Enabled)
+                _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.Off, appearance);
+            else if (pump.Blocked)
+                _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.Blocked, appearance);
+            else
+                _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.On, appearance);
         }
 
         private void OnPacketRecv(EntityUid uid, GasVolumePumpComponent component, DeviceNetworkPacketEvent args)

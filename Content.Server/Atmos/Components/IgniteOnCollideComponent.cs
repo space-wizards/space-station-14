@@ -3,7 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 namespace Content.Server.Atmos.Components;
 
 [RegisterComponent, Access(typeof(FlammableSystem))]
-public sealed class IgniteOnCollideComponent : Component
+public sealed partial class IgniteOnCollideComponent : Component
 {
     /// <summary>
     /// How many more times the ignition can be applied.

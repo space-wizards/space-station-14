@@ -11,7 +11,7 @@ namespace Content.Shared.Cargo.Components;
 /// Handles teleporting in requested cargo after the specified delay.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedCargoSystem))]
-public sealed class CargoTelepadComponent : Component
+public sealed partial class CargoTelepadComponent : Component
 {
     /// <summary>
     /// The base amount of time it takes to teleport from the telepad

@@ -11,7 +11,7 @@ namespace Content.Server.Salvage
     /// </summary>
     [NetworkedComponent, RegisterComponent]
     [Access(typeof(SalvageSystem))]
-    public sealed class SalvageMagnetComponent : SharedSalvageMagnetComponent
+    public sealed partial class SalvageMagnetComponent : SharedSalvageMagnetComponent
     {
         /// <summary>
         /// Maximum distance from the offset position that will be used as a salvage's spawnpoint.

@@ -1,7 +1,10 @@
 namespace Content.Server.Zombies;
 
+/// <summary>
+/// Entities with this component cannot be zombified.
+/// </summary>
 [RegisterComponent]
-public sealed class ZombieImmuneComponent : Component
+public sealed partial class ZombieImmuneComponent : Component
 {
     //still no
 }

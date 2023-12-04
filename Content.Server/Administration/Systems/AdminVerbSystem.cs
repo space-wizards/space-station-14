@@ -2,33 +2,34 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
+using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles;
 using Content.Server.Mind;
 using Content.Server.Mind.Commands;
-using Content.Server.Mind.Components;
-using Content.Server.Players;
 using Content.Server.Prayer;
+using Content.Server.Station.Systems;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Administration;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Configurable;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.GameTicking;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
+using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
@@ -48,8 +49,10 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly AdminSystem _adminSystem = default!;
         [Dependency] private readonly DisposalTubeSystem _disposalTubes = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
         [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -58,8 +61,11 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly ToolshedManager _toolshed = default!;
         [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly StationSystem _stations = default!;
+        [Dependency] private readonly StationSpawningSystem _spawning = default!;
 
-        private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
+        private readonly Dictionary<ICommonSession, EditSolutionsEui> _openSolutionUis = new();
 
         public override void Initialize()
         {
@@ -79,7 +85,7 @@ namespace Content.Server.Administration.Systems
 
         private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             var player = actor.PlayerSession;
@@ -140,6 +146,84 @@ namespace Content.Server.Administration.Systems
                         },
                         Impact = LogImpact.Medium,
                     });
+
+                    // Erase
+                    args.Verbs.Add(new Verb
+                    {
+                        Text = Loc.GetString("admin-verbs-erase"),
+                        Message = Loc.GetString("admin-verbs-erase-description"),
+                        Category = VerbCategory.Admin,
+                        Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
+                        Act = () =>
+                        {
+                            _adminSystem.Erase(targetActor.PlayerSession);
+                        },
+                        Impact = LogImpact.Extreme,
+                        ConfirmationPopup = true
+                    });
+
+                // Respawn
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("admin-player-actions-respawn"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            _console.ExecuteCommand(player, $"respawn {targetActor.PlayerSession.Name}");
+                        },
+                        ConfirmationPopup = true,
+                        // No logimpact as the command does it internally.
+                    });
+
+                    // Spawn - Like respawn but on the spot.
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("admin-player-actions-spawn"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            if (!_transformSystem.TryGetMapOrGridCoordinates(args.Target, out var coords))
+                            {
+                                _popup.PopupEntity(Loc.GetString("admin-player-spawn-failed"), args.User, args.User);
+                                return;
+                            }
+
+                            var stationUid = _stations.GetOwningStation(args.Target);
+
+                            var profile = _ticker.GetPlayerProfile(targetActor.PlayerSession);
+                            var mobUid = _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
+                            var targetMind = _mindSystem.GetMind(args.Target);
+
+                            if (targetMind != null)
+                            {
+                                _mindSystem.TransferTo(targetMind.Value, mobUid);
+                            }
+                        },
+                        ConfirmationPopup = true,
+                        Impact = LogImpact.High,
+                    });
+
+                    // Clone - Spawn but without the mind transfer, also spawns at the user's coordinates not the target's
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("admin-player-actions-clone"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            if (!_transformSystem.TryGetMapOrGridCoordinates(args.User, out var coords))
+                            {
+                                _popup.PopupEntity(Loc.GetString("admin-player-spawn-failed"), args.User, args.User);
+                                return;
+                            }
+
+                            var stationUid = _stations.GetOwningStation(args.Target);
+
+                            var profile = _ticker.GetPlayerProfile(targetActor.PlayerSession);
+                            _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
+                        },
+                        ConfirmationPopup = true,
+                        Impact = LogImpact.High,
+                    });
                 }
 
                 // Admin Logs
@@ -195,33 +279,18 @@ namespace Content.Server.Administration.Systems
                     Impact = LogImpact.Low
                 });
 
-                // Respawn
-                if (HasComp<ActorComponent>(args.Target))
-                {
-                    args.Verbs.Add(new Verb()
-                    {
-                        Text = Loc.GetString("admin-player-actions-respawn"),
-                        Category = VerbCategory.Admin,
-                        Act = () =>
-                        {
-                            _console.ExecuteCommand(player, $"respawn {actor.PlayerSession.Name}");
-                        },
-                        ConfirmationPopup = true,
-                        // No logimpact as the command does it internally.
-                    });
-                }
             }
         }
 
         private void AddDebugVerbs(GetVerbsEvent<Verb> args)
         {
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             var player = actor.PlayerSession;
 
             // Delete verb
-            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.GetCommand("delete"), null), player, out _) ?? false)
+            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.DefaultEnvironment.GetCommand("delete"), null), player, out _) ?? false)
             {
                 Verb verb = new()
                 {
@@ -236,7 +305,7 @@ namespace Content.Server.Administration.Systems
             }
 
             // Rejuvenate verb
-            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.GetCommand("rejuvenate"), null), player, out _) ?? false)
+            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.DefaultEnvironment.GetCommand("rejuvenate"), null), player, out _) ?? false)
             {
                 Verb verb = new()
                 {
@@ -250,7 +319,7 @@ namespace Content.Server.Administration.Systems
             }
 
             // Control mob verb
-            if (_groupController.CanCommand(player, "controlmob") &&
+            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.DefaultEnvironment.GetCommand("mind"), "control"), player, out _) ?? false &&
                 args.User != args.Target)
             {
                 Verb verb = new()
@@ -260,13 +329,7 @@ namespace Content.Server.Administration.Systems
                     // TODO VERB ICON control mob icon
                     Act = () =>
                     {
-                        MakeSentientCommand.MakeSentient(args.Target, EntityManager);
-
-                        var mind = player.ContentData()?.Mind;
-                        if (mind == null)
-                            return;
-
-                        _mindSystem.TransferTo(mind, args.Target, ghostCheckOverride: true);
+                        _mindSystem.ControlMob(args.User, args.Target);
                     },
                     Impact = LogImpact.High,
                     ConfirmationPopup = true
@@ -338,10 +401,12 @@ namespace Content.Server.Administration.Systems
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
                     Act = () =>
                     {
-                        var message = args.User.InRangeUnOccluded(args.Target)
+
+                        var message = ExamineSystemShared.InRangeUnOccluded(args.User, args.Target)
                             ? Loc.GetString("in-range-unoccluded-verb-on-activate-not-occluded")
                             : Loc.GetString("in-range-unoccluded-verb-on-activate-occluded");
-                        args.Target.PopupMessage(args.User, message);
+
+                        _popup.PopupEntity(message, args.Target, args.User);
                     }
                 };
                 args.Verbs.Add(verb);
@@ -349,7 +414,7 @@ namespace Content.Server.Administration.Systems
 
             // Get Disposal tube direction verb
             if (_groupController.CanCommand(player, "tubeconnections") &&
-                EntityManager.TryGetComponent<DisposalTubeComponent?>(args.Target, out var tube))
+                EntityManager.TryGetComponent(args.Target, out DisposalTubeComponent? tube))
             {
                 Verb verb = new()
                 {
@@ -376,7 +441,7 @@ namespace Content.Server.Administration.Systems
             }
 
             if (_groupController.CanAdminMenu(player) &&
-                EntityManager.TryGetComponent<ConfigurationComponent?>(args.Target, out var config))
+                EntityManager.TryGetComponent(args.Target, out ConfigurationComponent? config))
             {
                 Verb verb = new()
                 {
@@ -414,7 +479,7 @@ namespace Content.Server.Administration.Systems
             }
         }
 
-        public void OpenEditSolutionsEui(IPlayerSession session, EntityUid uid)
+        public void OpenEditSolutionsEui(ICommonSession session, EntityUid uid)
         {
             if (session.AttachedEntity == null)
                 return;
@@ -427,7 +492,7 @@ namespace Content.Server.Administration.Systems
             eui.StateDirty();
         }
 
-        public void OnEditSolutionsEuiClosed(IPlayerSession session)
+        public void OnEditSolutionsEuiClosed(ICommonSession session)
         {
             _openSolutionUis.Remove(session, out var eui);
         }

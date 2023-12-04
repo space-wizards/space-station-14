@@ -23,7 +23,6 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
         [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
         [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly ThrownItemSystem _thrownItem = default!;
 
         public override void Initialize()
@@ -48,10 +47,10 @@ namespace Content.Server.Damage.Systems
                 _sharedCameraRecoil.KickCamera(args.Target, direction);
             }
 
+            // TODO: If more stuff touches this then handle it after.
             if (TryComp<PhysicsComponent>(uid, out var physics))
             {
                 _thrownItem.LandComponent(args.Thrown, args.Component, physics, false);
-                _physics.ResetDynamics(physics);
             }
         }
 

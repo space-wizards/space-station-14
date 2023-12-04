@@ -18,4 +18,9 @@ Once this is done, you can use a multitool to convert each AME part into shieldi
 ## Fuel Economy
 The closer you are to the perfect ratio of [color=#a4885c]1:2[/color] (1 AME core to 2 fuel rate) the more efficient you'll be. You're cutting fuel efficiency to [color=#a4885c]50% and less[/color] if you're using more cores, but less fuel injection rate.
 For an example [color=#76db91]3 core and 6 fuel rate[/color] will generate [color=#76db91]240kW[/color], while [color=#f0684d]8 core 8 fuel rate[/color] will generate [color=#f0684d]160kW[/color]. Generating 80kW less while spending 2 more fuel each injection.
+
+## Upgrading the AME
+
+You can generally only upgrade the AME by getting more cores, which can be done by ordering more AME packages from [color=#a4885c]cargo[/color].
+
 </Document>

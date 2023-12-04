@@ -7,11 +7,12 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// Mostly for receiving events.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
-public sealed class MMILinkedComponent : Component
+[AutoGenerateComponentState]
+public sealed partial class MMILinkedComponent : Component
 {
     /// <summary>
     /// The MMI this entity is linked to.
     /// </summary>
-    [DataField("linkedMMI")]
+    [DataField("linkedMMI"), AutoNetworkedField]
     public EntityUid? LinkedMMI;
 }

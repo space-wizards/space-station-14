@@ -14,9 +14,9 @@
     CMOHyposprayStealObjective: 1
     RDHardsuitStealObjective: 1
     NukeDiskStealObjective: 1
-    IDComputerBoardStealObjective: 1
     MagbootsStealObjective: 1
     CorgiMeatStealObjective: 1
+    ClipboardStealObjective: 1
     CaptainGunStealObjective: 0.5
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
@@ -25,7 +25,7 @@
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
   weights:
-    KillRandomObjective: 1
+    KillRandomPersonObjective: 1
     KillRandomHeadObjective: 0.25
 
 - type: weightedRandom
@@ -33,6 +33,7 @@
   weights:
     EscapeShuttleObjective: 1
     DieObjective: 0.05
+    HijackShuttleObjective: 0.02
 
 - type: weightedRandom
   id: TraitorObjectiveGroupSocial

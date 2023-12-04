@@ -91,3 +91,19 @@
       amount: 1
   products:
     Licoxide: 1
+
+- type: reaction
+  id: PlasticSheet # It's here because "haha look you can get smooth beautiful sheets of plastic from small cylindric beaker" (jokes aside: i dont know where should i put it)
+  impact: Low
+  quantized: true
+  minTemp: 374
+  reactants:
+    Oil:
+      amount: 5
+    Ash:
+      amount: 3
+    SulfuricAcid:
+      amount: 2
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SheetPlastic1

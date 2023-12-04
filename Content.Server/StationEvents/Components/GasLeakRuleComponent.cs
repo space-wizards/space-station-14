@@ -5,7 +5,7 @@ using Robust.Shared.Map;
 namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(GasLeakRule))]
-public sealed class GasLeakRuleComponent : Component
+public sealed partial class GasLeakRuleComponent : Component
 {
     public readonly Gas[] LeakableGases =
     {

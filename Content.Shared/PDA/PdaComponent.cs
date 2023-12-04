@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.PDA
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class PdaComponent : Component
+    public sealed partial class PdaComponent : Component
     {
         public const string PdaIdSlotId = "PDA-id";
         public const string PdaPenSlotId = "PDA-pen";
@@ -33,7 +33,7 @@ namespace Content.Shared.PDA
         [ViewVariables] public EntityUid? ContainedId;
         [ViewVariables] public bool FlashlightOn;
 
-        [ViewVariables] public string? OwnerName;
+        [ViewVariables(VVAccess.ReadWrite)] public string? OwnerName;
         [ViewVariables] public string? StationName;
         [ViewVariables] public string? StationAlertLevel;
         [ViewVariables] public Color StationAlertColor = Color.White;

@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Arcade.SpaceVillain;
 
 [RegisterComponent]
-public sealed class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent
+public sealed partial class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent
 {
     /// <summary>
     /// Unused flag that can be hacked via wires.

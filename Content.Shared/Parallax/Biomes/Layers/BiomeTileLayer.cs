@@ -6,16 +6,16 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Parallax.Biomes.Layers;
 
 [Serializable, NetSerializable]
-public sealed class  BiomeTileLayer : IBiomeLayer
+public sealed partial class BiomeTileLayer : IBiomeLayer
 {
-    [DataField("noise")] public FastNoiseLite Noise { get; } = new(0);
+    [DataField("noise")] public FastNoiseLite Noise { get; private set; } = new(0);
 
     /// <inheritdoc/>
     [DataField("threshold")]
-    public float Threshold { get; } = 0.5f;
+    public float Threshold { get; private set; } = 0.5f;
 
     /// <inheritdoc/>
-    [DataField("invert")] public bool Invert { get; } = false;
+    [DataField("invert")] public bool Invert { get; private set; } = false;
 
     /// <summary>
     /// Which tile variants to use for this layer. Uses all of the tile's variants if none specified

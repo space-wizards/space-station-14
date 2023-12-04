@@ -4,6 +4,8 @@ namespace Content.Shared.StationRecords;
 
 public sealed class StationRecordKeyStorageSystem : EntitySystem
 {
+    [Dependency] private readonly SharedStationRecordsSystem _records = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -14,14 +16,14 @@ public sealed class StationRecordKeyStorageSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, StationRecordKeyStorageComponent component, ref ComponentGetState args)
     {
-        args.State = new StationRecordKeyStorageComponentState(component.Key);
+        args.State = new StationRecordKeyStorageComponentState(_records.Convert(component.Key));
     }
 
     private void OnHandleState(EntityUid uid, StationRecordKeyStorageComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not StationRecordKeyStorageComponentState state)
             return;
-        component.Key = state.Key;
+        component.Key = _records.Convert(state.Key);
     }
 
     /// <summary>
@@ -38,7 +40,7 @@ public sealed class StationRecordKeyStorageSystem : EntitySystem
         }
 
         keyStorage.Key = key;
-        Dirty(keyStorage);
+        Dirty(uid, keyStorage);
     }
 
     /// <summary>

@@ -10,7 +10,7 @@ namespace Content.Shared.Radio.Components;
 ///     This component is by entities that can contain encryption keys
 /// </summary>
 [RegisterComponent]
-public sealed class EncryptionKeyHolderComponent : Component
+public sealed partial class EncryptionKeyHolderComponent : Component
 {
     /// <summary>
     ///     Whether or not encryption keys can be removed from the headset.

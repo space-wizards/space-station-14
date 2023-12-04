@@ -16,6 +16,8 @@ using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -32,6 +34,8 @@ namespace Content.Server.Lathe
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
         [Dependency] private readonly StackSystem _stack = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -50,6 +54,42 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
             SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
+
+            SubscribeLocalEvent<LatheComponent, LatheEjectMaterialMessage>(OnLatheEjectMessage);
+        }
+
+        private void OnLatheEjectMessage(EntityUid uid, LatheComponent lathe, LatheEjectMaterialMessage message)
+        {
+            if (!lathe.CanEjectStoredMaterials)
+                return;
+
+            if (!_prototypeManager.TryIndex<MaterialPrototype>(message.Material, out var material))
+                return;
+
+            var volume = 0;
+
+            if (material.StackEntity != null)
+            {
+                var entProto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
+                if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
+                    return;
+
+                var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == message.Material).Value;
+                var sheetsToExtract = Math.Min(message.SheetsToExtract, _stack.GetMaxCount(material.StackEntity));
+
+                volume = sheetsToExtract * volumePerSheet;
+            }
+
+            if (volume > 0 && _materialStorage.TryChangeMaterialAmount(uid, message.Material, -volume))
+            {
+                var mats = _materialStorage.SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out _);
+                foreach (var mat in mats)
+                {
+                    if (TerminatingOrDeleted(mat))
+                        continue;
+                    _stack.TryMergeToContacts(mat);
+                }
+            }
         }
 
         public override void Update(float frameTime)
@@ -69,11 +109,11 @@ namespace Content.Server.Lathe
         {
             if (args.Storage != uid)
                 return;
-            var materialWhitelist = new List<string>();
+            var materialWhitelist = new List<ProtoId<MaterialPrototype>>();
             var recipes = GetAllBaseRecipes(component);
             foreach (var id in recipes)
             {
-                if (!_proto.TryIndex<LatheRecipePrototype>(id, out var proto))
+                if (!_proto.TryIndex(id, out var proto))
                     continue;
                 foreach (var (mat, _) in proto.RequiredMaterials)
                 {
@@ -89,7 +129,7 @@ namespace Content.Server.Lathe
         }
 
         [PublicAPI]
-        public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<string>? recipes, [NotNullWhen(true)] LatheComponent? component = null)
+        public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<ProtoId<LatheRecipePrototype>>? recipes, [NotNullWhen(true)] LatheComponent? component = null)
         {
             recipes = null;
             if (!Resolve(uid, ref component))
@@ -98,17 +138,17 @@ namespace Content.Server.Lathe
             return true;
         }
 
-        public List<string> GetAvailableRecipes(EntityUid uid, LatheComponent component)
+        public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component)
         {
             var ev = new LatheGetRecipesEvent(uid)
             {
-                Recipes = new List<string>(component.StaticRecipes)
+                Recipes = new List<ProtoId<LatheRecipePrototype>>(component.StaticRecipes)
             };
             RaiseLocalEvent(uid, ev);
             return ev.Recipes;
         }
 
-        public static List<string> GetAllBaseRecipes(LatheComponent component)
+        public static List<ProtoId<LatheRecipePrototype>> GetAllBaseRecipes(LatheComponent component)
         {
             return component.StaticRecipes.Union(component.DynamicRecipes).ToList();
         }
@@ -186,7 +226,7 @@ namespace Content.Server.Lathe
             var producing = component.CurrentRecipe ?? component.Queue.FirstOrDefault();
 
             var state = new LatheUpdateState(GetAvailableRecipes(uid, component), component.Queue, producing);
-            UserInterfaceSystem.SetUiState(ui, state);
+            _uiSys.SetUiState(ui, state);
         }
 
         private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)
@@ -262,7 +302,7 @@ namespace Content.Server.Lathe
 
         private void OnPartsRefresh(EntityUid uid, LatheComponent component, RefreshPartsEvent args)
         {
-            var printTimeRating = args.PartRatings[component.MachinePartPrintTime];
+            var printTimeRating = args.PartRatings[component.MachinePartPrintSpeed];
             var materialUseRating = args.PartRatings[component.MachinePartMaterialUse];
 
             component.TimeMultiplier = MathF.Pow(component.PartRatingPrintTimeMultiplier, printTimeRating - 1);

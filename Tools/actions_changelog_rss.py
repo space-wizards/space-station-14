@@ -43,6 +43,7 @@ FEED_LINK        = "https://github.com/space-wizards/space-station-14/"
 FEED_DESCRIPTION = "Changelog for the official Wizard's Den branch of Space Station 14."
 FEED_LANGUAGE    = "en-US"
 FEED_GUID_PREFIX = "ss14-changelog-wizards-"
+FEED_URL         = "https://central.spacestation14.io/changelog.xml"
 
 CHANGELOG_FILE = "Resources/Changelog/Changelog.yml"
 
@@ -56,7 +57,11 @@ TYPES_TO_EMOJI = {
 XML_NS = "https://spacestation14.com/changelog_rss"
 XML_NS_B = f"{{{XML_NS}}}"
 
+XML_NS_ATOM = "http://www.w3.org/2005/Atom"
+XML_NS_ATOM_B = f"{{{XML_NS_ATOM}}}"
+
 ET.register_namespace("ss14", XML_NS)
+ET.register_namespace("atom", XML_NS_ATOM)
 
 # From https://stackoverflow.com/a/37958106/4678631
 class NoDatesSafeLoader(yaml.SafeLoader):
@@ -113,6 +118,7 @@ def create_feed(changelog: Any, previous_items: List[ET.Element]) -> Tuple[ET.El
     ET.SubElement(channel, "language").text    = FEED_LANGUAGE
 
     ET.SubElement(channel, "lastBuildDate").text = email.utils.format_datetime(time_now)
+    ET.SubElement(channel, XML_NS_ATOM_B + "link", {"type": "application/rss+xml", "rel": "self", "href": FEED_URL})
 
     # Find the last item ID mentioned in the previous changelog
     last_changelog_id = find_last_changelog_id(previous_items)
@@ -132,7 +138,7 @@ def create_new_item_since(changelog: Any, channel: ET.Element, since: int, now: 
     attrs = {XML_NS_B + "from-id": str(since), XML_NS_B + "to-id": str(top_entry_id)}
     new_item = ET.SubElement(channel, "item", attrs)
     ET.SubElement(new_item, "pubDate").text = email.utils.format_datetime(now)
-    ET.SubElement(new_item, "guid").text = f"{FEED_GUID_PREFIX}{since}-{top_entry_id}"
+    ET.SubElement(new_item, "guid", {"isPermaLink": "false"}).text = f"{FEED_GUID_PREFIX}{since}-{top_entry_id}"
 
     ET.SubElement(new_item, "description").text = generate_description_for_entries(entries_for_item)
 

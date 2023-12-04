@@ -53,8 +53,8 @@ namespace Content.IntegrationTests.Tests.Doors
         [Test]
         public async Task OpenCloseDestroyTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var doors = entityManager.EntitySysManager.GetEntitySystem<DoorSystem>();
@@ -106,14 +106,14 @@ namespace Content.IntegrationTests.Tests.Doors
 
             server.RunTicks(5);
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task AirlockBlockTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             await server.WaitIdleAsync();
 
@@ -178,7 +178,7 @@ namespace Content.IntegrationTests.Tests.Doors
             {
                 Assert.That(Math.Abs(xformSystem.GetWorldPosition(AirlockPhysicsDummy).X - 1), Is.GreaterThan(0.01f));
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Content.Shared.Traits.Assorted;
 /// This is used for making something blind forever.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class PermanentBlindnessComponent : Component
+public sealed partial class PermanentBlindnessComponent : Component
 {
 }
 

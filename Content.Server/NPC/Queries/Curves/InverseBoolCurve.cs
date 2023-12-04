@@ -1,6 +1,6 @@
 namespace Content.Server.NPC.Queries.Curves;
 
-public sealed class InverseBoolCurve : IUtilityCurve
+public sealed partial class InverseBoolCurve : IUtilityCurve
 {
 
 }

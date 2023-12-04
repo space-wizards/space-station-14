@@ -7,7 +7,7 @@ namespace Content.Server.StationEvents.Components;
 ///     Defines basic data for a station event
 /// </summary>
 [RegisterComponent]
-public sealed class StationEventComponent : Component
+public sealed partial class StationEventComponent : Component
 {
     public const float WeightVeryLow = 0.0f;
     public const float WeightLow = 5.0f;

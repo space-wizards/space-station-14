@@ -24,7 +24,6 @@ namespace Content.Shared.SubFloor
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GridModifiedEvent>(OnGridChanged);
             SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
@@ -35,7 +34,7 @@ namespace Content.Shared.SubFloor
             SubscribeLocalEvent<SubFloorHideComponent, GetExplosionResistanceEvent>(OnGetExplosionResistance);
         }
 
-        private void OnGetExplosionResistance(EntityUid uid, SubFloorHideComponent component, GetExplosionResistanceEvent args)
+        private void OnGetExplosionResistance(EntityUid uid, SubFloorHideComponent component, ref GetExplosionResistanceEvent args)
         {
             if (component.BlockInteractions && component.IsUnderCover)
                 args.DamageCoefficient = 0;
@@ -95,14 +94,6 @@ namespace Content.Shared.SubFloor
                 return; // Anything that was here will be unanchored anyways.
 
             UpdateTile(MapManager.GetGrid(args.NewTile.GridUid), args.NewTile.GridIndices);
-        }
-
-        private void OnGridChanged(GridModifiedEvent args)
-        {
-            foreach (var modified in args.Modified)
-            {
-                UpdateTile(args.Grid, modified.position);
-            }
         }
 
         /// <summary>

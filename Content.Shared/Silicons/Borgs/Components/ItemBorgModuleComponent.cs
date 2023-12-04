@@ -9,7 +9,7 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// This is used for a <see cref="BorgModuleComponent"/> that provides items to the entity it's installed into.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
-public sealed class ItemBorgModuleComponent : Component
+public sealed partial class ItemBorgModuleComponent : Component
 {
     /// <summary>
     /// The items that are provided.

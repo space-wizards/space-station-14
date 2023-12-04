@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
 
 namespace Content.Client.Movement.Systems;
@@ -10,7 +9,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;
 
-    public void RequestZoom(EntityUid uid, Vector2 zoom, ContentEyeComponent? content = null)
+    public void RequestZoom(EntityUid uid, Vector2 zoom, bool ignoreLimit, ContentEyeComponent? content = null)
     {
         if (!Resolve(uid, ref content, false))
             return;
@@ -18,6 +17,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         RaisePredictiveEvent(new RequestTargetZoomEvent()
         {
             TargetZoom = zoom,
+            IgnoreLimit = ignoreLimit,
         });
     }
 
@@ -30,29 +30,18 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
     public void RequestToggleFov(EntityUid uid, EyeComponent? eye = null)
     {
         if (Resolve(uid, ref eye, false))
-            RequestFov(!eye.DrawFov);
+            RequestEye(!eye.DrawFov, eye.DrawLight);
     }
 
-    public void RequestFov(bool value)
+    public void RequestToggleLight(EntityUid uid, EyeComponent? eye = null)
     {
-        RaisePredictiveEvent(new RequestFovEvent()
-        {
-            Fov = value,
-        });
+        if (Resolve(uid, ref eye, false))
+            RequestEye(eye.DrawFov, !eye.DrawLight);
     }
 
-    public override void Update(float frameTime)
+
+    public void RequestEye(bool drawFov, bool drawLight)
     {
-        base.Update(frameTime);
-
-        var localPlayer = _player.LocalPlayer?.ControlledEntity;
-
-        if (!TryComp<ContentEyeComponent>(localPlayer, out var content) ||
-            !TryComp<EyeComponent>(localPlayer, out var eye))
-        {
-            return;
-        }
-
-        UpdateEye(localPlayer.Value, content, eye, frameTime);
+        RaisePredictiveEvent(new RequestEyeEvent(drawFov, drawLight));
     }
 }

@@ -16,11 +16,10 @@ using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
@@ -52,8 +51,7 @@ public sealed partial class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, EntityUnpausedEvent>(OnStamUnpaused);
         SubscribeLocalEvent<StaminaComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StaminaComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<StaminaComponent, ComponentGetState>(OnStamGetState);
-        SubscribeLocalEvent<StaminaComponent, ComponentHandleState>(OnStamHandleState);
+        SubscribeLocalEvent<StaminaComponent, AfterAutoHandleStateEvent>(OnStamHandleState);
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
 
@@ -67,31 +65,8 @@ public sealed partial class StaminaSystem : EntitySystem
         component.NextUpdate += args.PausedTime;
     }
 
-    private void OnStamGetState(EntityUid uid, StaminaComponent component, ref ComponentGetState args)
+    private void OnStamHandleState(EntityUid uid, StaminaComponent component, ref AfterAutoHandleStateEvent args)
     {
-        args.State = new StaminaComponentState()
-        {
-            Critical = component.Critical,
-            Decay = component.Decay,
-            CritThreshold = component.CritThreshold,
-            DecayCooldown = component.DecayCooldown,
-            LastUpdate = component.NextUpdate,
-            StaminaDamage = component.StaminaDamage,
-        };
-    }
-
-    private void OnStamHandleState(EntityUid uid, StaminaComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not StaminaComponentState state)
-            return;
-
-        component.Critical = state.Critical;
-        component.Decay = state.Decay;
-        component.CritThreshold = state.CritThreshold;
-        component.DecayCooldown = state.DecayCooldown;
-        component.NextUpdate = state.LastUpdate;
-        component.StaminaDamage = state.StaminaDamage;
-
         if (component.Critical)
             EnterStamCrit(uid, component);
         else
@@ -249,8 +224,9 @@ public sealed partial class StaminaSystem : EntitySystem
     /// </summary>
     public bool TryTakeStamina(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null)
     {
+        // Something that has no Stamina component automatically passes stamina checks
         if (!Resolve(uid, ref component, false))
-            return false;
+            return true;
 
         var oldStam = component.StaminaDamage;
 
@@ -282,7 +258,7 @@ public sealed partial class StaminaSystem : EntitySystem
         // Reset the decay cooldown upon taking damage.
         if (oldDamage < component.StaminaDamage)
         {
-            var nextUpdate = _timing.CurTime + TimeSpan.FromSeconds(component.DecayCooldown);
+            var nextUpdate = _timing.CurTime + TimeSpan.FromSeconds(component.Cooldown);
 
             if (component.NextUpdate < nextUpdate)
                 component.NextUpdate = nextUpdate;
@@ -393,11 +369,10 @@ public sealed partial class StaminaSystem : EntitySystem
         component.Critical = true;
         component.StaminaDamage = component.CritThreshold;
 
-        var stunTime = TimeSpan.FromSeconds(6);
-        _stunSystem.TryParalyze(uid, stunTime, true);
+        _stunSystem.TryParalyze(uid, component.StunTime, true);
 
         // Give them buffer before being able to be re-stunned
-        component.NextUpdate = _timing.CurTime + stunTime + StamCritBufferTime;
+        component.NextUpdate = _timing.CurTime + component.StunTime + StamCritBufferTime;
         EnsureComp<ActiveStaminaComponent>(uid);
         Dirty(component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} entered stamina crit");
@@ -419,18 +394,6 @@ public sealed partial class StaminaSystem : EntitySystem
         Dirty(component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
     }
-
-    [Serializable, NetSerializable]
-    private sealed class StaminaComponentState : ComponentState
-    {
-        public bool Critical;
-        public float Decay;
-        public float DecayCooldown;
-        public float StaminaDamage;
-        public float CritThreshold;
-        public TimeSpan LastUpdate;
-    }
-
 }
 
 /// <summary>

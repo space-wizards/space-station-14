@@ -1,16 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
+using Content.Server.Paper;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
-using Content.Shared.GameTicking;
-using Content.Server.Paper;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -146,7 +144,8 @@ namespace Content.Server.Cargo.Systems
             }
 
             _idCardSystem.TryFindIdCard(player, out var idCard);
-            order.SetApproverData(idCard?.FullName, idCard?.JobTitle);
+            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+            order.SetApproverData(idCard.Comp?.FullName, idCard.Comp?.JobTitle);
             _audio.PlayPvs(_audio.GetSound(component.ConfirmSound), uid);
 
             // Log order approval
@@ -215,13 +214,15 @@ namespace Content.Server.Cargo.Systems
                 !TryComp<StationBankAccountComponent>(station, out var bankAccount)) return;
 
             if (_uiSystem.TryGetUi(consoleUid, CargoConsoleUiKey.Orders, out var bui))
-                UserInterfaceSystem.SetUiState(bui, new CargoConsoleInterfaceState(
+            {
+                _uiSystem.SetUiState(bui, new CargoConsoleInterfaceState(
                     MetaData(station.Value).EntityName,
                     GetOutstandingOrderCount(orderDatabase),
                     orderDatabase.Capacity,
                     bankAccount.Balance,
                     orderDatabase.Orders
                 ));
+            }
         }
 
         private void ConsolePopup(ICommonSession session, string text)

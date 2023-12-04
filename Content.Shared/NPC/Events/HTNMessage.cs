@@ -8,6 +8,6 @@ namespace Content.Shared.NPC;
 [Serializable, NetSerializable]
 public sealed class HTNMessage : EntityEventArgs
 {
-    public EntityUid Uid;
+    public NetEntity Uid;
     public string Text = string.Empty;
 }

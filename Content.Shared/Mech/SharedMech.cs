@@ -49,14 +49,14 @@ public record struct AttemptRemoveMechEquipmentEvent()
     public bool Cancelled = false;
 }
 
-public sealed class MechToggleEquipmentEvent : InstantActionEvent
+public sealed partial class MechToggleEquipmentEvent : InstantActionEvent
 {
 }
 
-public sealed class MechOpenUiEvent : InstantActionEvent
+public sealed partial class MechOpenUiEvent : InstantActionEvent
 {
 }
 
-public sealed class MechEjectPilotEvent : InstantActionEvent
+public sealed partial class MechEjectPilotEvent : InstantActionEvent
 {
 }

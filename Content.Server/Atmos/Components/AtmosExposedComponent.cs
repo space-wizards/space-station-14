@@ -5,7 +5,7 @@
     /// Represents that entity can be exposed to Atmos
     /// </summary>
     [RegisterComponent]
-    public sealed class AtmosExposedComponent : Component
+    public sealed partial class AtmosExposedComponent : Component
     {
     }
 }

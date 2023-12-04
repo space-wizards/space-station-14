@@ -26,10 +26,10 @@ public sealed class PuddleOverlayDebugMessage : EntityEventArgs
 {
     public PuddleDebugOverlayData[] OverlayData { get; }
 
-    public EntityUid GridUid { get; }
+    public NetEntity GridUid { get; }
 
 
-    public PuddleOverlayDebugMessage(EntityUid gridUid, PuddleDebugOverlayData[] overlayData)
+    public PuddleOverlayDebugMessage(NetEntity gridUid, PuddleDebugOverlayData[] overlayData)
     {
         GridUid = gridUid;
         OverlayData = overlayData;

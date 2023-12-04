@@ -123,7 +123,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum temperature difference before the gas temperatures are just set to be equal.
         /// </summary>
-        public const float MinimumTemperatureDeltaToConsider = 0.5f;
+        public const float MinimumTemperatureDeltaToConsider = 0.1f;
 
         /// <summary>
         ///     Minimum temperature for starting superconduction.
@@ -308,25 +308,6 @@ namespace Content.Shared.Atmos
         ///     The default maximum speed powered equipment can work at, in L/s.
         /// </summary>
         public const float MaxTransferRate = 200;
-
-        /// <summary>
-        ///     What fraction of air from a spaced tile escapes every tick.
-        ///     1.0 for instant spacing, 0.2 means 20% of remaining air lost each time
-        /// </summary>
-        public const float SpacingEscapeRatio = 0.05f;
-
-        /// <summary>
-        ///     Minimum amount of air allowed on a spaced tile before it is reset to 0 immediately in kPa
-        ///     Since the decay due to SpacingEscapeRatio follows a curve, it would never reach 0.0 exactly
-        ///     unless we truncate it somewhere.
-        /// </summary>
-        public const float SpacingMinGas = 2.0f;
-
-        /// <summary>
-        ///     How much wind can go through a single tile before that tile doesn't depressurize itself
-        ///     (I.e spacing is limited in large rooms heading into smaller spaces)
-        /// </summary>
-        public const float SpacingMaxWind = 500.0f;
 
         #endregion
     }

@@ -8,11 +8,11 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Weapons.Ranged;
 
 [Prototype("hitscan")]
-public sealed class HitscanPrototype : IPrototype, IShootable
+public sealed partial class HitscanPrototype : IPrototype, IShootable
 {
     [ViewVariables]
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("staminaDamage")]
     public float StaminaDamage;

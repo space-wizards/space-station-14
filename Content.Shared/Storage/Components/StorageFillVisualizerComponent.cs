@@ -6,7 +6,7 @@ namespace Content.Shared.Storage.Components;
 ///     Change sprite depending on a storage fill percent.
 /// </summary>
 [RegisterComponent]
-public sealed class StorageFillVisualizerComponent : Component
+public sealed partial class StorageFillVisualizerComponent : Component
 {
     [DataField("maxFillLevels", required: true)]
     public int MaxFillLevels;

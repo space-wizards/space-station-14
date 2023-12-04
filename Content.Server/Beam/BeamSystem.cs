@@ -3,6 +3,8 @@ using Content.Server.Beam.Components;
 using Content.Shared.Beam;
 using Content.Shared.Beam.Components;
 using Content.Shared.Physics;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -96,7 +98,7 @@ public sealed class BeamSystem : SharedBeamSystem
 
         var distanceLength = distanceCorrection.Length();
 
-        var beamVisualizerEvent = new BeamVisualizerEvent(ent, distanceLength, userAngle, bodyState, shader);
+        var beamVisualizerEvent = new BeamVisualizerEvent(GetNetEntity(ent), distanceLength, userAngle, bodyState, shader);
         RaiseNetworkEvent(beamVisualizerEvent);
 
         if (controller != null)
@@ -119,7 +121,7 @@ public sealed class BeamSystem : SharedBeamSystem
             beamSpawnPos = beamSpawnPos.Offset(calculatedDistance.Normalized());
             var newEnt = Spawn(prototype, beamSpawnPos);
 
-            var ev = new BeamVisualizerEvent(newEnt, distanceLength, userAngle, bodyState, shader);
+            var ev = new BeamVisualizerEvent(GetNetEntity(newEnt), distanceLength, userAngle, bodyState, shader);
             RaiseNetworkEvent(ev);
         }
 

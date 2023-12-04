@@ -14,21 +14,21 @@
       - id: Scalpel
 
 - type: entity
-  id: ClothingBackpackDuffelCBURN
-  parent: ClothingBackpackDuffel
-  name: CBURN duffel bag
-  description: A duffel bag containing a variety of biological containment equipment.
+  id: ClothingBackpackDuffelCBURNFilled
+  parent: ClothingBackpackDuffelCBURN
+  suffix: Filled
   components:
   - type: StorageFill
     contents:
-      - id: WeaponShotgunDoubleBarreled
-      - id: BoxShotgunIncendiary
-        amount: 2
-      - id: GrenadeFlashBang
-        amount: 2
-      - id: PillAmbuzolPlus
-      - id: PillAmbuzol
-        amount: 4
+    - id: BoxSurvivalEngineering
+    - id: WeaponShotgunDoubleBarreled
+    - id: BoxShotgunIncendiary
+      amount: 2
+    - id: GrenadeFlashBang
+      amount: 2
+    - id: PillAmbuzolPlus
+    - id: PillAmbuzol
+      amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
@@ -146,22 +146,23 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicateCostumeCentcom
   name: CentCom official costume duffel bag
-  description: "Contains a full CentCom Official uniform set, headset and clipboard included. The headset comes without an encryption key."
+  description: "Contains a full CentCom Official uniform set, headset and clipboard included. Encryption keys and ID access are not included."
+  suffix: DO NOT MAP
   components:
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
   - type: StorageFill
     contents:
-      - id: ClothingHeadHatCaptain
+      - id: ClothingHeadHatCentcom
       - id: ClothingEyesGlassesSunglasses
       - id: ClothingUniformJumpsuitCentcomOfficial
       - id: ClothingShoesBootsJack
-      - id: ClothingHandsGlovesColorGray
-      - id: ClothingHeadsetService
+      - id: ClothingHandsGlovesColorBlack
+      - id: ClothingHeadsetAltCentComFake
       - id: ClothingOuterArmorBasic
       - id: Paper
       - id: Pen
-      - id: CentcomPDA
+      - id: CentcomPDAFake
 
 - type: entity
   parent: ClothingBackpackDuffelClown
@@ -181,10 +182,24 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateCarpSuit
+  name: carp suit duffel bag
+  description: Contains a carp suit and some friends to play with.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterSuitCarp
+    - id: PlushieCarp
+      amount: 6
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicatePyjamaBundle
   name: syndicate pyjama duffel bag
   description: Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
   components:
+  - type: Storage
+    maxTotalWeight: 44
   - type: StorageFill
     contents:
       - id: ClothingUniformJumpsuitPyjamaSyndicateRed
@@ -280,6 +295,7 @@
       - id: BoxSurvivalSyndicate
       - id: WeaponPistolViper
       - id: PinpointerNuclear
+      - id: DeathAcidifierImplanter
 
 
 - type: entity
@@ -290,18 +306,16 @@
   components:
   - type: StorageFill
     contents:
-      - id: Hemostat
-      - id: SawAdvanced
-      - id: Drill
-      - id: Cautery
-      - id: Retractor
-      - id: ScalpelAdvanced
+      - id: SyndiHypo
       - id: BoxSurvivalSyndicate
+      - id: SawAdvanced
+      - id: Cautery
       - id: CombatKnife
       - id: WeaponPistolViper
       - id: PinpointerNuclear
       - id: HandheldHealthAnalyzer
       - id: CombatMedipen
+      - id: DeathAcidifierImplanter
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle

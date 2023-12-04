@@ -10,7 +10,7 @@ using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 namespace Content.Server.Disposal.Tube.Components
 {
     [RegisterComponent]
-    public sealed class DisposalTaggerComponent : DisposalTransitComponent
+    public sealed partial class DisposalTaggerComponent : DisposalTransitComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("tag")]

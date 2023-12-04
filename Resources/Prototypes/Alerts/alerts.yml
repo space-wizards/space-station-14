@@ -6,6 +6,7 @@
   order:
     - category: Health
     - category: Stamina
+    - alertType: SuitPower
     - category: Internals
     - alertType: Fire
     - alertType: Handcuffed
@@ -176,6 +177,43 @@
   description: alerts-health-desc
   minSeverity: 0
   maxSeverity: 4
+
+- type: alert
+  id: BorgHealth
+  category: Health
+  icons:
+  - sprite: /Textures/Interface/Alerts/borg_alive.rsi
+    state: health0
+  - sprite: /Textures/Interface/Alerts/borg_alive.rsi
+    state: health1
+  - sprite: /Textures/Interface/Alerts/borg_alive.rsi
+    state: health2
+  - sprite: /Textures/Interface/Alerts/borg_alive.rsi
+    state: health3
+  - sprite: /Textures/Interface/Alerts/borg_alive.rsi
+    state: health4
+  name: alerts-health-name
+  description: alerts-health-desc
+  minSeverity: 0
+  maxSeverity: 4
+
+- type: alert
+  id: BorgCrit
+  category: Health
+  icons:
+  - sprite: /Textures/Interface/Alerts/borg_critical.rsi
+    state: critical
+  name: alerts-crit-name
+  description: alerts-crit-desc
+
+- type: alert
+  id: BorgDead
+  category: Health
+  icons:
+  - sprite: /Textures/Interface/Alerts/borg_dead.rsi
+    state: dead
+  name: alerts-dead-name
+  description: alerts-dead-desc
 
 - type: alert
   id: BorgBattery

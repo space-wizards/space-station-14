@@ -3,7 +3,6 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Clothing.Systems;
@@ -27,7 +26,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ChameleonClothingComponent, ComponentHandleState>(HandleState);
+        SubscribeLocalEvent<ChameleonClothingComponent, AfterAutoHandleStateEvent>(HandleState);
 
         PrepareAllVariants();
         _proto.PrototypesReloaded += OnProtoReloaded;
@@ -44,12 +43,8 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         PrepareAllVariants();
     }
 
-    private void HandleState(EntityUid uid, ChameleonClothingComponent component, ref ComponentHandleState args)
+    private void HandleState(EntityUid uid, ChameleonClothingComponent component, ref AfterAutoHandleStateEvent args)
     {
-        if (args.Current is not ChameleonClothingComponentState state)
-            return;
-        component.SelectedId = state.SelectedId;
-
         UpdateVisuals(uid, component);
     }
 

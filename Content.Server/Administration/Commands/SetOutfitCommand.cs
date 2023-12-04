@@ -9,9 +9,8 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands
@@ -20,7 +19,6 @@ namespace Content.Server.Administration.Commands
     public sealed class SetOutfitCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
-        [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
         public string Command => "setoutfit";
 
@@ -58,7 +56,7 @@ namespace Content.Server.Administration.Commands
 
             if (args.Length == 1)
             {
-                if (shell.Player is not IPlayerSession player)
+                if (shell.Player is not { } player)
                 {
                     shell.WriteError(Loc.GetString("set-outfit-command-is-not-player-error"));
                     return;
@@ -76,7 +74,7 @@ namespace Content.Server.Administration.Commands
 
         public static bool SetOutfit(EntityUid target, string gear, IEntityManager entityManager, Action<EntityUid, EntityUid>? onEquipped = null)
         {
-            if (!entityManager.TryGetComponent<InventoryComponent?>(target, out var inventoryComponent))
+            if (!entityManager.TryGetComponent(target, out InventoryComponent? inventoryComponent))
                 return false;
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
@@ -85,7 +83,7 @@ namespace Content.Server.Administration.Commands
 
             HumanoidCharacterProfile? profile = null;
             // Check if we are setting the outfit of a player to respect the preferences
-            if (entityManager.TryGetComponent<ActorComponent?>(target, out var actorComponent))
+            if (entityManager.TryGetComponent(target, out ActorComponent? actorComponent))
             {
                 var userId = actorComponent.PlayerSession.UserId;
                 var preferencesManager = IoCManager.Resolve<IServerPreferencesManager>();
@@ -106,7 +104,7 @@ namespace Content.Server.Administration.Commands
                     }
                     var equipmentEntity = entityManager.SpawnEntity(gearStr, entityManager.GetComponent<TransformComponent>(target).Coordinates);
                     if (slot.Name == "id" &&
-                        entityManager.TryGetComponent<PdaComponent?>(equipmentEntity, out var pdaComponent) &&
+                        entityManager.TryGetComponent(equipmentEntity, out PdaComponent? pdaComponent) &&
                         entityManager.TryGetComponent<IdCardComponent>(pdaComponent.ContainedId, out var id))
                     {
                         id.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
@@ -122,10 +120,10 @@ namespace Content.Server.Administration.Commands
             {
                 var handsSystem = entityManager.System<HandsSystem>();
                 var coords = entityManager.GetComponent<TransformComponent>(target).Coordinates;
-                foreach (var (hand, prototype) in startingGear.Inhand)
+                foreach (var prototype in startingGear.Inhand)
                 {
                     var inhandEntity = entityManager.SpawnEntity(prototype, coords);
-                    handsSystem.TryPickup(target, inhandEntity, hand, checkActionBlocker: false, handsComp: handsComponent);
+                    handsSystem.TryPickup(target, inhandEntity, checkActionBlocker: false, handsComp: handsComponent);
                 }
             }
 

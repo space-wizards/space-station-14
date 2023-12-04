@@ -27,6 +27,22 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretSecurity
+  name: security beret
+  description: A stylish clothing option for security officers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_security.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_security.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatCasa
   name: casa
   description: Cone-shaped hat
@@ -94,6 +110,17 @@
     sprite: Clothing/Head/Hats/beret_warden.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_warden.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretSeniorPhysician
+  name: physician beret
+  description: Donning the colours of medical and chemistry, physicians are the pride of this department!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_physician.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_physician.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -181,7 +208,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/chefhat.rsi
   - type: Storage
-    capacity: 5
+    maxSlots: 1
   - type: UserInterface
     interfaces:
       - key: enum.StorageUiKey.Key
@@ -352,6 +379,8 @@
     sprite: Clothing/Head/Hats/sombrero.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/sombrero.rsi
+  - type: AddAccentClothing
+    accent: SpanishAccent
 
 - type: entity
   parent: ClothingHeadBase
@@ -733,10 +762,10 @@
         offset: "0, 0.12"
     sprite: Clothing/Head/Hats/magician.rsi
   - type: Item
-    size: 10
+    size: Small
     sprite: Clothing/Head/Hats/magician.rsi
   - type: Storage
-    capacity: 10
+    maxSlots: 1
   - type: UserInterface
     interfaces:
       - key: enum.StorageUiKey.Key
@@ -761,3 +790,30 @@
     - ClothMade
     - WhitelistChameleon
     - HamsterWearable
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCentcomcap
+  name: CentCom cap
+  description: An extravagant, fancy Central Commander cap.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/comcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/comcap.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+    - HamsterWearable
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatGladiator
+  name: Gladiator helmet
+  description: Protects the head from harsh ash winds and toy spears.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/gladiator.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/gladiator.rsi

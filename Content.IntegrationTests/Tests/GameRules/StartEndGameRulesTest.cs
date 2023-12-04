@@ -15,12 +15,12 @@ public sealed class StartEndGameRulesTest
     [Test]
     public async Task TestAllConcurrent()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             Dirty = true,
             DummyTicker = false
         });
-        var server = pairTracker.Pair.Server;
+        var server = pair.Server;
         await server.WaitIdleAsync();
         var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
         var cfg = server.ResolveDependency<IConfigurationManager>();
@@ -48,6 +48,6 @@ public sealed class StartEndGameRulesTest
             Assert.That(!gameTicker.GetAddedGameRules().Any());
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

@@ -7,7 +7,7 @@ namespace Content.Shared.CombatMode.Pacification;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(PacificationSystem))]
-public sealed class PacifiedComponent : Component
+public sealed partial class PacifiedComponent : Component
 {
 
 }

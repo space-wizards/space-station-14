@@ -1,7 +1,7 @@
 ﻿namespace Content.Shared.Anomaly.Effects.Components;
 
 [RegisterComponent]
-public sealed class PyroclasticAnomalyComponent : Component
+public sealed partial class PyroclasticAnomalyComponent : Component
 {
     /// <summary>
     /// The maximum distance from which you can be ignited by the anomaly.

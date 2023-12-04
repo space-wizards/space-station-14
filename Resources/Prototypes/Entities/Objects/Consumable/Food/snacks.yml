@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_snack.yml
 # Base
 
 - type: entity
@@ -21,7 +22,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
-    size: 3
+    size: Tiny
 # Snacks
 
 # "Snacks" means food in a packet. Down the line this stuff can have multiple
@@ -41,6 +42,21 @@
   - type: Item
   - type: Food
     trash: FoodPacketBoritosTrash
+
+- type: entity
+  name: C&Ds
+  parent: FoodSnackBase
+  id: FoodSnackCnDs
+  description: Legally, we cannot say that these won't melt in your hands.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chocolate
+  - type: Sprite
+    state: cnds
+  - type: Item
+  - type: Food
+    trash: FoodPacketCnDsTrash
 
 - type: entity
   name: cheesie honkers
@@ -86,7 +102,7 @@
     state: chocolatebar
   - type: Item
     heldPrefix: chocolatebar
-    size: 3
+    size: Tiny
   - type: Tag
     tags:
       - FoodSnack
@@ -118,6 +134,8 @@
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 3
+        - ReagentId: CocoaPowder
+          Quantity: 1
 
 - type: entity
   name: energy bar
@@ -152,6 +170,25 @@
   - type: Item
 
 - type: entity
+  name: sweetie's pistachios
+  parent: FoodSnackBase
+  id: FoodSnackPistachios
+  description: Sweeties's name-brand pistachios. probably won't give you diseases. Probably.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - salty
+      - nutty
+  - type: Sprite
+    state: pistachio
+  - type: Item
+  - type: Food
+    trash: FoodPacketPistachioTrash
+  - type: Tag
+    tags:
+    - Fruit # Seed of a fruit, you can yell at me
+
+- type: entity
   name: popcorn
   parent: FoodSnackBase
   id: FoodSnackPopcorn
@@ -183,9 +220,27 @@
   - type: Item
   - type: Food
     trash: FoodPacketRaisinsTrash
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
-  name: Sus Jerky
+  name: bob's semki sunflower seeds
+  parent: FoodSnackBase
+  id: FoodSnackSemki
+  description: Proudly produced by the Bob Bobson nutritional corporation. Perfect for spitting at people.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nutty
+  - type: Sprite
+    state: semki
+  - type: Item
+  - type: Food
+    trash: FoodPacketSemkiTrash
+
+- type: entity
+  name: sus jerky
   parent: FoodSnackBase
   id: FoodSnackSus
   description: Something about this packet makes you feel incredibly uneasy. Jerky's good though.
@@ -198,6 +253,9 @@
   - type: Item
   - type: Food
     trash: FoodPacketSusTrash
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: syndi-cakes
@@ -289,7 +347,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
-    size: 1
+    size: Tiny
   - type: Food
     trash: FoodCookieFortune
 
@@ -300,7 +358,7 @@
   description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
   components:
   - type: Item
-    size: 10
+    size: Small
   - type: Tag
     tags:
       - FoodSnack
@@ -324,7 +382,7 @@
     flavors:
       - nutribrick
   - type: Item
-    size: 10
+    size: Small
   - type: Sprite
     state: nutribrick-open
   - type: Food
@@ -360,6 +418,7 @@
   id: FoodSnackMREBrownieOpen
   parent: FoodSnackBase
   name: brownie
+  suffix: MRE
   description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
   components:
   - type: FlavorProfile
@@ -385,6 +444,7 @@
   parent: BaseItem
   id: FoodPacketTrash
   description: This is rubbish.
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
@@ -409,6 +469,16 @@
   components:
   - type: Sprite
     state: boritos-trash
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketCnDsTrash
+  name: C&Ds bag
+  components:
+  - type: Sprite
+    state: cnds-trash
   - type: Item
 
 - type: entity

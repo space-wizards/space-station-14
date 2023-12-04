@@ -10,11 +10,11 @@
       - state: closed
       - state: open
         map: ["openLayer"]
-  - type: Storage
-    capacity: 36
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
-    size: 36
+    size: Normal
+  - type: Storage
+    maxSlots: 6
   - type: StorageFill
     contents:
       - id: CigPackGreen
@@ -77,3 +77,21 @@
     contents:
       - id: CigPackBlack
         amount: 6
+
+- type: entity
+  id: CigCartonMixed
+  parent: CigCartonGreen
+  name: Dan's soaked smokes
+  description: A carton containg 3 packets of Dan's soaked smokes.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/mixed.rsi
+    layers:
+      - state: closed
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/mixed.rsi
+  - type: StorageFill
+    contents:
+      - id: CigPackMixedMedical
+      - id: CigPackMixed
+      - id: CigPackMixedNasty

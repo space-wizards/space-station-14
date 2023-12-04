@@ -54,7 +54,7 @@
 
 - type: entity
   id: CrateMaterialPlasma
-  parent: CrateGenericSteel
+  parent: CratePlasma
   components:
   - type: StorageFill
     contents:
@@ -69,6 +69,15 @@
     contents:
       - id: MaterialCardboard
         amount: 2
+
+- type: entity
+  id: CrateMaterialPaper
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetPaper
+        amount: 3
 
 #- type: entity
 #  id: CrateMaterialHFuelTank

@@ -1,8 +1,8 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            Title="{Loc north-star-menu-title}">
+            Title="{Loc melee-speech-menu-title}">
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150" >
-        <Label Name="CurrentBattlecry" Text="{Loc 'north-star-current-battlecry'}" />
+        <Label Name="CurrentBattlecry" Text="{Loc 'melee-speech-current-battlecry'}" />
         <LineEdit Name="BattlecryLineEdit" />
     </BoxContainer>
 </DefaultWindow>

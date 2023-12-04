@@ -4,7 +4,7 @@
 ///     Added to entities contained within entity storage, for directed event purposes.
 /// </summary>
 [RegisterComponent]
-public sealed class InsideEntityStorageComponent : Component
+public sealed partial class InsideEntityStorageComponent : Component
 {
     public EntityUid Storage;
 }

@@ -24,6 +24,7 @@
 - type: startingGear
   id: SeniorPhysicianGear
   equipment:
+    head: ClothingHeadHatBeretSeniorPhysician
     jumpsuit: ClothingUniformJumpsuitSeniorPhysician
     back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesColorBlack
@@ -31,6 +32,6 @@
     id: SeniorPhysicianPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
-  innerclothingskirt: ClothingUniformJumpskirtSeniorPhysician
+  innerClothingSkirt: ClothingUniformJumpskirtSeniorPhysician
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled

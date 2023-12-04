@@ -8,6 +8,7 @@
     sprite: Objects/Weapons/Melee/baseball_bat.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Blunt: 10
@@ -17,7 +18,11 @@
       types:
         Blunt: 8
   - type: Item
-    size: 80
+    size: Normal
+  - type: Tool
+    qualities:
+    - Rolling
+    speed: 0.75 # a bit unwieldly but does the job
   - type: Clothing
     quickEquip: false
     slots:
@@ -25,6 +30,8 @@
   - type: Construction
     graph: WoodenBat
     node: bat
+  - type: UseDelay
+    delay: 1
   - type: Tag
     tags:
     - BaseballBat

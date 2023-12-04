@@ -27,19 +27,13 @@
       part: RightArmArachnid
       connections:
       - right hand
-      - secondary right hand
     left arm:
       part: LeftArmArachnid
       connections:
       - left hand
-      - secondary left hand
     right hand:
       part: RightHandArachnid
     left hand:
-      part: LeftHandArachnid
-    secondary right hand:
-      part: RightHandArachnid
-    secondary left hand:
       part: LeftHandArachnid
     right leg:
       part: RightLegArachnid

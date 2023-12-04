@@ -58,10 +58,10 @@ namespace Content.IntegrationTests.Tests.Utility
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
             var mapCoordinates = testMap.MapCoords;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
@@ -118,7 +118,7 @@ namespace Content.IntegrationTests.Tests.Utility
                     Assert.That(whitelistSer.IsValid(WhitelistTestInvalidTag), Is.False);
                 });
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

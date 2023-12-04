@@ -1,0 +1,101 @@
+# OBJECTIVE STYLE
+# in comments anything that says final prototype means the objective that isnt abstract
+# the final prototype must be noSpawn to avoid showing in f5
+# components are listed in this order:
+# 1. Objective
+# 2. requirement components
+# 3. non-condition components
+# 4. the condition component
+
+# all objectives should inherit this at some point
+# then have its difficulty etc fields set in the final objective prototypes
+- type: entity
+  abstract: true
+  id: BaseObjective
+  components:
+  - type: Objective
+
+# requires that the player not have a die objective
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseLivingObjective
+  components:
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+      - DieCondition
+
+# objective that targets a player
+# final prototype must specify the title locale id in TargetObjective
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseTargetObjective
+  components:
+  - type: TargetObjective
+
+# requires that the player kill someone
+# disables social objectives and is disabled by social objectives
+- type: entity
+  abstract: true
+  parent: BaseTargetObjective
+  id: BaseKillObjective
+  components:
+  - type: Objective
+    unique: false
+    icon:
+      sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+      state: icon
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+      - SocialObjective
+  - type: KillPersonCondition
+
+# requires that the player interact socially with someone
+# disables kill objectives and is disabled by kill objectives
+- type: entity
+  abstract: true
+  parent: BaseTargetObjective
+  id: BaseSocialObjective
+  components:
+  - type: Objective
+    unique: false
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+      - KillPersonCondition
+  - type: SocialObjective
+
+# requires that the target survives the round
+- type: entity
+  abstract: true
+  parent: BaseSocialObjective
+  id: BaseKeepAliveObjective
+  components:
+  - type: KeepAliveCondition
+
+# requires that the target completes at least 50% of their objectives
+- type: entity
+  abstract: true
+  parent: BaseSocialObjective
+  id: BaseHelpProgressObjective
+  components:
+  - type: HelpProgressCondition
+
+# requires that the player steal an item specified in the final prototype
+- type: entity
+  abstract: true
+  parent: BaseLivingObjective
+  id: BaseStealObjective
+  components:
+  - type: StealCondition
+
+# requires that the player not die, ignores being on emergency shuttle or cuffed
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseSurviveObjective
+  components:
+  - type: SurviveCondition

@@ -4,12 +4,15 @@ using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Cloning;
 using Content.Server.Drone.Components;
-using Content.Server.Inventory;
-using Content.Shared.Bed.Sleep;
 using Content.Server.Emoting.Systems;
+using Content.Server.Inventory;
 using Content.Server.Speech.EntitySystems;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.Cloning;
 using Content.Shared.Damage;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -49,6 +52,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
             SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
             SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
+            SubscribeLocalEvent<ZombieComponent, GetCharactedDeadIcEvent>(OnGetCharacterDeadIC);
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
 
@@ -114,6 +118,11 @@ namespace Content.Server.Zombies
         private void OnSleepAttempt(EntityUid uid, ZombieComponent component, ref TryingToSleepEvent args)
         {
             args.Cancelled = true;
+        }
+
+        private void OnGetCharacterDeadIC(EntityUid uid, ZombieComponent component, ref GetCharactedDeadIcEvent args)
+        {
+            args.Dead = true;
         }
 
         private void OnStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
@@ -210,14 +219,14 @@ namespace Content.Server.Zombies
                 }
                 else
                 {
-                    if (!HasComp<ZombieImmuneComponent>(entity) && _random.Prob(GetZombieInfectionChance(entity, component)))
+                    if (!HasComp<ZombieImmuneComponent>(entity) && !HasComp<NonSpreaderZombieComponent>(args.User) && _random.Prob(GetZombieInfectionChance(entity, component)))
                     {
                         EnsureComp<PendingZombieComponent>(entity);
                         EnsureComp<ZombifyOnDeathComponent>(entity);
                     }
                 }
 
-                if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity))
+                if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity) && !HasComp<ZombieImmuneComponent>(entity))
                 {
                     ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;
@@ -247,9 +256,13 @@ namespace Content.Server.Zombies
             foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
             {
                 _humanoidAppearance.SetBaseLayerColor(target, layer, info.Color);
-                _humanoidAppearance.SetBaseLayerId(target, layer, info.ID);
+                _humanoidAppearance.SetBaseLayerId(target, layer, info.Id);
             }
-            _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
+            if(TryComp<HumanoidAppearanceComponent>(target, out var appcomp))
+            {
+                appcomp.EyeColor = zombiecomp.BeforeZombifiedEyeColor;
+            }
+            _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor, false);
             _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 
             _metaData.SetEntityName(target, zombiecomp.BeforeZombifiedEntityName);

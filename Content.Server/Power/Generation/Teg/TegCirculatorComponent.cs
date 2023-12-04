@@ -9,35 +9,40 @@ namespace Content.Server.Power.Generation.Teg;
 /// <seealso cref="TegSystem"/>
 [RegisterComponent]
 [Access(typeof(TegSystem))]
-public sealed class TegCirculatorComponent : Component
+public sealed partial class TegCirculatorComponent : Component
 {
     /// <summary>
     /// The difference between the inlet and outlet pressure at the start of the previous tick.
     /// </summary>
-    [DataField("last_pressure_delta")] [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("lastPressureDelta")]
     public float LastPressureDelta;
 
     /// <summary>
     /// The amount of moles transferred by the circulator last tick.
     /// </summary>
-    [DataField("last_moles_transferred")] [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("lastMolesTransferred")]
     public float LastMolesTransferred;
 
     /// <summary>
     /// Minimum pressure delta between inlet and outlet for which the circulator animation speed is "fast".
     /// </summary>
-    [DataField("visual_speed_delta")] [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("visualSpeedDelta")]
     public float VisualSpeedDelta = 5 * Atmospherics.OneAtmosphere;
 
     /// <summary>
     /// Light color of this circulator when it's running at "slow" speed.
     /// </summary>
-    [DataField("light_color_slow")] [ViewVariables(VVAccess.ReadWrite)]
-    public Color LightColorSlow;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("lightColorSlow")]
+    public Color LightColorSlow = Color.FromHex("#FF3300");
 
     /// <summary>
     /// Light color of this circulator when it's running at "fast" speed.
     /// </summary>
-    [DataField("light_color_fast")] [ViewVariables(VVAccess.ReadWrite)]
-    public Color LightColorFast;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("lightColorFast")]
+    public Color LightColorFast = Color.FromHex("#AA00FF");
 }

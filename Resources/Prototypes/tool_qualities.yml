@@ -60,3 +60,10 @@
   toolName: tool-quality-honking-tool-name
   spawn: BikeHorn
   icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
+
+- type: tool
+  id: Rolling
+  name: tool-quality-rolling-name
+  toolName: tool-quality-rolling-tool-name
+  spawn: RollingPin
+  icon: { sprite: Objects/Tools/rolling_pin.rsi, state: icon }

@@ -66,7 +66,7 @@ namespace Content.Server.Access.Systems
                 return;
 
             var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.JobTitle ?? "", component.Icons);
-            UserInterfaceSystem.SetUiState(ui, state, args.Session);
+            _uiSystem.SetUiState(ui, state, args.Session);
         }
 
         private void OnJobChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardJobChangedMessage args)

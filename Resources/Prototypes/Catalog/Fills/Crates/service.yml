@@ -74,6 +74,7 @@
     - id: ClothingMaskMime
     - id: ClothingShoesClown
     - id: ClothingUniformJumpskirtJanimaid
+    - id: ClothingNeckCloakVoid
     - id: RevolverCapGun
 
 - type: entity
@@ -100,6 +101,8 @@
       amount: 15
     - id: Pen
       amount: 2
+    - id: BoxFolderClipboard
+      amount: 2  
     - id: HandLabeler
     - id: BoxFolderBlue
     - id: BoxFolderRed
@@ -172,18 +175,19 @@
   components:
     - type: StorageFill
       contents:
+          # Creatures
+        - id: MobCockroach
+          prob: 0.05
+        - id: MobMothroach
+          prob: 0.03
+        - id: MobMouse
+          prob: 0.05
           # Food Packaging
         - id: FoodPacketBoritosTrash
           prob: 0.1
         - id: FoodPacketCheesieTrash
           prob: 0.1
         - id: FoodPacketChipsTrash
-          prob: 0.1
-        - id: FoodPacketChocolateTrash
-          prob: 0.1
-        - id: FoodPacketEnergyTrash
-          prob: 0.1
-        - id: FoodPacketPopcornTrash
           prob: 0.1
         - id: FoodPacketSusTrash
           prob: 0.1
@@ -211,8 +215,6 @@
           # Cigarette Stuff
         - id: Ash
           prob: 0.15
-        - id: CigarSpent
-          prob: 0.15
         - id: CigaretteSpent
           prob: 0.15
           # Bacteria
@@ -226,8 +228,6 @@
         - id: FoodCornTrash
           prob: 0.15
           # Misc
-        - id: ShardGlass
-          prob: 0.1
         - id: DrinkGlass
           prob: 0.15
         - id: BrokenBottle
@@ -236,17 +236,7 @@
           prob: 0.15
         - id: LightBulbBroken
           prob: 0.15
-        - id: MousetrapArmed
-          prob: 0.15
-        - id: CableApcStack10
-          prob: 0.15
         - id: MobMouseDead
-          prob: 0.1
-        - id: RagItem
-          prob: 0.1
-        - id: Flare
-          prob: 0.1
-        - id: FoodKebabSkewer
           prob: 0.1
         - id: Syringe
           prob: 0.1

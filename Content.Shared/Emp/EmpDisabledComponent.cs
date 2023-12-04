@@ -5,11 +5,11 @@ namespace Content.Shared.Emp;
 
 /// <summary>
 /// While entity has this component it is "disabled" by EMP.
-/// Add desired behaviour in other systems 
+/// Add desired behaviour in other systems
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedEmpSystem))]
-public sealed class EmpDisabledComponent : Component
+public sealed partial class EmpDisabledComponent : Component
 {
     /// <summary>
     /// Moment of time when component is removed and entity stops being "disabled"
