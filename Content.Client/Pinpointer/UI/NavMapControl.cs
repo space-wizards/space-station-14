@@ -14,10 +14,10 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
-using System.Linq;
 using System.Numerics;
 using JetBrains.Annotations;
 using Robust.Shared.Collections;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -183,7 +183,7 @@ public sealed partial class NavMapControl : MapGridControl
         {
             _draggin = false;
 
-            if (_xform == null || _physics == null || !TrackedEntities.Any())
+            if (_xform == null || _physics == null || TrackedEntities.Count == 0)
                 return;
 
             // Get the clicked position
@@ -195,7 +195,7 @@ public sealed partial class NavMapControl : MapGridControl
             var worldPosition = _transformSystem.GetWorldMatrix(_xform).Transform(new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offset);
 
             // Find closest tracked entity in range
-            var allCoords = TrackedEntities.Keys.ToList();
+            var allCoords = TrackedEntities.Keys;
             var closestCoords = new EntityCoordinates();
             var closestDistance = float.PositiveInfinity;
 
@@ -309,7 +309,7 @@ public sealed partial class NavMapControl : MapGridControl
         // Then we can just run through the list each frame and draw the lines without any extra computation.
 
         // Draw walls
-        if (TileGrid != null && TileGrid.Any() && !HiddenLineGroups.Contains(NavMapLineGroup.Wall))
+        if (TileGrid != null && TileGrid.Count > 0 && !HiddenLineGroups.Contains(NavMapLineGroup.Wall))
         {
             var edges = new ValueList<Vector2>();
 
@@ -339,12 +339,12 @@ public sealed partial class NavMapControl : MapGridControl
                 }
             }
 
-            if (edges.Any())
+            if (edges.Count > 0)
                 handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, Color.Magenta);
         }
 
         // Draw full cable network
-        if (PowerCableNetwork != null && PowerCableNetwork.Any())
+        if (PowerCableNetwork != null && PowerCableNetwork.Count > 0)
         {
             var edges = new ValueList<Vector2>();
 
@@ -395,12 +395,12 @@ public sealed partial class NavMapControl : MapGridControl
                 }
             }
 
-            if (edges.Any())
+            if (edges.Count > 0)
                 handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, Color.Magenta);
         }
 
         // Draw focus network
-        if (FocusCableNetwork != null && FocusCableNetwork.Any())
+        if (FocusCableNetwork != null && FocusCableNetwork.Count > 0)
         {
             var edges = new ValueList<Vector2>();
 
@@ -452,7 +452,7 @@ public sealed partial class NavMapControl : MapGridControl
                 }
             }
 
-            if (edges.Any())
+            if (edges.Count > 0)
                 handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, Color.Magenta);
         }
 
@@ -478,6 +478,9 @@ public sealed partial class NavMapControl : MapGridControl
         }
 
         // Tracked entities (can use a supplied sprite as a marker instead; should probably just replace TrackedCoordinates with this)
+        SpriteSpecifier.Texture? texture = null;
+        var vertexUVs = new ValueList<DrawVertexUV2D>();
+
         foreach (var (coord, value) in TrackedEntities)
         {
             if ((lit || !value.Blinks))
@@ -492,17 +495,30 @@ public sealed partial class NavMapControl : MapGridControl
                     var scalingCoefficient = 2.5f;
                     var positionOffset = scalingCoefficient * float.Sqrt(MinimapScale);
 
-                    var rect = new UIBox2
-                        (position.X - positionOffset,
-                        position.Y - positionOffset,
-                        position.X + positionOffset,
-                        position.Y + positionOffset);
+                    //var rect = new UIBox2
+                    //    (position.X - positionOffset,
+                    //    position.Y - positionOffset,
+                    //    position.X + positionOffset,
+                    //    position.Y + positionOffset);
+
+                    vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X - positionOffset, position.Y - positionOffset), new Vector2(0f, 0f)));
+                    vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X - positionOffset, position.Y + positionOffset), new Vector2(0f, 1f)));
+                    vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X + positionOffset, position.Y - positionOffset), new Vector2(1f, 0f)));
+                    vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X - positionOffset, position.Y + positionOffset), new Vector2(0f, 1f)));
+                    vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X + positionOffset, position.Y - positionOffset), new Vector2(1f, 0f)));
+                    vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X + positionOffset, position.Y + positionOffset), new Vector2(1f, 1f)));
 
                     if (value.Texture != null)
-                        handle.DrawTextureRect(_spriteSystem.Frame0(value.Texture), rect, value.Color);
+                    {
+                        texture = value.Texture;
+                        //handle.DrawTextureRect(_spriteSystem.Frame0(value.Texture), rect, value.Color);
+                    }
                 }
             }
         }
+
+        if (texture != null)
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, _spriteSystem.Frame0(texture), vertexUVs.Span, Color.Aqua);
 
         // Beacons
         if (_beacons.Pressed)
@@ -551,7 +567,7 @@ public sealed partial class NavMapControl : MapGridControl
             return;
 
         FocusCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.FocusChunks, _grid);
-        PowerCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.AllChunks, _grid, PowerMonitoringConsole.FocusChunks.Any());
+        PowerCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.AllChunks, _grid, PowerMonitoringConsole.FocusChunks.Count > 0);
     }
 
     private Vector2 Scale(Vector2 position)

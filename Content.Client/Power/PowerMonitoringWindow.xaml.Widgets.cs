@@ -19,21 +19,21 @@ public sealed partial class PowerMonitoringWindow
 
     private void UpdateAllConsoleEntries
         (BoxContainer masterContainer,
-        List<PowerMonitoringConsoleEntry> entries,
-        List<PowerMonitoringConsoleEntry>? focusSources,
-        List<PowerMonitoringConsoleEntry>? focusLoads)
+        PowerMonitoringConsoleEntry[] entries,
+        PowerMonitoringConsoleEntry[]? focusSources,
+        PowerMonitoringConsoleEntry[]? focusLoads)
     {
         // Remove excess children
-        while (masterContainer.ChildCount > entries.Count)
+        while (masterContainer.ChildCount > entries.Length)
         {
             masterContainer.RemoveChild(masterContainer.GetChild(masterContainer.ChildCount - 1));
         }
 
-        if (!entries.Any())
+        if (entries.Length == 0)
             return;
 
         // Add missing children
-        while (masterContainer.ChildCount < entries.Count)
+        while (masterContainer.ChildCount < entries.Length)
         {
             // Basic entry
             var entry = entries[masterContainer.ChildCount];
@@ -104,7 +104,7 @@ public sealed partial class PowerMonitoringWindow
         var charLimit = (int) (button.NameLocalized.Width / 8f);
 
         if (_entManager.TryGetComponent<NavMapTrackableComponent>(uid, out var trackable) &&
-            trackable.ChildOffsets.Any() &&
+            trackable.ChildOffsets.Count > 0 &&
             meta.EntityPrototype != null)
         {
             name = Loc.GetString("power-monitoring-window-object-array", ("name", meta.EntityPrototype.Name), ("count", trackable.ChildOffsets.Count + 1));
@@ -123,25 +123,25 @@ public sealed partial class PowerMonitoringWindow
         button.PowerValue.Text = Loc.GetString("power-monitoring-window-value", ("value", entry.PowerValue));
     }
 
-    private void UpdateEntrySourcesAndLoads(BoxContainer masterContainer, BoxContainer currentContainer, List<PowerMonitoringConsoleEntry>? entries, SpriteSpecifier.Texture icon)
+    private void UpdateEntrySourcesAndLoads(BoxContainer masterContainer, BoxContainer currentContainer, PowerMonitoringConsoleEntry[]? entries, SpriteSpecifier.Texture icon)
     {
         if (currentContainer == null)
             return;
 
-        if (entries == null || !entries.Any())
+        if (entries == null || entries.Length == 0)
         {
             currentContainer.RemoveAllChildren();
             return;
         }
 
         // Remove excess children
-        while (currentContainer.ChildCount > entries.Count)
+        while (currentContainer.ChildCount > entries.Length)
         {
             currentContainer.RemoveChild(currentContainer.GetChild(currentContainer.ChildCount - 1));
         }
 
         // Add missing children
-        while (currentContainer.ChildCount < entries.Count)
+        while (currentContainer.ChildCount < entries.Length)
         {
             var entry = entries[currentContainer.ChildCount];
             var subEntry = new PowerMonitoringWindowSubEntry(entry);
@@ -240,7 +240,7 @@ public sealed partial class PowerMonitoringWindow
             return false;
 
         var container = scroll.Children.ElementAt(0) as BoxContainer;
-        if (container == null || !container.Children.Any())
+        if (container == null || container.Children.Count() == 0)
             return false;
 
         // Exit if the heights of the children haven't been initialized yet

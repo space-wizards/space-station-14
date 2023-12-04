@@ -1,5 +1,4 @@
 using Content.Shared.Power;
-using System.Linq;
 
 namespace Content.Client.Power;
 
@@ -31,9 +30,9 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
             (castState.TotalSources,
             castState.TotalBatteryUsage,
             castState.TotalLoads,
-            castState.AllEntries.ToList(),
-            castState.FocusSources.ToList(),
-            castState.FocusLoads.ToList(),
+            castState.AllEntries,
+            castState.FocusSources,
+            castState.FocusLoads,
             xform?.Coordinates);
     }
 

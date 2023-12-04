@@ -3,7 +3,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Power.Components;
 using Content.Shared.Pinpointer;
 using Robust.Shared.Map;
-using System.Linq;
+//using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -56,7 +56,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
     private void AssignMastersToEntities(string collectionName)
     {
         // Retrieve all devices of the specified prototype
-        if (!_groupableEntityCoords.TryGetValue(collectionName, out var devices) || !devices.Any())
+        if (!_groupableEntityCoords.TryGetValue(collectionName, out var devices) || devices.Count == 0)
             return;
 
         var currentMaster = EntityUid.Invalid;
@@ -79,7 +79,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
             // If the device is not attached to a network, continue on
             if (!TryComp<NodeContainerComponent>(ent, out var container) ||
                 !container.Nodes.TryGetValue(device.LoadNode, out var loadNode) ||
-                !loadNode.ReachableNodes.Any())
+                loadNode.ReachableNodes.Count == 0)
             {
                 device.CollectionMaster = ent;
                 _masterDevices.TryAdd(ent, device);
@@ -107,7 +107,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
                 if (!TryComp<NodeContainerComponent>(otherEnt, out var otherContainer) ||
                     !otherContainer.Nodes.TryGetValue(otherDevice.LoadNode, out var otherLoadNode) ||
-                    !otherLoadNode.ReachableNodes.Any())
+                    otherLoadNode.ReachableNodes.Count == 0)
                     continue;
 
                 // Matching netIds - this device should be represented by the master

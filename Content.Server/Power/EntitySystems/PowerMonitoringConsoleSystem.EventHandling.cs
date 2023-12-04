@@ -16,7 +16,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
 {
     private HashSet<ICommonSession> _trackedSessions = new();
 
-    private void OnComponentStartup(EntityUid uid, PowerMonitoringConsoleComponent component, ComponentStartup args)
+    private void OnEntParentChanged(EntityUid uid, PowerMonitoringConsoleComponent component, EntParentChangedMessage args)
     {
         var xform = Transform(uid);
         if (xform.GridUid == null)
@@ -85,11 +85,14 @@ internal sealed partial class PowerMonitoringConsoleSystem
             allChunks[chunkOrigin] = chunk;
         }
 
+        var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
+        var flag = SharedNavMapSystem.GetFlag(relative);
+
         if (args.Anchored)
-            AddPowerCableToTile(chunk, tile, component);
+            chunk.PowerCableData[(int) component.CableType] |= flag;
 
         else
-            RemovePowerCableFromTile(chunk, tile, component);
+            chunk.PowerCableData[(int) component.CableType] &= ~flag;
 
         var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var console, out var entXform))
@@ -107,14 +110,11 @@ internal sealed partial class PowerMonitoringConsoleSystem
         if (component.IsCollectionMasterOrChild)
             AssignMastersToEntities(component.CollectionName);
 
-        if (_rebuildingFocusNetwork)
-            return;
-
         var query = AllEntityQuery<PowerMonitoringConsoleComponent>();
         while (query.MoveNext(out var ent, out var console))
         {
             if (console.Focus == uid)
-                ResetPowerMonitoringConsoleFocus(ent, console);
+                console.FocusChunks.Clear();
         }
     }
 
@@ -173,7 +173,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
     // Sends the list of tracked power monitoring devices to player sessions with one or more power monitoring consoles open
     // This expansion of PVS is needed so that meta and sprite data for these device are available to the the player
     // Out-of-range devices will be automatically removed from the player PVS when the UI closes
-    private void OnExpandPvsEvent(ref ExpandPvsEvent ev)
+    private void OnExpandPvsEvent(EntityUid uid, PowerMonitoringConsoleUserComponent component, ref ExpandPvsEvent ev)
     {
         if (!_trackedSessions.Contains(ev.Session))
             return;
@@ -189,7 +189,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
         {
             if (ui.UiKey is PowerMonitoringConsoleUiKey)
             {
-                var xform = Transform(ui.Owner);
+                var xform = Transform(uid);
 
                 if (xform.GridUid == null || checkedGrids.Contains(xform.GridUid.Value))
                     continue;
@@ -218,6 +218,9 @@ internal sealed partial class PowerMonitoringConsoleSystem
     private void OnBoundUIOpened(EntityUid uid, PowerMonitoringConsoleComponent component, BoundUIOpenedEvent args)
     {
         _trackedSessions.Add(args.Session);
+
+        if (args.Session.AttachedEntity != null)
+            EnsureComp<PowerMonitoringConsoleUserComponent>(args.Session.AttachedEntity.Value);
     }
 
     private void OnBoundUIClosed(EntityUid uid, PowerMonitoringConsoleComponent component, BoundUIClosedEvent args)
@@ -234,6 +237,9 @@ internal sealed partial class PowerMonitoringConsoleSystem
         }
 
         _trackedSessions.Remove(args.Session);
+
+        if (args.Session.AttachedEntity != null)
+            EntityManager.RemoveComponent<PowerMonitoringConsoleUserComponent>(args.Session.AttachedEntity.Value);
     }
 
     private void OnUpdateRequestReceived(EntityUid uid, PowerMonitoringConsoleComponent component, RequestPowerMonitoringUpdateMessage args)
@@ -243,7 +249,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
         if (component.Focus != focus)
         {
             component.Focus = focus;
-            _focusNetworkToBeRebuilt = true;
+            component.FocusChunks.Clear();
         }
 
         component.FocusGroup = args.FocusGroup;

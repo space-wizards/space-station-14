@@ -1,9 +1,7 @@
-using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using Robust.Shared.Map.Components;
-using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -31,33 +29,14 @@ internal sealed partial class PowerMonitoringConsoleSystem
                 allChunks[chunkOrigin] = chunk;
             }
 
-            AddPowerCableToTile(chunk, tile.GridIndices, cable);
+            var relative = SharedMapSystem.GetChunkRelative(tile.GridIndices, SharedNavMapSystem.ChunkSize);
+            var flag = SharedNavMapSystem.GetFlag(relative);
+
+            chunk.PowerCableData[(int) cable.CableType] |= flag;
         }
     }
 
-    private void AddPowerCableToTile(PowerCableChunk chunk, Vector2i tile, CableComponent cable)
-    {
-        var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
-        var flag = SharedNavMapSystem.GetFlag(relative);
-
-        chunk.PowerCableData.TryAdd(cable.CableType, 0);
-        chunk.PowerCableData[cable.CableType] |= flag;
-
-        _focusNetworkToBeRebuilt = true;
-    }
-
-    private void RemovePowerCableFromTile(PowerCableChunk chunk, Vector2i tile, CableComponent cable)
-    {
-        var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
-        var flag = SharedNavMapSystem.GetFlag(relative);
-
-        chunk.PowerCableData.TryAdd(cable.CableType, 0);
-        chunk.PowerCableData[cable.CableType] &= ~flag;
-
-        _focusNetworkToBeRebuilt = true;
-    }
-
-    private void UpdateFocusNetwork(EntityUid uid, PowerMonitoringConsoleComponent component, EntityUid gridUid, MapGridComponent grid, IEnumerable<EntityUid> nodeList)
+    private void UpdateFocusNetwork(EntityUid uid, PowerMonitoringConsoleComponent component, EntityUid gridUid, MapGridComponent grid, List<EntityUid> nodeList)
     {
         component.FocusChunks.Clear();
 
@@ -78,37 +57,9 @@ internal sealed partial class PowerMonitoringConsoleSystem
             var flag = SharedNavMapSystem.GetFlag(relative);
 
             if (TryComp<CableComponent>(ent, out var cable))
-            {
-                if (!chunk.PowerCableData.ContainsKey(cable.CableType))
-                    chunk.PowerCableData.Add(cable.CableType, 0);
-
-                chunk.PowerCableData[cable.CableType] |= flag;
-            }
+                chunk.PowerCableData[(int) cable.CableType] |= flag;
         }
 
         Dirty(uid, component);
-    }
-
-    private List<Node> FloodFillNode(Node rootNode)
-    {
-        // Slower than the normal node flood fill, but re-using the FloodGen field was causing issues
-        var allNodes = new HashSet<Node>();
-        var stack = new Stack<Node>();
-
-        allNodes.Add(rootNode);
-        stack.Push(rootNode);
-
-        while (stack.TryPop(out var node))
-        {
-            foreach (var reachable in node.ReachableNodes)
-            {
-                if (!allNodes.Add(reachable))
-                    continue;
-
-                stack.Push(reachable);
-            }
-        }
-
-        return allNodes.ToList();
     }
 }

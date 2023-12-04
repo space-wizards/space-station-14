@@ -2,7 +2,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using static Robust.Shared.Utility.SpriteSpecifier;
-using System.Linq;
 
 namespace Content.Shared.Pinpointer;
 
@@ -42,7 +41,7 @@ public sealed partial class NavMapTrackableComponent : Component
             if (_texture != null)
                 return _texture;
 
-            if (TexturePath.Any())
+            if (TexturePath.Length > 0)
                 _texture = new Texture(new(TexturePath));
 
             return _texture;

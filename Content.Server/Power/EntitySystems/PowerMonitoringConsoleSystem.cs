@@ -30,23 +30,19 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
     private Dictionary<EntityUid, PowerMonitoringDeviceComponent> _masterDevices = new();
     private Dictionary<EntityUid, Dictionary<Vector2i, PowerCableChunk>> _gridPowerCableChunks = new();
 
-    //private bool _powerNetAbnormalities = false;
-    private const float RoguePowerConsumerThreshold = 100000;
-
-    // To remove
-    private bool _rebuildingFocusNetwork = false;
-    private bool _focusNetworkToBeRebuilt = false;
-
     private float _updateTimer = 1.0f;
+
     private const float UpdateTime = 1.0f;
+    private const float RoguePowerConsumerThreshold = 100000;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PowerMonitoringConsoleComponent, ComponentStartup>(OnComponentStartup);
+        //SubscribeLocalEvent<PowerMonitoringConsoleComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, EntParentChangedMessage>(OnEntParentChanged);
 
-        SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvsEvent);
+        SubscribeLocalEvent<PowerMonitoringConsoleUserComponent, ExpandPvsEvent>(OnExpandPvsEvent);
         SubscribeLocalEvent<GameRuleStartedEvent>(OnPowerGridCheckStarted);
         SubscribeLocalEvent<GameRuleEndedEvent>(OnPowerGridCheckEnded);
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, RequestPowerMonitoringUpdateMessage>(OnUpdateRequestReceived);
@@ -84,36 +80,14 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                         if (!EntityManager.TryGetComponent<PowerMonitoringConsoleComponent>(ui.Owner, out var console))
                             continue;
 
-                        var consoleXform = Transform(ui.Owner);
-
-                        if (consoleXform?.GridUid == null)
-                            continue;
-
-                        if (!_gridDevices.TryGetValue(consoleXform.GridUid.Value, out var gridDevices))
-                            continue;
-
-                        foreach ((var ent, var device) in gridDevices)
-                        {
-                            // Ignore joint, non-master entities
-                            if (device.IsCollectionMasterOrChild && !device.IsCollectionMaster)
-                                continue;
-
-                            _pvsOverride.AddSessionOverride(EntityManager.GetNetEntity(ent), session, false);
-                        }
-
-                        UpdateUIState(ui.Owner, console, console.Focus, console.FocusGroup, session);
+                        UpdateUIState(ui.Owner, console, session);
                     }
                 }
             }
         }
     }
 
-    public void UpdateUIState
-        (EntityUid uid,
-        PowerMonitoringConsoleComponent powerMonitoringConsole,
-        EntityUid? focus,
-        PowerMonitoringConsoleGroup? focusGroup,
-        ICommonSession session)
+    public void UpdateUIState(EntityUid uid, PowerMonitoringConsoleComponent component, ICommonSession session)
     {
         if (!_userInterfaceSystem.TryGetUi(uid, PowerMonitoringConsoleUiKey.Key, out var bui))
             return;
@@ -141,10 +115,10 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         var allEntries = new List<PowerMonitoringConsoleEntry>();
         var sourcesForFocus = new List<PowerMonitoringConsoleEntry>();
         var loadsForFocus = new List<PowerMonitoringConsoleEntry>();
-        var flags = powerMonitoringConsole.Flags;
+        var flags = component.Flags;
 
         // Reset RoguePowerConsumer flag
-        powerMonitoringConsole.Flags &= ~PowerMonitoringFlags.RoguePowerConsumer;
+        component.Flags &= ~PowerMonitoringFlags.RoguePowerConsumer;
 
         // Record the load value of all non-tracked power consumers on the same grid as the console
         var powerConsumerQuery = AllEntityQuery<PowerConsumerComponent, TransformComponent>();
@@ -158,13 +132,13 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             // Flag an alert if power consumption is ridiculous
             if (powerConsumer.ReceivedPower >= RoguePowerConsumerThreshold)
-                powerMonitoringConsole.Flags |= PowerMonitoringFlags.RoguePowerConsumer;
+                component.Flags |= PowerMonitoringFlags.RoguePowerConsumer;
 
             totalLoads += powerConsumer.DrawRate;
         }
 
-        if (powerMonitoringConsole.Flags != flags)
-            Dirty(uid, powerMonitoringConsole);
+        if (component.Flags != flags)
+            Dirty(uid, component);
 
         // Loop over all tracked devices
         foreach ((var ent, var device) in gridDevices)
@@ -188,7 +162,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             totalBatteryUsage += batteryUsage;
 
             // Continue on if the device is not in the current focus group
-            if (focusGroup != null && device.Group != focusGroup)
+            if (component.FocusGroup != null && device.Group != component.FocusGroup)
                 continue;
 
             // Generate a new console entry with which to populate the UI
@@ -196,19 +170,15 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             allEntries.Add(entry);
         }
 
-        //  Reset the UI focus if it should change
-        if (powerMonitoringConsole.Focus != focus)
-            ResetPowerMonitoringConsoleFocus(uid, powerMonitoringConsole);
-
-        // Update UI focus data (if applicable)
-        if (focus != null)
+        // Update the UI focus data (if applicable)
+        if (component.Focus != null)
         {
-            if (TryComp<NodeContainerComponent>(focus, out var nodeContainer) &&
-                TryComp<PowerMonitoringDeviceComponent>(focus, out var device))
+            if (TryComp<NodeContainerComponent>(component.Focus, out var nodeContainer) &&
+                TryComp<PowerMonitoringDeviceComponent>(component.Focus, out var device))
             {
                 // Record the tracked sources powering the device
                 if (nodeContainer.Nodes.TryGetValue(device.SourceNode, out var sourceNode))
-                    GetSourcesForNode(focus.Value, sourceNode, out sourcesForFocus);
+                    GetSourcesForNode(component.Focus.Value, sourceNode, out sourcesForFocus);
 
                 // Search for the enabled load node (required for portable generators)
                 var loadNodeName = device.LoadNode;
@@ -223,26 +193,29 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
                 // Record the tracked loads on the device
                 if (nodeContainer.Nodes.TryGetValue(loadNodeName, out var loadNode))
-                    GetLoadsForNode(focus.Value, loadNode, out loadsForFocus);
+                    GetLoadsForNode(component.Focus.Value, loadNode, out loadsForFocus);
 
                 // If the UI focus changed, update the highlighted power network
-                if (powerMonitoringConsole.Focus != focus || _focusNetworkToBeRebuilt)
+                if (component.FocusChunks.Count == 0)
                 {
-                    _rebuildingFocusNetwork = true;
+                    var reachableEntities = new List<EntityUid>();
 
-                    List<Node> reachableSourceNodes = sourceNode != null ? FloodFillNode(sourceNode) : new();
-                    List<Node> reachableLoadNodes = loadNode != null ? FloodFillNode(loadNode) : new();
+                    if (sourceNode?.NodeGroup != null)
+                    {
+                        foreach (var node in sourceNode.NodeGroup.Nodes)
+                            reachableEntities.Add(node.Owner);
+                    }
 
-                    var reachableNodes = reachableSourceNodes.Concat(reachableLoadNodes).Select(x => x.Owner).ToList();
-                    UpdateFocusNetwork(uid, powerMonitoringConsole, gridUid, mapGrid, reachableNodes);
+                    if (loadNode?.NodeGroup != null)
+                    {
+                        foreach (var node in loadNode.NodeGroup.Nodes)
+                            reachableEntities.Add(node.Owner);
+                    }
 
-                    _rebuildingFocusNetwork = false;
-                    _focusNetworkToBeRebuilt = false;
+                    UpdateFocusNetwork(uid, component, gridUid, mapGrid, reachableEntities);
                 }
             }
         }
-
-        powerMonitoringConsole.Focus = focus;
 
         // Set the UI state
         _userInterfaceSystem.SetUiState(bui,
@@ -437,8 +410,11 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         // Update the power value for each source based on the fraction of power the entity is actually draining from each
         var powerFraction = Math.Min(powerUsage / currentSupply, 1f) * Math.Min(currentSupply / currentDemand, 1f);
 
-        foreach (var entry in sources)
-            entry.PowerValue *= powerFraction;
+        for (int i = 0; i < sources.Count; i++)
+        {
+            var entry = sources[i];
+            sources[i] = new PowerMonitoringConsoleEntry(entry.NetEntity, entry.Group, entry.PowerValue * powerFraction);
+        }
     }
 
     private void GetLoadsForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> loads)
@@ -538,15 +514,10 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         // Update the power value for each load based on the fraction of power these entities are actually draining from this device
         var powerFraction = Math.Min(supplying / currentDemand, 1f);
 
-        foreach (var entry in loads)
-            entry.PowerValue *= powerFraction;
-    }
-
-    private void ResetPowerMonitoringConsoleFocus(EntityUid uid, PowerMonitoringConsoleComponent component)
-    {
-        component.Focus = null;
-        component.FocusChunks.Clear();
-
-        Dirty(uid, component);
+        for (int i = 0; i < indexedLoads.Values.Count; i++)
+        {
+            var entry = loads[i];
+            loads[i] = new PowerMonitoringConsoleEntry(entry.NetEntity, entry.Group, entry.PowerValue * powerFraction);
+        }
     }
 }

@@ -1,27 +1,17 @@
-using Content.Client.Power;
 using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using Robust.Shared.Map.Components;
-using System.Linq;
 using System.Numerics;
 
 namespace Content.Client.Pinpointer.UI;
 
 public sealed partial class NavMapControl
 {
-    private Dictionary<CableType, Color> _powerCableColors = new Dictionary<CableType, Color>
-    {
-        [CableType.HighVoltage] = Color.OrangeRed,
-        [CableType.MediumVoltage] = Color.Yellow,
-        [CableType.Apc] = Color.LimeGreen,
-    };
-
-    private Dictionary<CableType, Vector2> _powerCableOffsets = new Dictionary<CableType, Vector2>
-    {
-        [CableType.HighVoltage] = new Vector2(-0.2f, -0.2f),
-        [CableType.MediumVoltage] = Vector2.Zero,
-        [CableType.Apc] = new Vector2(0.2f, 0.2f),
-    };
+    // 0: CableType.HighVoltage
+    // 1: CableType.MediumVoltage
+    // 2: CableType.Apc
+    private readonly Color[] _powerCableColors = { Color.OrangeRed, Color.Yellow, Color.LimeGreen };
+    private readonly Vector2[] _powerCableOffsets = { new Vector2(-0.2f, -0.2f), Vector2.Zero, new Vector2(0.2f, 0.2f) };
 
     public Dictionary<Vector2i, List<NavMapLine>>? GetDecodedPowerCableChunks
         (Dictionary<Vector2i, PowerCableChunk>? chunks,
@@ -37,16 +27,18 @@ public sealed partial class NavMapControl
         {
             var list = new List<NavMapLine>();
 
-            foreach ((var cableType, var chunkMask) in chunk.PowerCableData)
+            for (int cableIdx = 0; cableIdx < chunk.PowerCableData.Length; cableIdx++)
             {
-                Vector2 offset = _powerCableOffsets.TryGetValue(cableType, out offset) ? offset : Vector2.Zero;
-                Color color = _powerCableColors.TryGetValue(cableType, out color) ? color : Color.White;
+                var chunkMask = chunk.PowerCableData[cableIdx];
+
+                Vector2 offset = _powerCableOffsets[cableIdx];
+                Color color = _powerCableColors[cableIdx];
 
                 color *= useDarkColors ? Color.DimGray : Color.White;
 
-                for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
+                for (var chunkIdx = 0; chunkIdx < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; chunkIdx++)
                 {
-                    var value = (int) Math.Pow(2, i);
+                    var value = (int) Math.Pow(2, chunkIdx);
                     var mask = chunkMask & value;
 
                     if (mask == 0x0)
@@ -56,7 +48,7 @@ public sealed partial class NavMapControl
                     var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * grid.TileSize;
                     var position = new Vector2(tile.X, -tile.Y);
 
-                    PowerCableChunk? neighborChunk;
+                    PowerCableChunk neighborChunk;
                     bool neighbor;
 
                     // Note: we only check the north and east neighbors
@@ -65,8 +57,7 @@ public sealed partial class NavMapControl
                     if (relativeTile.X == SharedNavMapSystem.ChunkSize - 1)
                     {
                         neighbor = chunks.TryGetValue(chunkOrigin + new Vector2i(1, 0), out neighborChunk) &&
-                                    neighborChunk.PowerCableData.TryGetValue(cableType, out var neighborChunkMask) &&
-                                    (neighborChunkMask & SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
+                                    (neighborChunk.PowerCableData[cableIdx] & SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
                     }
                     else
                     {
@@ -81,7 +72,7 @@ public sealed partial class NavMapControl
                             (position + offset + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f),
                             position + new Vector2(1f, 0f) + offset + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f),
                             color,
-                            (NavMapLineGroup) cableType);
+                            (NavMapLineGroup) cableIdx);
 
                         list.Add(line);
                     }
@@ -90,8 +81,7 @@ public sealed partial class NavMapControl
                     if (relativeTile.Y == SharedNavMapSystem.ChunkSize - 1)
                     {
                         neighbor = chunks.TryGetValue(chunkOrigin + new Vector2i(0, 1), out neighborChunk) &&
-                                    neighborChunk.PowerCableData.TryGetValue(cableType, out var neighborChunkMask) &&
-                                    (neighborChunkMask & SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
+                                    (neighborChunk.PowerCableData[cableIdx] & SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
                     }
                     else
                     {
@@ -106,7 +96,7 @@ public sealed partial class NavMapControl
                             (position + offset + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f),
                             position + new Vector2(0f, -1f) + offset + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f),
                             color,
-                            (NavMapLineGroup) cableType);
+                            (NavMapLineGroup) cableIdx);
 
                         list.Add(line);
                     }
@@ -114,7 +104,7 @@ public sealed partial class NavMapControl
 
             }
 
-            if (list.Any())
+            if (list.Count > 0)
                 decodedOutput.Add(chunkOrigin, list);
         }
 

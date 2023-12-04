@@ -42,19 +42,19 @@ public sealed partial class PowerMonitoringConsoleComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class PowerCableChunk
+public struct PowerCableChunk
 {
     public readonly Vector2i Origin;
 
     /// <summary>
     /// Bitmask dictionary for power cables, 1 for occupied and 0 for empty.
     /// </summary>
-    public Dictionary<CableType, int> PowerCableData;
+    public int[] PowerCableData;
 
     public PowerCableChunk(Vector2i origin)
     {
         Origin = origin;
-        PowerCableData = new Dictionary<CableType, int>();
+        PowerCableData = new int[3];
     }
 }
 
@@ -92,7 +92,7 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
 ///     Contains all the data needed to represent a single device on the power monitoring UI
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PowerMonitoringConsoleEntry
+public struct PowerMonitoringConsoleEntry
 {
     public NetEntity NetEntity;
     public PowerMonitoringConsoleGroup Group;
