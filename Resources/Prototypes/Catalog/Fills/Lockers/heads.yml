@@ -306,6 +306,7 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
+      - id: WeaponMultiphaseEnergyPistol
       - id: BookBusido # Corvax-Books
 
 - type: entity
@@ -352,3 +353,4 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
+      - id: WeaponMultiphaseEnergyPistol
