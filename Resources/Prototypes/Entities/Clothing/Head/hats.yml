@@ -113,6 +113,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretSeniorPhysician
+  name: physician beret
+  description: Donning the colours of medical and chemistry, physicians are the pride of this department!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_physician.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_physician.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBeretBrigmedic
   name: medical beret
   description: White beret, looks like a cream pie on the head.

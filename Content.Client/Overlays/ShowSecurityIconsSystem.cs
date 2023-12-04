@@ -1,5 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Mindshield.Components;
 using Content.Shared.Overlays;
 using Content.Shared.PDA;
 using Content.Shared.SS220.CriminalRecords;
@@ -89,6 +90,14 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
             }
         }
         //SS220 Criminal-Records end
+
+        if (TryComp<MindShieldComponent>(uid, out var comp))
+        {
+            if (_prototypeMan.TryIndex<StatusIconPrototype>(comp.MindShieldStatusIcon.Id, out var icon))
+                result.Add(icon);
+        }
+
+        // Add arrest icons here, WYCI.
 
         return result;
     }
