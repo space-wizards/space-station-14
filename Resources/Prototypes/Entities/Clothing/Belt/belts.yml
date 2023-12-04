@@ -29,6 +29,7 @@
         - HolofanProjector
         - Multitool
         - AppraisalTool
+        - JawsOfLife
       components:
         - SprayPainter
         - NetworkConfigurator
@@ -57,6 +58,10 @@
         whitelist:
           tags:
           - CrowbarRed
+      jaws:
+        whitelist:
+          tags:
+          - JawsOfLife
       screwdriver_nuke:
         whitelist:
           tags:
