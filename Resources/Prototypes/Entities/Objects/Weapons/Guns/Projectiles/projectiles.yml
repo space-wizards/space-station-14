@@ -792,7 +792,7 @@
     - type: GrapplingProjectile
 
 - type: entity
-  name: Ликвидация
+  name: TerminationOrb
   id: BulletHeavyHeatOrb
   parent: BaseBullet
   noSpawn: true
@@ -834,7 +834,7 @@
 
 - type: entity
   name: Оглушение
-  id: BulletShutdownOrb
+  id: ShutdownOrb
   parent: BaseBullet
   noSpawn: true
   components:
@@ -874,7 +874,7 @@
     damage: 170
 
 - type: entity
-  name: Летальный
+  name: LethalOrb
   id: BulletStaminaOrb
   parent: BaseBullet
   noSpawn: true
