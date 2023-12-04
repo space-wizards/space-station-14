@@ -111,7 +111,7 @@
       totalIntensity: 24 # ~ 2 tile radius
     - type: Repairable
       DoAfterDelay: 15
-      QualityNeeded: Screwing
+      QualityNeeded: Welding
     - type: DamageVisuals
       thresholds: [4, 8, 12]
       damageDivisor: 3
