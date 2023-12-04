@@ -99,6 +99,8 @@
           visualType: Large
           messages: [ "skeleton-sprayed-by-oat-milk-popup" ]
           probability: 0.5
+  - type: FireVisuals
+    alternateState: Standing
 
 - type: entity
   parent: BaseSpeciesDummy
