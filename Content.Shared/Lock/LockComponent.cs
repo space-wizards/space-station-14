@@ -50,13 +50,6 @@ public sealed partial class LockComponent : Component
     [DataField("breakOnEmag")]
     [AutoNetworkedField]
     public bool BreakOnEmag = true;
-
-    /// <summary>
-    /// Whether or not the lock will prevent deconstruction when locked.
-    /// </summary>
-    [DataField("lockDeconstruct")]
-    [AutoNetworkedField]
-    public bool LockDeconstruct = false;
 }
 
 /// <summary>
