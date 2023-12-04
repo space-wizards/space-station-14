@@ -1,14 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix crusher showing popups on 1-handed swings., type: Fix}
-  id: 4748
-  time: '2023-09-04T04:24:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix NPCs not juking properly if you stand on top of them., type: Fix}
-  id: 4749
-  time: '2023-09-04T04:34:20.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Fixed steel stack sprite, type: Fix}
@@ -2901,3 +2891,15 @@ Entries:
     type: Tweak}
   id: 5247
   time: '2023-12-03T03:54:00.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Skeletons now regain more health when coming in contact with milk.,
+    type: Tweak}
+  id: 5248
+  time: '2023-12-04T02:32:05.0000000+00:00'
+- author: joshepvodka
+  changes:
+  - {message: CentCom officers now finally have a jumpsuit that matches the ever stylish
+      green hue of CentCom equipment., type: Tweak}
+  id: 5249
+  time: '2023-12-04T02:32:45.0000000+00:00'
