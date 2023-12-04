@@ -119,14 +119,14 @@ namespace Content.Server.Forensics
                 targetComp.Residues.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
         }
 
-        private string GenerateFingerprint()
+        public string GenerateFingerprint()
         {
             var fingerprint = new byte[16];
             _random.NextBytes(fingerprint);
             return Convert.ToHexString(fingerprint);
         }
 
-        private string GenerateDNA()
+        public string GenerateDNA()
         {
             var letters = new[] { "A", "C", "G", "T" };
             var DNA = string.Empty;

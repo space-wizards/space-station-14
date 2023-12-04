@@ -34,6 +34,13 @@ public sealed partial class ItemComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sprite")]
     public string? RsiPath;
+
+    /// <summary>
+    /// An optional override for the shape of the item within the grid storage.
+    /// If null, a default shape will be used based on <see cref="Size"/>.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<Box2i>? Shape;
 }
 
 [Serializable, NetSerializable]
