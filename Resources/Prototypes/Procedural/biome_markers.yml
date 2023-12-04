@@ -1,31 +1,35 @@
 - type: biomeMarkerLayer
   id: Lizards
-  proto: MobLizard
-  groupCount: 5
+  prototype: MobLizard
+  minGroupSize: 3
+  maxGroupSize: 5
 
 - type: biomeMarkerLayer
   id: WatchersLavaland
-  proto: MobWatcherLavaland
-  groupCount: 3
+  prototype: MobWatcherLavaland
+  minGroupSize: 3
+  maxGroupSize: 3
 
 - type: biomeMarkerLayer
   id: WatchersIcewing
-  proto: MobWatcherIcewing
-  groupCount: 3
+  prototype: MobWatcherIcewing
+  minGroupSize: 3
+  maxGroupSize: 3
 
 - type: biomeMarkerLayer
   id: WatchersMagmawing
-  proto: MobWatcherMagmawing
-  groupCount: 3
+  prototype: MobWatcherMagmawing
+  minGroupSize: 3
+  maxGroupSize: 3
 
 # TODO: Needs to be more robust
 - type: biomeMarkerLayer
   id: Xenos
-  proto: MobXeno
+  prototype: MobXeno
 
 - type: biomeMarkerLayer
   id: Carps
-  proto: MobCarpDungeon
+  prototype: MobCarpDungeon
 
 
 #- type: biomeMarkerLayer

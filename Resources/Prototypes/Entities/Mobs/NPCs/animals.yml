@@ -121,6 +121,7 @@
       task: SimpleHostileCompound
   - type: Puller
     needsHands: true
+  - type: ZombieImmune
 
 - type: entity
   name: bee
@@ -147,6 +148,7 @@
     - SimpleHostile
   - type: Bloodstream
     bloodMaxVolume: 0.1
+  - type: ZombieImmune
 
 
 - type: entity
@@ -311,6 +313,7 @@
         damage: 10
       behaviors:
       - !type:GibBehavior { }
+  - type: NonSpreaderZombie
 
 - type: entity
   name: glockroach
@@ -361,6 +364,7 @@
   - type: Speech
     speechVerb: Moth
     speechSounds: Squeak
+  - type: MothAccent
   - type: Sprite
     sprite: Mobs/Animals/mothroach.rsi
     layers:
@@ -387,10 +391,10 @@
     thresholds:
       0: Alive
       25: Critical
-      50: Dead
+      45: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
+    baseSprintSpeed : 4
     weightlessAcceleration: 1.5
     weightlessFriction: 1
     weightlessModifier: 1
@@ -420,17 +424,18 @@
       Unsexed: UnisexMoth
     wilhelmProbability: 0.001
   - type: MobPrice
-    price: 60
+    price: 150
   - type: Tag
     tags:
     - Trash
     - CannotSuicide
+    - VimPilot
   - type: CanEscapeInventory
   - type: NpcFactionMember
     factions:
     - Mouse
   - type: Body
-    prototype: Moth
+    prototype: Mothroach
   - type: TypingIndicator
     proto: moth
 
@@ -761,6 +766,8 @@
         - MobLayer
   - type: Tag
     tags:
+    # let moths eat wool directly
+    - ClothMade
     - DoorBumpOpener
     - Goat
   - type: Reproductive
@@ -786,11 +793,19 @@
         reagents:
         - ReagentId: MilkGoat
           Quantity: 30
+      wool:
+        maxVol: 250
   - type: Udder
     reagentId: MilkGoat
     targetSolution: udder
     quantity: 25
     updateRate: 20
+  - type: Wooly
+  - type: Food
+    solution: wool
+    requiresSpecialDigestion: true
+    # Wooly prevents eating wool deleting the goat so its fine
+    requireDead: false
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1260,6 +1275,7 @@
   - type: Puller
     needsHands: true
   - type: BadFood
+  - type: NonSpreaderZombie
 
 - type: entity
   parent: MobMouse
@@ -2260,6 +2276,8 @@
     states:
       Alive:
         Base: puppy
+      Critical:
+        Base: puppy_dead
       Dead:
         Base: puppy_dead
   - type: Grammar
@@ -2676,6 +2694,7 @@
     BaseResistTime: 3
   - type: MobPrice
     price: 60
+  - type: NonSpreaderZombie
 
 - type: entity
   name: pig

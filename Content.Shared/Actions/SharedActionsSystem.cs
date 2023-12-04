@@ -8,6 +8,8 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -291,7 +293,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 }
 
                 var entityCoordinatesTarget = GetCoordinates(netCoordinatesTarget);
-                _rotateToFaceSystem.TryFaceCoordinates(user, entityCoordinatesTarget.Position);
+                _rotateToFaceSystem.TryFaceCoordinates(user, entityCoordinatesTarget.ToMapPos(EntityManager, _transformSystem));
 
                 if (!ValidateWorldTarget(user, entityCoordinatesTarget, worldAction))
                     return;

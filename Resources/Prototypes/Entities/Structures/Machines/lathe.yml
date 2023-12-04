@@ -220,6 +220,7 @@
       - Beaker
       - LargeBeaker
       - CryostasisBeaker
+      - SyringeCryostasis
       - Dropper
       - Syringe
       - Implanter
@@ -455,7 +456,6 @@
     - ProximitySensor
     - BorgModuleLightReplacer
     - BorgModuleAdvancedCleaning
-    - BorgModuleTrashCollection
     - BorgModuleMining
     - BorgModuleGrapplingGun
     - BorgModuleGasAnalyzer
@@ -700,6 +700,7 @@
       - BluespaceBeaker
       - SyringeBluespace
       - Jug
+      - SyringeCryostasis
   - type: Machine
     board: MedicalTechFabCircuitboard
 
