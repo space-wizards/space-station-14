@@ -833,8 +833,8 @@
     damage: 33
 
 - type: entity
-  name: Оглушение
-  id: ShutdownOrb
+  name: ShutDownOrb
+  id: BulletShutdownOrb
   parent: BaseBullet
   noSpawn: true
   components:

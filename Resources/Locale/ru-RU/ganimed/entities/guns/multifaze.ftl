@@ -1,6 +1,6 @@
 ent-WeaponMultiphaseEnergyPistol = X-01 Мультифазовый энергопистолет
     .desc = Это дорогая, современная версия антикварного лазерного пистолета. У этого оружия есть несколько уникальных режимов огня, но нет возможности самостоятельно перезаряжаться с течением времени.
 
-ent-TerminationOrb = Ликвидация
-ent-ShutdownOrb = Оглушение
-ent-LethalOrb = Летальный
+ent-BulletHeavyHeatOrb = Ликвидация
+ent-BulletShutdownOrb = Оглушение
+ent-BulletStaminaOrb = Летальный
