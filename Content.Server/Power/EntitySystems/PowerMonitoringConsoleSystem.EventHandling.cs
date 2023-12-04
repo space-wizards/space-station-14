@@ -22,10 +22,11 @@ internal sealed partial class PowerMonitoringConsoleSystem
         if (xform.GridUid == null)
             return;
 
-        if (!_gridPowerCableChunks.ContainsKey(xform.GridUid.Value))
+        // If the requested chunks are not in the dictionary, build them
+        if (!_gridPowerCableChunks.TryGetValue(xform.GridUid.Value, out var allChunks))
             RefreshPowerCableGrid(xform.GridUid.Value, Comp<MapGridComponent>(xform.GridUid.Value));
 
-        if (!_gridPowerCableChunks.TryGetValue(xform.GridUid.Value, out var allChunks))
+        if (allChunks == null)
             return;
 
         component.AllChunks = allChunks;
@@ -40,8 +41,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
         if (gridUid == null)
             return;
 
-        if (!_gridDevices.TryGetValue(gridUid.Value, out var _))
-            _gridDevices[gridUid.Value] = new();
+        _gridDevices.TryAdd(gridUid.Value, new());
 
         if (args.Anchored)
         {
@@ -133,9 +133,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
                 if (entXform.GridUid == null || !entXform.Anchored)
                     continue;
 
-                if (!_gridDevices.ContainsKey(entXform.GridUid.Value))
-                    _gridDevices[entXform.GridUid.Value] = new();
-
+                _gridDevices.TryAdd(entXform.GridUid.Value, new());
                 _gridDevices[entXform.GridUid.Value].Add((ent, entDevice));
 
                 // Note: no need to update master-child relations

@@ -20,9 +20,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
         if (protoId == null)
             return;
 
-        if (!_groupableEntityCoords.ContainsKey(component.CollectionName))
-            _groupableEntityCoords[component.CollectionName] = new();
-
+        _groupableEntityCoords.TryAdd(component.CollectionName, new());
         _groupableEntityCoords[component.CollectionName].Add(uid, coords);
     }
 
@@ -43,10 +41,10 @@ internal sealed partial class PowerMonitoringConsoleSystem
             Dirty(uid, trackable);
         }
 
-        if (!_groupableEntityCoords.ContainsKey(component.CollectionName))
+        if (!_groupableEntityCoords.TryGetValue(component.CollectionName, out var collection))
             return;
 
-        _groupableEntityCoords[component.CollectionName].Remove(uid);
+        collection.Remove(uid);
     }
 
     // Designates entities as 'masters' on a per prototype and per load network basis

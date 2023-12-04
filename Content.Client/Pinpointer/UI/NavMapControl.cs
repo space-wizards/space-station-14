@@ -18,6 +18,7 @@ using System.Numerics;
 using JetBrains.Annotations;
 using Robust.Shared.Collections;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -311,7 +312,7 @@ public sealed partial class NavMapControl : MapGridControl
         // Draw walls
         if (TileGrid != null && TileGrid.Count > 0 && !HiddenLineGroups.Contains(NavMapLineGroup.Wall))
         {
-            var edges = new ValueList<Vector2>();
+            var walls = new ValueList<Vector2>();
 
             foreach ((var chunk, var chunkedLines) in TileGrid)
             {
@@ -328,25 +329,20 @@ public sealed partial class NavMapControl : MapGridControl
                     var start = Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
                     var end = Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
 
-                    edges.Add(start);
-                    edges.Add(end);
-
-
-                    //handle.DrawLine
-                    //    (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
-                    //    Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
-                    //    chunkedLine.Color);
+                    walls.Add(start);
+                    walls.Add(end);
                 }
             }
 
-            if (edges.Count > 0)
-                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, Color.Magenta);
+            if (walls.Count > 0)
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, walls.Span, WallColor);
         }
 
         // Draw full cable network
         if (PowerCableNetwork != null && PowerCableNetwork.Count > 0)
         {
-            var edges = new ValueList<Vector2>();
+            var modulator = (FocusCableNetwork != null && FocusCableNetwork.Count > 0) ? Color.DimGray : Color.White;
+            var cableNetworks = new ValueList<Vector2>[3];
 
             foreach ((var chunk, var chunkedLines) in PowerCableNetwork)
             {
@@ -376,7 +372,7 @@ public sealed partial class NavMapControl : MapGridControl
                         handle.DrawRect
                             (new UIBox2(Scale(leftTop - new Vector2(offset.X, -offset.Y)),
                             Scale(rightBottom - new Vector2(offset.X, -offset.Y))),
-                            chunkedLine.Color);
+                            (_powerCableColors[(int) chunkedLine.Group] * modulator));
                     }
 
                     else
@@ -384,25 +380,25 @@ public sealed partial class NavMapControl : MapGridControl
                         var start = Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
                         var end = Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
 
-                        edges.Add(start);
-                        edges.Add(end);
-
-                        //handle.DrawLine
-                        //    (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
-                        //    Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
-                        //    chunkedLine.Color);
+                        cableNetworks[(int) chunkedLine.Group].Add(start);
+                        cableNetworks[(int) chunkedLine.Group].Add(end);
                     }
                 }
             }
 
-            if (edges.Count > 0)
-                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, Color.Magenta);
+            for (int cableNetworkIdx = 0; cableNetworkIdx < cableNetworks.Count(); cableNetworkIdx++)
+            {
+                var cableNetwork = cableNetworks[cableNetworkIdx];
+
+                if (cableNetwork.Count > 0)
+                    handle.DrawPrimitives(DrawPrimitiveTopology.LineList, cableNetwork.Span, (_powerCableColors[cableNetworkIdx] * new Color(164, 164, 164)));
+            }
         }
 
         // Draw focus network
         if (FocusCableNetwork != null && FocusCableNetwork.Count > 0)
         {
-            var edges = new ValueList<Vector2>();
+            var cableNetworks = new ValueList<Vector2>[3];
 
             foreach ((var chunk, var chunkedLines) in FocusCableNetwork)
             {
@@ -440,27 +436,26 @@ public sealed partial class NavMapControl : MapGridControl
                         var start = Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
                         var end = Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
 
-                        edges.Add(start);
-                        edges.Add(end);
-
-
-                        //handle.DrawLine
-                        //    (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
-                        //    Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
-                        //    chunkedLine.Color);
+                        cableNetworks[(int) chunkedLine.Group].Add(start);
+                        cableNetworks[(int) chunkedLine.Group].Add(end);
                     }
                 }
             }
 
-            if (edges.Count > 0)
-                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, Color.Magenta);
+            for (int cableNetworkIdx = 0; cableNetworkIdx < cableNetworks.Count(); cableNetworkIdx++)
+            {
+                var cableNetwork = cableNetworks[cableNetworkIdx];
+
+                //if (cableNetwork.Count > 0)
+                //    handle.DrawPrimitives(DrawPrimitiveTopology.LineList, cableNetwork.Span, _powerCableColors[cableNetworkIdx]);
+            }
         }
 
         var curTime = Timing.RealTime;
         var blinkFrequency = 1f / 1f;
         var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
 
-        // Tracked coordinates (simple dot)
+        // Tracked coordinates (simple dot, legacy)
         foreach (var (coord, value) in TrackedCoordinates)
         {
             if (lit && value.Visible)
@@ -477,13 +472,13 @@ public sealed partial class NavMapControl : MapGridControl
             }
         }
 
-        // Tracked entities (can use a supplied sprite as a marker instead; should probably just replace TrackedCoordinates with this)
+        // Tracked entities (can use a supplied sprite as a marker instead; should probably just replace TrackedCoordinates with this eventually)
         SpriteSpecifier.Texture? texture = null;
         var vertexUVs = new ValueList<DrawVertexUV2D>();
 
         foreach (var (coord, value) in TrackedEntities)
         {
-            if ((lit || !value.Blinks))
+            if (lit || !value.Blinks)
             {
                 var mapPos = coord.ToMap(_entManager, _transformSystem);
 

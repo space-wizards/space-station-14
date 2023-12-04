@@ -133,7 +133,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         if (_owner == null)
             return;
 
-        if (!_entManager.TryGetComponent<MapGridComponent>(NavMap.MapUid, out var _))
+        if (!_entManager.HasComponent<MapGridComponent>(NavMap.MapUid))
             return;
 
         // Sort all devices alphabetically by their entity name (not by power usage; otherwise their position on the UI will shift)
