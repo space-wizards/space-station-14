@@ -97,10 +97,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Unanchored, state == VisualState.UnAnchored);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Base, state == VisualState.Anchored);
-        sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseFlush, state is VisualState.Flushing or VisualState.Charging);
+        sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayFlush, state is VisualState.OverlayFlushing or VisualState.OverlayCharging);
 
         // This is a transient state so not too worried about replaying in range.
-        if (state == VisualState.Flushing)
+        if (state == VisualState.OverlayFlushing)
         {
             if (!_animationSystem.HasRunningAnimation(uid, AnimationKey))
             {
@@ -114,7 +114,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                     {
                         new AnimationTrackSpriteFlick
                         {
-                            LayerKey = DisposalUnitVisualLayers.BaseFlush,
+                            LayerKey = DisposalUnitVisualLayers.OverlayFlush,
                             KeyFrames =
                             {
                                 // Play the flush animation
@@ -143,9 +143,9 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                 _animationSystem.Play(uid, anim, AnimationKey);
             }
         }
-        else if (state == VisualState.Charging)
+        else if (state == VisualState.OverlayCharging)
         {
-            sprite.LayerSetState(DisposalUnitVisualLayers.BaseFlush, new RSI.StateId("disposal-charging"));
+            sprite.LayerSetState(DisposalUnitVisualLayers.OverlayFlush, new RSI.StateId("disposal-charging"));
         }
         else
         {
@@ -178,7 +178,7 @@ public enum DisposalUnitVisualLayers : byte
     Unanchored,
     Base,
     BaseCharging,
-    BaseFlush,
+    OverlayFlush,
     OverlayCharging,
     OverlayReady,
     OverlayFull,

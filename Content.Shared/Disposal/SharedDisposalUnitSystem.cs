@@ -1,14 +1,17 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Hands.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -119,6 +122,9 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         //Check if the entity is a mob and if mobs can be inserted
         if (TryComp<MobStateComponent>(entity, out var damageState) && !component.MobsCanEnter)
+            return false;
+
+        if (!HasComp<ItemComponent>(entity) && !component.HumanoidCanEnter)
             return false;
 
         if (TryComp<PhysicsComponent>(entity, out var physics) && (physics.CanCollide || storable))

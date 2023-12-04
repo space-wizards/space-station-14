@@ -2,21 +2,42 @@
   name: toilet
   id: ToiletEmpty
   suffix: Empty
-  parent: SeatBase
+  parent: [ DisposalUnitBase, SeatBase ]
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
   components:
-  - type: MeleeSound
-    soundGroups:
-      Brute:
-        path:
-          "/Audio/Weapons/slash.ogg"
-  - type: Anchorable
   - type: Sprite
     sprite: Structures/Furniture/toilet.rsi
-    state: closed_toilet_seat_up
+    layers:
+    - state: condisposal
+      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+    - state: disposal
+      map: [ "enum.DisposalUnitVisualLayers.Base" ]
+    - state: disposal-flush
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
+    - state: dispover-charge
+      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+    - state: dispover-ready
+      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
+    - state: dispover-full
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+    - state: dispover-handle
+      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+    - state: disposal-up
+      map: [ "enum.ToiletVisualLayers.Door" ]
+  - type: Rotatable
+  - type: Transform
+    noRot: false
+  - type: Strap
+    whitelist:
+      components:
+      - HumanoidAppearance
+  - type: DisposalUnit
+    autoEngageEnabled: false
+    humanoidCanEnter: false
   - type: Toilet
-  - type: SecretStash
-    secretPartName: secret-stash-part-toilet
+    sound: /Audio/Effects/toilet_seat_down.ogg
+    seatUp: disposal-up
+    seatDown: disposal-down
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
@@ -26,8 +47,6 @@
         maxVol: 500
       toilet:
         maxVol: 250
-  - type: Transform
-    anchored: true
   - type: Physics
     bodyType: Static
   - type: Construction
@@ -36,14 +55,13 @@
   - type: Appearance
   - type: Drain
     autoDrain: false
-  - type: DumpableSolution
-    solution: drainBuffer
-  - type: SolutionContainerVisuals
-    maxFillLevels: 1
-    fillBaseName: fill-
-    solutionName: drainBuffer
   - type: StaticPrice
     price: 25
+  - type: UserInterface
+    interfaces:
+    - key: enum.DisposalUnitUiKey.Key
+      type: DisposalUnitBoundUserInterface
+  - type: RatKingRummageable
 
 - type: entity
   id: ToiletDirtyWater

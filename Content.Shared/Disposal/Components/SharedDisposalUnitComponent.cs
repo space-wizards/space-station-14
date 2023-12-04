@@ -20,41 +20,44 @@ public abstract partial class SharedDisposalUnitComponent : Component
     /// <summary>
     /// State for this disposals unit.
     /// </summary>
-    [DataField("state")]
+    [DataField]
     public DisposalsPressureState State;
 
     // TODO: Just make this use vaulting.
     /// <summary>
     /// We'll track whatever just left disposals so we know what collision we need to ignore until they stop intersecting our BB.
     /// </summary>
-    [ViewVariables, DataField("recentlyEjected")]
+    [ViewVariables, DataField]
     public List<EntityUid> RecentlyEjected = new();
 
     /// <summary>
     /// Next time the disposal unit will be pressurized.
     /// </summary>
-    [DataField("nextPressurized", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextPressurized = TimeSpan.Zero;
 
     /// <summary>
     /// How long it takes to flush a disposals unit manually.
     /// </summary>
-    [DataField("flushTime")]
+    [DataField]
     public TimeSpan ManualFlushTime = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// How long it takes from the start of a flush animation to return the sprite to normal.
     /// </summary>
-    [DataField("flushDelay")]
+    [DataField]
     public TimeSpan FlushDelay = TimeSpan.FromSeconds(3);
 
-    [DataField("mobsCanEnter")]
+    [DataField]
     public bool MobsCanEnter = true;
+
+    [DataField]
+    public bool HumanoidCanEnter = true;
 
     /// <summary>
     /// Removes the pressure requirement for flushing.
     /// </summary>
-    [DataField("disablePressure"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool DisablePressure;
 
     /// <summary>
@@ -63,18 +66,18 @@ public abstract partial class SharedDisposalUnitComponent : Component
     [ViewVariables]
     public TimeSpan LastExitAttempt;
 
-    [DataField("autoEngageEnabled")]
+    [DataField]
     public bool AutomaticEngage = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("autoEngageTime")]
+    [DataField]
     public TimeSpan AutomaticEngageTime = TimeSpan.FromSeconds(30);
 
     /// <summary>
     ///     Delay from trying to enter disposals ourselves.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("entryDelay")]
+    [DataField]
     public float EntryDelay = 0.5f;
 
     /// <summary>
@@ -89,19 +92,19 @@ public abstract partial class SharedDisposalUnitComponent : Component
     [ViewVariables] public Container Container = default!;
 
     // TODO: Network power shit instead fam.
-    [ViewVariables, DataField("powered")]
+    [ViewVariables, DataField]
     public bool Powered;
 
     /// <summary>
     /// Was the disposals unit engaged for a manual flush.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("engaged")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public bool Engaged;
 
     /// <summary>
     /// Next time this unit will flush. Is the lesser of <see cref="FlushDelay"/> and <see cref="AutomaticEngageTime"/>
     /// </summary>
-    [ViewVariables, DataField("nextFlush", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [ViewVariables, DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan? NextFlush;
 
     [Serializable, NetSerializable]
@@ -117,8 +120,8 @@ public abstract partial class SharedDisposalUnitComponent : Component
     {
         UnAnchored,
         Anchored,
-        Flushing,
-        Charging
+        OverlayFlushing,
+        OverlayCharging
     }
 
     [Serializable, NetSerializable]

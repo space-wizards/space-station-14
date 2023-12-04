@@ -241,8 +241,8 @@ public abstract partial class SharedBuckleSystem
         }
 
         // Does it pass the Whitelist
-        if (strapComp.AllowedEntities != null &&
-            !strapComp.AllowedEntities.IsValid(userUid, EntityManager))
+        if (strapComp.Whitelist != null &&
+            !strapComp.Whitelist.IsValid(buckleUid, EntityManager))
         {
             if (_netManager.IsServer)
                 _popup.PopupEntity(Loc.GetString("buckle-component-cannot-fit-message"), userUid, buckleUid, PopupType.Medium);

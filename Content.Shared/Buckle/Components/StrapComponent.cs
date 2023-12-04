@@ -23,9 +23,8 @@ public sealed partial class StrapComponent : Component
     /// Entities that this strap accepts and can buckle
     /// If null it accepts any entity
     /// </summary>
-    [DataField]
-    [ViewVariables]
-    public EntityWhitelist? AllowedEntities;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// The change in position to the strapped mob
