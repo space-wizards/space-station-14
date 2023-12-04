@@ -20,7 +20,6 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -28,7 +27,6 @@ namespace Content.Shared.Storage.EntitySystems;
 
 public abstract class SharedStorageSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] private   readonly SharedContainerSystem _containerSystem = default!;
@@ -430,19 +428,16 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Container.ID != StorageComponent.ContainerId)
             return;
 
-        if (_net.IsServer)
+        if (!entity.Comp.StoredItems.ContainsKey(GetNetEntity(args.Entity)))
         {
-            if (!entity.Comp.StoredItems.ContainsKey(GetNetEntity(args.Entity)))
+            if (!TryGetAvailableGridSpace((entity.Owner, entity.Comp), (args.Entity, null), out var location))
             {
-                if (!TryGetAvailableGridSpace((entity.Owner, entity.Comp), (args.Entity, null), out var location))
-                {
-                    _containerSystem.Remove(args.Entity, args.Container, force: true);
-                    return;
-                }
-
-                entity.Comp.StoredItems[GetNetEntity(args.Entity)] = location.Value;
-                Dirty(entity, entity.Comp);
+                _containerSystem.Remove(args.Entity, args.Container, force: true);
+                return;
             }
+
+            entity.Comp.StoredItems[GetNetEntity(args.Entity)] = location.Value;
+            Dirty(entity, entity.Comp);
         }
 
         UpdateAppearance((entity, entity.Comp, null));

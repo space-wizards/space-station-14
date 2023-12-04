@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace Content.Shared.Storage;
 
 public static class StorageHelper
@@ -9,11 +7,33 @@ public static class StorageHelper
         if (boxes.Count == 0)
             return new Box2i();
 
-        var minBottom = boxes.Min(x => x.Bottom);
-        var minLeft = boxes.Min(x => x.Left);
-        var maxTop = boxes.Max(x => x.Top);
-        var maxRight = boxes.Max(x => x.Right);
-        return new Box2i(new Vector2i(minLeft, minBottom), new Vector2i(maxRight, maxTop));
+        var firstBox = boxes[0];
+
+        if (boxes.Count == 1)
+            return firstBox;
+
+        var bottom = firstBox.Bottom;
+        var left = firstBox.Left;
+        var top = firstBox.Top;
+        var right = firstBox.Right;
+
+        for (var i = 1; i < boxes.Count; i++)
+        {
+            var box = boxes[i];
+
+            if (bottom > box.Bottom)
+                bottom = box.Bottom;
+
+            if (left > box.Left)
+                left = box.Left;
+
+            if (top < box.Top)
+                top = box.Top;
+
+            if (right < box.Right)
+                right = box.Right;
+        }
+        return new Box2i(left, bottom, right, top);
     }
 
     public static int GetArea(this IReadOnlyList<Box2i> boxes)

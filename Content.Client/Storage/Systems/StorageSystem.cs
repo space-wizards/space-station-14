@@ -46,9 +46,12 @@ public sealed class StorageSystem : SharedStorageSystem
         StorageOrderChanged?.Invoke(last);
     }
 
-    public void CloseStorageUI(EntityUid uid, StorageComponent component)
+    public void CloseStorageUI(Entity<StorageComponent?> entity)
     {
-        if (!_openStorages.Contains((uid, component)))
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+
+        if (!_openStorages.Contains((entity, entity.Comp)))
             return;
 
         var storages = new ValueList<Entity<StorageComponent>>(_openStorages);
@@ -58,7 +61,7 @@ public sealed class StorageSystem : SharedStorageSystem
         {
             CloseStorageBoundUserInterface(storage.Owner);
             _openStorages.Remove(storage);
-            if (storage.Owner == uid)
+            if (storage.Owner == entity.Owner)
                 break;
         }
 
@@ -96,7 +99,7 @@ public sealed class StorageSystem : SharedStorageSystem
 
     private void OnShutdown(Entity<StorageComponent> ent, ref ComponentShutdown args)
     {
-        CloseStorageUI(ent.Owner, ent.Comp);
+        CloseStorageUI((ent, ent.Comp));
     }
 
     /// <inheritdoc />

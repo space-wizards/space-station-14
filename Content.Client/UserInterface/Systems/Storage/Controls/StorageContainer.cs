@@ -20,9 +20,6 @@ public sealed class StorageContainer : BaseWindow
 {
     [Dependency] private readonly IEntityManager _entity = default!;
     private readonly StorageUIController _storageController;
-    private ItemSystem? _itemSystem;
-    private StorageSystem? _storageSystem;
-    private HandsSystem? _handsSystem;
 
     public EntityUid? StorageEntity;
 
@@ -136,8 +133,6 @@ public sealed class StorageContainer : BaseWindow
         if (!comp.Grid.Any())
             return;
 
-        _storageSystem ??= _entity.System<StorageSystem>();
-
         var boundingGrid = comp.Grid.GetBoundingBox();
 
         _backgroundGrid.Children.Clear();
@@ -164,7 +159,7 @@ public sealed class StorageContainer : BaseWindow
         _sidebar.Rows = boundingGrid.Height + 1;
         var exitButton = new TextureButton
         {
-            TextureNormal = _storageSystem.OpenStorageAmount == 1
+            TextureNormal = _entity.System<StorageSystem>().OpenStorageAmount == 1
                 ?_exitTexture
                 : _backTexture,
             Scale = new Vector2(2, 2),
@@ -229,7 +224,6 @@ public sealed class StorageContainer : BaseWindow
 
         _pieceGrid.Children.Clear();
         _pieceGrid.Rows = boundingGrid.Height + 1;
-        _pieceGrid.Rows = boundingGrid.Height + 1;
         _pieceGrid.Columns = boundingGrid.Width + 1;
         for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
         {
@@ -274,9 +268,9 @@ public sealed class StorageContainer : BaseWindow
         if (!IsOpen)
             return;
 
-        _itemSystem ??= _entity.System<ItemSystem>();
-        _storageSystem ??= _entity.System<StorageSystem>();
-        _handsSystem ??= _entity.System<HandsSystem>();
+        var itemSystem = _entity.System<ItemSystem>();
+        var storageSystem = _entity.System<StorageSystem>();
+        var handsSystem = _entity.System<HandsSystem>();
 
         foreach (var child in _backgroundGrid.Children)
         {
@@ -297,8 +291,8 @@ public sealed class StorageContainer : BaseWindow
             currentEnt = dragging.Entity;
             currentLocation = dragging.Location;
         }
-        else if (_handsSystem.GetActiveHandEntity() is { } handEntity &&
-                 _storageSystem.CanInsert(StorageEntity.Value, handEntity, out _, storageComp: storageComponent, ignoreLocation: true))
+        else if (handsSystem.GetActiveHandEntity() is { } handEntity &&
+                 storageSystem.CanInsert(StorageEntity.Value, handEntity, out _, storageComp: storageComponent, ignoreLocation: true))
         {
             currentEnt = handEntity;
             currentLocation = new ItemStorageLocation(_storageController.DraggingRotation, Vector2i.Zero);
@@ -314,13 +308,13 @@ public sealed class StorageContainer : BaseWindow
 
         var origin = GetMouseGridPieceLocation((currentEnt, itemComp), currentLocation);
 
-        var itemShape = _itemSystem.GetAdjustedItemShape(
+        var itemShape = itemSystem.GetAdjustedItemShape(
             (currentEnt, itemComp),
             currentLocation.Rotation,
             origin);
         var itemBounding = itemShape.GetBoundingBox();
 
-        var validLocation = _storageSystem.ItemFitsInGridLocation(
+        var validLocation = storageSystem.ItemFitsInGridLocation(
             (currentEnt, itemComp),
             (StorageEntity.Value, storageComponent),
             origin,
@@ -355,7 +349,6 @@ public sealed class StorageContainer : BaseWindow
 
     public Vector2i GetMouseGridPieceLocation(Entity<ItemComponent?> entity, ItemStorageLocation location)
     {
-        _itemSystem ??= _entity.System<ItemSystem>();
         var origin = Vector2i.Zero;
 
         if (StorageEntity != null)
@@ -399,20 +392,19 @@ public sealed class StorageContainer : BaseWindow
         if (!IsOpen)
             return;
 
-        _itemSystem ??= _entity.System<ItemSystem>();
-        _storageSystem ??= _entity.System<StorageSystem>();
-        _handsSystem ??= _entity.System<HandsSystem>();
+        var storageSystem = _entity.System<StorageSystem>();
+        var handsSystem = _entity.System<HandsSystem>();
 
         if (args.Function == ContentKeyFunctions.MoveStoredItem && StorageEntity != null)
         {
-            if (_handsSystem.GetActiveHandEntity() is { } handEntity &&
-                _storageSystem.CanInsert(StorageEntity.Value, handEntity, out _))
+            if (handsSystem.GetActiveHandEntity() is { } handEntity &&
+                storageSystem.CanInsert(StorageEntity.Value, handEntity, out _))
             {
                 var pos = GetMouseGridPieceLocation((handEntity, null),
                     new ItemStorageLocation(_storageController.DraggingRotation, Vector2i.Zero));
 
                 var insertLocation = new ItemStorageLocation(_storageController.DraggingRotation, pos);
-                if (_storageSystem.ItemFitsInGridLocation(
+                if (storageSystem.ItemFitsInGridLocation(
                         (handEntity, null),
                         (StorageEntity.Value, null),
                         insertLocation))
@@ -431,9 +423,9 @@ public sealed class StorageContainer : BaseWindow
     {
         base.Close();
 
-        _storageSystem ??= _entity.System<StorageSystem>();
+        if (StorageEntity == null)
+            return;
 
-        if (_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComp))
-            _storageSystem?.CloseStorageUI(StorageEntity.Value, storageComp);
+        _entity.System<StorageSystem>().CloseStorageUI(StorageEntity.Value);
     }
 }

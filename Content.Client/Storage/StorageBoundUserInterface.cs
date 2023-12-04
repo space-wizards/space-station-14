@@ -31,8 +31,7 @@ public sealed class StorageBoundUserInterface : BoundUserInterface
         if (!disposing)
             return;
 
-        if (_entManager.TryGetComponent<StorageComponent>(Owner, out var comp))
-            _storage.CloseStorageUI(Owner, comp);
+        _storage.CloseStorageUI(Owner);
     }
 }
 

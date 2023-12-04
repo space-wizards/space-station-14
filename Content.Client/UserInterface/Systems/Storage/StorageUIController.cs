@@ -27,7 +27,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
-    private HandsSystem? _hands;
 
     private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
     private StorageContainer? _container;
@@ -135,14 +134,10 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     /// One might ask, Hey Emo, why are you parsing raw keyboard input just to rotate a rectangle?
     /// The answer is, that input bindings regarding mouse inputs are always intercepted by the UI,
     /// thus, if i want to be able to rotate my damn piece anywhere on the screen,
-    /// I have to sidestep all of the input handling. Cheers.
+    /// I have to side-step all of the input handling. Cheers.
     private void OnMiddleMouse(KeyEventArgs keyEvent, KeyEventType type)
     {
         if (keyEvent.Handled)
-            return;
-
-        _hands ??= _entity.System<HandsSystem>();
-        if (!IsDragging && _hands.GetActiveHandEntity() == null)
             return;
 
         if (type != KeyEventType.Down)
@@ -170,6 +165,9 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             !(binding.Mod1 == Keyboard.Key.Control ||
               binding.Mod2 == Keyboard.Key.Control ||
               binding.Mod3 == Keyboard.Key.Control))
+            return;
+
+        if (!IsDragging && _entity.System<HandsSystem>().GetActiveHandEntity() == null)
             return;
 
         //clamp it to a cardinal.
