@@ -1,11 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: A fracture in bluespace is now causing spacemen that hitchhike on shuttles
-      to be gibbed before and after FTL travel. Keep legs inside the vehicle at all
-      times., type: Tweak}
-  id: 4760
-  time: '2023-09-04T14:16:10.0000000+00:00'
 - author: lzk228
   changes:
   - {message: All bots now uses robot typing indicator, type: Tweak}
@@ -2910,3 +2903,8 @@ Entries:
       the associated message prints in your chatbox., type: Tweak}
   id: 5259
   time: '2023-12-04T23:10:49.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Clowns can now craft the Banana Clown outfit., type: Add}
+  id: 5260
+  time: '2023-12-04T23:12:02.0000000+00:00'
