@@ -1,11 +1,6 @@
 Entries:
 - author: deltanedas
   changes:
-  - {message: Emagging disposal units both works again and makes them silent., type: Tweak}
-  id: 4758
-  time: '2023-09-04T14:11:35.0000000+00:00'
-- author: deltanedas
-  changes:
   - {message: Armed nuclear bombs now have warning lights. Set off a nuke and watch
       the light spin!!!, type: Tweak}
   id: 4759
@@ -2906,3 +2901,8 @@ Entries:
   - {message: Doors can close over conveyor belts., type: Fix}
   id: 5257
   time: '2023-12-04T23:07:48.0000000+00:00'
+- author: 27alaing
+  changes:
+  - {message: Pun Pun can become a revolutionary again, type: Tweak}
+  id: 5258
+  time: '2023-12-04T23:09:36.0000000+00:00'
