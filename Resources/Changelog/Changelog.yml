@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: The Syndicate is now offering carp suit bundles to its operatives to
-      improve morale., type: Add}
-  id: 4753
-  time: '2023-09-04T05:16:36.0000000+00:00'
 - author: AlexMorgan3817
   changes:
   - {message: Fixed gravitational wells of supermatter and whitehole grenade, type: Fix}
@@ -2905,3 +2899,12 @@ Entries:
   - {message: Included missing damage type localization for armor examination., type: Fix}
   id: 5252
   time: '2023-12-04T12:57:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Storage now uses a grid-based system. You can drag around items in
+      your bag, left click to remove them, and use right click to rotate them while
+      dragging.', type: Add}
+  - {message: The storage window is now a fixed singleton above the hands. You can
+      make it moveable by toggling "Static storage UI" in the controls menu., type: Add}
+  id: 5253
+  time: '2023-12-04T23:04:39.0000000+00:00'
