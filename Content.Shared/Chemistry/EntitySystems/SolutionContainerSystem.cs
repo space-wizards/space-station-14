@@ -798,9 +798,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     {
         if (temperature == solution.Temperature)
             return;
-
-        solution.Temperature = temperature;
-        solution.ValidateTemperature(_prototypeManager);
+        solution.SetAbsoluteTemperature(temperature);
         UpdateChemicals(owner, solution, true);
     }
 

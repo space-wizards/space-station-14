@@ -152,6 +152,14 @@ namespace Content.Shared.Chemistry.Components
         }
 
         /// <summary>
+        ///     Sets the temperature of the solution.
+        /// </summary
+        public void SetAbsoluteTemperature(float temperature)
+        {
+            Temperature = temperature;
+        }
+
+        /// <summary>
         ///     Sets the temperature of the solution according to the amount of heat it should have.
         /// </summary
         public void SetTemperature(float thermalEnergy, IPrototypeManager? protoMan = null)
@@ -315,11 +323,11 @@ namespace Content.Shared.Chemistry.Components
         public Solution(Solution solution)
         {
             Volume = solution.Volume;
-            HeatCapacity = solution.HeatCapacity;
             Temperature = solution.Temperature;
             Contents = solution.Contents.ShallowClone();
             LowestBoilingPointReagent = solution.LowestBoilingPointReagent;
             HighestMeltingPointReagent = solution.HighestMeltingPointReagent;
+            UpdateHeatCapacity(null);
             ValidateSolution();
         }
 
@@ -483,7 +491,7 @@ namespace Content.Shared.Chemistry.Components
         public void AddReagent(ReagentId id, FixedPoint2 quantity, IPrototypeManager? protoMan = null, float? temperature = null)
         {
             if(temperature == null)
-                temperature = 293.15f;
+                temperature = Temperature;
 
             if(quantity <= 0)
                 return;
