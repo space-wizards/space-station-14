@@ -1,0 +1,41 @@
+- type: entity
+  name: X-01 Multiphase energy pistol
+  parent: BaseWeaponBatterySmall
+  id: WeaponMultiphaseEnergyPistol
+  description: This is an expensive, modern version of an antique laser pistol. This weapon has several unique fire modes, but does not have the ability to self-reload over time.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/Guns/Battery/multifaze.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Ganimed/Objects/Guns/Battery/multifaze.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletHeavyHeatOrb
+    fireCost: 166
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletHeavyHeatOrb
+      fireCost: 166
+    - proto: BulletStaminaOrb
+      fireCost: 100
+    - proto: BulletShutdownOrb
+      fireCost: 66
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: Tag
+    tags:
+    - HighRiskItem
+    - Sidearm
+  - type: StaticPrice
+    price: 1750
