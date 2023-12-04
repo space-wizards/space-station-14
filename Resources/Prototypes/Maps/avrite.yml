@@ -8,10 +8,10 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Avrite {1}'
+          mapNameTemplate: '{0} Аврит {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'TG'
+            prefixCreator: 'СН'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_corvaxavrit.yml
         - type: StationJobs

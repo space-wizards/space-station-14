@@ -8,10 +8,10 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'USG Ишимура {1}'
+          mapNameTemplate: '{0} Ишимура {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'DS'
+            prefixCreator: 'СН СМ'
         - type: StationJobs
           overflowJobs:
             - Passenger

@@ -11,10 +11,10 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_transit.yml
         - type: StationNameSetup
-          mapNameTemplate: '{0} Cluster Station {1}'
+          mapNameTemplate: '{0} Кластер {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: '14'
+            prefixCreator: 'СН'
         - type: StationJobs
           overflowJobs:
             - Passenger

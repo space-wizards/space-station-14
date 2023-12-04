@@ -11,7 +11,7 @@ public sealed partial class NanotrasenNameGenerator : StationNameGenerator
     /// </summary>
     [DataField("prefixCreator")] public string PrefixCreator = default!;
 
-    private string Prefix => "NT";
+    private string Prefix => "И";
     private string[] SuffixCodes => new []{ "LV", "NX", "EV", "QT", "PR" };
 
     public override string FormatName(string input)

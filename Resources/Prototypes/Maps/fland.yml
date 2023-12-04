@@ -8,10 +8,10 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Fland Installation {1}'
+          mapNameTemplate: '{0} Фланд {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'B'
+            prefixCreator: 'ПН ОМ'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
         - type: StationJobs

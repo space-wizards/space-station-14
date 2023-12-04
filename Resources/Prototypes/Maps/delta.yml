@@ -11,7 +11,7 @@
           mapNameTemplate: '{0} Дельта {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'TG'
+            prefixCreator: 'СН'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_corvaxdelta.yml
         - type: StationJobs

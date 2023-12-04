@@ -9,10 +9,10 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Silly {1}'
+          mapNameTemplate: '{0} Силли {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'AB'
+            prefixCreator: 'СН'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_corvaxsilly.yml
         - type: StationJobs

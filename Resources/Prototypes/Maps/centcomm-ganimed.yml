@@ -8,7 +8,4 @@
       stationProto: NanotrasenCentralCommand
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Central Command {1}'
-          nameGenerator:
-            !type:NanotrasenNameGenerator
-            prefixCreator: 'TG'
+          mapNameTemplate: 'АСН Центральное Командование "Ремитайд"'

@@ -9,10 +9,10 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Packed {1}'
+          mapNameTemplate: '{0} Паккед {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'VG'
+            prefixCreator: 'СН'
         - type: StationJobs
           overflowJobs:
             - Passenger

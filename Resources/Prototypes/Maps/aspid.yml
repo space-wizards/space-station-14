@@ -9,10 +9,10 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} NCS Aspid {1}'
+          mapNameTemplate: '{0} Аспид {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: '14'
+            prefixCreator: 'СН'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
         - type: StationJobs

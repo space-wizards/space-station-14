@@ -10,10 +10,10 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Saltern {1}'
+          mapNameTemplate: '{0} Салтерн {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: '14'
+            prefixCreator: 'СН'
         - type: StationJobs
           overflowJobs:
           - Passenger

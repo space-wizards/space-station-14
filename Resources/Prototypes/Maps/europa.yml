@@ -9,10 +9,10 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Europa {1}'
+          mapNameTemplate: '{0} Европа {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: '14'
+            prefixCreator: 'ОН'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_transit.yml
         - type: StationJobs

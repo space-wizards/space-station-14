@@ -8,10 +8,10 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Gate Station {1}'
+          mapNameTemplate: '{0} Проект "Врата" {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'ED'
+            prefixCreator: 'ОН'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_raven.yml
         - type: StationJobs

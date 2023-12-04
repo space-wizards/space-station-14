@@ -8,10 +8,10 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Meta Station {1}'
+          mapNameTemplate: '{0} Мета {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'TG'
+            prefixCreator: 'СН'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
         - type: StationJobs
