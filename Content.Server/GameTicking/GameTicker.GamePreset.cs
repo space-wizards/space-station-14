@@ -261,11 +261,10 @@ namespace Content.Server.GameTicking
                     //cry deeply
 
                     FixedPoint2 dealtDamage = 200;
-                    if (TryComp<DamageableComponent>(playerEntity, out var damageable))
+                    if (TryComp<DamageableComponent>(playerEntity, out var damageable) && TryComp<MobThresholdsComponent>(playerEntity, out var thresholds))
                     {
-                        TryComp<MobThresholdsComponent>(playerEntity, out var thresholds);
                         var playerDeadThreshold = _mobThresholdSystem.GetThresholdForState((EntityUid) playerEntity, MobState.Dead, thresholds);
-                        dealtDamage = playerDeadThreshold > 0 ? playerDeadThreshold - damageable.TotalDamage : 200;
+                        dealtDamage = playerDeadThreshold - damageable.TotalDamage;
                     }
 
                     DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), dealtDamage);
