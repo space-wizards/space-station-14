@@ -396,18 +396,3 @@
       amount: 1
   products:
     Saline: 5
-
-- type: reaction
-  id: Oblivizine
-  minTemp: 370
-  reactants:
-    MindbreakerToxin:
-      amount: 1
-    Cognizine:
-      amount: 2
-    ChloralHydrate:
-      amount: 1
-    Omnizine:
-      amount: 1
-  products:
-    Oblivizine: 1
