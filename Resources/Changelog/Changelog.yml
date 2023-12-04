@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Refilling magazines is now done automatically rather than spam clicking
-      each bullet., type: Tweak}
-  id: 4751
-  time: '2023-09-04T04:49:49.0000000+00:00'
 - author: qwerltaz
   changes:
   - {message: Anomalies and artifacts cannot push observers anymore., type: Fix}
@@ -2905,3 +2899,9 @@ Entries:
     type: Tweak}
   id: 5250
   time: '2023-12-04T04:31:11.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Gas tanks now deal damage when thrown. Be sure to hold them when opening
+      valve... or not., type: Tweak}
+  id: 5251
+  time: '2023-12-04T06:32:18.0000000+00:00'
