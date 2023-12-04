@@ -118,9 +118,7 @@ public sealed class RottingSystem : EntitySystem
             return;
 
         var molsToDump = perishable.MolsPerSecondPerUnitMass * physics.FixturesMass * (float) component.TotalRotTime.TotalSeconds;
-        var transform = Transform(uid);
-        var indices = _transform.GetGridOrMapTilePosition(uid, transform);
-        var tileMix = _atmosphere.GetTileMixture(transform.GridUid, transform.MapUid, indices, true);
+        var tileMix = _atmosphere.GetTileMixture(uid, excite: true);
         tileMix?.AdjustMoles(Gas.Miasma, molsToDump);
     }
 
@@ -214,8 +212,7 @@ public sealed class RottingSystem : EntitySystem
             // We need a way to get the mass of the mob alone without armor etc in the future
             // or just remove the mass mechanics altogether because they aren't good.
             var molRate = perishable.MolsPerSecondPerUnitMass * (float) rotting.RotUpdateRate.TotalSeconds;
-            var indices = _transform.GetGridOrMapTilePosition(uid);
-            var tileMix = _atmosphere.GetTileMixture(xform.GridUid, null, indices, true);
+            var tileMix = _atmosphere.GetTileMixture(uid, excite: true);
             tileMix?.AdjustMoles(Gas.Miasma, molRate * physics.FixturesMass);
         }
     }
