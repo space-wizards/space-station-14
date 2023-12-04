@@ -1655,6 +1655,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ToggleWalk =
             CVarDef.Create("control.toggle_walk", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        /// <summary>
+        /// Whether or not the storage UI is static and bound to the hotbar, or unbound and allowed to be dragged anywhere.
+        /// </summary>
+        public static readonly CVarDef<bool> StaticStorageUI =
+            CVarDef.Create("control.static_storage_ui", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
         /*
          * UPDATE
          */

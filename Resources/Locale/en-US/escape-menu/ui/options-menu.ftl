@@ -109,6 +109,9 @@ ui-options-function-alt-activate-item-in-world = Alternative activate item in wo
 ui-options-function-drop = Drop item
 ui-options-function-examine-entity = Examine
 ui-options-function-swap-hands = Swap hands
+ui-options-function-move-stored-item = Move stored item
+ui-options-function-rotate-stored-item = Rotate stored item
+ui-options-static-storage-ui = Static storage UI
 
 ui-options-function-smart-equip-backpack = Smart-equip to backpack
 ui-options-function-smart-equip-belt = Smart-equip to belt

@@ -2,6 +2,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.Examine;
+using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -149,5 +150,59 @@ public abstract class SharedItemSystem : EntitySystem
     public int GetItemSizeWeight(ProtoId<ItemSizePrototype> size)
     {
         return GetSizePrototype(size).Weight;
+    }
+
+    /// <summary>
+    /// Gets the default shape of an item.
+    /// </summary>
+    public IReadOnlyList<Box2i> GetItemShape(Entity<ItemComponent?> uid)
+    {
+        if (!Resolve(uid, ref uid.Comp))
+            return new Box2i[] { };
+
+        return uid.Comp.Shape ?? GetSizePrototype(uid.Comp.Size).DefaultShape;
+    }
+
+    /// <summary>
+    /// Gets the default shape of an item.
+    /// </summary>
+    public IReadOnlyList<Box2i> GetItemShape(ItemComponent component)
+    {
+        return component.Shape ?? GetSizePrototype(component.Size).DefaultShape;
+    }
+
+    /// <summary>
+    /// Gets the shape of an item, adjusting for rotation and offset.
+    /// </summary>
+    public IReadOnlyList<Box2i> GetAdjustedItemShape(Entity<ItemComponent?> entity, ItemStorageLocation location)
+    {
+        return GetAdjustedItemShape(entity, location.Rotation, location.Position);
+    }
+
+    /// <summary>
+    /// Gets the shape of an item, adjusting for rotation and offset.
+    /// </summary>
+    public IReadOnlyList<Box2i> GetAdjustedItemShape(Entity<ItemComponent?> entity, Angle rotation, Vector2i position)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return new Box2i[] { };
+
+        var shapes = GetItemShape(entity);
+        var boundingShape = shapes.GetBoundingBox();
+        var boundingCenter = ((Box2) boundingShape).Center;
+        var matty = Matrix3.CreateTransform(boundingCenter, rotation);
+        var drift = boundingShape.BottomLeft - matty.TransformBox(boundingShape).BottomLeft;
+
+        var adjustedShapes = new List<Box2i>();
+        foreach (var shape in shapes)
+        {
+            var transformed = matty.TransformBox(shape).Translated(drift);
+            var floored = new Box2i(transformed.BottomLeft.Floored(), transformed.TopRight.Floored());
+            var translated = floored.Translated(position);
+
+            adjustedShapes.Add(translated);
+        }
+
+        return adjustedShapes;
     }
 }
