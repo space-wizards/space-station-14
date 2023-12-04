@@ -1,9 +1,4 @@
 Entries:
-- author: qwerltaz
-  changes:
-  - {message: Anomalies and artifacts cannot push observers anymore., type: Fix}
-  id: 4752
-  time: '2023-09-04T04:52:11.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: The Syndicate is now offering carp suit bundles to its operatives to
@@ -2905,3 +2900,8 @@ Entries:
       valve... or not., type: Tweak}
   id: 5251
   time: '2023-12-04T06:32:18.0000000+00:00'
+- author: Chronophylos
+  changes:
+  - {message: Included missing damage type localization for armor examination., type: Fix}
+  id: 5252
+  time: '2023-12-04T12:57:29.0000000+00:00'
