@@ -97,15 +97,15 @@
   - type: NpcFactionMember
   - type: Reflect
     enabled: true
-    reflectProb: .75
-    spread: 75
+    reflectProb: .80
+    spread: 30
     factions:
       - SimpleHostile
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 50
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -135,7 +135,7 @@
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
-        Blunt: 8
+        Blunt: 6
   - type: CombatMode
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
@@ -147,7 +147,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 80
+        damage: 140
       behaviors:
       - !type:PlaySoundBehavior
         sound:
