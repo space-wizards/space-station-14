@@ -532,6 +532,7 @@
     - CannotSuicide
     - Hamster
     - VimPilot
+  - type: Flashable
 
 - type: entity
   name: Shiva
