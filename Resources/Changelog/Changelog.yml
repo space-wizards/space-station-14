@@ -1,11 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - {message: 'Radiation collectors now need an inserted gas tank filled with plasma
-      to function. The plasma gas will turn into tritium over time, so replace it
-      with fresh plasma as needed.', type: Tweak}
-  id: 4757
-  time: '2023-09-04T13:11:58.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Emagging disposal units both works again and makes them silent., type: Tweak}
@@ -2908,3 +2901,8 @@ Entries:
   - {message: The jaws of life can now fit inside of regular toolbelts., type: Fix}
   id: 5256
   time: '2023-12-04T23:06:46.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Doors can close over conveyor belts., type: Fix}
+  id: 5257
+  time: '2023-12-04T23:07:48.0000000+00:00'
