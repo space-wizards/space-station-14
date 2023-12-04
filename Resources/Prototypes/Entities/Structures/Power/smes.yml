@@ -90,6 +90,60 @@
       sendBroadcastAttemptEvent: true
       examinableAddress: true
     - type: WiredNetworkConnection
+    - type: SolutionContainerManager
+      solutions:
+       battery:
+        maxVol: 100
+        reagents:
+        - ReagentId: Licoxide
+          Quantity: 100
+    - type: GasCanister
+      gasMixture:
+        volume: 64
+        moles: # List of gasses for easy reference
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 64 # Plasma
+        temperature: 632
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 24 # ~ 2 tile radius
+    - type: Repairable
+      DoAfterDelay: 15
+      QualityNeeded: Screwing
+    - type: DamageVisuals
+      thresholds: [4, 8, 12]
+      damageDivisor: 3
+      trackAllDamage: true
+      damageOverlay:
+        sprite: Structures/Power/smesbroken.rsi
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
+      - trigger: 
+          !type:DamageTrigger
+          damage: 60
+        behaviors:
+        - !type:SpillBehavior 
+          solution: battery
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:DumpCanisterBehavior
+        - !type:SolutionExplosionBehavior
+          solution: battery
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
 
 # SMES' in use
 
