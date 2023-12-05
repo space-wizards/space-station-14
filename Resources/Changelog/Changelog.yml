@@ -1,9 +1,4 @@
 Entries:
-- author: DrTeaSpoon
-  changes:
-  - {message: Plant mutations can now alter plant gas and chemical production., type: Add}
-  id: 4762
-  time: '2023-09-04T16:24:39.0000000+00:00'
 - author: router
   changes:
   - {message: Shuttles no longer go hog wild whenever they're above their former maximum
@@ -2908,3 +2903,8 @@ Entries:
   - {message: Fixed Christmas tree bounding box, type: Fix}
   id: 5261
   time: '2023-12-05T06:20:54.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Paramedics are now available on barratry, type: Add}
+  id: 5262
+  time: '2023-12-05T07:35:36.0000000+00:00'
