@@ -96,7 +96,11 @@
         maxVol: 100
         reagents:
         - ReagentId: Licoxide
-          Quantity: 100
+          Quantity: 60
+        - ReagentId: Fluorosurfactant
+          Quantity: 20  
+        - ReagentId: Water
+          Quantity: 20
     - type: GasCanister
       gasMixture:
         volume: 64
@@ -105,10 +109,10 @@
           - 0 # nitrogen
           - 0 # CO2
           - 64 # Plasma
-        temperature: 632
+        temperature: 664
     - type: Explosive
       explosionType: Default
-      totalIntensity: 24 # ~ 2 tile radius
+      totalIntensity: 16 # ~ 2 tile radius
     - type: Repairable
       DoAfterDelay: 15
       QualityNeeded: Welding
@@ -139,11 +143,9 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
         - !type:DumpCanisterBehavior
-        - !type:SolutionExplosionBehavior
-          solution: battery
         - !type:PlaySoundBehavior
           sound:
-            path: /Audio/Effects/metalbreak.ogg
+            path: /Audio/Effects/explosion1.ogg
 
 # SMES' in use
 
