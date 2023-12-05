@@ -35,7 +35,8 @@ public sealed class RulesManager : SharedRulesManager
         _consoleHost.RegisterCommand("fuckrules", "", "", (_, _, _) =>
         {
             OnAcceptPressed();
-        });
+        },
+        requireServerOrSingleplayer: true);
     }
 
     private void OnShouldShowRules(ShouldShowRulesPopupMessage message)
