@@ -465,7 +465,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Cancelled || args.Container.ID != StorageComponent.ContainerId)
             return;
 
-        if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true))
+        if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true, includeContainerChecks: false))
             args.Cancel();
     }
 
@@ -534,7 +534,8 @@ public abstract class SharedStorageSystem : EntitySystem
         StorageComponent? storageComp = null,
         ItemComponent? item = null,
         bool ignoreStacks = false,
-        bool ignoreLocation = false)
+        bool ignoreLocation = false,
+        bool includeContainerChecks = true)
     {
         if (!Resolve(uid, ref storageComp) || !Resolve(insertEnt, ref item, false))
         {
@@ -591,7 +592,7 @@ public abstract class SharedStorageSystem : EntitySystem
             }
         }
 
-        if (!_containerSystem.CanInsert(insertEnt, storageComp.Container))
+        if (includeContainerChecks && !_containerSystem.CanInsert(insertEnt, storageComp.Container))
         {
             reason = null;
             return false;
