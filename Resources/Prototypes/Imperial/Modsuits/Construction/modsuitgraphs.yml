@@ -6,9 +6,17 @@
     edges:
     - to: modsuitconstructed
       steps:
+      - component: PowerCell
+        name: батарейку
+        doAfter: 1
+        store: battery-container
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+
       - tag: ModsuitHelmet
         name: шлем РИГ-а
-        doAfter: 2
+        doAfter: 1
         completed:
         - !type:VisualizerDataInt
           key: "enum.MechAssemblyVisuals.State"
@@ -50,7 +58,7 @@
         completed:
         - !type:VisualizerDataInt
           key: "enum.MechAssemblyVisuals.State"
-          data: 6
+          data: 5
 
   - node: modsuitconstructed
     actions:
