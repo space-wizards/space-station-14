@@ -1,14 +1,4 @@
 Entries:
-- author: PixelTK
-  changes:
-  - {message: Arachnids no longer have two additional hands as well as their damage
-      modifiers., type: Remove}
-  - {message: 'Arachnids can now craft more structures, unique clothes, and cloth
-      using their webs.', type: Add}
-  - {message: Arachnids now get more hungry when spinning webs., type: Tweak}
-  - {message: Moths can now eat silk., type: Tweak}
-  id: 4764
-  time: '2023-09-04T20:02:54.0000000+00:00'
 - author: Doru991
   changes:
   - {message: Genetically damaged plants can now be repaired with small amounts of
@@ -2904,3 +2894,9 @@ Entries:
   - {message: Paramedics are now available on marathon, type: Add}
   id: 5263
   time: '2023-12-05T07:36:58.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Chloral Hydrate sleep effect will start at 11 units, down from 16.',
+    type: Tweak}
+  id: 5264
+  time: '2023-12-05T08:52:47.0000000+00:00'
