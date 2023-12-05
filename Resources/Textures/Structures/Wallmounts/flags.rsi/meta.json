@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Derived by sprites from tgstation at https://github.com/tgstation/tgstation/commit/d0d81185f09ca30d3b0856d476544240dba0de53 and adapted by Saveliy360",
+  "copyright": "Derived by sprites from tgstation at https://github.com/tgstation/tgstation/commit/d0d81185f09ca30d3b0856d476544240dba0de53 and adapted by Saveliy360. NT_flag taken from Skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/tree/724d11274bf173044330ddc5f230c3abd80df8d2.",
   "size": {
     "x": 32,
     "y": 32

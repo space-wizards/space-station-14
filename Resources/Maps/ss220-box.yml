@@ -162344,7 +162344,7 @@ entities:
     - pos: 64.5,-36.5
       parent: 8364
       type: Transform
-- proto: SignNtFlag
+- proto: NTFlag
   entities:
   - uid: 29654
     components:

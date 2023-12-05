@@ -10,4 +10,5 @@
   - type: Sprite
     sprite: SS220/Clothing/Back/Backpacks/ussp.rsi
   - type: Storage
-    maxTotalWeight: 60
+    grid:
+    - 0,0,8,3

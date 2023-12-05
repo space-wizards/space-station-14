@@ -22,7 +22,8 @@
     - type: Transform
       anchored: true
     - type: Storage
-      maxSlots: 9999
+      grid:
+      - 0,0,20,10
       maxItemSize: Ginormous
       clickInsert: false
     - type: ActivatableUI

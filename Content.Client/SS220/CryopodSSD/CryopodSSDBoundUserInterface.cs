@@ -1,7 +1,6 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using Content.Client.Examine;
-using Content.Client.Storage.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Input;
 using Content.Shared.SS220.CryopodSSD;
@@ -9,50 +8,38 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Content.Shared.Storage;
+using Content.Client.Storage.Systems;
 
 namespace Content.Client.SS220.CryopodSSD;
 
 public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+
     private CryopodSSDWindow? _window = default!;
-    private StorageWindow? _storageWindow = default!;
+
+    private readonly StorageSystem _storage;
 
     public CryopodSSDBoundUserInterface(EntityUid owner, Enum uikey) : base(owner, uikey)
     {
+        IoCManager.InjectDependencies(this);
+
+        _storage = _entManager.System<StorageSystem>();
     }
 
     protected override void Open()
     {
         base.Open();
 
-        var entMan = IoCManager.Resolve<IEntityManager>();
-
         _window = new CryopodSSDWindow();
         _window.OnClose += Close;
 
         _window.OpenCentered();
 
-        if (_storageWindow == null)
+        if (_entManager.TryGetComponent<StorageComponent>(Owner, out var comp))
         {
-            _storageWindow = new StorageWindow(entMan)
-            {
-                Title = entMan.GetComponent<MetaDataComponent>(Owner).EntityName
-            };
-
-            _storageWindow.EntityList.GenerateItem += _storageWindow.GenerateButton;
-            _storageWindow.EntityList.ItemPressed += InteractWithItem;
-
-            _storageWindow.OnClose += Close;
-            _storageWindow.OpenCenteredLeft();
+            _storage.OpenStorageUI(Owner, comp);
         }
-        else
-        {
-            _storageWindow.Open();
-        }
-
-        var entityMan = IoCManager.Resolve<IEntityManager>();
-        if (entityMan.TryGetComponent<StorageComponent>(Owner, out var storageComp))
-            _storageWindow?.BuildEntityList(Owner, storageComp);
     }
 
     public void InteractWithItem(BaseButton.ButtonEventArgs? args, ListData? cData)
@@ -62,7 +49,7 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
 
         var entMan = IoCManager.Resolve<IEntityManager>();
 
-        if (cData is not EntityListData {Uid: var entity})
+        if (cData is not EntityListData { Uid: var entity })
             return;
 
         if (args.Event.Function == EngineKeyFunctions.UIClick)
@@ -75,7 +62,7 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
         }
     }
 
-    private void OnButtonPressed(GUIBoundKeyEventArgs args, EntityUid entity)
+    private static void OnButtonPressed(GUIBoundKeyEventArgs args, EntityUid entity)
     {
         var entitySys = IoCManager.Resolve<IEntitySystemManager>();
 
@@ -101,14 +88,19 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
             return;
         }
 
-        if (_storageWindow is not null)
+        if (!castedState.HasAccess)
         {
-            _storageWindow.Visible = castedState.HasAccess;
+            _storage.CloseStorageUI(Owner);
         }
 
-        var entityMan = IoCManager.Resolve<IEntityManager>();
-        if (entityMan.TryGetComponent<StorageComponent>(Owner, out var storageComp))
-            _storageWindow?.BuildEntityList(Owner, storageComp);
+        //if (_storageWindow is not null)
+        //{
+        //    _storageWindow.Visible = castedState.HasAccess;
+        //}
+
+        //var entityMan = IoCManager.Resolve<IEntityManager>();
+        //if (entityMan.TryGetComponent<StorageComponent>(Owner, out var storageComp))
+        //    _storageWindow?.BuildEntityList(Owner, storageComp);
         _window?.UpdateState(castedState);
     }
 
@@ -121,15 +113,8 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
             return;
         }
 
-        if (_storageWindow is not null)
-        {
-            _storageWindow.EntityList.GenerateItem -= _storageWindow.GenerateButton;
-            _storageWindow.EntityList.ItemPressed -= InteractWithItem;
-            _storageWindow.OnClose -= Close;
-        }
+        _storage.CloseStorageUI(Owner);
 
-        _storageWindow?.Dispose();
-        _storageWindow = null;
         _window?.Close();
     }
 }

@@ -28,7 +28,8 @@
   parent: BaseStorageItem
   components:
   - type: Storage
-    maxSlots: 4
+    grid:
+    - 0,0,4,1
     maxItemSize: Small
   - type: Item
     size: Large

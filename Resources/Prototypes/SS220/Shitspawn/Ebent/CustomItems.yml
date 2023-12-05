@@ -25,7 +25,8 @@
   suffix: Shitspawn, Ebent
   components:
   - type: Storage
-    maxTotalWeight: 60
+    grid:
+    - 0,0,12,3
 
 - type: entity
   parent: ClothingHeadsetAltSyndicate
@@ -49,7 +50,7 @@
   - type: StorageFill
     contents:
     - id: WeaponRevolverPython
- 
+
 #USSP
 - type: entity
   name: "фонарик СССП"
@@ -85,12 +86,12 @@
     walkModifier: 1
     sprintModifier: 1
     enabled: false
-    
+
 - type: entity
-  name: энергетическая сабля 
+  name: энергетическая сабля
   parent: BaseItem
   id: EnergySaberNT
-  description: Передовое оружие NanoTrasen для ведения ближнего боя. 
+  description: Передовое оружие NanoTrasen для ведения ближнего боя.
   suffix: Shitspawn, Ebent
   components:
   - type: EnergySword
