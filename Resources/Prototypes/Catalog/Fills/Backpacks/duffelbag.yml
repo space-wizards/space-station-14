@@ -38,12 +38,14 @@
   components:
   - type: StorageFill
     contents:
+      - id: MMI
       - id: Hemostat
       - id: SawAdvanced
       - id: Drill
       - id: Cautery
       - id: Retractor
       - id: ScalpelAdvanced
+      - id: ClothingHandsGlovesNitrile
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -327,6 +329,6 @@
       - id: Defibrillator
       - id: CombatMedipen
         amount: 3
-      - id: ClothingHandsGlovesLatex
+      - id: ClothingHandsGlovesNitrile
       - id: SyringeTranexamicAcid
       - id: SyringeHyronalin
