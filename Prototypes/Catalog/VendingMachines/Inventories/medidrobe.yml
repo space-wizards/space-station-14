@@ -1,0 +1,18 @@
+- type: vendingMachineInventory
+  id: MediDrobeInventory
+  startingInventory:
+    ClothingBackpackDuffelMedical: 4
+    ClothingBackpackMedical: 4
+    ClothingBackpackSatchelMedical: 4
+    ClothingUniformJumpsuitParamedic: 4
+    ClothingUniformJumpskirtParamedic: 4
+    ClothingHeadNurseHat: 4
+    ClothingOuterCoatLab: 4
+    ClothingShoesColorWhite: 4
+    ClothingHandsGlovesLatex: 4
+    ClothingHeadsetMedical: 4
+    ClothingOuterWinterMed: 2
+    ClothingOuterHospitalGown: 5
+    UniformScrubsColorGreen: 4
+    UniformScrubsColorBlue: 4
+    UniformScrubsColorPurple: 4
