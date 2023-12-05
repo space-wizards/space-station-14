@@ -39,7 +39,7 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<ActionsComponent, DidEquipHandEvent>(OnHandEquipped);
         SubscribeLocalEvent<ActionsComponent, DidUnequipEvent>(OnDidUnequip);
         SubscribeLocalEvent<ActionsComponent, DidUnequipHandEvent>(OnHandUnequipped);
-        SubscribeLocalEvent<ActionsComponent, RejuvenateEvent>();
+        SubscribeLocalEvent<ActionsComponent, RejuvenateEvent>(OnRejuventate);
 
         SubscribeLocalEvent<ActionsComponent, ComponentShutdown>(OnShutdown);
 
@@ -165,7 +165,7 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId.Value, action);
     }
 
-    public void OnRejuventate(EntityUid uid, ActionsComponent component)
+    public void OnRejuventate(EntityUid uid, ActionsComponent component, RejuvenateEvent args)
     {
         foreach (var act in component.Actions)
         {
