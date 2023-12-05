@@ -1,10 +1,4 @@
 Entries:
-- author: Doru991
-  changes:
-  - {message: Genetically damaged plants can now be repaired with small amounts of
-      phalanximine., type: Add}
-  id: 4765
-  time: '2023-09-04T20:11:41.0000000+00:00'
 - author: Fromoriss
   changes:
   - {message: Added cute and fluffy moth plushie!, type: Add}
@@ -2900,3 +2894,9 @@ Entries:
     type: Tweak}
   id: 5264
   time: '2023-12-05T08:52:47.0000000+00:00'
+- author: DangerRevolution
+  changes:
+  - {message: Added Emergency Nitrogen Tanks, type: Add}
+  - {message: Added Nitrogen Tanks to Emergency Closets, type: Add}
+  id: 5265
+  time: '2023-12-05T09:41:39.0000000+00:00'
