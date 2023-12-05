@@ -1,6 +1,7 @@
 ent-BaseWeaponLauncher = BaseWeaponLauncher
     .desc = Дерзай — налетай, целься и стреляй.
 ent-WeaponLauncherChinaLake = China Lake
+    .suffix = Гранатомет, Чайна Лейк
     .desc = БЛУП
 ent-WeaponLauncherRocket = РПГ-7
     .desc = Древний ручной реактивный гранатомёт.
