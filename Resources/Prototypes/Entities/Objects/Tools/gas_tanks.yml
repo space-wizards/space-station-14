@@ -130,6 +130,40 @@
       Steel: 100
 
 - type: entity
+  parent: GasTankRoundBase
+  id: EmergencyNitrogenTank
+  name: emergency nitrogen tank
+  description: An easily portable tank for emergencies. Contains very little nitrogen, rated for survival use only.
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/emergency_red.rsi
+  - type: Item
+    size: Small
+    sprite: Objects/Tanks/emergency_red.rsi
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      volume: 0.66
+      temperature: 293.15
+  - type: Clothing
+    sprite: Objects/Tanks/emergency_red.rsi
+    slots:
+    - Pocket
+    - Belt
+    - suitStorage
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+
+- type: entity
   parent: EmergencyOxygenTank
   id: ExtendedEmergencyOxygenTank
   name: extended-capacity emergency oxygen tank
