@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Revert 25% click attack buff., type: Tweak}
-  id: 4772
-  time: '2023-09-06T08:30:23.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Fixes crates requiring to be welded to deconstruct them., type: Fix}
@@ -2899,3 +2894,9 @@ Entries:
   - {message: Paper cups are now available at water coolers., type: Add}
   id: 5271
   time: '2023-12-05T21:47:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now make the storage window opaque with the "enable opaque storage
+      window" toggle in the graphics menu., type: Add}
+  id: 5272
+  time: '2023-12-05T23:38:10.0000000+00:00'
