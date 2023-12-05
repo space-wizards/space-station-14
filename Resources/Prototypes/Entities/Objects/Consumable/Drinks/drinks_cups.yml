@@ -309,12 +309,6 @@
   name: water cup
   description: A paper water cup.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Water
-          Quantity: 20
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
@@ -326,5 +320,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: icon-
+  - type: Tag
+    tags:
+    - Trash
   - type: TrashOnSolutionEmpty
     solution: drink
