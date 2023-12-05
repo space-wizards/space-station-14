@@ -36,9 +36,9 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
             xform?.Coordinates);
     }
 
-    public void RequestPowerMonitoringUpdate(NetEntity? netEntity, PowerMonitoringConsoleGroup? group)
+    public void SendPowerMonitoringConsoleMessage(NetEntity? netEntity, PowerMonitoringConsoleGroup group)
     {
-        SendMessage(new RequestPowerMonitoringUpdateMessage(netEntity, group));
+        SendMessage(new PowerMonitoringConsoleMessage(netEntity, group));
     }
 
     protected override void Dispose(bool disposing)

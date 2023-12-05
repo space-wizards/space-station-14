@@ -184,8 +184,7 @@ public sealed partial class PowerMonitoringWindow
             _focusEntity = null;
 
             // Request an update from the power monitoring system
-            RequestPowerMonitoringUpdateAction?.Invoke(null, null);
-            _updateTimer = 0f;
+            SendPowerMonitoringConsoleMessageAction?.Invoke(null, entry.Entry.Group);
 
             return;
         }
@@ -209,9 +208,6 @@ public sealed partial class PowerMonitoringWindow
         // Center the nav map on selected entity
         _focusEntity = entry.EntityUid;
 
-        //if (!TryGetEntityNavMapTrackingData(entry.EntityUid, out var trackingData))
-        //    return;
-
         if (!_trackedEntities.TryGetValue(entry.EntityUid, out var kvp))
             return;
 
@@ -227,8 +223,7 @@ public sealed partial class PowerMonitoringWindow
         _tryToScroll = true;
 
         // Request an update from the power monitoring system
-        RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_focusEntity), entry.Entry.Group);
-        _updateTimer = 0f;
+        SendPowerMonitoringConsoleMessageAction?.Invoke(_entManager.GetNetEntity(_focusEntity), entry.Entry.Group);
     }
 
     private bool TryGetNextScrollPosition([NotNullWhen(true)] out float? nextScrollPosition)

@@ -13,12 +13,14 @@ public sealed partial class PowerMonitoringConsoleComponent : Component
     /// <summary>
     /// The EntityUid of the device that is the console's current focus
     /// </summary>
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? Focus;
 
     /// <summary>
     /// The group that the device that is the console's current focus belongs to
     /// </summary>
-    public PowerMonitoringConsoleGroup? FocusGroup;
+    [ViewVariables, AutoNetworkedField]
+    public PowerMonitoringConsoleGroup FocusGroup = PowerMonitoringConsoleGroup.Generator;
 
     /// <summary>
     /// A dictionary of the all the nav map chunks that contain anchored power cables
@@ -110,12 +112,12 @@ public struct PowerMonitoringConsoleEntry
 ///     Triggers the server to send updated power monitoring console data to the client for the single player session
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class RequestPowerMonitoringUpdateMessage : BoundUserInterfaceMessage
+public sealed class PowerMonitoringConsoleMessage : BoundUserInterfaceMessage
 {
     public NetEntity? FocusDevice;
-    public PowerMonitoringConsoleGroup? FocusGroup;
+    public PowerMonitoringConsoleGroup FocusGroup;
 
-    public RequestPowerMonitoringUpdateMessage(NetEntity? focusDevice, PowerMonitoringConsoleGroup? focusGroup)
+    public PowerMonitoringConsoleMessage(NetEntity? focusDevice, PowerMonitoringConsoleGroup focusGroup)
     {
         FocusDevice = focusDevice;
         FocusGroup = focusGroup;

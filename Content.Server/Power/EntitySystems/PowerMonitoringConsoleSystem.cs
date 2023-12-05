@@ -23,7 +23,6 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 {
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly SharedMapSystem _sharedMapSystem = default!;
-    [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
     private Dictionary<EntityUid, List<(EntityUid, PowerMonitoringDeviceComponent)>> _gridDevices = new();
     private Dictionary<string, Dictionary<EntityUid, EntityCoordinates>> _groupableEntityCoords = new();
@@ -39,21 +38,24 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
     {
         base.Initialize();
 
-        //SubscribeLocalEvent<PowerMonitoringConsoleComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<PowerMonitoringConsoleComponent, EntParentChangedMessage>(OnEntParentChanged);
-
+        // PVS events
         SubscribeLocalEvent<PowerMonitoringConsoleUserComponent, ExpandPvsEvent>(OnExpandPvsEvent);
+
+        // Game rule events
         SubscribeLocalEvent<GameRuleStartedEvent>(OnPowerGridCheckStarted);
         SubscribeLocalEvent<GameRuleEndedEvent>(OnPowerGridCheckEnded);
-        SubscribeLocalEvent<PowerMonitoringConsoleComponent, RequestPowerMonitoringUpdateMessage>(OnUpdateRequestReceived);
 
+        // UI events
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, PowerMonitoringConsoleMessage>(OnPowerMonitoringConsoleMessage);
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, BoundUIClosedEvent>(OnBoundUIClosed);
 
+        // Grid events
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
         SubscribeLocalEvent<CableComponent, CableAnchorStateChangedEvent>(OnCableAnchorStateChanged);
         SubscribeLocalEvent<PowerMonitoringDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchoringChanged);
         SubscribeLocalEvent<PowerMonitoringDeviceComponent, NodeGroupsRebuilt>(OnNodeGroupRebuilt);
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, EntParentChangedMessage>(OnEntParentChanged);
     }
 
     public override void Update(float frameTime)
@@ -162,7 +164,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             totalBatteryUsage += batteryUsage;
 
             // Continue on if the device is not in the current focus group
-            if (component.FocusGroup != null && device.Group != component.FocusGroup)
+            if (device.Group != component.FocusGroup)
                 continue;
 
             // Generate a new console entry with which to populate the UI

@@ -19,8 +19,6 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
     private readonly SpriteSystem _spriteSystem;
     private readonly IGameTiming _gameTiming;
 
-    private float _updateTimer = 1.0f;
-    private const float UpdateTime = 1.0f;
     private const float BlinkFrequency = 1f;
 
     private EntityUid? _owner;
@@ -31,7 +29,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
     private Dictionary<EntityUid, (EntityCoordinates, NavMapTrackableComponent)> _trackedEntities = new();
 
-    public event Action<NetEntity?, PowerMonitoringConsoleGroup?>? RequestPowerMonitoringUpdateAction;
+    public event Action<NetEntity?, PowerMonitoringConsoleGroup>? SendPowerMonitoringConsoleMessageAction;
 
     public PowerMonitoringWindow(PowerMonitoringConsoleBoundUserInterface userInterface, EntityUid? owner)
     {
@@ -88,8 +86,8 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         ShowMVCable.OnToggled += _ => OnShowCableToggled(NavMapLineGroup.MediumVoltage);
         ShowLVCable.OnToggled += _ => OnShowCableToggled(NavMapLineGroup.Apc);
 
-        // Set power monitoring update request action
-        RequestPowerMonitoringUpdateAction += userInterface.RequestPowerMonitoringUpdate;
+        // Set power monitoring message action
+        SendPowerMonitoringConsoleMessageAction += userInterface.SendPowerMonitoringConsoleMessage;
 
         // Set trackable entity selected action
         NavMap.TrackableEntitySelectedAction += SetTrackedEntityFromNavMap;
@@ -97,7 +95,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
     private void OnTabChanged(int tab)
     {
-        RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_focusEntity), (PowerMonitoringConsoleGroup) tab);
+        SendPowerMonitoringConsoleMessageAction?.Invoke(_entManager.GetNetEntity(_focusEntity), (PowerMonitoringConsoleGroup) tab);
     }
 
     private void OnShowCableToggled(NavMapLineGroup lineGroup)
@@ -130,11 +128,20 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         PowerMonitoringConsoleEntry[] focusLoads,
         EntityCoordinates? monitorCoords)
     {
-        if (_owner == null)
+        if (_owner == null || !_entManager.HasComponent<MapGridComponent>(NavMap.MapUid))
             return;
 
-        if (!_entManager.HasComponent<MapGridComponent>(NavMap.MapUid))
+        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(_owner.Value, out var console))
             return;
+
+        // If this check fails it means that the client has changed the tabs and the received data is now out of date
+        if (console.FocusGroup != GetCurrentPowerMonitoringConsoleGroup())
+        {
+            Logger.Debug("console: " + console.FocusGroup + ", tab: " + GetCurrentPowerMonitoringConsoleGroup());
+
+            SendPowerMonitoringConsoleMessageAction?.Invoke(_entManager.GetNetEntity(_focusEntity), GetCurrentPowerMonitoringConsoleGroup());
+            return;
+        }
 
         // Sort all devices alphabetically by their entity name (not by power usage; otherwise their position on the UI will shift)
         Array.Sort(allEntries, AlphabeticalSort);
@@ -210,9 +217,6 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         NavMap.ForceNavMapUpdate();
 
         // Update system warnings
-        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(_owner.Value, out var console))
-            return;
-
         UpdateWarningLabel(console.Flags);
     }
 
@@ -252,28 +256,17 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         // Get the scroll position of the selected entity on the selected button the UI
         _tryToScroll = true;
 
-        // Request new data
-        RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_focusEntity), device.Group);
-        _updateTimer = 0f;
+        // Send message
+        SendPowerMonitoringConsoleMessageAction?.Invoke(_entManager.GetNetEntity(_focusEntity), device.Group);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         TryToScrollToFocus();
 
-        _updateTimer += args.DeltaSeconds;
-
         // Warning sign pulse        
         var lit = _gameTiming.RealTime.TotalSeconds % BlinkFrequency > BlinkFrequency / 2f;
         SystemWarningPanel.Modulate = lit ? Color.White : new Color(178, 178, 178);
-
-        if (_updateTimer >= UpdateTime)
-        {
-            _updateTimer -= UpdateTime;
-
-            // Request update from power monitoring system
-            RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_focusEntity), GetCurrentPowerMonitoringConsoleGroup());
-        }
     }
 
     private int AlphabeticalSort(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)

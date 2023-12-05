@@ -240,17 +240,27 @@ internal sealed partial class PowerMonitoringConsoleSystem
             EntityManager.RemoveComponent<PowerMonitoringConsoleUserComponent>(args.Session.AttachedEntity.Value);
     }
 
-    private void OnUpdateRequestReceived(EntityUid uid, PowerMonitoringConsoleComponent component, RequestPowerMonitoringUpdateMessage args)
+    private void OnPowerMonitoringConsoleMessage(EntityUid uid, PowerMonitoringConsoleComponent component, PowerMonitoringConsoleMessage args)
     {
         var focus = EntityManager.GetEntity(args.FocusDevice);
+        var group = args.FocusGroup;
 
+        // Update this if the focus device has changed
         if (component.Focus != focus)
         {
             component.Focus = focus;
             component.FocusChunks.Clear();
+
+            if (focus == null)
+                Dirty(uid, component);
         }
 
-        component.FocusGroup = args.FocusGroup;
+        // Update this if the focus group has changed
+        if (component.FocusGroup != group)
+        {
+            component.FocusGroup = args.FocusGroup;
+            Dirty(uid, component);
+        }
     }
 
     private void OnPowerGridCheckStarted(ref GameRuleStartedEvent ev)

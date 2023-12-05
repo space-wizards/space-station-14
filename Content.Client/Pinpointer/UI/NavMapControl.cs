@@ -47,9 +47,11 @@ public sealed partial class NavMapControl : MapGridControl
     public Color WallColor = new(102, 217, 102);
     public Color TileColor = new(30, 67, 30);
 
+    private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
+
     // Toggles
     public List<NavMapLineGroup> HiddenLineGroups = new List<NavMapLineGroup>();
-
+    
     // Local
     private NavMapComponent? _navMap;
     private MapGridComponent? _grid;
@@ -335,48 +337,41 @@ public sealed partial class NavMapControl : MapGridControl
             }
 
             if (walls.Count > 0)
-                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, walls.Span, WallColor);
+            {
+                if (!_sRGBLookUp.TryGetValue(WallColor, out var sRGB))
+                {
+                    sRGB = Color.ToSrgb(WallColor);
+                    _sRGBLookUp[WallColor] = sRGB;
+                }
+
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, walls.Span, sRGB);
+            }
         }
 
         // Draw full cable network
         if (PowerCableNetwork != null && PowerCableNetwork.Count > 0)
         {
             var modulator = (FocusCableNetwork != null && FocusCableNetwork.Count > 0) ? Color.DimGray : Color.White;
-            var cableNetworks = new ValueList<Vector2>[3];
 
-            foreach ((var chunk, var chunkedLines) in PowerCableNetwork)
+            if (WorldRange / WorldMaxRange > 0.5f)
             {
-                var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
+                var cableNetworks = new ValueList<Vector2>[3];
 
-                if (offsetChunk.X < area.Left - SharedNavMapSystem.ChunkSize || offsetChunk.X > area.Right)
-                    continue;
-
-                if (offsetChunk.Y < area.Bottom - SharedNavMapSystem.ChunkSize || offsetChunk.Y > area.Top)
-                    continue;
-
-                foreach (var chunkedLine in chunkedLines)
+                foreach ((var chunk, var chunkedLines) in PowerCableNetwork)
                 {
-                    if (HiddenLineGroups.Contains(chunkedLine.Group))
+                    var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
+
+                    if (offsetChunk.X < area.Left - SharedNavMapSystem.ChunkSize || offsetChunk.X > area.Right)
                         continue;
 
-                    if (WorldRange / WorldMaxRange < 0.5f)
+                    if (offsetChunk.Y < area.Bottom - SharedNavMapSystem.ChunkSize || offsetChunk.Y > area.Top)
+                        continue;
+
+                    foreach (var chunkedLine in chunkedLines)
                     {
-                        var leftTop = new Vector2
-                            (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
-                            Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f);
+                        if (HiddenLineGroups.Contains(chunkedLine.Group))
+                            continue;
 
-                        var rightBottom = new Vector2
-                            (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
-                            Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f);
-
-                        handle.DrawRect
-                            (new UIBox2(Scale(leftTop - new Vector2(offset.X, -offset.Y)),
-                            Scale(rightBottom - new Vector2(offset.X, -offset.Y))),
-                            (_powerCableColors[(int) chunkedLine.Group] * modulator));
-                    }
-
-                    else
-                    {
                         var start = Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
                         var end = Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
 
@@ -384,55 +379,116 @@ public sealed partial class NavMapControl : MapGridControl
                         cableNetworks[(int) chunkedLine.Group].Add(end);
                     }
                 }
+
+                for (int cableNetworkIdx = 0; cableNetworkIdx < cableNetworks.Length; cableNetworkIdx++)
+                {
+                    var cableNetwork = cableNetworks[cableNetworkIdx];
+
+                    if (cableNetwork.Count > 0)
+                    {
+                        var color = _powerCableColors[cableNetworkIdx] * modulator;
+
+                        if (!_sRGBLookUp.TryGetValue(color, out var sRGB))
+                        {
+                            sRGB = Color.ToSrgb(color);
+                            _sRGBLookUp[color] = sRGB;
+                        }
+
+                        handle.DrawPrimitives(DrawPrimitiveTopology.LineList, cableNetwork.Span, sRGB);
+                    }
+                }
             }
 
-            for (int cableNetworkIdx = 0; cableNetworkIdx < cableNetworks.Count(); cableNetworkIdx++)
+            else
             {
-                var cableNetwork = cableNetworks[cableNetworkIdx];
+                var cableVertexUVs = new ValueList<Vector2>[3];
 
-                if (cableNetwork.Count > 0)
-                    handle.DrawPrimitives(DrawPrimitiveTopology.LineList, cableNetwork.Span, (_powerCableColors[cableNetworkIdx] * new Color(164, 164, 164)));
+                foreach ((var chunk, var chunkedLines) in PowerCableNetwork)
+                {
+                    var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
+
+                    if (offsetChunk.X < area.Left - SharedNavMapSystem.ChunkSize || offsetChunk.X > area.Right)
+                        continue;
+
+                    if (offsetChunk.Y < area.Bottom - SharedNavMapSystem.ChunkSize || offsetChunk.Y > area.Top)
+                        continue;
+
+                    foreach (var chunkedLine in chunkedLines)
+                    {
+                        if (HiddenLineGroups.Contains(chunkedLine.Group))
+                            continue;
+
+                        var leftTop = Scale(new Vector2
+                            (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
+                            Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f)
+                            - new Vector2(offset.X, -offset.Y));
+
+                        var rightTop = Scale(new Vector2
+                            (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
+                            Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f)
+                            - new Vector2(offset.X, -offset.Y));
+
+                        var leftBottom = Scale(new Vector2
+                            (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
+                            Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f)
+                            - new Vector2(offset.X, -offset.Y));
+
+                        var rightBottom = Scale(new Vector2
+                            (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
+                            Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f)
+                            - new Vector2(offset.X, -offset.Y));
+
+                        cableVertexUVs[(int) chunkedLine.Group].Add(leftBottom);
+                        cableVertexUVs[(int) chunkedLine.Group].Add(leftTop);
+                        cableVertexUVs[(int) chunkedLine.Group].Add(rightBottom);
+                        cableVertexUVs[(int) chunkedLine.Group].Add(leftTop);
+                        cableVertexUVs[(int) chunkedLine.Group].Add(rightBottom);
+                        cableVertexUVs[(int) chunkedLine.Group].Add(rightTop);
+                    }
+                }
+
+                for (int cableNetworkIdx = 0; cableNetworkIdx < cableVertexUVs.Length; cableNetworkIdx++)
+                {
+                    var cableVertexUV = cableVertexUVs[cableNetworkIdx];
+
+                    if (cableVertexUV.Count > 0)
+                    {
+                        var color = _powerCableColors[cableNetworkIdx] * modulator;
+
+                        if (!_sRGBLookUp.TryGetValue(color, out var sRGB))
+                        {
+                            sRGB = Color.ToSrgb(color);
+                            _sRGBLookUp[color] = sRGB;
+                        }
+
+                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, cableVertexUV.Span, sRGB);
+                    }
+                }
             }
         }
 
         // Draw focus network
         if (FocusCableNetwork != null && FocusCableNetwork.Count > 0)
         {
-            var cableNetworks = new ValueList<Vector2>[3];
-
-            foreach ((var chunk, var chunkedLines) in FocusCableNetwork)
+            if (WorldRange / WorldMaxRange > 0.5f)
             {
-                var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
+                var cableNetworks = new ValueList<Vector2>[3];
 
-                if (offsetChunk.X < area.Left - SharedNavMapSystem.ChunkSize || offsetChunk.X > area.Right)
-                    continue;
-
-                if (offsetChunk.Y < area.Bottom - SharedNavMapSystem.ChunkSize || offsetChunk.Y > area.Top)
-                    continue;
-
-                foreach (var chunkedLine in chunkedLines)
+                foreach ((var chunk, var chunkedLines) in FocusCableNetwork)
                 {
-                    if (HiddenLineGroups.Contains(chunkedLine.Group))
+                    var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
+
+                    if (offsetChunk.X < area.Left - SharedNavMapSystem.ChunkSize || offsetChunk.X > area.Right)
                         continue;
 
-                    if (WorldRange / WorldMaxRange < 0.5f)
+                    if (offsetChunk.Y < area.Bottom - SharedNavMapSystem.ChunkSize || offsetChunk.Y > area.Top)
+                        continue;
+
+                    foreach (var chunkedLine in chunkedLines)
                     {
-                        var leftTop = new Vector2
-                            (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
-                            Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f);
+                        if (HiddenLineGroups.Contains(chunkedLine.Group))
+                            continue;
 
-                        var rightBottom = new Vector2
-                            (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
-                            Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f);
-
-                        handle.DrawRect
-                            (new UIBox2(Scale(leftTop - new Vector2(offset.X, -offset.Y)),
-                            Scale(rightBottom - new Vector2(offset.X, -offset.Y))),
-                            chunkedLine.Color);
-                    }
-
-                    else
-                    {
                         var start = Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
                         var end = Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
 
@@ -440,14 +496,91 @@ public sealed partial class NavMapControl : MapGridControl
                         cableNetworks[(int) chunkedLine.Group].Add(end);
                     }
                 }
+
+                for (int cableNetworkIdx = 0; cableNetworkIdx < cableNetworks.Length; cableNetworkIdx++)
+                {
+                    var cableNetwork = cableNetworks[cableNetworkIdx];
+
+                    if (cableNetwork.Count > 0)
+                    {
+                        var color = _powerCableColors[cableNetworkIdx];
+
+                        if (!_sRGBLookUp.TryGetValue(color, out var sRGB))
+                        {
+                            sRGB = Color.ToSrgb(color);
+                            _sRGBLookUp[color] = sRGB;
+                        }
+
+                        handle.DrawPrimitives(DrawPrimitiveTopology.LineList, cableNetwork.Span, sRGB);
+                    }
+                }
             }
 
-            for (int cableNetworkIdx = 0; cableNetworkIdx < cableNetworks.Count(); cableNetworkIdx++)
+            else
             {
-                var cableNetwork = cableNetworks[cableNetworkIdx];
+                var cableVertexUVs = new ValueList<Vector2>[3];
 
-                //if (cableNetwork.Count > 0)
-                //    handle.DrawPrimitives(DrawPrimitiveTopology.LineList, cableNetwork.Span, _powerCableColors[cableNetworkIdx]);
+                foreach ((var chunk, var chunkedLines) in FocusCableNetwork)
+                {
+                    var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
+
+                    if (offsetChunk.X < area.Left - SharedNavMapSystem.ChunkSize || offsetChunk.X > area.Right)
+                        continue;
+
+                    if (offsetChunk.Y < area.Bottom - SharedNavMapSystem.ChunkSize || offsetChunk.Y > area.Top)
+                        continue;
+
+                    foreach (var chunkedLine in chunkedLines)
+                    {
+                        if (HiddenLineGroups.Contains(chunkedLine.Group))
+                            continue;
+
+                        var leftTop = Scale(new Vector2
+                            (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
+                            Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f)
+                            - new Vector2(offset.X, -offset.Y));
+
+                        var rightTop = Scale(new Vector2
+                            (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
+                            Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f)
+                            - new Vector2(offset.X, -offset.Y));
+
+                        var leftBottom = Scale(new Vector2
+                            (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
+                            Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f)
+                            - new Vector2(offset.X, -offset.Y));
+
+                        var rightBottom = Scale(new Vector2
+                            (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
+                            Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f)
+                            - new Vector2(offset.X, -offset.Y));
+
+                        cableVertexUVs[(int) chunkedLine.Group].Add(leftBottom);
+                        cableVertexUVs[(int) chunkedLine.Group].Add(leftTop);
+                        cableVertexUVs[(int) chunkedLine.Group].Add(rightBottom);
+                        cableVertexUVs[(int) chunkedLine.Group].Add(leftTop);
+                        cableVertexUVs[(int) chunkedLine.Group].Add(rightBottom);
+                        cableVertexUVs[(int) chunkedLine.Group].Add(rightTop);
+                    }
+                }
+
+                for (int cableNetworkIdx = 0; cableNetworkIdx < cableVertexUVs.Length; cableNetworkIdx++)
+                {
+                    var cableVertexUV = cableVertexUVs[cableNetworkIdx];
+
+                    if (cableVertexUV.Count > 0)
+                    {
+                        var color = _powerCableColors[cableNetworkIdx];
+
+                        if (!_sRGBLookUp.TryGetValue(color, out var sRGB))
+                        {
+                            sRGB = Color.ToSrgb(color);
+                            _sRGBLookUp[color] = sRGB;
+                        }
+
+                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, cableVertexUV.Span, sRGB);
+                    }
+                }
             }
         }
 
@@ -473,47 +606,55 @@ public sealed partial class NavMapControl : MapGridControl
         }
 
         // Tracked entities (can use a supplied sprite as a marker instead; should probably just replace TrackedCoordinates with this eventually)
-        SpriteSpecifier.Texture? texture = null;
-        var vertexUVs = new ValueList<DrawVertexUV2D>();
+        var iconVertexUVs = new Dictionary<(Texture, Color), ValueList<DrawVertexUV2D>>();
 
-        foreach (var (coord, value) in TrackedEntities)
+        foreach ((var coord, var value) in TrackedEntities)
         {
-            if (lit || !value.Blinks)
+            if (value.Blinks && !lit)
+                continue;
+
+            if (value.Texture == null)
+                continue;
+
+            var texture = _spriteSystem.Frame0(value.Texture);
+
+            if (texture == null)
+                continue;
+
+            if (!iconVertexUVs.TryGetValue((texture, value.Color), out var vertexUVs))
+                vertexUVs = new();
+
+            var mapPos = coord.ToMap(_entManager, _transformSystem);
+
+            if (mapPos.MapId != MapId.Nullspace)
             {
-                var mapPos = coord.ToMap(_entManager, _transformSystem);
+                var position = _transformSystem.GetInvWorldMatrix(_xform).Transform(mapPos.Position) - offset;
+                position = Scale(new Vector2(position.X, -position.Y));
 
-                if (mapPos.MapId != MapId.Nullspace)
-                {
-                    var position = _transformSystem.GetInvWorldMatrix(_xform).Transform(mapPos.Position) - offset;
-                    position = Scale(new Vector2(position.X, -position.Y));
+                var scalingCoefficient = 2.5f;
+                var positionOffset = scalingCoefficient * float.Sqrt(MinimapScale);
 
-                    var scalingCoefficient = 2.5f;
-                    var positionOffset = scalingCoefficient * float.Sqrt(MinimapScale);
-
-                    //var rect = new UIBox2
-                    //    (position.X - positionOffset,
-                    //    position.Y - positionOffset,
-                    //    position.X + positionOffset,
-                    //    position.Y + positionOffset);
-
-                    vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X - positionOffset, position.Y - positionOffset), new Vector2(0f, 0f)));
-                    vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X - positionOffset, position.Y + positionOffset), new Vector2(0f, 1f)));
-                    vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X + positionOffset, position.Y - positionOffset), new Vector2(1f, 0f)));
-                    vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X - positionOffset, position.Y + positionOffset), new Vector2(0f, 1f)));
-                    vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X + positionOffset, position.Y - positionOffset), new Vector2(1f, 0f)));
-                    vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X + positionOffset, position.Y + positionOffset), new Vector2(1f, 1f)));
-
-                    if (value.Texture != null)
-                    {
-                        texture = value.Texture;
-                        //handle.DrawTextureRect(_spriteSystem.Frame0(value.Texture), rect, value.Color);
-                    }
-                }
+                vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X - positionOffset, position.Y - positionOffset), new Vector2(1f, 1f)));
+                vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X - positionOffset, position.Y + positionOffset), new Vector2(1f, 0f)));
+                vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X + positionOffset, position.Y - positionOffset), new Vector2(0f, 1f)));
+                vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X - positionOffset, position.Y + positionOffset), new Vector2(1f, 0f)));
+                vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X + positionOffset, position.Y - positionOffset), new Vector2(0f, 1f)));
+                vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X + positionOffset, position.Y + positionOffset), new Vector2(0f, 0f)));
             }
+
+            iconVertexUVs[(texture, value.Color)] = vertexUVs;
         }
 
-        if (texture != null)
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, _spriteSystem.Frame0(texture), vertexUVs.Span, Color.Aqua);
+        foreach ((var (texture, color), var vertexUVs) in iconVertexUVs)
+        {
+            if (!_sRGBLookUp.TryGetValue(color, out var sRGB))
+            {
+                sRGB = Color.ToSrgb(color);
+                _sRGBLookUp[color] = sRGB;
+            }
+
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, texture, vertexUVs.Span, sRGB);
+        }
 
         // Beacons
         if (_beacons.Pressed)
