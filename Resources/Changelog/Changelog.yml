@@ -1,13 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: Shuttles no longer go hog wild whenever they're above their former maximum
-      velocity of 20., type: Fix}
-  - {message: 'Upgraded thrusters now contribute to a direction-specific thrust factor,
-      calculated by dividing total thrust over thrust if every thruster was T1. The
-      maximum speed with T4 parts is 67.5.', type: Add}
-  id: 4763
-  time: '2023-09-04T19:33:47.0000000+00:00'
 - author: PixelTK
   changes:
   - {message: Arachnids no longer have two additional hands as well as their damage
@@ -2908,3 +2899,8 @@ Entries:
   - {message: Paramedics are now available on barratry, type: Add}
   id: 5262
   time: '2023-12-05T07:35:36.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Paramedics are now available on marathon, type: Add}
+  id: 5263
+  time: '2023-12-05T07:36:58.0000000+00:00'
