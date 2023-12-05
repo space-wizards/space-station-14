@@ -16,6 +16,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
@@ -190,8 +191,8 @@ namespace Content.Shared.Movement.Systems
 
             // Don't bother getting the tiledef here if we're weightless or in-air
             // since no tile-based modifiers should be applying in that situation
-            if (_mapManager.TryFindGridAt(xform.MapPosition, out var grid, out var gridComp)
-                && _mapSystem.TryGetTileRef(grid, gridComp, xform.Coordinates, out var tile)
+            if (TryComp(xform.GridUid, out MapGridComponent? gridComp)
+                && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile)
                 && !(weightless || physicsComponent.BodyStatus == BodyStatus.InAir))
             {
                 tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
