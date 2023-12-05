@@ -96,12 +96,12 @@
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadio40TC
-  suffix: 40 TC, NukeOps
+  suffix: 50 TC, NukeOps
   components:
   - type: Store
     preset: StorePresetUplink
     balance:
-      Telecrystal: 40
+      Telecrystal: 50
   - type: Tag
     tags:
     - NukeOpsUplink
@@ -109,12 +109,12 @@
 - type: entity
   parent: BaseUplinkRadio
   id: LoneOpsUplinkRadio40TC
-  suffix: 40 TC, LoneOps
+  suffix: 50 TC, LoneOps
   components:
   - type: Store
     preset: StorePresetUplink
     balance:
-      Telecrystal: 40
+      Telecrystal: 50
   - type: Tag
     tags:
     - LoneOpsUplink
