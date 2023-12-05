@@ -387,7 +387,7 @@
   id: SyringeCryostasis
   parent: BaseSyringe
   name: cryostasis syringe
-  description: A syringe used to contain chemicals or solutions without reactions. 
+  description: A syringe used to contain chemicals or solutions without reactions.
   components:
   - type: Sprite
     layers:
@@ -480,7 +480,8 @@
     tags:
       - PillCanister
   - type: Storage
-    maxTotalWeight: 10
+    grid:
+    - 0,0,4,1
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 1
