@@ -338,9 +338,9 @@
     sprite: Objects/Misc/bureaucracy.rsi
     size: Small
   - type: Storage
-    maxSlots: 10
     maxItemSize: Small
-    maxTotalWeight: 20
+    grid:
+    - 0,0,4,3
     whitelist:
       tags:
         - Document
@@ -476,8 +476,8 @@
     quickEquip: false
     sprite: Objects/Misc/clipboard.rsi
   - type: Storage
-    maxSlots: 15
-    maxTotalWeight: 30
+    grid:
+    - 0,0,5,3
     whitelist:
       tags:
         - Document
@@ -535,7 +535,8 @@
     quickEquip: false
     sprite: Objects/Misc/qm_clipboard.rsi
   - type: Storage
-    maxSlots: 20
+    grid:
+    - 0,0,4,3
     quickInsert: true
     whitelist:
       tags:
