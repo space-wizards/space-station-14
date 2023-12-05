@@ -1,49 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: All bots now uses robot typing indicator, type: Tweak}
-  id: 4761
-  time: '2023-09-04T14:21:53.0000000+00:00'
-- author: DrTeaSpoon
-  changes:
-  - {message: Plant mutations can now alter plant gas and chemical production., type: Add}
-  id: 4762
-  time: '2023-09-04T16:24:39.0000000+00:00'
-- author: router
-  changes:
-  - {message: Shuttles no longer go hog wild whenever they're above their former maximum
-      velocity of 20., type: Fix}
-  - {message: 'Upgraded thrusters now contribute to a direction-specific thrust factor,
-      calculated by dividing total thrust over thrust if every thruster was T1. The
-      maximum speed with T4 parts is 67.5.', type: Add}
-  id: 4763
-  time: '2023-09-04T19:33:47.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: Arachnids no longer have two additional hands as well as their damage
-      modifiers., type: Remove}
-  - {message: 'Arachnids can now craft more structures, unique clothes, and cloth
-      using their webs.', type: Add}
-  - {message: Arachnids now get more hungry when spinning webs., type: Tweak}
-  - {message: Moths can now eat silk., type: Tweak}
-  id: 4764
-  time: '2023-09-04T20:02:54.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: Genetically damaged plants can now be repaired with small amounts of
-      phalanximine., type: Add}
-  id: 4765
-  time: '2023-09-04T20:11:41.0000000+00:00'
-- author: Fromoriss
-  changes:
-  - {message: Added cute and fluffy moth plushie!, type: Add}
-  id: 4766
-  time: '2023-09-04T20:18:03.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fix deployable barriers., type: Fix}
-  id: 4767
-  time: '2023-09-04T22:33:40.0000000+00:00'
 - author: Endecc
   changes:
   - {message: 'Added the luxury mining hardsuit, a lighter and more versatile mining
@@ -2908,3 +2863,44 @@ Entries:
   - {message: Clowns can now craft the Banana Clown outfit., type: Add}
   id: 5260
   time: '2023-12-04T23:12:02.0000000+00:00'
+- author: enumerate0
+  changes:
+  - {message: Fixed Christmas tree bounding box, type: Fix}
+  id: 5261
+  time: '2023-12-05T06:20:54.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Paramedics are now available on barratry, type: Add}
+  id: 5262
+  time: '2023-12-05T07:35:36.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Paramedics are now available on marathon, type: Add}
+  id: 5263
+  time: '2023-12-05T07:36:58.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Chloral Hydrate sleep effect will start at 11 units, down from 16.',
+    type: Tweak}
+  id: 5264
+  time: '2023-12-05T08:52:47.0000000+00:00'
+- author: DangerRevolution
+  changes:
+  - {message: Added Emergency Nitrogen Tanks, type: Add}
+  - {message: Added Nitrogen Tanks to Emergency Closets, type: Add}
+  id: 5265
+  time: '2023-12-05T09:41:39.0000000+00:00'
+- author: Lazzi0706
+  changes:
+  - {message: Added a new stomach for mice and "hunger thresholds" in mice's prototype,
+    type: Add}
+  - {message: Fixed inadequate hunger in mice, type: Fix}
+  id: 5266
+  time: '2023-12-05T10:39:09.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Removed the spare paramedic clothes and EVA suit from the medidrobe,
+    type: Remove}
+  - {message: added medical doctor jumpsuits and skirts to the medidrobe, type: Add}
+  id: 5267
+  time: '2023-12-05T10:39:54.0000000+00:00'
