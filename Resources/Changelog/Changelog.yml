@@ -1,12 +1,4 @@
 Entries:
-- author: Endecc
-  changes:
-  - {message: 'Added the luxury mining hardsuit, a lighter and more versatile mining
-      hardsuit styled after the Quartermaster.', type: Add}
-  - {message: 'Added luxury mining hardsuit cargo order, because this ELITE cargo
-      suit is too expensive to stock on every station.', type: Add}
-  id: 4768
-  time: '2023-09-05T03:42:09.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Magnets can no longer be deconstructed while active, preventing a few
@@ -2904,3 +2896,8 @@ Entries:
   - {message: added medical doctor jumpsuits and skirts to the medidrobe, type: Add}
   id: 5267
   time: '2023-12-05T10:39:54.0000000+00:00'
+- author: ForestNoises
+  changes:
+  - {message: The rejuvenate command/verb resets all action cooldowns., type: Add}
+  id: 5268
+  time: '2023-12-05T21:00:03.0000000+00:00'
