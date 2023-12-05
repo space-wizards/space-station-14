@@ -1,9 +1,7 @@
-using System.Linq;
 using System.Numerics;
 using Content.Client.Items.Systems;
 using Content.Shared.Item;
 using Content.Shared.Storage;
-using Content.Shared.Storage.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -12,8 +10,7 @@ namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
 public sealed class ItemGridPiece : Control
 {
-    private readonly ItemSystem _itemSystem;
-    private readonly SpriteSystem _spriteSystem;
+    private readonly IEntityManager _entityManager;
     private readonly StorageUIController _storageController;
 
     private readonly List<(Texture, Vector2)> _texturesPositions = new();
@@ -49,8 +46,7 @@ public sealed class ItemGridPiece : Control
     {
         IoCManager.InjectDependencies(this);
 
-        _itemSystem = entityManager.System<ItemSystem>();
-        _spriteSystem = entityManager.System<SpriteSystem>();
+        _entityManager = entityManager;
         _storageController = UserInterfaceManager.GetUIController<StorageUIController>();
 
         Entity = entity.Owner;
@@ -81,10 +77,17 @@ public sealed class ItemGridPiece : Control
     {
         base.Draw(handle);
 
+        // really just an "oh shit" catch.
+        if (!_entityManager.EntityExists(Entity))
+        {
+            Dispose();
+            return;
+        }
+
         if (_storageController.IsDragging && _storageController.CurrentlyDragging == this)
             return;
 
-        var adjustedShape = _itemSystem.GetAdjustedItemShape((Entity, null), Location.Rotation, Vector2i.Zero);
+        var adjustedShape = _entityManager.System<ItemSystem>().GetAdjustedItemShape((Entity, null), Location.Rotation, Vector2i.Zero);
         var boundingGrid = adjustedShape.GetBoundingBox();
         var size = _centerTexture!.Size * 2 * UIScale;
 
@@ -130,7 +133,7 @@ public sealed class ItemGridPiece : Control
         var iconOffset = new Vector2((boundingGrid.Width + 1) * size.X ,
             (boundingGrid.Height + 1) * size.Y);
 
-        _spriteSystem.ForceUpdate(Entity);
+        _entityManager.System<SpriteSystem>().ForceUpdate(Entity);
         handle.DrawEntity(Entity,
             PixelPosition + iconOffset,
             Vector2.One * 2 * UIScale,

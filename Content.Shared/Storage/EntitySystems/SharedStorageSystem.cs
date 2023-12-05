@@ -407,7 +407,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!_actionBlockerSystem.CanInteract(player, itemEnt) || !_sharedHandsSystem.IsHolding(player, itemEnt, out _))
             return;
 
-        InsertAt((storageEnt, storageComp), (itemEnt, null), msg.Location, out _, player);
+        InsertAt((storageEnt, storageComp), (itemEnt, null), msg.Location, out _, player, stackAutomatically: false);
     }
 
     private void OnBoundUIOpen(EntityUid uid, StorageComponent storageComp, BoundUIOpenedEvent args)
@@ -465,7 +465,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Cancelled || args.Container.ID != StorageComponent.ContainerId)
             return;
 
-        if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true))
+        if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true, includeContainerChecks: false))
             args.Cancel();
     }
 
@@ -534,7 +534,8 @@ public abstract class SharedStorageSystem : EntitySystem
         StorageComponent? storageComp = null,
         ItemComponent? item = null,
         bool ignoreStacks = false,
-        bool ignoreLocation = false)
+        bool ignoreLocation = false,
+        bool includeContainerChecks = true)
     {
         if (!Resolve(uid, ref storageComp) || !Resolve(insertEnt, ref item, false))
         {
@@ -591,6 +592,12 @@ public abstract class SharedStorageSystem : EntitySystem
             }
         }
 
+        if (includeContainerChecks && !_containerSystem.CanInsert(insertEnt, storageComp.Container))
+        {
+            reason = null;
+            return false;
+        }
+
         reason = null;
         return true;
     }
@@ -606,7 +613,8 @@ public abstract class SharedStorageSystem : EntitySystem
         ItemStorageLocation location,
         out EntityUid? stackedEntity,
         EntityUid? user = null,
-        bool playSound = true)
+        bool playSound = true,
+        bool stackAutomatically = true)
     {
         stackedEntity = null;
         if (!Resolve(uid, ref uid.Comp))
@@ -617,7 +625,21 @@ public abstract class SharedStorageSystem : EntitySystem
 
         uid.Comp.StoredItems[GetNetEntity(insertEnt)] = location;
         Dirty(uid, uid.Comp);
-        return Insert(uid, insertEnt, out stackedEntity, out _, user: user, storageComp: uid.Comp, playSound: playSound);
+
+        if (Insert(uid,
+                insertEnt,
+                out stackedEntity,
+                out _,
+                user: user,
+                storageComp: uid.Comp,
+                playSound: playSound,
+                stackAutomatically: stackAutomatically))
+        {
+            return true;
+        }
+
+        uid.Comp.StoredItems.Remove(GetNetEntity(insertEnt));
+        return false;
     }
 
     /// <summary>
@@ -631,9 +653,10 @@ public abstract class SharedStorageSystem : EntitySystem
         out EntityUid? stackedEntity,
         EntityUid? user = null,
         StorageComponent? storageComp = null,
-        bool playSound = true)
+        bool playSound = true,
+        bool stackAutomatically = true)
     {
-        return Insert(uid, insertEnt, out stackedEntity, out _, user: user, storageComp: storageComp, playSound: playSound);
+        return Insert(uid, insertEnt, out stackedEntity, out _, user: user, storageComp: storageComp, playSound: playSound, stackAutomatically: stackAutomatically);
     }
 
     /// <summary>
@@ -648,7 +671,8 @@ public abstract class SharedStorageSystem : EntitySystem
         out string? reason,
         EntityUid? user = null,
         StorageComponent? storageComp = null,
-        bool playSound = true)
+        bool playSound = true,
+        bool stackAutomatically = true)
     {
         stackedEntity = null;
         reason = null;
@@ -665,7 +689,7 @@ public abstract class SharedStorageSystem : EntitySystem
          * For now we just treat items as always being the same size regardless of stack count.
          */
 
-        if (!_stackQuery.TryGetComponent(insertEnt, out var insertStack))
+        if (!stackAutomatically || !_stackQuery.TryGetComponent(insertEnt, out var insertStack))
         {
             if (!_containerSystem.Insert(insertEnt, storageComp.Container))
                 return false;
