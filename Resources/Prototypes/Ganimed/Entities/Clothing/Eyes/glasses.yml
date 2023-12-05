@@ -18,3 +18,21 @@
   - type: GuideHelp
     guides:
     - Security
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHUDGlassesSecurity
+  name: security HUD sunglasses
+  description: Improved shielding blocks many flashes. Holographic symbols are visible on the glass. Improved ancient technology?
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/secglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/secglasses.rsi
+  - type: ShowSecurityIcons
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+  - type: Tag
+    tags:
+    - HamsterWearable
