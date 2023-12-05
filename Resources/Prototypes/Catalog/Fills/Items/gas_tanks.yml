@@ -53,20 +53,6 @@
       moles:
         - 0.270782035 # oxygen
       temperature: 293.15
-      
-- type: entity
-  id: EmergencyOxygenTankFilled
-  parent: EmergencyOxygenTank
-  suffix: Filled
-  components:
-  - type: GasTank
-    outputPressure: 21.3
-    air:
-      # 4 minutes
-      volume: 0.66
-      moles:
-        - 0.270782035 # oxygen
-      temperature: 293.15
 
 - type: entity
   id: EmergencyNitrogenTankFilled
