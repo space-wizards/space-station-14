@@ -11,6 +11,7 @@
     sprite: Objects/Weapons/Bombs/ied.rsi
     layers:
     - state: base
+      map: ["enum.TriggerVisualLayers.Base"]
     - state: fuel
     - state: wires
   - type: Item
@@ -19,8 +20,12 @@
     delay: 5
     examinable: false
     initialBeepDelay: 0
-    beepSound: /Audio/Effects/lightburn.ogg
-  # TODO: random timer when crafted
+    beepSound:
+      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+      volume: 1
+  - type: RandomTimerTrigger
+    min: 0
+    max: 60
   - type: Explosive # Weak explosion in a very small radius. Doesn't break underplating.
     explosionType: Default
     totalIntensity: 20
@@ -28,6 +33,10 @@
     maxIntensity: 3
     canCreateVacuum: false
   - type: ExplodeOnTrigger
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: TimerTriggerVisuals
+    unprimedSprite: base
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
