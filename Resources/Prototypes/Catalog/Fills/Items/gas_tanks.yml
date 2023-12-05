@@ -89,6 +89,8 @@
   suffix: Filled
   components:
   - type: GasTank
+    outputPressure: 21.3
+    air:
       # 9 minutes
       volume: 1.5
       moles:
