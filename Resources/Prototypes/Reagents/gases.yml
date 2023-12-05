@@ -310,7 +310,8 @@
           shouldHave: false
         key: ForcedSleep
         component: ForcedSleeping
-        time: 3
+        time: 250 # time in miliseconds (due to how respiration works this needs to be over 2 seconds to prevent losing the effect.)
+        refresh: true
         type: Add
       - !type:HealthChange
         conditions:
@@ -355,8 +356,8 @@
         key: SeeingRainbows
         component: SeeingRainbows
         type: Add
-        time: 5
-        refresh: false
+        time: 250 # time in miliseconds (due to how respiration works this needs to be over 2 seconds to prevent losing the effect.)
+        refresh: true
       - !type:Drunk
         conditions:
         - !type:ReagentThreshold

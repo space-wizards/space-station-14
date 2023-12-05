@@ -1,5 +1,7 @@
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
+using Content.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
@@ -171,6 +173,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                     return true;
             }
         }
+		
+		if (args.BreakOnTargetWake && !HasComp<SleepingComponent>(args.Target))
+			return true;
 
         if (args.AttemptFrequency == AttemptFrequency.EveryTick && !TryAttemptEvent(doAfter))
             return true;

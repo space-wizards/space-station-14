@@ -22,3 +22,4 @@ injector-component-target-is-empty-message = {$target} is empty!
 
 injector-component-injecting-user = You start inserting the needle.
 injector-component-injecting-target = {CAPITALIZE(THE($user))} is trying to stick a needle into you!
+injector-component-implant-draw-fail-not-asleep = They must be asleep to remove an implant!

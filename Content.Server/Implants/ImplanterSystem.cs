@@ -1,4 +1,6 @@
+using Content.Server.Bed.Components;
 using Content.Server.Popups;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
@@ -108,12 +110,15 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
+			BreakOnTargetWake = true,
             NeedHand = true,
         };
 
-        if (_doAfter.TryStartDoAfter(args))
+        if (_doAfter.TryStartDoAfter(args) && HasComp<SleepingComponent>(target)){
             _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
-
+        } else {
+			_popup.PopupEntity(Loc.GetString("injector-component-implant-draw-fail-not-asleep"), target, user);
+		}
     }
 
     private void OnImplant(EntityUid uid, ImplanterComponent component, ImplantEvent args)
@@ -132,7 +137,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
             return;
 
         Draw(args.Used.Value, args.User, args.Target.Value, component);
-
+		
         args.Handled = true;
     }
 }

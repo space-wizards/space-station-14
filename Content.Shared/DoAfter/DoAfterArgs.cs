@@ -127,6 +127,12 @@ public sealed partial class DoAfterArgs
     /// </summary>
     [DataField("breakOnDamage")]
     public bool BreakOnDamage;
+	
+	/// <summary>
+    ///     Whether a change to the target sleep state will cancel the DoAfter.
+    /// </summary>
+    [DataField("breakOnTargetWake")]
+    public bool BreakOnTargetWake;
 
     /// <summary>
     ///     Threshold for user damage. This damage has to be dealt in a single event, not over time.
