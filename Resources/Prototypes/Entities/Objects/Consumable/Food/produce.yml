@@ -294,6 +294,7 @@
     tags:
     - Recyclable
     - Trash
+    - BananaPeel
   - type: SolutionContainerManager
     solutions:
       food:

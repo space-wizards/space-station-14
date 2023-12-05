@@ -35,7 +35,8 @@
       map: ["cigar8"]
       visible: false
   - type: Storage
-    maxSlots: 8
+    grid:
+    - 0,0,3,1
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
     size: Small

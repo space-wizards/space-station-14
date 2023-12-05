@@ -29,6 +29,26 @@
     - WhitelistChameleon
 
 - type: entity
+  parent: ClothingShoesClown
+  id: ClothingShoesClownBanana
+  name: banana clown shoes
+  description: "When humor and footwear combine into new levels of absurdity."
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/clown_banana.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/clown_banana.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepSlip
+  - type: Construction
+    graph: BananaClownShoes
+    node: shoes
+  - type: Skates
+    minimumSpeed: 20
+    acceleration: 5
+
+- type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBling
   name: bling clown shoes
@@ -47,6 +67,7 @@
     energy: 2
     color: "#FFD800"
     netsync: false
+
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesCult

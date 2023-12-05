@@ -54,6 +54,7 @@ tilemap:
   108: FloorWhiteHerringbone
   109: FloorWhiteMini
   110: FloorWhiteMono
+  111: FloorWhiteOffset
   114: FloorWhitePlastic
   115: FloorWood
   117: Lattice
@@ -203,7 +204,7 @@ entities:
           version: 6
         -2,-2:
           ind: -2,-2
-          tiles: dgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAcwAAAAABcwAAAAADdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAcwAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAGwAAAAADGwAAAAACdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAcwAAAAACdgAAAAAAcwAAAAACcwAAAAABcwAAAAABdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAGwAAAAADGwAAAAABdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAGwAAAAABGwAAAAACdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAZQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAGwAAAAACGwAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAZQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAAAAAAAAAAAAAAAAAdQAAAAAAdQAAAAAAdQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAZQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAZQAAAAAAZQAAAAAAZQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAaQAAAAACaQAAAAABdgAAAAAAaQAAAAADaQAAAAAAaQAAAAACdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAZgAAAAAAdgAAAAAAdgAAAAAAaQAAAAAAaQAAAAADdgAAAAAAaQAAAAABaQAAAAACaQAAAAACaQAAAAACdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAaQAAAAABaQAAAAACaQAAAAACdgAAAAAAaQAAAAAAaQAAAAACdgAAAAAAaQAAAAADaQAAAAAAaQAAAAAAaQAAAAABdgAAAAAAcwAAAAACcwAAAAABcwAAAAABcgAAAAACaQAAAAADcgAAAAABaQAAAAACdgAAAAAAaQAAAAACdgAAAAAAdgAAAAAAaQAAAAACaQAAAAACaQAAAAABaQAAAAADdgAAAAAAcwAAAAACcwAAAAAAcwAAAAABdgAAAAAAaQAAAAABaQAAAAAAaQAAAAAAdgAAAAAAaQAAAAADaQAAAAADaQAAAAACaQAAAAADaQAAAAADdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAaQAAAAAAcgAAAAACaQAAAAACKgAAAAAAaQAAAAACaQAAAAABaQAAAAADaQAAAAADaQAAAAACdgAAAAAAaQAAAAABaQAAAAACaQAAAAADaQAAAAABaQAAAAAAdgAAAAAAaQAAAAABaQAAAAACaQAAAAACdgAAAAAAKgAAAAAAdgAAAAAAaQAAAAADaQAAAAACaQAAAAAAdgAAAAAAaQAAAAADaQAAAAADaQAAAAACaQAAAAACaQAAAAADaQAAAAACaQAAAAABcgAAAAAAaQAAAAADdgAAAAAATgAAAAAAdgAAAAAAdgAAAAAAaQAAAAACdgAAAAAAdgAAAAAAaQAAAAACaQAAAAADaQAAAAAAaQAAAAACaQAAAAAAaQAAAAAAaQAAAAACcgAAAAAAaQAAAAACdgAAAAAAdgAAAAAAdgAAAAAAZQAAAAAAaQAAAAACaQAAAAABdgAAAAAAaQAAAAAAaQAAAAAAaQAAAAACaQAAAAACaQAAAAACdgAAAAAAaQAAAAACaQAAAAAAaQAAAAADdgAAAAAA
+          tiles: dgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAcwAAAAABcwAAAAADdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAcwAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAGwAAAAADGwAAAAACdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAcwAAAAACdgAAAAAAcwAAAAACcwAAAAABcwAAAAABdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAGwAAAAADGwAAAAABdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAGwAAAAABGwAAAAACdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAZQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAGwAAAAACGwAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAZQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAAAAAAAAAAAAAAAAAdQAAAAAAdQAAAAAAdQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAZQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAZQAAAAAAZQAAAAAAZQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAaQAAAAACaQAAAAABdgAAAAAAaQAAAAADaQAAAAAAaQAAAAACdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAZgAAAAAAdgAAAAAAdgAAAAAAaQAAAAAAaQAAAAADdgAAAAAAaQAAAAABaQAAAAACaQAAAAACaQAAAAACdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAaQAAAAABaQAAAAACaQAAAAACdgAAAAAAaQAAAAAAaQAAAAACdgAAAAAAaQAAAAADaQAAAAAAaQAAAAAAaQAAAAABdgAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbgAAAAAAaQAAAAADcgAAAAABaQAAAAACdgAAAAAAaQAAAAACdgAAAAAAdgAAAAAAaQAAAAACaQAAAAACaQAAAAABaQAAAAADdgAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAdgAAAAAAaQAAAAABaQAAAAAAaQAAAAAAdgAAAAAAaQAAAAADaQAAAAADaQAAAAACaQAAAAADaQAAAAADdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAaQAAAAAAcgAAAAACaQAAAAACKgAAAAAAaQAAAAACaQAAAAABaQAAAAADaQAAAAADaQAAAAACdgAAAAAAaQAAAAABaQAAAAACaQAAAAADaQAAAAABaQAAAAAAdgAAAAAAaQAAAAABaQAAAAACaQAAAAACdgAAAAAAKgAAAAAAdgAAAAAAaQAAAAADaQAAAAACaQAAAAAAdgAAAAAAaQAAAAADaQAAAAADaQAAAAACaQAAAAACaQAAAAADaQAAAAACaQAAAAABcgAAAAAAaQAAAAADdgAAAAAATgAAAAAAdgAAAAAAdgAAAAAAaQAAAAACdgAAAAAAdgAAAAAAaQAAAAACaQAAAAADaQAAAAAAaQAAAAACaQAAAAAAaQAAAAAAaQAAAAACcgAAAAAAaQAAAAACdgAAAAAAdgAAAAAAdgAAAAAAZQAAAAAAaQAAAAACaQAAAAABdgAAAAAAaQAAAAAAaQAAAAAAaQAAAAACaQAAAAACaQAAAAACdgAAAAAAaQAAAAACaQAAAAAAaQAAAAADdgAAAAAA
           version: 6
         -3,-2:
           ind: -3,-2
@@ -3417,6 +3418,16 @@ entities:
             3057: -56,-5
             3058: -56,7
         - node:
+            color: '#52B4E996'
+            id: OffsetCheckerBOverlay
+          decals:
+            3140: -22,-23
+            3141: -22,-22
+            3142: -23,-22
+            3143: -23,-23
+            3144: -24,-23
+            3145: -24,-22
+        - node:
             color: '#334E6DC8'
             id: QuarterTileOverlayGreyscale
           decals:
@@ -5001,26 +5012,6 @@ entities:
             1961: -10,34
             1962: -9,34
         - node:
-            color: '#FFFFFFFF'
-            id: WoodTrimThinCornerNe
-          decals:
-            2971: -22,-22
-        - node:
-            color: '#FFFFFFFF'
-            id: WoodTrimThinCornerNw
-          decals:
-            2972: -24,-22
-        - node:
-            color: '#FFFFFFFF'
-            id: WoodTrimThinCornerSe
-          decals:
-            2973: -22,-23
-        - node:
-            color: '#FFFFFFFF'
-            id: WoodTrimThinCornerSw
-          decals:
-            2974: -24,-23
-        - node:
             color: '#334E6DC8'
             id: WoodTrimThinEndE
           decals:
@@ -5131,7 +5122,6 @@ entities:
             1930: 26,13
             1931: 27,13
             1932: 28,13
-            2975: -23,-22
             3012: -38,-7
             3013: -39,-7
             3014: -40,-7
@@ -5198,7 +5188,6 @@ entities:
             1938: 26,16
             2661: -42,32
             2662: -45,32
-            2976: -23,-23
         - node:
             cleanable: True
             color: '#FFFFFFFF'
@@ -13643,11 +13632,6 @@ entities:
       type: Transform
 - proto: BedsheetMedical
   entities:
-  - uid: 989
-    components:
-    - pos: -21.5,-21.5
-      parent: 30
-      type: Transform
   - uid: 6954
     components:
     - pos: -21.5,-14.5
@@ -13656,11 +13640,6 @@ entities:
   - uid: 6959
     components:
     - pos: -23.5,-14.5
-      parent: 30
-      type: Transform
-  - uid: 7420
-    components:
-    - pos: -23.5,-21.5
       parent: 30
       type: Transform
   - uid: 8274
@@ -48523,12 +48502,6 @@ entities:
       pos: -8.5,-17.5
       parent: 30
       type: Transform
-  - uid: 7664
-    components:
-    - rot: 3.141592653589793 rad
-      pos: -22.5,-22.5
-      parent: 30
-      type: Transform
   - uid: 11445
     components:
     - rot: -1.5707963267948966 rad
@@ -48981,14 +48954,14 @@ entities:
       type: Transform
 - proto: CheapRollerBed
   entities:
-  - uid: 6853
+  - uid: 989
     components:
-    - pos: -10.487353,-4.3521314
+    - pos: -9.5,-4.5
       parent: 30
       type: Transform
-  - uid: 6854
+  - uid: 6853
     components:
-    - pos: -9.534228,-4.3365064
+    - pos: -10.5,-4.5
       parent: 30
       type: Transform
   - uid: 6996
@@ -61006,6 +60979,13 @@ entities:
   - uid: 7000
     components:
     - pos: -15.524454,-12.386732
+      parent: 30
+      type: Transform
+- proto: EmergencyRollerBedSpawnFolded
+  entities:
+  - uid: 496
+    components:
+    - pos: -23.5,-22.5
       parent: 30
       type: Transform
 - proto: Emitter
@@ -84699,12 +84679,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-  - uid: 7488
-    components:
-    - rot: 3.141592653589793 rad
-      pos: -22.5,-22.5
-      parent: 30
-      type: Transform
   - uid: 7498
     components:
     - rot: 3.141592653589793 rad
@@ -96096,11 +96070,6 @@ entities:
     - pos: 7.5,-17.5
       parent: 30
       type: Transform
-  - uid: 9666
-    components:
-    - pos: -20.5,-22.5
-      parent: 30
-      type: Transform
   - uid: 13087
     components:
     - pos: -43.5,64.5
@@ -99372,6 +99341,13 @@ entities:
     - pos: -9.5,-17.5
       parent: 30
       type: Transform
+- proto: LockerParamedicFilled
+  entities:
+  - uid: 6854
+    components:
+    - pos: -23.5,-21.5
+      parent: 30
+      type: Transform
 - proto: LockerQuarterMasterFilled
   entities:
   - uid: 16236
@@ -100199,16 +100175,6 @@ entities:
       type: Transform
 - proto: MedicalBed
   entities:
-  - uid: 495
-    components:
-    - pos: -23.5,-21.5
-      parent: 30
-      type: Transform
-  - uid: 496
-    components:
-    - pos: -21.5,-21.5
-      parent: 30
-      type: Transform
   - uid: 6687
     components:
     - pos: -23.5,-14.5
@@ -100338,6 +100304,11 @@ entities:
   - uid: 2241
     components:
     - pos: -51.008476,53.677338
+      parent: 30
+      type: Transform
+  - uid: 9628
+    components:
+    - pos: -22.612028,-21.409428
       parent: 30
       type: Transform
 - proto: MedkitRadiationFilled
@@ -104229,10 +104200,20 @@ entities:
       pos: -35.5,-12.5
       parent: 30
       type: Transform
+  - uid: 7420
+    components:
+    - pos: -14.5,-18.5
+      parent: 30
+      type: Transform
   - uid: 7430
     components:
     - rot: -1.5707963267948966 rad
       pos: -27.5,-2.5
+      parent: 30
+      type: Transform
+  - uid: 7665
+    components:
+    - pos: -22.5,-21.5
       parent: 30
       type: Transform
   - uid: 8227
@@ -106135,12 +106116,6 @@ entities:
     components:
     - rot: -1.5707963267948966 rad
       pos: -72.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 7665
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -23.5,-22.5
       parent: 30
       type: Transform
   - uid: 7912
@@ -110932,6 +110907,11 @@ entities:
   - uid: 9652
     components:
     - pos: -4.5,-42.5
+      parent: 30
+      type: Transform
+  - uid: 9666
+    components:
+    - pos: -20.5,-21.5
       parent: 30
       type: Transform
   - uid: 9723
@@ -117316,6 +117296,13 @@ entities:
     - pos: -2.5,2.5
       parent: 30
       type: Transform
+- proto: SpawnPointParamedic
+  entities:
+  - uid: 957
+    components:
+    - pos: -22.5,-22.5
+      parent: 30
+      type: Transform
 - proto: SpawnPointPsychologist
   entities:
   - uid: 9695
@@ -117521,6 +117508,13 @@ entities:
   - uid: 2009
     components:
     - pos: -43.5,47.5
+      parent: 30
+      type: Transform
+- proto: SpawnVehicleATV
+  entities:
+  - uid: 7664
+    components:
+    - pos: -21.5,-21.5
       parent: 30
       type: Transform
 - proto: SpawnVehicleJanicart
@@ -120081,6 +120075,11 @@ entities:
     - pos: -32.5,-11.5
       parent: 30
       type: Transform
+  - uid: 7488
+    components:
+    - pos: -22.5,-21.5
+      parent: 30
+      type: Transform
   - uid: 9168
     components:
     - pos: 0.5,-28.5
@@ -120856,11 +120855,6 @@ entities:
   - uid: 9027
     components:
     - pos: -10.5,-21.5
-      parent: 30
-      type: Transform
-  - uid: 9628
-    components:
-    - pos: -22.5,-21.5
       parent: 30
       type: Transform
   - uid: 9713
@@ -122363,11 +122357,6 @@ entities:
     - pos: -33.5,21.5
       parent: 30
       type: Transform
-  - uid: 957
-    components:
-    - pos: -20.5,-21.5
-      parent: 30
-      type: Transform
   - uid: 5735
     components:
     - pos: -20.5,-14.5
@@ -123067,6 +123056,13 @@ entities:
   - uid: 8286
     components:
     - pos: -26.5,-21.5
+      parent: 30
+      type: Transform
+- proto: VehicleKeyATV
+  entities:
+  - uid: 495
+    components:
+    - pos: -22.295399,-21.381802
       parent: 30
       type: Transform
 - proto: VehicleKeyJanicart
