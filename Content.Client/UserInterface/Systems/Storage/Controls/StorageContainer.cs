@@ -34,6 +34,10 @@ public sealed class StorageContainer : BaseWindow
     private Texture? _emptyTexture;
     private readonly string _blockedTexturePath = "Storage/tile_blocked";
     private Texture? _blockedTexture;
+    private readonly string _emptyOpaqueTexturePath = "Storage/tile_empty_opaque";
+    private Texture? _emptyOpaqueTexture;
+    private readonly string _blockedOpaqueTexturePath = "Storage/tile_blocked_opaque";
+    private Texture? _blockedOpaqueTexture;
     private readonly string _exitTexturePath = "Storage/exit";
     private Texture? _exitTexture;
     private readonly string _backTexturePath = "Storage/back";
@@ -109,6 +113,8 @@ public sealed class StorageContainer : BaseWindow
 
         _emptyTexture = Theme.ResolveTextureOrNull(_emptyTexturePath)?.Texture;
         _blockedTexture = Theme.ResolveTextureOrNull(_blockedTexturePath)?.Texture;
+        _emptyOpaqueTexture = Theme.ResolveTextureOrNull(_emptyOpaqueTexturePath)?.Texture;
+        _blockedOpaqueTexture = Theme.ResolveTextureOrNull(_blockedOpaqueTexturePath)?.Texture;
         _exitTexture = Theme.ResolveTextureOrNull(_exitTexturePath)?.Texture;
         _backTexture = Theme.ResolveTextureOrNull(_backTexturePath)?.Texture;
         _sidebarTopTexture = Theme.ResolveTextureOrNull(_sidebarTopTexturePath)?.Texture;
@@ -124,35 +130,17 @@ public sealed class StorageContainer : BaseWindow
         if (entity == null)
             return;
 
-        BuildGridRepresentation(entity.Value);
+        BuildGridRepresentation();
     }
 
-    private void BuildGridRepresentation(Entity<StorageComponent> entity)
+    private void BuildGridRepresentation()
     {
-        var comp = entity.Comp;
-        if (!comp.Grid.Any())
+        if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var comp) || !comp.Grid.Any())
             return;
 
         var boundingGrid = comp.Grid.GetBoundingBox();
 
-        _backgroundGrid.Children.Clear();
-        _backgroundGrid.Rows = boundingGrid.Height + 1;
-        _backgroundGrid.Columns = boundingGrid.Width + 1;
-        for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
-        {
-            for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
-            {
-                var texture = comp.Grid.Contains(x, y)
-                    ? _emptyTexture
-                    : _blockedTexture;
-
-                _backgroundGrid.AddChild(new TextureRect
-                {
-                    Texture = texture,
-                    TextureScale = new Vector2(2, 2)
-                });
-            }
-        }
+        BuildBackground();
 
         #region Sidebar
         _sidebar.Children.Clear();
@@ -207,6 +195,40 @@ public sealed class StorageContainer : BaseWindow
         #endregion
 
         BuildItemPieces();
+    }
+
+    public void BuildBackground()
+    {
+        if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var comp) || !comp.Grid.Any())
+            return;
+
+        var boundingGrid = comp.Grid.GetBoundingBox();
+
+        var emptyTexture = _storageController.OpaqueStorageWindow
+            ? _emptyOpaqueTexture
+            : _emptyTexture;
+        var blockedTexture = _storageController.OpaqueStorageWindow
+            ? _blockedOpaqueTexture
+            : _blockedTexture;
+
+        _backgroundGrid.Children.Clear();
+        _backgroundGrid.Rows = boundingGrid.Height + 1;
+        _backgroundGrid.Columns = boundingGrid.Width + 1;
+        for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
+        {
+            for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
+            {
+                var texture = comp.Grid.Contains(x, y)
+                    ? emptyTexture
+                    : blockedTexture;
+
+                _backgroundGrid.AddChild(new TextureRect
+                {
+                    Texture = texture,
+                    TextureScale = new Vector2(2, 2)
+                });
+            }
+        }
     }
 
     public void BuildItemPieces()
@@ -320,7 +342,7 @@ public sealed class StorageContainer : BaseWindow
             origin,
             currentLocation.Rotation);
 
-        var validColor = usingInHand ? Color.Goldenrod : Color.Green;
+        var validColor = usingInHand ? Color.Goldenrod : Color.FromHex("#1E8000");
 
         for (var y = itemBounding.Bottom; y <= itemBounding.Top; y++)
         {
@@ -328,7 +350,7 @@ public sealed class StorageContainer : BaseWindow
             {
                 if (TryGetBackgroundCell(x, y, out var cell) && itemShape.Contains(x, y))
                 {
-                    cell.ModulateSelfOverride = validLocation ? validColor : Color.Red;
+                    cell.ModulateSelfOverride = validLocation ? validColor : Color.FromHex("#B40046");
                 }
             }
         }
