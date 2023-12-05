@@ -1,18 +1,6 @@
 Entries:
 - author: deltanedas
   changes:
-  - {message: 'Magnets can no longer be deconstructed while active, preventing a few
-      bugs.', type: Fix}
-  id: 4769
-  time: '2023-09-05T16:20:55.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: 'Gas tanks now have valves, which can be used to vent their contents.',
-    type: Add}
-  id: 4770
-  time: '2023-09-05T17:20:05.0000000+00:00'
-- author: deltanedas
-  changes:
   - {message: Constructed hydroponics trays now start empty., type: Tweak}
   id: 4771
   time: '2023-09-05T20:15:06.0000000+00:00'
@@ -2901,3 +2889,13 @@ Entries:
   - {message: The rejuvenate command/verb resets all action cooldowns., type: Add}
   id: 5268
   time: '2023-12-05T21:00:03.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Empty hot cocoa can go in trash bags, type: Fix}
+  id: 5269
+  time: '2023-12-05T21:39:26.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: Ghosts now have speech bubbles again, type: Fix}
+  id: 5270
+  time: '2023-12-05T21:40:03.0000000+00:00'
