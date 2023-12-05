@@ -1,11 +1,6 @@
 ##  VendingMachineComponent
 
-vending-machine-component-try-eject-invalid-item = Несуществующий предмет
+vending-machine-component-try-eject-invalid-item = Неверный предмет
 vending-machine-component-try-eject-out-of-stock = Нет в наличии
-vending-machine-component-try-eject-access-denied = Доступ запрещён
-vending-machine-component-search-filter = Поиск...
-
-##  VendingMachineSelfDespense Action
-
-vending-machine-action-name = Выдать предмет
-vending-machine-action-description = Выдаёт случайный предмет из вашего инвентаря.
+vending-machine-component-try-eject-access-denied = Доступ запрещен
+vending-machine-component-search-filter = Искать...
