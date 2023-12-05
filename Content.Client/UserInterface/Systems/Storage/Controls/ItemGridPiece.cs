@@ -78,7 +78,7 @@ public sealed class ItemGridPiece : Control
         base.Draw(handle);
 
         // really just an "oh shit" catch.
-        if (_entityManager.Deleted(Entity))
+        if (!_entityManager.EntityExists(Entity))
         {
             Dispose();
             return;
