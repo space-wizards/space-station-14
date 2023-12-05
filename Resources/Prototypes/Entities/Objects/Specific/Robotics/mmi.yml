@@ -45,6 +45,9 @@
     containers:
       brain_slot: !type:ContainerSlot
   - type: Appearance
+  - type: GuideHelp
+    guides:
+      - Cyborgs
 
 - type: entity
   parent: MMI
@@ -117,3 +120,6 @@
             Off: { state: posibrain }
             Searching: { state: posibrain-searching }
             On: { state: posibrain-occupied }
+    - type: GuideHelp
+      guides:
+      - Cyborgs

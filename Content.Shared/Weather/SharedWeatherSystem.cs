@@ -19,9 +19,14 @@ public abstract class SharedWeatherSystem : EntitySystem
     [Dependency] private   readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
+    private EntityQuery<IgnoreWeatherComponent> _ignoreQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+        _ignoreQuery = GetEntityQuery<IgnoreWeatherComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
         SubscribeLocalEvent<WeatherComponent, EntityUnpausedEvent>(OnWeatherUnpaused);
     }
 
@@ -38,9 +43,7 @@ public abstract class SharedWeatherSystem : EntitySystem
 
     public bool CanWeatherAffect(
         MapGridComponent grid,
-        TileRef tileRef,
-        EntityQuery<IgnoreWeatherComponent> weatherIgnoreQuery,
-        EntityQuery<PhysicsComponent> bodyQuery)
+        TileRef tileRef)
     {
         if (tileRef.Tile.IsEmpty)
             return true;
@@ -54,8 +57,8 @@ public abstract class SharedWeatherSystem : EntitySystem
 
         while (anchoredEnts.MoveNext(out var ent))
         {
-            if (!weatherIgnoreQuery.HasComponent(ent.Value) &&
-                bodyQuery.TryGetComponent(ent, out var body) &&
+            if (!_ignoreQuery.HasComponent(ent.Value) &&
+                _physicsQuery.TryGetComponent(ent, out var body) &&
                 body.Hard &&
                 body.CanCollide)
             {

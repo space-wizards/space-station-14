@@ -153,13 +153,13 @@
     tags: [] # ignore "WhitelistChameleon" tag
   - type: StorageFill
     contents:
+      - id: ClothingOuterArmorBasic
       - id: ClothingHeadHatCentcom
       - id: ClothingEyesGlassesSunglasses
       - id: ClothingUniformJumpsuitCentcomOfficial
       - id: ClothingShoesBootsJack
       - id: ClothingHandsGlovesColorBlack
       - id: ClothingHeadsetAltCentComFake
-      - id: ClothingOuterArmorBasic
       - id: Paper
       - id: Pen
       - id: CentcomPDAFake
@@ -198,8 +198,6 @@
   name: syndicate pyjama duffel bag
   description: Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
   components:
-  - type: Storage
-    maxTotalWeight: 44
   - type: StorageFill
     contents:
       - id: ClothingUniformJumpsuitPyjamaSyndicateRed
@@ -295,7 +293,7 @@
       - id: BoxSurvivalSyndicate
       - id: WeaponPistolViper
       - id: PinpointerNuclear
-      - id: MicroBombImplanter
+      - id: DeathAcidifierImplanter
 
 
 - type: entity
@@ -315,7 +313,7 @@
       - id: PinpointerNuclear
       - id: HandheldHealthAnalyzer
       - id: CombatMedipen
-      - id: MicroBombImplanter
+      - id: DeathAcidifierImplanter
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle

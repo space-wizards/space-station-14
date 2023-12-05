@@ -328,12 +328,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.alert_level_change_delay", 30, CVar.SERVERONLY);
 
         /// <summary>
-        /// How many times per second artifacts when the round is over.
-        /// If set to 0, they won't activate (on a timer) when the round ends.
-        /// </summary>
-        public static readonly CVarDef<float> ArtifactRoundEndTimer = CVarDef.Create("game.artifact_round_end_timer", 0.5f, CVar.NOTIFY | CVar.REPLICATED);
-
-        /// <summary>
         /// The time in seconds that the server should wait before restarting the round.
         /// Defaults to 2 minutes.
         /// </summary>
@@ -929,7 +923,7 @@ namespace Content.Shared.CCVar
         ///     Whether gas differences will move entities.
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
-            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
@@ -975,7 +969,7 @@ namespace Content.Shared.CCVar
         ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosRipTiles =
-            CVarDef.Create("atmos.monstermos_rip_tiles", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.monstermos_rip_tiles", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether explosive depressurization will cause the grid to gain an impulse.
@@ -1482,6 +1476,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ChatShowTypingIndicator =
             CVarDef.Create("chat.show_typing_indicator", true, CVar.CLIENTONLY);
 
+        public static readonly CVarDef<bool> ChatEnableFancyBubbles =
+            CVarDef.Create("chat.enable_fancy_bubbles", true, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying fancy speech bubbles, which display the speaking character's name.");
+
+        public static readonly CVarDef<bool> ChatFancyNameBackground =
+            CVarDef.Create("chat.fancy_name_background", false, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying a background under the speaking character's name.");
+
         /// <summary>
         /// A message broadcast to each player that joins the lobby.
         /// May be changed by admins ingame through use of the "set-motd" command.
@@ -1660,6 +1660,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ToggleWalk =
             CVarDef.Create("control.toggle_walk", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        /// Whether or not the storage UI is static and bound to the hotbar, or unbound and allowed to be dragged anywhere.
+        /// </summary>
+        public static readonly CVarDef<bool> StaticStorageUI =
+            CVarDef.Create("control.static_storage_ui", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
          * UPDATE
