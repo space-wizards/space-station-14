@@ -198,3 +198,37 @@
         - id: ClothingControlModsuitCCSealed
         - id: ClothingMaskGasCentcom
         - id: JetpackSecurityFilled
+
+- type: entity
+  name: ModSuit Storage Centcom
+  description: ModSuit Storage
+  id: ModSuitStorageSyndicate
+  parent: ModSuitStorageBase
+  suffix: HOS
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitOperativeSealedFractionBoom
+        - id: ClothingMaskGasSyndicate
+        - id: JetpackBlackFilled
+  - type: Sprite
+    sprite: Imperial/Modsuits/suit_storage_syndie.rsi
+
+- type: entity
+  name: ModSuit Storage Centcom
+  description: ModSuit Storage
+  id: ModSuitStorageSyndicateCMD
+  parent: ModSuitStorageBase
+  suffix: HOS
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitOperativeCMDSealedFractionBoom
+        - id: ClothingMaskGasSyndicate
+        - id: JetpackBlackFilled
+  - type: Sprite
+    sprite: Imperial/Modsuits/suit_storage_syndie.rsi
