@@ -593,7 +593,8 @@ public abstract class SharedStorageSystem : EntitySystem
 
         if (!_containerSystem.CanInsert(insertEnt, storageComp.Container))
         {
-
+            reason = null;
+            return false;
         }
 
         reason = null;
