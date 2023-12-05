@@ -1,14 +1,4 @@
 Entries:
-- author: Fromoriss
-  changes:
-  - {message: Added cute and fluffy moth plushie!, type: Add}
-  id: 4766
-  time: '2023-09-04T20:18:03.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fix deployable barriers., type: Fix}
-  id: 4767
-  time: '2023-09-04T22:33:40.0000000+00:00'
 - author: Endecc
   changes:
   - {message: 'Added the luxury mining hardsuit, a lighter and more versatile mining
@@ -2900,3 +2890,17 @@ Entries:
   - {message: Added Nitrogen Tanks to Emergency Closets, type: Add}
   id: 5265
   time: '2023-12-05T09:41:39.0000000+00:00'
+- author: Lazzi0706
+  changes:
+  - {message: Added a new stomach for mice and "hunger thresholds" in mice's prototype,
+    type: Add}
+  - {message: Fixed inadequate hunger in mice, type: Fix}
+  id: 5266
+  time: '2023-12-05T10:39:09.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Removed the spare paramedic clothes and EVA suit from the medidrobe,
+    type: Remove}
+  - {message: added medical doctor jumpsuits and skirts to the medidrobe, type: Add}
+  id: 5267
+  time: '2023-12-05T10:39:54.0000000+00:00'
