@@ -43,6 +43,7 @@ guide-entry-artifact-reports = Artifact Reports
 guide-entry-traversal-distorter = Traversal Distorter
 guide-entry-machine-upgrading = Machine Upgrading
 guide-entry-robotics = Robotics
+guide-entry-cyborgs = Cyborgs
 guide-entry-security = Security
 guide-entry-dna = DNA
 guide-entry-defusal = Large Bomb Defusal

@@ -128,15 +128,7 @@ namespace Content.IntegrationTests.Tests
                     if (maxSize == null)
                         continue;
 
-                    if (storage.MaxSlots != null)
-                    {
-                        Assert.That(GetFillSize(fill, true, protoMan, itemSys), Is.LessThanOrEqualTo(storage.MaxSlots),
-                            $"{proto.ID} storage fill has too many items.");
-                    }
-                    else
-                    {
-                        Assert.That(size, Is.LessThanOrEqualTo(storage.MaxTotalWeight), $"{proto.ID} storage fill is too large.");
-                    }
+                    Assert.That(size, Is.LessThanOrEqualTo(storage.Grid.GetArea()), $"{proto.ID} storage fill is too large.");
 
                     foreach (var entry in fill.Contents)
                     {
@@ -210,7 +202,7 @@ namespace Content.IntegrationTests.Tests
 
 
             if (proto.TryGetComponent<ItemComponent>("Item", out var item))
-                return itemSystem.GetItemSizeWeight(item.Size) * entry.Amount;
+                return itemSystem.GetItemShape(item).GetArea() * entry.Amount;
 
             Assert.Fail($"Prototype is missing item comp: {entry.PrototypeId}");
             return 0;

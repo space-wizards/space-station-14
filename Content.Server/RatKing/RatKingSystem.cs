@@ -88,10 +88,7 @@ namespace Content.Server.RatKing
             _hunger.ModifyHunger(uid, -component.HungerPerDomainUse, hunger);
 
             _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid);
-
-            var transform = Transform(uid);
-            var indices = _xform.GetGridOrMapTilePosition(uid, transform);
-            var tileMix = _atmos.GetTileMixture(transform.GridUid, transform.MapUid, indices, true);
+            var tileMix = _atmos.GetTileMixture(uid, excite: true);
             tileMix?.AdjustMoles(Gas.Miasma, component.MolesMiasmaPerDomain);
         }
 

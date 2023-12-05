@@ -83,7 +83,7 @@ public sealed partial class FatExtractorComponent : Component
     [DataField("processSound")]
     public SoundSpecifier? ProcessSound;
 
-    public IPlayingAudioStream? Stream;
+    public EntityUid? Stream;
 
     /// <summary>
     /// A minium hunger threshold for extracting nutrition.
