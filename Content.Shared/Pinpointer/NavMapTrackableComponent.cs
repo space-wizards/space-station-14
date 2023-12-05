@@ -2,6 +2,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using static Robust.Shared.Utility.SpriteSpecifier;
+using System.Numerics;
 
 namespace Content.Shared.Pinpointer;
 
@@ -89,12 +90,12 @@ public sealed partial class NavMapTrackableComponent : Component
     ///     This allows you to draw multiple icons on a nav map via a single component 
     /// </remarks>
     [ViewVariables]
-    public List<EntityCoordinates> ChildOffsets = new();
+    public List<Vector2> ChildOffsets = new();
 }
 
 [Serializable, NetSerializable]
 public sealed class NavMapTrackableComponentState : ComponentState
 {
     public NetEntity? ParentUid { get; init; }
-    public List<NetCoordinates> ChildOffsets { get; init; } = new();
+    public List<Vector2> ChildOffsets { get; init; } = new();
 }

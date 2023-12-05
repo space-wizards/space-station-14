@@ -35,4 +35,20 @@ public sealed partial class CableComponent : Component
 ///     Event to be raised when a cable is anchored / unanchored
 /// </summary>
 [ByRefEvent]
-public readonly record struct CableAnchorStateChangedEvent(bool Anchored = false);
+public readonly struct CableAnchorStateChangedEvent
+{
+    public readonly TransformComponent Transform;
+    public EntityUid Entity => Transform.Owner;
+    public bool Anchored => Transform.Anchored;
+
+    /// <summary>
+    ///     If true, the entity is being detached to null-space
+    /// </summary>
+    public readonly bool Detaching;
+
+    public CableAnchorStateChangedEvent(TransformComponent transform, bool detaching = false)
+    {
+        Detaching = detaching;
+        Transform = transform;
+    }
+}

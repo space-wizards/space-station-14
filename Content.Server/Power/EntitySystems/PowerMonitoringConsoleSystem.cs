@@ -219,7 +219,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
     }
     public void OnCableAnchorStateChanged(EntityUid uid, CableComponent component, CableAnchorStateChangedEvent args)
     {
-        var xform = Transform(uid);
+        var xform = args.Transform;
 
         if (xform.GridUid == null || !TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
@@ -519,14 +519,13 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         // Master devices add the power values from all entities they represent (if applicable)
         if (device.IsCollectionMasterOrChild && device.IsCollectionMaster)
         {
-            foreach (var child in device.ChildEntities)
+            foreach ((var child, var childDevice) in device.ChildDevices)
             {
                 if (child == uid)
                     continue;
 
                 // Safeguard to prevent infinite loops
-                if (!TryComp<PowerMonitoringDeviceComponent>(child, out var childDevice) ||
-                    (childDevice.IsCollectionMaster && childDevice.ChildEntities.Contains(uid)))
+                if (childDevice.IsCollectionMaster && childDevice.ChildDevices.ContainsKey(uid))
                     continue;
 
                 var childPowerValue = GetPrimaryPowerValues(child, childDevice, out var childPowerSupplied, out var childPowerUsage, out var childBatteryUsage);
@@ -639,7 +638,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
         if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device) && device.IsCollectionMaster)
         {
-            foreach (var child in device.ChildEntities)
+            foreach ((var child, var _) in device.ChildDevices)
             {
                 if (TryComp<PowerNetworkBatteryComponent>(child, out var childBattery))
                     powerUsage += childBattery.CurrentReceiving;
@@ -740,7 +739,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
         if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device) && device.IsCollectionMaster)
         {
-            foreach (var child in device.ChildEntities)
+            foreach ((var child, var _) in device.ChildDevices)
             {
                 if (TryComp<PowerNetworkBatteryComponent>(child, out var childBattery))
                     supplying += childBattery.CurrentSupply;
@@ -779,11 +778,11 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             loadNode.ReachableNodes.Count == 0)
         {
             // Make a child the new master of the collection if necessary
-            if (device.ChildEntities.Count > 0)
-                AssignGridEntitiesToMaster(device.ChildEntities.First());
+            if (device.ChildDevices.TryFirstOrNull(out var child))
+                AssignGridEntitiesToMaster(child.Value.Key, child.Value.Value);
 
             device.CollectionMaster = uid;
-            device.ChildEntities.Clear();
+            device.ChildDevices.Clear();
 
             trackable.ParentUid = null;
             trackable.ChildOffsets.Clear();
@@ -793,7 +792,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         }
 
         device.CollectionMaster = uid;
-        device.ChildEntities.Clear();
+        device.ChildDevices.Clear();
 
         trackable.ParentUid = null;
         trackable.ChildOffsets.Clear();
@@ -804,6 +803,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             if (ent == uid)
                 continue;
 
+            if (entXform.GridUid != xform.GridUid)
+                continue;
+
             if (!entNodeContainer.Nodes.TryGetValue(entDevice.LoadNode, out var entLoadNode) ||
                 entLoadNode.ReachableNodes.Count == 0)
                 continue;
@@ -811,8 +813,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             // Matching netIds - this device should be represented by the master
             if ((loadNode.NodeGroup as BaseNodeGroup)?.NetId == (entLoadNode.NodeGroup as BaseNodeGroup)?.NetId)
             {
-                device.ChildEntities.Add(ent);
-                trackable.ChildOffsets.Add(entXform.Coordinates - xform.Coordinates);
+                device.ChildDevices.Add(ent, entDevice);
+                trackable.ChildOffsets.Add(entXform.Coordinates.Position - xform.Coordinates.Position);
 
                 entDevice.CollectionMaster = uid;
                 entTrackable.ParentUid = uid;

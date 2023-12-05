@@ -15,15 +15,11 @@ public sealed partial class SharedNavMapTrackableSystem : EntitySystem
     public void GetCompState(EntityUid uid, NavMapTrackableComponent component, ref ComponentGetState args)
     {
         var convertedParentUid = EntityManager.GetNetEntity(component.ParentUid);
-        var convertedOffsets = new List<NetCoordinates>();
-
-        foreach (var childOffset in component.ChildOffsets)
-            convertedOffsets.Add(EntityManager.GetNetCoordinates(childOffset));
 
         args.State = new NavMapTrackableComponentState
         {
             ParentUid = convertedParentUid,
-            ChildOffsets = convertedOffsets,
+            ChildOffsets = component.ChildOffsets,
         };
     }
 
@@ -32,12 +28,8 @@ public sealed partial class SharedNavMapTrackableSystem : EntitySystem
         if (args.Current is not NavMapTrackableComponentState state) return;
 
         var convertedParentUid = EntityManager.GetEntity(state.ParentUid);
-        var convertedOffsets = new List<EntityCoordinates>();
-
-        foreach (var childOffset in state.ChildOffsets)
-            convertedOffsets.Add(EntityManager.GetCoordinates(childOffset));
-
         component.ParentUid = convertedParentUid;
-        component.ChildOffsets = convertedOffsets;
+
+        component.ChildOffsets = state.ChildOffsets;
     }
 }

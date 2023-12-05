@@ -64,5 +64,5 @@ public sealed partial class PowerMonitoringDeviceComponent : SharedPowerMonitori
     ///     Used when grouping multiple entities into a single power monitoring console entry
     /// </remarks>
     [ViewVariables]
-    public HashSet<EntityUid> ChildEntities = new();
+    public Dictionary<EntityUid, PowerMonitoringDeviceComponent> ChildDevices = new();
 }

@@ -233,7 +233,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         {
             foreach (var offset in component.ChildOffsets)
             {
-                //NavMap.TrackedEntities[coords + offset] = component;
+                NavMap.TrackedEntities[coords.Offset(offset)] = component;
             }
         }
     }
