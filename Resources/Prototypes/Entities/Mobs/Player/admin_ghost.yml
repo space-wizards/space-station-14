@@ -81,6 +81,7 @@
   - type: Stripping
   - type: SolutionScanner
   - type: IgnoreUIRange
+  - type: ShowRevIcons
 
 - type: entity
   id: ActionAGhostShowSolar

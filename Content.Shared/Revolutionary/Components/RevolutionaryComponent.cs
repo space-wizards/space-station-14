@@ -15,4 +15,6 @@ public sealed partial class RevolutionaryComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<StatusIconPrototype> RevStatusIcon = "RevolutionaryFaction";
+
+    public override bool SessionSpecific => true;
 }

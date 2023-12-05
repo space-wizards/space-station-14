@@ -21,4 +21,6 @@ public sealed partial class HeadRevolutionaryComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan StunTime = TimeSpan.FromSeconds(3);
+
+    public override bool SessionSpecific => true;
 }
