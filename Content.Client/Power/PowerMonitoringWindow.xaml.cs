@@ -137,8 +137,6 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         // If this check fails it means that the client has changed the tabs and the received data is now out of date
         if (console.FocusGroup != GetCurrentPowerMonitoringConsoleGroup())
         {
-            Logger.Debug("console: " + console.FocusGroup + ", tab: " + GetCurrentPowerMonitoringConsoleGroup());
-
             SendPowerMonitoringConsoleMessageAction?.Invoke(_entManager.GetNetEntity(_focusEntity), GetCurrentPowerMonitoringConsoleGroup());
             return;
         }
@@ -235,7 +233,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         {
             foreach (var offset in component.ChildOffsets)
             {
-                NavMap.TrackedEntities[coords + offset] = component;
+                //NavMap.TrackedEntities[coords + offset] = component;
             }
         }
     }
