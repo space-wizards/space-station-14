@@ -88,44 +88,44 @@ namespace Content.Shared.Movement.Components
         /// The negative velocity applied for friction when weightless and providing inputs.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField]
-        public float WeightlessFriction = DefaultWeightlessFriction;
+        public float BaseWeightlessFriction = DefaultWeightlessFriction;
 
         /// <summary>
         /// The negative velocity applied for friction when weightless and not providing inputs.
         /// This is essentially how much their speed decreases per second.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField]
-        public float WeightlessFrictionNoInput = DefaultWeightlessFrictionNoInput;
+        public float BaseWeightlessFrictionNoInput = DefaultWeightlessFrictionNoInput;
 
         /// <summary>
         /// The movement speed modifier applied to a mob's total input velocity when weightless.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField]
-        public float WeightlessModifier = DefaultWeightlessModifier;
+        public float BaseWeightlessModifier = DefaultWeightlessModifier;
 
         /// <summary>
         /// The acceleration applied to mobs when moving and weightless.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField]
-        public float WeightlessAcceleration = DefaultWeightlessAcceleration;
+        public float BaseWeightlessAcceleration = DefaultWeightlessAcceleration;
 
         /// <summary>
         /// The acceleration applied to mobs when moving.
         /// </summary>
         [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
-        public float Acceleration = DefaultAcceleration;
+        public float BaseAcceleration = DefaultAcceleration;
 
         /// <summary>
         /// The negative velocity applied for friction.
         /// </summary>
         [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
-        public float Friction = DefaultFriction;
+        public float BaseFriction = DefaultFriction;
 
         /// <summary>
         /// The negative velocity applied for friction.
         /// </summary>
         [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
-        public float? FrictionNoInput;
+        public float? BaseFrictionNoInput;
 
         [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
         public float BaseWalkSpeed { get; set; } = DefaultBaseWalkSpeed;
@@ -142,25 +142,25 @@ namespace Content.Shared.Movement.Components
         public float CurrentSprintSpeed => SprintSpeedModifier * BaseSprintSpeed;
 
         [ViewVariables]
-        public float CurrentWeightlessModifier => WeightlessMultiplier * WeightlessModifier;
+        public float CurrentWeightlessModifier => WeightlessMultiplier * BaseWeightlessModifier;
 
         [ViewVariables]
-        public float CurrentAcceleration => AccelerationModifier * Acceleration;
+        public float CurrentAcceleration => AccelerationModifier * BaseAcceleration;
 
         [ViewVariables]
-        public float CurrentWeightlessAcceleration => WeightlessAccelerationModifier * WeightlessAcceleration;
+        public float CurrentWeightlessAcceleration => WeightlessAccelerationModifier * BaseWeightlessAcceleration;
 
         [ViewVariables]
-        public float CurrentFriction => FrictionModifier * Friction;
+        public float CurrentFriction => FrictionModifier * BaseFriction;
 
         [ViewVariables]
-        public float? CurrentFrictionNoInput => FrictionNoInputModifier * FrictionNoInput;
+        public float? CurrentFrictionNoInput => FrictionNoInputModifier * BaseFrictionNoInput;
 
         [ViewVariables]
-        public float CurrentWeightlessFriction => WeightlessFrictionModifier * WeightlessFriction;
+        public float CurrentWeightlessFriction => WeightlessFrictionModifier * BaseWeightlessFriction;
 
         [ViewVariables]
-        public float CurrentWeightlessFrictionNoInput => WeightlessFrictionNoInputModifier * WeightlessFrictionNoInput;
+        public float CurrentWeightlessFrictionNoInput => WeightlessFrictionNoInputModifier * BaseWeightlessFrictionNoInput;
 
         # endregion Current values
     }
