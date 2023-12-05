@@ -165,7 +165,7 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId.Value, action);
     }
 
-    public void OnRejuventate(EntityUid uid, ActionsComponent component, RejuvenateEvent args)
+    private void OnRejuventate(EntityUid uid, ActionsComponent component, RejuvenateEvent args)
     {
         foreach (var act in component.Actions)
         {
