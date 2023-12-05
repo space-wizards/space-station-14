@@ -187,6 +187,8 @@
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coco.rsi
+  - type: TrashOnSolutionEmpty
+    solution: drink
 
 - type: entity
   parent: DrinkBaseCup
