@@ -9,17 +9,22 @@ public sealed class FrictionContactsSystem : ContactsSystem
 {
     public void Initialize()
     {
-        Initialize_Contacts(typeof(FrictionContactsComponent));
-    }
+        base.Initialize();
 
+        SubscribeLocalEvent <FrictionContactComponent, StartCollideEvent>(OnEntityEnter_Contacts);
+        SubscribeLocalEvent <FrictionContactComponent, EndCollideEvent>(OnEntityExit_Contacts);
+        SubscribeLocalEvent <FrictionContactComponent, ComponentShutdown>(OnShutdown_Contacts);
+
+        UpdatesAfter.Add(typeof(SharedPhysicsSystem));
+    }
     private void OnEntityEnter(EntityUid uid, FrictionContactsComponent component, ref StartCollideEvent args)
     {
-        OnEntityEnter_Contacts(uid, component, args);
+        OnEntityEnter_Contacts(uid, component, ref args);
     }
 
     private void OnEntityExit(EntityUid uid, FrictionContactsComponent component, ref EndCollideEvent args)
     {
-        OnEntityExit_Contacts(uid, component, args);
+        OnEntityExit_Contacts(uid, component, ref args);
     }
 
     private void OnShutdown(EntityUid uid, FrictionContactsComponent component, ComponentShutdown args)
@@ -32,7 +37,7 @@ public sealed class FrictionContactsSystem : ContactsSystem
         Update_Contacts(frameTime, component);
     }
 
-    private void ApplyFrictionChange(EntityUid uid)
+    public void ApplyFrictionChange(EntityUid uid)
     {
         if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
             return;

@@ -1,3 +1,4 @@
+using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -15,17 +16,9 @@ namespace Content.Shared.Movement.Systems
         // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
         protected HashSet<EntityUid> _toUpdate = new();
         protected HashSet<EntityUid> _toRemove = new();
-        public void Initialize_Contacts(Type ContactsComponentType)
+        public void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ContactsComponentType, StartCollideEvent>(OnEntityEnter_Contacts);
-            SubscribeLocalEvent<ContactsComponentType, EndCollideEvent>(OnEntityExit_Contacts);
-            SubscribeLocalEvent<ContactsComponentType, ComponentShutdown>(OnShutdown_Contacts);
-
-            if (typeof(ContactsComponentType) == typeof(SlowContactsComponent))
-                SubscribeLocalEvent<SlowedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
-
-            UpdatesAfter.Add(typeof(SharedPhysicsSystem));
         }
 
         protected void OnEntityEnter_Contacts(EntityUid uid, Component component, ref StartCollideEvent args)
@@ -71,7 +64,7 @@ namespace Content.Shared.Movement.Systems
             {
                 foreach (var uid in _toUpdate)
                 {
-                    ApplyFrictionChange(uid);
+                    FrictionContactsSystem.ApplyFrictionChange(uid);
                 }
             }
 

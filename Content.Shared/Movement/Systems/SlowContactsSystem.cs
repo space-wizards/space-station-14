@@ -7,10 +7,17 @@ namespace Content.Shared.Movement.Systems;
 
 public sealed class SlowContactsSystem : ContactsSystem
 {
-    public override void Initialize()
+    public void Initialize()
     {
-        Initialize_Contacts(typeof(SlowContactsComponent));
+        base.Initialize();
+
+        SubscribeLocalEvent<SlowContactsComponent, StartCollideEvent>(OnEntityEnter_Contacts);
+        SubscribeLocalEvent<SlowContactsComponent, EndCollideEvent>(OnEntityExit_Contacts);
+        SubscribeLocalEvent<SlowedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
+        SubscribeLocalEvent<SlowContactsComponent, ComponentShutdown>(OnShutdown_Contacts);
+        UpdatesAfter.Add(typeof(SharedPhysicsSystem));
     }
+
 
     public void Update(float frameTime, SlowContactsComponent component)
     {
@@ -39,7 +46,7 @@ public sealed class SlowContactsSystem : ContactsSystem
         OnShutdown_Contacts(uid, component, args);
     }
 
-    private void MovementSpeedCheck(EntityUid uid, SlowedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
+    public void MovementSpeedCheck(EntityUid uid, SlowedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
             return;
@@ -70,11 +77,11 @@ public sealed class SlowContactsSystem : ContactsSystem
 
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, ref EndCollideEvent args)
     {
-        OnEntityExit_Contacts(uid, component, args);
+        OnEntityExit_Contacts(uid, component, ref args);
     }
 
     private void OnEntityEnter(EntityUid uid, SlowContactsComponent component, ref StartCollideEvent args)
     {
-        OnEntityEnter_Contacts(uid, component, args);
+        OnEntityEnter_Contacts(uid, component, ref args);
     }
 }
