@@ -8,8 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Clothing.Components;
 
 /// <summary>
-///     This component gives an item an action that will equip or un-equip some clothing. Intended for use with
-///     hardsuits and hardsuit helmets.
+///     This component gives an item an action that will equip or un-equip some clothing e.g. hardsuits and hardsuit helmets.
 /// </summary>
 [Access(typeof(ToggleableClothingSystem))]
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
@@ -23,13 +22,13 @@ public sealed partial class ToggleableClothingComponent : Component
     [DataField, AutoNetworkedField]
     public EntProtoId Action = "ActionToggleSuitPiece";
 
-    [DataField("actionEntity"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 
     /// <summary>
     ///     Default clothing entity prototype to spawn into the clothing container.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField(required: true), AutoNetworkedField]
     public EntProtoId ClothingPrototype = default!;
 
     /// <summary>
