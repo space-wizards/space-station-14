@@ -24,6 +24,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.80
     sprintModifier: 0.80
+  - type: HeldSpeedModifier
+    walkModifier: 0.80
+    sprintModifier: 0.80
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBasic
 
@@ -55,6 +58,9 @@
         Radiation: 0.5
         Caustic: 0.5
   - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: HeldSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
   - type: ToggleableClothing
@@ -90,6 +96,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
+  - type: HeldSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
 
@@ -116,6 +125,9 @@
         Radiation: 0.3 #salv is supposed to have radiation hazards in the future
         Caustic: 0.8
   - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.8
   - type: ToggleableClothing
@@ -148,6 +160,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
+  - type: HeldSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
 
@@ -177,6 +192,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
+  - type: HeldSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
 
@@ -201,6 +219,9 @@
         Slash: 0.8
         Piercing: 0.7
   - type: ClothingSpeedModifier
+    walkModifier: 0.65
+    sprintModifier: 0.65
+  - type: HeldSpeedModifier
     walkModifier: 0.65
     sprintModifier: 0.65
   - type: ToggleableClothing
@@ -230,6 +251,9 @@
         Piercing: 0.6
         Caustic: 0.7
   - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: HeldSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
   - type: ToggleableClothing
@@ -263,6 +287,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCap
 
@@ -294,6 +321,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
 
@@ -316,6 +346,9 @@
       coefficients:
         Caustic: 0.1
   - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.95
+  - type: HeldSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.95
   - type: ToggleableClothing
@@ -347,6 +380,9 @@
   - type: ExplosionResistance
     damageCoefficient: 0.1
   - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: HeldSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: Item
@@ -387,6 +423,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
 
@@ -415,6 +454,9 @@
         Radiation: 0.5
         Caustic: 0.8
   - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.9
   - type: ToggleableClothing
@@ -449,6 +491,9 @@
         Radiation: 0.5
         Caustic: 0.5
   - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: ToggleableClothing
@@ -498,6 +543,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: HeldSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
 
@@ -527,6 +575,9 @@
         Radiation: 0.25
         Caustic: 0.4
   - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: HeldSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
   - type: ToggleableClothing
@@ -560,6 +611,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.65
+  - type: HeldSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.65
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
 
@@ -591,6 +645,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
 
@@ -620,6 +677,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLing
 
@@ -647,6 +707,9 @@
         Heat: 0.4
         Caustic: 0.75
   - type: ClothingSpeedModifier
+    walkModifier: 0.6
+    sprintModifier: 0.6
+  - type: HeldSpeedModifier
     walkModifier: 0.6
     sprintModifier: 0.6
   - type: ToggleableClothing
@@ -679,6 +742,9 @@
         Heat: 0.4
         Caustic: 0.75
   - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: ToggleableClothing
@@ -787,6 +853,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: HeldSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
 
@@ -822,6 +891,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: HeldSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN
 
@@ -850,6 +922,9 @@
         Piercing: 0.9
         Caustic: 0.8
   - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: Construction

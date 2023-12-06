@@ -46,6 +46,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.7
+  - type: HeldSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.7
   - type: GroupExamine
 
 - type: entity
@@ -70,6 +73,9 @@
           Heat: 0.3
           Cold: 0.2
     - type: ClothingSpeedModifier
+      walkModifier: 0.8
+      sprintModifier: 0.8
+    - type: HeldSpeedModifier
       walkModifier: 0.8
       sprintModifier: 0.8
     - type: GroupExamine

@@ -22,6 +22,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
+  - type: HeldSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
 
 - type: entity
   abstract: true
@@ -70,6 +73,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.4
     sprintModifier: 0.6
+  - type: HeldSpeedModifier
+    walkModifier: 0.4
+    sprintModifier: 0.6
   - type: Item
     size: Ginormous
   - type: Armor
@@ -103,6 +109,9 @@
   - type: TemperatureProtection
     coefficient: 0.01 # Not complete protection from fire
   - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: Item
