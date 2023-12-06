@@ -6,6 +6,10 @@ namespace Content.Shared.Item;
 /// <summary>
 /// This is used for items that change your speed when they are held.
 /// </summary>
+/// <remarks>
+/// This is separate from <see cref="ClothingSpeedModifierComponent"/> because things like boots increase/decrease speed when worn, but
+/// shouldn't do that when just held in hand.
+/// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(HeldSpeedModifierSystem))]
 public sealed partial class HeldSpeedModifierComponent : Component
