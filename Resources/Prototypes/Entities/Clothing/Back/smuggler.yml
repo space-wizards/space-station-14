@@ -788,5 +788,5 @@
     sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
   - type: StorageFill
     contents:
-      - id: SpaceCash10000
-        maxAmount: 4
+      - id: SpaceCash5000
+        maxAmount: 8
