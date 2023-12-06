@@ -27,9 +27,12 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ## Graphics menu
 
-ui-options-show-held-item = Show held item next to cursor?
-ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor?
-ui-options-show-looc-on-head = Show LOOC chat above characters head?
+ui-options-show-held-item = Show held item next to cursor
+ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor
+ui-options-opaque-storage-window = Enable opaque storage window
+ui-options-show-looc-on-head = Show LOOC chat above characters head
+ui-options-fancy-speech = Show names in speech bubbles
+ui-options-fancy-name-background = Add background to speech bubble names
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
 ui-options-lighting-label = Lighting Quality:
@@ -109,6 +112,9 @@ ui-options-function-alt-activate-item-in-world = Alternative activate item in wo
 ui-options-function-drop = Drop item
 ui-options-function-examine-entity = Examine
 ui-options-function-swap-hands = Swap hands
+ui-options-function-move-stored-item = Move stored item
+ui-options-function-rotate-stored-item = Rotate stored item
+ui-options-static-storage-ui = Static storage UI
 
 ui-options-function-smart-equip-backpack = Smart-equip to backpack
 ui-options-function-smart-equip-belt = Smart-equip to belt

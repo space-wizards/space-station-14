@@ -35,19 +35,18 @@
     - id: MaterialCloth1
       amount: 1
 
+# stuff common to all military boots
 - type: entity
   abstract: true
-  parent: ClothingShoesBase
-  id: ClothingShoesStorageBase
+  parent: [ClothingShoesBase, ClothingSlotBase]
+  id: ClothingShoesMilitaryBase
   components:
-  - type: Storage
-    maxSlots: 1
-    maxItemSize: Normal
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
+  - type: Matchbox
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-military-boots-sidearm
+        whitelist:
+          tags:
+          - Knife
+          - Sidearm
