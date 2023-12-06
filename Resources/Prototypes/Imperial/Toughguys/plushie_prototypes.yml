@@ -238,3 +238,16 @@
     materialComposition:
       Cloth: 100
       Steel: 50
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieBarmem
+  name: Dallas
+  description: none
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_barmem
+  - type: StaticPrice
+    price: 299

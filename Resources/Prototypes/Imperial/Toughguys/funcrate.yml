@@ -1,0 +1,30 @@
+- type: entity
+  id: CrateFunPlushieCommunity
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+# Gift start
+      - id: PlushieCPGift
+      - id: PlushieBartenderGift
+      - id: PlushieChemistGift
+      - id: PlushieSOGift
+# Gift end
+      - id: PlushieCapitan
+      - id: PlushieEngineer
+      - id: PlushieGSB
+      - id: PlushieParamedic
+      - id: PlushiePCC
+      - id: PlushieScientist
+      - id: PlushieSurgeon
+      - id: PlushieBarmem
+
+- type: cargoProduct
+  id: FunPlushieCommunity
+  icon:
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_h
+  product: CrateFunPlushieCommunity
+  cost: 2000
+  category: Fun
+  group: market
