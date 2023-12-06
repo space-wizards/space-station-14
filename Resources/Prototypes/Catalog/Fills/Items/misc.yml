@@ -3,16 +3,25 @@
   parent: ClothingShoesBootsCombat
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: CombatKnife
+  # TODO: this is trash write SlotFill then
+  # - type: SlotFill
+  #   slots:
+  #     item: CombatKnife
+  # way better than this non-gaming
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-military-boots-sidearm
+        startingItem: CombatKnife
 
 - type: entity
   id: ClothingShoesBootsMercFilled
   parent: ClothingShoesBootsMerc
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: KukriKnife
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-military-boots-sidearm
+        startingItem: KukriKnife
 
