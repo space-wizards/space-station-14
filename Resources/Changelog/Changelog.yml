@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Fixes crates requiring to be welded to deconstruct them., type: Fix}
-  id: 4773
-  time: '2023-09-06T18:18:14.0000000+00:00'
 - author: potato1234x
   changes:
   - {message: Added back the old glass tiles while keeping the new ones as a fancier
@@ -2900,3 +2895,8 @@ Entries:
       window" toggle in the graphics menu., type: Add}
   id: 5272
   time: '2023-12-05T23:38:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reverted duffel bags to their original storage capacity., type: Fix}
+  id: 5273
+  time: '2023-12-06T03:11:01.0000000+00:00'
