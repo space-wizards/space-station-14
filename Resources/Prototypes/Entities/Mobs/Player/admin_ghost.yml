@@ -82,6 +82,7 @@
   - type: SolutionScanner
   - type: IgnoreUIRange
   - type: ShowRevIcons
+  - type: ShowZombieIcons
 
 - type: entity
   id: ActionAGhostShowSolar

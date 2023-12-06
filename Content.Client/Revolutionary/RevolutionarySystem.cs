@@ -21,14 +21,14 @@ public sealed class RevolutionarySystem : SharedStatusIconSystem
         base.Initialize();
 
         _cfg.OnValueChanged(CCVars.RevIconsVisibleToGhosts, value => _revIconGhostVisibility = value, true);
-        SubscribeLocalEvent<RevolutionaryComponent, CanDisplayStatusIconsEvent>(GetRevIcon);
-        SubscribeLocalEvent<HeadRevolutionaryComponent, CanDisplayStatusIconsEvent>(GetHeadRevIcon);
+        SubscribeLocalEvent<RevolutionaryComponent, CanDisplayStatusIconsEvent>(OnCanShowRevIcon);
+        SubscribeLocalEvent<HeadRevolutionaryComponent, CanDisplayStatusIconsEvent>(OnCanShowHeadRevIcon);
     }
 
     /// <summary>
     /// Determine whether a client should display the rev icon.
     /// </summary>
-    private void GetRevIcon(EntityUid uid, RevolutionaryComponent comp, ref CanDisplayStatusIconsEvent args)
+    private void OnCanShowRevIcon(EntityUid uid, RevolutionaryComponent comp, ref CanDisplayStatusIconsEvent args)
     {
         args.Cancelled = !CanDisplayIcon(args.User);
     }
@@ -36,7 +36,7 @@ public sealed class RevolutionarySystem : SharedStatusIconSystem
     /// <summary>
     /// Determine whether a client should display the head rev icon.
     /// </summary>
-    private void GetHeadRevIcon(EntityUid uid, HeadRevolutionaryComponent comp, ref CanDisplayStatusIconsEvent args)
+    private void OnCanShowHeadRevIcon(EntityUid uid, HeadRevolutionaryComponent comp, ref CanDisplayStatusIconsEvent args)
     {
         args.Cancelled = !CanDisplayIcon(args.User);
     }

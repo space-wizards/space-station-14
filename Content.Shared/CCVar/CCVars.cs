@@ -1682,6 +1682,11 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> RevIconsVisibleToGhosts =
             CVarDef.Create("ghost.rev_icons_visible_to_ghosts", true, CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        /// Whether ghosts can see zombie antag icons.
+        /// </summary>
+        public static readonly CVarDef<bool> ZombieIconsVisibleToGhosts =
+            CVarDef.Create("ghost.zombie_icons_visible_to_ghosts", true, CVar.SERVER | CVar.REPLICATED);
 
         /*
          * Fire alarm
