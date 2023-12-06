@@ -45,6 +45,7 @@
   - type: Storage
     grid:
     - 0,0,4,1
+    maxItemSize: Tiny
   - type: Item
     size: Small
   - type: StorageFill
