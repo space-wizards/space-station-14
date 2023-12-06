@@ -314,13 +314,25 @@
   description: No substitute for a doctor, but better than nothing.
   components:
   - type: Medibot
+    treatments:
+      Alive:
+        reagent: Tricordrazine
+        quantity: 30
+        minDamage: 0
+        maxDamage: 50
+      Critical:
+        reagent: Inaprovaline
+        quantity: 15
   - type: EmaggableMedibot
-    # when you are fine, medibot will help you go sleep
-    standardMed: ChloralHydrate
-    standardMedAmount: 15
-    # when you are crit, medibot will help you have fun
-    emergencyMed: SpaceDrugs
-    emergencyMedAmount: 25
+    replacements:
+      # when you are fine, medibot will help you go sleep
+      Alive:
+        reagent: ChloralHydrate
+        quantity: 15
+      # when you are crit, medibot will help you have fun
+      Critical:
+        reagent: SpaceDrugs
+        quantity: 25
   - type: Sprite
     sprite: Mobs/Silicon/Bots/medibot.rsi
     state: medibot

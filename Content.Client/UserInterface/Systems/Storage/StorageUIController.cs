@@ -38,6 +38,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     public ItemGridPiece? DraggingGhost;
     public Angle DraggingRotation = Angle.Zero;
     public bool StaticStorageUIEnabled;
+    public bool OpaqueStorageWindow;
 
     public bool IsDragging => _menuDragHelper.IsDragging;
     public ItemGridPiece? CurrentlyDragging => _menuDragHelper.Dragged;
@@ -52,6 +53,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         base.Initialize();
 
         _configuration.OnValueChanged(CCVars.StaticStorageUI, OnStaticStorageChanged, true);
+        _configuration.OnValueChanged(CCVars.OpaqueStorageWindow, OnOpaqueWindowChanged, true);
     }
 
     public void OnSystemLoaded(StorageSystem system)
@@ -80,7 +82,13 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
         if (nullEnt is not null)
         {
-            if (_lastContainerPosition == null)
+            // center it if we knock it off screen somehow.
+            if (!StaticStorageUIEnabled &&
+                (_lastContainerPosition == null ||
+                _lastContainerPosition.Value.X < 0 ||
+                _lastContainerPosition.Value.Y < 0 ||
+                _lastContainerPosition.Value.X > _ui.WindowRoot.Width ||
+                _lastContainerPosition.Value.Y > _ui.WindowRoot.Height))
             {
                 _container.OpenCenteredAt(new Vector2(0.5f, 0.75f));
             }
@@ -88,8 +96,11 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             {
                 _container.Open();
 
-                if (!StaticStorageUIEnabled)
-                    LayoutContainer.SetPosition(_container, _lastContainerPosition.Value);
+                var pos = !StaticStorageUIEnabled && _lastContainerPosition != null
+                    ? _lastContainerPosition.Value
+                    : Vector2.Zero;
+
+                LayoutContainer.SetPosition(_container, pos);
             }
 
             if (StaticStorageUIEnabled)
@@ -98,6 +109,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                 _container.Orphan();
                 Hotbar?.StorageContainer.AddChild(_container);
             }
+            _lastContainerPosition = _container.GlobalPosition;
         }
         else
         {
@@ -112,6 +124,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             return;
 
         StaticStorageUIEnabled = obj;
+        _lastContainerPosition = null;
 
         if (_container == null)
             return;
@@ -123,12 +136,22 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (StaticStorageUIEnabled)
         {
             Hotbar?.StorageContainer.AddChild(_container);
-            _lastContainerPosition = null;
         }
         else
         {
             _ui.WindowRoot.AddChild(_container);
         }
+
+        if (_entity.TryGetComponent<StorageComponent>(_container.StorageEntity, out var comp))
+            OnStorageOrderChanged((_container.StorageEntity.Value, comp));
+    }
+
+    private void OnOpaqueWindowChanged(bool obj)
+    {
+        if (OpaqueStorageWindow == obj)
+            return;
+        OpaqueStorageWindow = obj;
+        _container?.BuildBackground();
     }
 
     /// One might ask, Hey Emo, why are you parsing raw keyboard input just to rotate a rectangle?
@@ -321,7 +344,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
         _menuDragHelper.Update(args.DeltaSeconds);
 
-        if (!StaticStorageUIEnabled && _container?.Parent != null)
+        if (!StaticStorageUIEnabled && _container?.Parent != null && _lastContainerPosition != null)
             _lastContainerPosition = _container.GlobalPosition;
     }
 }
