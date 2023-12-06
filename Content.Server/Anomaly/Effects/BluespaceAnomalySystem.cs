@@ -4,6 +4,8 @@ using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Teleportation.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;

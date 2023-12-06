@@ -1454,7 +1454,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Brig"]]
+    access: [["Lawyer"]]
 
 - type: entity
   parent: VendingMachine

@@ -1,5 +1,7 @@
 using Content.Shared.Revolutionary;
 using Robust.Shared.GameStates;
+using Content.Shared.StatusIcon;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mindshield.Components;
 
@@ -9,4 +11,6 @@ namespace Content.Shared.Mindshield.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
 public sealed partial class MindShieldComponent : Component
 {
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<StatusIconPrototype> MindShieldStatusIcon = "MindShieldIcon";
 }

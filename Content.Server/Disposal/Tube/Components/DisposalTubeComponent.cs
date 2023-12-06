@@ -16,7 +16,7 @@ public sealed partial class DisposalTubeComponent : Component
     public bool Connected;
 
     [DataField]
-    public SoundSpecifier ClangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
+    public SoundSpecifier ClangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg", AudioParams.Default.WithVolume(-5f));
 
     /// <summary>
     ///     Container of entities that are currently inside this tube
@@ -32,7 +32,7 @@ public sealed partial class DisposalTubeComponent : Component
     {
         DamageDict = new()
         {
-            { "Blunt", 1.0 },
+            { "Blunt", 0.0 },
         }
     };
 }
