@@ -2,6 +2,7 @@
 using Content.Shared.Interaction.Events;
 using Content.Shared.Pinpointer;
 using Content.Shared.PowerCell;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 
@@ -64,11 +65,8 @@ public sealed class ProximityBeeperSystem : EntitySystem
         var xform = xformQuery.GetComponent(uid);
         var compType = EntityManager.ComponentFactory.GetRegistration(component.Component).Type;
         float? closestDistance = null;
-        foreach (var comp in _entityLookup.GetComponentsInRange(compType, xform.MapPosition, component.MaximumDistance))
+        foreach (var ent in _entityLookup.GetEntitiesInRange(compType, xform.MapPosition, component.MaximumDistance))
         {
-            // forgive me father, for i have sinned.
-            var ent = comp.Owner;
-
             var dist = (_transform.GetWorldPosition(xform, xformQuery) - _transform.GetWorldPosition(ent, xformQuery)).Length();
             if (dist >= (closestDistance ?? float.MaxValue))
                 continue;
@@ -83,7 +81,10 @@ public sealed class ProximityBeeperSystem : EntitySystem
 
         var scalingFactor = distance / component.MaximumDistance;
         var interval = (component.MaxBeepInterval - component.MinBeepInterval) * scalingFactor + component.MinBeepInterval;
+
         component.NextBeepTime += interval;
+        if (component.NextBeepTime < _timing.CurTime) // Prevents spending time out of range accumulating a deficit which causes a series of very rapid beeps when comeing into range.
+            component.NextBeepTime = _timing.CurTime + interval;
     }
 
     /// <summary>

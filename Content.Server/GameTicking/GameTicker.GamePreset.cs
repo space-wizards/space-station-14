@@ -7,16 +7,21 @@ using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
+        [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+
         public const float PresetFailedCooldownIncrease = 30f;
 
         /// <summary>
@@ -29,7 +34,7 @@ namespace Content.Server.GameTicking
         /// </summary>
         public GamePresetPrototype? CurrentPreset { get; private set; }
 
-        private bool StartPreset(IPlayerSession[] origReadyPlayers, bool force)
+        private bool StartPreset(ICommonSession[] origReadyPlayers, bool force)
         {
             var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
             RaiseLocalEvent(startAttempt);
@@ -214,7 +219,7 @@ namespace Content.Server.GameTicking
             {
                 if (mind.Session != null) // Logging is suppressed to prevent spam from ghost attempts caused by movement attempts
                 {
-                    _chatManager.DispatchServerMessage((IPlayerSession) mind.Session, Loc.GetString("comp-mind-ghosting-prevented"),
+                    _chatManager.DispatchServerMessage(mind.Session, Loc.GetString("comp-mind-ghosting-prevented"),
                         true);
                 }
 
@@ -254,7 +259,17 @@ namespace Content.Server.GameTicking
 
                     //todo: what if they dont breathe lol
                     //cry deeply
-                    DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 200);
+
+                    FixedPoint2 dealtDamage = 200;
+                    if (TryComp<DamageableComponent>(playerEntity, out var damageable)
+                        && TryComp<MobThresholdsComponent>(playerEntity, out var thresholds))
+                    {
+                        var playerDeadThreshold = _mobThresholdSystem.GetThresholdForState(playerEntity.Value, MobState.Dead, thresholds);
+                        dealtDamage = playerDeadThreshold - damageable.TotalDamage;
+                    }
+
+                    DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), dealtDamage);
+
                     _damageable.TryChangeDamage(playerEntity, damage, true);
                 }
             }
@@ -262,7 +277,7 @@ namespace Content.Server.GameTicking
             var xformQuery = GetEntityQuery<TransformComponent>();
             var coords = _transform.GetMoverCoordinates(position, xformQuery);
 
-            var ghost = Spawn("MobObserver", coords);
+            var ghost = Spawn(ObserverPrototypeName, coords);
 
             // Try setting the ghost entity name to either the character name or the player name.
             // If all else fails, it'll default to the default entity prototype name, "observer".

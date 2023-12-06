@@ -39,17 +39,6 @@
           Yellow: {state: "maint_unlit"}
   - type: Physics
     bodyType: Static
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
   - type: Construction
     graph: Machine
     node: machine
@@ -78,8 +67,8 @@
     board: MedicalScannerMachineCircuitboard
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-medicalscanner
-    LayoutId: MedicalScanner
+    boardName: wires-board-name-medicalscanner
+    layoutId: MedicalScanner
   - type: Appearance
   - type: Climbable
   - type: ApcPowerReceiver

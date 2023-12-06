@@ -6,6 +6,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
+using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
@@ -33,7 +34,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -1040,25 +1041,6 @@ namespace Content.Shared.Interaction
 
             _verbSystem.ExecuteVerb(verbs.First(), user, target);
             return true;
-        }
-        #endregion
-
-        #region Throw
-        /// <summary>
-        ///     Calls Thrown on all components that implement the IThrown interface
-        ///     on an entity that has been thrown.
-        /// </summary>
-        public void ThrownInteraction(EntityUid user, EntityUid thrown)
-        {
-            var throwMsg = new ThrownEvent(user, thrown);
-            RaiseLocalEvent(thrown, throwMsg, true);
-            if (throwMsg.Handled)
-            {
-                _adminLogger.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
-                return;
-            }
-
-            _adminLogger.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
         }
         #endregion
 

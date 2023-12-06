@@ -1,16 +1,20 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Clothing.Components;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Emp;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
-using Content.Server.Temperature.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Content.Shared.Popups;
@@ -24,6 +28,7 @@ using Content.Server.Emp;
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.Inventory;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -131,7 +136,7 @@ namespace Content.Server.Light.EntitySystems
                     if (damage != null)
                         _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total:damage} damage");
 
-                    _audio.Play(light.BurnHandSound, Filter.Pvs(uid), uid, true);
+                    _audio.PlayEntity(light.BurnHandSound, Filter.Pvs(uid), uid, true);
 
                     args.Handled = true;
                     return;
@@ -282,7 +287,7 @@ namespace Content.Server.Light.EntitySystems
                         if (time > light.LastThunk + ThunkDelay)
                         {
                             light.LastThunk = time;
-                            _audio.Play(light.TurnOnSound, Filter.Pvs(uid), uid, true, AudioParams.Default.WithVolume(-10f));
+                            _audio.PlayEntity(light.TurnOnSound, Filter.Pvs(uid), uid, true, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else
@@ -333,7 +338,7 @@ namespace Content.Server.Light.EntitySystems
             light.LastGhostBlink = time;
 
             ToggleBlinkingLight(uid, light, true);
-            light.Owner.SpawnTimer(light.GhostBlinkingTime, () =>
+            uid.SpawnTimer(light.GhostBlinkingTime, () =>
             {
                 ToggleBlinkingLight(uid, light, false);
             });
@@ -344,7 +349,9 @@ namespace Content.Server.Light.EntitySystems
         private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, ref PowerChangedEvent args)
         {
             // TODO: Power moment
-            if (MetaData(uid).EntityPaused)
+            var metadata = MetaData(uid);
+
+            if (metadata.EntityPaused || TerminatingOrDeleted(uid, metadata))
                 return;
 
             UpdateLight(uid, component);

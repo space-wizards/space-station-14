@@ -1,11 +1,12 @@
 using Content.Server.Anomaly.Components;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Robust.Shared.Random;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Prototypes;
 using Content.Shared.Sprite;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -32,7 +33,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     [Dependency] private readonly PointLightSystem _light = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    
+
     public const string FallbackReagent = "Water";
 
     public override void Initialize()
@@ -75,7 +76,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             if (anomaly.Severity >= 0.97) reagentProducingAmount *= component.SupercriticalReagentProducingModifier;
 
             newSol.AddReagent(component.ProducingReagent, reagentProducingAmount);
-            _solutionContainer.TryAddSolution(uid, producerSol, newSol); //TO DO - the container is not fully filled. 
+            _solutionContainer.TryAddSolution(uid, producerSol, newSol); //TO DO - the container is not fully filled.
 
             component.AccumulatedFrametime = 0;
 

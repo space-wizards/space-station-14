@@ -20,7 +20,7 @@
       types:
         Blunt: 5
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Absorbent
   - type: SolutionContainerManager
@@ -59,7 +59,7 @@
         types:
           Blunt: 5
     - type: Item
-      size: 15
+      size: Normal
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
       pickupAmount: 100
@@ -203,7 +203,7 @@
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    size: 15
+    size: Normal
   - type: Armor
     modifiers:
       coefficients:
@@ -246,9 +246,9 @@
   - type: LandMine
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
-    maxIntensity: 5 # about a ~67.5 total damage
-    totalIntensity: 60 # about a ~3 tile radius
+    explosionType: HardBomb  # normally Default and max 5 total 60
+    maxIntensity: 10 # about a ~67.5 total damage
+    totalIntensity: 30 # about a ~3 tile radius
     canCreateVacuum: false
   - type: DeleteOnTrigger
   - type: OnUseTimerTrigger
@@ -294,6 +294,49 @@
           whitelist:
             tags:
               - Mop
+          insertOnInteract: false # or it conflicts with bucket logic
+          priority: 9 # Higher than bucket slot
+        plunger_slot:
+          name: Plunger
+          whitelist:
+            tags:
+              - Plunger
+          priority: 8
+        wetfloorsign_slot4:
+          name: WetFloorSign
+          whitelist:
+            tags:
+              - WetFloorSign
+          priority: 7
+        wetfloorsign_slot3:
+          name: WetFloorSign
+          whitelist:
+            tags:
+              - WetFloorSign
+          priority: 7
+        wetfloorsign_slot2:
+          name: WetFloorSign
+          whitelist:
+            tags:
+              - WetFloorSign
+          priority: 7
+        wetfloorsign_slot1:
+          name: WetFloorSign
+          whitelist:
+            tags:
+              - WetFloorSign
+          priority: 7
+        lightreplacer_slot:
+          name: LightReplacer
+          whitelist:
+            tags:
+              - LightReplacer
+          priority: 6
+        spraybottle_slot:
+          name: Spray
+          whitelist:
+            tags:
+              - Spray
           insertOnInteract: false # or it conflicts with bucket logic
           priority: 5 # Higher than bucket slot
         bucket_slot:
@@ -428,6 +471,13 @@
         mop_slot: !type:ContainerSlot {}
         trashbag_slot: !type:ContainerSlot {}
         bucket_slot: !type:ContainerSlot {}
+        plunger_slot: !type:ContainerSlot {}
+        wetfloorsign_slot4: !type:ContainerSlot {}
+        wetfloorsign_slot3: !type:ContainerSlot {}
+        wetfloorsign_slot2: !type:ContainerSlot {}
+        wetfloorsign_slot1: !type:ContainerSlot {}
+        lightreplacer_slot: !type:ContainerSlot {}
+        spraybottle_slot:  !type:ContainerSlot {}
     - type: GuideHelp
       guides:
       - Janitorial
@@ -544,7 +594,7 @@
         types:
           Blunt: 0
     - type: Item
-      size: 10
+      size: Small
       sprite: Objects/Specific/Janitorial/rag.rsi
     - type: Absorbent
       pickupAmount: 15

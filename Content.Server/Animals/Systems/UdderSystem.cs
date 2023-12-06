@@ -1,10 +1,7 @@
 using Content.Server.Animals.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.DoAfter;
-using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
@@ -32,9 +29,11 @@ namespace Content.Server.Animals.Systems
             SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
             SubscribeLocalEvent<UdderComponent, MilkingDoAfterEvent>(OnDoAfter);
         }
+
         public override void Update(float frameTime)
         {
-            foreach (var udder in EntityManager.EntityQuery<UdderComponent>(false))
+            var query = EntityQueryEnumerator<UdderComponent>();
+            while (query.MoveNext(out var uid, out var udder))
             {
                 udder.AccumulatedFrameTime += frameTime;
 
@@ -43,19 +42,19 @@ namespace Content.Server.Animals.Systems
                     udder.AccumulatedFrameTime -= udder.UpdateRate;
 
                     // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
-                    if (EntityManager.TryGetComponent(udder.Owner, out HungerComponent? hunger))
+                    if (EntityManager.TryGetComponent(uid, out HungerComponent? hunger))
                     {
                         // Is there enough nutrition to produce reagent?
                         if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Peckish)
                             continue;
                     }
 
-                    if (!_solutionContainerSystem.TryGetSolution(udder.Owner, udder.TargetSolutionName,
+                    if (!_solutionContainerSystem.TryGetSolution(uid, udder.TargetSolutionName,
                             out var solution))
                         continue;
 
                     //TODO: toxins from bloodstream !?
-                    _solutionContainerSystem.TryAddReagent(udder.Owner, solution, udder.ReagentId,
+                    _solutionContainerSystem.TryAddReagent(uid, solution, udder.ReagentId,
                         udder.QuantityPerUpdate, out var accepted);
                 }
             }

@@ -12,3 +12,6 @@ reagent-desc-protein = Found in certain meals, good for bodily health.
 
 reagent-name-cocoapowder = сocoa powder
 reagent-desc-cocoapowder = From the best varieties of cocoa beans
+
+reagent-name-pumpkin-flesh = pumpkin flesh
+reagent-desc-pumpkin-flesh = The mushy, sweet remains of a pumpkin.

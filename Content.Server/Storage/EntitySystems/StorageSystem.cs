@@ -1,5 +1,6 @@
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Explosion;
 using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Lock;
@@ -9,10 +10,9 @@ using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Storage.EntitySystems;
@@ -20,6 +20,7 @@ namespace Content.Server.Storage.EntitySystems;
 public sealed partial class StorageSystem : SharedStorageSystem
 {
     [Dependency] private readonly IAdminManager _admin = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
@@ -27,6 +28,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
         base.Initialize();
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddUiVerb);
         SubscribeLocalEvent<StorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
+        SubscribeLocalEvent<StorageComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
     }
@@ -90,11 +92,16 @@ public sealed partial class StorageSystem : SharedStorageSystem
         if (!_uiSystem.IsUiOpen(uid, args.UiKey))
         {
             storageComp.IsUiOpen = false;
-            UpdateStorageVisualization(uid, storageComp);
+            UpdateAppearance((uid, storageComp, null));
 
             if (storageComp.StorageCloseSound is not null)
-                Audio.Play(storageComp.StorageCloseSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, storageComp.StorageCloseSound.Params);
+                Audio.PlayEntity(storageComp.StorageCloseSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, storageComp.StorageCloseSound.Params);
         }
+    }
+
+    private void OnExploded(Entity<StorageComponent> ent, ref BeforeExplodeEvent args)
+    {
+        args.Contents.AddRange(ent.Comp.Container.ContainedEntities);
     }
 
     /// <summary>
@@ -134,7 +141,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
     ///     If the user has nested-UIs open (e.g., PDA UI open when pda is in a backpack), close them.
     /// </summary>
     /// <param name="session"></param>
-    public void CloseNestedInterfaces(EntityUid uid, IPlayerSession session, StorageComponent? storageComp = null)
+    public void CloseNestedInterfaces(EntityUid uid, ICommonSession session, StorageComponent? storageComp = null)
     {
         if (!Resolve(uid, ref storageComp))
             return;

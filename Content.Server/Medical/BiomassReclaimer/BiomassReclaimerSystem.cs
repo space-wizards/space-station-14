@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Server.Body.Components;
-using Content.Server.Climbing;
 using Content.Server.Construction;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
@@ -9,6 +8,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Climbing.Events;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -24,6 +24,8 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
@@ -51,7 +53,8 @@ namespace Content.Server.Medical.BiomassReclaimer
         {
             base.Update(frameTime);
 
-            foreach (var (_, reclaimer) in EntityQuery<ActiveBiomassReclaimerComponent, BiomassReclaimerComponent>())
+            var query = EntityQueryEnumerator<ActiveBiomassReclaimerComponent, BiomassReclaimerComponent>();
+            while (query.MoveNext(out var uid, out var _, out var reclaimer))
             {
                 reclaimer.ProcessingTimer -= frameTime;
                 reclaimer.RandomMessTimer -= frameTime;
@@ -62,11 +65,11 @@ namespace Content.Server.Medical.BiomassReclaimer
                     {
                         Solution blood = new();
                         blood.AddReagent(reclaimer.BloodReagent, 50);
-                        _puddleSystem.TrySpillAt(reclaimer.Owner, blood, out _);
+                        _puddleSystem.TrySpillAt(uid, blood, out _);
                     }
                     if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)
                     {
-                        var thrown = Spawn(_robustRandom.Pick(reclaimer.SpawnedEntities).PrototypeId, Transform(reclaimer.Owner).Coordinates);
+                        var thrown = Spawn(_robustRandom.Pick(reclaimer.SpawnedEntities).PrototypeId, Transform(uid).Coordinates);
                         var direction = new Vector2(_robustRandom.Next(-30, 30), _robustRandom.Next(-30, 30));
                         _throwing.TryThrow(thrown, direction, _robustRandom.Next(1, 10));
                     }
@@ -78,11 +81,11 @@ namespace Content.Server.Medical.BiomassReclaimer
                     continue;
                 }
 
-                _material.SpawnMultipleFromMaterial(reclaimer.CurrentExpectedYield, "Biomass", Transform(reclaimer.Owner).Coordinates);
+                _material.SpawnMultipleFromMaterial(reclaimer.CurrentExpectedYield, "Biomass", Transform(uid).Coordinates);
 
                 reclaimer.BloodReagent = null;
                 reclaimer.SpawnedEntities.Clear();
-                RemCompDeferred<ActiveBiomassReclaimerComponent>(reclaimer.Owner);
+                RemCompDeferred<ActiveBiomassReclaimerComponent>(uid);
             }
         }
         public override void Initialize()
@@ -100,19 +103,19 @@ namespace Content.Server.Medical.BiomassReclaimer
             SubscribeLocalEvent<BiomassReclaimerComponent, ReclaimerDoAfterEvent>(OnDoAfter);
         }
 
-        private void OnSuicide(EntityUid uid, BiomassReclaimerComponent component, SuicideEvent args)
+        private void OnSuicide(Entity<BiomassReclaimerComponent> ent, ref SuicideEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (HasComp<ActiveBiomassReclaimerComponent>(uid))
+            if (HasComp<ActiveBiomassReclaimerComponent>(ent))
                 return;
 
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
+            if (TryComp<ApcPowerReceiverComponent>(ent, out var power) && !power.Powered)
                 return;
 
-            _popup.PopupEntity(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", args.Victim)), uid, PopupType.LargeCaution);
-            StartProcessing(args.Victim, component);
+            _popup.PopupEntity(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", args.Victim)), ent, PopupType.LargeCaution);
+            StartProcessing(args.Victim, ent);
             args.SetHandled(SuicideKind.Blunt);
         }
 
@@ -137,22 +140,22 @@ namespace Content.Server.Medical.BiomassReclaimer
                     EnsureComp<ActiveBiomassReclaimerComponent>(uid);
             }
             else
-                RemComp<ActiveBiomassReclaimerComponent>(component.Owner);
+                RemComp<ActiveBiomassReclaimerComponent>(uid);
         }
 
         private void OnUnanchorAttempt(EntityUid uid, ActiveBiomassReclaimerComponent component, UnanchorAttemptEvent args)
         {
             args.Cancel();
         }
-        private void OnAfterInteractUsing(EntityUid uid, BiomassReclaimerComponent component, AfterInteractUsingEvent args)
+        private void OnAfterInteractUsing(Entity<BiomassReclaimerComponent> reclaimer, ref AfterInteractUsingEvent args)
         {
             if (!args.CanReach || args.Target == null)
                 return;
 
-            if (!HasComp<MobStateComponent>(args.Used) || !CanGib(uid, args.Used, component))
+            if (!HasComp<MobStateComponent>(args.Used) || !CanGib(reclaimer, args.Used))
                 return;
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, 7f, new ReclaimerDoAfterEvent(), uid, target: args.Target, used: args.Used)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, 7f, new ReclaimerDoAfterEvent(), reclaimer, target: args.Target, used: args.Used)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -160,17 +163,17 @@ namespace Content.Server.Medical.BiomassReclaimer
             });
         }
 
-        private void OnClimbedOn(EntityUid uid, BiomassReclaimerComponent component, ClimbedOnEvent args)
+        private void OnClimbedOn(Entity<BiomassReclaimerComponent> reclaimer, ref ClimbedOnEvent args)
         {
-            if (!CanGib(uid, args.Climber, component))
+            if (!CanGib(reclaimer, args.Climber))
             {
                 var direction = new Vector2(_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
                 _throwing.TryThrow(args.Climber, direction, 0.5f);
                 return;
             }
-            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(args.Instigator):player} used a biomass reclaimer to gib {ToPrettyString(args.Climber):target} in {ToPrettyString(uid):reclaimer}");
+            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(args.Instigator):player} used a biomass reclaimer to gib {ToPrettyString(args.Climber):target} in {ToPrettyString(reclaimer):reclaimer}");
 
-            StartProcessing(args.Climber, component);
+            StartProcessing(args.Climber, reclaimer);
         }
 
         private void OnRefreshParts(EntityUid uid, BiomassReclaimerComponent component, RefreshPartsEvent args)
@@ -193,23 +196,24 @@ namespace Content.Server.Medical.BiomassReclaimer
             args.AddPercentageUpgrade("biomass-reclaimer-component-upgrade-biomass-yield", component.YieldPerUnitMass / component.BaseYieldPerUnitMass);
         }
 
-        private void OnDoAfter(EntityUid uid, BiomassReclaimerComponent component, DoAfterEvent args)
+        private void OnDoAfter(Entity<BiomassReclaimerComponent> reclaimer, ref ReclaimerDoAfterEvent args)
         {
             if (args.Handled || args.Cancelled || args.Args.Target == null || HasComp<BiomassReclaimerComponent>(args.Args.Target.Value))
                 return;
 
-            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(args.Args.User):player} used a biomass reclaimer to gib {ToPrettyString(args.Args.Target.Value):target} in {ToPrettyString(uid):reclaimer}");
-            StartProcessing(args.Args.Target.Value, component);
+            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(args.Args.User):player} used a biomass reclaimer to gib {ToPrettyString(args.Args.Target.Value):target} in {ToPrettyString(reclaimer):reclaimer}");
+            StartProcessing(args.Args.Target.Value, reclaimer);
 
             args.Handled = true;
         }
 
-        private void StartProcessing(EntityUid toProcess, BiomassReclaimerComponent component, PhysicsComponent? physics = null)
+        private void StartProcessing(EntityUid toProcess, Entity<BiomassReclaimerComponent> ent, PhysicsComponent? physics = null)
         {
             if (!Resolve(toProcess, ref physics))
                 return;
 
-            AddComp<ActiveBiomassReclaimerComponent>(component.Owner);
+            var component = ent.Comp;
+            AddComp<ActiveBiomassReclaimerComponent>(ent);
 
             if (TryComp<BloodstreamComponent>(toProcess, out var stream))
             {
@@ -225,21 +229,21 @@ namespace Content.Server.Medical.BiomassReclaimer
             QueueDel(toProcess);
         }
 
-        private bool CanGib(EntityUid uid, EntityUid dragged, BiomassReclaimerComponent component)
+        private bool CanGib(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
         {
-            if (HasComp<ActiveBiomassReclaimerComponent>(uid))
+            if (HasComp<ActiveBiomassReclaimerComponent>(reclaimer))
                 return false;
 
             if (!HasComp<MobStateComponent>(dragged))
                 return false;
 
-            if (!Transform(uid).Anchored)
+            if (!Transform(reclaimer).Anchored)
                 return false;
 
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
+            if (TryComp<ApcPowerReceiverComponent>(reclaimer, out var power) && !power.Powered)
                 return false;
 
-            if (component.SafetyEnabled && !_mobState.IsDead(dragged))
+            if (reclaimer.Comp.SafetyEnabled && !_mobState.IsDead(dragged))
                 return false;
 
             // Reject souled bodies in easy mode.

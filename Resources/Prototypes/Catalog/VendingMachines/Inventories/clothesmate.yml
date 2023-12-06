@@ -31,6 +31,8 @@
     ClothingUniformJumpskirtColorPink: 2
     ClothingUniformJumpsuitColorDarkBlue: 2
     ClothingUniformJumpskirtColorDarkBlue: 2
+    ClothingUniformJumpsuitColorDarkGreen:  2
+    ClothingUniformJumpskirtColorDarkGreen: 2
     ClothingUniformJumpsuitColorTeal: 2
     ClothingUniformJumpskirtColorTeal: 2
     ClothingUniformJumpsuitHawaiBlack: 2
@@ -38,6 +40,12 @@
     ClothingUniformJumpsuitHawaiRed: 2
     ClothingUniformJumpsuitHawaiYellow: 2
     ClothingUniformJumpsuitFlannel: 2
+    ClothingUniformJumpsuitCasualBlue: 2
+    ClothingUniformJumpskirtCasualBlue: 2
+    ClothingUniformJumpsuitCasualPurple: 2
+    ClothingUniformJumpskirtCasualPurple: 2
+    ClothingUniformJumpsuitCasualRed: 2
+    ClothingUniformJumpskirtCasualRed: 2
     ClothingShoesColorBlack: 8
     ClothingShoesColorBrown: 4
     ClothingShoesColorWhite: 3

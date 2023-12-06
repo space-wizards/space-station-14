@@ -9,7 +9,6 @@ using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
-using Content.Client.Lobby.UI;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
@@ -31,7 +30,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
-using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -135,7 +133,8 @@ public sealed class ChatUIController : UIController
     /// </summary>
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
-    public readonly List<(GameTick, ChatMessage)> History = new();
+    // TODO add a cap for this for non-replays
+    public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
 
     // Maintains which channels a client should be able to filter (for showing in the chatbox)
     // and select (for attempting to send on).
@@ -163,14 +162,16 @@ public sealed class ChatUIController : UIController
         _sawmill = Logger.GetSawmill("chat");
         _sawmill.Level = LogLevel.Info;
         _admin.AdminStatusUpdated += UpdateChannelPermissions;
-        _player.LocalPlayerChanged += OnLocalPlayerChanged;
+        _player.LocalPlayerAttached += OnAttachedChanged;
+        _player.LocalPlayerDetached += OnAttachedChanged;
         _state.OnStateChanged += StateChanged;
         _net.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
+        _net.RegisterNetMessage<MsgDeleteChatMessagesBy>(OnDeleteChatMessagesBy);
         SubscribeNetworkEvent<DamageForceSayEvent>(OnDamageForceSay);
 
         _speechBubbleRoot = new LayoutContainer();
 
-        OnLocalPlayerChanged(new LocalPlayerChangedEventArgs(null, _player.LocalPlayer));
+        UpdateChannelPermissions();
 
         _input.SetInputCommand(ContentKeyFunctions.FocusChat,
             InputCmdHandler.FromDelegate(_ => FocusChat()));
@@ -363,29 +364,7 @@ public sealed class ChatUIController : UIController
         _speechBubbleRoot.SetPositionLast();
     }
 
-    private void OnLocalPlayerChanged(LocalPlayerChangedEventArgs obj)
-    {
-        if (obj.OldPlayer != null)
-        {
-            obj.OldPlayer.EntityAttached -= OnLocalPlayerEntityAttached;
-            obj.OldPlayer.EntityDetached -= OnLocalPlayerEntityDetached;
-        }
-
-        if (obj.NewPlayer != null)
-        {
-            obj.NewPlayer.EntityAttached += OnLocalPlayerEntityAttached;
-            obj.NewPlayer.EntityDetached += OnLocalPlayerEntityDetached;
-        }
-
-        UpdateChannelPermissions();
-    }
-
-    private void OnLocalPlayerEntityAttached(EntityAttachedEventArgs obj)
-    {
-        UpdateChannelPermissions();
-    }
-
-    private void OnLocalPlayerEntityDetached(EntityDetachedEventArgs obj)
+    private void OnAttachedChanged(EntityUid uid)
     {
         UpdateChannelPermissions();
     }
@@ -400,19 +379,13 @@ public sealed class ChatUIController : UIController
             return;
         }
 
-        // msg.Message should be the string that a user sent over text, without any added markup.
-        var messages = SplitMessage(msg.Message);
-
-        foreach (var message in messages)
-        {
-            EnqueueSpeechBubble(ent, message, speechType);
-        }
+        EnqueueSpeechBubble(ent, msg, speechType);
     }
 
     private void CreateSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
     {
         var bubble =
-            SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eye, _manager, EntityManager);
+            SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity);
 
         bubble.OnDied += SpeechBubbleDied;
 
@@ -446,7 +419,7 @@ public sealed class ChatUIController : UIController
         RemoveSpeechBubble(entity, bubble);
     }
 
-    private void EnqueueSpeechBubble(EntityUid entity, string contents, SpeechBubble.SpeechType speechType)
+    private void EnqueueSpeechBubble(EntityUid entity, ChatMessage message, SpeechBubble.SpeechType speechType)
     {
         // Don't enqueue speech bubbles for other maps. TODO: Support multiple viewports/maps?
         if (EntityManager.GetComponent<TransformComponent>(entity).MapID != _eye.CurrentMap)
@@ -458,7 +431,7 @@ public sealed class ChatUIController : UIController
             _queuedSpeechBubbles.Add(entity, queueData);
         }
 
-        queueData.MessageQueue.Enqueue(new SpeechBubbleData(contents, speechType));
+        queueData.MessageQueue.Enqueue(new SpeechBubbleData(message, speechType));
     }
 
     public void RemoveSpeechBubble(EntityUid entityUid, SpeechBubble bubble)
@@ -586,7 +559,7 @@ public sealed class ChatUIController : UIController
 
             var msg = queueData.MessageQueue.Dequeue();
 
-            queueData.TimeLeft += BubbleDelayBase + msg.Message.Length * BubbleDelayFactor;
+            queueData.TimeLeft += BubbleDelayBase + msg.Message.Message.Length * BubbleDelayFactor;
 
             // We keep the queue around while it has 0 items. This allows us to keep the timer.
             // When the timer hits 0 and there's no messages left, THEN we can clear it up.
@@ -639,52 +612,6 @@ public sealed class ChatUIController : UIController
         }
     }
 
-    private List<string> SplitMessage(string msg)
-    {
-        // Split message into words separated by spaces.
-        var words = msg.Split(' ');
-        var messages = new List<string>();
-        var currentBuffer = new List<string>();
-
-        // Really shoddy way to approximate word length.
-        // Yes, I am aware of all the crimes here.
-        // TODO: Improve this to use actual glyph width etc..
-        var currentWordLength = 0;
-        foreach (var word in words)
-        {
-            // +1 for the space.
-            currentWordLength += word.Length + 1;
-
-            if (currentWordLength > SingleBubbleCharLimit)
-            {
-                // Too long for the current speech bubble, flush it.
-                messages.Add(string.Join(" ", currentBuffer));
-                currentBuffer.Clear();
-
-                currentWordLength = word.Length;
-
-                if (currentWordLength > SingleBubbleCharLimit)
-                {
-                    // Word is STILL too long.
-                    // Truncate it with an ellipse.
-                    messages.Add($"{word.Substring(0, SingleBubbleCharLimit - 3)}...");
-                    currentWordLength = 0;
-                    continue;
-                }
-            }
-
-            currentBuffer.Add(word);
-        }
-
-        if (currentBuffer.Count != 0)
-        {
-            // Don't forget the last bubble.
-            messages.Add(string.Join(" ", currentBuffer));
-        }
-
-        return messages;
-    }
-
     public ChatSelectChannel MapLocalIfGhost(ChatSelectChannel channel)
     {
         if (channel == ChatSelectChannel.Local && _ghost is {IsGhost: true})
@@ -703,7 +630,7 @@ public sealed class ChatUIController : UIController
 
     public void UpdateSelectedChannel(ChatBox box)
     {
-        var (prefixChannel, _, radioChannel) = SplitInputContents(box.ChatInput.Input.Text);
+        var (prefixChannel, _, radioChannel) = SplitInputContents(box.ChatInput.Input.Text.ToLower());
 
         if (prefixChannel == ChatSelectChannel.None)
             box.ChatInput.ChannelSelector.UpdateChannelSelectButton(box.SelectedChannel, null);
@@ -864,7 +791,22 @@ public sealed class ChatUIController : UIController
             case ChatChannel.Emotes:
                 AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
                 break;
+
+            case ChatChannel.LOOC:
+                if (_cfg.GetCVar(CCVars.LoocAboveHeadShow))
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Looc);
+                break;
         }
+    }
+
+    public void OnDeleteChatMessagesBy(MsgDeleteChatMessagesBy msg)
+    {
+        // This will delete messages from an entity even if different players were the author.
+        // Usages of the erase admin verb should be rare enough that this does not matter.
+        // Otherwise the client would need to know that one entity has multiple author players,
+        // or the server would need to track when and which entities a player sent messages as.
+        History.RemoveAll(h => h.Msg.SenderKey == msg.Key || msg.Entities.Contains(h.Msg.SenderEntity));
+        Repopulate();
     }
 
     public void RegisterChat(ChatBox chat)
@@ -895,7 +837,7 @@ public sealed class ChatUIController : UIController
         }
     }
 
-    private readonly record struct SpeechBubbleData(string Message, SpeechBubble.SpeechType Type);
+    private readonly record struct SpeechBubbleData(ChatMessage Message, SpeechBubble.SpeechType Type);
 
     private sealed class SpeechBubbleQueueData
     {

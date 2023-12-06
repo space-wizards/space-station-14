@@ -25,7 +25,6 @@
   - Salvage
   - Quartermaster
   - Maintenance
-  - External
   - Command
   special:
   - !type:AddImplantSpecial
@@ -45,6 +44,6 @@
     ears: ClothingHeadsetQM
     belt: BoxFolderClipboard
     pocket1: AppraisalTool
-  innerclothingskirt: ClothingUniformJumpskirtQM
+  innerClothingSkirt: ClothingUniformJumpskirtQM
   satchel: ClothingBackpackSatchelQuartermasterFilled
   duffelbag: ClothingBackpackDuffelQuartermasterFilled

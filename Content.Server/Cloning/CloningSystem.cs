@@ -22,7 +22,6 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
@@ -30,6 +29,8 @@ using Content.Shared.Roles.Jobs;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
@@ -154,7 +155,7 @@ namespace Content.Server.Cloning
             args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(uid, component.RequiredMaterial))));
         }
 
-        public bool TryCloning(EntityUid uid, EntityUid bodyToClone, MindComponent mind, CloningPodComponent? clonePod, float failChanceModifier = 1)
+        public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Entity<MindComponent> mindEnt, CloningPodComponent? clonePod, float failChanceModifier = 1)
         {
             if (!Resolve(uid, ref clonePod))
                 return false;
@@ -162,12 +163,13 @@ namespace Content.Server.Cloning
             if (HasComp<ActiveCloningPodComponent>(uid))
                 return false;
 
+            var mind = mindEnt.Comp;
             if (ClonesWaitingForMind.TryGetValue(mind, out var clone))
             {
                 if (EntityManager.EntityExists(clone) &&
                     !_mobStateSystem.IsDead(clone) &&
                     TryComp<MindContainerComponent>(clone, out var cloneMindComp) &&
-                    (cloneMindComp.Mind == null || cloneMindComp.Mind == mind.Owner))
+                    (cloneMindComp.Mind == null || cloneMindComp.Mind == mindEnt))
                     return false; // Mind already has clone
 
                 ClonesWaitingForMind.Remove(mind);
@@ -183,7 +185,7 @@ namespace Content.Server.Cloning
             if (!TryComp<HumanoidAppearanceComponent>(bodyToClone, out var humanoid))
                 return false; // whatever body was to be cloned, was not a humanoid
 
-            if (!_prototype.TryIndex<SpeciesPrototype>(humanoid.Species, out var speciesPrototype))
+            if (!_prototype.TryIndex(humanoid.Species, out var speciesPrototype))
                 return false;
 
             if (!TryComp<PhysicsComponent>(bodyToClone, out var physics))
@@ -198,9 +200,12 @@ namespace Content.Server.Cloning
             if (TryComp<UncloneableComponent>(bodyToClone, out _))
             {
                 if (clonePod.ConnectedConsole != null)
+                {
                     _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value,
                         Loc.GetString("cloning-console-uncloneable-trait-error"),
                         InGameICChatType.Speak, false);
+                }
+
                 return false;
             }
 
@@ -253,14 +258,13 @@ namespace Content.Server.Cloning
             clonePod.BodyContainer.Insert(mob);
             ClonesWaitingForMind.Add(mind, mob);
             UpdateStatus(uid, CloningPodStatus.NoMind, clonePod);
-            var mindId = mind.Owner;
-            _euiManager.OpenEui(new AcceptCloningEui(mindId, mind, this), client);
+            _euiManager.OpenEui(new AcceptCloningEui(mindEnt, mind, this), client);
 
             AddComp<ActiveCloningPodComponent>(uid);
 
             // TODO: Ideally, components like this should be components on the mind entity so this isn't necessary.
             // Add on special job components to the mob.
-            if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
+            if (_jobs.MindTryGetJob(mindEnt, out _, out var prototype))
             {
                 foreach (var special in prototype.Special)
                 {
@@ -335,8 +339,7 @@ namespace Content.Server.Cloning
             clonePod.CloningProgress = 0f;
             UpdateStatus(uid, CloningPodStatus.Idle, clonePod);
             var transform = Transform(uid);
-            var indices = _transformSystem.GetGridOrMapTilePosition(uid);
-
+            var indices = _transformSystem.GetGridTilePositionOrDefault((uid, transform));
             var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
 
             if (HasComp<EmaggedComponent>(uid))
@@ -369,24 +372,6 @@ namespace Content.Server.Cloning
         public void Reset(RoundRestartCleanupEvent ev)
         {
             ClonesWaitingForMind.Clear();
-        }
-    }
-
-    /// <summary>
-    /// Raised after a new mob got spawned when cloning a humanoid
-    /// </summary>
-    [ByRefEvent]
-    public struct CloningEvent
-    {
-        public bool NameHandled = false;
-
-        public readonly EntityUid Source;
-        public readonly EntityUid Target;
-
-        public CloningEvent(EntityUid source, EntityUid target)
-        {
-            Source = source;
-            Target = target;
         }
     }
 }

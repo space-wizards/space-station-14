@@ -12,7 +12,10 @@ using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
+using Content.Shared.Timing;
 
 namespace Content.Shared.Wieldable;
 
@@ -25,13 +28,13 @@ public sealed class WieldableSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly UseDelaySystem _delay = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand, before: new [] { typeof(SharedGunSystem) });
-        SubscribeLocalEvent<WieldableComponent, WieldableDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
@@ -76,7 +79,7 @@ public sealed class WieldableSystem : EntitySystem
 
         gun.MinAngle -= component.MinAngle;
         gun.MaxAngle -= component.MaxAngle;
-        Dirty(gun);
+        Dirty(uid, gun);
     }
 
     private void OnGunWielded(EntityUid uid, GunWieldBonusComponent component, ref ItemWieldedEvent args)
@@ -86,7 +89,7 @@ public sealed class WieldableSystem : EntitySystem
 
         gun.MinAngle += component.MinAngle;
         gun.MaxAngle += component.MaxAngle;
-        Dirty(gun);
+        Dirty(uid, gun);
     }
 
     private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -157,7 +160,7 @@ public sealed class WieldableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Attempts to wield an item, creating a DoAfter..
+    ///     Attempts to wield an item, starting a UseDelay after.
     /// </summary>
     /// <returns>True if the attempt wasn't blocked.</returns>
     public bool TryWield(EntityUid used, WieldableComponent component, EntityUid user)
@@ -171,13 +174,31 @@ public sealed class WieldableSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        var doargs = new DoAfterArgs(EntityManager, user, component.WieldTime, new WieldableDoAfterEvent(), used, used: used)
+        if (TryComp<ItemComponent>(used, out var item))
         {
-            BreakOnUserMove = false,
-            BreakOnDamage = true
-        };
+            component.OldInhandPrefix = item.HeldPrefix;
+            _itemSystem.SetHeldPrefix(used, component.WieldedInhandPrefix, item);
+        }
 
-        _doAfter.TryStartDoAfter(doargs);
+        component.Wielded = true;
+
+        if (component.WieldSound != null)
+            _audioSystem.PlayPredicted(component.WieldSound, used, user);
+
+        for (var i = 0; i < component.FreeHandsRequired; i++)
+        {
+            _virtualItemSystem.TrySpawnVirtualItemInHand(used, user);
+        }
+
+        _delay.BeginDelay(used);
+
+        _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", used)), user, user);
+        _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", user),("item", used)), user, Filter.PvsExcept(user), true);
+
+        var targEv = new ItemWieldedEvent();
+        RaiseLocalEvent(used, ref targEv);
+
+        Dirty(used, component);
         return true;
     }
 
@@ -197,38 +218,6 @@ public sealed class WieldableSystem : EntitySystem
 
         RaiseLocalEvent(used, targEv);
         return true;
-    }
-
-    private void OnDoAfter(EntityUid uid, WieldableComponent component, DoAfterEvent args)
-    {
-        if (args.Handled || args.Cancelled || !CanWield(uid, component, args.Args.User) || component.Wielded)
-            return;
-
-        if (TryComp<ItemComponent>(uid, out var item))
-        {
-            component.OldInhandPrefix = item.HeldPrefix;
-            _itemSystem.SetHeldPrefix(uid, component.WieldedInhandPrefix, item);
-        }
-
-        component.Wielded = true;
-
-        if (component.WieldSound != null)
-            _audioSystem.PlayPredicted(component.WieldSound, uid, args.User);
-
-        for (var i = 0; i < component.FreeHandsRequired; i++)
-        {
-            _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.Args.User);
-        }
-
-        _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", uid)), args.Args.User, args.Args.User);
-        _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", args.Args.User),("item", uid)), args.Args.User, Filter.PvsExcept(args.Args.User), true);
-
-        var ev = new ItemWieldedEvent();
-        RaiseLocalEvent(uid, ref ev);
-        _appearance.SetData(uid, WieldableVisuals.Wielded, true);
-
-        Dirty(component);
-        args.Handled = true;
     }
 
     private void OnItemUnwielded(EntityUid uid, WieldableComponent component, ItemUnwieldedEvent args)
@@ -258,7 +247,7 @@ public sealed class WieldableSystem : EntitySystem
 
         _appearance.SetData(uid, WieldableVisuals.Wielded, false);
 
-        Dirty(component);
+        Dirty(uid, component);
         _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);
     }
 

@@ -43,9 +43,10 @@
       Steel: 50
   - type: SpaceGarbage
   - type: Storage
-    capacity: 5
+    grid:
+    - 0,0,4,1
   - type: Item
-    size: 5
+    size: Small
   - type: StorageFill
     contents:
     - id: Cigarette
@@ -108,9 +109,10 @@
       Steel: 50
   - type: SpaceGarbage
   - type: Storage
-    capacity: 10
+    grid:
+    - 0,0,4,1
   - type: Item
-    size: 10
+    size: Small
   - type: StorageFill
     contents:
     - id: CigaretteRandom

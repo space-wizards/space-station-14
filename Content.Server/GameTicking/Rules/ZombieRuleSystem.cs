@@ -22,8 +22,10 @@ using Content.Shared.Roles;
 using Content.Shared.Zombies;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -264,9 +266,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             return;
         component.InfectedChosen = true;
 
-        var allPlayers = _playerManager.ServerSessions.ToList();
-        var playerList = new List<IPlayerSession>();
-        var prefList = new List<IPlayerSession>();
+        var allPlayers = _playerManager.Sessions.ToList();
+        var playerList = new List<ICommonSession>();
+        var prefList = new List<ICommonSession>();
         foreach (var player in allPlayers)
         {
             if (player.AttachedEntity == null || !HasComp<HumanoidAppearanceComponent>(player.AttachedEntity) || HasComp<ZombieImmuneComponent>(player.AttachedEntity))
@@ -288,7 +290,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var totalInfected = 0;
         while (totalInfected < numInfected)
         {
-            IPlayerSession zombie;
+            ICommonSession zombie;
             if (prefList.Count == 0)
             {
                 if (playerList.Count == 0)

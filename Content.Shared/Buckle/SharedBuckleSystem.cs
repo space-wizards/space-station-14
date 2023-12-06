@@ -7,11 +7,13 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Pulling;
 using Content.Shared.Standing;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Buckle;
@@ -75,7 +77,7 @@ public abstract partial class SharedBuckleSystem : EntitySystem
             return;
 
         _transform.SetLocalRotation(buckleUid, Angle.Zero, buckleTransform);
-        _joints.RefreshRelay(buckleUid, strapUid);
+        _joints.SetRelay(buckleUid, strapUid);
 
         switch (strapComp.Position)
         {

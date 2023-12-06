@@ -14,6 +14,8 @@ using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Morgue;
@@ -174,12 +176,13 @@ public sealed class CrematoriumSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (act, crem) in EntityQuery<ActiveCrematoriumComponent, CrematoriumComponent>())
+        var query = EntityQueryEnumerator<ActiveCrematoriumComponent, CrematoriumComponent>();
+        while (query.MoveNext(out var uid, out var act, out var crem))
         {
             act.Accumulator += frameTime;
 
             if (act.Accumulator >= crem.CookTime)
-                FinishCooking(act.Owner, crem);
+                FinishCooking(uid, crem);
         }
     }
 }

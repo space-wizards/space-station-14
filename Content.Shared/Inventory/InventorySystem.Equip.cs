@@ -11,9 +11,11 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Inventory;
@@ -23,10 +25,16 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
+    [ValidatePrototypeId<ItemSizePrototype>]
+    private const string PocketableItemSize = "Small";
 
     private void InitializeEquip()
     {
@@ -190,25 +198,12 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if(!silent && clothing != null && clothing.EquipSound != null && _gameTiming.IsFirstTimePredicted)
+        if (!silent && clothing != null && clothing.EquipSound != null)
         {
-            Filter filter;
-
-            if (_netMan.IsClient)
-                filter = Filter.Local();
-            else
-            {
-                filter = Filter.Pvs(target);
-
-                // don't play double audio for predicted interactions
-                if (predicted)
-                    filter.RemoveWhereAttachedEntity(entity => entity == actor);
-            }
-
-            SoundSystem.Play(clothing.EquipSound.GetSound(), filter, target, clothing.EquipSound.Params.WithVolume(-2f));
+            _audio.PlayPredicted(clothing.EquipSound, target, actor);
         }
 
-        inventory.Dirty();
+        Dirty(target, inventory);
 
         _movementSpeed.RefreshMovementSpeedModifiers(target);
 
@@ -263,7 +258,9 @@ public abstract partial class InventorySystem
         if (slotDefinition.DependsOn != null && !TryGetSlotEntity(target, slotDefinition.DependsOn, out _, inventory))
             return false;
 
-        var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) && item is { Size: <= (int) ReferenceSizes.Pocket };
+        var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) &&
+                              item != null &&
+                              _item.GetSizePrototype(item.Size) <= _item.GetSizePrototype(PocketableItemSize);
         if (clothing == null && !fittingInPocket
             || clothing != null && !clothing.Slots.HasFlag(slotDefinition.SlotFlags) && !fittingInPocket)
         {
@@ -372,40 +369,20 @@ public abstract partial class InventorySystem
             }
         }
 
-        if (force)
+        if (!slotContainer.Remove(removedItem.Value, force: force))
+            return false;
+
+        // TODO: Inventory needs a hot cleanup hoo boy
+        // Check if something else (AKA toggleable) dumped it into a container.
+        if (!_containerSystem.IsEntityInContainer(removedItem.Value))
+            _transform.DropNextTo(removedItem.Value, target);
+
+        if (!silent && Resolve(removedItem.Value, ref clothing, false) && clothing.UnequipSound != null)
         {
-            slotContainer.ForceRemove(removedItem.Value);
-        }
-        else
-        {
-            if (!slotContainer.Remove(removedItem.Value))
-            {
-                //should never happen bc of the canremove lets just keep in just in case
-                return false;
-            }
-        }
-
-        Transform(removedItem.Value).Coordinates = Transform(target).Coordinates;
-
-        if (!silent && Resolve(removedItem.Value, ref clothing, false) && clothing.UnequipSound != null && _gameTiming.IsFirstTimePredicted)
-        {
-            Filter filter;
-
-            if (_netMan.IsClient)
-                filter = Filter.Local();
-            else
-            {
-                filter = Filter.Pvs(target);
-
-                // don't play double audio for predicted interactions
-                if (predicted)
-                    filter.RemoveWhereAttachedEntity(entity => entity == actor);
-            }
-
-            SoundSystem.Play(clothing.UnequipSound.GetSound(), filter, target, clothing.UnequipSound.Params.WithVolume(-2f));
+            _audio.PlayPredicted(clothing.UnequipSound, target, actor);
         }
 
-        inventory.Dirty();
+        Dirty(target, inventory);
 
         _movementSpeed.RefreshMovementSpeedModifiers(target);
 

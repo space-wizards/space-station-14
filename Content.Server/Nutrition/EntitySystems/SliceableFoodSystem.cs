@@ -1,24 +1,24 @@
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Nutrition;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    internal sealed class SliceableFoodSystem : EntitySystem
+    public sealed class SliceableFoodSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -73,12 +73,11 @@ namespace Content.Server.Nutrition.EntitySystems
             else
             {
                 var xform = Transform(sliceUid);
-                _containerSystem.AttachParentToContainerOrGrid(xform);
+                _containerSystem.AttachParentToContainerOrGrid((sliceUid, xform));
                 xform.LocalRotation = 0;
             }
 
-            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid),
-                transform.Coordinates, AudioParams.Default.WithVolume(-2));
+            _audio.PlayPvs(component.Sound, transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
             // Decrease size of item based on count - Could implement in the future
             // Bug with this currently is the size in a container is not updated
@@ -112,7 +111,7 @@ namespace Content.Server.Nutrition.EntitySystems
             else
             {
                 var xform = Transform(sliceUid);
-                _containerSystem.AttachParentToContainerOrGrid(xform);
+                _containerSystem.AttachParentToContainerOrGrid((sliceUid, xform));
                 xform.LocalRotation = 0;
             }
 

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
@@ -13,12 +13,11 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
-using ShuttleSystem = Content.Server.Shuttles.Systems.ShuttleSystem;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -62,7 +61,9 @@ namespace Content.IntegrationTests.Tests
             "Core",
             "Marathon",
             "Kettle",
-            "MeteorArena"
+            "Gemini",
+            "MeteorArena",
+            "Atlas"
         };
 
         /// <summary>
@@ -184,7 +185,7 @@ namespace Content.IntegrationTests.Tests
                 EntityUid? targetGrid = null;
                 var memberQuery = entManager.GetEntityQuery<StationMemberComponent>();
 
-                var grids = mapManager.GetAllMapGrids(mapId).ToList();
+                var grids = mapManager.GetAllGrids(mapId).ToList();
                 var gridUids = grids.Select(o => o.Owner).ToList();
                 targetGrid = gridUids.First();
 
@@ -194,7 +195,7 @@ namespace Content.IntegrationTests.Tests
                     if (!memberQuery.HasComponent(gridEnt))
                         continue;
 
-                    var area = grid.LocalAABB.Width * grid.LocalAABB.Height;
+                    var area = grid.Comp.LocalAABB.Width * grid.Comp.LocalAABB.Height;
 
                     if (area > largest)
                     {
