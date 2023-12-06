@@ -29,7 +29,11 @@ public partial class SharedBodySystem
         // Organ inserted into body part.
         if (TryComp(parentUid, out BodyPartComponent? partComp))
         {
-            component.Body = partComp.Body;
+            RaiseLocalEvent(uid, new AddedToPartEvent(parentUid));
+
+            if (component.Body != null)
+                RaiseLocalEvent(uid, new AddedToPartInBodyEvent(component.Body.Value, parentUid));
+
             Dirty(uid, component);
         }
     }
@@ -40,33 +44,13 @@ public partial class SharedBodySystem
         if (TerminatingOrDeleted(uid))
             return;
 
-        if (component.Body != null)
-        {
-            component.Body = null;
-            Dirty(uid, component);
-        }
-    }
+        if (HasComp<BodyPartComponent>(args.Container.Owner))
+            RaiseLocalEvent(uid, new RemovedFromPartEvent(args.Container.Owner));
 
-    private void AddOrgan(EntityUid uid, EntityUid bodyUid, EntityUid parentPartUid, OrganComponent component)
-    {
-        component.Body = bodyUid;
-        RaiseLocalEvent(uid, new AddedToPartEvent(parentPartUid));
+        if (component.Body == null)
+            return;
 
-        if (component.Body != null)
-            RaiseLocalEvent(uid, new AddedToPartInBodyEvent(component.Body.Value, parentPartUid));
-
-        Dirty(uid, component);
-    }
-
-    private void RemoveOrgan(EntityUid uid, EntityUid parentPartUid, OrganComponent component)
-    {
-        RaiseLocalEvent(uid, new RemovedFromPartEvent(parentPartUid));
-
-        if (component.Body != null)
-        {
-            RaiseLocalEvent(uid, new RemovedFromPartInBodyEvent(component.Body.Value, parentPartUid));
-        }
-
+        RaiseLocalEvent(uid, new RemovedFromPartInBodyEvent(component.Body.Value, args.Container.Owner));
         component.Body = null;
         Dirty(uid, component);
     }
