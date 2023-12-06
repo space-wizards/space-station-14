@@ -460,6 +460,10 @@ public abstract class SharedDoorSystem : EntitySystem
             //If the colliding entity is a slippable item ignore it by the airlock
             if (otherPhysics.CollisionLayer == (int)CollisionGroup.SlipLayer && otherPhysics.CollisionMask == (int)CollisionGroup.ItemMask)
                 continue;
+            
+            //For when doors need to close over conveyor belts
+            if (otherPhysics.CollisionLayer == (int) CollisionGroup.ConveyorMask)
+                continue;
 
             if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
                 continue;
