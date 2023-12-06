@@ -3,7 +3,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Shared.Damage;
+using Robust.Shared.Audio.Systems;
 using Content.Shared.Abilities.Firestarter;
 
 /// <summary>
