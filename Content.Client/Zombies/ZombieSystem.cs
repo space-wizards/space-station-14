@@ -41,10 +41,7 @@ public sealed class ZombieSystem : EntitySystem
 
     private void OnCanDisplayStatusIcons(EntityUid uid, ZombieComponent component, ref CanDisplayStatusIconsEvent args)
     {
-        if (HasComp<ZombieComponent>(args.User))
-            return;
-
-        if (HasComp<ShowZombieIconsComponent>(args.User))
+        if (HasComp<ZombieComponent>(args.User) || HasComp<ShowZombieIconsComponent>(args.User))
             return;
 
         if (_zombieIconGhostVisibility && HasComp<GhostComponent>(args.User))
