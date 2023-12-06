@@ -2,20 +2,11 @@ using Content.Shared.Movement.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Content.Shared.Movement.ContactsSystem;
 
 namespace Content.Shared.Movement.Systems;
 
 public sealed class FrictionContactsSystem : ContactsSystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
-
-    // Comment copied from "original" SlowContactsSystem.cs
-    // TODO full-game-save 
-    // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
-    private HashSet<EntityUid> _toUpdate = new();
-
     public override void Initialize()
     {
         Initialize_Contacts(FrictionContactsComponent);
@@ -33,19 +24,12 @@ public sealed class FrictionContactsSystem : ContactsSystem
 
     private void OnShutdown(EntityUid uid, FrictionContactsComponent component, ComponentShutdown args)
     {
-        OnShutdown_Contacts(uid, component, args)
+        OnShutdown_Contacts(uid, component, args);
     }
 
-    public override void Update(float frameTime)
+    public override void Update(float frameTime, FrictionContactsComponent component)
     {
-        base.Update(frameTime);
-
-        foreach (var uid in _toUpdate)
-        {
-            ApplyFrictionChange(uid);
-        }
-
-        _toUpdate.Clear();
+        Update_Contacts(frameTime, component);
     }
 
     private void ApplyFrictionChange(EntityUid uid)

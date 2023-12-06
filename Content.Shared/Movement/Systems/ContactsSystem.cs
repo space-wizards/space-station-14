@@ -2,13 +2,20 @@ using Content.Shared.Movement.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using System;
 
 namespace Content.Shared.Movement.Systems
 {
     public abstract class ContactsSystem : EntitySystem
     {
-        public override void Initialize_Contacts(Type ContactsComponentType)
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
+
+        // Comment copied from "original" SlowContactsSystem.cs
+        // TODO full-game-save
+        // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
+        private HashSet<EntityUid> _toUpdate = new();
+        private HashSet<EntityUid> _toRemove = new();
+        public abstract void Initialize_Contacts(Type ContactsComponentType)
         {
             base.Initialize();
             SubscribeLocalEvent<ContactsComponentType, StartCollideEvent>(OnEntityEnter);
@@ -19,7 +26,7 @@ namespace Content.Shared.Movement.Systems
             UpdatesAfter.Add(typeof(SharedPhysicsSystem));
         }
 
-        private void OnEntityEnter_Contacts(EntityUid uid, Component component, ref StartCollideEvent args)
+        private abstract void OnEntityEnter_Contacts(EntityUid uid, Component component, ref StartCollideEvent args)
         {
             var otherUid = args.OtherEntity;
 
@@ -32,7 +39,7 @@ namespace Content.Shared.Movement.Systems
             _toUpdate.Add(otherUid);
         }
 
-        private void OnEntityExit_Contacts(EntityUid uid, Component component, ref EndCollideEvent args)
+        private abstract void OnEntityExit_Contacts(EntityUid uid, Component component, ref EndCollideEvent args)
         {
             var otherUid = args.OtherEntity;
 
@@ -45,7 +52,7 @@ namespace Content.Shared.Movement.Systems
             _toUpdate.Add(otherUid);
         }
 
-        private void OnShutdown_Contacts(EntityUid uid, Component component, ComponentShutdown args)
+        private abstract void OnShutdown_Contacts(EntityUid uid, Component component, ComponentShutdown args)
         {
             if (!TryComp(uid, out PhysicsComponent? phys))
                 return;
@@ -54,11 +61,30 @@ namespace Content.Shared.Movement.Systems
             _toUpdate.UnionWith(_physics.GetContactingEntities(uid, phys));
         }
 
-        public override void Update_Contacts(float frameTime)
+        public abstract void Update_Contacts(float frameTime, Component component)
         {
             base.Update(frameTime);
 
-            
+            if (typeof(component) == FrictionContactsComponent)
+            {
+                foreach (var uid in _toUpdate)
+                {
+                    ApplyFrictionChange(uid);
+                }
+            }
+
+            if (typeof(component) == SlowContactsComponent)
+            {
+                foreach (var ent in _toUpdate)
+                {
+                    _speedModifierSystem.RefreshMovementSpeedModifiers(ent);
+                }
+
+                foreach (var ent in _toRemove)
+                {
+                    RemComp<SlowedByContactComponent>(ent);
+                }
+            }
 
             _toUpdate.Clear();
         }
