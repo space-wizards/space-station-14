@@ -1,8 +1,19 @@
 - type: entity
+  name: ModSuit Storage Base
+  abstract: true
+  description: ModSuit Storage
+  id: ModSuitStorageBase
+  parent: SuitStorageBase
+  suffix: Chief Engineer
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/suit_storage.rsi
+
+- type: entity
   name: ModSuit Storage CE
   description: ModSuit Storage
   id: ModSuitStorageCE
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: Chief Engineer
   components:
   - type: StorageFill
@@ -18,7 +29,7 @@
   name: ModSuit Storage Captain
   description: ModSuit Storage
   id: ModSuitStorageCapSpace
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: Cap Space
   components:
   - type: StorageFill
@@ -32,7 +43,7 @@
   name: ModSuit storage Civillian
   description: ModSuit storage
   id: ModSuitStorageCivillian
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: Civ suit
   components:
   - type: StorageFill
@@ -46,7 +57,7 @@
   name: ModSuit Storage CMO
   description: ModSuit Storage
   id: ModSuitStorageCMO
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: СMO
   components:
   - type: StorageFill
@@ -60,7 +71,7 @@
   name: ModSuit Storage RND
   description: ModSuit Storage
   id: ModSuitStorageRND
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: RND
   components:
   - type: StorageFill
@@ -74,7 +85,7 @@
   name: ModSuit Storage Medical
   description: ModSuit Storage 
   id: ModSuitStorageMedical
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: Medical
   components:
   - type: StorageFill
@@ -88,7 +99,7 @@
   name: ModSuit Storage Security
   description: ModSuit Storage 
   id: ModSuitStorageSecurity
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: Security
   components:
   - type: StorageFill
@@ -102,7 +113,7 @@
   name: ModSuit Storage Salvage
   description: ModSuit Storage
   id: ModSuitStorageSalvage
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: Salvage
   components:
   - type: StorageFill
@@ -117,7 +128,7 @@
   name: ModSuit Storage Salvage
   description: ModSuit Storage
   id: ModSuitStorageMiner
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: Miner
   components:
   - type: StorageFill
@@ -132,7 +143,7 @@
   name: ModSuit Storage Engineer
   description: ModSuit Storage
   id: ModSuitStorageEngineer
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: Engineer
   components:
   - type: StorageFill
@@ -147,7 +158,7 @@
   name: ModSuit Storage Atmos
   description: ModSuit Storage
   id: ModSuitStorageAtmos
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: Atmos
   components:
   - type: StorageFill
@@ -162,7 +173,7 @@
   name: ModSuit Storage HOS
   description: ModSuit Storage
   id: ModSuitStorageHOS
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: HOS
   components:
   - type: StorageFill
@@ -177,7 +188,7 @@
   name: ModSuit Storage Centcom
   description: ModSuit Storage
   id: ModSuitStorageCentcom
-  parent: SuitStorageBase
+  parent: ModSuitStorageBase
   suffix: HOS
   components:
   - type: StorageFill
@@ -187,3 +198,37 @@
         - id: ClothingControlModsuitCCSealed
         - id: ClothingMaskGasCentcom
         - id: JetpackSecurityFilled
+
+- type: entity
+  name: ModSuit Storage Centcom
+  description: ModSuit Storage
+  id: ModSuitStorageSyndicate
+  parent: ModSuitStorageBase
+  suffix: HOS
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitOperativeSealedFractionBoom
+        - id: ClothingMaskGasSyndicate
+        - id: JetpackBlackFilled
+  - type: Sprite
+    sprite: Imperial/Modsuits/suit_storage_syndie.rsi
+
+- type: entity
+  name: ModSuit Storage Centcom
+  description: ModSuit Storage
+  id: ModSuitStorageSyndicateCMD
+  parent: ModSuitStorageBase
+  suffix: HOS
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitOperativeCMDSealedFractionBoom
+        - id: ClothingMaskGasSyndicate
+        - id: JetpackBlackFilled
+  - type: Sprite
+    sprite: Imperial/Modsuits/suit_storage_syndie.rsi

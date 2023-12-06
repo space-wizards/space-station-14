@@ -27,6 +27,7 @@
   #     4: 20
   #     5: 0
   #     6: 0
+  # СВЕРХУ ЭТО РАЗКОММЕНТИТь!!!
 
 - type: entity #мосьюты
   parent: ClothingOuterChestplateModsuitSealedBase
