@@ -7,9 +7,9 @@ namespace Content.Shared.Movement.Systems;
 
 public sealed class FrictionContactsSystem : ContactsSystem
 {
-    public override void Initialize()
+    public void Initialize()
     {
-        Initialize_Contacts(FrictionContactsComponent);
+        Initialize_Contacts(typeof(FrictionContactsComponent));
     }
 
     private void OnEntityEnter(EntityUid uid, FrictionContactsComponent component, ref StartCollideEvent args)
@@ -27,7 +27,7 @@ public sealed class FrictionContactsSystem : ContactsSystem
         OnShutdown_Contacts(uid, component, args);
     }
 
-    public override void Update(float frameTime, FrictionContactsComponent component)
+    public void Update(float frameTime, FrictionContactsComponent component)
     {
         Update_Contacts(frameTime, component);
     }

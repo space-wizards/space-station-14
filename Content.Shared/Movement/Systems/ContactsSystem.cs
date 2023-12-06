@@ -5,45 +5,47 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Movement.Systems
 {
-    public abstract class ContactsSystem : EntitySystem
+    public class ContactsSystem : EntitySystem
     {
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
+        [Dependency] protected readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] protected readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
 
         // Comment copied from "original" SlowContactsSystem.cs
         // TODO full-game-save
         // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
-        private HashSet<EntityUid> _toUpdate = new();
-        private HashSet<EntityUid> _toRemove = new();
-        public abstract void Initialize_Contacts(Type ContactsComponentType)
+        protected HashSet<EntityUid> _toUpdate = new();
+        protected HashSet<EntityUid> _toRemove = new();
+        public void Initialize_Contacts(Type ContactsComponentType)
         {
             base.Initialize();
-            SubscribeLocalEvent<ContactsComponentType, StartCollideEvent>(OnEntityEnter);
-            SubscribeLocalEvent<ContactsComponentType, EndCollideEvent>(OnEntityExit);
-            SubscribeLocalEvent<ContactsComponentType, ComponentShutdown>(OnShutdown);
-            if (ContactsComponentType == SlowContactsComponent)
+            SubscribeLocalEvent<ContactsComponentType, StartCollideEvent>(OnEntityEnter_Contacts);
+            SubscribeLocalEvent<ContactsComponentType, EndCollideEvent>(OnEntityExit_Contacts);
+            SubscribeLocalEvent<ContactsComponentType, ComponentShutdown>(OnShutdown_Contacts);
+
+            if (typeof(ContactsComponentType) == typeof(SlowContactsComponent))
                 SubscribeLocalEvent<SlowedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
+
             UpdatesAfter.Add(typeof(SharedPhysicsSystem));
         }
 
-        private abstract void OnEntityEnter_Contacts(EntityUid uid, Component component, ref StartCollideEvent args)
+        protected void OnEntityEnter_Contacts(EntityUid uid, Component component, ref StartCollideEvent args)
         {
             var otherUid = args.OtherEntity;
 
             if (!HasComp(otherUid, typeof(MovementSpeedModifierComponent)))
                 return;
 
-            if (typeof(component) == SlowContactsComponent)
+            if (typeof(SlowContactsComponent) == component.GetType())
                 EnsureComp<SlowedByContactComponent>(otherUid);
 
             _toUpdate.Add(otherUid);
         }
 
-        private abstract void OnEntityExit_Contacts(EntityUid uid, Component component, ref EndCollideEvent args)
+        protected void OnEntityExit_Contacts(EntityUid uid, Component component, ref EndCollideEvent args)
         {
             var otherUid = args.OtherEntity;
 
-            if (typeof(component) == FrictionContactsComponent)
+            if (typeof(FrictionContactsComponent) == component.GetType())
             {
                 if (!HasComp(otherUid, typeof(MovementSpeedModifierComponent)))
                     return;
@@ -52,7 +54,7 @@ namespace Content.Shared.Movement.Systems
             _toUpdate.Add(otherUid);
         }
 
-        private abstract void OnShutdown_Contacts(EntityUid uid, Component component, ComponentShutdown args)
+        protected void OnShutdown_Contacts(EntityUid uid, Component component, ComponentShutdown args)
         {
             if (!TryComp(uid, out PhysicsComponent? phys))
                 return;
@@ -61,11 +63,11 @@ namespace Content.Shared.Movement.Systems
             _toUpdate.UnionWith(_physics.GetContactingEntities(uid, phys));
         }
 
-        public abstract void Update_Contacts(float frameTime, Component component)
+        protected void Update_Contacts(float frameTime, Component component)
         {
             base.Update(frameTime);
 
-            if (typeof(component) == FrictionContactsComponent)
+            if (typeof(FrictionContactsComponent) == component.GetType())
             {
                 foreach (var uid in _toUpdate)
                 {
@@ -73,7 +75,7 @@ namespace Content.Shared.Movement.Systems
                 }
             }
 
-            if (typeof(component) == SlowContactsComponent)
+            if (typeof(SlowContactsComponent) == component.GetType())
             {
                 foreach (var ent in _toUpdate)
                 {

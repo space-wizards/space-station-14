@@ -9,10 +9,10 @@ public sealed class SlowContactsSystem : ContactsSystem
 {
     public override void Initialize()
     {
-        Initialize_Contacts(SlowContactsComponent);
+        Initialize_Contacts(typeof(SlowContactsComponent));
     }
 
-    public override void Update(float frameTime, SlowContactsComponent component)
+    public void Update(float frameTime, SlowContactsComponent component)
     {
         Update_Contacts(frameTime, component);
     }
