@@ -1,10 +1,4 @@
 Entries:
-- author: potato1234x
-  changes:
-  - {message: Added back the old glass tiles while keeping the new ones as a fancier
-      alternative., type: Add}
-  id: 4774
-  time: '2023-09-06T21:41:53.0000000+00:00'
 - author: Endecc
   changes:
   - {message: Secure crates are now craftable with 5 steel and 2 LV cable, type: Add}
@@ -2900,3 +2894,8 @@ Entries:
   - {message: Reverted duffel bags to their original storage capacity., type: Fix}
   id: 5273
   time: '2023-12-06T03:11:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Predict helmet toggling., type: Fix}
+  id: 5274
+  time: '2023-12-06T06:59:31.0000000+00:00'
