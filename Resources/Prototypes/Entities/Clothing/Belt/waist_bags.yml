@@ -9,8 +9,8 @@
   - type: Clothing
     sprite: Clothing/Belt/waistbag_leather.rsi
   - type: Storage
-    maxSlots: 4
-    maxItemSize: Small
+    grid:
+    - 0,0,3,1
 
 #Colorization on worn items doesn't work. If this ever gets fixed, you can duplicate this entry and change the color on the sprite to add color variants.
 #- type: entity
