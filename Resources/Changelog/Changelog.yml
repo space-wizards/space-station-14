@@ -1,17 +1,4 @@
 Entries:
-- author: Velcroboy
-  changes:
-  - {message: Chef Velcroboy has been in the kitchen messin around with the botanicals.
-      New recipes have been developed for some extra "special" brownies. Careful with
-      these..., type: Add}
-  id: 4777
-  time: '2023-09-07T01:21:14.0000000+00:00'
-- author: Varen
-  changes:
-  - {message: 'FTL transit on damaged shuttles is not lethal anymore, but passengers
-      should still hold on tight and remain inside the vehicle.', type: Tweak}
-  id: 4778
-  time: '2023-09-07T02:13:32.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: Hyposprays can inject their solutions back into beakers/jugs/whatever
@@ -2901,3 +2888,15 @@ Entries:
     type: Fix}
   id: 5276
   time: '2023-12-06T21:56:03.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Combat boots and friends use a slot for sidearms instead of a storage
+      window., type: Tweak}
+  id: 5277
+  time: '2023-12-06T21:58:25.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: Speech bubbles for the living now again have names when fancy speech
+      bubbles are enabled, type: Fix}
+  id: 5278
+  time: '2023-12-06T21:58:53.0000000+00:00'
