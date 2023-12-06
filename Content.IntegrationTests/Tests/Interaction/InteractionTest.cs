@@ -140,7 +140,7 @@ public abstract partial class InteractionTest
     [SetUp]
     public virtual async Task Setup()
     {
-        Pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        Pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true});
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();

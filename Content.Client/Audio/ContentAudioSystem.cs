@@ -1,17 +1,19 @@
 using Content.Shared.Audio;
 using Robust.Client.GameObjects;
+using Robust.Shared.Audio;
+using AudioComponent = Robust.Shared.Audio.Components.AudioComponent;
 
 namespace Content.Client.Audio;
 
 public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 {
     // Need how much volume to change per tick and just remove it when it drops below "0"
-    private readonly Dictionary<AudioSystem.PlayingStream, float> _fadingOut = new();
+    private readonly Dictionary<EntityUid, float> _fadingOut = new();
 
     // Need volume change per tick + target volume.
-    private readonly Dictionary<AudioSystem.PlayingStream, (float VolumeChange, float TargetVolume)> _fadingIn = new();
+    private readonly Dictionary<EntityUid, (float VolumeChange, float TargetVolume)> _fadingIn = new();
 
-    private readonly List<AudioSystem.PlayingStream> _fadeToRemove = new();
+    private readonly List<EntityUid> _fadeToRemove = new();
 
     private const float MinVolume = -32f;
     private const float DefaultDuration = 2f;
@@ -42,28 +44,28 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 
     #region Fades
 
-    public void FadeOut(AudioSystem.PlayingStream? stream, float duration = DefaultDuration)
+    public void FadeOut(EntityUid? stream, AudioComponent? component = null, float duration = DefaultDuration)
     {
-        if (stream == null || duration <= 0f)
+        if (stream == null || duration <= 0f || !Resolve(stream.Value, ref component))
             return;
 
         // Just in case
         // TODO: Maybe handle the removals by making it seamless?
-        _fadingIn.Remove(stream);
-        var diff = stream.Volume - MinVolume;
-        _fadingOut.Add(stream, diff / duration);
+        _fadingIn.Remove(stream.Value);
+        var diff = component.Volume - MinVolume;
+        _fadingOut.Add(stream.Value, diff / duration);
     }
 
-    public void FadeIn(AudioSystem.PlayingStream? stream, float duration = DefaultDuration)
+    public void FadeIn(EntityUid? stream, AudioComponent? component = null, float duration = DefaultDuration)
     {
-        if (stream == null || duration <= 0f || stream.Volume < MinVolume)
+        if (stream == null || duration <= 0f || !Resolve(stream.Value, ref component) || component.Volume < MinVolume)
             return;
 
-        _fadingOut.Remove(stream);
-        var curVolume = stream.Volume;
+        _fadingOut.Remove(stream.Value);
+        var curVolume = component.Volume;
         var change = (curVolume - MinVolume) / duration;
-        _fadingIn.Add(stream, (change, stream.Volume));
-        stream.Volume = MinVolume;
+        _fadingIn.Add(stream.Value, (change, component.Volume));
+        component.Volume = MinVolume;
     }
 
     private void UpdateFades(float frameTime)
@@ -72,19 +74,18 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 
         foreach (var (stream, change) in _fadingOut)
         {
-            // Cancelled elsewhere
-            if (stream.Done)
+            if (!TryComp(stream, out AudioComponent? component))
             {
                 _fadeToRemove.Add(stream);
                 continue;
             }
 
-            var volume = stream.Volume - change * frameTime;
-            stream.Volume = MathF.Max(MinVolume, volume);
+            var volume = component.Volume - change * frameTime;
+            component.Volume = MathF.Max(MinVolume, volume);
 
-            if (stream.Volume.Equals(MinVolume))
+            if (component.Volume.Equals(MinVolume))
             {
-                stream.Stop();
+                _audio.Stop(stream);
                 _fadeToRemove.Add(stream);
             }
         }
@@ -99,16 +100,16 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
         foreach (var (stream, (change, target)) in _fadingIn)
         {
             // Cancelled elsewhere
-            if (stream.Done)
+            if (!TryComp(stream, out AudioComponent? component))
             {
                 _fadeToRemove.Add(stream);
                 continue;
             }
 
-            var volume = stream.Volume + change * frameTime;
-            stream.Volume = MathF.Min(target, volume);
+            var volume = component.Volume + change * frameTime;
+            component.Volume = MathF.Min(target, volume);
 
-            if (stream.Volume.Equals(target))
+            if (component.Volume.Equals(target))
             {
                 _fadeToRemove.Add(stream);
             }

@@ -29,7 +29,8 @@
   id: ClothingOuterStorageBase
   components:
   - type: Storage
-    maxTotalWeight: 6
+    grid:
+    - 0,0,2,1
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
