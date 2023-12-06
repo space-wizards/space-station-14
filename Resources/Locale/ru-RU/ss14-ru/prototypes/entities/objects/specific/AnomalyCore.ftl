@@ -1,0 +1,36 @@
+ent-AnomalyCore = ядро аномалии
+    .desc = Ядро аномалии от неописуемого объета. Успей продать пока не остыло! Если оно вообще теплое... и можно его подобрать.
+ent-AnomalyCoreGravity = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreGravityInert = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreFlesh = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreFleshInert = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreFlesh = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreFleshInert = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreRock = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreRockInert = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreElectricity = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreElectricityInert = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCorePyroclastic = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCorePyroclasticInert = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreIce = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreIceInertInert = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreBluespaceInert = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+ent-AnomalyCoreBluespaceInertInert = { ent-AnomalyCore }
+    .desc = { ent-AnomalyCore.desc }
+
+
