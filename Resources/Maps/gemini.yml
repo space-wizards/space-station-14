@@ -123221,7 +123221,7 @@ entities:
 
         [color=#1b487e]█               █      ▀█   ██▄   █[/color] [color=#50be00]            [head=3]Relocation of Science[/head][/color]
 
-        [color=#1b487e]▀█▄▄▄▄▄▄▄▄▄▄▄▄▄▄█[/color] 
+        [color=#1b487e]▀█▄▄▄▄▄▄▄▄▄▄▄▄▄▄█[/color]
 
 
         [bold]From:[/bold] Central Command, NanoTrasen Corporation
@@ -139554,7 +139554,7 @@ entities:
         20499:
         - Pressed: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 20513
     components:
     - rot: 1.5707963267948966 rad
@@ -139787,7 +139787,7 @@ entities:
         20423:
         - Pressed: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 20528
     components:
     - rot: 3.141592653589793 rad
