@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
@@ -12,10 +13,12 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -352,13 +355,14 @@ public sealed partial class ClimbSystem : VirtualController
              return;
          }
 
-         foreach (var fixture in args.OurFixture.Contacts.Keys)
+         foreach (var otherFixture in args.OurFixture.Contacts.Keys)
          {
-             if (fixture == args.OtherFixture)
+             // If it's the other fixture then ignore em
+             if (otherFixture == args.OtherFixture)
                  continue;
 
              // If still colliding with a climbable, do not stop climbing
-             if (HasComp<ClimbableComponent>(args.OtherEntity))
+             if (HasComp<ClimbableComponent>(otherFixture.Owner))
                  return;
          }
 

@@ -10,9 +10,10 @@ namespace Content.Server.Administration.UI
     public sealed class SetOutfitEui : BaseEui
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
-        private readonly NetEntity _target;
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        private readonly EntityUid _target;
 
-        public SetOutfitEui(NetEntity entity)
+        public SetOutfitEui(EntityUid entity)
         {
             _target = entity;
             IoCManager.InjectDependencies(this);
@@ -30,7 +31,7 @@ namespace Content.Server.Administration.UI
         {
             return new SetOutfitEuiState
             {
-                TargetNetEntity = _target,
+                TargetNetEntity = _entManager.GetNetEntity(_target)
             };
         }
 

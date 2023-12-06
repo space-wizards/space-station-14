@@ -165,7 +165,8 @@
     node: bot
   - type: Storage
     maxItemSize: Huge
-    maxTotalWeight: 40
+    grid:
+    - 0,0,9,3
   - type: Access
     groups:
     - Cargo
