@@ -28,5 +28,6 @@
         - PlushieSurgeon
         - PlushieBartender
         - PlushieSO
+        - PlushieBarmem
       chance: 0.65
       offset: 0.10
