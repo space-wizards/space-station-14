@@ -185,7 +185,8 @@ namespace Content.Server.Database
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId,
-            ConnectionDenyReason? denied);
+            ConnectionDenyReason? denied,
+            int serverId);
 
         Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans);
 
@@ -514,10 +515,11 @@ namespace Content.Server.Database
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId,
-            ConnectionDenyReason? denied)
+            ConnectionDenyReason? denied,
+            int serverId)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.AddConnectionLogAsync(userId, userName, address, hwId, denied));
+            return RunDbCommand(() => _db.AddConnectionLogAsync(userId, userName, address, hwId, denied, serverId));
         }
 
         public Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans)
