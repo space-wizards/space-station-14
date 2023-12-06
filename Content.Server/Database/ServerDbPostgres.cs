@@ -463,7 +463,8 @@ namespace Content.Server.Database
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId,
-            ConnectionDenyReason? denied)
+            ConnectionDenyReason? denied,
+            int serverId)
         {
             await using var db = await GetDbImpl();
 
@@ -475,6 +476,7 @@ namespace Content.Server.Database
                 UserName = userName,
                 HWId = hwId.ToArray(),
                 Denied = denied,
+                ServerId = serverId
             };
 
             db.PgDbContext.ConnectionLog.Add(connectionLog);
