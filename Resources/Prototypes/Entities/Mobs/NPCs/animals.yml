@@ -1044,7 +1044,7 @@
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-primate
   - type: Inventory
-    templateId: monkey
+    templateId: monkeyinventory
     speciesId: monkey
   - type: InventorySlots
   - type: Cuffable
