@@ -11,10 +11,10 @@ public sealed class SlowContactsSystem : ContactsSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SlowContactsComponent, StartCollideEvent>(OnEntityEnter_Contacts);
-        SubscribeLocalEvent<SlowContactsComponent, EndCollideEvent>(OnEntityExit_Contacts);
+        SubscribeLocalEvent<SlowContactsComponent, StartCollideEvent>(OnEntityEnter);
+        SubscribeLocalEvent<SlowContactsComponent, EndCollideEvent>(OnEntityExit);
         SubscribeLocalEvent<SlowedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
-        SubscribeLocalEvent<SlowContactsComponent, ComponentShutdown>(OnShutdown_Contacts);
+        SubscribeLocalEvent<SlowContactsComponent, ComponentShutdown>(OnShutdown);
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
     }
 

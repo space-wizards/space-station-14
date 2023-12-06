@@ -11,9 +11,9 @@ public sealed class FrictionContactsSystem : ContactsSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent <FrictionContactComponent, StartCollideEvent>(OnEntityEnter_Contacts);
-        SubscribeLocalEvent <FrictionContactComponent, EndCollideEvent>(OnEntityExit_Contacts);
-        SubscribeLocalEvent <FrictionContactComponent, ComponentShutdown>(OnShutdown_Contacts);
+        SubscribeLocalEvent<FrictionContactsComponent, StartCollideEvent>(OnEntityEnter);
+        SubscribeLocalEvent<FrictionContactsComponent, EndCollideEvent>(OnEntityExit);
+        SubscribeLocalEvent<FrictionContactsComponent, ComponentShutdown>(OnShutdown);
 
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
     }

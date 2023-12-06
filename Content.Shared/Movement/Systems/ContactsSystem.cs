@@ -64,7 +64,9 @@ namespace Content.Shared.Movement.Systems
             {
                 foreach (var uid in _toUpdate)
                 {
-                    FrictionContactsSystem.ApplyFrictionChange(uid);
+
+                    FrictionContactsSystem frictionContactsSystem = new FrictionContactsSystem();
+                    frictionContactsSystem.ApplyFrictionChange(uid);
                 }
             }
 
