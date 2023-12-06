@@ -14,8 +14,9 @@
     slots:
     - back
   - type: Storage
+    grid:
+    - 0,0,6,3
     maxItemSize: Huge
-    maxTotalWeight: 28
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -197,7 +198,8 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
-    maxTotalWeight: 44
+    grid:
+    - 0,0,10,3
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -264,7 +266,8 @@
     size: Ginormous
   - type: Storage
     maxItemSize: Huge
-    maxTotalWeight: 200 #5 duffels worth of gear
+    grid:
+    - 0,0,19,9
 
 - type: entity
   parent: ClothingBackpackClown
@@ -278,3 +281,62 @@
   - type: Unremoveable
     deleteOnDrop: false
 
+# Debug
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackDebug
+  name: wackpack
+  description: What the fuck is this?
+  suffix: Debug
+  components:
+  - type: Storage
+    grid:
+    - 0,0,3,3
+    - 5,0,7,2
+    - 0,5,7,5
+    - 6,4,7,5
+    - 9,2,10,3
+    - 9,5,9,5
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackDebug2
+  name: big wackpack
+  description: What the fuck is this?
+  suffix: Debug
+  components:
+  - type: Storage
+    grid:
+    - 0,0,39,24
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackDebug3
+  name: gay wackpack
+  description: What the fuck is this?
+  suffix: Debug
+  components:
+  - type: Storage
+    grid:
+    - 0,0,0,3
+    - 0,0,2,0
+    - 0,3,2,3
+    - 2,1,2,1
+    - 4,0,4,2
+    - 6,0,6,2
+    - 5,1,5,1
+    - 5,3,5,3
+    - 9,0,9,1
+    - 8,2,8,3
+    - 10,2,10,3
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackDebug4
+  name: offset wackpack
+  description: What the fuck is this?
+  suffix: Debug
+  components:
+  - type: Storage
+    grid:
+    - 5,5,11,8

@@ -43,7 +43,7 @@ namespace Content.Shared.Throwing
             component.ThrownTime ??= _gameTiming.CurTime;
         }
 
-        private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
+        private void ThrowItem(EntityUid uid, ThrownItemComponent component, ref ThrownEvent @event)
         {
             if (!EntityManager.TryGetComponent(uid, out FixturesComponent? fixturesComponent) ||
                 fixturesComponent.Fixtures.Count != 1 ||
@@ -86,6 +86,7 @@ namespace Content.Shared.Throwing
 
         private void OnSleep(EntityUid uid, ThrownItemComponent thrownItem, ref PhysicsSleepEvent @event)
         {
+            @event.Cancelled = true;
             StopThrow(uid, thrownItem);
         }
 

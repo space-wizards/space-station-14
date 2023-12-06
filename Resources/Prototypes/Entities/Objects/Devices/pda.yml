@@ -961,3 +961,33 @@
     state: pda-pirate
   - type: Icon
     state: pda-pirate
+
+- type: entity
+  parent: BasePDA
+  id: SyndiAgentPDA
+  name: syndicate agent PDA
+  description: For those days when healing normal syndicates aren't enough, try healing nuclear operatives instead!
+  components:
+  - type: Pda
+    id: SyndicateIDCard
+    state: pda-syndi-agent
+  - type: PdaBorderColor
+    borderColor: "#891417"
+  - type: Icon
+    state: pda-syndi-agent
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+    cartridgeSlot:
+      priority: -1
+      name: Cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+          - Cartridge
+  - type: HealthAnalyzer 
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"

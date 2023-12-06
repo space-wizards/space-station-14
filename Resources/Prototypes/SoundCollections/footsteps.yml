@@ -173,3 +173,7 @@
   - /Audio/Effects/Footsteps/bells4.ogg
   - /Audio/Effects/Footsteps/bells5.ogg
 
+- type: soundCollection
+  id: FootstepSlip
+  files:
+  - /Audio/Effects/slip.ogg
