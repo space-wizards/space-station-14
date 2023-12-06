@@ -21,6 +21,7 @@
   - Maintenance
   - Chemistry
   - ChiefMedicalOfficer
+  - Paramedic
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
