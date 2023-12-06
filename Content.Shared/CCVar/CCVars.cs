@@ -1680,7 +1680,7 @@ namespace Content.Shared.CCVar
         /// Whether ghosts can see who is a rev or not.
         /// </summary>
         public static readonly CVarDef<bool> RevIconsVisibleToGhosts =
-            CVarDef.Create("ghost.rev_icons_visble_to_ghosts", true, CVar.SERVER);
+            CVarDef.Create("ghost.rev_icons_visible_to_ghosts", true, CVar.SERVER | CVar.REPLICATED);
 
 
         /*
