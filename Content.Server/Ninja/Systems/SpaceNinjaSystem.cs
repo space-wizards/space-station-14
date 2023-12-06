@@ -24,7 +24,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Objectives.Components;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -167,6 +169,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
             PrototypeId = "SpaceNinja"
         };
         _role.MindAddRole(mindId, role, mind);
+        _role.MindPlaySound(mindId, config.GreetingSound, mind);
 
         // choose spider charge detonation point
         var warps = new List<EntityUid>();
@@ -179,9 +182,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         if (warps.Count > 0)
             role.SpiderChargeTarget = _random.Pick(warps);
 
-        var session = mind.Session;
-        _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
-        _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
+        _chatMan.DispatchServerMessage(mind.Session, Loc.GetString("ninja-role-greeting"));
     }
 
     // TODO: PowerCellDraw, modify when cloak enabled

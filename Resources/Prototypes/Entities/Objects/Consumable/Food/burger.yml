@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_single.yml
 # Bun
 
 - type: entity
@@ -618,6 +619,8 @@
   id: FoodBurgerMcrib
   description: An elusive rib shaped burger with limited availability across the galaxy. Not as good as you remember it.
   components:
+  - type: Food
+    trash: FoodKebabSkewer
   - type: FlavorProfile
     flavors:
       - bun

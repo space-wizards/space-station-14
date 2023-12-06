@@ -121,6 +121,12 @@ public abstract partial class BaseActionComponent : Component
     [ViewVariables] public EntityUid? AttachedEntity;
 
     /// <summary>
+    ///     If true, this will cause the the action event to always be raised directed at the action performer/user instead of the action's container/provider.
+    /// </summary>
+    [DataField]
+    public bool RaiseOnUser;
+
+    /// <summary>
     ///     Whether or not to automatically add this action to the action bar when it becomes available.
     /// </summary>
     [DataField("autoPopulate")] public bool AutoPopulate = true;
@@ -159,6 +165,7 @@ public abstract class BaseActionComponentState : ComponentState
     public bool ClientExclusive;
     public int Priority;
     public NetEntity? AttachedEntity;
+    public bool RaiseOnUser;
     public bool AutoPopulate;
     public bool Temporary;
     public ItemActionIconStyle ItemIconStyle;
@@ -169,6 +176,7 @@ public abstract class BaseActionComponentState : ComponentState
         Container = entManager.GetNetEntity(component.Container);
         EntityIcon = entManager.GetNetEntity(component.EntIcon);
         AttachedEntity = entManager.GetNetEntity(component.AttachedEntity);
+        RaiseOnUser = component.RaiseOnUser;
         Icon = component.Icon;
         IconOn = component.IconOn;
         IconColor = component.IconColor;

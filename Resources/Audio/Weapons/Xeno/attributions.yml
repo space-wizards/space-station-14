@@ -1,0 +1,9 @@
+- files: ["alien_claw_flesh1.ogg", "alien_claw_flesh2.ogg", "alien_claw_flesh3.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from CM-SS13"
+  source: "https://gitlab.com/cmdevs/colonial-warfare/-/tree/dev/sound/weapons"
+
+- files: ["alien_spitacid.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/TerraGov-Marine-Corps/blob/233891d0e19a002d8307299bfe15206591172784/sound/voice/alien_spitacid.ogg"

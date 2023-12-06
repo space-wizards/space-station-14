@@ -198,6 +198,24 @@
   maxSeverity: 4
 
 - type: alert
+  id: BorgCrit
+  category: Health
+  icons:
+  - sprite: /Textures/Interface/Alerts/borg_critical.rsi
+    state: critical
+  name: alerts-crit-name
+  description: alerts-crit-desc
+
+- type: alert
+  id: BorgDead
+  category: Health
+  icons:
+  - sprite: /Textures/Interface/Alerts/borg_dead.rsi
+    state: dead
+  name: alerts-dead-name
+  description: alerts-dead-desc
+
+- type: alert
   id: BorgBattery
   category: Battery
   icons:

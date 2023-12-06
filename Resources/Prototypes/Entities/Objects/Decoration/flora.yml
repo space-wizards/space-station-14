@@ -1,5 +1,6 @@
 - type: entity
   id: BaseRock
+  name: boulder
   description: Heavy as a really heavy thing.
   abstract: true
   components:
@@ -31,7 +32,6 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
-
 
 - type: entity
   id: BaseTree
@@ -149,7 +149,6 @@
 - type: entity
   parent: BaseRock
   id: FloraRockSolid01
-  name: rock
   components:
   - type: Sprite
     state: rocksolid01
@@ -157,7 +156,6 @@
 - type: entity
   parent: BaseRock
   id: FloraRockSolid02
-  name: rock
   components:
   - type: Sprite
     state: rocksolid02
@@ -165,10 +163,59 @@
 - type: entity
   parent: BaseRock
   id: FloraRockSolid03
-  name: rock
   components:
   - type: Sprite
     state: rocksolid03
+
+- type: entity
+  name: stalagmite
+  description: Natural stone spikes.
+  parent: BaseRock
+  id: FloraStalagmite1
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite1
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraStalagmite2
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite2
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraStalagmite3
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite3
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraStalagmite4
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite4
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraStalagmite5
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite5
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraStalagmite6
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite6
 
 - type: entity
   parent: BaseTree
@@ -367,7 +414,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.8,-1.5,0.8,-0.8"
+          bounds: "-0.5,0,0.5,0.75"
         density: 4500
         layer:
         - WallLayer
@@ -376,10 +423,10 @@
       - id: PresentRandom
         orGroup: present
       - id: PresentRandomUnsafe
-        prob: 0.5
+        prob: 0.25
         orGroup: present
       - id: PresentRandomInsane
-        prob: 0.2
+        prob: 0.10
         orGroup: present
     receivedPopup: christmas-tree-got-gift
     deniedPopup: christmas-tree-no-gift
@@ -396,7 +443,8 @@
 - type: entity
   parent: FloraTree01
   id: ShadowTree01
-  name: tree
+  name: dark wood
+  description: The leaves are whispering about you.
   components:
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_shadow_trees.rsi
@@ -405,39 +453,34 @@
 - type: entity
   parent: ShadowTree01
   id: ShadowTree02
-  name: tree
   components:
   - type: Sprite
     state: tree02
-    
+
 - type: entity
   parent: ShadowTree01
   id: ShadowTree03
-  name: tree
   components:
   - type: Sprite
     state: tree03
-    
+
 - type: entity
   parent: ShadowTree01
   id: ShadowTree04
-  name: tree
   components:
   - type: Sprite
     state: tree04
-    
+
 - type: entity
   parent: ShadowTree01
   id: ShadowTree05
-  name: tree
   components:
   - type: Sprite
     state: tree05
-    
+
 - type: entity
   parent: ShadowTree01
   id: ShadowTree06
-  name: tree
   components:
   - type: Sprite
     state: tree06
