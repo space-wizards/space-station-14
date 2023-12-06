@@ -2,10 +2,11 @@ using Content.Shared.Movement.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Content.Shared.Movement.ContactsSystem;
 
 namespace Content.Shared.Movement.Systems;
 
-public sealed class SlowContactsSystem : EntitySystem
+public sealed class SlowContactsSystem : ContactsSystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
@@ -17,13 +18,7 @@ public sealed class SlowContactsSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-        SubscribeLocalEvent<SlowContactsComponent, StartCollideEvent>(OnEntityEnter);
-        SubscribeLocalEvent<SlowContactsComponent, EndCollideEvent>(OnEntityExit);
-        SubscribeLocalEvent<SlowedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
-        SubscribeLocalEvent<SlowContactsComponent, ComponentShutdown>(OnShutdown);
-
-        UpdatesAfter.Add(typeof(SharedPhysicsSystem));
+        Initialize_Contacts(SlowContactsComponent);
     }
 
     public override void Update(float frameTime)
@@ -64,11 +59,7 @@ public sealed class SlowContactsSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, SlowContactsComponent component, ComponentShutdown args)
     {
-        if (!TryComp(uid, out PhysicsComponent? phys))
-            return;
-
-        // Note that the entity may not be getting deleted here. E.g., glue puddles.
-        _toUpdate.UnionWith(_physics.GetContactingEntities(uid, phys));
+        OnShutdown_Contacts(uid, component, args)
     }
 
     private void MovementSpeedCheck(EntityUid uid, SlowedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -102,17 +93,11 @@ public sealed class SlowContactsSystem : EntitySystem
 
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, ref EndCollideEvent args)
     {
-        var otherUid = args.OtherEntity;
-        _toUpdate.Add(otherUid);
+        OnEntityExit_Contacts(uid, component, args);
     }
 
     private void OnEntityEnter(EntityUid uid, SlowContactsComponent component, ref StartCollideEvent args)
     {
-        var otherUid = args.OtherEntity;
-        if (!HasComp<MovementSpeedModifierComponent>(otherUid))
-            return;
-
-        EnsureComp<SlowedByContactComponent>(otherUid);
-        _toUpdate.Add(otherUid);
+        OnEntityEnter_Contacts(uid, component, args);
     }
 }

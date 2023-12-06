@@ -2,10 +2,11 @@ using Content.Shared.Movement.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Content.Shared.Movement.ContactsSystem;
 
 namespace Content.Shared.Movement.Systems;
 
-public sealed class FrictionContactsSystem : EntitySystem
+public sealed class FrictionContactsSystem : ContactsSystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
@@ -17,40 +18,22 @@ public sealed class FrictionContactsSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-        SubscribeLocalEvent<FrictionContactsComponent, StartCollideEvent>(OnEntityEnter);
-        SubscribeLocalEvent<FrictionContactsComponent, EndCollideEvent>(OnEntityExit);
-        SubscribeLocalEvent<FrictionContactsComponent, ComponentShutdown>(OnShutdown);
-
-        UpdatesAfter.Add(typeof(SharedPhysicsSystem));
+        Initialize_Contacts(FrictionContactsComponent);
     }
 
     private void OnEntityEnter(EntityUid uid, FrictionContactsComponent component, ref StartCollideEvent args)
     {
-        var otherUid = args.OtherEntity;
-
-        if (!HasComp(otherUid, typeof(MovementSpeedModifierComponent)))
-            return;
-
-        _toUpdate.Add(otherUid);
+        OnEntityEnter_Contacts(uid, component, args);
     }
 
     private void OnEntityExit(EntityUid uid, FrictionContactsComponent component, ref EndCollideEvent args)
     {
-        var otherUid = args.OtherEntity;
-
-        if (!HasComp(otherUid, typeof(MovementSpeedModifierComponent)))
-            return;
-
-        _toUpdate.Add(otherUid);
+        OnEntityExit_Contacts(uid, component, args);
     }
 
     private void OnShutdown(EntityUid uid, FrictionContactsComponent component, ComponentShutdown args)
     {
-        if (!TryComp(uid, out PhysicsComponent? phys))
-            return;
-
-        _toUpdate.UnionWith(_physics.GetContactingEntities(uid, phys));
+        OnShutdown_Contacts(uid, component, args)
     }
 
     public override void Update(float frameTime)
