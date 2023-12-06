@@ -1,0 +1,1 @@
+clothing-sheath-blade = Blade
