@@ -75,7 +75,7 @@
     rule: Ninja
   - type: AutoImplant
     implants:
-    - MicroBombImplant
+    - DeathAcidifierImplant
   - type: RandomMetadata
     nameSegments:
     - names_ninja_title

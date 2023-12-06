@@ -200,6 +200,27 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
     femaleMask: UniformTop
+  - type: Tag
+    tags:
+    - ClownSuit
+
+- type: entity
+  parent: ClothingUniformJumpsuitClown
+  id: ClothingUniformJumpsuitClownBanana
+  name: banana clown suit
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/clown_banana.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/clown_banana.rsi
+    femaleMask: UniformTop
+  - type: Construction
+    graph: BananaClownJumpsuit
+    node: jumpsuit
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.8
 
 - type: entity
   parent: ClothingUniformBase

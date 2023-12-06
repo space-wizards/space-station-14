@@ -10,16 +10,6 @@
 
 - type: entity
   parent: BaseSign
-  id: SignNtFlag
-  name: настенный флаг NanoTrasen
-  description: Синий флаг с логотипом NanoTrasen.
-  components:
-  - type: Sprite
-    sprite: SS220/Structures/Decorations/signs.rsi
-    state: ntflag
-
-- type: entity
-  parent: BaseSign
   id: PictureBobRoss
   name: картина "Художник за работой"
   description: На картине изображён художник, создающий счастливые случайности.

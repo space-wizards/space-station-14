@@ -22,8 +22,6 @@
   name: рюкзак офицера безопасности ОБР
   description: Вместительный рюкзак с множеством карманов, который носят офицеры безопасности отряда быстрого реагирования.
   components:
-    - type: Storage
-      maxTotalWeight: 60
     - type: StorageFill
       contents:
       - id: Crowbar
@@ -349,7 +347,7 @@
 - type: entity
   parent: ERTLeaderPDA
   name: КПК Главного Врача Специальных Операций
-  description: Имеет встроенный анализатор здоровья. 
+  description: Имеет встроенный анализатор здоровья.
   id: SpecOpsPDACMO
   suffix: Shitspawn, Ebent, СпецОпер
   components:

@@ -37,7 +37,8 @@
       - state: box
       - state: light
   - type: Storage
-    maxTotalWeight: 24
+    grid:
+    - 0,0,5,3
     whitelist:
       components:
       - LightBulb
@@ -60,7 +61,8 @@
       - state: box
       - state: lighttube
   - type: Storage
-    maxTotalWeight: 24
+    grid:
+    - 0,0,5,3
     whitelist:
       components:
       - LightBulb
@@ -85,7 +87,8 @@
       - state: box
       - state: lightmixed
   - type: Storage
-    maxTotalWeight: 24
+    grid:
+    - 0,0,5,3
     whitelist:
       components:
       - LightBulb
@@ -250,7 +253,8 @@
       - id: TrashBag
         amount: 6
   - type: Storage
-    maxTotalWeight: 24
+    grid:
+    - 0,0,5,3
     maxItemSize: Normal
     whitelist:
       tags:
@@ -391,7 +395,8 @@
       - id: HandheldGPSBasic
         amount: 6
   - type: Storage
-    maxTotalWeight: 24
+    grid:
+    - 0,0,5,3
   - type: Sprite
     layers:
       - state: box
@@ -419,7 +424,8 @@
       - state: box
       - state: candle
   - type: Storage
-    maxTotalWeight: 30
+    grid:
+    - 0,0,9,2
   - type: StorageFill
     contents:
       - id: Candle
@@ -443,7 +449,8 @@
       - state: box
       - state: candle
   - type: Storage
-    maxTotalWeight: 30
+    grid:
+    - 0,0,9,2
   - type: StorageFill
     contents:
       - id: CandleSmall
@@ -476,7 +483,8 @@
       - id: DartYellow
         amount: 3
   - type: Storage
-    maxTotalWeight: 24
+    grid:
+    - 0,0,5,3
   - type: Sprite
     layers:
       - state: box
