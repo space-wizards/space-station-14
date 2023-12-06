@@ -42,7 +42,7 @@
   components:
   - type: Storage
     grid:
-    - 0,0,1,1
+    - 0,0,0,1
     maxItemSize: Normal
   - type: ContainerContainer
     containers:
