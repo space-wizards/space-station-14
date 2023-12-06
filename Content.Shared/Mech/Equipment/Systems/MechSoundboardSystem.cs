@@ -44,11 +44,10 @@ public sealed class MechSoundboardSystem : EntitySystem
         if (msg.Sound >= comp.Sounds.Count)
             return;
 
-        if (_useDelay.IsDelayed(uid))
+        if (TryComp(uid, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 
         // honk!!!!!
-        _useDelay.ResetDelay(uid);
         _audio.PlayPvs(comp.Sounds[msg.Sound], uid);
     }
 }

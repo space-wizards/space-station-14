@@ -190,7 +190,8 @@ public sealed class WieldableSystem : EntitySystem
             _virtualItemSystem.TrySpawnVirtualItemInHand(used, user);
         }
 
-        _delay.BeginDelay(used);
+        if (TryComp(used, out UseDelayComponent? useDelay))
+            _delay.TryResetDelay((used, useDelay));
 
         _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", used)), user, user);
         _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", user),("item", used)), user, Filter.PvsExcept(user), true);

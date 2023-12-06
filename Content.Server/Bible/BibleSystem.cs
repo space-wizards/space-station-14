@@ -95,9 +95,7 @@ namespace Content.Server.Bible
             if (!args.CanReach)
                 return;
 
-            UseDelayComponent? delay = null;
-
-            if (_delay.IsDelayed(uid, delay))
+            if (!TryComp(uid, out UseDelayComponent? useDelay) || _delay.IsDelayed((uid, useDelay)))
                 return;
 
             if (args.Target == null || args.Target == args.User || !_mobStateSystem.IsAlive(args.Target.Value))
@@ -111,7 +109,7 @@ namespace Content.Server.Bible
 
                 _audio.PlayPvs(component.SizzleSoundPath, args.User);
                 _damageableSystem.TryChangeDamage(args.User, component.DamageOnUntrainedUse, true, origin: uid);
-                _delay.ResetDelay(uid, delay);
+                _delay.TryResetDelay((uid, useDelay));
 
                 return;
             }
@@ -129,7 +127,7 @@ namespace Content.Server.Bible
 
                     _audio.PlayPvs("/Audio/Effects/hit_kick.ogg", args.User);
                     _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true, origin: uid);
-                    _delay.ResetDelay(uid, delay);
+                    _delay.TryResetDelay((uid, useDelay));
                     return;
                 }
             }
@@ -152,7 +150,7 @@ namespace Content.Server.Bible
                 var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
                 _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.Large);
                 _audio.PlayPvs(component.HealSoundPath, args.User);
-                _delay.ResetDelay(uid, delay);
+                _delay.TryResetDelay((uid, useDelay));
             }
         }
 

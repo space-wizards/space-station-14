@@ -112,8 +112,8 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         _audio.PlayPredicted(comp.RevealSound, uid, user);
         // all abilities check for a usedelay on the ninja
         var useDelay = EnsureComp<UseDelayComponent>(user);
-        useDelay.Delay = comp.DisableTime;
-        UseDelay.BeginDelay(user, useDelay);
+        UseDelay.SetDelay((user, useDelay), comp.DisableTime);
+        UseDelay.TryResetDelay((user, useDelay));
     }
 
     // TODO: modify PowerCellDrain

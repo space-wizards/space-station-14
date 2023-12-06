@@ -154,10 +154,11 @@ namespace Content.Server.Atmos.EntitySystems
 
             args.Handled = true;
 
-            if (!_useDelay.BeginDelay(uid))
+            if (!TryComp(uid, out UseDelayComponent? useDelay) || !_useDelay.TryResetDelay((uid, useDelay), true))
                 return;
 
             _audio.PlayPvs(component.ExtinguishAttemptSound, uid);
+
             if (_random.Prob(component.Probability))
             {
                 AdjustFireStacks(uid, component.StackDelta, flammable);
@@ -167,6 +168,7 @@ namespace Content.Server.Atmos.EntitySystems
                 _popup.PopupEntity(Loc.GetString(component.ExtinguishFailed), uid);
             }
         }
+
         private void OnCollide(EntityUid uid, FlammableComponent flammable, ref StartCollideEvent args)
         {
             var otherUid = args.OtherEntity;

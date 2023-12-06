@@ -12,7 +12,7 @@
     - state: base
     - state: green_bit
       shader: unshaded
-  - type: ItemCooldown
+  - type: UseDelay
   - type: MeleeWeapon
     damage:
       types:

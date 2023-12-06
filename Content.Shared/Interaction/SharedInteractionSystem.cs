@@ -950,10 +950,10 @@ namespace Content.Shared.Interaction
             bool checkUseDelay = true,
             bool checkAccess = true)
         {
-            UseDelayComponent? delayComponent = null;
+            UseDelayComponent? useDelay = null;
             if (checkUseDelay
-                && TryComp(used, out delayComponent)
-                && _useDelay.IsDelayed(used, delayComponent))
+                && TryComp(used, out useDelay)
+                && _useDelay.IsDelayed((used, useDelay)))
                 return false;
 
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
@@ -977,7 +977,9 @@ namespace Content.Shared.Interaction
                 return false;
 
             DoContactInteraction(user, used, activateMsg);
-            _useDelay.ResetDelay(used, delayComponent);
+            if (useDelay != null)
+                _useDelay.TryResetDelay((used, useDelay));
+
             if (!activateMsg.WasLogged)
                 _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
@@ -998,11 +1000,10 @@ namespace Content.Shared.Interaction
             bool checkCanInteract = true,
             bool checkUseDelay = true)
         {
-            UseDelayComponent? delayComponent = null;
-
+            UseDelayComponent? useDelay = null;
             if (checkUseDelay
-                && TryComp(used, out delayComponent)
-                && _useDelay.IsDelayed(used, delayComponent))
+                && TryComp(used, out useDelay)
+                && _useDelay.IsDelayed((used, useDelay)))
                 return true; // if the item is on cooldown, we consider this handled.
 
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
@@ -1016,7 +1017,8 @@ namespace Content.Shared.Interaction
             if (useMsg.Handled)
             {
                 DoContactInteraction(user, used, useMsg);
-                _useDelay.ResetDelay(used, delayComponent);
+                if (useDelay != null)
+                    _useDelay.TryResetDelay((used, useDelay));
                 return true;
             }
 

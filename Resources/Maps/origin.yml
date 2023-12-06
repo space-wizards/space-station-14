@@ -77296,7 +77296,7 @@ entities:
     - pos: -46.5,62.5
       parent: 2
       type: Transform
-    - type: ItemCooldown
+    - type: UseDelay
 - proto: ClothingBackpackMedical
   entities:
   - uid: 12324
@@ -158201,7 +158201,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24131
     components:
     - rot: -1.5707963267948966 rad
@@ -158233,7 +158233,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24132
     components:
     - pos: 16.5,15.5
@@ -158264,7 +158264,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24133
     components:
     - rot: 3.141592653589793 rad
@@ -158276,7 +158276,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24134
     components:
     - rot: -1.5707963267948966 rad
@@ -158305,7 +158305,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24135
     components:
     - rot: 1.5707963267948966 rad
@@ -158320,7 +158320,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24136
     components:
     - rot: 3.141592653589793 rad
@@ -158372,7 +158372,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24140
     components:
     - rot: 3.141592653589793 rad
@@ -158419,7 +158419,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24143
     components:
     - pos: -52.5,-11.5
@@ -158476,7 +158476,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24146
     components:
     - pos: -49.5,24.5
@@ -158541,7 +158541,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24150
     components:
     - pos: 58.5,48.5
@@ -158764,7 +158764,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24164
     components:
     - pos: 54.5,51.5
@@ -158781,7 +158781,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24165
     components:
     - pos: 5.5,49.5
@@ -158975,7 +158975,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24174
     components:
     - rot: 3.141592653589793 rad
@@ -159019,7 +159019,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24175
     components:
     - rot: -1.5707963267948966 rad
@@ -159036,7 +159036,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24176
     components:
     - pos: -51.5,36.5
@@ -159047,7 +159047,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24177
     components:
     - rot: 1.5707963267948966 rad
@@ -159082,7 +159082,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24178
     components:
     - pos: 33.487907,17.698355
@@ -159101,7 +159101,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24179
     components:
     - rot: -1.5707963267948966 rad
@@ -159138,7 +159138,7 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24181
     components:
     - rot: -1.5707963267948966 rad
@@ -159219,7 +159219,7 @@ entities:
         - Off: Close
         - Status: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 24184
     components:
     - pos: -74.5,-43.5
@@ -169280,7 +169280,7 @@ entities:
         - Right: Reverse
         - Middle: Off
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 25838
     components:
     - pos: -41.5,17.5
@@ -169583,7 +169583,7 @@ entities:
         - Right: Reverse
         - Middle: Off
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 25846
     components:
     - pos: 47.5,39.5
@@ -169783,7 +169783,7 @@ entities:
         - Right: Forward
         - Middle: Off
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
 - proto: UnfinishedMachineFrame
   entities:
   - uid: 25851

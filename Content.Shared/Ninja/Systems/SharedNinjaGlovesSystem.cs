@@ -110,7 +110,8 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         target = args.Target;
         return _timing.IsFirstTimePredicted
             && !_combatMode.IsInCombatMode(uid)
-            && !_useDelay.ActiveDelay(uid)
+            && TryComp(uid, out UseDelayComponent? useDelay)
+            && !_useDelay.IsDelayed((uid, useDelay))
             && TryComp<HandsComponent>(uid, out var hands)
             && hands.ActiveHandEntity == null
             && Interaction.InRangeUnobstructed(uid, target);

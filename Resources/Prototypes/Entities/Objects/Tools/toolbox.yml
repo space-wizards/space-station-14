@@ -13,7 +13,7 @@
     maxTotalWeight: 14
   - type: Item
     size: Ginormous
-  - type: ItemCooldown
+  - type: UseDelay
   - type: MeleeWeapon
     damage:
       types:

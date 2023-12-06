@@ -29,7 +29,7 @@ public sealed class PriceGunSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Using == null)
             return;
 
-        if (_useDelay.IsDelayed(args.Using.Value))
+        if (!TryComp(uid, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((uid, useDelay)))
             return;
 
         var price = _pricingSystem.GetPrice(args.Target);
@@ -39,7 +39,7 @@ public sealed class PriceGunSystem : EntitySystem
             Act = () =>
             {
                 _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(args.Target, EntityManager)), ("price", $"{price:F2}")), args.User, args.User);
-                _useDelay.ResetDelay(uid);
+                _useDelay.TryResetDelay((uid, useDelay));
             },
             Text = Loc.GetString("price-gun-verb-text"),
             Message = Loc.GetString("price-gun-verb-message", ("object", Identity.Entity(args.Target, EntityManager)))
@@ -53,13 +53,13 @@ public sealed class PriceGunSystem : EntitySystem
         if (!args.CanReach || args.Target == null || args.Handled)
             return;
 
-        if (TryComp(uid, out UseDelayComponent? useDelay) && _useDelay.IsDelayed(uid, useDelay))
+        if (!TryComp(uid, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((uid, useDelay)))
             return;
 
         var price = _pricingSystem.GetPrice(args.Target.Value);
 
         _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(args.Target.Value, EntityManager)), ("price", $"{price:F2}")), args.User, args.User);
-        _useDelay.ResetDelay(uid, useDelay);
+        _useDelay.TryResetDelay((uid, useDelay));
         args.Handled = true;
     }
 }

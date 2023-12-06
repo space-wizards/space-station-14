@@ -563,7 +563,7 @@
     - type: Item
       sprite: Objects/Specific/Janitorial/plunger.rsi
       heldPrefix: plunger
-    - type: ItemCooldown
+    - type: UseDelay
     - type: GuideHelp
       guides:
       - Janitorial

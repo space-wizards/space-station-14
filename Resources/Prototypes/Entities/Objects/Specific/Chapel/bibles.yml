@@ -26,7 +26,6 @@
     mixMessage: "bible-mixing-success"
     reactionTypes:
     - Holy
-  - type: ItemCooldown
   - type: Sprite
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon

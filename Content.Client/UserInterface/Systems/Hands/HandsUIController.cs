@@ -3,10 +3,9 @@ using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
-using Content.Shared.Cooldown;
+using Content.Shared.Timing;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -395,8 +394,9 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             foreach (var hand in container.GetButtons())
             {
-                if (!_entities.TryGetComponent(hand.Entity, out ItemCooldownComponent? cooldown) ||
-                    cooldown is not { CooldownStart: { } start, CooldownEnd: { } end})
+
+                if (!_entities.TryGetComponent(hand.Entity, out UseDelayComponent? useDelay) ||
+                    useDelay is not { DelayStartTime: var start, DelayEndTime: var end })
                 {
                     hand.CooldownDisplay.Visible = false;
                     return;

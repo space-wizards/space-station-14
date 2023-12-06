@@ -8,18 +8,25 @@ namespace Content.Shared.Timing;
 /// </summary>
 [RegisterComponent]
 [NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(UseDelaySystem))]
 public sealed partial class UseDelayComponent : Component
 {
     /// <summary>
+    /// When the delay starts.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    public TimeSpan DelayStartTime;
+
+    /// <summary>
     /// When the delay ends.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("delayEnd", customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan DelayEndTime;
 
     /// <summary>
-    /// Default delay
+    /// Default delay time
     /// </summary>
-    [DataField("delay")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public TimeSpan Delay = TimeSpan.FromSeconds(1);

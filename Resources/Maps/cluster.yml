@@ -65221,7 +65221,7 @@ entities:
         3218:
         - Pressed: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 5389
     components:
     - rot: 1.5707963267948966 rad
@@ -65234,7 +65234,7 @@ entities:
         3218:
         - Pressed: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 5447
     components:
     - rot: 3.141592653589793 rad

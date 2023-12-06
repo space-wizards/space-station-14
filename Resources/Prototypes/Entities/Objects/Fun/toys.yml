@@ -19,7 +19,6 @@
   - type: EmitSoundOnLand
     sound:
       collection: ToyFall
-  - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
   - type: MeleeWeapon
@@ -686,7 +685,7 @@
     size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: foamblade
-  - type: ItemCooldown
+  - type: UseDelay
 
 # MISC
 
@@ -975,7 +974,6 @@
     sprite: Objects/Fun/whoopie.rsi
     state: icon
     quickEquip: false
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       collection: Parp

@@ -65,7 +65,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, RadiationCollectorComponent component, InteractHandEvent args)
     {
-        if (!_useDelay.TryUseDelay(uid))
+        if (TryComp(uid, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 
         ToggleCollector(uid, args.User, component);
@@ -83,7 +83,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
         foreach (var gas in component.RadiationReactiveGases)
         {
-            float reactantMol = gasTankComponent.Air.GetMoles(gas.Reactant);
+            float reactantMol = gasTankComponent.Air.GetMoles(gas.ReactantPrototype);
             float delta = args.TotalRads * reactantMol * gas.ReactantBreakdownRate;
 
             // We need to offset the huge power gains possible when using very cold gases
@@ -96,7 +96,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
             if (delta > 0)
             {
-                gasTankComponent.Air.AdjustMoles(gas.Reactant, -Math.Min(delta, reactantMol));
+                gasTankComponent.Air.AdjustMoles(gas.ReactantPrototype, -Math.Min(delta, reactantMol));
             }
 
             if (gas.Byproduct != null)

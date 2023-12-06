@@ -1,5 +1,6 @@
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
+using Robust.Shared.Audio.Systems;
 using Content.Shared.Explosion;
 using Content.Shared.Ghost;
 using Content.Shared.Hands;
@@ -22,6 +23,8 @@ public sealed partial class StorageSystem : SharedStorageSystem
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
@@ -113,14 +116,14 @@ public sealed partial class StorageSystem : SharedStorageSystem
         if (!Resolve(uid, ref storageComp) || !TryComp(entity, out ActorComponent? player))
             return;
 
-            // prevent spamming bag open / honkerton honk sound
-            silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.IsDelayed(uid, useDelay);
-            if (!silent)
-            {
-                _audio.PlayPvs(storageComp.StorageOpenSound, uid);
-                if (useDelay != null)
-                    _useDelay.ResetDelay(uid, useDelay);
-            }
+        // prevent spamming bag open / honkerton honk sound
+        silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.IsDelayed((uid, useDelay));
+        if (!silent)
+        {
+            _audio.PlayPvs(storageComp.StorageOpenSound, uid);
+            if (useDelay != null)
+                _useDelay.TryResetDelay((uid, useDelay));
+        }
 
         Log.Debug($"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
 

@@ -31,7 +31,10 @@ public sealed class NodeScannerSystem : EntitySystem
         args.Handled = true;
 
         var target = args.Target.Value;
-        _useDelay.ResetDelay(uid);
+
+        if (TryComp(uid, out UseDelayComponent? useDelay))
+            _useDelay.TryResetDelay((uid, useDelay));
+
         _popupSystem.PopupEntity(Loc.GetString("node-scan-popup",
             ("id", $"{artifact.CurrentNodeId}")), target);
     }

@@ -133102,7 +133102,7 @@ entities:
         19434:
         - Pressed: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 19438
     components:
     - name: Toxins Chamber Blast Doors

@@ -37,7 +37,7 @@
     damage:
       types:
         Blunt: 0
-  - type: ItemCooldown
+  - type: UseDelay
 
 - type: entity
   parent: DrinkBaseCup

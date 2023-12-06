@@ -13,21 +13,21 @@ public sealed partial class RadiationCollectorComponent : Component
     /// <summary>
     ///     How much joules will collector generate for each rad.
     /// </summary>
-    [DataField("chargeModifier")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float ChargeModifier = 30000f;
 
     /// <summary>
     ///     Is the machine enabled.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("enabled")]
+    [DataField]
+    [ViewVariables]
     public bool Enabled;
 
     /// <summary>
     ///     List of gases that will react to the radiation passing through the collector
     /// </summary>
-    [DataField("radiationReactiveGases")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public List<RadiationReactiveGas>? RadiationReactiveGases;
 }
@@ -41,13 +41,13 @@ public sealed partial class RadiationReactiveGas
     /// <summary>
     ///     The reactant gas
     /// </summary>
-    [DataField("reactantPrototype", required: true)]
-    public Gas Reactant;
+    [DataField(required: true)]
+    public Gas ReactantPrototype;
 
     /// <summary>
     ///     Multipier for the amount of power produced by the radiation collector when using this gas
     /// </summary>
-    [DataField("powerGenerationEfficiency")]
+    [DataField]
     public float PowerGenerationEfficiency = 1f;
 
     /// <summary>
@@ -56,7 +56,7 @@ public sealed partial class RadiationReactiveGas
     /// /// <remarks>
     ///     Set to zero if the reactant does not deplete
     /// </remarks>
-    [DataField("reactantBreakdownRate")]
+    [DataField]
     public float ReactantBreakdownRate = 1f;
 
     /// <summary>
@@ -65,12 +65,12 @@ public sealed partial class RadiationReactiveGas
     /// <remarks>
     ///     Leave null if the reactant no byproduct gas is to be formed
     /// </remarks>
-    [DataField("byproduct")]
+    [DataField]
     public Gas? Byproduct;
 
     /// <summary>
     ///     The molar ratio of the byproduct gas generated from the reactant gas
     /// </summary>
-    [DataField("molarRatio")]
+    [DataField]
     public float MolarRatio = 1f;
 }

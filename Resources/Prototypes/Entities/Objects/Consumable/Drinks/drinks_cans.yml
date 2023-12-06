@@ -53,7 +53,7 @@
     qualities:
     - Rolling
     speed: 0.25 # its small so takes longer to roll the entire dough flat
-  - type: ItemCooldown
+  - type: UseDelay
   - type: SpaceGarbage
   - type: TrashOnSolutionEmpty
     solution: drink

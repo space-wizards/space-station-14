@@ -70,7 +70,7 @@ namespace Content.Server.Chemistry.EntitySystems
             TryDoInject(uid, args.HitEntities.First(), args.User);
         }
 
-        public bool TryDoInject(EntityUid uid, EntityUid? target, EntityUid user, HyposprayComponent? component=null)
+        public bool TryDoInject(EntityUid uid, EntityUid? target, EntityUid user, HyposprayComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return false;
@@ -78,8 +78,12 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!EligibleEntity(target, _entMan, component))
                 return false;
 
-            if (TryComp(uid, out UseDelayComponent? delayComp) && _useDelay.IsDelayed(uid, delayComp))
-                return false;
+            if (TryComp(uid, out UseDelayComponent? delayComp))
+            {
+                if (_useDelay.IsDelayed((uid, delayComp)))
+                    return false;
+            }
+
 
             string? msgFormat = null;
 
@@ -118,8 +122,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
             // Medipens and such use this system and don't have a delay, requiring extra checks
             // BeginDelay function returns if item is already on delay
-            if (delayComp is not null)
-                _useDelay.ResetDelay(uid, delayComp);
+            if (delayComp != null)
+                _useDelay.TryResetDelay((uid, delayComp));
 
             // Get transfer amount. May be smaller than component.TransferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);

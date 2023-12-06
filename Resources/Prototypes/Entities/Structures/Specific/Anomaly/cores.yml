@@ -20,10 +20,9 @@
           False: { visible: false }
   - type: Item
     size: Normal
-  - type: ItemCooldown
   - type: EmitSoundOnUse #placeholder for future unical mechanic
     sound:
-      collection: RadiationPulse 
+      collection: RadiationPulse
   - type: UseDelay
     delay: 2
   - type: AnomalyCore

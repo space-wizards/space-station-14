@@ -136531,7 +136531,7 @@ entities:
         24553:
         - Pressed: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 25178
     components:
     - rot: 1.5707963267948966 rad

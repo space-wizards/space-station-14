@@ -45,7 +45,7 @@
     solution: spray
   - type: Spillable
     solution: spray
-  - type: ItemCooldown
+  - type: UseDelay
   - type: Tag
     tags:
     - Spray

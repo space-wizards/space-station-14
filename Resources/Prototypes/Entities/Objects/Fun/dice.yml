@@ -4,7 +4,6 @@
   id: BaseDice
   components:
   - type: Dice
-  - type: ItemCooldown
   - type: UseDelay
   - type: Sprite
     sprite: Objects/Fun/dice.rsi

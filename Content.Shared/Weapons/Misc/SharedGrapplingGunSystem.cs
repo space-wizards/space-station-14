@@ -117,10 +117,12 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
     private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
     {
-        if (!Timing.IsFirstTimePredicted || _delay.IsDelayed(uid))
+        if (!Timing.IsFirstTimePredicted || !TryComp(uid, out UseDelayComponent? useDelay))
             return;
 
-        _delay.ResetDelay(uid);
+        if (!_delay.TryResetDelay((uid, useDelay), true))
+            return;
+
         _audio.PlayPredicted(component.CycleSound, uid, args.User);
 
         TryComp<AppearanceComponent>(uid, out var appearance);

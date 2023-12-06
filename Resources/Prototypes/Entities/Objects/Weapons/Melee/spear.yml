@@ -55,7 +55,6 @@
   - type: Construction
     graph: Spear
     node: spear
-  - type: ItemCooldown
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -105,7 +104,6 @@
       types:
         Blunt: 5
   - type: UseDelay
-    delay: 1
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1

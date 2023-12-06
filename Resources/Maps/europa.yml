@@ -76426,7 +76426,7 @@ entities:
         1663:
         - Pressed: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
+    - type: UseDelay
   - uid: 9640
     components:
     - pos: -20.5,-1.5
