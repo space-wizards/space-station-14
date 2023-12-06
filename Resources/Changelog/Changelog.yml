@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Grog recipe now requires sugar., type: Tweak}
-  id: 4776
-  time: '2023-09-07T00:32:24.0000000+00:00'
 - author: Velcroboy
   changes:
   - {message: Chef Velcroboy has been in the kitchen messin around with the botanicals.
@@ -2900,3 +2895,9 @@ Entries:
     type: Fix}
   id: 5275
   time: '2023-12-06T21:30:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix toggleable clothing still being interactable e.g. hardsuit helmets.,
+    type: Fix}
+  id: 5276
+  time: '2023-12-06T21:56:03.0000000+00:00'
