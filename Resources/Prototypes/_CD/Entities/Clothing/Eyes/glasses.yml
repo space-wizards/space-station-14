@@ -1,0 +1,11 @@
+#Aviators
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesAviator
+  name: aviator sunglasses
+  description: A set of glasses designed to be worn under headgear and other equipment.
+  components:
+  - type: Sprite
+    sprite: _CD/Clothing/Eyes/Glasses/aviators.rsi
+  - type: Clothing
+    sprite: _CD/Clothing/Eyes/Glasses/aviators.rsi
