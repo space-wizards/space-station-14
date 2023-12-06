@@ -107,7 +107,6 @@
     size: Small
     sprite: Objects/Tanks/emergency.rsi
   - type: GasTank
-    outputPressure: 21.3
     air:
       volume: 0.66
       temperature: 293.15
@@ -130,7 +129,7 @@
       Steel: 100
 
 - type: entity
-  parent: GasTankRoundBase
+  parent: EmergencyOxygenTank
   id: EmergencyNitrogenTank
   name: emergency nitrogen tank
   description: An easily portable tank for emergencies. Contains very little nitrogen, rated for survival use only.
@@ -138,30 +137,9 @@
   - type: Sprite
     sprite: Objects/Tanks/emergency_red.rsi
   - type: Item
-    size: Small
     sprite: Objects/Tanks/emergency_red.rsi
-  - type: GasTank
-    outputPressure: 21.3
-    air:
-      volume: 0.66
-      temperature: 293.15
   - type: Clothing
     sprite: Objects/Tanks/emergency_red.rsi
-    slots:
-    - Pocket
-    - Belt
-    - suitStorage
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 5
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 5
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 100
 
 - type: entity
   parent: EmergencyOxygenTank
@@ -174,7 +152,6 @@
   - type: Item
     sprite: Objects/Tanks/emergency_yellow.rsi
   - type: GasTank
-    outputPressure: 21.3
     air:
       volume: 1.5
       temperature: 293.15
@@ -192,7 +169,6 @@
   - type: Item
     sprite: Objects/Tanks/emergency_double.rsi
   - type: GasTank
-    outputPressure: 21.3
     air:
       volume: 2.5
       temperature: 293.15
@@ -214,15 +190,8 @@
   name: air tank
   description: Mixed anyone?
   components:
-  - type: Sprite
-    sprite: Objects/Tanks/generic.rsi
   - type: GasTank
     outputPressure: 101.3
-    air:
-      volume: 5
-      temperature: 293.15
-  - type: Clothing
-    sprite: Objects/Tanks/generic.rsi
 
 - type: entity
   parent: GasTankRoundBase
@@ -236,9 +205,6 @@
     sprite: Objects/Tanks/anesthetic.rsi
   - type: GasTank
     outputPressure: 30.4
-    air:
-      volume: 5
-      temperature: 293.15
   - type: Clothing
     sprite: Objects/Tanks/anesthetic.rsi
 
@@ -255,8 +221,5 @@
     sprite: Objects/Tanks/plasma.rsi
   - type: GasTank
     outputPressure: 101.3
-    air:
-      volume: 5
-      temperature: 293.15
   - type: Clothing
     sprite: Objects/Tanks/plasma.rsi

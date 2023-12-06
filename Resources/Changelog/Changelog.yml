@@ -1,47 +1,6 @@
 Entries:
 - author: Endecc
   changes:
-  - {message: 'Added the luxury mining hardsuit, a lighter and more versatile mining
-      hardsuit styled after the Quartermaster.', type: Add}
-  - {message: 'Added luxury mining hardsuit cargo order, because this ELITE cargo
-      suit is too expensive to stock on every station.', type: Add}
-  id: 4768
-  time: '2023-09-05T03:42:09.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Magnets can no longer be deconstructed while active, preventing a few
-      bugs.', type: Fix}
-  id: 4769
-  time: '2023-09-05T16:20:55.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: 'Gas tanks now have valves, which can be used to vent their contents.',
-    type: Add}
-  id: 4770
-  time: '2023-09-05T17:20:05.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Constructed hydroponics trays now start empty., type: Tweak}
-  id: 4771
-  time: '2023-09-05T20:15:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Revert 25% click attack buff., type: Tweak}
-  id: 4772
-  time: '2023-09-06T08:30:23.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixes crates requiring to be welded to deconstruct them., type: Fix}
-  id: 4773
-  time: '2023-09-06T18:18:14.0000000+00:00'
-- author: potato1234x
-  changes:
-  - {message: Added back the old glass tiles while keeping the new ones as a fancier
-      alternative., type: Add}
-  id: 4774
-  time: '2023-09-06T21:41:53.0000000+00:00'
-- author: Endecc
-  changes:
   - {message: Secure crates are now craftable with 5 steel and 2 LV cable, type: Add}
   id: 4775
   time: '2023-09-07T00:25:25.0000000+00:00'
@@ -2904,3 +2863,39 @@ Entries:
   - {message: added medical doctor jumpsuits and skirts to the medidrobe, type: Add}
   id: 5267
   time: '2023-12-05T10:39:54.0000000+00:00'
+- author: ForestNoises
+  changes:
+  - {message: The rejuvenate command/verb resets all action cooldowns., type: Add}
+  id: 5268
+  time: '2023-12-05T21:00:03.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Empty hot cocoa can go in trash bags, type: Fix}
+  id: 5269
+  time: '2023-12-05T21:39:26.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: Ghosts now have speech bubbles again, type: Fix}
+  id: 5270
+  time: '2023-12-05T21:40:03.0000000+00:00'
+- author: tgrkzus
+  changes:
+  - {message: Paper cups are now available at water coolers., type: Add}
+  id: 5271
+  time: '2023-12-05T21:47:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now make the storage window opaque with the "enable opaque storage
+      window" toggle in the graphics menu., type: Add}
+  id: 5272
+  time: '2023-12-05T23:38:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reverted duffel bags to their original storage capacity., type: Fix}
+  id: 5273
+  time: '2023-12-06T03:11:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Predict helmet toggling., type: Fix}
+  id: 5274
+  time: '2023-12-06T06:59:31.0000000+00:00'
