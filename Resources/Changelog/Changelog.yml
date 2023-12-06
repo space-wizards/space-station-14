@@ -1,9 +1,4 @@
 Entries:
-- author: Endecc
-  changes:
-  - {message: Secure crates are now craftable with 5 steel and 2 LV cable, type: Add}
-  id: 4775
-  time: '2023-09-07T00:25:25.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Grog recipe now requires sugar., type: Tweak}
@@ -2899,3 +2894,9 @@ Entries:
   - {message: Predict helmet toggling., type: Fix}
   id: 5274
   time: '2023-12-06T06:59:31.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed emagged medibots not injecting healthy people with chloral hydrate.,
+    type: Fix}
+  id: 5275
+  time: '2023-12-06T21:30:32.0000000+00:00'
