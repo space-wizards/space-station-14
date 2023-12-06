@@ -1,3 +1,4 @@
+using Content.Shared.Clothing;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Item;
@@ -12,12 +13,18 @@ public sealed partial class HeldSpeedModifierComponent : Component
     /// <summary>
     /// A multiplier applied to the walk speed.
     /// </summary>
-    [DataField(required: true)] [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField] [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float WalkModifier = 1.0f;
 
     /// <summary>
     /// A multiplier applied to the sprint speed.
     /// </summary>
-    [DataField(required: true)] [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField] [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float SprintModifier = 1.0f;
+
+    /// <summary>
+    /// If true, values from <see cref="ClothingSpeedModifierComponent"/> will attempted to be used before the ones in this component.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool MirrorClothingModifier = true;
 }

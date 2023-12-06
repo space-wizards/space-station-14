@@ -47,8 +47,6 @@
     walkModifier: 0.8
     sprintModifier: 0.7
   - type: HeldSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.7
   - type: GroupExamine
 
 - type: entity
@@ -76,8 +74,6 @@
       walkModifier: 0.8
       sprintModifier: 0.8
     - type: HeldSpeedModifier
-      walkModifier: 0.8
-      sprintModifier: 0.8
     - type: GroupExamine
 
 - type: entity

@@ -1,3 +1,4 @@
+using Content.Shared.Clothing;
 using Content.Shared.Hands;
 using Content.Shared.Movement.Systems;
 
@@ -30,6 +31,14 @@ public sealed class HeldSpeedModifierSystem : EntitySystem
 
     private void OnRefreshMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
-        args.Args.ModifySpeed(component.WalkModifier, component.SprintModifier);
+        var walkMod = component.WalkModifier;
+        var sprintMod = component.SprintModifier;
+        if (component.MirrorClothingModifier && TryComp<ClothingSpeedModifierComponent>(uid, out var clothingSpeedModifier))
+        {
+            walkMod = clothingSpeedModifier.WalkModifier;
+            sprintMod = clothingSpeedModifier.SprintModifier;
+        }
+
+        args.Args.ModifySpeed(walkMod, sprintMod);
     }
 }

@@ -23,8 +23,6 @@
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: HeldSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
 
 - type: entity
   abstract: true
@@ -74,8 +72,6 @@
     walkModifier: 0.4
     sprintModifier: 0.6
   - type: HeldSpeedModifier
-    walkModifier: 0.4
-    sprintModifier: 0.6
   - type: Item
     size: Ginormous
   - type: Armor
@@ -112,8 +108,6 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
   - type: Item
     size: Huge
 

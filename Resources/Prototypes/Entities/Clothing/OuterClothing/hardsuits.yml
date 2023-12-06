@@ -25,8 +25,6 @@
     walkModifier: 0.80
     sprintModifier: 0.80
   - type: HeldSpeedModifier
-    walkModifier: 0.80
-    sprintModifier: 0.80
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBasic
 
@@ -61,8 +59,6 @@
     walkModifier: 0.7
     sprintModifier: 0.7
   - type: HeldSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmos
 
@@ -97,8 +93,6 @@
     walkModifier: 0.7
     sprintModifier: 0.7
   - type: HeldSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
 
@@ -128,8 +122,6 @@
     walkModifier: 0.9
     sprintModifier: 0.8
   - type: HeldSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpatio
 
@@ -161,8 +153,6 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: HeldSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
 
@@ -193,8 +183,6 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: HeldSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
 
@@ -222,8 +210,6 @@
     walkModifier: 0.65
     sprintModifier: 0.65
   - type: HeldSpeedModifier
-    walkModifier: 0.65
-    sprintModifier: 0.65
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
 
@@ -254,8 +240,6 @@
     walkModifier: 0.7
     sprintModifier: 0.7
   - type: HeldSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden
 
@@ -288,8 +272,6 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCap
 
@@ -322,8 +304,6 @@
     walkModifier: 0.75
     sprintModifier: 0.8
   - type: HeldSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
 
@@ -349,8 +329,6 @@
     walkModifier: 0.9
     sprintModifier: 0.95
   - type: HeldSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.95
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedical
 
@@ -383,8 +361,6 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: HeldSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
   - type: Item
     size: Normal
   - type: Tag
@@ -424,8 +400,6 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
 
@@ -457,8 +431,6 @@
     walkModifier: 0.85
     sprintModifier: 0.9
   - type: HeldSpeedModifier
-    walkModifier: 0.85
-    sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLuxury
 
@@ -494,8 +466,6 @@
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: HeldSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
 
@@ -544,8 +514,6 @@
     walkModifier: 1.0
     sprintModifier: 1.0
   - type: HeldSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
 
@@ -578,8 +546,6 @@
     walkModifier: 1.0
     sprintModifier: 1.0
   - type: HeldSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
 
@@ -612,8 +578,6 @@
     walkModifier: 0.9
     sprintModifier: 0.65
   - type: HeldSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.65
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
 
@@ -646,8 +610,6 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
 
@@ -678,8 +640,6 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLing
 
@@ -710,8 +670,6 @@
     walkModifier: 0.6
     sprintModifier: 0.6
   - type: HeldSpeedModifier
-    walkModifier: 0.6
-    sprintModifier: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA
   - type: StaticPrice
@@ -745,8 +703,6 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
   - type: StaticPrice
@@ -854,8 +810,6 @@
     walkModifier: 1.0
     sprintModifier: 1.0
   - type: HeldSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
 
@@ -892,8 +846,6 @@
     walkModifier: 1.0
     sprintModifier: 1.0
   - type: HeldSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN
 
@@ -925,8 +877,6 @@
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: HeldSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
   - type: Construction
     graph: ClownHardsuit
     node: clownHardsuit
