@@ -8,6 +8,7 @@
     sprite: Clothing/Back/Backpacks/backpack.rsi
     state: icon
   - type: Item
+    size: Huge
   - type: Appearance
   - type: SubFloorHide
   - type: Anchorable
@@ -15,7 +16,6 @@
     enable: false
   - type: Transform
     anchored: false
-    size: Huge
   - type: Clothing
     quickEquip: false
     slots:

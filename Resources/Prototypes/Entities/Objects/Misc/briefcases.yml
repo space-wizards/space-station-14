@@ -5,6 +5,7 @@
   description: Useful for carrying items in your hands.
   components:
   - type: Item
+    size: Ginormous
   - type: Appearance
   - type: SubFloorHide
   - type: Anchorable
@@ -12,7 +13,6 @@
     enable: false
   - type: Transform
     anchored: false
-    size: Ginormous
   - type: Storage
     grid:
     - 0,0,5,3
