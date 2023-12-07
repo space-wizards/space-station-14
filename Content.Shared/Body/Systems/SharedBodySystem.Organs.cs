@@ -31,10 +31,12 @@ public partial class SharedBodySystem
         {
             RaiseLocalEvent(uid, new AddedToPartEvent(parentUid));
 
-            if (component.Body != null)
-                RaiseLocalEvent(uid, new AddedToPartInBodyEvent(component.Body.Value, parentUid));
-
-            Dirty(uid, component);
+            if (partComp.Body != null)
+            {
+                component.Body = partComp.Body;
+                RaiseLocalEvent(uid, new AddedToPartInBodyEvent(partComp.Body.Value, parentUid));
+                Dirty(uid, component);
+            }
         }
     }
 
