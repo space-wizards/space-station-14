@@ -2,7 +2,9 @@ using Content.Server.Chat.Systems;
 using Content.Server.NPC.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
+using Content.Shared.Emag.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Bots;
 using Robust.Shared.Audio;
@@ -65,29 +67,23 @@ public sealed partial class MedibotInjectOperator : HTNOperator
 
         var total = damage.TotalDamage;
 
-        if (total == 0)
+        // always inject healthy patients when emagged
+        if (total == 0 && !_entMan.HasComponent<EmaggedComponent>(owner))
             return HTNOperatorStatus.Failed;
 
-        if (total >= MedibotComponent.EmergencyMedDamageThreshold)
-        {
-            _entMan.EnsureComponent<NPCRecentlyInjectedComponent>(target);
-            _solution.TryAddReagent(target, injectable, botComp.EmergencyMed, botComp.EmergencyMedAmount, out var accepted);
-            _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
-            _audio.PlayPvs(botComp.InjectSound, target);
-            _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit);
-            return HTNOperatorStatus.Finished;
-        }
+        if (!_entMan.TryGetComponent<MobStateComponent>(target, out var mobState))
+            return HTNOperatorStatus.Failed;
 
-        if (total >= MedibotComponent.StandardMedDamageThreshold && total <= MedibotComponent.StandardMedDamageThresholdStop)
-        {
-            _entMan.EnsureComponent<NPCRecentlyInjectedComponent>(target);
-            _solution.TryAddReagent(target, injectable, botComp.StandardMed, botComp.StandardMedAmount, out var accepted);
-            _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
-            _audio.PlayPvs(botComp.InjectSound, target);
-            _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit);
-            return HTNOperatorStatus.Finished;
-        }
+        var state = mobState.CurrentState;
+        var treatment = botComp.Treatments[mobState.CurrentState];
+        if (!treatment.IsValid(total))
+            return HTNOperatorStatus.Failed;
 
-        return HTNOperatorStatus.Failed;
+        _entMan.EnsureComponent<NPCRecentlyInjectedComponent>(target);
+        _solution.TryAddReagent(target, injectable, treatment.Reagent, treatment.Quantity, out _);
+        _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
+        _audio.PlayPvs(botComp.InjectSound, target);
+        _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, hideChat: true, hideLog: true);
+        return HTNOperatorStatus.Finished;
     }
 }
