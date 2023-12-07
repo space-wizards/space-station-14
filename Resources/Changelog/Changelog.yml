@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Bananium's radiation intensity increases in large stacks now., type: Tweak}
-  id: 4780
-  time: '2023-09-07T21:59:08.0000000+00:00'
 - author: notafet
   changes:
   - {message: Security techfabs now produce magazines instead of individual cartridges.,
@@ -2899,3 +2894,8 @@ Entries:
   - {message: Pickaxes have a more accurate shape in storage., type: Tweak}
   id: 5279
   time: '2023-12-07T00:52:57.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: 'Added a new lizard chest marking, an underbelly.', type: Add}
+  id: 5280
+  time: '2023-12-07T01:05:43.0000000+00:00'
