@@ -31,6 +31,7 @@ public abstract partial class SharedHandsSystem
         InitializeDrop();
         InitializePickup();
         InitializeVirtual();
+        InitializeRelay();
     }
 
     public override void Shutdown()

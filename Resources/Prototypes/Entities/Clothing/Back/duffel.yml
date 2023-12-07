@@ -13,6 +13,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -236,6 +237,7 @@
     - 0,0,19,9
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -248,3 +250,4 @@
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
+  - type: HeldSpeedModifier
