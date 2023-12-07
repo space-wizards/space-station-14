@@ -6,8 +6,7 @@ using Content.Server.Power.Nodes;
 using Content.Shared.Power.Generator;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
-using Robust.Shared.Player;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.Generator;
@@ -20,9 +19,9 @@ namespace Content.Server.Power.Generator;
 /// <seealso cref="GeneratorSystem"/>
 public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
 {
-    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()

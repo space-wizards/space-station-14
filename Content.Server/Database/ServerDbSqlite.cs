@@ -413,12 +413,13 @@ namespace Content.Server.Database
                 DateTime.SpecifyKind(unban.UnbanTime, DateTimeKind.Utc));
         }
 
-        public override async Task<int>  AddConnectionLogAsync(
+        public override async Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId,
-            ConnectionDenyReason? denied)
+            ConnectionDenyReason? denied,
+            int serverId)
         {
             await using var db = await GetDbImpl();
 
@@ -429,7 +430,8 @@ namespace Content.Server.Database
                 UserId = userId.UserId,
                 UserName = userName,
                 HWId = hwId.ToArray(),
-                Denied = denied
+                Denied = denied,
+                ServerId = serverId
             };
 
             db.SqliteDbContext.ConnectionLog.Add(connectionLog);
