@@ -4,6 +4,8 @@
   description: Wallmount reagent dispenser.
   placement:
     mode: SnapgridCenter
+    snap: 
+    - Wallmount
   components:
   - type: WallMount
     arc: 180
