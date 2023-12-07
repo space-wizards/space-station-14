@@ -12,7 +12,8 @@
       visible: false
   - type: Clothing
   - type: Storage
-    maxSlots: 15
+    grid:
+    - 0,0,7,3
     maxItemSize: Small
     whitelist:
       tags:

@@ -273,7 +273,7 @@ public sealed partial class ExplosionSystem
         return !tileBlocked;
     }
 
-    private bool GridQueryCallback(
+    private static bool GridQueryCallback(
         ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
         in EntityUid uid)
     {
@@ -283,7 +283,7 @@ public sealed partial class ExplosionSystem
         return true;
     }
 
-    private bool GridQueryCallback(
+    private static bool GridQueryCallback(
         ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
         in FixtureProxy proxy)
     {
@@ -307,7 +307,7 @@ public sealed partial class ExplosionSystem
         var gridBox = Box2.FromDimensions(tile * DefaultTileSize, new Vector2(DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
         var list = new List<(EntityUid, TransformComponent)>();
-        var state = (list, processed, invSpaceMatrix, lookup.Owner, _transformQuery, gridBox);
+        var state = (list, processed, invSpaceMatrix, lookup.Owner, _transformQuery, gridBox, _transformSystem);
 
         // get entities:
         lookup.DynamicTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
@@ -336,8 +336,8 @@ public sealed partial class ExplosionSystem
         }
     }
 
-    private bool SpaceQueryCallback(
-        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox) state,
+    private static bool SpaceQueryCallback(
+        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox, SharedTransformSystem System) state,
         in EntityUid uid)
     {
         if (state.Processed.Contains(uid))
@@ -355,14 +355,15 @@ public sealed partial class ExplosionSystem
         }
 
         // finally check if it intersects our tile
-        if (state.GridBox.Contains(state.InvSpaceMatrix.Transform(_transformSystem.GetWorldPosition(xform, state.XformQuery))))
+        var wpos = state.System.GetWorldPosition(xform);
+        if (state.GridBox.Contains(state.InvSpaceMatrix.Transform(wpos)))
             state.List.Add((uid, xform));
 
         return true;
     }
 
-    private bool SpaceQueryCallback(
-        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox) state,
+    private static bool SpaceQueryCallback(
+        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox, SharedTransformSystem System) state,
         in FixtureProxy proxy)
     {
         var uid = proxy.Entity;

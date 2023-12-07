@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore and Bighorn are drawn by Ubaser, and Kobold Ears are drawn by Pigeonpeas.",
+  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore and Bighorn are drawn by Ubaser, and Kobold Ears are drawn by Pigeonpeas. Body_underbelly made by Nairod(github) for SS14.",
   "size": {
     "x": 32,
     "y": 32
@@ -174,6 +174,10 @@
 	{
 	  "name": "horns_floppy_kobold_ears",
 	  "directions": 4
+	},
+    {
+      "name": "body_underbelly",
+      "directions": 4
 	}
   ]
 }
