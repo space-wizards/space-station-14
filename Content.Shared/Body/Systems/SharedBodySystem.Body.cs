@@ -177,6 +177,8 @@ public partial class SharedBodySystem
             yield break;
         }
 
+        yield return (body.RootContainer.ContainedEntity.Value, rootPart);
+
         foreach (var child in GetBodyPartChildren(body.RootContainer.ContainedEntity.Value, rootPart))
         {
             yield return child;

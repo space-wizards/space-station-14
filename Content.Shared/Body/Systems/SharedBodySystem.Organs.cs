@@ -42,8 +42,8 @@ public partial class SharedBodySystem
 
     private void OnOrganRemoved(EntityUid uid, OrganComponent component, EntGotRemovedFromContainerMessage args)
     {
-        // TODO: lifestage shenanigans
-        if (TerminatingOrDeleted(uid))
+        // Lifestage shenanigans.
+        if (component.Body != null && TerminatingOrDeleted(component.Body.Value))
             return;
 
         if (HasComp<BodyPartComponent>(args.Container.Owner))
