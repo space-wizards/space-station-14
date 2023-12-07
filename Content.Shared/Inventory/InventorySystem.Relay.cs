@@ -49,7 +49,7 @@ public partial class InventorySystem
 
     protected void RefRelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, ref T args) where T : IInventoryRelayEvent
     {
-        RelayEvent((uid, component), args);
+        RelayEvent((uid, component), ref args);
     }
 
     protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : IInventoryRelayEvent
