@@ -1,10 +1,4 @@
 Entries:
-- author: SonicHDC
-  changes:
-  - {message: Added steel bench!, type: Add}
-  - {message: Fixed some sprites rotations!, type: Fix}
-  id: 4783
-  time: '2023-09-09T12:56:11.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Gauze is now more effective at treating slash and piercing damage.,
@@ -2901,3 +2895,9 @@ Entries:
   - {message: 'Added Razorium, which is basically liquid razor blades.', type: Add}
   id: 5282
   time: '2023-12-07T03:05:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Speed penalties for duffels and hardsuits now apply when held, not
+      just when worn.', type: Add}
+  id: 5283
+  time: '2023-12-07T03:41:29.0000000+00:00'
