@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Advanced Laser Guns are now in the Tier 3 Portable Microfusion Weaponry
-      research., type: Tweak}
-  id: 4782
-  time: '2023-09-08T02:25:05.0000000+00:00'
 - author: SonicHDC
   changes:
   - {message: Added steel bench!, type: Add}
@@ -2900,3 +2894,10 @@ Entries:
   - {message: The too weak space spider has been strengthened., type: Tweak}
   id: 5281
   time: '2023-12-07T01:25:57.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: Added three new specialized brute healing chemicals and a guidebook
+      entry on how to safely use them., type: Add}
+  - {message: 'Added Razorium, which is basically liquid razor blades.', type: Add}
+  id: 5282
+  time: '2023-12-07T03:05:29.0000000+00:00'
