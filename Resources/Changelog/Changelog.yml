@@ -1,10 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: Hyposprays can inject their solutions back into beakers/jugs/whatever
-      can hold the solution., type: Tweak}
-  id: 4779
-  time: '2023-09-07T16:49:02.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Bananium's radiation intensity increases in large stacks now., type: Tweak}
@@ -2900,3 +2894,8 @@ Entries:
       bubbles are enabled, type: Fix}
   id: 5278
   time: '2023-12-06T21:58:53.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Pickaxes have a more accurate shape in storage., type: Tweak}
+  id: 5279
+  time: '2023-12-07T00:52:57.0000000+00:00'
