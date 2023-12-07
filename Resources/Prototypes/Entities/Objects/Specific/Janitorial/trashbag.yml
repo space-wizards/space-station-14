@@ -9,8 +9,9 @@
       - state: icon-0
         map: ["enum.StorageFillLayers.Fill"]
   - type: Storage
-    maxTotalWeight: 48
     maxItemSize: Small
+    grid:
+    - 0,0,7,5
     quickInsert: true
     areaInsert: true
     storageOpenSound:
@@ -56,9 +57,9 @@
   parent: TrashBagBlue
   components:
   - type: Storage
-    maxSlots: 100
     maxItemSize: Huge
-    maxTotalWeight: 200
+    grid:
+    - 0,0,19,9
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 1000

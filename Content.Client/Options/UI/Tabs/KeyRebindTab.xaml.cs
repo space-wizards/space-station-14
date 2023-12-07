@@ -97,6 +97,12 @@ namespace Content.Client.Options.UI.Tabs
             _deferCommands.Add(_inputManager.SaveToUserData);
         }
 
+        private void HandleStaticStorageUI(BaseButton.ButtonToggledEventArgs args)
+        {
+            _cfg.SetCVar(CCVars.StaticStorageUI, args.Pressed);
+            _cfg.SaveToFile();
+        }
+
         public KeyRebindTab()
         {
             IoCManager.InjectDependencies(this);
@@ -175,6 +181,9 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.Drop);
             AddButton(ContentKeyFunctions.ExamineEntity);
             AddButton(ContentKeyFunctions.SwapHands);
+            AddButton(ContentKeyFunctions.MoveStoredItem);
+            AddButton(ContentKeyFunctions.RotateStoredItem);
+            AddCheckBox("ui-options-static-storage-ui", _cfg.GetCVar(CCVars.StaticStorageUI), HandleStaticStorageUI);
 
             AddHeader("ui-options-header-interaction-adv");
             AddButton(ContentKeyFunctions.SmartEquipBackpack);

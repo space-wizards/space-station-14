@@ -126,8 +126,9 @@
   - type: Item
     size: Ginormous
   - type: Storage
-    maxSlots: 8
     maxItemSize: Normal
+    grid:
+    - 0,0,7,1
   - type: StorageFill
     contents:
       - id: ExGrenade

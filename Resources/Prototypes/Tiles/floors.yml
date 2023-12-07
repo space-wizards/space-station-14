@@ -684,6 +684,42 @@
   itemDrop: FloorTileItemBlue
   heatCapacity: 10000
 
+- type: tile
+  id: FloorMining
+  name: tiles-mining-tile
+  sprite: /Textures/Tiles/mining_floor.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemMining
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorMiningDark
+  name: tiles-mining-dark-tile
+  sprite: /Textures/Tiles/mining_floor_dark.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemMiningDark
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorMiningLight
+  name: tiles-mining-light-tile
+  sprite: /Textures/Tiles/mining_floor_light.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemMiningLight
+  heatCapacity: 10000
+
 # Departamental
 - type: tile
   id: FloorFreezer
