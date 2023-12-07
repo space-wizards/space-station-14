@@ -86,6 +86,7 @@ namespace Content.Shared.Throwing
 
         private void OnSleep(EntityUid uid, ThrownItemComponent thrownItem, ref PhysicsSleepEvent @event)
         {
+            @event.Cancelled = true;
             StopThrow(uid, thrownItem);
         }
 
