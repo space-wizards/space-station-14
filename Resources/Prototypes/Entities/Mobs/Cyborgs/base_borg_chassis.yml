@@ -124,6 +124,7 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai
+  - type: UnblockableSpeech
   - type: Construction
     graph: Cyborg
     containers:

@@ -94,6 +94,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of lemoon seeds
+  id: LemoonSeeds
+  components:
+    - type: Seed
+      seedId: lemoon
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/lemoon.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of lime seeds
   id: LimeSeeds
   components:

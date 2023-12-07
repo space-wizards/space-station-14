@@ -44,6 +44,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.5
     sprintModifier: 0.5
+  - type: HeldSpeedModifier
   - type: TemperatureProtection
     coefficient: 0.5
   - type: ToggleableClothing
@@ -83,6 +84,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
+  - type: HeldSpeedModifier
 
 #Paramedic Voidsuit
 #Despite having resistances and looking like one, this is two-piece and parents off the EVA suit so it goes here.
@@ -102,6 +104,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
+  - type: HeldSpeedModifier
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor

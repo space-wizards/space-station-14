@@ -1,11 +1,12 @@
 using Content.Shared.Emag.Systems;
-using Robust.Shared.Audio;
+using Content.Shared.Mobs;
 using Robust.Shared.Audio.Systems;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Silicons.Bots;
 
 /// <summary>
-/// Handles emagging medibots
+/// Handles emagging medibots and provides api.
 /// </summary>
 public sealed class MedibotSystem : EntitySystem
 {
@@ -25,10 +26,22 @@ public sealed class MedibotSystem : EntitySystem
 
         _audio.PlayPredicted(comp.SparkSound, uid, args.UserUid);
 
-        medibot.StandardMed = comp.StandardMed;
-        medibot.StandardMedAmount = comp.StandardMedAmount;
-        medibot.EmergencyMed = comp.EmergencyMed;
-        medibot.EmergencyMedAmount = comp.EmergencyMedAmount;
+        foreach (var (state, treatment) in comp.Replacements)
+        {
+            medibot.Treatments[state] = treatment;
+        }
+
         args.Handled = true;
+    }
+
+    /// <summary>
+    /// Get a treatment for a given mob state.
+    /// </summary>
+    /// <remarks>
+    /// This only exists because allowing other execute would allow modifying the dictionary, and Read access does not cover TryGetValue.
+    /// </remarks>
+    public bool TryGetTreatment(MedibotComponent comp, MobState state, [NotNullWhen(true)] out MedibotTreatment? treatment)
+    {
+        return comp.Treatments.TryGetValue(state, out treatment);
     }
 }

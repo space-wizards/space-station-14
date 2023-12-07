@@ -1138,6 +1138,16 @@
     FoodLemon: 3
 
 - type: microwaveMealRecipe
+  id: RecipeLemoonCake
+  name: lemoon cake recipe
+  result: FoodCakeLemoon
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodLemoon: 2
+    FoodBerries: 1 #dark colouring
+
+- type: microwaveMealRecipe
   id: RecipeOrangeCake
   name: orange cake recipe
   result: FoodCakeOrange

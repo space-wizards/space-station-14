@@ -1476,6 +1476,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ChatShowTypingIndicator =
             CVarDef.Create("chat.show_typing_indicator", true, CVar.CLIENTONLY);
 
+        public static readonly CVarDef<bool> ChatEnableFancyBubbles =
+            CVarDef.Create("chat.enable_fancy_bubbles", true, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying fancy speech bubbles, which display the speaking character's name.");
+
+        public static readonly CVarDef<bool> ChatFancyNameBackground =
+            CVarDef.Create("chat.fancy_name_background", false, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying a background under the speaking character's name.");
+
         /// <summary>
         /// A message broadcast to each player that joins the lobby.
         /// May be changed by admins ingame through use of the "set-motd" command.
@@ -1654,6 +1660,22 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ToggleWalk =
             CVarDef.Create("control.toggle_walk", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
+         * STORAGE
+         */
+
+        /// <summary>
+        /// Whether or not the storage UI is static and bound to the hotbar, or unbound and allowed to be dragged anywhere.
+        /// </summary>
+        public static readonly CVarDef<bool> StaticStorageUI =
+            CVarDef.Create("control.static_storage_ui", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        /// Whether or not the storage window uses a transparent or opaque sprite.
+        /// </summary>
+        public static readonly CVarDef<bool> OpaqueStorageWindow =
+            CVarDef.Create("control.opaque_storage_background", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
          * UPDATE

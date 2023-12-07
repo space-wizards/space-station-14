@@ -13,6 +13,11 @@
   copyright: "Taken from SergeQuadrado via freesound.org, edit and mono by TheShuEd"
   source: "https://freesound.org/people/SergeQuadrado/sounds/683504/"
 
+- files: ["narsie_rises.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/blob/b44fcdedfb7c7d8425bd75b9caf71644a86375d1/sound/creatures/narsie_rises.ogg"
+
 - files: ["epsilon.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Made by dj-34 (https://github.com/dj-34)"
@@ -32,4 +37,3 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from Citadel Station 13"
   source: "https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50"
-
