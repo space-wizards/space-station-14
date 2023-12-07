@@ -70,7 +70,7 @@
   name: chair
   id: ChairGreyscale
   parent: Chair
-  suffix: Greyscale
+  suffix: White
   components:
   - type: Sprite
     state: chair-greyscale
