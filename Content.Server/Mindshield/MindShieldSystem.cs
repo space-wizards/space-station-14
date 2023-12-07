@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Mind;
 using Content.Server.Popups;
-using Content.Server.Revolutionary.Components;
 using Content.Server.Roles;
 using Content.Shared.Database;
 using Content.Shared.Implants;
