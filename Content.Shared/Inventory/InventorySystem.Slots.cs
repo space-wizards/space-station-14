@@ -87,7 +87,7 @@ public partial class InventorySystem : EntitySystem
 
     public bool TryGetContainerSlotEnumerator(Entity<InventoryComponent?> entity, out InventorySlotEnumerator containerSlotEnumerator, SlotFlags flags = SlotFlags.All)
     {
-        if (!Resolve(entity.Owner, ref entity.Comp))
+        if (!Resolve(entity.Owner, ref entity.Comp, false))
         {
             containerSlotEnumerator = default;
             return false;
