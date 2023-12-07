@@ -5,6 +5,7 @@ using Content.Shared.Storage;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.CustomControls;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
@@ -55,7 +56,20 @@ public sealed class ItemGridPiece : Control
         Visible = true;
         MouseFilter = MouseFilterMode.Pass;
 
+        TooltipSupplier = SupplyTooltip;
+
         OnThemeUpdated();
+    }
+
+    private Control? SupplyTooltip(Control sender)
+    {
+        if (_storageController.IsDragging)
+            return null;
+
+        return new Tooltip
+        {
+            Text = _entityManager.GetComponent<MetaDataComponent>(Entity).EntityName
+        };
     }
 
     protected override void OnThemeUpdated()
