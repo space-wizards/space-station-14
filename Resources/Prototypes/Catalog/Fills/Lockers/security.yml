@@ -48,7 +48,6 @@
       - id: DoorRemoteArmory
       - id: HoloprojectorSecurity
       - id: ClothingEyesHudSecurity
-      - id: ClothingShoesBootsWinterWarden
 
 - type: entity
   id: LockerSecurityFilled
