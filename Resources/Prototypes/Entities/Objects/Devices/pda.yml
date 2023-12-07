@@ -37,7 +37,7 @@
         components:
         - IdCard
   - type: Item
-    size: 10
+    size: Small
   - type: ContainerContainer
     containers:
       PDA-id: !type:ContainerSlot {}
@@ -660,7 +660,7 @@
 - type: entity
   parent: CentcomPDA
   id: DeathsquadPDA
-  suffix: Deathsquad
+  suffix: Death Squad
   components:
   - type: Pda
     id: CentcomIDCardDeathsquad
@@ -949,3 +949,45 @@
     accentVColor: "#DFDFDF"
   - type: Icon
     state: pda-seniorofficer
+
+- type: entity
+  parent: SyndiPDA
+  id: PiratePDA
+  name: pirate PDA
+  description: Yargh!
+  components:
+  - type: Pda
+    id: PirateIDCard
+    state: pda-pirate
+  - type: Icon
+    state: pda-pirate
+
+- type: entity
+  parent: BasePDA
+  id: SyndiAgentPDA
+  name: syndicate agent PDA
+  description: For those days when healing normal syndicates aren't enough, try healing nuclear operatives instead!
+  components:
+  - type: Pda
+    id: SyndicateIDCard
+    state: pda-syndi-agent
+  - type: PdaBorderColor
+    borderColor: "#891417"
+  - type: Icon
+    state: pda-syndi-agent
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+    cartridgeSlot:
+      priority: -1
+      name: Cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+          - Cartridge
+  - type: HealthAnalyzer 
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"

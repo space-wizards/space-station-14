@@ -7,6 +7,8 @@
   suffix: Low Ore Yield
   description: A rocky asteroid.
   components:
+  - type: PlacementReplacement
+    key: walls
   - type: SoundOnGather
   - type: Gatherable
     whitelist:
@@ -55,6 +57,8 @@
   - type: OreVein
     oreChance: 0.2
     oreRarityPrototypeId: RandomOreDistributionStandard
+  - type: RadiationBlocker
+    resistance: 2
 
 - type: entity
   id: AsteroidRockMining
@@ -196,6 +200,8 @@
           state: rock_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_west
+    - type: RadiationBlocker
+      resistance: 2
 
 # Ore veins
 - type: entity
@@ -379,6 +385,7 @@
 # Basalt variants
 - type: entity
   id: WallRockBasalt
+  name: basalt
   parent: WallRock
   components:
     - type: Sprite
@@ -574,6 +581,7 @@
 # Snow variants
 - type: entity
   id: WallRockSnow
+  name: snowdrift
   parent: WallRock
   components:
     - type: Sprite
@@ -770,6 +778,7 @@
 # Sand variants
 - type: entity
   id: WallRockSand
+  name: sandstone
   parent: WallRock
   components:
     - type: Sprite
@@ -965,6 +974,7 @@
 # Chromite variants
 - type: entity
   id: WallRockChromite
+  name: chromite
   parent: WallRock
   components:
     - type: Sprite
@@ -1000,7 +1010,7 @@
           state: rock_chromite_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_chromite_west
-        - state: rock_chromite
+        - state: rock_gold
 
 - type: entity
   id: WallRockChromitePlasma
@@ -1160,6 +1170,7 @@
 # Andesite variants
 - type: entity
   id: WallRockAndesite
+  name: andesite
   parent: WallRock
   components:
     - type: Sprite
@@ -1195,7 +1206,7 @@
           state: rock_andesite_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_andesite_west
-        - state: rock_andesite
+        - state: rock_gold
 
 - type: entity
   id: WallRockAndesitePlasma

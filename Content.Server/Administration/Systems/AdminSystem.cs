@@ -26,6 +26,7 @@ using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
@@ -39,7 +40,6 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly HandsSystem _hands = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
@@ -49,6 +49,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly PlayTimeTrackingManager _playTime = default!;
         [Dependency] private readonly SharedRoleSystem _role = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
 
@@ -109,7 +110,7 @@ namespace Content.Server.Administration.Systems
             }
         }
 
-        public void UpdatePlayerList(IPlayerSession player)
+        public void UpdatePlayerList(ICommonSession player)
         {
             _playerList[player.UserId] = GetPlayerInfo(player.Data, player);
 
@@ -203,7 +204,7 @@ namespace Content.Server.Administration.Systems
             UpdatePanicBunker();
         }
 
-        private void SendFullPlayerList(IPlayerSession playerSession)
+        private void SendFullPlayerList(ICommonSession playerSession)
         {
             var ev = new FullPlayerListEvent();
 
@@ -212,7 +213,7 @@ namespace Content.Server.Administration.Systems
             RaiseNetworkEvent(ev, playerSession.ConnectedClient);
         }
 
-        private PlayerInfo GetPlayerInfo(IPlayerData data, IPlayerSession? session)
+        private PlayerInfo GetPlayerInfo(SessionData data, ICommonSession? session)
         {
             var name = data.UserName;
             var entityName = string.Empty;
@@ -326,7 +327,7 @@ namespace Content.Server.Administration.Systems
         ///     chat messages and showing a popup to other players.
         ///     Their items are dropped on the ground.
         /// </summary>
-        public void Erase(IPlayerSession player)
+        public void Erase(ICommonSession player)
         {
             var entity = player.AttachedEntity;
             _chat.DeleteMessagesBy(player);
@@ -340,7 +341,7 @@ namespace Content.Server.Administration.Systems
                     _popup.PopupCoordinates(Loc.GetString("admin-erase-popup", ("user", name)), coordinates, PopupType.LargeCaution);
                     var filter = Filter.Pvs(coordinates, 1, EntityManager, _playerManager);
                     var audioParams = new AudioParams().WithVolume(3);
-                    _audio.Play("/Audio/Effects/pop_high.ogg", filter, coordinates, true, audioParams);
+                    _audio.PlayStatic("/Audio/Effects/pop_high.ogg", filter, coordinates, true, audioParams);
                 }
 
                 foreach (var item in _inventory.GetHandOrInventoryEntities(entity.Value))

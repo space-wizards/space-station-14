@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Physics;
 using Robust.Client.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Eye;
@@ -30,7 +31,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         SubscribeLocalEvent<EyeAttachedEvent>(OnAttached);
 
         SubscribeLocalEvent<LerpingEyeComponent, EntParentChangedMessage>(HandleMapChange);
-        SubscribeLocalEvent<LerpingEyeComponent, PlayerDetachedEvent>(OnDetached);
+        SubscribeLocalEvent<LerpingEyeComponent, LocalPlayerDetachedEvent>(OnDetached);
 
         UpdatesAfter.Add(typeof(TransformSystem));
         UpdatesAfter.Add(typeof(PhysicsSystem));
@@ -94,7 +95,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         AddEye(ev.Entity, ev.Component, true);
     }
 
-    private void OnDetached(EntityUid uid, LerpingEyeComponent component, PlayerDetachedEvent args)
+    private void OnDetached(EntityUid uid, LerpingEyeComponent component, LocalPlayerDetachedEvent args)
     {
         if (!component.ManuallyAdded)
             RemCompDeferred(uid, component);

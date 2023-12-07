@@ -1,0 +1,43 @@
+- type: entity
+  name: "candy bucket"
+  parent: BaseItem
+  id: CandyBucket
+  description: A festive bucket for all your treats.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/candy_bucket.rsi
+    layers:
+    - state: empty_icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: ContainerHeld
+    threshold: 1
+  - type: Item
+    heldPrefix: empty
+    size: Normal
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+     enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: full_icon}
+          False: {state: empty_icon}
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,3,2
+    whitelist:
+      components:
+        - Pill
+      tags:
+        - FoodSnack
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  # to prevent bag open/honk spam
+  - type: UseDelay
+    delay: 0.5
