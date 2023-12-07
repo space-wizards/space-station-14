@@ -28,6 +28,7 @@
   - Command
   - Maintenance
   - Chemistry
+  - External
   - ChiefMedicalOfficer
   special:
   - !type:AddImplantSpecial
