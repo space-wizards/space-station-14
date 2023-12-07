@@ -1,12 +1,12 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-               xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
+               xmlns:ui="clr-namespace:Content.Client.Medical.CrewMonitoring"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'crew-monitoring-user-interface-title'}"
                SetSize="1180 700"
                MinSize="1180 700">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
-            <ui:NavMapControl Name="NavMap" HorizontalExpand="True" VerticalExpand="True" Margin="5 5"/>
+            <ui:CrewMonitoringNavMapControl Name="NavMap" HorizontalExpand="True" VerticalExpand="True" Margin="5 5"/>
             <BoxContainer Orientation="Vertical">
                 <!--<Label StyleClasses="FancyWindowTitle" Text="Crew status" HorizontalAlignment="Center" Margin="5 5"/>-->
                 <controls:StripeBack>

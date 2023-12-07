@@ -42,7 +42,7 @@ namespace Content.Client.Medical.CrewMonitoring
                 case CrewMonitoringState st:
                     EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
 
-                    _menu?.ShowSensors(st.Sensors, xform?.Coordinates, st.Snap, st.Precision);
+                    _menu?.ShowSensors(st.Sensors, Owner, xform?.Coordinates, st.Snap, st.Precision);
                     break;
             }
         }
