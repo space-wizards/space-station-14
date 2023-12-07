@@ -1,10 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Security techfabs now produce magazines instead of individual cartridges.,
-    type: Tweak}
-  id: 4781
-  time: '2023-09-08T02:16:20.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Advanced Laser Guns are now in the Tier 3 Portable Microfusion Weaponry
@@ -2899,3 +2893,10 @@ Entries:
   - {message: 'Added a new lizard chest marking, an underbelly.', type: Add}
   id: 5280
   time: '2023-12-07T01:05:43.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: 'Adds Space Cobras, invisible at rest and venom blind.', type: Add}
+  - {message: Adds snake meat and fancy snakeskin boots., type: Add}
+  - {message: The too weak space spider has been strengthened., type: Tweak}
+  id: 5281
+  time: '2023-12-07T01:25:57.0000000+00:00'
