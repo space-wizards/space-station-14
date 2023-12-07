@@ -1,5 +1,5 @@
 reagent-name-cryptobiolin = криптобиолин
-reagent-desc-cryptobiolin = Вызывает растерянность и головокружение. Необходим для изготовления Космоциллина.
+reagent-desc-cryptobiolin = Вызывает растерянность и головокружение.
 reagent-name-dylovene = диловен
 reagent-desc-dylovene = Антитоксин широкого спектра действия, который лечит поражение кровеносной системы токсинами. Передозировка вызывает рвоту, головокружение и боль.
 reagent-name-diphenhydramine = дифенгидрамин
