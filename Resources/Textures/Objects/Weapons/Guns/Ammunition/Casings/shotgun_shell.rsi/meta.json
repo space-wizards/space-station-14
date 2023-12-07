@@ -54,6 +54,12 @@
         },
         {
             "name": "slug-spent"
+        },
+        {
+            "name": "depleted-uranium"
+        },
+        {
+            "name": "depleted-uranium-spent"
         }
     ]
 }
