@@ -1,33 +1,4 @@
 Entries:
-- author: Endecc
-  changes:
-  - {message: Secure crates are now craftable with 5 steel and 2 LV cable, type: Add}
-  id: 4775
-  time: '2023-09-07T00:25:25.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Grog recipe now requires sugar., type: Tweak}
-  id: 4776
-  time: '2023-09-07T00:32:24.0000000+00:00'
-- author: Velcroboy
-  changes:
-  - {message: Chef Velcroboy has been in the kitchen messin around with the botanicals.
-      New recipes have been developed for some extra "special" brownies. Careful with
-      these..., type: Add}
-  id: 4777
-  time: '2023-09-07T01:21:14.0000000+00:00'
-- author: Varen
-  changes:
-  - {message: 'FTL transit on damaged shuttles is not lethal anymore, but passengers
-      should still hold on tight and remain inside the vehicle.', type: Tweak}
-  id: 4778
-  time: '2023-09-07T02:13:32.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: Hyposprays can inject their solutions back into beakers/jugs/whatever
-      can hold the solution., type: Tweak}
-  id: 4779
-  time: '2023-09-07T16:49:02.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Bananium's radiation intensity increases in large stacks now., type: Tweak}
@@ -2899,3 +2870,32 @@ Entries:
   - {message: Predict helmet toggling., type: Fix}
   id: 5274
   time: '2023-12-06T06:59:31.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed emagged medibots not injecting healthy people with chloral hydrate.,
+    type: Fix}
+  id: 5275
+  time: '2023-12-06T21:30:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix toggleable clothing still being interactable e.g. hardsuit helmets.,
+    type: Fix}
+  id: 5276
+  time: '2023-12-06T21:56:03.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Combat boots and friends use a slot for sidearms instead of a storage
+      window., type: Tweak}
+  id: 5277
+  time: '2023-12-06T21:58:25.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: Speech bubbles for the living now again have names when fancy speech
+      bubbles are enabled, type: Fix}
+  id: 5278
+  time: '2023-12-06T21:58:53.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Pickaxes have a more accurate shape in storage., type: Tweak}
+  id: 5279
+  time: '2023-12-07T00:52:57.0000000+00:00'

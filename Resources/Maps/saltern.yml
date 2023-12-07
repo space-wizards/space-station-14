@@ -6599,9 +6599,9 @@ entities:
       type: Transform
 - proto: BoxBeaker
   entities:
-  - uid: 554
+  - uid: 1329
     components:
-    - pos: 19.51463,0.6960156
+    - pos: 14.265211,1.7056841
       parent: 31
       type: Transform
 - proto: BoxBeanbag
@@ -6873,14 +6873,9 @@ entities:
       type: Transform
 - proto: BoxSyringe
   entities:
-  - uid: 1329
-    components:
-    - pos: 14.499004,1.2741406
-      parent: 31
-      type: Transform
   - uid: 5093
     components:
-    - pos: 14.499004,1.6491406
+    - pos: 14.718336,1.7681841
       parent: 31
       type: Transform
 - proto: BoxZiptie
@@ -26130,6 +26125,14 @@ entities:
     - pos: -13.5,-22.5
       parent: 31
       type: Transform
+- proto: CleanerDispenser
+  entities:
+  - uid: 554
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -18.5,-13.5
+      parent: 31
+      type: Transform
 - proto: ClosetBase
   entities:
   - uid: 7853
@@ -26478,7 +26481,7 @@ entities:
             - -0.25,0.48
           mask:
           - Impassable
-          - MidImpassable
+          - TableLayer
           - LowImpassable
           layer:
           - BulletImpassable
@@ -32401,7 +32404,7 @@ entities:
     - pos: 38.5,-5.5
       parent: 31
       type: Transform
-    - secondsUntilStateChange: -1361.5829
+    - secondsUntilStateChange: -1484.1124
       state: Closing
       type: Door
   - uid: 4019
@@ -33769,6 +33772,26 @@ entities:
   - uid: 4952
     components:
     - pos: -0.37258464,13.434727
+      parent: 31
+      type: Transform
+- proto: FuelDispenser
+  entities:
+  - uid: 5080
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 20.5,0.5
+      parent: 31
+      type: Transform
+  - uid: 11337
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 30.5,15.5
+      parent: 31
+      type: Transform
+  - uid: 11338
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 31.5,-5.5
       parent: 31
       type: Transform
 - proto: GasAnalyzer
@@ -47416,12 +47439,12 @@ entities:
       type: Transform
   - uid: 2932
     components:
-    - pos: 14.506557,1.3566204
+    - pos: 14.483961,1.1119341
       parent: 31
       type: Transform
   - uid: 2949
     components:
-    - pos: 14.506557,1.5610027
+    - pos: 14.499586,1.3619341
       parent: 31
       type: Transform
   - uid: 7126
@@ -59743,11 +59766,6 @@ entities:
     components:
     - rot: -1.5707963267948966 rad
       pos: 19.5,1.5
-      parent: 31
-      type: Transform
-  - uid: 5080
-    components:
-    - pos: 19.5,0.5
       parent: 31
       type: Transform
   - uid: 5087

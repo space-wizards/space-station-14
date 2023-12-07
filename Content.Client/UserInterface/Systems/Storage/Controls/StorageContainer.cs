@@ -251,23 +251,23 @@ public sealed class StorageContainer : BaseWindow
         {
             for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
             {
-                var currentPosition = new Vector2i(x, y);
-                var item = storageComp.StoredItems
-                    .Where(pair => pair.Value.Position == currentPosition)
-                    .FirstOrNull();
-
                 var control = new Control
                 {
                     MinSize = size
                 };
 
-                if (item != null)
+                var currentPosition = new Vector2i(x, y);
+
+                foreach (var item in storageComp.StoredItems)
                 {
-                    var itemEnt = _entity.GetEntity(item.Value.Key);
+                    if (item.Value.Position != currentPosition)
+                        continue;
+
+                    var itemEnt = _entity.GetEntity(item.Key);
 
                     if (_entity.TryGetComponent<ItemComponent>(itemEnt, out var itemEntComponent))
                     {
-                        var gridPiece = new ItemGridPiece((itemEnt, itemEntComponent), item.Value.Value, _entity)
+                        var gridPiece = new ItemGridPiece((itemEnt, itemEntComponent), item.Value, _entity)
                         {
                             MinSize = size,
                         };
