@@ -160,7 +160,7 @@
       - state: depleted-uranium
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
-    count: 3
+    count: 5
     spread: 6
     proto: PelletShotgunUranium
   - type: SpentAmmoVisuals

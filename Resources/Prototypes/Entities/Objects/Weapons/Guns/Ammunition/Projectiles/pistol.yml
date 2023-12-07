@@ -42,3 +42,15 @@
       types:
         Blunt: 2
         Heat: 14
+
+- type: entity
+  id: BulletPistolUranium
+  parent: BaseBullet
+  name: bullet (.35 auto depleted uranium)
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 14
+        Piercing: 2

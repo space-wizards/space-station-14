@@ -170,5 +170,5 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 6
-        Piercing: 2
+        Radiation: 7
+        Piercing: 1

@@ -56,3 +56,15 @@
       types:
         Piercing: 26 # 20% decrease
     ignoreResistances: true
+
+- type: entity
+  id: BulletMagnumUranium
+  name: bullet (.45 magnum depleted uranium)
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 32
+        Piercing: 3
