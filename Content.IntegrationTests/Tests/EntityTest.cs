@@ -234,6 +234,8 @@ namespace Content.IntegrationTests.Tests
                 "GhostRoleMobSpawner",
                 "NukeOperativeSpawner",
                 "TimedSpawner",
+                // makes an announcement on mapInit.
+                "MobNarsie",
             };
 
             Assert.That(server.CfgMan.GetCVar(CVars.NetPVS), Is.False);
