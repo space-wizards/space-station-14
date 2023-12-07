@@ -33,7 +33,7 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
         if (message is not PlantAnalyzerScannedSeedPlantInformation cast)
             return;
 
-        _window.UpdateState(cast);
+        _window.Populate(cast);
     }
 
     protected override void Dispose(bool disposing)

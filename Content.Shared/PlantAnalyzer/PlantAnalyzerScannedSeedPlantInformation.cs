@@ -26,9 +26,9 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
     public string SeedProblems = "";
 
     public bool IsTray;
-    public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntity)
+    public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntity, String seedName)
     {
         TargetEntity = targetEntity;
-
+        SeedName = seedName;
     }
 }

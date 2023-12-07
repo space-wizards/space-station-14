@@ -6,25 +6,31 @@
         Name="RootContainer"
         Orientation="Vertical">
         <Label
-            Name="PlantName"
-            Align="Left" />
-        <RichTextLabel
-            Name="PlantHP"/>
-        <Label
-            Name="Diagnostics"
-            Text="{Loc plant-analyzer-window-no-seed-information-text}"/>
-        <RichTextLabel
-            Name="Chemistry"/>
-        <RichTextLabel
-            Name="Temperature"/>
-        <RichTextLabel
-            Name="TraitsName"/>
-        <Label
-            Name="PlantTray"
-            Align="Left" />
-        <RichTextLabel
-            Name="HealthName"/>
-        <RichTextLabel
-            Name="ProblemsName"/>
+            Name="NoData"
+            Text="{Loc plant-analyzer-window-no-seed-information-text}" />
+        <BoxContainer
+                Name="PlantDataContainer"
+                Orientation="Vertical">
+            <Label
+                Name="PlantName"/>
+            <Label
+                Name="Yield"/>
+            <Label
+                Name="Potency"/>
+            <Label
+                Name="Chemicals"/>
+            <Label
+                Name="TraitsName"/>
+            <Label
+                Name="PlantTray" />
+            <Label
+                Name="HealthName"/>
+            <Label
+                Name="ProblemsName"/>
+        </BoxContainer>
+        <BoxContainer
+            Name="GroupsContainer"
+            Orientation="Vertical">
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
