@@ -416,7 +416,14 @@
         - MobMask
         layer:
         - MobLayer
-
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepSnake
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+    
 - type: entity
   name: space adder
   parent: MobPurpleSnake

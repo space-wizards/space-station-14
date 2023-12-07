@@ -40,6 +40,14 @@
   source: "https://freesound.org/people/philRacoIndie/sounds/512483/"
 
 - files:
+  - snake1.ogg
+  - snake2.ogg
+  - snake3.ogg
+  license: "Custom"
+  copyright: "Taken from https://zvukipro.com/"
+  source: "https://zvukipro.com/jivotnie/21-zvuki-zmej.html"
+
+- files:
   - bells1.ogg
   - bells2.ogg
   - bells3.ogg
