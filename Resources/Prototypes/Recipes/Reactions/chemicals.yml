@@ -386,3 +386,16 @@
       amount: 1
   products:
     SodiumCarbonate: 4
+
+- type: reaction
+  id: SodiumPolyacrylate
+  impact: Medium
+  reactants:
+    Oxygen:
+      amount: 2
+    Sodium:
+      amount: 1
+    Nitrogen:
+      amount: 1
+  products:
+    SodiumPolyacrylate: 4

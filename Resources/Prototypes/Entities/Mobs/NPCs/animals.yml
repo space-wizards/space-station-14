@@ -391,10 +391,10 @@
     thresholds:
       0: Alive
       25: Critical
-      50: Dead
+      45: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
+    baseSprintSpeed : 4
     weightlessAcceleration: 1.5
     weightlessFriction: 1
     weightlessModifier: 1
@@ -424,7 +424,7 @@
       Unsexed: UnisexMoth
     wilhelmProbability: 0.001
   - type: MobPrice
-    price: 60
+    price: 150
   - type: Tag
     tags:
     - Trash
@@ -1158,6 +1158,8 @@
   id: MobMouse
   description: Squeak!
   components:
+  - type: Body
+    prototype: Mouse
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -1226,6 +1228,12 @@
         Base: splat-0
   - type: Food
   - type: Hunger
+    thresholds:
+      Overfed: 35
+      Okay: 25
+      Peckish: 15
+      Starving: 10
+      Dead: 0
     baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
   - type: Extractable
     grindableSolutionName: food

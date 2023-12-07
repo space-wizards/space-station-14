@@ -198,21 +198,8 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if(!silent && clothing != null && clothing.EquipSound != null && _gameTiming.IsFirstTimePredicted)
+        if (!silent && clothing != null && clothing.EquipSound != null)
         {
-            Filter filter;
-
-            if (_netMan.IsClient)
-                filter = Filter.Local();
-            else
-            {
-                filter = Filter.Pvs(target);
-
-                // don't play double audio for predicted interactions
-                if (predicted)
-                    filter.RemoveWhereAttachedEntity(entity => entity == actor);
-            }
-
             _audio.PlayPredicted(clothing.EquipSound, target, actor);
         }
 
@@ -385,23 +372,13 @@ public abstract partial class InventorySystem
         if (!slotContainer.Remove(removedItem.Value, force: force))
             return false;
 
-        _transform.DropNextTo(removedItem.Value, target);
+        // TODO: Inventory needs a hot cleanup hoo boy
+        // Check if something else (AKA toggleable) dumped it into a container.
+        if (!_containerSystem.IsEntityInContainer(removedItem.Value))
+            _transform.DropNextTo(removedItem.Value, target);
 
-        if (!silent && Resolve(removedItem.Value, ref clothing, false) && clothing.UnequipSound != null && _gameTiming.IsFirstTimePredicted)
+        if (!silent && Resolve(removedItem.Value, ref clothing, false) && clothing.UnequipSound != null)
         {
-            Filter filter;
-
-            if (_netMan.IsClient)
-                filter = Filter.Local();
-            else
-            {
-                filter = Filter.Pvs(target);
-
-                // don't play double audio for predicted interactions
-                if (predicted)
-                    filter.RemoveWhereAttachedEntity(entity => entity == actor);
-            }
-
             _audio.PlayPredicted(clothing.UnequipSound, target, actor);
         }
 
