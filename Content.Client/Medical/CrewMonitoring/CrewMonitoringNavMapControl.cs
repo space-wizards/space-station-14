@@ -22,7 +22,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         var cache = IoCManager.Resolve<IResourceCache>();
 
         _transformSystem = _entManager.System<SharedTransformSystem>();
-        _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 12);        
+        _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 12);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -37,7 +37,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         if (xform == null)
             return;
 
-        foreach ((var coords, var (netEntity, color, texture, blinks)) in TrackedEntities)
+        foreach ((var netEntity, var (coords, _, _, _)) in TrackedEntities)
         {
             if (netEntity != Focus)
                 continue;
@@ -50,8 +50,8 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
             var position = _transformSystem.GetInvWorldMatrix(xform).Transform(mapPos.Position) - GetOffset();
             position = Scale(new Vector2(position.X, -position.Y));
 
-            var name = "Unknown";
-            LocalizedNames.TryGetValue(netEntity, out name);
+            if (!LocalizedNames.TryGetValue(netEntity, out var name))
+                name = "Unknown";
 
             var labelOffset = new Vector2(0.5f, 0.5f) * MinimapScale;
             var labelPosition = position + labelOffset;

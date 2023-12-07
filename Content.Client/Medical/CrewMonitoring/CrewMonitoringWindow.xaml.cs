@@ -62,6 +62,7 @@ namespace Content.Client.Medical.CrewMonitoring
         public void ShowSensors(List<SuitSensorStatus> stSensors, EntityUid monitor, EntityCoordinates? monitorCoords, bool snap, float precision)
         {
             ClearAllSensors();
+            NavMap.TrackedEntities.Clear();
 
             var monitorCoordsInStationSpace = _stationUid != null ? monitorCoords?.WithEntityId(_stationUid.Value, _entManager).Position : null;
 
@@ -118,6 +119,7 @@ namespace Content.Client.Medical.CrewMonitoring
                 // add button with username
                 var sensorButton = new CrewMonitoringButton()
                 {
+                    SuitSensorUid = sensor.SuitSensorUid,
                     Coordinates = coordinates,
                     Margin = new Thickness(5f, 5f),
                     Disabled = (coordinates == null),
@@ -209,8 +211,8 @@ namespace Content.Client.Medical.CrewMonitoring
 
                 if (coordinates != null && NavMap.Visible && _blipTexture != null)
                 {
-                    NavMap.TrackedEntities.TryAdd(coordinates.Value,
-                        (sensor.SuitSensorUid,
+                    NavMap.TrackedEntities.TryAdd(sensor.SuitSensorUid,
+                        (coordinates.Value,
                         (_trackedEntity == null || sensor.SuitSensorUid == _trackedEntity) ? Color.LimeGreen : Color.LimeGreen * Color.DimGray,
                         _blipTexture,
                         sensor.SuitSensorUid == _trackedEntity));
@@ -226,15 +228,45 @@ namespace Content.Client.Medical.CrewMonitoring
 
                             sensorButton.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
 
+                            foreach ((var netEntity, var (coords, color, texture, blinks)) in NavMap.TrackedEntities)
+                                NavMap.TrackedEntities[netEntity] = (coords, Color.LimeGreen, texture, false);
+
                             return;
                         }
 
                         NavMap.CenterToCoordinates(coordinates.Value);
 
-                        sensorButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                        var oldTrackedEntity = _trackedEntity;
 
                         _trackedEntity = sensor.SuitSensorUid;
                         NavMap.Focus = _trackedEntity;
+
+                        foreach (var sensor in SensorsTable.Children)
+                        {
+                            if (sensor is not CrewMonitoringButton)
+                                continue;
+
+                            var castSensor = (CrewMonitoringButton) sensor;
+
+                            if (castSensor?.Coordinates == null)
+                                continue;
+
+                            if (castSensor.SuitSensorUid == oldTrackedEntity)
+                                castSensor.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
+
+                            if (NavMap.TrackedEntities.TryGetValue(castSensor.SuitSensorUid, out var data))
+                            {
+                                data =
+                                    (data.Coordinates,
+                                    (_trackedEntity == null || castSensor.SuitSensorUid == _trackedEntity) ? Color.LimeGreen : Color.LimeGreen * Color.DimGray,
+                                    data.Texture,
+                                    false);
+
+                                NavMap.TrackedEntities[castSensor.SuitSensorUid] = data;
+                            }
+                        }
+
+                        sensorButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
                     };
                 }
             }
@@ -242,7 +274,7 @@ namespace Content.Client.Medical.CrewMonitoring
             // Show monitor point
             if (monitorCoords != null && _blipTexture != null)
             {
-                NavMap.TrackedEntities[monitorCoords.Value] = (_entManager.GetNetEntity(monitor), Color.Cyan, _blipTexture, true);
+                NavMap.TrackedEntities[_entManager.GetNetEntity(monitor)] = (monitorCoords.Value, Color.Cyan, _blipTexture, true);
             }
         }
 
@@ -293,7 +325,7 @@ namespace Content.Client.Medical.CrewMonitoring
     public sealed class CrewMonitoringButton : Button
     {
         public int IndexInTable;
-        public EntityUid? SuitSensorUid;
+        public NetEntity SuitSensorUid;
         public EntityCoordinates? Coordinates;
     }
 }

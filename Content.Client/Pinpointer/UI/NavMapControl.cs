@@ -35,7 +35,7 @@ public partial class NavMapControl : MapGridControl
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
-    public Dictionary<EntityCoordinates, (NetEntity NetEntity, Color Color, Texture Texture, bool Blinks)> TrackedEntities = new();
+    public Dictionary<NetEntity, (EntityCoordinates Coordinates, Color Color, Texture Texture, bool Blinks)> TrackedEntities = new();
     public Dictionary<Vector2i, List<NavMapLine>> TileGrid = default!;
 
     // Default colors
@@ -191,25 +191,26 @@ public partial class NavMapControl : MapGridControl
             var worldPosition = _transformSystem.GetWorldMatrix(_xform).Transform(new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offset);
 
             // Find closest tracked entity in range
-            var allCoords = TrackedEntities.Keys;
+            var closestEntity = NetEntity.Invalid;
             var closestCoords = new EntityCoordinates();
             var closestDistance = float.PositiveInfinity;
 
-            foreach (var currentCoords in allCoords)
+            foreach ((var currentEntity, var (currentCoords, _, _, _)) in TrackedEntities)
             {
                 var currentDistance = (currentCoords.ToMapPos(_entManager, _transformSystem) - worldPosition).Length();
 
                 if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
                     continue;
 
+                closestEntity = currentEntity;
                 closestCoords = currentCoords;
                 closestDistance = currentDistance;
             }
 
-            if (closestDistance > MaxSelectableDistance)
+            if (closestDistance > MaxSelectableDistance || !closestEntity.IsValid())
                 return;
 
-            TrackedEntitySelectedAction.Invoke(TrackedEntities[closestCoords].NetEntity);
+            TrackedEntitySelectedAction.Invoke(closestEntity);
         }
 
         else if (args.Function == EngineKeyFunctions.UIRightClick)
@@ -365,15 +366,15 @@ public partial class NavMapControl : MapGridControl
         // Tracked entities (can use a supplied sprite as a marker instead; should probably just replace TrackedCoordinates with this eventually)
         var iconVertexUVs = new Dictionary<(Texture, Color), ValueList<DrawVertexUV2D>>();
 
-        foreach ((var coord, var value) in TrackedEntities)
+        foreach ((var coord, var color, var texture, var blinks) in TrackedEntities.Values)
         {
-            if (value.Blinks && !lit)
+            if (blinks && !lit)
                 continue;
 
-            if (value.Texture == null)
+            if (texture == null)
                 continue;
 
-            if (!iconVertexUVs.TryGetValue((value.Texture, value.Color), out var vertexUVs))
+            if (!iconVertexUVs.TryGetValue((texture, color), out var vertexUVs))
                 vertexUVs = new();
 
             var mapPos = coord.ToMap(_entManager, _transformSystem);
@@ -394,7 +395,7 @@ public partial class NavMapControl : MapGridControl
                 vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X + positionOffset, position.Y + positionOffset), new Vector2(0f, 0f)));
             }
 
-            iconVertexUVs[(value.Texture, value.Color)] = vertexUVs;
+            iconVertexUVs[(texture, color)] = vertexUVs;
         }
 
         foreach ((var (texture, color), var vertexUVs) in iconVertexUVs)
@@ -411,22 +412,21 @@ public partial class NavMapControl : MapGridControl
         var beconTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")));
 
         // Beacons
-        var labelOffset = new Vector2(0.5f, 0.5f) * MinimapScale;
-        var rectBuffer = new Vector2(5f, 3f);
-        var beaconColor = Color.FromSrgb(Color.Red);
-
-        foreach (var beacon in _navMap.Beacons)
+        if (_beacons.Pressed)
         {
-            var position = beacon.Position - offset;
-
-            position = Scale(position with { Y = -position.Y });
-
-            handle.DrawCircle(position, 3f, beacon.Color);
-            var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
-
-            var labelPosition = position;
-            handle.DrawRect(new UIBox2(labelPosition, labelPosition + textDimensions + rectBuffer * 2), beaconColor);
-            handle.DrawString(_font, labelPosition + rectBuffer, beacon.Text, beacon.Color);
+            var labelOffset = new Vector2(0.5f, 0.5f) * MinimapScale;
+            var rectBuffer = new Vector2(5f, 3f);
+            var beaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
+            foreach (var beacon in _navMap.Beacons)
+            {
+                var position = beacon.Position - offset;
+                position = Scale(position with { Y = -position.Y });
+                handle.DrawCircle(position, MinimapScale / 2f, beacon.Color);
+                var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
+                var labelPosition = position + labelOffset;
+                handle.DrawRect(new UIBox2(labelPosition, labelPosition + textDimensions + rectBuffer * 2), beaconColor);
+                handle.DrawString(_font, labelPosition + rectBuffer, beacon.Text, beacon.Color);
+            }
         }
     }
 
