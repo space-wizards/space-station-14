@@ -8,6 +8,7 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Tag;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Mindshield;
 
@@ -21,25 +22,44 @@ public sealed class MindShieldSystem : EntitySystem
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     [ValidatePrototypeId<TagPrototype>]
     public const string MindShieldTag = "MindShield";
+    public const string CommandMindShieldTag = "CommandMindShield";
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SubdermalImplantComponent, ImplantImplantedEvent>(ImplantCheck);
+        SubscribeLocalEvent<SubdermalImplantComponent, ImplantImplantedEvent>(ImplantAddedCheck);
+        SubscribeLocalEvent<SubdermalImplantComponent, ImplantRemovedEvent>(ImplantRemovedCheck);
     }
 
     /// <summary>
-    /// Checks if the implant was a mindshield or not
+    /// Checks if the added implant was a mindshield or not
     /// </summary>
-    public void ImplantCheck(EntityUid uid, SubdermalImplantComponent comp, ref ImplantImplantedEvent ev)
+    public void ImplantAddedCheck(EntityUid uid, SubdermalImplantComponent comp, ref ImplantImplantedEvent ev)
     {
         if (_tag.HasTag(ev.Implant, MindShieldTag) && ev.Implanted != null)
         {
             EnsureComp<MindShieldComponent>(ev.Implanted.Value);
             MindShieldRemovalCheck(ev.Implanted.Value, ev.Implant);
+        }
+
+        if (_tag.HasTag(ev.Implant, CommandMindShieldTag) && ev.Implanted != null)
+        {
+            EnsureComp<CommandMindShieldComponent>(ev.Implanted.Value);
+        }
+    }
+
+    /// <summary>
+    /// Checks if the removed implant was a mindshield or not
+    /// </summary>
+    public void ImplantRemovedCheck(EntityUid uid, SubdermalImplantComponent comp, ref ImplantRemovedEvent ev)
+    {
+        if (_tag.HasTag(ev.Implant, MindShieldTag) && ev.Implanted != null)
+        {
+            RemCompDeferred<MindShieldComponent>(ev.Implanted.Value);
         }
     }
 
@@ -51,6 +71,12 @@ public sealed class MindShieldSystem : EntitySystem
         if (HasComp<HeadRevolutionaryComponent>(implanted))
         {
             _popupSystem.PopupEntity(Loc.GetString("head-rev-break-mindshield"), implanted);
+            QueueDel(implant);
+            return;
+        }
+
+        if (HasComp<CommandMindShieldComponent>(implanted) && !_tag.HasTag(implant, CommandMindShieldTag) && _tag.HasTag(implant, MindShieldTag))
+        {
             QueueDel(implant);
             return;
         }

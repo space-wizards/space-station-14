@@ -308,7 +308,20 @@
   noSpawn: true
   components:
    - type: SubdermalImplant
+   - type: Tag
+     tags:
+       - MindShield
+      
+- type: entity
+  parent: MindShieldImplant
+  id: CommandMindShieldImplant
+  name: mind-shield implant
+  suffix: Command
+  description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices. Unremovable.
+  components:
+   - type: SubdermalImplant
      permanent: true
    - type: Tag
      tags:
        - MindShield
+       - CommandMindShield
