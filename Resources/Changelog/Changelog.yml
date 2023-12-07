@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Gauze is now more effective at treating slash and piercing damage.,
-    type: Tweak}
-  id: 4784
-  time: '2023-09-09T18:32:00.0000000+00:00'
 - author: JoeHammad
   changes:
   - {message: Fingerless gloves are now available in the SecDrobe, type: Add}
@@ -2901,3 +2895,8 @@ Entries:
       just when worn.', type: Add}
   id: 5283
   time: '2023-12-07T03:41:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed explosion resistance being ignored., type: Fix}
+  id: 5284
+  time: '2023-12-07T18:51:46.0000000+00:00'
