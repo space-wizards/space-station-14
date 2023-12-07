@@ -24,7 +24,6 @@ public sealed class MindShieldSystem : EntitySystem
 
     [ValidatePrototypeId<TagPrototype>]
     public const string MindShieldTag = "MindShield";
-    public const string CommandMindShieldTag = "CommandMindShield";
 
     public override void Initialize()
     {
