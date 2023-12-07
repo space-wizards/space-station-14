@@ -235,7 +235,7 @@ namespace Content.IntegrationTests.Tests
                 "NukeOperativeSpawner",
                 "TimedSpawner",
                 // makes an announcement on mapInit.
-                "MobNarsie",
+                "AnnounceOnSpawn",
             };
 
             Assert.That(server.CfgMan.GetCVar(CVars.NetPVS), Is.False);
