@@ -308,6 +308,9 @@
   noSpawn: true
   components:
    - type: SubdermalImplant
+     blacklist:
+        components:
+        - CommandStaff # prevent command staff from getting extra mindshields
    - type: Tag
      tags:
        - MindShield

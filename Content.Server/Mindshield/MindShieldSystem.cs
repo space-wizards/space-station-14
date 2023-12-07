@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Mind;
 using Content.Server.Popups;
+using Content.Server.Revolutionary.Components;
 using Content.Server.Roles;
 using Content.Shared.Database;
 using Content.Shared.Implants;
@@ -43,11 +44,6 @@ public sealed class MindShieldSystem : EntitySystem
             EnsureComp<MindShieldComponent>(ev.Implanted.Value);
             MindShieldRemovalCheck(ev.Implanted.Value, ev.Implant);
         }
-
-        if (_tag.HasTag(ev.Implant, CommandMindShieldTag) && ev.Implanted != null)
-        {
-            EnsureComp<CommandMindShieldComponent>(ev.Implanted.Value);
-        }
     }
 
     /// <summary>
@@ -69,12 +65,6 @@ public sealed class MindShieldSystem : EntitySystem
         if (HasComp<HeadRevolutionaryComponent>(implanted))
         {
             _popupSystem.PopupEntity(Loc.GetString("head-rev-break-mindshield"), implanted);
-            QueueDel(implant);
-            return;
-        }
-
-        if (HasComp<CommandMindShieldComponent>(implanted) && !_tag.HasTag(implant, CommandMindShieldTag) && _tag.HasTag(implant, MindShieldTag))
-        {
             QueueDel(implant);
             return;
         }
