@@ -970,11 +970,11 @@
         damage:
           types:
             Piercing: -4
-            Blunt: 0.1
+            Blunt: 0.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 11
+          min: 10
         damage:
           types:
             Blunt: 5
