@@ -148,19 +148,22 @@ namespace Content.Server.Administration.Systems
                     });
 
                     // Erase
-                    args.Verbs.Add(new Verb
+                    if (_adminManager.HasAdminFlag(player, AdminFlags.Ban)) // SS220 Mentor buttons restrict
                     {
-                        Text = Loc.GetString("admin-verbs-erase"),
-                        Message = Loc.GetString("admin-verbs-erase-description"),
-                        Category = VerbCategory.Admin,
-                        Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
-                        Act = () =>
+                        args.Verbs.Add(new Verb
                         {
-                            _adminSystem.Erase(targetActor.PlayerSession);
-                        },
-                        Impact = LogImpact.Extreme,
-                        ConfirmationPopup = true
-                    });
+                            Text = Loc.GetString("admin-verbs-erase"),
+                            Message = Loc.GetString("admin-verbs-erase-description"),
+                            Category = VerbCategory.Admin,
+                            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
+                            Act = () =>
+                            {
+                                _adminSystem.Erase(targetActor.PlayerSession);
+                            },
+                            Impact = LogImpact.Extreme,
+                            ConfirmationPopup = true
+                        });
+                    }
 
                 // Respawn
                     args.Verbs.Add(new Verb()
@@ -204,30 +207,33 @@ namespace Content.Server.Administration.Systems
                     });
 
                     // Clone - Spawn but without the mind transfer, also spawns at the user's coordinates not the target's
-                    args.Verbs.Add(new Verb()
+                    if (_adminManager.HasAdminFlag(player, AdminFlags.Ban)) 
                     {
-                        Text = Loc.GetString("admin-player-actions-clone"),
-                        Category = VerbCategory.Admin,
-                        Act = () =>
+                        args.Verbs.Add(new Verb()
                         {
-                            if (!_transformSystem.TryGetMapOrGridCoordinates(args.User, out var coords))
+                            Text = Loc.GetString("admin-player-actions-clone"),
+                            Category = VerbCategory.Admin,
+                            Act = () =>
                             {
-                                _popup.PopupEntity(Loc.GetString("admin-player-spawn-failed"), args.User, args.User);
-                                return;
-                            }
+                                if (!_transformSystem.TryGetMapOrGridCoordinates(args.User, out var coords))
+                                {
+                                    _popup.PopupEntity(Loc.GetString("admin-player-spawn-failed"), args.User, args.User);
+                                    return;
+                                }
 
-                            var stationUid = _stations.GetOwningStation(args.Target);
+                                var stationUid = _stations.GetOwningStation(args.Target);
 
-                            var profile = _ticker.GetPlayerProfile(targetActor.PlayerSession);
-                            _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
-                        },
-                        ConfirmationPopup = true,
-                        Impact = LogImpact.High,
-                    });
+                                var profile = _ticker.GetPlayerProfile(targetActor.PlayerSession);
+                                _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
+                            },
+                            ConfirmationPopup = true,
+                            Impact = LogImpact.High,
+                        });
+                    }
                 }
 
                 // Admin Logs
-                if (_adminManager.HasAdminFlag(player, AdminFlags.Logs))
+                if (_adminManager.HasAdminFlag(player, AdminFlags.Logs)) // SS220 Mentor buttons restrict
                 {
                     Verb logsVerbEntity = new()
                     {
@@ -338,7 +344,8 @@ namespace Content.Server.Administration.Systems
             }
 
             // XenoArcheology
-            if (_adminManager.IsAdmin(player) && TryComp<ArtifactComponent>(args.Target, out var artifact))
+            if (_adminManager.IsAdmin(player) && TryComp<ArtifactComponent>(args.Target, out var artifact)
+                && _adminManager.HasAdminFlag(player, AdminFlags.Ban)) // SS220 Mentor buttons restrict
             {
                 // make artifact always active (by adding timer trigger)
                 args.Verbs.Add(new Verb()
