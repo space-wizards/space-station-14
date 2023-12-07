@@ -112,17 +112,19 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    /// Convert an entity-uid to a matching entity specifier. Usefull when doing entity lookups & checking that the
-    /// right quantity of entities/materials werre produced.
+    /// Convert an entity-uid to a matching entity specifier. Useful when doing entity lookups & checking that the
+    /// right quantity of entities/materials werre produced. Returns null if passed an entity with a null prototype.
     /// </summary>
-    protected EntitySpecifier ToEntitySpecifier(EntityUid uid)
+    protected EntitySpecifier? ToEntitySpecifier(EntityUid uid)
     {
         if (SEntMan.TryGetComponent(uid, out StackComponent? stack))
             return new EntitySpecifier(stack.StackTypeId, stack.Count) { Converted = true };
 
         var meta = SEntMan.GetComponent<MetaDataComponent>(uid);
-        Assert.That(meta.EntityPrototype, Is.Not.Null);
 
-        return new(meta.EntityPrototype!.ID, 1) { Converted = true };
+        if (meta.EntityPrototype is null)
+            return null;
+
+        return new(meta.EntityPrototype.ID, 1) { Converted = true };
     }
 }
