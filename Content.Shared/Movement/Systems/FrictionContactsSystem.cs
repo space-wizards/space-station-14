@@ -5,67 +5,39 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Movement.Systems;
 
-public sealed class FrictionContactsSystem : EntitySystem
+public sealed class FrictionContactsSystem : SharedContactsSystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
-
-    // Comment copied from "original" SlowContactsSystem.cs
-    // TODO full-game-save 
-    // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
-    private HashSet<EntityUid> _toUpdate = new();
-
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<FrictionContactsComponent, StartCollideEvent>(OnEntityEnter);
         SubscribeLocalEvent<FrictionContactsComponent, EndCollideEvent>(OnEntityExit);
         SubscribeLocalEvent<FrictionContactsComponent, ComponentShutdown>(OnShutdown);
 
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
     }
-
     private void OnEntityEnter(EntityUid uid, FrictionContactsComponent component, ref StartCollideEvent args)
     {
-        var otherUid = args.OtherEntity;
-
-        if (!HasComp(otherUid, typeof(MovementSpeedModifierComponent)))
-            return;
-
-        _toUpdate.Add(otherUid);
+        OnEntityEnter_Contacts(uid, component, ref args);
     }
 
     private void OnEntityExit(EntityUid uid, FrictionContactsComponent component, ref EndCollideEvent args)
     {
-        var otherUid = args.OtherEntity;
-
-        if (!HasComp(otherUid, typeof(MovementSpeedModifierComponent)))
-            return;
-
-        _toUpdate.Add(otherUid);
+        OnEntityExit_Contacts(uid, component, ref args);
     }
 
     private void OnShutdown(EntityUid uid, FrictionContactsComponent component, ComponentShutdown args)
     {
-        if (!TryComp(uid, out PhysicsComponent? phys))
-            return;
-
-        _toUpdate.UnionWith(_physics.GetContactingEntities(uid, phys));
+        OnShutdown_Contacts(uid, component, args);
     }
 
-    public override void Update(float frameTime)
+    public void Update(float frameTime, FrictionContactsComponent component)
     {
-        base.Update(frameTime);
-
-        foreach (var uid in _toUpdate)
-        {
-            ApplyFrictionChange(uid);
-        }
-
-        _toUpdate.Clear();
+        Update_Contacts(frameTime, component);
     }
 
-    private void ApplyFrictionChange(EntityUid uid)
+    public void ApplyFrictionChange(EntityUid uid)
     {
         if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
             return;
