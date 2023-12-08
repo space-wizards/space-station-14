@@ -19,7 +19,7 @@ pai-system-stopped-searching = Устройство прекратило пои�
 pai-system-pai-name = пИИ {CAPITALIZE($owner)}
 pai-system-pai-name-raw = {$name} пИИ
 
-pai-system-brick-popup = Сеть пИИ громко бзыкает и выдыхается!
+pai-system-brick-popup = Сеть пИИ громко взрывается и выдыхается!
 pai-system-scramble-popup = Сеть пИИ перегружено электричеством!
 
 
