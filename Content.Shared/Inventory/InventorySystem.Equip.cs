@@ -17,6 +17,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Inventory;
 
@@ -47,12 +48,10 @@ public abstract partial class InventorySystem
 
     protected void QuickEquip(EntityUid uid, ClothingComponent component, UseInHandEvent args)
     {
-        if (!TryComp(args.User, out InventoryComponent? inv)
-            || !TryComp(args.User, out HandsComponent? hands)
-            || !_prototypeManager.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var prototype))
+        if (!TryComp(args.User, out InventoryComponent? inv) || !HasComp<HandsComponent>(args.User))
             return;
 
-        foreach (var slotDef in prototype.Slots)
+        foreach (var slotDef in inv.Slots)
         {
             if (!CanEquip(args.User, uid, slotDef.Name, out _, slotDef, inv))
                 continue;
@@ -255,6 +254,7 @@ public abstract partial class InventorySystem
         if (slotDefinition == null && !TryGetSlot(target, slot, out slotDefinition, inventory: inventory))
             return false;
 
+        DebugTools.Assert(slotDefinition.Name == slot);
         if (slotDefinition.DependsOn != null && !TryGetSlotEntity(target, slotDefinition.DependsOn, out _, inventory))
             return false;
 
@@ -347,7 +347,8 @@ public abstract partial class InventorySystem
 
         removedItem = slotContainer.ContainedEntity;
 
-        if (!removedItem.HasValue) return false;
+        if (!removedItem.HasValue)
+            return false;
 
         if (!force && !CanUnequip(actor, target, slot, out var reason, slotContainer, slotDefinition, inventory))
         {
@@ -360,7 +361,7 @@ public abstract partial class InventorySystem
         if (!force && !_containerSystem.CanRemove(removedItem.Value, slotContainer))
             return false;
 
-        foreach (var slotDef in GetSlots(target, inventory))
+        foreach (var slotDef in inventory.Slots)
         {
             if (slotDef != slotDefinition && slotDef.DependsOn == slotDefinition.Name)
             {
