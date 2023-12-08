@@ -1,78 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Fixes crates requiring to be welded to deconstruct them., type: Fix}
-  id: 4773
-  time: '2023-09-06T18:18:14.0000000+00:00'
-- author: potato1234x
-  changes:
-  - {message: Added back the old glass tiles while keeping the new ones as a fancier
-      alternative., type: Add}
-  id: 4774
-  time: '2023-09-06T21:41:53.0000000+00:00'
-- author: Endecc
-  changes:
-  - {message: Secure crates are now craftable with 5 steel and 2 LV cable, type: Add}
-  id: 4775
-  time: '2023-09-07T00:25:25.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Grog recipe now requires sugar., type: Tweak}
-  id: 4776
-  time: '2023-09-07T00:32:24.0000000+00:00'
-- author: Velcroboy
-  changes:
-  - {message: Chef Velcroboy has been in the kitchen messin around with the botanicals.
-      New recipes have been developed for some extra "special" brownies. Careful with
-      these..., type: Add}
-  id: 4777
-  time: '2023-09-07T01:21:14.0000000+00:00'
-- author: Varen
-  changes:
-  - {message: 'FTL transit on damaged shuttles is not lethal anymore, but passengers
-      should still hold on tight and remain inside the vehicle.', type: Tweak}
-  id: 4778
-  time: '2023-09-07T02:13:32.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: Hyposprays can inject their solutions back into beakers/jugs/whatever
-      can hold the solution., type: Tweak}
-  id: 4779
-  time: '2023-09-07T16:49:02.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Bananium's radiation intensity increases in large stacks now., type: Tweak}
-  id: 4780
-  time: '2023-09-07T21:59:08.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Security techfabs now produce magazines instead of individual cartridges.,
-    type: Tweak}
-  id: 4781
-  time: '2023-09-08T02:16:20.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Advanced Laser Guns are now in the Tier 3 Portable Microfusion Weaponry
-      research., type: Tweak}
-  id: 4782
-  time: '2023-09-08T02:25:05.0000000+00:00'
-- author: SonicHDC
-  changes:
-  - {message: Added steel bench!, type: Add}
-  - {message: Fixed some sprites rotations!, type: Fix}
-  id: 4783
-  time: '2023-09-09T12:56:11.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Gauze is now more effective at treating slash and piercing damage.,
-    type: Tweak}
-  id: 4784
-  time: '2023-09-09T18:32:00.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: Fingerless gloves are now available in the SecDrobe, type: Add}
-  id: 4785
-  time: '2023-09-09T18:59:03.0000000+00:00'
 - author: DrTeaSpoon
   changes:
   - {message: Crossing plants may now combine their produced chemicals., type: Tweak}
@@ -2900,3 +2826,77 @@ Entries:
       window" toggle in the graphics menu., type: Add}
   id: 5272
   time: '2023-12-05T23:38:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reverted duffel bags to their original storage capacity., type: Fix}
+  id: 5273
+  time: '2023-12-06T03:11:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Predict helmet toggling., type: Fix}
+  id: 5274
+  time: '2023-12-06T06:59:31.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed emagged medibots not injecting healthy people with chloral hydrate.,
+    type: Fix}
+  id: 5275
+  time: '2023-12-06T21:30:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix toggleable clothing still being interactable e.g. hardsuit helmets.,
+    type: Fix}
+  id: 5276
+  time: '2023-12-06T21:56:03.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Combat boots and friends use a slot for sidearms instead of a storage
+      window., type: Tweak}
+  id: 5277
+  time: '2023-12-06T21:58:25.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: Speech bubbles for the living now again have names when fancy speech
+      bubbles are enabled, type: Fix}
+  id: 5278
+  time: '2023-12-06T21:58:53.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Pickaxes have a more accurate shape in storage., type: Tweak}
+  id: 5279
+  time: '2023-12-07T00:52:57.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: 'Added a new lizard chest marking, an underbelly.', type: Add}
+  id: 5280
+  time: '2023-12-07T01:05:43.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: 'Adds Space Cobras, invisible at rest and venom blind.', type: Add}
+  - {message: Adds snake meat and fancy snakeskin boots., type: Add}
+  - {message: The too weak space spider has been strengthened., type: Tweak}
+  id: 5281
+  time: '2023-12-07T01:25:57.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: Added three new specialized brute healing chemicals and a guidebook
+      entry on how to safely use them., type: Add}
+  - {message: 'Added Razorium, which is basically liquid razor blades.', type: Add}
+  id: 5282
+  time: '2023-12-07T03:05:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Speed penalties for duffels and hardsuits now apply when held, not
+      just when worn.', type: Add}
+  id: 5283
+  time: '2023-12-07T03:41:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed explosion resistance being ignored., type: Fix}
+  id: 5284
+  time: '2023-12-07T18:51:46.0000000+00:00'
+- author: Aexxie
+  changes:
+  - {message: Paramed no longer has external access., type: Remove}
+  id: 5285
+  time: '2023-12-07T23:27:18.0000000+00:00'

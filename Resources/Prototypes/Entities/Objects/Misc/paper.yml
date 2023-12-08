@@ -337,6 +337,7 @@
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     size: Small
+    shape: null
   - type: Storage
     maxItemSize: Small
     grid:

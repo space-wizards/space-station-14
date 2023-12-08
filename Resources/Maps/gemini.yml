@@ -14162,6 +14162,9 @@ entities:
     - pos: 0.5,-22.5
       parent: 2
       type: Transform
+    - secondsUntilStateChange: -827.9704
+      state: Opening
+      type: Door
   - uid: 426
     components:
     - pos: -6.5,-16.5
@@ -14466,7 +14469,7 @@ entities:
       pos: -1.5,10.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22919.445
+    - secondsUntilStateChange: -23788.28
       state: Opening
       type: Door
 - proto: AirlockResearchDirectorLocked
@@ -14477,7 +14480,7 @@ entities:
       pos: -2.5,11.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22919.08
+    - secondsUntilStateChange: -23787.914
       state: Opening
       type: Door
 - proto: AirlockSalvageGlassLocked
@@ -14513,7 +14516,7 @@ entities:
       pos: 24.5,72.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -21473.215
+    - secondsUntilStateChange: -22342.049
       state: Opening
       type: Door
   - uid: 505
@@ -14540,7 +14543,7 @@ entities:
       pos: 18.5,68.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -37346.625
+    - secondsUntilStateChange: -38215.46
       state: Opening
       type: Door
   - uid: 512
@@ -14555,7 +14558,7 @@ entities:
       pos: 23.5,72.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -21473.646
+    - secondsUntilStateChange: -22342.48
       state: Opening
       type: Door
   - uid: 13063
@@ -14585,7 +14588,7 @@ entities:
     - pos: 10.5,6.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22922.012
+    - secondsUntilStateChange: -23790.846
       state: Opening
       type: Door
   - uid: 496
@@ -14593,7 +14596,7 @@ entities:
     - pos: -0.5,15.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22915.713
+    - secondsUntilStateChange: -23784.547
       state: Opening
       type: Door
   - uid: 497
@@ -14603,7 +14606,7 @@ entities:
     - pos: 2.5,7.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22376.68
+    - secondsUntilStateChange: -23245.514
       state: Opening
       type: Door
   - uid: 498
@@ -14612,7 +14615,7 @@ entities:
       pos: 11.5,3.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -60137.055
+    - secondsUntilStateChange: -61005.89
       state: Opening
       type: Door
   - uid: 499
@@ -14620,7 +14623,7 @@ entities:
     - pos: 5.5,19.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22931.812
+    - secondsUntilStateChange: -23800.646
       state: Opening
       type: Door
   - uid: 500
@@ -14628,7 +14631,7 @@ entities:
     - pos: -0.5,16.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22915.945
+    - secondsUntilStateChange: -23784.78
       state: Opening
       type: Door
   - uid: 501
@@ -14636,7 +14639,7 @@ entities:
     - pos: 13.5,13.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22930.246
+    - secondsUntilStateChange: -23799.08
       state: Opening
       type: Door
   - uid: 502
@@ -14644,7 +14647,7 @@ entities:
     - pos: 14.5,13.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22930.547
+    - secondsUntilStateChange: -23799.38
       state: Opening
       type: Door
 - proto: AirlockScienceLocked
@@ -14654,7 +14657,7 @@ entities:
     - pos: 27.5,13.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22892.047
+    - secondsUntilStateChange: -23760.88
       state: Opening
       type: Door
   - uid: 504
@@ -14662,7 +14665,7 @@ entities:
     - pos: 30.5,13.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22890.479
+    - secondsUntilStateChange: -23759.312
       state: Opening
       type: Door
   - uid: 513
@@ -14671,7 +14674,7 @@ entities:
       pos: 17.5,15.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22929.213
+    - secondsUntilStateChange: -23798.047
       state: Opening
       type: Door
   - uid: 514
@@ -14679,7 +14682,7 @@ entities:
     - pos: 30.5,12.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22890.746
+    - secondsUntilStateChange: -23759.58
       state: Opening
       type: Door
   - uid: 515
@@ -14687,7 +14690,7 @@ entities:
     - pos: 27.5,12.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22892.346
+    - secondsUntilStateChange: -23761.18
       state: Opening
       type: Door
   - uid: 516
@@ -14695,7 +14698,7 @@ entities:
     - pos: 15.5,19.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -64222.914
+    - secondsUntilStateChange: -65091.75
       state: Opening
       type: Door
   - uid: 517
@@ -14703,7 +14706,7 @@ entities:
     - pos: 11.5,19.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22933.613
+    - secondsUntilStateChange: -23802.447
       state: Opening
       type: Door
   - uid: 518
@@ -14712,7 +14715,7 @@ entities:
       pos: 17.5,14.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22929.479
+    - secondsUntilStateChange: -23798.312
       state: Opening
       type: Door
   - uid: 520
@@ -14721,7 +14724,7 @@ entities:
       pos: 22.5,15.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22927.746
+    - secondsUntilStateChange: -23796.58
       state: Opening
       type: Door
   - uid: 521
@@ -14730,7 +14733,7 @@ entities:
       pos: 22.5,14.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22927.479
+    - secondsUntilStateChange: -23796.312
       state: Opening
       type: Door
 - proto: AirlockSecurity
@@ -20352,7 +20355,7 @@ entities:
             - -0.45,0.45
           mask:
           - Impassable
-          - MidImpassable
+          - TableLayer
           - LowImpassable
           layer:
           - BulletImpassable
@@ -20382,7 +20385,7 @@ entities:
             - -0.45,0.45
           mask:
           - Impassable
-          - MidImpassable
+          - TableLayer
           - LowImpassable
           layer:
           - BulletImpassable
@@ -39715,6 +39718,41 @@ entities:
   - uid: 26756
     components:
     - pos: 9.5,22.5
+      parent: 2
+      type: Transform
+  - uid: 26783
+    components:
+    - pos: 8.5,70.5
+      parent: 2
+      type: Transform
+  - uid: 26784
+    components:
+    - pos: 7.5,70.5
+      parent: 2
+      type: Transform
+  - uid: 26788
+    components:
+    - pos: 0.5,19.5
+      parent: 2
+      type: Transform
+  - uid: 26789
+    components:
+    - pos: 0.5,20.5
+      parent: 2
+      type: Transform
+  - uid: 26790
+    components:
+    - pos: 0.5,21.5
+      parent: 2
+      type: Transform
+  - uid: 26791
+    components:
+    - pos: 0.5,22.5
+      parent: 2
+      type: Transform
+  - uid: 26792
+    components:
+    - pos: 0.5,23.5
       parent: 2
       type: Transform
 - proto: CableApcStack
@@ -67774,7 +67812,7 @@ entities:
       type: Transform
 - proto: ComputerFrame
   entities:
-  - uid: 9967
+  - uid: 3270
     components:
     - rot: 1.5707963267948966 rad
       pos: -51.5,-35.5
@@ -68769,6 +68807,11 @@ entities:
         - 0
         - 0
       type: EntityStorage
+  - uid: 26785
+    components:
+    - pos: -27.5,47.5
+      parent: 2
+      type: Transform
 - proto: CrateFilledSpawner
   entities:
   - uid: 10082
@@ -78587,6 +78630,125 @@ entities:
     - enabled: True
       type: PointLight
     - type: ActiveEmergencyLight
+  - uid: 22145
+    components:
+    - pos: 27.5,10.5
+      parent: 2
+      type: Transform
+  - uid: 26764
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 23.5,16.5
+      parent: 2
+      type: Transform
+  - uid: 26765
+    components:
+    - pos: 14.5,15.5
+      parent: 2
+      type: Transform
+  - uid: 26766
+    components:
+    - pos: 8.5,18.5
+      parent: 2
+      type: Transform
+  - uid: 26767
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 0.5,14.5
+      parent: 2
+      type: Transform
+  - uid: 26768
+    components:
+    - pos: -5.5,10.5
+      parent: 2
+      type: Transform
+  - uid: 26769
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -1.5,13.5
+      parent: 2
+      type: Transform
+  - uid: 26770
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 0.5,6.5
+      parent: 2
+      type: Transform
+  - uid: 26771
+    components:
+    - pos: 11.5,8.5
+      parent: 2
+      type: Transform
+  - uid: 26772
+    components:
+    - pos: 8.5,15.5
+      parent: 2
+      type: Transform
+  - uid: 26773
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 9.5,22.5
+      parent: 2
+      type: Transform
+  - uid: 26774
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 14.5,18.5
+      parent: 2
+      type: Transform
+  - uid: 26775
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 3.5,22.5
+      parent: 2
+      type: Transform
+  - uid: 26776
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 1.5,24.5
+      parent: 2
+      type: Transform
+  - uid: 26777
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -3.5,17.5
+      parent: 2
+      type: Transform
+  - uid: 26778
+    components:
+    - pos: 1.5,55.5
+      parent: 2
+      type: Transform
+  - uid: 26779
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -8.5,55.5
+      parent: 2
+      type: Transform
+  - uid: 26780
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -3.5,62.5
+      parent: 2
+      type: Transform
+  - uid: 26781
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 5.5,70.5
+      parent: 2
+      type: Transform
+  - uid: 26782
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -4.5,76.5
+      parent: 2
+      type: Transform
+  - uid: 26793
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 4.5,60.5
+      parent: 2
+      type: Transform
 - proto: EmergencyRollerBed
   entities:
   - uid: 11614
@@ -82004,7 +82166,7 @@ entities:
     - pos: 19.5,62.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -60718.285
+    - secondsUntilStateChange: -61587.12
       state: Closing
       type: Door
   - uid: 12058
@@ -119051,7 +119213,7 @@ entities:
     - pos: 29.5,63.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -36488.92
+    - secondsUntilStateChange: -37357.758
       state: Opening
       type: Door
 - proto: HospitalCurtainsOpen
@@ -120408,9 +120570,9 @@ entities:
       type: EntityStorage
 - proto: LockerEngineerFilled
   entities:
-  - uid: 17585
+  - uid: 9967
     components:
-    - pos: -27.5,47.5
+    - pos: -10.5,41.5
       parent: 2
       type: Transform
   - uid: 17586
@@ -120426,6 +120588,11 @@ entities:
   - uid: 17588
     components:
     - pos: -11.5,47.5
+      parent: 2
+      type: Transform
+  - uid: 26786
+    components:
+    - pos: -11.5,41.5
       parent: 2
       type: Transform
 - proto: LockerEvidence
@@ -122960,6 +123127,11 @@ entities:
       type: Transform
 - proto: NuclearBombKeg
   entities:
+  - uid: 17585
+    components:
+    - pos: -50.5,-7.5
+      parent: 2
+      type: Transform
   - uid: 17877
     components:
     - pos: -61.5,-9.5
@@ -123203,59 +123375,6 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-  - uid: 3270
-    components:
-    - pos: 4.5937414,-16.948135
-      parent: 2
-      type: Transform
-    - stampState: paper_stamp-centcom
-      stampedBy:
-      - stampedColor: '#006600FF'
-        stampedName: stamp-component-stamped-name-centcom
-      content: >-
-        [color=#1b487e]█▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▄[/color]
-
-        [color=#1b487e]█   ▀██   █▄      █               █      [head=1]  NanoTrasen[/head] [/color]
-
-        [color=#1b487e]█         ▀   █▀█▄█   ▄         █       [head=1]  Corporation[/head] [/color]
-
-        [color=#1b487e]█               █      ▀█   ██▄   █[/color] [color=#50be00]            [head=3]Relocation of Science[/head][/color]
-
-        [color=#1b487e]▀█▄▄▄▄▄▄▄▄▄▄▄▄▄▄█[/color] 
-
-
-        [bold]From:[/bold] Central Command, NanoTrasen Corporation
-
-        [bold]To:[/bold] Research Director, Kettle Class Stations
-
-        [bold]Date:[/bold] [color=red]November 2X23[/color]
-
-        [bold]Subject:[/bold] [color=green]Notice of Station Reorganization and Relocation of Research Facilities[/color]
-
-
-
-        Dear Research Director,
-
-
-        We hope this message finds you well. We are writing to inform you of significant changes that have recently been implemented across our Kettle Class stations. Due to a recent incident, we have undertaken a comprehensive overhaul of our station layouts to enhance efficiency and safety.
-
-
-        The most notable change pertains to the relocation of the research facilities. The research department, which you have been accustomed to, has now been moved to the area previously occupied by the atmospherics department. This change has been made to optimize the use of space and resources, ensuring a more streamlined and effective research environment.
-
-
-        We understand that such changes can be challenging and may require a period of adjustment. However, we are confident that these new arrangements will ultimately lead to improved operational efficiency and a more conducive environment for scientific exploration and discovery.
-
-
-        We appreciate your understanding and cooperation during this period of change. We are confident that under your leadership, the research team will quickly adapt to the new environment and continue to achieve outstanding results. We wish you and your team the best of luck in your future endeavors at the newly reorganized station.
-
-
-        Sincerely,
-
-
-        [bold]Central Command[/bold]
-
-        NanoTrasen Corporation
-      type: Paper
   - uid: 17912
     components:
     - pos: 37.520905,18.369751
@@ -143300,11 +143419,6 @@ entities:
     - pos: 43.5,50.5
       parent: 2
       type: Transform
-  - uid: 21158
-    components:
-    - pos: 19.5,3.5
-      parent: 2
-      type: Transform
   - uid: 21159
     components:
     - pos: 49.5,9.5
@@ -143353,6 +143467,11 @@ entities:
   - uid: 21169
     components:
     - pos: 24.5,19.5
+      parent: 2
+      type: Transform
+  - uid: 26787
+    components:
+    - pos: -10.5,14.5
       parent: 2
       type: Transform
 - proto: SpawnMobPossumMorty
@@ -149899,6 +150018,13 @@ entities:
     - pos: 55.5,-40.5
       parent: 2
       type: Transform
+- proto: VendingMachineGeneDrobe
+  entities:
+  - uid: 21158
+    components:
+    - pos: -52.5,-32.5
+      parent: 2
+      type: Transform
 - proto: VendingMachineHappyHonk
   entities:
   - uid: 22134
@@ -149986,11 +150112,6 @@ entities:
     - flags: SessionSpecific
       type: MetaData
     - pos: -19.5,-28.5
-      parent: 2
-      type: Transform
-  - uid: 22145
-    components:
-    - pos: -52.5,-32.5
       parent: 2
       type: Transform
 - proto: VendingMachineNutri
