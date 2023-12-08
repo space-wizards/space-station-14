@@ -1,9 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Added cobweb decorations for mappers to utilize., type: Add}
-  id: 4791
-  time: '2023-09-10T03:37:56.0000000+00:00'
 - author: arimah
   changes:
   - {message: Particle Accelerators can now be constructed again, type: Fix}
@@ -2900,3 +2895,10 @@ Entries:
       smart-equip is now marked with a small star icon.', type: Add}
   id: 5290
   time: '2023-12-08T18:43:58.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Rat king and his servants properly heal from miasma., type: Fix}
+  - {message: Rat king no longer rummages from an infinite distance., type: Fix}
+  - {message: Rat king generates more miasma to fill larger rooms., type: Tweak}
+  id: 5291
+  time: '2023-12-08T18:46:28.0000000+00:00'
