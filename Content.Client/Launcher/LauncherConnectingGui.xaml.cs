@@ -23,10 +23,10 @@ namespace Content.Client.Launcher
         private readonly LauncherConnecting _state;
         private readonly IRobustRandom _random;
         private readonly IPrototypeManager _prototype;
+        private readonly IConfigurationManager _cfg;
 
         private float _redialWaitTime = RedialWaitTimeSeconds;
         private string _loginTipsDataset = "Tips";
-        private bool _loginTipsEnable;
 
         public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
             IPrototypeManager prototype, IConfigurationManager config)
@@ -34,6 +34,7 @@ namespace Content.Client.Launcher
             _state = state;
             _random = random;
             _prototype = prototype;
+            _cfg = config;
 
             RobustXamlLoader.Load(this);
 
@@ -66,16 +67,10 @@ namespace Content.Client.Launcher
             var edim = IoCManager.Resolve<ExtendedDisconnectInformationManager>();
             edim.LastNetDisconnectedArgsChanged += LastNetDisconnectedArgsChanged;
             LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
-            config.OnValueChanged(CCVars.LoginTipsEnable, SetLoginTipsEnable, true);
-            config.OnValueChanged(CCVars.LoginTipsDataset, SetLoginDataset, true);
+            _cfg.OnValueChanged(CCVars.LoginTipsDataset, SetLoginTipsDataset, true);
         }
 
-        private void SetLoginTipsEnable(bool value)
-        {
-            _loginTipsEnable = value;
-        }
-
-        private void SetLoginDataset(string value)
+        private void SetLoginTipsDataset(string value)
         {
             _loginTipsDataset = value;
         }
@@ -96,8 +91,9 @@ namespace Content.Client.Launcher
 
         private void ChangeLoginTip()
         {
-            LogitTips.Visible = _loginTipsEnable;
-            if (!_loginTipsEnable)
+            var loginTipsEnable = _cfg.GetCVar(CCVars.LoginTipsEnable);
+            LogitTips.Visible = loginTipsEnable;
+            if (!loginTipsEnable)
             {
                 return;
             }
