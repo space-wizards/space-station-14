@@ -26,6 +26,7 @@ namespace Content.Client.Launcher
         private readonly IConfigurationManager _cfg;
 
         private float _redialWaitTime = RedialWaitTimeSeconds;
+        private string _loginTipsDataset = "Tips";
 
         public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
             IPrototypeManager prototype, IConfigurationManager config)
@@ -66,6 +67,12 @@ namespace Content.Client.Launcher
             var edim = IoCManager.Resolve<ExtendedDisconnectInformationManager>();
             edim.LastNetDisconnectedArgsChanged += LastNetDisconnectedArgsChanged;
             LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
+            _cfg.OnValueChanged(CCVars.LoginTipsDataset, SetLoginTipsDataset, true);
+        }
+
+        private void SetLoginTipsDataset(string value)
+        {
+            _loginTipsDataset = value;
         }
 
         private void ConnectFailReasonChanged(string? reason)
@@ -91,8 +98,7 @@ namespace Content.Client.Launcher
                 return;
             }
 
-            var tipDataset = _cfg.GetCVar(CCVars.LoginTipsDataset);
-            if (!_prototype.TryIndex<DatasetPrototype>(tipDataset, out var tips))
+            if (!_prototype.TryIndex<DatasetPrototype>(_loginTipsDataset, out var tips))
                 return;
 
             var tipList = tips.Values.ToList();
