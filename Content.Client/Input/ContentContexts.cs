@@ -30,6 +30,8 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
             common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
             common.AddFunction(ContentKeyFunctions.ToggleFullscreen);
+            common.AddFunction(ContentKeyFunctions.MoveStoredItem);
+            common.AddFunction(ContentKeyFunctions.RotateStoredItem);
             common.AddFunction(ContentKeyFunctions.Point);
             common.AddFunction(ContentKeyFunctions.ZoomOut);
             common.AddFunction(ContentKeyFunctions.ZoomIn);
@@ -76,11 +78,6 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.OpenActionsMenu);
 
             foreach (var boundKey in ContentKeyFunctions.GetHotbarBoundKeys())
-            {
-                common.AddFunction(boundKey);
-            }
-
-            foreach (var boundKey in ContentKeyFunctions.GetLoadoutBoundKeys())
             {
                 common.AddFunction(boundKey);
             }

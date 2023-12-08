@@ -113,7 +113,9 @@
       - !type:WirePanel {}
       - !type:AllWiresCut
       completed:
-      - !type:EmptyAllContainers {}
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
       steps:
       - tool: Anchoring
         doAfter: 1
@@ -213,7 +215,9 @@
         container: board
       - !type:AllWiresCut
       completed:
-      - !type:EmptyAllContainers {}
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
       steps:
       - tool: Anchoring
         doAfter: 4

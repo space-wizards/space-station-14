@@ -43,7 +43,7 @@ namespace Content.Server.Atmos.Components
         /// <summary>
         /// Whether the entity is immuned to pressure (i.e possess the PressureImmunity component)
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool HasImmunity = false;
 
     }
