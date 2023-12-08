@@ -20,6 +20,7 @@
   - type: Accentless
     removes:
     - type: LizardAccent
+    - type: OwOAccent
     - type: MothAccent
     - type: ReplacementAccent
       accent: dwarf
