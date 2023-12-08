@@ -105,7 +105,7 @@
   - type: AnomalyVessel
     pointMultiplier: 2
   - type: RadiationSource
-    intensity: 1
+    intensity: 0.75
     slope: 0.1
     enabled: false
   - type: Machine
