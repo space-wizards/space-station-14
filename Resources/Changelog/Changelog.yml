@@ -1,10 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - message: Cryogenic gas cylinders are now available for purchase from cargo.
-    type: Add
-  id: 4824
-  time: '2023-09-14T03:37:13.0000000+00:00'
 - author: Whisper
   changes:
   - message: Guardians (holo, holoclown) have AI control before a ghost takes over
@@ -3748,3 +3742,12 @@ Entries:
     type: Fix
   id: 5273
   time: '2023-12-06T20:18:36.0000000+00:00'
+- author: spo9k
+  changes:
+  - message: "\u0410\u043A\u0446\u0435\u043D\u0442 \u0444\u0435\u043B\u0438\u043D\u0438\
+      \u0434\u043E\u0432 \u0442\u0435\u043F\u0435\u0440\u044C \u0432\u043E\u0437\u043C\
+      \u043E\u0436\u043D\u043E \u043E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u044C\
+      ."
+    type: Add
+  id: 5274
+  time: '2023-12-08T21:32:01.0000000+00:00'
