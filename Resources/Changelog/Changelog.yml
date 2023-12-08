@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not being able to use vehicle horns., type: Fix}
-  id: 4788
-  time: '2023-09-09T23:39:29.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Monkeys can now bump doors open and strip mobs like people can., type: Tweak}
@@ -2897,3 +2892,8 @@ Entries:
   - {message: Adds a bed for the psychologist's office., type: Add}
   id: 5287
   time: '2023-12-08T05:24:35.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Chemical explosions are powerful again., type: Tweak}
+  id: 5288
+  time: '2023-12-08T10:58:25.0000000+00:00'
