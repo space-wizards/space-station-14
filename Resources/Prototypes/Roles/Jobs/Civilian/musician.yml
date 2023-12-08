@@ -23,5 +23,6 @@
     shoes: ClothingShoesBootsLaceup
     id: MusicianPDA
     ears: ClothingHeadsetService
+  innerClothingSkirt: ClothingUniformJumpskirtMusician
   satchel: ClothingBackpackSatchelMusicianFilled
   duffelbag: ClothingBackpackDuffelMusicianFilled
