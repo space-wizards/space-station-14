@@ -16,7 +16,6 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using System.Numerics;
 using JetBrains.Annotations;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -28,14 +27,15 @@ public partial class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     private readonly SharedTransformSystem _transformSystem = default!;
-    private readonly SpriteSystem _spriteSystem = default!;
 
     public EntityUid? MapUid;
+
+    // Actions
     public event Action<NetEntity?>? TrackedEntitySelectedAction;
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
-    public Dictionary<NetEntity, (EntityCoordinates Coordinates, Color Color, Texture Texture, bool Blinks)> TrackedEntities = new();
+    public Dictionary<NetEntity, NavMapBlip> TrackedEntities = new();
     public Dictionary<Vector2i, List<NavMapLine>> TileGrid = default!;
 
     // Default colors
@@ -43,22 +43,25 @@ public partial class NavMapControl : MapGridControl
     public Color TileColor = new(30, 67, 30);
 
     // Constants
-    private const float UpdateTime = 1.0f;
-    private const float MaxSelectableDistance = 10f;
-    private const float RecenterMinimum = 0.05f;
+    protected float UpdateTime = 1.0f;
+    protected float MaxSelectableDistance = 10f;
+    protected float RecenterMinimum = 0.05f;
 
-    // Local
+    // Local variables
+    private Vector2 _offset;
+    private bool _draggin;
+    private bool _recentering = false;
+    private readonly Font _font;
+    private float _updateTimer = 0.25f;
+    private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
+    private Color _beaconColor;
+
+    // Components
     private NavMapComponent? _navMap;
     private MapGridComponent? _grid;
     private TransformComponent? _xform;
     private PhysicsComponent? _physics;
     private FixturesComponent? _fixtures;
-    private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
-    private Vector2 _offset;
-    private bool _draggin;
-    private bool _recentering = false;
-    private readonly Font _font;
-    private float _updateTimer = 1.0f;
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
@@ -91,9 +94,8 @@ public partial class NavMapControl : MapGridControl
         var cache = IoCManager.Resolve<IResourceCache>();
 
         _transformSystem = _entManager.System<SharedTransformSystem>();
-        _spriteSystem = _entManager.System<SpriteSystem>();
-
         _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 12);
+        _beaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
 
         RectClipContent = true;
         HorizontalExpand = true;
@@ -137,6 +139,8 @@ public partial class NavMapControl : MapGridControl
         {
             _recentering = true;
         };
+
+        ForceNavMapUpdate();
     }
 
     public void ForceRecenter()
@@ -195,15 +199,18 @@ public partial class NavMapControl : MapGridControl
             var closestCoords = new EntityCoordinates();
             var closestDistance = float.PositiveInfinity;
 
-            foreach ((var currentEntity, var (currentCoords, _, _, _)) in TrackedEntities)
+            foreach ((var currentEntity, var blip) in TrackedEntities)
             {
-                var currentDistance = (currentCoords.ToMapPos(_entManager, _transformSystem) - worldPosition).Length();
+                if (!blip.Selectable)
+                    continue;
+
+                var currentDistance = (blip.Coordinates.ToMapPos(_entManager, _transformSystem) - worldPosition).Length();
 
                 if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
                     continue;
 
                 closestEntity = currentEntity;
-                closestCoords = currentCoords;
+                closestCoords = blip.Coordinates;
                 closestDistance = currentDistance;
             }
 
@@ -342,6 +349,22 @@ public partial class NavMapControl : MapGridControl
             }
         }
 
+        // Beacons
+        if (_beacons.Pressed)
+        {
+            var rectBuffer = new Vector2(5f, 3f);
+
+            foreach (var beacon in _navMap.Beacons)
+            {
+                var position = beacon.Position - offset;
+                position = Scale(position with { Y = -position.Y });
+
+                var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
+                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), _beaconColor);
+                handle.DrawString(_font, position - textDimensions / 2, beacon.Text, beacon.Color);
+            }
+        }
+
         var curTime = Timing.RealTime;
         var blinkFrequency = 1f / 1f;
         var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
@@ -366,18 +389,18 @@ public partial class NavMapControl : MapGridControl
         // Tracked entities (can use a supplied sprite as a marker instead; should probably just replace TrackedCoordinates with this eventually)
         var iconVertexUVs = new Dictionary<(Texture, Color), ValueList<DrawVertexUV2D>>();
 
-        foreach ((var coord, var color, var texture, var blinks) in TrackedEntities.Values)
+        foreach (var blip in TrackedEntities.Values)
         {
-            if (blinks && !lit)
+            if (blip.Blinks && !lit)
                 continue;
 
-            if (texture == null)
+            if (blip.Texture == null)
                 continue;
 
-            if (!iconVertexUVs.TryGetValue((texture, color), out var vertexUVs))
+            if (!iconVertexUVs.TryGetValue((blip.Texture, blip.Color), out var vertexUVs))
                 vertexUVs = new();
 
-            var mapPos = coord.ToMap(_entManager, _transformSystem);
+            var mapPos = blip.Coordinates.ToMap(_entManager, _transformSystem);
 
             if (mapPos.MapId != MapId.Nullspace)
             {
@@ -395,7 +418,7 @@ public partial class NavMapControl : MapGridControl
                 vertexUVs.Add(new DrawVertexUV2D(new Vector2(position.X + positionOffset, position.Y + positionOffset), new Vector2(0f, 0f)));
             }
 
-            iconVertexUVs[(texture, color)] = vertexUVs;
+            iconVertexUVs[(blip.Texture, blip.Color)] = vertexUVs;
         }
 
         foreach ((var (texture, color), var vertexUVs) in iconVertexUVs)
@@ -407,26 +430,6 @@ public partial class NavMapControl : MapGridControl
             }
 
             handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, texture, vertexUVs.Span, sRGB);
-        }
-
-        var beconTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")));
-
-        // Beacons
-        if (_beacons.Pressed)
-        {
-            var labelOffset = new Vector2(0.5f, 0.5f) * MinimapScale;
-            var rectBuffer = new Vector2(5f, 3f);
-            var beaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
-            foreach (var beacon in _navMap.Beacons)
-            {
-                var position = beacon.Position - offset;
-                position = Scale(position with { Y = -position.Y });
-                handle.DrawCircle(position, MinimapScale / 2f, beacon.Color);
-                var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
-                var labelPosition = position + labelOffset;
-                handle.DrawRect(new UIBox2(labelPosition, labelPosition + textDimensions + rectBuffer * 2), beaconColor);
-                handle.DrawString(_font, labelPosition + rectBuffer, beacon.Text, beacon.Color);
-            }
         }
     }
 
@@ -572,6 +575,24 @@ public partial class NavMapControl : MapGridControl
     protected Vector2 GetOffset()
     {
         return _offset + (_physics != null ? _physics.LocalCenter : new Vector2());
+    }
+}
+
+public struct NavMapBlip
+{
+    public EntityCoordinates Coordinates;
+    public Texture Texture;
+    public Color Color;
+    public bool Blinks;
+    public bool Selectable;
+
+    public NavMapBlip(EntityCoordinates coordinates, Texture texture, Color color, bool blinks, bool selectable = true)
+    {
+        Coordinates = coordinates;
+        Texture = texture;
+        Color = color;
+        Blinks = blinks;
+        Selectable = selectable;
     }
 }
 

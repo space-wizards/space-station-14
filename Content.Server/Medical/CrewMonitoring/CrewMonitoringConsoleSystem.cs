@@ -4,6 +4,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.PowerCell;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Medical.SuitSensor;
+using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Medical.CrewMonitoring
@@ -29,11 +30,14 @@ namespace Content.Server.Medical.CrewMonitoring
         private void OnPacketReceived(EntityUid uid, CrewMonitoringConsoleComponent component, DeviceNetworkPacketEvent args)
         {
             var payload = args.Data;
-            // check command
+
+            // Check command
             if (!payload.TryGetValue(DeviceNetworkConstants.Command, out string? command))
                 return;
+
             if (command != DeviceNetworkConstants.CmdUpdatedState)
                 return;
+
             if (!payload.TryGetValue(SuitSensorConstants.NET_STATUS_COLLECTION, out Dictionary<string, SuitSensorStatus>? sensorStatus))
                 return;
 
@@ -57,9 +61,15 @@ namespace Content.Server.Medical.CrewMonitoring
             if (!_uiSystem.TryGetUi(uid, CrewMonitoringUIKey.Key, out var bui))
                 return;
 
-            // update all sensors info
+            // The grid must have a NavMapComponent to visualize the map in the UI
+            var xform = Transform(uid);
+
+            if (xform.GridUid != null)
+                EnsureComp<NavMapComponent>(xform.GridUid.Value);
+
+            // Update all sensors info
             var allSensors = component.ConnectedSensors.Values.ToList();
-            _uiSystem.SetUiState(bui, new CrewMonitoringState(allSensors, component.Snap, component.Precision));
+            _uiSystem.SetUiState(bui, new CrewMonitoringState(allSensors));
         }
     }
 }

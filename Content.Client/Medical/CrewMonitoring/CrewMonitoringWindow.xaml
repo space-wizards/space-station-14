@@ -8,14 +8,12 @@
         <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
             <ui:CrewMonitoringNavMapControl Name="NavMap" HorizontalExpand="True" VerticalExpand="True" Margin="5 5"/>
             <BoxContainer Orientation="Vertical">
-                <!--<Label StyleClasses="FancyWindowTitle" Text="Crew status" HorizontalAlignment="Center" Margin="5 5"/>-->
                 <controls:StripeBack>
                     <PanelContainer>
                         <Label Name="StationName" Text="Unknown station" Align="Center" />
                     </PanelContainer>
                 </controls:StripeBack>
                 
-                <!--<PanelContainer StyleClasses="LowDivider" />-->    
                 <ScrollContainer VerticalExpand="True" SetWidth="500"
                                  Margin="8, 8, 8, 8">
                     <BoxContainer Name="SensorsTable"

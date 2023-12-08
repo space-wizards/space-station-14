@@ -1,28 +1,50 @@
+using Content.Client.Message;
 using Content.Client.Pinpointer.UI;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Map;
-using System.Numerics;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Medical.CrewMonitoring;
 
 public sealed partial class CrewMonitoringNavMapControl : NavMapControl
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    private readonly SharedTransformSystem _transformSystem = default!;
-
     public NetEntity? Focus;
     public Dictionary<NetEntity, string> LocalizedNames = new();
 
-    private readonly Font _font;
+    private Color _backgroundColor;
+    private Label _trackedEntityLabel;
+    private PanelContainer _trackedEntityPanel;
 
     public CrewMonitoringNavMapControl() : base()
     {
-        IoCManager.InjectDependencies(this);
-        var cache = IoCManager.Resolve<IResourceCache>();
+        WallColor = new Color(250, 146, 255);
+        TileColor = new(71, 42, 72);
 
-        _transformSystem = _entManager.System<SharedTransformSystem>();
-        _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 12);
+        _backgroundColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
+
+        _trackedEntityLabel = new Label
+        {
+            Margin = new Thickness(10f, 8f),
+            HorizontalAlignment = HAlignment.Center,
+            VerticalAlignment = VAlignment.Center,
+            Modulate = Color.White,
+        };
+
+        _trackedEntityPanel = new PanelContainer
+        {
+            PanelOverride = new StyleBoxFlat
+            {
+                BackgroundColor = _backgroundColor,
+            },
+
+            Margin = new Thickness(5f, 10f),
+            HorizontalAlignment = HAlignment.Left,
+            VerticalAlignment = VAlignment.Bottom,
+            Visible = false,
+        };
+
+        _trackedEntityPanel.AddChild(_trackedEntityLabel);
+        this.AddChild(_trackedEntityPanel);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -30,39 +52,30 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         base.Draw(handle);
 
         if (Focus == null)
+        {
+            _trackedEntityLabel.Text = string.Empty;
+            _trackedEntityPanel.Visible = false;
+
             return;
+        }
 
-        _entManager.TryGetComponent<TransformComponent>(MapUid, out var xform);
-
-        if (xform == null)
-            return;
-
-        foreach ((var netEntity, var (coords, _, _, _)) in TrackedEntities)
+        foreach ((var netEntity, var blip) in TrackedEntities)
         {
             if (netEntity != Focus)
                 continue;
 
-            var mapPos = coords.ToMap(_entManager, _transformSystem);
-
-            if (mapPos.MapId == MapId.Nullspace)
-                return;
-
-            var position = _transformSystem.GetInvWorldMatrix(xform).Transform(mapPos.Position) - GetOffset();
-            position = Scale(new Vector2(position.X, -position.Y));
-
             if (!LocalizedNames.TryGetValue(netEntity, out var name))
                 name = "Unknown";
 
-            var labelOffset = new Vector2(0.5f, 0.5f) * MinimapScale;
-            var labelPosition = position + labelOffset;
-            var message = name + " [x = " + MathF.Round(coords.X) + ", y = " + MathF.Round(coords.Y) + "]";
-            var textDimensions = handle.GetDimensions(_font, message, 1f);
-            var rectBuffer = new Vector2(5f, 3f);
+            var message = name + "\nLocation: [x = " + MathF.Round(blip.Coordinates.X) + ", y = " + MathF.Round(blip.Coordinates.Y) + "]";
 
-            handle.DrawRect(new UIBox2(labelPosition, labelPosition + textDimensions + rectBuffer * 2), new Color(128, 128, 128, 20));
-            handle.DrawString(_font, labelPosition + rectBuffer, message, Color.White);
+            _trackedEntityLabel.Text = message;
+            _trackedEntityPanel.Visible = true;
 
-            break;
+            return;
         }
+
+        _trackedEntityLabel.Text = string.Empty;
+        _trackedEntityPanel.Visible = false;
     }
 }
