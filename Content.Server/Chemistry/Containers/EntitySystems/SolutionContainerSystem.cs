@@ -68,7 +68,9 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         SolutionComponent solutionComp;
         if (solutionSlot.ContainedEntity is not { } solutionId)
         {
-            (solutionId, solutionComp, _) = SpawnSolutionUninitialized(solutionSlot, name, minVol, prototype ?? new() { Name = name, MaxVolume = minVol });
+            prototype ??= new() { MaxVolume = minVol };
+            prototype.Name = name;
+            (solutionId, solutionComp, _) = SpawnSolutionUninitialized(solutionSlot, name, minVol, prototype);
             existed = false;
             needsInit = true;
             Dirty(uid, container);
@@ -77,6 +79,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         {
             solutionComp = Comp<SolutionComponent>(solutionId);
             DebugTools.Assert(TryComp(solutionId, out SolutionContainerComponent? relation) && relation.Container == uid && relation.Name == name);
+            DebugTools.Assert(solutionComp.Solution.Name == name);
 
             var solution = solutionComp.Solution;
             solution.MaxVolume = FixedPoint2.Max(solution.MaxVolume, minVol);
