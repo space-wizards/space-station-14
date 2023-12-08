@@ -35,18 +35,38 @@ public sealed class StorageSystem : SharedStorageSystem
             StorageUpdated?.Invoke((entity, entity.Comp));
     }
 
-    public void OpenStorageUI(EntityUid uid, StorageComponent component)
+    public void OpenStorageWindow(Entity<StorageComponent> entity)
     {
-        if (_openStorages.Contains((uid, component)))
-            return;
+        if (_openStorages.Contains(entity))
+        {
+            if (_openStorages.LastOrDefault() == entity)
+            {
+                CloseStorageWindow((entity, entity.Comp));
+            }
+            else
+            {
+                var storages = new ValueList<Entity<StorageComponent>>(_openStorages);
+                var reverseStorages = storages.Reverse();
 
-        ClearNonParentStorages(uid);
-        _openStorages.Add((uid, component));
+                foreach (var storageEnt in reverseStorages)
+                {
+                    if (storageEnt == entity)
+                        break;
+
+                    CloseStorageBoundUserInterface(storageEnt.Owner);
+                    _openStorages.Remove(entity);
+                }
+            }
+            return;
+        }
+
+        ClearNonParentStorages(entity);
+        _openStorages.Add(entity);
         Entity<StorageComponent>? last = _openStorages.LastOrDefault();
         StorageOrderChanged?.Invoke(last);
     }
 
-    public void CloseStorageUI(Entity<StorageComponent?> entity)
+    public void CloseStorageWindow(Entity<StorageComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
             return;
@@ -99,7 +119,7 @@ public sealed class StorageSystem : SharedStorageSystem
 
     private void OnShutdown(Entity<StorageComponent> ent, ref ComponentShutdown args)
     {
-        CloseStorageUI((ent, ent.Comp));
+        CloseStorageWindow((ent, ent.Comp));
     }
 
     /// <inheritdoc />

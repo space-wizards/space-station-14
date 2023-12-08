@@ -12,7 +12,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
@@ -155,6 +154,15 @@ public sealed class StorageContainer : BaseWindow
         exitButton.OnPressed += _ =>
         {
             Close();
+        };
+        exitButton.OnKeyBindDown += args =>
+        {
+            // it just makes sense...
+            if (!args.Handled && args.Function == ContentKeyFunctions.ActivateItemInWorld)
+            {
+                Close();
+                args.Handle();
+            }
         };
         var exitContainer = new BoxContainer
         {
@@ -448,6 +456,6 @@ public sealed class StorageContainer : BaseWindow
         if (StorageEntity == null)
             return;
 
-        _entity.System<StorageSystem>().CloseStorageUI(StorageEntity.Value);
+        _entity.System<StorageSystem>().CloseStorageWindow(StorageEntity.Value);
     }
 }
