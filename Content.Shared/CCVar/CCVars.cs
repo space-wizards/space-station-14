@@ -758,7 +758,7 @@ namespace Content.Shared.CCVar
         ///     Overrides the name the client sees in ahelps. Set empty to disable.
         /// </summary>
         public static readonly CVarDef<string> AdminAhelpOverrideClientName =
-            CVarDef.Create("admin.override_client_name_in_ahelp", string.Empty, CVar.SERVERONLY);
+            CVarDef.Create("admin.override_adminname_in_client_ahelp", string.Empty, CVar.SERVERONLY);
         /*
          * Explosions
          */
