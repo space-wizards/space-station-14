@@ -16,6 +16,7 @@ These medications are almost always useful to medbay in one way or another.
 # Specialty Medications
 
 These medications tend to have specific use cases.
+Also, check the [textlink="advanced brute chemicals"  link="AdvancedBrute"] tab for... advanced brute chemicals. Name's right on the tin.
 
 <GuideReagentEmbed Reagent="Cryoxadone"/>
 <GuideReagentEmbed Reagent="Epinephrine"/>
@@ -24,7 +25,7 @@ These medications tend to have specific use cases.
 <GuideReagentEmbed Reagent="Phalanximine"/>
 <GuideReagentEmbed Reagent="Tricordrazine"/>
 <GuideReagentEmbed Reagent="TranexamicAcid"/>
-<GuideReagentEmbed Reagent="Romerol"/>
+<GuideReagentEmbed Reagent="Ambuzol"/>
 <GuideReagentEmbed Reagent="Oculine"/>
 
 # All Medications
