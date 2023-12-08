@@ -9,7 +9,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_lefteye_2
 
 - type: marking
@@ -23,7 +23,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_lefteye_1
 
 - type: marking
@@ -37,7 +37,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_righteye_2
 
 - type: marking
@@ -51,7 +51,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_righteye_1
 
 - type: marking
@@ -65,7 +65,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_shoulder
     
 - type: marking
@@ -79,7 +79,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_abdomen
 
 - type: marking
@@ -93,7 +93,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_upperarm_r
 
 - type: marking
@@ -107,7 +107,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_lowerarm_r
 
 - type: marking
@@ -121,7 +121,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_leftarm
 
 - type: marking
@@ -135,7 +135,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_lowerleg_l
 
 - type: marking
@@ -149,7 +149,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_upperleg_l
 
 - type: marking
@@ -163,7 +163,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_upperleg_r
     
 - type: marking
@@ -177,6 +177,6 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_lowerleg_r
 
