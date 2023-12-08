@@ -14,7 +14,7 @@ In the event of a serious emergency, there're a few things you can do to help en
 <GuideEntityEmbed Entity="EmergencyMedipen"/>
 <GuideEntityEmbed Entity="SpaceMedipen"/>
 </Box>
-- Your emergency box contains a breath mask and oxygen tank, which can help you survive longer in a spacing situation. If you're one of the slimepeople, be aware that nitrogen replaces oxygen for you and you don't start with one of those in your emergency canister.
+- Your emergency box contains a breath mask and oxygen tank, which can help you survive longer in a spacing situation. If you're one of the slimepeople, be aware that you breathe nitrogen instead of oxygen, and that your emergency box starts with a nitrogen tank instead.
 <Box>
 <GuideEntityEmbed Entity="ClothingMaskBreath"/>
 <GuideEntityEmbed Entity="EmergencyOxygenTankFilled"/>
