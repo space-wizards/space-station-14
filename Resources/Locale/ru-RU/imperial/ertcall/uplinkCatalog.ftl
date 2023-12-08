@@ -200,6 +200,7 @@ ert-uplink-utilities-clothingshoesbootsmag-name = { ent-ClothingShoesBootsMag }
 ert-uplink-utilities-clothingshoesbootsmag-desc = { ent-ClothingShoesBootsMag.desc }
 ert-uplink-utilities-crowbar-name = { ent-Crowbar }
 ert-uplink-utilities-crowbar-desc = { ent-Crowbar.desc }
-
+ert-uplink-utilities-cratemineshield-name = { ent-ERTCallCrateMineShieldImplant }
+ert-uplink-utilities-cratemineshield-desc = { ent-ERTCallCrateMineShieldImplant.desc }
 
 

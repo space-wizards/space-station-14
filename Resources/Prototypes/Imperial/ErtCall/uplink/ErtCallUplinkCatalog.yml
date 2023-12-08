@@ -1124,3 +1124,13 @@
     BlueSpaceCube: 1
   categories:
   - ERTUplinkUtilities
+
+- type: listing
+  id: ErtCallUplinkMineShield
+  name: ert-uplink-utilities-cratemineshield-name
+  description: ert-uplink-utilities-cratemineshield-desc
+  productEntity: ERTCallCrateMineShieldImplant ##ID введенного мной ящика Artur Ur
+  cost:
+    BlueSpaceCube: 3
+  categories:
+  - ERTUplinkUtilities
