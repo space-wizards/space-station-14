@@ -151,6 +151,7 @@ namespace Content.Server.Administration.Systems
             _config.UnsubValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged);
             _config.UnsubValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged);
             _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
+            _config.UnsubValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged);
         }
 
         private async void OnWebhookChanged(string url)
