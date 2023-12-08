@@ -33,8 +33,15 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     public float MinBountyTime = 600f;
 
     /// <summary>
-    /// The maxmium amount of time the bounty lasts before being removed.
+    /// The maximum amount of time the bounty lasts before being removed.
     /// </summary>
     [DataField("maxBountyTime"), ViewVariables(VVAccess.ReadWrite)]
     public float MaxBountyTime = 905f;
+
+    /// <summary>
+    /// A list of bounty IDs that have been checked this tick.
+    /// Used to prevent multiplying bounty prices.
+    /// </summary>
+    [DataField]
+    public HashSet<int> CheckedBounties = new();
 }

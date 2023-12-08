@@ -17,6 +17,14 @@
     - Structural # this probably should be in separate container
 
 - type: damageContainer
+  id: Silicon
+  supportedGroups:
+    - Brute
+  supportedTypes:
+    - Heat
+    - Shock
+
+- type: damageContainer
   id: Shield
   supportedGroups:
     - Brute

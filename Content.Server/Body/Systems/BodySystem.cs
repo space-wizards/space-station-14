@@ -15,6 +15,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Numerics;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Body.Systems;
 
@@ -111,31 +112,34 @@ public sealed class BodySystem : SharedBodySystem
         _humanoidSystem.SetLayersVisibility(bodyUid, layers, false, true, humanoid);
     }
 
-    public override HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false, BodyComponent? body = null, bool deleteItems = false)
+    public override HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false, BodyComponent? body = null, bool deleteItems = false, bool deleteBrain = false)
     {
         if (!Resolve(bodyId, ref body, false))
             return new HashSet<EntityUid>();
 
-        if (LifeStage(bodyId) >= EntityLifeStage.Terminating || EntityManager.IsQueuedForDeletion(bodyId))
+        if (TerminatingOrDeleted(bodyId) || EntityManager.IsQueuedForDeletion(bodyId))
             return new HashSet<EntityUid>();
 
         var xform = Transform(bodyId);
         if (xform.MapUid == null)
             return new HashSet<EntityUid>();
 
-        var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems);
+        var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems, deleteBrain);
 
         var coordinates = xform.Coordinates;
         var filter = Filter.Pvs(bodyId, entityManager: EntityManager);
         var audio = AudioParams.Default.WithVariation(0.025f);
 
-        _audio.Play(body.GibSound, filter, coordinates, true, audio);
+        _audio.PlayStatic(body.GibSound, filter, coordinates, true, audio);
 
         foreach (var entity in gibs)
         {
             if (deleteItems)
             {
-                QueueDel(entity);
+                if (!HasComp<BrainComponent>(entity) || deleteBrain)
+                {
+                    QueueDel(entity);
+                }
             }
             else
             {

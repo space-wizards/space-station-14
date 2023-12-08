@@ -29,6 +29,7 @@
   - Maintenance
   - Chemistry
   - ChiefMedicalOfficer
+  - Brig
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -46,6 +47,6 @@
     id: CMOPDA
     ears: ClothingHeadsetCMO
     belt: ClothingBeltMedicalFilled
-  innerclothingskirt: ClothingUniformJumpskirtCMO
+  innerClothingSkirt: ClothingUniformJumpskirtCMO
   satchel: ClothingBackpackSatchelCMOFilled
   duffelbag: ClothingBackpackDuffelCMOFilled

@@ -1,13 +1,11 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
-
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -25,23 +23,25 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<SolutionInjectOnCollideComponent, StartCollideEvent>(HandleInjection);
         }
 
-        private void HandleInjection(EntityUid uid, SolutionInjectOnCollideComponent component, ref StartCollideEvent args)
+        private void HandleInjection(Entity<SolutionInjectOnCollideComponent> ent, ref StartCollideEvent args)
         {
+            var component = ent.Comp;
             var target = args.OtherEntity;
 
             if (!args.OtherBody.Hard ||
                 !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) ||
-                !_solutionsSystem.TryGetInjectableSolution(component.Owner, out var solution)) return;
-
-            if (component.BlockSlots != 0x0 && TryComp<InventoryComponent>(target, out var inventory))
+                !_solutionsSystem.TryGetInjectableSolution(ent, out var solution))
             {
-                var containerEnumerator = new InventorySystem.ContainerSlotEnumerator(target, inventory.TemplateId, _protoManager, _inventorySystem, component.BlockSlots);
+                return;
+            }
 
-                while (containerEnumerator.MoveNext(out var container))
-                {
-                    if (!container.ContainedEntity.HasValue) continue;
+            if (component.BlockSlots != 0x0)
+            {
+                var containerEnumerator = _inventorySystem.GetSlotEnumerator(target, component.BlockSlots);
+
+                // TODO add a helper method for this?
+                if (containerEnumerator.MoveNext(out _))
                     return;
-                }
             }
 
             var solRemoved = solution.SplitSolution(component.TransferAmount);

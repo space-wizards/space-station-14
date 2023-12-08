@@ -304,9 +304,13 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         var mapPos = xform.MapPosition;
         var box = Box2.CenteredAround(mapPos.Position, new Vector2(range, range));
         var circle = new Circle(mapPos.Position, range);
-        foreach (var grid in _mapMan.FindGridsIntersecting(mapPos.MapId, box))
-        {   // TODO: Remover grid.Owner when this iterator returns entityuids as well.
-            AttemptConsumeTiles(uid, grid.GetTilesIntersecting(circle), grid.Owner, grid, eventHorizon);
+        var grids = new List<Entity<MapGridComponent>>();
+        _mapMan.FindGridsIntersecting(mapPos.MapId, box, ref grids);
+
+        foreach (var grid in grids)
+        {
+            // TODO: Remover grid.Owner when this iterator returns entityuids as well.
+            AttemptConsumeTiles(uid, grid.Comp.GetTilesIntersecting(circle), grid, grid, eventHorizon);
         }
     }
 

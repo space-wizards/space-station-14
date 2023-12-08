@@ -9,13 +9,14 @@
     state: icon
   - type: Item
     sprite: Objects/Specific/Research/rped.rsi
-    size: 50
+    size: Normal
   - type: GuideHelp
     guides:
     - MachineUpgrading
   - type: PartExchanger
   - type: Storage
-    capacity: 150
+    grid:
+    - 0,0,9,2
     quickInsert: true
     areaInsert: true
     whitelist:

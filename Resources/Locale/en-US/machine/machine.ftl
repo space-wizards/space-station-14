@@ -11,6 +11,7 @@ machine-upgrade-not-upgraded = [color=yellow]{CAPITALIZE($upgraded)}[/color] not
 machine-part-name-capacitor = Capacitor
 machine-part-name-manipulator = Manipulator
 machine-part-name-matter-bin = Matter Bin
+machine-part-name-power-cell = Power Cell
 
 upgrade-power-draw = power draw
 upgrade-max-charge = max charge

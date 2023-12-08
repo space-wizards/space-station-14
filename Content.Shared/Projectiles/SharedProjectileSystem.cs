@@ -3,11 +3,10 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Projectiles;
-using Content.Shared.Sound.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
@@ -139,13 +138,13 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         }
     }
 
-    public void SetShooter(ProjectileComponent component, EntityUid uid)
+    public void SetShooter(EntityUid id, ProjectileComponent component, EntityUid shooterId)
     {
-        if (component.Shooter == uid)
+        if (component.Shooter == shooterId)
             return;
 
-        component.Shooter = uid;
-        Dirty(uid, component);
+        component.Shooter = shooterId;
+        Dirty(id, component);
     }
 
     [Serializable, NetSerializable]

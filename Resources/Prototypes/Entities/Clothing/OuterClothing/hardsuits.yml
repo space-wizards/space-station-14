@@ -24,6 +24,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.80
     sprintModifier: 0.80
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBasic
 
@@ -57,6 +58,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmos
 
@@ -90,6 +92,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
 
@@ -118,6 +121,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpatio
 
@@ -148,6 +152,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
 
@@ -177,6 +182,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
 
@@ -203,6 +209,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.65
     sprintModifier: 0.65
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
 
@@ -232,6 +239,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden
 
@@ -263,6 +271,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCap
 
@@ -294,6 +303,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
 
@@ -318,6 +328,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.95
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedical
 
@@ -349,8 +360,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
+  - type: HeldSpeedModifier
   - type: Item
-    size: 50
+    size: Normal
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -387,6 +399,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
 
@@ -417,6 +430,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.9
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLuxury
 
@@ -430,6 +444,8 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+  - type: Item
+    size: Huge
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: PressureProtection
@@ -449,6 +465,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
 
@@ -496,6 +513,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
 
@@ -527,6 +545,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
 
@@ -558,6 +577,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.65
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
 
@@ -589,6 +609,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
 
@@ -618,6 +639,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLing
 
@@ -647,8 +669,11 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.6
     sprintModifier: 0.6
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA
+  - type: StaticPrice
+    price: 0
 
 #Pirate Captain Hardsuit
 - type: entity
@@ -677,9 +702,11 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
-
+  - type: StaticPrice
+    price: 0
 
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
@@ -687,7 +714,7 @@
   parent: ClothingOuterHardsuitSyndieCommander
   id: ClothingOuterHardsuitERTLeader
   name: ERT leader's hardsuit
-  description: A protective hardsuit worn by members of an emergency response team.
+  description: A protective hardsuit worn by the leader of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
@@ -698,9 +725,10 @@
 
 #ERT Engineer Hardsuit
 - type: entity
-  parent: ClothingOuterHardsuitSyndie
+  parent: ClothingOuterHardsuitCBURN
   id: ClothingOuterHardsuitERTEngineer
   name: ERT engineer's hardsuit
+  description: A protective hardsuit worn by the engineers of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
@@ -711,9 +739,10 @@
 
 #ERT Medic Hardsuit
 - type: entity
-  parent: ClothingOuterHardsuitSyndieElite
+  parent: ClothingOuterHardsuitMedic
   id: ClothingOuterHardsuitERTMedical
   name: ERT medic's hardsuit
+  description: A protective hardsuit worn by the medics of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
@@ -727,6 +756,7 @@
   parent: ClothingOuterHardsuitSyndie
   id: ClothingOuterHardsuitERTSecurity
   name: ERT security's hardsuit
+  description: A protective hardsuit worn by the security officers of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
@@ -737,9 +767,10 @@
 
 #ERT Janitor Hardsuit
 - type: entity
-  parent: ClothingOuterHardsuitSyndie
+  parent: ClothingOuterHardsuitCBURN
   id: ClothingOuterHardsuitERTJanitor
   name: ERT janitor's hardsuit
+  description: A protective hardsuit worn by the janitors of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
@@ -752,7 +783,7 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitDeathsquad
-  name: deathsquad hardsuit
+  name: death squad hardsuit
   description: An advanced hardsuit favored by commandos for use in special operations.
   components:
   - type: Sprite
@@ -769,15 +800,16 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.2 #best armor in the game
-        Slash: 0.2
-        Piercing: 0.2
+        Blunt: 0.1 #best armor in the game
+        Slash: 0.1
+        Piercing: 0.1
         Heat: 0.1
         Radiation: 0.1
-        Caustic: 0.2
+        Caustic: 0.1
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
 
@@ -813,6 +845,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN
 
@@ -822,7 +855,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitClown
   name: clown hardsuit
-  description: A custom made clown hardsuit.
+  description: A custom-made clown hardsuit.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/clown.rsi
@@ -843,6 +876,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
+  - type: HeldSpeedModifier
   - type: Construction
     graph: ClownHardsuit
     node: clownHardsuit

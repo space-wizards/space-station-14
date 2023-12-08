@@ -382,6 +382,8 @@
   - type: IconSmooth
     key: walls
     base: plasma
+  - type: RadiationBlocker
+    resistance: 5
 
 - type: entity
   parent: BaseWall
@@ -512,10 +514,15 @@
         !type:DamageTrigger
         damage: 600
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
+    destroySound:
+      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: reinf_over
@@ -640,10 +647,11 @@
     key: walls
     base: silver
 
+#shuttle walls
 - type: entity
   id: WallShuttleDiagonal
   name: shuttle wall
-  suffix: diagonal
+  suffix: Diagonal
   description: Keeps the air in and the greytide out.
   placement:
     mode: SnapgridCenter
@@ -669,7 +677,7 @@
     state: state0
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageModifierSet: StrongMetallic
   - type: Physics
     bodyType: Static
   - type: Reflect
@@ -705,6 +713,8 @@
         !type:DamageTrigger
         damage: 300
       behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
@@ -712,44 +722,60 @@
         acts: ["Destruction"]
     destroySound:
       path: /Audio/Effects/metalbreak.ogg
+  - type: Construction
+    graph: Girder
+    node: diagonalshuttleWall
 
 - type: entity
-  parent: BaseWall
+  parent: WallReinforced
   id: WallShuttle
   name: shuttle wall
+  suffix: Reinforced, Exterior
   components:
-  - type: Tag
-    tags:
-      - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/shuttle.rsi
   - type: Icon
     sprite: Structures/Walls/shuttle.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1000
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    destroySound:
-      path: /Audio/Effects/metalbreak.ogg
-  - type: Reflect
-    reflectProb: 1
+    state: full
+  - type: Construction
+    graph: Girder
+    node: shuttleWall
   - type: IconSmooth
     key: walls
     base: state
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ShuttleWallVisuals.DeconstructionStage:
+        ShuttleWallVisualLayers.Deconstruction:
+          -1: { visible: false }
+          0: { state: shuttle_construct-0, visible: true}
+          1: { state: shuttle_construct-1, visible: true}
+          2: { state: shuttle_construct-2, visible: true}
+          3: { state: shuttle_construct-3, visible: true}
+          4: { state: shuttle_construct-4, visible: true}
+          5: { state: shuttle_construct-5, visible: true}
+  - type: Reflect
+    reflectProb: 1
+
+- type: entity
+  parent: WallSolid
+  id: WallShuttleInterior
+  name: shuttle wall
+  suffix: Interior
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/shuttleinterior.rsi
+  - type: Icon
+    sprite: Structures/Walls/shuttleinterior.rsi
+  - type: Construction
+    graph: Girder
+    node: shuttleInteriorWall
+  - type: IconSmooth
+    key: walls
+    base: state
+  - type: Reflect
+    reflectProb: 1
 
 - type: entity
   parent: BaseWall
@@ -889,6 +915,8 @@
   - type: IconSmooth
     key: walls
     base: uranium
+  - type: RadiationBlocker
+    resistance: 6
 
 - type: entity
   parent: BaseWall
@@ -962,6 +990,9 @@
           MaterialWebSilk:
             min: 1
             max: 1
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
   - type: IconSmooth
     key: walls
     base: wall
@@ -1143,3 +1174,108 @@
     - type: Icon
       sprite: Structures/Magic/forcewall.rsi
       state: forcewall
+
+- type: entity
+  parent: BaseWall
+  id: WallCobblebrick
+  name: cobblestone brick wall
+  description: Stone by stone, perfectly fitted together to form a wall.
+  components:
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallBasaltCobblebrick
+  name: basalt brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_basalt.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_basalt.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallSnowCobblebrick
+  name: snow brick wall
+  description: A cold, not-so-impenetrable wall.
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_snow.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_snow.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallAsteroidCobblebrick
+  name: asteroid stone brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_asteroid.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_asteroid.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallSandCobblebrick
+  name: sandstone brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_sand.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_sand.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallChromiteCobblebrick
+  name: chromite brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_chromite.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_chromite.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallAndesiteCobblebrick
+  name: andesite brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_andesite.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_andesite.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick

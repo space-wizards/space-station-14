@@ -8,7 +8,7 @@
     sprite: Objects/Materials/Sheets/other.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/other.rsi
-    size: 30
+    size: Normal
   - type: Tag
     tags:
     - Sheet
@@ -37,6 +37,10 @@
     - paper
     - paper_2
     - paper_3
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 100
   - type: Sprite
     state: paper_3
     layers:
@@ -45,6 +49,18 @@
   - type: Item
     heldPrefix: paper
   - type: Appearance
+  - type: SolutionContainerManager
+#This should maybe be cellulose later on, refer to the comments in materials.yml on wood.
+    solutions:
+      wood:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 2
+        - ReagentId: Oxygen
+          Quantity: 0.5
+        - ReagentId: Hydrogen
+          Quantity: 0.5
+
 
 - type: entity
   parent: SheetPaper
@@ -56,8 +72,6 @@
     state: paper
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -106,8 +120,6 @@
     state: plasma
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -138,7 +150,6 @@
       map: ["base"]
   - type: Item
     heldPrefix: plastic
-    size: 30
   - type: Appearance
 
 - type: entity
@@ -149,8 +160,6 @@
   components:
   - type: Sprite
     state: plastic
-  - type: Item
-    size: 10
   - type: Stack
     count: 10
 
@@ -162,8 +171,6 @@
   components:
   - type: Sprite
     state: plastic
-  - type: Item
-    size: 1
   - type: Stack
     count: 1
 
@@ -212,8 +219,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -255,5 +260,3 @@
       state: meat
     - type: Stack
       count: 1
-    - type: Item
-      size: 1
