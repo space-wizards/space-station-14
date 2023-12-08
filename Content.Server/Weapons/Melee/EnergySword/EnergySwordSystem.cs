@@ -111,6 +111,7 @@ public sealed class EnergySwordSystem : EntitySystem
             weaponComp.HitSound = comp.OnHitOff;
             if (comp.Secret)
                 weaponComp.Hidden = true;
+            Dirty(uid, weaponComp);
         }
 
         if (comp.IsSharp)
@@ -136,6 +137,7 @@ public sealed class EnergySwordSystem : EntitySystem
             weaponComp.HitSound = comp.OnHitOn;
             if (comp.Secret)
                 weaponComp.Hidden = false;
+            Dirty(uid, weaponComp);
         }
 
         if (TryComp<DisarmMalusComponent>(uid, out var malus))

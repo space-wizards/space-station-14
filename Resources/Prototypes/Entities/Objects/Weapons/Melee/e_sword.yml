@@ -25,7 +25,7 @@
     wideAnimationRotation: -135
     attackRate: 1
     soundHit:
-      path: /Audio/Weapons/eblade1.ogg
+      path: /Audio/Weapons/genhit1.ogg
     damage:
       types:
         Blunt: 4.5
@@ -184,7 +184,7 @@
     attackRate: 1.5
     angle: 100
     soundHit:
-      path: /Audio/Weapons/eblade1.ogg
+      path: /Audio/Weapons/genhit1.ogg
     damage:
       types:
         Blunt: 4.5
