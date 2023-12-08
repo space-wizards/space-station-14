@@ -67,7 +67,7 @@ namespace Content.Client.Launcher
             var edim = IoCManager.Resolve<ExtendedDisconnectInformationManager>();
             edim.LastNetDisconnectedArgsChanged += LastNetDisconnectedArgsChanged;
             LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
-            _cfg.OnValueChanged(CCVars.LoginTipsDataset, SetLoginTipsDataset, true);
+            _cfg.UnsubValueChanged(CCVars.LoginTipsDataset, SetLoginTipsDataset);
         }
 
         private void SetLoginTipsDataset(string value)

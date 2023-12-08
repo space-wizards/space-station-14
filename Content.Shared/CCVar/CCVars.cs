@@ -480,7 +480,7 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<bool> LoginTipsEnable =
-            CVarDef.Create("logintips.enable", true);
+            CVarDef.Create("logintips.enabled", true);
 
         public static readonly CVarDef<string> LoginTipsDataset =
             CVarDef.Create("logintips.dataset", "Tips");
