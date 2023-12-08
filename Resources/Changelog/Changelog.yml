@@ -1,15 +1,6 @@
 Entries:
 - author: DrSmugleaf
   changes:
-  - {message: Fixed action ordering., type: Fix}
-  - {message: Fixed not being able to wake up., type: Fix}
-  - {message: Fixed zombies not being able to toggle combat mode., type: Fix}
-  - {message: Fixed getting duplicate crit actions., type: Fix}
-  - {message: Fixed the mime not getting the invisible wall action., type: Fix}
-  id: 4787
-  time: '2023-09-09T23:14:17.0000000+00:00'
-- author: DrSmugleaf
-  changes:
   - {message: Fixed not being able to use vehicle horns., type: Fix}
   id: 4788
   time: '2023-09-09T23:39:29.0000000+00:00'
@@ -2901,3 +2892,8 @@ Entries:
     type: Add}
   id: 5286
   time: '2023-12-08T02:38:07.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds a bed for the psychologist's office., type: Add}
+  id: 5287
+  time: '2023-12-08T05:24:35.0000000+00:00'
