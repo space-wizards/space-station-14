@@ -240,7 +240,7 @@
         scaleByQuantity: true
         ignoreResistances: true
         damage:
-          Groups:
+          groups:
             Brute: -5
             Burn: -5
 
