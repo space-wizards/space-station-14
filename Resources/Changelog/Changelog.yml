@@ -1,14 +1,4 @@
 Entries:
-- author: arimah
-  changes:
-  - {message: Particle Accelerators can now be constructed again, type: Fix}
-  id: 4792
-  time: '2023-09-10T03:42:42.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Revert a PR causing container issues., type: Fix}
-  id: 4793
-  time: '2023-09-10T11:46:36.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Replays now record ghost chat., type: Fix}
@@ -2902,3 +2892,15 @@ Entries:
   - {message: Rat king generates more miasma to fill larger rooms., type: Tweak}
   id: 5291
   time: '2023-12-08T18:46:28.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Command staff has brig access., type: Tweak}
+  id: 5292
+  time: '2023-12-08T18:50:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Removed upgrades from the anomaly vessel., type: Remove}
+  - {message: 'Added the experimental anomaly vessel, which researches twice as fast
+      at the cost of being radioactive.', type: Add}
+  id: 5293
+  time: '2023-12-08T18:50:41.0000000+00:00'
