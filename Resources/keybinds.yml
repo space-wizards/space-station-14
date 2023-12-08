@@ -163,6 +163,13 @@ binds:
 - function: SwapHands
   type: State
   key: X
+- function: MoveStoredItem
+  type: State
+  key: MouseLeft
+  canFocus: true
+- function: RotateStoredItem
+  type: State
+  key: MouseRight
 - function: Drop
   type: State
   key: Q

@@ -69,7 +69,6 @@ public static partial class PoolManager
         options.BeforeStart += () =>
         {
             var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
-            var compFactory = IoCManager.Resolve<IComponentFactory>();
             entSysMan.LoadExtraSystemType<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
             entSysMan.LoadExtraSystemType<InteractionSystemTests.TestInteractionSystem>();
             entSysMan.LoadExtraSystemType<DeviceNetworkTestSystem>();

@@ -48,7 +48,8 @@
         type: StorageBoundUserInterface
     - type: Storage
       maxItemSize: Normal
-      maxTotalWeight: 40
+      grid:
+      - 0,0,7,4
     - type: TileFrictionModifier
       modifier: 0.4 # makes it slide
 
@@ -161,3 +162,4 @@
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
+    - type: AntiRottingContainer

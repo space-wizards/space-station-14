@@ -38,7 +38,7 @@ public sealed partial class ActionUpgradeComponent : Component
     ///     What level(s) effect this action?
     ///     You can skip levels, so you can have this entity change at level 2 but then won't change again until level 5.
     /// </summary>
-    [DataField]
+    [DataField("effectedLevels"), ViewVariables]
     public Dictionary<int, EntProtoId> EffectedLevels = new();
 
     // TODO: Branching level upgrades

@@ -110,3 +110,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "taken at commit 0587dd16e28108bdf0b0a28e2caae4319845e861, and recolored by TheShuEd"
   source: "https://github.com/Mojave-Sun/mojave-sun-13"
+
+- files: ["mining_floor.png", "mining_floor_dark.png", "mining_floor_light.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "taken at https://github.com/ParadiseSS13/Paradise/commit/43889a89d5a9378fd120d627f74613edb1841a66"
+  source: "https://github.com/ParadiseSS13/Paradise"

@@ -36,25 +36,34 @@ internal sealed class UpgradeActionCommand : IConsoleCommand
 
         var id = args[0];
 
-        if (!EntityUid.TryParse(id, out var euid))
+        if (!EntityUid.TryParse(id, out var uid))
         {
             shell.WriteLine(Loc.GetString("upgradeaction-command-incorrect-entityuid-format"));
             return;
         }
 
-        if (!_entMan.EntityExists(euid))
+        if (!_entMan.EntityExists(uid))
         {
-            shell.WriteLine(Loc.GetString("upgradeaction-command-entityuid-does-not-exist"));
+            shell.WriteLine(Loc.GetString("upgradeaction-command-entity-does-not-exist"));
             return;
         }
 
-        // TODO: Also check if it has the action upgrade component
+        if (!_entMan.TryGetComponent<ActionUpgradeComponent>(uid, out var actionUpgradeComponent))
+        {
+            shell.WriteLine(Loc.GetString("upgradeaction-command-entity-is-not-action"));
+            return;
+        }
 
-        // TODO: If only one arg, increment level
+        if (args.Length == 1)
+        {
+            shell.WriteLine("One arg");
+            actionUpgrade.UpgradeAction(uid, actionUpgradeComponent);
+        }
 
         // TODO: If 2 args, check if 2nd arg is a number then upgrade action system can set level
         if (args.Length == 2)
         {
+            shell.WriteLine("Two args");
             var levelArg = args[1];
 
             if (!int.TryParse(levelArg, out var level))
@@ -69,7 +78,7 @@ internal sealed class UpgradeActionCommand : IConsoleCommand
                 return;
             }
 
-            actionUpgrade.UpgradeAction(new EntityUid(123), level);
+            actionUpgrade.UpgradeAction(uid, level);
         }
     }
 }

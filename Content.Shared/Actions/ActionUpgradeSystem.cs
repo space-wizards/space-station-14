@@ -23,19 +23,32 @@ public sealed class ActionUpgradeSystem : EntitySystem
     {
         // TODO: Add level (check if able first)
         if (!CanLevelUp(args.NewLevel, component.EffectedLevels, out var newActionProto)
-            || !_actions.TryGetActionData(uid, out var actionComp)
-            || actionComp.Container is null
-            || !TryComp<ActionsContainerComponent>(actionComp.Container.Value, out var actionContainerComp))
+            || !_actions.TryGetActionData(uid, out var actionComp))
             return;
 
         component.Level = args.NewLevel;
+        var originalContainer = actionComp.Container;
+        var originalAttachedEntity = actionComp.AttachedEntity;
         // TODO: Replace current action with new one
         // 1 - check original action container (either by system or getting it)
         // 2 - if container, remove provided action, else remove action
-        _actionContainer.RemoveAction(uid, actionComp);
         // 4 - add this to container
+
+        // TODO: Looks like action (fireball 2) was added to the container (fireball spellbook) succesfully, but doesn't get added to entity (player)
+        _actionContainer.RemoveAction(uid, actionComp);
+
+        if (originalContainer != null
+            && TryComp<ActionsContainerComponent>(originalContainer.Value, out var actionContainerComp))
+        {
+            _actionContainer.AddAction(originalContainer.Value, newActionProto, actionContainerComp);
+        }
+        else if (originalAttachedEntity != null)
+        {
+            _actionContainer.AddAction(originalAttachedEntity.Value, newActionProto);
+        }
+
         // 5 - grant actions if externally granted
-        _actionContainer.AddAction(actionComp.Container.Value, newActionProto, actionContainerComp);
+
         // TODO: Preserve ordering of actions
         //      Step through removing an action to see how that works on UI side
 
@@ -86,7 +99,7 @@ public sealed class ActionUpgradeSystem : EntitySystem
         DebugTools.AssertNotNull(actionUpgradeComponent);
         DebugTools.AssertNotNull(actionId);
 
-        var newLevel = actionUpgradeComponent.Level++;
+        var newLevel = actionUpgradeComponent.Level + 1;
         RaiseActionUpgradeEvent(newLevel, actionId.Value);
     }
 
