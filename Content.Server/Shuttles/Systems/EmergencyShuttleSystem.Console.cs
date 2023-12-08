@@ -33,6 +33,8 @@ public sealed partial class EmergencyShuttleSystem
     /// </summary>
     private float _consoleAccumulator = float.MinValue;
 
+    public float СonsoleAccumulator => _consoleAccumulator;
+
     /// <summary>
     /// How long after the transit is over to end the round.
     /// </summary>

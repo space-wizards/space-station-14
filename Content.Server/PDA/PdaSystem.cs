@@ -5,15 +5,20 @@ using Content.Server.Instruments;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
 using Content.Server.PDA.Ringer;
+using Content.Server.RoundEnd;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.CartridgeLoader;
+using Content.Shared.CCVar;
 using Content.Shared.Light.Components;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Server.PDA
 {
@@ -26,6 +31,9 @@ namespace Content.Server.PDA
         [Dependency] private readonly StoreSystem _store = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
+        [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttleSystem = default!;
 
         public override void Initialize()
         {
@@ -130,6 +138,31 @@ namespace Content.Server.PDA
             if (!TryComp(uid, out CartridgeLoaderComponent? loader))
                 return;
 
+            TimeSpan? shuttleTime;
+            EvacShuttleStatus shuttleStatus;
+            if (_emergencyShuttleSystem.DockTime != null)
+            {
+                var dockTime = _cfg.GetCVar(CCVars.EmergencyShuttleDockTime);
+                shuttleTime = _emergencyShuttleSystem.DockTime + TimeSpan.FromSeconds(dockTime);
+                shuttleStatus = EvacShuttleStatus.WaitingToLaunch;
+            }
+            else
+            {
+                if (_roundEndSystem.ExpectedCountdownEnd != null)
+                {
+                    shuttleTime = _roundEndSystem.ExpectedCountdownEnd;
+                    shuttleStatus = EvacShuttleStatus.WaitingToArrival;
+                }
+                else
+                {
+                    var autoCalledBefore = _roundEndSystem.AutoCalledBefore
+                        ? _cfg.GetCVar(CCVars.EmergencyShuttleAutoCallExtensionTime)
+                        : _cfg.GetCVar(CCVars.EmergencyShuttleAutoCallTime);
+                    shuttleTime = _roundEndSystem.AutoCallStartTime + TimeSpan.FromMinutes(autoCalledBefore);
+                    shuttleStatus = EvacShuttleStatus.WaitingToCall;
+                }
+            }
+
             var programs = _cartridgeLoader.GetAvailablePrograms(uid, loader);
             var id = CompOrNull<IdCardComponent>(pda.ContainedId);
             var state = new PdaUpdateState(
@@ -143,7 +176,9 @@ namespace Content.Server.PDA
                     IdOwner = id?.FullName,
                     JobTitle = id?.JobTitle,
                     StationAlertLevel = pda.StationAlertLevel,
-                    StationAlertColor = pda.StationAlertColor
+                    StationAlertColor = pda.StationAlertColor,
+                    EvacShuttleStatus = shuttleStatus,
+                    EvacShuttleTime = shuttleTime
                 },
                 pda.StationName,
                 showUplink,

@@ -52,7 +52,7 @@ namespace Content.Server.RoundEnd
         public TimeSpan? ShuttleTimeLeft => ExpectedCountdownEnd - _gameTiming.CurTime;
 
         public TimeSpan AutoCallStartTime;
-        private bool AutoCalledBefore = false;
+        public bool AutoCalledBefore;
 
         public override void Initialize()
         {

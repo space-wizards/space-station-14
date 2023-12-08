@@ -34,6 +34,12 @@ comp-pda-ui-station-alert-level-instructions = Instructions: [color=white]{ $ins
 
 comp-pda-ui-station-time = Shift duration: [color=white]{ $time }[/color]
 
+comp-pda-ui-shuttle-call-time = Before the crew change: [color=white]{ $time }[/color]
+
+comp-pda-ui-shuttle-arrival-time = Before the shuttle arrival: [color=white]{ $time }[/color]
+
+comp-pda-ui-shuttle-launch-time = Before the shuttle launch: [color=white]{ $time }[/color]
+
 comp-pda-ui-eject-id-button = Eject ID
 
 comp-pda-ui-eject-pen-button = Eject Pen
