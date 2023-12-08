@@ -119,7 +119,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
     /// <param name="entity">The entity to open the UI for</param>
     public override void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false)
     {
-        if (!Resolve(uid, ref storageComp) || !TryComp(entity, out ActorComponent? player))
+        if (!Resolve(uid, ref storageComp, false) || !TryComp(entity, out ActorComponent? player))
             return;
 
         // prevent spamming bag open / honkerton honk sound
