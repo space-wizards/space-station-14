@@ -1,9 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - {message: Fingerless gloves are now available in the SecDrobe, type: Add}
-  id: 4785
-  time: '2023-09-09T18:59:03.0000000+00:00'
 - author: DrTeaSpoon
   changes:
   - {message: Crossing plants may now combine their produced chemicals., type: Tweak}
@@ -2900,3 +2895,8 @@ Entries:
   - {message: Fixed explosion resistance being ignored., type: Fix}
   id: 5284
   time: '2023-12-07T18:51:46.0000000+00:00'
+- author: Aexxie
+  changes:
+  - {message: Paramed no longer has external access., type: Remove}
+  id: 5285
+  time: '2023-12-07T23:27:18.0000000+00:00'
