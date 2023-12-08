@@ -17,4 +17,9 @@ pai-system-stop-searching-verb-text = Прекратить поиск
 pai-system-stopped-searching = Устройство прекратило поиск пИИ.
 
 pai-system-pai-name = пИИ {CAPITALIZE($owner)}
+pai-system-pai-name-raw = {$name} пИИ
+
+pai-system-brick-popup = Сеть пИИ громко бзыкает и выдыхается!
+pai-system-scramble-popup = Сеть пИИ перегружено электричеством!
+
 

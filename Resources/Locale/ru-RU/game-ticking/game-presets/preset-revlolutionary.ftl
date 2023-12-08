@@ -1,6 +1,6 @@
 ## Rev Head
 
-roles-antag-rev-head-name = Глава Революциии
+roles-antag-rev-head-name = Глава Революции
 roles-antag-rev-head-objective = Ваша цель — захватить станцию, обратив людей на свою сторону и убив весь командный состав на станции.
 
 head-rev-role-greeting =
