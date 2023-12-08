@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtMusician
+  name: Musician's uniform
+  description: none
+  components:
+  - type: Sprite
+    sprite: Imperial/jumpskirts/Clothing/musician.rsi
+  - type: Clothing
+    sprite: Imperial/jumpskirts/Clothing/musician.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPsychologist
+  name: Psychologist's uniform
+  description: none
+  components:
+  - type: Sprite
+    sprite: Imperial/jumpskirts/Clothing/psychologist.rsi
+  - type: Clothing
+    sprite: Imperial/jumpskirts/Clothing/psychologist.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtReporter
+  name: Reporter's uniform
+  description: none
+  components:
+  - type: Sprite
+    sprite: Imperial/jumpskirts/Clothing/reporter.rsi
+  - type: Clothing
+    sprite: Imperial/jumpskirts/Clothing/reporter.rsi
