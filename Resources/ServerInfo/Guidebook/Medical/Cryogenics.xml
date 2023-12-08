@@ -1,11 +1,11 @@
 <Document>
 # Cryogenics
-Cryogenics can be a bit daunting to understand, but hopefully, quick run through of this diagram, you'll learn how to work it! So, let's go over what each part does:
+Cryogenics can be a bit daunting to understand, but hopefully through a quick run through of this diagram, you'll learn how to work it! So, let's go over what each part does:
 
 - Air in: Air comes in here through the distro or an air tank, giving those inside something to breathe, and the freezer something to chill.
 - Gas pump: Limits the network pressure, so those in the tube aren't crushed.
 - Freezer: Chills the air, and by extension, patients in the tube, so Cryoxadone can activate.
-- Gas filters: Removes waste gas (Carbon Dioxide and Nitrous Oxide) from the loop.
+- Gas filters: Removes waste gas (Carbon Dioxide and Nitrous Oxide) from the loop, so patients don't suffocate.
 - Air out: Waste gasses go here, either into a storage tank, or into the waste network.
 <Box>
 <GuideEntityEmbed Entity="GasPipeBend" Rotation="90"/>

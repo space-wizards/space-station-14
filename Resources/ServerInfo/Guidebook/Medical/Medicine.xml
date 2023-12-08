@@ -16,7 +16,7 @@ These medications are almost always useful to medbay in one way or another.
 # Specialty Medications
 
 These medications tend to have specific use cases.
-Also, check the [textlink="advanced brute chemicals"  link="AdvancedBrute"] tab for... advanced brute chemicals. Name's right on the tin.
+Also, check the [textlink="advanced brute chemicals"  link="AdvancedBrute"] tab for chemicals specialized to a sub-damage type of brute.
 
 <GuideReagentEmbed Reagent="Cryoxadone"/>
 <GuideReagentEmbed Reagent="Epinephrine"/>
