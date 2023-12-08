@@ -1,15 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Monkeys can now bump doors open and strip mobs like people can., type: Tweak}
-  id: 4789
-  time: '2023-09-10T02:51:51.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Ian/Old Ian/Lisa yield corgi hide when butchered, which can be worn
-      as a hat or crafted into an ian suit.', type: Add}
-  id: 4790
-  time: '2023-09-10T03:04:33.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Added cobweb decorations for mappers to utilize., type: Add}
@@ -2897,3 +2886,17 @@ Entries:
   - {message: Chemical explosions are powerful again., type: Tweak}
   id: 5288
   time: '2023-12-08T10:58:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'V and shift-V can now be used to open the bag and belt, respectively.',
+    type: Add}
+  - {message: Interacting with a storage item now has context-sensitive logic based
+      on whether or not the window is open or focused., type: Fix}
+  id: 5289
+  time: '2023-12-08T18:43:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'When viewing a storage container, the item that will be removed via
+      smart-equip is now marked with a small star icon.', type: Add}
+  id: 5290
+  time: '2023-12-08T18:43:58.0000000+00:00'
