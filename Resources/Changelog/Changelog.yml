@@ -1,9 +1,4 @@
 Entries:
-- author: DrTeaSpoon
-  changes:
-  - {message: Crossing plants may now combine their produced chemicals., type: Tweak}
-  id: 4786
-  time: '2023-09-09T21:54:37.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed action ordering., type: Fix}
@@ -2900,3 +2895,9 @@ Entries:
   - {message: Paramed no longer has external access., type: Remove}
   id: 5285
   time: '2023-12-07T23:27:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Hovering over an item in storage now shows a tooltip with the name.,
+    type: Add}
+  id: 5286
+  time: '2023-12-08T02:38:07.0000000+00:00'
