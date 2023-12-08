@@ -318,7 +318,8 @@
   description: Holds the kit of CentComm's most feared agents.
   components:
     - type: Storage
-      maxTotalWeight: 56
+      grid:
+      - 0,0,7,6
     - type: StorageFill
       contents:
         - id: BoxSurvivalEngineering
