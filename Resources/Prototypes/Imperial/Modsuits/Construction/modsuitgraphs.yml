@@ -143,8 +143,8 @@
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: CORE-equip4
               doAfter: 2
-            - tag: CoreMedicalModsuit
-              name: Ядро медицинского РИГ-а
+            - tag: CoreBasicModsuit
+              name: Ядро базового РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core
@@ -231,7 +231,7 @@
                 state: CORE-equip4
               doAfter: 2
             - tag: CoreBasicModsuit
-              name: Ядро гражданского РИГ-а
+              name: Ядро базового РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core

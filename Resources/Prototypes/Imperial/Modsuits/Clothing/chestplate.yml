@@ -13,7 +13,7 @@
     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.002
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitCESealed
     requiredSlot: outerClothing
@@ -40,7 +40,7 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/advanced.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.0002
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.000001
   - type: ExplosionResistance
@@ -62,6 +62,7 @@
     clothingPrototype: ClothingHeadHelmetModsuitCESealed
     requiredSlot: outerClothing
     slot: head
+  - type: Insulated
 
 - type: entity 
   parent: ClothingOuterChestplateModsuitSealedBase
@@ -75,7 +76,7 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/engineer.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.04
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.5
   - type: ExplosionResistance
@@ -96,6 +97,7 @@
     clothingPrototype: ClothingHeadHelmetModsuitEngineerSealed
     requiredSlot: outerClothing
     slot: head
+  - type: Insulated
 
 - type: entity 
   parent: ClothingOuterChestplateModsuitSealedBase
@@ -108,8 +110,8 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/rnd.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.04
-    lowPressureMultiplier: 500
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.6
   - type: ExplosionResistance
@@ -143,7 +145,7 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/atmospheric.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.00001
   - type: ExplosionResistance
@@ -175,8 +177,8 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/medical.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.7
-    lowPressureMultiplier: 500
+    highPressureMultiplier: 0.4
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.5
   - type: ExplosionResistance
@@ -206,7 +208,7 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/cmo.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.2
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.15
   - type: ExplosionResistance
@@ -238,8 +240,8 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/civillian.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.7
-    lowPressureMultiplier: 500
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.9
   - type: ExplosionResistance
@@ -270,8 +272,8 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/magnate.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.4
-    lowPressureMultiplier: 500
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.02
   - type: ExplosionResistance
@@ -304,8 +306,8 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/security.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.4
-    lowPressureMultiplier: 500
+    highPressureMultiplier: 0.35
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.7
   - type: ExplosionResistance
@@ -338,8 +340,8 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/hos.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.4
-    lowPressureMultiplier: 500
+    highPressureMultiplier: 0.35
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.7
   - type: ExplosionResistance
@@ -372,19 +374,18 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/salvage.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.6
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.7
   - type: ExplosionResistance
-    damageCoefficient: 0.3
+    damageCoefficient: 0.7
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.7
-        Slash: 0.6
-        Piercing: 0.4
-        Caustic: 0.65
-        Radiation: 0.2
+        Slash: 0.7
+        Piercing: 0.8
+        Caustic: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
@@ -405,7 +406,7 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/miner.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.5
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.3
   - type: ExplosionResistance
@@ -413,12 +414,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.4
+        Blunt: 0.55
+        Slash: 0.55
+        Piercing: 0.7
         Caustic: 0.65
-        Heat: 0.85
-        Radiation: 0.2
+        Heat: 0.7
+        Radiation: 0.5
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
@@ -439,7 +440,7 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeops.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.25
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.3
   - type: ExplosionResistance
@@ -449,7 +450,7 @@
       coefficients:
         Blunt: 0.4
         Slash: 0.8
-        Piercing: 0.6
+        Piercing: 0.5
         Caustic: 0.4
         Heat: 0.6
         Radiation: 0.4
@@ -518,7 +519,7 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopscmd.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.001
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.3
   - type: ExplosionResistance
@@ -582,7 +583,7 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/corporate.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.04
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitCCSealed
     requiredSlot: outerClothing
@@ -609,7 +610,7 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/apocryphal.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.4
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.000005
   - type: ExplosionResistance

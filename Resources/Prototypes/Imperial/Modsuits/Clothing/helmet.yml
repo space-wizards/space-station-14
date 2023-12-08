@@ -21,7 +21,7 @@
         Piercing: 0.9
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: FlashImmunity
   - type: EyeProtection
   - type: IdentityBlocker
@@ -56,8 +56,8 @@
         Heat: 0.85
         Piercing: 0.9
   - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    highPressureMultiplier: 0.005
+    lowPressureMultiplier: 1000
   - type: FlashImmunity
   - type: EyeProtection
   - type: IdentityBlocker
@@ -86,7 +86,7 @@
         Radiation: 0.25
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: IdentityBlocker
 
 - type: entity
@@ -114,7 +114,7 @@
         Heat: 0.8
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -143,7 +143,7 @@
         Piercing: 0.85
   - type: PressureProtection
     highPressureMultiplier: 0.001
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: IdentityBlocker
 
 - type: entity
@@ -169,7 +169,7 @@
         Heat: 0.85
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHelmetModsuitCEBase
@@ -194,7 +194,7 @@
         Radiation: 0.2
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHelmetModsuitCEBase
@@ -216,7 +216,7 @@
         Radiation: 0.85
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: IdentityBlocker
 
 - type: entity
@@ -242,7 +242,7 @@
         Heat: 0.65
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: FlashImmunity
   - type: EyeProtection
 
@@ -269,7 +269,7 @@
         Heat: 0.8
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: FlashImmunity
   - type: EyeProtection
 
@@ -296,7 +296,7 @@
         Radiation: 0.7
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: FlashImmunity
   - type: EyeProtection
 
@@ -319,11 +319,11 @@
         Blunt: 0.85
         Slash: 0.85
         Piercing: 0.9
-        Radiation: 0.25
+        Radiation: 0.65
         Heat: 0.8
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHelmetModsuitCEBase
@@ -348,7 +348,7 @@
         Slash: 0.85
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: FlashImmunity #some kind of lava bursts protection
   - type: IdentityBlocker
 
@@ -374,7 +374,7 @@
         Heat: 0.75
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: FlashImmunity
   - type: EyeProtection
   - type: IdentityBlocker
@@ -401,7 +401,7 @@
         Caustic: 0.65
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: FlashImmunity
   - type: EyeProtection
   - type: IdentityBlocker
@@ -467,7 +467,7 @@
         Piercing: 0.8
   - type: PressureProtection
     highPressureMultiplier: 0.05
-    lowPressureMultiplier: 500
+    lowPressureMultiplier: 1000
   - type: FlashImmunity
   - type: EyeProtection
   - type: IdentityBlocker

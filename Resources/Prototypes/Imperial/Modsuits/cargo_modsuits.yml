@@ -5,11 +5,12 @@
   - type: StorageFill
     contents:
       - id: CoreEngineerModsuitConstructing
+      - id: CoreEngineerModsuitConstructing
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 700 #no tiding only teamwork
+        damage: 1000 #no tiding only teamwork
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -21,11 +22,12 @@
   - type: StorageFill
     contents:
       - id: CoreRNDModsuitConstructing
+      - id: CoreRNDModsuitConstructing
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 350 #no tiding only teamwork
+        damage: 500 #no tiding only teamwork
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -37,22 +39,7 @@
   - type: StorageFill
     contents:
       - id: CoreBasicModsuitConstructing
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500 #no tiding only teamwork
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-
-- type: entity
-  id: CrateModsuitsMedical
-  parent: CrateMedicalSecure
-  components:
-  - type: StorageFill
-    contents:
-      - id: CoreMedicalModsuitConstructing
+      - id: CoreBasicModsuitConstructing
   - type: Destructible
     thresholds:
     - trigger:
@@ -68,7 +55,7 @@
     sprite: Imperial/Modsuits/constructing_modsuit.rsi
     state: mod-core-plasma
   product: CrateModsuitsPlasma
-  cost: 2000
+  cost: 2500
   category: Engineering
   group: market
 
@@ -78,7 +65,7 @@
     sprite: Imperial/Modsuits/constructing_modsuit.rsi
     state: mod-core
   product: CrateModsuitsBasic
-  cost: 1000
+  cost: 1250
   category: Engineering
   group: market
 
@@ -88,16 +75,6 @@
     sprite: Imperial/Modsuits/constructing_modsuit.rsi
     state: mod-core
   product: CrateModsuitsScience
-  cost: 1750
-  category: Engineering
-  group: market
-
-- type: cargoProduct
-  id: CargoModsuitsMedical
-  icon:
-    sprite: Imperial/Modsuits/constructing_modsuit.rsi
-    state: mod-core
-  product: CrateModsuitsMedical
-  cost: 1500
+  cost: 2000
   category: Engineering
   group: market
