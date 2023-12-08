@@ -476,6 +476,16 @@ namespace Content.Shared.CCVar
             CVarDef.Create("tips.in_game_frequency", 60f * 60);
 
         /*
+         * Login Tips
+         */
+
+        public static readonly CVarDef<bool> LoginTipsEnable =
+            CVarDef.Create("logintips.enable", true);
+
+        public static readonly CVarDef<string> LoginTipsDataset =
+            CVarDef.Create("logintips.dataset", "Tips");
+
+        /*
          * Console
          */
 
