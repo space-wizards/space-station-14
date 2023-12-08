@@ -2,7 +2,7 @@
 - type: emote
   id: Scream
   category: Vocal
-  chatMessages: [кричит!]
+  chatMessages: [кричит!] # Imperial localization
   chatTriggers:
     - scream
     - screams
@@ -28,24 +28,22 @@
     - yells!
     - yelled
     - yelling
-
-    - крик
+    # Imperial localization start
     - кричит
     - кричит.
     - кричит!
-    - ор
     - орёт
     - орёт.
     - орёт!
-    - визг
     - визжит
     - визжит.
     - визжит!
+    # Imperial localization end
 
 - type: emote
   id: Laugh
   category: Vocal
-  chatMessages: [смеётся]
+  chatMessages: [смеётся.] # Imperial localization
   chatTriggers:
     - laugh
     - laughs
@@ -65,16 +63,14 @@
     - giggles!
     - giggling
     - giggled
-    - lol
-
-    - смех
+    # Imperial localization start
+    - лол
     - смеется
     - смеется.
     - смеется!
     - смеётся
     - смеётся.
     - смеётся!
-    - хохот
     - хохочет
     - хохочет.
     - хохочет!
@@ -84,8 +80,7 @@
     - хихикнул
     - хихикнула
     - ржёт
-    - лол
-
+    # Imperial localization end
 
 - type: emote
   id: Honk
@@ -95,7 +90,7 @@
 - type: emote
   id: Sigh
   category: Vocal
-  chatMessages: [sighs]
+  chatMessages: [вздыхает.] # Imperial localization
   chatTriggers:
     - sigh
     - sighs
@@ -103,11 +98,19 @@
     - sigh.
     - sighs.
     - sighed.
+    # Imperial localization start
+    - вздыхает
+    - вздыхает.
+    - вздохнул
+    - вздохнула
+    - вздохнул.
+    - вздохнула.
+    # Imperial localization end
 
 - type: emote
   id: Whistle
   category: Vocal
-  chatMessages: [whistle]
+  chatMessages: [свистит.] # Imperial localization
   chatTriggers:
     - whistle
     - whistle.
@@ -118,11 +121,19 @@
     - whistleblowing
     - whistleblowing.
     - whistleblowing!
+    # Imperial localization start
+    - свистит
+    - свистит.
+    - свистит!
+    - свистнул
+    - свистнул.
+    - свистнул!
+    # Imperial localization end
 
 - type: emote
   id: Crying
   category: Vocal
-  chatMessages: [crying]
+  chatMessages: [плачет.] # Imperial localization
   chatTriggers:
     - cry
     - cry.
@@ -133,11 +144,19 @@
     - cries
     - cries.
     - cries!
+    # Imperial localization start
+    - плачет
+    - плачет.
+    - плачет!
+    - рыдает
+    - рыдает.
+    - рыдает!
+    # Imperial localization end
 
 - type: emote
   id: Squish
   category: Vocal
-  chatMessages: [squishing]
+  chatMessages: [хлюпает.] # Imperial localization
   chatTriggers:
     - squish
     - squish.
@@ -148,11 +167,16 @@
     - squishes
     - squishes.
     - squishes!
+    # Imperial localization start
+    - хлюпает
+    - хлюпает.
+    - хлюпает!
+    # Imperial localization end
 
 - type: emote
   id: Chitter
   category: Vocal
-  chatMessages: [chitters.]
+  chatMessages: [стрекочет.] # Imperial localization
   chatTriggers:
    - chitter
    - chitter.
@@ -163,11 +187,16 @@
    - chittered
    - chittered.
    - chittered!
+   # Imperial localization start
+   - стрекочет
+   - стрекочет.
+   - стрекочет!
+   # Imperial localization end
 
 - type: emote
   id: Squeak
   category: Vocal
-  chatMessages: [squeaks.]
+  chatMessages: [пищит.] # Imperial localization
   chatTriggers:
    - squeak
    - squeak.
@@ -178,12 +207,17 @@
    - squeaked
    - squeaked.
    - squeaked!
+   # Imperial localization start
+   - пищит
+   - пищит.
+   - пищит!
+   # Imperial localization end
 
 # hand emotes
 - type: emote
   id: Clap
   category: Hands
-  chatMessages: [хлопает!]
+  chatMessages: [хлопает!] # Imperial localization
   chatTriggers:
     - clap
     - claps
@@ -191,8 +225,7 @@
     - claps!
     - clapping
     - clapped
-
-    - хлоп
+    # Imperial localization start
     - хлопает
     - хлопает.
     - хлопает!
@@ -206,11 +239,12 @@
     - апплодирует
     - апплодирует.
     - апплодирует!
+    # Imperial localization end
 
 - type: emote
   id: Snap
   category: Hands
-  chatMessages: [щёлкает пальцами] # snaps <{THEIR($ent)}> fingers?
+  chatMessages: [щёлкает пальцами.] # Imperial localization
   chatTriggers:
     - snap
     - snaps
@@ -225,8 +259,7 @@
     - snaps their fingers!
     - snapping fingers
     - snapped fingers
-
-    - щелк
+    # Imperial localization start
     - щелкает
     - щелкает.
     - щелкает!
@@ -247,11 +280,12 @@
     - щёлкает пальцами!
     - щёлкнул пальцами
     - щёлкнула пальцами
+    # Imperial localization end
 
 - type: emote
   id: Salute
   category: Hands
-  chatMessages: [Salute]
+  chatMessages: [салютует.] # Imperial localization
   chatTriggers:
     - salute
     - salute.
@@ -259,6 +293,20 @@
     - salutes
     - salutes.
     - salutes!
+    # Imperial localization start
+    - салютует
+    - салютует.
+    - салютует!
+    - отдаёт честь
+    - отдаёт честь.
+    - отдаёт честь!
+    - отдал честь
+    - отдал честь.
+    - отдал честь!
+    - отдала честь
+    - отдала честь.
+    - отдала честь!
+    # Imperial localization end
 
 - type: emote
   id: DefaultDeathgasp
