@@ -12,7 +12,7 @@
   - Proximity sensors
 
   Operating the exosuit fabricator is the same as every other lathe on the station; simply click the fabricator to open the UI, then click the icon for whatever part you want to print.
-  - Are there no recipes? click the [color=#a4885c]sync[/color] button on the UI to check for any new blueprints. If, even then, nothing shows up, you've likely not researched the relevant technology yet!
+  - Are there no recipes? Click the [color=#a4885c]sync[/color] button on the UI to check for any new blueprints. If, even then, nothing shows up, you've likely not researched the relevant technology yet!
   - If a recipe appears grayed-out, it's likely due to a lack of materials. To insert new materials (either [color=#99A3A4]steel[/color], [color=#ECF0F1]plastic[/color], or [color=#AED6F1]glass[/color]), simply click the fabricator while holding said material.
 
   Every station starts with a full suite of robotics equipment by default, but you can make another fabricator if [color=#a4885c]Robotics[/color] technology is available, which will allow you to make the respective circuit board.
@@ -28,7 +28,7 @@
 </Box>
   [color=#a4885c]Bots[/color] are small, simple automata which can perform simple tasks, such as cleaning. They don't use power cells, but are quite fragile. Making these will require parts which can be made at an exosuit fabricator.
 
-  To make a bot, open the [color=#a4885c]Construction Menu[/color] and go to the "Utilities" category  (or just search "bot") and you'll have the whole list of recipes. In order to assemble the bot, you must have the parts outlined by the recipe close to you and click [color=#a4885c]Build[/color], after a few seconds your newly created silicon servant should appear at your feet!
+  To make a bot, open the [color=#a4885c]Construction Menu[/color] and go to the "Utilities" category  (or just search "bot") and you'll have the whole list of recipes. In order to assemble the bot, you must have the parts outlined by the recipe close to you and click [color=#a4885c]Build[/color]; after a few seconds your newly created silicon servant should appear at your feet!
 
   ## Mechs
 <Box>

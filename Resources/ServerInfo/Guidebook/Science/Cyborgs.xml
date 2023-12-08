@@ -19,7 +19,7 @@
   Both brains can be fabricated without requiring any additional research.
 
   ## Chassis
-  While all cyborgs share the same endoskeleton, not all share the same chassis. The chassis determines what modules the cyborg can have, along with the [color=#a4885c]departmental radio channel[/color] they correspond to. By default, they will always have access to [color=#D381C9]Science[/color] and [color=green]station-wide[/color] frequencies, along with having [color=#a4885c]all-access[/color].
+  While all cyborgs share the same endoskeleton, not all share the same chassis. The chassis determines what modules the cyborg can have, along with the [color=#a4885c]departmental radio channel[/color] they (should) correspond to. By default, they will always have access to [color=#D381C9]Science[/color] and [color=green]station-wide[/color] frequencies, along with having [color=#a4885c]all-access[/color].
   <Box>
     <GuideEntityEmbed Entity="BorgChassisGeneric" Caption="Generic"/>
     <GuideEntityEmbed Entity="BorgChassisEngineer" Caption="Engineering"/>
@@ -39,7 +39,7 @@
   </Box>
   A cyborg isn't able to do much without [color=#a4885c]modules[/color]. These printed circuit boards are specific to cyborgs and grant additional functionality to them. They are printed at the [color=#a4885c]Exosuit Fabricator[/color].
 
-  [color=#a4885c]Generic[/color] modules add versatility. They can be fitted into any chassis, granting useful tools such as crowbars, GPS, and the ability to interact with cables. [bold]The generic borg chassis can fit up to 6 modules in total.[/bold]
+  [color=#a4885c]Generic[/color] modules add versatility. They can be fitted into any chassis, granting useful tools such as crowbars, GPS, and the ability to interact with cables. [bold]The generic borg chassis can fit up to 3 modules in total.[/bold]
   <Box>
     <GuideEntityEmbed Entity="BorgModuleCable" Caption="Cable"/>
     <GuideEntityEmbed Entity="BorgModuleGPS" Caption="GPS"/>

@@ -10,13 +10,13 @@ Anomalous Research is a subdepartment of Science focused around the containment 
 <GuideEntityEmbed Entity="MachineAPE"/>
 </Box>
 
-Scanners, vessels, and A.P.E.s are all used in the containment and observation of anomalies.
+Scanners, Vessels, A.P.E.s, C.H.I.M.P.s and Anomaly Synchronizers are all used in the containment and observation of anomalies.
 
 <Box>
 <GuideEntityEmbed Entity="MachineAnomalyGenerator"/>
 </Box>
 
-The anomaly generator can produce a random anomaly somewhere on the station at the cost of plasma.
+The Anomaly Generator can produce a random anomaly somewhere on the station at the cost of 15 plasma. All stations start with a full stack of plasma on a desk (usually) in the same room as the Anomaly Generator.
 
 ## Anomalies
 Anomalies are static objects that appear on the station. They cannot be moved, and must be worked around, no matter their location.

@@ -10,9 +10,9 @@ Machines help the station run smoothly, and as a scientist, you can help them ru
 <GuideEntityEmbed Entity="MatterBinStockPart"/>
 <GuideEntityEmbed Entity="MicroManipulatorStockPart"/>
 </Box>
-You can examine each machine part to see both the type and the rating, which range from 1 to 4.
+You can examine each machine part to see both the type and the rating, which range from 1 (Stock Parts) to 4 (Bluespace Parts, cannot be unlocked through technologies!).
 
-Parts of higher levels can be researched as well as found through artifacts or salvage.
+Parts of higher levels can be researched (excluding Bluespace Parts), or they can be found through artifacts or salvage.
 <Box>
 <GuideEntityEmbed Entity="AdvancedMatterBinStockPart"/>
 <GuideEntityEmbed Entity="SuperMatterBinStockPart"/>
@@ -33,6 +33,6 @@ You can use any rating part for any part requirement. Using higher rated parts w
 
 If you want to upgrade an existing machine, simply deconstruct it with a screwdriver and crowbar, and replace the existing parts with parts of a higher level.
 
-You can also quickly upgrade machines by using an RPED, loading it with machine parts, and then clicking on a machine. It will quickly be upgraded with whatever parts were inserted.
+You can also quickly upgrade machines by using an RPED, loading it with machine parts, and then clicking on a machine (after removing its maintenance panel, should it have one). It will quickly be upgraded with the best parts inserted.
 <GuideEntityEmbed Entity="RPED"/>
 </Document>

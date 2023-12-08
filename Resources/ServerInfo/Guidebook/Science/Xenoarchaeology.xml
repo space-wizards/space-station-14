@@ -29,6 +29,6 @@ Using the console, you can extract points from the artifact using the [color=#a4
 ## Assembling Artifacts
 <GuideEntityEmbed Entity="ArtifactFragment" Caption="Artifact Fragment"/>
 
-It is possible to gather multiple artifact fragments and assemble them into a working artifact. You can ask for these from Salvage, they usually find these while mining asteroids or on Expeditions.
+It is possible to gather multiple artifact fragments and assemble them into a working artifact. You can ask for these from Salvage, they usually find these while mining asteroids or on Expeditions. Some artifacts may also create these fragments, so look out for them!
 
 </Document>
