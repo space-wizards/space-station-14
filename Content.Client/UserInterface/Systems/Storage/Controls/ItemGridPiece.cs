@@ -1,19 +1,17 @@
-using System.Linq;
 using System.Numerics;
 using Content.Client.Items.Systems;
 using Content.Shared.Item;
 using Content.Shared.Storage;
-using Content.Shared.Storage.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.CustomControls;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
 public sealed class ItemGridPiece : Control
 {
-    private readonly ItemSystem _itemSystem;
-    private readonly SpriteSystem _spriteSystem;
+    private readonly IEntityManager _entityManager;
     private readonly StorageUIController _storageController;
 
     private readonly List<(Texture, Vector2)> _texturesPositions = new();
@@ -49,8 +47,7 @@ public sealed class ItemGridPiece : Control
     {
         IoCManager.InjectDependencies(this);
 
-        _itemSystem = entityManager.System<ItemSystem>();
-        _spriteSystem = entityManager.System<SpriteSystem>();
+        _entityManager = entityManager;
         _storageController = UserInterfaceManager.GetUIController<StorageUIController>();
 
         Entity = entity.Owner;
@@ -59,7 +56,20 @@ public sealed class ItemGridPiece : Control
         Visible = true;
         MouseFilter = MouseFilterMode.Pass;
 
+        TooltipSupplier = SupplyTooltip;
+
         OnThemeUpdated();
+    }
+
+    private Control? SupplyTooltip(Control sender)
+    {
+        if (_storageController.IsDragging)
+            return null;
+
+        return new Tooltip
+        {
+            Text = _entityManager.GetComponent<MetaDataComponent>(Entity).EntityName
+        };
     }
 
     protected override void OnThemeUpdated()
@@ -81,10 +91,17 @@ public sealed class ItemGridPiece : Control
     {
         base.Draw(handle);
 
+        // really just an "oh shit" catch.
+        if (!_entityManager.EntityExists(Entity) || !_entityManager.TryGetComponent<ItemComponent>(Entity, out var itemComponent))
+        {
+            Dispose();
+            return;
+        }
+
         if (_storageController.IsDragging && _storageController.CurrentlyDragging == this)
             return;
 
-        var adjustedShape = _itemSystem.GetAdjustedItemShape((Entity, null), Location.Rotation, Vector2i.Zero);
+        var adjustedShape = _entityManager.System<ItemSystem>().GetAdjustedItemShape((Entity, itemComponent), Location.Rotation, Vector2i.Zero);
         var boundingGrid = adjustedShape.GetBoundingBox();
         var size = _centerTexture!.Size * 2 * UIScale;
 
@@ -127,15 +144,37 @@ public sealed class ItemGridPiece : Control
         }
 
         // typically you'd divide by two, but since the textures are half a tile, this is done implicitly
-        var iconOffset = new Vector2((boundingGrid.Width + 1) * size.X ,
+        var iconPosition = new Vector2((boundingGrid.Width + 1) * size.X ,
             (boundingGrid.Height + 1) * size.Y);
+        var iconRotation = Location.Rotation + Angle.FromDegrees(itemComponent.StoredRotation);
 
-        _spriteSystem.ForceUpdate(Entity);
-        handle.DrawEntity(Entity,
-            PixelPosition + iconOffset,
-            Vector2.One * 2 * UIScale,
-            Angle.Zero,
-            overrideDirection: Direction.South);
+        if (itemComponent.StoredSprite is { } storageSprite)
+        {
+            var scale = 2 * UIScale;
+            var offset = (((Box2) boundingGrid).Size - Vector2.One) * size;
+            var sprite = _entityManager.System<SpriteSystem>().Frame0(storageSprite);
+
+            var spriteBox = new Box2Rotated(new Box2(0f, sprite.Height * scale, sprite.Width * scale, 0f), -iconRotation, Vector2.Zero);
+            var root = spriteBox.CalcBoundingBox().BottomLeft;
+            var pos = PixelPosition * 2
+                      + (Parent?.GlobalPixelPosition ?? Vector2.Zero)
+                      + offset;
+
+            handle.SetTransform(pos, iconRotation);
+            var box = new UIBox2(root, root + sprite.Size * scale);
+            handle.DrawTextureRect(sprite, box);
+            handle.SetTransform(Matrix3.Identity);
+        }
+        else
+        {
+            _entityManager.System<SpriteSystem>().ForceUpdate(Entity);
+            handle.DrawEntity(Entity,
+                PixelPosition + iconPosition,
+                Vector2.One * 2 * UIScale,
+                Angle.Zero,
+                eyeRotation: iconRotation,
+                overrideDirection: Direction.South);
+        }
     }
 
     protected override bool HasPoint(Vector2 point)

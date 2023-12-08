@@ -374,6 +374,9 @@
       state: rd_key
   - type: ResearchClient
   - type: ResearchConsole
+  - type: ActiveRadio
+    channels:
+    - Science
   - type: TechnologyDatabase
   - type: ActivatableUI
     key: enum.ResearchConsoleUiKey.Key
