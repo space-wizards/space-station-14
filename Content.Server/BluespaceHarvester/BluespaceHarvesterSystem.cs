@@ -13,6 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.BluespaceHarvester;
 
