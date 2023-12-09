@@ -38,8 +38,7 @@ public sealed class PacificationSystem : SharedPacificationSystem
         }
         // Or whether it can be spilled easily and has something to spill.
         else if (HasComp<SpillableComponent>(thrownItem)
-                 && TryComp<OpenableComponent>(thrownItem, out var openable)
-                 && !_openable.IsClosed(thrownItem, null, openable)
+                 && !_openable.IsClosed(thrownItem)
                  && _solutionContainerSystem.PercentFull(thrownItem) > 0)
         {
             // Further, check that the item does not contain harmful reagents:
