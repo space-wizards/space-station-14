@@ -78,6 +78,7 @@ namespace Content.Server.Access.Systems
             _accessSystem.SetAccessToJob(uid, job, extended);
 
             _cardSystem.TryChangeJobTitle(uid, job.LocalizedName);
+            _cardSystem.TryChangeJobDepartment(uid, job);
 
             if (_prototypeManager.TryIndex<StatusIconPrototype>(job.Icon, out var jobIcon))
             {

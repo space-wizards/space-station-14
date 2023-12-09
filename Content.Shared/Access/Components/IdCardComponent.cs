@@ -28,5 +28,11 @@ namespace Content.Shared.Access.Components
         [AutoNetworkedField]
         public string JobIcon = "JobIconUnknown";
 
+        /// <summary>
+        /// The unlocalized names of the departments associated with the job
+        /// </summary>
+        [DataField("jobDepartments")]
+        [AutoNetworkedField]
+        public List<LocId> JobDepartments = new();
     }
 }

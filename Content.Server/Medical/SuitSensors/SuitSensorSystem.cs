@@ -10,19 +10,13 @@ using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Medical.SuitSensor;
-using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using System.Linq;
 
 namespace Content.Server.Medical.SuitSensors
 {
@@ -37,8 +31,6 @@ namespace Content.Server.Medical.SuitSensors
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
-        [Dependency] private readonly SharedJobSystem _jobSystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -311,6 +303,8 @@ namespace Content.Server.Medical.SuitSensors
             var userName = Loc.GetString("suit-sensor-component-unknown-name");
             var userJob = Loc.GetString("suit-sensor-component-unknown-job");
             var userJobIcon = "JobIconNoId";
+            var userJobDepartments = new List<string>();
+
             if (_idCardSystem.TryFindIdCard(sensor.User.Value, out var card))
             {
                 if (card.Comp.FullName != null)
@@ -319,25 +313,10 @@ namespace Content.Server.Medical.SuitSensors
                     userJob = card.Comp.JobTitle;
                 if (card.Comp.JobIcon != null)
                     userJobIcon = card.Comp.JobIcon;
+
+                foreach (var department in card.Comp.JobDepartments)
+                    userJobDepartments.Add(Loc.GetString(department));
             }
-
-            var userJobDepartment = Loc.GetString("department-Specific");
-            /*if (TryComp<MindContainerComponent>(sensor.User.Value, out var mindContainer) &&
-                mindContainer.HasMind &&
-                TryComp<JobComponent>(mindContainer.Mind, out var job) &&
-                job.PrototypeId != null && _jobSystem.TryGetDepartment(job.PrototypeId, out var department))
-            {
-                //userJobDepartment = Loc.GetString("department-" + department.ID);
-            }*/
-
-            var jobPrototype = _prototypeManager.EnumeratePrototypes<JobPrototype>().FirstOrDefault(x => Loc.GetString(x.Name).Equals(userJob));
-            if (jobPrototype != null)
-            {
-                var department = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>().FirstOrDefault(x => x.Roles.Contains(jobPrototype.ID));
-                if (department != null)
-                    userJobDepartment = Loc.GetString("department-" + department.ID);
-            }
-
 
             // get health mob state
             var isAlive = false;
@@ -350,7 +329,7 @@ namespace Content.Server.Medical.SuitSensors
                 totalDamage = damageable.TotalDamage.Int();
 
             // finally, form suit sensor status
-            var status = new SuitSensorStatus(GetNetEntity(uid), userName, userJob, userJobIcon, userJobDepartment);
+            var status = new SuitSensorStatus(GetNetEntity(uid), userName, userJob, userJobIcon, userJobDepartments);
             switch (sensor.Mode)
             {
                 case SuitSensorMode.SensorBinary:
@@ -400,7 +379,7 @@ namespace Content.Server.Medical.SuitSensors
                 [SuitSensorConstants.NET_NAME] = status.Name,
                 [SuitSensorConstants.NET_JOB] = status.Job,
                 [SuitSensorConstants.NET_JOB_ICON] = status.JobIcon,
-                [SuitSensorConstants.NET_JOB_DEPARTMENT] = status.JobDepartment,
+                [SuitSensorConstants.NET_JOB_DEPARTMENTS] = status.JobDepartments,
                 [SuitSensorConstants.NET_IS_ALIVE] = status.IsAlive,
                 [SuitSensorConstants.NET_SUIT_SENSOR_UID] = status.SuitSensorUid,
             };
@@ -428,7 +407,7 @@ namespace Content.Server.Medical.SuitSensors
             if (!payload.TryGetValue(SuitSensorConstants.NET_NAME, out string? name)) return null;
             if (!payload.TryGetValue(SuitSensorConstants.NET_JOB, out string? job)) return null;
             if (!payload.TryGetValue(SuitSensorConstants.NET_JOB_ICON, out string? jobIcon)) return null;
-            if (!payload.TryGetValue(SuitSensorConstants.NET_JOB_DEPARTMENT, out string? jobDepartment)) return null;
+            if (!payload.TryGetValue(SuitSensorConstants.NET_JOB_DEPARTMENTS, out List<string>? jobDepartments)) return null;
             if (!payload.TryGetValue(SuitSensorConstants.NET_IS_ALIVE, out bool? isAlive)) return null;
             if (!payload.TryGetValue(SuitSensorConstants.NET_SUIT_SENSOR_UID, out NetEntity suitSensorUid)) return null;
 
@@ -436,7 +415,7 @@ namespace Content.Server.Medical.SuitSensors
             payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
             payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out NetCoordinates? coords);
 
-            var status = new SuitSensorStatus(suitSensorUid, name, job, jobIcon, jobDepartment)
+            var status = new SuitSensorStatus(suitSensorUid, name, job, jobIcon, jobDepartments)
             {
                 IsAlive = isAlive.Value,
                 TotalDamage = totalDamage,

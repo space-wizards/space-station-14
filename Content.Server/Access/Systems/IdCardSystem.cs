@@ -7,6 +7,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.Popups;
+using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -139,6 +140,22 @@ namespace Content.Server.Access.Systems
                 _adminLogger.Add(LogType.Identity, LogImpact.Low,
                     $"{ToPrettyString(player.Value):player} has changed the job icon of {ToPrettyString(uid):entity} to {jobIcon} ");
             }
+
+            return true;
+        }
+
+        public bool TryChangeJobDepartment(EntityUid uid, JobPrototype job, IdCardComponent? id = null)
+        {
+            if (!Resolve(uid, ref id))
+                return false;
+
+            foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
+            {
+                if (department.Roles.Contains(job.ID))
+                    id.JobDepartments.Add("department-" + department.ID);
+            }
+
+            Dirty(uid, id);
 
             return true;
         }
