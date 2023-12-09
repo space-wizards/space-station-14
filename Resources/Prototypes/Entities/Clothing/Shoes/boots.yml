@@ -109,7 +109,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterboots.rsi
   - type: TemperatureProtection
-    coefficient: 0.05
+    coefficient: 0.2
 
 - type: entity
   parent: ClothingShoesBootsJack
@@ -119,4 +119,3 @@
       sprite: Corvax/Clothing/Shoes/Boots/jackboots_sec.rsi
     - type: Clothing
       sprite: Corvax/Clothing/Shoes/Boots/jackboots_sec.rsi
-

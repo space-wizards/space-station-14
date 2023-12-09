@@ -14,6 +14,7 @@
   supervisors: job-supervisors-iaa
   access:
   - Service
+  - Lawyer
   - Brig
   - Maintenance
   special:

@@ -23,7 +23,6 @@
   - Salvage
   - Quartermaster
   - Maintenance
-  - External
 
 - type: startingGear
   id: QuartermasterGear

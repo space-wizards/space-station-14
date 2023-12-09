@@ -176,6 +176,14 @@
     access: [["Kitchen"]]
 
 - type: entity
+  parent: WindoorSecureSecurityLocked
+  id: WindoorSecureSecurityLawyerLocked
+  suffix: Security/Lawyer, Locked
+  components:
+  - type: AccessReader
+    access: [["Security"], ["Lawyer"]]
+
+- type: entity
   parent: WindoorSecure
   id: WindoorSecureMedicalLocked
   suffix: Medical, Locked

@@ -27,6 +27,7 @@
   - type: Accentless
     removes:
     - type: LizardAccent
+    - type: MothAccent
     - type: ReplacementAccent
       accent: dwarf
 

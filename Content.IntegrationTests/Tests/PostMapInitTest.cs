@@ -63,7 +63,14 @@ namespace Content.IntegrationTests.Tests
             "Marathon",
             "Kettle",
             "MeteorArena",
-			"CorvaxIshimura"
+			"CorvaxIshimura",
+			"CorvaxSpectrum",
+			"CorvaxSilly",
+			"CorvaxGate",
+			"CorvaxAvrite",
+            "Gemini",
+            "MeteorArena",
+            "Atlas"
         };
 
         /// <summary>

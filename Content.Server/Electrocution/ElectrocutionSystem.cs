@@ -26,6 +26,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
@@ -229,7 +230,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, true);
 
         siemens *= electrified.SiemensCoefficient;
-        if (siemens <= 0 || !DoCommonElectrocutionAttempt(targetUid, uid, ref siemens))
+        if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
             return false; // If electrocution would fail, do nothing.
 
         var targets = new List<(EntityUid entity, int depth)>();

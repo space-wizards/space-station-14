@@ -8,7 +8,8 @@
     sprite: Clothing/Back/Duffels/duffel.rsi
   - type: Storage
     maxItemSize: Huge
-    maxTotalWeight: 40
+    grid:
+    - 0,0,9,4
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
@@ -231,7 +232,8 @@
     size: Ginormous
   - type: Storage
     maxItemSize: Huge
-    maxTotalWeight: 200 #5 duffels worth of gear
+    grid:
+    - 0,0,19,9
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding
 
@@ -243,7 +245,6 @@
   components:
   - type: Storage
     maxItemSize: Huge
-    maxTotalWeight: 40
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1

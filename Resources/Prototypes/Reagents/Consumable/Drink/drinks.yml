@@ -17,6 +17,24 @@
         amount: 0.05
 
 - type: reagent
+  id: HotCocoa
+  name: reagent-name-cocoa
+  parent: BaseDrink
+  desc: reagent-desc-cocoa
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: chocolate
+  color: "#664300"
+  recognizable: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
+
+- type: reagent
   id: Cream
   name: reagent-name-cream
   group: Drinks
