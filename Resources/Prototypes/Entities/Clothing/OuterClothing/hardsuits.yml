@@ -855,7 +855,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitClown
   name: clown hardsuit
-  description: A custom made clown hardsuit.
+  description: A custom-made clown hardsuit.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/clown.rsi
