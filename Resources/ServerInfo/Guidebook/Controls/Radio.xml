@@ -7,7 +7,7 @@
     <GuideEntityEmbed Entity="ClothingHeadsetGrey"/>
   </Box>
 
-  To send a station-wide "Common" message over the radio, preface your text with [color=#a4885c]semi-colon (;)[/color].
+  To send a station-wide "Common" message over the radio, preface your text with [color=#a4885c]semi-colon (;)[/color] (by default).
 
   ## Departmental Radio
 
