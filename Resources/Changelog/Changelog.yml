@@ -1,4 +1,181 @@
 Entries:
+- author: ElectroJr
+  changes:
+  - {message: Replays now record ghost chat., type: Fix}
+  id: 4794
+  time: '2023-09-10T11:49:45.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Cognizine now works on monkeys., type: Fix}
+  - {message: Fixed Cognizine not working on player-controlled animals., type: Fix}
+  id: 4795
+  time: '2023-09-10T20:21:54.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: All pda's with built in medical scanners now take one second to scan.,
+    type: Tweak}
+  id: 4796
+  time: '2023-09-10T23:01:05.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Made tooltips open faster and anchor bottom-left to mouse cursor instead
+      of top-left., type: Tweak}
+  id: 4797
+  time: '2023-09-11T03:53:36.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix handheld crew monitor., type: Fix}
+  id: 4798
+  time: '2023-09-11T05:01:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ghost warps., type: Fix}
+  id: 4799
+  time: '2023-09-11T05:43:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Make the role timer tooltip look much nicer., type: Tweak}
+  id: 4800
+  time: '2023-09-11T05:44:22.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added indicator near SSD players, type: Add}
+  id: 4801
+  time: '2023-09-11T05:52:56.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Jetpacks, being weightless, and flying mobs can now pass over lava
+      & chasms unharmed (as well as other obstacles)', type: Add}
+  - {message: Observers are no longer affected by ice physics, type: Fix}
+  - {message: 'Step trigger (slipping, shards, etc) now by default won''t trigger
+      if the stepping entity is weightless or set as in air', type: Tweak}
+  id: 4802
+  time: '2023-09-11T06:03:17.0000000+00:00'
+- author: DrTeaSpoon
+  changes:
+  - {message: 'Fixed Tomatoes, Eggs, Watermelons and Flourbags not leaving puddles
+      based on what they actually contain.', type: Fix}
+  id: 4803
+  time: '2023-09-11T08:16:27.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed error when equipping the energy katana as a space ninja., type: Fix}
+  id: 4804
+  time: '2023-09-11T09:04:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Storage (e.g. backpacks) is now predicted and using FancyWindow., type: Fix}
+  id: 4805
+  time: '2023-09-11T11:20:47.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Artifact containers now heavily suppress the radioactivity of any irradiated
+      alien artifacts that they contain, type: Add}
+  id: 4806
+  time: '2023-09-11T19:58:26.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed "failed to insert into storage" messages being broken., type: Fix}
+  id: 4807
+  time: '2023-09-11T22:57:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added automatic area pickups to ore bags., type: Add}
+  - {message: Fix stackable items not playing the pickup animation on pickup., type: Fix}
+  id: 4808
+  time: '2023-09-12T12:34:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix lights not always updating., type: Fix}
+  id: 4809
+  time: '2023-09-12T14:35:08.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'Nukies now start with a microbomb implant in their backpack, remember
+      to communicate if you''re gonna use it!', type: Add}
+  - {message: The microbomb implanter has been removed from the nukie uplink, type: Remove}
+  id: 4810
+  time: '2023-09-12T15:09:33.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed ninja suit not having any actions., type: Fix}
+  id: 4811
+  time: '2023-09-12T20:54:19.0000000+00:00'
+- author: AndrewEyeke
+  changes:
+  - {message: Nuclear Operatives will be able to buy carps. They are limited to 10
+      per operative., type: Add}
+  id: 4812
+  time: '2023-09-12T21:50:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix eye not updating correctly when stopping riding (e.g. leaving vehicles).,
+    type: Fix}
+  id: 4813
+  time: '2023-09-13T04:25:35.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Welders can be toggled off again., type: Fix}
+  id: 4814
+  time: '2023-09-13T04:35:05.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix fultons being toggleable by any entity., type: Fix}
+  id: 4815
+  time: '2023-09-13T08:01:22.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Security Barriers can now be ordered by cargo., type: Tweak}
+  id: 4816
+  time: '2023-09-13T08:56:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix shuttles docking with planetmaps., type: Fix}
+  id: 4817
+  time: '2023-09-13T12:06:15.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Training bombs are now available for purchase at cargo., type: Add}
+  id: 4818
+  time: '2023-09-13T16:54:48.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Ninjas can spawn from 30 mins in, instead of 45.', type: Tweak}
+  id: 4819
+  time: '2023-09-13T22:02:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix storage windows not closing upon gamestate change., type: Fix}
+  id: 4820
+  time: '2023-09-13T22:03:45.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed microbomb implanters not spawning in nukie duffelbags., type: Fix}
+  id: 4821
+  time: '2023-09-14T00:21:33.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: The syndicate bomb now has a unique beeping sound., type: Add}
+  - {message: The training bomb now has the same amount of wires as the real deal.,
+    type: Tweak}
+  - {message: The syndicate bomb's minimum timer setting is now 120 seconds (30 seconds
+      longer then before.), type: Tweak}
+  - {message: Fixed the syndicate bomb's name & description in the uplink showing
+      up incorrectly., type: Fix}
+  id: 4822
+  time: '2023-09-14T00:26:58.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: "Added a telescopi\u0441 shield to the Advanced Riot Control Technology.",
+    type: Add}
+  id: 4823
+  time: '2023-09-14T01:03:13.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Cryogenic gas cylinders are now available for purchase from cargo.,
+    type: Add}
+  id: 4824
+  time: '2023-09-14T03:37:13.0000000+00:00'
 - author: Whisper
   changes:
   - message: Guardians (holo, holoclown) have AI control before a ghost takes over
@@ -3751,3 +3928,152 @@ Entries:
     type: Add
   id: 5274
   time: '2023-12-08T21:32:01.0000000+00:00'
+- author: ForestNoises
+  changes:
+  - {message: The rejuvenate command/verb resets all action cooldowns., type: Add}
+  id: 5268
+  time: '2023-12-05T21:00:03.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Empty hot cocoa can go in trash bags, type: Fix}
+  id: 5269
+  time: '2023-12-05T21:39:26.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: Ghosts now have speech bubbles again, type: Fix}
+  id: 5270
+  time: '2023-12-05T21:40:03.0000000+00:00'
+- author: tgrkzus
+  changes:
+  - {message: Paper cups are now available at water coolers., type: Add}
+  id: 5271
+  time: '2023-12-05T21:47:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now make the storage window opaque with the "enable opaque storage
+      window" toggle in the graphics menu., type: Add}
+  id: 5272
+  time: '2023-12-05T23:38:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reverted duffel bags to their original storage capacity., type: Fix}
+  id: 5273
+  time: '2023-12-06T03:11:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Predict helmet toggling., type: Fix}
+  id: 5274
+  time: '2023-12-06T06:59:31.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed emagged medibots not injecting healthy people with chloral hydrate.,
+    type: Fix}
+  id: 5275
+  time: '2023-12-06T21:30:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix toggleable clothing still being interactable e.g. hardsuit helmets.,
+    type: Fix}
+  id: 5276
+  time: '2023-12-06T21:56:03.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Combat boots and friends use a slot for sidearms instead of a storage
+      window., type: Tweak}
+  id: 5277
+  time: '2023-12-06T21:58:25.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: Speech bubbles for the living now again have names when fancy speech
+      bubbles are enabled, type: Fix}
+  id: 5278
+  time: '2023-12-06T21:58:53.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Pickaxes have a more accurate shape in storage., type: Tweak}
+  id: 5279
+  time: '2023-12-07T00:52:57.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: 'Added a new lizard chest marking, an underbelly.', type: Add}
+  id: 5280
+  time: '2023-12-07T01:05:43.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: 'Adds Space Cobras, invisible at rest and venom blind.', type: Add}
+  - {message: Adds snake meat and fancy snakeskin boots., type: Add}
+  - {message: The too weak space spider has been strengthened., type: Tweak}
+  id: 5281
+  time: '2023-12-07T01:25:57.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: Added three new specialized brute healing chemicals and a guidebook
+      entry on how to safely use them., type: Add}
+  - {message: 'Added Razorium, which is basically liquid razor blades.', type: Add}
+  id: 5282
+  time: '2023-12-07T03:05:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Speed penalties for duffels and hardsuits now apply when held, not
+      just when worn.', type: Add}
+  id: 5283
+  time: '2023-12-07T03:41:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed explosion resistance being ignored., type: Fix}
+  id: 5284
+  time: '2023-12-07T18:51:46.0000000+00:00'
+- author: Aexxie
+  changes:
+  - {message: Paramed no longer has external access., type: Remove}
+  id: 5285
+  time: '2023-12-07T23:27:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Hovering over an item in storage now shows a tooltip with the name.,
+    type: Add}
+  id: 5286
+  time: '2023-12-08T02:38:07.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds a bed for the psychologist's office., type: Add}
+  id: 5287
+  time: '2023-12-08T05:24:35.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Chemical explosions are powerful again., type: Tweak}
+  id: 5288
+  time: '2023-12-08T10:58:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'V and shift-V can now be used to open the bag and belt, respectively.',
+    type: Add}
+  - {message: Interacting with a storage item now has context-sensitive logic based
+      on whether or not the window is open or focused., type: Fix}
+  id: 5289
+  time: '2023-12-08T18:43:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'When viewing a storage container, the item that will be removed via
+      smart-equip is now marked with a small star icon.', type: Add}
+  id: 5290
+  time: '2023-12-08T18:43:58.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Rat king and his servants properly heal from miasma., type: Fix}
+  - {message: Rat king no longer rummages from an infinite distance., type: Fix}
+  - {message: Rat king generates more miasma to fill larger rooms., type: Tweak}
+  id: 5291
+  time: '2023-12-08T18:46:28.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Command staff has brig access., type: Tweak}
+  id: 5292
+  time: '2023-12-08T18:50:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Removed upgrades from the anomaly vessel., type: Remove}
+  - {message: 'Added the experimental anomaly vessel, which researches twice as fast
+      at the cost of being radioactive.', type: Add}
+  id: 5293
+  time: '2023-12-08T18:50:41.0000000+00:00'

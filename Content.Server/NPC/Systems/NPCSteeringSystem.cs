@@ -27,6 +27,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Prying.Systems;
+using Microsoft.Extensions.ObjectPool;
+using Robust.Shared.Threading;
 
 namespace Content.Server.NPC.Systems;
 
@@ -49,23 +51,25 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly DoorSystem _doors = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
+    [Dependency] private readonly PryingSystem _pryingSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-    [Dependency] private readonly PryingSystem _pryingSystem = default!;
 
     private EntityQuery<FixturesComponent> _fixturesQuery;
     private EntityQuery<MovementSpeedModifierComponent> _modifierQuery;
     private EntityQuery<NpcFactionMemberComponent> _factionQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
+
+    private ObjectPool<HashSet<EntityUid>> _entSetPool =
+        new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>());
 
     /// <summary>
     /// Enabled antistuck detection so if an NPC is in the same spot for a while it will re-path.

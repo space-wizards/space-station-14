@@ -177,7 +177,7 @@ public sealed class MagicSystem : EntitySystem
             var ent = Spawn(ev.Prototype, spawnCoords);
             var direction = ev.Target.ToMapPos(EntityManager, _transformSystem) -
                             spawnCoords.ToMapPos(EntityManager, _transformSystem);
-            _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer); //SS220-fireball-fix. Apparently, perfomer wasn't passed as user.
+            _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer);
         }
     }
 

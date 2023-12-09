@@ -44,6 +44,16 @@ namespace Content.Server.Zombies
 
         private const string ZombifyableTag = "ZombifyableByMelee";
 
+        public const SlotFlags ProtectiveSlots =
+            SlotFlags.FEET |
+            SlotFlags.HEAD |
+            SlotFlags.EYES |
+            SlotFlags.GLOVES |
+            SlotFlags.MASK |
+            SlotFlags.NECK |
+            SlotFlags.INNERCLOTHING |
+            SlotFlags.OUTERCLOTHING;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -170,10 +180,10 @@ namespace Content.Server.Zombies
 
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
         {
-            var baseChance = component.MaxZombieInfectionChance;
+            var max = component.MaxZombieInfectionChance;
 
-            if (!TryComp<InventoryComponent>(uid, out var inventoryComponent))
-                return baseChance;
+            if (!_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator, ProtectiveSlots))
+                return max;
 
             //SS220-zomb_reb
             DamageSpecifier ratingArmor = new()
@@ -189,11 +199,14 @@ namespace Content.Server.Zombies
             ratingArmor = ev.Damage;
             ratingArmor.DamageDict.TryGetValue("Slash", out var armorBonus);
 
-            var max = component.MaxZombieInfectionChance;
+            // Everyone knows that when it comes to zombies, socks & sandals provide just as much protection as an
+            // armored vest. Maybe these should be weighted per-item. I.e. some kind of coverage/protection component.
+            // Or at the very least different weights per slot.
+
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
             var chance = max * (armorBonus.Float() / 100);
-            if(chance < min)
+            if (chance < min)
                 return min;
             return chance;
             //SS220-zomb_reb
