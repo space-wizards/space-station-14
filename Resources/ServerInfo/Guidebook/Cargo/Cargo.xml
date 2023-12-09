@@ -11,7 +11,7 @@
   <Box>
     <GuideEntityEmbed Entity="BoxFolderQmClipboard"/>
   </Box>
-  The quartermaster also has the option to order and approve requests directly from his personal Requesition Digi-board, which acts as a handheld cargo request computer.
+  The quartermaster also has the option to order and approve requests directly from his personal Requisition Digi-board, which acts as a handheld cargo request computer.
 
   ## Piloting
   Orders are shipped to the station via the [color=#a4885c]cargo shuttle[/color], the remotely piloted spacecraft that cargo uses to buy and sell goods. In order to move the shuttle, you must first find the [color=#a4885c]cargo shuttle computer[/color].
