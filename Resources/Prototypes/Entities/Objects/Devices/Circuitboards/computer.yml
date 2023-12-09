@@ -8,8 +8,6 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: cpuboard
-    - type: Item
-      storedRotation: -90
     - type: Tag
       tags:
         - DroneUsable

@@ -9,4 +9,3 @@
     slots: [eyes]
   - type: Item
     size: Small
-    storedRotation: -90

@@ -21,8 +21,6 @@
   - type: Sprite
     sprite: Objects/Devices/Holoprojectors/custodial.rsi
     state: icon
-  - type: Item
-    storedRotation: -90
   - type: Tag
     tags:
       - HolosignProjector
@@ -44,8 +42,6 @@
       - HolofanProjector
   - type: StaticPrice
     price: 80
-  - type: Item
-    storedRotation: -90
 
 
 - type: entity
@@ -63,8 +59,6 @@
     - type: Tag
       tags:
         - HolofanProjector
-    - type: Item
-      storedRotation: -90
     - type: StaticPrice
       price: 80
 

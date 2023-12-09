@@ -9,7 +9,6 @@
     state: abductor_mod
   - type: Item
     size: Small
-    storedRotation: -90
   - type: Tag
     tags:
     - WeaponPistolCHIMPUpgradeKit

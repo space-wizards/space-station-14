@@ -9,9 +9,6 @@
     sprite: Objects/Devices/door_remote.rsi
   - type: Access
   - type: DoorRemote
-  - type: Item
-    storedRotation: -90
-
 
 - type: entity
   parent: DoorRemoteDefault

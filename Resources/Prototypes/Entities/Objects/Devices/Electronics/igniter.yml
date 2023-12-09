@@ -20,8 +20,6 @@
     ports:
     - Trigger
   - type: UseDelay # prevent sound spam
-  - type: Item
-    storedRotation: -90
   - type: Tag
     tags:
     - Igniter

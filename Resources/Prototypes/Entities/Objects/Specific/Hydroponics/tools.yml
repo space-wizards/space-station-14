@@ -41,7 +41,6 @@
         Slash: 7
   - type: Item
     sprite: Objects/Tools/Hydroponics/clippers.rsi
-    storedRotation: -90
 
 - type: entity
   name: scythe

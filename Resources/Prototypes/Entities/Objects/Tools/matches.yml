@@ -82,7 +82,6 @@
     sprite: Objects/Tools/matches.rsi
     heldPrefix: matchbox
     size: Small
-    storedRotation: -90
   - type: Storage
     grid:
     - 0,0,2,1

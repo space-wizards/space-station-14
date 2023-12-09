@@ -14,8 +14,6 @@
       Glass: 100
   - type: StaticPrice
     price: 50
-  - type: Item
-    storedRotation: 0
   - type: Tag
     tags:
     - DroneUsable

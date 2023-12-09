@@ -22,7 +22,6 @@
     state: cautery
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/cautery.rsi
-    storedRotation: -90
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
@@ -70,7 +69,6 @@
     state: scalpel
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
-    storedRotation: -90
   - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 1.5
@@ -130,7 +128,6 @@
     state: retractor
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
-    storedRotation: -90
   - type: ItemCooldown
 
 - type: entity
@@ -167,7 +164,6 @@
     state: saw
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
-    storedRotation: -90
   - type: ItemCooldown
   - type: Tool
     qualities:

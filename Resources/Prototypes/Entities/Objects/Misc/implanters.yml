@@ -40,7 +40,6 @@
       sprite: Objects/Specific/Medical/implanter.rsi
       heldPrefix: 0
       size: Small
-      storedRotation: -90
     - type: Appearance
     - type: GenericVisualizer
       visuals:

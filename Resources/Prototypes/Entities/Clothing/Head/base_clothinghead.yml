@@ -10,7 +10,6 @@
     state: icon
   - type: Item
     size: Small
-    storedRotation: -90
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager

@@ -271,7 +271,6 @@
     solution: injector
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
-    storedRotation: -90
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1

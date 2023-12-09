@@ -9,8 +9,6 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: generic
-    - type: Item
-      storedRotation: -90
     - type: Tag
       tags:
         - DroneUsable
