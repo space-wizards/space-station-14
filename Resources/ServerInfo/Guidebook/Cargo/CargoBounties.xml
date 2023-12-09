@@ -19,7 +19,7 @@
     <GuideEntityEmbed Entity="CargoPallet"/>
   </Box>
   Once you have collected the items you need for a bounty, completing it is a simple process:
-  - Place all of the items inside of the crate and [bold]close it![/bold]
+  - Place all of the items inside of a crate and [bold]close it![/bold]
   - Get the bounties manifest label by clicking the [color=#a4885c]print label[/color] button on corresponding entry on the cargo bounty computer.
   - Place the label on the crate containing the items.
   - Move the crate onto the cargo shuttle.

@@ -1,23 +1,24 @@
 <Document>
 # Salvage
 
-Salvage is one of Cargo's key sources of income... until atmos comes along with a bajillion dollars worth of frezon. Until then though, your main job will be making them money, and totally not making a shuttle
+Salvage is one of Cargo's key sources of income... until atmos comes along with a bajillion dollars worth of frezon. Until then though, your main job will be making them money, obtaining raw materials, finding abandoned or rare technologies, and totally not making another shuttle.
 
 ## How to prepare for a salvage
 
-Firstly you need a few things before you can commence on your salvaging.
+Firstly, you need a few things before you can commence salvaging.
 
 <Box>
 <GuideEntityEmbed Entity="ClothingOuterHardsuitSpatio"/>
 <GuideEntityEmbed Entity="ClothingShoesBootsMag"/>
 </Box>
-Your Hardsuit is important, as it provides EVA protection. Meaning the lack of pressure and tempurature of space wont kill you. It will also provide minor defense against any space fauna you may encounter. The magboots will ensure you can move smoothly on a salvage and pull things in and out. They also make you slip proof!
+Your Hardsuit is important, as it provides EVA protection. This means that the lack of pressure and tempurature of space won't kill you. It will also provide minor defense against any space fauna you may encounter.
+The magboots will ensure you can move smoothly on a salvage wreck and pull things in and out. They also make you slip proof!
 
 <Box>
 <GuideEntityEmbed Entity="JetpackBlue"/>
 <GuideEntityEmbed Entity="JetpackMini"/>
 </Box>
-Jetpacks will be needed to move thoughout space, since without floors and gravity, you will not be able to move. Its fueled by gases like oxygen, nitrogen, water vapor, or other gases that can be found in canisters.
+Jetpacks will be needed to move thoughout space, since without floors and gravity, you will not be able to move. Jetpacks can be fueled by any gas, like oxygen, nitrogen, water vapor, or other gases that can be found in canisters.
 
 <Box>
 <GuideEntityEmbed Entity="ClothingMaskGasExplorer"/>
@@ -25,24 +26,39 @@ Jetpacks will be needed to move thoughout space, since without floors and gravit
 <GuideEntityEmbed Entity="YellowOxygenTankFilled"/>
 <GuideEntityEmbed Entity="NitrogenTankFilled"/>
 </Box>
-Internals will be important, given all species need to breathe, and space doesnt have any gases. Your mask is used to connect the gas tank to your mouth to breath, while the gas tanks hold consumable gases and can be refilled at gas canisters. All species breathe oxygen (blue + yellow tanks) except slimes, which need nitrogen (red tanks)
+Internals will be important, given all normal species need to breathe, and space doesn't have any gases.
+Your mask is used to connect the gas tank to your mouth to breath, while the gas tanks hold consumable gases and can be refilled at gas canisters.
+All normal species breathe oxygen (blue or yellow tanks) except slimes, which need nitrogen (red tanks).
+One exception is the closet skeleton, who is both uneffected by space damage, and doesn't need to breathe. Spooky!
 
 <Box>
 <GuideEntityEmbed Entity="WeaponCrusher"/>
 <GuideEntityEmbed Entity="WeaponCrusherDagger"/>
 <GuideEntityEmbed Entity="WeaponProtoKineticAccelerator"/>
 </Box>
-The crusher devices are your first and last line of defense against space fauna and other things that want to bring cargo harm. While the dagger is just a standard knife, the crusher is has a special property that if you shoot something with it, then follow up with a melee attack, it deals 2x more damage. The protokinetic accelerator is like a recharging weapon that can provide thrust in the scenerio that your jetpack runs dry, or mine for you.
+The crusher devices are your first line of defense against space fauna and other things that want to bring cargo harm.
+While the dagger is just a standard knife, the crusher is has a special property that if you shoot something with it, then follow up with a melee attack, it deals 2x more damage and leeches health from the enemy back to you. Remember that this bullet does no damage!
+The protokinetic accelerator is a recharging weapon that can provide thrust in the scenerio that your jetpack runs dry, or mine for you.
 
 <Box>
 <GuideEntityEmbed Entity="Pickaxe"/>
-<GuideEntityEmbed Entity="MiningDrill"/>
+<GuideEntityEmbed Entity="MiningDrill" Caption="Mining drill, ask for it in R&D"/>
 <GuideEntityEmbed Entity="OreBag"/>
 <GuideEntityEmbed Entity="ClothingBeltUtilityFilled"/>
 </Box>
 The pickaxe and mining drill are both useful for mining rocks or breaking structures quickly.
-The ore bag magnetises nearby ore and automatically picks it up if equipped to a belt slot.
-The utility belt can be useful for holding miscellaneous items when not occupied by your ore bag.
+The ore bag magnetises nearby ore and automatically picks it up if equipped to a belt slot or if it is held.
+The utility belt can be useful for holding miscellaneous items when the slot is not occupied by your ore bag.
+
+<Box>
+<GuideEntityEmbed Entity="Fulton">
+<GuideEntityEmbed Entity="FultonBeacon">
+</Box>
+The fulton and fulton beacon are complementary items used to assist in bringing back large hauls to wherever you want, be it the salvage shuttle, Cargo, or even the captain's bedroom!
+First, place a fulton beacon wherever you want your loot to arrive and unfold it.
+Second, pair a fulton stack to a fulton beacon by clicking on an [italics]unfolded[italics/] fulton beacon (this will not work if the beacon is folded!).
+Lastly, use a fulton on an item to begin the extraction process. After a set period of time, the item will be whisked away and placed wherever the beacon is.
+This can be especially useful if a salvager dies or is in critical condition on an expedition, and you want to send them back for help (should the beacon be on the station).
 
 ## How to make money as a salvager
 <Box>
@@ -51,8 +67,8 @@ The utility belt can be useful for holding miscellaneous items when not occupied
 <Box>
 <GuideEntityEmbed Entity="ComputerSalvageExpedition"/>
 </Box>
-There are 2 primary forms of income for salvage. The magnet and Expeditions.
-The salvage magnet, when activated, calls in one of many random salvages to be generated somewhere within space. Once you find the salvage, you will need to fight off any present space fauna as well as loot it as much possible. A salvage will only be present for 4 minutes, before dissapearing, taking everything unlooted with it. And in worse case scenerios, will take the bodies of other salvagers in critical condition or dead. Afterwards, the magnet needs some time to recharge before being usable again.
-Expeditions are like adventures that you can do with your salvage buddies. First you must pick a mission from the salvage console, each of which of varying difficulty and reward. Afterwards you must FTL to the location via a shuttle. Once you arrive, the chat will tell you in which direction the dungeon of the salvage is, and you must go and conquer the dangers and gain the loot!
+There are 2 primary forms of income for salvage: The magnet and Expeditions.
+The salvage magnet, when activated, pulls in one of many random salvage wrecks to be generated somewhere within nearby space. Once you find the salvage wreck, you will need to fight off any present space fauna and take back as much loot as possible. A salvage wreck will only be present for 4 minutes before dissapearing, taking everything still on the wreck with it. And, in the worst case scenerios, the wreck will also take the bodies of other salvagers in critical or dead condition! Afterwards, the magnet will need some time to recharge before being usable again.
+Expeditions are like adventures that you can do with your salvage buddies. First, you must pick a mission from the salvage console, each of which with varying difficulty and reward. Afterwards, you must FTL to the location via a shuttle. Once you arrive, you will be told which direction the dungeon is, and you must go and conquer the dangers and obtain the loot within!
 
 </Document>
