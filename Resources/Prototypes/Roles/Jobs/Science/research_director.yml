@@ -23,7 +23,7 @@
   - Brig
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant  ]
+    implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
