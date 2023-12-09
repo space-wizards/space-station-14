@@ -244,7 +244,7 @@
           prob: 0.1
 
 - type: entity
-  id: CrateJanitorBiosuit
+  id: CrateJanitorExplosive
   parent: CratePlastic
   components:
   - type: StorageFill
