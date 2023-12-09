@@ -245,7 +245,7 @@
 
 - type: entity
   id: CrateJanitorExplosive
-  parent: CratePlastic
+  parent: ClosetJanitorBomb
   components:
   - type: StorageFill
     contents:
