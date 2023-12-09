@@ -93,7 +93,7 @@
   noSpawn: true
   components:
   - type: Transform
-  - type: TriggerWhenReachingLocation
+  - type: TriggerWhenReachingCoordinates
   - type: Projectile
     damage:
       types:
