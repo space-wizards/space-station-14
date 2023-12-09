@@ -21,7 +21,7 @@
     reflectProb: .5
     spread: 90
   - type: Item
-    size: Huge
+    size: Normal
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
   - type: Tag
     tags:

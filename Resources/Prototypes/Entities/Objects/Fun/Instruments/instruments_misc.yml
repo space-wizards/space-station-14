@@ -102,8 +102,7 @@
     sprite: Objects/Fun/Instruments/gunpet.rsi
     state: icon
   - type: Item
-    size: Small
-    storedRotation: -90
+    size: Small_Wide
     sprite: Objects/Fun/Instruments/gunpet.rsi
   - type: Tag
     tags:
