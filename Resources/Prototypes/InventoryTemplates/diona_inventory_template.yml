@@ -12,7 +12,6 @@
     - name: outerClothing
       slotTexture: suit
       slotFlags: OUTERCLOTHING
-      slotGroup: MainHotbar
       stripTime: 6
       uiWindowPos: 1,2
       strippingWindowPos: 1,2
