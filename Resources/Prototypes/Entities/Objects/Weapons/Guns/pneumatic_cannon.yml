@@ -32,9 +32,9 @@
     container: storagebase
   - type: PneumaticCannon
   - type: Storage
-    maxSlots: 8
     maxItemSize: Normal
-    maxTotalWeight: 32
+    grid:
+    - 0,0,3,3
     blacklist:
       tags:
         - CannonRestrict
@@ -77,9 +77,9 @@
     layers:
     - state: piecannon
   - type: Storage
-    maxSlots: 8
     maxItemSize: Normal
-    maxTotalWeight: 32
+    grid:
+    - 0,0,7,3
     whitelist:
       components:
       - CreamPie
@@ -126,9 +126,9 @@
   - type: Item
     size: Ginormous
   - type: Storage
-    maxSlots: 100
     maxItemSize: Ginormous
-    maxTotalWeight: 1600
+    grid:
+    - 0,0,19,10
     whitelist:
       tags: [] #dodging a test fail like the IRS
   - type: PneumaticCannon

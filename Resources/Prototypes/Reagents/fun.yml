@@ -166,3 +166,42 @@
       effects:
       - !type:Electrocute
         probability: 0.5
+
+- type: reagent
+  id: Razorium
+  name: reagent-name-razorium
+  group: Toxins
+  slippery: true
+  desc: reagent-desc-razorium
+  physicalDesc: reagent-physical-desc-reflective
+  flavor: sharp
+  color: "#e3fffb"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Slash: 0.5
+      - !type:Emote
+        emote: Scream
+        probability: 0.7
+  metabolisms:
+    Poison:
+      metabolismRate : 3.00
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+             Slash : 9
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        messages: [ "generic-reagent-effect-slicing-insides"]
+        probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.3

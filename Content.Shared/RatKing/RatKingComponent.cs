@@ -49,7 +49,7 @@ public sealed partial class RatKingComponent : Component
     ///     How many moles of Miasma are released after one us of Domain
     /// </summary>
     [DataField("molesMiasmaPerDomain"), ViewVariables(VVAccess.ReadWrite)]
-    public float MolesMiasmaPerDomain = 100f;
+    public float MolesMiasmaPerDomain = 200f;
 
     /// <summary>
     /// The current order that the Rat King assigned.
