@@ -36,6 +36,18 @@
 
 - type: entity
   parent: BaseItem
+  id: TransHandyFlag
+  name: Trans handheld flag
+  description: "The be trans do crime handy flag."
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/trans_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/trans_handy_flag.rsi
+
+- type: entity
+  parent: BaseItem
   id: LGBTQHandyFlag
   name: LGBTQ handheld flag
   description: "The be gay do crime handy flag."

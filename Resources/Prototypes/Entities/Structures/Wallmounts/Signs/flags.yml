@@ -47,6 +47,15 @@
     
 - type: entity
   parent: BaseFlag
+  id: TransFlag
+  name: Trans flag
+  description: "Be trans do crime flag"
+  components:
+  - type: Sprite
+    state: trans_flag
+    
+- type: entity
+  parent: BaseFlag
   id: PirateFlag
   name: Pirate flag
   description: "Raise the jolly roger, scallywags!"
