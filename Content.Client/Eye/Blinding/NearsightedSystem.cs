@@ -2,6 +2,7 @@ using Content.Shared.Eye.Blinding;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Player;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Eye.Blinding.Components;

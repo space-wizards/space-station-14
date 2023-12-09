@@ -5,37 +5,39 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Ganimed.Components;
 using Content.Shared.Examine;
+using Content.Server.UserInterface;
 using Content.Shared.Ganimed;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Content.Server.Popups;
-using Robust.Shared.Audio;
-using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
-using Robust.Shared.GameObjects;
+using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Server.Paper;
 using Content.Shared.Paper;
-using Robust.Shared.Random;
 using Content.Shared.Tag;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Server.Labels.Components;
 using System.Threading.Tasks;
-using Robust.Shared.Asynchronous;
-using Content.Shared.Audio;
 using Content.Shared.Ganimed;
 using Content.Shared.Ganimed.Components;
 using Content.Shared.Emag.Components;
 using Content.Shared.Construction.Components;
 using Content.Server.Construction;
+using Robust.Shared.Asynchronous;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Random;
+using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
+using Robust.Shared.GameObjects;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Ganimed
 {
     [UsedImplicitly]
 	public sealed class BookTerminalSystem : EntitySystem
     {
-        [Dependency] private readonly AudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -336,7 +338,7 @@ namespace Content.Server.Ganimed
 			FlushTask(bookTerminal);
 			UpdateUiState(bookTerminal);
 			
-            _audioSystem.PlayPvs(bookTerminal.Comp.ClickSound, bookTerminal, AudioParams.Default.WithVolume(5f));
+            _audio.PlayPvs(bookTerminal.Comp.ClickSound, bookTerminal, AudioParams.Default.WithVolume(5f));
 			
 		}
 		
@@ -346,7 +348,7 @@ namespace Content.Server.Ganimed
 			bookTerminal.Comp.WorkTimeRemaining = bookTerminal.Comp.WorkTime;
 			bookTerminal.Comp.WorkType = taskName;
 			
-			_audioSystem.PlayPvs(bookTerminal.Comp.WorkSound, bookTerminal, AudioParams.Default.WithVolume(5f));
+			_audio.PlayPvs(bookTerminal.Comp.WorkSound, bookTerminal, AudioParams.Default.WithVolume(5f));
             _ambientSoundSystem.SetAmbience(bookTerminal, true);
 			UpdateVisuals(bookTerminal);
 		}

@@ -156,7 +156,7 @@ public sealed partial class SalvageSystem
             {
                 // TODO: Some way to play audio attached to a map for players.
 				if (_prototypeManager.TryIndex<SoundCollectionPrototype>(comp.Sound, out var sound))
-                    comp.Stream = _audio.PlayGlobal(new SoundPathSpecifier(_random.Pick(sound.PickFiles), Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true).Value.Entity;
+                    comp.Stream = _audio.PlayGlobal(new SoundPathSpecifier(_random.Pick(sound.PickFiles)), Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true).Value.Entity;
                 comp.Stage = ExpeditionStage.MusicCountdown;
                 Dirty(uid, comp);
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(2).Minutes)));
