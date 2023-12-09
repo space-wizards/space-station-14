@@ -401,14 +401,20 @@ namespace Content.Server.Administration.Systems
 
             var escapedText = FormattedMessage.EscapeText(message.Text);
 
-            var bwoinkText = senderAdmin switch
+            string bwoinkText;
+
+            if (senderAdmin is not null && senderAdmin.Flags == AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
             {
-                var x when x is not null && x.Flags == AdminFlags.Adminhelp =>
-                    $"[color=purple]{senderSession.Name}[/color]: {escapedText}",
-                var x when x is not null && x.HasFlag(AdminFlags.Adminhelp) =>
-                    $"[color=red]{senderSession.Name}[/color]: {escapedText}",
-                _ => $"{senderSession.Name}: {escapedText}",
-            };
+                bwoinkText = $"[color=purple]{senderSession.Name}[/color]: {escapedText}";
+            }
+            else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
+            {
+                bwoinkText = $"[color=red]{senderSession.Name}[/color]: {escapedText}";
+            }
+            else
+            {
+                bwoinkText = $"{senderSession.Name}: {escapedText}";
+            }
 
             var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText);
 
@@ -430,14 +436,21 @@ namespace Content.Server.Administration.Systems
                     // If _overrideClientName is set, we generate a new message with the override name. The admins name will still be the original name for the webhooks.
                     if (_overrideClientName != string.Empty)
                     {
-                        var overrideMsgText = senderAdmin switch // Theres probably a better way to do this.
+                        string overrideMsgText;
+                        // Doing the same thing as above, but with the override name. Theres probably a better way to do this.
+                        if (senderAdmin is not null && senderAdmin.Flags == AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
                         {
-                            var x when x is not null && x.Flags == AdminFlags.Adminhelp =>
-                                $"[color=purple]{_overrideClientName}[/color]: {escapedText}",
-                            var x when x is not null && x.HasFlag(AdminFlags.Adminhelp) =>
-                                $"[color=red]{_overrideClientName}[/color]: {escapedText}",
-                            _ => $"{senderSession.Name}: {escapedText}", // Not an admin, name is not overriden.
-                        };
+                            overrideMsgText = $"[color=purple]{_overrideClientName}[/color]: {escapedText}";
+                        }
+                        else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
+                        {
+                            overrideMsgText = $"[color=red]{_overrideClientName}[/color]: {escapedText}";
+                        }
+                        else
+                        {
+                            overrideMsgText = $"{senderSession.Name}: {escapedText}"; // Not an admin, name is not overridden.
+                        }
+
                         RaiseNetworkEvent(new BwoinkTextMessage(message.UserId, senderSession.UserId, overrideMsgText), session.ConnectedClient);
                     }
                     else
