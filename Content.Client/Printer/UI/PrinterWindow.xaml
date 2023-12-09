@@ -1,0 +1,21 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="Printer"
+               MinWidth="150">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Text="Paper name:"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <LineEdit Name="Name" MinSize="60 0" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Text="Number of Copies:"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <SpinBox Name="CopiesNumber" MinSize="60 0" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Button Name="FileButton" Text="Print File" TextAlign="Center"/>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

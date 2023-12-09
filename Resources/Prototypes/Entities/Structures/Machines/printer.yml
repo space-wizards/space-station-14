@@ -1,0 +1,68 @@
+- type: entity
+  parent: BaseMachinePowered
+  id: PrinterMachine
+  name: printer
+  description: Mass producer of useless documents, the pen-pusher's 3rd favorite thing ever.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/printer.rsi
+    drawdepth: SmallObjects
+    layers:
+    - state: icon
+      map: ["base"]
+    - state: unpowered
+      map: ["power"]
+  - type: Icon
+    sprite: Structures/Machines/printer.rsi
+    state: icon
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        power:
+          True: { state: powered }
+          False: { state: unpowered }
+      enum.PrinterVisuals.VisualState:
+        base:
+          Empty: { state: idle }
+          Paper: { state: idlepaper }
+          Crumpled: { state: idlecrumpled }
+          CrumpledPaper: { state: idlecrumpledpaper }
+          PrintingLast: { state: printinglast }
+          Printing: { state: printing }
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 25
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: ActivatableUI
+    key: enum.PrinterUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.PrinterUiKey.Key
+      type: PrinterBoundUi
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 250
+  - type: Printer
+    trayId: storagebase
+  - type: Storage
+    maxItemSize: Tiny
+    grid:
+    - 0,0,4,0
+    whitelist:
+      components:
+        - Paper
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
