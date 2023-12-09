@@ -22,19 +22,19 @@ public sealed class PacificationSystem : SharedPacificationSystem
         SubscribeLocalEvent<PacifiedComponent, BeforeThrowEvent>(OnBeforeThrow);
     }
 
-    private void OnBeforeThrow(EntityUid playerUid, PacifiedComponent component, BeforeThrowEvent args)
+    private void OnBeforeThrow(Entity<PacifiedComponent> ent, ref BeforeThrowEvent args)
     {
         var thrownItem = args.ItemUid;
         var itemName = Identity.Entity(thrownItem, EntityManager);
         // Check whether the item being thrown is excluded by the blacklist:
-        if (component.ThrowBlacklist.IsValid(thrownItem, EntityManager))
+        if (ent.Comp.ThrowBlacklist.IsValid(thrownItem, EntityManager))
         {
             args.Handled = true;
             // Tell the player why they can’t throw stuff:
             var cannotThrowMessage = "pacified-cannot-throw";
             if (HasComp<SlipperyComponent>(thrownItem))
                 cannotThrowMessage = "pacified-cannot-throw-slippery";
-            _popup.PopupEntity(Loc.GetString(cannotThrowMessage, ("projectile", itemName)), playerUid, playerUid);
+            _popup.PopupEntity(Loc.GetString(cannotThrowMessage, ("projectile", itemName)), ent, ent);
         }
         // Or whether it can be spilled easily and has something to spill.
         else if (HasComp<SpillableComponent>(thrownItem)
@@ -46,7 +46,7 @@ public sealed class PacificationSystem : SharedPacificationSystem
                      reaction *can* take place. As it stands, anything that can spill is forbidden. */
             // DoACheck();
             args.Handled = true;
-            _popup.PopupEntity(Loc.GetString("pacified-cannot-throw-spill", ("projectile", itemName)), playerUid, playerUid);
+            _popup.PopupEntity(Loc.GetString("pacified-cannot-throw-spill", ("projectile", itemName)), ent, ent);
         }
     }
 }
