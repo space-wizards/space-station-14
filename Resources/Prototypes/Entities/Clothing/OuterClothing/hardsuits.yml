@@ -201,8 +201,8 @@
         Slash: 0.8
         Piercing: 0.7
   - type: ClothingSpeedModifier
-    walkModifier: 0.65
-    sprintModifier: 0.65
+    walkModifier: 0.80 ## Imperial rebalance
+    sprintModifier: 0.80 ## Imperial rebalance
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
 
