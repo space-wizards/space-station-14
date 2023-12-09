@@ -33,6 +33,33 @@
     },
     {
       "name": "tray-trash"
+    },
+    {
+      "name": "plate-stored"
+    },
+    {
+      "name": "plate-trash-stored"
+    },
+    {
+      "name": "plate-plastic-stored"
+    },
+    {
+      "name": "plate-small-stored"
+    },
+    {
+      "name": "plate-small-trash-stored"
+    },
+    {
+      "name": "plate-small-plastic-stored"
+    },
+    {
+      "name": "tin-stored"
+    },
+    {
+      "name": "tray-stored"
+    },
+    {
+      "name": "tray-trash-stored"
     }
   ]
 }
