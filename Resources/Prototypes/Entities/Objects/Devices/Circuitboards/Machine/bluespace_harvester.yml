@@ -21,3 +21,5 @@
           Amount: 5
           DefaultPrototype: Beaker
           ExamineName: Glass Beaker
+    - type: Item
+      size: Normal
