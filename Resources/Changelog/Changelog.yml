@@ -1,13 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - message: Guardians (holo, holoclown) have AI control before a ghost takes over
-      the role, and after a player ghosts from it.
-    type: Add
-  - message: Guardians can be summoned without a player in the role.
-    type: Tweak
-  id: 4825
-  time: '2023-09-14T03:51:10.0000000+00:00'
 - author: Doru991
   changes:
   - message: When mutated, some plants have been observed to occasionally transform
@@ -3751,3 +3742,10 @@ Entries:
     type: Add
   id: 5274
   time: '2023-12-08T21:32:01.0000000+00:00'
+- author: spook
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 Avrite."
+    type: Add
+  id: 5275
+  time: '2023-12-09T12:03:29.0000000+00:00'
