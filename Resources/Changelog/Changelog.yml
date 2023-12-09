@@ -1,10 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: Cognizine now works on monkeys., type: Fix}
-  - {message: Fixed Cognizine not working on player-controlled animals., type: Fix}
-  id: 4795
-  time: '2023-09-10T20:21:54.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: All pda's with built in medical scanners now take one second to scan.,
@@ -2904,3 +2898,8 @@ Entries:
   - {message: Opening the chat channel selector works again., type: Fix}
   id: 5294
   time: '2023-12-09T02:15:07.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Some knives now deal some damage when thrown, type: Add}
+  id: 5295
+  time: '2023-12-09T02:16:31.0000000+00:00'
