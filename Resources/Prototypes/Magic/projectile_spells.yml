@@ -24,6 +24,7 @@
 
 - type: entity
   id: ActionFireballII
+  parent: ActionFireball
   name: Fireball II
   description: Fire three explosive fireball towards the clicked location.
   noSpawn: true

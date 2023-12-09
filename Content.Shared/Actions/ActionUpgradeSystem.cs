@@ -26,7 +26,6 @@ public sealed class ActionUpgradeSystem : EntitySystem
             || !_actions.TryGetActionData(uid, out var actionComp))
             return;
 
-        component.Level = args.NewLevel;
         var originalContainer = actionComp.Container;
         var originalAttachedEntity = actionComp.AttachedEntity;
 
@@ -44,6 +43,11 @@ public sealed class ActionUpgradeSystem : EntitySystem
         {
             upgradedActionId = _actionContainer.AddAction(originalAttachedEntity.Value, newActionProto);
         }
+
+        if (!TryComp<ActionUpgradeComponent>(upgradedActionId, out var upgradeComp))
+            return;
+
+        upgradeComp.Level = args.NewLevel;
 
         // TODO: Preserve ordering of actions
         //      Step through removing an action to see how that works on UI side
