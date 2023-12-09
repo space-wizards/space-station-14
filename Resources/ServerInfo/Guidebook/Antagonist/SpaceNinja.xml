@@ -1,29 +1,29 @@
 <Document>
 # Space Ninja
 
-The Space Ninja is a ghost role randomly available mid-late game. If you pick it you will be given your gear, your objectives and the greeting.
+The Space Ninja is a ghost role randomly available mid-late game. If you pick it you will be given your gear, your objectives and a greeting.
 
 You are a ninja, but in space. The Spider Clan has sent you to the station to wreak all kinds of havoc, from bolting the armory open and killing the entire station to engaging in a slipping war with the clown and fighting in rage cages.
 
 # Equipment
 
-You start with a microbomb implant, so if you get KIA or seppuku you will leave behind a nice crater and all your precious equipment is kept out of enemy hands.
+You start with a microbomb implant, so if you get KIA or if you seppuku (like a dishonorable imposter), you will leave behind a nice crater and all your precious equipment is kept out of enemy hands.
 
 Your bag is full of tools for more subtle sabotage, along with a survival box if you need a snack.
 
-You have a jetpack and pinpointer that will let you find the station.
+You have a jetpack and pinpointer that will let you find and reach the station.
 
-<GuideEntityEmbed Entity="PinpointerStation" Caption="station pinpointer"/>
+<GuideEntityEmbed Entity="PinpointerStation" Caption="Station pinpointer"/>
 
 ## Ninja Suit
 
-<GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja" Captain="ninja suit"/>
+<GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja" Captain="Ninja suit"/>
 
-Your single most important item is your suit, without it none of your abilities would work.
-Your suit requires power to function, its internal battery can be replaced by clicking on it **with a better one**.
-You can see the current charge by examining the suit or in a sweet battery alert at the top right of your screen.
+Your single most important item is your suit; without it, none of your abilities would work.
+Your suit requires power to function; its internal battery can be replaced by clicking on it **with a better one**.
+You can see the current charge by examining the suit or through a sweet battery alert at the upper right side of your screen.
 
-If you run out of power and need to recharge your battery, just use your gloves to drain an APC, substation or a SMES.
+If you run out of power and need to recharge your battery, just use your gloves to drain an APC, substation or a SMES. Be careful, as all these methods ([italics]especially[/italics] draining from an APC, through timable brownouts) can alert the crew to your presence.
 
 ## Ninja Gloves
 
@@ -31,15 +31,15 @@ If you run out of power and need to recharge your battery, just use your gloves 
 
 These bad boys are your bread and butter.
 
-They are insulated so you can nom on wires in peace. Obviously they block your fingerprints from being left on things you touch.
+They are insulated so you can nom on wires in peace. Obviously they block your fingerprints from being left behind on things you touch.
 
-You have an action to toggle gloves. When the gloves are turned on, they allow you to use special abilities, which are triggered by interacting with things with an empty hand and with combat mode disabled.
+You have an action to toggle your gloves. When the gloves are turned on, they allow you to use special abilities, which are triggered by interacting with things with an empty hand and with combat mode disabled.
 
 Your glove abilities include:
 - Emagging an unlimited number of doors.
 - Draining power from transformers such as APCs, substations or SMESes. The higher the voltage, the more efficient the draining is.
 - You can shock any mob, stunning and slightly damaging them.
-- You can download technologies from a R&D server for one of your objectives.
+- You can download technologies from the R&D server for one of your objectives.
 - You can hack a communications console to call in a threat.
 
 ## Energy Katana
@@ -47,7 +47,7 @@ Your glove abilities include:
 <GuideEntityEmbed Entity="EnergyKatana" Captain="energy katana"/>
 
 Deals a lot of damage and can be recalled at will, costing suit power proportional to the distance teleported.
-While in hand you can teleport to anywhere that you can see, meaning most doors and windows, but not past solid walls.
+While in hand you can teleport to any location that you can see, meaning most doors and windows, but not past solid walls.
 This has a limited number of charges which regenerate slowly, so keep a charge or two spare incase you need a quick getaway.
 
 ## Spider Clan Charge
@@ -55,7 +55,7 @@ This has a limited number of charges which regenerate slowly, so keep a charge o
 <GuideEntityEmbed Entity="SpiderCharge" Caption="spider clan charge"/>
 
 A modified C-4 explosive, you start with this in your pocket. Creates a large explosion but must be armed in your target area.
-A random area on the map is selected for you to blow up, which is one of your objectives. It can't be activated manually, simply plant it on a wall or something.
+A random area on the map is selected for you to blow up, which shows up as one of your objectives. Since it cannot be armed manually, you must mount it to a wall in the designated area to count the objective as complete.
 Can't be unstuck once planted.
 
 ## Ninja Shoes

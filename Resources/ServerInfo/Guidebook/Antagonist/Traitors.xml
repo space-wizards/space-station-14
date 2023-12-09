@@ -3,27 +3,28 @@
 
   - A Traitor is an antagonist employed by the Syndicate. They have access to various Syndicate tools and weapons through their [color=#a4885c]Uplink[/color].
   - Traitors can use codewords to identify themselves to one another in order to cooperate.
-  - In a Traitor round, any player can be a Traitor aside from department heads, the captain, or any security officers.
-  - Traitors should focus primarily on completing their objectives successfully by the end of the round.
+  - In a Traitor round, any player can be a Traitor aside from department heads, the captain, or any security officers. Do note, however; you can still be promoted to these positions after the round begins.
+  - Traitors should focus primarily on completing their objectives successfully by the end of the round, and they should try not to help the station if they can do so without being revealed.
 
-  ## Uplink
+  ## The Uplink
   <Box>
     <GuideEntityEmbed Entity="BaseUplinkRadio40TC" Caption="Uplink"/>
   </Box>
-  - The [color=#a4885c]Uplink[/color] is the most important tool as a Traitor, as it can purchase tools and weapons with [color=#a4885c]telecrystals[/color](TC).
+  - The [color=#a4885c]Uplink[/color] is one of the most important tools of Traitor, as it can purchase more tools and weapons with [color=#a4885c]telecrystals[/color](TC).
   <Box>
     <GuideEntityEmbed Entity="Telecrystal" Caption="Telecrystals"/>
   </Box>
-  - [color=#a4885c]Telecrystals[/color] are given at the start to give traitors an edge on the station. Other traitors can trade their [color=#a4885c]telecrystals[/color] to each other exceeding the normal given amount.
+  - 20 [color=#a4885c]Telecrystals[/color] are given at roundstart to give traitors an edge on the station. Other traitors can trade their [color=#a4885c]telecrystals[/color] with (or steal them from) others, exceeding the normal given amount.
+  - You can also obtain 5 extra telecrystals by [color=#ff0000]butchering[/color] (not gibbing!) the captain's pet fox, [color=orange]Renault[/color].
   - Using your [color=#a4885c]PDA[/color] and setting the ringtone as your uplink code gives you a variety of options to use at your disposal against the station and its crew.
   <Box>
   <GuideEntityEmbed Entity="PassengerPDA" Caption="PDA"/>
   </Box>
-  Make sure to relock your [color=#a4885c]PDA[/color] to prevent anyone else from seeing it!
-  - Various gear include:
+  Make sure to relock your [color=#a4885c]Uplink[/color] in your [color=#a4885c]PDA[/color] to prevent anyone else from seeing it!
+  - Various purchasable gear sets include:
   <Box>
     <GuideEntityEmbed Entity="WeaponPistolViper" Caption="Guns"/>
-    <GuideEntityEmbed Entity="FireAxe" State="icon" Caption="Melee"/>
+    <GuideEntityEmbed Entity="FireAxe" State="icon" Caption="Melee weapons"/>
     <GuideEntityEmbed Entity="C4" Caption=" Explosives"/>
     <GuideEntityEmbed Entity="Syringe" Caption="Implants"/>
     <GuideEntityEmbed Entity="ClothingBackpackDuffelSyndicate" Caption="Bundles"/>
@@ -31,7 +32,7 @@
 
   ## Objectives
 
-  - When becoming a Traitor, you will have a list of objectives, ranging from escape alive, stealing something, and killing someone. Using the [color=#a4885c]Uplink[/color] will help you with most of these tasks.
+  - When becoming a Traitor, you will have a list of objectives; anything from escaping alive and uncuffed, to stealing something, or even killing someone. Using the [color=#a4885c]Uplink[/color]'s can help you with most of these tasks, but you are free to be creative with whatever else you have on hand as well!
 
   ## List of Possible Tasks
 
@@ -39,7 +40,8 @@
   - Kill or maroon a randomly selected traitor.
   - Kill or maroon a randomly selected department head.
   - Keep a randomly selected traitor alive.
-  - Escape on the evacuation shuttle alive and uncuffed.
+  - Leave on the evac shuttle alive and uncuffed.
+  - Hijack the evac shutte and leave with no loyal Nanotrasen crew onboard. {CURRENTLY DISABLED DUE TO BEING NIGH-IMPOSSIBLE TO ACCOMPLISH}
   - Help a randomly selected traitor finish 2/3 of their objectives.
   - Die a glorious death.
   - Steal the Captain's [color=#a4885c]ID Card[/color].
@@ -66,19 +68,23 @@
   <Box>
     <GuideEntityEmbed Entity="HandTeleporter" Caption="Hand Teleporter"/>
   </Box>
-  - Steal the Head of Security's [color=#a4885c]Secret Documents[/color].
+  - Steal the Head of Security's [color=#a4885c]Emergency Security Orders[/color].
   <Box>
-    <GuideEntityEmbed Entity="BookSecretDocuments" Caption="Secret Documents"/>
+    <GuideEntityEmbed Entity="BookSecretDocuments" Caption="Emergency Security Orders"/>
   </Box>
   - Steal the Chief Engineer's [color=#a4885c]Advanced Magboots[/color].
   <Box>
     <GuideEntityEmbed Entity="ClothingShoesBootsMagAdv" Caption="Advanced Magboots"/>
   </Box>
+  - Steal the Quartermaster's [color=#a4885c]Requisition Digi-Board.[/color]
+  <Box>
+  <GuideEntityEmbed Entity="BoxFolderQmClipboard" Caption="Requisition Digi-Board"/>
+  </Box>
   - Steal the [color=#a4885c]Nuke Disk[/color].
   <Box>
     <GuideEntityEmbed Entity="NukeDisk" Caption="Nuke Disk"/>
   </Box>
-  - Steal [color=#a4885c]Corgi Meat[/color].
+  - Steal a slice of fine-cut [color=#a4885c]Corgi Meat[/color], from [bold]only[/bold] the Head of Personnel's pet corgi. (Butcher them for their meat!)
   <Box>
   <GuideEntityEmbed Entity="MobCorgiIan" Caption="Corgi"/>
   <GuideEntityEmbed Entity="FoodMeatCorgi" Caption="Corgi Meat"/>

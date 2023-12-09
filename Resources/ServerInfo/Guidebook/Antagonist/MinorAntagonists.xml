@@ -1,8 +1,8 @@
 <Document>
   # Minor Antagonists
 
-  Most if not all Minor Antagonists are ghost-controlled roles that gives dead people new ways to cause chaos around the station. They are spawned by random events.
-  
+  Most, if not all Minor Antagonists are ghost-controlled roles that give dead people new ways to cause chaos around the station. They are spawned through random events.
+
   # Revenant
 
   <Box>
@@ -14,10 +14,10 @@
 
   ## Essence
 
-  - Your [color=#a4885c]essence[/color] is your very own life force and a way to use abilities for a cost, don't let it drop to 0.
-  - To gain [color=#a4885c]essence[/color] you first inspect various souls for their worth. More worthy souls grant more essence.
-  However merely checking their worth isn't enough for collecting [color=#a4885c]essence[/color]. You must siphon it either when the victim is critical, dead, or sleeping.
-  - A good start is to go to medical or dorms but be weary, you are vulnerable to attacks when you siphon a soul. Taking damage reduces your [color=#a4885c]essence[/color]! So plan your attacks wisely.
+  - Your [color=#a4885c]essence[/color] is your very own life force and a way to use abilities for a cost, don't let it drop to zero.
+  - To gain [color=#a4885c]essence[/color], you first inspect various souls for their worth. More worthy souls grant more essence.
+  - However, merely checking their worth isn't enough for collecting [color=#a4885c]essence[/color]. You must siphon it either when the victim is critical, dead, or sleeping.
+  - A good start is to go to medical or dorms; but be weary, you are vulnerable to attacks when you siphon a soul. Taking damage reduces your [color=#a4885c]essence[/color]! So plan your attacks wisely.
 
   ## Shop And Powers
 
@@ -31,7 +31,10 @@
     <GuideEntityEmbed Entity="MobRatKingBuff" Caption="Buff Rat King"/>
   </Box>
 
-  A Rat King is a giant rat capable of setting a nest and creating rats to do their bidding (usually to get food).
+  A Rat King is a giant rat capable of setting up a nest and creating rat servants to do their bidding (usually to get food).
+  While rat kings are catagorized as a minor antagonist role, they have no objectives stating they must harm the crew.
+  In reality, one could setup a peaceful coalition between the heads of the station and the Rat King.
+  Do be warned though; as you are not crew, security [italics]absolutely[/italics] has the right to shoot you on sight.
 
   ## Abilities
 
@@ -50,18 +53,17 @@
     <GuideEntityEmbed Entity="MobDragon" Caption=""/>
   </Box>
 
-  A Space Dragon is a giant dragon that creates space carp rifts and eat the crew.
+  A Space Dragon is a giant dragon that creates space carp rifts and eats the crew.
+  They can either be generated through a random event, brought onto the station from an expedition or a salvage wreck, or can be called in by a [textlink="Space Ninja" link="SpaceNinja"].
 
   ## Abilities
-  
+
   - Devour critical or dead victims.
-  
   <Box>
     <GuideEntityEmbed Entity="MobCarp" Caption=""/>
     <GuideEntityEmbed Entity="CarpRift" Caption=""/>
     <GuideEntityEmbed Entity="MobCarp" Caption=""/>
   </Box>
-
   - Summon a Carp Rift that periodically spawns [color=#a4885c]Space Carp[/color].
 
 </Document>

@@ -5,11 +5,11 @@
     <GuideEntityEmbed Entity="SignBiohazard" Caption=""/>
   </Box>
 
-  - Zombies are antagonist that infect all beings that they bite.
+  - Zombies are an antagonist that infect most-all beings that they bite.
 
   ## Infection
 
-  - Three ways of getting infected are by starting out as the intial infected, being bitten by a zombified being, or being injected by [color=#a4885c]Romerol[/color].
+  - The three ways of getting infected are: starting out as the Intial Infected (or II) and turning into a zombie through the related action, being bitten by a zombified being, or being injected with a minimum of 5 units of [color=#a4885c]Romerol[/color] (obtainable through a Nuclear Operatives uplink radio).
 
   <Box>
     <GuideReagentEmbed Reagent="Romerol"></GuideReagentEmbed>
@@ -17,12 +17,13 @@
 
   ## Objectives
 
-  - The objective for zombies is to infect the entire station's crew.
+  - The main objective of a zombie is to infect the entire station's crew and to not die again to the crew or to a CBURN team.
 
   ## Cure
 
-  - If you are already zombified, the only cure is death.
-  - If you are not zombified yet, using [color=#a4885c]Ambuzol[/color] will stop the infection from ensuing your timely demise but you may still get reinfected if not too careful. [color=#a4885c]Ambuzol Plus[/color] will prevent the infection continuously only while alive.
+  - If you are already zombified, the only cure, unfortunately, is death.
+  - If you are not zombified yet, taking in 5 units of [color=#a4885c]Ambuzol[/color] will stop the infection from ensuing your timely demise, but you may still get reinfected if you're not too careful.
+  - Taking in 5 units of [color=#a4885c]Ambuzol Plus[/color] will both stop an ongoing infection and vaccinate yourself from future infections, but only while you are alive.
 
   <Box>
     <GuideReagentEmbed Reagent="Ambuzol"></GuideReagentEmbed>
