@@ -46,6 +46,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.7
+  - type: HeldSpeedModifier
   - type: GroupExamine
 
 - type: entity
@@ -72,6 +73,7 @@
     - type: ClothingSpeedModifier
       walkModifier: 0.8
       sprintModifier: 0.8
+    - type: HeldSpeedModifier
     - type: GroupExamine
 
 - type: entity
@@ -176,7 +178,7 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
   - type: Item
-    size: 30
+    size: Normal
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
   - type: ToggleableClothing
@@ -197,7 +199,7 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: Item
-    size: 30
+    size: Normal
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: ToggleableClothing

@@ -27,8 +27,12 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ## Graphics menu
 
-ui-options-show-held-item = Show held item next to cursor?
-ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor?
+ui-options-show-held-item = Show held item next to cursor
+ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor
+ui-options-opaque-storage-window = Enable opaque storage window
+ui-options-show-looc-on-head = Show LOOC chat above characters head
+ui-options-fancy-speech = Show names in speech bubbles
+ui-options-fancy-name-background = Add background to speech bubble names
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
 ui-options-lighting-label = Lighting Quality:
@@ -108,9 +112,14 @@ ui-options-function-alt-activate-item-in-world = Alternative activate item in wo
 ui-options-function-drop = Drop item
 ui-options-function-examine-entity = Examine
 ui-options-function-swap-hands = Swap hands
+ui-options-function-move-stored-item = Move stored item
+ui-options-function-rotate-stored-item = Rotate stored item
+ui-options-static-storage-ui = Static storage UI
 
 ui-options-function-smart-equip-backpack = Smart-equip to backpack
 ui-options-function-smart-equip-belt = Smart-equip to belt
+ui-options-function-open-backpack = Open backpack
+ui-options-function-open-belt = Open belt
 ui-options-function-throw-item-in-hand = Throw item
 ui-options-function-try-pull-object = Pull object
 ui-options-function-move-pulled-object = Move pulled object
@@ -148,6 +157,7 @@ ui-options-function-escape-context = Close recent window or toggle game menu
 
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)
+ui-options-function-toggle-fullscreen = Toggle fullscreen
 
 ui-options-function-editor-place-object = Place object
 ui-options-function-editor-cancel-place = Cancel placement

@@ -4,7 +4,6 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -18,6 +17,7 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<OnUseTimerTriggerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, EntityStuckEvent>(OnStuck);
+        SubscribeLocalEvent<RandomTimerTriggerComponent, MapInitEvent>(OnRandomTimerTriggerMapInit);
     }
 
     private void OnStuck(EntityUid uid, OnUseTimerTriggerComponent component, EntityStuckEvent args)
@@ -112,6 +112,16 @@ public sealed partial class TriggerSystem
                 },
             });
         }
+    }
+
+    private void OnRandomTimerTriggerMapInit(Entity<RandomTimerTriggerComponent> ent, ref MapInitEvent args)
+    {
+        var (_, comp) = ent;
+
+        if (!TryComp<OnUseTimerTriggerComponent>(ent, out var timerTriggerComp))
+            return;
+
+        timerTriggerComp.Delay = _random.NextFloat(comp.Min, comp.Max);
     }
 
     private void CycleDelay(OnUseTimerTriggerComponent component, EntityUid user)

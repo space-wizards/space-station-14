@@ -1,7 +1,8 @@
 using System.Linq;
-using Content.Server.Players;
+using Content.Server.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
+using Content.Shared.Players;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -35,7 +36,7 @@ public sealed partial class MindTests
         MindComponent mind = default!;
         await server.WaitAssertion(() =>
         {
-            var player = playerMan.ServerSessions.Single();
+            var player = playerMan.Sessions.Single();
 
             playerEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
             visitEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
@@ -81,7 +82,7 @@ public sealed partial class MindTests
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
-        var player = playerMan.ServerSessions.Single();
+        var player = playerMan.Sessions.Single();
 
         var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
 
@@ -128,7 +129,7 @@ public sealed partial class MindTests
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
 
-        var player = playerMan.ServerSessions.Single();
+        var player = playerMan.Sessions.Single();
 
         Assert.That(!entMan.HasComponent<GhostComponent>(player.AttachedEntity), "Player was initially a ghost?");
 
@@ -162,7 +163,7 @@ public sealed partial class MindTests
         var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
         var mind = GetMind(pair);
 
-        var player = playerMan.ServerSessions.Single();
+        var player = playerMan.Sessions.Single();
 #pragma warning disable NUnit2045 // Interdependent assertions.
         Assert.That(player.AttachedEntity, Is.Not.Null);
         Assert.That(entMan.EntityExists(player.AttachedEntity));
@@ -172,7 +173,7 @@ public sealed partial class MindTests
         EntityUid ghost = default!;
         await server.WaitAssertion(() =>
         {
-            ghost = entMan.SpawnEntity("MobObserver", MapCoordinates.Nullspace);
+            ghost = entMan.SpawnEntity(GameTicker.ObserverPrototypeName, MapCoordinates.Nullspace);
             mindSystem.Visit(mind.Id, ghost);
         });
 
@@ -218,12 +219,12 @@ public sealed partial class MindTests
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var serverConsole = server.ResolveDependency<IServerConsoleHost>();
 
-        var player = playerMan.ServerSessions.Single();
+        var player = playerMan.Sessions.Single();
 
         var ghost = await BecomeGhost(pair);
 
         // Player is a normal ghost (not admin ghost).
-        Assert.That(entMan.GetComponent<MetaDataComponent>(player.AttachedEntity!.Value).EntityPrototype?.ID, Is.Not.EqualTo("AdminObserver"));
+        Assert.That(entMan.GetComponent<MetaDataComponent>(player.AttachedEntity!.Value).EntityPrototype?.ID, Is.Not.EqualTo(GameTicker.AdminObserverPrototypeName));
 
         // Try to become an admin ghost
         await server.WaitAssertion(() => serverConsole.ExecuteCommand(player, "aghost"));
@@ -234,7 +235,7 @@ public sealed partial class MindTests
         {
             Assert.That(player.AttachedEntity, Is.Not.EqualTo(ghost), "Player is still attached to the old ghost");
             Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "Player did not become a new ghost");
-            Assert.That(entMan.GetComponent<MetaDataComponent>(player.AttachedEntity!.Value).EntityPrototype?.ID, Is.EqualTo("AdminObserver"));
+            Assert.That(entMan.GetComponent<MetaDataComponent>(player.AttachedEntity!.Value).EntityPrototype?.ID, Is.EqualTo(GameTicker.AdminObserverPrototypeName));
         });
 
         var mindId = player.ContentData()?.Mind;
@@ -263,7 +264,7 @@ public sealed partial class MindTests
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var serverConsole = server.ResolveDependency<IServerConsoleHost>();
 
-        var player = playerMan.ServerSessions.Single();
+        var player = playerMan.Sessions.Single();
 
         EntityUid ghost = default!;
 

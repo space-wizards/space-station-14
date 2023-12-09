@@ -21,6 +21,8 @@ using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -140,7 +142,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     /// </summary>
     private void OnShuttleRequestPosition(EmergencyShuttleRequestPositionMessage msg, EntitySessionEventArgs args)
     {
-        if (!_admin.IsAdmin((IPlayerSession) args.SenderSession))
+        if (!_admin.IsAdmin(args.SenderSession))
             return;
 
         var player = args.SenderSession.AttachedEntity;

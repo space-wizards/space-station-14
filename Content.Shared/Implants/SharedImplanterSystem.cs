@@ -6,8 +6,10 @@ using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Implants;
 
@@ -81,13 +83,25 @@ public abstract class SharedImplanterSystem : EntitySystem
         [NotNullWhen(true)] out EntityUid? implant,
         [NotNullWhen(true)] out SubdermalImplantComponent? implantComp)
     {
-        implant = component.ImplanterSlot.ContainerSlot?.ContainedEntities.FirstOrDefault();
+        implant = component.ImplanterSlot.ContainerSlot?.ContainedEntities.FirstOrNull();
         if (!TryComp(implant, out implantComp))
             return false;
+
+        if (!CheckTarget(target, component.Whitelist, component.Blacklist) ||
+            !CheckTarget(target, implantComp.Whitelist, implantComp.Blacklist))
+        {
+            return false;
+        }
 
         var ev = new AddImplantAttemptEvent(user, target, implant.Value, implanter);
         RaiseLocalEvent(target, ev);
         return !ev.Cancelled;
+    }
+
+    protected bool CheckTarget(EntityUid target, EntityWhitelist? whitelist, EntityWhitelist? blacklist)
+    {
+        return whitelist?.IsValid(target, EntityManager) != false &&
+            blacklist?.IsValid(target, EntityManager) != true;
     }
 
     //Draw the implant out of the target

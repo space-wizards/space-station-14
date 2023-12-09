@@ -1,3 +1,4 @@
+# When adding new food also add to the appropriate random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\
 # Base
 
 - type: entity
@@ -16,7 +17,7 @@
         - ReagentId: Nutriment
           Quantity: 5
   - type: Item
-    size: 1
+    size: Tiny
 
 # Muffins/Buns
 

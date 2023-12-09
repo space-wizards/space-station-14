@@ -17,6 +17,9 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
@@ -616,7 +619,7 @@ public sealed class WiresSystem : SharedWiresSystem
             wires.WireSeed), ui: ui);
     }
 
-    public void OpenUserInterface(EntityUid uid, IPlayerSession player)
+    public void OpenUserInterface(EntityUid uid, ICommonSession player)
     {
         if (_uiSystem.TryGetUi(uid, WiresUiKey.Key, out var ui))
             _uiSystem.OpenUi(ui, player);

@@ -18,6 +18,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -153,7 +154,7 @@ public sealed partial class ClimbSystem : VirtualController
     {
         if (component.NextTransition != null)
         {
-            StopClimb(uid, component);
+            FinishTransition(uid, component);
         }
     }
 
@@ -257,15 +258,25 @@ public sealed partial class ClimbSystem : VirtualController
          // Need direction relative to climber's parent.
          var localDirection = (-parentRot).RotateVec(worldDirection);
 
-         climbing.IsClimbing = true;
-         var climbDuration = TimeSpan.FromSeconds(distance / climbing.TransitionRate);
-         climbing.NextTransition = _timing.CurTime + climbDuration;
+         // On top of it already so just do it in place.
+         if (localDirection.LengthSquared() < 0.01f)
+         {
+             climbing.NextTransition = null;
+         }
+         // VirtualController over to the thing.
+         else
+         {
+             var climbDuration = TimeSpan.FromSeconds(distance / climbing.TransitionRate);
+             climbing.NextTransition = _timing.CurTime + climbDuration;
 
-         climbing.Direction = localDirection.Normalized() * climbing.TransitionRate;
+             climbing.Direction = localDirection.Normalized() * climbing.TransitionRate;
+             _actionBlockerSystem.UpdateCanMove(uid);
+         }
+
+         climbing.IsClimbing = true;
          Dirty(uid, climbing);
 
          _audio.PlayPredicted(comp.FinishClimbSound, climbable, user);
-         _actionBlockerSystem.UpdateCanMove(uid);
 
          var startEv = new StartClimbEvent(climbable);
          var climbedEv = new ClimbedOnEvent(uid, user);
@@ -344,13 +355,14 @@ public sealed partial class ClimbSystem : VirtualController
              return;
          }
 
-         foreach (var fixture in args.OurFixture.Contacts.Keys)
+         foreach (var otherFixture in args.OurFixture.Contacts.Keys)
          {
-             if (fixture == args.OtherFixture)
+             // If it's the other fixture then ignore em
+             if (otherFixture == args.OtherFixture)
                  continue;
 
              // If still colliding with a climbable, do not stop climbing
-             if (HasComp<ClimbableComponent>(args.OtherEntity))
+             if (HasComp<ClimbableComponent>(otherFixture.Owner))
                  return;
          }
 
