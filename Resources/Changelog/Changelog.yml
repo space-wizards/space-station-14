@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Replays now record ghost chat., type: Fix}
-  id: 4794
-  time: '2023-09-10T11:49:45.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Cognizine now works on monkeys., type: Fix}
@@ -2904,3 +2899,8 @@ Entries:
       at the cost of being radioactive.', type: Add}
   id: 5293
   time: '2023-12-08T18:50:41.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Opening the chat channel selector works again., type: Fix}
+  id: 5294
+  time: '2023-12-09T02:15:07.0000000+00:00'
