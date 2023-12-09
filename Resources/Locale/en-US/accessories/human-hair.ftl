@@ -41,6 +41,7 @@ marking-HumanHairClassicAfro = Classic Afro
 marking-HumanHairClassicBigAfro = Classic Big Afro
 marking-HumanHairClassicBusiness = Classic Business Hair
 marking-HumanHairClassicCia = Classic CIA
+marking-HumanHairClassicCornrows2 = Classic Cornrows 2
 marking-HumanHairClassicFloorlengthBedhead = Classic Floorlength Bedhead
 marking-HumanHairClassicModern = Classic Modern
 marking-HumanHairClassicMulder = Classic Mulder

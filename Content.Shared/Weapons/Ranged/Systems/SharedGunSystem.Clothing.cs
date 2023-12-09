@@ -32,24 +32,19 @@ public partial class SharedGunSystem
     private bool TryGetClothingSlotEntity(EntityUid uid, ClothingSlotAmmoProviderComponent component, [NotNullWhen(true)] out EntityUid? slotEntity)
     {
         slotEntity = null;
-        if (!Containers.TryGetContainingContainer(uid, out var container))
-            return false;
-        var user = container.Owner;
 
-        if (!TryComp<InventoryComponent>(user, out var inventory))
+        if (!_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator, component.TargetSlot))
             return false;
-        var slots = _inventory.GetSlots(user, inventory);
-        foreach (var slot in slots)
+
+        while (enumerator.NextItem(out var item))
         {
-            if (slot.SlotFlags != component.TargetSlot)
+            if (component.ProviderWhitelist == null || component.ProviderWhitelist.IsValid(item, EntityManager))
                 continue;
-            if (!_inventory.TryGetSlotEntity(user, slot.Name, out var e, inventory))
-                continue;
-            if (component.ProviderWhitelist != null && !component.ProviderWhitelist.IsValid(e.Value, EntityManager))
-                continue;
-            slotEntity = e;
+
+            slotEntity = item;
+            return true;
         }
 
-        return slotEntity != null;
+        return false;
     }
 }

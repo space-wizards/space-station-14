@@ -97,6 +97,13 @@
   itemSize: 5
 
 - type: stack
+  id: FloorTileLime
+  name: lime tile
+  spawn: FloorTileItemLime
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileDirty
   name: dirty tile
   spawn: FloorTileItemDirty
