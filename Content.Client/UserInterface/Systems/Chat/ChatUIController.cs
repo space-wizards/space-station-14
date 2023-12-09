@@ -706,17 +706,14 @@ public sealed class ChatUIController : UIController
 
     private void OnDamageForceSay(DamageForceSayEvent ev, EntitySessionEventArgs _)
     {
-        if (UIManager.ActiveScreen?.GetWidget<ChatBox>() is not { } chatBox)
-            return;
-
+        var chatBox = UIManager.ActiveScreen?.GetWidget<ChatBox>() ?? UIManager.ActiveScreen?.GetWidget<ResizableChatBox>();
         // Don't send on OOC/LOOC obviously!
-        if (chatBox.SelectedChannel is not
-            (ChatSelectChannel.Local or
+        if (chatBox?.SelectedChannel is not (ChatSelectChannel.Local or
             ChatSelectChannel.Radio or
             ChatSelectChannel.Whisper))
             return;
 
-        if (_player.LocalPlayer?.ControlledEntity is not { } ent
+        if (_player.LocalSession?.AttachedEntity is not { } ent
             || !EntityManager.TryGetComponent<DamageForceSayComponent>(ent, out var forceSay))
             return;
 
