@@ -17,24 +17,24 @@ public sealed partial class PacifiedComponent : Component
     [DataField("throwBlacklist"), ViewVariables(VVAccess.ReadWrite)]
     public EntityWhitelist ThrowBlacklist = new()
     {
-            Components = new[]
-            {
-                // For sure no throwing stars or darts:
-                "EmbeddableProjectile",
-                // Nothing that can hurt if it hits someone:
-                "DamageOtherOnHit",
-                "DamageOnLand",
-                // Nothing that could make someone slip:
-                "Slippery",
-                // Containers full of liquid TBD. Some liquids are inert and we should not prohibit tossing
-                // water balloons, but should prohibit fluorosulfuric acid beakers.
-            }
-            //,
-            // Tags = new ()
-            // {
-            //     // No grenades!
-            //     "Grenade"
-            // }
+        Components = new[]
+        {
+            // For sure no throwing stars or darts:
+            "EmbeddableProjectile",
+            // Nothing that can hurt if it hits someone:
+            "DamageOtherOnHit",
+            "DamageOnLand",
+            // Nothing that could make someone slip:
+            "Slippery",
+            // Containers full of liquid TBD. Some liquids are inert and we should not prohibit tossing
+            // water balloons, but should prohibit fluorosulfuric acid beakers.
+        }
+        //,
+        // Tags = new ()
+        // {
+        //     // No grenades!
+        //     "Grenade"
+        // }
     };
 
     /// <summary>
