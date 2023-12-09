@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fix handheld crew monitor., type: Fix}
-  id: 4798
-  time: '2023-09-11T05:01:54.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix ghost warps., type: Fix}
@@ -2903,3 +2898,9 @@ Entries:
   - {message: Radiation now works again., type: Fix}
   id: 5297
   time: '2023-12-09T04:10:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reduced MIDI audio range so it's easier to reduce the volume to a comfortable
+      level., type: Tweak}
+  id: 5298
+  time: '2023-12-09T04:18:15.0000000+00:00'
