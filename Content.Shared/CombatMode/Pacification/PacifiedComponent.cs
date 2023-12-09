@@ -14,7 +14,7 @@ public sealed partial class PacifiedComponent : Component
     /// <summary>
     ///     A blacklist specifying entities that the player will refuse to throw.
     /// </summary>
-    [DataField("throwBlacklist")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityWhitelist ThrowBlacklist = new()
     {
         Components = new[]
