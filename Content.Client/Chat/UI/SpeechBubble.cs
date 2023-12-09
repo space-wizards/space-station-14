@@ -187,7 +187,7 @@ namespace Content.Client.Chat.UI
             var rawmsg = message.WrappedMessage;
             var tagStart = rawmsg.IndexOf($"[{tag}]");
             var tagEnd = rawmsg.IndexOf($"[/{tag}]");
-            if (tagStart <= 0 || tagEnd <= 0) //the above return -1 if the tag's not found, which in turn will cause the below to throw an exception. a blank speech bubble is far more noticeably broken than the bubble not appearing at all -bhijn
+            if (tagStart < 0 || tagEnd < 0) //the above return -1 if the tag's not found, which in turn will cause the below to throw an exception. a blank speech bubble is far more noticeably broken than the bubble not appearing at all -bhijn
                 return "";
             tagStart += tag.Length + 2;
             return rawmsg.Substring(tagStart, tagEnd - tagStart);

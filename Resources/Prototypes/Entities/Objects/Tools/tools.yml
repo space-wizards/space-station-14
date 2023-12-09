@@ -17,7 +17,7 @@
     - state: cutters
       map: [ "enum.DamageStateVisualLayers.Base" ]
     - state: cutters-cutty-thingy
-  - type: UseDelay
+  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -90
     damage:
@@ -37,6 +37,7 @@
           cutters: Rainbow
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
+    storedRotation: -90
   - type: LatticeCutting
   - type: PhysicalComposition
     materialComposition:
@@ -64,7 +65,8 @@
       - state: screwdriver-screwybits
   - type: Item
     sprite: Objects/Tools/screwdriver.rsi
-  - type: UseDelay
+    storedRotation: -90
+  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -90
     attackRate: 1
@@ -105,7 +107,10 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/wrench.rsi
-  - type: UseDelay
+    storedSprite:
+      sprite: Objects/Tools/wrench.rsi
+      state: storage
+  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 135
     attackRate: 1.5
@@ -141,7 +146,10 @@
   - type: Item
     sprite: Objects/Tools/crowbar.rsi
     size: Small
-  - type: UseDelay
+    storedSprite:
+      sprite: Objects/Tools/crowbar.rsi
+      state: storage
+  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -174,6 +182,9 @@
     state: red-icon
   - type: Item
     heldPrefix: red
+    storedSprite:
+      sprite: Objects/Tools/crowbar.rsi
+      state: red-storage
 
 - type: entity
   name: multitool
@@ -490,7 +501,7 @@
   - type: Sprite
     sprite: Objects/Tools/shovel.rsi
     state: icon
-  - type: UseDelay
+  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -523,7 +534,7 @@
     quickEquip: false
     slots:
     - Belt
-  - type: UseDelay
+  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
