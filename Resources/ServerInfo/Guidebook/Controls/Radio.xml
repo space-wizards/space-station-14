@@ -7,12 +7,11 @@
     <GuideEntityEmbed Entity="ClothingHeadsetGrey"/>
   </Box>
 
-  To send a station-wide message over the radio preface your text with [color=#a4885c]semi-colon (;)[/color].
+  To send a station-wide "Common" message over the radio, preface your text with [color=#a4885c]semi-colon (;)[/color].
 
   ## Departmental Radio
 
-  You are able to send messages over your departmental radio channels using [color=#a4885c]colon (:)[/color] followed by the
-  department letter as long as you're wearing a headset with your department's encryption key.
+  You are able to send messages over your departmental radio channels using [color=#a4885c]colon (:)[/color] (by default) followed by the department letter, as long as you're wearing a headset with your department's encryption key.
 
   Examine your headset to see the department channels available to you.
 
@@ -20,9 +19,15 @@
   <GuideEntityEmbed Entity="ClothingHeadsetEngineering"/>
 </Box>
 
-  Examining a default engineering headset would show you the prefixes for the [color=#32cd32]Common[/color] and [color=#f37746]Engineering[/color]
-  channels.
-  
-  It is also possible to use [color=#a4885c]:h[/color]. This hotkey will automatically default to your department radio channel. For an example if you're Captain, then [color=#a4885c]:h[/color] will default to [color=#a4885c]:c[/color]
+  Examining a default engineering headset would show you the prefixes for the [color=#32cd32]Common[/color] and [color=#f37746]Engineering[/color] channels.
 
+  It is also possible to use [color=#a4885c]:h[/color]. This hotkey will automatically default to your department radio channel. For radios with the keys swapped in (see next section), the first channel, or first key inserted, will become the default department key. For an example if you're Captain, then [color=#a4885c]:h[/color] will default to [color=#a4885c]:c[/color]
+
+  ## Key Insertion/Swapping
+
+  In the event that you wish to swap out some encryption keys, either for beneficial or nefarious purposes, there are a few ways to go around it.
+
+  If you have a free encryption key, you can insert it directly into your headset, and you will immediately start hearing (and can start sending) messages to and from said radio channel.
+
+  However, if you wish to extract the keys out of a headset, you can use a screwdriver on the headset, and all the keys inside will pop out; either into a free hand, or onto the ground.
 </Document>
