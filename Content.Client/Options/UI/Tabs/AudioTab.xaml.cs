@@ -153,11 +153,6 @@ namespace Content.Client.Options.UI.Tabs
             UpdateChanges();
         }
 
-        private float GetGain(float value)
-        {
-            return value;
-        }
-
         private void UpdateChanges()
         {
             // y'all need jesus.
