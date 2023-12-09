@@ -6,6 +6,9 @@
   id: FoodBowlBig
   description: A simple bowl, used for soups and salads.
   components:
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: SolutionContainerManager
     solutions:
       food:
@@ -54,6 +57,9 @@
   id: FoodBowlBigTrash
   description: A simple bowl, broken and useless.
   components:
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     state: bowl-trash

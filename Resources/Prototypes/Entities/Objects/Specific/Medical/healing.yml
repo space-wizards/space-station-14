@@ -24,9 +24,14 @@
     tags:
     - Ointment
   - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi
     state: ointment
   - type: Item
     heldPrefix: ointment
+    sprite: Objects/Specific/Medical/medical.rsi
+    storedSprite:
+      sprite: Objects/Specific/Medical/medical.rsi
+      state: ointment-stored
   - type: Healing
     damageContainers:
       - Biological
@@ -162,6 +167,7 @@
   - type: Sprite
     state: medicated-suture
   - type: Item
+    size: Small_Wide
     heldPrefix: medicated-suture
   - type: Healing
     damageContainers:
@@ -232,6 +238,8 @@
   id: Gauze
   suffix: Full
   components:
+  - type: Item
+    size: Small_Wide
   - type: Tag
     tags:
     - Gauze

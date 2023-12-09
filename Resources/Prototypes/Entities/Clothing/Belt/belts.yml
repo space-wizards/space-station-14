@@ -366,6 +366,7 @@
         - Taser
         - SecBeltEquip
         - Radio
+        - Sidearm
       components:
         - Stunbaton
         - FlashOnTrigger
@@ -469,8 +470,11 @@
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Item
-    size: Huge
+    size: Gargantuan
   - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,3,3
     whitelist:
       components:
         - Gun

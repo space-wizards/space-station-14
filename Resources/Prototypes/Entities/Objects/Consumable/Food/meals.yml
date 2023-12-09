@@ -10,6 +10,8 @@
   abstract: true
   description: A delicious meal, cooked with love.
   components:
+  - type: Item
+    size: Small_Wide
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
@@ -451,6 +453,8 @@
   id: FoodMealMemoryleek
   description: This should refresh your memory.
   components:
+  - type: Item
+    size: Small
   - type: FlavorProfile
     flavors:
       - memoryleek

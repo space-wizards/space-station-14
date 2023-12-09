@@ -15,7 +15,7 @@
     size: Normal
   - type: Storage
     grid:
-    - 0,0,5,1
+    - 0,0,4,1
   - type: StorageFill
     contents:
       - id: CigPackGreen

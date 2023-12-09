@@ -4,6 +4,8 @@
   name: "candy bowl"
   description: Grab as much as you can fit in your pockets!
   components:
+  - type: Item
+    size: Small_Wide
   - type: Sprite
     sprite: Objects/Misc/candy_bowl.rsi
     noRot: true

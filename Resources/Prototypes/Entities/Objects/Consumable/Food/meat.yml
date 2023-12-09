@@ -24,7 +24,7 @@
         - ReagentId: Fat
           Quantity: 5
   - type: Item
-    size: Tiny
+    size: Small_Wide
   - type: Fixtures
     fixtures:
       fix1:
@@ -666,6 +666,8 @@
   name: smile extract
   description: It's a real panacea. But at what cost?
   components:
+  - type: Item
+    size: Tiny
   - type: Extractable
     grindableSolutionName: food
   - type: FlavorProfile

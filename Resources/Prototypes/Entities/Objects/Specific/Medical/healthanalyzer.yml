@@ -4,6 +4,8 @@
   name: health analyzer
   description: A hand-held body scanner capable of distinguishing vital signs of the subject.
   components:
+  - type: Item
+    size: Small_Wide
   - type: Sprite
     sprite: Objects/Specific/Medical/healthanalyzer.rsi
     state: icon

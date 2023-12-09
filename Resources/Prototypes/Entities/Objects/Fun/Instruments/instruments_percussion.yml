@@ -60,6 +60,9 @@
   - type: Item
     size: Small
     sprite: Objects/Fun/Instruments/microphone.rsi
+    storedSprite:
+      sprite: Objects/Fun/Instruments/microphone.rsi
+      state: storage
 
 - type: entity
   parent: BaseHandheldInstrument

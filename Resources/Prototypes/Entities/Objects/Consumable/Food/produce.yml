@@ -81,6 +81,8 @@
   id: Sugarcane
   parent: ProduceBase
   components:
+  - type: Item
+    storedRotation: -40
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/sugarcane.rsi
   - type: SolutionContainerManager
@@ -367,6 +369,8 @@
   id: FoodCarrot
   description: It's good for the eyes!
   components:
+  - type: Item
+    storedRotation: -40
   - type: FlavorProfile
     flavors:
       - carrot
@@ -446,6 +450,8 @@
   id: FoodLemon
   description: When life gives you lemons, be grateful they aren't limes.
   components:
+  - type: Item
+    size: Small_Wide
   - type: FlavorProfile
     flavors:
       - sour
@@ -478,6 +484,8 @@
   id: FoodLemoon
   description: People says Moon is made out of cheese, but Moon is actually made out of milk and laurel!
   components:
+  - type: Item
+    size: Small_Wide
   - type: FlavorProfile
     flavors:
       - lemoon
@@ -509,6 +517,8 @@
   id: FoodLime
   description: Cures Space Scurvy, allows you to act like a Space Pirate.
   components:
+  - type: Item
+    size: Small_Wide
   - type: FlavorProfile
     flavors:
       - sour
@@ -532,6 +542,8 @@
   id: FoodOrange
   description: Healthy, very orange.
   components:
+  - type: Item
+    size: Small_Wide
   - type: FlavorProfile
     flavors:
       - orange
@@ -554,6 +566,8 @@
   id: FoodPineapple
   description: Mmm, tropical.
   components:
+  - type: Item
+    storedRotation: -45
   - type: FlavorProfile
     flavors:
       - pineapple
@@ -851,6 +865,8 @@
   id: FoodCorn
   description: Needs some butter! And some cooking...
   components:
+  - type: Item
+    size: Small_Wide
   - type: FlavorProfile
     flavors:
       - corn
@@ -965,6 +981,8 @@
   id: FoodMushroom
   description: "Cantharellus Cibarius: These jolly yellow little shrooms sure look tasty!"
   components:
+  - type: Item
+    size: Small_Wide
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1021,6 +1039,8 @@
   id: FoodOnionSlice
   description: Nothing to cry over.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - onion
@@ -1044,6 +1064,8 @@
   id: FoodOnionRedSlice
   description: Purple despite the name.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - onion
@@ -1118,6 +1140,8 @@
   id: FoodAloe
   description: A fragrant plant with soothing properties.
   components:
+  - type: Item
+    storedRotation: -90
   - type: FlavorProfile
     flavors:
       - medicine
@@ -1197,6 +1221,8 @@
   id: FoodAmbrosiaVulgaris
   description: A medicinal plant. May make you feel a little funny.
   components:
+  - type: Item
+    storedRotation: -45
   - type: FlavorProfile
     flavors:
       - leafy
@@ -1236,6 +1262,8 @@
   id: FoodAmbrosiaDeus
   description: An extremely sought-after medicinal plant. May have some funky side effects.
   components:
+  - type: Item
+    storedRotation: -45
   - type: FlavorProfile
     flavors:
       - leafy
@@ -1420,7 +1448,7 @@
   description: Round green object that you can slice and eat.
   components:
   - type: Item
-    size: Small
+    size: Small_Wide
   - type: FlavorProfile
     flavors:
       - watermelon
@@ -1597,6 +1625,8 @@
   parent: FoodInjectableBase
   id: FoodBungoPit
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/bungo.rsi
     state: pit
@@ -1693,7 +1723,7 @@
     - Fruit
 
 - type: entity
-  name: cotton bol
+  name: cotton boll
   description: Moth people's favorite snack, and just as fluffy as them.
   id: CottonBol
   parent: FoodProduceBase

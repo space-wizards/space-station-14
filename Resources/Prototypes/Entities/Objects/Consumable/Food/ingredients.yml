@@ -282,10 +282,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50 # you always need more mayo.
         reagents:
         - ReagentId: Mayo
-          Quantity: 20
+          Quantity: 50
 
 # - type: entity
 #   parent: ReagentPacketBase
@@ -344,6 +344,9 @@
   id: FoodDoughSlice
   description: A slice of dough. Can be cooked into a bun.
   components:
+  - type: Item
+    size: Small
+    storedRotation: -90
   - type: FlavorProfile
     flavors:
       - dough
@@ -372,6 +375,9 @@
   id: FoodDoughCornmealSlice
   description: A slice of cornmeal dough.
   components:
+  - type: Item
+    size: Small
+    storedRotation: -90
   - type: FlavorProfile
     flavors:
       - chalky
@@ -401,6 +407,9 @@
   id: FoodDoughTortillaSlice
   description: A slice of tortilla dough.
   components:
+  - type: Item
+    size: Small
+    storedRotation: -90
   - type: FlavorProfile
     flavors:
       - chalky
@@ -442,6 +451,9 @@
   id: FoodDoughPastryBase
   description: A base for any self-respecting pastry.
   components:
+  - type: Item
+    size: Small
+    storedRotation: -90
   - type: Sprite
     state: dough-pastry-baked
 

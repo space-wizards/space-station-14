@@ -18,6 +18,7 @@
     changeColor: false
   - type: Appearance
   - type: Item
+    storedRotation: 90
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
     paralyzeTime: 2

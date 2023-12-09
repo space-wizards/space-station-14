@@ -158,6 +158,8 @@
   id: WeaponTetherGun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
+    - type: Item
+      size: Small_Wide
     - type: TetherGun
       frequency: 5
       dampingRatio: 4
@@ -195,6 +197,8 @@
   id: WeaponForceGun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
+    - type: Item
+      size: Small_Wide
     - type: ForceGun
       frequency: 15
       dampingRatio: 4
@@ -235,6 +239,8 @@
   parent: BaseItem
   id: WeaponGrapplingGun
   components:
+    - type: Item
+      size: Small_Wide
     - type: AmmoCounter
     - type: GrapplingGun
     - type: Gun

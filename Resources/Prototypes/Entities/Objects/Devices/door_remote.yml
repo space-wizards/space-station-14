@@ -5,6 +5,8 @@
   description: A gadget which can open and bolt doors remotely.
   abstract: true
   components:
+  - type: Item
+    size: Small_Wide
   - type: Sprite
     sprite: Objects/Devices/door_remote.rsi
   - type: Access

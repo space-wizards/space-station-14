@@ -13,6 +13,9 @@
     {
       "name": "bag_folded"
     },
+	{
+      "name": "bag_folded_stored"
+    },
     {
       "name": "label_overlay"
     },

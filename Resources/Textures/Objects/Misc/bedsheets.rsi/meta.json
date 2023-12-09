@@ -109,6 +109,106 @@
     },
     {
       "name": "sheetyellow"
+    },
+    {
+      "name": "sheetNT-storage"
+    },
+    {
+      "name": "sheetUSA-storage"
+    },
+    {
+      "name": "sheetblack-storage"
+    },
+    {
+      "name": "sheetblue-storage"
+    },
+    {
+      "name": "sheetbrown-storage"
+    },
+    {
+      "name": "sheetcaptain-storage"
+    },
+    {
+      "name": "sheetce-storage"
+    },
+    {
+      "name": "sheetcentcom-storage"
+    },
+    {
+      "name": "sheetclown-storage"
+    },
+    {
+      "name": "sheetcmo-storage"
+    },
+    {
+      "name": "sheetcosmos-storage",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "sheetcult-storage"
+    },
+    {
+      "name": "sheetgreen-storage"
+    },
+    {
+      "name": "sheetgrey-storage"
+    },
+    {
+      "name": "sheethop-storage"
+    },
+    {
+      "name": "sheethos-storage"
+    },
+    {
+      "name": "sheetian-storage"
+    },
+    {
+      "name": "sheetmedical-storage"
+    },
+    {
+      "name": "sheetmime-storage"
+    },
+    {
+      "name": "sheetorange-storage"
+    },
+    {
+      "name": "sheetpurple-storage"
+    },
+    {
+      "name": "sheetqm-storage"
+    },
+    {
+      "name": "sheetrainbow-storage"
+    },
+    {
+      "name": "sheetrd-storage"
+    },
+    {
+      "name": "sheetbrigmedic-storage"
+    },
+    {
+      "name": "sheetred-storage"
+    },
+    {
+      "name": "sheetsyndie-storage"
+    },
+    {
+      "name": "sheetwhite-storage"
+    },
+    {
+      "name": "sheetwiz-storage"
+    },
+    {
+      "name": "sheetyellow-storage"
     }
   ]
 }

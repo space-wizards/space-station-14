@@ -21,6 +21,9 @@
     {
       "name": "equipped-BELT",
       "directions": 4
+    },
+	{
+      "name": "storage"
     }
   ]
 }

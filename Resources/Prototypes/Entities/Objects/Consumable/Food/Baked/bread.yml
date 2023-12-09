@@ -6,6 +6,8 @@
   id: FoodBreadBase
   abstract: true
   components:
+  - type: Item
+    size: Small_Wide
   - type: FlavorProfile
     flavors:
       - bread

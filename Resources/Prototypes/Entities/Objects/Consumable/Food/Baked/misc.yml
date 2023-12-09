@@ -448,6 +448,8 @@
   id: FoodBakedDumplings
   description: Average recipe for meat in doughs.
   components:
+  - type: Item
+    size: Small_Wide
   - type: Sprite
     state: dumplings
   - type: SolutionContainerManager
@@ -490,6 +492,8 @@
   id: FoodBakedBrownieBatch
   description: A pan of brownies.
   components:
+  - type: Item
+    size: Small_Wide
   - type: FlavorProfile
     flavors:
       - sweet
@@ -540,6 +544,8 @@
   id: FoodBakedCannabisBrownieBatch
   description: A pan of "special" brownies.
   components:
+  - type: Item
+    size: Small_Wide
   - type: FlavorProfile
     flavors:
       - sweet

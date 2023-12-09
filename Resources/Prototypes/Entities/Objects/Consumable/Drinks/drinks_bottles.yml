@@ -410,6 +410,8 @@
   name: water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
   components:
+  - type: Item
+    size: Small
   - type: SolutionContainerManager
     solutions:
       drink:

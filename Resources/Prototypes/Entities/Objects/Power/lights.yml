@@ -69,6 +69,8 @@
   id: BaseLightTube
   abstract: true
   components:
+  - type: Item
+    storedRotation: -45 # Light tubes need to be changed wholesale to a non diagonal sprite because storedSprite can't handle state changes.
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
   - type: LightBulb
@@ -83,6 +85,8 @@
   id: LightBulb
   description: A light bulb.
   components:
+  - type: Item
+    size: Tiny
   - type: LightBulb
     bulb: Bulb
     color: "#FFD1A3" # 4000K color temp
@@ -97,6 +101,8 @@
   id: LightBulbBroken
   description: A light bulb.
   components:
+  - type: Item
+    size: Tiny
   - type: LightBulb
     startingState: Broken
     bulb: Bulb

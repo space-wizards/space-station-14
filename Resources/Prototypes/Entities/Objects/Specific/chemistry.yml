@@ -270,6 +270,7 @@
   - type: Spillable
     solution: injector
   - type: Item
+    storedRotation: 90
     sprite: Objects/Specific/Chemistry/dropper.rsi
   - type: Appearance
   - type: SolutionContainerVisuals
@@ -474,8 +475,8 @@
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
     state: pill_canister
   - type: Item
-    sprite: Objects/Specific/Chemistry/pills_canister.rsi
     size: Small
+    sprite: Objects/Specific/Chemistry/pills_canister.rsi
   - type: Tag
     tags:
       - PillCanister

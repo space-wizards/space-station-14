@@ -400,6 +400,8 @@
   name: brownie
   description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     state: mre-brownie

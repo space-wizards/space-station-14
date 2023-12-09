@@ -56,6 +56,7 @@
         visible: false
         map: [ "light" ]
   - type: Item
+    storedRotation: 90
     sprite: Objects/Tools/flashlight.rsi
   - type: PointLight
     enabled: false

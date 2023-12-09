@@ -1,20 +1,5 @@
 - type: entity
   parent: BaseItem
-  id: Emag
-  name: cryptographic sequencer
-  description: The all-in-one hacking solution. The thinking man's lockpick. The iconic EMAG.
-  components:
-  - type: Emag
-  - type: LimitedCharges
-  - type: AutoRecharge
-  - type: Sprite
-    sprite: Objects/Tools/emag.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Tools/emag.rsi
-
-- type: entity
-  parent: BaseItem
   id: EmagUnlimited
   suffix: Unlimited
   name: cryptographic sequencer
@@ -25,4 +10,13 @@
     sprite: Objects/Tools/emag.rsi
     state: icon
   - type: Item
+    storedRotation: -90
     sprite: Objects/Tools/emag.rsi
+
+- type: entity
+  parent: EmagUnlimited
+  id: Emag
+  suffix: Limited
+  components:
+  - type: LimitedCharges
+  - type: AutoRecharge

@@ -4,6 +4,8 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: Item
+    size: Small_Wide
   - type: Tag
     tags:
       - SpeedLoaderCap

@@ -25,12 +25,15 @@
   id: FoodFrozenSandwich
   description: Portable ice-cream in its own packaging.
   components:
+  - type: Item
+    size: Small
+    storedRotation: -90
   - type: Sprite
     state: sandwich
 
 - type: entity
   name: strawberry ice-cream sandwich
-  parent: FoodFrozenBase
+  parent: FoodFrozenSandwich
   id: FoodFrozenSandwichStrawberry
   description: Portable ice-cream in its own packaging of the strawberry variety.
   components:
@@ -61,6 +64,9 @@
   id: FoodFrozenCornuto
   description: A Neapolitan vanilla and chocolate ice-cream cone. It menaces with a sprinkling of caramelized nuts.
   components:
+  - type: Item
+    size: Small
+    storedRotation: -44
   - type: Sprite
     state: cornuto
   - type: SolutionContainerManager

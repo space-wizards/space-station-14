@@ -7,6 +7,9 @@
   - type: Sprite
     sprite: Objects/Devices/jammer.rsi
     state: jammer
+  - type: Item
+    storedRotation: -90
+    sprite: Objects/Devices/jammer.rsi
   - type: RadioJammer
   - type: PowerCellSlot
     cellSlotId: cell_slot
@@ -18,3 +21,6 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
+  - type: Tag
+    tags:
+    - Sidearm

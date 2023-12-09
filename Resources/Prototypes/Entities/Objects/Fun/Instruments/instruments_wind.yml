@@ -62,7 +62,7 @@
     sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
   - type: Item
-    size: Small
+    size: Small_Wide
     sprite: Objects/Fun/Instruments/harmonica.rsi
   - type: Tag
     tags:
@@ -171,7 +171,7 @@
     sprite: Objects/Fun/Instruments/bagpipes.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: Large
     sprite: Objects/Fun/Instruments/bagpipes.rsi
   - type: Tag
     tags:

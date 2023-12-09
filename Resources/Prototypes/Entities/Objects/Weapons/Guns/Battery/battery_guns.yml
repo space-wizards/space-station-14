@@ -37,7 +37,7 @@
   abstract: true
   components:
   - type: Item
-    size: Small
+    size: Small_Wide
   - type: Tag
     tags:
     - Sidearm

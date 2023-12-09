@@ -18,6 +18,7 @@
     equippedPrefix: unlit
   - type: Item
     size: Tiny
+    storedRotation: -90
   - type: Construction
     graph: smokeableCigarette
     node: cigarette
@@ -42,6 +43,7 @@
     equippedPrefix: unlit
   - type: Item
     size: Tiny
+    storedRotation: -90
   - type: Construction
     graph: smokeableCigarette
     node: cigarette

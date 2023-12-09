@@ -7,6 +7,9 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/backgammon.rsi
     state: board
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: TabletopGame
     boardName: tabletop-backgammon-board-name
     size: 550, 410

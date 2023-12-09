@@ -102,6 +102,8 @@
   name: WT550 magazine (.35 auto top-mounted)
   parent: BaseItem
   components:
+  - type: Item
+    size: Small_Wide
   - type: Tag
     tags:
       - MagazinePistolSubMachineGunTopMounted

@@ -6,6 +6,8 @@
   id: FoodTacoShell
   description: A taco shell, easy to hold, but falls on its side when put down.
   components:
+  - type: Item
+    size: Tiny
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
@@ -43,6 +45,7 @@
         - ReagentId: Vitamin
           Quantity: 4
   - type: Item
+    size: Tiny
     sprite: Objects/Consumable/Food/taco.rsi
   - type: Tag
     tags:
@@ -154,6 +157,8 @@
   id: FoodMealSoftTaco
   description: Take a bite!
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - cheesy

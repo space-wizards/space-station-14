@@ -12,7 +12,7 @@
     size: Normal
   - type: Storage
     grid:
-    - 0,0,7,1
+    - 0,0,1,7
   - type: StorageFill
     contents:
     - id: ClothingNeckGoldmedal

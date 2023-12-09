@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created by EmoGarbage",
+  "copyright": "Created by EmoGarbage, storage by IProduceWidgets",
   "states": [
     {
       "name": "icon"
@@ -17,6 +17,9 @@
     {
       "name": "inhand-right",
       "directions": 4
+    },
+    {
+      "name": "storage"
     }
   ]
 }

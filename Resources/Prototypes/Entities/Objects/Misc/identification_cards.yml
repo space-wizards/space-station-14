@@ -13,6 +13,7 @@
     sprite: Objects/Misc/id_cards.rsi
   - type: Item
     size: Small
+    storedRotation: -90
     heldPrefix: default
   - type: Access
   - type: IdCard
@@ -459,12 +460,84 @@
 - type: entity
   parent: CentcomIDCard
   id: ERTLeaderIDCard
-  name: ERT ID card
+  name: ERT Leader ID card
   components:
   - type: Sprite
     layers:
     - state: gold
-    - state: ert_commander # we have the sprites but don't need individual ID entities for now.
+    - state: ert_commander 
+  - type: IdCard
+    jobTitle: ERT Company Commander
+  - type: Item
+    heldPrefix: gold
+
+- type: entity
+  parent: CentcomIDCard
+  id: ERTChaplainIDCard
+  name: ERT Chaplain ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: ert_chaplain # we have the sprite for the id but dont have chaplain ERT equipment for now.
+  - type: IdCard
+    jobTitle: ERT Soul Officer
+  - type: Item
+    heldPrefix: gold
+
+- type: entity
+  parent: CentcomIDCard
+  id: ERTEngineerIDCard
+  name: ERT Engineer ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: ert_engineer
+  - type: IdCard
+    jobTitle: ERT Field Engineer
+  - type: Item
+    heldPrefix: gold
+
+- type: entity
+  parent: CentcomIDCard
+  id: ERTJanitorIDCard
+  name: ERT Janitor ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: ert_janitor
+  - type: IdCard
+    jobTitle: ERT Custodian
+  - type: Item
+    heldPrefix: gold
+
+- type: entity
+  parent: CentcomIDCard
+  id: ERTMedicIDCard
+  name: ERT Medic ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: ert_medic
+  - type: IdCard
+    jobTitle: ERT Medical Doctor
+  - type: Item
+    heldPrefix: gold
+
+- type: entity
+  parent: CentcomIDCard
+  id: ERTSecurityIDCard
+  name: ERT Security ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: ert_security
+  - type: IdCard
+    jobTitle: ERT Field Officer
   - type: Item
     heldPrefix: gold
 
@@ -713,10 +786,11 @@
   components:
   - type: Sprite
     layers:
-    - state: gold
-    - state: idcentcom
+    - state: centcom
   - type: Item
-    heldPrefix: gold
+    heldPrefix: blue
+  - type: IdCard
+    jobTitle: Centcom Quarantine Officer
 
 
 - type: entity

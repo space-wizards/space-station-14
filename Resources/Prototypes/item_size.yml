@@ -14,6 +14,13 @@
   defaultShape:
   - 0,0,0,1
 
+- type: itemSize
+  id: Small_Wide
+  weight: 2
+  name: item-component-size-Small
+  defaultShape:
+  - 0,0,1,0
+
 # Items that can fit inside of a standard bag.
 - type: itemSize
   id: Normal

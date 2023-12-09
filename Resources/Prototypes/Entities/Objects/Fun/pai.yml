@@ -105,6 +105,8 @@
   name: potato artificial intelligence
   description: It's a potato. You forced it to be sentient, you monster.
   components:
+  - type: Item
+    size: Small_Wide
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
     layers:

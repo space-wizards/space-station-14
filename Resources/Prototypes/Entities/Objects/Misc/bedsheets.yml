@@ -12,8 +12,6 @@
   - type: Sprite
     sprite: Objects/Misc/bedsheets.rsi
     noRot: true
-  - type: Item
-    size: Small
   - type: Clothing
     quickEquip: true
     slots:
@@ -30,6 +28,12 @@
     state: sheetblack
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/black.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetblack-storage
 
 - type: entity
   id: BedsheetBlue
@@ -40,6 +44,12 @@
     state: sheetblue
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/blue.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetblue-storage
 
 - type: entity
   id: BedsheetBrown
@@ -50,6 +60,12 @@
     state: sheetbrown
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/brown.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetbrown-storage
 
 - type: entity
   id: BedsheetCaptain
@@ -61,6 +77,12 @@
     state: sheetcaptain
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/captain.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetcaptain-storage
 
 - type: entity
   id: BedsheetCE
@@ -72,6 +94,12 @@
     state: sheetce
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/ce.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetce-storage
 
 - type: entity
   id: BedsheetCentcom
@@ -83,6 +111,12 @@
     state: sheetcentcom
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/centcom.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetcentcom-storage
 
 - type: entity
   id: BedsheetClown
@@ -94,6 +128,12 @@
     state: sheetclown
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/rainbow.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetclown-storage
 
 - type: entity
   id: BedsheetCMO
@@ -105,6 +145,12 @@
     state: sheetcmo
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/cmo.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetcmo-storage
 
 - type: entity
   id: BedsheetCosmos
@@ -116,6 +162,12 @@
     state: sheetcosmos
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/cosmos.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetcosmos-storage
 
 - type: entity
   id: BedsheetCult
@@ -127,6 +179,12 @@
     state: sheetcult
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/cult.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetcult-storage
 
 - type: entity
   id: BedsheetGreen
@@ -137,6 +195,12 @@
     state: sheetgreen
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/green.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetgreen-storage
 
 - type: entity
   id: BedsheetGrey
@@ -147,6 +211,12 @@
     state: sheetgrey
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/grey.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetgrey-storage
 
 - type: entity
   id: BedsheetHOP
@@ -158,6 +228,12 @@
     state: sheethop
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/hop.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheethop-storage
 
 - type: entity
   id: BedsheetHOS
@@ -169,6 +245,12 @@
     state: sheethos
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/hos.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheethos-storage
 
 - type: entity
   id: BedsheetIan
@@ -179,6 +261,12 @@
     state: sheetian
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/ian.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetian-storage
 
 - type: entity
   id: BedsheetMedical
@@ -190,6 +278,12 @@
     state: sheetmedical
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/medical.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetmedical-storage
 
 - type: entity
   id: BedsheetMime
@@ -201,6 +295,12 @@
     state: sheetmime
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/mime.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetmime-storage
 
 - type: entity
   id: BedsheetNT
@@ -212,6 +312,12 @@
     state: sheetNT
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/NT.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetNT-storage
 
 - type: entity
   id: BedsheetOrange
@@ -222,6 +328,12 @@
     state: sheetorange
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/orange.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetorange-storage
 
 - type: entity
   id: BedsheetPurple
@@ -232,6 +344,12 @@
     state: sheetpurple
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/purple.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetpurple-storage
 
 - type: entity
   id: BedsheetQM
@@ -242,6 +360,12 @@
     state: sheetqm
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/qm.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetqm-storage
 
 - type: entity
   id: BedsheetRainbow
@@ -252,6 +376,12 @@
     state: sheetrainbow
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/rainbow.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetrainbow-storage
 
 - type: entity
   id: BedsheetRD
@@ -263,6 +393,12 @@
     state: sheetrd
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/rd.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetrd-storage
 
 - type: entity
   id: BedsheetBrigmedic
@@ -274,6 +410,12 @@
     state: sheetbrigmedic
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/brigmedic.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetbrigmedic-storage
 
 - type: entity
   id: BedsheetRed
@@ -284,6 +426,12 @@
     state: sheetred
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/red.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetred-storage
 
 - type: entity
   id: BedsheetSyndie
@@ -295,6 +443,12 @@
     state: sheetsyndie
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/syndie.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetsyndie-storage
 
 - type: entity
   id: BedsheetUSA
@@ -305,6 +459,12 @@
     state: sheetUSA
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/USA.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetUSA-storage
 
 - type: entity
   id: BedsheetWhite
@@ -319,6 +479,12 @@
     state: sheetwhite
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/white.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetwhite-storage
 
 - type: entity
   id: BedsheetWiz
@@ -330,6 +496,12 @@
     state: sheetwiz
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/wiz.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetwiz-storage
 
 - type: entity
   id: BedsheetYellow
@@ -340,3 +512,9 @@
     state: sheetyellow
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/yellow.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/bedsheets.rsi
+    storedSprite:
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetyellow-storage

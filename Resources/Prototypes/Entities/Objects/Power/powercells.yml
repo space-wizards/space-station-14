@@ -3,6 +3,8 @@
   abstract: true
   parent: BaseItem
   components:
+  - type: Item
+    size: Small_Wide
   - type: Battery
     pricePerJoule: 0.15
   - type: PowerCell
@@ -38,6 +40,8 @@
   id: PowerCellPotato
   parent: BasePowerCell
   components:
+  - type: Item
+    size: Small
   - type: Sprite
     layers:
     - state: potato

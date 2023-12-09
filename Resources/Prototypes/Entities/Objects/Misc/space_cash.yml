@@ -4,6 +4,8 @@
   name: spesos
   description: You gotta have money.
   components:
+  - type: Item
+    size: Small_Wide
   - type: Material
   - type: PhysicalComposition
     materialComposition:

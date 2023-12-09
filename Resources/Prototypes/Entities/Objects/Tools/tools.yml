@@ -203,6 +203,8 @@
       shader: unshaded
   - type: Item
     size: Small
+    shape:
+    - 0,0,0,0
   - type: Clothing
     sprite: Objects/Tools/multitool.rsi
     quickEquip: false
@@ -252,6 +254,8 @@
           shader: unshaded
     - type: Item
       size: Small
+      shape:
+      - 0,0,0,0
     - type: Clothing
       sprite: Objects/Tools/network_configurator.rsi
       quickEquip: false
@@ -527,8 +531,11 @@
     sprite: Objects/Tools/rolling_pin.rsi
     state: icon
   - type: Item
-    sprite: Objects/Tools/rolling_pin.rsi
     size: Small
+    sprite: Objects/Tools/rolling_pin.rsi
+    storedSprite:
+      sprite: Objects/Tools/rolling_pin.rsi
+      state: storage
   - type: Clothing
     sprite: Objects/Tools/rolling_pin.rsi
     quickEquip: false

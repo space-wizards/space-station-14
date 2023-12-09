@@ -4,6 +4,8 @@
   name: anomaly scanner
   description: A hand-held scanner built to collect information on various anomalous objects.
   components:
+  - type: Item
+    size: Small_Wide
   - type: Sprite
     sprite: Objects/Specific/Research/anomalyscanner.rsi
     state: icon

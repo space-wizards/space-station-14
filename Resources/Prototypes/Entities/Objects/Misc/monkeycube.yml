@@ -59,6 +59,8 @@
   id: SyndicateSpongeWrapped
   description: Unwrap this to get a monkey cube.
   components:
+  - type: Item
+    size: Tiny
   - type: SpawnItemsOnUse
     items:
       - id: SyndicateSponge
@@ -67,8 +69,6 @@
   - type: Sprite
     sprite: Objects/Misc/monkeycube.rsi
     state: wrapper
-  - type: Item
-    size: Tiny
   - type: Tag
     tags:
     - MonkeyCube

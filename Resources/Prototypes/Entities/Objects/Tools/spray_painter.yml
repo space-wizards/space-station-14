@@ -8,6 +8,7 @@
       sprite: Objects/Tools/spray_painter.rsi
       state: spray_painter
     - type: Item
+      storedRotation: -90
       sprite: Objects/Tools/spray_painter.rsi
     - type: UserInterface
       interfaces:

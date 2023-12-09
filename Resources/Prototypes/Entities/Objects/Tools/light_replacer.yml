@@ -8,6 +8,9 @@
     sprite: Objects/Specific/Janitorial/light_replacer.rsi
     state: icon
   - type: Item
+    shape:
+    - 0,0,2,0
+    - 1,1,1,1
     sprite: Objects/Specific/Janitorial/light_replacer.rsi
   - type: LightReplacer
     contents:

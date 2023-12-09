@@ -18,6 +18,9 @@
       visible: false
   - type: Item
     size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
     sprite: Objects/Tools/welder.rsi
   - type: ToggleableLightVisuals
     spriteLayer: flame
@@ -142,7 +145,10 @@
   - type: Sprite
     sprite: Objects/Tools/welder_mini.rsi
   - type: Item
-    size: Tiny
+    size: Small
+    shape:
+    - 0,0,0,1
+    storedRotation: 90
     sprite: Objects/Tools/welder_mini.rsi
   - type: RefillableSolution
     solution: Welder

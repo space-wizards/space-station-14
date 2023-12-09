@@ -10,7 +10,7 @@
   - type: Food
     requiresSpecialDigestion: true
   - type: Item
-    size: Small
+    size: Small_Wide
   - type: SolutionContainerManager
     solutions:
       food:

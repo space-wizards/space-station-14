@@ -23,6 +23,7 @@
       path: /Audio/Items/wirecutter.ogg
     speed: 0.05
   - type: Item
+    storedRotation: 90
     sprite: Objects/Tools/Cowtools/haycutters.rsi
 
 - type: entity
@@ -35,6 +36,7 @@
     sprite: Objects/Tools/Cowtools/moodriver.rsi
     state: moodriver
   - type: Item
+    storedRotation: -45
     sprite: Objects/Tools/Cowtools/moodriver.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
@@ -59,6 +61,7 @@
     sprite: Objects/Tools/Cowtools/wronch.rsi
     state: wronch
   - type: Item
+    storedRotation: -45
     sprite: Objects/Tools/Cowtools/wronch.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
@@ -128,6 +131,7 @@
     sprite: Objects/Tools/Cowtools/cowelder.rsi
   - type: Item
     size: Small
+    storedRotation: 90
     sprite: Objects/Tools/Cowtools/cowelder.rsi
   - type: Tool
     speed: 0.05
@@ -153,6 +157,10 @@
     - key: enum.GasAnalyzerUiKey.Key
       type: GasAnalyzerBoundUserInterface
   - type: Appearance
+  - type: Item
+    size: Small
+    storedRotation: -90
+    sprite: Objects/Tools/Cowtools/milkalyzer.rsi
 
 - type: entity
   name: cow toolbox

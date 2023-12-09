@@ -21,6 +21,7 @@
     sprite: Objects/Specific/Medical/Surgery/cautery.rsi
     state: cautery
   - type: Item
+    storedRotation: -90
     sprite: Objects/Specific/Medical/Surgery/cautery.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
@@ -42,6 +43,7 @@
     sprite: Objects/Specific/Medical/Surgery/drill.rsi
     state: drill
   - type: Item
+    storedRotation: -90
     sprite: Objects/Specific/Medical/Surgery/drill.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
@@ -68,6 +70,7 @@
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     state: scalpel
   - type: Item
+    storedRotation: -90
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
@@ -127,6 +130,7 @@
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
     state: retractor
   - type: Item
+    storedRotation: -90
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
   - type: ItemCooldown
 
@@ -163,6 +167,7 @@
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
     state: saw
   - type: Item
+    storedRotation: -90
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
   - type: ItemCooldown
   - type: Tool

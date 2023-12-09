@@ -1,8 +1,9 @@
 - type: entity
-  name: handcuffs
+  name: base_handcuffs
   description: Used to detain criminals and other assholes.
-  id: Handcuffs
+  id: BaseHandcuffs
   parent: BaseItem
+  abstract: true
   components:
   - type: Item
     size: Small
@@ -26,11 +27,24 @@
     - Security
 
 - type: entity
+  name: handcuffs
+  id: Handcuffs
+  parent: BaseHandcuffs
+  components:
+  - type: Item
+    size: Small
+    storedRotation: 90
+  
+
+- type: entity
   name: makeshift handcuffs
   description: Homemade handcuffs crafted from spare cables.
   id: Cablecuffs
-  parent: Handcuffs
+  parent: BaseHandcuffs
   components:
+  - type: Item
+    size: Small
+    storedRotation: -90
   - type: Handcuff
     breakoutTime: 15
     cuffedRSI: Objects/Misc/cablecuffs.rsi
@@ -60,8 +74,11 @@
   name: zipties
   description: Tough single-use plastic zipties, ideal for restraining rowdy prisoners.
   id: Zipties
-  parent: Handcuffs
+  parent: BaseHandcuffs
   components:
+  - type: Item
+    size: Small
+    storedRotation: -90
   - type: Handcuff
     breakoutTime: 20  # halfway between improvised cablecuffs and metal ones
     cuffedRSI: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine
@@ -118,7 +135,7 @@
     color: forestgreen
 
 - type: entity
-  parent: Handcuffs
+  parent: BaseHandcuffs
   id: ClothingOuterStraightjacket
   name: straitjacket
   description: Used to restrain those who may cause harm to themselves or others.

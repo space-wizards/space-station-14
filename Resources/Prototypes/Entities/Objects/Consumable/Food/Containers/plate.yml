@@ -12,6 +12,9 @@
   id: FoodPlate
   description: A large plate, excellent for bread.
   components:
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate
@@ -55,6 +58,9 @@
   id: FoodPlateTrash
   description: A broken plate. Useless.
   components:
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-trash
@@ -99,6 +105,9 @@
   parent: FoodPlateTrash
   id: FoodPlateSmallTrash
   components:
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-trash
@@ -111,6 +120,9 @@
   id: FoodPlatePlastic
   description: A large blue plastic plate, excellent for a birthday cake.
   components:
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-plastic
@@ -124,6 +136,9 @@
   id: FoodPlateSmallPlastic
   description: A blue plastic plate, excellent for slices of birthday cake.
   components:
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-plastic
@@ -139,6 +154,9 @@
   id: FoodPlateTin
   description: A cheap foil tin for pies.
   components:
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: tin

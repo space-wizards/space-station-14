@@ -157,6 +157,8 @@
   name: packet of tower cap spores
   id: TowercapSeeds
   components:
+    - type: Item
+      size: Small_Wide
     - type: Seed
       seedId: towercap
     - type: Sprite
@@ -167,6 +169,8 @@
   name: packet of steel cap spores
   id: SteelcapSeeds
   components:
+    - type: Item
+      size: Small_Wide
     - type: Seed
       seedId: steelcap
     - type: Sprite
@@ -237,6 +241,8 @@
   name: packet of chanterelle spores
   id: ChanterelleSeeds
   components:
+    - type: Item
+      size: Small_Wide
     - type: Seed
       seedId: chanterelle
     - type: Sprite
@@ -346,6 +352,8 @@
   description: "Also known as reishi."
   id: LingzhiSeeds
   components:
+    - type: Item
+      size: Small_Wide
     - type: Seed
       seedId: lingzhi
     - type: Sprite
@@ -390,6 +398,8 @@
   description: "The iconic, extremely deadly mushroom to be used for purely ornamental purposes."
   id: FlyAmanitaSeeds
   components:
+    - type: Item
+      size: Small_Wide
     - type: Seed
       seedId: flyAmanita
     - type: Sprite
