@@ -1,88 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Gauze is now more effective at treating slash and piercing damage.,
-    type: Tweak}
-  id: 4784
-  time: '2023-09-09T18:32:00.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: Fingerless gloves are now available in the SecDrobe, type: Add}
-  id: 4785
-  time: '2023-09-09T18:59:03.0000000+00:00'
-- author: DrTeaSpoon
-  changes:
-  - {message: Crossing plants may now combine their produced chemicals., type: Tweak}
-  id: 4786
-  time: '2023-09-09T21:54:37.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed action ordering., type: Fix}
-  - {message: Fixed not being able to wake up., type: Fix}
-  - {message: Fixed zombies not being able to toggle combat mode., type: Fix}
-  - {message: Fixed getting duplicate crit actions., type: Fix}
-  - {message: Fixed the mime not getting the invisible wall action., type: Fix}
-  id: 4787
-  time: '2023-09-09T23:14:17.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not being able to use vehicle horns., type: Fix}
-  id: 4788
-  time: '2023-09-09T23:39:29.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Monkeys can now bump doors open and strip mobs like people can., type: Tweak}
-  id: 4789
-  time: '2023-09-10T02:51:51.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Ian/Old Ian/Lisa yield corgi hide when butchered, which can be worn
-      as a hat or crafted into an ian suit.', type: Add}
-  id: 4790
-  time: '2023-09-10T03:04:33.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Added cobweb decorations for mappers to utilize., type: Add}
-  id: 4791
-  time: '2023-09-10T03:37:56.0000000+00:00'
-- author: arimah
-  changes:
-  - {message: Particle Accelerators can now be constructed again, type: Fix}
-  id: 4792
-  time: '2023-09-10T03:42:42.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Revert a PR causing container issues., type: Fix}
-  id: 4793
-  time: '2023-09-10T11:46:36.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Replays now record ghost chat., type: Fix}
-  id: 4794
-  time: '2023-09-10T11:49:45.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: Cognizine now works on monkeys., type: Fix}
-  - {message: Fixed Cognizine not working on player-controlled animals., type: Fix}
-  id: 4795
-  time: '2023-09-10T20:21:54.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: All pda's with built in medical scanners now take one second to scan.,
-    type: Tweak}
-  id: 4796
-  time: '2023-09-10T23:01:05.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Made tooltips open faster and anchor bottom-left to mouse cursor instead
-      of top-left., type: Tweak}
-  id: 4797
-  time: '2023-09-11T03:53:36.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix handheld crew monitor., type: Fix}
-  id: 4798
-  time: '2023-09-11T05:01:54.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix ghost warps., type: Fix}
@@ -2901,3 +2817,90 @@ Entries:
       just when worn.', type: Add}
   id: 5283
   time: '2023-12-07T03:41:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed explosion resistance being ignored., type: Fix}
+  id: 5284
+  time: '2023-12-07T18:51:46.0000000+00:00'
+- author: Aexxie
+  changes:
+  - {message: Paramed no longer has external access., type: Remove}
+  id: 5285
+  time: '2023-12-07T23:27:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Hovering over an item in storage now shows a tooltip with the name.,
+    type: Add}
+  id: 5286
+  time: '2023-12-08T02:38:07.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds a bed for the psychologist's office., type: Add}
+  id: 5287
+  time: '2023-12-08T05:24:35.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Chemical explosions are powerful again., type: Tweak}
+  id: 5288
+  time: '2023-12-08T10:58:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'V and shift-V can now be used to open the bag and belt, respectively.',
+    type: Add}
+  - {message: Interacting with a storage item now has context-sensitive logic based
+      on whether or not the window is open or focused., type: Fix}
+  id: 5289
+  time: '2023-12-08T18:43:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'When viewing a storage container, the item that will be removed via
+      smart-equip is now marked with a small star icon.', type: Add}
+  id: 5290
+  time: '2023-12-08T18:43:58.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Rat king and his servants properly heal from miasma., type: Fix}
+  - {message: Rat king no longer rummages from an infinite distance., type: Fix}
+  - {message: Rat king generates more miasma to fill larger rooms., type: Tweak}
+  id: 5291
+  time: '2023-12-08T18:46:28.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Command staff has brig access., type: Tweak}
+  id: 5292
+  time: '2023-12-08T18:50:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Removed upgrades from the anomaly vessel., type: Remove}
+  - {message: 'Added the experimental anomaly vessel, which researches twice as fast
+      at the cost of being radioactive.', type: Add}
+  id: 5293
+  time: '2023-12-08T18:50:41.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Opening the chat channel selector works again., type: Fix}
+  id: 5294
+  time: '2023-12-09T02:15:07.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Some knives now deal some damage when thrown, type: Add}
+  id: 5295
+  time: '2023-12-09T02:16:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed a bug where the audio slider can get saved at 50% audio with no
+      sound. Unfortunately this means your audio sliders will reset., type: Fix}
+  - {message: Fix crash on options menu while game sim not running., type: Fix}
+  id: 5296
+  time: '2023-12-09T03:03:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Radiation now works again., type: Fix}
+  id: 5297
+  time: '2023-12-09T04:10:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reduced MIDI audio range so it's easier to reduce the volume to a comfortable
+      level., type: Tweak}
+  id: 5298
+  time: '2023-12-09T04:18:15.0000000+00:00'
