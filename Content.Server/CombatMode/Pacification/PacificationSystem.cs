@@ -1,17 +1,16 @@
 using Content.Server.Damage.Components;
-using Content.Server.Destructible;
-using Content.Server.Destructible.Thresholds;
-using Content.Server.Destructible.Thresholds.Behaviors;
-using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Server.Fluids.Components;
+using Content.Server.Item;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
+using Content.Shared.Slippery;
 using Content.Shared.Throwing;
-using Robust.Shared.Player;
 
 namespace Content.Server.CombatMode.Pacification;
 
@@ -27,33 +26,32 @@ public sealed class PacificationSystem : SharedPacificationSystem
         SubscribeLocalEvent<PacifiedComponent, BeforeThrowEvent>(OnBeforeThrow);
     }
 
-    public void OnBeforeThrow(EntityUid uid, PacifiedComponent component, BeforeThrowEvent args)
+    private void OnBeforeThrow(EntityUid playerUid, PacifiedComponent component, BeforeThrowEvent args)
     {
-        args.Handled = true;
-        _popup.PopupEntity(Loc.GetString("pacified-cannot-throw"), args.PlayerUid, args.PlayerUid);
-    }
-
-    /// <summary>
-    /// Returns true if the given entity is considered harmful when thrown.
-    /// </summary>
-    public bool IsEntityFragile(EntityUid uid, int fragileDamageThreshold)
-    {
-        // It damages entities on hit.
-        if (HasComp<DamageOnHitComponent>(uid))
-            return true;
-
-        // It can be spilled easily and has something to spill.
-        if (HasComp<SpillableComponent>(uid)
-            && TryComp<OpenableComponent>(uid, out var openable)
-            && !_openable.IsClosed(uid, null, openable)
-            && _solutionContainerSystem.PercentFull(uid) > 0)
-            return true;
-
-        // It might be made of non-reinforced glass.
-        if (TryComp(uid, out DamageableComponent? damageableComponent)
-            && damageableComponent.DamageModifierSetId == "Glass")
-            return true;
-
-        return false;
+        var thrownItem = args.ItemUid;
+        var itemName = Identity.Entity(thrownItem, EntityManager);
+        // Check whether the item being thrown is excluded by the blacklist:
+        if (component.ThrowBlacklist.IsValid(thrownItem, EntityManager))
+        {
+            args.Handled = true;
+            // Tell the player why they can’t throw stuff:
+            var cannotThrowMessage = "pacified-cannot-throw";
+            if (HasComp<SlipperyComponent>(thrownItem))
+                cannotThrowMessage = "pacified-cannot-throw-slippery";
+            _popup.PopupEntity(Loc.GetString(cannotThrowMessage, ("projectile", itemName)), playerUid, playerUid);
+        }
+        // Or whether it can be spilled easily and has something to spill.
+        else if (HasComp<SpillableComponent>(thrownItem)
+                 && TryComp<OpenableComponent>(thrownItem, out var openable)
+                 && !_openable.IsClosed(thrownItem, null, openable)
+                 && _solutionContainerSystem.PercentFull(thrownItem) > 0)
+        {
+            // Further, check that the item does not contain harmful reagents:
+            /* TODO: I guess this should call out to ReactiveSystem, but there is no method that checks whether a
+                     reaction *can* take place. As it stands, anything that can spill is forbidden. */
+            // DoACheck();
+            args.Handled = true;
+            _popup.PopupEntity(Loc.GetString("pacified-cannot-throw-spill", ("projectile", itemName)), playerUid, playerUid);
+        }
     }
 }

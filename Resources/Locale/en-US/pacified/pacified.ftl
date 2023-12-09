@@ -3,8 +3,5 @@
 
 # With projectiles:
 pacified-cannot-throw = You can't bring yourself to throw { THE($projectile) }, that could hurt someone!
-
-# With melee weapons:
-pacified-cannot-attack = You try to hit { THE($target) } stop yourself: That could hurt someone!
-
-# With guns
+# With liquid-spilling projectiles:
+pacified-cannot-throw-spill = You can't possibly throw { THE($projectile) }, that could spill nasty stuff on someone!
