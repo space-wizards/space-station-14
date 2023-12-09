@@ -75,7 +75,7 @@ public sealed partial class ContentAudioSystem
 
     private void AmbienceCVarChanged(float obj)
     {
-        _volumeSlider = obj;
+        _volumeSlider = SharedAudioSystem.GainToVolume(obj);
 
         if (_ambientMusicStream != null && _musicProto != null)
         {
