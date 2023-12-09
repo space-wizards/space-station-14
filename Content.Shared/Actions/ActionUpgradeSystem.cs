@@ -29,30 +29,27 @@ public sealed class ActionUpgradeSystem : EntitySystem
         component.Level = args.NewLevel;
         var originalContainer = actionComp.Container;
         var originalAttachedEntity = actionComp.AttachedEntity;
-        // TODO: Replace current action with new one
-        // 1 - check original action container (either by system or getting it)
-        // 2 - if container, remove provided action, else remove action
-        // 4 - add this to container
 
-        // TODO: Looks like action (fireball 2) was added to the container (fireball spellbook) succesfully, but doesn't get added to entity (player)
         _actionContainer.RemoveAction(uid, actionComp);
 
+        EntityUid? upgradedActionId = null;
         if (originalContainer != null
             && TryComp<ActionsContainerComponent>(originalContainer.Value, out var actionContainerComp))
         {
-            _actionContainer.AddAction(originalContainer.Value, newActionProto, actionContainerComp);
+            // THIS WORKED!!!!!!!
+            upgradedActionId = _actionContainer.AddAction(originalContainer.Value, newActionProto, actionContainerComp);
+            _actions.GrantContainedActions(originalContainer.Value, originalContainer.Value);
         }
         else if (originalAttachedEntity != null)
         {
-            _actionContainer.AddAction(originalAttachedEntity.Value, newActionProto);
+            upgradedActionId = _actionContainer.AddAction(originalAttachedEntity.Value, newActionProto);
         }
-
-        // 5 - grant actions if externally granted
 
         // TODO: Preserve ordering of actions
         //      Step through removing an action to see how that works on UI side
 
         // TODO: Delete old action so it's not just lingering in nullspace?
+        //  What about reverting the action?
         // _entityManager.DeleteEntity(uid);
     }
 
