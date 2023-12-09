@@ -80,6 +80,7 @@
       types:
         Slash: 6.5
   - type: Item
+    storedRotation: -45
     size: Small
   - type: Tag
     tags:

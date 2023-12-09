@@ -40,6 +40,7 @@
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
     state: icon
   - type: Item
+    storedRotation: -45
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
   - type: GuideHelp
     guides:
@@ -90,6 +91,7 @@
       types:
         Slash: 10
   - type: Item
+    storedRotation: -45
     sprite: Objects/Weapons/Melee/combat_knife.rsi
   - type: DisarmMalus
     malus: 0.225
@@ -121,6 +123,7 @@
       types:
         Slash: 15
   - type: Item
+    storedRotation: -55
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
 
 - type: entity
