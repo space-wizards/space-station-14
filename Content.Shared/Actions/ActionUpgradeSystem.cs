@@ -56,6 +56,25 @@ public sealed class ActionUpgradeSystem : EntitySystem
         _entityManager.DeleteEntity(uid);
     }
 
+    public bool TryUpgradeAction(EntityUid? actionId, ActionUpgradeComponent? actionUpgradeComponent = null, int newLevel = 0)
+    {
+        if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
+            return false;
+
+        actionUpgradeComponent ??= actionUpgradeComp;
+        DebugTools.AssertNotNull(actionUpgradeComponent);
+        DebugTools.AssertNotNull(actionId);
+
+        if (newLevel < 1)
+            newLevel = actionUpgradeComponent.Level + 1;
+
+        if (!CanLevelUp(newLevel, actionUpgradeComponent.EffectedLevels, out _))
+            return false;
+
+        UpgradeAction(actionId, actionUpgradeComp);
+        return true;
+    }
+
     // TODO: Add checks for branching upgrades
     private bool CanLevelUp(
         int newLevel,
@@ -87,9 +106,7 @@ public sealed class ActionUpgradeSystem : EntitySystem
     /// <summary>
     ///     Raises a level by one
     /// </summary>
-    /// <param name="actionId"></param>
-    /// <param name="actionUpgradeComponent"></param>
-    public void UpgradeAction(EntityUid? actionId, ActionUpgradeComponent? actionUpgradeComponent = null)
+    public void UpgradeAction(EntityUid? actionId, ActionUpgradeComponent? actionUpgradeComponent = null, int newLevel = 0)
     {
         if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
             return;
@@ -98,24 +115,8 @@ public sealed class ActionUpgradeSystem : EntitySystem
         DebugTools.AssertNotNull(actionUpgradeComponent);
         DebugTools.AssertNotNull(actionId);
 
-        var newLevel = actionUpgradeComponent.Level + 1;
-        RaiseActionUpgradeEvent(newLevel, actionId.Value);
-    }
-
-    /// <summary>
-    ///     Sets an upgrade to the specified level
-    /// </summary>
-    /// <param name="actionId"></param>
-    /// <param name="newLevel"></param>
-    /// <param name="actionUpgradeComponent"></param>
-    public void UpgradeAction(EntityUid? actionId, int newLevel, ActionUpgradeComponent? actionUpgradeComponent = null)
-    {
-        if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
-            return;
-
-        actionUpgradeComponent ??= actionUpgradeComp;
-        DebugTools.AssertNotNull(actionUpgradeComponent);
-        DebugTools.AssertNotNull(actionId);
+        if (newLevel < 1)
+            newLevel = actionUpgradeComponent.Level + 1;
 
         RaiseActionUpgradeEvent(newLevel, actionId.Value);
     }
