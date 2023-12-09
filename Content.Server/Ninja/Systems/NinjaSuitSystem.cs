@@ -3,14 +3,12 @@ using Content.Server.Ninja.Events;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
-using Content.Shared.Timing;
-using Content.Shared.Actions;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
-using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Timing;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Ninja.Systems;
@@ -159,7 +157,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         }
 
         // I don't think this affects the suit battery, but if it ever does in the future add a blacklist for it
-        var coords = Transform(user).MapPosition;
+        var coords = _transform.GetMapCoordinates(user);
         _emp.EmpPulse(coords, comp.EmpRange, comp.EmpConsumption, comp.EmpDuration);
     }
 }

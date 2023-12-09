@@ -11,7 +11,7 @@ public sealed partial class InteractWithOperator : HTNOperator
     /// <summary>
     /// Key that contains the target entity.
     /// </summary>
-    [DataField("targetKey", required: true)]
+    [DataField(required: true)]
     public string TargetKey = default!;
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)

@@ -38,7 +38,6 @@ public sealed class DefibrillatorSystem : EntitySystem
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly RottingSystem _rotting = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -113,7 +112,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             : TryEnable(uid, component, user);
     }
 
-    public bool TryEnable(EntityUid uid, DefibrillatorComponent? component = null, EntityUid? user = null)
+    public bool TryEnable(EntityUid uid, DefibrillatorComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -224,7 +223,7 @@ public sealed class DefibrillatorSystem : EntitySystem
                 _damageable.TryChangeDamage(target, component.ZapHeal, true, origin: uid);
             _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
 
-            if (_mind.TryGetMind(target, out var mindId, out var mind) &&
+            if (_mind.TryGetMind(target, out var _, out var mind) &&
                 mind.Session is { } playerSession)
             {
                 session = playerSession;

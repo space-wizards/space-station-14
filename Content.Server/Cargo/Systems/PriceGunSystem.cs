@@ -4,7 +4,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 
 namespace Content.Server.Cargo.Systems;
 

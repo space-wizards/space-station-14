@@ -1,27 +1,24 @@
-using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
+using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
-using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Melee.Components;
+using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
-using Content.Shared.Timing;
 
 namespace Content.Shared.Wieldable;
 
 public sealed class WieldableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandVirtualItemSystem _virtualItemSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
@@ -107,9 +104,9 @@ public sealed class WieldableSystem : EntitySystem
         InteractionVerb verb = new()
         {
             Text = component.Wielded ? Loc.GetString("wieldable-verb-text-unwield") : Loc.GetString("wieldable-verb-text-wield"),
-            Act = component.Wielded
-                ? () => TryUnwield(uid, component, args.User)
-                : () => TryWield(uid, component, args.User)
+            Act = component.Wielded ?
+            () => TryUnwield(uid, component, args.User) :
+            () => TryWield(uid, component, args.User)
         };
 
         args.Verbs.Add(verb);
@@ -120,18 +117,18 @@ public sealed class WieldableSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if(!component.Wielded)
+        if (!component.Wielded)
             args.Handled = TryWield(uid, component, args.User);
         else
             args.Handled = TryUnwield(uid, component, args.User);
     }
 
-    public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet=false)
+    public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet = false)
     {
         // Do they have enough hands free?
         if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
         {
-            if(!quiet)
+            if (!quiet)
                 _popupSystem.PopupClient(Loc.GetString("wieldable-component-no-hands"), user, user);
             return false;
         }
@@ -194,7 +191,7 @@ public sealed class WieldableSystem : EntitySystem
             _delay.TryResetDelay((used, useDelay));
 
         _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", used)), user, user);
-        _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", user),("item", used)), user, Filter.PvsExcept(user), true);
+        _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", user), ("item", used)), user, Filter.PvsExcept(user), true);
 
         var targEv = new ItemWieldedEvent();
         RaiseLocalEvent(used, ref targEv);
@@ -225,6 +222,7 @@ public sealed class WieldableSystem : EntitySystem
     {
         if (args.User == null)
             return;
+
         if (!component.Wielded)
             return;
 
@@ -256,6 +254,7 @@ public sealed class WieldableSystem : EntitySystem
     {
         if (!component.Wielded || uid != args.Unequipped)
             return;
+
         RaiseLocalEvent(uid, new ItemUnwieldedEvent(args.User, force: true), true);
     }
 
@@ -269,6 +268,7 @@ public sealed class WieldableSystem : EntitySystem
     {
         if (!TryComp<WieldableComponent>(uid, out var wield))
             return;
+
         if (!wield.Wielded)
             return;
 

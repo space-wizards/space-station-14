@@ -15,7 +15,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
-    [Dependency] protected readonly SharedSpaceNinjaSystem _ninja = default!;
+    [Dependency] protected readonly SharedSpaceNinjaSystem Ninja = default!;
     [Dependency] protected readonly StealthClothingSystem StealthClothing = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
@@ -88,7 +88,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     protected virtual void NinjaEquippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user, SpaceNinjaComponent ninja)
     {
         // mark the user as wearing this suit, used when being attacked among other things
-        _ninja.AssignSuit(user, uid, ninja);
+        Ninja.AssignSuit(user, uid, ninja);
 
         // initialize phase cloak, but keep it off
         StealthClothing.SetEnabled(uid, user, false);
@@ -141,7 +141,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
             return;
 
         // mark the user as not wearing a suit
-        _ninja.AssignSuit(user, null, ninja);
+        Ninja.AssignSuit(user, null, ninja);
         // disable glove abilities
         if (ninja.Gloves != null && TryComp<NinjaGlovesComponent>(ninja.Gloves.Value, out var gloves))
             _gloves.DisableGloves(ninja.Gloves.Value, gloves);

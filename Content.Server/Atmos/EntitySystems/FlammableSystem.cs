@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
@@ -11,7 +10,6 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
@@ -39,7 +37,6 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly FixtureSystem _fixture = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -57,7 +54,6 @@ namespace Content.Server.Atmos.EntitySystems
         private float _timer;
 
         private readonly Dictionary<Entity<FlammableComponent>, float> _fireEvents = new();
-        private readonly List<EntityUid> _toRemove = new();
 
         public override void Initialize()
         {
@@ -380,9 +376,9 @@ namespace Content.Server.Atmos.EntitySystems
                 if (flammable.FireStacks > 0)
                 {
                     // TODO FLAMMABLE: further balancing
-                    var damageScale = Math.Min((int)flammable.FireStacks, 5);
+                    var damageScale = Math.Min( (int) flammable.FireStacks, 5);
 
-                    if(TryComp(uid, out TemperatureComponent? temp))
+                    if (TryComp(uid, out TemperatureComponent? temp))
                         _temperatureSystem.ChangeHeat(uid, 12500 * damageScale, false, temp);
 
                     _damageableSystem.TryChangeDamage(uid, flammable.Damage * damageScale);
@@ -404,7 +400,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 }
 
-                if(transform.GridUid != null)
+                if (transform.GridUid != null)
                 {
                     _atmosphereSystem.HotspotExpose(transform.GridUid.Value,
                         _transformSystem.GetGridOrMapTilePosition(uid, transform),

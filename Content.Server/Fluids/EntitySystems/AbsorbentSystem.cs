@@ -9,7 +9,7 @@ using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -18,7 +18,6 @@ namespace Content.Server.Fluids.EntitySystems;
 /// <inheritdoc/>
 public sealed class AbsorbentSystem : SharedAbsorbentSystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
@@ -28,6 +27,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
 
     public override void Initialize()
     {
@@ -81,7 +81,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         if (component.Progress.Equals(oldProgress))
             return;
 
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnInteractNoHand(EntityUid uid, AbsorbentComponent component, InteractNoHandEvent args)
@@ -247,10 +247,12 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         var absorberSplit = absorberSoln.SplitSolutionWithOnly(puddleSplit.Volume, PuddleSystem.EvaporationReagents);
 
         // Do tile reactions first
-        var coordinates = Transform(target).Coordinates;
-        if (_mapManager.TryGetGrid(coordinates.GetGridUid(EntityManager), out var mapGrid))
+        var transform = Transform(target);
+        var gridUid = transform.GridUid;
+        if (TryComp(gridUid, out MapGridComponent? mapGrid))
         {
-            _puddleSystem.DoTileReactions(mapGrid.GetTileRef(coordinates), absorberSplit);
+            var tileRef = _mapSystem.GetTileRef(gridUid.Value, mapGrid, transform.Coordinates);
+            _puddleSystem.DoTileReactions(tileRef, absorberSplit);
         }
 
         puddleSoln.AddSolution(absorberSplit, _prototype);

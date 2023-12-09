@@ -1,18 +1,19 @@
-using Content.Server.Singularity.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Singularity.Components;
-using Content.Server.Popups;
-using Content.Server.Power.Components;
-using Content.Shared.Radiation.Events;
-using Robust.Shared.Timing;
-using Robust.Shared.Containers;
-using Content.Server.Atmos.Components;
-using Content.Shared.Examine;
-using Content.Server.Atmos;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Timing;
+using Content.Server.Atmos;
+using Content.Server.Atmos.Components;
+using Content.Server.Popups;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Singularity.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Radiation.Events;
+using Content.Shared.Singularity.Components;
+using Content.Shared.Timing;
+using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -23,6 +24,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly BatterySystem _batterySystem = default!;
 
     private const string GasTankContainer = "gas_tank";
 
@@ -112,7 +114,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
         // This still won't stop things being potentially hilariously unbalanced though.
         if (TryComp<BatteryComponent>(uid, out var batteryComponent))
         {
-            batteryComponent.CurrentCharge += charge;
+            _batterySystem.SetCharge(uid, charge, batteryComponent);
         }
 
         // Update appearance

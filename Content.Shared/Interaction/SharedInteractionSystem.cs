@@ -6,7 +6,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
-using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
@@ -21,7 +20,6 @@ using Content.Shared.Popups;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tag;
-using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Wall;
@@ -67,8 +65,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
 
-        private const CollisionGroup InRangeUnobstructedMask
-            = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
+        private const CollisionGroup InRangeUnobstructedMask = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
         public const float InteractionRange = 1.5f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
@@ -169,7 +166,6 @@ namespace Content.Shared.Interaction
             else if (_net.IsServer)
                 QueueDel(uid);
         }
-
 
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
@@ -951,9 +947,9 @@ namespace Content.Shared.Interaction
             bool checkAccess = true)
         {
             UseDelayComponent? useDelay = null;
-            if (checkUseDelay
-                && TryComp(used, out useDelay)
-                && _useDelay.IsDelayed((used, useDelay)))
+            if (checkUseDelay &&
+                TryComp(used, out useDelay) &&
+                _useDelay.IsDelayed((used, useDelay)))
                 return false;
 
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
@@ -1001,9 +997,9 @@ namespace Content.Shared.Interaction
             bool checkUseDelay = true)
         {
             UseDelayComponent? useDelay = null;
-            if (checkUseDelay
-                && TryComp(used, out useDelay)
-                && _useDelay.IsDelayed((used, useDelay)))
+            if (checkUseDelay &&
+                TryComp(used, out useDelay) &&
+                _useDelay.IsDelayed((used, useDelay)))
                 return true; // if the item is on cooldown, we consider this handled.
 
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))

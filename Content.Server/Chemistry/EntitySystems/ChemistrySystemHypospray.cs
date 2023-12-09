@@ -48,7 +48,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnSolutionChange(EntityUid uid, HyposprayComponent component, SolutionChangedEvent args)
         {
-            Dirty(component);
+            Dirty(uid, component);
         }
 
         public void OnAfterInteract(EntityUid uid, HyposprayComponent component, AfterInteractEvent args)
@@ -130,7 +130,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (realTransferAmount <= 0)
             {
-                _popup.PopupCursor(Loc.GetString("hypospray-component-transfer-already-full-message",("owner", target)), user);
+                _popup.PopupCursor(Loc.GetString("hypospray-component-transfer-already-full-message", ("owner", target)), user);
                 return true;
             }
 
