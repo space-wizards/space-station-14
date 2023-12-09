@@ -21,7 +21,6 @@ public sealed class ActionUpgradeSystem : EntitySystem
 
     private void OnActionUpgradeEvent(EntityUid uid, ActionUpgradeComponent component, ActionUpgradeEvent args)
     {
-        // TODO: Add level (check if able first)
         if (!CanLevelUp(args.NewLevel, component.EffectedLevels, out var newActionProto)
             || !_actions.TryGetActionData(uid, out var actionComp))
             return;
@@ -35,9 +34,12 @@ public sealed class ActionUpgradeSystem : EntitySystem
         if (originalContainer != null
             && TryComp<ActionsContainerComponent>(originalContainer.Value, out var actionContainerComp))
         {
-            // THIS WORKED!!!!!!!
             upgradedActionId = _actionContainer.AddAction(originalContainer.Value, newActionProto, actionContainerComp);
-            _actions.GrantContainedActions(originalContainer.Value, originalContainer.Value);
+
+            if (originalAttachedEntity != null)
+                _actions.GrantContainedActions(originalAttachedEntity.Value, originalContainer.Value);
+            else
+                _actions.GrantContainedActions(originalContainer.Value, originalContainer.Value);
         }
         else if (originalAttachedEntity != null)
         {
@@ -50,13 +52,11 @@ public sealed class ActionUpgradeSystem : EntitySystem
         upgradeComp.Level = args.NewLevel;
 
         // TODO: Preserve ordering of actions
-        //      Step through removing an action to see how that works on UI side
 
-        // TODO: Delete old action so it's not just lingering in nullspace?
-        //  What about reverting the action?
-        // _entityManager.DeleteEntity(uid);
+        _entityManager.DeleteEntity(uid);
     }
 
+    // TODO: Add checks for branching upgrades
     private bool CanLevelUp(
         int newLevel,
         Dictionary<int, EntProtoId> levelDict,
@@ -94,9 +94,7 @@ public sealed class ActionUpgradeSystem : EntitySystem
         if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
             return;
 
-        if (actionUpgradeComponent == null)
-            actionUpgradeComponent = actionUpgradeComp;
-
+        actionUpgradeComponent ??= actionUpgradeComp;
         DebugTools.AssertNotNull(actionUpgradeComponent);
         DebugTools.AssertNotNull(actionId);
 
@@ -115,9 +113,7 @@ public sealed class ActionUpgradeSystem : EntitySystem
         if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
             return;
 
-        if (actionUpgradeComponent == null)
-            actionUpgradeComponent = actionUpgradeComp;
-
+        actionUpgradeComponent ??= actionUpgradeComp;
         DebugTools.AssertNotNull(actionUpgradeComponent);
         DebugTools.AssertNotNull(actionId);
 

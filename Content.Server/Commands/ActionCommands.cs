@@ -16,6 +16,8 @@ internal sealed class UpgradeActionCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
+        // TODO: Check if action can be upgraded, display message if not
+
         if (args.Length < 1)
         {
             shell.WriteLine(Loc.GetString("upgradeaction-command-need-one-argument"));
@@ -28,12 +30,7 @@ internal sealed class UpgradeActionCommand : IConsoleCommand
             return;
         }
 
-        // var minds = IoCManager.Resolve<IEntityManager>().System<SharedMindSystem>();
-        // var gameTicker = EntitySystem.Get<GameTicker>();
-        // var suicideSystem = EntitySystem.Get<SuicideSystem>();
-
         var actionUpgrade = _entMan.EntitySysManager.GetEntitySystem<ActionUpgradeSystem>();
-
         var id = args[0];
 
         if (!EntityUid.TryParse(id, out var uid))
@@ -55,15 +52,10 @@ internal sealed class UpgradeActionCommand : IConsoleCommand
         }
 
         if (args.Length == 1)
-        {
-            shell.WriteLine("One arg");
             actionUpgrade.UpgradeAction(uid, actionUpgradeComponent);
-        }
 
-        // TODO: If 2 args, check if 2nd arg is a number then upgrade action system can set level
         if (args.Length == 2)
         {
-            shell.WriteLine("Two args");
             var levelArg = args[1];
 
             if (!int.TryParse(levelArg, out var level))
