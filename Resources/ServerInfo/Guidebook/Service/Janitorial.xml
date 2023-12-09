@@ -22,11 +22,11 @@ You keep things clean, it's a rough job sometimes, but someone's gotta do it. Th
 <Box>
 <GuideEntityEmbed Entity="VehicleJanicart"/>
 <GuideEntityEmbed Entity="WetFloorSign"/>
-<GuideEntityEmbed Entity="Holoprojector" Caption="holosign projector"/>
+<GuideEntityEmbed Entity="Holoprojector" Caption="Holosign projector"/>
 <GuideEntityEmbed Entity="LightReplacer"/>
 </Box>
 <Box>
-<GuideEntityEmbed Entity="AdvMopItem" Caption="Advanced mop, ask in R&D"/>
+<GuideEntityEmbed Entity="AdvMopItem" Caption="Advanced mop, ask for it in R&D"/>
 </Box>
 
 ## Fluid Acquisition and Disposal
