@@ -1,10 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: All pda's with built in medical scanners now take one second to scan.,
-    type: Tweak}
-  id: 4796
-  time: '2023-09-10T23:01:05.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Made tooltips open faster and anchor bottom-left to mouse cursor instead
@@ -2903,3 +2897,10 @@ Entries:
   - {message: Some knives now deal some damage when thrown, type: Add}
   id: 5295
   time: '2023-12-09T02:16:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed a bug where the audio slider can get saved at 50% audio with no
+      sound. Unfortunately this means your audio sliders will reset., type: Fix}
+  - {message: Fix crash on options menu while game sim not running., type: Fix}
+  id: 5296
+  time: '2023-12-09T03:03:08.0000000+00:00'
