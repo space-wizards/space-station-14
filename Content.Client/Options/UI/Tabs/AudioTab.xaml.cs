@@ -17,14 +17,14 @@ namespace Content.Client.Options.UI.Tabs
     public sealed partial class AudioTab : Control
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
-        private readonly AudioSystem _audio;
+        private readonly IAudioManager _audio;
 
         public AudioTab()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            _audio = IoCManager.Resolve<IEntityManager>().System<AudioSystem>();
+            _audio = IoCManager.Resolve<IAudioManager>();
             LobbyMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.LobbyMusicEnabled);
             RestartSoundsCheckBox.Pressed = _cfg.GetCVar(CCVars.RestartSoundsEnabled);
             EventMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.EventMusicEnabled);
@@ -83,7 +83,7 @@ namespace Content.Client.Options.UI.Tabs
 
         private void OnMasterVolumeSliderChanged(Range range)
         {
-            _audio.SetMasterVolume(MasterVolumeSlider.Value / 100f);
+            _audio.SetMasterGain(MasterVolumeSlider.Value / 100f);
             UpdateChanges();
         }
 
