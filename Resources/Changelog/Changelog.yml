@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Made tooltips open faster and anchor bottom-left to mouse cursor instead
-      of top-left., type: Tweak}
-  id: 4797
-  time: '2023-09-11T03:53:36.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fix handheld crew monitor., type: Fix}
@@ -2904,3 +2898,8 @@ Entries:
   - {message: Fix crash on options menu while game sim not running., type: Fix}
   id: 5296
   time: '2023-12-09T03:03:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Radiation now works again., type: Fix}
+  id: 5297
+  time: '2023-12-09T04:10:01.0000000+00:00'
