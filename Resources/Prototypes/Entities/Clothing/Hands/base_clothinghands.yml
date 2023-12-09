@@ -11,6 +11,7 @@
     requiresSpecialDigestion: true
   - type: Item
     size: Small
+    storedRotation: -90
   - type: SolutionContainerManager
     solutions:
       food:

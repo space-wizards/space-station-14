@@ -48,6 +48,8 @@
     materialComposition:
       Glass: 60
   - type: SpaceGarbage
+  - type: Item
+    storedRotation: -90
 
 - type: entity
   name: broken plate
@@ -62,6 +64,8 @@
     tags:
     - Trash
   - type: SpaceGarbage
+  - type: Item
+    storedRotation: -90
 
 # Small Plate
 
@@ -117,6 +121,8 @@
   - type: Tag
     tags:
     - Trash
+  - type: Item
+    storedRotation: -90
 
 - type: entity
   name: plastic plate
@@ -130,6 +136,8 @@
   - type: Tag
     tags:
     - Trash
+  - type: Item
+    storedRotation: -90
 
 # Pie Tin
 
@@ -149,3 +157,5 @@
     materialComposition:
       Steel: 100
   - type: SpaceGarbage
+  - type: Item
+    storedRotation: -90

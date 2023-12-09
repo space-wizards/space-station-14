@@ -18,6 +18,7 @@
     state: timer
   - type: Item
     size: Small
+    storedRotation: -90
   - type: PayloadTrigger
     components:
     - type: OnUseTimerTrigger
@@ -68,3 +69,5 @@
   - type: Tag
     tags:
     - VoiceTrigger
+  - type: Item
+    storedRotation: -90

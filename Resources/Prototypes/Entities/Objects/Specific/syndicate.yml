@@ -61,6 +61,7 @@
   - type: Item
     sprite: Objects/Devices/communication.rsi
     heldPrefix: old-radio
+    storedRotation: -90
   - type: UserInterface
     interfaces:
     - key: enum.StoreUiKey.Key

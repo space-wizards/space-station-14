@@ -255,6 +255,8 @@
   - type: Stack
     stackType: Gauze
     count: 10
+  - type: Item
+    storedRotation: 90
   - type: StackPrice
     price: 10
 

@@ -18,3 +18,5 @@
         Glass: 200
       chemicalComposition:
         Silicon: 20
+    - type: Item
+      storedRotation: -90

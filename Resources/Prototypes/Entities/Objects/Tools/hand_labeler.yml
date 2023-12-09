@@ -9,6 +9,7 @@
       state: hand_labeler
     - type: Item
       sprite: Objects/Tools/hand_labeler.rsi
+      storedRotation: -90
     - type: UseDelay
       delay: 2.0
     - type: ActivatableUI

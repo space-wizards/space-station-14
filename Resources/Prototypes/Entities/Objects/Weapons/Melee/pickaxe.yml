@@ -47,6 +47,8 @@
     sprite: Objects/Tools/handdrill.rsi
     state: handdrill
   - type: ItemCooldown
+  - type: Item
+    storedRotation: -90
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
