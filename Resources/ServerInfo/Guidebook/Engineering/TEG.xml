@@ -58,17 +58,18 @@
   - The Air Injector/Passive Vent
   - The Space Vent
   - The Air Scrubber (array)
-  - The Air Alarm (Optional)
+  - The Air Alarm (Optional, but Recommended)
 
   The air injector (or Passive Vent) injects air (or allows air to flow) into the burn chamber. Either should be supplemented with a pump before it, to keep pressures high.
   There are a few notable differences between the passive vent and the air injector; mostly speaking, the air injector allows you to keep pumping in air at higher pressures, at the expense of being mildly more tedious to work with than a passive vent. If you are using the space vent, it really doesn't matter which one you use.
 
   The space vent (designated as a blast door to space on one side of the burn chamber) allows waste gases to be expelled and destroyed. This is only really useful if you want to produce tritium and you want to keep the burn going, but you can open this if you want to for now.
 
-  The air scrubber(s) serve to input the now hot air into a pipe that should lead to the hot-side Circulator. They also 'filter' the air; this is only really useful if you want to filter out a useful gas (usually, tritium). For now, the default filter setting should do the job just fine.
+  The air scrubber(s) serve to input the now hot air into a pipe that should lead to the hot-side Circulator. They also 'filter' the air; this is only really useful if you want to filter out a useful gas (usually, tritium). However, the default settings also are not the best, as gas intake is low, and plasma is also filtered out, both reducing the efficicency of the burn. See the Air Alarm step for more information.
   To increase the output's airflow, pipe as many air scrubbers as the room can hold to the output. You can't stack scrubbers, so be efficient!
 
-  Optionally, you can use a network configurator to link all the air scrubbers to the air alarm present on some burn chambers. If you want to extract tritium, do this and set the scrubbers to filter for tritium gas. If not, ignore this step.
+  Optionally, you can use a network configurator to link all the air scrubbers to the air alarm present on some burn chambers. If you want to extract tritium, do this and set the scrubbers to filter for tritium gas.
+  If not, it is still recommended to do this step, and set the gas scrubbers to scrub everything but Plasma and O2, and also set the scrubbers to siphon air instead. This ensures as much hot, non-burnable air is pulled in as possible.
 
   TODO: Use entities to show an example of the above layout
 
