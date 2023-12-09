@@ -12,3 +12,8 @@
   id: SS14ClassicTheme
   name: ui-options-hud-theme-classic
   path: Classic
+
+- type: hudTheme
+  id: SS14PlasmafireTheme
+  name: ui-options-hud-theme-plasmafire
+  path: Plasmafire
