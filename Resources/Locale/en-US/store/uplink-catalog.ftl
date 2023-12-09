@@ -106,6 +106,9 @@ uplink-black-jetpack-desc = A black jetpack. It allows you to fly around in spac
 uplink-reinforcement-radio-monkey-name = Monkey Reinforcement Teleporter
 uplink-reinforcement-radio-monkey-desc =  Call in a trained monkey to assist you. Comes with a single syndicate cigarette.
 
+uplink-hardsuit-syndie-monkey-name = Monkey Syndicate Hardsuit
+uplink-hardsuit-syndie-monkey-desc = A blood-red hardsuit specially compacted into a size fit for a monkey.
+
 uplink-reinforcement-radio-name = Reinforcement Teleporter
 uplink-reinforcement-radio-desc =  Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
 

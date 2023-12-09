@@ -581,6 +581,34 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
 
+#Syndicate monkey hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitSyndieMonkey
+  name: monkey blood-red hardsuit
+  description: A heavily armored hardsuit designed for use by monkey operatives. Property of Gorlex Marauders.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/syndicate-monkey.rsi
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/syndicate-monkey.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.65
+        Heat: 0.65
+        Caustic: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.85
+  - type: Tag
+    tags:
+    - MonkeyHardsuit
+
 #Wizard Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase

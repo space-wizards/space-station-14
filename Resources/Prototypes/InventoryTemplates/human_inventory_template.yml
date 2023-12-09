@@ -23,6 +23,9 @@
       uiWindowPos: 1,2
       strippingWindowPos: 1,2
       displayName: Suit
+      blacklist:
+        tags:
+          - MonkeyHardsuit
     - name: gloves
       slotTexture: gloves
       slotFlags: GLOVES

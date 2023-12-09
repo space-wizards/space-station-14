@@ -804,6 +804,9 @@
   id: MonkeyWearable
 
 - type: Tag
+  id: MonkeyHardsuit
+
+- type: Tag
   id: Pickaxe
 
 - type: Tag

@@ -112,6 +112,9 @@
       uiWindowPos: 1,2
       strippingWindowPos: 1,2
       displayName: Suit
+      blacklist:
+        tags:
+          - MonkeyHardsuit
     - name: pocket1
       slotTexture: pocket
       slotFlags: POCKET
