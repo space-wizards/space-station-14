@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
+using Content.Server.Explosion.Components;
 using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stunnable;
@@ -149,6 +150,13 @@ public sealed partial class GunSystem : SharedGunSystem
                             var uid = Spawn(cartridge.Prototype, fromEnt);
                             ShootOrThrow(uid, mapDirection, gunVelocity, gun, gunUid, user);
                             shotProjectiles.Add(uid);
+
+                            // Stores spawn and aim coordinates for projectiles needing to trigger at aim location
+                            if (TryComp<TriggerWhenReachingCoordinatesComponent>(uid, out var comp))
+                            {
+                                comp.Destination = toMap;
+                                comp.Origin = fromMap;
+                            }
                         }
 
                         RaiseLocalEvent(ent!.Value, new AmmoShotEvent()
