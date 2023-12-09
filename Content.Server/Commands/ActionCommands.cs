@@ -16,8 +16,6 @@ internal sealed class UpgradeActionCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        // TODO: Check if action can be upgraded, display message if not
-
         if (args.Length < 1)
         {
             shell.WriteLine(Loc.GetString("upgradeaction-command-need-one-argument"));
