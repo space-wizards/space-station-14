@@ -4,7 +4,7 @@ using Content.Shared.Interaction.Events;
 
 namespace Content.Shared.CombatMode.Pacification;
 
-public sealed class PacificationSystem : EntitySystem
+public abstract class SharedPacificationSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
