@@ -1,13 +1,13 @@
 ﻿<Document>
   # Thermo-electric Engine (TEG)
 
-  The TEG generates power by exchanging heat between hot and cold gases. On station, hot gas is usually created by burning plasma, and an array of heat-exchanging pipes in space radiates away heat to make a cold side.
+  The TEG generates power by exchanging heat between hot and cold gases. On the station, hot gas is usually created by burning plasma, and an array of heat-exchanging pipes in space radiates away heat to make cold gas.
 
-  The TEG relies heavily on atmospherics piping. The only truly special component about it is the generator core, the rest is all off-the-shelf atmospherics equipment. Note that while the exact layout may vary significantly depending on station, the general components and setup are usually the same.
+  The TEG relies heavily on atmospherics piping. The only truly special component about it is the generator core and circulators; the rest is all off-the-shelf atmospherics equipment. Note that while the exact layout may vary significantly depending on station, the general components and setup are usually the same.
 
   ## Generator
 
-  The main generator itself is a machine made up of multiple parts: the core generator and two "circulators", in this arrangement:
+  The main generator itself is a machine made up of 3 major parts: the central generator and two "circulators", in this arrangement:
 
   <Box>
     <GuideEntityEmbed Entity="TegCirculator" Rotation="180" Caption="" Margin="0" />
@@ -21,19 +21,98 @@
 
   There is no preference for which side must be hot or cold, there need only be a difference in temperature between them. The gases in the two "loops" are never mixed, only energy is exchanged between them. The hot side will cool down, the cold side will heat up.
 
-  ## Burn Chamber
-
-  As I'm sure a wise person once said: the best way to make something hot is to light it on fire. Well, depending on context that may not be very wise, but luckily your engineering department has just what's needed to do it wisely after all.
-
-  TODO: somebody fill this out once we settle on a general mapped layout for burn chambers.
-
-  ## Coolant Array
-
-  A whole bunch of heat-exchanger piping in space. There's not much to say here: gas goes through and cools down.
-
   ## The Pipes
 
-  TODO: somebody fill this out once we settle on a general mapped layout for burn chambers.
+  There are 2 major pipenets to worry about here: The Hot Loop (where gas will be burnt for heat), and The Cold Loop (where heated gas will be removed, either into space or by a cooling system). Make sure that [bold]both pipenets do NOT mix[/bold], as only heat should be transferred between the two through the TEG.
 
+  ## The Hot Loop
+
+  As stated above, there are many different layouts one can follow to heat up (or cool down) gases; this part of the guide will cover 2 common methods one will often see for the hot loop when the TEG is setup: The Pipe Burn, and the Burn chamber.
+
+  ### The Pipe Burn
+
+  Also known as the naive method, this is generally discouraged when working for efficiency. However, if all you need is a smidge of power to run the station, and you don't feel like setting up the burn chamber, this method will do.
+
+  TODO: Remove this section when atmos pipes are updated to have pressure/temperature limits in a future atmos refactor.
+
+  Most (if not all) pipe burns follow this general layout:
+  <Box>
+    Gas input --> High-pressure volumetric pump --> Pipe segment (with heater) --> Low-pressure volumetric pump --> Circulator
+    TODO: Prettyprint this box's layout using entity versions of the above parts
+  </Box>
+  - The Gas input is pretty self-explanatory; this is where you will input the O2-Plasma mix to be burnt. A 2:1 (67/33) ratio of Oxygen to Plasma is recommended for the hottest burn.
+  - The High-pressure pump serves 2 purposes; first, it prevents the burn from backwashing into the supply pipe, which would be.. bad, for many reasons. Second, it maintains a positive pressure in the following pipe segment, which is important to allow the burn to continue, especially since hot gases expand.
+  - The Pipe segment is where the burn actually occurs; to start it off, one can use a heater to increase the temperature up to the ignition temperature of Plasma. Afterwards, the reaction should be self-sustaining, so long as the Pressure and Moles supplied remains high enough. Be warned; if you wish to remove the heater, it will carry some of this superheated gas with it, transferring it to the next pipenet you connect it to. Best to space the gas through a space vent, if you must.
+  - The Low-pressure pump (whose pressure should be lower than the input pump, but still sufficiently high) prevents [italics]all[/italics] the gas from passing through the circulator, which could result in the loss of the Moles required to sustain a burn. A general recommendation is to max out the input pump, and set this pump to [italics]slightly lower[/italics] than that, to keep flow high.
+  - The Circulator is where this generated heat will flow to the cold loop; afterwards, feel free to space the waste gases.
+
+  Note: Volumetric pumps are used here as they pump on flow-rate, not pressure; this is mildly better than using pressure pumps here, although the steps can be followed with those too.
+
+  ### The Burn Chamber
+
+  As I'm sure a wise person once said: the best way to make something hot is to light it on fire. Well, depending on context, that may not be very wise, but luckily your engineering department has just what's needed to do it wisely after all.
+
+  The burn chamber is the preferred method for heating up gases, and it is commonly used for other purposes too. (see: Tritium production)
+
+  Most (if not all) stations have the burn chamber seperated from the main atmospherics block by a 1-wide spaced grid, presumably to prevent conduction. The chambers consist of 3(+1) important parts:
+  - The Air Injector/Passive Vent
+  - The Space Vent
+  - The Air Scrubber (array)
+  - The Air Alarm (Optional)
+
+  The air injector (or Passive Vent) injects air (or allows air to flow) into the burn chamber. Either should be supplemented with a pump before it, to keep pressures high.
+  There are a few notable differences between the passive vent and the air injector; mostly speaking, the air injector allows you to keep pumping in air at higher pressures, at the expense of being mildly more tedious to work with than a passive vent. If you are using the space vent, it really doesn't matter which one you use.
+
+  The space vent (designated as a blast door to space on one side of the burn chamber) allows waste gases to be expelled and destroyed. This is only really useful if you want to produce tritium and you want to keep the burn going, but you can open this if you want to for now.
+
+  The air scrubber(s) serve to input the now hot air into a pipe that should lead to the hot-side Circulator. They also 'filter' the air; this is only really useful if you want to filter out a useful gas (usually, tritium). For now, the default filter setting should do the job just fine.
+  To increase the output's airflow, pipe as many air scrubbers as the room can hold to the output. You can't stack scrubbers, so be efficient!
+
+  Optionally, you can use a network configurator to link all the air scrubbers to the air alarm present on some burn chambers. If you want to extract tritium, do this and set the scrubbers to filter for tritium gas. If not, ignore this step.
+
+  TODO: Use entities to show an example of the above layout
+
+  ## The Cold Loop
+
+  As with the Hot Loop, the Cold Loop must also be setup in order to operate the TEG. However, the Cold Loop is usually a lot more low-tech than the Hot Loop; in reality, the Cold Loop only has to be "relatively" cooler - hey, room temperature is technically cooler than the surface of the sun, right?
+
+  There are 3 main methods you will see used for the Cold Loop: The Water Cooler (see: Liltenhead's Video on the TEG), the Coolant Array and the Freezer Loop.
+
+  ### The Water Cooler
+
+  TODO: Name this something better
+
+  An equally naive method as the Pipe Burn, this simply involves taking some useless gas (in this case, Water Vapour) and flowing it through the TEG and into space. Its dirt-cheap and simple, at the cost of efficiency and permanant loss of gas.
+
+  Setting this up is so simple, even Hamlet could manage it. Just take an output of a gas (here, Water Vapour), send it through the Cold side of the TEG, and then vent it into space.
+
+  TODO: Remove this section when gas miners are removed in a future atmos refactor.
+
+  ### Coolant Array
+
+  This is the default method for the Cold Loop you will see on a variety of stations. Being of moderate complexity and having no losses of any resource, this [italics]should[/italics] be the main method of cooling down the TEG. However, space heat exchange kinda sucks at the moment, so this is not as relavant as it should be.
+
+  Simply speaking, this consists of 3 major parts: An input connector port, a few pumps and the heat-exchanger array out in space. It should be setup like so:
+  <Box>
+    Connector Port VV
+    Circulator --------> Input Pump --> Heat-Exchanger array --> Output Pump --------> Circulator
+    TODO: Prettyprint this box's layout using entity versions of the above parts
+  </Box>
+  - Connector Port: Use this to input a gas with high heat capacity; most of the time, Plasma or Frezon is used to do so. (Yes, Plasma =/= Hot. You can cool it down, and it acts as a really good heat exchange medium.)
+  - Input/Output Pumps: Used to make sure gas keeps flowing through both the Circulator and the Heat-Exchanger array. As the gas cools down and heats up (and as it flows through the Exchanger), pressure must be applied for it to keep flowing.
+  - Heat-Exchanger: Basically, just a bunch of heat-exchanger pipes in space. Not much to say, besides the fact that it cools down the gas inside it.
+
+  ### The Freezer Loop
+
+  Most of the time, you will see this method being used in efficient TEG setups. It's basically just the Coolant array, but replacing the Heat-Exchangers with a freezer. Even though the freezer does use power, it is only a small fraction of what the TEG can generate, and its better than the Coolant array at the moment, so go fish.
+
+  Just follow the steps for the Coolant array, but use a freezer in place of the Heat-Exchangers. As so:
+  <Box>
+    Connector Port VV
+    Circulator --------> Input Pump --> Freezer --> Output Pump --------> Circulator
+    TODO: Prettyprint this box's layout using entity versions of the above parts
+  </Box>
+
+  Once again, use Plasma or Frezon in the loop for max efficiency (although most any gas will do).
 
 </Document>
