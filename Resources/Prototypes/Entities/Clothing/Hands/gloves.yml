@@ -155,6 +155,23 @@
   - type: Fiber
     fiberMaterial: fibers-nitrile
   - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesCombatNitrile
+  name: nitrile combat gloves
+  description: Very hight-quality nitrile combat gloves. Designed to provide medical assistance during hostilities.
+  components:
+  - type: Insulated
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/nitrile.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/nitrile.rsi
+  - type: Fiber
+    fiberMaterial: insulative
+    fiberColor: fibers-nitrile
+  - type: FingerprintMask
+
 ####
 - type: entity
   parent: ClothingHandsBase

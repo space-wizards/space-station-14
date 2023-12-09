@@ -2904,3 +2904,8 @@ Entries:
       level., type: Tweak}
   id: 5298
   time: '2023-12-09T04:18:15.0000000+00:00'
+- author: Stanislav4ix
+  changes:
+  - {message: Added combat nitrile gloves for nuke medics. Now they appear with them., type: Add}
+  id: 5299
+  time: '2023-12-09T04:22:12.0000000+00:00'
