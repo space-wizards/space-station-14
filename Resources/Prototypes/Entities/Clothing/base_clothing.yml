@@ -3,6 +3,8 @@
   parent: BaseItem
   id: Clothing
   components:
+  - type: Item
+    size: Normal
   - type: Sprite
   - type: Tag
     tags:
@@ -16,3 +18,14 @@
   components:
     - type: Geiger
       attachedToSuit: true
+
+# for clothing that has a single item slot to insert and alt click out.
+# inheritors add a whitelisted slot named item
+- type: entity
+  abstract: true
+  id: ClothingSlotBase
+  components:
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      item: !type:ContainerSlot

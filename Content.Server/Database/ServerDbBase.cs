@@ -570,7 +570,8 @@ namespace Content.Server.Database
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId,
-            ConnectionDenyReason? denied);
+            ConnectionDenyReason? denied,
+            int serverId);
 
         public async Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans)
         {
@@ -677,6 +678,7 @@ namespace Content.Server.Database
 
             var round = new Round
             {
+                StartDate = DateTime.UtcNow,
                 Players = players,
                 ServerId = server.Id
             };

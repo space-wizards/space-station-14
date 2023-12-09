@@ -1,7 +1,8 @@
 #When adding new hardsuits, please try to keep the organization consistent with hardsuit.yml (if possible.)
 
-#For now, since locational damage is not a thing, all "combat" hardsuits (with the exception of the deathsquad hardsuit) have the equvilent of a helmet in terms of armor. This is so people don't need to wear both regular, on-station helmets and hardsuits to get full protection.
-#Generally, unless you're adding something like caustic damage, you should probably avoid messing with armor outside of the above scenario.
+#For now, since locational damage is not a thing, all "combat" hardsuits (with the exception of the deathsquad hardsuit) have the equvilent of a helmet in terms of armor.
+#This is so people don't need to wear both regular, on-station helmets and hardsuits to get full protection.
+#Generally, unless you're adding something like caustic damage, you should probably avoid messing with armor here outside of the above scenario.
 
 #CREW HARDSUITS
 #Standard Hardsuit
@@ -550,6 +551,7 @@
   id: ClothingHeadHelmetHardsuitERTEngineer
   noSpawn: true
   name: ERT engineer hardsuit helmet
+  description: A special hardsuit helmet worn by members of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
@@ -571,6 +573,7 @@
   id: ClothingHeadHelmetHardsuitERTMedical
   noSpawn: true
   name: ERT medic hardsuit helmet
+  description: A special hardsuit helmet worn by members of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
@@ -585,6 +588,7 @@
   id: ClothingHeadHelmetHardsuitERTSecurity
   noSpawn: true
   name: ERT security hardsuit helmet
+  description: A special hardsuit helmet worn by members of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
@@ -606,6 +610,7 @@
   id: ClothingHeadHelmetHardsuitERTJanitor
   noSpawn: true
   name: ERT janitor hardsuit helmet
+  description: A special hardsuit helmet worn by members of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
