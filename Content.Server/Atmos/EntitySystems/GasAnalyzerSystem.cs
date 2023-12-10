@@ -23,6 +23,11 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
 
+        /// <summary>
+        /// Minimum moles of a gas to be sent to the client.
+        /// </summary>
+        private const float UIMinMoles = 0.01f;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -254,7 +259,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var gas = _atmo.GetGas(i);
 
-                if (mixture?.Moles[i] <= Atmospherics.GasMinMoles)
+                if (mixture?.Moles[i] <= UIMinMoles)
                     continue;
 
                 if (mixture != null)
@@ -263,6 +268,15 @@ namespace Content.Server.Atmos.EntitySystems
                     gases.Add(new GasEntry(gasName, mixture.Moles[i], gas.Color));
                 }
             }
+
+            gases.Sort(delegate(GasEntry a, GasEntry b)
+            {
+                if (a.Amount > b.Amount)
+                    return -1;
+                if (a.Amount < b.Amount)
+                    return 1;
+                return 0;
+            });
 
             return gases.ToArray();
         }
