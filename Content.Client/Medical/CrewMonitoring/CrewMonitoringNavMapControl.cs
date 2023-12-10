@@ -1,7 +1,5 @@
-using Content.Client.Message;
 using Content.Client.Pinpointer.UI;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Medical.CrewMonitoring;
