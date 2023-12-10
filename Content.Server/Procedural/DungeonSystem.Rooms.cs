@@ -43,6 +43,10 @@ public sealed partial class DungeonSystem
         Random random,
         bool rotation = false)
     {
+        // Ensure the underlying template exists.
+        var roomMap = GetOrCreateTemplate(room);
+        var templateMapUid = _mapManager.GetMapEntityId(roomMap);
+        var templateGrid = Comp<MapGridComponent>(templateMapUid);
         Angle roomRotation = Angle.Zero;
         var roomDimensions = room.Size;
 
@@ -61,6 +65,7 @@ public sealed partial class DungeonSystem
 
         var roomTransform = Matrix3.CreateTransform((Vector2) room.Size / 2f, roomRotation);
         Matrix3.Multiply(roomTransform, transform, out var finalTransform);
+        var finalRoomRotation = finalTransform.GetRotation();
 
         var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
         var roomTiles = new HashSet<Vector2i>(room.Size.X * room.Size.Y);
@@ -75,7 +80,7 @@ public sealed partial class DungeonSystem
             for (var y = 0; y < roomDimensions.Y; y++)
             {
                 var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
-                var tileRef = templateGrid.GetTileRef(indices);
+                var tileRef = _maps.GetTileRef(templateMapUid, templateGrid, indices);
 
                 var tilePos = finalTransform.Transform(indices + tileOffset);
                 var rounded = tilePos.Floored();
