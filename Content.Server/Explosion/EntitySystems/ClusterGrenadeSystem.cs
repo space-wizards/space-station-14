@@ -8,6 +8,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Content.Server.Weapons.Ranged.Systems;
 using System.Numerics;
+using Robust.Server.Containers;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -18,6 +20,8 @@ public sealed class ClusterGrenadeSystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly GunSystem _gun = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private readonly ContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -55,7 +59,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
             !HasComp<FlashOnTriggerComponent>(args.Used))
             return;
 
-        component.GrenadesContainer.Insert(args.Used);
+        _containerSystem.Insert(args.Used, component.GrenadesContainer);
         UpdateAppearance(clug);
         args.Handled = true;
     }
@@ -79,7 +83,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                 var grenadesInserted = clug.GrenadesContainer.ContainedEntities.Count + clug.UnspawnedCount;
                 var thrownCount = 0;
                 var segmentAngle = 360 / grenadesInserted;
-                var bombletDelay = 0f;
+                var grenadeDelay = 0f;
 
                 while (TryGetGrenade(uid, clug, out var grenade))
                 {
@@ -93,43 +97,49 @@ public sealed class ClusterGrenadeSystem : EntitySystem
 
                     switch (clug.GrenadeType)
                     {
-                        case "shoot":
+                        case GrenadeType.Shoot:
                             ShootProjectile(grenade, angle, clug, uid);
                             break;
-                        case "throw":
+                        case GrenadeType.Throw:
                             ThrowGrenade(grenade, angle, clug);
                             break;
                     }
 
                     // give an active timer trigger to the contained grenades when they get launched
-                    if (clug.TriggerBomblets)
+                    if (clug.TriggerGrenades)
                     {
-                        bombletDelay += _random.NextFloat(clug.BombletDelayMin, clug.BombletDelayMax);
-                        var bomblet = EnsureComp<ActiveTimerTriggerComponent>(grenade);
-                        bomblet.TimeRemaining = (clug.MinimumDelay + bombletDelay);
+                        grenadeDelay += _random.NextFloat(clug.GrenadeTriggerIntervalMin, clug.GrenadeTriggerIntervalMax);
+                        var grenadeTimer = EnsureComp<ActiveTimerTriggerComponent>(grenade);
+                        grenadeTimer.TimeRemaining = (clug.BaseTriggerDelay + grenadeDelay);
                         var ev = new ActiveTimerTriggerEvent(grenade, uid);
                         RaiseLocalEvent(uid, ref ev);
                     }
                 }
                 // delete the empty shell of the clusterbomb
-                EntityManager.DeleteEntity(uid);
+                Del(uid);
             }
         }
     }
 
     private void ShootProjectile(EntityUid grenade, Angle angle, ClusterGrenadeComponent clug, EntityUid clugUid)
     {
+        var direction = angle.ToVec().Normalized();
+
         if (clug.RandomSpread)
-            _gun.ShootProjectile(grenade, _random.NextVector2().Normalized(), Vector2.One.Normalized(), clugUid);
-        else _gun.ShootProjectile(grenade, angle.ToVec().Normalized(), Vector2.One.Normalized(), clugUid);
+            direction = _random.NextVector2().Normalized();
+
+        _gun.ShootProjectile(grenade, direction, Vector2.One.Normalized(), clugUid);
 
     }
 
     private void ThrowGrenade(EntityUid grenade, Angle angle, ClusterGrenadeComponent clug)
     {
+        var direction = angle.ToVec().Normalized() * clug.Distance;
+
         if (clug.RandomSpread)
-            _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized() * _random.NextFloat(clug.MinSpreadDistance, clug.MaxSpreadDistance), clug.Velocity);
-        else _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized() * clug.Distance, clug.Velocity);
+            direction = angle.ToVec().Normalized() * _random.NextFloat(clug.MinSpreadDistance, clug.MaxSpreadDistance);
+
+        _throwingSystem.TryThrow(grenade, direction, clug.Velocity);
     }
 
     private bool TryGetGrenade(EntityUid clugUid, ClusterGrenadeComponent component, out EntityUid grenade)
@@ -139,7 +149,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         if (component.UnspawnedCount > 0)
         {
             component.UnspawnedCount--;
-            grenade = EntityManager.SpawnEntity(component.FillPrototype, Transform(clugUid).MapPosition);
+            grenade = Spawn(component.FillPrototype, _transformSystem.GetMapCoordinates(clugUid));
             return true;
         }
 

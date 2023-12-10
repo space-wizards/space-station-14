@@ -91,7 +91,7 @@
   - type: ClusterGrenade
     fillPrototype: TrashBananaPeelExplosive
     maxGrenadesCount: 6
-    minimumDelay: 20
+    baseTriggerDelay: 20
   - type: DamageOnLand
     damage:
       types:
@@ -128,7 +128,7 @@
   - type: ClusterGrenade
     fillPrototype: PelletClusterRubber
     maxGrenadesCount: 30
-    grenadeType: "shoot"
+    grenadeType: enum.GrenadeType.Shoot
   - type: FlashOnTrigger
     range: 7
   - type: EmitSoundOnTrigger
@@ -157,7 +157,7 @@
   - type: ClusterGrenade
     fillPrototype: PelletClusterIncendiary
     maxGrenadesCount: 15
-    grenadeType: "shoot"
+    grenadeType: enum.GrenadeType.Shoot
   - type: OnUseTimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
@@ -186,7 +186,7 @@
   - type: ClusterGrenade
     fillPrototype: PelletClusterLethal
     maxGrenadesCount: 30
-    grenadeType: "shoot"
+    grenadeType: enum.GrenadeType.Shoot
   - type: OnUseTimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
@@ -215,9 +215,9 @@
   - type: ClusterGrenade
     fillPrototype: SoapletSyndie
     maxGrenadesCount: 30
-    bombletDelayMax: 0
-    bombletDelayMin: 0
-    minimumDelay: 60
+    grenadeTriggerIntervalMax: 0
+    grenadeTriggerIntervalMin: 0
+    baseTriggerDelay: 60
     randomSpread: true
     velocity: 3
   - type: DamageOnLand

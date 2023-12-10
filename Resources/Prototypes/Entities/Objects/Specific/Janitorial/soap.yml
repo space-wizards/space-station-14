@@ -131,6 +131,7 @@
 - type: entity
   name: soaplet
   id: SoapletSyndie
+  noSpawn: true
   parent: Soap
   description: A tiny piece of syndicate soap.
   components:

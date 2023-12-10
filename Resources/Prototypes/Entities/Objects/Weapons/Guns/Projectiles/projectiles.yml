@@ -681,7 +681,7 @@
   - type: ClusterGrenade
     fillPrototype: PelletClusterIncendiary
     maxGrenadesCount: 15
-    grenadeType: "shoot"
+    grenadeType: enum.GrenadeType.Shoot
   - type: Projectile
     deleteOnCollide: false
     canPenetrate: true
@@ -714,7 +714,7 @@
   - type: ClusterGrenade
     fillPrototype: PelletClusterLethal
     maxGrenadesCount: 30
-    grenadeType: "shoot"
+    grenadeType: enum.GrenadeType.Shoot
   - type: Projectile
     deleteOnCollide: false
     canPenetrate: true
