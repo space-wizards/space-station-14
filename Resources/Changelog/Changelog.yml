@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed error when equipping the energy katana as a space ninja., type: Fix}
-  id: 4804
-  time: '2023-09-11T09:04:03.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Storage (e.g. backpacks) is now predicted and using FancyWindow., type: Fix}
@@ -2901,3 +2896,8 @@ Entries:
   - {message: Adjusted welder blindness to be much less forgiving., type: Tweak}
   id: 5303
   time: '2023-12-10T23:10:07.0000000+00:00'
+- author: KittenColony
+  changes:
+  - {message: Added various gauze wraps to most species in the form of markings, type: Add}
+  id: 5304
+  time: '2023-12-10T23:16:38.0000000+00:00'
