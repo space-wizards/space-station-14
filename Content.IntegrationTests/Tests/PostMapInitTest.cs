@@ -79,6 +79,7 @@ namespace Content.IntegrationTests.Tests
             "220Gate",
             "Nox",
             "Snout",
+            "220Avrite",
         };
 
         /// <summary>
