@@ -16,6 +16,9 @@
     {
       "name": "produce"
     },
+	{
+	  "name": "stored"
+	},
     {
       "name": "slice"
     },

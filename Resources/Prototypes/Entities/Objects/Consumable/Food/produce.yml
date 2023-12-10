@@ -573,7 +573,10 @@
   description: Mmm, tropical.
   components:
   - type: Item
-    storedRotation: -45 # Honestly, my only justification is the diagonals look good on pinapple skin.
+    sprite: Objects/Specific/Hydroponics/pineapple.rsi
+    storedSprite:
+      sprite: Objects/Specific/Hydroponics/pineapple.rsi
+      state: stored  # This is cursed, please fix.
   - type: FlavorProfile
     flavors:
       - pineapple
