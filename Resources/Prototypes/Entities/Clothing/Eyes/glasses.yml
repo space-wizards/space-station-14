@@ -206,6 +206,7 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
+  - type: ShowSecurityIcons
 #SS220-Blueshield-end
 
 - type: entity

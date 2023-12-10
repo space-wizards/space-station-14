@@ -11,7 +11,7 @@
       department: Medical
       time: 72000 # SS220-RoleTime
     - !type:OverallPlaytimeRequirement
-      time: 180000 # SS220-RoleTime   
+      time: 180000 # SS220-RoleTime
   startingGear: BlueShieldGear
   icon: "JobIconBlueShield"
   supervisors: job-supervisors-centcom
@@ -39,6 +39,9 @@
   - Cargo
   - Medical
   - Blueshield
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: BlueShieldGear
