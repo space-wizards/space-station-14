@@ -58,6 +58,9 @@ ghost-role-information-salvage-carp-description = Defend the loot inside the sal
 ghost-role-information-sentient-carp-name = Sentient Carp
 ghost-role-information-sentient-carp-description = Help the dragon flood the station with carps!
 
+ghost-role-information-salvage-shark-name = Space sharkminnow on salvage wreck
+ghost-role-information-salvage-shark-description = Help the younger fellow carp protect their prey. Smell the blood!
+
 ghost-role-information-willow-name = Willow the kangaroo
 ghost-role-information-willow-description = You're a kangaroo named willow! willow likes to box.
 
@@ -99,6 +102,12 @@ ghost-role-information-space-spider-description =  Space spiders are just as agg
 
 ghost-role-information-salvage-spider-name = Space spider on salvage wreck
 ghost-role-information-salvage-spider-description = Space spiders are just as aggressive as regular spiders, feed.
+
+ghost-role-information-space-cobra-name = Space cobra
+ghost-role-information-space-cobra-description = Space cobras really don't like guests, and will always snack on a visitor.
+
+ghost-role-information-salvage-cobra-name = Space cobra on salvage wreck
+ghost-role-information-salvage-cobra-description = Space cobras really don't like guests, and will always snack on a visitor.
 
 ghost-role-information-guardian-name = Guardian
 ghost-role-information-guardian-description = Listen to your owner. Don't tank damage. Punch people hard.
@@ -176,3 +185,7 @@ ghost-role-information-Death-Squad-description = Prepare for an all-out offensiv
 ghost-role-information-exterminator-name = Exterminator
 ghost-role-information-exterminator-description = You been been sent back in time to terminate a target with high importance to the future.
 ghost-role-information-exterminator-rules = You are an antagonist and may kill anyone that tries to stop you, but killing the target is always your top priority.
+
+ghost-role-information-Cak-name = Cak
+ghost-role-information-Cak-description = You are the chef's favorite child. You're a living cake cat.  
+ghost-role-information-Cak-rules = You are a living edible sweet cat. Your task is to find your place in this world where everything wants to eat you.

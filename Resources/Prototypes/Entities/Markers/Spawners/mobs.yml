@@ -46,6 +46,7 @@
       - MobCorgiIan
       - MobCorgiIanOld
       - MobCorgiLisa
+      - MobCorgiIanPup
 
 - type: entity
   name: Possum Morty Spawner
@@ -322,6 +323,20 @@
     - MobCarpHolo
 
 - type: entity
+  name: Space Sharkminnow Spawner
+  id: SpawnMobShark
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobShark
+
+- type: entity
   name: Hamster Hamlet Spawner
   id: SpawnMobHamsterHamlet
   parent: MarkerBase
@@ -357,7 +372,8 @@
   - type: Sprite
     layers:
       - state: green
-      - state: ai
+      - state: shiva
+        sprite: Mobs/Pets/shiva.rsi
   - type: ConditionalSpawner
     prototypes:
       - MobSpiderShiva
@@ -412,10 +428,25 @@
   - type: Sprite
     layers:
     - state: green
-    - state: ai
+    - state: spacespider
+      sprite: Mobs/Animals/spacespider.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobSpiderSpace
+
+- type: entity
+  name: Space Cobra Spawner
+  id: SpawnMobSpaceCobra
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: spacecobra
+      sprite: Mobs/Animals/spacecobra.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCobraSpace
 
 - type: entity
   name: Slimes Spawner Blue

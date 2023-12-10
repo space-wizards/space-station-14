@@ -21,6 +21,7 @@ using Content.Shared.Players;
 using Content.Shared.Radio;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
@@ -183,6 +184,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
         }
 
+        if (player != null && !_chatManager.HandleRateLimit(player))
+            return;
+
         // Sus
         if (player?.AttachedEntity is { Valid: true } entity && source != entity)
         {
@@ -191,6 +195,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (!CanSendInGame(message, shell, player))
             return;
+
+        ignoreActionBlocker = CheckIgnoreSpeechBlocker(source, ignoreActionBlocker);
 
         // this method is a disaster
         // every second i have to spend working with this code is fucking agony
@@ -235,7 +241,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             if (TryProccessRadioMessage(source, message, out var modMessage, out var channel))
             {
-                SendEntityWhisper(source, modMessage, range, channel, nameOverride, ignoreActionBlocker);
+                SendEntityWhisper(source, modMessage, range, channel, nameOverride, hideLog, ignoreActionBlocker);
                 return;
             }
         }
@@ -265,6 +271,9 @@ public sealed partial class ChatSystem : SharedChatSystem
         )
     {
         if (!CanSendInGame(message, shell, player))
+            return;
+
+        if (player != null && !_chatManager.HandleRateLimit(player))
             return;
 
         // It doesn't make any sense for a non-player to send in-game OOC messages, whereas non-players may be sending
@@ -316,7 +325,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         _chatManager.ChatMessageToAll(ChatChannel.Radio, message, wrappedMessage, default, false, true, colorOverride);
         if (playSound)
         {
-            SoundSystem.Play(announcementSound?.GetSound() ?? DefaultAnnouncementSound, Filter.Broadcast(), AudioParams.Default.WithVolume(-2f));
+            _audio.PlayGlobal(announcementSound?.GetSound() ?? DefaultAnnouncementSound, Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
         }
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
     }
@@ -354,7 +363,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (playDefaultSound)
         {
-            SoundSystem.Play(announcementSound?.GetSound() ?? DefaultAnnouncementSound, filter, AudioParams.Default.WithVolume(-2f));
+            _audio.PlayGlobal(announcementSound?.GetSound() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
@@ -727,6 +736,17 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         return ev.Message;
     }
+ 
+    public bool CheckIgnoreSpeechBlocker(EntityUid sender, bool ignoreBlocker)
+    {
+        if (ignoreBlocker)
+            return ignoreBlocker;
+
+        var ev = new CheckIgnoreSpeechBlockerEvent(sender, ignoreBlocker);
+        RaiseLocalEvent(sender, ev, true);
+
+        return ev.IgnoreBlocker;
+    }
 
     private IEnumerable<INetChannel> GetDeadChatClients()
     {
@@ -862,6 +882,18 @@ public sealed class TransformSpeechEvent : EntityEventArgs
     {
         Sender = sender;
         Message = message;
+    }
+}
+
+public sealed class CheckIgnoreSpeechBlockerEvent : EntityEventArgs
+{
+    public EntityUid Sender;
+    public bool IgnoreBlocker;
+
+    public CheckIgnoreSpeechBlockerEvent(EntityUid sender, bool ignoreBlocker)
+    {
+        Sender = sender;
+        IgnoreBlocker = ignoreBlocker;
     }
 }
 

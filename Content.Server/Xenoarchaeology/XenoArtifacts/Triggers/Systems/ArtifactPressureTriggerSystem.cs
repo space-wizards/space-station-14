@@ -21,9 +21,7 @@ public sealed class ArtifactPressureTriggerSystem : EntitySystem
         var query = EntityQueryEnumerator<ArtifactPressureTriggerComponent, ArtifactComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var trigger, out var artifact, out var transform))
         {
-            var environment = _atmosphereSystem.GetTileMixture(transform.GridUid, transform.MapUid,
-                _transformSystem.GetGridOrMapTilePosition(uid, transform));
-
+            var environment = _atmosphereSystem.GetTileMixture((uid, transform));
             if (environment == null)
                 continue;
 

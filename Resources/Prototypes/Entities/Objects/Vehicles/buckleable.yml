@@ -451,6 +451,8 @@
             - MobMask
           layer:
             - TableLayer
+    - type: StaticPrice
+      price: 70
 
 - type: entity
   parent: VehicleWheelchair

@@ -3,7 +3,7 @@
   id: IDCardStandard
   name: identification card
   description: A card necessary to access various areas aboard the station.
-  noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Misc/id_cards.rsi
@@ -14,12 +14,14 @@
   - type: Item
     size: Small
     heldPrefix: default
+    storedRotation: -90
   - type: Access
   - type: IdCard
   - type: StationRecordKeyStorage
   - type: Tag
     tags:
     - DoorBumpOpener
+    - WhitelistChameleon
 
 #IDs with layers
 
@@ -582,10 +584,18 @@
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: ChameleonClothing
+    slot: [idcard]
+    default: PassengerIDCard
   - type: UserInterface
     interfaces:
       - key: enum.AgentIDCardUiKey.Key
         type: AgentIDCardBoundUserInterface
+      - key: enum.ChameleonUiKey.Key
+        type: ChameleonBoundUserInterface
 
 - type: entity
   name: passenger ID card
