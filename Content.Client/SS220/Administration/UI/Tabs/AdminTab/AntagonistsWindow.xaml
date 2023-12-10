@@ -1,0 +1,17 @@
+<!-- © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt -->
+
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:SS220cc="clr-namespace:Content.Client.SS220.Administration.UI.CustomControls"
+    xmlns:SS220at="clr-namespace:Content.Client.SS220.Administration.UI.Tabs.AdminTab"
+    Title="{Loc admin-player-actions-window-antagonists}" MinSize="425 272">
+    <BoxContainer Orientation="Vertical">
+        <SS220cc:AntagonistsListControl Name="AntagonistsList" VerticalExpand="True" />
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="ListOfTargetsButton" Text="{Loc admin-antagonists-list-of-targets}" Disabled="True"/>
+            <cc:UICommandButton Name="AddTargetButton" Text="{Loc admin-antagonists-add-target}" Disabled="True" WindowType="{x:Type SS220at:AddObjectiveWindow}"/>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
     xmlns:at="clr-namespace:Content.Client.Administration.UI.Tabs.AdminTab"
+    xmlns:SS220at="clr-namespace:Content.Client.SS220.Administration.UI.Tabs.AdminTab"
     Margin="4"
     MinSize="50 50">
     <BoxContainer Orientation="Vertical">
@@ -17,7 +18,7 @@
             <cc:UICommandButton Command="callshuttle" Text="{Loc admin-player-actions-window-shuttle}" WindowType="{x:Type at:AdminShuttleWindow}"/>
             <cc:CommandButton Command="adminlogs" Text="{Loc admin-player-actions-window-admin-logs}" />
             <cc:CommandButton Command="faxui" Text="{Loc admin-player-actions-window-admin-fax}" />
-            <cc:UICommandButton Command="antagonists" Text="{Loc admin-player-actions-window-antagonists}" WindowType="{x:Type at:AntagonistsWindow}" />
+            <cc:UICommandButton Command="antagonists" Text="{Loc admin-player-actions-window-antagonists}" WindowType="{x:Type SS220at:AntagonistsWindow}" />
             <cc:CommandButton Command="allttsqueuereset" Text="{Loc admin-player-actions-tts-queue-reset}" WithDialog="True" />
         </GridContainer>
     </BoxContainer>

@@ -1,3 +1,5 @@
+// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
 using System.Linq;
 using Content.Client.Administration.Systems;
 using Content.Client.UserInterface.Controls;
@@ -10,7 +12,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
 
-namespace Content.Client.Administration.UI.CustomControls
+namespace Content.Client.SS220.Administration.UI.CustomControls
 {
     [GenerateTypedNameReferences]
     public sealed partial class AntagonistsListControl : BoxContainer
