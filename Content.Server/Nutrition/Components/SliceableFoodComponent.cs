@@ -26,6 +26,6 @@ public sealed partial class SliceableFoodComponent : Component
     /// <summary>
     /// Number of slices left.
     /// </summary>
-    [DataField("remainingCount"), ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)]
     public ushort Count;
 }
