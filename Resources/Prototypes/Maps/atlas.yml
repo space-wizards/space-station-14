@@ -9,10 +9,10 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Atlas {1}'
+          mapNameTemplate: '{0} Атлас {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'R4' # R4407/Goon. GS isn't as cool sounding.
+            prefixCreator: 'СН'
         - type: StationJobs
           overflowJobs:
           - Passenger
