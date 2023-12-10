@@ -1,0 +1,30 @@
+# Pride Pins Box
+- type: entity
+  name: pride pin box
+  parent: BoxCardboard
+  id: BoxPridePins
+  description: This box is filled pride pins.
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingNeckLGBTPin
+          amount: 1
+        - id: ClothingNeckAromanticPin
+          amount: 1
+        - id: ClothingNeckAsexualPin
+          amount: 1
+        - id: ClothingNeckBisexualPin
+          amount: 1
+        - id: ClothingNeckIntersexPin
+          amount: 1
+        - id: ClothingNeckLesbianPin
+          amount: 1
+        - id: ClothingNeckNonBinaryPin
+          amount: 1
+        - id: ClothingNeckPansexualPin
+          amount: 1
+        - id: ClothingNeckTransPin
+          amount: 1 
+    - type: Sprite
+      layers:
+        - state: box
