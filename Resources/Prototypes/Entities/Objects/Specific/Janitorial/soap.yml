@@ -17,8 +17,8 @@
     fillBaseName: soap-
     changeColor: false
   - type: Appearance
-  - type: Item
-    storedRotation: 90
+#  - type: Item
+#    storedRotation: 90 # Inexplicably, this causes the Yaml Linter to fail. No clue why. Commented for Testing
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
     paralyzeTime: 2
