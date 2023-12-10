@@ -1,5 +1,4 @@
 using Content.Shared.Damage;
-using Content.Shared.Item;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -83,24 +82,27 @@ public sealed partial class ItemToggleComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("activatedSharp")]
     public bool ActivatedSharp = false;
-    [DataField("offSize")]
-    public ProtoId<ItemSizePrototype> OffSize = "Small";
+
+    /// <summary>
+    ///     Item's size when activated
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("activatedSize")]
+    public ProtoId<ItemSizePrototype> ActivatedSize = "Huge";
+
+    /// <summary>
+    ///     Item's size when deactivated
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("deactivatedSize")]
+    public ProtoId<ItemSizePrototype> DeactivatedSize = "Small";
+
 
     /// <summary>
     ///     Does this become hidden when deactivated
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("onSize")]
-    public ProtoId<ItemSizePrototype> OnSize = "Huge";
     [DataField("deactivatedSecret")]
     public bool DeactivatedSecret = false;
-
-    /// <summary>
-    ///     Item's size increase when activated
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("activatedSizeModifier"), AutoNetworkedField]
-    public int ActivatedSizeModifier = 0;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("isHotWhenActivated"), AutoNetworkedField]
@@ -109,7 +111,7 @@ public sealed partial class ItemToggleComponent : Component
     /// <summary>
     ///     Used when the item emits sound while active.
     /// </summary>
-    public IPlayingAudioStream? Stream;
+    public EntityUid? Stream;
 }
 
 /// <summary>

@@ -4,8 +4,8 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Temperature;
 using Content.Shared.Wieldable;
 using Content.Shared.Wieldable.Components;
-using Robust.Shared.Random;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Item;
 /// <summary>
@@ -29,7 +29,6 @@ public sealed class ItemToggleSystem : EntitySystem
         SubscribeLocalEvent<ItemToggleComponent, ItemUnwieldedEvent>(TurnOffonUnwielded);
         SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnonWielded);
     }
-
 
     public void Toggle(EntityUid uid, ItemToggleComponent? component = null)
     {
@@ -75,7 +74,7 @@ public sealed class ItemToggleSystem : EntitySystem
         {
             _audio.PlayPredicted(component.ActivateSound, uid, user);
             //Starts the active sound (like humming).
-            component.Stream = _audio.PlayPredicted(component.ActiveSound, uid, user, AudioParams.Default.WithLoop(true));
+            component.Stream = _audio.PlayPredicted(component.ActiveSound, uid, user, AudioParams.Default.WithLoop(true))?.Entity;
         }
         return true;
     }
@@ -109,8 +108,7 @@ public sealed class ItemToggleSystem : EntitySystem
         {
             _audio.PlayPredicted(component.DeactivateSound, uid, user);
             //Stops the active sound (like humming).
-            component.Stream?.Stop();
-            component.Stream = null;
+            component.Stream = _audio.Stop(component.Stream);
         }
         return true;
     }
@@ -191,9 +189,9 @@ public sealed class ItemToggleSystem : EntitySystem
             return;
 
         if (component.Activated)
-            _item.SetSize(uid, item.Size + component.ActivatedSizeModifier, item);
+            _item.SetSize(uid, component.ActivatedSize, item);
         else
-            _item.SetSize(uid, item.Size - component.ActivatedSizeModifier, item);
+            _item.SetSize(uid, component.DeactivatedSize, item);
     }
 
     /// <summary>

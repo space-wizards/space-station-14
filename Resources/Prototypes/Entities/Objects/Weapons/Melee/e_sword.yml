@@ -28,7 +28,8 @@
         types:
             Blunt: 4.5
     activatedDisarmMalus: 0.6
-    activatedSizeModifier: 9999
+    activatedSize: Huge
+    deactivatedSize: Small
     activatedSharp: true
     deactivatedSecret: false
     activatedColor: DodgerBlue
@@ -108,6 +109,7 @@
         types:
             Blunt: 1
     activatedDisarmMalus: 0.4
+    deactivatedSize: Tiny
     deactivatedSecret: true
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
