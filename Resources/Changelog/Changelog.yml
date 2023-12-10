@@ -1,11 +1,4 @@
 Entries:
-- author: HerCoyote23
-  changes:
-  - message: The Syndicate has grown tired of losing overconfident "Loud" agents,
-      and has reduced their stealth gear prices to encourage a more sneaky approach.
-    type: Tweak
-  id: 4856
-  time: '2023-09-18T21:07:00.0000000+00:00'
 - author: Doru991
   changes:
   - message: Berry seeds are now available from the MegaSeed Servitor.
@@ -3792,3 +3785,14 @@ Entries:
     type: Fix
   id: 5296
   time: '2023-12-10T18:56:06.0000000+00:00'
+- author: Ady4
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0432\u043E\u0437\
+      \u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u0441\u043A\u0440\u0443\u0442\
+      \u0438\u0442\u044C \u043F\u043E\u043A\u0440\u044B\u0442\u0438\u0435 \u043F\u0440\
+      \u0438 \u043F\u043E\u043C\u043E\u0449\u0438 \u0447\u0435\u043B\u044E\u0441\u0442\
+      \u0435\u0439 \u0436\u0438\u0437\u043D\u0438 (\u043D\u0435 \u0432\u043A\u043B\
+      \u044E\u0447\u0430\u044F \u0421\u0438\u043D\u0434\u0438\u043A\u0430\u0442)."
+    type: Add
+  id: 5297
+  time: '2023-12-10T21:15:26.0000000+00:00'
