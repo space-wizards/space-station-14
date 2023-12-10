@@ -150,6 +150,7 @@ public sealed class ItemToggleSystem : EntitySystem
             return;
 
         _appearance.SetData(uid, ToggleableLightVisuals.Enabled, component.Activated, appearanceComponent);
+        _appearance.SetData(uid, ToggleVisuals.Toggled, component.Activated, appearanceComponent);
     }
 
     /// <summary>

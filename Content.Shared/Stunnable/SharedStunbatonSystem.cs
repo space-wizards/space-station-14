@@ -10,15 +10,15 @@ public abstract class SharedStunbatonSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StunbatonComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
+        //SubscribeLocalEvent<StunbatonComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
     }
 
-    private void OnGetMeleeDamage(EntityUid uid, StunbatonComponent component, ref GetMeleeDamageEvent args)
-    {
-        if (!component.Activated)
-            return;
+    //private void OnGetMeleeDamage(EntityUid uid, StunbatonComponent component, ref GetMeleeDamageEvent args)
+    //{
+    //    if (!component.Activated)
+    //        return;
 
-        // Don't apply damage if it's activated; just do stamina damage.
-        args.Damage = new DamageSpecifier();
-    }
+    //    // Don't apply damage if it's activated; just do stamina damage.
+    //    args.Damage = new DamageSpecifier();
+    //}
 }

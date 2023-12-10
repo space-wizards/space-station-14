@@ -26,6 +26,8 @@ namespace Content.Server.Stunnable.Systems
         [Dependency] private readonly BatterySystem _battery = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
 
+        public const float PitchVariation = 0.25f;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -47,7 +49,7 @@ namespace Content.Server.Stunnable.Systems
 
             if (battery.CurrentCharge < component.EnergyPerUse)
             {
-                _audio.PlayPvs(component.SparksSound, uid, AudioHelpers.WithVariation(0.25f));
+                _audio.PlayPvs(component.SparksSound, uid, AudioParams.Default.WithVariation(PitchVariation));
                 TurnOff(uid, component);
             }
         }
@@ -73,7 +75,7 @@ namespace Content.Server.Stunnable.Systems
             if (TryComp<BatteryComponent>(uid, out var battery))
             {
                 args.PushMarkup(Loc.GetString("stunbaton-component-on-examine-charge",
-                    ("charge", (int)((battery.CurrentCharge/battery.MaxCharge) * 100))));
+                    ("charge", (int) (battery.CurrentCharge / battery.MaxCharge * 100))));
             }
         }
 
@@ -86,10 +88,8 @@ namespace Content.Server.Stunnable.Systems
                 TryComp<ItemComponent>(uid, out var item))
             {
                 _item.SetHeldPrefix(uid, "off", item);
-                _appearance.SetData(uid, ToggleVisuals.Toggled, false, appearance);
             }
-
-            _audio.PlayPvs(comp.SparksSound, uid, AudioHelpers.WithVariation(0.25f));
+            _audio.PlayPvs(comp.SparksSound, uid, AudioParams.Default.WithVariation(PitchVariation));
 
             comp.Activated = false;
             Dirty(uid, comp);
@@ -97,14 +97,12 @@ namespace Content.Server.Stunnable.Systems
 
         private void TurnOn(EntityUid uid, StunbatonComponent comp, EntityUid user)
         {
-
             if (comp.Activated)
                 return;
 
-            if (!TryComp<BatteryComponent>(uid, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
+            if (!TryComp<BatteryComponent>(uid, out var battery) || battery.CurrentCharge < stunbatonComp.EnergyPerUse)
             {
-
-                _audio.PlayPvs(comp.TurnOnFailSound, uid, AudioHelpers.WithVariation(0.25f));
+                _audio.PlayPvs(stunbatonComp.TurnOnFailSound, uid, AudioParams.Default.WithVariation(PitchVariation));
                 _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), user, user);
                 return;
             }
@@ -115,14 +113,12 @@ namespace Content.Server.Stunnable.Systems
             }
 
 
-            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance) &&
-                EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
+            if (EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
             {
                 _item.SetHeldPrefix(uid, "on", item);
-                _appearance.SetData(uid, ToggleVisuals.Toggled, true, appearance);
             }
 
-            _audio.PlayPvs(comp.SparksSound, uid, AudioHelpers.WithVariation(0.25f));
+            _audio.PlayPvs(comp.SparksSound, uid, AudioParams.Default.WithVariation(PitchVariation));
             comp.Activated = true;
             Dirty(uid, comp);
         }
