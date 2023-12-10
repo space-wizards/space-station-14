@@ -1,5 +1,5 @@
-using Content.Server.Chemistry.Components;
 using Content.Server.Explosion.Components;
+using Content.Server.Fluids.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Maps;
@@ -41,7 +41,6 @@ public sealed class SmokeOnTriggerSystem : EntitySystem
             return;
         }
 
-        smoke.SpreadAmount = comp.SpreadAmount;
-        _smoke.Start(ent, smoke, comp.Solution, comp.Duration);
+        _smoke.StartSmoke(ent, comp.Solution, comp.Duration, comp.SpreadAmount, smoke);
     }
 }
