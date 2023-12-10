@@ -38,7 +38,7 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
 
         if (_entManager.TryGetComponent<StorageComponent>(Owner, out var comp))
         {
-            _storage.OpenStorageUI(Owner, comp);
+            _storage.OpenStorageWindow(new(Owner, comp));
         }
     }
 
@@ -90,7 +90,7 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
 
         if (!castedState.HasAccess)
         {
-            _storage.CloseStorageUI(Owner);
+            _storage.CloseStorageWindow(Owner);
         }
 
         //if (_storageWindow is not null)
@@ -113,7 +113,7 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
             return;
         }
 
-        _storage.CloseStorageUI(Owner);
+        _storage.CloseStorageWindow(Owner);
 
         _window?.Close();
     }

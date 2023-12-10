@@ -132,6 +132,27 @@
         - ReagentId: Water
           Quantity: 500
   - type: Cart #SS220-Cart-system
+  - type: ContainerContainer
+    containers:
+      bin-container: !type:Container
+  - type: Bin
+    initialContents:
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    whitelist:
+      requireAll: true
+      components:
+      - FitsInDispenser
+      tags:
+      - Trash
 
 - type: entity
   parent: StorageTank

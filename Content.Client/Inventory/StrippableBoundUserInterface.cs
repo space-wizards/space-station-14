@@ -90,11 +90,11 @@ namespace Content.Client.Inventory
 
             _strippingMenu.ClearButtons();
 
-            if (EntMan.TryGetComponent<InventoryComponent>(Owner, out var inv) && _protoMan.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var template))
+            if (EntMan.TryGetComponent<InventoryComponent>(Owner, out var inv))
             {
-                foreach (var slot in template.Slots)
+                foreach (var slot in inv.Slots)
                 {
-                    AddInventoryButton(Owner, slot.Name, template, inv);
+                    AddInventoryButton(Owner, slot.Name, inv);
                 }
             }
 
@@ -190,7 +190,7 @@ namespace Content.Client.Inventory
                 _ui.GetUIController<VerbMenuUIController>().OpenVerbMenu(slot.Entity.Value);
         }
 
-        private void AddInventoryButton(EntityUid invUid, string slotId, InventoryTemplatePrototype _, InventoryComponent inv)
+        private void AddInventoryButton(EntityUid invUid, string slotId, InventoryComponent inv)
         {
             if (!_inv.TryGetSlotContainer(invUid, slotId, out var container, out var slotDef, inv))
                 return;

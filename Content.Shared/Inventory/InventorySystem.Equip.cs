@@ -17,6 +17,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Inventory;
 
@@ -47,12 +48,10 @@ public abstract partial class InventorySystem
 
     protected void QuickEquip(EntityUid uid, ClothingComponent component, UseInHandEvent args)
     {
-        if (!TryComp(args.User, out InventoryComponent? inv)
-            || !TryComp(args.User, out HandsComponent? hands)
-            || !_prototypeManager.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var prototype))
+        if (!TryComp(args.User, out InventoryComponent? inv) || !HasComp<HandsComponent>(args.User))
             return;
 
-        foreach (var slotDef in prototype.Slots)
+        foreach (var slotDef in inv.Slots)
         {
             if (!CanEquip(args.User, uid, slotDef.Name, out _, slotDef, inv))
                 continue;
@@ -198,21 +197,8 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if(!silent && clothing != null && clothing.EquipSound != null && _gameTiming.IsFirstTimePredicted)
+        if (!silent && clothing != null && clothing.EquipSound != null)
         {
-            Filter filter;
-
-            if (_netMan.IsClient)
-                filter = Filter.Local();
-            else
-            {
-                filter = Filter.Pvs(target);
-
-                // don't play double audio for predicted interactions
-                if (predicted)
-                    filter.RemoveWhereAttachedEntity(entity => entity == actor);
-            }
-
             _audio.PlayPredicted(clothing.EquipSound, target, actor);
         }
 
@@ -268,6 +254,7 @@ public abstract partial class InventorySystem
         if (slotDefinition == null && !TryGetSlot(target, slot, out slotDefinition, inventory: inventory))
             return false;
 
+        DebugTools.Assert(slotDefinition.Name == slot);
         if (slotDefinition.DependsOn != null && !TryGetSlotEntity(target, slotDefinition.DependsOn, out _, inventory))
             return false;
 
@@ -360,7 +347,8 @@ public abstract partial class InventorySystem
 
         removedItem = slotContainer.ContainedEntity;
 
-        if (!removedItem.HasValue) return false;
+        if (!removedItem.HasValue)
+            return false;
 
         if (!force && !CanUnequip(actor, target, slot, out var reason, slotContainer, slotDefinition, inventory))
         {
@@ -373,7 +361,7 @@ public abstract partial class InventorySystem
         if (!force && !_containerSystem.CanRemove(removedItem.Value, slotContainer))
             return false;
 
-        foreach (var slotDef in GetSlots(target, inventory))
+        foreach (var slotDef in inventory.Slots)
         {
             if (slotDef != slotDefinition && slotDef.DependsOn == slotDefinition.Name)
             {
@@ -385,23 +373,13 @@ public abstract partial class InventorySystem
         if (!slotContainer.Remove(removedItem.Value, force: force))
             return false;
 
-        _transform.DropNextTo(removedItem.Value, target);
+        // TODO: Inventory needs a hot cleanup hoo boy
+        // Check if something else (AKA toggleable) dumped it into a container.
+        if (!_containerSystem.IsEntityInContainer(removedItem.Value))
+            _transform.DropNextTo(removedItem.Value, target);
 
-        if (!silent && Resolve(removedItem.Value, ref clothing, false) && clothing.UnequipSound != null && _gameTiming.IsFirstTimePredicted)
+        if (!silent && Resolve(removedItem.Value, ref clothing, false) && clothing.UnequipSound != null)
         {
-            Filter filter;
-
-            if (_netMan.IsClient)
-                filter = Filter.Local();
-            else
-            {
-                filter = Filter.Pvs(target);
-
-                // don't play double audio for predicted interactions
-                if (predicted)
-                    filter.RemoveWhereAttachedEntity(entity => entity == actor);
-            }
-
             _audio.PlayPredicted(clothing.UnequipSound, target, actor);
         }
 

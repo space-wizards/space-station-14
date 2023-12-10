@@ -71,6 +71,18 @@
     sprite: Clothing/Shoes/Misc/damedaneshoes.rsi
 
 - type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesSnakeskinBoots
+  name: snakeskin boots
+  description: Boots made of high-class snakeskin, everyone around you will be jealous.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Misc/snakeskin.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Misc/snakeskin.rsi
+  - type: NoSlip
+
+- type: entity
   parent: [ClothingShoesBase, PowerCellSlotSmallItem]
   id: ClothingShoesBootsSpeed
   name: speed boots
