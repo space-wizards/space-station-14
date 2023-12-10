@@ -474,9 +474,6 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
     state: pill_canister
-  - type: Item
-    size: Small
-    sprite: Objects/Specific/Chemistry/pills_canister.rsi
   - type: Tag
     tags:
       - PillCanister
@@ -489,3 +486,5 @@
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
   - type: Dumpable
+  - type: Item
+    size: Small

@@ -42,11 +42,11 @@
     materialComposition:
       Steel: 50
   - type: SpaceGarbage
+  - type: Item
+    size: Small
   - type: Storage
     grid:
     - 0,0,4,1
-  - type: Item
-    size: Small
   - type: StorageFill
     contents:
     - id: Cigarette
@@ -108,11 +108,11 @@
     materialComposition:
       Steel: 50
   - type: SpaceGarbage
+  - type: Item
+    size: Small
   - type: Storage
     grid:
     - 0,0,4,1
-  - type: Item
-    size: Small
   - type: StorageFill
     contents:
     - id: CigaretteRandom
