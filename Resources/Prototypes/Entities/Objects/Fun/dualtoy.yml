@@ -4,39 +4,33 @@
   id: DualToySword
   description:
   components:
-  - type: Wieldable
-    wieldTime: 0
-  - type: EnergySword
+  - type: DualEnergySword
     litDamageBonus:
-        types:
-            Slash: 0
-            Heat: 0
-            Structural: 0
-            Blunt: 0
-    litDisarmMalus: 0
-  - type: MeleeWeapon
-    attackRate: 1.5
-    angle: 100
-    soundHit:
-      path: /Audio/Weapons/eblade1.ogg
-    damage:
       types:
         Blunt: 0
+    litDisarmMalus: 0
   - type: Sprite
-    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+    sprite: Objects/Weapons/Melee/e_dual_sword.rsi
     layers:
-      - state: e_sword_double
-      - state: e_sword_double_blade
+      - state: e_sword
+      - state: e_sword_blade
         color: "#FFFFFF"
         visible: false
         shader: unshaded
         map: [ "blade" ]
-  - type: Item
-    size: 10
-    sprite: Objects/Weapons/Melee/e_sword_double.rsi
-  - type: Construction
-    graph: DualToySword
-    node: DualToySword
+  - type: MeleeWeapon
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 0
+  - type: UseDelay
+    delay: 1.0
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 2
+    energy: 2
+    color: white
   - type: Appearance
   - type: ToggleableLightVisuals
     spriteLayer: blade
@@ -47,11 +41,20 @@
       right:
       - state: inhand-right-blade
         shader: unshaded
-  - type: UseDelay
-    delay: 1.0
-  - type: PointLight
-    enabled: false
-    radius: 2
-    energy: 2
-    color: white
-    netsync: false
+  - type: DisarmMalus
+    malus: 0
+  - type: Wieldable
+    wieldTime: 0
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Slash: 0
+        Heat: 0
+        Structural: 0
+        Blunt: 0
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/e_dual_sword.rsi
+  - type: Construction
+    graph: DualToySword
+    node: DualToySword
