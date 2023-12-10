@@ -49,6 +49,7 @@ tiles-mining-dark-tile = тёмная шахтёрская плитка
 tiles-mining-light-tile = светлая шахтёрская плитка
 tiles-freezer = морозильник
 tiles-showroom-floor = пол выставочного зала
+tiles-lime-floor = лаймовый пол
 tiles-hydro-floor = гидро пол
 tiles-bar-floor = барный пол
 tiles-clown-floor = клоунский пол
