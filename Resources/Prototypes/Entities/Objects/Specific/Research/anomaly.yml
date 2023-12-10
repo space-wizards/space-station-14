@@ -7,8 +7,8 @@
   - type: Sprite
     sprite: Objects/Specific/Research/anomalyscanner.rsi
     state: icon
-  - type: Item
-    size: Small_Wide
+#  - type: Item # delete afterwards, trying to find the linter issue. Testing
+#    size: Small_Wide
   - type: ActivatableUI
     key: enum.AnomalyScannerUiKey.Key
     closeOnHandDeselect: false
