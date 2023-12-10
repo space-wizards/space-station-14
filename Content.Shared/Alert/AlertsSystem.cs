@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Alert;
@@ -166,6 +167,7 @@ public abstract class AlertsSystem : EntitySystem
 
         SubscribeLocalEvent<AlertsComponent, ComponentStartup>(HandleComponentStartup);
         SubscribeLocalEvent<AlertsComponent, ComponentShutdown>(HandleComponentShutdown);
+        SubscribeLocalEvent<AlertsComponent, PlayerAttachedEvent>(OnPlayerAttached);
 
         SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
 
@@ -238,5 +240,10 @@ public abstract class AlertsSystem : EntitySystem
         }
 
         alert.OnClick?.AlertClicked(player.Value);
+    }
+
+    private void OnPlayerAttached(EntityUid uid, AlertsComponent component, PlayerAttachedEvent args)
+    {
+        Dirty(uid, component);
     }
 }

@@ -1,0 +1,47 @@
+- type: entity
+  id: RandomDrinkSoda
+  name: random soda spawner
+  parent: MarkerBase
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Consumable/Drinks/dr_gibb.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - DrinkColaBottleFull
+      - DrinkSpaceMountainWindBottleFull
+      - DrinkSpaceUpBottleFull
+      - DrinkWaterBottleFull
+      - DrinkColaCan
+      - DrinkIcedTeaCan
+      - DrinkLemonLimeCan
+      - DrinkGrapeCan
+      - DrinkRootBeerCan
+      - DrinkSodaWaterCan
+      - DrinkSpaceMountainWindCan
+      - DrinkSpaceUpCan
+      - DrinkStarkistCan
+      - DrinkTonicWaterCan
+      - DrinkFourteenLokoCan
+      - DrinkChangelingStingCan
+      - DrinkDrGibbCan
+      - DrinkEnergyDrinkCan
+      - DrinkShamblersJuiceCan
+      - DrinkPwrGameCan
+      - DrinkHotCoco
+      - DrinkHotCoffee
+      - DrinkCafeLatte
+      - DrinkTeacup
+      - DrinkGreenTea
+      - DrinkWaterCup
+    chance: 0.8
+    offset: 0.0
+    #rare
+    rarePrototypes:
+      - DrinkNukieCan
+      - DrinkLean
+    rareChance: 0.01
