@@ -2,11 +2,11 @@
                xmlns:ui="clr-namespace:Content.Client.Medical.CrewMonitoring"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'crew-monitoring-user-interface-title'}"
-               SetSize="1180 700"
-               MinSize="1180 700">
+               SetSize="1200 700"
+               MinSize="1200 700">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
-            <ui:CrewMonitoringNavMapControl Name="NavMap" HorizontalExpand="True" VerticalExpand="True" Margin="5 5"/>
+            <ui:CrewMonitoringNavMapControl Name="NavMap" HorizontalExpand="True" VerticalExpand="True" Margin="5 20"/>
             <BoxContainer Orientation="Vertical">
                 <controls:StripeBack>
                     <PanelContainer>
@@ -14,11 +14,14 @@
                     </PanelContainer>
                 </controls:StripeBack>
                 
-                <ScrollContainer VerticalExpand="True" SetWidth="500"
+                <ScrollContainer Name="SensorScroller"
+                                 VerticalExpand="True"
+                                 SetWidth="520"
                                  Margin="8, 8, 8, 8">
                     <BoxContainer Name="SensorsTable"
                                    Orientation="Vertical"
-                                   HorizontalExpand="True">
+                                   HorizontalExpand="True"
+                                   Margin="0 0 10 0">
                         <!-- Table rows are filled by code -->
                     </BoxContainer>
                     <Label  Name="NoServerLabel"
