@@ -819,7 +819,7 @@ public abstract class SharedStorageSystem : EntitySystem
         {
             for (var x = storageBounding.Left; x <= storageBounding.Right; x++)
             {
-                for (var angle = Angle.Zero; angle <= Angle.FromDegrees(360); angle += Math.PI / 2f)
+                for (var angle = Angle.FromDegrees(-itemEnt.Comp.StoredRotation); angle <= Angle.FromDegrees(360 - itemEnt.Comp.StoredRotation); angle += Math.PI / 2f)
                 {
                     var location = new ItemStorageLocation(angle, (x, y));
                     if (ItemFitsInGridLocation(itemEnt, storageEnt, location))
