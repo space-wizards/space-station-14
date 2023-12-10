@@ -107,6 +107,16 @@
   license: "CC-BY-4.0"
   source: "https://freesound.org/people/thomas_evdokimoff/sounds/202193/"
 
+- files: ["hydraulic_press.ogg"]
+  copyright: 'Created by chainsaw_dinner_party on Freesound.org. Extended and converted to MONO and .ogg by EmoGarbage404 (github)'
+  license: "CC0-1.0"
+  source: "https://freesound.org/people/chainsaw_dinner_party/sounds/403075/"
+
+- files: ["metal_crunch.ogg"]
+  copyright: 'Created by PNMCarrieRailfan on Freesound.org. Edited and exported to .ogg by EmoGarbage404 (github)'
+  license: "CC-BY-NC-4.0"
+  source: "https://freesound.org/people/PNMCarrieRailfan/sounds/682439/"
+
 - files: ["voteding.ogg"]
   copyright: '"Bike, Bell Ding, Single, 01-01.wav" byInspectorJ (www.jshaw.co.uk) of Freesound.org; The volume has been reduced.'
   license: "CC-BY-4.0"
