@@ -11,14 +11,21 @@ namespace Content.Server.Procedural;
 public sealed partial class RoomFillComponent : Component
 {
     /// <summary>
-    /// Are rotated variants of rooms allowed?
+    /// Are we allowed to rotate room templates?
+    /// If the room is not a square this will only do 180 degree rotations.
     /// </summary>
     [DataField]
-    public bool Rotations = true;
+    public bool Rotation = true;
+
+    /// <summary>
+    /// Size of the room to fill.
+    /// </summary>
+    [DataField(required: true)]
+    public Vector2i Size;
 
     /// <summary>
     /// Rooms allowed for the marker.
     /// </summary>
-    [DataField(required: true)]
-    public EntityWhitelist RoomWhitelist;
+    [DataField]
+    public EntityWhitelist? RoomWhitelist;
 }

@@ -16,6 +16,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Procedural;
 
@@ -25,6 +26,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly AnchorableSystem _anchorable = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
@@ -33,7 +35,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private List<(Vector2i, Tile)> _tiles = new();
+    private readonly List<(Vector2i, Tile)> _tiles = new();
 
     private EntityQuery<MetaDataComponent> _metaQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -46,8 +48,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     private readonly JobQueue _dungeonJobQueue = new(DungeonJobTime);
     private readonly Dictionary<DungeonJob, CancellationTokenSource> _dungeonJobs = new();
 
-    private ITileDefinition _fallbackTile = default!;
-
     [ValidatePrototypeId<ContentTileDefinition>]
     public const string FallbackTileId = "FloorSteel";
 
@@ -55,7 +55,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     {
         base.Initialize();
 
-        _fallbackTile = _tileDefManager[FallbackTileId];
         _metaQuery = GetEntityQuery<MetaDataComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
         _console.RegisterCommand("dungen", Loc.GetString("cmd-dungen-desc"), Loc.GetString("cmd-dungen-help"), GenerateDungeon, CompletionCallback);

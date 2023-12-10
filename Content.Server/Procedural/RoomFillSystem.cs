@@ -1,10 +1,11 @@
-using Robust.Shared.Random;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Procedural;
 
 public sealed class RoomFillSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly DungeonSystem _dungeon = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
 
     public override void Initialize()
     {
@@ -12,18 +13,26 @@ public sealed class RoomFillSystem : EntitySystem
         SubscribeLocalEvent<RoomFillComponent, MapInitEvent>(OnRoomFillMapInit);
     }
 
-    private void OnRoomFillMapInit(Entity<RoomFillComponent> ent, ref MapInitEvent args)
+    private void OnRoomFillMapInit(EntityUid uid, RoomFillComponent component, MapInitEvent args)
     {
-        var xform = Transform(ent.Owner);
+        var xform = Transform(uid);
 
         if (xform.GridUid != null)
         {
-            var room = _random.Pick(ent.Comp.RoomPrototypes);
+            var room = _dungeon.GetRoomPrototype(component.Size, component.RoomWhitelist);
 
-
+            if (room != null)
+            {
+                var mapGrid = Comp<MapGridComponent>(xform.GridUid.Value);
+                _dungeon.SpawnRoom(xform.GridUid.Value, mapGrid, _maps.LocalToTile(xform.GridUid.Value, mapGrid, xform.Coordinates), room, new Random(), component.Rotation);
+            }
+            else
+            {
+                Log.Error($"Unable to find matching room prototype for {ToPrettyString(uid)}");
+            }
         }
 
         // Final cleanup
-        QueueDel(ent.Owner);
+        QueueDel(uid);
     }
 }

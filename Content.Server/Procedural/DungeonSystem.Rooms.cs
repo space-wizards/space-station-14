@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Decals;
 using Content.Shared.Procedural;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -10,29 +11,57 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem
 {
+    private List<DungeonRoomPrototype> _availableRooms = new();
+
     /// <summary>
-    /// Gets a random dunge room matching the specified area and whitelist.
+    /// Gets a random dungeon room matching the specified area and whitelist.
     /// </summary>
-    public DungeonRoomPrototype? GetRoomPrototype(Box2i area, EntityWhitelist? whitelist = null)
+    public DungeonRoomPrototype? GetRoomPrototype(Vector2i size, EntityWhitelist? whitelist = null)
     {
+        // Can never be true.
+        if (whitelist is { Tags: null })
+        {
+            return null;
+        }
+
+        _availableRooms.Clear();
+
         foreach (var proto in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
         {
-            if (proto.Size != area.Size)
+            if (proto.Size != size)
                 continue;
 
-            if (whitelist?.Tags == null)
+            if (whitelist == null)
+            {
+                _availableRooms.Add(proto);
                 continue;
+            }
 
             foreach (var tag in whitelist.Tags)
             {
                 if (!proto.Tags.Contains(tag))
                     continue;
 
-                return proto;
+                _availableRooms.Add(proto);
+                break;
             }
         }
 
-        return null;
+        var room = _availableRooms[_random.Next(_availableRooms.Count)];
+
+        return room;
+    }
+
+    public void SpawnRoom(
+        EntityUid gridUid,
+        MapGridComponent grid,
+        Vector2i origin,
+        DungeonRoomPrototype room,
+        Random random,
+        bool rotation = false)
+    {
+        var originTransform = Matrix3.CreateTranslation(origin);
+        SpawnRoom(gridUid, grid, originTransform, room, random, rotation);
     }
 
     public void SpawnRoom(
@@ -47,7 +76,7 @@ public sealed partial class DungeonSystem
         var roomMap = GetOrCreateTemplate(room);
         var templateMapUid = _mapManager.GetMapEntityId(roomMap);
         var templateGrid = Comp<MapGridComponent>(templateMapUid);
-        Angle roomRotation = Angle.Zero;
+        var roomRotation = Angle.Zero;
         var roomDimensions = room.Size;
 
         if (rotation)
@@ -64,14 +93,11 @@ public sealed partial class DungeonSystem
         }
 
         var roomTransform = Matrix3.CreateTransform((Vector2) room.Size / 2f, roomRotation);
-        Matrix3.Multiply(roomTransform, transform, out var finalTransform);
-        var finalRoomRotation = finalTransform.GetRotation();
+        Matrix3.Multiply(transform, roomTransform, out var finalTransform);
+        var finalRoomRotation = finalTransform.Rotation();
 
         var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
-        var roomTiles = new HashSet<Vector2i>(room.Size.X * room.Size.Y);
-        var exterior = new HashSet<Vector2i>(room.Size.X * 2 + room.Size.Y * 2);
         var tileOffset = -roomCenter + grid.TileSizeHalfVector;
-        Box2i? mapBounds = null;
         _tiles.Clear();
 
         // Load tiles
@@ -85,25 +111,6 @@ public sealed partial class DungeonSystem
                 var tilePos = finalTransform.Transform(indices + tileOffset);
                 var rounded = tilePos.Floored();
                 _tiles.Add((rounded, tileRef.Tile));
-                roomTiles.Add(rounded);
-
-                // If this were a Box2 we'd add tilesize although here I think that's undesirable as
-                // for example, a box2i of 0,0,1,1 is assumed to also include the tile at 1,1
-                mapBounds = mapBounds?.Union(new Box2i(rounded, rounded)) ?? new Box2i(rounded, rounded);
-            }
-        }
-
-        for (var x = -1; x <= roomDimensions.X; x++)
-        {
-            for (var y = -1; y <= roomDimensions.Y; y++)
-            {
-                if (x != -1 && y != -1 && x != roomDimensions.X && y != roomDimensions.Y)
-                {
-                    continue;
-                }
-
-                var tilePos = finalTransform.Transform(new Vector2i(x + roomDimensions.X, y + room.Offset.Y) + tileOffset);
-                exterior.Add(tilePos.Floored());
             }
         }
 
@@ -184,7 +191,7 @@ public sealed partial class DungeonSystem
                 // but place 1 nanometre off grid and fail the add.
                 if (!_maps.TryGetTileRef(gridUid, grid, tilePos, out var tileRef) || tileRef.Tile.IsEmpty)
                 {
-                    _maps.SetTile(gridUid, grid, tilePos, fallbackTile);
+                    _maps.SetTile(gridUid, grid, tilePos, _tileDefManager.GetVariantTile(FallbackTileId, _random));
                 }
 
                 var result = _decals.TryAddDecal(
