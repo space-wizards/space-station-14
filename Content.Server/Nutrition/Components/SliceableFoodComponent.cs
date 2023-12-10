@@ -7,7 +7,7 @@ namespace Content.Server.Nutrition.Components;
 [RegisterComponent, Access(typeof(SliceableFoodSystem))]
 public sealed partial class SliceableFoodComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId Slice = string.Empty;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
