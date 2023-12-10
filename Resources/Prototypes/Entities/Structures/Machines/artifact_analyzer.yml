@@ -199,6 +199,12 @@
     stateDoorClosed: door-closed
     openDrawDepth: 0
     closedDrawDepth: 4
+  - type: Construction
+    containers:
+    - machine_board
+    - machine_parts
+    - entity_storage
+    - output_container
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
