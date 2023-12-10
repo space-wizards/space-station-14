@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix ghost warps., type: Fix}
-  id: 4799
-  time: '2023-09-11T05:43:25.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Make the role timer tooltip look much nicer., type: Tweak}
   id: 4800
   time: '2023-09-11T05:44:22.0000000+00:00'
@@ -2904,3 +2899,9 @@ Entries:
       level., type: Tweak}
   id: 5298
   time: '2023-12-09T04:18:15.0000000+00:00'
+- author: nok-ko
+  changes:
+  - {message: 'Entities without hands (like mice and mothroaches) are now forbidden
+      from operating Syndicate Bombs, C4, and other timed explosives.', type: Fix}
+  id: 5299
+  time: '2023-12-10T03:13:00.0000000+00:00'
