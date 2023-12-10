@@ -13,7 +13,7 @@
     sprite: Objects/Misc/id_cards.rsi
   - type: Item
     size: Small
-#    storedRotation: -90 # test, uncomment after figuring out what the Yaml Linter is smoking
+    storedRotation: -90
     heldPrefix: default
   - type: Access
   - type: IdCard
