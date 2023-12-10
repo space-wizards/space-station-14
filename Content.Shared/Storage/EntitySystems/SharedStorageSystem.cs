@@ -37,7 +37,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] protected readonly SharedItemSystem ItemSystem = default!;
     [Dependency] private   readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private   readonly SharedHandsSystem _sharedHandsSystem = default!;
-    [Dependency] private   readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] protected readonly ActionBlockerSystem ActionBlocker = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
@@ -334,7 +334,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
         }
 
-        if (!_actionBlockerSystem.CanInteract(player, entity) || !storageComp.Container.Contains(entity))
+        if (!ActionBlocker.CanInteract(player, entity) || !storageComp.Container.Contains(entity))
             return;
 
         // Does the player have hands?
@@ -377,7 +377,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
         }
 
-        if (!_actionBlockerSystem.CanInteract(player, itemEnt))
+        if (!ActionBlocker.CanInteract(player, itemEnt))
             return;
 
         TrySetItemStorageLocation((itemEnt, null), (storageEnt, storageComp), msg.Location);
@@ -404,7 +404,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
         }
 
-        if (!_actionBlockerSystem.CanInteract(player, itemEnt) || !_sharedHandsSystem.IsHolding(player, itemEnt, out _))
+        if (!ActionBlocker.CanInteract(player, itemEnt) || !_sharedHandsSystem.IsHolding(player, itemEnt, out _))
             return;
 
         InsertAt((storageEnt, storageComp), (itemEnt, null), msg.Location, out _, player, stackAutomatically: false);

@@ -15,6 +15,7 @@
     size: Small
 #    storedRotation: -90 # For some reason this causes the Yaml Linter to fail. 
     heldPrefix: default
+    storedRotation: -90
   - type: Access
   - type: IdCard
   - type: StationRecordKeyStorage
