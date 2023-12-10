@@ -13,7 +13,7 @@
     sprite: Objects/Misc/id_cards.rsi
   - type: Item
     size: Small
-    storedRotation: -90
+#    storedRotation: -90 # For some reason this causes the Yaml Linter to fail. 
     heldPrefix: default
   - type: Access
   - type: IdCard
