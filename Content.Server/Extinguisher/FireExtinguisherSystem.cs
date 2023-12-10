@@ -45,7 +45,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
         if (args.Handled)
             return;
 
-        ToggleSafety(uid, args.User, component);
+        ToggleSafety(uid, component);
 
         args.Handled = true;
     }
@@ -99,11 +99,10 @@ public sealed class FireExtinguisherSystem : EntitySystem
         if (!args.CanInteract)
             return;
 
-        var verb = new InteractionVerb
-        {
-            Act = () => ToggleSafety(uid, args.User, component),
-            Text = Loc.GetString("fire-extinguisher-component-verb-text"),
-        };
+        var verb = new InteractionVerb();  // generic verb, Extinguisher-specific properties added afterwards
+
+        verb.Act = () => ToggleSafety(uid, component);
+        verb.Text = Loc.GetString("fire-extinguisher-component-verb-text");
 
         args.Verbs.Add(verb);
     }
@@ -119,7 +118,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
     }
 
     private void UpdateAppearance(EntityUid uid, FireExtinguisherComponent comp,
-        AppearanceComponent? appearance=null)
+        AppearanceComponent? appearance = null)
     {
         if (!Resolve(uid, ref appearance, false))
             return;
@@ -130,8 +129,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
         }
     }
 
-    public void ToggleSafety(EntityUid uid, EntityUid user,
-        FireExtinguisherComponent? extinguisher = null)
+    public void ToggleSafety(EntityUid uid, FireExtinguisherComponent? extinguisher = null)
     {
         if (!Resolve(uid, ref extinguisher))
             return;
