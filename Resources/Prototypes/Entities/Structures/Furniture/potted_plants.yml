@@ -235,6 +235,15 @@
   - type: Sprite
     state: plant-25
 
+- type: entity
+  id: PottedPlantCap #PottedPlant30
+  parent: PottedPlantBase
+  name: "Captain's bombzai tree"
+  description: "The captain's perculiarly trimmed bonzai tree. There's a tag on the base that says \"Reminder : If you cant find the nuke, look behind me.\""
+  components:
+  - type: Sprite
+    state: plant-30
+
 #these are all the plastic plants. They inherit from the first one because they don't have
 #enough differences to warrant getting a unique abstract prototype. It's just the name and description.
 - type: entity
