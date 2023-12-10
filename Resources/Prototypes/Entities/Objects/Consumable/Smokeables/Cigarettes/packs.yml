@@ -42,8 +42,6 @@
     materialComposition:
       Steel: 50
   - type: SpaceGarbage
-  - type: Item
-    size: Small
   - type: Storage
     grid:
     - 0,0,4,1
@@ -108,8 +106,6 @@
     materialComposition:
       Steel: 50
   - type: SpaceGarbage
-  - type: Item
-    size: Small
   - type: Storage
     grid:
     - 0,0,4,1
