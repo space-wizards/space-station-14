@@ -58,10 +58,11 @@ public sealed partial class DungeonSystem
         Vector2i origin,
         DungeonRoomPrototype room,
         Random random,
+        bool clearExisting = false,
         bool rotation = false)
     {
         var originTransform = Matrix3.CreateTranslation(origin);
-        SpawnRoom(gridUid, grid, originTransform, room, random, rotation);
+        SpawnRoom(gridUid, grid, originTransform, room, random, clearExisting, rotation);
     }
 
     public void SpawnRoom(
@@ -70,6 +71,7 @@ public sealed partial class DungeonSystem
         Matrix3 transform,
         DungeonRoomPrototype room,
         Random random,
+        bool clearExisting = false,
         bool rotation = false)
     {
         // Ensure the underlying template exists.
@@ -93,8 +95,23 @@ public sealed partial class DungeonSystem
         }
 
         var roomTransform = Matrix3.CreateTransform((Vector2) room.Size / 2f, roomRotation);
-        Matrix3.Multiply(transform, roomTransform, out var finalTransform);
+        Matrix3.Multiply(roomTransform, transform, out var finalTransform);
         var finalRoomRotation = finalTransform.Rotation();
+
+        // go BRRNNTTT on existing stuff
+        if (clearExisting)
+        {
+            var gridBounds = new Box2(transform.Transform(Vector2.Zero), transform.Transform(room.Size));
+
+            // TODO: This is using WorldAABB
+            /*
+            foreach (var templateEnt in
+                     _lookup.GetEntitiesIntersecting(gridUid, gridBounds, LookupFlags.Uncontained))
+            {
+                Del(templateEnt);
+            }
+            */
+        }
 
         var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
         var tileOffset = -roomCenter + grid.TileSizeHalfVector;

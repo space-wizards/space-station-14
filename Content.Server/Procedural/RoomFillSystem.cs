@@ -24,7 +24,14 @@ public sealed class RoomFillSystem : EntitySystem
             if (room != null)
             {
                 var mapGrid = Comp<MapGridComponent>(xform.GridUid.Value);
-                _dungeon.SpawnRoom(xform.GridUid.Value, mapGrid, _maps.LocalToTile(xform.GridUid.Value, mapGrid, xform.Coordinates), room, new Random(), component.Rotation);
+                _dungeon.SpawnRoom(
+                    xform.GridUid.Value,
+                    mapGrid,
+                    _maps.LocalToTile(xform.GridUid.Value, mapGrid, xform.Coordinates),
+                    room,
+                    new Random(),
+                    clearExisting: true
+                    rotation: component.Rotation);
             }
             else
             {
