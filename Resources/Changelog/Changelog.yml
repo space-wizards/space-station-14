@@ -1,10 +1,4 @@
 Entries:
-- author: DrTeaSpoon
-  changes:
-  - {message: 'Fixed Tomatoes, Eggs, Watermelons and Flourbags not leaving puddles
-      based on what they actually contain.', type: Fix}
-  id: 4803
-  time: '2023-09-11T08:16:27.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed error when equipping the energy katana as a space ninja., type: Fix}
@@ -2902,3 +2896,8 @@ Entries:
   - {message: Removed gas tank throwing damage., type: Remove}
   id: 5302
   time: '2023-12-10T14:11:26.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Adjusted welder blindness to be much less forgiving., type: Tweak}
+  id: 5303
+  time: '2023-12-10T23:10:07.0000000+00:00'
