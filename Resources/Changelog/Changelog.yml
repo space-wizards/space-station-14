@@ -1,178 +1,4 @@
 Entries:
-- author: Psychpsyo
-  changes:
-  - message: Janitors can now take the shark plushie for a walk in their bucket.
-    type: Add
-  id: 4827
-  time: '2023-09-14T07:17:45.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - message: Fixed some missing localization.
-    type: Fix
-  id: 4828
-  time: '2023-09-14T10:08:03.0000000+00:00'
-- author: Nairodian
-  changes:
-  - message: Holobarrier projectors can now be researched and produced in the security
-      techfab.
-    type: Tweak
-  id: 4829
-  time: '2023-09-14T23:34:43.0000000+00:00'
-- author: Lank
-  changes:
-  - message: Training bombs are now unable to space tiles.
-    type: Tweak
-  id: 4830
-  time: '2023-09-14T23:51:47.0000000+00:00'
-- author: kseandi
-  changes:
-  - message: HUD theme selection is now works!
-    type: Fix
-  id: 4831
-  time: '2023-09-15T02:05:56.0000000+00:00'
-- author: Morb0
-  changes:
-  - message: NPS no longer have an SSD indicator
-    type: Fix
-  id: 4832
-  time: '2023-09-15T02:15:26.0000000+00:00'
-- author: Doru991
-  changes:
-  - message: It is now easier to tell how damaged cyborgs are.
-    type: Tweak
-  id: 4833
-  time: '2023-09-15T03:14:47.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Swapping between guns now has a small delay before you can fire.
-    type: Tweak
-  id: 4834
-  time: '2023-09-15T04:15:43.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Fixed succumb and last words actions not appearing
-    type: Fix
-  id: 4835
-  time: '2023-09-15T20:52:49.0000000+00:00'
-- author: Slava0135
-  changes:
-  - message: Entity velocity now resets when buckling.
-    type: Tweak
-  id: 4836
-  time: '2023-09-16T04:15:06.0000000+00:00'
-- author: Psychpsyo
-  changes:
-  - message: The janitor's advanced mop can now be wielded, just like the regular
-      mop.
-    type: Add
-  id: 4837
-  time: '2023-09-16T04:33:01.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Some Syndicate objectives have been tweaked to have higher difficulties,
-      notably stealing the nuke disk.
-    type: Tweak
-  id: 4838
-  time: '2023-09-16T06:18:11.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Added beacons to station maps.
-    type: Add
-  id: 4839
-  time: '2023-09-16T08:11:48.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Fixed objectives not being given in some cases.
-    type: Fix
-  id: 4840
-  time: '2023-09-16T12:10:06.0000000+00:00'
-- author: Flareguy
-  changes:
-  - message: Added several new types of barricades for mappers to use, all using sprites
-      from /vg/station. The regular, full-tile barricade has also received a new sprite
-      from /vg/station.
-    type: Add
-  - message: Barricades are now slightly stronger & cheaper to make.
-    type: Tweak
-  id: 4841
-  time: '2023-09-16T12:50:48.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - message: Resized the non-admin Ahelp window to be taller and less wide.
-    type: Tweak
-  id: 4842
-  time: '2023-09-17T09:04:20.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - message: Fixed light animations not working.
-    type: Fix
-  id: 4843
-  time: '2023-09-17T17:57:50.0000000+00:00'
-- author: Henry12116
-  changes:
-  - message: You can now eat most organs. Bon appetit!
-    type: Add
-  id: 4844
-  time: '2023-09-18T00:20:11.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - message: Fixed fultons losing their beacon when the stack is split.
-    type: Fix
-  id: 4845
-  time: '2023-09-18T00:22:26.0000000+00:00'
-- author: Psychpsyo
-  changes:
-  - message: The advanced mop no longer looks boring when attached to the janitorial
-      trolley.
-    type: Tweak
-  id: 4846
-  time: '2023-09-18T00:23:35.0000000+00:00'
-- author: lapatison
-  changes:
-  - message: Now you can light matches with certain types (combat, work, merc, explorer)
-      of boots like a cool dude.
-    type: Add
-  id: 4847
-  time: '2023-09-18T00:26:21.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - message: security now has access to its own beret, fancy!
-    type: Add
-  id: 4848
-  time: '2023-09-18T00:30:31.0000000+00:00'
-- author: peptron1
-  changes:
-  - message: The chaplain hoodie now comes with its hood as an action, similar to
-      winter coats
-    type: Tweak
-  id: 4849
-  time: '2023-09-18T01:10:44.0000000+00:00'
-- author: Nairodian
-  changes:
-  - message: Fixed Holobarriers being unable to be destroyed.
-    type: Fix
-  id: 4850
-  time: '2023-09-18T01:22:39.0000000+00:00'
-- author: Ilya246
-  changes:
-  - message: Blood-red magboots' jetpack now works again.
-    type: Fix
-  id: 4851
-  time: '2023-09-18T06:13:12.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - message: The syndicate have started using cheaper materials in the manufacture
-      of their over ear headsets
-    type: Add
-  id: 4852
-  time: '2023-09-18T19:18:56.0000000+00:00'
-- author: PursuitinAshes
-  changes:
-  - message: Nanotrasen now properly supplies its captains with appropriate headgear
-      in all of their lockers.
-    type: Fix
-  id: 4853
-  time: '2023-09-18T19:20:10.0000000+00:00'
 - author: deltanedas
   changes:
   - message: The Syndicate has cracked the binary radio channel's encryption and is
@@ -3630,6 +3456,12 @@ Entries:
     type: Tweak
   id: 5268
   time: '2023-12-06T16:40:23.0000000+00:00'
+- author: ForestNoises
+  changes:
+  - message: The rejuvenate command/verb resets all action cooldowns.
+    type: Add
+  id: 5268
+  time: '2023-12-05T21:00:03.0000000+00:00'
 - author: Kit0vras
   changes:
   - message: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
@@ -3637,6 +3469,12 @@ Entries:
     type: Tweak
   id: 5269
   time: '2023-12-06T16:41:07.0000000+00:00'
+- author: themias
+  changes:
+  - message: Empty hot cocoa can go in trash bags
+    type: Fix
+  id: 5269
+  time: '2023-12-05T21:39:26.0000000+00:00'
 - author: ZoNeSRuS
   changes:
   - message: "\u043C\u0435\u0434/\u0438\u043D\u0436/\u0440\u043D\u0434/\u0441\u0435\
@@ -3646,6 +3484,12 @@ Entries:
     type: Fix
   id: 5270
   time: '2023-12-06T16:39:44.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - message: Ghosts now have speech bubbles again
+    type: Fix
+  id: 5270
+  time: '2023-12-05T21:40:03.0000000+00:00'
 - author: Ady4
   changes:
   - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u043D\u043E\u0432\u044B\
@@ -3666,6 +3510,12 @@ Entries:
     type: Fix
   id: 5271
   time: '2023-12-06T17:20:36.0000000+00:00'
+- author: tgrkzus
+  changes:
+  - message: Paper cups are now available at water coolers.
+    type: Add
+  id: 5271
+  time: '2023-12-05T21:47:21.0000000+00:00'
 - author: AlexandrSTG
   changes:
   - message: "\u043D\u043E\u0432\u044B\u0435 \u043F\u0435\u0440\u0435\u0432\u043E\u0434\
@@ -3716,6 +3566,13 @@ Entries:
     type: Fix
   id: 5272
   time: '2023-12-06T19:48:49.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: You can now make the storage window opaque with the "enable opaque storage
+      window" toggle in the graphics menu.
+    type: Add
+  id: 5272
+  time: '2023-12-05T23:38:10.0000000+00:00'
 - author: Ady4
   changes:
   - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0430 \u043E\u0448\
@@ -3726,6 +3583,12 @@ Entries:
     type: Fix
   id: 5273
   time: '2023-12-06T20:18:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: Reverted duffel bags to their original storage capacity.
+    type: Fix
+  id: 5273
+  time: '2023-12-06T03:11:01.0000000+00:00'
 - author: spo9k
   changes:
   - message: "\u0410\u043A\u0446\u0435\u043D\u0442 \u0444\u0435\u043B\u0438\u043D\u0438\
@@ -3735,155 +3598,18 @@ Entries:
     type: Add
   id: 5274
   time: '2023-12-08T21:32:01.0000000+00:00'
-- author: ForestNoises
-  changes:
-  - {message: The rejuvenate command/verb resets all action cooldowns., type: Add}
-  id: 5268
-  time: '2023-12-05T21:00:03.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Empty hot cocoa can go in trash bags, type: Fix}
-  id: 5269
-  time: '2023-12-05T21:39:26.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - {message: Ghosts now have speech bubbles again, type: Fix}
-  id: 5270
-  time: '2023-12-05T21:40:03.0000000+00:00'
-- author: tgrkzus
-  changes:
-  - {message: Paper cups are now available at water coolers., type: Add}
-  id: 5271
-  time: '2023-12-05T21:47:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: You can now make the storage window opaque with the "enable opaque storage
-      window" toggle in the graphics menu., type: Add}
-  id: 5272
-  time: '2023-12-05T23:38:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Reverted duffel bags to their original storage capacity., type: Fix}
-  id: 5273
-  time: '2023-12-06T03:11:01.0000000+00:00'
 - author: metalgearsloth
   changes:
-  - {message: Predict helmet toggling., type: Fix}
+  - message: Predict helmet toggling.
+    type: Fix
   id: 5274
   time: '2023-12-06T06:59:31.0000000+00:00'
 - author: deltanedas
   changes:
-  - {message: Fixed emagged medibots not injecting healthy people with chloral hydrate.,
-    type: Fix}
+  - message: Fixed emagged medibots not injecting healthy people with chloral hydrate.
+    type: Fix
   id: 5275
   time: '2023-12-06T21:30:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix toggleable clothing still being interactable e.g. hardsuit helmets.,
-    type: Fix}
-  id: 5276
-  time: '2023-12-06T21:56:03.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Combat boots and friends use a slot for sidearms instead of a storage
-      window., type: Tweak}
-  id: 5277
-  time: '2023-12-06T21:58:25.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - {message: Speech bubbles for the living now again have names when fancy speech
-      bubbles are enabled, type: Fix}
-  id: 5278
-  time: '2023-12-06T21:58:53.0000000+00:00'
-- author: TemporalOroboros
-  changes:
-  - {message: Pickaxes have a more accurate shape in storage., type: Tweak}
-  id: 5279
-  time: '2023-12-07T00:52:57.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: 'Added a new lizard chest marking, an underbelly.', type: Add}
-  id: 5280
-  time: '2023-12-07T01:05:43.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: 'Adds Space Cobras, invisible at rest and venom blind.', type: Add}
-  - {message: Adds snake meat and fancy snakeskin boots., type: Add}
-  - {message: The too weak space spider has been strengthened., type: Tweak}
-  id: 5281
-  time: '2023-12-07T01:25:57.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: Added three new specialized brute healing chemicals and a guidebook
-      entry on how to safely use them., type: Add}
-  - {message: 'Added Razorium, which is basically liquid razor blades.', type: Add}
-  id: 5282
-  time: '2023-12-07T03:05:29.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Speed penalties for duffels and hardsuits now apply when held, not
-      just when worn.', type: Add}
-  id: 5283
-  time: '2023-12-07T03:41:29.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixed explosion resistance being ignored., type: Fix}
-  id: 5284
-  time: '2023-12-07T18:51:46.0000000+00:00'
-- author: Aexxie
-  changes:
-  - {message: Paramed no longer has external access., type: Remove}
-  id: 5285
-  time: '2023-12-07T23:27:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Hovering over an item in storage now shows a tooltip with the name.,
-    type: Add}
-  id: 5286
-  time: '2023-12-08T02:38:07.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Adds a bed for the psychologist's office., type: Add}
-  id: 5287
-  time: '2023-12-08T05:24:35.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Chemical explosions are powerful again., type: Tweak}
-  id: 5288
-  time: '2023-12-08T10:58:25.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'V and shift-V can now be used to open the bag and belt, respectively.',
-    type: Add}
-  - {message: Interacting with a storage item now has context-sensitive logic based
-      on whether or not the window is open or focused., type: Fix}
-  id: 5289
-  time: '2023-12-08T18:43:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'When viewing a storage container, the item that will be removed via
-      smart-equip is now marked with a small star icon.', type: Add}
-  id: 5290
-  time: '2023-12-08T18:43:58.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Rat king and his servants properly heal from miasma., type: Fix}
-  - {message: Rat king no longer rummages from an infinite distance., type: Fix}
-  - {message: Rat king generates more miasma to fill larger rooms., type: Tweak}
-  id: 5291
-  time: '2023-12-08T18:46:28.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Command staff has brig access., type: Tweak}
-  id: 5292
-  time: '2023-12-08T18:50:07.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Removed upgrades from the anomaly vessel., type: Remove}
-  - {message: 'Added the experimental anomaly vessel, which researches twice as fast
-      at the cost of being radioactive.', type: Add}
-  id: 5293
-  time: '2023-12-08T18:50:41.0000000+00:00'
 - author: spook
   changes:
   - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
@@ -3891,6 +3617,12 @@ Entries:
     type: Add
   id: 5275
   time: '2023-12-09T12:03:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Fix toggleable clothing still being interactable e.g. hardsuit helmets.
+    type: Fix
+  id: 5276
+  time: '2023-12-06T21:56:03.0000000+00:00'
 - author: Dexler
   changes:
   - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0444\u0443\u043D\u043A\
@@ -3902,3 +3634,139 @@ Entries:
     type: Add
   id: 5276
   time: '2023-12-10T08:52:19.0000000+00:00'
+- author: deltanedas
+  changes:
+  - message: Combat boots and friends use a slot for sidearms instead of a storage
+      window.
+    type: Tweak
+  id: 5277
+  time: '2023-12-06T21:58:25.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - message: Speech bubbles for the living now again have names when fancy speech
+      bubbles are enabled
+    type: Fix
+  id: 5278
+  time: '2023-12-06T21:58:53.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - message: Pickaxes have a more accurate shape in storage.
+    type: Tweak
+  id: 5279
+  time: '2023-12-07T00:52:57.0000000+00:00'
+- author: Nairodian
+  changes:
+  - message: Added a new lizard chest marking, an underbelly.
+    type: Add
+  id: 5280
+  time: '2023-12-07T01:05:43.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - message: Adds Space Cobras, invisible at rest and venom blind.
+    type: Add
+  - message: Adds snake meat and fancy snakeskin boots.
+    type: Add
+  - message: The too weak space spider has been strengthened.
+    type: Tweak
+  id: 5281
+  time: '2023-12-07T01:25:57.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - message: Added three new specialized brute healing chemicals and a guidebook entry
+      on how to safely use them.
+    type: Add
+  - message: Added Razorium, which is basically liquid razor blades.
+    type: Add
+  id: 5282
+  time: '2023-12-07T03:05:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: Speed penalties for duffels and hardsuits now apply when held, not just
+      when worn.
+    type: Add
+  id: 5283
+  time: '2023-12-07T03:41:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - message: Fixed explosion resistance being ignored.
+    type: Fix
+  id: 5284
+  time: '2023-12-07T18:51:46.0000000+00:00'
+- author: Aexxie
+  changes:
+  - message: Paramed no longer has external access.
+    type: Remove
+  id: 5285
+  time: '2023-12-07T23:27:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: Hovering over an item in storage now shows a tooltip with the name.
+    type: Add
+  id: 5286
+  time: '2023-12-08T02:38:07.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - message: Adds a bed for the psychologist's office.
+    type: Add
+  id: 5287
+  time: '2023-12-08T05:24:35.0000000+00:00'
+- author: Emisse
+  changes:
+  - message: Chemical explosions are powerful again.
+    type: Tweak
+  id: 5288
+  time: '2023-12-08T10:58:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: V and shift-V can now be used to open the bag and belt, respectively.
+    type: Add
+  - message: Interacting with a storage item now has context-sensitive logic based
+      on whether or not the window is open or focused.
+    type: Fix
+  id: 5289
+  time: '2023-12-08T18:43:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: When viewing a storage container, the item that will be removed via smart-equip
+      is now marked with a small star icon.
+    type: Add
+  id: 5290
+  time: '2023-12-08T18:43:58.0000000+00:00'
+- author: Whisper
+  changes:
+  - message: Rat king and his servants properly heal from miasma.
+    type: Fix
+  - message: Rat king no longer rummages from an infinite distance.
+    type: Fix
+  - message: Rat king generates more miasma to fill larger rooms.
+    type: Tweak
+  id: 5291
+  time: '2023-12-08T18:46:28.0000000+00:00'
+- author: Emisse
+  changes:
+  - message: Command staff has brig access.
+    type: Tweak
+  id: 5292
+  time: '2023-12-08T18:50:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: Removed upgrades from the anomaly vessel.
+    type: Remove
+  - message: Added the experimental anomaly vessel, which researches twice as fast
+      at the cost of being radioactive.
+    type: Add
+  id: 5293
+  time: '2023-12-08T18:50:41.0000000+00:00'
+- author: ZoNeSRuS
+  changes:
+  - message: "\u041E\u0447\u043A\u0438 \u0421\u0429 \u0442\u0435\u043F\u0435\u0440\
+      \u044C \u0438\u043C\u0435\u044E\u0442 \"\u0421\u0435\u043A\u044C\u044E\u0440\
+      \u0438\u0442\u0438 \u0445\u0443\u0434\""
+    type: Add
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u044B \u041C\u0429 \u0443\
+      \ \u0433\u043B\u0430\u0432, \u0447\u0442\u043E \u0431\u044B \u0441\u043E\u043E\
+      \u0442\u0432\u0435\u0442\u0441\u0442\u0432\u043E\u0432\u0430\u0442\u044C \u0438\
+      \u0434\u0435\u0435 \u0441\u0435\u0440\u0432\u0435\u0440\u0430."
+    type: Tweak
+  id: 5294
+  time: '2023-12-10T09:17:54.0000000+00:00'
