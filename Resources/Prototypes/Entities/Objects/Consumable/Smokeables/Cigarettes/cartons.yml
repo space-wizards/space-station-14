@@ -19,7 +19,7 @@
   - type: StorageFill
     contents:
       - id: CigPackGreen
-        amount: 6
+        amount: 5
   - type: Tag
     tags:
     - Trash
