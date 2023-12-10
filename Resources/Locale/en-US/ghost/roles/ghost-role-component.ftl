@@ -180,12 +180,12 @@ ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
 
 ghost-role-information-Death-Squad-name = Death Squad Operative
-ghost-role-information-Death-Squad-description = Prepare for an all-out offensive on the station. As a heavily armed operative, your mission is to obliterate all life in your path. No witnesses.
-
-ghost-role-information-exterminator-name = Exterminator
-ghost-role-information-exterminator-description = You been been sent back in time to terminate a target with high importance to the future.
-ghost-role-information-exterminator-rules = You are an antagonist and may kill anyone that tries to stop you, but killing the target is always your top priority.
+ghost-role-information-Death-Squad-description = One of Nanotrasen's top internal affairs agents. Await orders from CentComm or an official.
 
 ghost-role-information-Cak-name = Cak
 ghost-role-information-Cak-description = You are the chef's favorite child. You're a living cake cat.  
 ghost-role-information-Cak-rules = You are a living edible sweet cat. Your task is to find your place in this world where everything wants to eat you.
+
+ghost-role-information-exterminator-name = Exterminator
+ghost-role-information-exterminator-description = You been been sent back in time to terminate a target with high importance to the future.
+ghost-role-information-exterminator-rules = You are an antagonist and may kill anyone that tries to stop you, but killing the target is always your top priority.
