@@ -1,6 +1,6 @@
 using Content.Server.Explosion.Components;
-using Content.Server.Fluids.Components;
 using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
