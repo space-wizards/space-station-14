@@ -76,7 +76,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         base.Update(frameTime);
         var query = EntityQueryEnumerator<ClusterGrenadeComponent>();
 
-        if (query.MoveNext(out var uid, out var clug))
+        while (query.MoveNext(out var uid, out var clug))
         {
             if (clug.CountDown && clug.UnspawnedCount > 0)
             {
