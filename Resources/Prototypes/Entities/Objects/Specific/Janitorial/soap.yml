@@ -19,6 +19,7 @@
   - type: Appearance
   - type: Item
     sprite: Objects/Specific/Janitorial/soap.rsi
+    storedRotation: -90
   - type: Slippery
     paralyzeTime: 2
     launchForwardsMultiplier: 1.5
@@ -67,7 +68,6 @@
   - type: Food
     solution: soap
   - type: BadFood
-
 
 - type: entity
   name: soap

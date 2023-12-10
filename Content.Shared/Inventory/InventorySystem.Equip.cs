@@ -331,6 +331,10 @@ public abstract partial class InventorySystem
         bool force = false, bool predicted = false, InventoryComponent? inventory = null, ClothingComponent? clothing = null)
     {
         removedItem = null;
+
+        if (TerminatingOrDeleted(target))
+            return false;
+
         if (!Resolve(target, ref inventory, false))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
@@ -347,7 +351,7 @@ public abstract partial class InventorySystem
 
         removedItem = slotContainer.ContainedEntity;
 
-        if (!removedItem.HasValue)
+        if (!removedItem.HasValue || TerminatingOrDeleted(removedItem.Value))
             return false;
 
         if (!force && !CanUnequip(actor, target, slot, out var reason, slotContainer, slotDefinition, inventory))
