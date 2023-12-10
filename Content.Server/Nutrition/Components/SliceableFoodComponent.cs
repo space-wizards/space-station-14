@@ -7,8 +7,12 @@ namespace Content.Server.Nutrition.Components;
 [RegisterComponent, Access(typeof(SliceableFoodSystem))]
 public sealed partial class SliceableFoodComponent : Component
 {
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
-    public EntProtoId Slice = string.Empty;
+    /// <summary>
+    /// Prototype to spawn after slicing.
+    /// If null then it can't be sliced.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId? Slice;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Items/Culinary/chop.ogg");
