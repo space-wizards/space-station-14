@@ -105,8 +105,10 @@
     sprite: Objects/Tanks/emergency.rsi
   - type: Item
     size: Small
-    storedRotation: -45
     sprite: Objects/Tanks/emergency.rsi
+    storedSprite:
+      sprite: Objects/Tanks/emergency.rsi
+      state: stored
   - type: GasTank
     air:
       volume: 0.66
@@ -137,10 +139,14 @@
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_red.rsi
-  - type: Item
-    sprite: Objects/Tanks/emergency_red.rsi
   - type: Clothing
     sprite: Objects/Tanks/emergency_red.rsi
+  - type: Item
+    size: Small
+    sprite: Objects/Tanks/emergency_red.rsi
+    storedSprite:
+      sprite: Objects/Tanks/emergency_red.rsi
+      state: stored
 
 - type: entity
   parent: EmergencyOxygenTank
@@ -150,14 +156,18 @@
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_yellow.rsi
-  - type: Item
-    sprite: Objects/Tanks/emergency_yellow.rsi
   - type: GasTank
     air:
       volume: 1.5
       temperature: 293.15
   - type: Clothing
+    sprite: Objects/Tanks/emergency_yellow.
+  - type: Item
+    size: Small
     sprite: Objects/Tanks/emergency_yellow.rsi
+    storedSprite:
+      sprite: Objects/Tanks/emergency_yellow.rsi
+      state: stored
 
 - type: entity
   parent: ExtendedEmergencyOxygenTank
@@ -169,6 +179,10 @@
     sprite: Objects/Tanks/emergency_double.rsi
   - type: Item
     sprite: Objects/Tanks/emergency_double.rsi
+    size: Small
+    storedSprite:
+      sprite: Objects/Tanks/emergency_double.rsi
+      state: stored
   - type: GasTank
     air:
       volume: 2.5
