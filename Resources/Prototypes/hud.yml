@@ -17,3 +17,8 @@
   id: SS14PlasmafireTheme
   name: ui-options-hud-theme-plasmafire
   path: Plasmafire
+
+- type: hudTheme
+  id: SS14RetroTheme
+  name: ui-options-hud-theme-retro
+  path: Retro
