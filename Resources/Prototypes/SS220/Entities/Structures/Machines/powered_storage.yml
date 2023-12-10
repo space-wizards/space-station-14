@@ -1,0 +1,116 @@
+- type: entity
+  id: MachineStorage
+  parent: BaseMachinePowered
+  name: MachineStorage
+  description: its just a backpack, but too heavy, and with additional features
+  abstract: true
+  components:
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 3
+    enabled: false
+    sound:
+      path: /Audio/Ambience/Objects/vending_machine_hum.ogg
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/empty.rsi
+    snapCardinals: true
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.45,0.25,0.45"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 200
+  - type: ActivatableUI
+    key: enum.SmartFridgeUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.SmartFridgeUiKey.Key
+      type: SmartFridgeBoundUserInterface
+  - type: Anchorable
+  - type: DoAfter
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: PointLight
+    enabled: false
+    castShadows: false
+    radius: 1.5
+  - type: LitOnPowered
+  - type: ApcPowerReceiver
+    powerLoad: 20
+    priority: Low
+  - type: Actions
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+
+
+- type: entity
+  parent: MachineStorage
+  id: StorageSmartFridge
+  name: SmartFridge
+  description: A refrigerated storage unit for keeping items cold and fresh.
+  components:
+  - type: SmartFridge
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
+    loopDeny: false
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/smartfridge.rsi
+    layers:
+    - state: off
+      map: ["enum.SmartFridgeVisualLayers.Base"]
+    - state: off
+      map: ["enum.SmartFridgeVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: fill-3
+      map: ["enum.PowerDeviceVisuals.Powered"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        base:
+          True: { state: fill-3 }
+          False: { state: off }
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#9dc5c9"
+  - type: Storage
+    grid:
+    - 0,0,20,20
+    maxItemSize: Huge
+    whitelist:
+      components:
+        - Pill
+        - Seed
+        - Produce
+      tags:
+        - Bottle
+        - Ointment
+        - Bloodpack
+        - Brutepack
+        - GlassBeaker
+        - PillCanister
+        - Meat
+        - Fruit
+        - Corn
+        - ClothMade
+        - Ambrosia
+        - Flower
+        - Carrot
+        - Potato

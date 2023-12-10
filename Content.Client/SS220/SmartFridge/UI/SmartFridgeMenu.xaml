@@ -1,0 +1,11 @@
+<!-- © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt -->
+
+<DefaultWindow xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Vertical">
+        <LineEdit Name="SearchBar" PlaceHolder="{Loc 'vending-machine-component-search-filter'}" HorizontalExpand="True"  Margin ="0 4" Access="Public"/>
+        <ItemList Name="SmartFridgeContents"
+                  SizeFlagsStretchRatio="8"
+                  VerticalExpand="True">
+        </ItemList>
+    </BoxContainer>
+</DefaultWindow>
