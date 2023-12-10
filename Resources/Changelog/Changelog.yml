@@ -1,28 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix ghost warps., type: Fix}
-  id: 4799
-  time: '2023-09-11T05:43:25.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Make the role timer tooltip look much nicer., type: Tweak}
-  id: 4800
-  time: '2023-09-11T05:44:22.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Added indicator near SSD players, type: Add}
-  id: 4801
-  time: '2023-09-11T05:52:56.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Jetpacks, being weightless, and flying mobs can now pass over lava
-      & chasms unharmed (as well as other obstacles)', type: Add}
-  - {message: Observers are no longer affected by ice physics, type: Fix}
-  - {message: 'Step trigger (slipping, shards, etc) now by default won''t trigger
-      if the stepping entity is weightless or set as in air', type: Tweak}
-  id: 4802
-  time: '2023-09-11T06:03:17.0000000+00:00'
 - author: DrTeaSpoon
   changes:
   - {message: 'Fixed Tomatoes, Eggs, Watermelons and Flourbags not leaving puddles
@@ -2904,3 +2880,25 @@ Entries:
       level., type: Tweak}
   id: 5298
   time: '2023-12-09T04:18:15.0000000+00:00'
+- author: nok-ko
+  changes:
+  - {message: 'Entities without hands (like mice and mothroaches) are now forbidden
+      from operating Syndicate Bombs, C4, and other timed explosives.', type: Fix}
+  id: 5299
+  time: '2023-12-10T03:13:00.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Updated the crew monitoring console user interface, type: Tweak}
+  id: 5300
+  time: '2023-12-10T05:38:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Add color picker to color selection, e.g. for character colors.', type: Add}
+  - {message: Fix drag-drop interaction outline not updating properly., type: Fix}
+  id: 5301
+  time: '2023-12-10T10:43:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed gas tank throwing damage., type: Remove}
+  id: 5302
+  time: '2023-12-10T14:11:26.0000000+00:00'
