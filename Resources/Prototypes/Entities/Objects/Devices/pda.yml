@@ -1038,7 +1038,7 @@
       whitelist:
         components:
           - Cartridge
-  - type: HealthAnalyzer 
+  - type: HealthAnalyzer
     scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"

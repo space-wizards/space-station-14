@@ -477,7 +477,7 @@
         wetfloorsign_slot2: !type:ContainerSlot {}
         wetfloorsign_slot1: !type:ContainerSlot {}
         lightreplacer_slot: !type:ContainerSlot {}
-        spraybottle_slot:  !type:ContainerSlot {}
+        spraybottle_slot: !type:ContainerSlot {}
     - type: GuideHelp
       guides:
       - Janitorial

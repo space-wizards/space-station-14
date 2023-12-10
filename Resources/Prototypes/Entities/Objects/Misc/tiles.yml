@@ -337,7 +337,7 @@
       - FloorMiningLight
   - type: Stack
     stackType: FloorTileMiningLight
-    
+
 # Departamental
 - type: entity
   name: freezer tile

@@ -36,12 +36,12 @@
   - type: Openable
     sound:
       collection: packetOpenSounds
-  # Since this one is closed, the only way to insert liquid is with a syringe.
+ # Since this one is closed, the only way to insert liquid is with a syringe.
   - type: InjectableSolution
     solution: food
-  # Note NOT refillable. 
-  # It be a shame if it turned out ALL drinks were ALWAYS refillable.... ffs.
-  # Well its fixed now, but I want to share my pain.
+ # Note NOT refillable. 
+ # It be a shame if it turned out ALL drinks were ALWAYS refillable.... ffs.
+ # Well its fixed now, but I want to share my pain.
   - type: SolutionContainerManager
     solutions:
       food:

@@ -69,5 +69,3 @@
         sprite: Structures/Machines/server.rsi
         state: server
     - type: NetProbeCartridge
-
-

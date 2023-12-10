@@ -1,7 +1,7 @@
 - type: entity
   id: WoodenSign
   name: wooden sign
-  description: He's pointing somewhere. 
+  description: He's pointing somewhere.
   components:
   - type: Clickable
   - type: InteractionOutline

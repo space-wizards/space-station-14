@@ -204,7 +204,7 @@
         reagents: #Hell if I know what durathread is made out of.
         - ReagentId: Fiber
           Quantity: 6
-          
+
 - type: entity
   parent: MaterialBase
   id: MaterialWoodPlank

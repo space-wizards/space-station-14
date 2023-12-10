@@ -1083,7 +1083,7 @@
   parent: DrinkBase
   id: CrazyGlue
   name: crazy glue
-  description:  A bottle of crazy glue manufactured by Honk! Co.
+  description: A bottle of crazy glue manufactured by Honk! Co.
   components:
   - type: Openable
     sound:

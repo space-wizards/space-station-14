@@ -17,7 +17,7 @@
   - type: Tag
     tags:
     - Figurine
-    
+
 #Ripley APLU
 - type: entity
   parent: BaseFigurineMech

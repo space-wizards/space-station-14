@@ -72,7 +72,7 @@
   - type: Item
     storedRotation: -45 # Light tubes need to be changed wholesale to a non diagonal sprite because storedSprite can't handle state changes.
   - type: Sprite
-    sprite:  Objects/Power/light_tube.rsi
+    sprite: Objects/Power/light_tube.rsi
   - type: LightBulb
     bulb: Tube
 

@@ -49,4 +49,3 @@
       coldDamage: {}
       ColdDamageThreshold: 0
     - type: FrictionContacts
-      

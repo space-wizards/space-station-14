@@ -34,7 +34,6 @@
   - type: Item
     size: Small
     storedRotation: 90
-  
 
 - type: entity
   name: makeshift handcuffs
