@@ -1,13 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Jetpacks, being weightless, and flying mobs can now pass over lava
-      & chasms unharmed (as well as other obstacles)', type: Add}
-  - {message: Observers are no longer affected by ice physics, type: Fix}
-  - {message: 'Step trigger (slipping, shards, etc) now by default won''t trigger
-      if the stepping entity is weightless or set as in air', type: Tweak}
-  id: 4802
-  time: '2023-09-11T06:03:17.0000000+00:00'
 - author: DrTeaSpoon
   changes:
   - {message: 'Fixed Tomatoes, Eggs, Watermelons and Flourbags not leaving puddles
@@ -2906,3 +2897,8 @@ Entries:
   - {message: Fix drag-drop interaction outline not updating properly., type: Fix}
   id: 5301
   time: '2023-12-10T10:43:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed gas tank throwing damage., type: Remove}
+  id: 5302
+  time: '2023-12-10T14:11:26.0000000+00:00'
