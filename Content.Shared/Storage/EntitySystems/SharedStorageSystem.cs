@@ -53,6 +53,8 @@ public abstract class SharedStorageSystem : EntitySystem
     [ValidatePrototypeId<ItemSizePrototype>]
     public const string DefaultStorageMaxItemSize = "Normal";
 
+    public bool CheckingCanInsert;
+
     /// <inheritdoc />
     public override void Initialize()
     {
@@ -465,7 +467,11 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Cancelled || args.Container.ID != StorageComponent.ContainerId)
             return;
 
-        if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true, includeContainerChecks: false))
+        // don't run cyclical CanInsert() loops
+        if (CheckingCanInsert)
+            return;
+
+        if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true))
             args.Cancel();
     }
 
@@ -534,8 +540,7 @@ public abstract class SharedStorageSystem : EntitySystem
         StorageComponent? storageComp = null,
         ItemComponent? item = null,
         bool ignoreStacks = false,
-        bool ignoreLocation = false,
-        bool includeContainerChecks = true)
+        bool ignoreLocation = false)
     {
         if (!Resolve(uid, ref storageComp) || !Resolve(insertEnt, ref item, false))
         {
@@ -592,11 +597,14 @@ public abstract class SharedStorageSystem : EntitySystem
             }
         }
 
-        if (includeContainerChecks && !_containerSystem.CanInsert(insertEnt, storageComp.Container))
+        CheckingCanInsert = true;
+        if (!_containerSystem.CanInsert(insertEnt, storageComp.Container))
         {
+            CheckingCanInsert = false;
             reason = null;
             return false;
         }
+        CheckingCanInsert = false;
 
         reason = null;
         return true;
