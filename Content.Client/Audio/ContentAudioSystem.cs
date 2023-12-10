@@ -1,5 +1,7 @@
 using Content.Shared.Audio;
+using Content.Shared.CCVar;
 using Robust.Client.GameObjects;
+using Robust.Shared;
 using Robust.Shared.Audio;
 using AudioComponent = Robust.Shared.Audio.Components.AudioComponent;
 
@@ -17,6 +19,18 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 
     private const float MinVolume = -32f;
     private const float DefaultDuration = 2f;
+
+    /*
+     * Gain multipliers for specific audio sliders.
+     * The float value will get multiplied by this when setting
+     * i.e. a gain of 0.5f x 3 will equal 1.5f which is supported in OpenAL.
+     */
+
+    public const float MasterVolumeMultiplier = 3f;
+    public const float MidiVolumeMultiplier = 0.25f;
+    public const float AmbienceMultiplier = 3f;
+    public const float AmbientMusicMultiplier = 3f;
+    public const float LobbyMultiplier = 3f;
 
     public override void Initialize()
     {

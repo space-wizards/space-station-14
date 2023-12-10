@@ -598,7 +598,7 @@ public abstract partial class InteractionTest
 
     /// <summary>
     /// Performs an entity lookup and asserts that only the listed entities exist and that they are all present.
-    /// Ignores the grid, map, player, target and contained entities.
+    /// Ignores the grid, map, player, target, contained entities, and entities with null prototypes.
     /// </summary>
     protected async Task AssertEntityLookup(
         EntitySpecifierCollection collection,
@@ -652,6 +652,9 @@ public abstract partial class InteractionTest
         foreach (var uid in entities)
         {
             var found = ToEntitySpecifier(uid);
+            if (found is null)
+                continue;
+
             if (spec.Prototype != found.Prototype)
                 continue;
 
