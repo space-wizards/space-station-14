@@ -18,6 +18,7 @@
     slots:
       - Belt
   - type: TilePrying
+    advanced: true
   - type: LatticeCutting
   - type: Tool
     qualities:
