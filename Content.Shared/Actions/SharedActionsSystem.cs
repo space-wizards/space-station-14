@@ -308,17 +308,7 @@ public abstract class SharedActionsSystem : EntitySystem
         UpdateAction(actionId, action);
         Dirty(actionId.Value, action);
     }
-
-    public void ChangeName(EntityUid? actionId, string name)
-    {
-        if (!TryGetActionData(actionId, out var action) || !TryComp(actionId, out MetaDataComponent? metadata) || metadata.EntityName == name)
-            return;
-
-        _metaData.SetEntityName(actionId.Value, name, metadata);
-        UpdateAction(actionId, action);
-        Dirty(actionId.Value, action);
-    }
-
+    
     private void OnActionsGetState(EntityUid uid, ActionsComponent component, ref ComponentGetState args)
     {
         args.State = new ActionsComponentState(GetNetEntitySet(component.Actions));
