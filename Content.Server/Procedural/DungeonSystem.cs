@@ -7,6 +7,7 @@ using Content.Server.GameTicking.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.GameTicking;
+using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Robust.Server.GameObjects;
@@ -45,10 +46,16 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     private readonly JobQueue _dungeonJobQueue = new(DungeonJobTime);
     private readonly Dictionary<DungeonJob, CancellationTokenSource> _dungeonJobs = new();
 
+    private ITileDefinition _fallbackTile = default!;
+
+    [ValidatePrototypeId<ContentTileDefinition>]
+    public const string FallbackTileId = "FloorSteel";
+
     public override void Initialize()
     {
         base.Initialize();
 
+        _fallbackTile = _tileDefManager[FallbackTileId];
         _metaQuery = GetEntityQuery<MetaDataComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
         _console.RegisterCommand("dungen", Loc.GetString("cmd-dungen-desc"), Loc.GetString("cmd-dungen-help"), GenerateDungeon, CompletionCallback);
@@ -184,7 +191,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     {
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob(
-            _sawmill,
+            Log,
             DungeonJobTime,
             EntityManager,
             _mapManager,
@@ -215,7 +222,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     {
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob(
-            _sawmill,
+            Log,
             DungeonJobTime,
             EntityManager,
             _mapManager,
