@@ -1,4 +1,5 @@
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -29,13 +30,17 @@ namespace Content.Server.Kitchen.Components
         [DataField("ItemBreakSound")]
         public SoundSpecifier ItemBreakSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
-        public IPlayingAudioStream? PlayingStream { get; set; }
+        public EntityUid? PlayingStream;
+
         [DataField("loopingSound")]
         public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
         #endregion
 
         [ViewVariables]
         public bool Broken;
+
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public ProtoId<SinkPortPrototype> OnPort = "On";
 
         /// <summary>
         /// This is a fixed offset of 5.

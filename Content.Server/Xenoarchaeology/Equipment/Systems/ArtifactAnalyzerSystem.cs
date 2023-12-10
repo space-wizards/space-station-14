@@ -17,8 +17,8 @@ using Content.Shared.Xenoarchaeology.Equipment;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -229,7 +229,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     /// <param name="args"></param>
     private void OnServerSelectionMessage(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleServerSelectionMessage args)
     {
-        _ui.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
+        _ui.TryOpen(uid, ResearchClientUiKey.Key, args.Session);
     }
 
     /// <summary>

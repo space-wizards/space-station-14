@@ -46,20 +46,19 @@
   id: DeathSquadGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitDeathSquad
-    back: ClothingBackpackDuffelSyndicateAmmo
+    back: ClothingBackpackDeathSquadFilled
     mask: ClothingMaskGasDeathSquad
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesHudSecurity
     ears: ClothingHeadsetAltCentCom
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitDeathsquad
-    suitstorage: OxygenTankFilled
+    suitstorage: AirTankFilled
     shoes: ClothingShoesBootsMagAdv
     id: DeathsquadPDA
     pocket1: EnergySword
-    belt: ClothingBeltChiefEngineerFilled
+    pocket2: EnergyShield
+    belt: ClothingBeltMilitaryWebbingMedFilled
   innerClothingSkirt: ClothingUniformJumpskirtColorBlack
-  satchel: ClothingBackpackDuffelSyndicateAmmo
-  duffelbag: ClothingBackpackDuffelSyndicateAmmo
 
 # Syndicate Operative Outfit - Monkey
 - type: startingGear
@@ -104,8 +103,7 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperative
     mask: ClothingMaskGasSyndicate
-  # eyes: Night Vision Goggles whenever they're made
-    eyes: ClothingEyesGlassesMeson
+    eyes: ClothingEyesHudSyndicate
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndie
@@ -125,8 +123,7 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperative
     mask: ClothingMaskGasSyndicate
-  # eyes: Night Vision Goggles whenever they're made
-    eyes: ClothingEyesGlassesMeson
+    eyes: ClothingEyesHudSyndicate
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndieCommander
@@ -148,12 +145,12 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperativeMedic
     mask: ClothingMaskGasSyndicate
-    eyes: ClothingEyesHudMedical
+    eyes: ClothingEyesHudSyndicate
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitMedic
     shoes: ClothingShoesBootsMagSyndie
-    id: SyndiPDA
+    id: SyndiAgentPDA
     pocket1: DoubleEmergencyOxygenTankFilled
     pocket2: BaseUplinkRadio40TC
     belt: ClothingBeltMilitaryWebbingMedFilled
@@ -255,8 +252,8 @@
   id: CBURNGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBrown
-    back: ClothingBackpackDuffelCBURN
-    mask: ClothingMaskGasExplorer
+    back: ClothingBackpackDuffelCBURNFilled
+    mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCentCom
     gloves: ClothingHandsGlovesCombat
@@ -268,8 +265,8 @@
     suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier
   innerClothingSkirt: ClothingUniformJumpsuitColorBrown
-  satchel: ClothingBackpackDuffelCBURN
-  duffelbag: ClothingBackpackDuffelCBURN
+  satchel: ClothingBackpackDuffelCBURNFilled
+  duffelbag: ClothingBackpackDuffelCBURNFilled
 
 - type: startingGear
   id: BoxingKangarooGear
@@ -350,3 +347,11 @@
     back: SpearBone
     head: ClothingHeadHelmetBone
     shoes: ClothingShoesCult
+
+#Banana Clown
+- type: startingGear
+  id: BananaClown
+  equipment:
+    shoes: ClothingShoesClownBanana
+    jumpsuit: ClothingUniformJumpsuitClownBanana
+    mask: ClothingMaskClownBanana

@@ -11,7 +11,7 @@
     sprite: Objects/Tools/jaws_of_life.rsi
     state: jaws_pry
   - type: Item
-    size: 50
+    size: Normal
   - type: Clothing
     sprite: Objects/Tools/jaws_of_life.rsi
     quickEquip: false
@@ -61,7 +61,7 @@
     sprite: Objects/Tools/jaws_of_life.rsi
     state: syn_jaws_pry
   - type: Item
-    size: 35
+    size: Normal
   - type: Tool
     qualities:
       - Prying

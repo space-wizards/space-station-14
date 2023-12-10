@@ -168,6 +168,15 @@ namespace Content.Server.Database
             modelBuilder.Entity<ConnectionLog>()
                 .HasIndex(p => p.UserId);
 
+            modelBuilder.Entity<ConnectionLog>()
+                .Property(p => p.ServerId)
+                .HasDefaultValue(0);
+
+            modelBuilder.Entity<ConnectionLog>()
+                .HasOne(p => p.Server)
+                .WithMany(p => p.ConnectionLogs)
+                .OnDelete(DeleteBehavior.SetNull);
+
             // SetNull is necessary for created by/edited by-s here,
             // so you can safely delete admins (GDPR right to erasure) while keeping the notes intact
 
@@ -494,6 +503,9 @@ namespace Content.Server.Database
 
         [InverseProperty(nameof(Round.Server))]
         public List<Round> Rounds { get; set; } = default!;
+
+        [InverseProperty(nameof(ConnectionLog.Server))]
+        public List<ConnectionLog> ConnectionLogs { get; set; } = default!;
     }
 
     [Index(nameof(Type))]
@@ -516,9 +528,6 @@ namespace Content.Server.Database
         [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
 
         public List<AdminLogPlayer> Players { get; set; } = default!;
-
-        // Unused
-        public List<AdminLogEntity> Entities { get; set; } = default!;
     }
 
     public class AdminLogPlayer
@@ -529,13 +538,6 @@ namespace Content.Server.Database
         [Required, Key] public int LogId { get; set; }
         [Required, Key] public int RoundId { get; set; }
         [ForeignKey("LogId,RoundId")] public AdminLog Log { get; set; } = default!;
-    }
-
-    // Unused
-    public class AdminLogEntity
-    {
-        [Required, Key] public int Uid { get; set; }
-        public string? Name { get; set; } = default!;
     }
 
     // Used by SS14.Admin
@@ -759,7 +761,19 @@ namespace Content.Server.Database
 
         public ConnectionDenyReason? Denied { get; set; }
 
+        /// <summary>
+        /// ID of the <see cref="Server"/> that the connection was attempted to.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The default value of this column is set to <c>0</c>, which is the ID of the "<c>unknown</c>" server.
+        /// This is intended for old entries (that didn't track this) and if the server name isn't configured.
+        /// </para>
+        /// </remarks>
+        public int ServerId { get; set; }
+
         public List<ServerBanHit> BanHits { get; set; } = null!;
+        public Server Server { get; set; } = null!;
     }
 
     public enum ConnectionDenyReason : byte

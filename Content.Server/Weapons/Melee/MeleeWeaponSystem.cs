@@ -18,17 +18,16 @@ using Content.Shared.Effects;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Random;
 
 namespace Content.Server.Weapons.Melee;
@@ -42,6 +41,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly LagCompensationSystem _lag = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
@@ -102,6 +102,11 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         var target = GetEntity(ev.Target!.Value);
+
+        if (_mobState.IsIncapacitated(target))
+        {
+            return false;
+        }
 
         if (!TryComp<HandsComponent>(target, out var targetHandsComponent))
         {
@@ -174,7 +179,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         EntityCoordinates targetCoordinates;
         Angle targetLocalAngle;
 
-        if (session is IPlayerSession pSession)
+        if (session is { } pSession)
         {
             (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
         }

@@ -286,12 +286,26 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: classicbigafro
 - type: marking
+  id: HumanHairClassicBusiness
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: classicbusiness
+- type: marking
   id: HumanHairClassicCia
   bodyPart: Hair
   markingCategory: Hair
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
       state: classiccia
+- type: marking
+  id: HumanHairClassicCornrows2
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: classiccornrows2      
 - type: marking
   id: HumanHairClassicFloorlengthBedhead
   bodyPart: Hair

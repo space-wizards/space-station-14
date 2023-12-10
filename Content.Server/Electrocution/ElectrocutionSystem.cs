@@ -26,6 +26,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
@@ -192,18 +193,13 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void OnLightAttacked(EntityUid uid, PoweredLightComponent component, AttackedEvent args)
     {
+        if (!component.CurrentLit || args.Used != args.User)
+            return;
 
         if (!_meleeWeapon.GetDamage(args.Used, args.User).Any())
             return;
 
-        if (args.Used != args.User)
-            return;
-
-        if (component.CurrentLit == false)
-            return;
-
         DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false, 1);
-
     }
 
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
@@ -234,7 +230,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, true);
 
         siemens *= electrified.SiemensCoefficient;
-        if (siemens <= 0 || !DoCommonElectrocutionAttempt(targetUid, uid, ref siemens))
+        if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
             return false; // If electrocution would fail, do nothing.
 
         var targets = new List<(EntityUid entity, int depth)>();
@@ -498,7 +494,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void PlayElectrocutionSound(EntityUid targetUid, EntityUid sourceUid, ElectrifiedComponent? electrified = null)
     {
-        if (!Resolve(sourceUid, ref electrified) || !electrified.PlaySoundOnShock)
+        if (!Resolve(sourceUid, ref electrified, false) || !electrified.PlaySoundOnShock)
         {
             return;
         }

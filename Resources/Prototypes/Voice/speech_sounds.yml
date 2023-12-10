@@ -96,3 +96,12 @@
     path: /Audio/Voice/Talk/arachnid_ask.ogg
   exclaimSound:
     path: /Audio/Voice/Talk/arachnid_exclaim.ogg
+
+- type: speechSounds
+  id: Cat
+  saySound:
+    path: /Audio/Animals/cat_meow2.ogg
+  askSound:
+    path: /Audio/Animals/cat_meow.ogg
+  exclaimSound:
+    path: /Audio/Animals/cat_meow.ogg

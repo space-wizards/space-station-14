@@ -1,6 +1,8 @@
 using Content.Shared.Damage;
+using Content.Shared.Item;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Item;
 
@@ -81,11 +83,15 @@ public sealed partial class ItemToggleComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("activatedSharp")]
     public bool ActivatedSharp = false;
+    [DataField("offSize")]
+    public ProtoId<ItemSizePrototype> OffSize = "Small";
 
     /// <summary>
     ///     Does this become hidden when deactivated
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("onSize")]
+    public ProtoId<ItemSizePrototype> OnSize = "Huge";
     [DataField("deactivatedSecret")]
     public bool DeactivatedSecret = false;
 
