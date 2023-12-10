@@ -82,7 +82,7 @@
   parent: ProduceBase
   components:
   - type: Item
-    storedRotation: -40
+    storedRotation: -40 # Honestly, it just looks like green lines when I try to make it a non rotated sprite.
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/sugarcane.rsi
   - type: SolutionContainerManager
@@ -370,7 +370,7 @@
   description: It's good for the eyes!
   components:
   - type: Item
-    storedRotation: -40
+    storedRotation: -40 # Honestly, my only justification is the diagonal looks okay, and it looked like shitty minecrap every time I tried a non rotated sprite.
   - type: FlavorProfile
     flavors:
       - carrot
@@ -567,7 +567,7 @@
   description: Mmm, tropical.
   components:
   - type: Item
-    storedRotation: -45
+    storedRotation: -45 # Honestly, my only justification is the diagonals look good on pinapple skin.
   - type: FlavorProfile
     flavors:
       - pineapple

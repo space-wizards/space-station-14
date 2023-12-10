@@ -29,7 +29,7 @@
       - map: [ enum.ExpendableLightVisualLayers.Overlay ]
         state: glowstick_unlit
     - type: Item
-      storedRotation: -45
+      storedRotation: -45 # storedSprite can't handle state changes.
       sprite: Objects/Misc/glowstick.rsi
       heldPrefix: unlit
     - type: Appearance

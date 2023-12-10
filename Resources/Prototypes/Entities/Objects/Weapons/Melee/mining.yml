@@ -80,7 +80,7 @@
       types:
         Slash: 6.5
   - type: Item
-    storedRotation: -45
+    storedRotation: -45 # Needs a sprite for storedSprite. 
     size: Small
   - type: Tag
     tags:

@@ -871,7 +871,7 @@
           map: [ "blade" ]
     - type: Item
       size: Small
-      storedRotation: -45
+      storedRotation: -45 # storedSprite can't handle state changes.
       sprite: Objects/Weapons/Melee/e_sword.rsi
     - type: UseDelay
       delay: 1.0

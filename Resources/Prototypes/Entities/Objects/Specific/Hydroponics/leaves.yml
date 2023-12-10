@@ -72,7 +72,7 @@
   description: "Dry them out to make some smokes."
   components:
   - type: Item
-    storedRotation: 45
+    storedRotation: 45 # Only because its leaves.
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
   - type: Produce
