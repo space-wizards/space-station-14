@@ -110,6 +110,10 @@
     materialComposition:
       Steel: 50
   - type: SpaceGarbage
+  - type: Item
+    size: Tiny
+    shape: # Yes, this is cursed, but it breaks otherwise, dont question it.
+    - 0,0,0,1
   - type: Storage
     grid:
     - 0,0,4,1
