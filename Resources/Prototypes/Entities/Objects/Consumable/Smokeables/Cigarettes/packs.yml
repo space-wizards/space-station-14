@@ -134,8 +134,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
-  - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
 
 - type: entity
   id: CigPackRed
@@ -144,8 +142,6 @@
   description: The most popular brand of Space Cigarettes, sponsors of the Space Olympics.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
-  - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
 
 - type: entity
@@ -156,8 +152,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
-  - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
 
 - type: entity
   id: CigPackBlack
@@ -167,8 +161,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
-  - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
 
 - type: entity
   id: CigPackSyndicate
@@ -177,8 +169,6 @@
   description: Elite cigarettes for elite syndicate agents. Infused with medicine for when you need to do more than calm your nerves.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
-  - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
   - type: StorageFill
     contents:
@@ -192,8 +182,6 @@
   description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
-  - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
   - type: StorageFill
     contents:
@@ -219,8 +207,6 @@
   description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
-  - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
   - type: StorageFill
     contents:
@@ -252,8 +238,6 @@
   description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
-  - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
   - type: StorageFill
     contents:
