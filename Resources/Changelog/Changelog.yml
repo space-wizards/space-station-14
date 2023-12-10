@@ -1,9 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: Added indicator near SSD players, type: Add}
-  id: 4801
-  time: '2023-09-11T05:52:56.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Jetpacks, being weightless, and flying mobs can now pass over lava
@@ -2905,3 +2900,9 @@ Entries:
   - {message: Updated the crew monitoring console user interface, type: Tweak}
   id: 5300
   time: '2023-12-10T05:38:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Add color picker to color selection, e.g. for character colors.', type: Add}
+  - {message: Fix drag-drop interaction outline not updating properly., type: Fix}
+  id: 5301
+  time: '2023-12-10T10:43:06.0000000+00:00'
