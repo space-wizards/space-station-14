@@ -82,7 +82,10 @@
   parent: ProduceBase
   components:
   - type: Item
-    storedRotation: -40 # Honestly, it just looks like green lines when I try to make it a non rotated sprite.
+    sprite: Objects/Specific/Hydroponics/sugarcane.rsi
+    storedSprite:
+      sprite: Objects/Specific/Hydroponics/sugarcane.rsi
+      state: stored
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/sugarcane.rsi
   - type: SolutionContainerManager
@@ -370,7 +373,10 @@
   description: It's good for the eyes!
   components:
   - type: Item
-    storedRotation: -40 # Honestly, my only justification is the diagonal looks okay, and it looked like shitty minecrap every time I tried a non rotated sprite.
+    sprite: Objects/Specific/Hydroponics/carrot.rsi
+    storedSprite:
+      sprite: Objects/Specific/Hydroponics/carrot.rsi
+      state: stored
   - type: FlavorProfile
     flavors:
       - carrot
@@ -1222,7 +1228,10 @@
   description: A medicinal plant. May make you feel a little funny.
   components:
   - type: Item
-    storedRotation: -45
+    sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+    storedSprite:
+      sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+      state: stored
   - type: FlavorProfile
     flavors:
       - leafy
@@ -1263,7 +1272,10 @@
   description: An extremely sought-after medicinal plant. May have some funky side effects.
   components:
   - type: Item
-    storedRotation: -45
+    sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
+    storedSprite:
+      sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
+      state: stored
   - type: FlavorProfile
     flavors:
       - leafy

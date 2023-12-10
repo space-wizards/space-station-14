@@ -10,6 +10,9 @@
     {
       "name": "dead"
     },
+	{
+	  "name": "stored"
+	},
     {
       "name": "harvest"
     },
