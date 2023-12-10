@@ -5,13 +5,35 @@
   description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
   - type: EnergySword
-    litDamageBonus:
+  - type: ItemToggle
+    activated: false
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+    activatedSoundOnHit:
+      path: /Audio/Weapons/eblade1.ogg
+    deactivatedSoundOnHit:
+      path: /Audio/Weapons/genhit1.ogg
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+    activatedDamage:
         types:
             Slash: 15
             Heat: 15
             Structural: 4
-            Blunt: -4.5
-    litDisarmMalus: 0.6
+    deactivatedDamage:
+        types:
+            Blunt: 4.5
+    activatedDisarmMalus: 0.6
+    activatedSizeModifier: 9999
+    activatedSharp: true
+    deactivatedSecret: false
+    activatedColor: DodgerBlue
+    randomActivatedColor: true
+    isHotWhenActivated: true
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:
@@ -24,8 +46,6 @@
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1
-    soundHit:
-      path: /Audio/Weapons/genhit1.ogg
     damage:
       types:
         Blunt: 4.5
@@ -63,21 +83,32 @@
   description: 'A dark ink pen.'
   components:
   - type: EnergySword
-    secret: true
-    litDamageBonus:
-        types:
-            Slash: 9
-            Heat: 9
-            Blunt: -1
-    litDisarmMalus: 0.4
-    activateSound: !type:SoundPathSpecifier
+  - type: ItemToggle
+    soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
       params:
         volume: -6
-    deActivateSound: !type:SoundPathSpecifier
+    soundDeactivate:
       path: /Audio/Weapons/ebladeoff.ogg
       params:
         volume: -6
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        volume: -6
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: -6
+    activatedDamage:
+        types:
+            Slash: 9
+            Heat: 9
+    deactivatedDamage:
+        types:
+            Blunt: 1
+    activatedDisarmMalus: 0.4
+    deactivatedSecret: true
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -144,13 +175,14 @@
   description: An exotic energy weapon.
   components:
   - type: EnergySword
-    secret: true
-    litDamageBonus:
+  - type: ItemToggle
+    activatedDamageBonus:
         types:
-            Slash: 7.5
-            Heat: 7.5
-            Blunt: -1
-    litDisarmMalus: 0.6
+            Slash: 14
+            Heat: 16
+            Structural: 3
+    activatedDisarmMalus: 0.6
+    deactivatedSecret: true
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
     layers:
@@ -170,15 +202,34 @@
   id: EnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
   components:
-  - type: Wieldable
   - type: EnergySword
-    litDamageBonus:
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+      params:
+        volume: +3
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+      params:
+        volume: +3
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        volume: +3
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: +3
+    activatedDamage:
         types:
             Slash: 17
             Heat: 17
             Structural: 20
-            Blunt: -4.5
-    litDisarmMalus: 0.7
+    deactivatedDamage:
+        types:
+            Blunt: 5.5
+    activatedDisarmMalus: 0.7
+  - type: Wieldable
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1.5
@@ -187,7 +238,7 @@
       path: /Audio/Weapons/genhit1.ogg
     damage:
       types:
-        Blunt: 4.5
+        Blunt: 5.5
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
     layers:
@@ -201,7 +252,6 @@
     size: 10
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
   - type: Reflect
-    enabled: true
     reflectProb: .75
     spread: 75
   - type: UseDelay
