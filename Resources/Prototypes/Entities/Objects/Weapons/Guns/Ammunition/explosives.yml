@@ -124,40 +124,6 @@
     suffix: false
 
 - type: entity
-  id: GrenadeIncendiaryTimed
-  name: timed incendiary grenade
-  parent: BaseGrenade
-  components:
-  - type: CartridgeAmmo
-    proto: BulletGrenadeTimedIncendiary
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    layers:
-    - state: incendiary
-      map: ["enum.AmmoVisualLayers.Base"]
-  - type: Appearance
-  - type: SpentAmmoVisuals
-    state: frag
-    suffix: false
-
-- type: entity
-  id: GrenadeShrapnelTimed
-  name: timed shrapnel grenade
-  parent: BaseGrenade
-  components:
-  - type: CartridgeAmmo
-    proto: BulletGrenadeTimedShrapnel
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    layers:
-    - state: shrapnel
-      map: ["enum.AmmoVisualLayers.Base"]
-  - type: Appearance
-  - type: SpentAmmoVisuals
-    state: frag
-    suffix: false
-
-- type: entity
   id: CannonBall
   name: cannonball
   suffix: Pirate

@@ -105,13 +105,9 @@
     contents:
       - id: WeaponLauncherChinaLake
       - id: GrenadeBlast
-        amount: 2
+        amount: 4
       - id: GrenadeFrag
-        amount: 2
-      - id: GrenadeIncendiaryTimed
-        amount: 2
-      - id: GrenadeShrapnelTimed
-        amount: 2
+        amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

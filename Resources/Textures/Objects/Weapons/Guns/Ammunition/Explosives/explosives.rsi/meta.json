@@ -26,12 +26,6 @@
             "name": "ball"
         },
         {
-            "name": "incendiary"
-        },
-        {
-            "name": "shrapnel"
-        },
-        {
             "name": "spent"
         }
     ]
