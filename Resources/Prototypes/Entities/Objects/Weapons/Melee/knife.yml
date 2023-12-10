@@ -40,8 +40,10 @@
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
     state: icon
   - type: Item
-    storedRotation: -45 # Needs a sprite for storedSprite. 
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+    storedSprite:
+      sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+      state: stored
   - type: GuideHelp
     guides:
     - Chef
@@ -97,8 +99,10 @@
       types:
         Slash: 10
   - type: Item
-    storedRotation: -45 # Needs a sprite for storedSprite. 
     sprite: Objects/Weapons/Melee/combat_knife.rsi
+    storedSprite:
+      sprite: Objects/Weapons/Melee/combat_knife.rsi
+      state: stored
   - type: DisarmMalus
     malus: 0.225
 
@@ -113,6 +117,9 @@
     state: icon
   - type: Item
     sprite: Objects/Weapons/Melee/survival_knife.rsi
+    storedSprite:
+      sprite: Objects/Weapons/Melee/survival_knife.rsi
+      state: stored
 
 - type: entity
   name: kukri knife
@@ -129,8 +136,11 @@
       types:
         Slash: 15
   - type: Item
-    storedRotation: -55 # Needs a sprite for storedSprite. 
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
+    storedSprite:
+      sprite: Objects/Weapons/Melee/kukri_knife.rsi
+      state: stored
+
 
 - type: entity
   name: shiv
