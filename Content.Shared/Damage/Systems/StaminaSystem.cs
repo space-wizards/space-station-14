@@ -252,7 +252,20 @@ public sealed partial class StaminaSystem : EntitySystem
             return;
 
         var oldDamage = component.StaminaDamage;
-        component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + value);
+        // stamina resistance begin
+        if (value > 0)
+        {
+            var damage = value;
+            var evd = new StaminaModifyEvent(damage, source);
+            RaiseLocalEvent(uid, evd);
+            component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + evd.Damage);
+        }
+        if (value <= 0)
+        {
+            component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + value);
+        }
+        // stamina resistance end
+
 
         // Reset the decay cooldown upon taking damage.
         if (oldDamage < component.StaminaDamage)

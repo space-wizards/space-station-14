@@ -13,6 +13,9 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+// stamina resistance begin
+using Content.Shared.Damage.Events;
+// stamina resistance end
 
 namespace Content.Shared.Inventory;
 
@@ -44,6 +47,9 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowThirstIconsComponent>>(RelayInventoryEvent);
 
         SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetEquipmentVerbs);
+        // stamina resistance begin
+        SubscribeLocalEvent<InventoryComponent, StaminaModifyEvent>(RelayInventoryEvent);
+        // stamina resistance end
     }
 
     protected void RefRelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, ref T args) where T : IInventoryRelayEvent

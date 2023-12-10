@@ -16,6 +16,7 @@
         Slash: 0.6
         Piercing: 0.3
         Heat: 0.9
+        Stamina: 0.8 # stamina resistance
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
@@ -37,6 +38,7 @@
         Slash: 0.7
         Piercing: 0.5
         Heat: 0.9
+        Stamina: 0.8 # stamince resistance
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
