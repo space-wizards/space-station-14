@@ -1,11 +1,6 @@
 Entries:
 - author: deltanedas
   changes:
-  - {message: Training bombs are now available for purchase at cargo., type: Add}
-  id: 4818
-  time: '2023-09-13T16:54:48.0000000+00:00'
-- author: deltanedas
-  changes:
   - {message: 'Ninjas can spawn from 30 mins in, instead of 45.', type: Tweak}
   id: 4819
   time: '2023-09-13T22:02:33.0000000+00:00'
@@ -2905,3 +2900,9 @@ Entries:
   - {message: Arrivals is now stationed on a planet., type: Add}
   id: 5317
   time: '2023-12-11T09:34:19.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Added cosmetic sunglasses to the clothesmate., type: Add}
+  - {message: Musician and Bartender now have cosmetic sunglasses., type: Tweak}
+  id: 5318
+  time: '2023-12-11T09:35:51.0000000+00:00'
