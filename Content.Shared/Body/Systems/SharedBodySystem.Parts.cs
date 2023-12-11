@@ -19,99 +19,89 @@ public partial class SharedBodySystem
         // TODO: This doesn't handle comp removal on child ents.
 
         // If you modify this also see the Body partial for root parts.
-        SubscribeLocalEvent<BodyPartComponent, EntGotInsertedIntoContainerMessage>(OnBodyPartInserted);
-        SubscribeLocalEvent<BodyPartComponent, EntGotRemovedFromContainerMessage>(OnBodyPartRemoved);
+        SubscribeLocalEvent<BodyPartComponent, EntInsertedIntoContainerMessage>(OnBodyPartInserted);
+        SubscribeLocalEvent<BodyPartComponent, EntRemovedFromContainerMessage>(OnBodyPartRemoved);
     }
 
-    private void OnBodyPartInserted(EntityUid uid, BodyPartComponent component, EntGotInsertedIntoContainerMessage args)
+    private void OnBodyPartInserted(EntityUid uid, BodyPartComponent component, EntInsertedIntoContainerMessage args)
     {
-        var parentUid = args.Container.Owner;
-
-        if (HasComp<BodyComponent>(parentUid))
-        {
-            AddPart(parentUid, uid, GetPartSlotContainerId(args.Container.ID), component);
-            RecursiveBodyUpdate(uid, parentUid, component);
-        }
-
         // Body part inserted into another body part.
-        if (TryComp(parentUid, out BodyPartComponent? partComp))
-        {
-            if (partComp.Body == null)
-                return;
+        var entity = args.Entity;
+        var slotId = args.Container.ID;
 
-            AddPart(partComp.Body.Value, uid, GetPartSlotContainerId(args.Container.ID), component);
-            RecursiveBodyUpdate(uid, partComp.Body, component);
-        }
-    }
-
-    private void OnBodyPartRemoved(EntityUid uid, BodyPartComponent component, EntGotRemovedFromContainerMessage args)
-    {
         if (component.Body != null)
         {
-            // Lifestage shenanigans.
-            if (TerminatingOrDeleted(component.Body.Value))
-                return;
+            if (TryComp(entity, out BodyPartComponent? childPart))
+            {
+                AddPart(component.Body.Value, entity, slotId, childPart);
+                RecursiveBodyUpdate(entity, component.Body.Value, childPart);
+            }
 
-            RemovePart(component.Body.Value, uid, GetPartSlotContainerId(args.Container.ID), component);
-            RecursiveBodyUpdate(uid, null, component);
+            if (TryComp(entity, out OrganComponent? organ))
+            {
+                AddOrgan(entity, component.Body.Value, uid, organ);
+            }
         }
     }
 
-    /// <summary>
-    /// Updates body parts recursively for a particular entity, including itself.
-    /// </summary>
+    private void OnBodyPartRemoved(EntityUid uid, BodyPartComponent component, EntRemovedFromContainerMessage args)
+    {
+        // TODO: lifestage shenanigans
+        if (TerminatingOrDeleted(uid))
+            return;
+
+        // Body part removed from another body part.
+        var entity = args.Entity;
+        var slotId = args.Container.ID;
+
+        if (TryComp(entity, out BodyPartComponent? childPart) && childPart.Body != null)
+        {
+            RemovePart(childPart.Body.Value, entity, slotId, childPart);
+            RecursiveBodyUpdate(entity, null, childPart);
+        }
+
+        if (TryComp(entity, out OrganComponent? organ))
+        {
+            RemoveOrgan(entity, uid, organ);
+        }
+    }
+
     private void RecursiveBodyUpdate(EntityUid uid, EntityUid? bodyUid, BodyPartComponent component)
     {
-        // Recursively iterate all child parts and organs and ensure their body refs are updated.
         foreach (var children in GetBodyPartChildren(uid, component))
         {
-            if (children.Component.Body == bodyUid)
-                continue;
-
-            // Raise the body part change event if relevant.
-            if (Containers.TryGetContainingContainer(children.Id, out var childContainer))
+            if (children.Component.Body != bodyUid)
             {
-                var slotId = GetPartSlotContainerId(childContainer.ID);
+                children.Component.Body = bodyUid;
+                Dirty(children.Id, children.Component);
 
-                if (bodyUid != null)
+                foreach (var slotId in children.Component.Organs.Keys)
                 {
-                    AddPart(bodyUid.Value, children.Id, slotId, children.Component);
-                }
-                else if (component.Body != null)
-                {
-                    RemovePart(component.Body.Value, children.Id, slotId, children.Component);
-                }
-            }
+                    var organContainerId = GetOrganContainerId(slotId);
 
-            children.Component.Body = bodyUid;
-            Dirty(children.Id, children.Component);
+                    if (!Containers.TryGetContainer(children.Id, organContainerId, out var container))
+                        continue;
 
-            foreach (var slotId in children.Component.Organs.Keys)
-            {
-                var organContainerId = GetOrganContainerId(slotId);
-
-                if (!Containers.TryGetContainer(children.Id, organContainerId, out var container))
-                    continue;
-
-                foreach (var organ in container.ContainedEntities)
-                {
-                    if (TryComp(organ, out OrganComponent? organComp))
+                    foreach (var organ in container.ContainedEntities)
                     {
-                        var oldBody = organComp.Body;
-                        organComp.Body = bodyUid;
-
-                        if (bodyUid != null)
+                        if (TryComp(organ, out OrganComponent? organComp))
                         {
-                            var ev = new AddedToPartInBodyEvent(bodyUid.Value, children.Id);
-                            RaiseLocalEvent(organ, ev);
-                        }
-                        else if (oldBody != null)
-                        {
-                            var ev = new RemovedFromPartInBodyEvent(oldBody.Value, children.Id);
-                            RaiseLocalEvent(organ, ev);
-                        }
+                            var oldBody = organComp.Body;
+                            organComp.Body = bodyUid;
 
-                        Dirty(organ, organComp);
+                            if (bodyUid != null)
+                            {
+                                var ev = new AddedToPartInBodyEvent(bodyUid.Value, children.Id);
+                                RaiseLocalEvent(organ, ev);
+                            }
+                            else if (oldBody != null)
+                            {
+                                var ev = new RemovedFromPartInBodyEvent(oldBody.Value, children.Id);
+                                RaiseLocalEvent(organ, ev);
+                            }
+
+                            Dirty(organ, organComp);
+                        }
                     }
                 }
             }
@@ -126,8 +116,9 @@ public partial class SharedBodySystem
         BodyComponent? bodyComp = null)
     {
         DebugTools.AssertOwner(partUid, component);
-        component.Body = bodyUid;
         Dirty(partUid, component);
+        component.Body = bodyUid;
+
         var ev = new BodyPartAddedEvent(slotId, component);
         RaiseLocalEvent(bodyUid, ref ev);
 
@@ -143,8 +134,8 @@ public partial class SharedBodySystem
     {
         DebugTools.AssertOwner(partUid, component);
         Resolve(bodyUid, ref bodyComp, false);
-        component.Body = null;
         Dirty(partUid, component);
+        component.Body = null;
 
         var ev = new BodyPartRemovedEvent(slotId, component);
         RaiseLocalEvent(bodyUid, ref ev);
@@ -556,12 +547,14 @@ public partial class SharedBodySystem
     }
 
     /// <summary>
-    /// Returns all body part components for this entity not including itself.
+    /// Returns all body part components for this entity including itself.
     /// </summary>
     public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyPartChildren(EntityUid partId, BodyPartComponent? part = null)
     {
         if (!Resolve(partId, ref part, false))
             yield break;
+
+        yield return (partId, part);
 
         foreach (var slotId in part.Children.Keys)
         {
@@ -573,8 +566,6 @@ public partial class SharedBodySystem
                 {
                     if (!TryComp(containedEnt, out BodyPartComponent? childPart))
                         continue;
-
-                    yield return (containedEnt, childPart);
 
                     foreach (var value in GetBodyPartChildren(containedEnt, childPart))
                     {
@@ -637,9 +628,6 @@ public partial class SharedBodySystem
         {
             return false;
         }
-
-        if (childId == parentId)
-            return true;
 
         foreach (var (foundId, _) in GetBodyPartChildren(parentId, parent))
         {
