@@ -155,11 +155,6 @@
     sprite: Objects/Tanks/emergency_extended_red.rsi
   - type: Item
     sprite: Objects/Tanks/emergency_extended_red.rsi
-  - type: GasTank
-    outputPressure: 21.3
-    air:
-      volume: 1.5
-      temperature: 293.15
   - type: Clothing
     sprite: Objects/Tanks/emergency_extended_red.rsi
 
