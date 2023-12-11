@@ -34,12 +34,12 @@
         - 2.051379050 # oxygen
       temperature: 293.15
 
-- type: entity
-  id: YellowOxygenTankFilled
-  parent: YellowOxygenTank
-  suffix: Filled
-  components: *oxyTankFill
-
+#- type: entity
+#  id: YellowOxygenTankFilled
+#  parent: YellowOxygenTank
+#  suffix: Filled
+#  components: *oxyTankFill
+#
 - type: entity
   id: EmergencyOxygenTankFilled
   parent: EmergencyOxygenTank
