@@ -54,7 +54,7 @@ public sealed class ArrivalsSystem : EntitySystem
     /// </summary>
     public bool Enabled { get; private set; }
 
-    private List<ProtoId<BiomeTemplatePrototype>> _arrivalsBiomeOptions = new()
+    private readonly List<ProtoId<BiomeTemplatePrototype>> _arrivalsBiomeOptions = new()
     {
         "Grasslands",
         "LowDesert",
@@ -425,7 +425,7 @@ public sealed class ArrivalsSystem : EntitySystem
         }
 
         // Setup planet arrivals if relevant
-        if (true)
+        if (_cfgManager.GetCVar(CCVars.ArrivalsPlanet))
         {
             var template = _random.Pick(_arrivalsBiomeOptions);
             _biomes.EnsurePlanet(mapUid, _protoManager.Index(template));
