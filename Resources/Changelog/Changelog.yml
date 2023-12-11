@@ -1,16 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix fultons being toggleable by any entity., type: Fix}
-  id: 4815
-  time: '2023-09-13T08:01:22.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: Security Barriers can now be ordered by cargo., type: Tweak}
-  id: 4816
-  time: '2023-09-13T08:56:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix shuttles docking with planetmaps., type: Fix}
   id: 4817
   time: '2023-09-13T12:06:15.0000000+00:00'
@@ -2901,3 +2891,17 @@ Entries:
   - {message: The kobold ear marking has received a new sprite., type: Tweak}
   id: 5314
   time: '2023-12-11T09:25:55.0000000+00:00'
+- author: Rainfey
+  changes:
+  - {message: Hardsuit helmets added to chameleon menu, type: Add}
+  id: 5315
+  time: '2023-12-11T09:27:36.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Added 4 new HUD themes: Plasmafire, Slimecore, Clockwork, and Retro.',
+    type: Add}
+  - {message: The default HUD theme is now Classic. The old default HUD theme still
+      exists under the name "Minimalist.", type: Tweak}
+  - {message: The modernized HUD theme has been renamed to "Eris.", type: Tweak}
+  id: 5316
+  time: '2023-12-11T09:28:17.0000000+00:00'
