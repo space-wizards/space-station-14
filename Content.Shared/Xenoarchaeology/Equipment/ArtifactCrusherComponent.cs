@@ -14,32 +14,32 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 /// <summary>
 /// This is an entity storage that, when activated, crushes the artifact inside of it and gives artifact fragments.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedArtifactCrusherSystem))]
 public sealed partial class ArtifactCrusherComponent : Component
 {
     /// <summary>
     /// Whether or not the crusher is currently in the process of crushing something.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Crushing;
 
     /// <summary>
     /// When the current crushing will end.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public TimeSpan CrushEndTime;
 
     /// <summary>
     /// The next second. Used to apply damage over time.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public TimeSpan NextSecond;
 
     /// <summary>
     /// The total duration of the crushing.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public TimeSpan CrushDuration = TimeSpan.FromSeconds(10);
 
     /// <summary>
@@ -51,13 +51,13 @@ public sealed partial class ArtifactCrusherComponent : Component
     /// <summary>
     /// The minimum amount of fragments spawned.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public int MinFragments = 2;
 
     /// <summary>
     /// The maximum amount of fragments spawned, non-inclusive.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public int MaxFragments = 5;
 
     /// <summary>
@@ -81,25 +81,25 @@ public sealed partial class ArtifactCrusherComponent : Component
     /// <summary>
     /// Damage dealt each second to entities inside while crushing.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public DamageSpecifier CrushingDamage = new();
 
     /// <summary>
     /// Sound played at the end of a successful crush.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? CrushingCompleteSound = new SoundPathSpecifier("/Audio/Effects/metal_crunch.ogg");
 
     /// <summary>
     /// Sound played throughout the entire crushing. Cut off if ended early.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? CrushingSound = new SoundPathSpecifier("/Audio/Effects/hydraulic_press.ogg");
 
     /// <summary>
     /// Stores entity of <see cref="CrushingSound"/> to allow ending it early.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public (EntityUid, AudioComponent)? CrushingSoundEntity;
 }
 

@@ -71,6 +71,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         crusher.CrushEndTime = _timing.CurTime + crusher.CrushDuration;
         crusher.CrushingSoundEntity = AudioSystem.PlayPvs(crusher.CrushingSound, ent);
         Appearance.SetData(ent, ArtifactCrusherVisuals.Crushing, true);
+        Dirty(ent, ent.Comp1);
     }
 
     public void FinishCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent)
@@ -79,6 +80,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         StopCrushing((ent, ent.Comp1), false);
         AudioSystem.PlayPvs(crusher.CrushingCompleteSound, ent);
         crusher.CrushingSoundEntity = null;
+        Dirty(ent, ent.Comp1);
 
         var contents = new ValueList<EntityUid>(storage.Contents.ContainedEntities);
         var coords = Transform(ent).Coordinates;
@@ -124,6 +126,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
                     _damageable.TryChangeDamage(contained, crusher.CrushingDamage);
                 }
                 crusher.NextSecond += TimeSpan.FromSeconds(1);
+                Dirty(uid, crusher);
             }
 
             if (crusher.CrushEndTime < _timing.CurTime)
