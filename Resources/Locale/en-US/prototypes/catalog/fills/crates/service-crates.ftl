@@ -33,3 +33,6 @@ ent-CrateJanitorBiosuit = Janitor bio suit crate
 
 ent-CrateServiceTheatre = Theatrical performances crate
     .desc = Contains a moth cloak, maid uniform, clown and mime attributes, and other performance charms.
+
+ent-CrateJanitorExplosive = Janitorial bomb suit crate
+    .desc = Supplies a bomb suit for cleaning up any explosive compounds, buy one today!
