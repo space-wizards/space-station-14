@@ -45,7 +45,7 @@ public sealed partial class FrezonCoolantReaction : IGasReactionEffect
             energyReleased = burnRate * Atmospherics.FrezonCoolEnergyReleased * energyModifier;
         }
 
-        energyReleased /= atmosphereSystem.Speedup; // people want all the benefits of buffs without disadvantages
+        energyReleased /= atmosphereSystem.Speedup; // adjust energy to make sure speedup doesn't cause mega temperature rise
         if (energyReleased >= 0f)
             return ReactionResult.NoReaction;
 
