@@ -128,40 +128,6 @@
     materialComposition:
       Steel: 100
 
-#- type: entity
-#  parent: GasTankRoundBase
-#  id: EmergencyNitrogenTank
-#  name: emergency nitrogen tank
-#  description: An easily portable tank for emergencies. Contains very little nitrogen, rated for survival use only.
-#  components:
-#  - type: Sprite
-#    sprite: Objects/Tanks/emergency_red.rsi
-#  - type: Item
-#    size: Small
-#    sprite: Objects/Tanks/emergency_red.rsi
-#  - type: GasTank
-#    outputPressure: 21.3
-#    air:
-#      volume: 0.66
-#      temperature: 293.15
-#  - type: Clothing
-#    sprite: Objects/Tanks/emergency_red.rsi
-#    slots:
-#    - Pocket
-#    - Belt
-#    - suitStorage
-#  - type: MeleeWeapon
-#    damage:
-#      types:
-#        Blunt: 5
-#  - type: DamageOtherOnHit
-#    damage:
-#      types:
-#        Blunt: 5
-#  - type: PhysicalComposition
-#    materialComposition:
-#      Steel: 100
-
 - type: entity
   parent: EmergencyOxygenTank
   id: EmergencyNitrogenTank
@@ -191,24 +157,6 @@
       temperature: 293.15
   - type: Clothing
     sprite: Objects/Tanks/emergency_extended.rsi
-
-#- type: entity
-#  parent: EmergencyNitrogenTank
-#  id: ExtendedEmergencyNitrogenTank
-#  name: extended-capacity emergency nitrogen tank
-#  description: An emergency tank with extended capacity. Technically rated for prolonged use.
-#  components:
-#  - type: Sprite
-#    sprite: Objects/Tanks/emergency_extended_red.rsi
-#  - type: Item
-#    sprite: Objects/Tanks/emergency_extended_red.rsi
-#  - type: GasTank
-#    outputPressure: 21.3
-#    air:
-#      volume: 1.5
-#      temperature: 293.15
-#  - type: Clothing
-#    sprite: Objects/Tanks/emergency_extended_red.rsi
 
 - type: entity
   parent: ExtendedEmergencyOxygenTank
@@ -253,33 +201,6 @@
     damage:
       types:
         Blunt: 7.5
-
-#- type: entity
-#  parent: DoubleEmergencyNitrogenTank
-#  id: DoubleEmergencyNitrogenTank
-#  name: double emergency oxygen tank
-#  description: A high-grade dual-tank emergency life support container. It holds a decent amount of nitrogen for it's small size.
-#  components:
-#  - type: Sprite
-#    sprite: Objects/Tanks/emergency_double_red.rsi
-#  - type: Item
-#    sprite: Objects/Tanks/emergency_double_red.rsi
-#  - type: GasTank
-#    outputPressure: 21.3
-#    air:
-#      volume: 2.5
-#      temperature: 293.15
-#  - type: Clothing
-#    sprite: Objects/Tanks/emergency_double_red.rsi
-#  - type: MeleeWeapon
-#    attackRate: 0.9
-#    damage:
-#      types:
-#        Blunt: 7.5
-#  - type: DamageOtherOnHit
-#    damage:
-#      types:
-#        Blunt: 7.5
 
 - type: entity
   parent: ExtendedEmergencyOxygenTank
