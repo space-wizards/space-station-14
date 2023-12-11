@@ -958,6 +958,8 @@ namespace Content.Shared.CCVar
         /// <summary>
         ///     Whether monstermos explosive depressurization will rip tiles..
         ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
+		///		WARNING: This has MAJOR contrast issues, and usually tends to make any spaced scene look very cluttered.
+		///		This not only usually looks strange, but can also reduce playability for people with impaired vision. Think twice before enabling this on your server!
         /// </summary>
         public static readonly CVarDef<bool> MonstermosRipTiles =
             CVarDef.Create("atmos.monstermos_rip_tiles", false, CVar.SERVERONLY);
