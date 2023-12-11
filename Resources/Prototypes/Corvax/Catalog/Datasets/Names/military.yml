@@ -1,22 +1,4 @@
 - type: dataset
-  id: NamesFirstMilitaryLeaderCorvax
-  values:
-  - Коммандер
-  - Полковник
-  - Подполковник
-  - Майор
-  - Лейтенант
-
-- type: dataset
-  id: NamesFirstMilitaryCorvax
-  values:
-  - Прапорщик
-  - Старшина
-  - Сержант
-  - Капрал
-  - Ефрейтор
-
-- type: dataset
   id: NamesLastERTCallsign
   values:
   - Антарес

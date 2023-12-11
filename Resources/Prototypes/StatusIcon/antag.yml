@@ -22,7 +22,7 @@
 - type: statusIcon
   id: MindShieldIcon
   priority: 2
-  locationPreference: Right
+  locationPreference: Left # Corvax-TypingIndicator
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: MindShield

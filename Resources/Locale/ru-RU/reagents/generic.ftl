@@ -8,3 +8,4 @@ generic-reagent-effect-nauseous = Вы чувствуете тошноту.
 generic-reagent-effect-parched = Вы чувствуете сухость в горле.
 generic-reagent-effect-thirsty = Вы испытываете жажду.
 generic-reagent-effect-sick = Вы чувствуете себя плохо после употребления этого...
+generic-reagent-effect-slicing-insides = Вы чувствуете невероятно острую боль в животе!
