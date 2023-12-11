@@ -1,9 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: Training bombs are now unable to space tiles., type: Tweak}
-  id: 4830
-  time: '2023-09-14T23:51:47.0000000+00:00'
 - author: kseandi
   changes:
   - {message: HUD theme selection is now works!, type: Fix}
@@ -2897,3 +2892,9 @@ Entries:
       be ordered at cargo., type: Tweak}
   id: 5329
   time: '2023-12-11T23:21:25.0000000+00:00'
+- author: nok-ko
+  changes:
+  - {message: 'Pacified players can no longer throw dangerous objects such as spears,
+      bolas, and bottles.', type: Tweak}
+  id: 5330
+  time: '2023-12-11T23:40:23.0000000+00:00'
