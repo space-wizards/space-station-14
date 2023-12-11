@@ -1,10 +1,4 @@
 Entries:
-- author: Doru991
-  changes:
-  - {message: 'When mutated, some plants have been observed to occasionally transform
-      into entirely different species.', type: Add}
-  id: 4826
-  time: '2023-09-14T04:56:24.0000000+00:00'
 - author: Psychpsyo
   changes:
   - {message: Janitors can now take the shark plushie for a walk in their bucket.,
@@ -2898,3 +2892,8 @@ Entries:
   - {message: Incapacitated mobs can no longer be shoved for a speed boost., type: Fix}
   id: 5325
   time: '2023-12-11T13:05:14.0000000+00:00'
+- author: willicassi
+  changes:
+  - {message: Added info to botany guidebook entry, type: Add}
+  id: 5326
+  time: '2023-12-11T17:42:22.0000000+00:00'
