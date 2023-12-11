@@ -23,14 +23,6 @@
   name: trait-pacifist-name
   components:
     - type: Pacified
-      throwBlacklist:
-        components:
-        - EmbeddableProjectile
-        - DamageOtherOnHit
-        - DamageOnLand
-        - Slippery
-#        tags:
-#        - Grenade
 
 - type: trait
   id: Paracusia
