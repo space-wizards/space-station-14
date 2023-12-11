@@ -15,7 +15,7 @@ namespace Content.Shared.Damage
     ///     The actual damage information is stored in <see cref="DamageDict"/>. This class provides
     ///     functions to apply resistance sets and supports basic math operations to modify this dictionary.
     /// </remarks>
-    [DataDefinition]
+    [DataDefinition, Serializable]
     public sealed partial class DamageSpecifier : IEquatable<DamageSpecifier>
     {
         // These exist solely so the wiki works. Please do not touch them or use them.

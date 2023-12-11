@@ -63,8 +63,8 @@ public sealed partial class MeleeWeaponComponent : Component
     /// <summary>
     /// Base damage for this weapon. Can be modified via heavy damage or other means.
     /// </summary>
-    [DataField(required:true)]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public DamageSpecifier Damage = default!;
 
     [DataField]
