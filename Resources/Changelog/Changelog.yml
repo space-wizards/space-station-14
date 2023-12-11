@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix lights not always updating., type: Fix}
-  id: 4809
-  time: '2023-09-12T14:35:08.0000000+00:00'
 - author: JoeHammad
   changes:
   - {message: 'Nukies now start with a microbomb implant in their backpack, remember
@@ -2902,3 +2897,9 @@ Entries:
       before removing them., type: Tweak}
   id: 5308
   time: '2023-12-11T07:51:45.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Janitors can now buy their own bomb suit for cleaning chemical spills.,
+    type: Add}
+  id: 5309
+  time: '2023-12-11T08:41:54.0000000+00:00'
