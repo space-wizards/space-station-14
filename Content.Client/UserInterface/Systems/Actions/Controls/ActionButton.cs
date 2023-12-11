@@ -283,13 +283,15 @@ public sealed class ActionButton : Control, IEntityControl
 
     public void UpdateBackground()
     {
-        if (_action == null)
+        _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
+        if (_action != null ||
+            _controller.IsDragging && GetPositionInParent() == Parent?.ChildCount - 1)
         {
-            Button.Texture = null;
+            Button.Texture = _buttonBackgroundTexture;
         }
         else
         {
-            Button.Texture = _buttonBackgroundTexture;
+            Button.Texture = null;
         }
     }
 
@@ -326,6 +328,9 @@ public sealed class ActionButton : Control, IEntityControl
     {
         base.FrameUpdate(args);
 
+        UpdateBackground();
+
+        Cooldown.Visible = _action != null && _action.Cooldown != null;
         if (_action == null)
             return;
 
@@ -396,7 +401,7 @@ public sealed class ActionButton : Control, IEntityControl
 
         // it's only depress-able if it's usable, so if we're depressed
         // show the depressed style
-        if (_depressed)
+        if (_depressed && !_beingHovered)
         {
             HighlightRect.Visible = false;
             SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassPressed);

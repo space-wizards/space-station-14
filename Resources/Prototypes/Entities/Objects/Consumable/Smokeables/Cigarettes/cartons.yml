@@ -14,7 +14,8 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     size: Normal
   - type: Storage
-    maxSlots: 6
+    grid:
+    - 0,0,5,1
   - type: StorageFill
     contents:
       - id: CigPackGreen

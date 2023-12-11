@@ -13,6 +13,9 @@
   - type: Tag
     tags:
     - BorgModuleGeneric
+  - type: GuideHelp
+    guides:
+      - Cyborgs
 
 - type: entity
   id: BaseProviderBorgModule
@@ -288,19 +291,7 @@
     items:
     - MopItem
     - Bucket
-
-- type: entity
-  id: BorgModuleTrashCollection
-  parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
-  name: trash collection cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: janitor
-    - state: icon-trash-bag
-  - type: ItemBorgModule
-    items:
-    - TrashBagBlue
+    - TrashBag
 
 - type: entity
   id: BorgModuleAdvancedCleaning

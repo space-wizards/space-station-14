@@ -30,14 +30,14 @@ namespace Content.Server.Forensics
             component.DNA = GenerateDNA();
         }
 
-        private string GenerateFingerprint()
+        public string GenerateFingerprint()
         {
             var fingerprint = new byte[16];
             _random.NextBytes(fingerprint);
             return Convert.ToHexString(fingerprint);
         }
 
-        private string GenerateDNA()
+        public string GenerateDNA()
         {
             var letters = new[] { "A", "C", "G", "T" };
             var DNA = string.Empty;

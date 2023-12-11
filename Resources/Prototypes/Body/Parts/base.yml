@@ -23,6 +23,7 @@
   id: BaseTorso
   name: "torso"
   parent: BasePart
+  abstract: true
   components:
   - type: BodyPart
     partType: Torso
@@ -31,6 +32,7 @@
   id: BaseHead
   name: "head"
   parent: BasePart
+  abstract: true
   components:
   - type: BodyPart
     partType: Head
@@ -45,6 +47,7 @@
   id: BaseLeftArm
   name: "left arm"
   parent: BasePart
+  abstract: true
   components:
   - type: BodyPart
     partType: Arm
@@ -54,6 +57,7 @@
   id: BaseRightArm
   name: "right arm"
   parent: BasePart
+  abstract: true
   components:
   - type: BodyPart
     partType: Arm
@@ -63,6 +67,7 @@
   id: BaseLeftHand
   name: "left hand"
   parent: BasePart
+  abstract: true
   components:
   - type: BodyPart
     partType: Hand
@@ -72,6 +77,7 @@
   id: BaseRightHand
   name: "right hand"
   parent: BasePart
+  abstract: true
   components:
   - type: BodyPart
     partType: Hand
@@ -81,6 +87,7 @@
   id: BaseLeftLeg
   name: "left leg"
   parent: BasePart
+  abstract: true
   components:
   - type: BodyPart
     partType: Leg
@@ -91,6 +98,7 @@
   id: BaseRightLeg
   name: "right leg"
   parent: BasePart
+  abstract: true
   components:
   - type: BodyPart
     partType: Leg
@@ -101,6 +109,7 @@
   id: BaseLeftFoot
   name: "left foot"
   parent: BasePart
+  abstract: true
   components:
   - type: BodyPart
     partType: Foot
@@ -110,6 +119,7 @@
   id: BaseRightFoot
   name: "right foot"
   parent: BasePart
+  abstract: true
   components:
   - type: BodyPart
     partType: Foot

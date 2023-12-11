@@ -93,3 +93,19 @@
     sprite: Objects/Weapons/Melee/web-shield.rsi
     state: icon
   objectType: Item
+
+- type: construction
+  name: web winter boots
+  id: ClothingShoesBootsWinterWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: boots
+  category: construction-category-clothing
+  description: "Tightly woven web should protect against the cold"
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Shoes/Boots/winterbootsweb.rsi
+    state: icon
+  objectType: Item
