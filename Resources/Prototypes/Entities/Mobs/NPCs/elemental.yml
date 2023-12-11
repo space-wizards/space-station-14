@@ -92,7 +92,7 @@
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
-        Blunt: 10
+        Blunt: 6
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 2.5
@@ -134,7 +134,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 6
+        Blunt: 5
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 2
@@ -161,15 +161,8 @@
   description: An ore crab made from uranium.
   components:
   - type: FactionException
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 8
   - type: NPCRetaliation
     attackMemoryLength: 10
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2
-    baseSprintSpeed : 2.5
   - type: NpcFactionMember
     factions:
       - SimpleNeutral
@@ -213,7 +206,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 80
+        damage: 70
       behaviors:
       - !type:PlaySoundBehavior
         sound:
