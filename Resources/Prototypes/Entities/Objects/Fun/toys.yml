@@ -210,7 +210,6 @@
   components:
   - type: Item
     size: Small
-    storedRotation: -90
   - type: Sprite
     state: plushie_lizard_mirrored
 
