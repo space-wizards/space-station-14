@@ -1,0 +1,338 @@
+- type: entity
+  parent: BaseItem
+  id: PlayableCardJokerRed
+  name: playablecard
+  description:
+  components:
+  - type: Sprite
+    sprite: Fun/playablecard.rsi
+    layers:
+    - state: redjoker
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Fun/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redjoker-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redjoker}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardJokerBlack
+  name: playablecard
+  description:
+  components:
+  - type: Sprite
+    sprite: Fun/playablecard.rsi
+    layers:
+    - state: blackjoker
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Fun/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackjoker-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackjoker}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardKingRed
+  name: playablecard
+  description:
+  components:
+  - type: Sprite
+    sprite: Fun/playablecard.rsi
+    layers:
+    - state: redking
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Fun/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redking-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redking}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardKingBlack
+  name: playablecard
+  description:
+  components:
+  - type: Sprite
+    sprite: Fun/playablecard.rsi
+    layers:
+    - state: blackking
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Fun/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackking-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackking}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardQueenRed
+  name: playablecard
+  description:
+  components:
+  - type: Sprite
+    sprite: Fun/playablecard.rsi
+    layers:
+    - state: redqueen
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Fun/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redqueen-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redqueen}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardQueenBlack
+  name: playablecard
+  description:
+  components:
+  - type: Sprite
+    sprite: Fun/playablecard.rsi
+    layers:
+    - state: blackqueen
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Fun/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackqueen-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackqueen}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardJackRed
+  name: playablecard
+  description:
+  components:
+  - type: Sprite
+    sprite: Fun/playablecard.rsi
+    layers:
+    - state: redjack
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Fun/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redjack-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redjack}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardJackBlack
+  name: playablecard
+  description:
+  components:
+  - type: Sprite
+    sprite: Fun/playablecard.rsi
+    layers:
+    - state: blackjack
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Fun/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackjack-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackjack}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardTenRed
+  name: playablecard
+  description:
+  components:
+  - type: Sprite
+    sprite: Fun/playablecard.rsi
+    layers:
+    - state: redten
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Fun/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redten-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redten}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardTenBlack
+  name: playablecard
+  description:
+  components:
+  - type: Sprite
+    sprite: Fun/playablecard.rsi
+    layers:
+    - state: blackten
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Fun/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackten-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackten}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseStructureDynamic
+  id: CardBin
+  name: card bin
+  description: What secrets lie at the bottom of its endless stack?
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Fun/cardbin.rsi
+    state: paper_bin
+    drawdepth: SmallObjects
+    noRot: true
+  - type: Appearance
+  - type: ItemMapper
+    sprite: Fun/cardbin.rsi
+    mapLayers:
+      paper_bin1:
+        whitelist:
+          tags:
+          - PlayableCard
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.10,0.10,0.10"
+        density: 500
+        mask:
+          - TabletopMachineMask
+  - type: InteractionOutline
+  - type: Bin
+    whitelist:
+      tags:
+      - PlayableCard
+  - type: ContainerContainer
+    containers:
+      bin-container: !type:Container
+
+- type: entity
+  parent: CardBin
+  id: CardBin10
+  suffix: 10
+  components:
+  - type: Bin
+    initialContents:
+    - PlayableCardJokerRed
+    - PlayableCardJokerBlack
+    - PlayableCardKingRed
+    - PlayableCardKingBlack
+    - PlayableCardQueenRed
+    - PlayableCardQueenBlack
+    - PlayableCardJackRed
+    - PlayableCardJackBlack
+    - PlayableCardTenRed
+    - PlayableCardTenBlack
+    whitelist:
+      tags:
+      - PlayableCard
