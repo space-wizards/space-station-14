@@ -111,9 +111,9 @@
 
 - type: entity
   parent: ClothingEyesBase
-  id: ClothingEyesGlassesSunglasses
+  id: ClothingEyesGlassesCosmeticSunglasses
   name: sun glasses
-  description: Useful both for security and cargonia.
+  description: A pair of black sunglasses.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
@@ -126,6 +126,14 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingEyesGlassesCosmeticSunglasses
+  id: ClothingEyesGlassesSunglasses
+  components:
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
 
 - type: entity
   parent: ClothingEyesBase
