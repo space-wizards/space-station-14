@@ -316,7 +316,7 @@ namespace Content.Server.GameTicking
             // This whole setup logic should be made asynchronous so we can properly wait on the DB AAAAAAAAAAAAAH
             var task = Task.Run(async () =>
             {
-                var server = await _db.AddOrGetServer(serverName);
+                var server = await _dbEntryManager.ServerEntity;
                 return await _db.AddNewRound(server, playerIds);
             });
 

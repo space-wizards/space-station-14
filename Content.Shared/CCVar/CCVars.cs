@@ -67,28 +67,19 @@ namespace Content.Shared.CCVar
         /// Ambience volume.
         /// </summary>
         public static readonly CVarDef<float> AmbienceVolume =
-            CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
-
-        public const float MasterMultiplier = 2f;
-
-        // Midi is on engine so deal
-        public const float MidiMultiplier = 3f;
-
-        public const float AmbienceMultiplier = 2f;
+            CVarDef.Create("ambience.volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /// <summary>
         /// Ambience music volume.
         /// </summary>
         public static readonly CVarDef<float> AmbientMusicVolume =
-            CVarDef.Create("ambience.music_volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
-
-        public const float AmbientMusicMultiplier = 2f;
+            CVarDef.Create("ambience.music_volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /// <summary>
         /// Lobby / round end music volume.
         /// </summary>
         public static readonly CVarDef<float> LobbyMusicVolume =
-            CVarDef.Create("ambience.lobby_music_volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
+            CVarDef.Create("ambience.lobby_music_volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * Status
@@ -548,6 +539,16 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> DatabasePgConcurrency =
             CVarDef.Create("database.pg_concurrency", 8, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Milliseconds to asynchronously delay all PostgreSQL database operations with.
+        /// </summary>
+        /// <remarks>
+        /// This is intended for performance testing. It works different from <see cref="DatabaseSqliteDelay"/>,
+        /// as the lag is applied after acquiring the database lock.
+        /// </remarks>
+        public static readonly CVarDef<int> DatabasePgFakeLag =
+            CVarDef.Create("database.pg_fake_lag", 0, CVar.SERVERONLY);
 
         // Basically only exists for integration tests to avoid race conditions.
         public static readonly CVarDef<bool> DatabaseSynchronous =
@@ -1661,11 +1662,21 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ToggleWalk =
             CVarDef.Create("control.toggle_walk", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        /*
+         * STORAGE
+         */
+
         /// <summary>
         /// Whether or not the storage UI is static and bound to the hotbar, or unbound and allowed to be dragged anywhere.
         /// </summary>
         public static readonly CVarDef<bool> StaticStorageUI =
             CVarDef.Create("control.static_storage_ui", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        /// Whether or not the storage window uses a transparent or opaque sprite.
+        /// </summary>
+        public static readonly CVarDef<bool> OpaqueStorageWindow =
+            CVarDef.Create("control.opaque_storage_background", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
          * UPDATE
