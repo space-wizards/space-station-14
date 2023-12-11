@@ -92,7 +92,6 @@
     sprite: Clothing/Eyes/Glasses/jensen.rsi
   - type: Tag
     tags:
-    - HamsterWearable
     - WhitelistChameleon
 
 - type: entity
