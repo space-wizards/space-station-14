@@ -178,7 +178,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
 
         foreach (var player in list)
         {
-            //player preferences to play as thief
+            //player preferences to play as this antag
             var profile = candidates[player];
             if (profile.AntagPreferences.Contains(antagPreferenceId))
             {
@@ -204,7 +204,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         var results = new List<ICommonSession>(antagCount);
         if (prefList.Count == 0)
         {
-            Log.Info("Insufficient ready players to fill up with thieves, stopping the selection.");
+            Log.Info("Insufficient ready players to fill up with antags, stopping the selection.");
             return results;
         }
 
