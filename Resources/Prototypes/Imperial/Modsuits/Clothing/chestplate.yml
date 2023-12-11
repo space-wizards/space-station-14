@@ -18,6 +18,8 @@
     clothingPrototype: ClothingHeadHelmetModsuitCESealed
     requiredSlot: outerClothing
     slot: head
+  - type: TemperatureProtection
+    coefficient: 0.01
   # - type: QualityOfItem
   #   qualityWeights:
   #     0: 0
@@ -41,8 +43,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.0002
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.000001
   - type: ExplosionResistance
     damageCoefficient: 0.15
   - type: Armor
@@ -63,6 +63,8 @@
     requiredSlot: outerClothing
     slot: head
   - type: Insulated
+  - type: TemperatureProtection
+    coefficient: 0.0000001
 
 - type: entity 
   parent: ClothingOuterChestplateModsuitSealedBase
@@ -77,8 +79,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.04
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.25
   - type: Armor
@@ -98,6 +98,8 @@
     requiredSlot: outerClothing
     slot: head
   - type: Insulated
+  - type: TemperatureProtection
+    coefficient: 0.001
 
 - type: entity 
   parent: ClothingOuterChestplateModsuitSealedBase
@@ -112,8 +114,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.1
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.6
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: Armor
@@ -146,8 +146,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.00001
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: Armor
@@ -165,6 +163,8 @@
     clothingPrototype: ClothingHeadHelmetModsuitAtmosphericsSealed
     requiredSlot: outerClothing
     slot: head
+  - type: TemperatureProtection
+    coefficient: 0.000001
 
 - type: entity 
   parent: ClothingOuterChestplateModsuitSealedBase
@@ -180,7 +180,7 @@
     highPressureMultiplier: 0.4
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.5
+    coefficient: 0.1
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: Armor
@@ -209,8 +209,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.2
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.15
   - type: ExplosionResistance
     damageCoefficient: 0.6
   - type: Armor
@@ -242,8 +240,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: Armor
@@ -274,8 +270,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.1
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.02
   - type: ExplosionResistance
     damageCoefficient: 0.4
   - type: Armor
@@ -308,8 +302,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.35
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.7
   - type: ExplosionResistance
     damageCoefficient: 0.3
   - type: Armor
@@ -342,8 +334,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.35
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.7
   - type: ExplosionResistance
     damageCoefficient: 0.3
   - type: Armor
@@ -375,8 +365,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.7
   - type: ExplosionResistance
     damageCoefficient: 0.7
   - type: Armor
@@ -407,8 +395,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.3
   - type: ExplosionResistance
     damageCoefficient: 0.2
   - type: Armor
@@ -441,8 +427,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.25
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.3
   - type: ExplosionResistance
     damageCoefficient: 0.3
   - type: Armor
@@ -520,8 +504,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.001
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.3
   - type: ExplosionResistance
     damageCoefficient: 0.3
   - type: Armor
