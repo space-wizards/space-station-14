@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed some missing localization., type: Fix}
-  id: 4828
-  time: '2023-09-14T10:08:03.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Holobarrier projectors can now be researched and produced in the security
@@ -2897,3 +2892,8 @@ Entries:
       item, tasers, from research.', type: Remove}
   id: 5327
   time: '2023-12-11T22:33:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the artifact crusher to research! Crush things today!, type: Add}
+  id: 5328
+  time: '2023-12-11T23:15:47.0000000+00:00'
