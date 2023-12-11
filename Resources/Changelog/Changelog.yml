@@ -1,15 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: The syndicate bomb now has a unique beeping sound., type: Add}
-  - {message: The training bomb now has the same amount of wires as the real deal.,
-    type: Tweak}
-  - {message: The syndicate bomb's minimum timer setting is now 120 seconds (30 seconds
-      longer then before.), type: Tweak}
-  - {message: Fixed the syndicate bomb's name & description in the uplink showing
-      up incorrectly., type: Fix}
-  id: 4822
-  time: '2023-09-14T00:26:58.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: "Added a telescopi\u0441 shield to the Advanced Riot Control Technology.",
@@ -2907,3 +2896,9 @@ Entries:
   - {message: Beer goggles can now scan solutions., type: Add}
   id: 5321
   time: '2023-12-11T11:35:11.0000000+00:00'
+- author: MACMAN2003
+  changes:
+  - {message: Added yellow tinted jensen glasses that may show up in maints from time
+      to time, type: Add}
+  id: 5322
+  time: '2023-12-11T11:36:19.0000000+00:00'
