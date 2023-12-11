@@ -81,7 +81,7 @@ public sealed partial class ArtifactCrusherComponent : Component
     /// <summary>
     /// Damage dealt each second to entities inside while crushing.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public DamageSpecifier CrushingDamage = new();
 
     /// <summary>
@@ -99,7 +99,7 @@ public sealed partial class ArtifactCrusherComponent : Component
     /// <summary>
     /// Stores entity of <see cref="CrushingSound"/> to allow ending it early.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public (EntityUid, AudioComponent)? CrushingSoundEntity;
 }
 
