@@ -60381,13 +60381,6 @@ entities:
     - pos: -0.5,-19.5
       parent: 1
       type: Transform
-- proto: GasMinerPlasma
-  entities:
-  - uid: 3023
-    components:
-    - pos: -0.5,-27.5
-      parent: 1
-      type: Transform
 - proto: GasMixerFlipped
   entities:
   - uid: 4699
