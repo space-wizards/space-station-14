@@ -82,7 +82,7 @@
     contents:
       - id: ClothingOuterHardsuitAtmos
       - id: ClothingMaskGasAtmos
-      - id: OxygenTankFilled
+      - id: YellowOxygenTankFilled
       - id: NitrogenTankFilled
       - id: ClothingOuterSuitAtmosFire
       - id: ClothingHeadHelmetAtmosFire

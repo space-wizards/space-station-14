@@ -37,7 +37,7 @@
     pocket1: SpiderCharge
     pocket2: PinpointerStation
     belt: EnergyKatana
-    suitstorage: OxygenTankFilled
+    suitstorage: YellowOxygenTankFilled
   inhand:
     - JetpackBlackFilled
 
@@ -262,7 +262,7 @@
     id: CBURNPDA
     pocket1: RadioHandheld
     pocket2: WeaponLaserGun
-    suitstorage: OxygenTankFilled
+    suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier
   innerClothingSkirt: ClothingUniformJumpsuitColorBrown
   satchel: ClothingBackpackDuffelCBURNFilled

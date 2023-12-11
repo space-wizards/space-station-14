@@ -137,7 +137,7 @@
       rareChance: 0.08
       prototypes:
         - FlashlightLantern
-        - OxygenTankFilled
+        - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - ToolboxEmergencyFilled
         - NitrogenTankFilled
@@ -212,7 +212,7 @@
       rareChance: 0.05
       prototypes:
         - FlashlightLantern
-        - OxygenTankFilled
+        - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - NitrogenTankFilled
         - DoubleEmergencyNitrogenTankFilled
