@@ -1,11 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - {message: 'Nukies now start with a microbomb implant in their backpack, remember
-      to communicate if you''re gonna use it!', type: Add}
-  - {message: The microbomb implanter has been removed from the nukie uplink, type: Remove}
-  id: 4810
-  time: '2023-09-12T15:09:33.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Fixed ninja suit not having any actions., type: Fix}
@@ -2903,3 +2896,9 @@ Entries:
     type: Add}
   id: 5309
   time: '2023-12-11T08:41:54.0000000+00:00'
+- author: nok-ko
+  changes:
+  - {message: "Fixed taking damage mid-sentence not activating \u201Cglorfcode\u201D",
+    type: Fix}
+  id: 5310
+  time: '2023-12-11T08:53:10.0000000+00:00'
