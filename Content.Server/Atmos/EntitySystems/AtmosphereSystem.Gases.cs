@@ -59,7 +59,17 @@ namespace Content.Server.Atmos.EntitySystems
 
             Span<float> tmp = stackalloc float[moles.Length];
             NumericsHelpers.Multiply(moles, GasSpecificHeats, tmp);
-            return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
+            // Adjust heat capacity by speedup, because this is primarily what
+            // determines how quickly gases heat up/cool.
+            return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity) / Speedup;
+        }
+
+        /// <summary>
+        ///     Return speedup factor for pumped or flow-based devices that depend on MaxTransferRate.
+        /// </summary>
+        public float PumpSpeedup()
+        {
+            return MathF.Sqrt(Speedup);
         }
 
         /// <summary>

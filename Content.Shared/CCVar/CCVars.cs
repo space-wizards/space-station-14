@@ -1044,6 +1044,15 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AtmosTickRate =
             CVarDef.Create("atmos.tickrate", 15f, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Scale factor for how fast things happen in our atmosphere
+        ///     simulation compared to real life. 1x means that a room takes as
+        ///     long to heat up in game as real life. Players typically expect
+        ///     things to happen faster in-game.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosSpeedup =
+            CVarDef.Create("atmos.speedup", 64f, CVar.SERVERONLY);
+
         /*
          * MIDI instruments
          */

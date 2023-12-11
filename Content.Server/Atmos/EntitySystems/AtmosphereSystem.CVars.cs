@@ -24,6 +24,7 @@ namespace Content.Server.Atmos.EntitySystems
         public bool ExcitedGroupsSpaceIsAllConsuming { get; private set; }
         public float AtmosMaxProcessTime { get; private set; }
         public float AtmosTickRate { get; private set; }
+        public float Speedup { get; private set; }
 
         /// <summary>
         /// Time between each atmos sub-update.  If you are writing an atmos device, use AtmosDeviceUpdateEvent.dt
@@ -49,6 +50,7 @@ namespace Content.Server.Atmos.EntitySystems
             _cfg.OnValueChanged(CCVars.Superconduction, value => Superconduction = value, true);
             _cfg.OnValueChanged(CCVars.AtmosMaxProcessTime, value => AtmosMaxProcessTime = value, true);
             _cfg.OnValueChanged(CCVars.AtmosTickRate, value => AtmosTickRate = value, true);
+            _cfg.OnValueChanged(CCVars.AtmosSpeedup, value => Speedup = value, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroups, value => ExcitedGroups = value, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroupsSpaceIsAllConsuming, value => ExcitedGroupsSpaceIsAllConsuming = value, true);
         }
