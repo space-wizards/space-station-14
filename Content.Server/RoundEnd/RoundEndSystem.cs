@@ -8,12 +8,15 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
+using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -31,6 +34,8 @@ namespace Content.Server.RoundEnd
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
@@ -88,6 +93,27 @@ namespace Content.Server.RoundEnd
             SetAutoCallTime();
             _autoCalledBefore = false;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
+        }
+
+        /// <summary>
+        ///     Attempts to get the MapUid of the station using <see cref="StationSystem.GetLargestGrid"/>
+        /// </summary>
+        public EntityUid? GetStation()
+        {
+            AllEntityQuery<StationEmergencyShuttleComponent, StationDataComponent>().MoveNext(out _, out _, out var data);
+            if (data == null)
+                return null;
+            var targetGrid = _stationSystem.GetLargestGrid(data);
+            return targetGrid == null ? null : Transform(targetGrid.Value).MapUid;
+        }
+
+        /// <summary>
+        ///     Attempts to get centcomm's MapUid
+        /// </summary>
+        public EntityUid? GetCentcomm()
+        {
+            AllEntityQuery<StationCentcommComponent>().MoveNext(out var centcomm);
+            return centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId);
         }
 
         public bool CanCallOrRecall()
@@ -168,17 +194,17 @@ namespace Content.Server.RoundEnd
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
 
-            var maps = _shuttleTimerSystem.GetEscapeMaps();
-            if (maps.TryGetValue("eshuttle", out var shuttle) && TryComp<DeviceNetworkComponent>(shuttle, out var net))
+            var shuttle = _shuttle.GetShuttle();
+            if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle, out var net))
             {
                 var payload = new NetworkPayload
                 {
-                    ["ShuttleMap"] = shuttle,
-                    ["SourceMap"] = maps["centcomm"],
-                    ["DestMap"] = maps["station"],
-                    ["ShuttleTimer"] = countdownTime,
-                    ["SourceTimer"] = countdownTime + TimeSpan.FromSeconds(_shuttle.TransitTime + _cfg.GetCVar(CCVars.EmergencyShuttleDockTime)),
-                    ["DestTimer"] = countdownTime,
+                    [ShuttleTimerMasks.ShuttleMap] = shuttle,
+                    [ShuttleTimerMasks.SourceMap] = GetCentcomm(),
+                    [ShuttleTimerMasks.DestMap] = GetStation(),
+                    [ShuttleTimerMasks.ShuttleTime] = countdownTime,
+                    [ShuttleTimerMasks.SourceTime] = countdownTime + TimeSpan.FromSeconds(_shuttle.TransitTime + _cfg.GetCVar(CCVars.EmergencyShuttleDockTime)),
+                    [ShuttleTimerMasks.DestTime] = countdownTime,
                 };
                 _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }
@@ -214,18 +240,18 @@ namespace Content.Server.RoundEnd
 
             // remove all active shuttle timers
             var zero = TimeSpan.Zero;
-            var maps = _shuttleTimerSystem.GetEscapeMaps();
-            if (maps.TryGetValue("eshuttle", out var shuttle) && TryComp<DeviceNetworkComponent>(shuttle, out var net))
+            var shuttle = _shuttle.GetShuttle();
+            if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle, out var net))
             {
                 var payload = new NetworkPayload
                 {
-                    ["ShuttleMap"] = shuttle,
-                    ["SourceMap"] = maps["centcomm"],
-                    ["DestMap"] = maps["station"],
-                    ["ShuttleTimer"] = zero,
-                    ["SourceTimer"] = zero,
-                    ["DestTimer"] = zero,
-                    ["Text"] = new string?[] { string.Empty, string.Empty }
+                    [ShuttleTimerMasks.ShuttleMap] = shuttle,
+                    [ShuttleTimerMasks.SourceMap] = GetCentcomm(),
+                    [ShuttleTimerMasks.DestMap] = GetStation(),
+                    [ShuttleTimerMasks.ShuttleTime] = zero,
+                    [ShuttleTimerMasks.SourceTime] = zero,
+                    [ShuttleTimerMasks.DestTime] = zero,
+                    [ShuttleTimerMasks.Text] = new string?[] { string.Empty, string.Empty }
                 };
                 _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }

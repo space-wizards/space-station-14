@@ -377,18 +377,18 @@ public sealed partial class EmergencyShuttleSystem
         UpdateAllEmergencyConsoles();
 
         var time = TimeSpan.FromSeconds(_authorizeTime);
-        var maps = _shuttleTimerSystem.GetEscapeMaps();
-        if (maps.TryGetValue("eshuttle", out var shuttle) && TryComp<DeviceNetworkComponent>(shuttle, out var net))
+        var shuttle = GetShuttle();
+        if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle, out var net))
         {
             var payload = new NetworkPayload
             {
-                ["ShuttleMap"] = shuttle,
-                ["SourceMap"] = maps["station"],
-                ["DestMap"] = maps["centcomm"],
-                ["ShuttleTimer"] = time,
-                ["SourceTimer"] = time,
-                ["DestTimer"] = time + TimeSpan.FromSeconds(TransitTime),
-                ["Docked"] = true
+                [ShuttleTimerMasks.ShuttleMap] = shuttle,
+                [ShuttleTimerMasks.SourceMap] = _roundEnd.GetStation(),
+                [ShuttleTimerMasks.DestMap] = _roundEnd.GetCentcomm(),
+                [ShuttleTimerMasks.ShuttleTime] = time,
+                [ShuttleTimerMasks.SourceTime] = time,
+                [ShuttleTimerMasks.DestTime] = time + TimeSpan.FromSeconds(TransitTime),
+                [ShuttleTimerMasks.Docked] = true
             };
             _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
         }

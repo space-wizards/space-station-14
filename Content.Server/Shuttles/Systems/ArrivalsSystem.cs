@@ -179,8 +179,8 @@ public sealed class ArrivalsSystem : EntitySystem
 
             var payload = new NetworkPayload
             {
-                ["ShuttleMap"] = shuttleUid,
-                ["ShuttleTimer"] = ftlTime
+                [ShuttleTimerMasks.ShuttleMap] = shuttleUid,
+                [ShuttleTimerMasks.ShuttleTime] = ftlTime
             };
 
             // unfortunate levels of spaghetti due to roundstart arrivals ftl behavior
@@ -193,14 +193,14 @@ public sealed class ArrivalsSystem : EntitySystem
                 sourceMap = station == null ? null : Transform(station.Value)?.MapUid;
                 arrivalsDelay += RoundStartFTLDuration;
                 component.FirstRun = false;
-                payload.Add("DestMap", Transform(args.TargetCoordinates.EntityId).MapUid);
-                payload.Add("DestTimer", ftlTime);
+                payload.Add(ShuttleTimerMasks.DestMap, Transform(args.TargetCoordinates.EntityId).MapUid);
+                payload.Add(ShuttleTimerMasks.DestTime, ftlTime);
             }
             else
                 sourceMap = args.FromMapUid;
 
-            payload.Add("SourceMap", sourceMap);
-            payload.Add("SourceTimer", ftlTime + TimeSpan.FromSeconds(arrivalsDelay));
+            payload.Add(ShuttleTimerMasks.SourceMap, sourceMap);
+            payload.Add(ShuttleTimerMasks.SourceTime, ftlTime + TimeSpan.FromSeconds(arrivalsDelay));
 
             _deviceNetworkSystem.QueuePacket(shuttleUid, null, payload, netComp.TransmitFrequency);
         }
@@ -253,11 +253,11 @@ public sealed class ArrivalsSystem : EntitySystem
         {
             var payload = new NetworkPayload
             {
-                ["ShuttleMap"] = uid,
-                ["SourceMap"] = args.MapUid,
-                ["ShuttleTimer"] = dockTime,
-                ["SourceTimer"] = dockTime,
-                ["Docked"] = true
+                [ShuttleTimerMasks.ShuttleMap] = uid,
+                [ShuttleTimerMasks.ShuttleTime] = dockTime,
+                [ShuttleTimerMasks.SourceMap] = args.MapUid,
+                [ShuttleTimerMasks.SourceTime] = dockTime,
+                [ShuttleTimerMasks.Docked] = true
             };
             _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.TransmitFrequency);
         }

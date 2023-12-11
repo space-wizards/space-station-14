@@ -60,7 +60,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
-    [Dependency] private readonly ShuttleTimerSystem _shuttleTimerSystem = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -108,6 +107,15 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             _mapManager.DeleteMap(component.MapId);
 
         component.MapId = MapId.Nullspace;
+    }
+
+    /// <summary>
+    ///     Attempts to get the EntityUid of the emergency shuttle
+    /// </summary>
+    public EntityUid? GetShuttle()
+    {
+        AllEntityQuery<EmergencyShuttleComponent>().MoveNext(out var shuttle, out _);
+        return shuttle;
     }
 
     private void SetEmergencyShuttleEnabled(bool value)
@@ -185,7 +193,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Escape shuttle FTL event handler. The only escape shuttle FTL should be from station to centcomm
+    ///     Escape shuttle FTL event handler. The only escape shuttle FTL transit should be from station to centcomm at round end
     /// </summary>
     private void OnEmergencyFTL(EntityUid uid, EmergencyShuttleComponent component, ref FTLStartedEvent args)
     {
@@ -199,12 +207,12 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         {
             var payload = new NetworkPayload
             {
-                ["ShuttleMap"] = uid,
-                ["SourceMap"] = args.FromMapUid,
-                ["DestMap"] = args.TargetCoordinates.GetMapUid(_entityManager),
-                ["ShuttleTimer"] = ftlTime,
-                ["SourceTimer"] = ftlTime,
-                ["DestTimer"] = ftlTime
+                [ShuttleTimerMasks.ShuttleMap] = uid,
+                [ShuttleTimerMasks.SourceMap] = args.FromMapUid,
+                [ShuttleTimerMasks.DestMap] = args.TargetCoordinates.GetMapUid(_entityManager),
+                [ShuttleTimerMasks.ShuttleTime] = ftlTime,
+                [ShuttleTimerMasks.SourceTime] = ftlTime,
+                [ShuttleTimerMasks.DestTime] = ftlTime
             };
             _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.TransmitFrequency);
         }
@@ -216,19 +224,18 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     private void OnEmergencyFTLComplete(EntityUid uid, EmergencyShuttleComponent component, ref FTLCompletedEvent args)
     {
         var countdownTime = TimeSpan.FromSeconds(_configManager.GetCVar(CCVars.RoundRestartTime));
-        var maps = _shuttleTimerSystem.GetEscapeMaps();
         var shuttle = args.Entity;
         if (TryComp<DeviceNetworkComponent>(shuttle, out var net))
         {
             var payload = new NetworkPayload
             {
-                ["ShuttleMap"] = shuttle,
-                ["SourceMap"] = maps["centcomm"],
-                ["DestMap"] = maps["station"],
-                ["ShuttleTimer"] = countdownTime,
-                ["SourceTimer"] = countdownTime,
-                ["DestTimer"] = countdownTime,
-                ["Text"] = new string?[] { "BYE!" }
+                [ShuttleTimerMasks.ShuttleMap] = shuttle,
+                [ShuttleTimerMasks.SourceMap] = _roundEnd.GetCentcomm(),
+                [ShuttleTimerMasks.DestMap] = _roundEnd.GetStation(),
+                [ShuttleTimerMasks.ShuttleTime] = countdownTime,
+                [ShuttleTimerMasks.SourceTime] = countdownTime,
+                [ShuttleTimerMasks.DestTime] = countdownTime,
+                [ShuttleTimerMasks.Text] = new string?[] { "BYE!" }
             };
             _deviceNetworkSystem.QueuePacket(shuttle, null, payload, net.TransmitFrequency);
         }
@@ -272,16 +279,15 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             var time = TimeSpan.FromSeconds(_consoleAccumulator);
             if (TryComp<DeviceNetworkComponent>(stationShuttle.EmergencyShuttle.Value, out var netComp))
             {
-                AllEntityQuery<StationCentcommComponent>().MoveNext(out var centcomm);
                 var payload = new NetworkPayload
                 {
-                    ["ShuttleMap"] = stationShuttle.EmergencyShuttle.Value,
-                    ["SourceMap"] = targetXform?.MapUid,
-                    ["DestMap"] = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId),
-                    ["ShuttleTimer"] = time,
-                    ["SourceTimer"] = time,
-                    ["DestTimer"] = time + TimeSpan.FromSeconds(TransitTime),
-                    ["Docked"] = true
+                    [ShuttleTimerMasks.ShuttleMap] = stationShuttle.EmergencyShuttle.Value,
+                    [ShuttleTimerMasks.SourceMap] = targetXform?.MapUid,
+                    [ShuttleTimerMasks.DestMap] = _roundEnd.GetCentcomm(),
+                    [ShuttleTimerMasks.ShuttleTime] = time,
+                    [ShuttleTimerMasks.SourceTime] = time,
+                    [ShuttleTimerMasks.DestTime] = time + TimeSpan.FromSeconds(TransitTime),
+                    [ShuttleTimerMasks.Docked] = true
                 };
                 _deviceNetworkSystem.QueuePacket(stationShuttle.EmergencyShuttle.Value, null, payload, netComp.TransmitFrequency);
             }
