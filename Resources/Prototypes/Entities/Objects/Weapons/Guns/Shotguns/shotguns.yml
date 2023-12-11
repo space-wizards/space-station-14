@@ -7,8 +7,8 @@
   components:
   - type: Sprite
     layers:
-      - state: icon
-        map: [ "enum.GunVisualLayers.Base" ]
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     # If you update this also update the bulldog's size.
     size: Large
@@ -166,6 +166,9 @@
     size: Normal
   - type: BallisticAmmoProvider
     capacity: 4
+  - type: Tag
+    tags:
+    - WeaponShotgunKammerer
 
 - type: entity
   name: sawn-off shotgun

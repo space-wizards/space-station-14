@@ -13,8 +13,64 @@
     dangerousRedFore: "#BB3232"
     disabledFore: "#5A5A5A"
 - type: uiTheme
-  id: SS14ClassicTheme
-  path: /Textures/Interface/Classic/
+  id: SS14PlasmafireTheme
+  path: /Textures/Interface/Plasmafire/
+  colors:
+    whiteText: "#FFF5EE"
+    slotSelectedGold: "#FFF5EE"
+    slotColor: "#FFF5EE"
+    slotOutline: "#FFF5EE"
+    slotText: "#FFF5EE"
+    nanoGold: "#FFF5EE"
+    goodGreenFore: "#FFF5EE"
+    concerningOrangeFore: "#FFF5EE"
+    dangerousRedFore: "#FFF5EE"
+    disabledFore: "#FFF5EE"
+- type: uiTheme
+  id: SS14SlimecoreTheme
+  path: /Textures/Interface/Slimecore/
+  colors:
+    whiteText: "#FFF5EE"
+    slotSelectedGold: "#FFF5EE"
+    slotColor: "#FFF5EE"
+    slotOutline: "#FFF5EE"
+    slotText: "#FFF5EE"
+    nanoGold: "#FFF5EE"
+    goodGreenFore: "#FFF5EE"
+    concerningOrangeFore: "#FFF5EE"
+    dangerousRedFore: "#FFF5EE"
+    disabledFore: "#FFF5EE"
+- type: uiTheme
+  id: SS14ClockworkTheme
+  path: /Textures/Interface/Clockwork/
+  colors:
+    whiteText: "#FFF5EE"
+    slotSelectedGold: "#FFF5EE"
+    slotColor: "#FFF5EE"
+    slotOutline: "#FFF5EE"
+    slotText: "#FFF5EE"
+    nanoGold: "#FFF5EE"
+    goodGreenFore: "#FFF5EE"
+    concerningOrangeFore: "#FFF5EE"
+    dangerousRedFore: "#FFF5EE"
+    disabledFore: "#FFF5EE"
+- type: uiTheme
+  id: SS14RetroTheme
+  path: /Textures/Interface/Retro/
+  colors:
+    whiteText: "#FFF5EE"
+    slotSelectedGold: "#FFF5EE"
+    slotColor: "#FFF5EE"
+    slotOutline: "#FFF5EE"
+    slotText: "#FFF5EE"
+    nanoGold: "#FFF5EE"
+    goodGreenFore: "#FFF5EE"
+    concerningOrangeFore: "#FFF5EE"
+    dangerousRedFore: "#FFF5EE"
+    disabledFore: "#FFF5EE"
+- type: uiTheme
+  id: SS14MinimalistTheme
+  path: /Textures/Interface/Minimalist/
   colors:
     whiteText: "#FFF5EE"
     slotSelectedGold: "#e6b812"
@@ -27,8 +83,8 @@
     dangerousRedFore: "#BB3232"
     disabledFore: "#5A5A5A"
 - type: uiTheme
-  id: SS14ModernizedTheme
-  path: /Textures/Interface/Modernized/
+  id: SS14ErisTheme
+  path: /Textures/Interface/Eris/
   colors:
     whiteText: "#FFF5EE"
     slotSelectedGold: "#e6b812"

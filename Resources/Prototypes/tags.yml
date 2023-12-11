@@ -1081,6 +1081,9 @@
   id: WeaponPistolCHIMPUpgradeKit
 
 - type: Tag
+  id: WeaponShotgunKammerer
+
+- type: Tag
   id: Window
 
 - type: Tag
@@ -1115,3 +1118,6 @@
 
 - type: Tag
   id: MindShield
+
+- type: Tag
+  id:  boots

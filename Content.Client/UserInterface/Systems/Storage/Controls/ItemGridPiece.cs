@@ -5,6 +5,8 @@ using Content.Shared.Storage;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.CustomControls;
+using YamlDotNet.Core;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
@@ -17,6 +19,7 @@ public sealed class ItemGridPiece : Control
 
     public readonly EntityUid Entity;
     public ItemStorageLocation Location;
+    public bool Marked = false;
 
     public event Action<GUIBoundKeyEventArgs, ItemGridPiece>? OnPiecePressed;
     public event Action<GUIBoundKeyEventArgs, ItemGridPiece>? OnPieceUnpressed;
@@ -40,6 +43,8 @@ public sealed class ItemGridPiece : Control
     private Texture? _bottomLeftTexture;
     private readonly string _bottomRightTexturePath = "Storage/piece_bottomRight";
     private Texture? _bottomRightTexture;
+    private readonly string _markedTexturePath = "Storage/marked";
+    private Texture? _markedTexture;
     #endregion
 
     public ItemGridPiece(Entity<ItemComponent> entity, ItemStorageLocation location,  IEntityManager entityManager)
@@ -55,7 +60,20 @@ public sealed class ItemGridPiece : Control
         Visible = true;
         MouseFilter = MouseFilterMode.Pass;
 
+        TooltipSupplier = SupplyTooltip;
+
         OnThemeUpdated();
+    }
+
+    private Control? SupplyTooltip(Control sender)
+    {
+        if (_storageController.IsDragging)
+            return null;
+
+        return new Tooltip
+        {
+            Text = _entityManager.GetComponent<MetaDataComponent>(Entity).EntityName
+        };
     }
 
     protected override void OnThemeUpdated()
@@ -71,6 +89,7 @@ public sealed class ItemGridPiece : Control
         _topRightTexture = Theme.ResolveTextureOrNull(_topRightTexturePath)?.Texture;
         _bottomLeftTexture = Theme.ResolveTextureOrNull(_bottomLeftTexturePath)?.Texture;
         _bottomRightTexture = Theme.ResolveTextureOrNull(_bottomRightTexturePath)?.Texture;
+        _markedTexture = Theme.ResolveTextureOrNull(_markedTexturePath)?.Texture;
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -95,6 +114,9 @@ public sealed class ItemGridPiece : Control
         //yeah, this coloring is kinda hardcoded. deal with it. B)
         Color? colorModulate = hovering  ? null : Color.FromHex("#a8a8a8");
 
+        var marked = Marked;
+        Vector2i? maybeMarkedPos = null;
+
         _texturesPositions.Clear();
         for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
         {
@@ -115,6 +137,12 @@ public sealed class ItemGridPiece : Control
                 {
                     _texturesPositions.Add((nwTexture, Position + offset / UIScale));
                     handle.DrawTextureRect(nwTexture, new UIBox2(topLeft, topLeft + size), colorModulate);
+
+                    if (marked && nwTexture == _topLeftTexture)
+                    {
+                        maybeMarkedPos = topLeft;
+                        marked = false;
+                    }
                 }
                 if (GetTexture(adjustedShape, new Vector2i(x, y), Direction.SouthEast) is {} seTexture)
                 {
@@ -160,6 +188,11 @@ public sealed class ItemGridPiece : Control
                 Angle.Zero,
                 eyeRotation: iconRotation,
                 overrideDirection: Direction.South);
+        }
+
+        if (maybeMarkedPos is {} markedPos && _markedTexture != null)
+        {
+            handle.DrawTextureRect(_markedTexture, new UIBox2(markedPos, markedPos + size));
         }
     }
 
