@@ -34,7 +34,7 @@
   - type: Storage
     maxItemSize: Normal
     grid:
-    - 0,0,7,3
+    - 0,0,3,3
     blacklist:
       tags:
         - CannonRestrict

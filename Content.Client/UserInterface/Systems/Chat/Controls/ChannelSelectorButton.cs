@@ -2,16 +2,14 @@ using System.Numerics;
 using Content.Shared.Chat;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Input;
+using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
-/// <summary>
-/// Only needed to avoid the issue where right click on the button closes the popup
-/// but leaves the button highlighted.
-/// </summary>
 public sealed class ChannelSelectorButton : Button
 {
+    private readonly IGameTiming _gameTiming;
+
     private readonly ChannelSelectorPopup _channelSelectorPopup;
     public event Action<ChatSelectChannel>? OnChannelSelect;
 
@@ -19,15 +17,16 @@ public sealed class ChannelSelectorButton : Button
 
     private const int SelectorDropdownOffset = 38;
 
+    private uint _frameLastPopupChanged;
+
     public ChannelSelectorButton()
     {
-        // needed so the popup is untoggled regardless of which key is pressed when hovering this button.
-        // If we don't have this, then right clicking the button while it's toggled on will hide
-        // the popup but keep the button toggled on
+        _gameTiming = IoCManager.Resolve<IGameTiming>();
+
         Name = "ChannelSelector";
-        Mode = ActionMode.Press;
-        EnableAllKeybinds = true;
+
         ToggleMode = true;
+
         OnToggled += OnSelectorButtonToggled;
         _channelSelectorPopup = UserInterfaceManager.CreatePopup<ChannelSelectorPopup>();
         _channelSelectorPopup.Selected += OnChannelSelected;
@@ -46,13 +45,25 @@ public sealed class ChannelSelectorButton : Button
 
     private void OnPopupVisibilityChanged(Control control)
     {
+        // If the popup gets closed (e.g. by clicking anywhere else on the screen)
+        // We clear the button pressed state.
+
         Pressed = control.Visible;
+        _frameLastPopupChanged = _gameTiming.CurFrame;
     }
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
-        // needed since we need EnableAllKeybinds - don't double-send both UI click and Use
-        if (args.Function == EngineKeyFunctions.Use) return;
+        // If you try to close the popup by clicking on the button again the following would happen:
+        // The UI system would see that you clicked outside a popup, and would close it.
+        // Because of the above logic, that sets the button to UNPRESSED.
+        // THEN, it would propagate the keyboard event to us, the chat selector...
+        // And we would become pressed again.
+        // As a workaround, we check the frame the popup was last dismissed (above)
+        // and don't allow changing it again this frame.
+        if (_frameLastPopupChanged == _gameTiming.CurFrame)
+            return;
+
         base.KeyBindDown(args);
     }
 

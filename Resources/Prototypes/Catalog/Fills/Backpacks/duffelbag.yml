@@ -198,6 +198,9 @@
   name: syndicate pyjama duffel bag
   description: Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
   components:
+  - type: Storage
+    grid:
+    - 0,0,8,4
   - type: StorageFill
     contents:
       - id: ClothingUniformJumpsuitPyjamaSyndicateRed

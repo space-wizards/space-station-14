@@ -103,7 +103,11 @@ namespace Content.Server.Zombies
             RemComp<ThirstComponent>(target);
 
             //funny voice
-            EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";
+            var accentType = "zombie";
+            if (TryComp<ZombieAccentOverrideComponent>(target, out var accent))
+                accentType = accent.Accent;
+
+            EnsureComp<ReplacementAccentComponent>(target).Accent = accentType;
 
             //This is needed for stupid entities that fuck up combat mode component
             //in an attempt to make an entity not attack. This is the easiest way to do it.
