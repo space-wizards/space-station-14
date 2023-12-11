@@ -31,6 +31,10 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
     [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
 
+    const string bigObjectiveGroup = "ThiefBigObjectiveGroups";
+    const string smallObjectiveGroup = "ThiefObjectiveGroups";
+    const string escapeObjectiveGroup = "ThiefEscapeObjectiveGroups";
+
     private const float BigObjectiveChance = 0.7f;
     public override void Initialize()
     {
@@ -131,7 +135,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         if (_random.Prob(BigObjectiveChance)) // 70% chance to 1 big objective (structure or animal)
         {
-            var objective = _objectives.GetRandomObjective(mindId, mind, "ThiefBigObjectiveGroups");
+            var objective = _objectives.GetRandomObjective(mindId, mind, bigObjectiveGroup);
             if (objective != null)
             {
                 _mindSystem.AddObjective(mindId, mind, objective.Value);
@@ -141,7 +145,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         for (var i = 0; i < thiefRule.MaxStealObjectives && thiefRule.MaxObjectiveDifficulty > difficulty; i++)  // Many small objectives
         {
-            var objective = _objectives.GetRandomObjective(mindId, mind, "ThiefObjectiveGroups");
+            var objective = _objectives.GetRandomObjective(mindId, mind, smallObjectiveGroup);
             if (objective == null)
                 continue;
 
@@ -150,7 +154,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         }
 
         //Escape target
-        var escapeObjective = _objectives.GetRandomObjective(mindId, mind, "ThiefEscapeObjectiveGroups");
+        var escapeObjective = _objectives.GetRandomObjective(mindId, mind, escapeObjectiveGroup);
         if (escapeObjective != null)
             _mindSystem.AddObjective(mindId, mind, escapeObjective.Value);
 

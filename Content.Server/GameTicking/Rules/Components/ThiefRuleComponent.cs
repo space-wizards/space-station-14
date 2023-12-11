@@ -1,7 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Content.Shared.Roles;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Player;
 using Content.Shared.Preferences;
 
@@ -19,8 +18,8 @@ public sealed partial class ThiefRuleComponent : Component
     [DataField]
     public float RuleChance = 1f;
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
-    public string ThiefPrototypeId = "Thief";
+    [DataField]
+    public ProtoId<AntagPrototype> ThiefPrototypeId = "Thief";
 
     public Dictionary<ICommonSession, HumanoidCharacterProfile> StartCandidates = new();
 

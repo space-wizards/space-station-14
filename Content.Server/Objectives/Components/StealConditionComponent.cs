@@ -49,7 +49,7 @@ public sealed partial class StealConditionComponent : Component
     /// Help newer players by saying e.g. "steal the chief engineer's advanced magboots"
     /// instead of "steal advanced magboots. Should be a loc string.
     /// </summary>
-    [DataField]
+    [DataField("owner")]
     public string? OwnerText;
 
     // All this need to be loc string

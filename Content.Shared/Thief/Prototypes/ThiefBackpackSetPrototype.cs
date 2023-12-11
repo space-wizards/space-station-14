@@ -9,23 +9,10 @@ namespace Content.Shared.Thief;
 [Prototype("thiefBackpackSet")]
 public sealed partial class ThiefBackpackSetPrototype : IPrototype
 {
-    // ID
-    [IdDataField]
-    public string ID { get; private set; } = default!;
+    [IdDataField] public string ID { get; private set; } = default!;
+    [DataField] public string Name { get; private set; } = string.Empty;
+    [DataField] public string Description { get; private set; } = string.Empty;
+    [DataField] public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
 
-    // Name
-    [DataField]
-    public string Name { get; private set; } = string.Empty;
-
-    // Description
-    [DataField]
-    public string Description { get; private set; } = string.Empty;
-
-    // Sprite
-    [DataField]
-    public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
-
-    //Item in set
-    [DataField]
-    public List<EntProtoId> Content = new();
+    [DataField] public List<EntProtoId> Content = new();
 }

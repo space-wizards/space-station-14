@@ -42,9 +42,6 @@ public enum ThiefBackpackUIKey : byte
 [Serializable, NetSerializable, DataDefinition]
 public partial struct ThiefBackpackSetInfo
 {
-    //[DataField]
-    //public ProtoId<ThiefBackpackSetPrototype> proto = default!;
-
     [DataField]
     public string Name;
 

@@ -9,15 +9,7 @@ namespace Content.Shared.Objectives;
 [Prototype("stealTargetGroup")]
 public sealed partial class StealTargetGroupPrototype : IPrototype
 {
-    /// ID
-    [IdDataField]
-    public string ID { get; private set; } = default!;
-
-    /// Name
-    [DataField]
-    public string Name { get; private set; } = string.Empty;
-
-    // Sprite
-    [DataField]
-    public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
+    [IdDataField] public string ID { get; private set; } = default!;
+    [DataField] public string Name { get; private set; } = string.Empty;
+    [DataField] public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
 }
