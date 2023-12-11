@@ -170,6 +170,15 @@ namespace Content.Shared.Storage
         }
     }
 
+    /// <summary>
+    /// An extra BUI message that either opens, closes, or focuses the storage window based on context.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class StorageModifyWindowMessage : BoundUserInterfaceMessage
+    {
+
+    }
+
     [NetSerializable]
     [Serializable]
     public enum StorageVisuals : byte
