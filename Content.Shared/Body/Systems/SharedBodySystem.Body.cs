@@ -25,9 +25,61 @@ public partial class SharedBodySystem
 
     private void InitializeBody()
     {
+        // Body here to handle root body parts.
+        SubscribeLocalEvent<BodyComponent, EntInsertedIntoContainerMessage>(OnBodyInserted);
+        SubscribeLocalEvent<BodyComponent, EntRemovedFromContainerMessage>(OnBodyRemoved);
+
         SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
         SubscribeLocalEvent<BodyComponent, MapInitEvent>(OnBodyMapInit);
         SubscribeLocalEvent<BodyComponent, CanDragEvent>(OnBodyCanDrag);
+    }
+
+    private void OnBodyInserted(EntityUid uid, BodyComponent component, EntInsertedIntoContainerMessage args)
+    {
+        // Root body part?
+        var slotId = args.Container.ID;
+
+        if (slotId != BodyRootContainerId)
+            return;
+
+        var entity = args.Entity;
+
+        if (TryComp(entity, out BodyPartComponent? childPart))
+        {
+            AddPart(uid, entity, slotId, childPart);
+            RecursiveBodyUpdate(entity, uid, childPart);
+        }
+
+        if (TryComp(entity, out OrganComponent? organ))
+        {
+            AddOrgan(entity, uid, uid, organ);
+        }
+    }
+
+    private void OnBodyRemoved(EntityUid uid, BodyComponent component, EntRemovedFromContainerMessage args)
+    {
+        // TODO: lifestage shenanigans
+        if (TerminatingOrDeleted(uid))
+            return;
+
+        // Root body part?
+        var slotId = args.Container.ID;
+
+        if (slotId != BodyRootContainerId)
+            return;
+
+        var entity = args.Entity;
+
+        if (TryComp(entity, out BodyPartComponent? childPart))
+        {
+            RemovePart(uid, entity, slotId, childPart);
+            RecursiveBodyUpdate(entity, null, childPart);
+        }
+
+        if (TryComp(entity, out OrganComponent? organ))
+        {
+            RemoveOrgan(entity, uid, organ);
+        }
     }
 
     private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)
@@ -176,8 +228,6 @@ public partial class SharedBodySystem
         {
             yield break;
         }
-
-        yield return (body.RootContainer.ContainedEntity.Value, rootPart);
 
         foreach (var child in GetBodyPartChildren(body.RootContainer.ContainedEntity.Value, rootPart))
         {
