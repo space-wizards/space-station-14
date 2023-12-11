@@ -279,6 +279,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             }
             else //if we just clicked, then take it out of the bag.
             {
+                DraggingRotation = control.Location.Rotation;
                 _entity.RaisePredictiveEvent(new StorageInteractWithItemEvent(
                     _entity.GetNetEntity(control.Entity),
                     _entity.GetNetEntity(storageEnt)));

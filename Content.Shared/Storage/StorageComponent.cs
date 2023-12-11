@@ -108,6 +108,8 @@ namespace Content.Shared.Storage
 
         public readonly NetEntity StorageUid;
 
+        public bool Remove;
+
         public StorageInteractWithItemEvent(NetEntity interactedItemUid, NetEntity storageUid)
         {
             InteractedItemUid = interactedItemUid;

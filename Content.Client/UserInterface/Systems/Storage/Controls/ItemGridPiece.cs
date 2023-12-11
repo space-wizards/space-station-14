@@ -6,7 +6,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
-using YamlDotNet.Core;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
@@ -177,7 +176,7 @@ public sealed class ItemGridPiece : Control
             handle.SetTransform(pos, iconRotation);
             var box = new UIBox2(root, root + sprite.Size * scale);
             handle.DrawTextureRect(sprite, box);
-            handle.SetTransform(Matrix3.Identity);
+            handle.SetTransform(GlobalPixelPosition, Angle.Zero);
         }
         else
         {
