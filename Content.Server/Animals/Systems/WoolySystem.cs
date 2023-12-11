@@ -1,3 +1,4 @@
+using Content.Server.Animals.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition;
 using Content.Shared.Mobs.Systems;
