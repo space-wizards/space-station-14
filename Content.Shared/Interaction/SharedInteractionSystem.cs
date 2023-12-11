@@ -1044,25 +1044,6 @@ namespace Content.Shared.Interaction
         }
         #endregion
 
-        #region Throw
-        /// <summary>
-        ///     Calls Thrown on all components that implement the IThrown interface
-        ///     on an entity that has been thrown.
-        /// </summary>
-        public void ThrownInteraction(EntityUid user, EntityUid thrown)
-        {
-            var throwMsg = new ThrownEvent(user, thrown);
-            RaiseLocalEvent(thrown, throwMsg, true);
-            if (throwMsg.Handled)
-            {
-                _adminLogger.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
-                return;
-            }
-
-            _adminLogger.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
-        }
-        #endregion
-
         public void DroppedInteraction(EntityUid user, EntityUid item)
         {
             var dropMsg = new DroppedEvent(user);

@@ -1,16 +1,11 @@
 using System.Linq;
 using System.Numerics;
-using System.Reflection;
-using Content.Server.Explosion.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.Maps;
-using Content.Shared.Mind.Components;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
-using Robust.Shared.Spawners;
 using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -55,6 +50,13 @@ public sealed partial class ExplosionSystem
     /// </summary>
     private int _previousTileIteration;
 
+    /// <summary>
+    /// This list is used when raising <see cref="BeforeExplodeEvent"/> to avoid allocating a new list per event.
+    /// </summary>
+    private readonly List<EntityUid> _containedEntities = new();
+
+    private readonly List<(EntityUid, DamageSpecifier)> _toDamage = new();
+
     private List<EntityUid> _anchored = new();
 
     private void OnMapChanged(MapChangedEvent ev)
@@ -83,8 +85,6 @@ public sealed partial class ExplosionSystem
 
         Stopwatch.Restart();
         var x = Stopwatch.Elapsed.TotalMilliseconds;
-
-        var availableTime = MaxProcessingTime;
 
         var tilesRemaining = TilesPerTick;
         while (tilesRemaining > 0 && MaxProcessingTime > Stopwatch.Elapsed.TotalMilliseconds)
@@ -273,7 +273,7 @@ public sealed partial class ExplosionSystem
         return !tileBlocked;
     }
 
-    private bool GridQueryCallback(
+    private static bool GridQueryCallback(
         ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
         in EntityUid uid)
     {
@@ -283,7 +283,7 @@ public sealed partial class ExplosionSystem
         return true;
     }
 
-    private bool GridQueryCallback(
+    private static bool GridQueryCallback(
         ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
         in FixtureProxy proxy)
     {
@@ -307,7 +307,7 @@ public sealed partial class ExplosionSystem
         var gridBox = Box2.FromDimensions(tile * DefaultTileSize, new Vector2(DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
         var list = new List<(EntityUid, TransformComponent)>();
-        var state = (list, processed, invSpaceMatrix, lookup.Owner, _transformQuery, gridBox);
+        var state = (list, processed, invSpaceMatrix, lookup.Owner, _transformQuery, gridBox, _transformSystem);
 
         // get entities:
         lookup.DynamicTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
@@ -336,8 +336,8 @@ public sealed partial class ExplosionSystem
         }
     }
 
-    private bool SpaceQueryCallback(
-        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox) state,
+    private static bool SpaceQueryCallback(
+        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox, SharedTransformSystem System) state,
         in EntityUid uid)
     {
         if (state.Processed.Contains(uid))
@@ -355,18 +355,63 @@ public sealed partial class ExplosionSystem
         }
 
         // finally check if it intersects our tile
-        if (state.GridBox.Contains(state.InvSpaceMatrix.Transform(_transformSystem.GetWorldPosition(xform, state.XformQuery))))
+        var wpos = state.System.GetWorldPosition(xform);
+        if (state.GridBox.Contains(state.InvSpaceMatrix.Transform(wpos)))
             state.List.Add((uid, xform));
 
         return true;
     }
 
-    private bool SpaceQueryCallback(
-        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox) state,
+    private static bool SpaceQueryCallback(
+        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox, SharedTransformSystem System) state,
         in FixtureProxy proxy)
     {
         var uid = proxy.Entity;
         return SpaceQueryCallback(ref state, in uid);
+    }
+
+    private DamageSpecifier GetDamage(EntityUid uid,
+        string id, DamageSpecifier damage)
+    {
+        // TODO Explosion Performance
+        // Cache this? I.e., instead of raising an event, check for a component?
+        var resistanceEv = new GetExplosionResistanceEvent(id);
+        RaiseLocalEvent(uid, ref resistanceEv);
+        resistanceEv.DamageCoefficient = Math.Max(0, resistanceEv.DamageCoefficient);
+
+        // ReSharper disable once CompareOfFloatsByEqualityOperator
+        if (resistanceEv.DamageCoefficient != 1)
+            damage *= resistanceEv.DamageCoefficient;
+
+        return damage;
+    }
+
+    private void GetEntitiesToDamage(EntityUid uid, DamageSpecifier originalDamage, string prototype)
+    {
+        _toDamage.Clear();
+        _toDamage.Add((uid, GetDamage(uid, prototype, originalDamage)));
+
+        for (var i = 0; i < _toDamage.Count; i++)
+        {
+            var (ent, damage) = _toDamage[i];
+            _containedEntities.Clear();
+            var ev = new BeforeExplodeEvent(damage, prototype, _containedEntities);
+            RaiseLocalEvent(ent, ref ev);
+
+            if (_containedEntities.Count == 0)
+                continue;
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (ev.DamageCoefficient != 1)
+                damage *= ev.DamageCoefficient;
+
+            _toDamage.EnsureCapacity(_toDamage.Count + _containedEntities.Count);
+            foreach (var contained in _containedEntities)
+            {
+                var newDamage = GetDamage(contained, prototype, damage);
+                _toDamage.Add((contained, newDamage));
+            }
+        }
     }
 
     /// <summary>
@@ -375,58 +420,23 @@ public sealed partial class ExplosionSystem
     private void ProcessEntity(
         EntityUid uid,
         MapCoordinates epicenter,
-        DamageSpecifier? damage,
+        DamageSpecifier? originalDamage,
         float throwForce,
         string id,
         TransformComponent? xform)
     {
-        // damage
-        if (damage != null && _damageQuery.TryGetComponent(uid, out var damageable))
+        if (originalDamage != null)
         {
-            // TODO Explosion Performance
-            // Cache this? I.e., instead of raising an event, check for a component?
-            var ev = new GetExplosionResistanceEvent(id);
-            RaiseLocalEvent(uid, ref ev);
-
-            ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
-
-            // TODO explosion entity
-            // Move explosion data into the existing explosion visuals entity
-            // Give each explosion a unique name, include in admin logs.
-
-            // TODO Explosion Performance
-            // This creates a new dictionary. Maybe we should just re-use a private local damage specifier and update it.
-            // Though most entities shouldn't have explosion resistance, so maybe its fine.
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (ev.DamageCoefficient != 1)
-                damage *= ev.DamageCoefficient;
-
-            // Log damage to players. Damage is logged before dealing damage so that the position can be logged before
-            // the entity gets deleted.
-            if (_mindQuery.HasComponent(uid))
+            GetEntitiesToDamage(uid, originalDamage, id);
+            foreach (var (entity, damage) in _toDamage)
             {
-                _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
-                    $"Explosion caused [{damage.Total}] damage to {ToPrettyString(uid):target} at {xform?.Coordinates}");
-            }
-
-            _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
-        }
-
-        // if it's a container, try to damage all its contents
-        if (_containersQuery.TryGetComponent(uid, out var containers))
-        {
-            foreach (var container in containers.Containers.Values)
-            {
-                foreach (var ent in container.ContainedEntities)
-                {
-                    // setting throw force to 0 to prevent offset items inside containers
-                    ProcessEntity(ent, epicenter, damage, 0f, id, _transformQuery.GetComponent(uid));
-                }
+                // TODO EXPLOSIONS turn explosions into entities, and pass the the entity in as the damage origin.
+                _damageableSystem.TryChangeDamage(entity, damage, ignoreResistances: true);
             }
         }
 
         // throw
-        if (xform != null // null implies anchored
+        if (xform != null // null implies anchored or in a container
             && !xform.Anchored
             && throwForce > 0
             && !EntityManager.IsQueuedForDeletion(uid)
@@ -442,10 +452,6 @@ public sealed partial class ExplosionSystem
                 _projectileQuery,
                 throwForce);
         }
-
-        // TODO EXPLOSION puddle / flammable ignite?
-
-        // TODO EXPLOSION deaf/ear damage? other explosion effects?
     }
 
     /// <summary>
@@ -845,4 +851,3 @@ sealed class Explosion
         _tileUpdateDict.Clear();
     }
 }
-

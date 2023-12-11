@@ -1,7 +1,6 @@
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Animals.Components;
 
@@ -9,28 +8,29 @@ namespace Content.Server.Animals.Components;
 ///     This component handles animals which lay eggs (or some other item) on a timer, using up hunger to do so.
 ///     It also grants an action to players who are controlling these entities, allowing them to do it manually.
 /// </summary>
+
 [RegisterComponent]
 public sealed partial class EggLayerComponent : Component
 {
-    [DataField("eggLayAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string EggLayAction = "ActionAnimalLayEgg";
+    [DataField]
+    public EntProtoId EggLayAction = "ActionAnimalLayEgg";
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("hungerUsage")]
+    /// <summary>
+    ///     The amount of nutrient consumed on update.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float HungerUsage = 60f;
 
     /// <summary>
     ///     Minimum cooldown used for the automatic egg laying.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("eggLayCooldownMin")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float EggLayCooldownMin = 60f;
 
     /// <summary>
     ///     Maximum cooldown used for the automatic egg laying.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("eggLayCooldownMax")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float EggLayCooldownMax = 120f;
 
     /// <summary>
@@ -39,14 +39,13 @@ public sealed partial class EggLayerComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float CurrentEggLayCooldown;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("eggSpawn", required: true)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public List<EntitySpawnEntry> EggSpawn = default!;
 
-    [DataField("eggLaySound")]
+    [DataField]
     public SoundSpecifier EggLaySound = new SoundPathSpecifier("/Audio/Effects/pop.ogg");
 
-    [DataField("accumulatedFrametime")]
+    [DataField]
     public float AccumulatedFrametime;
 
     [DataField] public EntityUid? Action;

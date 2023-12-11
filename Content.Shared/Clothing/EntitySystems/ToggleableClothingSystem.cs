@@ -9,13 +9,17 @@ using Content.Shared.Popups;
 using Content.Shared.Strip;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
 public sealed class ToggleableClothingSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
@@ -23,8 +27,6 @@ public sealed class ToggleableClothingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedStrippableSystem _strippable = default!;
-
-    private Queue<EntityUid> _toInsert = new();
 
     public override void Initialize()
     {
@@ -40,6 +42,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         SubscribeLocalEvent<AttachedClothingComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<AttachedClothingComponent, GotUnequippedEvent>(OnAttachedUnequip);
         SubscribeLocalEvent<AttachedClothingComponent, ComponentRemove>(OnRemoveAttached);
+        SubscribeLocalEvent<AttachedClothingComponent, BeingUnequippedAttemptEvent>(OnAttachedUnequipAttempt);
 
         SubscribeLocalEvent<ToggleableClothingComponent, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>>(GetRelayedVerbs);
         SubscribeLocalEvent<ToggleableClothingComponent, GetVerbsEvent<EquipmentVerb>>(OnGetVerbs);
@@ -128,18 +131,6 @@ public sealed class ToggleableClothingSystem : EntitySystem
         ToggleClothing(args.User, uid, component);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        // process delayed insertions. Avoids doing a container insert during a container removal.
-        while (_toInsert.TryDequeue(out var uid))
-        {
-            if (TryComp(uid, out ToggleableClothingComponent? component) && component.ClothingUid != null)
-                component.Container?.Insert(component.ClothingUid.Value);
-        }
-    }
-
     private void OnInteractHand(EntityUid uid, AttachedClothingComponent component, InteractHandEvent args)
     {
         if (args.Handled)
@@ -182,8 +173,13 @@ public sealed class ToggleableClothingSystem : EntitySystem
             _actionsSystem.RemoveAction(action.AttachedEntity.Value, component.ActionEntity);
         }
 
-        if (component.ClothingUid != null)
+        if (component.ClothingUid != null && !_netMan.IsClient)
             QueueDel(component.ClothingUid.Value);
+    }
+
+    private void OnAttachedUnequipAttempt(EntityUid uid, AttachedClothingComponent component, BeingUnequippedAttemptEvent args)
+    {
+        args.Cancel();
     }
 
     private void OnRemoveAttached(EntityUid uid, AttachedClothingComponent component, ComponentRemove args)
@@ -214,6 +210,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
     /// </summary>
     private void OnAttachedUnequip(EntityUid uid, AttachedClothingComponent component, GotUnequippedEvent args)
     {
+        // Let containers worry about it.
+        if (_timing.ApplyingState)
+            return;
+
         if (component.LifeStage > ComponentLifeStage.Running)
             return;
 
@@ -225,7 +225,8 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
         // As unequipped gets called in the middle of container removal, we cannot call a container-insert without causing issues.
         // So we delay it and process it during a system update:
-        _toInsert.Enqueue(component.AttachedUid);
+        if (toggleComp.ClothingUid != null)
+            toggleComp.Container?.Insert(toggleComp.ClothingUid.Value);
     }
 
     /// <summary>
@@ -247,10 +248,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
         var parent = Transform(target).ParentUid;
         if (component.Container.ContainedEntity == null)
-            _inventorySystem.TryUnequip(user, parent, component.Slot);
+            _inventorySystem.TryUnequip(user, parent, component.Slot, force: true);
         else if (_inventorySystem.TryGetSlotEntity(parent, component.Slot, out var existing))
         {
-            _popupSystem.PopupEntity(Loc.GetString("toggleable-clothing-remove-first", ("entity", existing)),
+            _popupSystem.PopupClient(Loc.GetString("toggleable-clothing-remove-first", ("entity", existing)),
                 user, user);
         }
         else
@@ -294,8 +295,11 @@ public sealed class ToggleableClothingSystem : EntitySystem
         {
             var xform = Transform(uid);
             component.ClothingUid = Spawn(component.ClothingPrototype, xform.Coordinates);
-            EnsureComp<AttachedClothingComponent>(component.ClothingUid.Value).AttachedUid = uid;
+            var attachedClothing = EnsureComp<AttachedClothingComponent>(component.ClothingUid.Value);
+            attachedClothing.AttachedUid = uid;
+            Dirty(component.ClothingUid.Value, attachedClothing);
             component.Container.Insert(component.ClothingUid.Value, EntityManager, ownerTransform: xform);
+            Dirty(uid, component);
         }
 
         if (_actionContainer.EnsureAction(uid, ref component.ActionEntity, out var action, component.Action))
