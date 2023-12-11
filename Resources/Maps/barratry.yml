@@ -49248,13 +49248,6 @@ entities:
       type: Transform
     - maxExternalPressure: 4000
       type: GasMiner
-- proto: GasMinerPlasma
-  entities:
-  - uid: 10842
-    components:
-    - pos: -89.5,43.5
-      parent: 1
-      type: Transform
 - proto: GasOutletInjector
   entities:
   - uid: 13633
