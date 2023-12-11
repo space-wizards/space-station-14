@@ -97,7 +97,7 @@ public sealed class PacificationSystem : EntitySystem
         if (!ev.Cancelled)
             return;
 
-        args.Handled = true;
+        args.Cancelled = true;
 
         // Tell the player why they can’t throw stuff:
         var cannotThrowMessage = ev.CancelReasonMessageId ?? "pacified-cannot-throw";
