@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Fixed ninja suit not having any actions., type: Fix}
-  id: 4811
-  time: '2023-09-12T20:54:19.0000000+00:00'
 - author: AndrewEyeke
   changes:
   - {message: Nuclear Operatives will be able to buy carps. They are limited to 10
@@ -2902,3 +2897,8 @@ Entries:
     type: Fix}
   id: 5310
   time: '2023-12-11T08:53:10.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Added two eye scar markings for humans and dwarves., type: Add}
+  id: 5311
+  time: '2023-12-11T09:18:20.0000000+00:00'
