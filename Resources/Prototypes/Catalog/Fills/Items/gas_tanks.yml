@@ -145,7 +145,6 @@
   name: nitrogen tank
   components:
   - type: GasTank
-    outputPressure: 21.3
     air:
       # 31 minutes
       volume: 5
