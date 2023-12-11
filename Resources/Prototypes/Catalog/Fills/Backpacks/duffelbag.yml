@@ -258,7 +258,7 @@
       - id: ClothingOuterHardsuitSyndicate
       - id: ClothingMaskGasSyndicate
       - id: DoubleEmergencyOxygenTankFilled
-     #- id: DoubleEmergencyNitrogenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
