@@ -22,7 +22,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - ShellShotgun
+        - ShellShotgunFlare
     proto: ShellShotgunFlare
     capacity: 1
     soundInsert:
