@@ -1247,6 +1247,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.camera_rotation_locked", false, CVar.REPLICATED);
 
         /// <summary>
+        /// Whether the arrivals terminal should be on a planet map.
+        /// </summary>
+        public static readonly CVarDef<bool> ArrivalsPlanet =
+            CVarDef.Create("shuttle.arrivals_planet", true, CVar.SERVERONLY);
+
+        /// <summary>
         /// Whether the arrivals shuttle is enabled.
         /// </summary>
         public static readonly CVarDef<bool> ArrivalsShuttles =
