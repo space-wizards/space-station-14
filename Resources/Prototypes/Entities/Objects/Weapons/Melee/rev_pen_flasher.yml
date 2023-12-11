@@ -4,6 +4,7 @@
   suffix: flash pen
   components:
   - type: Flash
+    sound: /Audio/Effects/drop.ogg
   - type: LimitedCharges
     maxCharges: 5
     charges: 5
