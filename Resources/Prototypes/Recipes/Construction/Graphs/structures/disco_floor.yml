@@ -1,0 +1,22 @@
+﻿- type: constructionGraph
+  id: DiscoFloor
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: discoSquare
+          steps:
+            - material: Steel
+              amount: 4
+              doAfter: 1
+            - material: Glass
+              amount: 4
+              doAfter: 1
+            - material: Cable
+              amount: 5
+              doAfter: 1
+
+    - node: discoSquare
+      entity: DiscoFloor

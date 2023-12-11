@@ -1,0 +1,84 @@
+- type: entity
+  id: DiscoFloor
+  name: disco floor
+  description: ♫ It's time to boogy! ♫
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/disco_floor.rsi
+    drawdepth: FloorTiles
+    layers:
+    - state: off
+    - state: powered
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: {visible: true}
+          False: {visible: false}
+  - type: PowerSwitch
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Clickable
+  - type: Fixtures
+  - type: Construction
+    graph: Girder
+    node: discoFloor
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+          ShardGlass:
+            min: 2
+            max: 4
+          LightTubeBroken:
+            min: 2
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PointLight
+    enabled: false
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SmartLight
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - On
+      - Off
+      - Toggle
+  - type: Construction
+    graph: DiscoFloor
+    node: discoFloor
+  - type: Appearance
+  - type: PoweredLightVisuals
+    blinkingSound:
+      path: "/Audio/Machines/light_tube_on.ogg"
+  - type: Transform
+    anchored: true
+  - type: Tag
+    tags:
+      - Catwalk
+
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWood
+      params:
+        volume: 3
