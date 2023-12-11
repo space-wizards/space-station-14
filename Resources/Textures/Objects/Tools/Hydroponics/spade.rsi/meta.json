@@ -19,6 +19,9 @@
       "name": "icon"
     },
     {
+      "name": "stored"
+	},
+    {
       "name": "equipped-BELT",
       "directions": 4
     }

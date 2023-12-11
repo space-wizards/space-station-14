@@ -20,6 +20,9 @@
         Slash: 10
   - type: Item
     sprite: Objects/Tools/Hydroponics/hoe.rsi
+    storedSprite:
+      sprite: Objects/Tools/Hydroponics/hoe.rsi
+      state: stored
 
 - type: entity
   name: plant clippers
@@ -41,6 +44,7 @@
         Slash: 7
   - type: Item
     sprite: Objects/Tools/Hydroponics/clippers.rsi
+    storedRotation: -90
 
 - type: entity
   name: scythe
@@ -90,6 +94,9 @@
         Piercing: 5
   - type: Item
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
+    storedSprite:
+      sprite: Objects/Tools/Hydroponics/hatchet.rsi
+      state: stored
 
 - type: entity
   name: spade
@@ -113,6 +120,9 @@
         Piercing: 5 # I guess you can stab it into them?
   - type: Item
     sprite: Objects/Tools/Hydroponics/spade.rsi
+    storedSprite:
+      sprite: Objects/Tools/Hydroponics/spade.rsi
+      state: stored
 
 - type: entity
   name: plant bag
