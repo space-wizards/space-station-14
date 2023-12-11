@@ -1,10 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - {message: Artifact containers now heavily suppress the radioactivity of any irradiated
-      alien artifacts that they contain, type: Add}
-  id: 4806
-  time: '2023-09-11T19:58:26.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed "failed to insert into storage" messages being broken., type: Fix}
@@ -2902,3 +2896,8 @@ Entries:
       brains., type: Tweak}
   id: 5305
   time: '2023-12-11T03:17:55.0000000+00:00'
+- author: TheKilk
+  changes:
+  - {message: Added 7 new winter boots textures!, type: Add}
+  id: 5306
+  time: '2023-12-11T03:19:28.0000000+00:00'
