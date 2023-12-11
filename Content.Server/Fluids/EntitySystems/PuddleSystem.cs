@@ -81,7 +81,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
     // loses & then gains reagents in a single tick.
     private HashSet<EntityUid> _deletionQueue = new();
-    private HashSet<EntityUid> _tempEntitySet = new();
 
     /*
      * TODO: Need some sort of way to do blood slash / vomit solution spill on its own
@@ -515,9 +514,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (solution.Volume == 0)
             return false;
 
-        _tempEntitySet.Clear();
-        _lookup.GetEntitiesInRange(coordinates, 1.0f, _tempEntitySet, LookupFlags.Uncontained);
-        foreach (var ent in _tempEntitySet)
+        var targets = _lookup.GetEntitiesInRange(coordinates, 1.0f, LookupFlags.Uncontained);
+        foreach (var ent in targets)
         {
             SpillSolutionOnTarget(solution, ent, _random.NextFloat(0.05f, 0.30f));
             if (user != null)
