@@ -77,51 +77,14 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         }
 
         var startThiefCount = Math.Min(component.MaxAllowThief, component.StartCandidates.Count);
-        var thiefPool = FindPotentialThiefs(component.StartCandidates, component);
-        var selectedThieves = PickThieves(_random.Next(1,startThiefCount), thiefPool);
+        var thiefPool = _antagSelection.FindPotentialAntags(component.StartCandidates, component.ThiefPrototypeId);
+        //TO DO: When voxes specifies are added, increase their chance of becoming a thief by 4 times >:)
+        var selectedThieves = PickThieves(_random.Next(1, startThiefCount), thiefPool);
 
         foreach(var thief in selectedThieves)
         {
             MakeThief(thief);
         }
-    }
-
-    private List<ICommonSession> FindPotentialThiefs(in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, ThiefRuleComponent component)
-    {
-        //TO DO: When voxes specifies are added, increase their chance of becoming a thief by 4 times >:)
-        var list = new List<ICommonSession>();
-        var pendingQuery = GetEntityQuery<PendingClockInComponent>();
-
-        foreach (var player in candidates.Keys)
-        {
-            // Role prevents antag.
-            if (!_jobs.CanBeAntag(player))
-                continue;
-
-            // Latejoin
-            if (player.AttachedEntity != null && pendingQuery.HasComponent(player.AttachedEntity.Value))
-                continue;
-
-            list.Add(player);
-        }
-
-        var prefList = new List<ICommonSession>();
-
-        foreach (var player in list)
-        {
-            //player preferences to play as thief
-            var profile = candidates[player];
-            if (profile.AntagPreferences.Contains(component.ThiefPrototypeId))
-            {
-                prefList.Add(player);
-            }
-        }
-        if (prefList.Count == 0)
-        {
-            Log.Info("Insufficient preferred thiefs, picking at random.");
-            prefList = list;
-        }
-        return prefList;
     }
 
     private List<ICommonSession> PickThieves(int thiefCount, List<ICommonSession> prefList)

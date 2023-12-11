@@ -25,6 +25,7 @@ using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Server.Shuttles.Components;
 
 namespace Content.Server.Antag;
 
@@ -147,6 +148,49 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.FromHex(greetingColor));
             }
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="candidates"></param>
+    /// <param name="antagPreferenceId"></param>
+    /// <returns></returns>
+    public List<ICommonSession> FindPotentialAntags(in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, string antagPreferenceId)
+    {
+        var list = new List<ICommonSession>();
+        var pendingQuery = GetEntityQuery<PendingClockInComponent>();
+
+        foreach (var player in candidates.Keys)
+        {
+            // Role prevents antag.
+            if (!_jobs.CanBeAntag(player))
+                continue;
+
+            // Latejoin
+            if (player.AttachedEntity != null && pendingQuery.HasComponent(player.AttachedEntity.Value))
+                continue;
+
+            list.Add(player);
+        }
+
+        var prefList = new List<ICommonSession>();
+
+        foreach (var player in list)
+        {
+            //player preferences to play as thief
+            var profile = candidates[player];
+            if (profile.AntagPreferences.Contains(antagPreferenceId))
+            {
+                prefList.Add(player);
+            }
+        }
+        if (prefList.Count == 0)
+        {
+            Log.Info($"Insufficient preferred antag:{antagPreferenceId}, picking at random.");
+            prefList = list;
+        }
+        return prefList;
     }
 
     /// <summary>
