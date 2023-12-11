@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed "failed to insert into storage" messages being broken., type: Fix}
-  id: 4807
-  time: '2023-09-11T22:57:27.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added automatic area pickups to ore bags., type: Add}
@@ -2901,3 +2896,9 @@ Entries:
   - {message: Added 7 new winter boots textures!, type: Add}
   id: 5306
   time: '2023-12-11T03:19:28.0000000+00:00'
+- author: Sirionaut
+  changes:
+  - {message: 'Animals now require a more reasonable amount of satiation before producing
+      eggs, milk, or wool (unless they are undead)', type: Fix}
+  id: 5307
+  time: '2023-12-11T03:20:41.0000000+00:00'
