@@ -8,4 +8,5 @@
   - type: Clothing
     slots: [eyes]
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90

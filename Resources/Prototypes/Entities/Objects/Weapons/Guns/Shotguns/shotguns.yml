@@ -184,7 +184,8 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Gun
     fireRate: 4
   - type: BallisticAmmoProvider
@@ -215,7 +216,8 @@
   description: Looks unreliable. Uses .50 shotgun shells.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Clothing

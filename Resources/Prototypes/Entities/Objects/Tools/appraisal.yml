@@ -8,7 +8,8 @@
     sprite: Objects/Tools/appraisal-tool.rsi
     state: icon
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
     sprite: Objects/Tools/appraisal-tool.rsi
   - type: PriceGun
   - type: UseDelay

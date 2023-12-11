@@ -59,7 +59,8 @@
     layers:
     - state: old-radio
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
     sprite: Objects/Devices/communication.rsi
     heldPrefix: old-radio
   - type: UserInterface

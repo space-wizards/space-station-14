@@ -5,7 +5,8 @@
   description: You gotta have money.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Material
   - type: PhysicalComposition
     materialComposition:

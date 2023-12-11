@@ -106,7 +106,8 @@
   description: It's a potato. You forced it to be sentient, you monster.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
     layers:

@@ -11,7 +11,8 @@
   description: A delicious meal, cooked with love.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi

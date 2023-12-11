@@ -4,7 +4,8 @@
   parent: BaseItem
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Battery
     pricePerJoule: 0.15
   - type: PowerCell

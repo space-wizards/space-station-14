@@ -10,7 +10,8 @@
     slots: BELT
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Gun
     clumsyProof: true
     cameraRecoilScalar: 0 #no recoil

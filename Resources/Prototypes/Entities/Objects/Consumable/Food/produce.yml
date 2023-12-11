@@ -457,7 +457,8 @@
   description: When life gives you lemons, be grateful they aren't limes.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: FlavorProfile
     flavors:
       - sour
@@ -491,7 +492,8 @@
   description: People says Moon is made out of cheese, but Moon is actually made out of milk and laurel!
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: FlavorProfile
     flavors:
       - lemoon
@@ -524,7 +526,8 @@
   description: Cures Space Scurvy, allows you to act like a Space Pirate.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: FlavorProfile
     flavors:
       - sour
@@ -549,7 +552,8 @@
   description: Healthy, very orange.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: FlavorProfile
     flavors:
       - orange
@@ -875,7 +879,8 @@
   description: Needs some butter! And some cooking...
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: FlavorProfile
     flavors:
       - corn
@@ -991,7 +996,8 @@
   description: "Cantharellus Cibarius: These jolly yellow little shrooms sure look tasty!"
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1463,7 +1469,8 @@
   description: Round green object that you can slice and eat.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: FlavorProfile
     flavors:
       - watermelon

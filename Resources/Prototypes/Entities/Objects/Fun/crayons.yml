@@ -239,7 +239,8 @@
     - 0,0,6,0
     maxItemSize: Tiny
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
     shape: # we need to define its shape here because the parent defines a shape.
     - 0,0,1,0
     sprite: Objects/Fun/crayons.rsi

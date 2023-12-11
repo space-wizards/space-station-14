@@ -24,7 +24,8 @@
         - ReagentId: Fat
           Quantity: 5
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Fixtures
     fixtures:
       fix1:

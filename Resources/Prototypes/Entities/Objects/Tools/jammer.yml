@@ -8,7 +8,8 @@
     sprite: Objects/Devices/jammer.rsi
     state: jammer
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
     sprite: Objects/Devices/jammer.rsi
   - type: RadioJammer
   - type: PowerCellSlot

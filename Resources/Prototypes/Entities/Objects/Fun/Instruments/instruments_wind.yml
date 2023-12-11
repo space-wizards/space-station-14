@@ -62,7 +62,8 @@
     sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
     sprite: Objects/Fun/Instruments/harmonica.rsi
   - type: Tag
     tags:

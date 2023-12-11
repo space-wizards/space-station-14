@@ -158,7 +158,8 @@
   id: TowercapSeeds
   components:
     - type: Item
-      size: Small_Wide
+      size: Small
+      storedRotation: 90
     - type: Seed
       seedId: towercap
     - type: Sprite
@@ -170,7 +171,8 @@
   id: SteelcapSeeds
   components:
     - type: Item
-      size: Small_Wide
+      size: Small
+      storedRotation: 90
     - type: Seed
       seedId: steelcap
     - type: Sprite
@@ -242,7 +244,8 @@
   id: ChanterelleSeeds
   components:
     - type: Item
-      size: Small_Wide
+      size: Small
+      storedRotation: 90
     - type: Seed
       seedId: chanterelle
     - type: Sprite
@@ -353,7 +356,8 @@
   id: LingzhiSeeds
   components:
     - type: Item
-      size: Small_Wide
+      size: Small
+      storedRotation: 90
     - type: Seed
       seedId: lingzhi
     - type: Sprite
@@ -399,7 +403,8 @@
   id: FlyAmanitaSeeds
   components:
     - type: Item
-      size: Small_Wide
+      size: Small
+      storedRotation: 90
     - type: Seed
       seedId: flyAmanita
     - type: Sprite

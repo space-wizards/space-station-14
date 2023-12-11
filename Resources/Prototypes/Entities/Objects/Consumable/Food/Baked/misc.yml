@@ -449,7 +449,8 @@
   description: Average recipe for meat in doughs.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Sprite
     state: dumplings
   - type: SolutionContainerManager
@@ -493,7 +494,8 @@
   description: A pan of brownies.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: FlavorProfile
     flavors:
       - sweet
@@ -545,7 +547,8 @@
   description: A pan of "special" brownies.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: FlavorProfile
     flavors:
       - sweet

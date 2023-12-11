@@ -18,7 +18,8 @@
         - ReagentId: Nutriment
           Quantity: 8
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
 
 # Kebabs
 
@@ -40,7 +41,8 @@
   description: A thin rod of metal used to skewer just about anything and cook it.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Sprite
     sprite: Objects/Consumable/Food/skewer.rsi
     state: skewer

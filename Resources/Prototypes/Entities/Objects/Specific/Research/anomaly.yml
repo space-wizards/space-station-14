@@ -8,7 +8,8 @@
     sprite: Objects/Specific/Research/anomalyscanner.rsi
     state: icon
 #  - type: Item # For reasons beyond my comprehension this kills the Yaml Linter.  
-#    size: Small_Wide
+#    size: Small
+    storedRotation: 90
   - type: ActivatableUI
     key: enum.AnomalyScannerUiKey.Key
     closeOnHandDeselect: false

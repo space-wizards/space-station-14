@@ -103,7 +103,8 @@
   parent: BaseItem
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Tag
     tags:
       - MagazinePistolSubMachineGunTopMounted

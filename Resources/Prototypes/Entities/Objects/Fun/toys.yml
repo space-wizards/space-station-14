@@ -209,7 +209,7 @@
   id: PlushieLizardSleepy
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
     storedRotation: -90
   - type: Sprite
     state: plushie_lizard_mirrored
@@ -308,7 +308,8 @@
     sprite: Objects/Fun/sharkplush.rsi
     state: blue
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
     heldPrefix: blue
   - type: Tag
     tags:
@@ -375,7 +376,8 @@
   - type: Sprite
     state: carpplush
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
     heldPrefix: carpplush
   - type: EmitSoundOnUse
     sound:
@@ -409,7 +411,8 @@
   description: An adorable stuffed toy that resembles a snake.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Sprite
     state: plushie_snake
   - type: EmitSoundOnUse
@@ -550,7 +553,8 @@
   description: A plastic model of a Nuclear Fission Explosive. No uranium included... probably.
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Sprite
     state: nuketoy
   - type: UseDelay
@@ -636,7 +640,8 @@
   abstract: true
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Sprite
 
 - type: entity
@@ -750,7 +755,8 @@
     sprite: Objects/Fun/toys.rsi
     state: football
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
     sprite: Objects/Fun/toys.rsi
     heldPrefix: footb
 

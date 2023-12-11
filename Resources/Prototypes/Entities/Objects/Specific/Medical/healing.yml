@@ -167,7 +167,8 @@
   - type: Sprite
     state: medicated-suture
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
     heldPrefix: medicated-suture
   - type: Healing
     damageContainers:
@@ -239,7 +240,8 @@
   suffix: Full
   components:
   - type: Item
-    size: Small_Wide
+    size: Small
+    storedRotation: 90
   - type: Tag
     tags:
     - Gauze
