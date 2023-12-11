@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix shuttles docking with planetmaps., type: Fix}
-  id: 4817
-  time: '2023-09-13T12:06:15.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Training bombs are now available for purchase at cargo., type: Add}
@@ -2905,3 +2900,8 @@ Entries:
   - {message: The modernized HUD theme has been renamed to "Eris.", type: Tweak}
   id: 5316
   time: '2023-12-11T09:28:17.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Arrivals is now stationed on a planet., type: Add}
+  id: 5317
+  time: '2023-12-11T09:34:19.0000000+00:00'
