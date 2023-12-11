@@ -1,10 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: "Added a telescopi\u0441 shield to the Advanced Riot Control Technology.",
-    type: Add}
-  id: 4823
-  time: '2023-09-14T01:03:13.0000000+00:00'
 - author: notafet
   changes:
   - {message: Cryogenic gas cylinders are now available for purchase from cargo.,
@@ -2902,3 +2896,8 @@ Entries:
       to time, type: Add}
   id: 5322
   time: '2023-12-11T11:36:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed gas selling until properly fixed., type: Fix}
+  id: 5323
+  time: '2023-12-11T12:28:33.0000000+00:00'
