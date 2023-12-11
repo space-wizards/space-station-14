@@ -1,17 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Cryogenic gas cylinders are now available for purchase from cargo.,
-    type: Add}
-  id: 4824
-  time: '2023-09-14T03:37:13.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: 'Guardians (holo, holoclown) have AI control before a ghost takes over
-      the role, and after a player ghosts from it.', type: Add}
-  - {message: Guardians can be summoned without a player in the role., type: Tweak}
-  id: 4825
-  time: '2023-09-14T03:51:10.0000000+00:00'
 - author: Doru991
   changes:
   - {message: 'When mutated, some plants have been observed to occasionally transform
@@ -2901,3 +2888,13 @@ Entries:
   - {message: Removed gas selling until properly fixed., type: Fix}
   id: 5323
   time: '2023-12-11T12:28:33.0000000+00:00'
+- author: ninruB
+  changes:
+  - {message: Familiar Garbs may now appear as maintenance loot., type: Add}
+  id: 5324
+  time: '2023-12-11T13:04:56.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Incapacitated mobs can no longer be shoved for a speed boost., type: Fix}
+  id: 5325
+  time: '2023-12-11T13:05:14.0000000+00:00'
