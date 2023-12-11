@@ -27,3 +27,8 @@
   id: SS14MinimalistTheme
   name: ui-options-hud-theme-minimalist
   path: Minimalist
+
+- type: hudTheme
+  id: SS14ErisTheme
+  name: ui-options-hud-theme-eris
+  path: Eris
