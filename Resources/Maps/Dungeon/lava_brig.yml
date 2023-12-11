@@ -7968,9 +7968,6 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
   - uid: 1717
     components:
     - pos: 21.5,10.5
@@ -7978,9 +7975,6 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
   - uid: 1718
     components:
     - pos: 30.5,4.5
@@ -7988,9 +7982,6 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
   - uid: 1719
     components:
     - rot: 3.141592653589793 rad
@@ -7999,9 +7990,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1720
     components:
     - rot: 3.141592653589793 rad
@@ -8010,9 +7999,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1721
     components:
     - rot: 3.141592653589793 rad
@@ -8021,9 +8008,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1722
     components:
     - pos: 18.5,16.5
@@ -8031,9 +8016,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1723
     components:
     - pos: 31.5,22.5
@@ -8041,9 +8024,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1724
     components:
     - rot: -1.5707963267948966 rad
@@ -8052,9 +8033,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1726
     components:
     - rot: -1.5707963267948966 rad
@@ -8063,9 +8042,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1727
     components:
     - rot: -1.5707963267948966 rad
@@ -8074,9 +8051,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1728
     components:
     - rot: 1.5707963267948966 rad
@@ -8085,9 +8060,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1729
     components:
     - rot: -1.5707963267948966 rad
@@ -8096,9 +8069,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1730
     components:
     - rot: 1.5707963267948966 rad
@@ -8107,9 +8078,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1731
     components:
     - rot: 1.5707963267948966 rad
@@ -8118,9 +8087,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1732
     components:
     - rot: -1.5707963267948966 rad
@@ -8129,9 +8096,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1733
     components:
     - rot: 1.5707963267948966 rad
@@ -8140,9 +8105,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1734
     components:
     - pos: 1.5,24.5
@@ -8150,9 +8113,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1735
     components:
     - rot: 3.141592653589793 rad
@@ -8161,9 +8122,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1736
     components:
     - pos: 11.5,32.5
@@ -8171,9 +8130,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1737
     components:
     - rot: -1.5707963267948966 rad
@@ -8182,9 +8139,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1738
     components:
     - rot: 1.5707963267948966 rad
@@ -8193,9 +8148,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1739
     components:
     - rot: 3.141592653589793 rad
@@ -8204,9 +8157,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1740
     components:
     - rot: 1.5707963267948966 rad
@@ -8215,9 +8166,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1742
     components:
     - rot: -1.5707963267948966 rad
@@ -8226,9 +8175,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1744
     components:
     - rot: 3.141592653589793 rad
@@ -8237,9 +8184,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1745
     components:
     - rot: 3.141592653589793 rad
@@ -8248,9 +8193,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1746
     components:
     - rot: 3.141592653589793 rad
@@ -8259,9 +8202,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1747
     components:
     - rot: 3.141592653589793 rad
@@ -8270,9 +8211,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1748
     components:
     - rot: -1.5707963267948966 rad
@@ -8281,9 +8220,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1749
     components:
     - rot: 1.5707963267948966 rad
@@ -8292,9 +8229,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1750
     components:
     - rot: -1.5707963267948966 rad
@@ -8303,9 +8238,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1751
     components:
     - pos: 30.5,6.5
@@ -8313,9 +8246,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1752
     components:
     - rot: 3.141592653589793 rad
@@ -8324,9 +8255,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
   - uid: 1832
     components:
     - rot: -1.5707963267948966 rad
@@ -8335,9 +8264,7 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
-    - type: ActiveEmergencyLight
+
 - proto: EmergencyRollerBed
   entities:
   - uid: 1141

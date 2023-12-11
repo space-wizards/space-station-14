@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
@@ -28,9 +29,13 @@ namespace Content.Server.Database
 
         private int _msDelay;
 
-        public ServerDbSqlite(Func<DbContextOptions<SqliteServerDbContext>> options,
+        public ServerDbSqlite(
+            Func<DbContextOptions<SqliteServerDbContext>> options,
             bool inMemory,
-            IConfigurationManager cfg, bool synchronous)
+            IConfigurationManager cfg,
+            bool synchronous,
+            ISawmill opsLog)
+            : base(opsLog)
         {
             _options = options;
 
@@ -541,8 +546,9 @@ namespace Content.Server.Database
             return await base.AddAdminMessage(message);
         }
 
-        private async Task<DbGuardImpl> GetDbImpl()
+        private async Task<DbGuardImpl> GetDbImpl([CallerMemberName] string? name = null)
         {
+            LogDbOp(name);
             await _dbReadyTask;
             if (_msDelay > 0)
                 await Task.Delay(_msDelay);
@@ -554,9 +560,9 @@ namespace Content.Server.Database
             return new DbGuardImpl(this, dbContext);
         }
 
-        protected override async Task<DbGuard> GetDb()
+        protected override async Task<DbGuard> GetDb([CallerMemberName] string? name = null)
         {
-            return await GetDbImpl().ConfigureAwait(false);
+            return await GetDbImpl(name).ConfigureAwait(false);
         }
 
         private sealed class DbGuardImpl : DbGuard

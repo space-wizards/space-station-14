@@ -75,7 +75,7 @@ public sealed partial class ContentAudioSystem
 
     private void AmbienceCVarChanged(float obj)
     {
-        _volumeSlider = obj;
+        _volumeSlider = SharedAudioSystem.GainToVolume(obj);
 
         if (_ambientMusicStream != null && _musicProto != null)
         {
@@ -159,7 +159,7 @@ public sealed partial class ContentAudioSystem
         // Update still runs in lobby so just ignore it.
         if (_state.CurrentState is not GameplayState)
         {
-            FadeOut(_ambientMusicStream);
+            Audio.Stop(_ambientMusicStream);
             _ambientMusicStream = null;
             _musicProto = null;
             return;
