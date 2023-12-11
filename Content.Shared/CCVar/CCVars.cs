@@ -960,6 +960,7 @@ namespace Content.Shared.CCVar
         ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
 		///		WARNING: This has MAJOR contrast issues, and usually tends to make any spaced scene look very cluttered.
 		///		This not only usually looks strange, but can also reduce playability for people with impaired vision. Think twice before enabling this on your server!
+		///     Also looks weird on slow spacing for unrelated reasons. If you want to enable this, you should probably turn off instaspacing.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosRipTiles =
             CVarDef.Create("atmos.monstermos_rip_tiles", false, CVar.SERVERONLY);
