@@ -90,17 +90,17 @@
 #  category: Atmospherics
 #  group: market
 
-#- type: cargoProduct
-#  name: "plasma canister"
-#  id: AtmosphericsPlasma
-#  description: "Plasma canister"
-#  icon:
-#    sprite: Structures/Storage/canister.rsi
-#    state: orange
-#  product: PlasmaCanister
-#  cost: 8500
-#  category: Atmospherics
-#  group: market
+- type: cargoProduct
+  name: "plasma canister"
+  id: AtmosphericsPlasma
+  description: "Plasma canister"
+  icon:
+    sprite: Structures/Storage/canister.rsi
+    state: orange
+  product: PlasmaCanister
+  cost: 8500
+  category: Atmospherics
+  group: market
 
 #- type: cargoProduct
 #  name: "tritium canister"
