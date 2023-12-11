@@ -11,17 +11,19 @@ namespace Content.Shared.CombatMode.Pacification;
 /// Raised when a Pacified entity attempts to throw something.
 /// The throw is only permitted if this event is not cancelled.
 /// </summary>
-public sealed class AttemptPacifiedThrowEvent : CancellableEntityEventArgs
+[ByRefEvent]
+public struct AttemptPacifiedThrowEvent
 {
+    public EntityUid ItemUid;
+    public EntityUid PlayerUid;
+
     public AttemptPacifiedThrowEvent(EntityUid itemUid,  EntityUid playerUid)
     {
         ItemUid = itemUid;
         PlayerUid = playerUid;
     }
 
-    public EntityUid ItemUid { get; set; }
-    public EntityUid PlayerUid { get; }
-
+    public bool Cancelled { get; private set; } = false;
     public string? CancelReasonMessageId { get; private set; }
 
     /// <param name="reasonMessageId">
@@ -32,7 +34,7 @@ public sealed class AttemptPacifiedThrowEvent : CancellableEntityEventArgs
     /// </param>
     public void Cancel(string? reasonMessageId = null)
     {
-        base.Cancel();
+        Cancelled = true;
         CancelReasonMessageId = reasonMessageId;
     }
 }
@@ -91,7 +93,7 @@ public sealed class PacificationSystem : EntitySystem
         // Raise an AttemptPacifiedThrow event and rely on other systems to check
         // whether the candidate item is OK to throw:
         var ev = new AttemptPacifiedThrowEvent(thrownItem, ent);
-        RaiseLocalEvent(thrownItem, ev);
+        RaiseLocalEvent(thrownItem, ref ev);
         if (!ev.Cancelled)
             return;
 
