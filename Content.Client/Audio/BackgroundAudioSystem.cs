@@ -14,6 +14,9 @@ namespace Content.Client.Audio;
 [UsedImplicitly]
 public sealed class BackgroundAudioSystem : EntitySystem
 {
+    /*
+     * TODO: Nuke this system and merge into contentaudiosystem
+     */
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
@@ -22,7 +25,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
 
-    private EntityUid? _lobbyStream;
+    public EntityUid? LobbyStream;
 
     public override void Initialize()
     {
@@ -109,7 +112,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     public void StartLobbyMusic()
     {
-        if (_lobbyStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
+        if (LobbyStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
             return;
 
         var file = _gameTicker.LobbySong;
@@ -118,12 +121,12 @@ public sealed class BackgroundAudioSystem : EntitySystem
             return;
         }
 
-        _lobbyStream = _audio.PlayGlobal(file, Filter.Local(), false,
+        LobbyStream = _audio.PlayGlobal(file, Filter.Local(), false,
             _lobbyParams.WithVolume(_lobbyParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume))))?.Entity;
     }
 
     private void EndLobbyMusic()
     {
-        _lobbyStream = _audio.Stop(_lobbyStream);
+        LobbyStream = _audio.Stop(LobbyStream);
     }
 }

@@ -1,5 +1,6 @@
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Robust.Client.GameObjects;
 using Robust.Shared;
 using Robust.Shared.Audio;
@@ -37,6 +38,24 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
         base.Initialize();
         UpdatesOutsidePrediction = true;
         InitializeAmbientMusic();
+        SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
+    }
+
+    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
+    {
+        _fadingOut.Clear();
+
+        // Preserve lobby music but everything else should get dumped.
+        var lobbyStream = EntityManager.System<BackgroundAudioSystem>().LobbyStream;
+        TryComp(lobbyStream, out AudioComponent? audioComp);
+        var oldGain = audioComp?.Gain;
+
+        SilenceAudio();
+
+        if (oldGain != null)
+        {
+            Audio.SetGain(lobbyStream, oldGain.Value, audioComp);
+        }
     }
 
     public override void Shutdown()
