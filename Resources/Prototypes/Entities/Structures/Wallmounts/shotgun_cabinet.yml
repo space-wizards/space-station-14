@@ -4,14 +4,6 @@
   name: shotgun cabinet
   description: There is a small label that reads "For Emergency use only" along with details for safe use of the shotgun. As if.
   components:
-#  - type: MeleeSound
-#    soundGroups:
-#      Brute:
-#        path:
-#          "/Audio/Effects/glass_hit.ogg"
-#  - type: WallMount
-#  - type: Clickable
-#  - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Wallmounts/shotgun_cabinet.rsi
     layers:
@@ -27,32 +19,13 @@
       whitelist:
         tags:
         - WeaponShotgunKammerer
-#    doorSound:
-#      path: /Audio/Machines/machine_switch.ogg
-#    openState: glass-up
-#    closedState: glass
-#  - type: Appearance
-#  - type: Lock
   - type: AccessReader
     access: [["Security"], ["Command"]]
-#  - type: ItemSlots
-#  - type: ContainerContainer
-#    containers:
-#      ItemCabinet: !type:ContainerSlot
-#  placement:
-#    mode: SnapgridCenter
 
 - type: entity
   id: ShotGunCabinetOpen
   parent: [ShotGunCabinet, FireAxeCabinetOpen]
   suffix: Open
-#  components:
-#  - type: ItemCabinet
-#    opened: true
-#    doorSound:
-#      path: /Audio/Machines/machine_switch.ogg
-#    openState: glass-up
-#    closedState: glass
 
 - type: entity
   id: ShotGunCabinetFilled
@@ -66,19 +39,9 @@
       whitelist:
         tags:
         - WeaponShotgunKammerer
-#    doorSound:
-#      path: /Audio/Machines/machine_switch.ogg
-#    openState: glass-up
-#    closedState: glass
 
 - type: entity
   id: ShotGunCabinetFilledOpen
   parent: [ShotGunCabinetFilled,FireAxeCabinetFilledOpen]
   suffix: Filled, Open
-#  components:
-#  - type: ItemCabinet
-#    opened: true
-#    doorSound:
-#      path: /Audio/Machines/machine_switch.ogg
-#    openState: glass-up
-#    closedState: glass
+
