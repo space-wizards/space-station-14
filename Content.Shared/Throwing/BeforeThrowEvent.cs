@@ -1,5 +1,4 @@
 using System.Numerics;
-using System.Reflection.Metadata;
 
 namespace Content.Shared.Throwing;
 

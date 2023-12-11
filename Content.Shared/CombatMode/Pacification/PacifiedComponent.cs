@@ -1,5 +1,3 @@
-using Content.Shared.Projectiles;
-using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.CombatMode.Pacification;
