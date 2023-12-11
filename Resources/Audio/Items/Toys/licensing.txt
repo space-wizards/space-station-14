@@ -1,5 +1,0 @@
-"weh" and "muffled_weh" are licensed under CC0.
-"skub" is licensed under CC0.
-"sitcom_laugh" taken from Kinoton at https://freesound.org/people/Kinoton/sounds/371562/ under CC0 1.0, clipped by github Henri215, turned into mono by github lapatison
-"sitcom_laugh2" taken from mrrap4food at https://freesound.org/people/mrrap4food/sounds/618972/ under CC0 1.0, clipped by Henri215
-"skates" taken from PeteBarry at https://freesound.org/people/PeteBarry/sounds/464857/ under CC BY 4.0, shortened by Brainfood1183 (github).

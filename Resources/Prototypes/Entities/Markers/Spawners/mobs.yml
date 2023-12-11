@@ -46,6 +46,7 @@
       - MobCorgiIan
       - MobCorgiIanOld
       - MobCorgiLisa
+      - MobCorgiIanPup
 
 - type: entity
   name: Possum Morty Spawner
@@ -138,7 +139,7 @@
   - type: ConditionalSpawner
     prototypes:
       - MobCatFloppa
-      
+
 - type: entity
   name: Bingus Spawner
   id: SpawnMobCatBingus
@@ -164,6 +165,19 @@
   - type: ConditionalSpawner
     prototypes:
       - MobCatSpace
+    
+- type: entity
+  name: Kitten Spawner
+  id: SpawnMobCatKitten
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatKitten
 
 - type: entity
   name: Cat Spawner
@@ -195,6 +209,7 @@
       - MobCat
       - MobCatCalico
       - MobCatCaracal
+      - MobCatKitten
     rarePrototypes:
       - MobCatSpace
     rareChance: 0.05
@@ -308,6 +323,20 @@
     - MobCarpHolo
 
 - type: entity
+  name: Space Sharkminnow Spawner
+  id: SpawnMobShark
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobShark
+
+- type: entity
   name: Hamster Hamlet Spawner
   id: SpawnMobHamsterHamlet
   parent: MarkerBase
@@ -343,7 +372,8 @@
   - type: Sprite
     layers:
       - state: green
-      - state: ai
+      - state: shiva
+        sprite: Mobs/Pets/shiva.rsi
   - type: ConditionalSpawner
     prototypes:
       - MobSpiderShiva
@@ -398,10 +428,25 @@
   - type: Sprite
     layers:
     - state: green
-    - state: ai
+    - state: spacespider
+      sprite: Mobs/Animals/spacespider.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobSpiderSpace
+
+- type: entity
+  name: Space Cobra Spawner
+  id: SpawnMobSpaceCobra
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: spacecobra
+      sprite: Mobs/Animals/spacecobra.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCobraSpace
 
 - type: entity
   name: Slimes Spawner Blue
@@ -754,7 +799,7 @@
 
 - type: entity
   name: luminous object spawner
-  id: SpawnMobLuminousОbject
+  id: SpawnMobLuminousObject
   parent: MarkerBase
   components:
   - type: Sprite
@@ -764,7 +809,7 @@
       sprite: Mobs/Elemental/living_light/luminous_object.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobLuminousОbject
+    - MobLuminousObject
 
 - type: entity
   name: luminous entity spawner

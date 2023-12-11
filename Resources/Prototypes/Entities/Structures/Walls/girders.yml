@@ -6,7 +6,7 @@
   components:
   - type: Transform
     anchored: true
-    noRot: true
+    noRot: false
   - type: Physics
     bodyType: Static
   - type: Fixtures

@@ -39,11 +39,11 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
         var jobs = ent.System<SharedJobSystem>();
         jobs.MindTryGetJob(mindId, out var job, out _);
 
-        if (Blacklist != null && job?.PrototypeId != null)
+        if (Blacklist != null && job?.Prototype != null)
         {
             foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
-                if (department.Roles.Contains(job.PrototypeId) && Blacklist.Contains(department.ID))
+                if (department.Roles.Contains(job.Prototype) && Blacklist.Contains(department.ID))
                     return false;
             }
         }
@@ -52,11 +52,11 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
         {
             var found = false;
 
-            if (job?.PrototypeId != null)
+            if (job?.Prototype != null)
             {
                 foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
                 {
-                    if (department.Roles.Contains(job.PrototypeId) && Whitelist.Contains(department.ID))
+                    if (department.Roles.Contains(job.Prototype) && Whitelist.Contains(department.ID))
                     {
                         found = true;
                         break;

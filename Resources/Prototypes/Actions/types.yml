@@ -62,6 +62,22 @@
     event: !type:ActivateImplantEvent
 
 - type: entity
+  id: ActionActivateDeathAcidifier
+  name: Activate Death-Acidifier
+  description: Activates your death-acidifier, completely melting you and your equipment
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: gib
+    event: !type:ActivateImplantEvent
+
+
+- type: entity
   id: ActionActivateFreedomImplant
   name: Break Free
   description: Activating your freedom implant will free you from any hand restraints

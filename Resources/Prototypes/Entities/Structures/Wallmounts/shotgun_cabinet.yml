@@ -1,0 +1,47 @@
+﻿- type: entity
+  parent: FireAxeCabinet
+  id: ShotGunCabinet
+  name: shotgun cabinet
+  description: There is a small label that reads "For Emergency use only" along with details for safe use of the shotgun. As if.
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/shotgun_cabinet.rsi
+    layers:
+    - state: cabinet
+    - state: shotgun
+      map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
+      visible: true
+    - state: glass
+      map: ["enum.ItemCabinetVisualLayers.Door"]
+  - type: ItemCabinet
+    cabinetSlot:
+      ejectOnInteract: true
+      whitelist:
+        tags:
+        - WeaponShotgunKammerer
+  - type: AccessReader
+    access: [["Security"], ["Command"]]
+
+- type: entity
+  id: ShotGunCabinetOpen
+  parent: [ShotGunCabinet, FireAxeCabinetOpen]
+  suffix: Open
+
+- type: entity
+  id: ShotGunCabinetFilled
+  parent: [ShotGunCabinet,FireAxeCabinetFilled]
+  suffix: Filled
+  components:
+  - type: ItemCabinet
+    cabinetSlot:
+      startingItem: WeaponShotgunKammerer
+      ejectOnInteract: true
+      whitelist:
+        tags:
+        - WeaponShotgunKammerer
+
+- type: entity
+  id: ShotGunCabinetFilledOpen
+  parent: [ShotGunCabinetFilled,FireAxeCabinetFilledOpen]
+  suffix: Filled, Open
+

@@ -228,10 +228,27 @@
     - type: MachineBoard
       prototype: MachineAnomalyVessel
       requirements:
-        Capacitor: 5
+        Capacitor: 3
       materialRequirements:
         Cable: 1
         PlasmaGlass: 10
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: AnomalyVesselExperimentalCircuitboard
+  name: experimental anomaly vessel machine board
+  description: A machine printed circuit board for an experimental anomaly vessel.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: MachineAnomalyVesselExperimental
+    requirements:
+      Capacitor: 3
+    materialRequirements:
+      Cable: 5
+      PlasmaGlass: 15
+      MetalRod: 4
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -755,17 +772,10 @@
       prototype: StasisBed
       requirements:
         Capacitor: 1
+        Manipulator: 1
       materialRequirements:
         Cable: 3
-      tagRequirements:
-        Pipe:
-          Amount: 1
-          DefaultPrototype: GasPipeStraight
-          ExamineName: Pipe
-        Cryobeaker:
-          Amount: 2
-          DefaultPrototype: CryostasisBeaker
-          ExamineName: Cryostasis Beaker
+        Steel: 2
 
 - type: entity
   id: MaterialReclaimerMachineCircuitboard

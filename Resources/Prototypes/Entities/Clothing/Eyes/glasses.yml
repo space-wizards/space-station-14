@@ -79,6 +79,20 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+    
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesJensen
+  name: jensen glasses
+  description: A pair of yellow tinted folding glasses. You never asked for these.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/jensen.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/jensen.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingEyesBase
@@ -111,21 +125,26 @@
 
 - type: entity
   parent: ClothingEyesBase
-  id: ClothingEyesGlassesSunglasses
+  id: ClothingEyesGlassesCosmeticSunglasses
   name: sun glasses
-  description: Useful both for security and cargonia.
+  description: A pair of black sunglasses.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
   - type: Tag
     tags:
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingEyesGlassesCosmeticSunglasses
+  id: ClothingEyesGlassesSunglasses
+  components:
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
 
 - type: entity
   parent: ClothingEyesBase

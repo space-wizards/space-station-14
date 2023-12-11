@@ -30,21 +30,22 @@ namespace Content.Client.Decals.Overlays
         {
             // Shouldn't need to clear cached textures unless the prototypes get reloaded.
             var handle = args.WorldHandle;
-            var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
             var xformSystem = _entManager.System<TransformSystem>();
             var eyeAngle = args.Viewport.Eye?.Rotation ?? Angle.Zero;
 
-            foreach (var (decalGrid, xform) in _entManager.EntityQuery<DecalGridComponent, TransformComponent>(true))
+            var gridQuery = _entManager.AllEntityQueryEnumerator<DecalGridComponent, TransformComponent>();
+
+            while (gridQuery.MoveNext(out var decalGrid, out var xform))
             {
+                if (xform.MapID != args.MapId)
+                    continue;
+
                 var zIndexDictionary = decalGrid.DecalRenderIndex;
 
                 if (zIndexDictionary.Count == 0)
                     continue;
 
-                if (xform.MapID != args.MapId)
-                    continue;
-
-                var (_, worldRot, worldMatrix) = xformSystem.GetWorldPositionRotationMatrix(xform, xformQuery);
+                var (_, worldRot, worldMatrix) = xformSystem.GetWorldPositionRotationMatrix(xform);
 
                 handle.SetTransform(worldMatrix);
 
