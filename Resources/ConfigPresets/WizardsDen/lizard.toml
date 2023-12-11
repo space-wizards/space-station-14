@@ -8,3 +8,8 @@ soft_max_players = 80
 
 [hub]
 tags = "lang:en,region:am_n_w,rp:low"
+
+# slow "linda-only" spacing
+[atmos]
+monstermos_equalization = false
+monstermos_depressurization = false

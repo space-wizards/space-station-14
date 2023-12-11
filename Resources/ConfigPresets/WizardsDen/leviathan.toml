@@ -11,3 +11,9 @@ tags = "lang:en,region:am_n_e,rp:low"
 
 [worldgen]
 enabled = true
+
+# classic "monstermos" "fast" spacing
+[atmos]
+mmos_spacing_speed = 1.0
+monstermos_rip_tiles = true
+space_wind = true
