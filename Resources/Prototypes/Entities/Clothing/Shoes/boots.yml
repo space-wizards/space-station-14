@@ -141,6 +141,7 @@
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterSyndicate
   name: syndicate's winter boots
+  description: Durable heavy boots, looks like merch from "Syndieland"
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootssyndicate.rsi
