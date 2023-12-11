@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Storage (e.g. backpacks) is now predicted and using FancyWindow., type: Fix}
-  id: 4805
-  time: '2023-09-11T11:20:47.0000000+00:00'
 - author: chromiumboy
   changes:
   - {message: Artifact containers now heavily suppress the radioactivity of any irradiated
@@ -2901,3 +2896,9 @@ Entries:
   - {message: Added various gauze wraps to most species in the form of markings, type: Add}
   id: 5304
   time: '2023-12-10T23:16:38.0000000+00:00'
+- author: Simyon
+  changes:
+  - {message: Moths that are turned into zombies will now prefer cloth instead of
+      brains., type: Tweak}
+  id: 5305
+  time: '2023-12-11T03:17:55.0000000+00:00'
