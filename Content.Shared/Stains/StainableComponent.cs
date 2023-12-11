@@ -9,7 +9,8 @@ namespace Content.Shared.Stains;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
-public partial class StainableComponent : Component
+[Access(typeof(SharedStainsSystem))]
+public sealed partial class StainableComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string Solution = "stains";
