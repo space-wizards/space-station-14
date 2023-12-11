@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Fixed microbomb implanters not spawning in nukie duffelbags., type: Fix}
-  id: 4821
-  time: '2023-09-14T00:21:33.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: The syndicate bomb now has a unique beeping sound., type: Add}
@@ -2907,3 +2902,8 @@ Entries:
   - {message: Fix game audio persisting to lobby., type: Fix}
   id: 5320
   time: '2023-12-11T10:26:56.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Beer goggles can now scan solutions., type: Add}
+  id: 5321
+  time: '2023-12-11T11:35:11.0000000+00:00'
