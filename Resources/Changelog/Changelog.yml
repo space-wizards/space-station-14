@@ -2902,3 +2902,8 @@ Entries:
       to time, type: Add}
   id: 5322
   time: '2023-12-11T11:36:19.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: 'Incapacitated mobs can no longer be shoved for a speed boost.', type: Fix}
+  id: 5323
+  time: '2023-12-11T09:43:00.0000000+00:00'
