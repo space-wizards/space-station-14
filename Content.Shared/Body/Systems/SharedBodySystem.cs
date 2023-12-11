@@ -39,6 +39,7 @@ public abstract partial class SharedBodySystem : EntitySystem
         base.Initialize();
 
         InitializeBody();
+        InitializeOrgans();
         InitializeParts();
     }
 

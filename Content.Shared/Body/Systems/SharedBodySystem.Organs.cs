@@ -9,26 +9,50 @@ namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
-    private void AddOrgan(EntityUid uid, EntityUid bodyUid, EntityUid parentPartUid, OrganComponent component)
+    private void InitializeOrgans()
     {
-        component.Body = bodyUid;
-        RaiseLocalEvent(uid, new AddedToPartEvent(parentPartUid));
-
-        if (component.Body != null)
-            RaiseLocalEvent(uid, new AddedToPartInBodyEvent(component.Body.Value, parentPartUid));
-
-        Dirty(uid, component);
+        SubscribeLocalEvent<OrganComponent, EntGotInsertedIntoContainerMessage>(OnOrganInserted);
+        SubscribeLocalEvent<OrganComponent, EntGotRemovedFromContainerMessage>(OnOrganRemoved);
     }
 
-    private void RemoveOrgan(EntityUid uid, EntityUid parentPartUid, OrganComponent component)
+    private void OnOrganInserted(EntityUid uid, OrganComponent component, EntGotInsertedIntoContainerMessage args)
     {
-        RaiseLocalEvent(uid, new RemovedFromPartEvent(parentPartUid));
+        // No recursive updates for these as you can't insert organs into organsTM.
+        var parentUid = args.Container.Owner;
 
-        if (component.Body != null)
+        if (HasComp<BodyComponent>(parentUid))
         {
-            RaiseLocalEvent(uid, new RemovedFromPartInBodyEvent(component.Body.Value, parentPartUid));
+            component.Body = parentUid;
+            Dirty(uid, component);
         }
 
+        // Organ inserted into body part.
+        if (TryComp(parentUid, out BodyPartComponent? partComp))
+        {
+            RaiseLocalEvent(uid, new AddedToPartEvent(parentUid));
+
+            if (partComp.Body != null)
+            {
+                component.Body = partComp.Body;
+                RaiseLocalEvent(uid, new AddedToPartInBodyEvent(partComp.Body.Value, parentUid));
+                Dirty(uid, component);
+            }
+        }
+    }
+
+    private void OnOrganRemoved(EntityUid uid, OrganComponent component, EntGotRemovedFromContainerMessage args)
+    {
+        // Lifestage shenanigans.
+        if (component.Body != null && TerminatingOrDeleted(component.Body.Value))
+            return;
+
+        if (HasComp<BodyPartComponent>(args.Container.Owner))
+            RaiseLocalEvent(uid, new RemovedFromPartEvent(args.Container.Owner));
+
+        if (component.Body == null)
+            return;
+
+        RaiseLocalEvent(uid, new RemovedFromPartInBodyEvent(component.Body.Value, args.Container.Owner));
         component.Body = null;
         Dirty(uid, component);
     }
