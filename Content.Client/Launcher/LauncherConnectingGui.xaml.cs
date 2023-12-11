@@ -26,6 +26,7 @@ namespace Content.Client.Launcher
         private readonly IConfigurationManager _cfg;
 
         private float _redialWaitTime = RedialWaitTimeSeconds;
+        [ValidatePrototypeId<DatasetPrototype>]
         private string _loginTipsDataset = "Tips";
 
         public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
