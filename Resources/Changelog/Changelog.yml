@@ -1,12 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Added automatic area pickups to ore bags., type: Add}
-  - {message: Fix stackable items not playing the pickup animation on pickup., type: Fix}
-  id: 4808
-  time: '2023-09-12T12:34:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix lights not always updating., type: Fix}
   id: 4809
   time: '2023-09-12T14:35:08.0000000+00:00'
@@ -2902,3 +2896,9 @@ Entries:
       eggs, milk, or wool (unless they are undead)', type: Fix}
   id: 5307
   time: '2023-12-11T03:20:41.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Pipes now leak their contents when destroyed. Make sure to drain pipes
+      before removing them., type: Tweak}
+  id: 5308
+  time: '2023-12-11T07:51:45.0000000+00:00'
