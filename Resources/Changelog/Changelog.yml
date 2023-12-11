@@ -1,9 +1,4 @@
 Entries:
-- author: Doru991
-  changes:
-  - {message: Welders can be toggled off again., type: Fix}
-  id: 4814
-  time: '2023-09-13T04:35:05.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix fultons being toggleable by any entity., type: Fix}
@@ -2901,3 +2896,8 @@ Entries:
   - {message: Emergency light radius and energy is now much lower, type: Tweak}
   id: 5313
   time: '2023-12-11T09:24:10.0000000+00:00'
+- author: Ubaser and Pigeonpeas
+  changes:
+  - {message: The kobold ear marking has received a new sprite., type: Tweak}
+  id: 5314
+  time: '2023-12-11T09:25:55.0000000+00:00'
