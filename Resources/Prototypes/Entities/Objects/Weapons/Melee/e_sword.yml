@@ -13,10 +13,14 @@
       path: /Audio/Weapons/ebladeoff.ogg
     activatedSoundOnHit:
       path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
     deactivatedSoundOnHit:
       path: /Audio/Weapons/genhit1.ogg
     activatedSoundOnSwing:
       path: /Audio/Weapons/eblademiss.ogg
+      params:
+        variation: 0.250
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
     activatedDamage:
@@ -27,14 +31,14 @@
     deactivatedDamage:
         types:
             Blunt: 4.5
-    activatedDisarmMalus: 0.6
     activatedSize: Huge
     deactivatedSize: Small
-    activatedSharp: true
     deactivatedSecret: false
     activatedColor: DodgerBlue
     randomActivatedColor: true
     isHotWhenActivated: true
+    activatedSharp: true
+    activatedDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:
@@ -97,6 +101,7 @@
       path: /Audio/Weapons/eblademiss.ogg
       params:
         volume: -6
+        variation: 0.250
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
       params:
@@ -218,6 +223,7 @@
       path: /Audio/Weapons/eblademiss.ogg
       params:
         volume: +3
+        variation: 0.250
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
       params:

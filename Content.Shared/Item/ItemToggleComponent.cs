@@ -15,7 +15,7 @@ namespace Content.Shared.Item;
 public sealed partial class ItemToggleComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("activated"), AutoNetworkedField]
-    public bool Activated;
+    public bool Activated = false;
 
     /// <summary>
     ///     The noise this item makes when it is toggled on.
@@ -30,6 +30,12 @@ public sealed partial class ItemToggleComponent : Component
     public SoundSpecifier? DeactivateSound;
 
     /// <summary>
+    ///     The noise this item makes when it is toggled on.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundFailToActivate"), AutoNetworkedField]
+    public SoundSpecifier? FailToActivateSound;
+
+    /// <summary>
     ///     The noise this item makes when hitting something with it on.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("activatedSoundOnHit"), AutoNetworkedField]
@@ -42,7 +48,7 @@ public sealed partial class ItemToggleComponent : Component
     public SoundSpecifier? DeactivatedSoundOnHit;
 
     /// <summary>
-    ///     The noise this item makes when hitting something with it off.
+    ///     The continuous noise this item makes when it's activated (like an e-sword's hum). This loops.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("activeSound"), AutoNetworkedField]
     public SoundSpecifier? ActiveSound;
@@ -73,16 +79,6 @@ public sealed partial class ItemToggleComponent : Component
     [DataField("deactivatedDamage")]
     public DamageSpecifier DeactivatedDamage = new();
 
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("activatedDisarmMalus")]
-    public float ActivatedDisarmMalus = 0.6f;
-
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("activatedSharp")]
-    public bool ActivatedSharp = false;
-
     /// <summary>
     ///     Item's size when activated
     /// </summary>
@@ -91,12 +87,11 @@ public sealed partial class ItemToggleComponent : Component
     public ProtoId<ItemSizePrototype> ActivatedSize = "Huge";
 
     /// <summary>
-    ///     Item's size when deactivated
+    ///     Item's size when deactivated. If none is mentioned, it uses the item's default size instead.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("deactivatedSize")]
-    public ProtoId<ItemSizePrototype> DeactivatedSize = "Small";
-
+    public ProtoId<ItemSizePrototype>? DeactivatedSize = null;
 
     /// <summary>
     ///     Does this become hidden when deactivated
@@ -109,6 +104,34 @@ public sealed partial class ItemToggleComponent : Component
     public bool IsHotWhenActivated = false;
 
     /// <summary>
+    ///     Item has this modifier to the chance to disarm when activated.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("activatedDisarmMalus")]
+    public float ActivatedDisarmMalus = 0.6f;
+
+    /// <summary>
+    ///     Item has this modifier to the chance to disarm when deactivated. If none is mentioned, it uses the item's default disarm modifier.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("DeactivatedDisarmMalus")]
+    public float? DeactivatedDisarmMalus = null;
+
+    /// <summary>
+    ///     Item can be used to butcher when activated.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("activatedSharp")]
+    public bool ActivatedSharp = false;
+
+    /// <summary>
+    ///     User entity used to store the information about the last user who has toggled the item. Used in other functions to affect the user in some way (like show messages).
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("user")]
+    public EntityUid User { get; set; }
+
+    /// <summary>
     ///     Used when the item emits sound while active.
     /// </summary>
     public EntityUid? Stream;
@@ -118,7 +141,16 @@ public sealed partial class ItemToggleComponent : Component
 /// Raised directed on an entity when its ItemToggle is attempted to be activated.
 /// </summary>
 [ByRefEvent]
-public readonly record struct ItemToggleActivateAttemptEvent(bool Cancelled = false);
+public record struct ItemToggleActivateAttemptEvent()
+{
+    public bool Cancelled = false;
+}
+
+/// <summary>
+/// Raised directed on an entity when activation changes have been applied on shared components. Used to call for server component changes.
+/// </summary>
+[ByRefEvent]
+public readonly record struct ItemToggleActivatedServerChangesEvent;
 
 /// <summary>
 /// Raised directed on an entity when its ItemToggle is activated.
@@ -130,12 +162,27 @@ public readonly record struct ItemToggleActivatedEvent;
 /// Raised directed on an entity when its ItemToggle is attempted to be deactivated.
 /// </summary>
 [ByRefEvent]
-public readonly record struct ItemToggleDeactivateAttemptEvent(bool Cancelled = false);
+public record struct ItemToggleDeactivateAttemptEvent()
+{
+    public bool Cancelled = false;
+}
+
+/// <summary>
+/// Raised directed on an entity when deactivation changes have been applied on shared components. Used to call for server component changes.
+/// </summary>
+[ByRefEvent]
+public readonly record struct ItemToggleDeactivatedServerChangesEvent;
 
 /// <summary>
 /// Raised directed on an entity when its ItemToggle is deactivated.
 /// </summary>
 [ByRefEvent]
 public readonly record struct ItemToggleDeactivatedEvent;
+
+/// <summary>
+/// Raised directed on an entity when another component forces a toggle (like running out of battery).
+/// </summary>
+[ByRefEvent]
+public readonly record struct ItemToggleForceToggleEvent;
 
 

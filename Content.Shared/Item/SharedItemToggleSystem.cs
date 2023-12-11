@@ -6,6 +6,7 @@ using Content.Shared.Wieldable;
 using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Item;
 /// <summary>
@@ -14,7 +15,7 @@ namespace Content.Shared.Item;
 /// <remarks>
 /// If you need extended functionality (e.g. requiring power) then add a new component and use events.
 /// </remarks>
-public sealed class ItemToggleSystem : EntitySystem
+public abstract class SharedItemToggleSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -28,6 +29,21 @@ public sealed class ItemToggleSystem : EntitySystem
         SubscribeLocalEvent<ItemToggleComponent, IsHotEvent>(OnIsHotEvent);
         SubscribeLocalEvent<ItemToggleComponent, ItemUnwieldedEvent>(TurnOffonUnwielded);
         SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnonWielded);
+        SubscribeLocalEvent<ItemToggleComponent, ItemToggleForceToggleEvent>(ForceToggle);
+    }
+    private void OnUseInHand(EntityUid uid, ItemToggleComponent component, UseInHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+
+        component.User = args.User;
+
+        if (TryComp<WieldableComponent>(uid, out var wieldableComp))
+            return;
+
+        Toggle(uid, component);
     }
 
     public void Toggle(EntityUid uid, ItemToggleComponent? component = null)
@@ -45,6 +61,11 @@ public sealed class ItemToggleSystem : EntitySystem
         }
     }
 
+    public void ForceToggle(EntityUid uid, ItemToggleComponent component, ref ItemToggleForceToggleEvent args)
+    {
+        Toggle(uid, component);
+    }
+
     public bool TryActivate(EntityUid uid, EntityUid? user = null, ItemToggleComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -54,28 +75,24 @@ public sealed class ItemToggleSystem : EntitySystem
             return true;
 
         var attempt = new ItemToggleActivateAttemptEvent();
-
         RaiseLocalEvent(uid, ref attempt);
 
         if (attempt.Cancelled)
+        {
+            //Play the failure to activate noise if there is any.
+            _audio.PlayPredicted(component.FailToActivateSound, uid, user);
             return false;
+        }
 
-        component.Activated = true;
+        Activate(uid, component);
+
         var ev = new ItemToggleActivatedEvent();
         RaiseLocalEvent(uid, ref ev);
 
-        UpdateItemComponent(uid, component);
-        UpdateWeaponComponent(uid, component);
-        UpdateAppearance(uid, component);
-        Dirty(uid, component);
+        _audio.PlayPredicted(component.ActivateSound, uid, user);
+        //Starts the active sound (like humming).
+        component.Stream = _audio.PlayPredicted(component.ActiveSound, uid, user, AudioParams.Default.WithLoop(true))?.Entity;
 
-        //Added in order to supress the client side item from making noise.
-        if (uid.Id == GetNetEntity(uid).Id)
-        {
-            _audio.PlayPredicted(component.ActivateSound, uid, user);
-            //Starts the active sound (like humming).
-            component.Stream = _audio.PlayPredicted(component.ActiveSound, uid, user, AudioParams.Default.WithLoop(true))?.Entity;
-        }
         return true;
     }
 
@@ -88,43 +105,51 @@ public sealed class ItemToggleSystem : EntitySystem
             return true;
 
         var attempt = new ItemToggleDeactivateAttemptEvent();
-
         RaiseLocalEvent(uid, ref attempt);
 
         if (attempt.Cancelled)
             return false;
 
-        component.Activated = false;
+        Deactivate(uid, component);
+
         var ev = new ItemToggleDeactivatedEvent();
         RaiseLocalEvent(uid, ref ev);
+
+        _audio.PlayPredicted(component.DeactivateSound, uid, user);
+        //Stops the active sound (like humming).
+        component.Stream = _audio.Stop(component.Stream);
+
+        return true;
+    }
+
+    private void Activate(EntityUid uid, ItemToggleComponent component)
+    {
+        component.Activated = true;
 
         UpdateItemComponent(uid, component);
         UpdateWeaponComponent(uid, component);
         UpdateAppearance(uid, component);
+
+        var ev = new ItemToggleActivatedServerChangesEvent();
+        RaiseLocalEvent(uid, ref ev);
+
         Dirty(uid, component);
-
-        //Added in order to supress the client side item from making noise.
-        if (uid.Id == GetNetEntity(uid).Id)
-        {
-            _audio.PlayPredicted(component.DeactivateSound, uid, user);
-            //Stops the active sound (like humming).
-            component.Stream = _audio.Stop(component.Stream);
-        }
-        return true;
     }
 
-    private void OnUseInHand(EntityUid uid, ItemToggleComponent component, UseInHandEvent args)
+    private void Deactivate(EntityUid uid, ItemToggleComponent component)
     {
-        if (args.Handled)
-            return;
+        component.Activated = false;
 
-        args.Handled = true;
+        UpdateItemComponent(uid, component);
+        UpdateWeaponComponent(uid, component);
+        UpdateAppearance(uid, component);
 
-        if (TryComp<WieldableComponent>(uid, out var wieldableComp))
-            return;
+        var ev = new ItemToggleDeactivatedServerChangesEvent();
+        RaiseLocalEvent(uid, ref ev);
 
-        Toggle(uid, component);
+        Dirty(uid, component);
     }
+
 
     private void TurnOffonUnwielded(EntityUid uid, ItemToggleComponent component, ItemUnwieldedEvent args)
     {
@@ -177,6 +202,7 @@ public sealed class ItemToggleSystem : EntitySystem
             if (component.DeactivatedSecret)
                 weaponComp.Hidden = true;
         }
+
         Dirty(uid, weaponComp);
     }
 
@@ -188,10 +214,15 @@ public sealed class ItemToggleSystem : EntitySystem
         if (!TryComp(uid, out ItemComponent? item))
             return;
 
+        if (component.DeactivatedSize == null)
+            component.DeactivatedSize = item.Size;
+
         if (component.Activated)
             _item.SetSize(uid, component.ActivatedSize, item);
         else
-            _item.SetSize(uid, component.DeactivatedSize, item);
+            _item.SetSize(uid, (ProtoId<ItemSizePrototype>) component.DeactivatedSize, item);
+
+        Dirty(uid, item);
     }
 
     /// <summary>
