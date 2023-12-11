@@ -43,6 +43,7 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/beergoggles.rsi
   - type: ShowThirstIcons
+  - type: SolutionScanner
 
 - type: entity
   parent: ClothingEyesBase
@@ -158,4 +159,4 @@
     sprite: Clothing/Eyes/Hud/synd.rsi
   - type: ShowSyndicateIcons
   - type: ShowSecurityIcons
-  
+
