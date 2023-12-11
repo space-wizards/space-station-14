@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Ninjas can spawn from 30 mins in, instead of 45.', type: Tweak}
-  id: 4819
-  time: '2023-09-13T22:02:33.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix storage windows not closing upon gamestate change., type: Fix}
@@ -2906,3 +2901,9 @@ Entries:
   - {message: Musician and Bartender now have cosmetic sunglasses., type: Tweak}
   id: 5318
   time: '2023-12-11T09:35:51.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Syndicate duffel bags heavily protect their items from explosions,
+      and regular bags have minor protection.', type: Tweak}
+  id: 5319
+  time: '2023-12-11T09:43:00.0000000+00:00'
