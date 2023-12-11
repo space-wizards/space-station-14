@@ -45,6 +45,7 @@
   - type: ShowThirstIcons
   - type: StealTarget
     stealGroup: ClothingEyesHudBeer
+  - type: SolutionScanner
 
 - type: entity
   parent: ClothingEyesBase
@@ -160,4 +161,4 @@
     sprite: Clothing/Eyes/Hud/synd.rsi
   - type: ShowSyndicateIcons
   - type: ShowSecurityIcons
-  
+
