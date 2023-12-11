@@ -6,7 +6,6 @@
   molarMass: 32
   color: 2887E8
   reagent: Oxygen
-  pricePerMole: 0
 
 - type: gas
   id: 1
@@ -16,7 +15,6 @@
   molarMass: 28
   color: DA1010
   reagent: Nitrogen
-  pricePerMole: 0
 
 - type: gas
   id: 2
@@ -26,7 +24,6 @@
   molarMass: 44
   color: 4e4e4e
   reagent: CarbonDioxide
-  pricePerMole: 0
 
 - type: gas
   id: 3
@@ -38,7 +35,6 @@
   gasOverlayState: plasma
   color: FF3300
   reagent: Plasma
-  pricePerMole: 0
 
 - type: gas
   id: 4
@@ -50,7 +46,6 @@
   gasOverlayState: tritium
   color: 13FF4B
   reagent: Tritium
-  pricePerMole: 5
 
 - type: gas
   id: 5
@@ -62,7 +57,6 @@
   gasOverlayState: water_vapor
   color: bffffd
   reagent: Water
-  pricePerMole: 0
 
 - type: gas
   id: 6
@@ -76,7 +70,6 @@
   gasVisbilityFactor: 3.5
   color: 56941E
   reagent: Miasma
-  pricePerMole: 0.15
 
 - type: gas
   id: 7
@@ -86,7 +79,6 @@
   molarMass: 44
   color: 2887E8
   reagent: NitrousOxide
-  pricePerMole: 2.5
 
 - type: gas
   id: 8
@@ -99,4 +91,3 @@
   gasMolesVisible: 0.6
   color: 3a758c
   reagent: Frezon
-  pricePerMole: 7.5
