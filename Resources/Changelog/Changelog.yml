@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix storage windows not closing upon gamestate change., type: Fix}
-  id: 4820
-  time: '2023-09-13T22:03:45.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Fixed microbomb implanters not spawning in nukie duffelbags., type: Fix}
@@ -2907,3 +2902,8 @@ Entries:
       and regular bags have minor protection.', type: Tweak}
   id: 5319
   time: '2023-12-11T09:43:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix game audio persisting to lobby., type: Fix}
+  id: 5320
+  time: '2023-12-11T10:26:56.0000000+00:00'
