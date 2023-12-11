@@ -120,7 +120,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         var numTraitors = MathHelper.Clamp(component.StartCandidates.Count / PlayersPerTraitor, 1, MaxTraitors);
         var traitorPool = _antagSelection.FindPotentialAntags(component.StartCandidates, component.TraitorPrototypeId);
-        var selectedTraitors = PickTraitors(numTraitors, traitorPool);
+        var selectedTraitors = _antagSelection.PickAntag(numTraitors, traitorPool);
 
         foreach (var traitor in selectedTraitors)
         {
@@ -153,23 +153,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
             traitor.SelectionStatus = TraitorRuleComponent.SelectionState.ReadyToSelect;
         }
-    }
-
-    private List<ICommonSession> PickTraitors(int traitorCount, List<ICommonSession> prefList)
-    {
-        var results = new List<ICommonSession>(traitorCount);
-        if (prefList.Count == 0)
-        {
-            Log.Info("Insufficient ready players to fill up with traitors, stopping the selection.");
-            return results;
-        }
-
-        for (var i = 0; i < traitorCount; i++)
-        {
-            results.Add(_random.PickAndTake(prefList));
-            Log.Info("Selected a preferred traitor.");
-        }
-        return results;
     }
 
     public bool MakeTraitor(ICommonSession traitor, bool giveUplink = true, bool giveObjectives = true)

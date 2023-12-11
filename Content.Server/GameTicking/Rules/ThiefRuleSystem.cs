@@ -79,29 +79,12 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         var startThiefCount = Math.Min(component.MaxAllowThief, component.StartCandidates.Count);
         var thiefPool = _antagSelection.FindPotentialAntags(component.StartCandidates, component.ThiefPrototypeId);
         //TO DO: When voxes specifies are added, increase their chance of becoming a thief by 4 times >:)
-        var selectedThieves = PickThieves(_random.Next(1, startThiefCount), thiefPool);
+        var selectedThieves = _antagSelection.PickAntag(_random.Next(1, startThiefCount), thiefPool);
 
         foreach(var thief in selectedThieves)
         {
             MakeThief(thief);
         }
-    }
-
-    private List<ICommonSession> PickThieves(int thiefCount, List<ICommonSession> prefList)
-    {
-        var results = new List<ICommonSession>(thiefCount);
-        if (prefList.Count == 0)
-        {
-            Log.Info("Insufficient ready players to fill up with thieves, stopping the selection.");
-            return results;
-        }
-
-        for (var i = 0; i < thiefCount; i++)
-        {
-            results.Add(_random.PickAndTake(prefList));
-            Log.Info("Selected a preferred thief.");
-        }
-        return results;
     }
 
     public bool MakeThief(ICommonSession thief)

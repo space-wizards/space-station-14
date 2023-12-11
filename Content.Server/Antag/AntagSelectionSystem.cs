@@ -151,10 +151,10 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     }
 
     /// <summary>
-    /// 
+    /// The function walks through all players, checking their role and preferences to generate a list of players who can become antagonists.
     /// </summary>
-    /// <param name="candidates"></param>
-    /// <param name="antagPreferenceId"></param>
+    /// <param name="candidates">a list of players to check out</param>
+    /// <param name="antagPreferenceId">antagonist's code id</param>
     /// <returns></returns>
     public List<ICommonSession> FindPotentialAntags(in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, string antagPreferenceId)
     {
@@ -191,6 +191,29 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             prefList = list;
         }
         return prefList;
+    }
+
+    /// <summary>
+    /// selects the specified number of players from the list
+    /// </summary>
+    /// <param name="antagCount">how many players to take</param>
+    /// <param name="prefList">a list of players from which to draw</param>
+    /// <returns></returns>
+    public List<ICommonSession> PickAntag(int antagCount, List<ICommonSession> prefList)
+    {
+        var results = new List<ICommonSession>(antagCount);
+        if (prefList.Count == 0)
+        {
+            Log.Info("Insufficient ready players to fill up with thieves, stopping the selection.");
+            return results;
+        }
+
+        for (var i = 0; i < antagCount; i++)
+        {
+            results.Add(_random.PickAndTake(prefList));
+            Log.Info("Selected a preferred antag.");
+        }
+        return results;
     }
 
     /// <summary>
