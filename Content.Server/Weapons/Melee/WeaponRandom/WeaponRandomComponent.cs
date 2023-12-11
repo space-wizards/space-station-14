@@ -14,25 +14,13 @@ internal sealed partial class WeaponRandomComponent : Component
     public DamageSpecifier DamageBonus = new();
 
     /// <summary>
-    /// Chance for the damage bonus to occur.
+    /// Chance for the damage bonus to occur (1 = 100%).
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float RandomDamageChance = 0.00001f;
 
     /// <summary>
-    /// If this is true then the random damage will occur.
-    /// </summary>
-    [DataField("randomDamage")]
-    public bool RandomDamage = true;
-
-    /// <summary>
-    /// If this is true then the weapon will have a unique interaction with cluwnes.
-    /// </summary>
-    [DataField("antiCluwne")]
-    public bool AntiCluwne = true;
-
-    /// <summary>
-    /// Noise to play when the damage bonus occurs.
+    /// Sound effect to play when the damage bonus occurs.
     /// </summary>
     [DataField("damageSound")]
     public SoundSpecifier DamageSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
