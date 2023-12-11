@@ -1,10 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Holobarrier projectors can now be researched and produced in the security
-      techfab., type: Tweak}
-  id: 4829
-  time: '2023-09-14T23:34:43.0000000+00:00'
 - author: Lank
   changes:
   - {message: Training bombs are now unable to space tiles., type: Tweak}
@@ -2897,3 +2891,9 @@ Entries:
   - {message: Added the artifact crusher to research! Crush things today!, type: Add}
   id: 5328
   time: '2023-12-11T23:15:47.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Stations no longer produce limitless plasma. Plasma refills can now
+      be ordered at cargo., type: Tweak}
+  id: 5329
+  time: '2023-12-11T23:21:25.0000000+00:00'
