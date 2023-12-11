@@ -28,6 +28,7 @@
   id: ClothingOuterSuitJanitorBomb
   name: janitorial bomb suit
   description: A heavy helmet designed to withstand explosions formed from reactions between chemicals.
+  suffix: DO NOT MAP
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/janitor_bombsuit.rsi
