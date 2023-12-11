@@ -61,6 +61,10 @@
   name: high-heeled boots
   description: Snazy boots for when you want to be stylish, yet prepared.
   components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 12
   - type: Item
     size: Normal
   - type: Sprite
