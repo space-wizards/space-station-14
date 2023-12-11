@@ -1,73 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix ghost warps., type: Fix}
-  id: 4799
-  time: '2023-09-11T05:43:25.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Make the role timer tooltip look much nicer., type: Tweak}
-  id: 4800
-  time: '2023-09-11T05:44:22.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Added indicator near SSD players, type: Add}
-  id: 4801
-  time: '2023-09-11T05:52:56.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Jetpacks, being weightless, and flying mobs can now pass over lava
-      & chasms unharmed (as well as other obstacles)', type: Add}
-  - {message: Observers are no longer affected by ice physics, type: Fix}
-  - {message: 'Step trigger (slipping, shards, etc) now by default won''t trigger
-      if the stepping entity is weightless or set as in air', type: Tweak}
-  id: 4802
-  time: '2023-09-11T06:03:17.0000000+00:00'
-- author: DrTeaSpoon
-  changes:
-  - {message: 'Fixed Tomatoes, Eggs, Watermelons and Flourbags not leaving puddles
-      based on what they actually contain.', type: Fix}
-  id: 4803
-  time: '2023-09-11T08:16:27.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed error when equipping the energy katana as a space ninja., type: Fix}
-  id: 4804
-  time: '2023-09-11T09:04:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Storage (e.g. backpacks) is now predicted and using FancyWindow., type: Fix}
-  id: 4805
-  time: '2023-09-11T11:20:47.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Artifact containers now heavily suppress the radioactivity of any irradiated
-      alien artifacts that they contain, type: Add}
-  id: 4806
-  time: '2023-09-11T19:58:26.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed "failed to insert into storage" messages being broken., type: Fix}
-  id: 4807
-  time: '2023-09-11T22:57:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added automatic area pickups to ore bags., type: Add}
-  - {message: Fix stackable items not playing the pickup animation on pickup., type: Fix}
-  id: 4808
-  time: '2023-09-12T12:34:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix lights not always updating., type: Fix}
-  id: 4809
-  time: '2023-09-12T14:35:08.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: 'Nukies now start with a microbomb implant in their backpack, remember
-      to communicate if you''re gonna use it!', type: Add}
-  - {message: The microbomb implanter has been removed from the nukie uplink, type: Remove}
-  id: 4810
-  time: '2023-09-12T15:09:33.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Fixed ninja suit not having any actions., type: Fix}
@@ -2904,3 +2835,70 @@ Entries:
       level., type: Tweak}
   id: 5298
   time: '2023-12-09T04:18:15.0000000+00:00'
+- author: nok-ko
+  changes:
+  - {message: 'Entities without hands (like mice and mothroaches) are now forbidden
+      from operating Syndicate Bombs, C4, and other timed explosives.', type: Fix}
+  id: 5299
+  time: '2023-12-10T03:13:00.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Updated the crew monitoring console user interface, type: Tweak}
+  id: 5300
+  time: '2023-12-10T05:38:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Add color picker to color selection, e.g. for character colors.', type: Add}
+  - {message: Fix drag-drop interaction outline not updating properly., type: Fix}
+  id: 5301
+  time: '2023-12-10T10:43:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed gas tank throwing damage., type: Remove}
+  id: 5302
+  time: '2023-12-10T14:11:26.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Adjusted welder blindness to be much less forgiving., type: Tweak}
+  id: 5303
+  time: '2023-12-10T23:10:07.0000000+00:00'
+- author: KittenColony
+  changes:
+  - {message: Added various gauze wraps to most species in the form of markings, type: Add}
+  id: 5304
+  time: '2023-12-10T23:16:38.0000000+00:00'
+- author: Simyon
+  changes:
+  - {message: Moths that are turned into zombies will now prefer cloth instead of
+      brains., type: Tweak}
+  id: 5305
+  time: '2023-12-11T03:17:55.0000000+00:00'
+- author: TheKilk
+  changes:
+  - {message: Added 7 new winter boots textures!, type: Add}
+  id: 5306
+  time: '2023-12-11T03:19:28.0000000+00:00'
+- author: Sirionaut
+  changes:
+  - {message: 'Animals now require a more reasonable amount of satiation before producing
+      eggs, milk, or wool (unless they are undead)', type: Fix}
+  id: 5307
+  time: '2023-12-11T03:20:41.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Pipes now leak their contents when destroyed. Make sure to drain pipes
+      before removing them., type: Tweak}
+  id: 5308
+  time: '2023-12-11T07:51:45.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Janitors can now buy their own bomb suit for cleaning chemical spills.,
+    type: Add}
+  id: 5309
+  time: '2023-12-11T08:41:54.0000000+00:00'
+- author: nok-ko
+  changes:
+  - {message: "Fixed taking damage mid-sentence not activating \u201Cglorfcode\u201D",
+    type: Fix}
+  id: 5310
+  time: '2023-12-11T08:53:10.0000000+00:00'

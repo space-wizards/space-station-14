@@ -22,6 +22,8 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Moth
+  - type: ZombieAccentOverride
+    accent: zombieMoth
   - type: Speech
     speechVerb: Moth
   - type: TypingIndicator
