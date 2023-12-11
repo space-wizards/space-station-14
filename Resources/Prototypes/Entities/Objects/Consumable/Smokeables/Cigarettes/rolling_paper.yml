@@ -5,11 +5,12 @@
   description: A pack of thin pieces of paper used to make fine smokeables.
   components:
   - type: Storage
+    grid:
+    - 0,0,3,1
     whitelist:
       tags:
       - RollingPaper
       - CigFilter
-    maxSlots: 20
   - type: StorageFill
     contents:
       - id: PaperRolling

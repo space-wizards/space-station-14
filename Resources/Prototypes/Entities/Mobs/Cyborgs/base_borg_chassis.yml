@@ -124,6 +124,7 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai
+  - type: UnblockableSpeech
   - type: Construction
     graph: Cyborg
     containers:
@@ -193,6 +194,9 @@
     - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
   - type: Emoting
+  - type: GuideHelp
+    guides:
+      - Cyborgs
 
 - type: entity
   id: BaseBorgChassisNT
@@ -208,5 +212,6 @@
     - AllAccess
   - type: Lock
     locked: true
+  - type: ActivatableUIRequiresLock
   - type: AccessReader
     access: [["Command"], ["Research"]]

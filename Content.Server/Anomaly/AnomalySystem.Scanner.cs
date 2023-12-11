@@ -78,6 +78,8 @@ public sealed partial class AnomalySystem
             return;
         if (!HasComp<AnomalyComponent>(target))
             return;
+        if (!args.CanReach)
+            return;
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ScanDoAfterDuration, new ScannerDoAfterEvent(), uid, target: target, used: uid)
         {

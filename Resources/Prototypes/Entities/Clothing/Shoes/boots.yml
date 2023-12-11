@@ -11,7 +11,7 @@
   - type: Matchbox
 
 - type: entity
-  parent: ClothingShoesStorageBase
+  parent: ClothingShoesMilitaryBase
   id: ClothingShoesBootsJack
   name: jackboots
   description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
@@ -20,12 +20,6 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
-  - type: Matchbox
-  - type: Storage
-    whitelist:
-      tags:
-        - Knife
-        - Sidearm
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -51,7 +45,7 @@
     sprite: Clothing/Shoes/Boots/performer.rsi
 
 - type: entity
-  parent: ClothingShoesStorageBase
+  parent: ClothingShoesMilitaryBase
   id: ClothingShoesBootsCombat
   name: combat boots
   description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
@@ -60,15 +54,9 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/combatboots.rsi
-  - type: Matchbox
-  - type: Storage
-    whitelist:
-      tags:
-        - Knife
-        - Sidearm
 
 - type: entity
-  parent: ClothingShoesStorageBase
+  parent: ClothingShoesMilitaryBase
   id: ClothingShoesBootsMerc
   name: mercenary boots
   description: Boots that have gone through many conflicts and that have proven their combat reliability.
@@ -77,12 +65,6 @@
     sprite: Clothing/Shoes/Boots/mercboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/mercboots.rsi
-  - type: Matchbox
-  - type: Storage
-    whitelist:
-      tags:
-        - Knife
-        - Sidearm
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -96,14 +78,98 @@
     sprite: Clothing/Shoes/Boots/laceups.rsi
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinter
   name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterboots.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterCargo
+  name: cargo winter boots
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/winterbootscargo.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/winterbootscargo.rsi
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterEngi
+  name: engineering winter boots
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/winterbootsengi.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/winterbootsengi.rsi
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterMed
+  name: medical winter boots
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/winterbootsmed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/winterbootsmed.rsi
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterSci
+  name: science winter boots
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/winterbootssci.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/winterbootssci.rsi
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterSec
+  name: security winter boots
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/winterbootssec.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/winterbootssec.rsi
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterSyndicate
+  name: syndicate's winter boots
+  description: Durable heavy boots, looks like merch from "Syndieland"
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/winterbootssyndicate.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/winterbootssyndicate.rsi
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterWeb
+  name: web winter boots
+  description: Boots made out of dense webbing to help survive even the coldest of winters.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/winterbootsweb.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/winterbootsweb.rsi
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions: # 6 (3 (fiber count of web) * 2 (to craft)) + 4 (magical crafting bonus)
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: Construction
+    graph: WebObjects
+    node: boots
