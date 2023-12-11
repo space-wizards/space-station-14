@@ -2,6 +2,10 @@
   id: CleanerDispenser
   name: space cleaner dispenser
   description: Wallmount reagent dispenser.
+  placement:
+    mode: SnapgridCenter
+    snap: 
+    - Wallmount
   components:
   - type: WallMount
     arc: 180

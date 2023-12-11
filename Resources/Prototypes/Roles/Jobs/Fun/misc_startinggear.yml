@@ -347,3 +347,11 @@
     back: SpearBone
     head: ClothingHeadHelmetBone
     shoes: ClothingShoesCult
+
+#Banana Clown
+- type: startingGear
+  id: BananaClown
+  equipment:
+    shoes: ClothingShoesClownBanana
+    jumpsuit: ClothingUniformJumpsuitClownBanana
+    mask: ClothingMaskClownBanana

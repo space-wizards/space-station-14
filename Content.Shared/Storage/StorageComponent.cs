@@ -5,6 +5,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -26,11 +27,16 @@ namespace Content.Shared.Storage
         public Container Container = default!;
 
         /// <summary>
-        /// A limit for the cumulative ItemSize weights that can be inserted in this storage.
-        /// If MaxSlots is not null, then this is ignored.
+        /// A dictionary storing each entity to its position within the storage grid.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public int MaxTotalWeight;
+        public Dictionary<NetEntity, ItemStorageLocation> StoredItems = new();
+
+        /// <summary>
+        /// A list of boxes that comprise a combined grid that determines the location that items can be stored.
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        public List<Box2i> Grid = new();
 
         /// <summary>
         /// The maximum size item that can be inserted into this storage,
@@ -38,12 +44,6 @@ namespace Content.Shared.Storage
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         [Access(typeof(SharedStorageSystem))]
         public ProtoId<ItemSizePrototype>? MaxItemSize;
-
-        /// <summary>
-        /// The max number of entities that can be inserted into this storage.
-        /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public int? MaxSlots;
 
         // TODO: Make area insert its own component.
         [DataField("quickInsert")]
@@ -95,11 +95,6 @@ namespace Content.Shared.Storage
         public SoundSpecifier? StorageCloseSound;
 
         [Serializable, NetSerializable]
-        public sealed class StorageInsertItemMessage : BoundUserInterfaceMessage
-        {
-        }
-
-        [Serializable, NetSerializable]
         public enum StorageUiKey
         {
             Key,
@@ -107,14 +102,53 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public sealed class StorageInteractWithItemEvent : BoundUserInterfaceMessage
+    public sealed class StorageInteractWithItemEvent : EntityEventArgs
     {
-        public readonly NetEntity InteractedItemUID;
-        public StorageInteractWithItemEvent(NetEntity interactedItemUID)
+        public readonly NetEntity InteractedItemUid;
+
+        public readonly NetEntity StorageUid;
+
+        public StorageInteractWithItemEvent(NetEntity interactedItemUid, NetEntity storageUid)
         {
-            InteractedItemUID = interactedItemUID;
+            InteractedItemUid = interactedItemUid;
+            StorageUid = storageUid;
         }
     }
+
+    [Serializable, NetSerializable]
+    public sealed class StorageSetItemLocationEvent : EntityEventArgs
+    {
+        public readonly NetEntity ItemEnt;
+
+        public readonly NetEntity StorageEnt;
+
+        public readonly ItemStorageLocation Location;
+
+        public StorageSetItemLocationEvent(NetEntity itemEnt, NetEntity storageEnt, ItemStorageLocation location)
+        {
+            ItemEnt = itemEnt;
+            StorageEnt = storageEnt;
+            Location = location;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class StorageInsertItemIntoLocationEvent : EntityEventArgs
+    {
+        public readonly NetEntity ItemEnt;
+
+        public readonly NetEntity StorageEnt;
+
+        public readonly ItemStorageLocation Location;
+
+        public StorageInsertItemIntoLocationEvent(NetEntity itemEnt, NetEntity storageEnt, ItemStorageLocation location)
+        {
+            ItemEnt = itemEnt;
+            StorageEnt = storageEnt;
+            Location = location;
+        }
+    }
+
 
     /// <summary>
     /// Network event for displaying an animation of entities flying into a storage entity
@@ -134,6 +168,15 @@ namespace Content.Shared.Storage
             EntityPositions = entityPositions;
             EntityAngles = entityAngles;
         }
+    }
+
+    /// <summary>
+    /// An extra BUI message that either opens, closes, or focuses the storage window based on context.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class StorageModifyWindowMessage : BoundUserInterfaceMessage
+    {
+
     }
 
     [NetSerializable]
