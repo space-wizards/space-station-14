@@ -25,7 +25,6 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
     private void OnInit(Entity<ArtifactCrusherComponent> ent, ref ComponentInit args)
     {
         ent.Comp.OutputContainer = ContainerSystem.EnsureContainer<Container>(ent, ent.Comp.OutputContainerName);
-        Dirty(ent, ent.Comp);
     }
 
     private void OnStorageAfterOpen(Entity<ArtifactCrusherComponent> ent, ref StorageAfterOpenEvent args)
