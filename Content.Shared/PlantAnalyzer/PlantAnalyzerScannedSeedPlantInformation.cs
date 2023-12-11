@@ -26,9 +26,17 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
     public string SeedProblems = "";
 
     public bool IsTray;
-    public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntity, String seedName)
+    public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntit, string seedName, string seedYield, string seedPotency,
+        string seedChem)
     {
-        TargetEntity = targetEntity;
+        TargetEntity = targetEntit;
         SeedName = seedName;
+        SeedYield = seedYield;
+        SeedPotency = seedPotency;
+        SeedChem = seedChem;
+
+
+        //SeedMinTemp = seedMinTemp;
+       // SeedMaxTemp = seedMaxTemp;
     }
 }

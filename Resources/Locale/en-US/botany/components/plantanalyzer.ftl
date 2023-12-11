@@ -1,6 +1,6 @@
 plant-analyzer-interface-title = Plant analyzer
 plant-analyzer-window-no-seed-information-text = There is no relevant information to analyze
-plant-analyzer-window-label-name-scanned-plant = Analysed plant:
+plant-analyzer-window-label-name-scanned-plant = Analysed plant: {$seedName}
 plant-analyzer-plant-endurance-text= [color=white]Plant endurance: {$seedEndurance}[/color]
 plant-analyzer-plant-chemistry-text =  [color=white]Сontained substances[/color] : {$seedChemistry}
 plant-analyzer-plant-yield-text = Plant Yield:  {$seedYield}
