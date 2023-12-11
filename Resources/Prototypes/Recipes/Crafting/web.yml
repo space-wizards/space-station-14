@@ -101,7 +101,7 @@
   startNode: start
   targetNode: boots
   category: construction-category-clothing
-  description: "Tightly woven web should protect against the cold"
+  description: "Web boots"
   entityWhitelist:
     tags:
     - SpiderCraft

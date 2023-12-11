@@ -158,7 +158,7 @@
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterWeb
   name: web winter boots
-  description: Boots made of dense webbing to help survive even the coldest of winters.
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsweb.rsi
