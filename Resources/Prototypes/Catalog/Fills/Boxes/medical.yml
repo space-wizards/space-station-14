@@ -94,7 +94,8 @@
   id: BoxMouthSwab
   components:
   - type: Storage
-    maxTotalWeight: 20
+    grid:
+    - 0,0,4,3
   - type: StorageFill
     contents:
       - id: DiseaseSwab

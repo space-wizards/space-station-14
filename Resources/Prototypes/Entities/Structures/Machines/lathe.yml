@@ -106,6 +106,8 @@
       - Beaker
       - Syringe
       - LightTube
+      - SodiumLightTube
+      - ExteriorLightTube
       - LightBulb
       - Bucket
       - FoodPlate
@@ -220,6 +222,7 @@
       - Beaker
       - LargeBeaker
       - CryostasisBeaker
+      - SyringeCryostasis
       - Dropper
       - Syringe
       - Implanter
@@ -367,6 +370,7 @@
       - AnalysisComputerCircuitboard
       - ExosuitFabricatorMachineCircuitboard
       - AnomalyVesselCircuitboard
+      - AnomalyVesselExperimentalCircuitboard
       - AnomalySynchronizerCircuitboard
       - APECircuitboard
       - ArtifactAnalyzerMachineCircuitboard
@@ -699,6 +703,7 @@
       - BluespaceBeaker
       - SyringeBluespace
       - Jug
+      - SyringeCryostasis
   - type: Machine
     board: MedicalTechFabCircuitboard
 
