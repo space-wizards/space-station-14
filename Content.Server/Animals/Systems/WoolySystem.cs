@@ -1,5 +1,6 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Timing;
@@ -7,13 +8,14 @@ using Robust.Shared.Timing;
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-/// Handles regeneration of an animal's wool solution when not hungry.
-/// Shearing is not currently possible so the only use is for moths to eat.
+///     Gives ability to produce fiber reagents, produces endless if the 
+///     owner has no HungerComponent
 /// </summary>
 public sealed class WoolySystem : EntitySystem
 {
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
 
     public override void Initialize()
@@ -27,23 +29,32 @@ public sealed class WoolySystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<WoolyComponent, HungerComponent>();
+        var query = EntityQueryEnumerator<WoolyComponent>();
         var now = _timing.CurTime;
-        while (query.MoveNext(out var uid, out var comp, out var hunger))
+        while (query.MoveNext(out var uid, out var wooly))
         {
-            if (now < comp.NextGrowth)
+            if (now < wooly.NextGrowth)
                 continue;
 
-            comp.NextGrowth = now + comp.GrowthDelay;
+            wooly.NextGrowth = now + wooly.GrowthDelay;
 
-            // Is there enough nutrition to produce reagent?
-            if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Peckish)
+            if (_mobState.IsDead(uid))
                 continue;
 
-            if (!_solutionContainer.TryGetSolution(uid, comp.Solution, out var solution, out _))
+            // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
+            if (EntityManager.TryGetComponent(uid, out HungerComponent? hunger))
+            {
+                // Is there enough nutrition to produce reagent?
+                if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Okay)
+                    continue;
+
+                _hunger.ModifyHunger(uid, -wooly.HungerUsage, hunger);
+            }
+
+            if (!_solutionContainer.TryGetSolution(uid, wooly.Solution, out var solution, out _))
                 continue;
 
-            _solutionContainer.TryAddReagent(solution, comp.ReagentId, comp.Quantity, out _);
+            _solutionContainer.TryAddReagent(solution, wooly.ReagentId, wooly.Quantity, out _);
         }
     }
 

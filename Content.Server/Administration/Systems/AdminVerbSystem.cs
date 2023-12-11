@@ -238,7 +238,7 @@ namespace Content.Server.Administration.Systems
                         {
                             var ui = new AdminLogsEui();
                             _eui.OpenEui(ui, player);
-                            ui.SetLogFilter(search:args.Target.GetHashCode().ToString());
+                            ui.SetLogFilter(search:args.Target.Id.ToString());
                         },
                         Impact = LogImpact.Low
                     };
