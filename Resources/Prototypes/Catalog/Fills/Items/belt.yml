@@ -85,8 +85,9 @@
 
 - type: entity
   id: ClothingBeltParamedicFilled
-  parent: ClothingBeltMedical
-  suffix: Filled
+  parent: ClothingBeltMedical #in the future, make this a seperate prototype so it can have a unique, darker sprite
+  name: EMT belt
+  suffix: Paramedic,Filled
   components:
   - type: StorageFill
     contents:

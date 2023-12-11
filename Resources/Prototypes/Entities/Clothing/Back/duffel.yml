@@ -9,7 +9,7 @@
   - type: Storage
     maxItemSize: Huge
     grid:
-    - 0,0,9,4
+    - 0,0,7,4
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
