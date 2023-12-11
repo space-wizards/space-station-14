@@ -166,6 +166,7 @@ binds:
 - function: MoveStoredItem
   type: State
   key: MouseLeft
+  priority: -1
   canFocus: true
 - function: RotateStoredItem
   type: State
