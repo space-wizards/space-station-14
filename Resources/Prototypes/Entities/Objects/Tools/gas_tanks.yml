@@ -185,7 +185,7 @@
         Blunt: 7.5
 
 - type: entity
-  parent: ExtendedEmergencyOxygenTank
+  parent: DoubleEmergencyOxygenTank
   id: DoubleEmergencyNitrogenTank
   name: double emergency nitrogen tank
   description: A high-grade dual-tank emergency life support container. It holds a decent amount of nitrogen for it's small size.
