@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
@@ -35,29 +34,10 @@ namespace Content.Server.Tools.Components
         public FixedPoint2 FuelLitCost { get; private set; } = FixedPoint2.New(0.5f);
 
         /// <summary>
-        ///     Sound played when the welder is turned off.
+        ///     Sound played when refilling the welder.
         /// </summary>
-        [DataField("welderOffSounds")]
-        public SoundSpecifier WelderOffSounds { get; private set; } = new SoundCollectionSpecifier("WelderOff");
-
-        /// <summary>
-        ///     Sound played when the tool is turned on.
-        /// </summary>
-        [DataField("welderOnSounds")]
-        public SoundSpecifier WelderOnSounds { get; private set; } = new SoundCollectionSpecifier("WelderOn");
-
         [DataField("welderRefill")]
         public SoundSpecifier WelderRefill { get; private set; } = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
-
-        /// <summary>
-        ///     When the welder is lit, this damage is added to the base melee weapon damage.
-        /// </summary>
-        /// <remarks>
-        ///     If this is a standard welder, this damage bonus should probably subtract the entity's standard melee weapon damage
-        ///     and replace it all with heat damage.
-        /// </remarks>
-        [DataField("litMeleeDamageBonus")]
-        public DamageSpecifier LitMeleeDamageBonus = new();
 
         /// <summary>
         ///     Whether the item is safe to refill while lit without exploding the tank.

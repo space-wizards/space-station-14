@@ -14,5 +14,8 @@ namespace Content.Client.Tools.Components
 
         [ViewVariables]
         public float Fuel { get; set; }
+
+        [ViewVariables]
+        public bool Lit { get; set; }
     }
 }

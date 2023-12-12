@@ -33,6 +33,11 @@
   copyright: "User Nimfar11 on GitHub."
   source: "https://github.com/Nimfar11"
 
+- files: ["ebladehum.ogg", "eblademiss.ogg"]
+  license: "CC0-1.0"
+  copyright: "User gyzhor on freesound.org. Modified by Darkenson on github."
+  source: "https://freesound.org/people/gyzhor/sounds/47123/"
+
 - files: ["dodgeball.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation"

@@ -2,18 +2,13 @@ using System.Linq;
 using Content.Server.Chemistry.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Temperature;
-using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
-using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Server.Tools
@@ -27,22 +22,14 @@ namespace Content.Server.Tools
 
         public void InitializeWelders()
         {
-            SubscribeLocalEvent<WelderComponent, ComponentStartup>(OnWelderStartup);
-            SubscribeLocalEvent<WelderComponent, IsHotEvent>(OnWelderIsHotEvent);
             SubscribeLocalEvent<WelderComponent, ExaminedEvent>(OnWelderExamine);
-            SubscribeLocalEvent<WelderComponent, SolutionChangedEvent>(OnWelderSolutionChange);
-            SubscribeLocalEvent<WelderComponent, ActivateInWorldEvent>(OnWelderActivate);
             SubscribeLocalEvent<WelderComponent, AfterInteractEvent>(OnWelderAfterInteract);
             SubscribeLocalEvent<WelderComponent, DoAfterAttemptEvent<ToolDoAfterEvent>>(OnWelderToolUseAttempt);
             SubscribeLocalEvent<WelderComponent, ComponentShutdown>(OnWelderShutdown);
             SubscribeLocalEvent<WelderComponent, ComponentGetState>(OnWelderGetState);
-            SubscribeLocalEvent<WelderComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
-        }
+            SubscribeLocalEvent<WelderComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
+            SubscribeLocalEvent<WelderComponent, ItemToggleDeactivatedEvent>(TurnOff);
 
-        private void OnGetMeleeDamage(EntityUid uid, WelderComponent component, ref GetMeleeDamageEvent args)
-        {
-            if (component.Lit)
-                args.Damage += component.LitMeleeDamageBonus;
         }
 
         public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
@@ -54,79 +41,38 @@ namespace Content.Server.Tools
             return (_solutionContainerSystem.GetTotalPrototypeQuantity(uid, welder.FuelReagent), fuelSolution.MaxVolume);
         }
 
-        public bool TryToggleWelder(EntityUid uid, EntityUid? user,
-            WelderComponent? welder = null,
-            SolutionContainerManagerComponent? solutionContainer = null,
-            ItemComponent? item = null,
-            SharedPointLightComponent? light = null,
-            AppearanceComponent? appearance = null)
+
+        public void TryTurnOn(EntityUid uid, WelderComponent welder, ref ItemToggleActivateAttemptEvent args)
         {
-            // Right now, we only need the welder.
-            // So let's not unnecessarily resolve components
-            if (!Resolve(uid, ref welder))
-                return false;
 
-            return !welder.Lit
-                ? TryTurnWelderOn(uid, user, welder, solutionContainer, item, light, appearance)
-                : TryTurnWelderOff(uid, user, welder, item, light, appearance);
-        }
-
-        public bool TryTurnWelderOn(EntityUid uid, EntityUid? user,
-            WelderComponent? welder = null,
-            SolutionContainerManagerComponent? solutionContainer = null,
-            ItemComponent? item = null,
-            SharedPointLightComponent? light = null,
-            AppearanceComponent? appearance = null,
-            TransformComponent? transform = null)
-        {
-            if (!Resolve(uid, ref welder, ref solutionContainer, ref transform))
-                return false;
-
-            // Optional components.
-            Resolve(uid, ref item, ref appearance, false);
-
-            _light.ResolveLight(uid, ref light);
-
-            if (!_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var solution, solutionContainer))
-                return false;
-
+            if (!_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var solution) ||
+                !TryComp<TransformComponent>(uid, out var transform))
+            {
+                args.Cancelled = true;
+                return;
+            }
             var fuel = solution.GetTotalPrototypeQuantity(welder.FuelReagent);
 
-            // Not enough fuel to lit welder.
-            if (fuel == FixedPoint2.Zero || fuel < welder.FuelLitCost)
+            if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
             {
-                if(user != null)
-                    _popupSystem.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), uid, user.Value);
-                return false;
+                // Not enough fuel to lit welder.
+                if (fuel == FixedPoint2.Zero || fuel < welder.FuelLitCost)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), uid, itemToggleComp.User);
+                    args.Cancelled = true;
+                    return;
+                }
+
+                solution.RemoveReagent(welder.FuelReagent, welder.FuelLitCost);
+
+                // Logging
+                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(itemToggleComp.User):user} toggled {ToPrettyString(uid):welder} on");
             }
-
-            solution.RemoveReagent(welder.FuelReagent, welder.FuelLitCost);
-
-            welder.Lit = true;
-
-            // Logging
-            if (user != null)
-                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user.Value):user} toggled {ToPrettyString(uid):welder} on");
-            else
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(uid):welder} toggled on");
 
             var ev = new WelderToggledEvent(true);
             RaiseLocalEvent(uid, ev);
 
-            var hotEvent = new IsHotEvent() {IsHot = true};
-            RaiseLocalEvent(uid, hotEvent);
-
-            _appearanceSystem.SetData(uid, WelderVisuals.Lit, true);
-            _appearanceSystem.SetData(uid, ToggleableLightVisuals.Enabled, true);
-
-            if (light != null)
-            {
-                _light.SetEnabled(uid, true, light);
-            }
-
-            _audioSystem.PlayPvs(welder.WelderOnSounds, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-5f));
-
-            if (transform.GridUid is {} gridUid)
+            if (transform.GridUid is { } gridUid)
             {
                 var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
                 _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, uid, true);
@@ -135,74 +81,35 @@ namespace Content.Server.Tools
             Dirty(uid, welder);
 
             _activeWelders.Add(uid);
-            return true;
         }
 
-        public bool TryTurnWelderOff(EntityUid uid, EntityUid? user,
-            WelderComponent? welder = null,
-            ItemComponent? item = null,
-            SharedPointLightComponent? light = null,
-            AppearanceComponent? appearance = null)
+        public void TurnOff(EntityUid uid, WelderComponent welder, ref ItemToggleDeactivatedEvent args)
         {
-            if (!Resolve(uid, ref welder))
-                return false;
-
-            // Optional components.
-            Resolve(uid, ref item, ref appearance, false);
-
-            _light.ResolveLight(uid, ref light);
-
-            welder.Lit = false;
-
-            // Logging
-            if (user != null)
-                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user.Value):user} toggled {ToPrettyString(uid):welder} off");
-            else
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(uid):welder} toggled off");
-
+            if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
+            {
+                // Logging
+                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(itemToggleComp.User):user} toggled {ToPrettyString(uid):welder} off");
+            }
             var ev = new WelderToggledEvent(false);
             RaiseLocalEvent(uid, ev);
-
-            var hotEvent = new IsHotEvent() {IsHot = false};
-            RaiseLocalEvent(uid, hotEvent);
-
-            // Layer 1 is the flame.
-            _appearanceSystem.SetData(uid, WelderVisuals.Lit, false);
-            _appearanceSystem.SetData(uid, ToggleableLightVisuals.Enabled, false);
-
-            if (light != null)
-            {
-                _light.SetEnabled(uid, false, light);
-            }
-
-            _audioSystem.PlayPvs(welder.WelderOffSounds, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-5f));
 
             Dirty(uid, welder);
 
             _activeWelders.Remove(uid);
-            return true;
-        }
-
-        private void OnWelderStartup(EntityUid uid, WelderComponent welder, ComponentStartup args)
-        {
-            // TODO: Delete this shit what
-            Dirty(uid, welder);
-        }
-
-        private void OnWelderIsHotEvent(EntityUid uid, WelderComponent welder, IsHotEvent args)
-        {
-            args.IsHot = welder.Lit;
         }
 
         private void OnWelderExamine(EntityUid uid, WelderComponent welder, ExaminedEvent args)
         {
-            if (welder.Lit)
+            if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
             {
-                args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message"));
-            }
-            else
-            {
-                args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-not-lit-message"));
+                if (itemToggleComp.Activated)
+                {
+                    args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message"));
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-not-lit-message"));
+                }
             }
 
             if (args.IsInDetailsRange)
@@ -217,26 +124,12 @@ namespace Content.Server.Tools
             }
         }
 
-        private void OnWelderSolutionChange(EntityUid uid, WelderComponent welder, SolutionChangedEvent args)
-        {
-            // TODO what
-            // ????
-            Dirty(uid, welder);
-        }
-
-        private void OnWelderActivate(EntityUid uid, WelderComponent welder, ActivateInWorldEvent args)
-        {
-            args.Handled = TryToggleWelder(uid, args.User, welder);
-            if (args.Handled)
-                args.WasLogged = true;
-        }
-
         private void OnWelderAfterInteract(EntityUid uid, WelderComponent welder, AfterInteractEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (args.Target is not {Valid: true} target || !args.CanReach)
+            if (args.Target is not { Valid: true } target || !args.CanReach)
                 return;
 
             // TODO: Clean up this inherited oldcode.
@@ -249,7 +142,7 @@ namespace Content.Server.Tools
                 var trans = FixedPoint2.Min(welderSolution.AvailableVolume, targetSolution.Volume);
                 if (trans > 0)
                 {
-                    var drained = _solutionContainerSystem.Drain(target, targetSolution,  trans);
+                    var drained = _solutionContainerSystem.Drain(target, targetSolution, trans);
                     _solutionContainerSystem.TryAddSolution(uid, welderSolution, drained);
                     _audioSystem.PlayPvs(welder.WelderRefill, uid);
                     _popupSystem.PopupEntity(Loc.GetString("welder-component-after-interact-refueled-message"), uid, args.User);
@@ -271,11 +164,14 @@ namespace Content.Server.Tools
         {
             var user = args.DoAfter.Args.User;
 
-            if (!welder.Lit)
+            if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
             {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, user);
-                args.Cancel();
-                return;
+                if (!itemToggleComp.Activated)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, user);
+                    args.Cancel();
+                    return;
+                }
             }
         }
 
@@ -287,7 +183,10 @@ namespace Content.Server.Tools
         private void OnWelderGetState(EntityUid uid, WelderComponent welder, ref ComponentGetState args)
         {
             var (fuel, capacity) = GetWelderFuelAndCapacity(uid, welder);
-            args.State = new WelderComponentState(capacity.Float(), fuel.Float(), welder.Lit);
+            if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
+            {
+                args.State = new WelderComponentState(capacity.Float(), fuel.Float(), itemToggleComp.Activated);
+            }
         }
 
         private void UpdateWelders(float frameTime)
@@ -296,7 +195,6 @@ namespace Content.Server.Tools
 
             if (_welderTimer < WelderUpdateTimer)
                 return;
-
 
             // TODO Use an "active welder" component instead, EntityQuery over that.
             foreach (var tool in _activeWelders.ToArray())
@@ -312,11 +210,13 @@ namespace Content.Server.Tools
                 solution.RemoveReagent(welder.FuelReagent, welder.FuelConsumption * _welderTimer);
 
                 if (solution.GetTotalPrototypeQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
-                    TryTurnWelderOff(tool, null, welder);
+                {
+                    var ev = new ItemToggleForceToggleEvent();
+                    RaiseLocalEvent(tool, ref ev);
+                }
 
                 Dirty(tool, welder);
             }
-
             _welderTimer -= WelderUpdateTimer;
         }
     }

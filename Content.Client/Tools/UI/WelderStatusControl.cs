@@ -15,7 +15,7 @@ public sealed class WelderStatusControl : Control
     public WelderStatusControl(WelderComponent parent)
     {
         _parent = parent;
-        _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
+        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
         AddChild(_label);
 
         UpdateDraw();
