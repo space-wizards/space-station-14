@@ -4,7 +4,6 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Temperature;
 using Content.Shared.Wieldable;
 using Content.Shared.Wieldable.Components;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
