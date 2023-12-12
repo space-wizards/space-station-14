@@ -22,7 +22,7 @@ namespace Content.Server.Stunnable.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<BatteryComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
             SubscribeLocalEvent<StunbatonComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
@@ -45,24 +45,22 @@ namespace Content.Server.Stunnable.Systems
             {
                 var ev = new ItemToggleForceToggleEvent();
                 RaiseLocalEvent(uid, ref ev);
-                return;
             }
         }
 
-        private void OnExamined(EntityUid uid, StunbatonComponent comp, ExaminedEvent args)
+        private void OnExamined(EntityUid uid, BatteryComponent battery, ExaminedEvent args)
         {
-            if (!TryComp<ItemToggleComponent>(uid, out var itemToggle))
-                return;
-
-            var msg = itemToggle.Activated
+            if (TryComp<ItemToggleComponent>(uid, out var itemToggle))
+            {
+                var onMsg = itemToggle.Activated
                 ? Loc.GetString("comp-stunbaton-examined-on")
                 : Loc.GetString("comp-stunbaton-examined-off");
-            args.PushMarkup(msg);
-            if (TryComp<BatteryComponent>(uid, out var battery))
-            {
-                args.PushMarkup(Loc.GetString("stunbaton-component-on-examine-charge",
-                    ("charge", (int) (battery.CurrentCharge / battery.MaxCharge * 100))));
+                args.PushMarkup(onMsg);
             }
+
+            var chargeMessage = Loc.GetString("stunbaton-component-on-examine-charge",
+                ("charge", (int) (battery.CurrentCharge / battery.MaxCharge * 100)));
+            args.PushMarkup(chargeMessage);
         }
 
         private void TurnOff(EntityUid uid, StunbatonComponent comp, ref ItemToggleDeactivatedEvent args)
