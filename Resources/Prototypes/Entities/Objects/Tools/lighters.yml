@@ -126,7 +126,7 @@
 
 - type: entity
   name: zippi lighter
-  parent: Lighter
+  parent: BaseItem
   id: ZippoLighter
   description: "A rugged metal lighter, lasts quite a while."
   components:
@@ -145,6 +145,17 @@
       map: ["flame"]
       visible: false
       shader: unshaded
+  - type: ItemToggle
+    activated: false
+    soundActivate:
+      collection: lighterOnSounds
+    soundDeactivate:
+      collection: lighterOffSounds
+    activatedDamage:
+        types:
+            Heat: 1
+    activatedSize: Small
+    isHotWhenActivated: true
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -168,6 +179,10 @@
         - ReagentId: WeldingFuel
           Quantity: 12
         maxVol: 12 #uses less fuel than a welder, so this isnt as bad as it looks
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 1 # does a little bit of damage on hit when off
   - type: PointLight
     enabled: false
     netsync: false
