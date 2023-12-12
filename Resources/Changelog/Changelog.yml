@@ -1,12 +1,4 @@
 Entries:
-- author: Doru991
-  changes:
-  - message: Berry seeds are now available from the MegaSeed Servitor.
-    type: Add
-  - message: Seeds for the bungo fruit are included in the exotic seed crate.
-    type: Add
-  id: 4857
-  time: '2023-09-19T03:29:28.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Skeletons have been reported in the closets of various station officials.
@@ -3796,3 +3788,12 @@ Entries:
     type: Add
   id: 5297
   time: '2023-12-10T21:15:26.0000000+00:00'
+- author: ZoNeSRuS
+  changes:
+  - message: "\u041A\u0430\u043D\u0430\u043B \u0441\u0438\u043D\u0434\u0438\u043A\u0430\
+      \u0442\u0430 \u043D\u0435 \u0432\u0438\u0434\u043D\u043E \u0432 \u043D\u0435\
+      \ \u0441\u0438\u043D\u0434\u0438 \u0433\u0430\u0440\u043D\u0438\u0442\u0443\u0440\
+      \u0430\u0445."
+    type: Add
+  id: 5298
+  time: '2023-12-12T10:47:56.0000000+00:00'
