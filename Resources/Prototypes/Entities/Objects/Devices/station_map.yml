@@ -12,6 +12,8 @@
         - state: tablet
         - state: generic
           shader: unshaded
+    - type: Item
+      size: Normal
     - type: ActivatableUI
       inHandsOnly: true
       singleUser: true
