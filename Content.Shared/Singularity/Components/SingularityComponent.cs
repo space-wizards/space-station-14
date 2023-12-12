@@ -61,7 +61,7 @@ public sealed partial class SingularityComponent : Component
     /// The audio stream that plays the sound specified by <see cref="AmbientSound"/> on loop.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public IPlayingAudioStream? AmbientSoundStream = null;
+    public EntityUid? AmbientSoundStream = null;
 
     /// <summary>
     ///     The sound that the singularity produces when it forms.

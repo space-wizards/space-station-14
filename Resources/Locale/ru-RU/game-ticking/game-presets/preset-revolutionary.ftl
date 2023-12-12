@@ -14,13 +14,14 @@ head-rev-briefing =
     Используйте вспышки, чтобы обращать экипаж в своих пособников.
     Убейте всё высшее командование, чтобы захватить станцию.
 
-head-rev-initial-name = [color=#5e9cff]{$name}[/color] был одним из главных революционеров.
-head-rev-initial-name-user = [color=#5e9cff]{$name}[/color] ([color=gray]{$username}[/color]) был одним из главных революционеров.
-
-head-rev-initial-count = {$initialCount ->
-    [one] Единственный глава революции:
-    *[other] Было {$initialCount} глав революции:
+rev-headrev-count = {$initialCount ->
+    [one] Был один главный революционер:
+    *[other] Было {$initialCount} главных революционеров:
 }
+rev-headrev-player = {$title} обратил {$count} {$count ->
+    [one] человека
+    *[other] человек
+}.
 
 head-rev-break-mindshield = Защита сознания не возымела эффекта!
 

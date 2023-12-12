@@ -171,7 +171,8 @@
     size: Ginormous
   - type: Storage
     maxItemSize: Huge
-    maxTotalWeight: 200 #5 duffels worth of gear
+    grid:
+    - 0,0,19,9
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -191,4 +192,5 @@
   - type: Sprite
     sprite: Corvax/Back/Satchels/military.rsi
   - type: Storage
-    maxTotalWeight: 44
+    grid:
+    - 0,0,10,3

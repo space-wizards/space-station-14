@@ -8,7 +8,7 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Ориджин {1}'
+          mapNameTemplate: '{0} Исток {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'ОН'

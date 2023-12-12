@@ -35,7 +35,7 @@
     shoes: ClothingShoesBootsJack
     gloves: ClothingHandsGlovesNitrile
     eyes: ClothingEyesHudMedical
-    head: ClothingHeadHatBeretSecurity
+    head: ClothingHeadHatBeretSecurityMedic
     id: BrigmedicPDA
     ears: ClothingHeadsetBrigmedic
     mask: ClothingMaskBreathMedicalSecurity

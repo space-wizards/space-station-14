@@ -22,3 +22,5 @@ ent-BaseStationSiliconLawCrewsimov = { "" }
     .desc = { "" }
 ent-BaseStationAllEventsEligible = { "" }
     .desc = { "" }
+ent-BaseStationGateway = { "" }
+    .desc = { "" }

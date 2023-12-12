@@ -7,6 +7,22 @@
     Glass: 50
 
 - type: latheRecipe
+  id: SodiumLightTube
+  result: SodiumLightTube
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
+  id: ExteriorLightTube
+  result: ExteriorLightTube
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
   id: LightBulb
   result: LightBulb
   completetime: 2

@@ -49,6 +49,9 @@ ent-DeathRattleImplanter = { ent-Implanter }
 ent-MindShieldImplanter = { ent-Implanter }
     .desc = { ent-BaseImplantOnlyImplanter.desc }
     .suffix = Щит разума
+ent-DeathAcidifierImplanter = { ent-Implanter }
+    .desc = { ent-BaseImplantOnlyImplanter.desc }
+    .suffix = Разжижение
 
 # Corvax anti-meta localization end
 

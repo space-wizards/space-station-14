@@ -116,3 +116,7 @@ tiles-hull = внешняя обшивка
 tiles-hull-reinforced = укрепленная внешняя обшивка
 tiles-web = паутинный пол
 tiles-chromite = хромит
+
+tiles-mining-tile = шахтёрский пол
+tiles-mining-dark-tile = тёмный шахтёрский пол
+tiles-mining-light-tile = светлый шахтёрский пол

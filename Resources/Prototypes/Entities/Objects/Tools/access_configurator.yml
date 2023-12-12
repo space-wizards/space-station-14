@@ -38,6 +38,7 @@
       - Hydroponics
       - Janitor
       - Kitchen
+      - Lawyer
       - Maintenance
       - Medical
       - Quartermaster
@@ -47,6 +48,7 @@
       - Security
       - Service
       - Theatre
+      - Library
       privilegedIdSlot:
         name: id-card-console-privileged-id
         ejectSound: /Audio/Machines/id_swipe.ogg

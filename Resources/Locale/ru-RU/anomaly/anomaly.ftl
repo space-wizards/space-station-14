@@ -42,3 +42,8 @@ anomaly-generator-flavor-right = v1.1
 
 anomaly-sync-connected = Аномалия успешно соединена
 anomaly-sync-disconnected = Соединение с аномалией потеряно!
+anomaly-sync-no-anomaly = Не найдено аномалий поблизости.
+anomaly-sync-examine-connected = Оно [color=darkgreen]соединено[/color] с аномалией.
+anomaly-sync-examine-not-connected = Оно [color=darkred]не соединено[/color] с аномалией.
+anomaly-sync-connect-verb-text = Соединить с аномалией
+anomaly-sync-connect-verb-message = Соединить {$machine} и ближайшую аномалию.

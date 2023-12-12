@@ -19,6 +19,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -218,11 +219,9 @@ public sealed class DefibrillatorSystem : EntitySystem
         }
         else
         {
-            _mobThreshold.SetAllowRevives(target, true, thresholds);
             if (_mobState.IsDead(target, mob))
                 _damageable.TryChangeDamage(target, component.ZapHeal, true, origin: uid);
             _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
-            _mobThreshold.SetAllowRevives(target, false, thresholds);
 
             if (_mind.TryGetMind(target, out var mindId, out var mind) &&
                 mind.Session is { } playerSession)

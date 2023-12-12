@@ -17,7 +17,6 @@
 - type: startingGear
   id: TechnicalAssistantGear
   equipment:
-    head: ClothingHeadHatWelding
     jumpsuit: ClothingUniformJumpsuitColorYellow
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesBootsWork

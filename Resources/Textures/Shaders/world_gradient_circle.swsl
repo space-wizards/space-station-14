@@ -1,0 +1,27 @@
+// Has 2 circles, an inner one that is unaffected and an outer one.
+light_mode unshaded;
+
+const highp vec4 color = vec4(1.0, 1.0, 1.0, 1.0);
+
+// Position of the center in pixel terms.
+uniform highp vec2 position;
+uniform highp float maxRange;
+uniform highp float minRange;
+uniform highp float bufferRange;
+uniform highp float gradient;
+
+void fragment() {
+	highp float distance = length(FRAGCOORD.xy - position);
+
+	if (distance > maxRange) {
+		discard;
+	}
+	else if (distance < minRange) {
+		COLOR = color;
+	}
+	else {
+		
+        	highp float ratio = 1.0 - pow((distance - minRange) / bufferRange, gradient);
+		COLOR = vec4(color.x, color.y, color.z, ratio);
+	}
+}

@@ -23,11 +23,11 @@ chat-manager-sender-announcement-wrap-message = [font size=14][bold]Объявл
                                                 {$message}[/bold][/font]
 chat-manager-sender-announcement-highlight-wrap-message = [font size=14][bold]Объявление {$sender}:
                                                 {$message}[/font]
-chat-manager-entity-say-wrap-message = [bold]{$entityName}[/bold] {$verb}, [font={$fontType} size={$fontSize}]"{$message}"[/font]
-chat-manager-entity-say-bold-wrap-message = [bold]{$entityName}[/bold] {$verb}, [font={$fontType} size={$fontSize}][bold]"{$message}"[/bold][/font]
+chat-manager-entity-say-wrap-message = [BubbleHeader][bold]{$entityName}[/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent]{$message}[/BubbleContent]"[/font]
+chat-manager-entity-say-bold-wrap-message = [BubbleHeader][bold]{$entityName}[/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][bold]{$message}[/bold][/BubbleContent]"[/font]
 
-chat-manager-entity-whisper-wrap-message = [font size=11][italic]{$entityName} шепчет, "{$message}"[/italic][/font]
-chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic]Кто-то шепчет, "{$message}"[/italic][/font]
+chat-manager-entity-whisper-wrap-message = [font size=11][italic][BubbleHeader]{$entityName}[/BubbleHeader] шепчет, "[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
+chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic][BubbleHeader]Кто-то[/BubbleHeader] шепчет, "[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
 chat-manager-entity-me-wrap-message = [italic]{ PROPER($entity) ->
     *[false] {$entityName} {$message}[/italic]
      [true] {$entityName} {$message}[/italic]
@@ -44,6 +44,10 @@ chat-manager-send-admin-announcement-wrap-message = [bold]{$adminChannelName}: {
 chat-manager-send-hook-ooc-wrap-message = OOC: [bold](D){$senderName}:[/bold] {$message}
 chat-manager-dead-channel-name = МЁРТВЫЕ
 chat-manager-admin-channel-name = АДМИН
+
+chat-manager-rate-limited = Вы посылаете сообщения слишком быстро!
+chat-manager-rate-limit-admin-announcement = Игрок { $player } превысили ограничение скорости отправления сообщений.
+
 
 ## Speech verbs for chat
 
