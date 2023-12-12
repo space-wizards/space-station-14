@@ -102,7 +102,7 @@ public sealed class ItemGridPiece : Control
             return;
         }
 
-        if (_storageController.IsDragging && _storageController.CurrentlyDragging == this)
+        if (_storageController.IsDragging && _storageController.DraggingGhost?.Entity == Entity && _storageController.DraggingGhost != this)
             return;
 
         var adjustedShape = _entityManager.System<ItemSystem>().GetAdjustedItemShape((Entity, itemComponent), Location.Rotation, Vector2i.Zero);

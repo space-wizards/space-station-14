@@ -108,8 +108,6 @@ namespace Content.Shared.Storage
 
         public readonly NetEntity StorageUid;
 
-        public bool Remove;
-
         public StorageInteractWithItemEvent(NetEntity interactedItemUid, NetEntity storageUid)
         {
             InteractedItemUid = interactedItemUid;
@@ -131,6 +129,20 @@ namespace Content.Shared.Storage
             ItemEnt = itemEnt;
             StorageEnt = storageEnt;
             Location = location;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class StorageRemoveItemEvent : EntityEventArgs
+    {
+        public readonly NetEntity ItemEnt;
+
+        public readonly NetEntity StorageEnt;
+
+        public StorageRemoveItemEvent(NetEntity itemEnt, NetEntity storageEnt)
+        {
+            ItemEnt = itemEnt;
+            StorageEnt = storageEnt;
         }
     }
 
