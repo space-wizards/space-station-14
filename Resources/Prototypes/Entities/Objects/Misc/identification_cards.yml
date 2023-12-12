@@ -472,7 +472,7 @@
     heldPrefix: gold
 
 - type: entity
-  parent: CentcomIDCard
+  parent: ERTLeaderIDCard
   id: ERTChaplainIDCard
   name: ERT Chaplain ID card
   components:
@@ -482,11 +482,9 @@
     - state: ert_chaplain # we have the sprite for the id but dont have chaplain ERT equipment for now.
   - type: IdCard
     jobTitle: ERT Soul Officer
-  - type: Item
-    heldPrefix: gold
 
 - type: entity
-  parent: CentcomIDCard
+  parent: ERTLeaderIDCard
   id: ERTEngineerIDCard
   name: ERT Engineer ID card
   components:
@@ -496,11 +494,9 @@
     - state: ert_engineer
   - type: IdCard
     jobTitle: ERT Field Engineer
-  - type: Item
-    heldPrefix: gold
 
 - type: entity
-  parent: CentcomIDCard
+  parent: ERTLeaderIDCard
   id: ERTJanitorIDCard
   name: ERT Janitor ID card
   components:
@@ -510,11 +506,9 @@
     - state: ert_janitor
   - type: IdCard
     jobTitle: ERT Custodian
-  - type: Item
-    heldPrefix: gold
 
 - type: entity
-  parent: CentcomIDCard
+  parent: ERTLeaderIDCard
   id: ERTMedicIDCard
   name: ERT Medic ID card
   components:
@@ -524,11 +518,9 @@
     - state: ert_medic
   - type: IdCard
     jobTitle: ERT Medical Doctor
-  - type: Item
-    heldPrefix: gold
 
 - type: entity
-  parent: CentcomIDCard
+  parent: ERTLeaderIDCard
   id: ERTSecurityIDCard
   name: ERT Security ID card
   components:
@@ -538,8 +530,6 @@
     - state: ert_security
   - type: IdCard
     jobTitle: ERT Field Officer
-  - type: Item
-    heldPrefix: gold
 
 - type: entity
   parent: IDCardStandard
