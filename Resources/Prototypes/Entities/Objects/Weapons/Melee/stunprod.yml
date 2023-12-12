@@ -14,9 +14,6 @@
     activatedDamage:
       types:
         Blunt: 0
-    deactivatedDamage:
-      types:
-        Blunt: 9
     soundActivate:
       collection: sparks
       params:
