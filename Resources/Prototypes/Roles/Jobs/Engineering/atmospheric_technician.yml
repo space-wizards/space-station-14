@@ -17,6 +17,9 @@
   - Engineering
   - External
   - Atmospherics
+  special: ##Imperial start
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ] ##Imperial end
 
 - type: startingGear
   id: AtmosphericTechnicianGear
