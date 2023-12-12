@@ -1,11 +1,4 @@
 Entries:
-- author: Repo
-  changes:
-  - message: Time out for particular uplink items for balancing. Syndicate Bomb can
-      only be purchased after 30min.
-    type: Add
-  id: 4860
-  time: '2023-09-19T23:51:15.0000000+00:00'
 - author: liltenhead
   changes:
   - message: Reduced the crafting costs of the buckler and makeshift shield.
@@ -3813,3 +3806,18 @@ Entries:
     type: Tweak
   id: 5300
   time: '2023-12-12T17:48:35.0000000+00:00'
+- author: AlexandrSTG
+  changes:
+  - message: "\u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0432\u043E\u0437\
+      \u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u043F\u0440\u043E\u0441\u043A\
+      \u0430\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0441\u043A\u0430\u043D\
+      \u0435\u0440\u043E\u043C \u0430\u043D\u043E\u043C\u0430\u043B\u0438\u0439 \u043B\
+      \u044E\u0431\u043E\u0439 \u043E\u0431\u044A\u0435\u043A\u0442 (\u0432\u043A\u043B\
+      \u044E\u0447\u0430\u044F \u043D\u0435\u0432\u0438\u0434\u0438\u043C\u0443\u044E\
+      \ \u043A\u043E\u0440\u043E\u0431\u043A\u0443) \u0438 \u0443\u0437\u043D\u0430\
+      \u0442\u044C \u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u043B\u0438 \u043E\
+      \u0431\u044A\u0435\u043A\u0442 \u0430\u043D\u043E\u043C\u0430\u043B\u0438\u0435\
+      \u0439."
+    type: Add
+  id: 5301
+  time: '2023-12-12T21:33:50.0000000+00:00'
