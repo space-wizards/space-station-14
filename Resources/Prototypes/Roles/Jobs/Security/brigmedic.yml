@@ -20,6 +20,9 @@
   - Brig
   - Maintenance
   - External
+  special: #Imperia start
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ] #Imperia end
 
 - type: startingGear
   id: NewBrigmedicGear
