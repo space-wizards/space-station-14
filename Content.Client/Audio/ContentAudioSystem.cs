@@ -1,15 +1,18 @@
 using Content.Shared.Audio;
-using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
-using Robust.Client.GameObjects;
-using Robust.Shared;
-using Robust.Shared.Audio;
+using Robust.Client.Audio;
+using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
 using AudioComponent = Robust.Shared.Audio.Components.AudioComponent;
 
 namespace Content.Client.Audio;
 
 public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 {
+    [Dependency] private readonly IAudioManager _audioManager = default!;
+    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+
     // Need how much volume to change per tick and just remove it when it drops below "0"
     private readonly Dictionary<EntityUid, float> _fadingOut = new();
 
@@ -37,6 +40,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
     {
         base.Initialize();
         UpdatesOutsidePrediction = true;
+        InitializeUI();
         InitializeAmbientMusic();
         SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
     }
