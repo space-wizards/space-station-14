@@ -53,6 +53,8 @@ public abstract class SharedStorageSystem : EntitySystem
     [ValidatePrototypeId<ItemSizePrototype>]
     public const string DefaultStorageMaxItemSize = "Normal";
 
+    public bool CheckingCanInsert;
+
     /// <inheritdoc />
     public override void Initialize()
     {
@@ -81,6 +83,7 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeAllEvent<StorageInteractWithItemEvent>(OnInteractWithItem);
         SubscribeAllEvent<StorageSetItemLocationEvent>(OnSetItemLocation);
         SubscribeAllEvent<StorageInsertItemIntoLocationEvent>(OnInsertItemIntoLocation);
+        SubscribeAllEvent<StorageRemoveItemEvent>(OnRemoveItem);
     }
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
@@ -383,6 +386,34 @@ public abstract class SharedStorageSystem : EntitySystem
         TrySetItemStorageLocation((itemEnt, null), (storageEnt, storageComp), msg.Location);
     }
 
+    private void OnRemoveItem(StorageRemoveItemEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not { } player)
+            return;
+
+        var storageEnt = GetEntity(msg.StorageEnt);
+        var itemEnt = GetEntity(msg.ItemEnt);
+
+        if (!TryComp<StorageComponent>(storageEnt, out var storageComp))
+            return;
+
+        if (!_ui.TryGetUi(storageEnt, StorageComponent.StorageUiKey.Key, out var bui) ||
+            !bui.SubscribedSessions.Contains(args.SenderSession))
+            return;
+
+        if (!Exists(itemEnt))
+        {
+            Log.Error($"Player {args.SenderSession} set location of non-existent item {msg.ItemEnt} stored in {ToPrettyString(storageEnt)}");
+            return;
+        }
+
+        if (!ActionBlocker.CanInteract(player, itemEnt))
+            return;
+
+        TransformSystem.DropNextTo(itemEnt, player);
+        Audio.PlayPredicted(storageComp.StorageRemoveSound, storageEnt, player);
+    }
+
     private void OnInsertItemIntoLocation(StorageInsertItemIntoLocationEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not { } player)
@@ -465,7 +496,11 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Cancelled || args.Container.ID != StorageComponent.ContainerId)
             return;
 
-        if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true, includeContainerChecks: false))
+        // don't run cyclical CanInsert() loops
+        if (CheckingCanInsert)
+            return;
+
+        if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true))
             args.Cancel();
     }
 
@@ -534,8 +569,7 @@ public abstract class SharedStorageSystem : EntitySystem
         StorageComponent? storageComp = null,
         ItemComponent? item = null,
         bool ignoreStacks = false,
-        bool ignoreLocation = false,
-        bool includeContainerChecks = true)
+        bool ignoreLocation = false)
     {
         if (!Resolve(uid, ref storageComp) || !Resolve(insertEnt, ref item, false))
         {
@@ -592,11 +626,14 @@ public abstract class SharedStorageSystem : EntitySystem
             }
         }
 
-        if (includeContainerChecks && !_containerSystem.CanInsert(insertEnt, storageComp.Container))
+        CheckingCanInsert = true;
+        if (!_containerSystem.CanInsert(insertEnt, storageComp.Container))
         {
+            CheckingCanInsert = false;
             reason = null;
             return false;
         }
+        CheckingCanInsert = false;
 
         reason = null;
         return true;
@@ -819,7 +856,7 @@ public abstract class SharedStorageSystem : EntitySystem
         {
             for (var x = storageBounding.Left; x <= storageBounding.Right; x++)
             {
-                for (var angle = Angle.Zero; angle <= Angle.FromDegrees(360); angle += Math.PI / 2f)
+                for (var angle = Angle.FromDegrees(-itemEnt.Comp.StoredRotation); angle <= Angle.FromDegrees(360 - itemEnt.Comp.StoredRotation); angle += Math.PI / 2f)
                 {
                     var location = new ItemStorageLocation(angle, (x, y));
                     if (ItemFitsInGridLocation(itemEnt, storageEnt, location))

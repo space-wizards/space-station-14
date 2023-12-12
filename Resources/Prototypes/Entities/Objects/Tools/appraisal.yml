@@ -21,6 +21,7 @@
   - type: Tag
     tags:
     - AppraisalTool
+    - Sidearm
   - type: GuideHelp
     guides:
     - Cargo

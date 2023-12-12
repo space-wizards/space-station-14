@@ -1,258 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: Added indicator near SSD players, type: Add}
-  id: 4801
-  time: '2023-09-11T05:52:56.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Jetpacks, being weightless, and flying mobs can now pass over lava
-      & chasms unharmed (as well as other obstacles)', type: Add}
-  - {message: Observers are no longer affected by ice physics, type: Fix}
-  - {message: 'Step trigger (slipping, shards, etc) now by default won''t trigger
-      if the stepping entity is weightless or set as in air', type: Tweak}
-  id: 4802
-  time: '2023-09-11T06:03:17.0000000+00:00'
-- author: DrTeaSpoon
-  changes:
-  - {message: 'Fixed Tomatoes, Eggs, Watermelons and Flourbags not leaving puddles
-      based on what they actually contain.', type: Fix}
-  id: 4803
-  time: '2023-09-11T08:16:27.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed error when equipping the energy katana as a space ninja., type: Fix}
-  id: 4804
-  time: '2023-09-11T09:04:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Storage (e.g. backpacks) is now predicted and using FancyWindow., type: Fix}
-  id: 4805
-  time: '2023-09-11T11:20:47.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Artifact containers now heavily suppress the radioactivity of any irradiated
-      alien artifacts that they contain, type: Add}
-  id: 4806
-  time: '2023-09-11T19:58:26.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed "failed to insert into storage" messages being broken., type: Fix}
-  id: 4807
-  time: '2023-09-11T22:57:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added automatic area pickups to ore bags., type: Add}
-  - {message: Fix stackable items not playing the pickup animation on pickup., type: Fix}
-  id: 4808
-  time: '2023-09-12T12:34:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix lights not always updating., type: Fix}
-  id: 4809
-  time: '2023-09-12T14:35:08.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: 'Nukies now start with a microbomb implant in their backpack, remember
-      to communicate if you''re gonna use it!', type: Add}
-  - {message: The microbomb implanter has been removed from the nukie uplink, type: Remove}
-  id: 4810
-  time: '2023-09-12T15:09:33.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixed ninja suit not having any actions., type: Fix}
-  id: 4811
-  time: '2023-09-12T20:54:19.0000000+00:00'
-- author: AndrewEyeke
-  changes:
-  - {message: Nuclear Operatives will be able to buy carps. They are limited to 10
-      per operative., type: Add}
-  id: 4812
-  time: '2023-09-12T21:50:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix eye not updating correctly when stopping riding (e.g. leaving vehicles).,
-    type: Fix}
-  id: 4813
-  time: '2023-09-13T04:25:35.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: Welders can be toggled off again., type: Fix}
-  id: 4814
-  time: '2023-09-13T04:35:05.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix fultons being toggleable by any entity., type: Fix}
-  id: 4815
-  time: '2023-09-13T08:01:22.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: Security Barriers can now be ordered by cargo., type: Tweak}
-  id: 4816
-  time: '2023-09-13T08:56:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix shuttles docking with planetmaps., type: Fix}
-  id: 4817
-  time: '2023-09-13T12:06:15.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Training bombs are now available for purchase at cargo., type: Add}
-  id: 4818
-  time: '2023-09-13T16:54:48.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Ninjas can spawn from 30 mins in, instead of 45.', type: Tweak}
-  id: 4819
-  time: '2023-09-13T22:02:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix storage windows not closing upon gamestate change., type: Fix}
-  id: 4820
-  time: '2023-09-13T22:03:45.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixed microbomb implanters not spawning in nukie duffelbags., type: Fix}
-  id: 4821
-  time: '2023-09-14T00:21:33.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: The syndicate bomb now has a unique beeping sound., type: Add}
-  - {message: The training bomb now has the same amount of wires as the real deal.,
-    type: Tweak}
-  - {message: The syndicate bomb's minimum timer setting is now 120 seconds (30 seconds
-      longer then before.), type: Tweak}
-  - {message: Fixed the syndicate bomb's name & description in the uplink showing
-      up incorrectly., type: Fix}
-  id: 4822
-  time: '2023-09-14T00:26:58.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: "Added a telescopi\u0441 shield to the Advanced Riot Control Technology.",
-    type: Add}
-  id: 4823
-  time: '2023-09-14T01:03:13.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Cryogenic gas cylinders are now available for purchase from cargo.,
-    type: Add}
-  id: 4824
-  time: '2023-09-14T03:37:13.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: 'Guardians (holo, holoclown) have AI control before a ghost takes over
-      the role, and after a player ghosts from it.', type: Add}
-  - {message: Guardians can be summoned without a player in the role., type: Tweak}
-  id: 4825
-  time: '2023-09-14T03:51:10.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: 'When mutated, some plants have been observed to occasionally transform
-      into entirely different species.', type: Add}
-  id: 4826
-  time: '2023-09-14T04:56:24.0000000+00:00'
-- author: Psychpsyo
-  changes:
-  - {message: Janitors can now take the shark plushie for a walk in their bucket.,
-    type: Add}
-  id: 4827
-  time: '2023-09-14T07:17:45.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed some missing localization., type: Fix}
-  id: 4828
-  time: '2023-09-14T10:08:03.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: Holobarrier projectors can now be researched and produced in the security
-      techfab., type: Tweak}
-  id: 4829
-  time: '2023-09-14T23:34:43.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: Training bombs are now unable to space tiles., type: Tweak}
-  id: 4830
-  time: '2023-09-14T23:51:47.0000000+00:00'
-- author: kseandi
-  changes:
-  - {message: HUD theme selection is now works!, type: Fix}
-  id: 4831
-  time: '2023-09-15T02:05:56.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: NPS no longer have an SSD indicator, type: Fix}
-  id: 4832
-  time: '2023-09-15T02:15:26.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: It is now easier to tell how damaged cyborgs are., type: Tweak}
-  id: 4833
-  time: '2023-09-15T03:14:47.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Swapping between guns now has a small delay before you can fire., type: Tweak}
-  id: 4834
-  time: '2023-09-15T04:15:43.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed succumb and last words actions not appearing, type: Fix}
-  id: 4835
-  time: '2023-09-15T20:52:49.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Entity velocity now resets when buckling., type: Tweak}
-  id: 4836
-  time: '2023-09-16T04:15:06.0000000+00:00'
-- author: Psychpsyo
-  changes:
-  - {message: 'The janitor''s advanced mop can now be wielded, just like the regular
-      mop.', type: Add}
-  id: 4837
-  time: '2023-09-16T04:33:01.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Some Syndicate objectives have been tweaked to have higher difficulties,
-      notably stealing the nuke disk.', type: Tweak}
-  id: 4838
-  time: '2023-09-16T06:18:11.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added beacons to station maps., type: Add}
-  id: 4839
-  time: '2023-09-16T08:11:48.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixed objectives not being given in some cases., type: Fix}
-  id: 4840
-  time: '2023-09-16T12:10:06.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Added several new types of barricades for mappers to use, all using
-      sprites from /vg/station. The regular, full-tile barricade has also received
-      a new sprite from /vg/station.', type: Add}
-  - {message: Barricades are now slightly stronger & cheaper to make., type: Tweak}
-  id: 4841
-  time: '2023-09-16T12:50:48.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Resized the non-admin Ahelp window to be taller and less wide., type: Tweak}
-  id: 4842
-  time: '2023-09-17T09:04:20.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed light animations not working., type: Fix}
-  id: 4843
-  time: '2023-09-17T17:57:50.0000000+00:00'
-- author: Henry12116
-  changes:
-  - {message: You can now eat most organs. Bon appetit!, type: Add}
-  id: 4844
-  time: '2023-09-18T00:20:11.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed fultons losing their beacon when the stack is split., type: Fix}
-  id: 4845
-  time: '2023-09-18T00:22:26.0000000+00:00'
 - author: Psychpsyo
   changes:
   - {message: The advanced mop no longer looks boring when attached to the janitorial
@@ -2905,3 +2651,253 @@ Entries:
   - {message: Updated the crew monitoring console user interface, type: Tweak}
   id: 5300
   time: '2023-12-10T05:38:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Add color picker to color selection, e.g. for character colors.', type: Add}
+  - {message: Fix drag-drop interaction outline not updating properly., type: Fix}
+  id: 5301
+  time: '2023-12-10T10:43:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed gas tank throwing damage., type: Remove}
+  id: 5302
+  time: '2023-12-10T14:11:26.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Adjusted welder blindness to be much less forgiving., type: Tweak}
+  id: 5303
+  time: '2023-12-10T23:10:07.0000000+00:00'
+- author: KittenColony
+  changes:
+  - {message: Added various gauze wraps to most species in the form of markings, type: Add}
+  id: 5304
+  time: '2023-12-10T23:16:38.0000000+00:00'
+- author: Simyon
+  changes:
+  - {message: Moths that are turned into zombies will now prefer cloth instead of
+      brains., type: Tweak}
+  id: 5305
+  time: '2023-12-11T03:17:55.0000000+00:00'
+- author: TheKilk
+  changes:
+  - {message: Added 7 new winter boots textures!, type: Add}
+  id: 5306
+  time: '2023-12-11T03:19:28.0000000+00:00'
+- author: Sirionaut
+  changes:
+  - {message: 'Animals now require a more reasonable amount of satiation before producing
+      eggs, milk, or wool (unless they are undead)', type: Fix}
+  id: 5307
+  time: '2023-12-11T03:20:41.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Pipes now leak their contents when destroyed. Make sure to drain pipes
+      before removing them., type: Tweak}
+  id: 5308
+  time: '2023-12-11T07:51:45.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Janitors can now buy their own bomb suit for cleaning chemical spills.,
+    type: Add}
+  id: 5309
+  time: '2023-12-11T08:41:54.0000000+00:00'
+- author: nok-ko
+  changes:
+  - {message: "Fixed taking damage mid-sentence not activating \u201Cglorfcode\u201D",
+    type: Fix}
+  id: 5310
+  time: '2023-12-11T08:53:10.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Added two eye scar markings for humans and dwarves., type: Add}
+  id: 5311
+  time: '2023-12-11T09:18:20.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Added black gloves to the clothesmate, type: Add}
+  id: 5312
+  time: '2023-12-11T09:23:51.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Emergency lights no longer make sound, type: Remove}
+  - {message: Emergency light radius and energy is now much lower, type: Tweak}
+  id: 5313
+  time: '2023-12-11T09:24:10.0000000+00:00'
+- author: Ubaser and Pigeonpeas
+  changes:
+  - {message: The kobold ear marking has received a new sprite., type: Tweak}
+  id: 5314
+  time: '2023-12-11T09:25:55.0000000+00:00'
+- author: Rainfey
+  changes:
+  - {message: Hardsuit helmets added to chameleon menu, type: Add}
+  id: 5315
+  time: '2023-12-11T09:27:36.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Added 4 new HUD themes: Plasmafire, Slimecore, Clockwork, and Retro.',
+    type: Add}
+  - {message: The default HUD theme is now Classic. The old default HUD theme still
+      exists under the name "Minimalist.", type: Tweak}
+  - {message: The modernized HUD theme has been renamed to "Eris.", type: Tweak}
+  id: 5316
+  time: '2023-12-11T09:28:17.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Arrivals is now stationed on a planet., type: Add}
+  id: 5317
+  time: '2023-12-11T09:34:19.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Added cosmetic sunglasses to the clothesmate., type: Add}
+  - {message: Musician and Bartender now have cosmetic sunglasses., type: Tweak}
+  id: 5318
+  time: '2023-12-11T09:35:51.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Syndicate duffel bags heavily protect their items from explosions,
+      and regular bags have minor protection.', type: Tweak}
+  id: 5319
+  time: '2023-12-11T09:43:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix game audio persisting to lobby., type: Fix}
+  id: 5320
+  time: '2023-12-11T10:26:56.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Beer goggles can now scan solutions., type: Add}
+  id: 5321
+  time: '2023-12-11T11:35:11.0000000+00:00'
+- author: MACMAN2003
+  changes:
+  - {message: Added yellow tinted jensen glasses that may show up in maints from time
+      to time, type: Add}
+  id: 5322
+  time: '2023-12-11T11:36:19.0000000+00:00'
+- author: ninruB
+  changes:
+  - {message: Familiar Garbs may now appear as maintenance loot., type: Add}
+  id: 5324
+  time: '2023-12-11T13:04:56.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Incapacitated mobs can no longer be shoved for a speed boost., type: Fix}
+  id: 5325
+  time: '2023-12-11T13:05:14.0000000+00:00'
+- author: willicassi
+  changes:
+  - {message: Added info to botany guidebook entry, type: Add}
+  id: 5326
+  time: '2023-12-11T17:42:22.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Removed the Handheld Electrical Propulsion technology and its associated
+      item, tasers, from research.', type: Remove}
+  id: 5327
+  time: '2023-12-11T22:33:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the artifact crusher to research! Crush things today!, type: Add}
+  id: 5328
+  time: '2023-12-11T23:15:47.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Stations no longer produce limitless plasma. Plasma refills can now
+      be ordered at cargo., type: Tweak}
+  id: 5329
+  time: '2023-12-11T23:21:25.0000000+00:00'
+- author: nok-ko
+  changes:
+  - {message: 'Pacified players can no longer throw dangerous objects such as spears,
+      bolas, and bottles.', type: Tweak}
+  id: 5330
+  time: '2023-12-11T23:40:23.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: 'Pumps, vents, scrubbers, and heaters now work faster.', type: Tweak}
+  id: 5331
+  time: '2023-12-11T23:59:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Removed Senior Researcher, Senior Engineer, Senior Physician, and Senior
+      Officer.', type: Remove}
+  id: 5332
+  time: '2023-12-12T02:37:06.0000000+00:00'
+- author: Avalon
+  changes:
+  - {message: CentCom has begun unceremoniously plucking Mothroaches out of Maintenance
+      and selling them to nearby Space Stations after the discovery that they make
+      decent pets., type: Add}
+  id: 5333
+  time: '2023-12-12T04:46:41.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Tritium and frezon can once again be sold for profit., type: Tweak}
+  id: 5334
+  time: '2023-12-12T07:48:34.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Mayo Jar is bigger (50u), type: Tweak}
+  id: 5335
+  time: '2023-12-12T07:48:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed the quick-remove star in the inventory sometimes not appearing.,
+    type: Fix}
+  - {message: You can drag items out of the inventory window to drop them on the ground.,
+    type: Add}
+  id: 5336
+  time: '2023-12-12T07:49:37.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: 'Pill canisters are slightly better than cig packs, go talk to the chemists.',
+    type: Tweak}
+  id: 5337
+  time: '2023-12-12T07:51:38.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Sec belt holds sidearms and sidearm ammo., type: Tweak}
+  id: 5338
+  time: '2023-12-12T07:52:26.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: The syndie holster now holds the guns you always wanted it to., type: Tweak}
+  id: 5339
+  time: '2023-12-12T07:53:00.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Jar now fills., type: Tweak}
+  id: 5340
+  time: '2023-12-12T07:54:15.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Cig Cartons are slightly smaller., type: Tweak}
+  id: 5341
+  time: '2023-12-12T07:55:56.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Cigar cases can now hold Small items., type: Tweak}
+  id: 5342
+  time: '2023-12-12T07:56:19.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Pipes now have slightly bigger bowls! (30u), type: Tweak}
+  id: 5343
+  time: '2023-12-12T07:56:44.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Long guns are now actually long., type: Tweak}
+  id: 5344
+  time: '2023-12-12T07:59:43.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: syndicate pens now come in suitably sized discarding boxes., type: Tweak}
+  id: 5345
+  time: '2023-12-12T08:01:33.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Mops are now larger!, type: Tweak}
+  - {message: Defibs are now larger!, type: Tweak}
+  id: 5346
+  time: '2023-12-12T08:02:44.0000000+00:00'
