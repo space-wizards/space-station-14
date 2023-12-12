@@ -1,112 +1,4 @@
 Entries:
-- author: Psychpsyo
-  changes:
-  - {message: Janitors can now take the shark plushie for a walk in their bucket.,
-    type: Add}
-  id: 4827
-  time: '2023-09-14T07:17:45.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed some missing localization., type: Fix}
-  id: 4828
-  time: '2023-09-14T10:08:03.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: Holobarrier projectors can now be researched and produced in the security
-      techfab., type: Tweak}
-  id: 4829
-  time: '2023-09-14T23:34:43.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: Training bombs are now unable to space tiles., type: Tweak}
-  id: 4830
-  time: '2023-09-14T23:51:47.0000000+00:00'
-- author: kseandi
-  changes:
-  - {message: HUD theme selection is now works!, type: Fix}
-  id: 4831
-  time: '2023-09-15T02:05:56.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: NPS no longer have an SSD indicator, type: Fix}
-  id: 4832
-  time: '2023-09-15T02:15:26.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: It is now easier to tell how damaged cyborgs are., type: Tweak}
-  id: 4833
-  time: '2023-09-15T03:14:47.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Swapping between guns now has a small delay before you can fire., type: Tweak}
-  id: 4834
-  time: '2023-09-15T04:15:43.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed succumb and last words actions not appearing, type: Fix}
-  id: 4835
-  time: '2023-09-15T20:52:49.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Entity velocity now resets when buckling., type: Tweak}
-  id: 4836
-  time: '2023-09-16T04:15:06.0000000+00:00'
-- author: Psychpsyo
-  changes:
-  - {message: 'The janitor''s advanced mop can now be wielded, just like the regular
-      mop.', type: Add}
-  id: 4837
-  time: '2023-09-16T04:33:01.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Some Syndicate objectives have been tweaked to have higher difficulties,
-      notably stealing the nuke disk.', type: Tweak}
-  id: 4838
-  time: '2023-09-16T06:18:11.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added beacons to station maps., type: Add}
-  id: 4839
-  time: '2023-09-16T08:11:48.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixed objectives not being given in some cases., type: Fix}
-  id: 4840
-  time: '2023-09-16T12:10:06.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Added several new types of barricades for mappers to use, all using
-      sprites from /vg/station. The regular, full-tile barricade has also received
-      a new sprite from /vg/station.', type: Add}
-  - {message: Barricades are now slightly stronger & cheaper to make., type: Tweak}
-  id: 4841
-  time: '2023-09-16T12:50:48.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Resized the non-admin Ahelp window to be taller and less wide., type: Tweak}
-  id: 4842
-  time: '2023-09-17T09:04:20.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed light animations not working., type: Fix}
-  id: 4843
-  time: '2023-09-17T17:57:50.0000000+00:00'
-- author: Henry12116
-  changes:
-  - {message: You can now eat most organs. Bon appetit!, type: Add}
-  id: 4844
-  time: '2023-09-18T00:20:11.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed fultons losing their beacon when the stack is split., type: Fix}
-  id: 4845
-  time: '2023-09-18T00:22:26.0000000+00:00'
-- author: Psychpsyo
-  changes:
-  - {message: The advanced mop no longer looks boring when attached to the janitorial
-      trolley., type: Tweak}
-  id: 4846
-  time: '2023-09-18T00:23:35.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'Now you can light matches with certain types (combat, work, merc, explorer)
@@ -2877,11 +2769,6 @@ Entries:
       to time, type: Add}
   id: 5322
   time: '2023-12-11T11:36:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Removed gas selling until properly fixed., type: Fix}
-  id: 5323
-  time: '2023-12-11T12:28:33.0000000+00:00'
 - author: ninruB
   changes:
   - {message: Familiar Garbs may now appear as maintenance loot., type: Add}
@@ -2897,3 +2784,119 @@ Entries:
   - {message: Added info to botany guidebook entry, type: Add}
   id: 5326
   time: '2023-12-11T17:42:22.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Removed the Handheld Electrical Propulsion technology and its associated
+      item, tasers, from research.', type: Remove}
+  id: 5327
+  time: '2023-12-11T22:33:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the artifact crusher to research! Crush things today!, type: Add}
+  id: 5328
+  time: '2023-12-11T23:15:47.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Stations no longer produce limitless plasma. Plasma refills can now
+      be ordered at cargo., type: Tweak}
+  id: 5329
+  time: '2023-12-11T23:21:25.0000000+00:00'
+- author: nok-ko
+  changes:
+  - {message: 'Pacified players can no longer throw dangerous objects such as spears,
+      bolas, and bottles.', type: Tweak}
+  id: 5330
+  time: '2023-12-11T23:40:23.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: 'Pumps, vents, scrubbers, and heaters now work faster.', type: Tweak}
+  id: 5331
+  time: '2023-12-11T23:59:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Removed Senior Researcher, Senior Engineer, Senior Physician, and Senior
+      Officer.', type: Remove}
+  id: 5332
+  time: '2023-12-12T02:37:06.0000000+00:00'
+- author: Avalon
+  changes:
+  - {message: CentCom has begun unceremoniously plucking Mothroaches out of Maintenance
+      and selling them to nearby Space Stations after the discovery that they make
+      decent pets., type: Add}
+  id: 5333
+  time: '2023-12-12T04:46:41.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Tritium and frezon can once again be sold for profit., type: Tweak}
+  id: 5334
+  time: '2023-12-12T07:48:34.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Mayo Jar is bigger (50u), type: Tweak}
+  id: 5335
+  time: '2023-12-12T07:48:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed the quick-remove star in the inventory sometimes not appearing.,
+    type: Fix}
+  - {message: You can drag items out of the inventory window to drop them on the ground.,
+    type: Add}
+  id: 5336
+  time: '2023-12-12T07:49:37.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: 'Pill canisters are slightly better than cig packs, go talk to the chemists.',
+    type: Tweak}
+  id: 5337
+  time: '2023-12-12T07:51:38.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Sec belt holds sidearms and sidearm ammo., type: Tweak}
+  id: 5338
+  time: '2023-12-12T07:52:26.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: The syndie holster now holds the guns you always wanted it to., type: Tweak}
+  id: 5339
+  time: '2023-12-12T07:53:00.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Jar now fills., type: Tweak}
+  id: 5340
+  time: '2023-12-12T07:54:15.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Cig Cartons are slightly smaller., type: Tweak}
+  id: 5341
+  time: '2023-12-12T07:55:56.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Cigar cases can now hold Small items., type: Tweak}
+  id: 5342
+  time: '2023-12-12T07:56:19.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Pipes now have slightly bigger bowls! (30u), type: Tweak}
+  id: 5343
+  time: '2023-12-12T07:56:44.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Long guns are now actually long., type: Tweak}
+  id: 5344
+  time: '2023-12-12T07:59:43.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: syndicate pens now come in suitably sized discarding boxes., type: Tweak}
+  id: 5345
+  time: '2023-12-12T08:01:33.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Mops are now larger!, type: Tweak}
+  - {message: Defibs are now larger!, type: Tweak}
+  id: 5346
+  time: '2023-12-12T08:02:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Fix arrivals fog not actually blocking, no more free roaming.', type: Fix}
+  id: 5347
+  time: '2023-12-12T09:20:33.0000000+00:00'
