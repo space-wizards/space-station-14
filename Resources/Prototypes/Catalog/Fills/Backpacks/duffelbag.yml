@@ -45,6 +45,7 @@
       - id: Retractor
       - id: ScalpelAdvanced
       - id: ClothingHandsGlovesNitrile
+      - id: EmergencyRollerBed
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
