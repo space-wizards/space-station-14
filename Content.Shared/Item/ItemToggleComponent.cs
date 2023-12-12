@@ -20,50 +20,50 @@ public sealed partial class ItemToggleComponent : Component
     /// <summary>
     ///     The noise this item makes when it is toggled on.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundActivate"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundActivate")]
     public SoundSpecifier? ActivateSound;
 
     /// <summary>
     ///     The noise this item makes when it is toggled off.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundDeactivate"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundDeactivate")]
     public SoundSpecifier? DeactivateSound;
 
     /// <summary>
     ///     The noise this item makes when it is toggled on.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundFailToActivate"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundFailToActivate")]
     public SoundSpecifier? FailToActivateSound;
 
     /// <summary>
     ///     The noise this item makes when hitting something with it on.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("activatedSoundOnHit"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("activatedSoundOnHit")]
     public SoundSpecifier? ActivatedSoundOnHit;
 
     /// <summary>
     ///     The noise this item makes when hitting something with it off.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("deactivatedSoundOnHit"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("deactivatedSoundOnHit")]
     public SoundSpecifier? DeactivatedSoundOnHit;
 
     /// <summary>
     ///     The continuous noise this item makes when it's activated (like an e-sword's hum). This loops.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("activeSound"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("activeSound")]
     public SoundSpecifier? ActiveSound;
 
     /// <summary>
     ///     The noise this item makes when swinging at nothing while activated.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("activatedSoundOnSwing"), AutoNetworkedField]
-    public SoundSpecifier ActivatedSoundOnSwing = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");
+    [ViewVariables(VVAccess.ReadWrite), DataField("activatedSoundOnSwing")]
+    public SoundSpecifier? ActivatedSoundOnSwing;
 
     /// <summary>
     ///     The noise this item makes when swinging at nothing while not activated.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("deactivatedSoundOnSwing"), AutoNetworkedField]
-    public SoundSpecifier DeactivatedSoundOnSwing = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");
+    [ViewVariables(VVAccess.ReadWrite), DataField("deactivatedSoundOnSwing")]
+    public SoundSpecifier? DeactivatedSoundOnSwing;
 
     /// <summary>
     ///     Damage done by this item when activated.
@@ -77,7 +77,7 @@ public sealed partial class ItemToggleComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("deactivatedDamage")]
-    public DamageSpecifier DeactivatedDamage = new();
+    public DamageSpecifier? DeactivatedDamage = null;
 
     /// <summary>
     ///     Item's size when activated
@@ -96,11 +96,15 @@ public sealed partial class ItemToggleComponent : Component
     /// <summary>
     ///     Does this become hidden when deactivated
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("deactivatedSecret")]
     public bool DeactivatedSecret = false;
 
+    /// <summary>
+    ///     Item becomes hot when active.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("isHotWhenActivated"), AutoNetworkedField]
+    [DataField("isHotWhenActivated")]
     public bool IsHotWhenActivated = false;
 
     /// <summary>
@@ -108,7 +112,7 @@ public sealed partial class ItemToggleComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("activatedDisarmMalus")]
-    public float ActivatedDisarmMalus = 0.6f;
+    public float? ActivatedDisarmMalus = null;
 
     /// <summary>
     ///     Item has this modifier to the chance to disarm when deactivated. If none is mentioned, it uses the item's default disarm modifier.
@@ -128,7 +132,7 @@ public sealed partial class ItemToggleComponent : Component
     ///     User entity used to store the information about the last user who has toggled the item. Used in other functions to affect the user in some way (like show messages).
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("user")]
+    [DataField("user"), AutoNetworkedField]
     public EntityUid User { get; set; }
 
     /// <summary>

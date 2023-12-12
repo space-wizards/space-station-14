@@ -15,8 +15,6 @@
       path: /Audio/Weapons/eblade1.ogg
       params:
         variation: 0.250
-    deactivatedSoundOnHit:
-      path: /Audio/Weapons/genhit1.ogg
     activatedSoundOnSwing:
       path: /Audio/Weapons/eblademiss.ogg
       params:
@@ -28,14 +26,8 @@
             Slash: 15
             Heat: 15
             Structural: 4
-    deactivatedDamage:
-        types:
-            Blunt: 4.5
     activatedSize: Huge
-    deactivatedSize: Small
     deactivatedSecret: false
-    activatedColor: DodgerBlue
-    randomActivatedColor: true
     isHotWhenActivated: true
     activatedSharp: true
     activatedDisarmMalus: 0.6
@@ -110,9 +102,6 @@
         types:
             Slash: 9
             Heat: 9
-    deactivatedDamage:
-        types:
-            Blunt: 1
     activatedDisarmMalus: 0.4
     deactivatedSize: Tiny
     deactivatedSecret: true
@@ -233,9 +222,6 @@
             Slash: 17
             Heat: 17
             Structural: 20
-    deactivatedDamage:
-        types:
-            Blunt: 5.5
     activatedDisarmMalus: 0.7
   - type: Wieldable
   - type: MeleeWeapon

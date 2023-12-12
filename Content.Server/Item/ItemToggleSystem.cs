@@ -19,9 +19,12 @@ public sealed class ItemToggleSystem : SharedItemToggleSystem
         if (comp.ActivatedSharp)
             EnsureComp<SharpComponent>(uid);
 
-        if (TryComp<DisarmMalusComponent>(uid, out var malus))
+        if (comp.ActivatedDisarmMalus != null)
         {
-            malus.Malus = comp.ActivatedDisarmMalus;
+            if (TryComp<DisarmMalusComponent>(uid, out var malus))
+            {
+                malus.Malus = (float) comp.ActivatedDisarmMalus;
+            }
         }
     }
 

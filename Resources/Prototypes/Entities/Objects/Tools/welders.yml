@@ -16,6 +16,26 @@
       map: ["enum.WelderLayers.Flame"]
       shader: unshaded
       visible: false
+  - type: ItemToggle
+    activated: false
+    soundActivate:
+      collection: WelderOn
+      variation: 0.125f
+      volume: -5f
+    soundDeactivate:
+      collection: WelderOff
+      variation: 0.125f
+      volume: -5f
+    activatedSoundOnHit:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+    activatedDamage:
+        types:
+            Heat: 8
+    activatedSize: Large
+    isHotWhenActivated: true
+    activatedDisarmMalus: 0.6
   - type: Item
     size: Small
     sprite: Objects/Tools/welder.rsi
@@ -48,10 +68,6 @@
       collection: Welder
     qualities: Welding
   - type: Welder
-    litMeleeDamageBonus:
-      types:
-        Heat: 8
-        Blunt: -5
   - type: PointLight
     enabled: false
     radius: 1.5

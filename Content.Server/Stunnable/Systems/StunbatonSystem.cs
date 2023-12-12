@@ -50,6 +50,7 @@ namespace Content.Server.Stunnable.Systems
                 {
                     var ev = new ItemToggleForceToggleEvent();
                     RaiseLocalEvent(uid, ref ev);
+                    return;
                 }
             }
         }

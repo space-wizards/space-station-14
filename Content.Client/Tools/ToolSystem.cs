@@ -1,7 +1,6 @@
 using Content.Client.Items;
 using Content.Client.Tools.Components;
 using Content.Client.Tools.UI;
-using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;

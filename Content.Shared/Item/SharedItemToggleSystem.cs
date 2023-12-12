@@ -4,9 +4,11 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Temperature;
 using Content.Shared.Wieldable;
 using Content.Shared.Wieldable.Components;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
+using Content.Shared.Tools.Components;
 
 namespace Content.Shared.Item;
 /// <summary>
@@ -20,6 +22,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private readonly SharedPointLightSystem _light = default!;
 
     public override void Initialize()
     {
@@ -122,6 +125,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         return true;
     }
 
+    //Makes the actual changes to the item.
     private void Activate(EntityUid uid, ItemToggleComponent component)
     {
         component.Activated = true;
@@ -129,6 +133,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         UpdateItemComponent(uid, component);
         UpdateWeaponComponent(uid, component);
         UpdateAppearance(uid, component);
+        UpdateLight(uid, component);
 
         var ev = new ItemToggleActivatedServerChangesEvent();
         RaiseLocalEvent(uid, ref ev);
@@ -143,6 +148,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         UpdateItemComponent(uid, component);
         UpdateWeaponComponent(uid, component);
         UpdateAppearance(uid, component);
+        UpdateLight(uid, component);
 
         var ev = new ItemToggleDeactivatedServerChangesEvent();
         RaiseLocalEvent(uid, ref ev);
@@ -174,6 +180,21 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
         _appearance.SetData(uid, ToggleableLightVisuals.Enabled, component.Activated, appearanceComponent);
         _appearance.SetData(uid, ToggleVisuals.Toggled, component.Activated, appearanceComponent);
+        _appearance.SetData(uid, WelderVisuals.Lit, component.Activated, appearanceComponent);
+    }
+
+    /// <summary>
+    /// Used to update light settings.
+    /// </summary>
+    private void UpdateLight(EntityUid uid, ItemToggleComponent component)
+    {
+        SharedPointLightComponent? lightComponent = null;
+        _light.ResolveLight(uid, ref lightComponent);
+
+        if (lightComponent != null)
+        {
+            _light.SetEnabled(uid, component.Activated, lightComponent);
+        }
     }
 
     /// <summary>
@@ -184,20 +205,27 @@ public abstract class SharedItemToggleSystem : EntitySystem
         if (!TryComp(uid, out MeleeWeaponComponent? weaponComp))
             return;
 
+        //Sets the value for deactivated damage to the item's default if none is stated.
+        component.DeactivatedDamage ??= weaponComp.Damage;
+
         if (component.Activated)
         {
-            weaponComp.HitSound = component.ActivatedSoundOnHit;
-            weaponComp.SwingSound = component.ActivatedSoundOnSwing;
             weaponComp.Damage = component.ActivatedDamage;
+            weaponComp.HitSound = component.ActivatedSoundOnHit;
+
+            if (component.ActivatedSoundOnSwing != null)
+                weaponComp.SwingSound = component.ActivatedSoundOnSwing;
 
             if (component.DeactivatedSecret)
                 weaponComp.Hidden = false;
         }
         else
         {
-            weaponComp.HitSound = component.DeactivatedSoundOnHit;
-            weaponComp.SwingSound = component.DeactivatedSoundOnSwing;
             weaponComp.Damage = component.DeactivatedDamage;
+            weaponComp.HitSound = component.DeactivatedSoundOnHit;
+
+            if (component.DeactivatedSoundOnSwing != null)
+                weaponComp.SwingSound = component.DeactivatedSoundOnSwing;
 
             if (component.DeactivatedSecret)
                 weaponComp.Hidden = true;
@@ -214,8 +242,8 @@ public abstract class SharedItemToggleSystem : EntitySystem
         if (!TryComp(uid, out ItemComponent? item))
             return;
 
-        if (component.DeactivatedSize == null)
-            component.DeactivatedSize = item.Size;
+        //Sets the deactivated size to the default if none is stated.
+        component.DeactivatedSize ??= item.Size;
 
         if (component.Activated)
             _item.SetSize(uid, component.ActivatedSize, item);
