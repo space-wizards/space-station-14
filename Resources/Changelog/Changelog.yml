@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed light animations not working., type: Fix}
-  id: 4843
-  time: '2023-09-17T17:57:50.0000000+00:00'
 - author: Henry12116
   changes:
   - {message: You can now eat most organs. Bon appetit!, type: Add}
@@ -2900,3 +2895,8 @@ Entries:
   - {message: Pipes now have slightly bigger bowls! (30u), type: Tweak}
   id: 5343
   time: '2023-12-12T07:56:44.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Long guns are now actually long., type: Tweak}
+  id: 5344
+  time: '2023-12-12T07:59:43.0000000+00:00'
