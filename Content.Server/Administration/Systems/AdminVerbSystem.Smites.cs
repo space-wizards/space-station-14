@@ -794,9 +794,9 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(superSpeed);
         //Bonk
-        Verb slam = new()
+        Verb superBonk = new()
         {
-            Text = "Super Slam",
+            Text = "Super Bonk",
             Category = VerbCategory.Smite,
             Icon = new SpriteSpecifier.Rsi(new("Structures/Furniture/Tables/generic.rsi"), "full"),
             Act = () =>
@@ -823,6 +823,6 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-smite-super-slam-description"),
             Impact = LogImpact.Extreme,
         };
-        args.Verbs.Add(slam);
+        args.Verbs.Add(superBonk);
     }
 }
