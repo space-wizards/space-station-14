@@ -164,7 +164,7 @@ public abstract partial class InteractionTest
 
         // spawn and pick up the new item
         var item = await SpawnEntity(entity, SEntMan.GetCoordinates(PlayerCoords));
-        WelderComponent? welder = null;
+        ItemToggleComponent ? welder = null;
 
         await Server.WaitPost(() =>
         {
@@ -173,14 +173,14 @@ public abstract partial class InteractionTest
             Assert.That(HandSys.TryPickup(playerEnt, item, Hands.ActiveHand, false, false, Hands));
 
             // turn on welders
-            if (enableWelder && SEntMan.TryGetComponent(item, out welder) && !welder.Lit)
-                Assert.That(ToolSys.TryTurnWelderOn(item, playerEnt, welder));
+            if (enableWelder && SEntMan.TryGetComponent(item, out welder) && !welder.Activated)
+                Assert.That(ItemToggleSys.TryActivate(item, playerEnt));
         });
 
         await RunTicks(1);
         Assert.That(Hands.ActiveHandEntity, Is.EqualTo(item));
         if (enableWelder && welder != null)
-            Assert.That(welder.Lit);
+            Assert.That(welder.Activated);
 
         return item;
     }
