@@ -1,0 +1,69 @@
+# Needed for Syndie Lobbying Bundle | BriefcaseSyndieLobbyingBundleFilled
+- type: entity
+  parent: BaseItem
+  id: SpaceCashFake
+  name: spesos
+  description: You gotta have money.
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      FakeCredit: 1
+  - type: StaticPrice
+    price: 0
+  - type: Stack
+    stackType: FakeCredit
+    count: 1
+    baseLayer: base
+    layerStates:
+    - cash
+    - cash_10
+    - cash_100
+    - cash_500
+    - cash_1000
+    - cash_1000000
+  - type: Sprite
+    sprite: Objects/Economy/cash.rsi
+    state: cash
+    layers:
+    - state: cash
+      map: ["base"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        density: 30
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.2,0.25,0.1"
+        mask:
+        - ItemMask
+  - type: Appearance
+
+# stacktype for SpaceCashFake
+- type: stack
+  id: FakeCredit
+  name: speso
+  icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }
+  spawn: SpaceCashFake
+
+# material for SpaceCashFake and fackeCash price
+- type: material
+  id: FakeCredit
+  name: speso
+  unit: materials-unit-bill
+  stackEntity: SpaceCash
+  icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }
+  price: 0.2
+
+# for shitspawn
+- type: entity
+  parent: SpaceCashFake
+  id: SpaceCashFake50000
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_1000
+  - type: Stack
+    count: 50000

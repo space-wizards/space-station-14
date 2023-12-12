@@ -144,6 +144,10 @@ ent-ClothingUniformJumpsuitLawyerBlue = синий адвокатский кос
     .desc = Яркий синий костюм, который носят адвокаты и хвастуны.
 ent-ClothingUniformJumpsuitLawyerBlack = чёрный адвокатский костюм
     .desc = Изысканный черный костюм, который носят адвокаты и гангстеры.
+# SS220-lobbying-bundle-fake-money begin
+ent-ClothingUniformJumpsuitLawyerBlackSyndieLobbyingBundle = чёрный деловой костюм
+    .desc = Красивая обертка и нужные слова – основа сделки.
+# SS220-lobbying-bundle-fake-money end
 ent-ClothingUniformJumpsuitLawyerPurple = фиолетовый адвокатский костюм
     .desc = Стильный фиолетовый костюм, который носят адвокаты и шоумены.
 ent-ClothingUniformJumpsuitLawyerGood = хороший адвокатский костюм

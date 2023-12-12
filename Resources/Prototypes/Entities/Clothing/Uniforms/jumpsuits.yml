@@ -825,6 +825,12 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/lawyerblack.rsi
 
+# SS220-lobbying-bundle-fake-money begin
+- type: entity
+  parent: ClothingUniformJumpsuitLawyerBlack
+  id: ClothingUniformJumpsuitLawyerBlackSyndieLobbyingBundle
+# SS220-lobbying-bundle-fake-money end
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerPurple
