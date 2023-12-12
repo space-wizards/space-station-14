@@ -5,13 +5,13 @@
   description:
   components:
   - type: Sprite
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     layers:
     - state: redjoker
     - state: back
       map: ["base"]
   - type: Item
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     size: 1
   - type: Appearance
   - type: FoldableCard
@@ -33,13 +33,13 @@
   description:
   components:
   - type: Sprite
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     layers:
     - state: blackjoker
     - state: back
       map: ["base"]
   - type: Item
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     size: 1
   - type: Appearance
   - type: FoldableCard
@@ -61,13 +61,13 @@
   description:
   components:
   - type: Sprite
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     layers:
     - state: redking
     - state: back
       map: ["base"]
   - type: Item
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     size: 1
   - type: Appearance
   - type: FoldableCard
@@ -89,13 +89,13 @@
   description:
   components:
   - type: Sprite
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     layers:
     - state: blackking
     - state: back
       map: ["base"]
   - type: Item
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     size: 1
   - type: Appearance
   - type: FoldableCard
@@ -117,13 +117,13 @@
   description:
   components:
   - type: Sprite
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     layers:
     - state: redqueen
     - state: back
       map: ["base"]
   - type: Item
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     size: 1
   - type: Appearance
   - type: FoldableCard
@@ -145,13 +145,13 @@
   description:
   components:
   - type: Sprite
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     layers:
     - state: blackqueen
     - state: back
       map: ["base"]
   - type: Item
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     size: 1
   - type: Appearance
   - type: FoldableCard
@@ -173,13 +173,13 @@
   description:
   components:
   - type: Sprite
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     layers:
     - state: redjack
     - state: back
       map: ["base"]
   - type: Item
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     size: 1
   - type: Appearance
   - type: FoldableCard
@@ -201,13 +201,13 @@
   description:
   components:
   - type: Sprite
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     layers:
     - state: blackjack
     - state: back
       map: ["base"]
   - type: Item
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     size: 1
   - type: Appearance
   - type: FoldableCard
@@ -229,13 +229,13 @@
   description:
   components:
   - type: Sprite
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     layers:
     - state: redten
     - state: back
       map: ["base"]
   - type: Item
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     size: 1
   - type: Appearance
   - type: FoldableCard
@@ -257,13 +257,13 @@
   description:
   components:
   - type: Sprite
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     layers:
     - state: blackten
     - state: back
       map: ["base"]
   - type: Item
-    sprite: Fun/playablecard.rsi
+    sprite: Imperial/Playablecards/playablecard.rsi
     size: 1
   - type: Appearance
   - type: FoldableCard
@@ -286,13 +286,13 @@
   suffix: Empty
   components:
   - type: Sprite
-    sprite: Fun/cardbin.rsi
+    sprite: Imperial/Playablecards/cardbin.rsi
     state: paper_bin
     drawdepth: SmallObjects
     noRot: true
   - type: Appearance
   - type: ItemMapper
-    sprite: Fun/cardbin.rsi
+    sprite: Imperial/Playablecards/cardbin.rsi
     mapLayers:
       paper_bin1:
         whitelist:
