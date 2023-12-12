@@ -1,22 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Fixed objectives not being given in some cases., type: Fix}
-  id: 4840
-  time: '2023-09-16T12:10:06.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Added several new types of barricades for mappers to use, all using
-      sprites from /vg/station. The regular, full-tile barricade has also received
-      a new sprite from /vg/station.', type: Add}
-  - {message: Barricades are now slightly stronger & cheaper to make., type: Tweak}
-  id: 4841
-  time: '2023-09-16T12:50:48.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Resized the non-admin Ahelp window to be taller and less wide., type: Tweak}
-  id: 4842
-  time: '2023-09-17T09:04:20.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed light animations not working., type: Fix}
@@ -2903,3 +2885,18 @@ Entries:
   - {message: Jar now fills., type: Tweak}
   id: 5340
   time: '2023-12-12T07:54:15.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Cig Cartons are slightly smaller., type: Tweak}
+  id: 5341
+  time: '2023-12-12T07:55:56.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Cigar cases can now hold Small items., type: Tweak}
+  id: 5342
+  time: '2023-12-12T07:56:19.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Pipes now have slightly bigger bowls! (30u), type: Tweak}
+  id: 5343
+  time: '2023-12-12T07:56:44.0000000+00:00'
