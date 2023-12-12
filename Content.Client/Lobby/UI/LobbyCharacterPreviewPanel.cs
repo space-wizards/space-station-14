@@ -207,25 +207,28 @@ namespace Content.Client.Lobby.UI
                 // Automatically search empty slot for clothes to equip
                 string? firstSlotName = null;
                 var isEquipped = false;
-                foreach (var slot in invSystem.GetSlots(dummy))
-                {
-                    if (!clothing.Slots.HasFlag(slot.SlotFlags))
-                        continue;
+				if (invSystem.TryGetContainerSlotEnumerator(dummy, out var enumerator))
+				{
+					while (enumerator.NextItem(out var item, out var slot))
+					{
+						if (!clothing.Slots.HasFlag(slot.SlotFlags))
+							continue;
 
-                    firstSlotName ??= slot.Name;
+						firstSlotName ??= slot.Name;
 
-                    if (invSystem.TryGetSlotEntity(dummy, slot.Name, out var _))
-                        continue;
+						if (invSystem.TryGetSlotEntity(dummy, slot.Name, out var _))
+							continue;
 
-                    if (loadout.Exclusive && invSystem.TryUnequip(dummy, firstSlotName, out var removedItem, true, true))
-                        entMan.DeleteEntity(removedItem.Value);
+						if (loadout.Exclusive && invSystem.TryUnequip(dummy, firstSlotName, out var removedItem, true, true))
+							entMan.DeleteEntity(removedItem.Value);
 
-                    if (!invSystem.TryEquip(dummy, entity, slot.Name, true, true))
-                        continue;
+						if (!invSystem.TryEquip(dummy, entity, slot.Name, true, true))
+							continue;
 
-                    isEquipped = true;
-                    break;
-                }
+						isEquipped = true;
+						break;
+					}
+				}
 
                 if (isEquipped || firstSlotName == null)
                     continue;
