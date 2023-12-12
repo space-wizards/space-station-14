@@ -21,7 +21,7 @@ public sealed class RestrictedRangeSystem : SharedRestrictedRangeSystem
 
     private void OnRestrictedMapInit(EntityUid uid, RestrictedRangeComponent component, MapInitEvent args)
     {
-        CreateBoundary(new EntityCoordinates(uid, component.Origin), component.Range);
+        component.BoundaryEntity = CreateBoundary(new EntityCoordinates(uid, component.Origin), component.Range);
     }
 
     public EntityUid CreateBoundary(EntityCoordinates coordinates, float range)
@@ -30,7 +30,7 @@ public sealed class RestrictedRangeSystem : SharedRestrictedRangeSystem
         var boundaryPhysics = AddComp<PhysicsComponent>(boundaryUid);
         var cShape = new ChainShape();
         // Don't need it to be a perfect circle, just need it to be loosely accurate.
-        cShape.CreateLoop(Vector2.Zero, range + 1f, false, count: 4);
+        cShape.CreateLoop(Vector2.Zero, range + 0.25f, false, count: 4);
         _fixtures.TryCreateFixture(
             boundaryUid,
             cShape,
