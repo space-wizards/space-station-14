@@ -19,7 +19,7 @@
     requiredSlot: outerClothing
     slot: head
   - type: TemperatureProtection
-    coefficient: 0.01
+    coefficient: 0.0001
   # - type: QualityOfItem
   #   qualityWeights:
   #     0: 0
@@ -99,7 +99,7 @@
     slot: head
   - type: Insulated
   - type: TemperatureProtection
-    coefficient: 0.001
+    coefficient: 0.00001
 
 - type: entity 
   parent: ClothingOuterChestplateModsuitSealedBase
@@ -164,7 +164,7 @@
     requiredSlot: outerClothing
     slot: head
   - type: TemperatureProtection
-    coefficient: 0.000001
+    coefficient: 0.0000001
 
 - type: entity 
   parent: ClothingOuterChestplateModsuitSealedBase
@@ -180,7 +180,7 @@
     highPressureMultiplier: 0.4
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.1
+    coefficient: 0.0001
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: Armor
@@ -594,7 +594,7 @@
     highPressureMultiplier: 0.4
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.000005
+    coefficient: 0.000000000005
   - type: ExplosionResistance
     damageCoefficient: 0.01
   - type: Armor
