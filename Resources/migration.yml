@@ -88,6 +88,12 @@ GeneratorUranium: PortableGeneratorSuperPacman
 GeneratorPlasmaMachineCircuitboard: PortableGeneratorPacmanMachineCircuitboard
 GeneratorUraniumMachineCircuitboard: PortableGeneratorSuperPacmanMachineCircuitboard
 
+# 2023-12-10
+SpawnPointSeniorResearcher: null
+SpawnPointSeniorOfficer: null
+SpawnPointSeniorEngineer: null
+SpawnPointSeniorPhysician: null
+
 # 2023-12-12
 #No this is not the CMO hardsuit, their prototype IDs were just confusingly similar
 ClothingOuterHardsuitMedic: ClothingOuterHardsuitSyndieMedic

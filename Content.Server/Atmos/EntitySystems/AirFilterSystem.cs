@@ -56,7 +56,7 @@ public sealed class AirFilterSystem : EntitySystem
         if (!GetAir(uid, out var air))
             return;
 
-        var ratio = MathF.Min(1f, args.dt * filter.TransferRate);
+        var ratio = MathF.Min(1f, args.dt * filter.TransferRate * _atmosphere.PumpSpeedup());
         var removed = air.RemoveRatio(ratio);
         // nothing left to remove from the volume
         if (MathHelper.CloseToPercent(removed.TotalMoles, 0f))

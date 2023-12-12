@@ -152,6 +152,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
     /// </summary>
     private void OnToggleableUnequip(EntityUid uid, ToggleableClothingComponent component, GotUnequippedEvent args)
     {
+        // If it's a part of PVS departure then don't handle it.
+        if (_timing.ApplyingState)
+            return;
+
         // If the attached clothing is not currently in the container, this just assumes that it is currently equipped.
         // This should maybe double check that the entity currently in the slot is actually the attached clothing, but
         // if its not, then something else has gone wrong already...

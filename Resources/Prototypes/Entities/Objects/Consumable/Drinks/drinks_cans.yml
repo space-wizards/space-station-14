@@ -404,7 +404,7 @@
     size: Normal
   - type: Storage
     grid:
-    - 0,0,5,1
+    - 0,0,2,3
     whitelist:
       tags:
         - Cola
