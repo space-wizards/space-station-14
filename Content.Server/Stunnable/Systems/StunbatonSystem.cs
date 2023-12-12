@@ -8,8 +8,6 @@ using Content.Shared.Examine;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Stunnable.Systems
 {
@@ -19,10 +17,6 @@ namespace Content.Server.Stunnable.Systems
         [Dependency] private readonly RiggableSystem _riggableSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly BatterySystem _battery = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-
-
-        public const float PitchVariation = 0.25f;
 
         public override void Initialize()
         {
@@ -37,71 +31,70 @@ namespace Content.Server.Stunnable.Systems
 
         private void OnStaminaHitAttempt(EntityUid uid, StunbatonComponent component, ref StaminaDamageOnHitAttemptEvent args)
         {
-            if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
-            {
-                if (!itemToggleComp.Activated ||
-                !TryComp<BatteryComponent>(uid, out var battery) || !_battery.TryUseCharge(uid, component.EnergyPerUse, battery))
-                {
-                    args.Cancelled = true;
-                    return;
-                }
+            if (!TryComp<ItemToggleComponent>(uid, out var itemToggle))
+                return;
 
-                if (battery.CurrentCharge < component.EnergyPerUse)
-                {
-                    var ev = new ItemToggleForceToggleEvent();
-                    RaiseLocalEvent(uid, ref ev);
-                    return;
-                }
+            if (!itemToggle.Activated ||
+            !TryComp<BatteryComponent>(uid, out var battery) || !_battery.TryUseCharge(uid, component.EnergyPerUse, battery))
+            {
+                args.Cancelled = true;
+                return;
+            }
+
+            if (battery.CurrentCharge < component.EnergyPerUse)
+            {
+                var ev = new ItemToggleForceToggleEvent();
+                RaiseLocalEvent(uid, ref ev);
+                return;
             }
         }
 
         private void OnExamined(EntityUid uid, StunbatonComponent comp, ExaminedEvent args)
         {
-            if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
-            {
-                var msg = itemToggleComp.Activated
+            if (!TryComp<ItemToggleComponent>(uid, out var itemToggle))
+                return;
+
+            var msg = itemToggle.Activated
                 ? Loc.GetString("comp-stunbaton-examined-on")
                 : Loc.GetString("comp-stunbaton-examined-off");
-                args.PushMarkup(msg);
-                if (TryComp<BatteryComponent>(uid, out var battery))
-                {
-                    args.PushMarkup(Loc.GetString("stunbaton-component-on-examine-charge",
-                        ("charge", (int) (battery.CurrentCharge / battery.MaxCharge * 100))));
-                }
+            args.PushMarkup(msg);
+            if (TryComp<BatteryComponent>(uid, out var battery))
+            {
+                args.PushMarkup(Loc.GetString("stunbaton-component-on-examine-charge",
+                    ("charge", (int) (battery.CurrentCharge / battery.MaxCharge * 100))));
             }
         }
 
         private void TurnOff(EntityUid uid, StunbatonComponent comp, ref ItemToggleDeactivatedEvent args)
         {
-            if (TryComp<ItemComponent>(uid, out var item))
-            {
-                _item.SetHeldPrefix(uid, "off", item);
-            }
+            if (!TryComp<ItemComponent>(uid, out var item))
+                return;
+            _item.SetHeldPrefix(uid, "off", item);
         }
 
         private void TryTurnOn(EntityUid uid, StunbatonComponent comp, ref ItemToggleActivateAttemptEvent args)
         {
-            if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
+            if (!TryComp<ItemToggleComponent>(uid, out var itemToggle))
+                return;
+
+            if (!TryComp<BatteryComponent>(uid, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
-                if (!TryComp<BatteryComponent>(uid, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
+                args.Cancelled = true;
+                if (itemToggle.User != null)
                 {
-                    args.Cancelled = true;
-                    if (itemToggleComp.User != null)
-                    {
-                        _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), (EntityUid) itemToggleComp.User, (EntityUid) itemToggleComp.User);
-                    }
-                    return;
+                    _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), (EntityUid) itemToggle.User, (EntityUid) itemToggle.User);
                 }
+                return;
+            }
 
-                if (TryComp<RiggableComponent>(uid, out var rig) && rig.IsRigged)
-                {
-                    _riggableSystem.Explode(uid, battery, itemToggleComp.User);
-                }
+            if (TryComp<RiggableComponent>(uid, out var rig) && rig.IsRigged)
+            {
+                _riggableSystem.Explode(uid, battery, itemToggle.User);
+            }
 
-                if (EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
-                {
-                    _item.SetHeldPrefix(uid, "on", item);
-                }
+            if (EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
+            {
+                _item.SetHeldPrefix(uid, "on", item);
             }
         }
 
@@ -109,14 +102,13 @@ namespace Content.Server.Stunnable.Systems
         private void OnSolutionChange(EntityUid uid, StunbatonComponent component, SolutionChangedEvent args)
         {
             // Explode if baton is activated and rigged.
-            if (!TryComp<RiggableComponent>(uid, out var riggable) || !TryComp<BatteryComponent>(uid, out var battery))
+            if (!TryComp<RiggableComponent>(uid, out var riggable) ||
+                !TryComp<BatteryComponent>(uid, out var battery) ||
+                !TryComp<ItemToggleComponent>(uid, out var itemToggle))
                 return;
 
-            if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
-            {
-                if (itemToggleComp.Activated && riggable.IsRigged)
-                    _riggableSystem.Explode(uid, battery);
-            }
+            if (itemToggle.Activated && riggable.IsRigged)
+                _riggableSystem.Explode(uid, battery);
         }
 
         private void SendPowerPulse(EntityUid target, EntityUid? user, EntityUid used)
