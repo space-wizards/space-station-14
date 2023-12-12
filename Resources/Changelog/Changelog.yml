@@ -1,9 +1,4 @@
 Entries:
-- author: Doru991
-  changes:
-  - {message: It is now easier to tell how damaged cyborgs are., type: Tweak}
-  id: 4833
-  time: '2023-09-15T03:14:47.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Swapping between guns now has a small delay before you can fire., type: Tweak}
@@ -2899,3 +2894,10 @@ Entries:
       Officer.', type: Remove}
   id: 5332
   time: '2023-12-12T02:37:06.0000000+00:00'
+- author: Avalon
+  changes:
+  - {message: CentCom has begun unceremoniously plucking Mothroaches out of Maintenance
+      and selling them to nearby Space Stations after the discovery that they make
+      decent pets., type: Add}
+  id: 5333
+  time: '2023-12-12T04:46:41.0000000+00:00'
