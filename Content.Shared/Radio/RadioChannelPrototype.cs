@@ -35,4 +35,12 @@ public sealed partial class RadioChannelPrototype : IPrototype
     /// </summary>
     [DataField("longRange"), ViewVariables]
     public bool LongRange = false;
+
+    //SS220-synd_key_stealth begin
+    /// <summary>
+    ///     Determines the visibility of the key during inspection
+    /// </summary>
+    [DataField("stealthChannel")]
+    public bool? StealthChannel = false;
+    //SS220-synd_key_stealth end
 }

@@ -69,6 +69,7 @@
   frequency: 1213
   color: "#8f4a4b"
   longRange: true
+  stealthChannel: true #SS220-synd_key_stealth
 
 - type: radioChannel
   id: Handheld
