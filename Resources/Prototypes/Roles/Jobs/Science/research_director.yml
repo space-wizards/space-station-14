@@ -20,6 +20,7 @@
   - Command
   - Maintenance
   - ResearchDirector
+  - Brig
   special:
   - !type:AddComponentSpecial
     components:

@@ -54,7 +54,7 @@ namespace Content.Client.Eye.Blinding
             // Maybe gradually shrink the view-size?
             // Make the effect only apply to the edge of the viewport?
             // Actually make it blurry??
-            var opacity =  0.75f * _magnitude / BlurryVisionComponent.MaxMagnitude;
+            var opacity =  1f * _magnitude / BlurryVisionComponent.MaxMagnitude;
             var worldHandle = args.WorldHandle;
             var viewport = args.WorldBounds;
             worldHandle.SetTransform(Matrix3.Identity);

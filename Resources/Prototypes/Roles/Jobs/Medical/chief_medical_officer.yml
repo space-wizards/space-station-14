@@ -24,6 +24,7 @@
   - Maintenance
   - Chemistry
   - ChiefMedicalOfficer
+  - Brig
   special:
   - !type:AddComponentSpecial
     components:

@@ -286,6 +286,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: HeldSpeedModifier
   - type: ExplosionResistance
     damageCoefficient: 0.65
   - type: GroupExamine
@@ -313,6 +314,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.65
+  - type: HeldSpeedModifier
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: GroupExamine
@@ -337,6 +339,7 @@
         Piercing: 0.4
   - type: ClothingSpeedModifier
     walkModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ExplosionResistance
     damageCoefficient: 0.4
   - type: GroupExamine

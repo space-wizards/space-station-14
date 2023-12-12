@@ -24,6 +24,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.80
     sprintModifier: 0.80
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBasic
   - type: StaminaProtection
@@ -59,6 +60,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmos
   - type: StaminaProtection
@@ -94,6 +96,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
   - type: StaminaProtection
@@ -124,6 +127,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpatio
   - type: StaminaProtection
@@ -156,6 +160,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
   - type: StaminaProtection
@@ -187,6 +192,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
   - type: StaminaProtection
@@ -215,6 +221,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.65
     sprintModifier: 0.65
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
   - type: StaminaProtection
@@ -246,6 +253,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden
   - type: StaminaProtection
@@ -279,6 +287,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCap
   - type: StaminaProtection
@@ -312,6 +321,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
   - type: StaminaProtection
@@ -338,6 +348,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.95
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedical
   - type: StaminaProtection
@@ -371,6 +382,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
+  - type: HeldSpeedModifier
   - type: Item
     size: Normal
   - type: Tag
@@ -411,6 +423,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
   - type: StaminaProtection
@@ -443,6 +456,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.9
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLuxury
   - type: StaminaProtection
@@ -479,6 +493,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
   - type: StaminaProtection
@@ -528,6 +543,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
   - type: StaminaProtection
@@ -561,6 +577,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
   - type: StaminaProtection
@@ -594,6 +611,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.65
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
   - type: StaminaProtection
@@ -627,6 +645,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
   - type: StaminaProtection
@@ -658,6 +677,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLing
   - type: StaminaProtection
@@ -689,6 +709,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.6
     sprintModifier: 0.6
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA
   - type: StaminaProtection
@@ -723,6 +744,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
   - type: StaminaProtection
@@ -831,6 +853,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
   - type: StaminaProtection
@@ -868,6 +891,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN
   - type: StaminaProtection
@@ -879,7 +903,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitClown
   name: clown hardsuit
-  description: A custom made clown hardsuit.
+  description: A custom-made clown hardsuit.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/clown.rsi
@@ -900,6 +924,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
+  - type: HeldSpeedModifier
   - type: Construction
     graph: ClownHardsuit
     node: clownHardsuit

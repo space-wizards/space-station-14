@@ -300,6 +300,13 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: classiccia
 - type: marking
+  id: HumanHairClassicCornrows2
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: classiccornrows2      
+- type: marking
   id: HumanHairClassicFloorlengthBedhead
   bodyPart: Hair
   markingCategory: Hair

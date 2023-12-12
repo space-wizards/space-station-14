@@ -185,7 +185,8 @@ namespace Content.Server.Database
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId,
-            ConnectionDenyReason? denied);
+            ConnectionDenyReason? denied,
+            int serverId);
 
         Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans);
 
@@ -295,6 +296,10 @@ namespace Content.Server.Database
             "db_write_ops",
             "Amount of write operations processed by the database manager.");
 
+        public static readonly Gauge DbActiveOps = Metrics.CreateGauge(
+            "db_executing_ops",
+            "Amount of active database operations. Note that some operations may be waiting for a database connection.");
+
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logMgr = default!;
@@ -319,15 +324,16 @@ namespace Content.Server.Database
             _synchronous = _cfg.GetCVar(CCVars.DatabaseSynchronous);
 
             var engine = _cfg.GetCVar(CCVars.DatabaseEngine).ToLower();
+            var opsLog = _logMgr.GetSawmill("db.op");
             switch (engine)
             {
                 case "sqlite":
                     SetupSqlite(out var contextFunc, out var inMemory);
-                    _db = new ServerDbSqlite(contextFunc, inMemory, _cfg, _synchronous);
+                    _db = new ServerDbSqlite(contextFunc, inMemory, _cfg, _synchronous, opsLog);
                     break;
                 case "postgres":
                     var pgOptions = CreatePostgresOptions();
-                    _db = new ServerDbPostgres(pgOptions, _cfg);
+                    _db = new ServerDbPostgres(pgOptions, _cfg, opsLog);
                     break;
                 default:
                     throw new InvalidDataException($"Unknown database engine {engine}.");
@@ -521,10 +527,11 @@ namespace Content.Server.Database
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId,
-            ConnectionDenyReason? denied)
+            ConnectionDenyReason? denied,
+            int serverId)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.AddConnectionLogAsync(userId, userName, address, hwId, denied));
+            return RunDbCommand(() => _db.AddConnectionLogAsync(userId, userName, address, hwId, denied, serverId));
         }
 
         public Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans)
@@ -873,20 +880,27 @@ namespace Content.Server.Database
         // as that would make things very random and undeterministic.
         // That only works on SQLite though, since SQLite is internally synchronous anyways.
 
-        private Task<T> RunDbCommand<T>(Func<Task<T>> command)
+        private async Task<T> RunDbCommand<T>(Func<Task<T>> command)
         {
-            if (_synchronous)
-                return RunDbCommandCoreSync(command);
+            using var _ = DbActiveOps.TrackInProgress();
 
-            return Task.Run(command);
+            if (_synchronous)
+                return await RunDbCommandCoreSync(command);
+
+            return await Task.Run(command);
         }
 
-        private Task RunDbCommand(Func<Task> command)
+        private async Task RunDbCommand(Func<Task> command)
         {
-            if (_synchronous)
-                return RunDbCommandCoreSync(command);
+            using var _ = DbActiveOps.TrackInProgress();
 
-            return Task.Run(command);
+            if (_synchronous)
+            {
+                await RunDbCommandCoreSync(command);
+                return;
+            }
+
+            await Task.Run(command);
         }
 
         private static T RunDbCommandCoreSync<T>(Func<T> command) where T : IAsyncResult

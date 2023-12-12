@@ -23,6 +23,7 @@
   - External
   - ChiefEngineer
   - Atmospherics
+  - Brig
   special:
   - !type:AddComponentSpecial
     components:

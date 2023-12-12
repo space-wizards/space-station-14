@@ -38,6 +38,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     public ItemGridPiece? DraggingGhost;
     public Angle DraggingRotation = Angle.Zero;
     public bool StaticStorageUIEnabled;
+    public bool OpaqueStorageWindow;
 
     public bool IsDragging => _menuDragHelper.IsDragging;
     public ItemGridPiece? CurrentlyDragging => _menuDragHelper.Dragged;
@@ -52,6 +53,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         base.Initialize();
 
         _configuration.OnValueChanged(CCVars.StaticStorageUI, OnStaticStorageChanged, true);
+        _configuration.OnValueChanged(CCVars.OpaqueStorageWindow, OnOpaqueWindowChanged, true);
     }
 
     public void OnSystemLoaded(StorageSystem system)
@@ -73,14 +75,20 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (_container == null)
             return;
 
-        _container.UpdateContainer(nullEnt);
-
         if (IsDragging)
             _menuDragHelper.EndDrag();
 
+        _container.UpdateContainer(nullEnt);
+
         if (nullEnt is not null)
         {
-            if (_lastContainerPosition == null)
+            // center it if we knock it off screen somehow.
+            if (!StaticStorageUIEnabled &&
+                (_lastContainerPosition == null ||
+                _lastContainerPosition.Value.X < 0 ||
+                _lastContainerPosition.Value.Y < 0 ||
+                _lastContainerPosition.Value.X > _ui.WindowRoot.Width ||
+                _lastContainerPosition.Value.Y > _ui.WindowRoot.Height))
             {
                 _container.OpenCenteredAt(new Vector2(0.5f, 0.75f));
             }
@@ -88,8 +96,11 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             {
                 _container.Open();
 
-                if (!StaticStorageUIEnabled)
-                    LayoutContainer.SetPosition(_container, _lastContainerPosition.Value);
+                var pos = !StaticStorageUIEnabled && _lastContainerPosition != null
+                    ? _lastContainerPosition.Value
+                    : Vector2.Zero;
+
+                LayoutContainer.SetPosition(_container, pos);
             }
 
             if (StaticStorageUIEnabled)
@@ -98,6 +109,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                 _container.Orphan();
                 Hotbar?.StorageContainer.AddChild(_container);
             }
+            _lastContainerPosition = _container.GlobalPosition;
         }
         else
         {
@@ -112,6 +124,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             return;
 
         StaticStorageUIEnabled = obj;
+        _lastContainerPosition = null;
 
         if (_container == null)
             return;
@@ -123,12 +136,22 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (StaticStorageUIEnabled)
         {
             Hotbar?.StorageContainer.AddChild(_container);
-            _lastContainerPosition = null;
         }
         else
         {
             _ui.WindowRoot.AddChild(_container);
         }
+
+        if (_entity.TryGetComponent<StorageComponent>(_container.StorageEntity, out var comp))
+            OnStorageOrderChanged((_container.StorageEntity.Value, comp));
+    }
+
+    private void OnOpaqueWindowChanged(bool obj)
+    {
+        if (OpaqueStorageWindow == obj)
+            return;
+        OpaqueStorageWindow = obj;
+        _container?.BuildBackground();
     }
 
     /// One might ask, Hey Emo, why are you parsing raw keyboard input just to rotate a rectangle?
@@ -240,29 +263,55 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
     private void OnPieceUnpressed(GUIBoundKeyEventArgs args, ItemGridPiece control)
     {
-        if (_container?.StorageEntity is not { } storageEnt)
+        if (args.Function != ContentKeyFunctions.MoveStoredItem)
             return;
 
-        if (args.Function == ContentKeyFunctions.MoveStoredItem)
+        if (_container?.StorageEntity is not { } storageEnt|| !_entity.TryGetComponent<StorageComponent>(storageEnt, out var storageComp))
+            return;
+
+        if (DraggingGhost is { } draggingGhost)
         {
-            if (DraggingGhost is { } draggingGhost)
+            var dragEnt = draggingGhost.Entity;
+            var dragLoc = draggingGhost.Location;
+            var itemSys = _entity.System<SharedItemSystem>();
+
+            var position = _container.GetMouseGridPieceLocation(dragEnt, dragLoc);
+            var itemBounding = itemSys.GetAdjustedItemShape(dragEnt, dragLoc).GetBoundingBox();
+            var gridBounding = storageComp.Grid.GetBoundingBox();
+
+            // The extended bounding box for if this is out of the window is the grid bounding box dimensions combined
+            // with the item shape bounding box dimensions. Plus 1 on the left for the sidebar. This makes it so that.
+            // dropping an item on the floor requires dragging it all the way out of the window.
+            var left = gridBounding.Left - itemBounding.Width - 1;
+            var bottom = gridBounding.Bottom - itemBounding.Height;
+            var top = gridBounding.Top;
+            var right = gridBounding.Right;
+            var lenientBounding = new Box2i(left, bottom, right, top);
+
+            if (lenientBounding.Contains(position))
             {
-                var position = _container.GetMouseGridPieceLocation(draggingGhost.Entity, draggingGhost.Location);
                 _entity.RaisePredictiveEvent(new StorageSetItemLocationEvent(
                     _entity.GetNetEntity(draggingGhost.Entity),
                     _entity.GetNetEntity(storageEnt),
                     new ItemStorageLocation(DraggingRotation, position)));
-                _container?.BuildItemPieces();
             }
-            else //if we just clicked, then take it out of the bag.
+            else
             {
-                _entity.RaisePredictiveEvent(new StorageInteractWithItemEvent(
-                    _entity.GetNetEntity(control.Entity),
+                _entity.RaisePredictiveEvent(new StorageRemoveItemEvent(
+                    _entity.GetNetEntity(draggingGhost.Entity),
                     _entity.GetNetEntity(storageEnt)));
             }
-            _menuDragHelper.EndDrag();
-            args.Handle();
+
+            _container?.BuildItemPieces();
         }
+        else //if we just clicked, then take it out of the bag.
+        {
+            _entity.RaisePredictiveEvent(new StorageInteractWithItemEvent(
+                _entity.GetNetEntity(control.Entity),
+                _entity.GetNetEntity(storageEnt)));
+        }
+        _menuDragHelper.EndDrag();
+        args.Handle();
     }
 
     private bool OnMenuBeginDrag()
@@ -321,7 +370,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
         _menuDragHelper.Update(args.DeltaSeconds);
 
-        if (!StaticStorageUIEnabled && _container?.Parent != null)
+        if (!StaticStorageUIEnabled && _container?.Parent != null && _lastContainerPosition != null)
             _lastContainerPosition = _container.GlobalPosition;
     }
 }

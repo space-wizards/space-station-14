@@ -230,6 +230,22 @@
         Cable: 1
 
 - type: entity
+  id: ArtifactCrusherMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: artifact crusher machine board
+  description: A machine printed circuit board for an artifact crusher.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: MachineArtifactCrusher
+    requirements:
+      Manipulator: 2
+    materialRequirements:
+      Glass: 1
+      Steel: 5
+
+- type: entity
   parent: BaseMachineCircuitboard
   id: AnomalyVesselCircuitboard
   name: anomaly vessel machine board
@@ -240,10 +256,27 @@
     - type: MachineBoard
       prototype: MachineAnomalyVessel
       requirements:
-        Capacitor: 5
+        Capacitor: 3
       materialRequirements:
         Cable: 1
         PlasmaGlass: 10
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: AnomalyVesselExperimentalCircuitboard
+  name: experimental anomaly vessel machine board
+  description: A machine printed circuit board for an experimental anomaly vessel.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: MachineAnomalyVesselExperimental
+    requirements:
+      Capacitor: 3
+    materialRequirements:
+      Cable: 5
+      PlasmaGlass: 15
+      MetalRod: 4
 
 - type: entity
   parent: BaseMachineCircuitboard

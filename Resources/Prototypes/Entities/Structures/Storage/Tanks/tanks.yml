@@ -127,6 +127,27 @@
         reagents:
         - ReagentId: Water
           Quantity: 500
+  - type: ContainerContainer
+    containers:
+      bin-container: !type:Container
+  - type: Bin
+    initialContents:
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    whitelist:
+      requireAll: true
+      components:
+      - FitsInDispenser
+      tags:
+      - Trash
 
 - type: entity
   parent: StorageTank

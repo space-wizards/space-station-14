@@ -353,3 +353,19 @@
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
       - id: WeaponMultiphaseEnergyPistol
+
+- type: entity
+  id: LockerFreezerVaultFilled
+  suffix: Vault, Locked
+  parent: LockerFreezerBase
+  components:
+  - type: AccessReader
+    access: [ [ "Command" ] ]
+  - type: StorageFill
+    contents:
+    - id: WeaponRevolverDeckard
+    - id: ClothingOuterHardsuitBasic
+    - id: JetpackBlue
+    - id: SpaceCash1000
+    - id: BeachBall
+    - id: BikeHorn

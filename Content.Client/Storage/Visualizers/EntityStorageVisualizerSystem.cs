@@ -37,15 +37,27 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
         {
             if (open)
             {
-                args.Sprite.LayerSetVisible(StorageVisualLayers.Door, true);
+                if (comp.OpenDrawDepth != null)
+                    args.Sprite.DrawDepth = comp.OpenDrawDepth.Value;
+
                 if (comp.StateDoorOpen != null)
+                {
                     args.Sprite.LayerSetState(StorageVisualLayers.Door, comp.StateDoorOpen);
+                    args.Sprite.LayerSetVisible(StorageVisualLayers.Door, true);
+                }
+                else
+                {
+                    args.Sprite.LayerSetVisible(StorageVisualLayers.Door, false);
+                }
 
                 if (comp.StateBaseOpen != null)
                     args.Sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseOpen);
             }
             else
             {
+                if (comp.ClosedDrawDepth != null)
+                    args.Sprite.DrawDepth = comp.ClosedDrawDepth.Value;
+
                 if (comp.StateDoorClosed != null)
                 {
                     args.Sprite.LayerSetState(StorageVisualLayers.Door, comp.StateDoorClosed);

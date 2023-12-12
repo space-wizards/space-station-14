@@ -244,6 +244,13 @@ binds:
   type: State
   key: E
   mod1: Shift
+- function: OpenBackpack
+  type: State
+  key: V
+- function: OpenBelt
+  type: State
+  key: V
+  mod1: Shift
 - function: ShowDebugConsole
   type: State
   key: Tilde

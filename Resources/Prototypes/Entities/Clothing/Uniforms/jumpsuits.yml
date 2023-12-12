@@ -1685,3 +1685,14 @@
       sprite: Corvax/Clothing/Uniforms/Jumpsuit/centcom_admiral.rsi
     - type: Clothing
       sprite: Corvax/Clothing/Uniforms/Jumpsuit/centcom_admiral.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitFamilyGuy
+  name: familiar garbs
+  description: Makes you remember the time you did something funny.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi

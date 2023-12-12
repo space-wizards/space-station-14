@@ -14,6 +14,7 @@
   - type: Item
     size: Small
     heldPrefix: default
+    storedRotation: -90
   - type: Access
   - type: IdCard
   - type: StationRecordKeyStorage
@@ -479,17 +480,81 @@
 - type: entity
   parent: SpecOpsIDCard
   id: ERTLeaderIDCard
-  name: ERT ID card
+  name: ERT leader ID card
   components:
   - type: Sprite
     layers:
     - state: gold
-    - state: ert_commander # we have the sprites but don't need individual ID entities for now.
+    - state: ert_commander
+  - type: IdCard
+    jobTitle: ERT Company Commander
   - type: Item
     heldPrefix: gold
   - type: IdCard
     jobTitle: Офицер СО
     jobIcon: JobIconNanotrasen
+
+- type: entity
+  parent: ERTLeaderIDCard
+  id: ERTChaplainIDCard
+  name: ERT Chaplain ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: ert_chaplain # we have the sprite for the id but dont have chaplain ERT equipment for now.
+  - type: IdCard
+    jobTitle: ERT Soul Officer
+  - type: Item
+    heldPrefix: blue
+
+- type: entity
+  parent: ERTChaplainIDCard
+  id: ERTEngineerIDCard
+  name: ERT Engineer ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: ert_engineer
+  - type: IdCard
+    jobTitle: ERT Field Engineer
+
+- type: entity
+  parent: ERTChaplainIDCard
+  id: ERTJanitorIDCard
+  name: ERT Janitor ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: ert_janitor
+  - type: IdCard
+    jobTitle: ERT Custodian
+
+- type: entity
+  parent: ERTChaplainIDCard
+  id: ERTMedicIDCard
+  name: ERT Medic ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: ert_medic
+  - type: IdCard
+    jobTitle: ERT Medical Doctor
+
+- type: entity
+  parent: ERTChaplainIDCard
+  id: ERTSecurityIDCard
+  name: ERT Security ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: ert_security
+  - type: IdCard
+    jobTitle: ERT Field Officer
 
 - type: entity
   parent: IDCardStandard
@@ -577,7 +642,6 @@
     - JobIconChiefEngineer
     - JobIconBartender
     - JobIconHeadOfSecurity
-    - JobIconBrigmedic
     - JobIconMedicalDoctor
     - JobIconParamedic
     - JobIconChef
@@ -727,14 +791,15 @@
   parent: SpecOpsIDCard
   id: CBURNIDcard
   name: CBURN ID card
+  suffix: CBURN
   components:
   - type: Sprite
     layers:
-    - state: gold
-    - state: idcentcom
+    - state: centcom
   - type: Item
-    heldPrefix: gold
-
+    heldPrefix: blue
+  - type: IdCard
+    jobTitle: Centcom Quarantine Officer
 
 - type: entity
   parent: IDCardStandard
@@ -761,8 +826,6 @@
     layers:
     - state: default
     - state: idseniorengineer
-  - type: PresetIdCard
-    job: SeniorEngineer
 
 - type: entity
   parent: IDCardStandard
@@ -773,8 +836,6 @@
     layers:
     - state: default
     - state: idseniorresearcher
-  - type: PresetIdCard
-    job: SeniorResearcher
 
 - type: entity
   parent: IDCardStandard
@@ -785,8 +846,6 @@
     layers:
     - state: default
     - state: idseniorphysician
-  - type: PresetIdCard
-    job: SeniorPhysician
 
 - type: entity
   parent: IDCardStandard

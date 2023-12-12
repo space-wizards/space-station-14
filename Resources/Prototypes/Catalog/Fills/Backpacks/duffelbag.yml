@@ -44,6 +44,8 @@
       - id: Cautery
       - id: Retractor
       - id: ScalpelAdvanced
+      - id: ClothingHandsGlovesNitrile
+      - id: EmergencyRollerBedSpawnFolded
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -198,6 +200,9 @@
   name: syndicate pyjama duffel bag
   description: Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
   components:
+  - type: Storage
+    grid:
+    - 0,0,8,4
   - type: StorageFill
     contents:
       - id: ClothingUniformJumpsuitPyjamaSyndicateRed
@@ -327,6 +332,6 @@
       - id: Defibrillator
       - id: CombatMedipen
         amount: 3
-      - id: ClothingHandsGlovesLatex
+      - id: ClothingHandsGlovesNitrile
       - id: SyringeTranexamicAcid
       - id: SyringeHyronalin

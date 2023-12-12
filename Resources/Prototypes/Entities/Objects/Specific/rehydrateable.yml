@@ -4,6 +4,8 @@
   name: monkey cube
   description: Just add water!
   components:
+  - type: Item
+    size: Tiny
   - type: SolutionContainerManager
     solutions:
       cube:
@@ -109,6 +111,8 @@
   suffix: Syndicate
   description: Just add water!
   components:
+  - type: Item
+    size: Tiny
   - type: SolutionContainerManager
     solutions:
       cube:

@@ -27,6 +27,28 @@
 
 - type: entity
   parent: ClothingOuterBaseLarge
+  id: ClothingOuterSuitJanitorBomb
+  name: janitorial bomb suit
+  description: A heavy helmet designed to withstand explosions formed from reactions between chemicals.
+  suffix: DO NOT MAP
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/janitor_bombsuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/janitor_bombsuit.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.15
+  - type: GroupExamine
+  - type: Tag
+    tags:
+    - Hardsuit
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingOuterBaseLarge
   id: ClothingOuterSuitFire
   name: fire suit
   description: A suit that helps protect against hazardous temperatures.
@@ -48,6 +70,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.7
+  - type: HeldSpeedModifier
   - type: GroupExamine
   - type: StaminaProtection
     coefficient: 0.85
@@ -103,6 +126,7 @@
     - type: ClothingSpeedModifier
       walkModifier: 0.8
       sprintModifier: 0.8
+    - type: HeldSpeedModifier
     - type: GroupExamine
     - type: StaminaProtection
       coefficient: 0.85

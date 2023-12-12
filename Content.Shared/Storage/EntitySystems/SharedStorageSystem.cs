@@ -37,7 +37,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] protected readonly SharedItemSystem ItemSystem = default!;
     [Dependency] private   readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private   readonly SharedHandsSystem _sharedHandsSystem = default!;
-    [Dependency] private   readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] protected readonly ActionBlockerSystem ActionBlocker = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
@@ -52,6 +52,8 @@ public abstract class SharedStorageSystem : EntitySystem
 
     [ValidatePrototypeId<ItemSizePrototype>]
     public const string DefaultStorageMaxItemSize = "Normal";
+
+    public bool CheckingCanInsert;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -81,6 +83,7 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeAllEvent<StorageInteractWithItemEvent>(OnInteractWithItem);
         SubscribeAllEvent<StorageSetItemLocationEvent>(OnSetItemLocation);
         SubscribeAllEvent<StorageInsertItemIntoLocationEvent>(OnInsertItemIntoLocation);
+        SubscribeAllEvent<StorageRemoveItemEvent>(OnRemoveItem);
     }
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
@@ -334,7 +337,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
         }
 
-        if (!_actionBlockerSystem.CanInteract(player, entity) || !storageComp.Container.Contains(entity))
+        if (!ActionBlocker.CanInteract(player, entity) || !storageComp.Container.Contains(entity))
             return;
 
         // Does the player have hands?
@@ -377,10 +380,38 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
         }
 
-        if (!_actionBlockerSystem.CanInteract(player, itemEnt))
+        if (!ActionBlocker.CanInteract(player, itemEnt))
             return;
 
         TrySetItemStorageLocation((itemEnt, null), (storageEnt, storageComp), msg.Location);
+    }
+
+    private void OnRemoveItem(StorageRemoveItemEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not { } player)
+            return;
+
+        var storageEnt = GetEntity(msg.StorageEnt);
+        var itemEnt = GetEntity(msg.ItemEnt);
+
+        if (!TryComp<StorageComponent>(storageEnt, out var storageComp))
+            return;
+
+        if (!_ui.TryGetUi(storageEnt, StorageComponent.StorageUiKey.Key, out var bui) ||
+            !bui.SubscribedSessions.Contains(args.SenderSession))
+            return;
+
+        if (!Exists(itemEnt))
+        {
+            Log.Error($"Player {args.SenderSession} set location of non-existent item {msg.ItemEnt} stored in {ToPrettyString(storageEnt)}");
+            return;
+        }
+
+        if (!ActionBlocker.CanInteract(player, itemEnt))
+            return;
+
+        TransformSystem.DropNextTo(itemEnt, player);
+        Audio.PlayPredicted(storageComp.StorageRemoveSound, storageEnt, player);
     }
 
     private void OnInsertItemIntoLocation(StorageInsertItemIntoLocationEvent msg, EntitySessionEventArgs args)
@@ -404,10 +435,10 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
         }
 
-        if (!_actionBlockerSystem.CanInteract(player, itemEnt) || !_sharedHandsSystem.IsHolding(player, itemEnt, out _))
+        if (!ActionBlocker.CanInteract(player, itemEnt) || !_sharedHandsSystem.IsHolding(player, itemEnt, out _))
             return;
 
-        InsertAt((storageEnt, storageComp), (itemEnt, null), msg.Location, out _, player);
+        InsertAt((storageEnt, storageComp), (itemEnt, null), msg.Location, out _, player, stackAutomatically: false);
     }
 
     private void OnBoundUIOpen(EntityUid uid, StorageComponent storageComp, BoundUIOpenedEvent args)
@@ -463,6 +494,10 @@ public abstract class SharedStorageSystem : EntitySystem
     private void OnInsertAttempt(EntityUid uid, StorageComponent component, ContainerIsInsertingAttemptEvent args)
     {
         if (args.Cancelled || args.Container.ID != StorageComponent.ContainerId)
+            return;
+
+        // don't run cyclical CanInsert() loops
+        if (CheckingCanInsert)
             return;
 
         if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true))
@@ -591,6 +626,15 @@ public abstract class SharedStorageSystem : EntitySystem
             }
         }
 
+        CheckingCanInsert = true;
+        if (!_containerSystem.CanInsert(insertEnt, storageComp.Container))
+        {
+            CheckingCanInsert = false;
+            reason = null;
+            return false;
+        }
+        CheckingCanInsert = false;
+
         reason = null;
         return true;
     }
@@ -606,7 +650,8 @@ public abstract class SharedStorageSystem : EntitySystem
         ItemStorageLocation location,
         out EntityUid? stackedEntity,
         EntityUid? user = null,
-        bool playSound = true)
+        bool playSound = true,
+        bool stackAutomatically = true)
     {
         stackedEntity = null;
         if (!Resolve(uid, ref uid.Comp))
@@ -617,7 +662,21 @@ public abstract class SharedStorageSystem : EntitySystem
 
         uid.Comp.StoredItems[GetNetEntity(insertEnt)] = location;
         Dirty(uid, uid.Comp);
-        return Insert(uid, insertEnt, out stackedEntity, out _, user: user, storageComp: uid.Comp, playSound: playSound);
+
+        if (Insert(uid,
+                insertEnt,
+                out stackedEntity,
+                out _,
+                user: user,
+                storageComp: uid.Comp,
+                playSound: playSound,
+                stackAutomatically: stackAutomatically))
+        {
+            return true;
+        }
+
+        uid.Comp.StoredItems.Remove(GetNetEntity(insertEnt));
+        return false;
     }
 
     /// <summary>
@@ -631,9 +690,10 @@ public abstract class SharedStorageSystem : EntitySystem
         out EntityUid? stackedEntity,
         EntityUid? user = null,
         StorageComponent? storageComp = null,
-        bool playSound = true)
+        bool playSound = true,
+        bool stackAutomatically = true)
     {
-        return Insert(uid, insertEnt, out stackedEntity, out _, user: user, storageComp: storageComp, playSound: playSound);
+        return Insert(uid, insertEnt, out stackedEntity, out _, user: user, storageComp: storageComp, playSound: playSound, stackAutomatically: stackAutomatically);
     }
 
     /// <summary>
@@ -648,7 +708,8 @@ public abstract class SharedStorageSystem : EntitySystem
         out string? reason,
         EntityUid? user = null,
         StorageComponent? storageComp = null,
-        bool playSound = true)
+        bool playSound = true,
+        bool stackAutomatically = true)
     {
         stackedEntity = null;
         reason = null;
@@ -665,7 +726,7 @@ public abstract class SharedStorageSystem : EntitySystem
          * For now we just treat items as always being the same size regardless of stack count.
          */
 
-        if (!_stackQuery.TryGetComponent(insertEnt, out var insertStack))
+        if (!stackAutomatically || !_stackQuery.TryGetComponent(insertEnt, out var insertStack))
         {
             if (!_containerSystem.Insert(insertEnt, storageComp.Container))
                 return false;
@@ -795,7 +856,7 @@ public abstract class SharedStorageSystem : EntitySystem
         {
             for (var x = storageBounding.Left; x <= storageBounding.Right; x++)
             {
-                for (var angle = Angle.Zero; angle <= Angle.FromDegrees(360); angle += Math.PI / 2f)
+                for (var angle = Angle.FromDegrees(-itemEnt.Comp.StoredRotation); angle <= Angle.FromDegrees(360 - itemEnt.Comp.StoredRotation); angle += Math.PI / 2f)
                 {
                     var location = new ItemStorageLocation(angle, (x, y));
                     if (ItemFitsInGridLocation(itemEnt, storageEnt, location))
