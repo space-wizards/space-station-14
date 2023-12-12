@@ -136,7 +136,7 @@ public sealed partial class GunSystem : SharedGunSystem
                             !gun.CompatibleAmmo.Exists(ammoAllowed => ammoAllowed.Equals(cartridge.Prototype))
                             && user != null)
                         {
-                            Damageable.TryChangeDamage(user, new DamageSpecifier(), origin: user);
+                            Damageable.TryChangeDamage(user, default!, origin: user);
                             _stun.TryParalyze(user.Value, TimeSpan.FromSeconds(3f), true);
 
                             Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gunUid);
