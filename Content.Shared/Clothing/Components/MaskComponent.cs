@@ -17,5 +17,6 @@ public sealed partial class MaskComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? ToggleActionEntity;
 
-    public bool IsToggled = false;
+    [DataField, AutoNetworkedField]
+    public bool IsToggled;
 }
