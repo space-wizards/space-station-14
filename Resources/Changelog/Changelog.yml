@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Added beacons to station maps., type: Add}
-  id: 4839
-  time: '2023-09-16T08:11:48.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Fixed objectives not being given in some cases., type: Fix}
@@ -2903,3 +2898,8 @@ Entries:
   - {message: The syndie holster now holds the guns you always wanted it to., type: Tweak}
   id: 5339
   time: '2023-12-12T07:53:00.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Jar now fills., type: Tweak}
+  id: 5340
+  time: '2023-12-12T07:54:15.0000000+00:00'
