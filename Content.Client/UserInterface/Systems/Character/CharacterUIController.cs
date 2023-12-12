@@ -184,7 +184,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         if (CharacterButton != null)
         {
-            CharacterButton.Pressed = !_window.IsOpen;
+            CharacterButton.SetClickPressed(!_window.IsOpen);
         }
 
         if (_window.IsOpen)

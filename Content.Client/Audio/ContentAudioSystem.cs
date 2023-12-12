@@ -35,6 +35,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
     public const float AmbienceMultiplier = 3f;
     public const float AmbientMusicMultiplier = 3f;
     public const float LobbyMultiplier = 3f;
+    public const float InterfaceMultiplier = 2f;
 
     public override void Initialize()
     {

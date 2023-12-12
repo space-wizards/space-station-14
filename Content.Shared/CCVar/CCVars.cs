@@ -81,6 +81,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> LobbyMusicVolume =
             CVarDef.Create("ambience.lobby_music_volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /// <summary>
+        /// UI volume.
+        /// </summary>
+        public static readonly CVarDef<float> InterfaceVolume =
+            CVarDef.Create("audio.interface_volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
         /*
          * Status
          */

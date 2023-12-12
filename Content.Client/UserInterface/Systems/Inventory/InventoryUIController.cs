@@ -181,14 +181,12 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         if (_inventoryHotbar.Visible)
         {
             _inventoryHotbar.Visible = false;
-            if (InventoryButton != null)
-                InventoryButton.Pressed = false;
+            InventoryButton?.SetClickPressed(false);
         }
         else
         {
             _inventoryHotbar.Visible = true;
-            if (InventoryButton != null)
-                InventoryButton.Pressed = true;
+            InventoryButton?.SetClickPressed(true);
         }
     }
 
