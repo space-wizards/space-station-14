@@ -12,7 +12,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
+using Content.Server.Item;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Client.Input;
@@ -24,6 +24,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
+using Content.Shared.Item;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -154,6 +155,7 @@ public abstract partial class InteractionTest
         HandSys = SEntMan.System<SharedHandsSystem>();
         InteractSys = SEntMan.System<SharedInteractionSystem>();
         ToolSys = SEntMan.System<ToolSystem>();
+        ItemToggleSys = SEntMan.System<SharedItemToggleSystem>();
         DoAfterSys = SEntMan.System<SharedDoAfterSystem>();
         Transform = SEntMan.System<SharedTransformSystem>();
         SConstruction = SEntMan.System<Server.Construction.ConstructionSystem>();

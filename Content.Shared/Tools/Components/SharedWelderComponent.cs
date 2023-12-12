@@ -4,9 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Tools.Components
 {
     [NetworkedComponent]
-    public abstract partial class SharedWelderComponent : Component
-    {
-    }
+    public abstract partial class SharedWelderComponent : Component { }
 
     [NetSerializable, Serializable]
     public sealed class WelderComponentState : ComponentState
