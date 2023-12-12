@@ -54,6 +54,7 @@ public sealed class MaskSystem : EntitySystem
             return;
 
         mask.IsToggled = false;
+        Dirty(uid, mask);
         _actionSystem.SetToggled(mask.ToggleActionEntity, mask.IsToggled);
 
         ToggleMaskComponents(uid, mask, args.Equipee, true);
