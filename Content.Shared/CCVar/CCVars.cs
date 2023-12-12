@@ -18,10 +18,10 @@ namespace Content.Shared.CCVar
             CVarDef.Create("server.id", "unknown_server_id", CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
-        ///     Name of the rules txt file in the "Resources/Server Info" dir. Include the extension.
+        ///     Path to the rules txt file in the "Resources/Server Info" dir. Include the extension.
         /// </summary>
-        public static readonly CVarDef<string> RulesFile =
-            CVarDef.Create("server.rules_file", "Rules.txt", CVar.REPLICATED | CVar.SERVER);
+        public static readonly CVarDef<string> RulesPath =
+            CVarDef.Create("server.rules_file", "/ServerInfo/Rules.txt", CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         ///     A loc string for what should be displayed as the title on the Rules window.
