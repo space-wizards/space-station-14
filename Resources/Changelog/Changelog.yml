@@ -2840,11 +2840,6 @@ Entries:
       to time, type: Add}
   id: 5322
   time: '2023-12-11T11:36:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Removed gas selling until properly fixed., type: Fix}
-  id: 5323
-  time: '2023-12-11T12:28:33.0000000+00:00'
 - author: ninruB
   changes:
   - {message: Familiar Garbs may now appear as maintenance loot., type: Add}
