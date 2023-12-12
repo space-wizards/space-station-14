@@ -7,38 +7,66 @@
   # Sloth: What is this comment ?????????
   - type: RandomSprite #this has to be before sprite component for the flame to toggle right because weldercomponent behaves weird (and i dont trust myself to fix it right)
     available:
-      - enum.WelderLayers.Base:
+      - enum.ToggleVisuals.Layer:
           basic_icon_base-1: ""
-      - enum.WelderLayers.Base:
+      - enum.ToggleVisuals.Layer:
           basic_icon_base-2: ""
-      - enum.WelderLayers.Base:
+      - enum.ToggleVisuals.Layer:
           basic_icon_base-3: ""
-      - enum.WelderLayers.Base:
+      - enum.ToggleVisuals.Layer:
           basic_icon_base-4: ""
-      - enum.WelderLayers.Base:
+      - enum.ToggleVisuals.Layer:
           basic_icon_base-5: ""
-      - enum.WelderLayers.Base:
+      - enum.ToggleVisuals.Layer:
           basic_icon_base-6: ""
-      - enum.WelderLayers.Base:
+      - enum.ToggleVisuals.Layer:
           basic_icon_base-7: ""
-      - enum.WelderLayers.Base:
+      - enum.ToggleVisuals.Layer:
           basic_icon_base-8: ""
-      - enum.WelderLayers.Base:
+      - enum.ToggleVisuals.Layer:
           basic_icon_base-9: ""
-      - enum.WelderLayers.Base:
+      - enum.ToggleVisuals.Layer:
           basic_icon_base-10: ""
-      - enum.WelderLayers.Base:
+      - enum.ToggleVisuals.Layer:
           basic_icon_base-11: ""
+  - type: ItemToggle
+    activated: false
+    soundActivate:
+      collection: lighterOnSounds
+    soundDeactivate:
+      collection: lighterOffSounds
+    activatedDamage:
+        types:
+            Heat: 1
+    activatedSize: Small
+    isHotWhenActivated: true
   - type: Sprite
     sprite: Objects/Tools/lighters.rsi
     layers:
     - state: icon_map
-      map: ["enum.WelderLayers.Base"]
-    - state: lighter_flame
-      map: ["enum.WelderLayers.Flame"]
-      shader: unshaded
-      visible: false
+    - state: cheap_icon_base
+      map: ["enum.ToggleVisuals.Layer"]
     - state: basic_icon_top
+    - state: lighter_flame
+      visible: false
+      shader: unshaded
+      map: [ "flame" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        flame:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ToggleableLightVisuals
+    spriteLayer: lighter_flame
+    inhandVisuals:
+      left:
+      - state: inhand-left-flame
+        shader: unshaded
+      right:
+      - state: inhand-right-flame
+        shader: unshaded
   - type: Item
     size: Tiny
     sprite: Objects/Tools/lighters.rsi
@@ -56,24 +84,16 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 0 #this feels hacky, but is needed for burn damage while active (i think)
+        Blunt: 0
   - type: Welder
     fuelConsumption: 0.01
     fuelLitCost: 0.1
-    litMeleeDamageBonus:
-      types:
-        Heat: 1
     tankSafe: true
-    welderOnSounds:
-      collection: lighterOnSounds
-    welderOffSounds:
-      collection: lighterOffSounds
   - type: PointLight
     enabled: false
+    netsync: false
     radius: 1.1 #smallest possible
     color: orange
-  - type: Appearance
-
 
 - type: entity
   name: cheap lighter
@@ -83,18 +103,19 @@
   components:
   - type: RandomSprite
     available:
-      - enum.WelderLayers.Base:
+      - enum.ToggleVisuals.Layer:
           cheap_icon_base: Rainbow
   - type: Sprite
     sprite: Objects/Tools/lighters.rsi
     layers:
     - state: icon_map
-      map: ["enum.WelderLayers.Base"]
-    - state: lighter_flame
-      map: ["enum.WelderLayers.Flame"]
-      shader: unshaded
-      visible: false
+    - state: cheap_icon_base
+      map: [ "enum.ToggleVisuals.Layer" ]
     - state: cheap_icon_top
+    - state: lighter_flame
+      visible: false
+      shader: unshaded
+      map: [ "flame" ]
   - type: SolutionContainerManager
     solutions:
       Welder:
@@ -103,4 +124,52 @@
           Quantity: 4
         maxVol: 4 #uses less fuel than a welder, so this isnt as bad as it looks
 
-    #TODO: zippos
+- type: entity
+  name: zippi lighter
+  parent: Lighter
+  id: ZippoLighter
+  description: "A rugged metal lighter, lasts quite a while."
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/lighters.rsi
+    layers:
+    - state: zippo_top
+      map: ["top"]
+      visible: false
+    - state: zippo_icon_base
+      map: ["base"]
+    - state: zippo_open
+      map: ["open"]
+      visible: false
+    - state: lighter_flame
+      map: ["flame"]
+      visible: false
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        flame:
+          True: { visible: true }
+          False: { visible: false }
+        top:
+          True: { visible: true }
+          False: { visible: false }
+        open:
+          True: { visible: true }
+          False: { visible: false }
+        base:
+          True: { visible: false }
+          False: { visible: true }
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 12
+        maxVol: 12 #uses less fuel than a welder, so this isnt as bad as it looks
+  - type: PointLight
+    enabled: false
+    netsync: false
+    radius: 1.2 #slightly stronger than the other lighters
+    color: orange

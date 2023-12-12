@@ -11,11 +11,20 @@
     sprite: Objects/Tools/welder.rsi
     layers:
     - state: icon
-      map: ["enum.WelderLayers.Base"]
     - state: welder_flame
-      map: ["enum.WelderLayers.Flame"]
-      shader: unshaded
       visible: false
+      shader: unshaded
+      map: ["enum.ToggleVisuals.Layer"]
+
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Item
+    size: Small
+    sprite: Objects/Tools/welder.rsi
   - type: ItemToggle
     activated: false
     soundActivate:
@@ -36,9 +45,6 @@
     activatedSize: Large
     isHotWhenActivated: true
     activatedDisarmMalus: 0.6
-  - type: Item
-    size: Small
-    sprite: Objects/Tools/welder.rsi
   - type: ToggleableLightVisuals
     spriteLayer: flame
     inhandVisuals:

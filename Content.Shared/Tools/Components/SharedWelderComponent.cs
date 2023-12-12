@@ -20,17 +20,4 @@ namespace Content.Shared.Tools.Components
             Fuel = fuel;
         }
     }
-
-    [Serializable, NetSerializable]
-    public enum WelderVisuals : byte
-    {
-        Lit
-    }
-
-    [Serializable, NetSerializable]
-    public enum WelderLayers : byte
-    {
-        Base,
-        Flame
-    }
 }

@@ -7,7 +7,6 @@ using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
-using Content.Shared.Tools.Components;
 
 namespace Content.Shared.Item;
 /// <summary>
@@ -179,7 +178,6 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
         _appearance.SetData(uid, ToggleableLightVisuals.Enabled, component.Activated, appearanceComponent);
         _appearance.SetData(uid, ToggleVisuals.Toggled, component.Activated, appearanceComponent);
-        _appearance.SetData(uid, WelderVisuals.Lit, component.Activated, appearanceComponent);
     }
 
     /// <summary>
