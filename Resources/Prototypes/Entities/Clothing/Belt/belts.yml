@@ -368,6 +368,8 @@
         - Taser
         - SecBeltEquip
         - Radio
+        - Sidearm
+        - MagazinePistol
       components:
         - Stunbaton
         - FlashOnTrigger
