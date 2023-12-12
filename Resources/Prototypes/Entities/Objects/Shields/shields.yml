@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: base shield
   parent: BaseItem
   id: BaseShield
@@ -356,12 +356,14 @@
   description: Exotic energy shield, when folded, can even fit in your pocket.
   components:
     - type: ItemToggle
+      activated: false
       activatedDisarmMalus: 0.6
-      activateSound:
+      soundActivate:
         path: /Audio/Weapons/ebladeon.ogg
-      deActivateSound:
+      soundDeactivate:
         path: /Audio/Weapons/ebladeoff.ogg
-      offSize: Small
+      activatedSize: Huge
+      deactivatedSize: Small
     - type: Sprite
       sprite: Objects/Weapons/Melee/e_shield.rsi
       layers:
@@ -461,16 +463,18 @@
   description: An advanced riot shield made of lightweight materials that collapses for easy storage.
   components:
     - type: ItemToggle
+      activated: false
       activatedDisarmMalus: 0.6
-      activateSound:
+      soundActivate:
         path: /Audio/Weapons/telescopicon.ogg
         params:
           volume: -5
-      deActivateSound:
+      soundDeactivate:
         path: /Audio/Weapons/telescopicoff.ogg
         params:
           volume: -5
-      offSize: Small
+      activatedSize: Huge
+      deactivatedSize: Small
     - type: Sprite
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       layers:

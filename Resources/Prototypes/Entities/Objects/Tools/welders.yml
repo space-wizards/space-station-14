@@ -29,12 +29,14 @@
     activated: false
     soundActivate:
       collection: WelderOn
-      variation: 0.125f
-      volume: -5f
+      params:
+        variation: 0.125f
+        volume: -5f
     soundDeactivate:
       collection: WelderOff
-      variation: 0.125f
-      volume: -5f
+      params:
+        variation: 0.125f
+        volume: -5f
     activatedSoundOnHit:
       path: /Audio/Weapons/eblade1.ogg
       params:

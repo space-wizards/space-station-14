@@ -172,7 +172,7 @@
   components:
   - type: EnergySword
   - type: ItemToggle
-    activatedDamageBonus:
+    activatedDamage:
         types:
             Slash: 14
             Heat: 16
