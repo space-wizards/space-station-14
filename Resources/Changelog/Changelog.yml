@@ -1,21 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: Entity velocity now resets when buckling., type: Tweak}
-  id: 4836
-  time: '2023-09-16T04:15:06.0000000+00:00'
-- author: Psychpsyo
-  changes:
-  - {message: 'The janitor''s advanced mop can now be wielded, just like the regular
-      mop.', type: Add}
-  id: 4837
-  time: '2023-09-16T04:33:01.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Some Syndicate objectives have been tweaked to have higher difficulties,
-      notably stealing the nuke disk.', type: Tweak}
-  id: 4838
-  time: '2023-09-16T06:18:11.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added beacons to station maps., type: Add}
@@ -2904,3 +2887,19 @@ Entries:
     type: Add}
   id: 5336
   time: '2023-12-12T07:49:37.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: 'Pill canisters are slightly better than cig packs, go talk to the chemists.',
+    type: Tweak}
+  id: 5337
+  time: '2023-12-12T07:51:38.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Sec belt holds sidearms and sidearm ammo., type: Tweak}
+  id: 5338
+  time: '2023-12-12T07:52:26.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: The syndie holster now holds the guns you always wanted it to., type: Tweak}
+  id: 5339
+  time: '2023-12-12T07:53:00.0000000+00:00'
