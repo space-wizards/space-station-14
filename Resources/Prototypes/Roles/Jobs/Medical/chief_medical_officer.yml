@@ -29,6 +29,7 @@
   - Maintenance
   - Chemistry
   - ChiefMedicalOfficer
+  - Paramedic
   - Brig
   special:
   - !type:AddImplantSpecial

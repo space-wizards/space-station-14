@@ -66,6 +66,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "Lawyer",
         "Maintenance",
         "Medical",
+        "Paramedic",
         "Quartermaster",
         "Research",
         "ResearchDirector",
