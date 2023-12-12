@@ -22,6 +22,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fax;
 
@@ -47,6 +48,7 @@ public sealed class FaxSystem : EntitySystem
     ///     The prototype ID to use for faxed or copied entities if we can't get one from
     ///     the paper entity for whatever reason.
     /// </summary>
+    [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultPaperPrototypeId = "Paper";
 
     public override void Initialize()
