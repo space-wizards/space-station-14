@@ -68,7 +68,7 @@
     sprite: Objects/Tanks/oxygen.rsi
   - type: Clothing
     sprite: Objects/Tanks/oxygen.rsi
-    
+
 - type: entity
   parent: OxygenTank
   id: YellowOxygenTank
@@ -201,7 +201,7 @@
   parent: DoubleEmergencyOxygenTank
   id: DoubleEmergencyNitrogenTank
   name: double emergency nitrogen tank
-  description: A high-grade dual-tank emergency life support container. It holds a decent amount of nitrogen for it's small size.
+  description: A high-grade dual-tank emergency life support container. It holds a decent amount of nitrogen for its small size.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_double_red.rsi
