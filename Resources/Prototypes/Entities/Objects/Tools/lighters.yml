@@ -70,7 +70,6 @@
   - type: Item
     size: Tiny
     sprite: Objects/Tools/lighters.rsi
-    heldPrefix: off
   - type: ItemCooldown
   - type: RefillableSolution
     solution: Welder
@@ -156,6 +155,10 @@
             Heat: 1
     activatedSize: Small
     isHotWhenActivated: true
+  - type: Item
+    size: Tiny
+    sprite: Objects/Tools/lighters.rsi
+    heldPrefix: zippo
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -179,6 +182,15 @@
         - ReagentId: WeldingFuel
           Quantity: 12
         maxVol: 12 #uses less fuel than a welder, so this isnt as bad as it looks
+  - type: ToggleableLightVisuals
+    spriteLayer: lighter_flame
+    inhandVisuals:
+      left:
+      - state: zippo-inhand-left-flame
+        shader: unshaded
+      right:
+      - state: zippo-inhand-right-flame
+        shader: unshaded
   - type: MeleeWeapon
     damage:
       types:
