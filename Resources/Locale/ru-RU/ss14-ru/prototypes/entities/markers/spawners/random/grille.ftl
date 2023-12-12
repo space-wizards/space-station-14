@@ -1,3 +1,3 @@
 ent-GrilleSpawner = случайный спавнер решётки
-    .suffix = { }
+    .suffix = { "" }
     .desc = { ent-MarkerBase.desc }

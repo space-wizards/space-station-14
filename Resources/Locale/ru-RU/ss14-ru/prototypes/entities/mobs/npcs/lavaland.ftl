@@ -8,4 +8,4 @@ ent-MobWatcherMagmawing = пылающий хранитель
     .desc = { ent-MobWatcherBase.desc }
 ent-MobWatcherPride = хрустальный хранитель
     .desc = Этот редкий подвид хранителей появляется только в июне.
-	.suffix = ПРАЙД
+    .suffix = ПРАЙД

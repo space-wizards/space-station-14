@@ -10,4 +10,4 @@ ent-ShadowBasaltFive = { ent-ShadowBasaltOne }
     .desc = { ent-ShadowBasaltOne.desc }
 ent-ShadowBasaltRandom = { ent-ShadowBasaltOne }
     .desc = { ent-ShadowBasaltOne.desc }
-	.suffix = Случайный
+    .suffix = Случайный

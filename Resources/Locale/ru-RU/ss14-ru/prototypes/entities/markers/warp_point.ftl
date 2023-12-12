@@ -4,8 +4,7 @@ ent-WarpPointBeacon = варп-точка (маяк)
     .desc = { ent-WarpPoint.desc }
 ent-WarpPointBombing = варп-точка
     .desc = { ent-WarpPoint.desc }
-	.suffix = цель ниндзя
-
+    .suffix = цель ниндзя
 ent-WarpPointBeaconBar = варп-точка (бар)
     .desc = { ent-WarpPoint.desc }
 ent-WarpPointBeaconCargo = варп-точка (снабжение)

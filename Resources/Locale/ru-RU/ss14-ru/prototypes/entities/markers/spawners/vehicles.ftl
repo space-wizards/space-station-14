@@ -10,4 +10,4 @@ ent-SpawnVehicleWheelchair = спавнер кресло-коляска
     .desc = { ent-MarkerBase.desc }
 ent-SpawnVehicleWheelchairFolded = спавнер кресло-коляска
     .desc = { ent-MarkerBase.desc }
-	.suffix = Сложенная
+    .suffix = Сложенная

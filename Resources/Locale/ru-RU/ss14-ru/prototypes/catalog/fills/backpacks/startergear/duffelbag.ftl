@@ -47,4 +47,4 @@ ent-ClothingBackpackDuffelCargoFilled = { ent-ClothingBackpackDuffelCargo }
 ent-ClothingBackpackDuffelSalvageFilled = { ent-ClothingBackpackDuffelSalvage }
     .desc = { ent-ClothingBackpackDuffelSalvage.desc }
 ent-ClothingBackpackDuffelSecurityFilledDetective = { ent-ClothingBackpackDuffelSecurity }
-	.desc = { ent-ClothingBackpackDuffelSecurity.desc }
+    .desc = { ent-ClothingBackpackDuffelSecurity.desc }

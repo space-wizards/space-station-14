@@ -5,8 +5,7 @@ generator-ui-fuel-use-label = Расход топлива:
 generator-ui-fuel-left-label = Остаток топлива:
 generator-insert-material = { $item } вставили в { $generator }...
 
-
-﻿generator-clogged = { $generator } неожиданно выключается!
+generator-clogged = { $generator } неожиданно выключается!
 portable-generator-verb-start = Запустить генератор
 portable-generator-verb-start-msg-unreliable = Запустить генератор. Может потребовать несколько попыток.
 portable-generator-verb-start-msg-reliable = Запустить генератор.

@@ -16,4 +16,4 @@ ent-ArtifactFragment = фрагмент артефакта
     .desc = Отломанный кусок артефакта. Возможно, найдя ещё, вы сможете его починить.
 ent-ArtifactFragment1 = { ent-ArtifactFragment }
     .desc = { ent-ArtifactFragment.desc }
-	.suffix = Один
+    .suffix = Один
