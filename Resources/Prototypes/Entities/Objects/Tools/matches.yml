@@ -80,8 +80,6 @@
       visible: false
   - type: Item
     size: Small
-    shape:
-    - 0,0,1,0
     sprite: Objects/Tools/matches.rsi
     heldPrefix: matchbox
   - type: Storage

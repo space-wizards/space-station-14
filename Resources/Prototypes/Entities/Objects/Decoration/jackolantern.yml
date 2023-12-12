@@ -31,43 +31,31 @@
 - type: entity
   parent: CarvedPumpkin
   id: CarvedPumpkinSmall
-  suffix: Tiny
+  suffix: Small
   components:
-    - type: Item
-      size: Tiny
     - type: Sprite
       scale: 0.75, 0.75
 
 - type: entity
   parent: CarvedPumpkin
   id: CarvedPumpkinLarge
-  suffix: Huge
+  suffix: Large
   components:
-    - type: Item
-      size: Large
-      shape:
-      - 0,0,2,2
     - type: Sprite
       scale: 1.5, 1.5
 
 - type: entity
   parent: PumpkinLantern
   id: PumpkinLanternSmall
-  suffix: Tiny
+  suffix: Small
   components:
-    - type: Item
-      size: Tiny
     - type: Sprite
       scale: 0.75, 0.75
 
 - type: entity
   parent: PumpkinLantern
   id: PumpkinLanternLarge
-  suffix: Huge
+  suffix: Large
   components:
-    - type: Item
-      size: Large
-      shape:
-      - 0,0,2,2
     - type: Sprite
       scale: 1.5, 1.5

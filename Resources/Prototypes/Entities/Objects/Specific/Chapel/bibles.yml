@@ -31,7 +31,7 @@
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon
   - type: Item
-    size: Small
+    size: Normal
     sprite: Objects/Specific/Chapel/bible.rsi
   - type: Clothing
     slots:

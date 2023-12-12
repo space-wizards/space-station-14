@@ -39,10 +39,7 @@
     - 0,0,3,1
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
-    size: Normal
-    shape:
-    - 0,0,2,1
-    storedRotation: 90
+    size: Small
   - type: StorageFill
     contents:
     - id: Cigar

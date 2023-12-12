@@ -423,13 +423,10 @@
       - id: PresentRandom
         orGroup: present
       - id: PresentRandomUnsafe
-        prob: 0.35
+        prob: 0.25
         orGroup: present
       - id: PresentRandomInsane
-        prob: 0.2
-        orGroup: present
-      - id: PresentRandomCash
-        prob: 0.2
+        prob: 0.10
         orGroup: present
     receivedPopup: christmas-tree-got-gift
     deniedPopup: christmas-tree-no-gift

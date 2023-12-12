@@ -61,7 +61,7 @@
   - type: SolutionContainerManager
     solutions:
       smokable:
-        maxVol: 30
+        maxVol: 20
 
 - type: entity
   parent: BaseItem

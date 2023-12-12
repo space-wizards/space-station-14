@@ -472,7 +472,7 @@
   description: Holds up to 10 pills.
   components:
   - type: Item
-    size: Tiny
+    size: Tiny # this is required, otherwise shit breaks. If you want it larger its gonna be a shape assertion.
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
     state: pill_canister

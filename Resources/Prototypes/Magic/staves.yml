@@ -17,7 +17,6 @@
     actions:
     - ActionRgbLight
   - type: Item
-    size: Normal
     inhandVisuals:
       left:
       - state: staff-inhand-left

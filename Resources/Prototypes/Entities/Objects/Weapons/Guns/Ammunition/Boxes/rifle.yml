@@ -29,8 +29,6 @@
   id: MagazineBoxRifleBig
   name: ammunition box (.20 rifle)
   components:
-  - type: Item
-    size: Normal
   - type: BallisticAmmoProvider
     capacity: 200
     proto: CartridgeRifle
@@ -51,8 +49,6 @@
   id: MagazineBoxRifleBigRubber
   name: ammunition box (.20 rifle rubber)
   components:
-  - type: Item
-    size: Normal
   - type: BallisticAmmoProvider
     capacity: 200
     proto: CartridgeRiflePractice

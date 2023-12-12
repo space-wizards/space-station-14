@@ -4,8 +4,6 @@
   id: BoxDonkSoftBase
   name: foamdart box
   components:
-  - type: Item
-    size: Normal
   - type: BallisticAmmoProvider
     mayTransfer: true
     capacity: 30

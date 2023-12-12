@@ -172,7 +172,7 @@
     sprite: Objects/Fun/Instruments/bagpipes.rsi
     state: icon
   - type: Item
-    size: Large
+    size: Normal
     sprite: Objects/Fun/Instruments/bagpipes.rsi
   - type: Tag
     tags:

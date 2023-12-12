@@ -30,8 +30,6 @@
   id: MagazineBoxAntiMaterielBig
   name: ammunition box (.60 anti-materiel)
   components:
-  - type: Item
-    size: Normal
   - type: BallisticAmmoProvider
     capacity: 30
     proto: CartridgeAntiMateriel

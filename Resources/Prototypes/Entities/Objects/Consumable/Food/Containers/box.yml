@@ -39,7 +39,7 @@
       visible: false
   - type: Storage
     grid:
-    - 0,0,5,0
+    - 0,0,1,2
     whitelist:
       tags:
       - Donut

@@ -4,12 +4,6 @@
   name: error
   description: Hmmmm. Something went wrong.
   components:
-  - type: Item
-    shape: # funny shape
-    - 0,0,6,0
-    - 0,1,0,2
-    - 0,3,6,3
-    - 6,1,6,2
   - type: Sprite
     sprite: error.rsi
     state: error

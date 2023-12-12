@@ -191,7 +191,6 @@
         - suitStorage
     - type: Item
       sprite: Objects/Tanks/Jetpacks/mini.rsi
-      size: Large
     - type: GasTank
       outputPressure: 42.6
       air:
@@ -255,7 +254,6 @@
   suffix: Empty
   components:
   - type: Item
-    size: Normal
     sprite: Objects/Tanks/Jetpacks/void.rsi
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/void.rsi

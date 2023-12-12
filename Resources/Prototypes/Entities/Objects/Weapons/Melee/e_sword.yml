@@ -64,7 +64,6 @@
   - type: Item
     storedRotation: -45 # Inventory sprites don't support state changes yet, and straight in-hand swords look dumb.
   
-
 - type: entity
   name: pen
   parent: EnergySword
@@ -138,8 +137,6 @@
   suffix: E-Dagger
   description: A small box containing an e-dagger. Packaging disintegrates when opened, leaving no evidence behind.
   components:
-  - type: Item
-    size: Tiny
   - type: Sprite
     sprite: Objects/Storage/penbox.rsi
     state: e_dagger

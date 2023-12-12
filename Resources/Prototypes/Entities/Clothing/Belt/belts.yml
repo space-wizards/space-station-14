@@ -88,8 +88,6 @@
   - type: Clothing
     sprite: Clothing/Belt/ce.rsi
   - type: Storage
-    grid:
-    - 0,0,9,1
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -368,8 +366,6 @@
         - Taser
         - SecBeltEquip
         - Radio
-        - Sidearm
-        - MagazinePistol
       components:
         - Stunbaton
         - FlashOnTrigger
@@ -473,11 +469,8 @@
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Item
-    size: Ginormous
+    size: Huge
   - type: Storage
-    maxItemSize: Huge
-    grid:
-    - 0,0,3,3
     whitelist:
       components:
         - Gun
