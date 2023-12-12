@@ -61,7 +61,7 @@ namespace Content.Server.Atmos.EntitySystems
             NumericsHelpers.Multiply(moles, GasSpecificHeats, tmp);
             // Adjust heat capacity by speedup, because this is primarily what
             // determines how quickly gases heat up/cool.
-            return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity) / Speedup;
+            return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity) / HeatScale;
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         public float PumpSpeedup()
         {
-            return MathF.Sqrt(Speedup);
+            return Speedup;
         }
 
         /// <summary>
