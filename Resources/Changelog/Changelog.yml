@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed fultons losing their beacon when the stack is split., type: Fix}
-  id: 4845
-  time: '2023-09-18T00:22:26.0000000+00:00'
 - author: Psychpsyo
   changes:
   - {message: The advanced mop no longer looks boring when attached to the janitorial
@@ -2900,3 +2895,9 @@ Entries:
   - {message: syndicate pens now come in suitably sized discarding boxes., type: Tweak}
   id: 5345
   time: '2023-12-12T08:01:33.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Mops are now larger!, type: Tweak}
+  - {message: Defibs are now larger!, type: Tweak}
+  id: 5346
+  time: '2023-12-12T08:02:44.0000000+00:00'
