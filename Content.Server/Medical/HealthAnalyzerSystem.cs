@@ -20,12 +20,15 @@ namespace Content.Server.Medical
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<HealthAnalyzerComponent, HealthAnalyzerDoAfterEvent>(OnDoAfter);
+
+            SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(OnDamageChanged);
         }
 
         private void OnAfterInteract(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, AfterInteractEvent args)
@@ -50,7 +53,9 @@ namespace Content.Server.Medical
 
             _audio.PlayPvs(component.ScanningEndSound, args.Args.User);
 
-            UpdateScannedUser(uid, args.Args.User, args.Args.Target.Value, component);
+            component.ScannedEntity = args.Args.Target.Value;
+            OpenUserInterface(args.Args.User, uid);
+            UpdateScannedUser(uid, args.Args.Target.Value, component);
             args.Handled = true;
         }
 
@@ -62,7 +67,34 @@ namespace Content.Server.Medical
             _uiSystem.OpenUi(ui ,actor.PlayerSession);
         }
 
-        public void UpdateScannedUser(EntityUid uid, EntityUid user, EntityUid? target, HealthAnalyzerComponent? healthAnalyzer)
+        private void OnDamageChanged(EntityUid uid, MobStateComponent component, DamageChangedEvent args)
+        {
+            var query = EntityQueryEnumerator<HealthAnalyzerComponent>();
+            while (query.MoveNext(out var healthAnalyserUid, out var healthAnalyserComp))
+            {
+                if (healthAnalyserComp.ScannedEntity != uid)
+                    continue;
+
+                //Get distance between health analyser and the scanned entity
+                var scannedEntityPosition = _transformSystem.GetMapCoordinates(uid);
+                var healthAnalyserPosition = _transformSystem.GetMapCoordinates(healthAnalyserUid);
+                var distance = (scannedEntityPosition.Position - healthAnalyserPosition.Position).Length();
+
+                //If they are on different maps, or the distance is greater than the Max Scan range
+                //Remove the scanned entity to prevent further updates
+                if (scannedEntityPosition.MapId != healthAnalyserPosition.MapId ||
+                    distance > healthAnalyserComp.MaxScanRange)
+                {
+                    healthAnalyserComp.ScannedEntity = EntityUid.Invalid;
+                }
+                else
+                {
+                    UpdateScannedUser(healthAnalyserUid, uid, healthAnalyserComp);
+                }
+            }
+        }
+
+        public void UpdateScannedUser(EntityUid uid, EntityUid? target, HealthAnalyzerComponent? healthAnalyzer)
         {
             if (!Resolve(uid, ref healthAnalyzer))
                 return;
@@ -75,8 +107,6 @@ namespace Content.Server.Medical
 
             TryComp<TemperatureComponent>(target, out var temp);
             TryComp<BloodstreamComponent>(target, out var bloodstream);
-
-            OpenUserInterface(user, uid);
 
             _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(GetNetEntity(target), temp != null ? temp.CurrentTemperature : float.NaN,
                 bloodstream != null ? bloodstream.BloodSolution.FillFraction : float.NaN));

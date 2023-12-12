@@ -18,6 +18,17 @@ namespace Content.Server.Medical.Components
         public float ScanDelay = 0.8f;
 
         /// <summary>
+        /// Which entity has been scanned, for continuous updates
+        /// </summary>
+        public EntityUid ScannedEntity;
+
+        /// <summary>
+        /// The maximum range at which the analyser can read an entities vitals
+        /// </summary>
+        [DataField("maxScanRange")]
+        public float MaxScanRange = 5f;
+
+        /// <summary>
         ///     Sound played on scanning begin
         /// </summary>
         [DataField("scanningBeginSound")]
