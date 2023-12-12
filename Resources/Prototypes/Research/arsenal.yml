@@ -23,7 +23,7 @@
     state: incendiarydisplay
   discipline: Arsenal
   tier: 1
-  cost: 10000
+  cost: 6000
   recipeUnlocks:
   - ShellShotgunIncendiary
   - CartridgePistolIncendiary
@@ -86,22 +86,24 @@
   - MagazineBoxRifleRubber
 
 - type: technology
-  id: PracticeAmmunition
-  name: research-technology-practice-ammunition
+  id: DepletedUraniumMunitions
+  name: research-technology-uranium-munitions
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: practice
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: uranium
   discipline: Arsenal
   tier: 1
-  cost: 2000
+  cost: 6000
   recipeUnlocks:
-  - ShellShotgunPractice
-  - MagazineBoxPistolPractice
-  - MagazineBoxMagnumPractice
-  - MagazineBoxLightRiflePractice
-  - MagazineBoxRiflePractice
-  - WeaponLaserCarbinePractice
-  - WeaponDisablerPractice
+  - ShellShotgunUranium
+  - CartridgePistolUranium
+  - CartridgeMagnumUranium
+  - CartridgeLightRifleUranium
+  - CartridgeRifleUranium
+  - MagazineBoxPistolUranium
+  - MagazineBoxMagnumUranium
+  - MagazineBoxLightRifleUranium
+  - MagazineBoxRifleUranium
 
 # Tier 2
 
