@@ -15,10 +15,10 @@ public sealed partial class SuperBonkComponent: Component
     public Dictionary<EntityUid, BonkableComponent>.Enumerator Tables;
 
     [DataField("initialTime")]
-    public float InitialTime = 0.25f;
+    public float InitialTime = 0.10f;
 
     [DataField("timeRemaining")]
-    public float TimeRemaining = 0.25f;
+    public float TimeRemaining = 0.10f;
 
     [DataField("removeClumsy")]
     public bool RemoveClumsy;
