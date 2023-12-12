@@ -56,6 +56,7 @@
         Caustic: 0.35
         Heat: 0.35
         Radiation: 0
+        Stamina: 0.85 ## Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -65,7 +66,7 @@
     slot: head
   - type: Insulated
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitEngineerSealed
   name: marine modsuit
@@ -91,6 +92,7 @@
         Shock: 0.7
         Caustic: 0.4
         Radiation: 0.2
+        Stamina: 0.85 ## Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
@@ -100,7 +102,7 @@
     slot: head
   - type: Insulated
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitRNDSealed
   name: marine modsuit
@@ -126,6 +128,7 @@
         Caustic: 0.3
         Heat: 0.6
         Radiation: 0.4
+        Stamina: 0.85 ## Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
@@ -134,7 +137,7 @@
     requiredSlot: outerClothing
     slot: head
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitAtmosphericsSealed
   name: marine modsuit
@@ -159,6 +162,7 @@
         Piercing: 0.9
         Caustic: 0.3
         Heat: 0.1
+        Stamina: 0.85 ## Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
@@ -167,7 +171,7 @@
     requiredSlot: outerClothing
     slot: head
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitMedicalSealed
   name: marine modsuit
@@ -189,6 +193,7 @@
       coefficients:
         Caustic: 0.7
         Heat: 0.9
+        Stamina: 0.85 ## Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.95
@@ -197,7 +202,7 @@
     requiredSlot: outerClothing
     slot: head
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitCMOSealed
   name: marine modsuit
@@ -222,6 +227,7 @@
         Blunt: 0.85
         Slash: 0.85
         Heat: 0.7
+        Stamina: 0.85 ## Stamina resistance
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitCMOSealed
     requiredSlot: outerClothing
@@ -230,7 +236,7 @@
     walkModifier: 0.95
     sprintModifier: 0.95
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitCivillianSealed
   name: marine modsuit
@@ -254,6 +260,7 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+        Stamina: 0.85 ## Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -262,7 +269,7 @@
     requiredSlot: outerClothing
     slot: head
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitMagnateSealed
   name: marine modsuit
@@ -288,6 +295,7 @@
         Caustic: 0.55
         Radiation: 0.5
         Heat: 0.6
+        Stamina: 0.85 ## Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
@@ -296,7 +304,7 @@
     requiredSlot: outerClothing
     slot: head
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitSecuritySealed
   name: marine modsuit
@@ -321,6 +329,7 @@
         Piercing: 0.5
         Shock: 0.65
         Caustic: 0.7
+        Stamina: 0.8 ## Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
@@ -330,7 +339,7 @@
     slot: head
 
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitHOSSealed
   name: marine modsuit
@@ -355,6 +364,7 @@
         Piercing: 0.45
         Caustic: 0.45
         Heat: 0.7
+        Stamina: 0.7 ## Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
@@ -363,7 +373,7 @@
     requiredSlot: outerClothing
     slot: head
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitSalvageSealed
   name: marine modsuit
@@ -387,6 +397,7 @@
         Slash: 0.7
         Piercing: 0.8
         Caustic: 0.8
+        Stamina: 0.85 ## Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
@@ -395,7 +406,7 @@
     requiredSlot: outerClothing
     slot: head
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitMinerSealed
   name: marine modsuit
@@ -421,6 +432,7 @@
         Caustic: 0.65
         Heat: 0.7
         Radiation: 0.5
+        Stamina: 0.85 ## Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
@@ -429,7 +441,7 @@
     requiredSlot: outerClothing
     slot: head
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitOperativeSealed
   name: marine modsuit
@@ -455,6 +467,7 @@
         Caustic: 0.4
         Heat: 0.6
         Radiation: 0.4
+        Stamina: 0.45 # Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -493,7 +506,7 @@
     tags:
       - WhitelistChameleon
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitOperativeSealed
   id: ClothingOuterChestplateModsuitHonkOperativeSealed
   name: marine modsuit
@@ -508,7 +521,7 @@
     requiredSlot: outerClothing
     slot: head
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitOperativeCMDSealed
   name: marine modsuit
@@ -534,6 +547,7 @@
         Caustic: 0.15
         Heat: 0.3
         Radiation: 0.15
+        Stamina: 0.45 # Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -572,7 +586,7 @@
     tags:
       - WhitelistChameleon
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitOperativeSealed
   id: ClothingOuterChestplateModsuitCCSealed
   name: marine modsuit
@@ -598,8 +612,9 @@
         Caustic: 0.9
         Heat: 0.85
         Radiation: 0.7
+        Stamina: 0.85 ## Stamina resistance
 
-- type: entity 
+- type: entity
   parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitApocryphalSealed
   name: marine modsuit
@@ -626,6 +641,7 @@
         Caustic: 0.05
         Heat: 0.05
         Radiation: 0.05
+        Stamina: 0.5 ## Stamina resistance
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.95
