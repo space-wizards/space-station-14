@@ -36,5 +36,5 @@ marking-GauzeLowerLegRight-gauze_lowerleg_r = Gauze Ankle Wrap (Right)
 marking-GauzeLowerLegRight = Gauze Ankle Wrap (Right)
 
 
-marking-GauzeUpperLegRight-gauze_upperleg_r = Gauze Leg Wrap (Right)
-marking-GauzeUpperLegRight = Gauze Leg Wrap (Right)
+marking-GauzeUpperLegRight-gauze_upperleg_r = Gauze Thigh Wrap (Right)
+marking-GauzeUpperLegRight = Gauze Thigh Wrap (Right)
