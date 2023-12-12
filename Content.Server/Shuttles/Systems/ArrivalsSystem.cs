@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
@@ -6,6 +7,7 @@ using Content.Server.Parallax;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Salvage;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Spawners.Components;
@@ -48,6 +50,7 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly RestrictedRangeSystem _restricted = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
@@ -492,9 +495,11 @@ public sealed class ArrivalsSystem : EntitySystem
         {
             var template = _random.Pick(_arrivalsBiomeOptions);
             _biomes.EnsurePlanet(mapUid, _protoManager.Index(template));
-            var range = AddComp<RestrictedRangeComponent>(mapUid);
-            range.Range = 32f;
-            Dirty(mapUid, range);
+            var restricted = new RestrictedRangeComponent
+            {
+                Range = 32f
+            };
+            AddComp(mapUid, restricted);
         }
 
         _mapManager.DoMapInitialize(mapId);

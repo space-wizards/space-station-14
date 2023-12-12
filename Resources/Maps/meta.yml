@@ -73770,13 +73770,6 @@ entities:
     - pos: 56.5,-29.5
       parent: 5350
       type: Transform
-- proto: GasMinerPlasma
-  entities:
-  - uid: 11599
-    components:
-    - pos: 68.5,-15.5
-      parent: 5350
-      type: Transform
 - proto: GasMixer
   entities:
   - uid: 11074
