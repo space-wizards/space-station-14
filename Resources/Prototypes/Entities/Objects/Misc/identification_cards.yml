@@ -482,9 +482,11 @@
     - state: ert_chaplain # we have the sprite for the id but dont have chaplain ERT equipment for now.
   - type: IdCard
     jobTitle: ERT Soul Officer
+  - type: Item
+    heldPrefix: blue
 
 - type: entity
-  parent: ERTLeaderIDCard
+  parent: ERTChaplainIDCard
   id: ERTEngineerIDCard
   name: ERT Engineer ID card
   components:
@@ -496,7 +498,7 @@
     jobTitle: ERT Field Engineer
 
 - type: entity
-  parent: ERTLeaderIDCard
+  parent: ERTChaplainIDCard
   id: ERTJanitorIDCard
   name: ERT Janitor ID card
   components:
@@ -508,7 +510,7 @@
     jobTitle: ERT Custodian
 
 - type: entity
-  parent: ERTLeaderIDCard
+  parent: ERTChaplainIDCard
   id: ERTMedicIDCard
   name: ERT Medic ID card
   components:
@@ -520,7 +522,7 @@
     jobTitle: ERT Medical Doctor
 
 - type: entity
-  parent: ERTLeaderIDCard
+  parent: ERTChaplainIDCard
   id: ERTSecurityIDCard
   name: ERT Security ID card
   components:
