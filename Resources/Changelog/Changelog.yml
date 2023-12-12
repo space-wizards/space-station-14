@@ -1,9 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: NPS no longer have an SSD indicator, type: Fix}
-  id: 4832
-  time: '2023-09-15T02:15:26.0000000+00:00'
 - author: Doru991
   changes:
   - {message: It is now easier to tell how damaged cyborgs are., type: Tweak}
@@ -2898,3 +2893,9 @@ Entries:
   - {message: 'Pumps, vents, scrubbers, and heaters now work faster.', type: Tweak}
   id: 5331
   time: '2023-12-11T23:59:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Removed Senior Researcher, Senior Engineer, Senior Physician, and Senior
+      Officer.', type: Remove}
+  id: 5332
+  time: '2023-12-12T02:37:06.0000000+00:00'
