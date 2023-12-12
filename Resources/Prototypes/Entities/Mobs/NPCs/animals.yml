@@ -313,6 +313,7 @@
         damage: 10
       behaviors:
       - !type:GibBehavior { }
+  - type: NonSpreaderZombie
 
 - type: entity
   name: glockroach
@@ -363,6 +364,7 @@
   - type: Speech
     speechVerb: Moth
     speechSounds: Squeak
+  - type: MothAccent
   - type: Sprite
     sprite: Mobs/Animals/mothroach.rsi
     layers:
@@ -389,10 +391,10 @@
     thresholds:
       0: Alive
       25: Critical
-      50: Dead
+      45: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
+    baseSprintSpeed : 4
     weightlessAcceleration: 1.5
     weightlessFriction: 1
     weightlessModifier: 1
@@ -415,6 +417,8 @@
     grindableSolutionName: food
   - type: ReplacementAccent
     accent: mothroach
+  - type: ZombieAccentOverride
+    accent: zombieMoth
   - type: Vocal
     sounds:
       Male: UnisexMoth
@@ -422,17 +426,18 @@
       Unsexed: UnisexMoth
     wilhelmProbability: 0.001
   - type: MobPrice
-    price: 60
+    price: 150
   - type: Tag
     tags:
     - Trash
     - CannotSuicide
+    - VimPilot
   - type: CanEscapeInventory
   - type: NpcFactionMember
     factions:
     - Mouse
   - type: Body
-    prototype: Moth
+    prototype: Mothroach
   - type: TypingIndicator
     proto: moth
 
@@ -763,6 +768,8 @@
         - MobLayer
   - type: Tag
     tags:
+    # let moths eat wool directly
+    - ClothMade
     - DoorBumpOpener
     - Goat
   - type: Reproductive
@@ -788,11 +795,19 @@
         reagents:
         - ReagentId: MilkGoat
           Quantity: 30
+      wool:
+        maxVol: 250
   - type: Udder
     reagentId: MilkGoat
     targetSolution: udder
     quantity: 25
     updateRate: 20
+  - type: Wooly
+  - type: Food
+    solution: wool
+    requiresSpecialDigestion: true
+    # Wooly prevents eating wool deleting the goat so its fine
+    requireDead: false
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1102,6 +1117,7 @@
       amount: 3
   - type: MonkeyAccent
   - type: Puller
+    needsHands: false
   - type: CanHostGuardian
   - type: NPCRetaliation
     attackMemoryLength: 10
@@ -1145,6 +1161,8 @@
   id: MobMouse
   description: Squeak!
   components:
+  - type: Body
+    prototype: Mouse
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -1213,6 +1231,12 @@
         Base: splat-0
   - type: Food
   - type: Hunger
+    thresholds:
+      Overfed: 35
+      Okay: 25
+      Peckish: 15
+      Starving: 10
+      Dead: 0
     baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
   - type: Extractable
     grindableSolutionName: food
@@ -1263,6 +1287,7 @@
   - type: Puller
     needsHands: true
   - type: BadFood
+  - type: NonSpreaderZombie
 
 - type: entity
   parent: MobMouse
@@ -2681,6 +2706,7 @@
     BaseResistTime: 3
   - type: MobPrice
     price: 60
+  - type: NonSpreaderZombie
 
 - type: entity
   name: pig

@@ -19,6 +19,8 @@
     size: Ginormous
   - type: Storage
     maxItemSize: Huge
+    grid:
+    - 0,0,6,3
   - type: StorageFill
     contents:
       - id: WeaponSniperHristov

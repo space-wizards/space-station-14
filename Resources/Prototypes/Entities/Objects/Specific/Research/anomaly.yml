@@ -19,6 +19,8 @@
   - type: GuideHelp
     guides:
     - ScannersAndVessels
+  - type: Item
+    storedRotation: -90
 
 - type: entity
   id: AnomalyLocatorUnpowered
@@ -50,7 +52,7 @@
     beepSound:
       path: "/Audio/Items/locator_beep.ogg"
       params:
-        maxdistance: 1
+        maxDistance: 1
         volume: -8
 
 - type: entity

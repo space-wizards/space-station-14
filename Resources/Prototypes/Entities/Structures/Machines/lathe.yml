@@ -106,6 +106,8 @@
       - Beaker
       - Syringe
       - LightTube
+      - SodiumLightTube
+      - ExteriorLightTube
       - LightBulb
       - Bucket
       - FoodPlate
@@ -220,6 +222,7 @@
       - Beaker
       - LargeBeaker
       - CryostasisBeaker
+      - SyringeCryostasis
       - Dropper
       - Syringe
       - Implanter
@@ -279,7 +282,6 @@
       - WeaponAdvancedLaser
       - WeaponLaserCannon
       - WeaponXrayCannon
-      - WeaponTaser
 
 - type: entity
   id: CircuitImprinter
@@ -367,10 +369,12 @@
       - AnalysisComputerCircuitboard
       - ExosuitFabricatorMachineCircuitboard
       - AnomalyVesselCircuitboard
+      - AnomalyVesselExperimentalCircuitboard
       - AnomalySynchronizerCircuitboard
       - APECircuitboard
       - ArtifactAnalyzerMachineCircuitboard
       - TraversalDistorterMachineCircuitboard
+      - ArtifactCrusherMachineCircuitboard
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
@@ -455,7 +459,6 @@
     - ProximitySensor
     - BorgModuleLightReplacer
     - BorgModuleAdvancedCleaning
-    - BorgModuleTrashCollection
     - BorgModuleMining
     - BorgModuleGrapplingGun
     - BorgModuleGasAnalyzer
@@ -586,7 +589,6 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponLaserCarbinePractice
-      - WeaponTaser
       - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:
@@ -700,6 +702,7 @@
       - BluespaceBeaker
       - SyringeBluespace
       - Jug
+      - SyringeCryostasis
   - type: Machine
     board: MedicalTechFabCircuitboard
 

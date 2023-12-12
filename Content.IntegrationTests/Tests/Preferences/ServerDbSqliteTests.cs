@@ -8,9 +8,11 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests.Preferences
 {
@@ -64,20 +66,22 @@ namespace Content.IntegrationTests.Tests.Preferences
             );
         }
 
-        private static ServerDbSqlite GetDb(IConfigurationManager cfgManager)
+        private static ServerDbSqlite GetDb(RobustIntegrationTest.ServerIntegrationInstance server)
         {
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            var opsLog = server.ResolveDependency<ILogManager>().GetSawmill("db.ops");
             var builder = new DbContextOptionsBuilder<SqliteServerDbContext>();
             var conn = new SqliteConnection("Data Source=:memory:");
             conn.Open();
             builder.UseSqlite(conn);
-            return new ServerDbSqlite(() => builder.Options, true, cfgManager, true);
+            return new ServerDbSqlite(() => builder.Options, true, cfg, true, opsLog);
         }
 
         [Test]
         public async Task TestUserDoesNotExist()
         {
             var pair = await PoolManager.GetServerClient();
-            var db = GetDb(pair.Server.ResolveDependency<IConfigurationManager>());
+            var db = GetDb(pair.Server);
             // Database should be empty so a new GUID should do it.
             Assert.Null(await db.GetPlayerPreferencesAsync(NewUserId()));
 
@@ -88,7 +92,7 @@ namespace Content.IntegrationTests.Tests.Preferences
         public async Task TestInitPrefs()
         {
             var pair = await PoolManager.GetServerClient();
-            var db = GetDb(pair.Server.ResolveDependency<IConfigurationManager>());
+            var db = GetDb(pair.Server);
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
             const int slot = 0;
             var originalProfile = CharlieCharlieson();
@@ -103,7 +107,7 @@ namespace Content.IntegrationTests.Tests.Preferences
         {
             var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
-            var db = GetDb(server.ResolveDependency<IConfigurationManager>());
+            var db = GetDb(server);
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
             await db.InitPrefsAsync(username, new HumanoidCharacterProfile());
             await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), 1);

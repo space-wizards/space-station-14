@@ -42,10 +42,13 @@
     materialComposition:
       Steel: 50
   - type: SpaceGarbage
-  - type: Storage
-    maxSlots: 5
   - type: Item
-    size: Small
+    size: Tiny
+    shape: # Yes, this is cursed, but it breaks otherwise, dont question it.
+    - 0,0,0,1
+  - type: Storage
+    grid:
+    - 0,0,4,1
   - type: StorageFill
     contents:
     - id: Cigarette
@@ -107,11 +110,13 @@
     materialComposition:
       Steel: 50
   - type: SpaceGarbage
-  - type: Storage
-    maxSlots: 10
-    maxTotalWeight: 20
   - type: Item
-    size: Small
+    size: Tiny
+    shape: # Yes, this is cursed, but it breaks otherwise, dont question it.
+    - 0,0,0,1
+  - type: Storage
+    grid:
+    - 0,0,4,1
   - type: StorageFill
     contents:
     - id: CigaretteRandom

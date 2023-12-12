@@ -124,3 +124,13 @@
         prob: 0.5
       - id: NettleSeeds
         prob: 0.7
+
+- type: entity
+  id: ClosetJanitorBombFilled
+  parent: ClosetJanitorBomb
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetJanitorBombSuit
+      - id: ClothingOuterSuitJanitorBomb

@@ -743,6 +743,7 @@
   parent: BasePDA
   id: ERTLeaderPDA
   name: ERT PDA
+  suffix: Leader
   description: Red for firepower.
   components:
   - type: Pda
@@ -753,6 +754,56 @@
     accentHColor: "#447987"
     accentVColor: "#447987"
   - type: Icon
+    state: pda-ert
+
+- type: entity
+  parent: ERTLeaderPDA
+  id: ERTChaplainPDA
+  name: ERT PDA
+  suffix: Chaplain
+  components:
+  - type: Pda
+    id: ERTChaplainIDCard
+    state: pda-ert
+
+- type: entity
+  parent: ERTLeaderPDA
+  id: ERTEngineerPDA
+  name: ERT PDA
+  suffix: Engineer
+  components:
+  - type: Pda
+    id: ERTEngineerIDCard
+    state: pda-ert
+
+- type: entity
+  parent: ERTLeaderPDA
+  id: ERTJanitorPDA
+  name: ERT PDA
+  suffix: Janitor
+  components:
+  - type: Pda
+    id: ERTJanitorIDCard
+    state: pda-ert
+
+- type: entity
+  parent: ERTLeaderPDA
+  id: ERTMedicPDA
+  name: ERT PDA
+  suffix: Medic
+  components:
+  - type: Pda
+    id: ERTMedicIDCard
+    state: pda-ert
+
+- type: entity
+  parent: ERTLeaderPDA
+  id: ERTSecurityPDA
+  name: ERT PDA
+  suffix: Security
+  components:
+  - type: Pda
+    id: ERTSecurityIDCard
     state: pda-ert
 
 - type: entity
@@ -961,3 +1012,33 @@
     state: pda-pirate
   - type: Icon
     state: pda-pirate
+
+- type: entity
+  parent: BasePDA
+  id: SyndiAgentPDA
+  name: syndicate agent PDA
+  description: For those days when healing normal syndicates aren't enough, try healing nuclear operatives instead!
+  components:
+  - type: Pda
+    id: SyndicateIDCard
+    state: pda-syndi-agent
+  - type: PdaBorderColor
+    borderColor: "#891417"
+  - type: Icon
+    state: pda-syndi-agent
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+    cartridgeSlot:
+      priority: -1
+      name: Cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+          - Cartridge
+  - type: HealthAnalyzer 
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
