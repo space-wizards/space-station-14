@@ -361,9 +361,11 @@ namespace Content.Server.GameTicking
                 else if (mind.CurrentEntity != null && TryName(mind.CurrentEntity.Value, out var icName))
                     playerIcName = icName;
 
-                // Temporarily disabled to test if this causes issues on live servers
-                //if (TryGetEntity(mind.OriginalOwnedEntity, out var entity))
-                //    _pvsOverride.AddGlobalOverride(GetNetEntity(entity.Value), recursive: true);
+                if (TryGetEntity(mind.OriginalOwnedEntity, out var entity))
+                {
+                    // Temporarily disabled to test if this causes issues on live servers
+                    // _pvsOverride.AddGlobalOverride(GetNetEntity(entity.Value), recursive: true);
+                }
 
                 var roles = _roles.MindGetAllRoles(mindId);
 
