@@ -113,3 +113,5 @@
   components:
   - type: Sprite
     state: silver
+  - type: Stack
+    count: 1
