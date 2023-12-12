@@ -26,12 +26,12 @@ namespace Content.Server.Damage.Systems
             if (args.Handled)
                 return;
 
-            if (!TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
+            if (!TryComp<ItemToggleComponent>(uid, out var itemToggle))
                 return;
 
             if (component.WeldingDamage is {} weldingDamage
             && EntityManager.TryGetComponent(args.Used, out WelderComponent? welder)
-            && itemToggleComp.Activated
+            && itemToggle.Activated
             && !welder.TankSafe)
             {
                 var dmg = _damageableSystem.TryChangeDamage(args.Target, weldingDamage, origin: args.User);
