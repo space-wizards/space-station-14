@@ -1,3 +1,5 @@
+#license: CLA
+#copityght: https://github.com/ss14-ganimed/ENT14-Master/blob/master/CLA.txt
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretBlueShield
