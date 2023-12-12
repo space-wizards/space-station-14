@@ -32,39 +32,40 @@ public abstract class SharedItemToggleSystem : EntitySystem
         SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnonWielded);
         SubscribeLocalEvent<ItemToggleComponent, ItemToggleForceToggleEvent>(ForceToggle);
     }
-    private void OnUseInHand(EntityUid uid, ItemToggleComponent component, UseInHandEvent args)
+    private void OnUseInHand(EntityUid uid, ItemToggleComponent itemToggle, UseInHandEvent args)
     {
         if (args.Handled)
             return;
 
         args.Handled = true;
 
-        component.User = args.User;
+        itemToggle.User = args.User;
 
         if (TryComp<WieldableComponent>(uid, out var wieldableComp))
             return;
 
-        Toggle(uid, component);
+        Toggle(uid, itemToggle.User, itemToggle);
     }
 
-    public void Toggle(EntityUid uid, ItemToggleComponent? itemToggle = null)
+    public void Toggle(EntityUid uid, EntityUid? user = null, ItemToggleComponent? itemToggle = null)
     {
         if (!Resolve(uid, ref itemToggle))
             return;
 
         if (itemToggle.Activated)
         {
-            TryDeactivate(uid, itemToggle: itemToggle);
+            TryDeactivate(uid, user, itemToggle: itemToggle);
         }
         else
         {
-            TryActivate(uid, itemToggle: itemToggle);
+            TryActivate(uid, user, itemToggle: itemToggle);
         }
     }
 
-    public void ForceToggle(EntityUid uid, ItemToggleComponent component, ref ItemToggleForceToggleEvent args)
+    public void ForceToggle(EntityUid uid, ItemToggleComponent itemToggle, ref ItemToggleForceToggleEvent args)
     {
-        Toggle(uid, component);
+
+        Toggle(uid, itemToggle.User, itemToggle);
     }
 
     public bool TryActivate(EntityUid uid, EntityUid? user = null, ItemToggleComponent? itemToggle = null)
@@ -124,34 +125,34 @@ public abstract class SharedItemToggleSystem : EntitySystem
     }
 
     //Makes the actual changes to the item.
-    private void Activate(EntityUid uid, ItemToggleComponent component)
+    private void Activate(EntityUid uid, ItemToggleComponent itemToggle)
     {
-        component.Activated = true;
+        itemToggle.Activated = true;
 
-        UpdateItemComponent(uid, component);
-        UpdateWeaponComponent(uid, component);
-        UpdateAppearance(uid, component);
-        UpdateLight(uid, component);
+        UpdateItemComponent(uid, itemToggle);
+        UpdateWeaponComponent(uid, itemToggle);
+        UpdateAppearance(uid, itemToggle);
+        UpdateLight(uid, itemToggle);
 
         var ev = new ItemToggleActivatedServerChangesEvent();
         RaiseLocalEvent(uid, ref ev);
 
-        Dirty(uid, component);
+        Dirty(uid, itemToggle);
     }
 
-    private void Deactivate(EntityUid uid, ItemToggleComponent component)
+    private void Deactivate(EntityUid uid, ItemToggleComponent itemToggle)
     {
-        component.Activated = false;
+        itemToggle.Activated = false;
 
-        UpdateItemComponent(uid, component);
-        UpdateWeaponComponent(uid, component);
-        UpdateAppearance(uid, component);
-        UpdateLight(uid, component);
+        UpdateItemComponent(uid, itemToggle);
+        UpdateWeaponComponent(uid, itemToggle);
+        UpdateAppearance(uid, itemToggle);
+        UpdateLight(uid, itemToggle);
 
         var ev = new ItemToggleDeactivatedServerChangesEvent();
         RaiseLocalEvent(uid, ref ev);
 
-        Dirty(uid, component);
+        Dirty(uid, itemToggle);
     }
 
 
