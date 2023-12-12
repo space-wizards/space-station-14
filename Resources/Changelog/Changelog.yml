@@ -1,10 +1,4 @@
 Entries:
-- author: Psychpsyo
-  changes:
-  - {message: The advanced mop no longer looks boring when attached to the janitorial
-      trolley., type: Tweak}
-  id: 4846
-  time: '2023-09-18T00:23:35.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'Now you can light matches with certain types (combat, work, merc, explorer)
@@ -2901,3 +2895,8 @@ Entries:
   - {message: Defibs are now larger!, type: Tweak}
   id: 5346
   time: '2023-12-12T08:02:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Fix arrivals fog not actually blocking, no more free roaming.', type: Fix}
+  id: 5347
+  time: '2023-12-12T09:20:33.0000000+00:00'
