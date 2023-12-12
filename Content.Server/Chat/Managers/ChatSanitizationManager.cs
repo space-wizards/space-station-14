@@ -20,7 +20,6 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "о7", "chatsan-salutes" }, // cyrillic о
         { "0_o", "chatsan-wide-eyed" },
         { "лмао", "chatsan-laughs" },
-        { "рофл", "chatsan-laughs" },
         { "яхз", "chatsan-shrugs" },
         { ":0", "chatsan-surprised" },
         { ":р", "chatsan-stick-out-tongue" }, // cyrillic р
@@ -35,6 +34,28 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "!х", "chatsan-claps" },
         { "!п", "chatsan-cries" },
         { "!щ", "chatsan-snaps" },
+        { "хд.", "chatsan-laughs" },
+        { "о-о.", "chatsan-wide-eyed" }, // cyrillic о
+        { "о.о.", "chatsan-wide-eyed" }, // cyrillic о
+        { "0_о.", "chatsan-wide-eyed" }, // cyrillic о
+        { "о/.", "chatsan-waves" }, // cyrillic о
+        { "о7", "chatsan-salutes" }, // cyrillic о
+        { "0_o.", "chatsan-wide-eyed" },
+        { "лмао.", "chatsan-laughs" },
+        { "яхз.", "chatsan-shrugs" },
+        { ":0.", "chatsan-surprised" },
+        { ":р.", "chatsan-stick-out-tongue" }, // cyrillic р
+        { "кек.", "chatsan-laughs" },
+        { "лол.", "chatsan-laughs" },
+        { "T_T.", "chatsan-cries" },
+        { "Т_Т.", "chatsan-cries" }, // cyrillic T
+        { "=_(.", "chatsan-cries" },
+        { "!см.", "chatsan-laughs" },
+        { "!св.", "chatsan-whistle" },
+        { "!в.", "chatsan-sighs" },
+        { "!х.", "chatsan-claps" },
+        { "!п.", "chatsan-cries" },
+        { "!щ.", "chatsan-snaps" },
         //imperial rus replace end @keeyn
         // I could've done this with regex, but felt it wasn't the right idea.
         { ":)", "chatsan-smiles" },
