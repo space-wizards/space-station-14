@@ -470,6 +470,8 @@
   parent: BaseStorageItem
   description: Holds up to 10 pills.
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
     state: pill_canister
