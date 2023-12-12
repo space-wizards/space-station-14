@@ -601,7 +601,6 @@
       - WeaponAdvancedLaser
       - WeaponLaserCannon
       - WeaponLaserCarbine
-      - WeaponTaser
       - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:

@@ -34,6 +34,7 @@ research-technology-cloning = Cloning
 
 research-technology-salvage-weapons = Salvage Weapons
 research-technology-draconic-munitions = Draconic Munitions
+research-technology-uranium-munitions = Depleted Uranium Munitions
 research-technology-explosive-technology = Explosive Technology
 research-technology-weaponized-laser-manipulation = Weaponized Laser Manipulation
 research-technology-nonlethal-ammunition = Nonlethal Ammunition
