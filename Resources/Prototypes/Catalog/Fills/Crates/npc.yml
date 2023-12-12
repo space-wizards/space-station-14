@@ -203,3 +203,12 @@
   - type: StorageFill
     contents:
       - id: MobKangaroo
+
+- type: entity
+  id: CrateNPCMothroach
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobMothroach
+        amount: 4
