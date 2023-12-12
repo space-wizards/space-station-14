@@ -83,6 +83,7 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeAllEvent<StorageInteractWithItemEvent>(OnInteractWithItem);
         SubscribeAllEvent<StorageSetItemLocationEvent>(OnSetItemLocation);
         SubscribeAllEvent<StorageInsertItemIntoLocationEvent>(OnInsertItemIntoLocation);
+        SubscribeAllEvent<StorageRemoveItemEvent>(OnRemoveItem);
     }
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
@@ -383,6 +384,34 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
 
         TrySetItemStorageLocation((itemEnt, null), (storageEnt, storageComp), msg.Location);
+    }
+
+    private void OnRemoveItem(StorageRemoveItemEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not { } player)
+            return;
+
+        var storageEnt = GetEntity(msg.StorageEnt);
+        var itemEnt = GetEntity(msg.ItemEnt);
+
+        if (!TryComp<StorageComponent>(storageEnt, out var storageComp))
+            return;
+
+        if (!_ui.TryGetUi(storageEnt, StorageComponent.StorageUiKey.Key, out var bui) ||
+            !bui.SubscribedSessions.Contains(args.SenderSession))
+            return;
+
+        if (!Exists(itemEnt))
+        {
+            Log.Error($"Player {args.SenderSession} set location of non-existent item {msg.ItemEnt} stored in {ToPrettyString(storageEnt)}");
+            return;
+        }
+
+        if (!ActionBlocker.CanInteract(player, itemEnt))
+            return;
+
+        TransformSystem.DropNextTo(itemEnt, player);
+        Audio.PlayPredicted(storageComp.StorageRemoveSound, storageEnt, player);
     }
 
     private void OnInsertItemIntoLocation(StorageInsertItemIntoLocationEvent msg, EntitySessionEventArgs args)

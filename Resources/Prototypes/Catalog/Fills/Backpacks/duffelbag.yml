@@ -44,6 +44,8 @@
       - id: Cautery
       - id: Retractor
       - id: ScalpelAdvanced
+      - id: ClothingHandsGlovesNitrile
+      - id: EmergencyRollerBedSpawnFolded
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -330,6 +332,6 @@
       - id: Defibrillator
       - id: CombatMedipen
         amount: 3
-      - id: ClothingHandsGlovesLatex
+      - id: ClothingHandsGlovesNitrile
       - id: SyringeTranexamicAcid
       - id: SyringeHyronalin
