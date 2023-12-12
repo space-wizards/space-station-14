@@ -12,3 +12,5 @@ ent-FoodTacoBeefSupreme = великий говяжий тако
     .desc = Обычный говяжий тако. Величайший.
 ent-FoodTacoChickenSupreme = великий куриный тако
     .desc = Обычный куриный тако. Величайший.
+ent-FoodMealSoftTaco = мягкая лепёшка тако
+    .desc = Попробуйте кусочек!

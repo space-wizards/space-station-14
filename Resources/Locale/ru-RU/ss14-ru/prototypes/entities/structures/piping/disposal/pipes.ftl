@@ -24,3 +24,7 @@ ent-DisposalYJunction = Y-развязка утилизационной труб
     .desc = Трёхсторонняя развязка с альтернативным местом выхода.
 ent-DisposalBend = изгиб утилизационной трубы
     .desc = Труба, согнутая под прямым углом.
+ent-DisposalSignalRouter = контролируемый маршрутизатор утилизационной трубы
+    .desc = Трехсторонний маршрутизатор, контролируемый сигналом.
+ent-DisposalSignalRouterFlipped = { ent-DisposalSignalRouter }
+    .desc = { ent-DisposalSignalRouter.desc }

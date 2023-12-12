@@ -1,5 +1,5 @@
 ent-WardrobeBase = { ent-ClosetBase }
-    .desc = Стандартное хранилище Nanotrasen для одежды и снаряжения.
+    .desc = Стандартное хранилище НаноТразен для одежды и снаряжения.
 ent-WardrobeBlue = синий гардероб
     .desc = { ent-WardrobeBase.desc }
 ent-WardrobePink = розовый гардероб
@@ -29,7 +29,7 @@ ent-WardrobeFormal = официально-деловой гардероб
 ent-ClosetChef = поварской гардероб
     .desc = Хранилище кухонной одежды и мышеловок.
 ent-WardrobeChapel = гардероб священника
-    .desc = Хранилище религиозной атрибутики, одобренной Nanotrasen.
+    .desc = Хранилище религиозной атрибутики, одобренной НаноТразен.
 ent-ClosetLegal = адвокатский шкаф
     .desc = Хранилище судебных принадлежностей и одежды.
 ent-WardrobeCargo = гардероб грузчика

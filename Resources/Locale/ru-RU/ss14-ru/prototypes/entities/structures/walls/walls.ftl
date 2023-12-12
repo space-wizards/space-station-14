@@ -89,3 +89,6 @@ ent-WallChromiteCobblebrick = хромитовая кладка
     .desc = { ent-WallCobblebrick.desc }
 ent-WallAndesiteCobblebrick = андезитовая кладка
     .desc = { ent-WallCobblebrick.desc }
+ent-WallShuttleInterior = стена шаттла
+    .desc = { ent-WallShuttle.desc }
+	.suffix = Внутренняя

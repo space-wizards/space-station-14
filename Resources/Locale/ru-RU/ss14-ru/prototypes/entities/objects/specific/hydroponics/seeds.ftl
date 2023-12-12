@@ -100,3 +100,5 @@ ent-PumpkinSeeds = пакет семян тыквы
     .desc = { ent-SeedBase.desc }
 ent-CottonSeeds = пакет семян хлопка
     .desc = { ent-SeedBase.desc }
+ent-LemoonSeeds = пакет семян лунного лемона
+    .desc = { ent-SeedBase.desc }

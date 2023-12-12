@@ -1,0 +1,14 @@
+ent-DrinkCartonBaseFull = { ent-DrinkBase }
+    .desc = { ent-DrinkBase.desc }
+ent-DrinkJuiceLimeCarton = лаймовый сок
+    .desc = Кисло-сладкая свежесть.
+ent-DrinkJuiceOrangeCarton = апельсиновый сок
+    .desc = Полно витаминов и вкусностей!
+ent-DrinkJuiceTomatoCarton = томатный сок
+    .desc = Как минимум, ПОХОЖЕ на томатный сок. Такой красный, что точно не разберёшь.
+ent-DrinkCreamCarton = сливки
+    .desc = Это сливки. Сделаны из молока. А вы чего ожидали?
+ent-DrinkMilkCarton = молоко
+    .desc = Непрозрачная белая жидкость, выделяемая молочными железами млекопитающих.
+ent-DrinkSoyMilkCarton = соевое молоко
+    .desc = Белая и питательная соевая вкуснятина!

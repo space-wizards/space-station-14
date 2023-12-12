@@ -31,3 +31,5 @@ ent-ClothingShoesClownLarge = большие клоунские туфли
     .desc = Когда вам нужно выделиться в комнате, полной клоунов!
 ent-ClothingShoesSkates = роликовые коньки
     .desc = Прокатись с ветерком!
+ent-ClothingShoesClownBanana = туфли банана-клоуна
+    .desc = Когда юмор и обувь рождают новый уровень абсурда.
