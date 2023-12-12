@@ -182,8 +182,6 @@
   name: mini jetpack
   suffix: Empty
   components:
-    - type: Item
-      sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: Clothing
@@ -191,6 +189,9 @@
       slots:
         - Back
         - suitStorage
+    - type: Item
+      sprite: Objects/Tanks/Jetpacks/mini.rsi
+      size: Large
     - type: GasTank
       outputPressure: 42.6
       air:
@@ -254,6 +255,7 @@
   suffix: Empty
   components:
   - type: Item
+    size: Normal
     sprite: Objects/Tanks/Jetpacks/void.rsi
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/void.rsi
