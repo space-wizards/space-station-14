@@ -57,9 +57,6 @@
   name: shell (.50 flare)
   parent: BaseShellShotgun
   components:
-  - type: Tag
-    tags:
-      - ShellShotgunFlare
   - type: Sprite
     layers:
       - state: flare

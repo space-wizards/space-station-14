@@ -17,12 +17,14 @@
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
+    compatibleAmmo:
+      - PelletShotgunFlare
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - ShellShotgunFlare
+        - ShellShotgun
     proto: ShellShotgunFlare
     capacity: 1
     soundInsert:

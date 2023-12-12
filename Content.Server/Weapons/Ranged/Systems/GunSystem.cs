@@ -132,6 +132,21 @@ public sealed partial class GunSystem : SharedGunSystem
                 case CartridgeAmmoComponent cartridge:
                     if (!cartridge.Spent)
                     {
+                        if (gun.CompatibleAmmo != null &&
+                            !gun.CompatibleAmmo.Exists(ammoAllowed => ammoAllowed.Equals(cartridge.Prototype))
+                            && user != null)
+                        {
+                            Damageable.TryChangeDamage(user, new DamageSpecifier(), origin: user);
+                            _stun.TryParalyze(user.Value, TimeSpan.FromSeconds(3f), true);
+
+                            Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gunUid);
+
+                            PopupSystem.PopupEntity(Loc.GetString("Test"), user.Value);
+                            _adminLogger.Add(LogType.EntityDelete, LogImpact.Medium, $"Shot wrong ammo by {ToPrettyString(user.Value)} deleted {ToPrettyString(gunUid)}");
+                            Del(gunUid);
+                            userImpulse = false;
+                            return;
+                        }
                         if (cartridge.Count > 1)
                         {
                             var angles = LinearSpread(mapAngle - cartridge.Spread / 2,

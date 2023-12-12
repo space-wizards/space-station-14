@@ -931,7 +931,7 @@
   id: ShellShotgun
 
 - type: Tag
-  id: ShellShotgunFlare
+  id: PelletShotgunFlare
 
 - type: Tag
   id: Shiv

@@ -1,7 +1,9 @@
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -109,6 +111,13 @@ public partial class GunComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("resetOnHandSelected")]
     public bool ResetOnHandSelected = true;
+
+    /// <summary>
+    /// Type of ammo the gun can work with
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite),
+     DataField("compatibleAmmo", customTypeSerializer: typeof(PrototypeIdListSerializer<TagPrototype>))]
+    public List<string>? CompatibleAmmo = null;
 
     /// <summary>
     /// How fast the projectile moves.
