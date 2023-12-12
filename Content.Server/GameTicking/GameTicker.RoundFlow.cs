@@ -362,7 +362,10 @@ namespace Content.Server.GameTicking
                     playerIcName = icName;
 
                 if (TryGetEntity(mind.OriginalOwnedEntity, out var entity))
+                {
+                    // Temporarily disabled to test if this causes issues on live servers
                     _pvsOverride.AddGlobalOverride(GetNetEntity(entity.Value), recursive: true);
+                }
 
                 var roles = _roles.MindGetAllRoles(mindId);
 
