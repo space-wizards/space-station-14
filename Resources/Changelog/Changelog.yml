@@ -1,9 +1,4 @@
 Entries:
-- author: kseandi
-  changes:
-  - {message: HUD theme selection is now works!, type: Fix}
-  id: 4831
-  time: '2023-09-15T02:05:56.0000000+00:00'
 - author: Morb0
   changes:
   - {message: NPS no longer have an SSD indicator, type: Fix}
@@ -2898,3 +2893,8 @@ Entries:
       bolas, and bottles.', type: Tweak}
   id: 5330
   time: '2023-12-11T23:40:23.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: 'Pumps, vents, scrubbers, and heaters now work faster.', type: Tweak}
+  id: 5331
+  time: '2023-12-11T23:59:47.0000000+00:00'
