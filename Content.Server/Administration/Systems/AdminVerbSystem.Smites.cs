@@ -22,6 +22,9 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Climbing.Components;
+using Content.Shared.Climbing.Events;
+using Content.Shared.Climbing.Systems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Cluwne;
 using Content.Shared.Damage;
@@ -77,6 +80,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly BonkSystem _bonksystem = default!;
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -793,5 +797,51 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-smite-super-speed-description"),
         };
         args.Verbs.Add(superSpeed);
+        //Bonk
+        Verb slam = new()
+        {
+            Text = "Super Slam",
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new("Structures/Furniture/Tables/generic.rsi"), "full"),
+            Act = () =>
+            {
+                var hadClumsy = EnsureComp<ClumsyComponent>(args.Target, out _);
+
+                var tables = EntityQueryEnumerator<BonkableComponent>();
+                var source = new CancellationTokenSource();
+                Timer.SpawnRepeating(250,
+                    () =>
+                    {
+                        if (!tables.MoveNext(out var uid, out var comp) || !HasComp<TransformComponent>(args.Target))
+                        {
+                            if (!hadClumsy)
+                                RemComp<ClumsyComponent>(args.Target);
+                            source.Cancel();
+                            return;
+                        }
+
+                        // It would be very weird for something without a transform component to have a bonk component
+                        // but just in case because I don't want to crash the server.
+                        if (!HasComp<TransformComponent>(uid))
+                            return;
+
+                        _transformSystem.SetCoordinates(args.Target, Transform(uid).Coordinates);
+
+                        //This is just so glass tables shatter which is funnier.
+                        if (HasComp<GlassTableComponent>(uid))
+                        {
+                            var ev = new ClimbedOnEvent(args.Target, args.Target);
+                            RaiseLocalEvent(uid, ref ev);
+                            return;
+                        }
+
+                        _bonksystem.TryBonk(args.Target, uid, comp);
+                    },
+                    source.Token);
+
+            },
+            Message = Loc.GetString("admin-smite-super-slam-description"),
+        };
+        args.Verbs.Add(slam);
     }
 }
