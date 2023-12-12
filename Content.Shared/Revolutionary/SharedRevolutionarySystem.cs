@@ -26,9 +26,9 @@ public sealed class SharedRevolutionarySystem : EntitySystem
         SubscribeLocalEvent<MindShieldComponent, MapInitEvent>(MindShieldImplanted);
         SubscribeLocalEvent<RevolutionaryComponent, ComponentGetStateAttemptEvent>(OnRevCompGetStateAttempt);
         SubscribeLocalEvent<HeadRevolutionaryComponent, ComponentGetStateAttemptEvent>(OnRevCompGetStateAttempt);
-        SubscribeLocalEvent<RevolutionaryComponent, ComponentStartup>(OnRevCompStartup);
-        SubscribeLocalEvent<HeadRevolutionaryComponent, ComponentStartup>(OnHeadRevCompStartup);
-        SubscribeLocalEvent<ShowRevIconsComponent, ComponentStartup>(OnShowRevIconsCompStartup);
+        SubscribeLocalEvent<RevolutionaryComponent, ComponentStartup>(DirtyRevComps);
+        SubscribeLocalEvent<HeadRevolutionaryComponent, ComponentStartup>(DirtyRevComps);
+        SubscribeLocalEvent<ShowRevIconsComponent, ComponentStartup>(DirtyRevComps);
     }
 
     /// <summary>
@@ -89,22 +89,6 @@ public sealed class SharedRevolutionarySystem : EntitySystem
 
         return HasComp<ShowRevIconsComponent>(uid);
     }
-
-    private void OnRevCompStartup (EntityUid uid, RevolutionaryComponent comp, ComponentStartup ev)
-    {
-        DirtyRevComps();
-    }
-
-    private void OnHeadRevCompStartup(EntityUid uid, HeadRevolutionaryComponent comp, ComponentStartup ev)
-    {
-        DirtyRevComps();
-    }
-
-    private void OnShowRevIconsCompStartup(EntityUid uid, ShowRevIconsComponent comp, ComponentStartup ev)
-    {
-        DirtyRevComps();
-    }
-
     /// <summary>
     /// Dirties all the Rev components so they are sent to clients.
     ///
@@ -112,7 +96,7 @@ public sealed class SharedRevolutionarySystem : EntitySystem
     /// becomes a rev then we need to send all the components to it. To my knowledge there is no way to do this on a
     /// per client basis so we are just dirtying all the components.
     /// </summary>
-    private void DirtyRevComps()
+    private void DirtyRevComps<T>(EntityUid someUid, T someComp, ComponentStartup ev)
     {
         var revComps = EntityQueryEnumerator<RevolutionaryComponent>();
         while (revComps.MoveNext(out var uid, out var comp))
