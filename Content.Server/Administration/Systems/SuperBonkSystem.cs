@@ -3,6 +3,8 @@ using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Administration.Systems;
 
@@ -16,6 +18,30 @@ public sealed class SuperBonkSystem: EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SuperBonkComponent, ComponentShutdown>(OnBonkShutdown);
+    }
+
+    public void StartSuperBonk(EntityUid target, float delay = 0.1f, bool stopWhenDead = false )
+    {
+
+        var hadClumsy = EnsureComp<ClumsyComponent>(target, out _);
+
+        var tables = EntityQueryEnumerator<BonkableComponent>();
+        var bonks = new Dictionary<EntityUid, BonkableComponent>();
+        // This is done so we don't crash if something like a new table is spawned.
+        while (tables.MoveNext(out var uid, out var comp))
+        {
+            bonks.Add(uid, comp);
+        }
+
+        var sComp = new SuperBonkComponent
+        {
+            Target = target,
+            Tables = bonks.GetEnumerator(),
+            RemoveClumsy = !hadClumsy,
+            StopWhenDead = stopWhenDead,
+        };
+
+        AddComp(target, sComp);
     }
 
     public override void Update(float frameTime)
@@ -35,6 +61,16 @@ public sealed class SuperBonkSystem: EntitySystem
             {
                 RemComp<SuperBonkComponent>(comp.Target);
                 continue;
+            }
+
+            if (comp.StopWhenDead)
+            {
+                if (TryComp<MobStateComponent>(comp.Target, out var mComp)
+                    && mComp.CurrentState == MobState.Dead)
+                {
+                    RemComp<SuperBonkComponent>(comp.Target);
+                    continue;
+                }
             }
 
             comp.TimeRemaining = comp.InitialTime;

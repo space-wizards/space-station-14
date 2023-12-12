@@ -22,7 +22,6 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Content.Shared.Climbing.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Cluwne;
 using Content.Shared.Damage;
@@ -77,6 +76,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SuperBonkSystem _superBonkSystem = default!;
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -794,33 +794,29 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(superSpeed);
         //Bonk
-        Verb superBonk = new()
+        Verb superBonkLite = new()
+        {
+            Text = "Super Bonk Lite",
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new("Structures/Furniture/Tables/glass.rsi"), "full"),
+            Act = () =>
+            {
+                _superBonkSystem.StartSuperBonk(args.Target, stopWhenDead: true);
+            },
+            Message = Loc.GetString("admin-smite-super-bonk-lite-description"),
+            Impact = LogImpact.Extreme,
+        };
+        args.Verbs.Add(superBonkLite);
+        Verb superBonk= new()
         {
             Text = "Super Bonk",
             Category = VerbCategory.Smite,
             Icon = new SpriteSpecifier.Rsi(new("Structures/Furniture/Tables/generic.rsi"), "full"),
             Act = () =>
             {
-                var hadClumsy = EnsureComp<ClumsyComponent>(args.Target, out _);
-
-                var tables = EntityQueryEnumerator<BonkableComponent>();
-                var bonks = new Dictionary<EntityUid, BonkableComponent>();
-                // This is done so we don't crash if something like a new table is spawned.
-                while (tables.MoveNext(out var uid, out var comp))
-                {
-                    bonks.Add(uid, comp);
-                }
-
-                var sComp = new SuperBonkComponent
-                {
-                    Target = args.Target,
-                    Tables = bonks.GetEnumerator(),
-                    RemoveClumsy = !hadClumsy
-                };
-
-                AddComp(args.Target, sComp);
+                _superBonkSystem.StartSuperBonk(args.Target);
             },
-            Message = Loc.GetString("admin-smite-super-slam-description"),
+            Message = Loc.GetString("admin-smite-super-bonk-description"),
             Impact = LogImpact.Extreme,
         };
         args.Verbs.Add(superBonk);

@@ -21,5 +21,8 @@ public sealed partial class SuperBonkComponent: Component
     public float TimeRemaining = 0.10f;
 
     [DataField("removeClumsy")]
-    public bool RemoveClumsy;
+    public bool RemoveClumsy = true;
+
+    [DataField("stopWhenDead")]
+    public bool StopWhenDead = true;
 }
