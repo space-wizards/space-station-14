@@ -185,13 +185,10 @@ public abstract class SharedItemToggleSystem : EntitySystem
     /// </summary>
     private void UpdateLight(EntityUid uid, ItemToggleComponent itemToggle)
     {
-        SharedPointLightComponent? light = null;
-        _light.ResolveLight(uid, ref light);
+        if (!_light.TryGetLight(uid, out var light))
+            return;
 
-        if (light != null)
-        {
-            _light.SetEnabled(uid, itemToggle.Activated, light);
-        }
+        _light.SetEnabled(uid, itemToggle.Activated, light);
     }
 
     /// <summary>
