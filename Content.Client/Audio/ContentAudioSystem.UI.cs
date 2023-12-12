@@ -12,10 +12,22 @@ public sealed partial class ContentAudioSystem
 
         if (source != null)
         {
-            source.Gain = 0.25f;
+            source.Gain = 0.15f;
             source.Global = true;
         }
 
         _uiManager.SetClickSound(source);
+
+        var hoverResource = _cache.GetResource<AudioResource>("/Audio/UI/diamond.ogg");
+        var hoverSource =
+            _audioManager.CreateAudioSource(hoverResource);
+
+        if (hoverSource != null)
+        {
+            hoverSource.Gain = 0.05f;
+            hoverSource.Global = true;
+        }
+
+        _uiManager.SetHoverSound(hoverSource);
     }
 }
