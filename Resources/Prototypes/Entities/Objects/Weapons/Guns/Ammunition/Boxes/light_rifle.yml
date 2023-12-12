@@ -30,6 +30,8 @@
   id: MagazineBoxLightRifleBig
   name: ammunition box (.30 rifle)
   components:
+  - type: Item
+    size: Normal
   - type: BallisticAmmoProvider
     capacity: 200
     proto: CartridgeLightRifle
