@@ -30,6 +30,8 @@
   id: MagazineBoxCaselessRifle10x24
   name: ammunition box (.25 caseless)
   components:
+  - type: Item
+    size: Normal
   - type: BallisticAmmoProvider
     capacity: 200
     proto: CartridgeCaselessRifle
@@ -50,6 +52,8 @@
   id: MagazineBoxCaselessRifleBig
   name: ammunition box (.25 caseless)
   components:
+  - type: Item
+    size: Normal
   - type: BallisticAmmoProvider
     capacity: 200
     proto: CartridgeCaselessRifle
@@ -70,6 +74,8 @@
   id: MagazineBoxCaselessRifleBigRubber
   name: ammunition box (.25 caseless rubber)
   components:
+  - type: Item
+    size: Normal
   - type: BallisticAmmoProvider
     capacity: 200
     proto: CartridgeCaselessRifleRubber
