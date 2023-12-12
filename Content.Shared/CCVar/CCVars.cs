@@ -555,6 +555,16 @@ namespace Content.Shared.CCVar
             CVarDef.Create("database.sync", false, CVar.SERVERONLY);
 
         /*
+         * Interface
+         */
+
+        public static readonly CVarDef<string> UIClickSound =
+            CVarDef.Create("interface.click_sound", "/Audio/UserInterface/click.ogg", CVar.REPLICATED);
+
+        public static readonly CVarDef<string> UIHoverSound =
+            CVarDef.Create("interface.hover_sound", "/Audio/UserInterface/hover.ogg", CVar.REPLICATED);
+
+        /*
          * Outline
          */
 

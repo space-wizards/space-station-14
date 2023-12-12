@@ -40,7 +40,6 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
     {
         base.Initialize();
         UpdatesOutsidePrediction = true;
-        InitializeUI();
         InitializeAmbientMusic();
         SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
     }
