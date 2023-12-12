@@ -394,7 +394,7 @@ namespace Content.Client.Construction.UI
                 if (IsAtFront)
                 {
                     WindowOpen = false;
-                    _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.Pressed = false; // This does not call CraftingButtonToggled
+                    _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.SetClickPressed(false); // This does not call CraftingButtonToggled
                 }
                 else
                     _constructionView.MoveToFront();
@@ -402,7 +402,7 @@ namespace Content.Client.Construction.UI
             else
             {
                 WindowOpen = true;
-                _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.Pressed = true; // This does not call CraftingButtonToggled
+                _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.SetClickPressed(true); // This does not call CraftingButtonToggled
             }
         }
 
