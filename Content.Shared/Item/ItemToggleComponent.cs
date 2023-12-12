@@ -133,7 +133,7 @@ public sealed partial class ItemToggleComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("user"), AutoNetworkedField]
-    public EntityUid User { get; set; }
+    public EntityUid? User { get; set; } = null;
 
     /// <summary>
     ///     Used when the item emits sound while active.

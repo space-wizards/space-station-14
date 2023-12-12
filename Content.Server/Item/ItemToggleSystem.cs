@@ -2,7 +2,7 @@ using Content.Shared.Item;
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Kitchen.Components;
 
-namespace Content.Server.Item.ItemToggleSystem;
+namespace Content.Server.Item;
 
 public sealed class ItemToggleSystem : SharedItemToggleSystem
 {

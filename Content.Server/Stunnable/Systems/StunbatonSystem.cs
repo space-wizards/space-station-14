@@ -86,8 +86,10 @@ namespace Content.Server.Stunnable.Systems
                 if (!TryComp<BatteryComponent>(uid, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
                 {
                     args.Cancelled = true;
-                    _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), itemToggleComp.User, itemToggleComp.User);
-
+                    if (itemToggleComp.User != null)
+                    {
+                        _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), (EntityUid) itemToggleComp.User, (EntityUid) itemToggleComp.User);
+                    }
                     return;
                 }
 

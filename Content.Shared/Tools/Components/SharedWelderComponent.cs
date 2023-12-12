@@ -6,7 +6,6 @@ namespace Content.Shared.Tools.Components
     [NetworkedComponent]
     public abstract partial class SharedWelderComponent : Component
     {
-        public bool Lit { get; set; }
     }
 
     [NetSerializable, Serializable]
@@ -14,13 +13,11 @@ namespace Content.Shared.Tools.Components
     {
         public float FuelCapacity { get; }
         public float Fuel { get; }
-        public bool Lit { get; }
 
-        public WelderComponentState(float fuelCapacity, float fuel, bool lit)
+        public WelderComponentState(float fuelCapacity, float fuel)
         {
             FuelCapacity = fuelCapacity;
             Fuel = fuel;
-            Lit = lit;
         }
     }
 

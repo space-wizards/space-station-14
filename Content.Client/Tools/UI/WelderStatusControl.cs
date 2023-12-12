@@ -1,6 +1,7 @@
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Client.Tools.Components;
+using Content.Shared.Item;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
@@ -10,11 +11,13 @@ namespace Content.Client.Tools.UI;
 public sealed class WelderStatusControl : Control
 {
     private readonly WelderComponent _parent;
+    private readonly ItemToggleComponent _toggleComponent;
     private readonly RichTextLabel _label;
 
-    public WelderStatusControl(WelderComponent parent)
+    public WelderStatusControl(WelderComponent parent, ItemToggleComponent itemToggle)
     {
         _parent = parent;
+        _toggleComponent = itemToggle;
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
         AddChild(_label);
 
@@ -39,7 +42,7 @@ public sealed class WelderStatusControl : Control
 
         var fuelCap = _parent.FuelCapacity;
         var fuel = _parent.Fuel;
-        var lit = _parent.Lit;
+        var lit = _toggleComponent.Activated;
 
         _label.SetMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
             ("colorName", fuel < fuelCap / 4f ? "darkorange" : "orange"),

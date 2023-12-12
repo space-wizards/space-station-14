@@ -58,7 +58,10 @@ namespace Content.Server.Tools
                 // Not enough fuel to lit welder.
                 if (fuel == FixedPoint2.Zero || fuel < welder.FuelLitCost)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), uid, itemToggleComp.User);
+                    if (itemToggleComp.User != null)
+                    {
+                        _popupSystem.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), uid, (EntityUid) itemToggleComp.User);
+                    }
                     args.Cancelled = true;
                     return;
                 }
@@ -185,7 +188,7 @@ namespace Content.Server.Tools
             var (fuel, capacity) = GetWelderFuelAndCapacity(uid, welder);
             if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
             {
-                args.State = new WelderComponentState(capacity.Float(), fuel.Float(), itemToggleComp.Activated);
+                args.State = new WelderComponentState(capacity.Float(), fuel.Float());
             }
         }
 
