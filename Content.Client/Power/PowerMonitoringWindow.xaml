@@ -1,5 +1,5 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-               xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
+               xmlns:ui="clr-namespace:Content.Client.Power"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                Title="{Loc 'power-monitoring-window-title'}"
@@ -10,7 +10,7 @@
         <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
             <!-- Nav map -->
             <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-                <ui:NavMapControl Name="NavMap" Margin="5 5" VerticalExpand="True" HorizontalExpand="True">
+                <ui:PowerMonitoringConsoleNavMapControl Name="NavMap" Margin="5 5" VerticalExpand="True" HorizontalExpand="True">
 
                     <!-- System warning -->
                     <PanelContainer Name="SystemWarningPanel"
@@ -23,30 +23,30 @@
                     </PanelContainer>
 
 
-                </ui:NavMapControl>
+                </ui:PowerMonitoringConsoleNavMapControl>
 
                 <!-- Nav map legend -->
                 <BoxContainer Orientation="Horizontal" Margin="0 10 0 10">
                     <TextureRect Stretch="KeepAspectCentered"
-                                 TexturePath="/Textures/Interface/PowerMonitoring/beveled_circle.png"
+                                 TexturePath="/Textures/Interface/NavMap/beveled_circle.png"
                                  Modulate="#800080"
                                  SetSize="16 16"
                                  Margin="20 0 5 0"/>
                     <Label Text="{Loc 'power-monitoring-window-label-sources'}"/>
                     <TextureRect Stretch="KeepAspectCentered"
-                                 TexturePath="/Textures/Interface/PowerMonitoring/beveled_hexagon.png"
+                                 TexturePath="/Textures/Interface/NavMap/beveled_hexagon.png"
                                  SetSize="16 16"
                                  Modulate="#ff4500"                               
                                  Margin="20 0 5 0"/>
                     <Label Text="{Loc 'power-monitoring-window-label-smes'}"/>
                     <TextureRect Stretch="KeepAspectCentered"
-                                 TexturePath="/Textures/Interface/PowerMonitoring/beveled_square.png"
+                                 TexturePath="/Textures/Interface/NavMap/beveled_square.png"
                                  SetSize="16 16"
                                  Modulate="#ffff00"
                                  Margin="20 0 5 0"/>
                     <Label Text="{Loc 'power-monitoring-window-label-substation'}"/>
                     <TextureRect Stretch="KeepAspectCentered"
-                                 TexturePath="/Textures/Interface/PowerMonitoring/beveled_triangle.png"
+                                 TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
                                  SetSize="16 16"
                                  Modulate="#32cd32"
                                  Margin="20 0 5 0"/>

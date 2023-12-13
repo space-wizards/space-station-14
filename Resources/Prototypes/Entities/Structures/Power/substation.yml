@@ -44,9 +44,8 @@
     group: Substation
     sourceNode: input
     loadNode: output
-  - type: NavMapTrackable
-    texture: /Textures/Interface/PowerMonitoring/beveled_square.png
-    color: Yellow
+    sprite: Structures/Power/substation.rsi
+    state: substation_static
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger
@@ -177,9 +176,8 @@
     group: Substation
     sourceNode: input
     loadNode: output
-  - type: NavMapTrackable
-    texture: /Textures/Interface/PowerMonitoring/beveled_square.png
-    color: Yellow
+    sprite: Structures/Power/substation.rsi
+    state: substation_wall_static
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger

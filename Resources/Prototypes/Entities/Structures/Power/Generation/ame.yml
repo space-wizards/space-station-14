@@ -81,9 +81,8 @@
   - type: PowerMonitoringDevice
     group: Generator
     loadNode: input
-  - type: NavMapTrackable
-    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
-    color: Purple
+    sprite: Structures/Power/Generation/ame.rsi
+    state: static
   - type: PowerSupplier
     supplyRate: 0
   - type: ContainerContainer

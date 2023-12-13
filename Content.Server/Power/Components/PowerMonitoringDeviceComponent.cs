@@ -8,7 +8,7 @@ namespace Content.Server.Power.Components;
 ///     Used to flag any entities that should appear on a power monitoring console
 /// </summary>
 [RegisterComponent, Access(typeof(PowerMonitoringConsoleSystem))]
-public sealed partial class PowerMonitoringDeviceComponent : SharedPowerMonitoringDeviceComponent
+public sealed partial class PowerMonitoringDeviceComponent : Component
 {
     /// <summary>
     ///     Name of the node that this device draws its power from (see <see cref="NodeContainerComponent"/>)
@@ -65,4 +65,22 @@ public sealed partial class PowerMonitoringDeviceComponent : SharedPowerMonitori
     /// </remarks>
     [ViewVariables]
     public Dictionary<EntityUid, PowerMonitoringDeviceComponent> ChildDevices = new();
+
+    /// <summary>
+    /// Path to the .rsi folder
+    /// </summary>
+    [DataField("sprite")]
+    public string SpritePath = string.Empty;
+
+    /// <summary>
+    /// The .rsi state
+    /// </summary>
+    [DataField("state")]
+    public string SpriteState = string.Empty;
+
+    /// <summary>
+    ///    Determines what power monitoring group this entity should belong to 
+    /// </summary>
+    [DataField("group", required: true)]
+    public PowerMonitoringConsoleGroup Group;
 }

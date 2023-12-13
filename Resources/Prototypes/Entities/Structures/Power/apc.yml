@@ -69,9 +69,8 @@
     group: APC
     sourceNode: input
     loadNode: output
-  - type: NavMapTrackable
-    texture: /Textures/Interface/PowerMonitoring/beveled_triangle.png
-    color: LimeGreen
+    sprite: Structures/Power/apc.rsi
+    state: static
   - type: BatteryCharger
     voltage: Medium
   - type: PowerProvider

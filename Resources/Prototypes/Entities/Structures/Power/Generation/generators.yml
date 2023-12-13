@@ -43,9 +43,8 @@
   - type: PowerMonitoringDevice
     group: Generator
     loadNode: output
-  - type: NavMapTrackable
-    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
-    color: Purple
+    sprite: Structures/Power/power.rsi
+    state: generator
   - type: PowerSupplier
     supplyRate: 3000
     supplyRampRate: 500
@@ -133,9 +132,8 @@
   - type: PowerMonitoringDevice
     group: Generator
     loadNode: output
-  - type: NavMapTrackable
-    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
-    color: Purple
+    sprite: Structures/Power/Generation/wallmount_generator.rsi
+    state: static
   - type: PowerSupplier
     supplyRate: 3000
     supplyRampRate: 500
@@ -241,6 +239,9 @@
   - type: Sprite
     sprite: Structures/Power/Generation/rtg.rsi
     state: rtg
+  - type: PowerMonitoringDevice
+    sprite: Structures/Power/Generation/rtg.rsi
+    state: rtg
   - type: AmbientSound
     range: 5
     sound:
@@ -284,6 +285,9 @@
     layers:
       - state: rtg_damaged
       - state: rtg_glow
+  - type: PowerMonitoringDevice
+    sprite: Structures/Power/Generation/rtg.rsi
+    state: rtg_damaged
   - type: RadiationSource # ideally only when opened.
     intensity: 2
   - type: Destructible

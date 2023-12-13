@@ -39,7 +39,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         base.Initialize();
 
         // PVS events
-        SubscribeLocalEvent<PowerMonitoringConsoleUserComponent, ExpandPvsEvent>(OnExpandPvsEvent);
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, ComponentInit>(OnConsoleInit);
+        SubscribeLocalEvent<PowerMonitoringCableNetworksComponent, ComponentInit>(OnCableNetworksInit);
 
         // Game rule events
         SubscribeLocalEvent<GameRuleStartedEvent>(OnPowerGridCheckStarted);
@@ -55,55 +56,35 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         SubscribeLocalEvent<CableComponent, CableAnchorStateChangedEvent>(OnCableAnchorStateChanged);
         SubscribeLocalEvent<PowerMonitoringDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchoringChanged);
         SubscribeLocalEvent<PowerMonitoringDeviceComponent, NodeGroupsRebuilt>(OnNodeGroupRebuilt);
-        SubscribeLocalEvent<PowerMonitoringConsoleComponent, EntParentChangedMessage>(OnEntParentChanged);
+
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, EntParentChangedMessage>(OnConsoleParentChanged);
+        SubscribeLocalEvent<PowerMonitoringCableNetworksComponent, EntParentChangedMessage>(OnCableNetworksParentChanged);
     }
 
     #region EventHandling
 
-    // Sends the list of tracked power monitoring devices to player sessions with one or more power monitoring consoles open
-    // This expansion of PVS is needed so that meta and sprite data for these device are available to the the player
-    // Out-of-range devices will be automatically removed from the player PVS when the UI closes
-    private void OnExpandPvsEvent(EntityUid uid, PowerMonitoringConsoleUserComponent component, ref ExpandPvsEvent ev)
+    private void OnConsoleInit(EntityUid uid, PowerMonitoringConsoleComponent component, ComponentInit args)
     {
-        if (!_trackedSessions.Contains(ev.Session))
+        ResetPowerMonitorConsole(uid, component);
+    }
+
+    private void OnCableNetworksInit(EntityUid uid, PowerMonitoringCableNetworksComponent component, ComponentInit args)
+    {
+        var xform = Transform(uid);
+
+        if (xform.GridUid == null)
             return;
 
-        var uis = _userInterfaceSystem.GetAllUIsForSession(ev.Session);
+        var grid = xform.GridUid.Value;
 
-        if (uis == null)
+        if (!TryComp<MapGridComponent>(grid, out var map))
             return;
 
-        var checkedGrids = new List<EntityUid>();
+        if (!_gridPowerCableChunks.TryGetValue(grid, out var allChunks))
+            allChunks = RefreshPowerCableGrid(grid, map);
 
-        foreach (var ui in uis)
-        {
-            if (ui.UiKey is PowerMonitoringConsoleUiKey)
-            {
-                var xform = Transform(uid);
-
-                if (xform.GridUid == null || checkedGrids.Contains(xform.GridUid.Value))
-                    continue;
-
-                checkedGrids.Add(xform.GridUid.Value);
-
-                if (ev.Entities == null)
-                    ev.Entities = new List<EntityUid>();
-
-                var powerMonitoringDeviceQuery = AllEntityQuery<PowerMonitoringDeviceComponent, TransformComponent>();
-                while (powerMonitoringDeviceQuery.MoveNext(out var ent, out var entDevice, out var entXform))
-                {
-                    if (entXform.GridUid != xform.GridUid)
-                        continue;
-
-                    // Skip entities which are represented by a collection master
-                    // This will cut down the number of entities that need to be added
-                    if (entDevice.IsCollectionMasterOrChild && !entDevice.IsCollectionMaster)
-                        continue;
-
-                    ev.Entities.Add(ent);
-                }
-            }
-        }
+        component.AllChunks = allChunks;
+        Dirty(uid, component);
     }
 
     private void OnPowerGridCheckStarted(ref GameRuleStartedEvent ev)
@@ -147,7 +128,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         if (component.Focus != focus)
         {
             component.Focus = focus;
-            component.FocusChunks.Clear();
+
+            if (TryComp<PowerMonitoringCableNetworksComponent>(uid, out var cableNetworks))
+                cableNetworks.FocusChunks.Clear(); // Component is dirtied when these chunks are rebuilt
 
             if (focus == null)
                 Dirty(uid, component);
@@ -198,11 +181,16 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
         // Refresh affected power cable grids
         foreach (var grid in allGrids)
-            RefreshPowerCableGrid(grid, Comp<MapGridComponent>(grid));
+        {
+            if (!TryComp<MapGridComponent>(grid, out var map))
+                continue;
+
+            RefreshPowerCableGrid(grid, map);
+        }
 
         // Update power monitoring consoles that stand upon an updated grid
-        var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var entConsole, out var entXform))
+        var query = AllEntityQuery<PowerMonitoringCableNetworksComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var entCableNetworks, out var entXform))
         {
             if (entXform.GridUid == null)
                 continue;
@@ -211,12 +199,13 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                 continue;
 
             if (!_gridPowerCableChunks.TryGetValue(entXform.GridUid.Value, out var allChunks))
-                continue;
+                allChunks = new();
 
-            entConsole.AllChunks = allChunks;
-            Dirty(ent, entConsole);
+            entCableNetworks.AllChunks = allChunks;
+            Dirty(ent, entCableNetworks);
         }
     }
+
     public void OnCableAnchorStateChanged(EntityUid uid, CableComponent component, CableAnchorStateChangedEvent args)
     {
         var xform = args.Transform;
@@ -225,7 +214,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             return;
 
         if (!_gridPowerCableChunks.TryGetValue(xform.GridUid.Value, out var allChunks))
-            return;
+            allChunks = new();
 
         var tile = _sharedMapSystem.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
         var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, SharedNavMapSystem.ChunkSize);
@@ -245,14 +234,14 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         else
             chunk.PowerCableData[(int) component.CableType] &= ~flag;
 
-        var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var entConsole, out var entXform))
+        var query = AllEntityQuery<PowerMonitoringCableNetworksComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var entCableNetworks, out var entXform))
         {
             if (entXform.GridUid != xform.GridUid)
                 continue;
 
-            entConsole.AllChunks = allChunks;
-            Dirty(ent, entConsole);
+            entCableNetworks.AllChunks = allChunks;
+            Dirty(ent, entCableNetworks);
         }
     }
 
@@ -265,7 +254,30 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             return;
 
         if (component.IsCollectionMasterOrChild)
-            AssignGridEntitiesToMaster(uid, component, null, null, xform);
+            AssignGridEntitiesToMaster(uid, component, xform);
+
+        var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var entConsole, out var entXform))
+        {
+            if (gridUid != entXform.GridUid)
+                continue;
+
+            if (!args.Anchored)
+            {
+                entConsole.PowerMonitoringDeviceMetaData.Remove(EntityManager.GetNetEntity(uid));
+                Dirty(ent, entConsole);
+
+                continue;
+            }
+
+            var name = MetaData(uid).EntityName;
+            var coords = EntityManager.GetNetCoordinates(xform.Coordinates);
+
+            var metaData = new PowerMonitoringDeviceMetaData(name, coords, component.Group, component.SpritePath, component.SpriteState);
+            entConsole.PowerMonitoringDeviceMetaData.TryAdd(EntityManager.GetNetEntity(uid), metaData);
+
+            Dirty(ent, entConsole);
+        }
     }
 
     public void OnNodeGroupRebuilt(EntityUid uid, PowerMonitoringDeviceComponent component, NodeGroupsRebuilt args)
@@ -273,15 +285,20 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         if (component.IsCollectionMasterOrChild)
             AssignGridEntitiesToMaster(uid, component);
 
-        var query = AllEntityQuery<PowerMonitoringConsoleComponent>();
-        while (query.MoveNext(out var ent, out var entConsole))
+        var query = AllEntityQuery<PowerMonitoringConsoleComponent, PowerMonitoringCableNetworksComponent>();
+        while (query.MoveNext(out var _, out var entConsole, out var entCableNetworks))
         {
             if (entConsole.Focus == uid)
-                entConsole.FocusChunks.Clear();
+                entCableNetworks.FocusChunks.Clear(); // Component is dirtied when these chunks are rebuilt
         }
     }
 
-    private void OnEntParentChanged(EntityUid uid, PowerMonitoringConsoleComponent component, EntParentChangedMessage args)
+    private void OnConsoleParentChanged(EntityUid uid, PowerMonitoringConsoleComponent component, EntParentChangedMessage args)
+    {
+        ResetPowerMonitorConsole(uid, component);
+    }
+
+    private void OnCableNetworksParentChanged(EntityUid uid, PowerMonitoringCableNetworksComponent component, EntParentChangedMessage args)
     {
         var xform = Transform(uid);
         if (xform.GridUid == null)
@@ -289,10 +306,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
         // If the requested chunks are not in the dictionary, build them
         if (!_gridPowerCableChunks.TryGetValue(xform.GridUid.Value, out var allChunks))
-            RefreshPowerCableGrid(xform.GridUid.Value, Comp<MapGridComponent>(xform.GridUid.Value));
-
-        if (allChunks == null)
-            return;
+            allChunks = RefreshPowerCableGrid(xform.GridUid.Value, Comp<MapGridComponent>(xform.GridUid.Value));
 
         component.AllChunks = allChunks;
         Dirty(uid, component);
@@ -435,7 +449,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                     GetLoadsForNode(component.Focus.Value, loadNode, out loadsForFocus);
 
                 // If the UI focus changed, update the highlighted power network
-                if (component.FocusChunks.Count == 0)
+                if (TryComp<PowerMonitoringCableNetworksComponent>(uid, out var cableNetworks) &&
+                    cableNetworks.FocusChunks.Count == 0)
                 {
                     var reachableEntities = new List<EntityUid>();
 
@@ -451,7 +466,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                             reachableEntities.Add(node.Owner);
                     }
 
-                    UpdateFocusNetwork(uid, component, gridUid, mapGrid, reachableEntities);
+                    UpdateFocusNetwork(uid, cableNetworks, gridUid, mapGrid, reachableEntities);
                 }
             }
         }
@@ -655,7 +670,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         }
     }
 
-    private void GetLoadsForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> loads)
+    private void GetLoadsForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> loads, List<EntityUid>? children = null)
     {
         loads = new List<PowerMonitoringConsoleEntry>();
 
@@ -676,6 +691,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
+
+
                 // Combine entities represented by an master into a single entry
                 if (entDevice.IsCollectionMasterOrChild && !entDevice.IsCollectionMaster)
                     ent = entDevice.CollectionMaster;
@@ -766,12 +783,13 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
     private void AssignGridEntitiesToMaster
         (EntityUid uid,
         PowerMonitoringDeviceComponent? device = null,
-        NodeContainerComponent? nodeContainer = null,
-        NavMapTrackableComponent? trackable = null,
-        TransformComponent? xform = null)
+        TransformComponent? xform = null,
+        NodeContainerComponent? nodeContainer = null)
     {
-        if (!Resolve(uid, ref device, ref nodeContainer, ref trackable, ref xform, false))
+        if (!Resolve(uid, ref device, ref nodeContainer, ref xform, false))
             return;
+
+        UpdateConsoleMetaData(uid, null);
 
         // If the device is not attached to a network, exit
         if (!nodeContainer.Nodes.TryGetValue(device.LoadNode, out var loadNode) ||
@@ -784,21 +802,16 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             device.CollectionMaster = uid;
             device.ChildDevices.Clear();
 
-            trackable.ParentUid = null;
-            trackable.ChildOffsets.Clear();
-            Dirty(uid, trackable);
-
             return;
         }
+
+       // name = Loc.GetString("power-monitoring-window-object-array", ("name", meta.EntityPrototype.Name), ("count", trackable.ChildOffsets.Count + 1));
 
         device.CollectionMaster = uid;
         device.ChildDevices.Clear();
 
-        trackable.ParentUid = null;
-        trackable.ChildOffsets.Clear();
-
-        var query = AllEntityQuery<PowerMonitoringDeviceComponent, NodeContainerComponent, NavMapTrackableComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var entDevice, out var entNodeContainer, out var entTrackable, out var entXform))
+        var query = AllEntityQuery<PowerMonitoringDeviceComponent, TransformComponent, NodeContainerComponent>();
+        while (query.MoveNext(out var ent, out var entDevice, out var entXform, out var entNodeContainer))
         {
             if (ent == uid)
                 continue;
@@ -814,19 +827,35 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             if ((loadNode.NodeGroup as BaseNodeGroup)?.NetId == (entLoadNode.NodeGroup as BaseNodeGroup)?.NetId)
             {
                 device.ChildDevices.Add(ent, entDevice);
-                trackable.ChildOffsets.Add(entXform.Coordinates.Position - xform.Coordinates.Position);
-
+                UpdateConsoleMetaData(ent, uid);
                 entDevice.CollectionMaster = uid;
-                entTrackable.ParentUid = uid;
-                entTrackable.ChildOffsets.Clear();
-                Dirty(ent, entTrackable);
             }
         }
 
-        Dirty(uid, trackable);
+        UpdateConsoleMetaData(uid, null, device.ChildDevices.Keys.ToList());
     }
 
-    private void RefreshPowerCableGrid(EntityUid gridUid, MapGridComponent grid)
+    private void UpdateConsoleMetaData(EntityUid uid, EntityUid? master, List<EntityUid>? children = null)
+    {
+        var netEntity = EntityManager.GetNetEntity(uid);
+        var xform = Transform(uid);
+
+        var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var entConsole, out var entXform))
+        {
+            if (entXform.GridUid != xform.GridUid)
+                return;
+
+            if (!entConsole.PowerMonitoringDeviceMetaData.TryGetValue(netEntity, out var metaData))
+                continue;
+
+            metaData.Master = EntityManager.GetNetEntity(master);
+
+            entConsole.PowerMonitoringDeviceMetaData[netEntity] = metaData;
+        }
+    }
+
+    private Dictionary<Vector2i, PowerCableChunk> RefreshPowerCableGrid(EntityUid gridUid, MapGridComponent grid)
     {
         // Clears all chunks for the associated grid
         var allChunks = new Dictionary<Vector2i, PowerCableChunk>();
@@ -853,9 +882,11 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             chunk.PowerCableData[(int) cable.CableType] |= flag;
         }
+
+        return allChunks;
     }
 
-    private void UpdateFocusNetwork(EntityUid uid, PowerMonitoringConsoleComponent component, EntityUid gridUid, MapGridComponent grid, List<EntityUid> nodeList)
+    private void UpdateFocusNetwork(EntityUid uid, PowerMonitoringCableNetworksComponent component, EntityUid gridUid, MapGridComponent grid, List<EntityUid> nodeList)
     {
         component.FocusChunks.Clear();
 
@@ -877,6 +908,34 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             if (TryComp<CableComponent>(ent, out var cable))
                 chunk.PowerCableData[(int) cable.CableType] |= flag;
+        }
+
+        Dirty(uid, component);
+    }
+
+    private void ResetPowerMonitorConsole(EntityUid uid, PowerMonitoringConsoleComponent component)
+    {
+        component.PowerMonitoringDeviceMetaData.Clear();
+
+        var xform = Transform(uid);
+
+        if (xform.GridUid == null)
+            return;
+
+        var grid = xform.GridUid.Value;
+
+        var query = AllEntityQuery<PowerMonitoringDeviceComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var entDevice, out var entXform))
+        {
+            if (grid != entXform.GridUid)
+                continue;
+
+            var netEntity = EntityManager.GetNetEntity(ent);
+            var name = MetaData(ent).EntityName;
+            var netCoords = EntityManager.GetNetCoordinates(entXform.Coordinates);
+
+            var metaData = new PowerMonitoringDeviceMetaData(name, netCoords, entDevice.Group, entDevice.SpritePath, entDevice.SpriteState);
+            component.PowerMonitoringDeviceMetaData.Add(netEntity, metaData);
         }
 
         Dirty(uid, component);

@@ -1,5 +1,7 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using System.Numerics;
 
 namespace Content.Shared.Power;
 
@@ -7,33 +9,26 @@ namespace Content.Shared.Power;
 ///     Flags an entity as being a power monitoring console
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedPowerMonitoringConsoleSystem))]
+[Access(typeof(SharedPowerMonitoringConsoleSystem), Other = AccessPermissions.ReadExecute)]
 public sealed partial class PowerMonitoringConsoleComponent : Component
 {
     /// <summary>
     /// The EntityUid of the device that is the console's current focus
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    /// <remarks>
+    /// Not-networked - set by the console UI
+    /// </remarks>
+    [ViewVariables]
     public EntityUid? Focus;
 
     /// <summary>
     /// The group that the device that is the console's current focus belongs to
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    /// /// <remarks>
+    /// Not-networked - set by the console UI
+    /// </remarks>
+    [ViewVariables]
     public PowerMonitoringConsoleGroup FocusGroup = PowerMonitoringConsoleGroup.Generator;
-
-    /// <summary>
-    /// A dictionary of the all the nav map chunks that contain anchored power cables
-    /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public Dictionary<Vector2i, PowerCableChunk> AllChunks = new();
-
-    /// <summary>
-    /// A dictionary of the all the nav map chunks that contain anchored power cables
-    /// that are directly connected to the console's current focus
-    /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public Dictionary<Vector2i, PowerCableChunk> FocusChunks = new();
 
     /// <summary>
     /// A list of flags relating to currently active events of interest to the console.
@@ -41,22 +36,31 @@ public sealed partial class PowerMonitoringConsoleComponent : Component
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public PowerMonitoringFlags Flags = PowerMonitoringFlags.None;
+
+    /// <summary>
+    /// A dictionary containing all the meta data for tracked power monitoring devices
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public Dictionary<NetEntity, PowerMonitoringDeviceMetaData> PowerMonitoringDeviceMetaData = new();
 }
 
 [Serializable, NetSerializable]
-public struct PowerCableChunk
+public struct PowerMonitoringDeviceMetaData
 {
-    public readonly Vector2i Origin;
+    public string EntityName;
+    public NetCoordinates Coordinates;
+    public PowerMonitoringConsoleGroup Group;
+    public string SpritePath;
+    public string SpriteState;
+    public NetEntity? Master;
 
-    /// <summary>
-    /// Bitmask dictionary for power cables, 1 for occupied and 0 for empty.
-    /// </summary>
-    public int[] PowerCableData;
-
-    public PowerCableChunk(Vector2i origin)
+    public PowerMonitoringDeviceMetaData(string name, NetCoordinates coordinates, PowerMonitoringConsoleGroup group, string spritePath, string spriteState)
     {
-        Origin = origin;
-        PowerCableData = new int[3];
+        EntityName = name;
+        Coordinates = coordinates;
+        Group = group;
+        SpritePath = spritePath;
+        SpriteState = spriteState;
     }
 }
 
@@ -91,7 +95,7 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
 }
 
 /// <summary>
-///     Contains all the data needed to represent a single device on the power monitoring UI
+///     Contains all the data needed to update a single device on the power monitoring UI
 /// </summary>
 [Serializable, NetSerializable]
 public struct PowerMonitoringConsoleEntry

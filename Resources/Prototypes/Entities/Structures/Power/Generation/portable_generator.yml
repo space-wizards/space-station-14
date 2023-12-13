@@ -175,9 +175,8 @@
       loadNodes:
         - output_hv
         - output_mv
-    - type: NavMapTrackable
-      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
-      color: Purple
+      sprite: Structures/Power/Generation/portable_generator.rsi
+      state: portgen0
       
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
@@ -232,9 +231,8 @@
       loadNodes:
         - output_hv
         - output_mv
-    - type: NavMapTrackable
-      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
-      color: Purple
+      sprite: Structures/Power/Generation/portable_generator.rsi
+      state: portgen1
       
 - type: entity
   name: J.R.P.A.C.M.A.N.-type portable generator
@@ -313,9 +311,8 @@
     - type: PowerMonitoringDevice
       group: Generator
       loadNode: output
-    - type: NavMapTrackable
-      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
-      color: Purple
+      sprite: Structures/Power/Generation/portable_generator.rsi
+      state: portgen3
     - type: PowerSupplier
       # No ramping needed on this bugger.
       voltage: Apc

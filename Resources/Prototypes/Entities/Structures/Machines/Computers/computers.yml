@@ -239,15 +239,13 @@
   - type: Computer
     board: PowerComputerCircuitboard
   - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
   - type: NodeContainer
     examinable: true
     nodes:
       hv:
         !type:CableDeviceNode
         nodeGroupID: HVPower
-  - type: NavMapTrackable
-    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
-    color: Cyan
   - type: ActivatableUI
     singleUser: true
     key: enum.PowerMonitoringConsoleUiKey.Key

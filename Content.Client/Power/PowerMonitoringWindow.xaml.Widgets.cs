@@ -17,27 +17,38 @@ public sealed partial class PowerMonitoringWindow
 
     private bool _tryToScroll = false;
 
-    private void UpdateAllConsoleEntries
+    private void UpdateWindowConsoleEntry
         (BoxContainer masterContainer,
-        PowerMonitoringConsoleEntry[] entries,
-        PowerMonitoringConsoleEntry[]? focusSources,
-        PowerMonitoringConsoleEntry[]? focusLoads)
+        int index,
+        PowerMonitoringConsoleEntry entry,
+        PowerMonitoringDeviceMetaData metaData,
+        PowerMonitoringConsoleEntry[] focusSources,
+        PowerMonitoringConsoleEntry[] focusLoads)
     {
-        // Remove excess children
-        while (masterContainer.ChildCount > entries.Length)
-        {
-            masterContainer.RemoveChild(masterContainer.GetChild(masterContainer.ChildCount - 1));
-        }
+        UpdateWindowConsoleEntry(masterContainer, index, entry, metaData);
 
-        if (entries.Length == 0)
+        var windowEntry = masterContainer.GetChild(index) as PowerMonitoringWindowEntry;
+
+        // If we exit here, something was added to the container that shouldn't have been added
+        if (windowEntry == null)
             return;
 
+        // Update sources and loads 
+        UpdateEntrySourcesOrLoads(masterContainer, windowEntry.SourcesContainer, focusSources, _sourceIcon);
+        UpdateEntrySourcesOrLoads(masterContainer, windowEntry.LoadsContainer, focusLoads, _loadIconPath);
+
+        windowEntry.MainContainer.Visible = true;
+    }
+
+    private void UpdateWindowConsoleEntry(BoxContainer masterContainer, int index, PowerMonitoringConsoleEntry entry, PowerMonitoringDeviceMetaData metaData)
+    {
+        PowerMonitoringWindowEntry? windowEntry;
+
         // Add missing children
-        while (masterContainer.ChildCount < entries.Length)
+        if (index >= masterContainer.ChildCount)
         {
-            // Basic entry
-            var entry = entries[masterContainer.ChildCount];
-            var windowEntry = new PowerMonitoringWindowEntry(entry);
+            // Add basic entry
+            windowEntry = new PowerMonitoringWindowEntry(entry);
             masterContainer.AddChild(windowEntry);
 
             // Selection action
@@ -49,66 +60,40 @@ public sealed partial class PowerMonitoringWindow
             };
         }
 
-        // Update all children
-        foreach (var child in masterContainer.Children)
+        else
         {
-            if (child is not PowerMonitoringWindowEntry)
-                continue;
-
-            var castChild = (PowerMonitoringWindowEntry) child;
-
-            if (castChild == null)
-                continue;
-
-            var entry = entries[child.GetPositionInParent()];
-            var uid = _entManager.GetEntity(entry.NetEntity);
-
-            // Update entry info and button appearance
-            castChild.EntityUid = uid;
-            castChild.Entry = entry;
-
-            UpdateEntryButton(uid, castChild.Button, entry);
-
-            // Update sources and loads (if applicable)
-            if (_focusEntity == uid)
-            {
-                castChild.MainContainer.Visible = true;
-
-                UpdateEntrySourcesAndLoads(masterContainer, castChild.SourcesContainer, focusSources, _sourceIcon);
-                UpdateEntrySourcesAndLoads(masterContainer, castChild.LoadsContainer, focusLoads, _loadIconPath);
-            }
-
-            else
-                castChild.MainContainer.Visible = false;
+            windowEntry = masterContainer.GetChild(index) as PowerMonitoringWindowEntry;
         }
+
+        // If we exit here, something was added to the container that shouldn't have been added
+        if (windowEntry == null)
+            return;
+
+        windowEntry.NetEntity = entry.NetEntity;
+        windowEntry.Entry = entry;
+        windowEntry.MainContainer.Visible = false;
+
+        UpdateWindowEntryButton(entry.NetEntity, windowEntry.Button, entry, metaData);
     }
 
-    public void UpdateEntryButton(EntityUid uid, PowerMonitoringButton button, PowerMonitoringConsoleEntry entry)
+    public void UpdateWindowEntryButton(NetEntity netEntity, PowerMonitoringButton button, PowerMonitoringConsoleEntry entry, PowerMonitoringDeviceMetaData metaData)
     {
-        if (!uid.IsValid())
+        if (!netEntity.IsValid())
             return;
 
         // Update button style
-        if (uid == _focusEntity)
+        if (netEntity == _focusEntity)
             button.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
 
         else
             button.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
 
-        // Update sprite view
-        button.SpriteView.SetEntity(uid);
-
         // Update name
-        var meta = _entManager.GetComponent<MetaDataComponent>(uid);
-        var name = Loc.GetString(meta.EntityName);
+        var name = Loc.GetString(metaData.EntityName);
         var charLimit = (int) (button.NameLocalized.Width / 8f);
 
-        if (_entManager.TryGetComponent<NavMapTrackableComponent>(uid, out var trackable) &&
-            trackable.ChildOffsets.Count > 0 &&
-            meta.EntityPrototype != null)
-        {
-            name = Loc.GetString("power-monitoring-window-object-array", ("name", meta.EntityPrototype.Name), ("count", trackable.ChildOffsets.Count + 1));
-        }
+        if (metaData.SpritePath != string.Empty && metaData.SpriteState != string.Empty)
+            button.TextureRect.Texture = _spriteSystem.Frame0(new SpriteSpecifier.Rsi(new ResPath(metaData.SpritePath), metaData.SpriteState));
 
         // Update tool tip
         button.ToolTip = Loc.GetString(name);
@@ -123,7 +108,7 @@ public sealed partial class PowerMonitoringWindow
         button.PowerValue.Text = Loc.GetString("power-monitoring-window-value", ("value", entry.PowerValue));
     }
 
-    private void UpdateEntrySourcesAndLoads(BoxContainer masterContainer, BoxContainer currentContainer, PowerMonitoringConsoleEntry[]? entries, SpriteSpecifier.Texture icon)
+    private void UpdateEntrySourcesOrLoads(BoxContainer masterContainer, BoxContainer currentContainer, PowerMonitoringConsoleEntry[]? entries, SpriteSpecifier.Texture icon)
     {
         if (currentContainer == null)
             return;
@@ -151,6 +136,9 @@ public sealed partial class PowerMonitoringWindow
             subEntry.Button.OnButtonUp += args => { ButtonAction(subEntry, masterContainer); };
         }
 
+        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(_owner, out var console))
+            return;
+
         // Update all children
         foreach (var child in currentContainer.Children)
         {
@@ -166,19 +154,21 @@ public sealed partial class PowerMonitoringWindow
                 castChild.Icon.Texture = _spriteSystem.Frame0(icon);
 
             var entry = entries[child.GetPositionInParent()];
-            var uid = _entManager.GetEntity(entry.NetEntity);
 
+            castChild.NetEntity = entry.NetEntity;
             castChild.Entry = entry;
-            castChild.EntityUid = uid;
 
-            UpdateEntryButton(uid, castChild.Button, entries.ElementAt(child.GetPositionInParent()));
+            if (!console.PowerMonitoringDeviceMetaData.TryGetValue(castChild.NetEntity, out var metaData))
+                continue;
+
+            UpdateWindowEntryButton(entry.NetEntity, castChild.Button, entries.ElementAt(child.GetPositionInParent()), metaData);
         }
     }
 
     private void ButtonAction(PowerMonitoringWindowBaseEntry entry, BoxContainer masterContainer)
     {
         // Toggle off button?
-        if (entry.EntityUid == _focusEntity)
+        if (entry.NetEntity == _focusEntity)
         {
             entry.Button.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
             _focusEntity = null;
@@ -197,7 +187,7 @@ public sealed partial class PowerMonitoringWindow
         {
             foreach (PowerMonitoringWindowEntry sibling in masterContainer.Children)
             {
-                if (sibling.EntityUid == _focusEntity)
+                if (sibling.NetEntity == _focusEntity)
                 {
                     sibling.Button.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
                     break;
@@ -206,24 +196,18 @@ public sealed partial class PowerMonitoringWindow
         }
 
         // Center the nav map on selected entity
-        _focusEntity = entry.EntityUid;
+        _focusEntity = entry.NetEntity;
 
-        if (!_trackedEntities.TryGetValue(entry.EntityUid, out var kvp))
+        if (!NavMap.TrackedEntities.TryGetValue(entry.NetEntity, out var blip))
             return;
 
-        var coords = kvp.Item1;
-        var trackable = kvp.Item2;
-
-        NavMap.CenterToCoordinates(coords);
+        NavMap.CenterToCoordinates(blip.Coordinates);
 
         // Switch tabs
         SwitchTabsBasedOnPowerMonitoringConsoleGroup(entry.Entry.Group);
 
-        // Get the scroll position of the selected entity on the selected button the UI
-        _tryToScroll = true;
-
-        // Request an update from the power monitoring system
-        SendPowerMonitoringConsoleMessageAction?.Invoke(_entManager.GetNetEntity(_focusEntity), entry.Entry.Group);
+        // Send an update from the power monitoring system
+        SendPowerMonitoringConsoleMessageAction?.Invoke(_focusEntity, entry.Entry.Group);
     }
 
     private bool TryGetNextScrollPosition([NotNullWhen(true)] out float? nextScrollPosition)
@@ -249,7 +233,7 @@ public sealed partial class PowerMonitoringWindow
             if (control == null || control is not PowerMonitoringWindowEntry)
                 continue;
 
-            if (((PowerMonitoringWindowEntry) control).EntityUid == _focusEntity)
+            if (((PowerMonitoringWindowEntry) control).NetEntity == _focusEntity)
                 return true;
 
             nextScrollPosition += control.Height;
@@ -429,7 +413,7 @@ public sealed class PowerMonitoringWindowSubEntry : PowerMonitoringWindowBaseEnt
 
 public abstract class PowerMonitoringWindowBaseEntry : BoxContainer
 {
-    public EntityUid EntityUid;
+    public NetEntity NetEntity;
     public PowerMonitoringConsoleEntry Entry;
     public PowerMonitoringButton Button;
 
@@ -446,6 +430,7 @@ public sealed class PowerMonitoringButton : Button
 {
     public BoxContainer MainContainer;
     public SpriteView SpriteView;
+    public TextureRect TextureRect;
     public Label NameLocalized;
     public Label PowerValue;
 
@@ -457,6 +442,7 @@ public sealed class PowerMonitoringButton : Button
 
         MainContainer = new BoxContainer();
         MainContainer.Orientation = BoxContainer.LayoutOrientation.Horizontal;
+        MainContainer.SetHeight = 32f;
         MainContainer.HorizontalExpand = true;
         AddChild(MainContainer);
 
@@ -464,7 +450,14 @@ public sealed class PowerMonitoringButton : Button
         SpriteView.OverrideDirection = Direction.South;
         SpriteView.SetSize = new Vector2(32f, 32f);
         SpriteView.Margin = new Thickness(0, 0, 5, 0);
-        MainContainer.AddChild(SpriteView);
+        //MainContainer.AddChild(SpriteView);
+
+        TextureRect = new TextureRect();
+        TextureRect.HorizontalAlignment = HAlignment.Center;
+        TextureRect.VerticalAlignment = VAlignment.Center;
+        TextureRect.SetSize = new Vector2(32f, 32f);
+        TextureRect.Margin = new Thickness(0, 0, 5, 0);
+        MainContainer.AddChild(TextureRect);
 
         NameLocalized = new Label();
         NameLocalized.ClipText = true;
@@ -475,6 +468,7 @@ public sealed class PowerMonitoringButton : Button
         PowerValue.ClipText = true;
         PowerValue.SetWidth = 72f;
         PowerValue.HorizontalAlignment = HAlignment.Right;
+        PowerValue.HorizontalExpand = true;
         MainContainer.AddChild(PowerValue);
     }
 }

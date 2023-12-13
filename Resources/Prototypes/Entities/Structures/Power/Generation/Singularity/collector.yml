@@ -53,9 +53,8 @@
   - type: PowerMonitoringDevice
     group: Generator
     loadNode: input
-  - type: NavMapTrackable
-    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
-    color: Purple  
+    sprite: Structures/Power/Generation/Singularity/collector.rsi
+    state: static
   - type: RadiationCollector
     chargeModifier: 7500
     radiationReactiveGases:

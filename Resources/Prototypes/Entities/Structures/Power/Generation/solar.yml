@@ -39,10 +39,9 @@
   - type: PowerMonitoringDevice
     group: Generator
     loadNode: output
-    collectionName: SolarPanel
-  - type: NavMapTrackable
-    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
-    color: Purple
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: static
+    collectionName: SolarPanel   
   - type: Anchorable
   - type: Pullable
   - type: Electrified

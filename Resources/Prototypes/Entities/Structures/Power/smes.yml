@@ -52,9 +52,8 @@
       group: SMES
       sourceNode: input
       loadNode: output
-    - type: NavMapTrackable
-      texture: /Textures/Interface/PowerMonitoring/beveled_hexagon.png
-      color: OrangeRed
+      sprite: Structures/Power/smes.rsi
+      state: static
     - type: BatteryDischarger
       voltage: High
       node: output
