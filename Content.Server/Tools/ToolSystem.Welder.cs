@@ -28,7 +28,7 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, ComponentShutdown>(OnWelderShutdown);
             SubscribeLocalEvent<WelderComponent, ComponentGetState>(OnWelderGetState);
             SubscribeLocalEvent<WelderComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
-            SubscribeLocalEvent<WelderComponent, ItemToggleDeactivatedEvent>(TurnOff);
+            SubscribeLocalEvent<WelderComponent, ItemToggleDeactivateAttemptEvent>(TurnOff);
 
         }
 
@@ -58,9 +58,9 @@ namespace Content.Server.Tools
                 // Not enough fuel to lit welder.
                 if (fuel == FixedPoint2.Zero || fuel < welder.FuelLitCost)
                 {
-                    if (itemToggleComp.User != null)
+                    if (args.User != null)
                     {
-                        _popupSystem.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), uid, (EntityUid) itemToggleComp.User);
+                        _popupSystem.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), uid, (EntityUid) args.User);
                     }
                     args.Cancelled = true;
                     return;
@@ -69,7 +69,7 @@ namespace Content.Server.Tools
                 solution.RemoveReagent(welder.FuelReagent, welder.FuelLitCost);
 
                 // Logging
-                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(itemToggleComp.User):user} toggled {ToPrettyString(uid):welder} on");
+                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(uid):welder} on");
             }
 
             var ev = new WelderToggledEvent(true);
@@ -86,12 +86,12 @@ namespace Content.Server.Tools
             _activeWelders.Add(uid);
         }
 
-        public void TurnOff(EntityUid uid, WelderComponent welder, ref ItemToggleDeactivatedEvent args)
+        public void TurnOff(EntityUid uid, WelderComponent welder, ref ItemToggleDeactivateAttemptEvent args)
         {
             if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
             {
                 // Logging
-                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(itemToggleComp.User):user} toggled {ToPrettyString(uid):welder} off");
+                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(uid):welder} off");
             }
             var ev = new WelderToggledEvent(false);
             RaiseLocalEvent(uid, ev);

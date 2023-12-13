@@ -133,13 +133,6 @@ public sealed partial class ItemToggleComponent : Component
     public bool ActivatedSharp = false;
 
     /// <summary>
-    ///     User entity used to store the information about the last user who has toggled the item. Used in other functions to affect the user in some way (like show messages).
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public EntityUid? User { get; set; } = null;
-
-    /// <summary>
     ///     Used when the item emits sound while active.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
@@ -150,9 +143,10 @@ public sealed partial class ItemToggleComponent : Component
 /// Raised directed on an entity when its ItemToggle is attempted to be activated.
 /// </summary>
 [ByRefEvent]
-public record struct ItemToggleActivateAttemptEvent()
+public record struct ItemToggleActivateAttemptEvent(EntityUid? User)
 {
     public bool Cancelled = false;
+    public EntityUid? User { get; set; } = User;
 }
 
 /// <summary>
@@ -165,9 +159,10 @@ public readonly record struct ItemToggleActivatedEvent;
 /// Raised directed on an entity when its ItemToggle is attempted to be deactivated.
 /// </summary>
 [ByRefEvent]
-public record struct ItemToggleDeactivateAttemptEvent()
+public record struct ItemToggleDeactivateAttemptEvent(EntityUid? User)
 {
     public bool Cancelled = false;
+    public EntityUid? User { get; set; } = User;
 }
 
 /// <summary>
@@ -180,6 +175,10 @@ public readonly record struct ItemToggleDeactivatedEvent;
 /// Raised directed on an entity when another component forces a toggle (like running out of battery).
 /// </summary>
 [ByRefEvent]
-public readonly record struct ItemToggleForceToggleEvent;
+public record struct ItemToggleForceToggleEvent(EntityUid? User)
+{
+    public EntityUid? User { get; set; } = User;
+}
+
 
 

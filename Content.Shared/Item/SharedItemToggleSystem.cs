@@ -7,6 +7,7 @@ using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Item;
 /// <summary>
@@ -21,6 +22,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
 
     public override void Initialize()
     {
@@ -39,12 +41,10 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
         args.Handled = true;
 
-        itemToggle.User = args.User;
-
         if (TryComp<WieldableComponent>(uid, out var wieldableComp))
             return;
 
-        Toggle(uid, itemToggle.User, itemToggle);
+        Toggle(uid, args.User, itemToggle);
     }
 
     public void Toggle(EntityUid uid, EntityUid? user = null, ItemToggleComponent? itemToggle = null)
@@ -64,8 +64,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
     public void ForceToggle(EntityUid uid, ItemToggleComponent itemToggle, ref ItemToggleForceToggleEvent args)
     {
-
-        Toggle(uid, itemToggle.User, itemToggle);
+        Toggle(uid, args.User, itemToggle);
     }
 
     public bool TryActivate(EntityUid uid, EntityUid? user = null, ItemToggleComponent? itemToggle = null)
@@ -76,28 +75,31 @@ public abstract class SharedItemToggleSystem : EntitySystem
         if (itemToggle.Activated)
             return true;
 
-        var attempt = new ItemToggleActivateAttemptEvent();
-        RaiseLocalEvent(uid, ref attempt);
-
-        if (attempt.Cancelled)
+        //The client cannot predict if the attempt to turn on fails or not since the battery and fuel systems are server side (for now). Potential future TODO
+        if (_netManager.IsServer)
         {
-            //Play the failure to activate noise if there is any.
-            _audio.PlayPredicted(itemToggle.FailToActivateSound, uid, user);
-            return false;
+            var attempt = new ItemToggleActivateAttemptEvent(user);
+            RaiseLocalEvent(uid, ref attempt);
+
+            if (attempt.Cancelled)
+            {
+                //Play the failure to activate noise if there is any.
+                _audio.PlayPvs(itemToggle.FailToActivateSound, uid);
+                return false;
+            }
+
+            // At this point the server knows that the activation went through successfully, so we play the sounds and make the changes.
+            _audio.PlayPvs(itemToggle.ActivateSound, uid);
+            //Starts the active sound (like humming).
+            if (itemToggle.ActiveSound != null && itemToggle.PlayingStream == null)
+            {
+                itemToggle.PlayingStream = _audio.PlayPvs(itemToggle.ActiveSound, uid, AudioParams.Default.WithLoop(true)).Value.Entity;
+            }
+
+            Activate(uid, itemToggle);
+            var ev = new ItemToggleActivatedEvent();
+            RaiseLocalEvent(uid, ref ev);
         }
-
-        Activate(uid, itemToggle);
-
-        var ev = new ItemToggleActivatedEvent();
-        RaiseLocalEvent(uid, ref ev);
-
-        _audio.PlayPredicted(itemToggle.ActivateSound, uid, user);
-        //Starts the active sound (like humming).
-        if (itemToggle.ActiveSound != null && itemToggle.PlayingStream == null)
-        {
-            itemToggle.PlayingStream = _audio.PlayPredicted(itemToggle.ActiveSound, uid, user, AudioParams.Default.WithLoop(true)).Value.Entity;
-        }
-
         return true;
     }
 
@@ -109,24 +111,29 @@ public abstract class SharedItemToggleSystem : EntitySystem
         if (!itemToggle.Activated)
             return true;
 
-        var attempt = new ItemToggleDeactivateAttemptEvent();
+        //Since there is currently no system that cancels a deactivation, it's all predicted.
+        var attempt = new ItemToggleDeactivateAttemptEvent(user);
         RaiseLocalEvent(uid, ref attempt);
 
-        if (attempt.Cancelled)
+        if (attempt.Cancelled && uid.Id == GetNetEntity(uid).Id)
+        {
             return false;
+        }
+        else
+        {
+            _audio.PlayPredicted(itemToggle.DeactivateSound, uid, user);
+            itemToggle.PlayingStream = _audio.Stop(itemToggle.PlayingStream);
 
-        Deactivate(uid, itemToggle);
+            Deactivate(uid, itemToggle);
 
-        var ev = new ItemToggleDeactivatedEvent();
-        RaiseLocalEvent(uid, ref ev);
+            var ev = new ItemToggleDeactivatedEvent();
+            RaiseLocalEvent(uid, ref ev);
 
-        _audio.PlayPredicted(itemToggle.DeactivateSound, uid, user);
-        itemToggle.PlayingStream = _audio.Stop(itemToggle.PlayingStream);
-
-        return true;
+            return true;
+        }
     }
 
-    //Makes the actual changes to the item.
+    //Makes the actual changes to the item's components on activation.
     private void Activate(EntityUid uid, ItemToggleComponent itemToggle)
     {
         itemToggle.Activated = true;
@@ -138,7 +145,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
         Dirty(uid, itemToggle);
     }
-
+    //Makes the actual changes to the item's components on deactivation.
     private void Deactivate(EntityUid uid, ItemToggleComponent itemToggle)
     {
         itemToggle.Activated = false;
@@ -151,13 +158,18 @@ public abstract class SharedItemToggleSystem : EntitySystem
         Dirty(uid, itemToggle);
     }
 
-
+    /// <summary>
+    /// Used for items that require to be wielded in both hands to activate. For instance the dual energy sword will turn off if not wielded.
+    /// </summary>
     private void TurnOffonUnwielded(EntityUid uid, ItemToggleComponent itemToggle, ItemUnwieldedEvent args)
     {
         if (itemToggle.Activated)
             TryDeactivate(uid, itemToggle: itemToggle);
     }
 
+    /// <summary>
+    /// Wieldable items will automatically turn on when wielded.
+    /// </summary>
     private void TurnOnonWielded(EntityUid uid, ItemToggleComponent itemToggle, ref ItemWieldedEvent args)
     {
         if (!itemToggle.Activated)

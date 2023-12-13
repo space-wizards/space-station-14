@@ -78,16 +78,16 @@ namespace Content.Server.Stunnable.Systems
             if (!TryComp<BatteryComponent>(uid, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
                 args.Cancelled = true;
-                if (itemToggle.User != null)
+                if (args.User != null)
                 {
-                    _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), (EntityUid) itemToggle.User, (EntityUid) itemToggle.User);
+                    _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), (EntityUid) args.User, (EntityUid) args.User);
                 }
                 return;
             }
 
             if (TryComp<RiggableComponent>(uid, out var rig) && rig.IsRigged)
             {
-                _riggableSystem.Explode(uid, battery, itemToggle.User);
+                _riggableSystem.Explode(uid, battery, args.User);
             }
 
             if (EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
