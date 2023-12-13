@@ -501,10 +501,10 @@ public sealed partial class ShuttleSystem
         var childEnumerator = xform.ChildEnumerator;
         while (childEnumerator.MoveNext(out var child))
         {
-            if (!_buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
+            if (!_buckleQuery.TryGetComponent(child, out var buckle) || buckle.Buckled)
                 continue;
 
-            toKnock.Add(child.Value);
+            toKnock.Add(child);
         }
     }
 

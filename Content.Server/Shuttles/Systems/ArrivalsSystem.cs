@@ -236,10 +236,9 @@ public sealed class ArrivalsSystem : EntitySystem
         }
 
         var children = xform.ChildEnumerator;
-
         while (children.MoveNext(out var child))
         {
-            DumpChildren(child.Value, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
+            DumpChildren(child, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
         }
     }
 
