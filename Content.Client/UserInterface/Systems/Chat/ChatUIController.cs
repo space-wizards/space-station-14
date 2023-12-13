@@ -707,17 +707,24 @@ public sealed class ChatUIController : UIController
     private void OnDamageForceSay(DamageForceSayEvent ev, EntitySessionEventArgs _)
     {
         var chatBox = UIManager.ActiveScreen?.GetWidget<ChatBox>() ?? UIManager.ActiveScreen?.GetWidget<ResizableChatBox>();
+        if (chatBox == null)
+            return;
+
+        var msg = chatBox.ChatInput.Input.Text.TrimEnd();
         // Don't send on OOC/LOOC obviously!
-        if (chatBox?.SelectedChannel is not (ChatSelectChannel.Local or
-            ChatSelectChannel.Radio or
-            ChatSelectChannel.Whisper))
+        if (SplitInputContents(msg).chatChannel
+                is not (
+                    ChatSelectChannel.Local or
+                    ChatSelectChannel.Radio or
+                    ChatSelectChannel.Whisper
+                )
+            )
             return;
 
         if (_player.LocalSession?.AttachedEntity is not { } ent
             || !EntityManager.TryGetComponent<DamageForceSayComponent>(ent, out var forceSay))
             return;
 
-        var msg = chatBox.ChatInput.Input.Text.TrimEnd();
 
         if (string.IsNullOrWhiteSpace(msg))
             return;

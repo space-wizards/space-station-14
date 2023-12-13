@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
+using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
@@ -21,6 +22,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerNameEvent>(OnSpeakerNameTransform);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeNameMessage>(OnChangeName);
+        SubscribeLocalEvent<VoiceMaskComponent, ItemMaskToggledEvent>(OnMaskToggled);
         SubscribeLocalEvent<VoiceMaskerComponent, GotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<VoiceMaskerComponent, GotUnequippedEvent>(OnUnequip);
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OnSetName);
@@ -65,6 +67,11 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
             args.Name = component.VoiceName;
         }
+    }
+
+    private void OnMaskToggled(Entity<VoiceMaskComponent> ent, ref ItemMaskToggledEvent args)
+    {
+        ent.Comp.Enabled = !args.IsToggled;
     }
 
     private void OpenUI(EntityUid player, ActorComponent? actor = null)
