@@ -11,6 +11,7 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Audio;
@@ -20,8 +21,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -33,6 +33,7 @@ namespace Content.Client.UserInterface.Systems.Bwoink;
 public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSystem>, IOnStateChanged<GameplayState>, IOnStateChanged<LobbyState>
 {
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
@@ -44,6 +45,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     public IAHelpUIHandler? UIHelper;
     private bool _discordRelayActive;
     private bool _hasUnreadAHelp;
+    private string? _aHelpSound;
 
     public override void Initialize()
     {
@@ -53,6 +55,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         SubscribeNetworkEvent<BwoinkPlayerTypingUpdated>(PeopleTypingUpdated);
 
         _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
+        _config.OnValueChanged(CCVars.AHelpSound, v => _aHelpSound = v, true);
     }
 
     public void UnloadButton()
@@ -131,7 +134,8 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         }
         if (localPlayer.UserId != message.TrueSender)
         {
-            _audio.PlayGlobal("/Audio/Effects/adminhelp.ogg", Filter.Local(), false);
+            if (_aHelpSound != null)
+                _audio.PlayGlobal(_aHelpSound, Filter.Local(), false);
             _clyde.RequestWindowAttention();
         }
 

@@ -33801,13 +33801,6 @@ entities:
     - pos: 36.5,22.5
       parent: 31
       type: Transform
-- proto: GasMinerPlasma
-  entities:
-  - uid: 11073
-    components:
-    - pos: 42.5,22.5
-      parent: 31
-      type: Transform
 - proto: GasMinerWaterVapor
   entities:
   - uid: 6836

@@ -1,0 +1,94 @@
+﻿- type: entity
+  parent: BaseStructureDynamic
+  id: SmartFridge
+  name: SmartFridge
+  description: A refrigerated storage unit for keeping items cold and fresh.
+  components:
+  - type: Advertise
+    pack: SmartFridgeAds
+  - type: Speech
+  - type: Appearance
+  - type: Sprite
+    sprite: Structures/Machines/smartfridge.rsi
+    snapCardinals: true
+    layers:
+    - state: smartfridge
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: smartfridge_door
+      map: ["enum.StorageVisualLayers.Door"]
+      shader: unshaded
+  - type: EntityStorageVisuals
+    stateBaseClosed: smartfridge
+    stateDoorOpen: smartfridge_open
+    stateDoorClosed: smartfridge_door
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#9dc5c9"
+  - type: EntityStorage
+    isCollidableWhenOpen: true
+    closeSound:
+      path: /Audio/Machines/windoor_open.ogg
+      params:
+        volume: -3
+    openSound:
+      path: /Audio/Machines/windoor_open.ogg
+      params:
+        volume: -3
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+  - type: UseDelay
+    delay: 1
+  - type: AntiRottingContainer
+  - type: ResistLocker
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    noRot: true
+    anchored: True
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 200
+  - type: Anchorable
+    delay: 2
+  - type: InteractionOutline
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/bang.ogg

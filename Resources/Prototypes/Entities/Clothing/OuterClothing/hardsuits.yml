@@ -474,7 +474,7 @@
 # Syndicate Medic Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitSyndie
-  id: ClothingOuterHardsuitMedic
+  id: ClothingOuterHardsuitSyndieMedic
   name: blood-red medic hardsuit
   description: A heavily armored and agile advanced hardsuit specifically designed for field medic operations.
   components:
@@ -741,7 +741,7 @@
 
 #ERT Medic Hardsuit
 - type: entity
-  parent: ClothingOuterHardsuitMedic
+  parent: ClothingOuterHardsuitSyndieMedic
   id: ClothingOuterHardsuitERTMedical
   name: ERT medic's hardsuit
   description: A protective hardsuit worn by the medics of an emergency response team.
