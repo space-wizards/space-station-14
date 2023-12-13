@@ -42,6 +42,7 @@
       - id: ClothingHeadsetAltSecurity
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsJack
+      - id: ClothingShoesHighheelBoots
       - id: ClothingOuterCoatWarden
       - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
