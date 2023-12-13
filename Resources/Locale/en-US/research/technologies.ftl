@@ -41,7 +41,6 @@ research-technology-practice-ammunition = Practice Ammunition
 research-technology-concentrated-laser-weaponry = Concentrated Laser Weaponry
 research-technology-wave-particle-harnessing = Wave Particle Harnessing
 research-technology-advanced-riot-control = Advanced Riot Control
-research-technology-handheld-electrical-propulsion = Handheld Electrical Propulsion
 research-technology-portable-microfusion-weaponry = Portable Microfusion Weaponry
 
 research-technology-basic-robotics = Basic Robotics

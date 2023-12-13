@@ -6,7 +6,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
-using YamlDotNet.Core;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
@@ -103,7 +102,7 @@ public sealed class ItemGridPiece : Control
             return;
         }
 
-        if (_storageController.IsDragging && _storageController.CurrentlyDragging == this)
+        if (_storageController.IsDragging && _storageController.DraggingGhost?.Entity == Entity && _storageController.DraggingGhost != this)
             return;
 
         var adjustedShape = _entityManager.System<ItemSystem>().GetAdjustedItemShape((Entity, itemComponent), Location.Rotation, Vector2i.Zero);
@@ -177,7 +176,7 @@ public sealed class ItemGridPiece : Control
             handle.SetTransform(pos, iconRotation);
             var box = new UIBox2(root, root + sprite.Size * scale);
             handle.DrawTextureRect(sprite, box);
-            handle.SetTransform(Matrix3.Identity);
+            handle.SetTransform(GlobalPixelPosition, Angle.Zero);
         }
         else
         {
