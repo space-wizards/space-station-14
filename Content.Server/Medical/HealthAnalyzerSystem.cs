@@ -38,7 +38,7 @@ namespace Content.Server.Medical
 
         private void OnAfterInteract(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, AfterInteractEvent args)
         {
-            if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasDrawCharge(uid))
+            if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasDrawCharge(uid, user: args.User))
                 return;
 
             _audio.PlayPvs(healthAnalyzer.ScanningBeginSound, uid);
@@ -79,7 +79,7 @@ namespace Content.Server.Medical
 
         private void OnDoAfter(EntityUid uid, HealthAnalyzerComponent component, DoAfterEvent args)
         {
-            if (args.Handled || args.Cancelled || args.Args.Target == null || !_cell.HasDrawCharge(uid))
+            if (args.Handled || args.Cancelled || args.Args.Target == null || !_cell.HasDrawCharge(uid, user: args.User))
                 return;
 
             _audio.PlayPvs(component.ScanningEndSound, args.Args.User);
