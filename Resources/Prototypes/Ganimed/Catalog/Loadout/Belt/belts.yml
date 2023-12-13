@@ -16,6 +16,17 @@
   prototype: ClothingBeltMilitaryWebbing
 
 - type: loadout
+  id: LoadoutBeltClothingBeltSalvageWebbing
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - CargoTechnician
+    - SalvageSpecialist
+    - Quartermaster
+  prototype: ClothingBeltSalvageWebbing
+
+- type: loadout
   id: LoadoutBeltClothingBeltMilitaryWebbingMed
   category: loadout-category-belt
   cost: 6

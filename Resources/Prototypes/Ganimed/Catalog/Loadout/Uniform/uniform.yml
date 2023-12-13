@@ -42,6 +42,17 @@
   prototype: ClothingUniformJumpskirtQMTurtleneck
 
 - type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitCargoTurtleneck
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - Quartermaster
+    - SalvageSpecialist
+    - CargoTechnician
+  prototype: ClothingUniformJumpsuitCargoTurtleneck
+
+- type: loadout
   id: LoadoutUniformClothingUniformJumpsuitResearchDirector
   category: loadout-category-uniform
   cost: 1
