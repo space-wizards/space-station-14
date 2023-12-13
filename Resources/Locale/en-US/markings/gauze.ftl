@@ -35,6 +35,18 @@ marking-GauzeUpperLegLeft = Gauze Thigh Wrap (Left)
 marking-GauzeLowerLegRight-gauze_lowerleg_r = Gauze Ankle Wrap (Right)
 marking-GauzeLowerLegRight = Gauze Ankle Wrap (Right)
 
-
 marking-GauzeUpperLegRight-gauze_upperleg_r = Gauze Thigh Wrap (Right)
 marking-GauzeUpperLegRight = Gauze Thigh Wrap (Right)
+
+
+marking-GauzeLizardLowerLegRight-gauze_lizardfoot_r = Gauze Foot Wrap (Right)
+marking-GauzeLizardLowerLegRight = Gauze Foot Wrap (Right)
+
+marking-GauzeLizardFootLeft-gauze_lizardfoot_l = Gauze Foot Wrap (Left)
+marking-GauzeLizardFootLeft = Gauze Foot Wrap (Left)
+
+marking-GauzeLizardLefteyePatch-gauze_lizardlefteye = Adjusted Gauze eyepatch (Left)
+marking-GauzeLizardLefteyePatch = Adjusted Gauze eyepatch (Left)
+
+marking-GauzeLizardRighteyePatch-gauze_lizardlefteye = Adjusted Gauze eyepatch (Right)
+marking-GauzeLizardRighteyePatch = Adjusted Gauze Eyepatch (Right)

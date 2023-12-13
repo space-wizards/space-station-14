@@ -58,6 +58,22 @@
 	{
 	  "name": "gauze_lowerleg_l",
 	  "directions": 4
-	}
+	},
+	{
+      "name": "gauze_lizardrighteye_2",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lizardlefteye_2",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lizardlowerleg_r",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lizardlowerleg_l",
+      "directions": 4
+    }
   ]
 }
