@@ -54,9 +54,6 @@
   id: PinpointerSyndicateNuclear
   parent: PinpointerBase
   components:
-  - type: Sprite
-    noRot: True
-    sprite: Objects/Devices/pinpointer-syndicate.png
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
@@ -69,9 +66,6 @@
   id: PinpointerUniversal
   parent: PinpointerBase
   components:
-   - type: Sprite
-     noRot: True
-     sprite: Objects/Devices/pinpointer-way.png
    - type: Icon
      state: pinpointer-way
    - type: Pinpointer
@@ -85,9 +79,6 @@
   id: PinpointerStation
   suffix: Station
   components:
-  - type: Sprite
-    noRot: True
-    sprite: Objects/Devices/pinpointer-station.png
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
