@@ -1,10 +1,4 @@
 Entries:
-- author: peptron1
-  changes:
-  - {message: 'The chaplain hoodie now comes with its hood as an action, similar to
-      winter coats', type: Tweak}
-  id: 4849
-  time: '2023-09-18T01:10:44.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Fixed Holobarriers being unable to be destroyed., type: Fix}
@@ -2899,3 +2893,10 @@ Entries:
   - {message: Fixed secret doors not requiring metal rods, type: Fix}
   id: 5349
   time: '2023-12-13T00:01:51.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: 'Added a General settings tab, and moved a bunch of options into it.',
+    type: Add}
+  - {message: Added the ability to toggle on and off the Discord Rich Presence., type: Add}
+  id: 5350
+  time: '2023-12-13T01:58:20.0000000+00:00'
