@@ -1153,7 +1153,7 @@
   description: Cousins to the sentient race of lizard people, kobolds are as nasty as monkeys; ready to pull out your hair and stab you to death.
   components:
   - type: LizardAccent
-  - type: Speech
+  - type: Speech # I don't know how to get it to work and i want someone to make them speak like a lizard with normal accents (or optionally another language altogether)
     speechSounds: Lizard
     speechVerb: Reptilian
   - type: Vocal
@@ -1164,10 +1164,10 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      50: Dead
+      40: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.5
-    baseSprintSpeed: 4.5
+    baseSprintSpeed: 5
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Weapons/pierce.ogg
@@ -1175,7 +1175,7 @@
     animation: WeaponArcPunch
     damage:
       types:
-        Piercing: 8
+        Piercing: 9
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
