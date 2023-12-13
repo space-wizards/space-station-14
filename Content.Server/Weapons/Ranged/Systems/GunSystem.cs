@@ -10,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Effects;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
@@ -136,15 +137,22 @@ public sealed partial class GunSystem : SharedGunSystem
                             !gun.CompatibleAmmo.Exists(ammoAllowed => ammoAllowed.Equals(cartridge.Prototype))
                             && user != null)
                         {
-                            Damageable.TryChangeDamage(user, default!, origin: user);
+                            var damage = new DamageSpecifier();
+                            damage.DamageDict.Add("Blunt", 5f);
+                            Damageable.TryChangeDamage(user, damage, origin: user);
                             _stun.TryParalyze(user.Value, TimeSpan.FromSeconds(3f), true);
 
                             Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gunUid);
 
-                            PopupSystem.PopupEntity(Loc.GetString("Test"), user.Value);
+                            PopupSystem.PopupEntity(Loc.GetString("Wrong ammo!"), user.Value);
                             _adminLogger.Add(LogType.EntityDelete, LogImpact.Medium, $"Shot wrong ammo by {ToPrettyString(user.Value)} deleted {ToPrettyString(gunUid)}");
-                            Del(gunUid);
                             userImpulse = false;
+
+                            SetCartridgeSpent(ent!.Value, cartridge, true);
+                            MuzzleFlash(gunUid, cartridge, user);
+                            Del(gunUid);
+                            if (cartridge.DeleteOnSpawn)
+                                Del(ent.Value);
                             return;
                         }
                         if (cartridge.Count > 1)

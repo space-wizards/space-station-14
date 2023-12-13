@@ -2,6 +2,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -115,9 +116,8 @@ public partial class GunComponent : Component
     /// <summary>
     /// Type of ammo the gun can work with
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite),
-     DataField("compatibleAmmo", customTypeSerializer: typeof(PrototypeIdListSerializer<TagPrototype>))]
-    public List<string>? CompatibleAmmo = null;
+    [ViewVariables(VVAccess.ReadWrite), DataField("compatibleAmmo")]
+    public List<ProtoId<TagPrototype>>? CompatibleAmmo;
 
     /// <summary>
     /// How fast the projectile moves.
