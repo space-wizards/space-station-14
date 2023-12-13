@@ -17,7 +17,6 @@ using Robust.Shared.Containers;
 using System.Linq;
 using Content.Shared.Inventory.Events;
 using Content.Server.Forensics;
-using Content.Shared.Forensics;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -33,6 +32,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SharedItemSystem _items = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly ForensicsSystem _forensics = default!;
 
         private const float UpdateTimer = 3f;
 
@@ -93,8 +93,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             if (args.Slot == "mask")
             {
-                var ev = new TransferDnaEvent { Donor = args.Equipee, Recipient = uid, CanDnaBeCleaned = false };
-                RaiseLocalEvent(args.Equipee, ref ev);
+                _forensics.TransferDna(uid, args.Equipee, false);
             }
         }
 

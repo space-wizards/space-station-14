@@ -65,7 +65,7 @@ namespace Content.Server.Forensics
                 foreach(EntityUid hitEntity in args.HitEntities)
                 {
                     if(TryComp<DnaComponent>(hitEntity, out var hitEntityComp))
-                    component.DNAs.Add(hitEntityComp.DNA);
+                        component.DNAs.Add(hitEntityComp.DNA);
                 }
             }
         }
@@ -160,5 +160,24 @@ namespace Content.Server.Forensics
             recipientComp.DNAs.Add(component.DNA);
             recipientComp.CanDnaBeCleaned = args.CanDnaBeCleaned;
         }
+
+        #region Public API
+
+        /// <summary>
+        /// Transfer DNA from one entity onto the forensics of another
+        /// </summary>
+        /// <param name="recipient">The entity receiving the DNA</param>
+        /// <param name="donor">The entity applying its DNA</param>
+        /// <param name="canDnaBeCleaned">If this DNA be cleaned off of the recipient. e.g. cleaning a knife vs cleaning a puddle of blood</param>
+        public void TransferDna(EntityUid recipient, EntityUid donor, bool canDnaBeCleaned = true)
+        {
+            if (TryComp<DnaComponent>(donor, out var donorComp))
+            {
+                EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
+                recipientComp.DNAs.Add(donorComp.DNA);
+            }
+        }
+
+        #endregion
     }
 }

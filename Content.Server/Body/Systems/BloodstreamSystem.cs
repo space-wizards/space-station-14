@@ -22,7 +22,7 @@ using Robust.Shared.Random;
 using Content.Shared.Speech.EntitySystems;
 using Robust.Server.Audio;
 using Robust.Shared.GameObjects;
-using Content.Shared.Forensics;
+using Content.Server.Forensics;
 
 namespace Content.Server.Body.Systems;
 
@@ -39,6 +39,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+    [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
 
     public override void Initialize()
     {
@@ -323,8 +324,7 @@ public sealed class BloodstreamSystem : EntitySystem
             component.BloodTemporarySolution.AddSolution(temp, _prototypeManager);
             if (_puddleSystem.TrySpillAt(uid, component.BloodTemporarySolution, out var puddleUid, false))
             {
-                var ev = new TransferDnaEvent { Donor = uid, Recipient = puddleUid, CanDnaBeCleaned = false };
-                RaiseLocalEvent(uid, ref ev);
+                _forensicsSystem.TransferDna(puddleUid, uid, false);
             }
 
             component.BloodTemporarySolution.RemoveAllSolution();
@@ -376,8 +376,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
         if (_puddleSystem.TrySpillAt(uid, tempSol, out var puddleUid))
         {
-            var ev = new TransferDnaEvent { Donor = uid, Recipient = puddleUid, CanDnaBeCleaned = false };
-            RaiseLocalEvent(uid, ref ev);
+            _forensicsSystem.TransferDna(puddleUid, uid, false);
         }
     }
 

@@ -18,7 +18,6 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -55,6 +54,7 @@ public sealed class DrinkSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
+    [Dependency] private readonly ForensicsSystem _forensics = default!;
 
     public override void Initialize()
     {
@@ -400,8 +400,7 @@ public sealed class DrinkSystem : EntitySystem
         //TODO: Grab the stomach UIDs somehow without using Owner
         _stomach.TryTransferSolution(firstStomach.Value.Comp.Owner, drained, firstStomach.Value.Comp);
 
-        var ev = new TransferDnaEvent { Donor = args.Target.Value, Recipient = uid };
-        RaiseLocalEvent(uid, ref ev);
+        _forensics.TransferDna(uid, args.Target.Value);
 
         if (!forceDrink && solution.Volume > 0)
             args.Repeat = true;

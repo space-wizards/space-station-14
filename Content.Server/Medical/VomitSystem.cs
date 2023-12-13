@@ -1,11 +1,11 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Forensics;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -28,6 +28,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly ThirstSystem _thirst = default!;
+        [Dependency] private readonly ForensicsSystem _forensics = default!;
 
         /// <summary>
         /// Make an entity vomit, if they have a stomach.
@@ -85,8 +86,7 @@ namespace Content.Server.Medical
 
             if (_puddle.TrySpillAt(uid, solution, out var puddle, false))
             {
-                var ev = new TransferDnaEvent { Donor = uid, Recipient = puddle };
-                RaiseLocalEvent(uid, ref ev);
+                _forensics.TransferDna(puddle, uid, false);
             }
 
             // Force sound to play as spill doesn't work if solution is empty.
