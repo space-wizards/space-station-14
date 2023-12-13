@@ -39,8 +39,8 @@ marking-GauzeUpperLegRight-gauze_upperleg_r = Gauze Thigh Wrap (Right)
 marking-GauzeUpperLegRight = Gauze Thigh Wrap (Right)
 
 
-marking-GauzeLizardLowerLegRight-gauze_lizardfoot_r = Gauze Foot Wrap (Right)
-marking-GauzeLizardLowerLegRight = Gauze Foot Wrap (Right)
+marking-GauzeLizardFootRight-gauze_lizardfoot_r = Gauze Foot Wrap (Right)
+marking-GauzeLizardFootRight = Gauze Foot Wrap (Right)
 
 marking-GauzeLizardFootLeft-gauze_lizardfoot_l = Gauze Foot Wrap (Left)
 marking-GauzeLizardFootLeft = Gauze Foot Wrap (Left)
