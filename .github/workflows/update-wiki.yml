@@ -47,7 +47,7 @@ jobs:
       uses: jtmullen/mediawiki-edit-action@v0.1.1
       with:
         wiki_text_file: ./bin/Content.Server/data/rules.txt
-        edit_summary: Update rules_prototypes.json via GitHub Actions
+        edit_summary: Update server rules via GitHub Actions
         page_name: "${{ secrets.WIKI_PAGE_ROOT }}/Server_Rules"
         api_url: https://wiki.spacestation14.io/w/api.php
         username: ${{ secrets.WIKI_BOT_USER }}
