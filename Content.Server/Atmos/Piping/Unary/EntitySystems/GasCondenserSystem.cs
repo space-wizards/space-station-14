@@ -66,7 +66,7 @@ public sealed class GasCondenserSystem : EntitySystem
     public float NumberOfMolesToConvert(ApcPowerReceiverComponent comp, GasMixture mix, float dt)
     {
         var hc = _atmosphereSystem.GetHeatCapacity(mix);
-        var alpha = 0.05f; // ratio of heat of vaporization to specific heat, based on water, tune this
+        var alpha = 0.05f; // tuned to give us 5-ish u/second of reagent conversion
         var energy = comp.Load * dt;
         return energy / (alpha * hc);
     }
