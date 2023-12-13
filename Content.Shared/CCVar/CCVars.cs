@@ -12,16 +12,22 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
+        ///     Path to the server info files
+        /// </summary>
+        public static readonly CVarDef<string> ServerInfoPath =
+            CVarDef.Create("server.info_path", "/ServerInfo/", CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
         ///     Change this to have the changelog and rules "last seen" date stored separately.
         /// </summary>
         public static readonly CVarDef<string> ServerId =
             CVarDef.Create("server.id", "unknown_server_id", CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
-        ///     Path to the rules txt file in the "Resources/Server Info" dir. Include the extension.
+        ///     Name of the rules txt file in the "Resources/Server Info" dir. Include the extension.
         /// </summary>
-        public static readonly CVarDef<string> RulesPath =
-            CVarDef.Create("server.rules_file", "/ServerInfo/Rules.txt", CVar.REPLICATED | CVar.SERVER);
+        public static readonly CVarDef<string> RulesFile =
+            CVarDef.Create("server.rules_file", "Rules.txt", CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         ///     A loc string for what should be displayed as the title on the Rules window.
