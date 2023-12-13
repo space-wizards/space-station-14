@@ -1,10 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - {message: The syndicate have started using cheaper materials in the manufacture
-      of their over ear headsets, type: Add}
-  id: 4852
-  time: '2023-09-18T19:18:56.0000000+00:00'
 - author: PursuitinAshes
   changes:
   - {message: Nanotrasen now properly supplies its captains with appropriate headgear
@@ -2900,3 +2894,8 @@ Entries:
   - {message: Some jetpacks can be now worn in more slots., type: Tweak}
   id: 5352
   time: '2023-12-13T08:51:09.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Ninjas and Nukies now get new sprites for their pinpointers., type: Add}
+  id: 5353
+  time: '2023-12-13T08:53:05.0000000+00:00'
