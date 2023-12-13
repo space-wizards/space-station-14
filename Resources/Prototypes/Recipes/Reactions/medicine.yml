@@ -428,7 +428,7 @@
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
       amount: 1
     Lithium:
-      amount: 0.9
+      amount: 1
     Sugar:
       amount: 1
   products:
