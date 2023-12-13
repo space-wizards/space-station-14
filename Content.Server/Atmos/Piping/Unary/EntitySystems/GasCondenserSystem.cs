@@ -1,22 +1,14 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.Construction;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Examine;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
@@ -27,7 +19,6 @@ public sealed class GasCondenserSystem : EntitySystem
     [Dependency] private readonly PowerReceiverSystem _power = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly SolutionContainerSystem _solution = default!;
-
 
     public override void Initialize()
     {
@@ -50,7 +41,6 @@ public sealed class GasCondenserSystem : EntitySystem
             return;
 
         var molesToConvert = NumberOfMolesToConvert(receiver, inlet.Air, args.dt);
-        Log.Debug($"moless: {molesToConvert}");
         var removed = inlet.Air.Remove(molesToConvert);
 
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
