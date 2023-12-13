@@ -14,6 +14,9 @@ namespace Content.Shared.Item;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ItemToggleComponent : Component
 {
+    /// <summary>
+    ///     The toggle state the item starts at.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("activated"), AutoNetworkedField]
     public bool Activated = false;
 
