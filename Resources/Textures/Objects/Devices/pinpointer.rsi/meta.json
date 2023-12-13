@@ -139,19 +139,19 @@
             "name": "pinpointer"
         },
         {
-            "name": "pinpointer_crew"
+            "name": "pinpointer-crew"
         },
         {
-            "name": "pinpointer_crewprox"
+            "name": "pinpointer-crewprox"
         },
         {
-            "name": "pinpointer_syndicate"
+            "name": "pinpointer-syndicate"
         },
         {
-            "name": "pinpointer_way"
+            "name": "pinpointer-way"
         },
         {
-            "name": "pinpointer_station"
+            "name": "pinpointer-station"
         },
         {
             "name": "inhand-left",

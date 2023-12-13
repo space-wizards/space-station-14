@@ -17,6 +17,9 @@
       map: ["enum.PinpointerLayers.Screen"]
       shader: unshaded
       visible: false
+  - type: Icon
+    sprite: Objects/Devices/pinpointer.rsi
+    state: pinpointer
   - type: Item
     sprite: Objects/Devices/pinpointer.rsi
   - type: Pinpointer
@@ -53,7 +56,7 @@
   components:
   - type: Sprite
     noRot: True
-    sprite: Objects/Devices/pinpointer_syndicate.rsi
+    sprite: Objects/Devices/pinpointer-syndicate.rsi
   - type: Pinpointer
     component: NukeDisk
     targetName: nuclear authentication disk
@@ -66,7 +69,7 @@
   components:
    - type: Sprite
     noRot: True
-    sprite: Objects/Devices/pinpointer_way.rsi
+    sprite: Objects/Devices/pinpointer-way.rsi
   - type: Pinpointer
     updateTargetName: true
     canRetarget: true
@@ -80,7 +83,7 @@
   components:
   - type: Sprite
     noRot: True
-    sprite: Objects/Devices/pinpointer_station.rsi
+    sprite: Objects/Devices/pinpointer-station.rsi
   - type: Pinpointer
     component: BecomesStation
     targetName: the station
