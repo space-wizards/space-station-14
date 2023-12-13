@@ -48,5 +48,5 @@ marking-GauzeLizardFootLeft = Gauze Foot Wrap (Left)
 marking-GauzeLizardLefteyePatch-gauze_lizardlefteye = Adjusted Gauze eyepatch (Left)
 marking-GauzeLizardLefteyePatch = Adjusted Gauze eyepatch (Left)
 
-marking-GauzeLizardRighteyePatch-gauze_lizardlefteye = Adjusted Gauze eyepatch (Right)
+marking-GauzeLizardRighteyePatch-gauze_lizardrighteye = Adjusted Gauze eyepatch (Right)
 marking-GauzeLizardRighteyePatch = Adjusted Gauze Eyepatch (Right)
