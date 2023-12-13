@@ -165,8 +165,10 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             var fireEvent = new TileFireEvent(tile.Hotspot.Temperature, tile.Hotspot.Volume);
+            _entSet.Clear();
+            _lookup.GetLocalEntitiesIntersecting(tile.GridIndex, tile.GridIndices, _entSet, 0f);
 
-            foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices, 0f))
+            foreach (var entity in _entSet)
             {
                 RaiseLocalEvent(entity, ref fireEvent);
             }
