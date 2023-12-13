@@ -17,6 +17,9 @@
       "name": "off"
     },
     {
+      "name": "broken"
+    },
+    {
       "name": "smartfridge_door"
     }
   ]
