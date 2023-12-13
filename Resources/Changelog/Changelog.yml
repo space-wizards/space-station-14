@@ -1,15 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'Now you can light matches with certain types (combat, work, merc, explorer)
-      of boots like a cool dude.', type: Add}
-  id: 4847
-  time: '2023-09-18T00:26:21.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: 'security now has access to its own beret, fancy!', type: Add}
-  id: 4848
-  time: '2023-09-18T00:30:31.0000000+00:00'
 - author: peptron1
   changes:
   - {message: 'The chaplain hoodie now comes with its hood as an action, similar to
@@ -2900,3 +2889,13 @@ Entries:
   - {message: 'Fix arrivals fog not actually blocking, no more free roaming.', type: Fix}
   id: 5347
   time: '2023-12-12T09:20:33.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Added fill visuals to Hot Chocolate, type: Tweak}
+  id: 5348
+  time: '2023-12-13T00:01:24.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed secret doors not requiring metal rods, type: Fix}
+  id: 5349
+  time: '2023-12-13T00:01:51.0000000+00:00'
