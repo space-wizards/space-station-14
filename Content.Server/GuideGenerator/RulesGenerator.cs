@@ -16,6 +16,11 @@ public static class RulesGenerator
 
         var rulesMarkup = resManager.ContentFileReadAllText($"/ServerInfo/{rulesFile}");
 
+        // See the guidebook comment
+        var entries = rulesMarkup.Split("\n");
+        entries = entries[1..^1];
+        rulesMarkup = string.Join("\n", entries);
+
         // Lort forgive me I just want an easy way to dump text on the wiki
         // and DocumentParsingManager doesn't seem sufficient
         var markupParse = new Regex(@"(\[color=)(#.+)(\])(.*)(\[\/color\])", RegexOptions.Compiled);
