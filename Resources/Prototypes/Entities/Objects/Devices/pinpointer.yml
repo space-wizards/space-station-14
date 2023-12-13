@@ -46,20 +46,41 @@
     targetName: nuclear authentication disk
 
 - type: entity
+  name: syndicate pinpointer
+  description: Produced specifically for nuclear operative missions, get that disk!
+  id: PinpointerSyndicateNuclear
+  parent: PinpointerBase
+  components:
+  - type: Sprite
+    noRot: True
+    sprite: Objects/Devices/pinpointer_syndicate.rsi
+  - type: Pinpointer
+    component: NukeDisk
+    targetName: nuclear authentication disk
+
+- type: entity
   name: universal pinpointer
   description: A handheld tracking device that locks onto any physical entity while off.
   id: PinpointerUniversal
   parent: PinpointerBase
   components:
+   - type: Sprite
+    noRot: True
+    sprite: Objects/Devices/pinpointer_way.rsi
   - type: Pinpointer
     updateTargetName: true
     canRetarget: true
 
 - type: entity
   parent: PinpointerBase
+  name: station pinpointer
+  description: A handheld tracking device that leads to the direction of any nearby station.
   id: PinpointerStation
   suffix: Station
   components:
+  - type: Sprite
+    noRot: True
+    sprite: Objects/Devices/pinpointer_station.rsi
   - type: Pinpointer
     component: BecomesStation
     targetName: the station
