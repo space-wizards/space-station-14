@@ -222,7 +222,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
                 if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
                 {
-                    var gasHeatCapacity = delta * GasSpecificHeats[i];
+                    var gasHeatCapacity = delta * GasSpecificHeats[i] / HeatScale;
                     if (delta > 0)
                     {
                         heatCapacityToSharer += gasHeatCapacity;
