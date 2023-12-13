@@ -448,7 +448,7 @@ public sealed class PowerMonitoringButton : Button
     {
         HorizontalExpand = true;
         VerticalExpand = true;
-        Margin = new Thickness(0, 1, 0, 1);
+        Margin = new Thickness(0f, 1f, 0f, 1f);
 
         MainContainer = new BoxContainer()
         {
@@ -464,7 +464,7 @@ public sealed class PowerMonitoringButton : Button
             HorizontalAlignment = HAlignment.Center,
             VerticalAlignment = VAlignment.Center,
             SetSize = new Vector2(32f, 32f),
-            Margin = new Thickness(0, 0, 5, 0),
+            Margin = new Thickness(0f, 0f, 5f, 0f),
         };
 
         MainContainer.AddChild(TextureRect);
@@ -480,7 +480,8 @@ public sealed class PowerMonitoringButton : Button
         PowerValue = new Label()
         {
             HorizontalAlignment = HAlignment.Right,
-            SetWidth = 50f,
+            SetWidth = 72f,
+            Margin = new Thickness(10, 0, 0, 0),
             ClipText = true,
         };
 
