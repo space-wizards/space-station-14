@@ -64,7 +64,9 @@ namespace Content.Server.Construction.Commands
             var changed = 0;
             var tagSystem = _entManager.EntitySysManager.GetEntitySystem<TagSystem>();
 
-            foreach (var child in xformQuery.GetComponent(gridId.Value).ChildEntities)
+
+            var enumerator = xformQuery.GetComponent(gridId.Value).ChildEnumerator;
+            while (enumerator.MoveNext(out var child))
             {
                 if (!_entManager.EntityExists(child))
                 {

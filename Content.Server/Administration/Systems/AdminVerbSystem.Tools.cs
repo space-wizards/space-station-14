@@ -772,18 +772,20 @@ public sealed partial class AdminVerbSystem
         {
             foreach (var grid in station.Grids)
             {
-                foreach (var ent in Transform(grid).ChildEntities)
+                var enumerator = Transform(grid).ChildEnumerator;
+                while (enumerator.MoveNext(out var ent))
                 {
                     yield return ent;
                 }
             }
         }
-
         else if (HasComp<MapComponent>(target))
         {
-            foreach (var possibleGrid in Transform(target).ChildEntities)
+            var enumerator = Transform(target).ChildEnumerator;
+            while (enumerator.MoveNext(out var possibleGrid))
             {
-                foreach (var ent in Transform(possibleGrid).ChildEntities)
+                var enumerator2 = Transform(possibleGrid).ChildEnumerator;
+                while (enumerator2.MoveNext(out var ent))
                 {
                     yield return ent;
                 }
@@ -791,7 +793,8 @@ public sealed partial class AdminVerbSystem
         }
         else
         {
-            foreach (var ent in Transform(target).ChildEntities)
+            var enumerator = Transform(target).ChildEnumerator;
+            while (enumerator.MoveNext(out var ent))
             {
                 yield return ent;
             }
