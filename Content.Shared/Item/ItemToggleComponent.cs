@@ -9,7 +9,8 @@ namespace Content.Shared.Item;
 /// Handles generic item toggles, like a welder turning on and off, or an e-sword.
 /// </summary>
 /// <remarks>
-/// If you need extended functionality (e.g. requiring power) then add a new component and use events.
+/// If you need extended functionality (e.g. requiring power) then add a new component and use events:
+/// ItemToggleActivateAttemptEvent, ItemToggleDectivateAttemptEvent or ItemToggleForceToggleEvent.
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ItemToggleComponent : Component
