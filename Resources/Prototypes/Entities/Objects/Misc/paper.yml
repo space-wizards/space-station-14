@@ -259,6 +259,7 @@
   - type: Tag
     tags:
     - Write
+    - WriteIgnoreStamps
     - Pickaxe
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
