@@ -68,11 +68,11 @@
   parent: PinpointerBase
   components:
    - type: Sprite
-    noRot: True
-    sprite: Objects/Devices/pinpointer-way.rsi
-  - type: Pinpointer
-    updateTargetName: true
-    canRetarget: true
+     noRot: True
+     sprite: Objects/Devices/pinpointer-way.rsi
+   - type: Pinpointer
+     updateTargetName: true
+     canRetarget: true
 
 - type: entity
   parent: PinpointerBase
