@@ -32,7 +32,7 @@
   - type: Tag
     tags:
     - MonkeyCube
--
+
 - type: entity
   parent: BoxCardboard
   name: kobold cube box
