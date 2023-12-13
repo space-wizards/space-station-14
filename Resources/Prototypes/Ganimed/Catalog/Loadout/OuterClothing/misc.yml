@@ -175,3 +175,20 @@
   whitelistJobs:
     - Botanist
   prototype: ClothingOuterApronBotanist
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterVestSecurityMedic
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+    - BlueShield
+    - Brigmedic
+  prototype: ClothingOuterVestSecurityMedic

@@ -239,3 +239,22 @@
   whitelistJobs:
     - Captain
   prototype: ClothingOuterArmorCaptainCarapace
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterVestArmorMedSec
+  category: loadout-category-outerClothing
+  cost: 4
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - HeadOfSecurity
+    - Detective
+    - SeniorOfficer
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Brigmedic
+    - BlueShield
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+  prototype: ClothingOuterVestArmorMedSec

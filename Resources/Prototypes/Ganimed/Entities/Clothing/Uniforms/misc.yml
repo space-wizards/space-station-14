@@ -57,6 +57,50 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCoronerBlack
+  name: black coroner jumpsuit
+  description: Total overhaul vastly different from the usual coroner uniform. Personel freak out when they can't see you from the shadows.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/Jumpsuit/blackcoroner.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/Jumpsuit/blackcoroner.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtCoronerBlack
+  name: black coroner jumpskirt
+  description: Total overhaul vastly different from the usual coroner uniform. Personel freak out when they can't see you from the shadows.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/Jumpskirt/blackcoroner.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/Jumpskirt/blackcoroner.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBrigmedicBlack
+  name: black brigmedic jumpsuit
+  description: Total overhaul vastly different from the usual brigmedic uniform. It is generally a bad idea to be bright if you are on a battlefield.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/Jumpsuit/blackbrigmedic.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/Jumpsuit/blackbrigmedic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtBrigmedicBlack
+  name: black brigmedic jumpskirt
+  description: Total overhaul vastly different from the usual brigmedic uniform. It is generally a bad idea to be bright if you are on a battlefield.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/Jumpskirt/blackbrigmedic.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/Jumpskirt/blackbrigmedic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitBlueShield
   name: blueshield jumpsuit
   description: A high-tech tactical modification of the standart-issue security uniform in blue colors. For the most professional of the bodyguards out there.

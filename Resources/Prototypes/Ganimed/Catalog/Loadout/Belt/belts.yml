@@ -20,6 +20,7 @@
   category: loadout-category-belt
   cost: 3
   exclusive: true
+  sponsorOnly: true
   whitelistJobs:
     - CargoTechnician
     - SalvageSpecialist

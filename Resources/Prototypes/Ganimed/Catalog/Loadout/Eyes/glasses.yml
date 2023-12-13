@@ -72,10 +72,17 @@
     - Captain
     - Quartermaster
     - SalvageSpecialist
-    - Bartender
     - Brigmedic
     - BlueShield
   prototype: ClothingEyesGlassesMercenary
+
+- type: loadout
+  id: LoadoutEyesClothingEyesGlassesCosmeticSunglasses
+  category: loadout-category-eyes
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingEyesGlassesCosmeticSunglasses
 
 - type: loadout
   id: LoadoutEyesClothingEyesGlassesOutlawGlasses
@@ -157,7 +164,6 @@
     - Captain
     - Quartermaster
     - SalvageSpecialist
-    - Bartender
     - Brigmedic
     - BlueShield
   prototype: ClothingEyesGlassesSunglasses

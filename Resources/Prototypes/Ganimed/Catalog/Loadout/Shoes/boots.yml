@@ -97,7 +97,7 @@
   prototype: ClothingShoesBootsMag
 
 - type: loadout
-  id: LoadoutShoesClothingShoesBootsJack
+  id: LoadoutShoesClothingShoesBootsJackSec
   category: loadout-category-shoes
   cost: 3
   exclusive: true
@@ -113,6 +113,23 @@
     - BlueShield
     - Brigmedic
   prototype: ClothingShoesBootsJack
+
+- type: loadout
+  id: LoadoutShoesClothingShoesBootsJackSecFilled
+  category: loadout-category-shoes
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+    - BlueShield
+    - Brigmedic
+  prototype: ClothingShoesBootsJackSecFilled
 
 - type: loadout
   id: LoadoutShoesClothingShoesBootsWork

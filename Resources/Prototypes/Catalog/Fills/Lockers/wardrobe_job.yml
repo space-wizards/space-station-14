@@ -159,7 +159,7 @@
      contents:
        - id: ClothingUniformJumpsuitSec
        - id: ClothingBackpackSecurity
-       - id: ClothingShoesBootsJack
+       - id: ClothingShoesBootsJackSecFilled
        - id: ClothingEyesGlassesSecurity
        - id: ClothingHeadHelmetBasic
        - id: ClothingOuterArmorBasic

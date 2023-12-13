@@ -46,6 +46,7 @@
   category: loadout-category-uniform
   cost: 3
   exclusive: true
+  sponsorOnly: true
   whitelistJobs:
     - Quartermaster
     - SalvageSpecialist
@@ -1369,3 +1370,85 @@
     - Janitor
     - ServiceWorker
   prototype: ClothingUniformJumpskirtJanimaidmini
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtCoroner 
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Coroner
+  prototype: ClothingUniformJumpskirtCoroner
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitCoroner 
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Coroner
+  prototype: ClothingUniformJumpsuitCoroner
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtCoronerBlack
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Coroner
+  prototype: ClothingUniformJumpskirtCoronerBlack
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitCoronerBlack
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Coroner
+  prototype: ClothingUniformJumpsuitCoronerBlack
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtBrigmedicBlack
+  category: loadout-category-uniform
+  cost: 4
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - BlueShield
+    - HeadOfSecurity
+    - SeniorOfficer
+    - Brigmedic
+  prototype: ClothingUniformJumpskirtBrigmedicBlack
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitBrigmedicBlack
+  category: loadout-category-uniform
+  cost: 4
+  sponsorOnly: true
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - BlueShield
+    - HeadOfSecurity
+    - SeniorOfficer
+    - Brigmedic
+  prototype: ClothingUniformJumpsuitBrigmedicBlack

@@ -44,7 +44,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoS
     back: ClothingBackpackHOSFilled
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJackSecFilled
     outerClothing: ClothingOuterCoatHoSTrench
     eyes: ClothingEyesHUDGlassesSecurity
     head: ClothingHeadHatBeretHoS
