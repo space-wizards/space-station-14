@@ -17,6 +17,9 @@
       map: ["enum.PinpointerLayers.Screen"]
       shader: unshaded
       visible: false
+  - type: Icon
+    sprite: Objects/Devices/pinpointer.rsi
+    state: pinpointer
   - type: Item
     sprite: Objects/Devices/pinpointer.rsi
   - type: Pinpointer
@@ -46,20 +49,38 @@
     targetName: nuclear authentication disk
 
 - type: entity
+  name: syndicate pinpointer
+  description: Produced specifically for nuclear operative missions, get that disk!
+  id: PinpointerSyndicateNuclear
+  parent: PinpointerBase
+  components:
+  - type: Icon
+    state: pinpointer-syndicate
+  - type: Pinpointer
+    component: NukeDisk
+    targetName: nuclear authentication disk
+
+- type: entity
   name: universal pinpointer
   description: A handheld tracking device that locks onto any physical entity while off. Keep upright to retain accuracy.
   id: PinpointerUniversal
   parent: PinpointerBase
   components:
-  - type: Pinpointer
-    updateTargetName: true
-    canRetarget: true
+   - type: Icon
+     state: pinpointer-way
+   - type: Pinpointer
+     updateTargetName: true
+     canRetarget: true
 
 - type: entity
   parent: PinpointerBase
+  name: station pinpointer
+  description: A handheld tracking device that leads to the direction of any nearby station.
   id: PinpointerStation
   suffix: Station
   components:
+  - type: Icon
+    state: pinpointer-station
   - type: Pinpointer
     component: BecomesStation
     targetName: the station
