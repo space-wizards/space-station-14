@@ -46,7 +46,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
     /// </summary>
     private void OnGetAltVerbs(EntityUid uid, DefusableComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract || !args.CanAccess || args.Hands == null)
             return;
 
         args.Verbs.Add(new AlternativeVerb

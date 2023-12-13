@@ -1,0 +1,41 @@
+﻿<tabs:MiscTab xmlns="https://spacestation14.io"
+                  xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                  xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs"
+                  xmlns:xNamespace="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:s="clr-namespace:Content.Client.Stylesheets">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
+            <Label Text="{Loc 'ui-options-general-discord'}"
+                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                   StyleClasses="LabelKeyText"/>
+            <CheckBox Name="DiscordRich" Text="{Loc 'ui-options-discordrich'}" />
+            <Label Text="{Loc 'ui-options-general-speech'}"
+                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                   StyleClasses="LabelKeyText"/>
+            <CheckBox Name="ShowLoocAboveHeadCheckBox" Text="{Loc 'ui-options-show-looc-on-head'}" />
+            <CheckBox Name="FancySpeechBubblesCheckBox" Text="{Loc 'ui-options-fancy-speech'}" />
+            <CheckBox Name="FancyNameBackgroundsCheckBox" Text="{Loc 'ui-options-fancy-name-background'}" />
+            <Label Text="{Loc 'ui-options-general-cursor'}"
+                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                   StyleClasses="LabelKeyText"/>
+            <CheckBox Name="ShowHeldItemCheckBox" Text="{Loc 'ui-options-show-held-item'}" />
+            <CheckBox Name="ShowCombatModeIndicatorsCheckBox" Text="{Loc 'ui-options-show-combat-mode-indicators'}" />
+            <Label Text="{Loc 'ui-options-general-storage'}"
+                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                   StyleClasses="LabelKeyText"/>
+            <CheckBox Name="OpaqueStorageWindowCheckBox" Text="{Loc 'ui-options-opaque-storage-window'}" />
+            <CheckBox Name="StaticStorageUI" Text="{Loc 'ui-options-static-storage-ui'}" />
+            <!-- <CheckBox Name="ToggleWalk" Text="{Loc 'ui-options-hotkey-toggle-walk'}" /> -->
+
+        </BoxContainer>
+        <controls:StripeBack HasBottomEdge="False" HasMargins="False">
+            <Button Name="ApplyButton"
+                    Text="{Loc 'ui-options-apply'}"
+                    TextAlign="Center"
+                    HorizontalAlignment="Right" />
+        </controls:StripeBack>
+    </BoxContainer>
+</tabs:MiscTab>
+
+
+

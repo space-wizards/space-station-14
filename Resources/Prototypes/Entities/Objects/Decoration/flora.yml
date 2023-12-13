@@ -414,7 +414,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.8,-1.5,0.8,-0.8"
+          bounds: "-0.5,0,0.5,0.75"
         density: 4500
         layer:
         - WallLayer
@@ -423,10 +423,13 @@
       - id: PresentRandom
         orGroup: present
       - id: PresentRandomUnsafe
-        prob: 0.25
+        prob: 0.35
         orGroup: present
       - id: PresentRandomInsane
-        prob: 0.10
+        prob: 0.20
+        orGroup: present
+      - id: PresentRandomCash
+        prob: 0.20
         orGroup: present
     receivedPopup: christmas-tree-got-gift
     deniedPopup: christmas-tree-no-gift

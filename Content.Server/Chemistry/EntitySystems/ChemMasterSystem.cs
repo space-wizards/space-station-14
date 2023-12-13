@@ -355,7 +355,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return (Name(pill), quantity);
             })).ToList();
 
-            return new ContainerInfo(name, _storageSystem.GetCumulativeItemSizes(container.Value, storage), storage.MaxTotalWeight)
+            return new ContainerInfo(name, _storageSystem.GetCumulativeItemAreas((container.Value, storage)), storage.Grid.GetArea())
             {
                 Entities = pills
             };
