@@ -17,6 +17,6 @@ ent-MobSpiderSpaceSalvage = { ent-MobSpiderSpace }
     .desc = { ent-MobSpiderSpace.desc }
 ent-MobCobraSpace = космокобра
     .desc = Длинные клыки и светящийся капюшон. Гипнотический образ манит подойти.
-ent-MobCobraSpace = { ent-MobCobraSpace }
+ent-MobCobraSpaceSalvage = { ent-MobCobraSpace }
     .suffix = Salvage Ruleset. Обломок
     .desc = { ent-MobCobraSpace.desc }

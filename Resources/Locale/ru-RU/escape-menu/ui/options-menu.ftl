@@ -5,9 +5,18 @@ ui-options-tab-graphics = Графика
 ui-options-tab-controls = Управление
 ui-options-tab-audio = Аудио
 ui-options-tab-network = Сеть
+ui-options-tab-misc = Основное
 ui-options-apply = Применить
 ui-options-reset-all = Сбросить всё
 ui-options-default = По-умолчанию
+
+# Misc/General menu
+
+ui-options-discordrich = Включить Discord Rich Presence
+ui-options-general-discord = Discord
+ui-options-general-cursor = Курсор
+ui-options-general-speech = Речь
+ui-options-general-storage = Хранилище
 
 ## Audio menu
 
