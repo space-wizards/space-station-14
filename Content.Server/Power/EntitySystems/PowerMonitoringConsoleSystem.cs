@@ -939,7 +939,10 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     private void RefreshPowerMonitoringConsole(EntityUid uid, PowerMonitoringConsoleComponent component)
     {
+        component.Focus = null;
+        component.FocusGroup = PowerMonitoringConsoleGroup.Generator;
         component.PowerMonitoringDeviceMetaData.Clear();
+        component.Flags = 0;
 
         var xform = Transform(uid);
 
