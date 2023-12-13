@@ -136,9 +136,6 @@ public abstract class SharedItemToggleSystem : EntitySystem
         UpdateAppearance(uid, itemToggle);
         UpdateLight(uid, itemToggle);
 
-        var ev = new ItemToggleActivatedServerChangesEvent();
-        RaiseLocalEvent(uid, ref ev);
-
         Dirty(uid, itemToggle);
     }
 
@@ -150,9 +147,6 @@ public abstract class SharedItemToggleSystem : EntitySystem
         UpdateWeaponComponent(uid, itemToggle);
         UpdateAppearance(uid, itemToggle);
         UpdateLight(uid, itemToggle);
-
-        var ev = new ItemToggleDeactivatedServerChangesEvent();
-        RaiseLocalEvent(uid, ref ev);
 
         Dirty(uid, itemToggle);
     }

@@ -156,12 +156,6 @@ public record struct ItemToggleActivateAttemptEvent()
 }
 
 /// <summary>
-/// Raised directed on an entity when activation changes have been applied on shared components. Used to call for server component changes.
-/// </summary>
-[ByRefEvent]
-public readonly record struct ItemToggleActivatedServerChangesEvent;
-
-/// <summary>
 /// Raised directed on an entity when its ItemToggle is activated.
 /// </summary>
 [ByRefEvent]
@@ -175,12 +169,6 @@ public record struct ItemToggleDeactivateAttemptEvent()
 {
     public bool Cancelled = false;
 }
-
-/// <summary>
-/// Raised directed on an entity when deactivation changes have been applied on shared components. Used to call for server component changes.
-/// </summary>
-[ByRefEvent]
-public readonly record struct ItemToggleDeactivatedServerChangesEvent;
 
 /// <summary>
 /// Raised directed on an entity when its ItemToggle is deactivated.

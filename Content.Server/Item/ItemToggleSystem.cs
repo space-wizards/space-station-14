@@ -10,11 +10,11 @@ public sealed class ItemToggleSystem : SharedItemToggleSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ItemToggleComponent, ItemToggleActivatedServerChangesEvent>(Activate);
-        SubscribeLocalEvent<ItemToggleComponent, ItemToggleDeactivatedServerChangesEvent>(Deactivate);
+        SubscribeLocalEvent<ItemToggleComponent, ItemToggleActivatedEvent>(Activate);
+        SubscribeLocalEvent<ItemToggleComponent, ItemToggleDeactivatedEvent>(Deactivate);
     }
 
-    private void Activate(EntityUid uid, ItemToggleComponent comp, ref ItemToggleActivatedServerChangesEvent args)
+    private void Activate(EntityUid uid, ItemToggleComponent comp, ref ItemToggleActivatedEvent args)
     {
         if (comp.ActivatedSharp)
             EnsureComp<SharpComponent>(uid);
@@ -28,7 +28,7 @@ public sealed class ItemToggleSystem : SharedItemToggleSystem
         }
     }
 
-    private void Deactivate(EntityUid uid, ItemToggleComponent comp, ref ItemToggleDeactivatedServerChangesEvent args)
+    private void Deactivate(EntityUid uid, ItemToggleComponent comp, ref ItemToggleDeactivatedEvent args)
     {
         if (!comp.ActivatedSharp)
             RemComp<SharpComponent>(uid);
