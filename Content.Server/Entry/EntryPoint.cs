@@ -1,3 +1,4 @@
+using System.IO;
 using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
@@ -124,12 +125,22 @@ namespace Content.Server.Entry
             if (!string.IsNullOrEmpty(dest))
             {
                 var resPath = new ResPath(dest).ToRootedPath();
-                var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_" + dest));
+                StreamWriter file;
+
+                /*
+                file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_" + dest));
                 ChemistryJsonGenerator.PublishJson(file);
                 file.Flush();
+
                 file = resourceManager.UserData.OpenWriteText(resPath.WithName("react_" + dest));
                 ReactionJsonGenerator.PublishJson(file);
                 file.Flush();
+                */
+
+                file = resourceManager.UserData.OpenWriteText(resPath.WithName("rules_" + dest));
+                RulesGenerator.Publish(file);
+                file.Flush();
+
                 IoCManager.Resolve<IBaseServer>().Shutdown("Data generation done");
             }
             else

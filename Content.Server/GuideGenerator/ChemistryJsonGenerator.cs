@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.GuideGenerator;
 
-public sealed class ChemistryJsonGenerator
+public static class ChemistryJsonGenerator
 {
     public static void PublishJson(StreamWriter file)
     {
