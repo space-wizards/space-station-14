@@ -3,6 +3,7 @@ using Content.Shared.Info;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Log;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Info;
 
@@ -19,12 +20,15 @@ public sealed class InfoSystem : EntitySystem
     protected void OnRequestRules(RequestRulesMessage message, EntitySessionEventArgs eventArgs)
     {
         Logger.DebugS("info", "Client requested rules.");
+
         var title = Loc.GetString(_cfg.GetCVar(CCVars.RulesHeader));
-        var path = _cfg.GetCVar(CCVars.RulesPath);
+        var path = _cfg.GetCVar(CCVars.ServerInfoPath);
+        var rulesFilename = _cfg.GetCVar(CCVars.RulesFile);
+
         var rules = "Server could not read its rules.";
         try
         {
-            rules = _res.ContentFileReadAllText(path);
+            rules = _res.ContentFileReadAllText($"{path}{rulesFilename}");
         }
         catch (Exception)
         {
