@@ -80,3 +80,31 @@
         conditions:
         - !type:ReagentThreshold
           min: 5
+
+- type: reagent
+  id: Benzene
+  name: reagent-name-benzene
+  desc: reagent-desc-benzene
+  physicalDesc: reagent-physical-desc-acidic
+  flavor: bitter
+  color: "#E7EA91"
+  boilingPoint: 55.5
+  meltingPoint: -50.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Genetic: 1 #it's a carcinogen, reckon this is fine
+
+- type: reagent
+  id: Hydroxide
+  name: reagent-name-hydroxide
+  desc: reagent-desc-hydroxide
+  physicalDesc: reagent-physical-desc-acidic
+  flavor: bitter
+  color: "#E7EA91"
+  boilingPoint: 55.5
+  meltingPoint: -50.0
+
