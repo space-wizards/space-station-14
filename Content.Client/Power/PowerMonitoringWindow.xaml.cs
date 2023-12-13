@@ -125,15 +125,6 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(_owner.Value, out var console))
             return;
 
-        // Reset nav map values
-        NavMap.TrackedCoordinates.Clear();
-        NavMap.TrackedEntities.Clear();
-
-        // Sort all devices alphabetically by their entity name (not by power usage; otherwise their position on the UI will shift)
-        //Array.Sort(masterEntries, AlphabeticalSort);
-        //Array.Sort(focusSources, AlphabeticalSort);
-        //Array.Sort(focusLoads, AlphabeticalSort);
-
         // Update power status text
         TotalSources.Text = Loc.GetString("power-monitoring-window-value", ("value", totalSources));
         TotalBatteryUsage.Text = Loc.GetString("power-monitoring-window-value", ("value", totalBatteryUsage));
@@ -149,43 +140,30 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         // Update system warnings
         UpdateWarningLabel(console.Flags);
 
-        // Get current console entry container
-        BoxContainer currentContainer = SourcesList;
-        switch (GetCurrentPowerMonitoringConsoleGroup())
+        // Reset nav map values
+        NavMap.TrackedCoordinates.Clear();
+        NavMap.TrackedEntities.Clear();
+
+        // Draw entities on the nav map
+        var entitiesOfInterest = new List<NetEntity>();
+
+        if (_focusEntity != null)
         {
-            case PowerMonitoringConsoleGroup.SMES:
-                currentContainer = SMESList; break;
-            case PowerMonitoringConsoleGroup.Substation:
-                currentContainer = SubstationList; break;
-            case PowerMonitoringConsoleGroup.APC:
-                currentContainer = ApcList; break;
+            entitiesOfInterest.Add(_focusEntity.Value);
+
+            foreach (var entry in focusSources)
+                entitiesOfInterest.Add(entry.NetEntity);
+
+            foreach (var entry in focusLoads)
+                entitiesOfInterest.Add(entry.NetEntity);
         }
 
-        // Clear excess children
-        while (currentContainer.ChildCount > allEntries.Length)
-            currentContainer.RemoveChild(currentContainer.GetChild(currentContainer.ChildCount - 1));
-
-        var index = 0;
+        focusSources.Concat(focusLoads);
 
         foreach ((var netEntity, var metaData) in console.PowerMonitoringDeviceMetaData)
         {
-            // Draw entity on the nav map
             if (NavMap.Visible)
-                AddTrackedEntityToNavMap(netEntity, metaData);
-
-            var entry = allEntries.FirstOrNull(x => x.NetEntity == netEntity);
-
-            if (entry == null)
-                continue;
-
-            // Update console entry
-            if (netEntity == _focusEntity)
-                UpdateWindowConsoleEntry(currentContainer, index, entry.Value, metaData, focusSources, focusLoads);
-
-            else
-                UpdateWindowConsoleEntry(currentContainer, index, entry.Value, metaData);
-
-            index++;
+                AddTrackedEntityToNavMap(netEntity, metaData, entitiesOfInterest);
         }
 
         // Show monitor location
@@ -200,26 +178,61 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         // Update nav map
         NavMap.ForceNavMapUpdate();
+
+        // If the entry group doesn't match the current tab, the data is out dated, do not use it
+        if (allEntries.Length > 0 && allEntries[0].Group != GetCurrentPowerMonitoringConsoleGroup())
+            return;
+
+        // Assign meta data to the console entries and sort them
+        allEntries = GetUpdatedPowerMonitoringConsoleEntries(allEntries, console);
+        focusSources = GetUpdatedPowerMonitoringConsoleEntries(focusSources, console);
+        focusLoads = GetUpdatedPowerMonitoringConsoleEntries(focusLoads, console);
+
+        // Get current console entry container
+        BoxContainer currentContainer = SourcesList;
+        switch (GetCurrentPowerMonitoringConsoleGroup())
+        {
+            case PowerMonitoringConsoleGroup.SMES:
+                currentContainer = SMESList; break;
+            case PowerMonitoringConsoleGroup.Substation:
+                currentContainer = SubstationList; break;
+            case PowerMonitoringConsoleGroup.APC:
+                currentContainer = ApcList; break;
+        }
+
+        // Clear excess children from the container
+        while (currentContainer.ChildCount > allEntries.Length)
+            currentContainer.RemoveChild(currentContainer.GetChild(currentContainer.ChildCount - 1));
+
+        // Update the remaining children
+        for (var index = 0; index < allEntries.Length; index++)
+        {
+            var entry = allEntries[index];
+
+            if (entry.NetEntity == _focusEntity)
+                UpdateWindowConsoleEntry(currentContainer, index, entry, focusSources, focusLoads);
+
+            else
+                UpdateWindowConsoleEntry(currentContainer, index, entry);
+        }
     }
 
-    private void AddTrackedEntityToNavMap(NetEntity netEntity, PowerMonitoringDeviceMetaData metaData)
+    private void AddTrackedEntityToNavMap(NetEntity netEntity, PowerMonitoringDeviceMetaData metaData, List<NetEntity> entitiesOfInterest)
     {
         if (!_groupBlips.TryGetValue(metaData.Group, out var data))
             return;
 
+        var usedEntity = (metaData.Master != null) ? metaData.Master : netEntity;
         var coords = _entManager.GetCoordinates(metaData.Coordinates);
         var texture = data.Item1;
         var color = data.Item2;
-        var modulator = (_focusEntity != null && netEntity != _focusEntity) ? Color.DimGray : Color.White;
+        var blink = usedEntity == _focusEntity;
+        var modulator = Color.White;
 
-        var blip = new NavMapBlip(coords, _spriteSystem.Frame0(texture), color * modulator, netEntity == _focusEntity);
+        if (_focusEntity != null && usedEntity != _focusEntity && !entitiesOfInterest.Contains(usedEntity.Value))
+            modulator = Color.DimGray;
 
-        if (metaData.Master != null)
-        {
-            blip.Color = (_focusEntity != null && metaData.Master != _focusEntity) ? color * Color.DimGray : color;
-            blip.Blinks = metaData.Master == _focusEntity;
-        }
-
+        var blip = new NavMapBlip(coords, _spriteSystem.Frame0(texture), color * modulator, blink);
         NavMap.TrackedEntities[netEntity] = blip;
     }
 
@@ -260,22 +273,33 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         SystemWarningPanel.Modulate = lit ? Color.White : new Color(178, 178, 178);
     }
 
+    private PowerMonitoringConsoleEntry[] GetUpdatedPowerMonitoringConsoleEntries(PowerMonitoringConsoleEntry[] entries, PowerMonitoringConsoleComponent console)
+    {
+        for (int i = 0; i < entries.Length; i++)
+        {
+            var entry = entries[i];
+
+            if (!console.PowerMonitoringDeviceMetaData.TryGetValue(entry.NetEntity, out var metaData))
+                continue;
+
+            entries[i].MetaData = metaData;
+        }
+
+        // Sort all devices alphabetically by their entity name (not by power usage; otherwise their position on the UI will shift)
+        Array.Sort(entries, AlphabeticalSort);
+
+        return entries;
+    }
+
     private int AlphabeticalSort(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)
     {
-        var entX = _entManager.GetEntity(x.NetEntity);
-
-        if (!entX.IsValid())
+        if (x.MetaData?.EntityName == null)
             return -1;
 
-        var entY = _entManager.GetEntity(y.NetEntity);
-
-        if (!entY.IsValid())
+        if (y.MetaData?.EntityName == null)
             return 1;
 
-        var nameX = _entManager.GetComponent<MetaDataComponent>(entX).EntityName;
-        var nameY = _entManager.GetComponent<MetaDataComponent>(entY).EntityName;
-
-        return nameX.CompareTo(nameY);
+        return x.MetaData.Value.EntityName.CompareTo(y.MetaData.Value.EntityName);
     }
 }
 

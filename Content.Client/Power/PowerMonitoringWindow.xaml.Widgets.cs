@@ -21,11 +21,10 @@ public sealed partial class PowerMonitoringWindow
         (BoxContainer masterContainer,
         int index,
         PowerMonitoringConsoleEntry entry,
-        PowerMonitoringDeviceMetaData metaData,
         PowerMonitoringConsoleEntry[] focusSources,
         PowerMonitoringConsoleEntry[] focusLoads)
     {
-        UpdateWindowConsoleEntry(masterContainer, index, entry, metaData);
+        UpdateWindowConsoleEntry(masterContainer, index, entry);
 
         var windowEntry = masterContainer.GetChild(index) as PowerMonitoringWindowEntry;
 
@@ -40,7 +39,7 @@ public sealed partial class PowerMonitoringWindow
         windowEntry.MainContainer.Visible = true;
     }
 
-    private void UpdateWindowConsoleEntry(BoxContainer masterContainer, int index, PowerMonitoringConsoleEntry entry, PowerMonitoringDeviceMetaData metaData)
+    private void UpdateWindowConsoleEntry(BoxContainer masterContainer, int index, PowerMonitoringConsoleEntry entry)
     {
         PowerMonitoringWindowEntry? windowEntry;
 
@@ -73,12 +72,15 @@ public sealed partial class PowerMonitoringWindow
         windowEntry.Entry = entry;
         windowEntry.MainContainer.Visible = false;
 
-        UpdateWindowEntryButton(entry.NetEntity, windowEntry.Button, entry, metaData);
+        UpdateWindowEntryButton(entry.NetEntity, windowEntry.Button, entry);
     }
 
-    public void UpdateWindowEntryButton(NetEntity netEntity, PowerMonitoringButton button, PowerMonitoringConsoleEntry entry, PowerMonitoringDeviceMetaData metaData)
+    public void UpdateWindowEntryButton(NetEntity netEntity, PowerMonitoringButton button, PowerMonitoringConsoleEntry entry)
     {
         if (!netEntity.IsValid())
+            return;
+
+        if (entry.MetaData == null)
             return;
 
         // Update button style
@@ -89,11 +91,11 @@ public sealed partial class PowerMonitoringWindow
             button.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
 
         // Update name
-        var name = Loc.GetString(metaData.EntityName);
+        var name = Loc.GetString(entry.MetaData.Value.EntityName);
         var charLimit = (int) (button.NameLocalized.Width / 8f);
 
-        if (metaData.SpritePath != string.Empty && metaData.SpriteState != string.Empty)
-            button.TextureRect.Texture = _spriteSystem.Frame0(new SpriteSpecifier.Rsi(new ResPath(metaData.SpritePath), metaData.SpriteState));
+        if (entry.MetaData.Value.SpritePath != string.Empty && entry.MetaData.Value.SpriteState != string.Empty)
+            button.TextureRect.Texture = _spriteSystem.Frame0(new SpriteSpecifier.Rsi(new ResPath(entry.MetaData.Value.SpritePath), entry.MetaData.Value.SpriteState));
 
         // Update tool tip
         button.ToolTip = Loc.GetString(name);
@@ -158,10 +160,7 @@ public sealed partial class PowerMonitoringWindow
             castChild.NetEntity = entry.NetEntity;
             castChild.Entry = entry;
 
-            if (!console.PowerMonitoringDeviceMetaData.TryGetValue(castChild.NetEntity, out var metaData))
-                continue;
-
-            UpdateWindowEntryButton(entry.NetEntity, castChild.Button, entries.ElementAt(child.GetPositionInParent()), metaData);
+            UpdateWindowEntryButton(entry.NetEntity, castChild.Button, entries.ElementAt(child.GetPositionInParent()));
         }
     }
 

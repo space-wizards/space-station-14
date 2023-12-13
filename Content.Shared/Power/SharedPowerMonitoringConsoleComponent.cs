@@ -104,6 +104,8 @@ public struct PowerMonitoringConsoleEntry
     public PowerMonitoringConsoleGroup Group;
     public double PowerValue;
 
+    [NonSerialized] public PowerMonitoringDeviceMetaData? MetaData = null;
+
     public PowerMonitoringConsoleEntry(NetEntity netEntity, PowerMonitoringConsoleGroup group, double powerValue = 0d)
     {
         NetEntity = netEntity;

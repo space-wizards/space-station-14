@@ -130,10 +130,12 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             component.Focus = focus;
 
             if (TryComp<PowerMonitoringCableNetworksComponent>(uid, out var cableNetworks))
-                cableNetworks.FocusChunks.Clear(); // Component is dirtied when these chunks are rebuilt
+            {
+                cableNetworks.FocusChunks.Clear(); // Component will be dirtied when these chunks are rebuilt, unless the focus is null
 
-            if (focus == null)
-                Dirty(uid, component);
+                if (focus == null)
+                    Dirty(uid, cableNetworks);
+            }
         }
 
         // Update this if the focus group has changed
@@ -691,8 +693,6 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
-
-
                 // Combine entities represented by an master into a single entry
                 if (entDevice.IsCollectionMasterOrChild && !entDevice.IsCollectionMaster)
                     ent = entDevice.CollectionMaster;
@@ -832,10 +832,10 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             }
         }
 
-        UpdateConsoleMetaData(uid, null, device.ChildDevices.Keys.ToList());
+        UpdateConsoleMetaData(uid, null);
     }
 
-    private void UpdateConsoleMetaData(EntityUid uid, EntityUid? master, List<EntityUid>? children = null)
+    private void UpdateConsoleMetaData(EntityUid uid, EntityUid? master)
     {
         var netEntity = EntityManager.GetNetEntity(uid);
         var xform = Transform(uid);
