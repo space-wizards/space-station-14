@@ -56,7 +56,9 @@
   components:
   - type: Sprite
     noRot: True
-    sprite: Objects/Devices/pinpointer-syndicate.rsi
+    sprite: Objects/Devices/pinpointer-syndicate.png
+  - type: Icon
+    state: pinpointer-syndicate
   - type: Pinpointer
     component: NukeDisk
     targetName: nuclear authentication disk
@@ -69,7 +71,9 @@
   components:
    - type: Sprite
      noRot: True
-     sprite: Objects/Devices/pinpointer-way.rsi
+     sprite: Objects/Devices/pinpointer-way.png
+   - type: Icon
+     state: pinpointer-way
    - type: Pinpointer
      updateTargetName: true
      canRetarget: true
@@ -83,7 +87,9 @@
   components:
   - type: Sprite
     noRot: True
-    sprite: Objects/Devices/pinpointer-station.rsi
+    sprite: Objects/Devices/pinpointer-station.png
+  - type: Icon
+    state: pinpointer-station
   - type: Pinpointer
     component: BecomesStation
     targetName: the station
