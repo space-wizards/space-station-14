@@ -70,6 +70,27 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jar.rsi
+    layers:
+      - state: icon
+        map: [ "enum.SolutionContainerLayers.Base" ]
+      - state: fill1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+      - state: icon-front
+        map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+  - type: SolutionContainerVisuals
+    maxFillLevels: 9
+    fillBaseName: fill
+    metamorphic: true
+    metamorphicDefaultSprite:
+      sprite: Objects/Consumable/Drinks/jar.rsi
+      state: icon
+  - type: TransformableContainer
 
 - type: entity
   parent: DrinkGlassBase

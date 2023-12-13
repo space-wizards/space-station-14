@@ -6,6 +6,7 @@ using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands.Components;
 using Content.Shared.Internals;
 using Content.Shared.Inventory;
 using Content.Shared.Verbs;
@@ -25,6 +26,8 @@ public sealed class InternalsSystem : EntitySystem
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+
+    public const SlotFlags InventorySlots = SlotFlags.POCKET | SlotFlags.BELT;
 
     public override void Initialize()
     {
@@ -81,7 +84,7 @@ public sealed class InternalsSystem : EntitySystem
             return;
         }
 
-        var tank = FindBestGasTank(uid, internals);
+        var tank = FindBestGasTank(uid);
 
         if (tank == null)
         {
@@ -224,59 +227,35 @@ public sealed class InternalsSystem : EntitySystem
         return 1;
     }
 
-    public Entity<GasTankComponent>? FindBestGasTank(EntityUid internalsOwner, InternalsComponent component)
+    public Entity<GasTankComponent>? FindBestGasTank(Entity<HandsComponent?, InventoryComponent?, ContainerManagerComponent?> user)
     {
         // Prioritise
         // 1. back equipped tanks
         // 2. exo-slot tanks
         // 3. in-hand tanks
         // 4. pocket/belt tanks
-        InventoryComponent? inventory = null;
-        ContainerManagerComponent? containerManager = null;
 
-        if (_inventory.TryGetSlotEntity(internalsOwner, "back", out var backEntity, inventory, containerManager) &&
+        if (!Resolve(user.Owner, ref user.Comp1, ref user.Comp2, ref user.Comp3))
+            return null;
+
+        if (_inventory.TryGetSlotEntity(user.Owner, "back", out var backEntity, user.Comp2, user.Comp3) &&
             TryComp<GasTankComponent>(backEntity, out var backGasTank) &&
             _gasTank.CanConnectToInternals(backGasTank))
         {
             return (backEntity.Value, backGasTank);
         }
 
-        if (_inventory.TryGetSlotEntity(internalsOwner, "suitstorage", out var entity, inventory, containerManager) &&
+        if (_inventory.TryGetSlotEntity(user.Owner, "suitstorage", out var entity, user.Comp2, user.Comp3) &&
             TryComp<GasTankComponent>(entity, out var gasTank) &&
             _gasTank.CanConnectToInternals(gasTank))
         {
             return (entity.Value, gasTank);
         }
 
-        var tanks = new List<Entity<GasTankComponent>>();
-
-        foreach (var hand in _hands.EnumerateHands(internalsOwner))
+        foreach (var item in _inventory.GetHandOrInventoryEntities((user.Owner, user.Comp1, user.Comp2)))
         {
-            if (TryComp(hand.HeldEntity, out gasTank) && _gasTank.CanConnectToInternals(gasTank))
-                tanks.Add((hand.HeldEntity.Value, gasTank));
-        }
-
-        if (tanks.Count > 0)
-        {
-            tanks.Sort((x, y) => y.Comp.Air.TotalMoles.CompareTo(x.Comp.Air.TotalMoles));
-            return tanks[0];
-        }
-
-        if (Resolve(internalsOwner, ref inventory, false))
-        {
-            var enumerator = new InventorySystem.ContainerSlotEnumerator(internalsOwner, inventory.TemplateId, _protoManager, _inventory, SlotFlags.POCKET | SlotFlags.BELT);
-
-            while (enumerator.MoveNext(out var container))
-            {
-                if (TryComp(container.ContainedEntity, out gasTank) && _gasTank.CanConnectToInternals(gasTank))
-                    tanks.Add((container.ContainedEntity.Value, gasTank));
-            }
-
-            if (tanks.Count > 0)
-            {
-                tanks.Sort((x, y) => y.Comp.Air.TotalMoles.CompareTo(x.Comp.Air.TotalMoles));
-                return tanks[0];
-            }
+            if (TryComp(item, out gasTank) && _gasTank.CanConnectToInternals(gasTank))
+                return (item, gasTank);
         }
 
         return null;

@@ -19,6 +19,7 @@ using Content.Shared.Physics;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
@@ -176,7 +177,7 @@ public sealed class MagicSystem : EntitySystem
             var ent = Spawn(ev.Prototype, spawnCoords);
             var direction = ev.Target.ToMapPos(EntityManager, _transformSystem) -
                             spawnCoords.ToMapPos(EntityManager, _transformSystem);
-            _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer);
+            _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer);
         }
     }
 

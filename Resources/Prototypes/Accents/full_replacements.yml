@@ -27,8 +27,8 @@
   - accent-words-mouse-2
   - accent-words-mouse-3
   - accent-words-mouse-4
-  - accent-words-mouse-5 
-  - accent-words-mouse-6 
+  - accent-words-mouse-5
+  - accent-words-mouse-6
   - accent-words-mouse-7
 
 - type: accent
@@ -73,6 +73,24 @@
   - accent-words-zombie-5
   - accent-words-zombie-6
   - accent-words-zombie-7
+  - accent-words-zombie-8
+  - accent-words-zombie-9
+  - accent-words-zombie-10
+
+- type: accent
+  id: zombieMoth
+  fullReplacements:
+  - accent-words-zombie-moth-1
+  - accent-words-zombie-moth-2
+  - accent-words-zombie-moth-3
+  - accent-words-zombie-moth-4
+  - accent-words-zombie-moth-5
+  - accent-words-zombie-moth-6
+  - accent-words-zombie-1
+  - accent-words-zombie-2
+  - accent-words-zombie-4
+  - accent-words-zombie-5
+  - accent-words-zombie-6
   - accent-words-zombie-8
   - accent-words-zombie-9
   - accent-words-zombie-10

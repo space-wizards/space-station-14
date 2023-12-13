@@ -384,6 +384,38 @@
     - Trash
 
 - type: entity
+  id: SyringeCryostasis
+  parent: BaseSyringe
+  name: cryostasis syringe
+  description: A syringe used to contain chemicals or solutions without reactions.
+  components:
+  - type: Sprite
+    layers:
+    - state: syringe1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+    - state: cryo_base0
+      map: ["enum.SolutionContainerLayers.Base"]
+  - type: Icon
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: cryo_base0
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 10
+        canReact: false
+  - type: Injector
+    injectOnly: false
+    minTransferAmount: 5
+    maxTransferAmount: 10
+    transferAmount: 10
+  - type: Tag
+    tags:
+    - Syringe
+    - Trash
+
+
+- type: entity
   name: pill
   parent: BaseItem
   id: Pill
@@ -438,17 +470,18 @@
   parent: BaseStorageItem
   description: Holds up to 10 pills.
   components:
+  - type: Item
+    size: Tiny
+    sprite: Objects/Specific/Chemistry/pills_canister.rsi
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
     state: pill_canister
-  - type: Item
-    sprite: Objects/Specific/Chemistry/pills_canister.rsi
-    size: Small
   - type: Tag
     tags:
       - PillCanister
   - type: Storage
-    maxTotalWeight: 10
+    grid:
+    - 0,0,4,1
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 1

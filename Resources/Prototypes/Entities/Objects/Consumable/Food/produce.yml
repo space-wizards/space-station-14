@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_produce.yml
 # For produce that can't be immediately eaten
 
 - type: entity
@@ -171,8 +172,8 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 6
-        Caustic: 6
+        Heat: 7.5
+        Caustic: 7.5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -293,6 +294,7 @@
     tags:
     - Recyclable
     - Trash
+    - BananaPeel
   - type: SolutionContainerManager
     solutions:
       food:
@@ -303,6 +305,28 @@
   - type: Extractable
     grindableSolutionName: food
   - type: SpaceGarbage
+
+- type: entity
+  name: baked banana peel
+  parent: TrashBananaPeel
+  id: TrashBakedBananaPeel
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: baked-peel
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    heldPrefix: baked-peel
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: PulpedBananaPeel
+          Quantity: 1
+        - ReagentId: Bananadine
+          Quantity: 1
+        - ReagentId: Carbon
+          Quantity: 2
 
 - type: entity
   name: mimana peel
@@ -446,6 +470,37 @@
   - type: Tag
     tags:
     - Lemon
+    - Fruit
+
+- type: entity
+  name: lemoon
+  parent: FoodProduceBase
+  id: FoodLemoon
+  description: People says Moon is made out of cheese, but Moon is actually made out of milk and laurel!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - lemoon
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Milk
+          Quantity: 16
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lemoon.rsi
+  - type: Produce
+    seedId: lemoon
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Sake #the best drink while watching moon
+        Quantity: 10
+  - type: Tag
+    tags:
     - Fruit
 
 - type: entity
@@ -623,12 +678,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 19
+        maxVol: 24
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
         - ReagentId: SpaceLube
-          Quantity: 10
+          Quantity: 15
         - ReagentId: Vitamin
           Quantity: 4
   - type: Sprite
@@ -1188,10 +1243,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 22
+        maxVol: 20
         reagents:
         - ReagentId: Omnizine
-          Quantity: 5
+          Quantity: 3
         - ReagentId: SpaceDrugs
           Quantity: 5
         - ReagentId: Nutriment
@@ -1344,19 +1399,19 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 9
+        maxVol: 7
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
         - ReagentId: CarpoToxin
-          Quantity: 4
+          Quantity: 2
   - type: Produce
     seedId: koibean
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: CarpoToxin
-        Quantity: 4
+        Quantity: 2
 
 - type: entity
   name: watermelon
@@ -1638,7 +1693,7 @@
     - Fruit
 
 - type: entity
-  name: cotton bol
+  name: cotton boll
   description: Moth people's favorite snack, and just as fluffy as them.
   id: CottonBol
   parent: FoodProduceBase
