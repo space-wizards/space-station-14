@@ -93,7 +93,10 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
         _audio.PlayPredicted(itemToggle.ActivateSound, uid, user);
         //Starts the active sound (like humming).
-        itemToggle.Stream = _audio.PlayPredicted(itemToggle.ActiveSound, uid, user, AudioParams.Default.WithLoop(true))?.Entity;
+        if (itemToggle.ActiveSound != null && itemToggle.PlayingStream == null)
+        {
+            itemToggle.PlayingStream = _audio.PlayPredicted(itemToggle.ActiveSound, uid, user, AudioParams.Default.WithLoop(true)).Value.Entity;
+        }
 
         return true;
     }
@@ -118,8 +121,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
 
         _audio.PlayPredicted(itemToggle.DeactivateSound, uid, user);
-        //Stops the active sound (like humming).
-        itemToggle.Stream = _audio.Stop(itemToggle.Stream);
+        itemToggle.PlayingStream = _audio.Stop(itemToggle.PlayingStream);
 
         return true;
     }

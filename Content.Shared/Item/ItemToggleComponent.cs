@@ -136,13 +136,14 @@ public sealed partial class ItemToggleComponent : Component
     ///     User entity used to store the information about the last user who has toggled the item. Used in other functions to affect the user in some way (like show messages).
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("user"), AutoNetworkedField]
+    [AutoNetworkedField]
     public EntityUid? User { get; set; } = null;
 
     /// <summary>
     ///     Used when the item emits sound while active.
     /// </summary>
-    public EntityUid? Stream;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public EntityUid? PlayingStream;
 }
 
 /// <summary>
