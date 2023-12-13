@@ -93,3 +93,14 @@ SpawnPointSeniorResearcher: null
 SpawnPointSeniorOfficer: null
 SpawnPointSeniorEngineer: null
 SpawnPointSeniorPhysician: null
+
+# 2023-12-12
+#No this is not the CMO hardsuit, their prototype IDs were just confusingly similar
+ClothingOuterHardsuitMedic: ClothingOuterHardsuitSyndieMedic
+
+# 2023-12-13
+VendingMachineSmartFridge: SmartFridge
+
+#2023-12-13
+YellowOxygenTank: OxygenTank
+YellowOxygenTankFilled: OxygenTank
