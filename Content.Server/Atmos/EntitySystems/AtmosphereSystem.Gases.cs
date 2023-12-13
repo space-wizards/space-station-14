@@ -35,7 +35,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             for (var i = 0; i < GasPrototypes.Length; i++)
             {
-                _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat;
+                _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat / HeatScale;
                 GasReagents[i] = GasPrototypes[i].Reagent;
             }
         }
@@ -61,7 +61,7 @@ namespace Content.Server.Atmos.EntitySystems
             NumericsHelpers.Multiply(moles, GasSpecificHeats, tmp);
             // Adjust heat capacity by speedup, because this is primarily what
             // determines how quickly gases heat up/cool.
-            return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity) / HeatScale;
+            return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
         }
 
         /// <summary>
