@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Gauze sprites by Github KittenColony / Discord kittencolony (297865728374210561)",
+  "size": {
+	"x": 32,
+	"y": 32
+  },
+  "states": [
+	{
+	  "name": "gauze_abdomen",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_shoulder",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_lefteye_1",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_lefteye_2",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_righteye_1",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_righteye_2",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_lowerarm_r",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_upperarm_r",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_leftarm",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_upperleg_r",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_lowerleg_r",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_upperleg_l",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_lowerleg_l",
+	  "directions": 4
+	}
+  ]
+}

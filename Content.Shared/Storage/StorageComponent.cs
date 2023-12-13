@@ -133,6 +133,20 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
+    public sealed class StorageRemoveItemEvent : EntityEventArgs
+    {
+        public readonly NetEntity ItemEnt;
+
+        public readonly NetEntity StorageEnt;
+
+        public StorageRemoveItemEvent(NetEntity itemEnt, NetEntity storageEnt)
+        {
+            ItemEnt = itemEnt;
+            StorageEnt = storageEnt;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public sealed class StorageInsertItemIntoLocationEvent : EntityEventArgs
     {
         public readonly NetEntity ItemEnt;
@@ -168,6 +182,15 @@ namespace Content.Shared.Storage
             EntityPositions = entityPositions;
             EntityAngles = entityAngles;
         }
+    }
+
+    /// <summary>
+    /// An extra BUI message that either opens, closes, or focuses the storage window based on context.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class StorageModifyWindowMessage : BoundUserInterfaceMessage
+    {
+
     }
 
     [NetSerializable]

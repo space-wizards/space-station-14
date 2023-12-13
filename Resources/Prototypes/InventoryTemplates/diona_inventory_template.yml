@@ -12,7 +12,6 @@
     - name: outerClothing
       slotTexture: suit
       slotFlags: OUTERCLOTHING
-      slotGroup: MainHotbar
       stripTime: 6
       uiWindowPos: 1,2
       strippingWindowPos: 1,2
@@ -78,6 +77,7 @@
     - name: suitstorage
       slotTexture: suit_storage
       slotFlags:   SUITSTORAGE
+      slotGroup: MainHotbar
       stripTime: 3
       uiWindowPos: 2,0
       strippingWindowPos: 2,5

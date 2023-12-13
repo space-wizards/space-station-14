@@ -229,7 +229,7 @@
           Quantity: 9
   - type: SliceableFood
     count: 3
-    slice: FoodMeatPenguinCutletSlice
+    slice: FoodMeatPenguinCutlet
   - type: Construction
     graph: PenguinSteak
     node: start

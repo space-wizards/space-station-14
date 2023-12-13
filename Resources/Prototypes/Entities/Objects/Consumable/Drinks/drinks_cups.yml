@@ -187,6 +187,14 @@
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coco.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
   - type: TrashOnSolutionEmpty
     solution: drink
 
