@@ -32,7 +32,7 @@ public sealed class EnergySwordSystem : EntitySystem
         _appearance.SetData(uid, ToggleableLightVisuals.Color, comp.ActivatedColor, appearanceComponent);
     }
 
-     private void OnInteractUsing(EntityUid uid, EnergySwordComponent comp, InteractUsingEvent args)
+    private void OnInteractUsing(EntityUid uid, EnergySwordComponent comp, InteractUsingEvent args)
     {
         if (args.Handled)
             return;
