@@ -1193,6 +1193,11 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: kobold
       sprite: Mobs/Animals/kobold.rsi
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
     - map: [ "ears" ]
     - map: [ "id" ]
     - map: [ "mask" ]
