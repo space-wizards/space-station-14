@@ -1,15 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: The Syndicate has cracked the binary radio channel's encryption and
-      is offering keys for 4 TC., type: Add}
-  id: 4854
-  time: '2023-09-18T19:20:56.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Increased the amount of barotrauma damage you receive., type: Tweak}
-  id: 4855
-  time: '2023-09-18T19:21:36.0000000+00:00'
 - author: HerCoyote23
   changes:
   - {message: 'The Syndicate has grown tired of losing overconfident "Loud" agents,
@@ -2899,3 +2888,13 @@ Entries:
     type: Fix}
   id: 5354
   time: '2023-12-13T21:20:38.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Cybersun and centcom pens can now edit stamped paper., type: Tweak}
+  id: 5355
+  time: '2023-12-13T21:33:32.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Added a new "uneven" hair style., type: Add}
+  id: 5356
+  time: '2023-12-13T21:34:28.0000000+00:00'
