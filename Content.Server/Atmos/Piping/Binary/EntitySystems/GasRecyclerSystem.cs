@@ -105,7 +105,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return 0;
             }
             float overPressConst = 300; // pressure difference (in atm) to get 200 L/sec transfer rate
-            float alpha = Atmospherics.MaxTransferRate / (float)Math.Sqrt(overPressConst*Atmospherics.OneAtmosphere);
+            float alpha = Atmospherics.MaxTransferRate * _atmosphereSystem.PumpSpeedup() / (float)Math.Sqrt(overPressConst*Atmospherics.OneAtmosphere);
             return alpha * (float)Math.Sqrt(inlet.Pressure - outlet.Pressure);
         }
 

@@ -504,7 +504,7 @@
     layers:
       - state: green
       - state: seniorofficer
-      
+
 - type: entity
   id: SpawnPointPilot
   parent: SpawnPointJobBase

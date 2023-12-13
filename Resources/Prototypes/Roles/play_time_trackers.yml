@@ -66,8 +66,8 @@
 
 - type: playTimeTracker
   id: JobHeadOfSecurity
-  
-- type: playTimeTracker 
+
+- type: playTimeTracker
   id: JobSecurityPilot
 
 - type: playTimeTracker

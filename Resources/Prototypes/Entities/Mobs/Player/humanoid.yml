@@ -13,7 +13,7 @@
     - type: RandomMetadata
       nameSegments:
         - NamesFirstMilitaryLeader
-        - names_last_male # Corvax-Localization
+        - NamesLastMilitary
     - type: RandomHumanoidSpawner
       settings: DeathSquad
 
@@ -31,7 +31,7 @@
     - type: RandomMetadata
       nameSegments:
         - NamesFirstMilitaryLeader
-        - names_last_male # Corvax-Localization
+        - NamesLastMilitary
 
 
 ## ERT Leader
@@ -47,7 +47,7 @@
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitaryLeader
-      - NamesLastERTCallsign # Corvax-Localization
+      - NamesLastMilitary
     - type: RandomHumanoidSpawner
       settings: ERTLeader
 
