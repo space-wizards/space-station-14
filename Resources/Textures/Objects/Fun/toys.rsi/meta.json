@@ -44,13 +44,13 @@
             "name": "bee-inhand-right",
             "directions": 4
         },
-	{
+        {
             "name": "plushie_hampter"
         },
         {
             "name": "plushie_lizard"
         },
-		{
+        {
             "name": "plushie_lizard_mirrored"
         },
         {
@@ -306,6 +306,9 @@
         {
             "name": "beachb-inhand-right",
             "directions": 4
+        },
+        {
+            "name": "plushie_bubble"
         }
     ]
 }

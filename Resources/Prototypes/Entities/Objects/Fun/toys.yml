@@ -1121,3 +1121,24 @@
   components:
   - type: Sprite
     state: plushie_penguin
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieBubble
+  name: plushie bubble
+  description: Meet! Very scary, big and bloody - plushie bubble!
+  components:
+  - type: Sprite
+    state: plushie_bubble
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/space_dragon_roar.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/space_dragon_roar.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/space_dragon_roar.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Animals/space_dragon_roar.ogg
