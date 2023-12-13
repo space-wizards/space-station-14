@@ -89,14 +89,6 @@ public sealed class SuperBonkSystem: EntitySystem
 
         _transformSystem.SetCoordinates(comp.Target, Transform(uid).Coordinates);
 
-        //This is just so glass tables shatter which is funnier.
-        if (HasComp<GlassTableComponent>(uid))
-        {
-            var ev = new ClimbedOnEvent(comp.Target, comp.Target);
-            RaiseLocalEvent(uid, ref ev);
-            return;
-        }
-
         _bonkSystem.TryBonk(comp.Target, uid, bonkComp);
     }
 
