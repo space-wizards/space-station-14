@@ -90,7 +90,7 @@ namespace Content.Server.Stunnable.Systems
                 _riggableSystem.Explode(uid, battery, args.User);
             }
 
-            if (EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
+            if (TryComp<ItemComponent>(uid, out var item))
             {
                 _item.SetHeldPrefix(uid, "on", item);
             }
