@@ -116242,19 +116242,6 @@ entities:
       type: Item
     - malus: 0.6
       type: DisarmMalus
-    - soundHit: !type:SoundPathSpecifier
-        params:
-          variation: null
-          playoffset: 0
-          loop: False
-          referenceDistance: 1
-          rolloffFactor: 1
-          maxdistance: 25
-          busname: Master
-          pitchscale: 1
-          volume: 0
-        path: /Audio/Weapons/eblade1.ogg
-      type: MeleeWeapon
     - type: ItemCooldown
 - proto: TrackingImplanter
   entities:
