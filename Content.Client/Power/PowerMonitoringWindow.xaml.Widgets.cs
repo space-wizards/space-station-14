@@ -1,5 +1,4 @@
 using Content.Client.Stylesheets;
-using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
@@ -15,7 +14,8 @@ public sealed partial class PowerMonitoringWindow
     private SpriteSpecifier.Texture _sourceIcon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/PowerMonitoring/source_arrow.png"));
     private SpriteSpecifier.Texture _loadIconPath = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/PowerMonitoring/load_arrow.png"));
 
-    private bool _tryToScroll = false;
+    private bool _autoScrollActive = false;
+    private bool _autoScrollAwaitsUpdate = false;
 
     private void UpdateWindowConsoleEntry
         (BoxContainer masterContainer,
@@ -90,21 +90,16 @@ public sealed partial class PowerMonitoringWindow
         else
             button.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
 
-        // Update name
-        var name = Loc.GetString(entry.MetaData.Value.EntityName);
-        var charLimit = (int) (button.NameLocalized.Width / 8f);
-
+        // Update sprite
         if (entry.MetaData.Value.SpritePath != string.Empty && entry.MetaData.Value.SpriteState != string.Empty)
             button.TextureRect.Texture = _spriteSystem.Frame0(new SpriteSpecifier.Rsi(new ResPath(entry.MetaData.Value.SpritePath), entry.MetaData.Value.SpriteState));
 
+        // Update name
+        var name = Loc.GetString(entry.MetaData.Value.EntityName);
+        button.NameLocalized.Text = name;
+
         // Update tool tip
         button.ToolTip = Loc.GetString(name);
-
-        // Shorten name if required
-        if (charLimit > 3 && name.Length > charLimit)
-            name = $"{name.Substring(0, charLimit - 3)}...";
-
-        button.NameLocalized.Text = name;
 
         // Update power value
         button.PowerValue.Text = Loc.GetString("power-monitoring-window-value", ("value", entry.PowerValue));
@@ -181,6 +176,8 @@ public sealed partial class PowerMonitoringWindow
         // Otherwise, toggle on
         entry.Button.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
 
+        ActivateAutoScrollToFocus();
+
         // Toggle off the old button (if applicable)
         if (_focusEntity != null)
         {
@@ -207,6 +204,12 @@ public sealed partial class PowerMonitoringWindow
 
         // Send an update from the power monitoring system
         SendPowerMonitoringConsoleMessageAction?.Invoke(_focusEntity, entry.Entry.Group);
+    }
+
+    private void ActivateAutoScrollToFocus()
+    {
+        _autoScrollActive = false;
+        _autoScrollAwaitsUpdate = true;
     }
 
     private bool TryGetNextScrollPosition([NotNullWhen(true)] out float? nextScrollPosition)
@@ -265,9 +268,9 @@ public sealed partial class PowerMonitoringWindow
         return false;
     }
 
-    private void TryToScrollToFocus()
+    private void AutoScrollToFocus()
     {
-        if (!_tryToScroll)
+        if (!_autoScrollActive)
             return;
 
         var scroll = MasterTabContainer.Children.ElementAt(MasterTabContainer.CurrentTab) as ScrollContainer;
@@ -277,16 +280,13 @@ public sealed partial class PowerMonitoringWindow
         if (!TryGetVerticalScrollbar(scroll, out var vScrollbar))
             return;
 
-        if (TryGetNextScrollPosition(out float? nextScrollPosition))
-        {
-            vScrollbar.ValueTarget = nextScrollPosition.Value;
+        if (!TryGetNextScrollPosition(out float? nextScrollPosition))
+            return;
 
-            if (MathHelper.CloseToPercent(vScrollbar.Value, vScrollbar.ValueTarget))
-            {
-                _tryToScroll = false;
-                return;
-            }
-        }
+        vScrollbar.ValueTarget = nextScrollPosition.Value;
+
+        if (MathHelper.CloseToPercent(vScrollbar.Value, vScrollbar.ValueTarget))
+            _autoScrollActive = false;
     }
 
     private void UpdateWarningLabel(PowerMonitoringFlags flags)
@@ -368,23 +368,32 @@ public sealed class PowerMonitoringWindowEntry : PowerMonitoringWindowBaseEntry
         AddChild(Button);
 
         // Grid container to hold sub containers
-        MainContainer = new BoxContainer();
-        MainContainer.Orientation = LayoutOrientation.Vertical;
-        MainContainer.HorizontalExpand = true;
-        MainContainer.Margin = new Thickness(8, 0, 0, 0);
-        MainContainer.Visible = false;
+        MainContainer = new BoxContainer()
+        {
+            Orientation = LayoutOrientation.Vertical,
+            HorizontalExpand = true,
+            Margin = new Thickness(8, 0, 0, 0),
+            Visible = false,
+        };
+
         AddChild(MainContainer);
 
         // Grid container to hold the list of sources when selected 
-        SourcesContainer = new BoxContainer();
-        SourcesContainer.Orientation = LayoutOrientation.Vertical;
-        SourcesContainer.HorizontalExpand = true;
+        SourcesContainer = new BoxContainer()
+        {
+            Orientation = LayoutOrientation.Vertical,
+            HorizontalExpand = true,
+        };
+
         MainContainer.AddChild(SourcesContainer);
 
         // Grid container to hold the list of loads when selected
-        LoadsContainer = new BoxContainer();
-        LoadsContainer.Orientation = LayoutOrientation.Vertical;
-        LoadsContainer.HorizontalExpand = true;
+        LoadsContainer = new BoxContainer()
+        {
+            Orientation = LayoutOrientation.Vertical,
+            HorizontalExpand = true,
+        };
+
         MainContainer.AddChild(LoadsContainer);
     }
 }
@@ -399,9 +408,12 @@ public sealed class PowerMonitoringWindowSubEntry : PowerMonitoringWindowBaseEnt
         HorizontalExpand = true;
 
         // Source/load icon
-        Icon = new TextureRect();
-        Icon.VerticalAlignment = VAlignment.Center;
-        Icon.Margin = new Thickness(0, 0, 2, 0);
+        Icon = new TextureRect()
+        {
+            VerticalAlignment = VAlignment.Center,
+            Margin = new Thickness(0, 0, 2, 0),
+        };
+
         AddChild(Icon);
 
         // Selection button
@@ -428,7 +440,6 @@ public abstract class PowerMonitoringWindowBaseEntry : BoxContainer
 public sealed class PowerMonitoringButton : Button
 {
     public BoxContainer MainContainer;
-    public SpriteView SpriteView;
     public TextureRect TextureRect;
     public Label NameLocalized;
     public Label PowerValue;
@@ -439,35 +450,40 @@ public sealed class PowerMonitoringButton : Button
         VerticalExpand = true;
         Margin = new Thickness(0, 1, 0, 1);
 
-        MainContainer = new BoxContainer();
-        MainContainer.Orientation = BoxContainer.LayoutOrientation.Horizontal;
-        MainContainer.SetHeight = 32f;
-        MainContainer.HorizontalExpand = true;
+        MainContainer = new BoxContainer()
+        {
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            HorizontalExpand = true,
+            SetHeight = 32f,
+        };
+
         AddChild(MainContainer);
 
-        SpriteView = new SpriteView();
-        SpriteView.OverrideDirection = Direction.South;
-        SpriteView.SetSize = new Vector2(32f, 32f);
-        SpriteView.Margin = new Thickness(0, 0, 5, 0);
-        //MainContainer.AddChild(SpriteView);
+        TextureRect = new TextureRect()
+        {
+            HorizontalAlignment = HAlignment.Center,
+            VerticalAlignment = VAlignment.Center,
+            SetSize = new Vector2(32f, 32f),
+            Margin = new Thickness(0, 0, 5, 0),
+        };
 
-        TextureRect = new TextureRect();
-        TextureRect.HorizontalAlignment = HAlignment.Center;
-        TextureRect.VerticalAlignment = VAlignment.Center;
-        TextureRect.SetSize = new Vector2(32f, 32f);
-        TextureRect.Margin = new Thickness(0, 0, 5, 0);
         MainContainer.AddChild(TextureRect);
 
-        NameLocalized = new Label();
-        NameLocalized.ClipText = true;
-        NameLocalized.HorizontalExpand = true;
+        NameLocalized = new Label()
+        {
+            HorizontalExpand = true,
+            ClipText = true,
+        };
+
         MainContainer.AddChild(NameLocalized);
 
-        PowerValue = new Label();
-        PowerValue.ClipText = true;
-        PowerValue.SetWidth = 72f;
-        PowerValue.HorizontalAlignment = HAlignment.Right;
-        PowerValue.HorizontalExpand = true;
+        PowerValue = new Label()
+        {
+            HorizontalAlignment = HAlignment.Right,
+            SetWidth = 50f,
+            ClipText = true,
+        };
+
         MainContainer.AddChild(PowerValue);
     }
 }

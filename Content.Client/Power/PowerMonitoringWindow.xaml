@@ -3,8 +3,8 @@
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                Title="{Loc 'power-monitoring-window-title'}"
-               SetSize="1150 750"
-               MinSize="1150 750">
+               SetSize="1120 750"
+               MinSize="1120 750">
     <BoxContainer Orientation="Vertical">
         <!-- Main display -->
         <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
@@ -76,21 +76,17 @@
 
                 <!-- Loads / Sources (entries added by C# code) -->
                 <TabContainer Name="MasterTabContainer" VerticalExpand="True" HorizontalExpand="True" Margin="0 10 0 0">
-                    <ScrollContainer HorizontalExpand="True"                                     
-                                     Margin="8, 8, 8, 8">
-                        <BoxContainer Name="SourcesList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/>
+                    <ScrollContainer HorizontalExpand="True" Margin="8, 8, 8, 8">
+                        <BoxContainer Name="SourcesList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 10 0"/>
                     </ScrollContainer>
-                    <ScrollContainer HorizontalExpand="True"                                    
-                                     Margin="8, 8, 8, 8">
-                        <BoxContainer Name="SMESList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/>
+                    <ScrollContainer HorizontalExpand="True" Margin="8, 8, 8, 8">
+                        <BoxContainer Name="SMESList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 10 0"/>
                     </ScrollContainer>
-                    <ScrollContainer HorizontalExpand="True"                                  
-                                     Margin="8, 8, 8, 8">
-                        <BoxContainer Name="SubstationList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/>
+                    <ScrollContainer HorizontalExpand="True" Margin="8, 8, 8, 8">
+                        <BoxContainer Name="SubstationList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 10 0"/>
                     </ScrollContainer>
-                    <ScrollContainer HorizontalExpand="True"                                   
-                                     Margin="8, 8, 8, 8">
-                        <BoxContainer Name="ApcList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/>
+                    <ScrollContainer HorizontalExpand="True" Margin="8, 8, 8, 8">
+                        <BoxContainer Name="ApcList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 10 0"/>
                     </ScrollContainer>
                 </TabContainer>
 

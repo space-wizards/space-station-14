@@ -1,7 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using System.Numerics;
 
 namespace Content.Shared.Power;
 
@@ -52,7 +51,7 @@ public struct PowerMonitoringDeviceMetaData
     public PowerMonitoringConsoleGroup Group;
     public string SpritePath;
     public string SpriteState;
-    public NetEntity? Master;
+    public NetEntity? CollectionMaster;
 
     public PowerMonitoringDeviceMetaData(string name, NetCoordinates coordinates, PowerMonitoringConsoleGroup group, string spritePath, string spriteState)
     {
