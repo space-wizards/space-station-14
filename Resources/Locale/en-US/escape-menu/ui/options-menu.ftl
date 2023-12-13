@@ -5,10 +5,19 @@ ui-options-tab-graphics = Graphics
 ui-options-tab-controls = Controls
 ui-options-tab-audio = Audio
 ui-options-tab-network = Network
+ui-options-tab-misc = General
 
 ui-options-apply = Apply
 ui-options-reset-all = Reset All
 ui-options-default = Default
+
+# Misc/General menu
+
+ui-options-discordrich = Enable Discord Rich Presence
+ui-options-general-discord = Discord
+ui-options-general-cursor = Cursor
+ui-options-general-speech = Speech
+ui-options-general-storage = Storage
 
 ## Audio menu
 
@@ -50,8 +59,12 @@ ui-options-scale-175 = 175%
 ui-options-scale-200 = 200%
 ui-options-hud-theme = HUD Theme:
 ui-options-hud-theme-default = Default
-ui-options-hud-theme-modernized = Modernized
-ui-options-hud-theme-classic = Classic
+ui-options-hud-theme-plasmafire = Plasmafire
+ui-options-hud-theme-slimecore = Slimecore
+ui-options-hud-theme-clockwork = Clockwork
+ui-options-hud-theme-retro = Retro
+ui-options-hud-theme-minimalist = Minimalist
+ui-options-hud-theme-eris = Eris
 ui-options-vp-stretch = Stretch viewport to fit game window
 ui-options-vp-scale = Fixed viewport scale: x{ $scale }
 ui-options-vp-integer-scaling = Prefer integer scaling (might cause black bars/clipping)
