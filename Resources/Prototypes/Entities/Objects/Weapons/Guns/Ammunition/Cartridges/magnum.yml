@@ -62,7 +62,7 @@
 
 - type: entity
   id: CartridgeMagnumUranium
-  name: cartridge (.45 magnum depleted uranium)
+  name: cartridge (.45 magnum uranium)
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo

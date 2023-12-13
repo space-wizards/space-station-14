@@ -152,7 +152,7 @@
 
 - type: entity
   id: ShellShotgunUranium
-  name: depleted uranium shotgun shell
+  name: uranium shotgun shell
   parent: BaseShellShotgun
   components:
   - type: Sprite

@@ -127,7 +127,7 @@
 - type: entity
   id: MagazineBoxRifleUranium
   parent: BaseMagazineBoxRifle
-  name: ammunition box (.20 rifle depleted uranium)
+  name: ammunition box (.20 rifle uranium)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleUranium

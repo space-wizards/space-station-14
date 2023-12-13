@@ -46,12 +46,12 @@
 - type: entity
   id: BulletRifleUranium
   parent: BaseBullet
-  name: bullet (0.20 rifle depleted uranium)
+  name: bullet (0.20 rifle uranium)
   noSpawn: true
   components:
   - type: Projectile
     damage:
       types:
-        Radiation: 15
-        Piercing: 2
+        Radiation: 7
+        Piercing: 8
         

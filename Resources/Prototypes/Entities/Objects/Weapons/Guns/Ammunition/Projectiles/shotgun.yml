@@ -160,7 +160,7 @@
 
 - type: entity
   id: PelletShotgunUranium
-  name: pellet (.50 depleted uranium)
+  name: pellet (.50 uranium)
   noSpawn: true
   parent: BaseBullet
   components:
@@ -170,5 +170,5 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 7
-        Piercing: 1
+        Radiation: 3
+        Piercing: 5

@@ -54,7 +54,7 @@
 
 - type: entity
   id: CartridgeRifleUranium
-  name: cartridge (.20 rifle depleted uranium)
+  name: cartridge (.20 rifle uranium)
   parent: BaseCartridgeRifle
   components:
   - type: CartridgeAmmo

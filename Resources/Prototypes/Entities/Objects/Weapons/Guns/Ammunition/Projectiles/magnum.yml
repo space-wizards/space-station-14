@@ -59,12 +59,12 @@
 
 - type: entity
   id: BulletMagnumUranium
-  name: bullet (.45 magnum depleted uranium)
+  name: bullet (.45 magnum uranium)
   parent: BaseBullet
   noSpawn: true
   components:
   - type: Projectile
     damage:
       types:
-        Radiation: 32
-        Piercing: 3
+        Radiation: 15
+        Piercing: 20

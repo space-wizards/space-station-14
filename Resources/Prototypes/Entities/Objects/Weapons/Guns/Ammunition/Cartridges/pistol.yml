@@ -54,7 +54,7 @@
 
 - type: entity
   id: CartridgePistolUranium
-  name: cartridge (.35 auto depleted uranium)
+  name: cartridge (.35 auto uranium)
   parent: BaseCartridgePistol
   components:
   - type: CartridgeAmmo
