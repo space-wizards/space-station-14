@@ -1150,7 +1150,7 @@
   name: kobold
   id: MobKobold
   parent: MobMonkey
-  description: Cousins to the sentient race of lizard people, kobolds are as nasty as monkeys; ready to pull out your hair and stab you to death.
+  description: Cousins to the sentient race of lizard people, kobolds blend in with industrial tiling and are as nasty as monkeys; ready to pull out your hair and stab you to death.
   components:
   - type: LizardAccent
   - type: Speech # I don't know how to get it to work and i want someone to make them speak like a lizard with normal accents (or optionally another language altogether)
