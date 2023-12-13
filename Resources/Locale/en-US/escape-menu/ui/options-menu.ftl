@@ -14,6 +14,10 @@ ui-options-default = Default
 # Misc/General menu
 
 ui-options-discordrich = Enable Discord Rich Presence
+ui-options-general-discord = Discord
+ui-options-general-cursor = Cursor
+ui-options-general-speech = Speech
+ui-options-general-storage = Storage
 
 ## Audio menu
 
