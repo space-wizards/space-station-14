@@ -48,7 +48,7 @@
         hard: false
         layer:
         - LowImpassable
--
+
 - type: entity
   parent: MonkeyCube
   id: KoboldCube
