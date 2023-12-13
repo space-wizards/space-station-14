@@ -31,6 +31,18 @@ public sealed class SharedRevolutionarySystem : EntitySystem
         SubscribeLocalEvent<ShowRevIconsComponent, ComponentStartup>(DirtyRevComps);
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        EntityManager.EventBus.UnsubscribeLocalEvent<MindShieldComponent, MapInitEvent>();
+        EntityManager.EventBus.UnsubscribeLocalEvent<RevolutionaryComponent, ComponentGetStateAttemptEvent>();
+        EntityManager.EventBus.UnsubscribeLocalEvent<HeadRevolutionaryComponent, ComponentGetStateAttemptEvent>();
+        EntityManager.EventBus.UnsubscribeLocalEvent<RevolutionaryComponent, ComponentStartup>();
+        EntityManager.EventBus.UnsubscribeLocalEvent<HeadRevolutionaryComponent, ComponentStartup>();
+        EntityManager.EventBus.UnsubscribeLocalEvent<ShowRevIconsComponent, ComponentStartup>();
+    }
+
     /// <summary>
     /// When the mindshield is implanted in the rev it will popup saying they were deconverted. In Head Revs it will remove the mindshield component.
     /// </summary>

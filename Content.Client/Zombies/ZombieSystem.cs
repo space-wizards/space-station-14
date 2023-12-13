@@ -25,6 +25,13 @@ public sealed class ZombieSystem : EntitySystem
         SubscribeLocalEvent<ZombieComponent, CanDisplayStatusIconsEvent>(OnCanDisplayStatusIcons);
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        EntityManager.EventBus.UnsubscribeLocalEvent<ZombieComponent, ComponentStartup>();
+        EntityManager.EventBus.UnsubscribeLocalEvent<ZombieComponent, CanDisplayStatusIconsEvent>();
+    }
+
     private void OnStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
     {
         if (HasComp<HumanoidAppearanceComponent>(uid))
@@ -39,6 +46,9 @@ public sealed class ZombieSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Determines whether a player should be able to see the StatusIcon for zombies.
+    /// </summary>
     private void OnCanDisplayStatusIcons(EntityUid uid, ZombieComponent component, ref CanDisplayStatusIconsEvent args)
     {
         if (HasComp<ZombieComponent>(args.User) || HasComp<ShowZombieIconsComponent>(args.User))
