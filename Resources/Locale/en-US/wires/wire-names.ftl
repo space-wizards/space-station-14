@@ -3,6 +3,7 @@ wires-board-name-default = Wires
 wires-board-name-booze = BoozeDispenser
 wires-board-name-soda = SodaDispenser
 wires-board-name-thermomachine = Thermomachine
+wires-board-name-condenser = Condenser
 wires-board-name-pa = Mk2 Particle Accelerator
 wires-board-name-highsec = HighSec Control
 wires-board-name-vessel = Vessel
