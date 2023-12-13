@@ -5,10 +5,15 @@ ui-options-tab-graphics = Graphics
 ui-options-tab-controls = Controls
 ui-options-tab-audio = Audio
 ui-options-tab-network = Network
+ui-options-tab-misc = General
 
 ui-options-apply = Apply
 ui-options-reset-all = Reset All
 ui-options-default = Default
+
+# Misc/General menu
+
+ui-options-discordrich = Enable Discord Rich Presence
 
 ## Audio menu
 
