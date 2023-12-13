@@ -87,6 +87,7 @@ GeneratorPlasma: PortableGeneratorPacman
 GeneratorUranium: PortableGeneratorSuperPacman
 GeneratorPlasmaMachineCircuitboard: PortableGeneratorPacmanMachineCircuitboard
 GeneratorUraniumMachineCircuitboard: PortableGeneratorSuperPacmanMachineCircuitboard
+<<<<<<< HEAD
 
 # 2023-12-10
 SpawnPointSeniorResearcher: null
@@ -100,3 +101,5 @@ ClothingOuterHardsuitMedic: ClothingOuterHardsuitSyndieMedic
 
 # 2023-12-13
 VendingMachineSmartFridge: SmartFridge
+=======
+>>>>>>> parent of 66a1bb7a9f (Remove senior roles (#22303))
