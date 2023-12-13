@@ -487,12 +487,10 @@
     - state: gold
     - state: ert_commander
   - type: IdCard
-    jobTitle: ERT Company Commander
+    jobTitle: ОБР Лидер
+    jobIcon: JobIconNanotrasen
   - type: Item
     heldPrefix: gold
-  - type: IdCard
-    jobTitle: Офицер СО
-    jobIcon: JobIconNanotrasen
 
 - type: entity
   parent: ERTLeaderIDCard
@@ -504,7 +502,7 @@
     - state: gold
     - state: ert_chaplain # we have the sprite for the id but dont have chaplain ERT equipment for now.
   - type: IdCard
-    jobTitle: ERT Soul Officer
+    jobTitle: ОБР Капеллан
   - type: Item
     heldPrefix: blue
 
@@ -518,7 +516,7 @@
     - state: gold
     - state: ert_engineer
   - type: IdCard
-    jobTitle: ERT Field Engineer
+    jobTitle: ОБР Полевой Инженер
 
 - type: entity
   parent: ERTChaplainIDCard
@@ -530,7 +528,7 @@
     - state: gold
     - state: ert_janitor
   - type: IdCard
-    jobTitle: ERT Custodian
+    jobTitle: ОБР Клинер
 
 - type: entity
   parent: ERTChaplainIDCard
@@ -542,7 +540,7 @@
     - state: gold
     - state: ert_medic
   - type: IdCard
-    jobTitle: ERT Medical Doctor
+    jobTitle: ОБР Медик
 
 - type: entity
   parent: ERTChaplainIDCard
@@ -554,7 +552,7 @@
     - state: gold
     - state: ert_security
   - type: IdCard
-    jobTitle: ERT Field Officer
+    jobTitle: ОБР Полевой Офицер
 
 - type: entity
   parent: IDCardStandard
@@ -799,7 +797,7 @@
   - type: Item
     heldPrefix: blue
   - type: IdCard
-    jobTitle: Centcom Quarantine Officer
+    jobTitle: Офицер Карантина ЦК
 
 - type: entity
   parent: IDCardStandard

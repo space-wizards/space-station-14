@@ -267,3 +267,5 @@ ent-ClothingUniformJumpsuitCasualRed = красный кэжуал
     .desc = Красная рубашка свободной носки с серыми брюками, идеально для расслабления.
 ent-ClothingUniformJumpsuitClownBanana = костюм банана-клоуна
     .desc = { ent-ClothingUniformJumpsuitClown.desc }
+ent-ClothingUniformJumpsuitFamilyGuy = знакомая одежда
+    .desc = Заставляет вспоминать каждый раз, когда вы делаете что-то смешное.

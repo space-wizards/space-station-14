@@ -108,3 +108,5 @@ ent-FloorTileItemMiningDark = тёмный шахтёрский пол
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemMiningLight = светлый шахтёрский пол
     .desc = { ent-FloorTileItemBase.desc }
+ent-FloorTileItemLime = лаймовый пол
+    .desc = { ent-FloorTileItemBase.desc }

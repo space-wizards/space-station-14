@@ -20,3 +20,7 @@ marking-TattooEyeRight = Правый глаз
 marking-TattooEyeLeft-eyeleft = Левый глаз
 marking-TattooEyeLeft-tattoo_eye_l = Левый глаз
 marking-TattooEyeLeft = Левый глаз
+marking-ScarEyeRight-scar_eye_right = Шрам, правый глаз
+marking-ScarEyeRight = Шрам, правый глаз
+marking-ScarEyeLeft-scar_eye_left = Шрам, левый глаз
+marking-ScarEyeLeft = Шрам, правый глаз

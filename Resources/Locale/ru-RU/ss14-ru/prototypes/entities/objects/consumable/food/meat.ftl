@@ -118,3 +118,5 @@ ent-FoodMeatSpiderCutletCooked = паучья котлета
     .desc = Котлета из паучьего мяса. Наконец-то съедобно.
 ent-FoodMeatXenoCutletCooked = ксено котлета
     .desc = Котлета из ксеноса, сочащаяся... вкусом?
+ent-FoodMeatSnake = сырое змеиное мясо
+    .desc = Длинный кусок змеиного мяса. Не ядовит. Вероятно.

@@ -105,3 +105,5 @@ ent-PlushieMoth = плюшевый мотылёк
     .desc = Милая и пушистая плюшевая моль. Развлекайтесь, бз!
 ent-PlushiePenguin = плюшевый пингвин
     .desc = Кстати, я использую Arch!
+ent-PlushieLizardMirrored = { ent-PlushieLizard }
+    .desc = { ent-PlushieLizard.desc }

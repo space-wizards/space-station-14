@@ -60,3 +60,5 @@ marking-LizardHornsKoboldEars-horns_kobold_ears = Унатх, рожки (Коб
 marking-LizardHornsKoboldEars = Унатх, рожки (Кобольд)
 marking-LizardHornsFloppyKoboldEars-horns_floppy_kobold_ears = Унатх, ушки (Кобольд)
 marking-LizardHornsFloppyKoboldEars = Унатх, ушки (Кобольд)
+marking-LizardChestUnderbelly-horns_body_underbelly = Унатх, живот
+marking-LizardChestUnderbelly = Унатх, живот

@@ -117,3 +117,5 @@ ent-SpawnMobLuminousEntity = спавнер лучезарность
 ent-SpawnMobLuminousObject = спавнер лучезарность
     .desc = { ent-MarkerBase.desc }
     .suffix = Объект
+ent-SpawnMobSpaceCobra = спавнер космокобра
+    .desc = { ent-MarkerBase.desc }

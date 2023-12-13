@@ -49,6 +49,7 @@ marking-HumanHairCoffeehouse = Кофейная
 marking-HumanHairCombover = Зачёс (Назад)
 marking-HumanHairCornrows = Корнроу
 marking-HumanHairCornrows2 = Корнроу 2
+marking-HumanHairClassicCornrows2 = Классическая Корнроу 2
 marking-HumanHairCornrowbun = Корнроу (Пучок)
 marking-HumanHairCornrowbraid = Корнроу (Косичка)
 marking-HumanHairCornrowtail = Корнроу (Хвостик)

@@ -15,3 +15,5 @@ ent-GasPipeTJunction = { ent-GasPipeBase }
 ent-GasPipeFourway = { ent-GasPipeBase }
     .suffix = Четверная
     .desc = { ent-GasPipeBase.desc }
+ent-GasPipeBroken = сломанная труба
+    .desc = Когда-то содержала газ.
