@@ -1,15 +1,17 @@
+using Content.Server.Body.Components;
 using Content.Server.Medical.Components;
 using Content.Server.PowerCell;
+using Content.Server.Temperature.Components;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
+using Content.Shared.PowerCell;
 using Robust.Server.GameObjects;
-using Content.Server.Temperature.Components;
-using Content.Server.Body.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server.Medical
@@ -27,13 +29,16 @@ namespace Content.Server.Medical
             base.Initialize();
             SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<HealthAnalyzerComponent, HealthAnalyzerDoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<HealthAnalyzerComponent, DroppedEvent>(OnDropped);
+            SubscribeLocalEvent<HealthAnalyzerComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
+            SubscribeLocalEvent<HealthAnalyzerComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
 
             SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(OnDamageChanged);
         }
 
         private void OnAfterInteract(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, AfterInteractEvent args)
         {
-            if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasActivatableCharge(uid, user: args.User))
+            if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasDrawCharge(uid))
                 return;
 
             _audio.PlayPvs(healthAnalyzer.ScanningBeginSound, uid);
@@ -46,14 +51,41 @@ namespace Content.Server.Medical
             });
         }
 
+        /// <summary>
+        /// Turn off when placed into a storage item or moved between slots/hands
+        /// </summary>
+        private void OnInsertedIntoContainer(EntityUid uid, HealthAnalyzerComponent component, EntGotInsertedIntoContainerMessage args)
+        {
+            component.ScannedEntity = EntityUid.Invalid;
+            _cell.SetPowerCellDrawEnabled(uid, false);
+        }
+
+        /// <summary>
+        /// Disable continuous updates once battery is dead
+        /// </summary>
+        private void OnPowerCellSlotEmpty(EntityUid uid, HealthAnalyzerComponent component, ref PowerCellSlotEmptyEvent args)
+        {
+            component.ScannedEntity = EntityUid.Invalid;
+        }
+
+        /// <summary>
+        /// Turn off the analyser when dropped
+        /// </summary>
+        private void OnDropped(EntityUid uid, HealthAnalyzerComponent component, DroppedEvent args)
+        {
+            component.ScannedEntity = EntityUid.Invalid;
+            _cell.SetPowerCellDrawEnabled(uid, false);
+        }
+
         private void OnDoAfter(EntityUid uid, HealthAnalyzerComponent component, DoAfterEvent args)
         {
-            if (args.Handled || args.Cancelled || args.Args.Target == null || !_cell.TryUseActivatableCharge(uid, user: args.User))
+            if (args.Handled || args.Cancelled || args.Args.Target == null || !_cell.HasDrawCharge(uid))
                 return;
 
             _audio.PlayPvs(component.ScanningEndSound, args.Args.User);
 
             component.ScannedEntity = args.Args.Target.Value;
+            _cell.SetPowerCellDrawEnabled(uid, true);
             OpenUserInterface(args.Args.User, uid);
             UpdateScannedUser(uid, args.Args.Target.Value, component);
             args.Handled = true;
@@ -64,7 +96,7 @@ namespace Content.Server.Medical
             if (!TryComp<ActorComponent>(user, out var actor) || !_uiSystem.TryGetUi(analyzer, HealthAnalyzerUiKey.Key, out var ui))
                 return;
 
-            _uiSystem.OpenUi(ui ,actor.PlayerSession);
+            _uiSystem.OpenUi(ui, actor.PlayerSession);
         }
 
         private void OnDamageChanged(EntityUid uid, MobStateComponent component, DamageChangedEvent args)
@@ -86,6 +118,7 @@ namespace Content.Server.Medical
                     distance > healthAnalyserComp.MaxScanRange)
                 {
                     healthAnalyserComp.ScannedEntity = EntityUid.Invalid;
+                    _cell.SetPowerCellDrawEnabled(uid, false);
                 }
                 else
                 {
