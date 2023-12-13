@@ -463,7 +463,6 @@
   description: An advanced riot shield made of lightweight materials that collapses for easy storage.
   components:
     - type: ItemToggle
-      activated: false
       activatedDisarmMalus: 0.6
       soundActivate:
         path: /Audio/Weapons/telescopicon.ogg

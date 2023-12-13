@@ -6,7 +6,6 @@
   components:
   - type: EnergySword
   - type: ItemToggle
-    activated: false
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
     soundDeactivate:

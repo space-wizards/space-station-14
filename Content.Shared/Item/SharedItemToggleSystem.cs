@@ -84,12 +84,12 @@ public abstract class SharedItemToggleSystem : EntitySystem
             if (attempt.Cancelled)
             {
                 //Play the failure to activate noise if there is any.
-                _audio.PlayPvs(itemToggle.FailToActivateSound, uid);
+                _audio.PlayPvs(itemToggle.SoundFailToActivate, uid);
                 return false;
             }
 
             // At this point the server knows that the activation went through successfully, so we play the sounds and make the changes.
-            _audio.PlayPvs(itemToggle.ActivateSound, uid);
+            _audio.PlayPvs(itemToggle.SoundActivate, uid);
             //Starts the active sound (like humming).
             if (itemToggle.ActiveSound != null && itemToggle.PlayingStream == null)
             {
@@ -121,7 +121,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         }
         else
         {
-            _audio.PlayPredicted(itemToggle.DeactivateSound, uid, user);
+            _audio.PlayPredicted(itemToggle.SoundDeactivate, uid, user);
             itemToggle.PlayingStream = _audio.Stop(itemToggle.PlayingStream);
 
             Deactivate(uid, itemToggle);

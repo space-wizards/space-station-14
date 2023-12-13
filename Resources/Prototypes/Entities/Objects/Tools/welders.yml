@@ -15,7 +15,6 @@
       visible: false
       shader: unshaded
       map: ["enum.ToggleVisuals.Layer"]
-
   - type: GenericVisualizer
     visuals:
       enum.ToggleVisuals.Toggled:
@@ -26,7 +25,6 @@
     size: Small
     sprite: Objects/Tools/welder.rsi
   - type: ItemToggle
-    activated: false
     soundActivate:
       collection: WelderOn
       params:

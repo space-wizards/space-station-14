@@ -12,7 +12,6 @@
   - type: Stunbaton
     energyPerUse: 50
   - type: ItemToggle
-    activated: false
     activatedDamage:
       types:
         Blunt: 0

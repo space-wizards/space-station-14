@@ -10,7 +10,6 @@
     - state: stunprod_off
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: ItemToggle
-    activated: false
     activatedDamage:
       types:
         Blunt: 0
