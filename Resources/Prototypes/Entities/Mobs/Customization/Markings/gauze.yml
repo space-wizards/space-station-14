@@ -249,7 +249,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_lizardfoot_r
 
 - type: marking
@@ -263,6 +263,6 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs\Customization\gauze.rsi
+  - sprite: Mobs/Customization/gauze.rsi
     state: gauze_lizardfoot_l
 
