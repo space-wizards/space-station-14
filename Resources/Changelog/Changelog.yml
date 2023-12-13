@@ -1,14 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Fixed Holobarriers being unable to be destroyed., type: Fix}
-  id: 4850
-  time: '2023-09-18T01:22:39.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: Blood-red magboots' jetpack now works again., type: Fix}
-  id: 4851
-  time: '2023-09-18T06:13:12.0000000+00:00'
 - author: JoeHammad
   changes:
   - {message: The syndicate have started using cheaper materials in the manufacture
@@ -2900,3 +2890,13 @@ Entries:
   - {message: Added the ability to toggle on and off the Discord Rich Presence., type: Add}
   id: 5350
   time: '2023-12-13T01:58:20.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: RD now has a custom-made lab coat., type: Add}
+  id: 5351
+  time: '2023-12-13T08:51:00.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Some jetpacks can be now worn in more slots., type: Tweak}
+  id: 5352
+  time: '2023-12-13T08:51:09.0000000+00:00'
