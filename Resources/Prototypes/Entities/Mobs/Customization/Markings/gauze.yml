@@ -179,6 +179,34 @@
   sprites:
   - sprite: Mobs\Customization\gauze.rsi
     state: gauze_lowerleg_r
+    
+- type: marking
+  id: GauzeBoxerWrapRight
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs\Customization\gauze.rsi
+    state: gauze_boxerwrap_r
+    
+- type: marking
+  id: GauzeBoxerWrapLeft
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs\Customization\gauze.rsi
+    state: gauze_boxerwrap_l
 
 
 # Lizard Specific Markings

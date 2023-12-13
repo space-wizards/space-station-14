@@ -28,6 +28,11 @@ marking-GauzeLeftArm = Gauze Arm Wrap (Left)
 marking-GauzeLowerLegLeft-gauze_lowerleg_l = Gauze Ankle Wrap (Left)
 marking-GauzeLowerLegLeft = Gauze Ankle Wrap (Left)
 
+marking-GauzeBoxerWrapLeft-gauze_boxerwrap_l = Gauze Handwrap (Left)
+marking-GauzeBoxerWrapLeft = Gauze Handwrap (Left)
+
+marking-GauzeBoxerWrapRight-gauze_boxerwrap_r = Gauze Handwrap (Right)
+marking-GauzeBoxerWrapRight = Gauze Handwrap (Right)
 
 marking-GauzeUpperLegLeft-gauze_upperleg_l = Gauze Thigh Wrap (Left)
 marking-GauzeUpperLegLeft = Gauze Thigh Wrap (Left)
