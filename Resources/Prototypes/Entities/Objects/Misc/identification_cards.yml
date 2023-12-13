@@ -626,7 +626,6 @@
     - JobIconChiefEngineer
     - JobIconBartender
     - JobIconHeadOfSecurity
-    - JobIconBrigmedic
     - JobIconMedicalDoctor
     - JobIconParamedic
     - JobIconChef
@@ -641,10 +640,6 @@
     - JobIconServiceWorker
     - JobIconSecurityCadet
     - JobIconZookeeper
-    - JobIconSeniorPhysician
-    - JobIconSeniorOfficer
-    - JobIconSeniorEngineer
-    - JobIconSeniorResearcher
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true
@@ -808,8 +803,6 @@
     layers:
     - state: default
     - state: idseniorengineer
-  - type: PresetIdCard
-    job: SeniorEngineer
 
 - type: entity
   parent: IDCardStandard
@@ -820,8 +813,6 @@
     layers:
     - state: default
     - state: idseniorresearcher
-  - type: PresetIdCard
-    job: SeniorResearcher
 
 - type: entity
   parent: IDCardStandard
@@ -832,8 +823,6 @@
     layers:
     - state: default
     - state: idseniorphysician
-  - type: PresetIdCard
-    job: SeniorPhysician
 
 - type: entity
   parent: IDCardStandard
@@ -844,5 +833,3 @@
     layers:
     - state: default
     - state: idseniorofficer
-  - type: PresetIdCard
-    job: SeniorOfficer
