@@ -1,0 +1,12 @@
+- type: entity
+  parent: BaseItem
+  id: Cognislime
+  name: cognislime
+  description: Cognizine, but it's slime. Geddit?
+  components:
+  - type: Cognislime
+  - type: Sprite
+    sprite: Objects/Misc/skub.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/skub.rsi
