@@ -550,7 +550,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCargoTurtleneck
   name: cargo turtleneck
-  nospawn: true
+  noSpawn: true
   description: Heavy duty cargo pants and a sharp turtleneck made for the hardy work environment of supply.
   components:
     - type: Sprite
