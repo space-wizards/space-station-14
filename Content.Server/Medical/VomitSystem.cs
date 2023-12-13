@@ -72,7 +72,7 @@ namespace Content.Server.Medical
                 var vomitMultiplier = 0.9;
 
                 // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
-                var vomitAmount = new Solution("Vomit", solutionSize * vomitMultiplier);
+                var vomitAmount = new Solution("Vomit", solutionSize * vomitMultiplier, _proto);
 
                 // Takes 10% of the chemicals removed from the chem stream
                 var vomitChemstreamAmount = _solutionContainer.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize * chemMultiplier);

@@ -7,6 +7,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.TileReactions;
 
@@ -33,6 +34,7 @@ public sealed partial class CleanTileReaction : ITileReaction
 
     FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {
+        var protoMan = IoCManager.Resolve<IPrototypeManager>();
         var entMan = IoCManager.Resolve<IEntityManager>();
         var entities = entMan.System<EntityLookupSystem>().GetEntitiesIntersecting(tile, 0f).ToArray();
         var puddleQuery = entMan.GetEntityQuery<PuddleComponent>();
@@ -53,7 +55,7 @@ public sealed partial class CleanTileReaction : ITileReaction
 
             purgeAmount -= purgeable.Volume;
 
-            solutionContainerSystem.TryAddSolution(entity, puddleSolution, new Solution(ReplacementReagent, purgeable.Volume));
+            solutionContainerSystem.TryAddSolution(entity, puddleSolution, new Solution(ReplacementReagent, purgeable.Volume, protoMan));
 
             if (purgeable.Volume <= FixedPoint2.Zero)
                 break;

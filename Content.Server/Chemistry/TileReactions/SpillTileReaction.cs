@@ -10,6 +10,7 @@ using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.TileReactions
 {
@@ -26,9 +27,10 @@ namespace Content.Server.Chemistry.TileReactions
             if (reactVolume < 5) return FixedPoint2.Zero;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            var protoMan = IoCManager.Resolve<IPrototypeManager>();
 
             if (entityManager.EntitySysManager.GetEntitySystem<PuddleSystem>()
-                .TrySpillAt(tile, new Solution(reagent.ID, reactVolume), out var puddleUid, false, false))
+                .TrySpillAt(tile, new Solution(reagent.ID, reactVolume, protoMan), out var puddleUid, false, false))
             {
                 var slippery = entityManager.EnsureComponent<SlipperyComponent>(puddleUid);
                 slippery.LaunchForwardsMultiplier = _launchForwardsMultiplier;

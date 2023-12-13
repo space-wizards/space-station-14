@@ -27,6 +27,7 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {
@@ -46,6 +47,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Update(float frameTime)
         {
@@ -62,7 +64,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                     if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagent is not null)
                     {
                         Solution blood = new();
-                        blood.AddReagent(reclaimer.BloodReagent, 50, null);
+                        blood.AddReagent(reclaimer.BloodReagent, 50, _prototypeManager);
                         _puddleSystem.TrySpillAt(uid, blood, out _);
                     }
                     if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)

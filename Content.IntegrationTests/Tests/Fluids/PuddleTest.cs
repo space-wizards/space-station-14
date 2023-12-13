@@ -6,6 +6,7 @@ using Content.Shared.Fluids.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Fluids
 {
@@ -22,11 +23,12 @@ namespace Content.IntegrationTests.Tests.Fluids
             var testMap = await pair.CreateTestMap();
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+            var protoMan = server.ResolveDependency<IPrototypeManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<PuddleSystem>();
 
             await server.WaitAssertion(() =>
             {
-                var solution = new Solution("Water", FixedPoint2.New(20));
+                var solution = new Solution("Water", FixedPoint2.New(20), protoMan);
                 var tile = testMap.Tile;
                 var gridUid = tile.GridUid;
                 var (x, y) = tile.GridIndices;
@@ -47,6 +49,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             var testMap = await pair.CreateTestMap();
 
+            var protoMan = server.ResolveDependency<IPrototypeManager>();
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<PuddleSystem>();
 
@@ -68,7 +71,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitAssertion(() =>
             {
                 var coordinates = grid.ToCoordinates();
-                var solution = new Solution("Water", FixedPoint2.New(20));
+                var solution = new Solution("Water", FixedPoint2.New(20), protoMan);
 
                 Assert.That(spillSystem.TrySpillAt(coordinates, solution, out _), Is.False);
             });

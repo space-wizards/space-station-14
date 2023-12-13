@@ -4,12 +4,14 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Body.Systems
 {
     public sealed class StomachSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public const string DefaultSolutionName = "stomach";
 
@@ -52,7 +54,7 @@ namespace Content.Server.Body.Systems
                                 reagent = new(reagent.Reagent, delta.ReagentQuantity.Quantity);
 
                             _solutionContainerSystem.RemoveReagent(uid, stomachSolution, reagent);
-                            transferSolution.AddReagent(reagent, null);
+                            transferSolution.AddReagent(reagent, _prototypeManager);
                         }
 
                         queue.Add(delta);

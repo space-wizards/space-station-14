@@ -35,8 +35,9 @@ namespace Content.Server.Atmos.Reactions
             mixture.AdjustMoles(GasId, -MolesPerUnit);
 
             var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex);
-            EntitySystem.Get<PuddleSystem>()
-                .TrySpillAt(tileRef, new Solution(Reagent, FixedPoint2.New(MolesPerUnit)), out _, sound: false);
+            //This not being used right now so i'll leave it commented, new Solution needs prototypeManager, and i dont want to hack it in.
+            //EntitySystem.Get<PuddleSystem>()
+            //    .TrySpillAt(tileRef, new Solution(Reagent, FixedPoint2.New(MolesPerUnit)), out _, sound: false);
 
             return ReactionResult.Reacting;
         }

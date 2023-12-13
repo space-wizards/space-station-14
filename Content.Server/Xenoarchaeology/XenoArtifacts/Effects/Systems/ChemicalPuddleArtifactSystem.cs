@@ -2,6 +2,7 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
@@ -13,6 +14,7 @@ public sealed class ChemicalPuddleArtifactSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ArtifactSystem _artifact = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     /// <summary>
     /// The key for the node data entry containing
@@ -46,7 +48,7 @@ public sealed class ChemicalPuddleArtifactSystem : EntitySystem
         var amountPerChem = component.ChemicalSolution.MaxVolume / component.ChemAmount;
         foreach (var reagent in chemicalList)
         {
-            component.ChemicalSolution.AddReagent(reagent, amountPerChem, null);
+            component.ChemicalSolution.AddReagent(reagent, amountPerChem, _prototypeManager);
         }
 
         _puddle.TrySpillAt(uid, component.ChemicalSolution, out _);

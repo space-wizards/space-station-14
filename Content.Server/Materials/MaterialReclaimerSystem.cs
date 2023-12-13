@@ -20,6 +20,7 @@ using Content.Shared.Mind;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Materials;
 
@@ -36,6 +37,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -234,7 +236,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             foreach (var (key, value) in composition.ChemicalComposition)
             {
                 // TODO use ReagentQuantity
-                totalChemicals.AddReagent(key, value * efficiency, null);
+                totalChemicals.AddReagent(key, value * efficiency, _prototypeManager);
             }
         }
 
@@ -245,7 +247,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             {
                 foreach (var quantity in solution.Contents)
                 {
-                    totalChemicals.AddReagent(quantity.Reagent.Prototype, quantity.Quantity * efficiency, null);
+                    totalChemicals.AddReagent(quantity.Reagent.Prototype, quantity.Quantity * efficiency, _prototypeManager);
                 }
             }
         }

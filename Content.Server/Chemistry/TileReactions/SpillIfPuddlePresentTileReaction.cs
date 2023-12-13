@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.TileReactions
 {
@@ -18,7 +19,8 @@ namespace Content.Server.Chemistry.TileReactions
             if (reactVolume < 5 || !spillSystem.TryGetPuddle(tile, out _))
                 return FixedPoint2.Zero;
 
-            return spillSystem.TrySpillAt(tile, new Solution(reagent.ID, reactVolume), out _, sound: false, tileReact: false)
+            var protoMan = IoCManager.Resolve<IPrototypeManager>();
+            return spillSystem.TrySpillAt(tile, new Solution(reagent.ID, reactVolume, protoMan), out _, sound: false, tileReact: false)
                 ? reactVolume
                 : FixedPoint2.Zero;
         }

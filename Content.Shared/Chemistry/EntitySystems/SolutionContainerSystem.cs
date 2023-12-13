@@ -75,7 +75,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         foreach (var (name, solutionHolder) in component.Solutions)
         {
             solutionHolder.Name = name;
-            solutionHolder.UpdateHeatCapacity(_prototypeManager);
+            solutionHolder.UpdateHeatCapacity();
             solutionHolder.ValidateSolution();
             UpdateAppearance(uid, solutionHolder);
         }
@@ -810,7 +810,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
     public void SetThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
     {
-        solution.SetTemperature(thermalEnergy, _prototypeManager);
+        solution.SetTemperature(thermalEnergy);
         UpdateChemicals(owner, solution, true);
     }
 
@@ -822,7 +822,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
     public void AddThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
     {
-        solution.AdjustTemperature(thermalEnergy, _prototypeManager);
+        solution.AdjustTemperature(thermalEnergy);
         UpdateChemicals(owner, solution, true);
     }
 

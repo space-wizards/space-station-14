@@ -194,7 +194,7 @@ namespace Content.Shared.Chemistry.Reaction
 
             if (reaction.ConserveEnergy)
             {
-                    solution.SetTemperature(energy, _prototypeManager);
+                    solution.SetTemperature(energy);
             }
 
             OnReaction(solution, reaction, null, owner, unitReactions);

@@ -3,12 +3,14 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Devour;
 using Content.Shared.Devour.Components;
 using Content.Shared.Humanoid;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Devour;
 
 public sealed class DevourSystem : SharedDevourSystem
 {
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -22,7 +24,7 @@ public sealed class DevourSystem : SharedDevourSystem
         if (args.Handled || args.Cancelled)
             return;
 
-        var ichorInjection = new Solution(component.Chemical, component.HealRate);
+        var ichorInjection = new Solution(component.Chemical, component.HealRate, _prototypeManager);
 
         if (component.FoodPreference == FoodPreference.All ||
             (component.FoodPreference == FoodPreference.Humanoid && HasComp<HumanoidAppearanceComponent>(args.Args.Target)))

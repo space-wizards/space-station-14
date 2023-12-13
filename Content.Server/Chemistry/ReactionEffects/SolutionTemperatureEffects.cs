@@ -113,7 +113,7 @@ namespace Content.Server.Chemistry.ReactionEffects
                 : _delta / heatCap;
 
             solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);
-            solution.ValidateTemperature(null);
+            solution.ValidateTemperature();
         }
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

@@ -62,8 +62,8 @@ public sealed class SolutionSystemTests
             var oilQuantity = FixedPoint2.New(15);
             var waterQuantity = FixedPoint2.New(10);
 
-            var oilAdded = new Solution("Oil", oilQuantity);
-            var originalWater = new Solution("Water", waterQuantity);
+            var oilAdded = new Solution("Oil", oilQuantity, protoMan);
+            var originalWater = new Solution("Water", waterQuantity, protoMan);
 
             beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
             Assert.That(containerSystem
@@ -107,8 +107,8 @@ public sealed class SolutionSystemTests
             var oilQuantity = FixedPoint2.New(1500);
             var waterQuantity = FixedPoint2.New(10);
 
-            var oilAdded = new Solution("Oil", oilQuantity);
-            var originalWater = new Solution("Water", waterQuantity);
+            var oilAdded = new Solution("Oil", oilQuantity, protoMan);
+            var originalWater = new Solution("Water", waterQuantity, protoMan);
 
             beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
             Assert.That(containerSystem
@@ -153,8 +153,8 @@ public sealed class SolutionSystemTests
             var waterQuantity = FixedPoint2.New(10);
             var oilQuantity = FixedPoint2.New(ratio * waterQuantity.Int());
 
-            var oilAdded = new Solution("Oil", oilQuantity);
-            var originalWater = new Solution("Water", waterQuantity);
+            var oilAdded = new Solution("Oil", oilQuantity, protoMan);
+            var originalWater = new Solution("Water", waterQuantity, protoMan);
 
             beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
             Assert.That(containerSystem
@@ -207,8 +207,8 @@ public sealed class SolutionSystemTests
             var waterQuantity = FixedPoint2.New(10);
             var oilQuantity = FixedPoint2.New(ratio * waterQuantity.Int());
 
-            var oilAdded = new Solution("Oil", oilQuantity);
-            var originalWater = new Solution("Water", waterQuantity);
+            var oilAdded = new Solution("Oil", oilQuantity, protoMan);
+            var originalWater = new Solution("Water", waterQuantity, protoMan);
 
             beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
             Assert.That(containerSystem
@@ -235,23 +235,23 @@ public sealed class SolutionSystemTests
         await server.WaitAssertion(() =>
         {
 
-            var solution = new Solution("TestReagentA", FixedPoint2.New(100)) { Temperature = temp };
+            var solution = new Solution("TestReagentA", FixedPoint2.New(100), protoMan) { Temperature = temp };
             Assert.That(solution.Temperature, Is.EqualTo(temp * 1));
 
-            solution.AddSolution(new Solution("TestReagentA", FixedPoint2.New(100)) { Temperature = temp * 3 }, protoMan);
+            solution.AddSolution(new Solution("TestReagentA", FixedPoint2.New(100), protoMan) { Temperature = temp * 3 }, protoMan);
             Assert.That(solution.Temperature, Is.EqualTo(temp * 2));
 
-            solution.AddSolution(new Solution("TestReagentB", FixedPoint2.New(100)) { Temperature = temp * 5 }, protoMan);
+            solution.AddSolution(new Solution("TestReagentB", FixedPoint2.New(100), protoMan) { Temperature = temp * 5 }, protoMan);
             Assert.That(solution.Temperature, Is.EqualTo(temp * 3));
         });
 
         // adding solutions combines thermal energy
         await server.WaitAssertion(() =>
         {
-            var solutionOne = new Solution("TestReagentA", FixedPoint2.New(100)) { Temperature = temp };
+            var solutionOne = new Solution("TestReagentA", FixedPoint2.New(100), protoMan) { Temperature = temp };
 
-            var solutionTwo = new Solution("TestReagentB", FixedPoint2.New(100)) { Temperature = temp };
-            solutionTwo.AddReagent("TestReagentC", FixedPoint2.New(100));
+            var solutionTwo = new Solution("TestReagentB", FixedPoint2.New(100), protoMan) { Temperature = temp };
+            solutionTwo.AddReagent("TestReagentC", FixedPoint2.New(100), protoMan);
 
             var thermalEnergyOne = solutionOne.HeatCapacity * solutionOne.Temperature;
             var thermalEnergyTwo = solutionTwo.HeatCapacity * solutionTwo.Temperature;

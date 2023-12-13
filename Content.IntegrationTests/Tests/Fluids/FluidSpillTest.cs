@@ -9,6 +9,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Fluids;
 
@@ -38,6 +39,7 @@ public sealed class FluidSpill
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
         var mapManager = server.ResolveDependency<IMapManager>();
+        var protoMan = server.ResolveDependency<IPrototypeManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
         var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
@@ -73,7 +75,7 @@ public sealed class FluidSpill
         await server.WaitAssertion(() =>
         {
             var grid = mapManager.GetGrid(gridId);
-            var solution = new Solution("Blood", FixedPoint2.New(100));
+            var solution = new Solution("Blood", FixedPoint2.New(100), protoMan);
             var tileRef = grid.GetTileRef(puddleOrigin);
 #pragma warning disable NUnit2045 // Interdependent tests
             Assert.That(puddleSystem.TrySpillAt(tileRef, solution, out _), Is.True);
