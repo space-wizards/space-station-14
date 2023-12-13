@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Sprite;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
@@ -14,6 +15,7 @@ public sealed class ConstructedMealSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
     private EntityQuery<TagComponent> _tagQuery;
@@ -30,6 +32,7 @@ public sealed class ConstructedMealSystem : EntitySystem
         var items = GetItems(uid, container);
         DebugTools.Assert(items.Count > 0, "Cannot finish empty meal, use ContainerNotEmpty condition");
         var recipe = FindRecipe(items, meal);
+        var solution = MealSolution(items, recipe?.BonusSolution);
         if (recipe == null)
         {
             // get the number of each ingredient
@@ -74,7 +77,7 @@ public sealed class ConstructedMealSystem : EntitySystem
 
             description = Loc.GetString(description, values.ToArray());
 
-            // will use automatic sprite from ingredients
+            // will use automatic sprite from ingredients (trust)
         }
         else
         {
@@ -88,6 +91,17 @@ public sealed class ConstructedMealSystem : EntitySystem
         var mealMeta = MetaData(uid);
         _meta.SetEntityName(uid, name, mealMeta);
         _meta.SetEntityDescription(uid, description, mealMeta);
+
+        // TODO: copy flavor profile from recipe, then combine non-recipe items' flavors
+
+        // make the meal actually nutritious probably
+        // TODO: shared food -> unhardcode
+        if (_solutions.TryGetSolution(uid, "food", out var food))
+            food.AddSolution(solution);
+
+        // delete meal items now that the meal has proper solution
+        if (_container.TryGetContainer(uid, container, out var cont))
+            _container.EmptyContainer(cont);
     }
 
     private IReadOnlyList<EntityUid> GetItems(EntityUid uid, string id)
@@ -156,5 +170,28 @@ public sealed class ConstructedMealSystem : EntitySystem
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Add up the solutions in every item of the meal.
+    /// This is added to the food solution, so pizza dough always has value but salad bowls probably don't.
+    /// </summary>
+    public Solution MealSolution(IReadOnlyList<EntityUid> items, Solution? bonus)
+    {
+        var result = new Solution();
+
+        foreach (var item in items)
+        {
+            // TODO: unhardcode solution name when FoodComponent in shared
+            if (!_solutions.TryGetSolution(item, "food", out var solution))
+                continue;
+
+            result.AddSolution(solution, _proto);
+        }
+
+        if (bonus != null)
+            result.AddSolution(bonus, _proto);
+
+        return result;
     }
 }

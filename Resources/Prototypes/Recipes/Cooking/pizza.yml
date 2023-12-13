@@ -16,6 +16,10 @@
   tags:
     Cheese: 1
     Mushroom: 4
+  bonusSolution:
+    reagents:
+    - ReagentId: Vitamin
+      Quantity: 8
 
 - type: constructedMealRecipe
   id: RecipeMeatPizza
@@ -67,6 +71,10 @@
   tags:
     Cheese: 1
     DonkPocket: 3
+  bonusSolution:
+    reagents:
+    - ReagentId: Omnizine
+      Quantity: 3
 
 - type: constructedMealRecipe
   id: RecipeArnoldPizza
@@ -76,6 +84,14 @@
     Cheese: 1
     Cutlet: 3
     CartridgePistol: 8
+  bonusSolution:
+    reagents:
+    - ReagentId: Vitamin
+      Quantity: 8
+    - ReagentId: Iron
+      Quantity: 10
+    - ReagentId: Omnizine
+      Quantity: 30
   # TODO: add component to the pizza for arm/muting/gibbing behaviour
 
 - type: constructedMealRecipe

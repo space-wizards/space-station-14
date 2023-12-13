@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
@@ -52,5 +53,11 @@ public sealed partial class ConstructedMealRecipePrototype : IPrototype
     [DataField]
     public int Priority;
 
-    // TODO: bonus chemicals/components for better food/arnolds pizza
+    /// <summary>
+    /// Solution to add to the meal's food solution as a reward for completing the recipe.
+    /// </summary>
+    [DataField]
+    public Solution? BonusSolution;
+
+    // TODO: bonus components for arnolds pizza
 }
