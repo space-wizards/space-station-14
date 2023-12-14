@@ -1,21 +1,22 @@
 using Content.Shared.CriminalRecords;
 using Content.Shared.StationRecords;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.CriminalRecords;
 
-public sealed class GeneralCriminalRecordConsoleBoundUserInterface : BoundUserInterface
+public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterface
 {
-    private GeneralCriminalRecordConsoleWindow? _window;
+    private CriminalRecordsConsoleWindow? _window;
 
-    public GeneralCriminalRecordConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public CriminalRecordsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {}
 
     protected override void Open()
     {
         base.Open();
 
-        _window = new();
+        _window = new(Owner);
         _window.OnKeySelected += OnKeySelected;
         _window.OnFiltersChanged += OnFiltersChanged;
         _window.OnClose += Close;
@@ -26,9 +27,9 @@ public sealed class GeneralCriminalRecordConsoleBoundUserInterface : BoundUserIn
         _window.OnStatusOptionButtonSelected += (_, status, reason, name) => SendMessage(new CriminalStatusOptionButtonSelected(status, reason, name));
     }
 
-    private void OnKeySelected(StationRecordKey? key)
+    private void OnKeySelected(uint? key)
     {
-        SendMessage(new SelectGeneralCriminalRecord(key));
+        SendMessage(new SelectCriminalRecords(key));
     }
 
     private void OnFiltersChanged(
@@ -42,10 +43,8 @@ public sealed class GeneralCriminalRecordConsoleBoundUserInterface : BoundUserIn
     {
         base.UpdateState(state);
 
-        if (state is not GeneralCriminalRecordConsoleState cast)
-        {
+        if (state is not CriminalRecordsConsoleState cast)
             return;
-        }
 
         _window?.UpdateState(cast);
     }
