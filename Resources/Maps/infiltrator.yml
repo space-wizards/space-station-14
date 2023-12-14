@@ -593,7 +593,7 @@ entities:
       pos: 8.5,-16.5
       parent: 1
       type: Transform
-- proto: AirlockSyndicateGlassLocked
+- proto: AirlockSyndicateNukeopGlassLocked
   entities:
   - uid: 13
     components:
