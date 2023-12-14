@@ -68,18 +68,14 @@ public sealed class RenameCommand : IConsoleCommand
                 // This is done here because ID cards are linked to station records
                 if (_entManager.TrySystem<StationRecordsSystem>(out var recordsSystem)
                     && _entManager.TryGetComponent(idCard, out StationRecordKeyStorageComponent? keyStorage)
-                    && keyStorage.Key != null)
+                    && keyStorage.Key is {} key)
                 {
-                    var origin = keyStorage.Key.Value.OriginStation;
-
-                    if (recordsSystem.TryGetRecord<GeneralStationRecord>(origin,
-                            keyStorage.Key.Value,
-                            out var generalRecord))
+                    if (recordsSystem.TryGetRecord<GeneralStationRecord>(key, out var generalRecord))
                     {
                         generalRecord.Name = name;
                     }
 
-                    recordsSystem.Synchronize(origin);
+                    recordsSystem.Synchronize(key);
                 }
             }
         }
