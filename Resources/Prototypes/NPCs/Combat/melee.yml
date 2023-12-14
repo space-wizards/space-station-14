@@ -3,6 +3,14 @@
 - type: htnCompound
   id: MeleeCombatCompound
   branches:
+    # Tore pull if we have one
+    - preconditions:
+        - !type:PulledPrecondition
+          isPulled: true
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UnPullOperator
+
     # Pickup weapon if we don't have one.
     - preconditions:
        - !type:ActiveHandComponentPrecondition
