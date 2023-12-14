@@ -9,3 +9,6 @@ reagent-desc-sodium-carbonate = A white, odorless, water-soluble salt that yield
 
 reagent-name-artifexium = artifexium
 reagent-desc-artifexium = A lavender mixture of microscopic artifact fragments and a strong acid. It has the ability to activate artifacts.
+
+reagent-name-sodium-polyacrylate = Sodium Polyacrylate
+reagent-desc-sodium-polyacrylate = A super-absorbent polymer with assorted industrial uses.

@@ -29,7 +29,12 @@
         acts: ["Destruction"]
   - type: Appearance
   - type: AnimationPlayer
-  - type: TimerTriggerVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: icon }
 
 - type: entity
   name: explosive grenade

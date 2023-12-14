@@ -234,9 +234,9 @@
     - type: StorageFill
       contents:
       - id: BoxSurvival
+      - id: BoxForensicPad
       - id: Lighter
       - id: CigPackBlack
-      - id: BoxForensicPad
       - id: HandLabeler
 
 - type: entity

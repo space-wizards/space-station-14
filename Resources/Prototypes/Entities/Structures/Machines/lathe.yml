@@ -106,6 +106,8 @@
       - Beaker
       - Syringe
       - LightTube
+      - SodiumLightTube
+      - ExteriorLightTube
       - LightBulb
       - Bucket
       - FoodPlate
@@ -280,7 +282,6 @@
       - WeaponAdvancedLaser
       - WeaponLaserCannon
       - WeaponXrayCannon
-      - WeaponTaser
 
 - type: entity
   id: CircuitImprinter
@@ -305,6 +306,8 @@
     producingSound: /Audio/Machines/circuitprinter.ogg
     idleState: icon
     runningState: building
+    staticRecipes:
+    - CondenserMachineCircuitBoard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
@@ -368,10 +371,12 @@
       - AnalysisComputerCircuitboard
       - ExosuitFabricatorMachineCircuitboard
       - AnomalyVesselCircuitboard
+      - AnomalyVesselExperimentalCircuitboard
       - AnomalySynchronizerCircuitboard
       - APECircuitboard
       - ArtifactAnalyzerMachineCircuitboard
       - TraversalDistorterMachineCircuitboard
+      - ArtifactCrusherMachineCircuitboard
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
@@ -586,7 +591,6 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponLaserCarbinePractice
-      - WeaponTaser
       - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:

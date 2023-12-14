@@ -105,6 +105,14 @@
     Gold: 50
 
 - type: latheRecipe
+  id: CondenserMachineCircuitBoard
+  result: CondenserMachineCircuitBoard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
   id: PortableScrubberMachineCircuitBoard
   result: PortableScrubberMachineCircuitBoard
   completetime: 4
@@ -241,12 +249,30 @@
      Gold: 100
 
 - type: latheRecipe
+  id: ArtifactCrusherMachineCircuitboard
+  result: ArtifactCrusherMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
   id: AnomalyVesselCircuitboard
   result: AnomalyVesselCircuitboard
   completetime: 4
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: AnomalyVesselExperimentalCircuitboard
+  result: AnomalyVesselExperimentalCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
 
 - type: latheRecipe
   id: AnomalySynchronizerCircuitboard
@@ -695,4 +721,4 @@
   materials:
      Steel: 100
      Glass: 900
-     Gold: 100     
+     Gold: 100

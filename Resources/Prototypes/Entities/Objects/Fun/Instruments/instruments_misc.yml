@@ -24,7 +24,7 @@
   - type: Instrument
     program: 122
   - type: Item
-    size: Small
+    size: Normal
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -38,7 +38,8 @@
   - type: Instrument
     program: 123
   - type: Item
-    size: Tiny
+    size: Small
+    storedRotation: 90
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -102,10 +103,11 @@
     sprite: Objects/Fun/Instruments/gunpet.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: Small
     sprite: Objects/Fun/Instruments/gunpet.rsi
   - type: Tag
     tags:
+    - Sidearm
     - BrassInstrument
 
 - type: entity

@@ -177,7 +177,7 @@ public sealed class MagicSystem : EntitySystem
             var ent = Spawn(ev.Prototype, spawnCoords);
             var direction = ev.Target.ToMapPos(EntityManager, _transformSystem) -
                             spawnCoords.ToMapPos(EntityManager, _transformSystem);
-            _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer);
+            _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer);
         }
     }
 

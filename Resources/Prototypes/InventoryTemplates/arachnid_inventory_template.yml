@@ -53,14 +53,6 @@
       uiWindowPos: 1,0
       strippingWindowPos: 1,0
       displayName: Head
-    - name: suitstorage
-      slotTexture: suit_storage
-      slotFlags:   SUITSTORAGE
-      stripTime: 3
-      uiWindowPos: 2,0
-      strippingWindowPos: 2,5
-      dependsOn: outerClothing
-      displayName: Suit Storage
     - name: id
       slotTexture: id
       slotFlags: IDCARD
@@ -103,11 +95,9 @@
       uiWindowPos: 0,4
       strippingWindowPos: 0,5
       displayName: Pocket 3
-
     - name: outerClothing
       slotTexture: suit
       slotFlags: OUTERCLOTHING
-      slotGroup: SecondHotbar
       stripTime: 6
       uiWindowPos: 1,2
       strippingWindowPos: 1,2
@@ -132,3 +122,12 @@
       dependsOn: jumpsuit
       displayName: Pocket 2
       stripHidden: true
+    - name: suitstorage
+      slotTexture: suit_storage
+      slotFlags:   SUITSTORAGE
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 2,0
+      strippingWindowPos: 2,5
+      dependsOn: outerClothing
+      displayName: Suit Storage

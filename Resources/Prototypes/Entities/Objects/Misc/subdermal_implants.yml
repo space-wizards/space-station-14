@@ -118,7 +118,8 @@
         components:
         - Hands # no use giving a mouse a storage implant, but a monkey is another story...
     - type: Storage
-      maxSlots: 4
+      grid:
+      - 0,0,2,2
       maxItemSize: Small
     - type: ContainerContainer
       containers:

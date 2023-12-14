@@ -85,8 +85,9 @@
 
 - type: entity
   id: ClothingBeltParamedicFilled
-  parent: ClothingBeltMedical
-  suffix: Filled
+  parent: ClothingBeltMedical #in the future, make this a seperate prototype so it can have a unique, darker sprite
+  name: EMT belt
+  suffix: Paramedic,Filled
   components:
   - type: StorageFill
     contents:
@@ -126,8 +127,9 @@
   - type: Item
     size: Ginormous
   - type: Storage
-    maxSlots: 8
     maxItemSize: Normal
+    grid:
+    - 0,0,7,1
   - type: StorageFill
     contents:
       - id: ExGrenade

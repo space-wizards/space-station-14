@@ -22,8 +22,9 @@
   id: ClothingBeltStorageBase
   components:
   - type: Storage
-    maxSlots: 7
     maxItemSize: Normal
+    grid:
+    - 0,0,7,1
   - type: Item
     size: Ginormous
   - type: ContainerContainer
@@ -39,12 +40,12 @@
   abstract: true
   parent: ClothingBeltBase
   id: ClothingBeltAmmoProviderBase
-  components: 
+  components:
   - type: BallisticAmmoProvider
     mayTransfer: true
   - type: Item
     size: Ginormous
   - type: ContainerContainer
-    containers: 
+    containers:
       ballistic-ammo: !type:Container
-      
+
