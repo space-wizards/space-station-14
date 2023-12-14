@@ -1,15 +1,4 @@
 Entries:
-- author: Repo
-  changes:
-  - {message: Time out for particular uplink items for balancing. Syndicate Bomb can
-      only be purchased after 30min., type: Add}
-  id: 4860
-  time: '2023-09-19T23:51:15.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Reduced the crafting costs of the buckler and makeshift shield., type: Tweak}
-  id: 4861
-  time: '2023-09-20T04:49:43.0000000+00:00'
 - author: dahnte
   changes:
   - {message: Added frontal lisp as a character trait for all species!, type: Add}
@@ -2900,3 +2889,13 @@ Entries:
     type: Add}
   id: 5360
   time: '2023-12-14T04:35:39.0000000+00:00'
+- author: SlamBamActionman
+  changes:
+  - {message: Discord bot Changelog now includes hyperlinks to the PRs., type: Add}
+  id: 5361
+  time: '2023-12-14T18:19:25.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed spray nozzle not getting ammo from the back pack tank, type: Fix}
+  id: 5362
+  time: '2023-12-14T20:49:40.0000000+00:00'
