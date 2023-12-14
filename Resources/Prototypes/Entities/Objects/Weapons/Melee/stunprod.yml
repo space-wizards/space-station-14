@@ -10,9 +10,6 @@
     - state: stunprod_off
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: ItemToggle
-    activatedDamage:
-      types:
-        Blunt: 0
     soundActivate:
       collection: sparks
       params:
@@ -25,6 +22,10 @@
       path: /Audio/Machines/button.ogg
       params:
         variation: 0.250
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Blunt: 0
   - type: Stunbaton
     energyPerUse: 70
   - type: MeleeWeapon

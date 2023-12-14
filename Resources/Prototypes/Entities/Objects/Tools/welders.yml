@@ -35,6 +35,7 @@
       params:
         variation: 0.125
         volume: -5
+  - type: ItemToggleMeleeWeapon
     activatedSoundOnHit:
       path: /Audio/Weapons/eblade1.ogg
       params:
@@ -43,8 +44,10 @@
     activatedDamage:
         types:
             Heat: 8
+  - type: ItemToggleSize
     activatedSize: Large
-    isHotWhenActivated: true
+  - type: ItemToggleHot
+  - type: ItemToggleDisarmMalus
     activatedDisarmMalus: 0.6
   - type: ToggleableLightVisuals
     spriteLayer: flame

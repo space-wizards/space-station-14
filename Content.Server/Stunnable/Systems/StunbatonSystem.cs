@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Item;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 

@@ -10,6 +10,16 @@
       path: /Audio/Weapons/ebladeon.ogg
     soundDeactivate:
       path: /Audio/Weapons/ebladeoff.ogg
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+  - type: ItemToggleSharp
+  - type: ItemToggleHot
+  - type: ItemToggleDisarmMalus
+    activatedDisarmMalus: 0.6
+  - type: ItemToggleSize
+    activatedSize: Huge
+  - type: ItemToggleMeleeWeapon
     activatedSoundOnHit:
       path: /Audio/Weapons/eblade1.ogg
       params:
@@ -18,18 +28,11 @@
       path: /Audio/Weapons/eblademiss.ogg
       params:
         variation: 0.250
-    activeSound:
-      path: /Audio/Weapons/ebladehum.ogg
     activatedDamage:
         types:
             Slash: 15
             Heat: 15
             Structural: 4
-    activatedSize: Huge
-    deactivatedSecret: false
-    isHotWhenActivated: true
-    activatedSharp: true
-    activatedDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:
@@ -88,6 +91,8 @@
       path: /Audio/Weapons/ebladeoff.ogg
       params:
         volume: -6
+    activatedDisarmMalus: 0.4
+  - type: ItemToggleMeleeWeapon
     activatedSoundOnSwing:
       path: /Audio/Weapons/eblademiss.ogg
       params:
@@ -101,8 +106,6 @@
         types:
             Slash: 9
             Heat: 9
-    activatedDisarmMalus: 0.4
-    deactivatedSize: Tiny
     deactivatedSecret: true
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
@@ -172,14 +175,15 @@
   description: An exotic energy weapon.
   components:
   - type: EnergySword
-  - type: ItemToggle
+  - type: ItemToggleMeleeWeapon
     activatedDamage:
         types:
             Slash: 14
             Heat: 16
             Structural: 3
-    activatedDisarmMalus: 0.6
     deactivatedSecret: true
+  - type: ItemToggleDisarmMalus
+    activatedDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
     layers:
@@ -209,20 +213,23 @@
       path: /Audio/Weapons/ebladeoff.ogg
       params:
         volume: +3
+  - type: ItemToggleMeleeWeapon
     activatedSoundOnSwing:
       path: /Audio/Weapons/eblademiss.ogg
       params:
         volume: +3
         variation: 0.250
-    activeSound:
-      path: /Audio/Weapons/ebladehum.ogg
-      params:
-        volume: +3
     activatedDamage:
         types:
             Slash: 17
             Heat: 17
             Structural: 20
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: +3
+  - type: ItemToggleDisarmMalus
     activatedDisarmMalus: 0.7
   - type: Wieldable
   - type: MeleeWeapon

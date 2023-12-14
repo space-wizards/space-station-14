@@ -9,7 +9,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Network;
 
-namespace Content.Shared.Item;
+namespace Content.Shared.Item.ItemToggle;
 /// <summary>
 /// Handles generic item toggles, like a welder turning on and off, or an e-sword.
 /// </summary>
@@ -29,7 +29,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ItemToggleComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<ItemToggleComponent, IsHotEvent>(OnIsHotEvent);
+        SubscribeLocalEvent<ItemToggleHotComponent, IsHotEvent>(OnIsHotEvent);
         SubscribeLocalEvent<ItemToggleComponent, ItemUnwieldedEvent>(TurnOffonUnwielded);
         SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnonWielded);
         SubscribeLocalEvent<ItemToggleComponent, ItemToggleForceToggleEvent>(ForceToggle);
@@ -90,10 +90,14 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
             // At this point the server knows that the activation went through successfully, so we play the sounds and make the changes.
             _audio.PlayPvs(itemToggle.SoundActivate, uid);
+
             // Starts the active sound (like humming).
-            if (itemToggle.ActiveSound != null && itemToggle.PlayingStream == null)
+            if (TryComp(uid, out ItemToggleActiveSoundComponent? activeSound))
             {
-                itemToggle.PlayingStream = _audio.PlayPvs(itemToggle.ActiveSound, uid, AudioParams.Default.WithLoop(true)).Value.Entity;
+                if (activeSound.ActiveSound != null && activeSound.PlayingStream == null)
+                {
+                    activeSound.PlayingStream = _audio.PlayPvs(activeSound.ActiveSound, uid, AudioParams.Default.WithLoop(true)).Value.Entity;
+                }
             }
 
             Activate(uid, itemToggle);
@@ -122,7 +126,12 @@ public abstract class SharedItemToggleSystem : EntitySystem
         else
         {
             _audio.PlayPredicted(itemToggle.SoundDeactivate, uid, user);
-            itemToggle.PlayingStream = _audio.Stop(itemToggle.PlayingStream);
+
+            //Stops the active sound if there is any.
+            if (TryComp(uid, out ItemToggleActiveSoundComponent? activeSound))
+            {
+                activeSound.PlayingStream = _audio.Stop(activeSound.PlayingStream);
+            }
 
             Deactivate(uid, itemToggle);
 
@@ -138,8 +147,14 @@ public abstract class SharedItemToggleSystem : EntitySystem
     {
         itemToggle.Activated = true;
 
-        UpdateItemComponent(uid, itemToggle);
-        UpdateWeaponComponent(uid, itemToggle);
+        if (TryComp(uid, out ItemToggleSizeComponent? itemToggleSize))
+        {
+            UpdateItemComponent(uid, itemToggleSize);
+        }
+        if (TryComp(uid, out ItemToggleMeleeWeaponComponent? itemToggleMelee))
+        {
+            UpdateWeaponComponent(uid, itemToggleMelee);
+        }
         UpdateAppearance(uid, itemToggle);
         UpdateLight(uid, itemToggle);
 
@@ -150,8 +165,14 @@ public abstract class SharedItemToggleSystem : EntitySystem
     {
         itemToggle.Activated = false;
 
-        UpdateItemComponent(uid, itemToggle);
-        UpdateWeaponComponent(uid, itemToggle);
+        if (TryComp(uid, out ItemToggleSizeComponent? itemToggleSize))
+        {
+            UpdateItemComponent(uid, itemToggleSize);
+        }
+        if (TryComp(uid, out ItemToggleMeleeWeaponComponent? itemToggleMelee))
+        {
+            UpdateWeaponComponent(uid, itemToggleMelee);
+        }
         UpdateAppearance(uid, itemToggle);
         UpdateLight(uid, itemToggle);
 
@@ -201,36 +222,38 @@ public abstract class SharedItemToggleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Used to update weapon component aspects, like hit sounds and damage values.
+    /// Used to update weapon component aspects, like hit sounds, damage values and hidden status while activated.
     /// </summary>
-    private void UpdateWeaponComponent(EntityUid uid, ItemToggleComponent itemToggle)
+    private void UpdateWeaponComponent(EntityUid uid, ItemToggleMeleeWeaponComponent itemToggleMelee)
     {
         if (!TryComp(uid, out MeleeWeaponComponent? meleeWeapon))
             return;
 
-        //Sets the value for deactivated damage to the item's default if none is stated.
-        itemToggle.DeactivatedDamage ??= meleeWeapon.Damage;
+        //Sets the deactivated damage values to the item's default if none is stated.
+        itemToggleMelee.DeactivatedDamage ??= meleeWeapon.Damage;
 
-        if (itemToggle.Activated)
+        if (IsActivated(uid))
         {
-            meleeWeapon.Damage = itemToggle.ActivatedDamage;
-            meleeWeapon.HitSound = itemToggle.ActivatedSoundOnHit;
+            if (itemToggleMelee.ActivatedDamage != null)
+                meleeWeapon.Damage = itemToggleMelee.ActivatedDamage;
 
-            if (itemToggle.ActivatedSoundOnSwing != null)
-                meleeWeapon.SwingSound = itemToggle.ActivatedSoundOnSwing;
+            meleeWeapon.HitSound = itemToggleMelee.ActivatedSoundOnHit;
 
-            if (itemToggle.DeactivatedSecret)
+            if (itemToggleMelee.ActivatedSoundOnSwing != null)
+                meleeWeapon.SwingSound = itemToggleMelee.ActivatedSoundOnSwing;
+
+            if (itemToggleMelee.DeactivatedSecret)
                 meleeWeapon.Hidden = false;
         }
         else
         {
-            meleeWeapon.Damage = itemToggle.DeactivatedDamage;
-            meleeWeapon.HitSound = itemToggle.DeactivatedSoundOnHit;
+            meleeWeapon.Damage = itemToggleMelee.DeactivatedDamage;
+            meleeWeapon.HitSound = itemToggleMelee.DeactivatedSoundOnHit;
 
-            if (itemToggle.DeactivatedSoundOnSwing != null)
-                meleeWeapon.SwingSound = itemToggle.DeactivatedSoundOnSwing;
+            if (itemToggleMelee.DeactivatedSoundOnSwing != null)
+                meleeWeapon.SwingSound = itemToggleMelee.DeactivatedSoundOnSwing;
 
-            if (itemToggle.DeactivatedSecret)
+            if (itemToggleMelee.DeactivatedSecret)
                 meleeWeapon.Hidden = true;
         }
 
@@ -240,18 +263,19 @@ public abstract class SharedItemToggleSystem : EntitySystem
     /// <summary>
     /// Used to update item component aspects, like size values for items that expand when activated (heh).
     /// </summary>
-    private void UpdateItemComponent(EntityUid uid, ItemToggleComponent itemToggle)
+    private void UpdateItemComponent(EntityUid uid, ItemToggleSizeComponent itemToggleSize)
     {
         if (!TryComp(uid, out ItemComponent? item))
             return;
 
         //Sets the deactivated size to the default if none is stated.
-        itemToggle.DeactivatedSize ??= item.Size;
+        itemToggleSize.ActivatedSize ??= item.Size;
+        itemToggleSize.DeactivatedSize ??= item.Size;
 
-        if (itemToggle.Activated)
-            _item.SetSize(uid, itemToggle.ActivatedSize, item);
+        if (IsActivated(uid))
+            _item.SetSize(uid, (ProtoId<ItemSizePrototype>) itemToggleSize.ActivatedSize, item);
         else
-            _item.SetSize(uid, (ProtoId<ItemSizePrototype>) itemToggle.DeactivatedSize, item);
+            _item.SetSize(uid, (ProtoId<ItemSizePrototype>) itemToggleSize.DeactivatedSize, item);
 
         Dirty(uid, item);
     }
@@ -267,9 +291,9 @@ public abstract class SharedItemToggleSystem : EntitySystem
     /// <summary>
     /// Used to make the item hot when activated.
     /// </summary>
-    private void OnIsHotEvent(EntityUid uid, ItemToggleComponent itemToggle, IsHotEvent args)
+    private void OnIsHotEvent(EntityUid uid, ItemToggleHotComponent itemToggleHot, IsHotEvent args)
     {
-        if (itemToggle.IsHotWhenActivated)
-            args.IsHot = itemToggle.Activated;
+        if (itemToggleHot.IsHotWhenActivated)
+            args.IsHot = IsActivated(uid);
     }
 }

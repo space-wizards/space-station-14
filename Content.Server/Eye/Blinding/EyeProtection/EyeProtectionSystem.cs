@@ -4,6 +4,7 @@ using Content.Shared.Item;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Tools.Components;
+using Content.Shared.Item.ItemToggle;
 
 namespace Content.Server.Eye.Blinding.EyeProtection
 {

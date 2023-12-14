@@ -12,9 +12,6 @@
   - type: Stunbaton
     energyPerUse: 50
   - type: ItemToggle
-    activatedDamage:
-      types:
-        Blunt: 0
     soundActivate:
       collection: sparks
       params:
@@ -27,6 +24,10 @@
       path: /Audio/Machines/button.ogg
       params:
         variation: 0.250
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Blunt: 0
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:

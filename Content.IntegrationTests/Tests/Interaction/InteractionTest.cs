@@ -24,7 +24,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
-using Content.Shared.Item;
+using Content.Shared.Item.ItemToggle;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 

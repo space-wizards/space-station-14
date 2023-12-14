@@ -9,11 +9,13 @@
       collection: lighterOnSounds
     soundDeactivate:
       collection: lighterOffSounds
+  - type: ItemToggleMeleeWeapon
     activatedDamage:
         types:
             Heat: 1
+  - type: ItemToggleSize
     activatedSize: Small
-    isHotWhenActivated: true
+  - type: ItemToggleHot
   - type: Sprite
     sprite: Objects/Tools/lighters.rsi
     layers:
@@ -132,7 +134,7 @@
     layers:
     - state: zippo_top
       map: ["top"]
-      visible: false
+      # visible: false
     - state: zippo_icon_base
       map: ["base"]
     - state: zippo_open
@@ -143,16 +145,17 @@
       visible: false
       shader: unshaded
   - type: ItemToggle
-    activated: false
     soundActivate:
       collection: lighterOnSounds
     soundDeactivate:
       collection: lighterOffSounds
+  - type: ItemToggleMeleeWeapon
     activatedDamage:
         types:
             Heat: 1
+  - type: ItemToggleSize
     activatedSize: Small
-    isHotWhenActivated: true
+  - type: ItemToggleHot
   - type: Item
     size: Tiny
     sprite: Objects/Tools/lighters.rsi
@@ -164,9 +167,9 @@
         flame:
           True: { visible: true }
           False: { visible: false }
-        top:
-          True: { visible: true }
-          False: { visible: false }
+        # top:
+        #   True: { visible: true }
+        #   False: { visible: false }
         open:
           True: { visible: true }
           False: { visible: false }
