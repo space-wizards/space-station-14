@@ -50,6 +50,9 @@
         {
             "name": "plushie_lizard"
         },
+		{
+            "name": "plushie_lizard_mirrored"
+        },
         {
             "name": "plushie_lamp"
         },

@@ -96710,13 +96710,6 @@ entities:
     - pos: -49.5,-52.5
       parent: 2
       type: Transform
-- proto: GasMinerPlasma
-  entities:
-  - uid: 15367
-    components:
-    - pos: -49.5,-46.5
-      parent: 2
-      type: Transform
 - proto: GasMinerWaterVapor
   entities:
   - uid: 15368

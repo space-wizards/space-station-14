@@ -218,6 +218,22 @@
         Cable: 1
 
 - type: entity
+  id: ArtifactCrusherMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: artifact crusher machine board
+  description: A machine printed circuit board for an artifact crusher.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: MachineArtifactCrusher
+    requirements:
+      Manipulator: 2
+    materialRequirements:
+      Glass: 1
+      Steel: 5
+
+- type: entity
   parent: BaseMachineCircuitboard
   id: AnomalyVesselCircuitboard
   name: anomaly vessel machine board
@@ -321,6 +337,21 @@
     graph: ThermomachineBoard
     deconstructionTarget: null
     node: heater
+
+- type: entity
+  id: CondenserMachineCircuitBoard
+  parent: BaseMachineCircuitboard
+  name: condenser machine board
+  description: A machine printed circuit board for a condenser.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: BaseGasCondenser
+    requirements:
+      MatterBin: 1
+    materialRequirements:
+      Glass: 1
 
 - type: entity
   id: PortableScrubberMachineCircuitBoard
