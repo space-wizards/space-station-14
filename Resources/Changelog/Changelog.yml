@@ -1,11 +1,4 @@
 Entries:
-- author: HerCoyote23
-  changes:
-  - {message: 'The Syndicate has grown tired of losing overconfident "Loud" agents,
-      and has reduced their stealth gear prices to encourage a more sneaky approach.',
-    type: Tweak}
-  id: 4856
-  time: '2023-09-18T21:07:00.0000000+00:00'
 - author: Doru991
   changes:
   - {message: Berry seeds are now available from the MegaSeed Servitor., type: Add}
@@ -2898,3 +2891,9 @@ Entries:
   - {message: Added a new "uneven" hair style., type: Add}
   id: 5356
   time: '2023-12-13T21:34:28.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Plasma and tritium fires spread more slowly and are now more survivable.,
+    type: Tweak}
+  id: 5357
+  time: '2023-12-14T02:39:38.0000000+00:00'
