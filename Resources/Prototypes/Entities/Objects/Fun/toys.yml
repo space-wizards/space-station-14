@@ -1128,6 +1128,8 @@
   name: plushie bubble
   description: Meet! Very scary, big and bloody - plushie bubble!
   components:
+  - type: UseDelay
+    delay: 30.0
   - type: Sprite
     state: plushie_bubble
   - type: EmitSoundOnUse
@@ -1136,9 +1138,18 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Animals/space_dragon_roar.ogg
+      params:
+        volume: -2
+        maxDistance: 15
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Animals/space_dragon_roar.ogg
+      params:
+        volume: -2
+        maxDistance: 15
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Animals/space_dragon_roar.ogg
+      params:
+        volume: -2
+        maxDistance: 15
