@@ -61,7 +61,6 @@ namespace Content.IntegrationTests.Tests
             "Saltern",
             "Core",
             "Marathon",
-            "Kettle",
             "MeteorArena",
 			"CorvaxIshimura",
 			"CorvaxSpectrum",

@@ -2,8 +2,8 @@
   id: Europa
   mapName: 'Europa'
   mapPath: /Maps/europa.yml
-  minPlayers: 0
-  maxPlayers: 40
+  minPlayers: 5
+  maxPlayers: 25
   stations:
     Europa:
       stationProto: StandardNanotrasenStation

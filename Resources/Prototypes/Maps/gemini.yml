@@ -2,7 +2,8 @@
   id: Gemini
   mapName: 'Gemini'
   mapPath: /Maps/gemini.yml
-  minPlayers: 35
+  minPlayers: 30
+  maxPlayers: 65
   stations:
     Gemini:
       stationProto: StandardNanotrasenStation

@@ -3,7 +3,7 @@
   mapName: 'Silly Station'
   mapPath: /Maps/corvax_silly.yml
   minPlayers: 0
-  maxPlayers: 30
+  maxPlayers: 20
   stations:
     Silly:
       stationProto: StandardNanotrasenStation
