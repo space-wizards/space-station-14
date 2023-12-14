@@ -164,7 +164,7 @@ public sealed partial class PuddleSystem
             return;
 
         // Don’t care about empty containers.
-        if (!_solutionContainerSystem.TryGetSolution(ent, ent.Comp.SolutionName, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out _, out var solution) || solution.Volume <= 0)
             return;
 
         args.Cancel("pacified-cannot-throw-spill");
