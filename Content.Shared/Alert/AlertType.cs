@@ -54,6 +54,7 @@ namespace Content.Shared.Alert
         BorgDead,
         DeadscoreStage1, //SS220 DarkReaper
 		DeadscoreStage2, //SS220 DarkReaper
+        ItemOffer, // SS220 ItemOfferVerb 
     }
 
 }
