@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Atmos.EntitySystems;
@@ -32,7 +33,9 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private readonly GasTileOverlaySystem _gasTileOverlaySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
-    [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private readonly TileSystem _tile = default!;;
+    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] public readonly PuddleSystem Puddle = default!;
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;

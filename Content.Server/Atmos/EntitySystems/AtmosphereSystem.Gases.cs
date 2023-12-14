@@ -320,7 +320,9 @@ namespace Content.Server.Atmos.EntitySystems
 
                     var req = prototype.MinimumRequirements[i];
 
-                    if (!(mixture.GetMoles(i) < req)) continue;
+                    if (!(mixture.GetMoles(i) < req))
+                        continue;
+
                     doReaction = false;
                     break;
                 }
@@ -328,7 +330,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!doReaction)
                     continue;
 
-                reaction = prototype.React(mixture, holder, this);
+                reaction = prototype.React(mixture, holder, this, HeatScale);
                 if(reaction.HasFlag(ReactionResult.StopReactions))
                     break;
             }
