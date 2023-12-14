@@ -7,9 +7,9 @@ namespace Content.Server.StationRecords.Systems;
 
 public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly StationRecordsSystem _stationRecordsSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
 
     public override void Initialize()
     {
@@ -48,23 +48,20 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         GeneralStationRecordConsoleComponent? console = null)
     {
         if (!Resolve(uid, ref console))
-        {
             return;
-        }
 
-        var owningStation = _stationSystem.GetOwningStation(uid);
+        var owningStation = _station.GetOwningStation(uid);
 
-        if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecordsComponent))
+        if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecords))
         {
-            GeneralStationRecordConsoleState state = new(null, null, null, null);
-            SetStateForInterface(uid, state);
+            SetStateForInterface(uid, new GeneralStationRecordConsoleState());
             return;
         }
 
         var consoleRecords =
-            _stationRecordsSystem.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecordsComponent);
+            _stationRecords.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecords);
 
-        var listing = new Dictionary<(NetEntity, uint), string>();
+        var listing = new Dictionary<uint, string>();
 
         foreach (var pair in consoleRecords)
         {
@@ -73,7 +70,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
                 continue;
             }
 
-            listing.Add(_stationRecordsSystem.Convert(pair.Item1), pair.Item2.Name);
+            listing.Add(pair.Item1, pair.Item2.Name);
         }
 
         if (listing.Count == 0)
@@ -82,7 +79,8 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             SetStateForInterface(uid, state);
             return;
         }
-        else if (listing.Count == 1)
+
+        if (listing.Count == 1)
         {
             console.ActiveKey = listing.Keys.First();
         }
@@ -90,8 +88,8 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         GeneralStationRecord? record = null;
         if (console.ActiveKey != null)
         {
-            _stationRecordsSystem.TryGetRecord(owningStation.Value, _stationRecordsSystem.Convert(console.ActiveKey.Value), out record,
-                stationRecordsComponent);
+            var key = new StationRecordKey(console.ActiveKey.Value, owningStation.Value);
+            _stationRecords.TryGetRecord(key, out record, stationRecords);
         }
 
         GeneralStationRecordConsoleState newState = new(console.ActiveKey, record, listing, console.Filter);
@@ -100,7 +98,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
     private void SetStateForInterface(EntityUid uid, GeneralStationRecordConsoleState newState)
     {
-        _userInterface.TrySetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
+        _ui.TrySetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
     }
 
     private bool IsSkippedRecord(GeneralStationRecordsFilter filter,
