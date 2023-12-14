@@ -52,7 +52,6 @@
         - ClothingOuterRobesCult
         - ClothingOuterGhostSheet
         - ClothingShoesCult
-        - ClothingShoesHighheelBoots
         - ClothingUniformJumpsuitAncient
         - ClothingUniformJumpsuitPirate
       rareChance: 0.01
@@ -108,6 +107,7 @@
         - ClothingOuterFlannelGreen
         - ClothingOuterVestHazard
         - ClothingShoesBootsJack
+        - ClothingShoesHighheelBoots
         - ClothingShoesBootsLaceup
         - ClothingShoesLeather
         - ClothingShoesBootsSalvage
