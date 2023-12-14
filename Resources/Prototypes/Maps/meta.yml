@@ -41,8 +41,7 @@
             Paramedic: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
-            SeniorResearcher: [ 1, 1 ]
-            Scientist: [ 4, 6 ]
+            Scientist: [ 5, 7 ]
             ResearchAssistant: [ 3, 6 ]
             Borg: [ 2, 2 ]
             #security
