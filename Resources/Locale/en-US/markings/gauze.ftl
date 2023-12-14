@@ -43,6 +43,11 @@ marking-GauzeLowerLegRight = Gauze Ankle Wrap (Right)
 marking-GauzeUpperLegRight-gauze_upperleg_r = Gauze Thigh Wrap (Right)
 marking-GauzeUpperLegRight = Gauze Thigh Wrap (Right)
 
+marking-GauzeBlindfold-gauze_blindfold = Gauze Blindfold
+marking-GauzeBlindfold = Gauze Blindfold
+
+marking-GauzeLizardBlindfold-gauze_lizardblindfold = Gauze Blindfold
+marking-GauzeLizardBlindfold = Gauze Blindfold
 
 marking-GauzeLizardFootRight-gauze_lizardfoot_r = Gauze Foot Wrap (Right)
 marking-GauzeLizardFootRight = Gauze Foot Wrap (Right)

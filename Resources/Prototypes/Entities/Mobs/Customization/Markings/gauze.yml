@@ -55,6 +55,20 @@
     state: gauze_righteye_1
 
 - type: marking
+  id: GauzeBlindfold
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Moth, Dwarf, Human, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_blindfold
+
+- type: marking
   id: GauzeShoulder
   bodyPart: Chest
   markingCategory: Chest
@@ -264,4 +278,18 @@
   sprites:
   - sprite: Mobs/Customization/gauze.rsi
     state: gauze_lizardfoot_l
+
+- type: marking
+  id: GauzeLizardBlindfold
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lizardblindfold
 

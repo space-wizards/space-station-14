@@ -68,6 +68,14 @@
 	  "directions": 4
 	},
 	{
+      "name": "gauze_blindfold",
+      "directions": 4
+    },
+	{
+      "name": "gauze_lizardblindfold",
+      "directions": 4
+    },
+	{
       "name": "gauze_lizardrighteye",
       "directions": 4
     },
