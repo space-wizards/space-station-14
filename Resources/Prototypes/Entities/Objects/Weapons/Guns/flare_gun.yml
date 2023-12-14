@@ -21,6 +21,9 @@
       - PelletShotgunFlare
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
+    damageOnWrongAmmo:
+      types:
+        Blunt: 6.0
   - type: BallisticAmmoProvider
     whitelist:
       tags:

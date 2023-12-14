@@ -138,8 +138,8 @@ public sealed partial class GunSystem : SharedGunSystem
                             && user != null)
                         {
                             var damage = new DamageSpecifier();
-                            damage.DamageDict.Add("Blunt", 5f);
-                            Damageable.TryChangeDamage(user, damage, origin: user);
+                            if (gun.DamageOnWrongAmmo != null)
+                                Damageable.TryChangeDamage(user, gun.DamageOnWrongAmmo, origin: user);
                             _stun.TryParalyze(user.Value, TimeSpan.FromSeconds(3f), true);
 
                             Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gunUid);
