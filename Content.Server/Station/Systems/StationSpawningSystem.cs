@@ -24,6 +24,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.Station.Systems;
 
@@ -43,6 +45,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly SharedJobSystem _jobSystem = default!;
 
     private bool _randomizeCharacters;
 
@@ -188,6 +191,12 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         var cardId = pdaComponent.ContainedId.Value;
         _cardSystem.TryChangeFullName(cardId, characterName, card);
         _cardSystem.TryChangeJobTitle(cardId, jobPrototype.LocalizedName, card);
+		
+		var color =  jobPrototype.Color is not null ? jobPrototype.Color
+						: _jobSystem.TryGetDepartment(jobPrototype.Name, out var department) ? department.Color 
+						: Color.FromHex("#FFFFFF");
+			
+		_cardSystem.TryChangeColor(cardId, color);
 
         if (_prototypeManager.TryIndex<StatusIconPrototype>(jobPrototype.Icon, out var jobIcon))
         {

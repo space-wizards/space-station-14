@@ -79,9 +79,9 @@ public sealed class LoadoutSystem : EntitySystem
             // Automatically search empty slot for clothes to equip
             string? firstSlotName = null;
             var isEquipped = false;
-			if (_inventorySystem.TryGetContainerSlotEnumerator(ev.Mob, out var enumerator))
+			if (_inventorySystem.TryGetSlots(ev.Mob, out var slotDefinitions))
 			{
-				while (enumerator.NextItem(out var item, out var slot))
+				foreach (var slot in slotDefinitions)
 				{
 					if (!clothing.Slots.HasFlag(slot.SlotFlags))
 						continue;
@@ -100,7 +100,7 @@ public sealed class LoadoutSystem : EntitySystem
 					isEquipped = true;
 					break;
 				}
-
+				
 				if (isEquipped || firstSlotName == null)
 					continue;
 

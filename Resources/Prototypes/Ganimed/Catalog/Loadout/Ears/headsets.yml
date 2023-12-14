@@ -63,7 +63,7 @@
   exclusive: true
   whitelistJobs:
     - Captain
-    - HeadOfPersonnnel
+    - HeadOfPersonnel
     - IAA
     - BlueShield
   prototype: ClothingHeadsetCommand
@@ -134,7 +134,7 @@
   cost: 1
   exclusive: true
   whitelistJobs:
-    - HeadOfPersonnnel
+    - HeadOfPersonnel
     - Bartender
     - Chef
     - Janitor

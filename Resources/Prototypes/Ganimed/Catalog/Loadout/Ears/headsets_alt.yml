@@ -32,7 +32,7 @@
   exclusive: true
   whitelistJobs:
     - Captain
-    - HeadOfPersonnnel
+    - HeadOfPersonnel
   prototype: ClothingHeadsetAltCommand
 
 - type: loadout

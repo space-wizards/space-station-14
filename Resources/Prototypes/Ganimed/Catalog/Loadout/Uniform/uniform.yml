@@ -864,7 +864,6 @@
   exclusive: true
   whitelistJobs:
     - BlueShield
-    - Blueshield
   prototype: ClothingUniformJumpsuitBlueShield
 
 - type: loadout

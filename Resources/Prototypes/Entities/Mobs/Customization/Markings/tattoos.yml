@@ -109,17 +109,6 @@
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_campbell_r_leg
-
-- type: marking
-  id: TattooEyeRight
-  bodyPart: Eyes
-  markingCategory: Head
-  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
-  coloring:
-    default:
-      type:
-        !type:EyeColoring
-          negative: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_r
