@@ -1,3 +1,5 @@
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Timing;
@@ -10,6 +12,10 @@ public sealed class UseDelaySystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<UseDelayComponent, EntityUnpausedEvent>(OnUnpaused);
+
+        SubscribeLocalEvent<UseDelayComponent, GettingInteractedWithAttemptEvent>(OnGettingInteracted);
+        SubscribeLocalEvent<UseDelayComponent, ActivateInWorldEvent>(OnActivateInWorld);
+        SubscribeLocalEvent<UseDelayComponent, UseInHandEvent>(OnUseInHand);
     }
 
     private void OnUnpaused(Entity<UseDelayComponent> ent, ref EntityUnpausedEvent args)
@@ -18,6 +24,28 @@ public sealed class UseDelaySystem : EntitySystem
         ent.Comp.DelayStartTime += args.PausedTime;
         ent.Comp.DelayEndTime += args.PausedTime;
         Dirty(ent);
+    }
+
+    private void OnGettingInteracted(Entity<UseDelayComponent> ent, ref GettingInteractedWithAttemptEvent args)
+    {
+        if (IsDelayed(ent))
+            args.Cancel();
+    }
+
+    private void OnUseInHand(Entity<UseDelayComponent> ent, ref UseInHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = !TryResetDelay(ent, true);
+    }
+
+    private void OnActivateInWorld(Entity<UseDelayComponent> ent, ref ActivateInWorldEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = !TryResetDelay(ent, true);
     }
 
     public void SetDelay(Entity<UseDelayComponent> ent, TimeSpan delay)

@@ -44,7 +44,6 @@
   - type: Sprite
     sprite: Objects/Tools/handdrill.rsi
     state: handdrill
-  - type: UseDelay
   - type: MeleeWeapon
     attackRate: 1.5
     damage:

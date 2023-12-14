@@ -112,7 +112,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             : TryEnable(uid, component, user);
     }
 
-    public bool TryEnable(EntityUid uid, DefibrillatorComponent? component = null)
+    public bool TryEnable(EntityUid uid, DefibrillatorComponent? component = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref component))
             return false;

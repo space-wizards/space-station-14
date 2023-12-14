@@ -8,7 +8,6 @@
   - type: Sprite
   - type: StaticPrice
     price: 60
-  - type: UseDelay
 
 # Cautery
 

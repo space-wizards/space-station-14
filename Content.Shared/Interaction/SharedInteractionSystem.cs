@@ -427,7 +427,6 @@ namespace Content.Shared.Interaction
             // Else we run Activate.
             InteractionActivate(user, target,
                 checkCanInteract: false,
-                checkUseDelay: true,
                 checkAccess: false);
         }
 
@@ -943,15 +942,8 @@ namespace Content.Shared.Interaction
             EntityUid user,
             EntityUid used,
             bool checkCanInteract = true,
-            bool checkUseDelay = true,
             bool checkAccess = true)
         {
-            UseDelayComponent? useDelay = null;
-            if (checkUseDelay &&
-                TryComp(used, out useDelay) &&
-                _useDelay.IsDelayed((used, useDelay)))
-                return false;
-
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
                 return false;
 
@@ -973,8 +965,6 @@ namespace Content.Shared.Interaction
                 return false;
 
             DoContactInteraction(user, used, activateMsg);
-            if (useDelay != null)
-                _useDelay.TryResetDelay((used, useDelay));
 
             if (!activateMsg.WasLogged)
                 _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
@@ -993,15 +983,8 @@ namespace Content.Shared.Interaction
             EntityUid user,
             EntityUid used,
             bool checkCanUse = true,
-            bool checkCanInteract = true,
-            bool checkUseDelay = true)
+            bool checkCanInteract = true)
         {
-            UseDelayComponent? useDelay = null;
-            if (checkUseDelay &&
-                TryComp(used, out useDelay) &&
-                _useDelay.IsDelayed((used, useDelay)))
-                return true; // if the item is on cooldown, we consider this handled.
-
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
                 return false;
 
@@ -1013,13 +996,11 @@ namespace Content.Shared.Interaction
             if (useMsg.Handled)
             {
                 DoContactInteraction(user, used, useMsg);
-                if (useDelay != null)
-                    _useDelay.TryResetDelay((used, useDelay));
                 return true;
             }
 
             // else, default to activating the item
-            return InteractionActivate(user, used, false, false, false);
+            return InteractionActivate(user, used, false, false);
         }
 
         /// <summary>
