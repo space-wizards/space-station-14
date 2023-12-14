@@ -20,7 +20,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)

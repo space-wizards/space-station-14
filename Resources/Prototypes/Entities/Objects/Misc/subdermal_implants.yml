@@ -118,7 +118,8 @@
         components:
         - Hands # no use giving a mouse a storage implant, but a monkey is another story...
     - type: Storage
-      maxSlots: 4
+      grid:
+      - 0,0,2,2
       maxItemSize: Small
     - type: ContainerContainer
       containers:
@@ -256,6 +257,28 @@
         - SubdermalImplant
         - HideContextMenu
         - MacroBomb
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: DeathAcidifierImplant
+  name: death-acidifier implant
+  description: This implant melts the user and their equipment upon death.
+  noSpawn: true
+  components:
+  - type: SubdermalImplant
+    permanent: true
+    implantAction: ActionActivateDeathAcidifier
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Dead
+  - type: TriggerImplantAction
+  - type: GibOnTrigger
+    deleteItems: true
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
+    - DeathAcidifier
 
 - type: entity
   parent: BaseSubdermalImplant

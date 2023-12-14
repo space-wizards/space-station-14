@@ -727,6 +727,7 @@
       amount: 3
     - id: DrinkTequilaBottleFull
       amount: 1
+  - type: Flashable
   - type: Tag
     tags:
     - CannotSuicide

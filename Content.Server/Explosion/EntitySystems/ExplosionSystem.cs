@@ -132,7 +132,8 @@ public sealed partial class ExplosionSystem : EntitySystem
     private void RelayedResistance(EntityUid uid, ExplosionResistanceComponent component,
         InventoryRelayedEvent<GetExplosionResistanceEvent> args)
     {
-        OnGetResistance(uid, component, ref args.Args);
+        if (component.Worn)
+            OnGetResistance(uid, component, ref args.Args);
     }
 
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, ref GetExplosionResistanceEvent args)
@@ -378,9 +379,9 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     private void OnArmorExamine(EntityUid uid, ExplosionResistanceComponent component, ref ArmorExamineEvent args)
     {
+        var value = MathF.Round((1f - component.DamageCoefficient) * 100, 1);
+
         args.Msg.PushNewline();
-        args.Msg.AddMarkup(Loc.GetString("explosion-resistance-coefficient-value",
-            ("value", MathF.Round((1f - component.DamageCoefficient) * 100, 1))
-            ));
+        args.Msg.AddMarkup(Loc.GetString(component.Examine, ("value", value)));
     }
 }

@@ -368,15 +368,12 @@ namespace Content.Server.Administration.Systems
                     }
                 }
 
-                if (TryComp(entity.Value, out InventoryComponent? inventory) &&
-                    _inventory.TryGetSlots(entity.Value, out var slots, inventory))
+                if (_inventory.TryGetContainerSlotEnumerator(entity.Value, out var enumerator))
                 {
-                    foreach (var slot in slots)
+                    while (enumerator.NextItem(out var item, out var slot))
                     {
-                        if (_inventory.TryUnequip(entity.Value, entity.Value, slot.Name, out var item, true, true))
-                        {
-                            _physics.ApplyAngularImpulse(item.Value, ThrowingSystem.ThrowAngularImpulse);
-                        }
+                        if (_inventory.TryUnequip(entity.Value, entity.Value, slot.Name, true, true))
+                            _physics.ApplyAngularImpulse(item, ThrowingSystem.ThrowAngularImpulse);
                     }
                 }
 

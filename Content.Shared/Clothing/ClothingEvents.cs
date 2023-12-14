@@ -59,3 +59,15 @@ public sealed class EquipmentVisualsUpdatedEvent : EntityEventArgs
 }
 
 public sealed partial class ToggleMaskEvent : InstantActionEvent { }
+
+/// <summary>
+///     Event raised on the mask entity when it is toggled.
+/// </summary>
+[ByRefEvent]
+public readonly record struct ItemMaskToggledEvent(EntityUid Wearer, bool IsToggled, bool IsEquip);
+
+/// <summary>
+///     Event raised on the entity wearing the mask when it is toggled.
+/// </summary>
+[ByRefEvent]
+public readonly record struct WearerMaskToggledEvent(bool Enabled);

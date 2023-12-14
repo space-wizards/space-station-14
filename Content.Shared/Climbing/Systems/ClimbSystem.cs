@@ -355,13 +355,14 @@ public sealed partial class ClimbSystem : VirtualController
              return;
          }
 
-         foreach (var fixture in args.OurFixture.Contacts.Keys)
+         foreach (var otherFixture in args.OurFixture.Contacts.Keys)
          {
-             if (fixture == args.OtherFixture)
+             // If it's the other fixture then ignore em
+             if (otherFixture == args.OtherFixture)
                  continue;
 
              // If still colliding with a climbable, do not stop climbing
-             if (HasComp<ClimbableComponent>(args.OtherEntity))
+             if (HasComp<ClimbableComponent>(otherFixture.Owner))
                  return;
          }
 
