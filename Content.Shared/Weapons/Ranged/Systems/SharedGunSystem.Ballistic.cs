@@ -48,7 +48,7 @@ public abstract partial class SharedGunSystem
             return;
 
         component.Entities.Add(args.Used);
-        component.Container.Insert(args.Used);
+        Containers.Insert(args.Used, component.Container);
         // Not predicted so
         Audio.PlayPredicted(component.SoundInsert, uid, args.User);
         args.Handled = true;

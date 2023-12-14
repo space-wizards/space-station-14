@@ -263,7 +263,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         }
 
         _joints.RecursiveClearJoints(toInsert);
-        if (!component.Contents.Insert(toInsert, EntityManager))
+        if (!_container.Insert(toInsert, component.Contents))
             return false;
 
         var inside = EnsureComp<InsideEntityStorageComponent>(toInsert);

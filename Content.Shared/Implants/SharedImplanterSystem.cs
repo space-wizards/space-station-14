@@ -65,7 +65,7 @@ public abstract class SharedImplanterSystem : EntitySystem
         component.ImplanterSlot.ContainerSlot?.Remove(implant.Value);
         implantComp.ImplantedEntity = target;
         implantContainer.OccludesLight = false;
-        implantContainer.Insert(implant.Value);
+        _container.Insert(implant.Value, implantContainer);
 
         if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
             DrawMode(implanter, component);
@@ -138,7 +138,7 @@ public abstract class SharedImplanterSystem : EntitySystem
 
                 implantContainer.Remove(implant);
                 implantComp.ImplantedEntity = null;
-                implanterContainer.Insert(implant);
+                _container.Insert(implant, implanterContainer);
                 permanentFound = implantComp.Permanent;
                 //Break so only one implant is drawn
                 break;

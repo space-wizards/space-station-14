@@ -132,7 +132,7 @@ public partial class SharedGunSystem
                 }
 
                 component.AmmoSlots[index] = ent.Value;
-                component.AmmoContainer.Insert(ent.Value, EntityManager);
+                Containers.Insert(ent.Value, component.AmmoContainer);
 
                 if (ev.Ammo.Count == 0)
                     break;
@@ -160,7 +160,7 @@ public partial class SharedGunSystem
             }
 
             component.AmmoSlots[index] = uid;
-            component.AmmoContainer.Insert(uid);
+            Containers.Insert(uid, component.AmmoContainer);
             Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
             Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
             UpdateRevolverAppearance(revolverUid, component);

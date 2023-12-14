@@ -63,7 +63,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!CanInsert(uid, toInsert, holder))
                 return false;
 
-            if (!holder.Container.Insert(toInsert, EntityManager))
+            if (!_containerSystem.Insert(toInsert, holder.Container))
                 return false;
 
             if (_physicsQuery.TryGetComponent(toInsert, out var physBody))
@@ -134,7 +134,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     continue;
 
                 if (duc != null)
-                    duc.Container.Insert(entity, EntityManager, xform, meta: meta);
+                    _containerSystem.Insert((entity, xform, meta), duc.Container);
                 else
                 {
                     _xformSystem.AttachToGridOrMap(entity, xform);
@@ -185,7 +185,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             // Insert into next tube
-            if (!to.Contents.Insert(holderUid))
+            if (!_containerSystem.Insert(holderUid, to.Contents))
             {
                 ExitDisposals(holderUid, holder, holderTransform);
                 return false;

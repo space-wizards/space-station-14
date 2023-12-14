@@ -404,7 +404,7 @@ public partial class SharedBodySystem
             return false;
         }
 
-        return body.RootContainer.Insert(partId);
+        return Containers.Insert(partId, body.RootContainer);
     }
 
     #endregion
@@ -454,7 +454,7 @@ public partial class SharedBodySystem
             return false;
         }
 
-        return container.Insert(partId);
+        return Containers.Insert(partId, container);
     }
 
     #endregion

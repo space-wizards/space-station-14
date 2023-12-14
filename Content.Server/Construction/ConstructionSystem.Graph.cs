@@ -389,7 +389,7 @@ namespace Content.Server.Construction
                     {
                         var entity = ourContainer.ContainedEntities[i];
                         ourContainer.ForceRemove(entity);
-                        otherContainer.Insert(entity);
+                        _container.Insert(entity, otherContainer);
                     }
                 }
             }

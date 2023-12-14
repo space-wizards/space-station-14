@@ -190,7 +190,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if (!slotContainer.Insert(itemUid))
+        if (!_containerSystem.Insert(itemUid, slotContainer))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));

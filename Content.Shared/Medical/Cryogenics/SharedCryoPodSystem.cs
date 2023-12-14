@@ -76,7 +76,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
             return false;
 
         var xform = Transform(target);
-        cryoPodComponent.BodyContainer.Insert(target, transform: xform);
+        _containerSystem.Insert((target, xform), cryoPodComponent.BodyContainer);
 
         EnsureComp<InsideCryoPodComponent>(target);
         _standingStateSystem.Stand(target, force: true); // Force-stand the mob so that the cryo pod sprite overlays it fully

@@ -245,7 +245,7 @@ public sealed partial class BorgSystem
             if (LifeStage(item) <= EntityLifeStage.MapInitialized)
             {
                 RemComp<UnremoveableComponent>(item);
-                component.ProvidedContainer.Insert(item, EntityManager);
+                _container.Insert(item, component.ProvidedContainer);
             }
             _hands.RemoveHand(chassis, handId, hands);
         }

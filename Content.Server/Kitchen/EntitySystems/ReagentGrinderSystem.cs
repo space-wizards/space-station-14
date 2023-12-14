@@ -159,7 +159,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (inputContainer.ContainedEntities.Count >= reagentGrinder.StorageMaxEntities)
                 return;
 
-            if (!inputContainer.Insert(heldEnt, EntityManager))
+            if (!_containerSystem.Insert(heldEnt, inputContainer))
                 return;
 
             args.Handled = true;

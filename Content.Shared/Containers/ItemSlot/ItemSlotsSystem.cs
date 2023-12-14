@@ -68,7 +68,8 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 var item = EntityManager.SpawnEntity(slot.StartingItem, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
-                slot.ContainerSlot?.Insert(item);
+                if (slot.ContainerSlot != null)
+                    _containers.Insert(item, slot.ContainerSlot);
             }
         }
 
@@ -228,7 +229,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// Useful for predicted interactions</param>
         private void Insert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
-            var inserted = slot.ContainerSlot?.Insert(item);
+            bool? inserted = slot.ContainerSlot != null ? _containers.Insert(item, slot.ContainerSlot) : null;
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
             // Logging

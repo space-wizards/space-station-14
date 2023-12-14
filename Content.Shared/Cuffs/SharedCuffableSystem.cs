@@ -448,7 +448,7 @@ namespace Content.Shared.Cuffs
             // Success!
             _hands.TryDrop(user, handcuff);
 
-            component.Container.Insert(handcuff);
+            _container.Insert(handcuff, component.Container);
             UpdateHeldItems(target, handcuff, component);
             return true;
         }

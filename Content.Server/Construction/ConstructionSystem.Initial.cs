@@ -188,10 +188,10 @@ namespace Content.Server.Construction
 
                             if (string.IsNullOrEmpty(materialStep.Store))
                             {
-                                if (!container.Insert(splitStack.Value))
+                                if (!_container.Insert(splitStack.Value, container))
                                     continue;
                             }
-                            else if (!GetContainer(materialStep.Store).Insert(splitStack.Value))
+                            else if (!_container.Insert(splitStack.Value, GetContainer(materialStep.Store)))
                                 continue;
 
                             handled = true;
@@ -217,10 +217,10 @@ namespace Content.Server.Construction
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
-                                if (!container.Insert(entity))
+                                if (!_container.Insert(entity, container))
                                     continue;
                             }
-                            else if (!GetContainer(arbitraryStep.Store).Insert(entity))
+                            else if (!_container.Insert(entity, GetContainer(arbitraryStep.Store)))
                                 continue;
 
                             handled = true;
@@ -285,7 +285,7 @@ namespace Content.Server.Construction
                 foreach (var entity in cont.ContainedEntities.ToArray())
                 {
                     cont.ForceRemove(entity);
-                    newCont.Insert(entity);
+                    _container.Insert(entity, newCont);
                 }
             }
 

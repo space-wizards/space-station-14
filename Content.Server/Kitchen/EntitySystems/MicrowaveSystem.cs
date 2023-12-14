@@ -208,7 +208,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 foreach (var part in headSlots)
                 {
-                    component.Storage.Insert(part.Id);
+                    _container.Insert(part.Id, component.Storage);
                     headCount++;
                 }
             }
@@ -371,7 +371,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 if (_tag.HasTag(item, "MicrowaveSelfUnsafe") || _tag.HasTag(item, "Plastic"))
                 {
                     var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
-                    component.Storage.Insert(junk);
+                    _container.Insert(junk, component.Storage);
                     QueueDel(item);
                 }
 

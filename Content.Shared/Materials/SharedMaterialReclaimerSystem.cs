@@ -133,7 +133,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         var active = EnsureComp<ActiveMaterialReclaimerComponent>(uid);
         active.Duration = duration;
         active.EndTime = Timing.CurTime + duration;
-        active.ReclaimingContainer.Insert(item);
+        _container.Insert(item, active.ReclaimingContainer);
         return true;
     }
 

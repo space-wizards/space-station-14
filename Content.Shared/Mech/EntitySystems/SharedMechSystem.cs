@@ -220,7 +220,7 @@ public abstract class SharedMechSystem : EntitySystem
             return;
 
         equipmentComponent.EquipmentOwner = uid;
-        component.EquipmentContainer.Insert(toInsert, EntityManager);
+        _container.Insert(toInsert, component.EquipmentContainer);
         var ev = new MechEquipmentInsertedEvent(uid);
         RaiseLocalEvent(toInsert, ref ev);
         UpdateUserInterface(uid, component);
@@ -364,7 +364,7 @@ public abstract class SharedMechSystem : EntitySystem
             return false;
 
         SetupUser(uid, toInsert.Value);
-        component.PilotSlot.Insert(toInsert.Value, EntityManager);
+        _container.Insert(toInsert.Value, component.PilotSlot);
         UpdateAppearance(uid, component);
         return true;
     }

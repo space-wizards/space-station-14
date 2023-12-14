@@ -173,7 +173,7 @@ public sealed class StickySystem : EntitySystem
         // add container to entity and insert sticker into it
         var container = _containerSystem.EnsureContainer<Container>(target, StickerSlotId);
         container.ShowContents = true;
-        if (!container.Insert(uid))
+        if (!_containerSystem.Insert(uid, container))
             return;
 
         // show message to user

@@ -27,7 +27,7 @@ namespace Content.Server.Construction.Completions
             foreach (var contained in from.ContainedEntities.ToArray())
             {
                 if (from.Remove(contained))
-                    to.Insert(contained);
+                    containerSystem.Insert(contained, to);
             }
         }
     }

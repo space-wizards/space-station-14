@@ -233,7 +233,7 @@ namespace Content.Server.Medical
             if (!HasComp<BodyComponent>(to_insert))
                 return;
 
-            scannerComponent.BodyContainer.Insert(to_insert);
+            _containerSystem.Insert(to_insert, scannerComponent.BodyContainer);
             UpdateAppearance(uid, scannerComponent);
         }
 

@@ -91,7 +91,7 @@ public sealed partial class EnsnareableSystem
         }
 
         component.Ensnared = target;
-        ensnareable.Container.Insert(ensnare);
+        _container.Insert(ensnare, ensnareable.Container);
         ensnareable.IsEnsnared = true;
         Dirty(ensnareable);
 

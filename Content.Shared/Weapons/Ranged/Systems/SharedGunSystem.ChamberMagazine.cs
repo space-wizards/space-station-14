@@ -316,7 +316,7 @@ public abstract partial class SharedGunSystem
     {
         return Containers.TryGetContainer(uid, ChamberSlot, out var container) &&
                container is ContainerSlot slot &&
-               slot.Insert(ammo);
+               Containers.Insert(ammo, slot);
     }
 
     private void OnChamberAmmoCount(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ref GetAmmoCountEvent args)

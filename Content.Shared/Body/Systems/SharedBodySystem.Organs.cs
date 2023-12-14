@@ -98,7 +98,7 @@ public partial class SharedBodySystem
         if (!Containers.TryGetContainer(partId, containerId, out var container))
             return false;
 
-        return container.Insert(organId);
+        return Containers.Insert(organId, container);
     }
 
     /// <summary>

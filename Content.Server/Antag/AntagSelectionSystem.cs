@@ -218,7 +218,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 {
                     if (_containerSystem.CanInsert(itemToSpawn, pocket1Slot))
                     {
-                        pocket1Slot.Insert(itemToSpawn);
+                        _containerSystem.Insert(itemToSpawn, pocket1Slot);
                     }
                 }
                 else if (_inventory.TryGetSlotContainer(antag, "pocket2", out var pocket2Slot, out _))
@@ -227,7 +227,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                     {
                         if (_containerSystem.CanInsert(itemToSpawn, pocket2Slot))
                         {
-                            pocket2Slot.Insert(itemToSpawn);
+                            _containerSystem.Insert(itemToSpawn, pocket2Slot);
                         }
                     }
                 }

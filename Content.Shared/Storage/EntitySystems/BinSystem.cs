@@ -138,7 +138,7 @@ public sealed class BinSystem : EntitySystem
         if (component.Whitelist != null && !component.Whitelist.IsValid(toInsert))
             return false;
 
-        component.ItemContainer.Insert(toInsert);
+        _container.Insert(toInsert, component.ItemContainer);
         component.Items.Add(toInsert);
         Dirty(component);
         return true;

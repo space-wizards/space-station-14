@@ -213,7 +213,7 @@ namespace Content.Server.Guardian
             // Use map position so it's not inadvertantly parented to the host + if it's in a container it spawns outside I guess.
             var guardian = Spawn(component.GuardianProto, hostXform.MapPosition);
 
-            host.GuardianContainer.Insert(guardian);
+            _container.Insert(guardian, host.GuardianContainer);
             host.HostedGuardian = guardian;
 
             if (TryComp<GuardianComponent>(guardian, out var guardianComp))
@@ -351,7 +351,7 @@ namespace Content.Server.Guardian
                 return;
             }
 
-            hostComponent.GuardianContainer.Insert(guardian);
+            _container.Insert(guardian, hostComponent.GuardianContainer);
             DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardian));
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-recall"), host);
             guardianComponent.GuardianLoose = false;
