@@ -17,6 +17,7 @@ namespace Content.Server.Stunnable.Systems
         [Dependency] private readonly RiggableSystem _riggableSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly BatterySystem _battery = default!;
+        [Dependency] private readonly SharedItemToggleSystem _itemToggle = default!;
 
         public override void Initialize()
         {
@@ -31,10 +32,7 @@ namespace Content.Server.Stunnable.Systems
 
         private void OnStaminaHitAttempt(EntityUid uid, StunbatonComponent component, ref StaminaDamageOnHitAttemptEvent args)
         {
-            if (!TryComp<ItemToggleComponent>(uid, out var itemToggle))
-                return;
-
-            if (!itemToggle.Activated ||
+            if (!_itemToggle.IsActivated(uid) ||
             !TryComp<BatteryComponent>(uid, out var battery) || !_battery.TryUseCharge(uid, component.EnergyPerUse, battery))
             {
                 args.Cancelled = true;
@@ -50,13 +48,10 @@ namespace Content.Server.Stunnable.Systems
 
         private void OnExamined(EntityUid uid, BatteryComponent battery, ExaminedEvent args)
         {
-            if (TryComp<ItemToggleComponent>(uid, out var itemToggle))
-            {
-                var onMsg = itemToggle.Activated
-                ? Loc.GetString("comp-stunbaton-examined-on")
-                : Loc.GetString("comp-stunbaton-examined-off");
-                args.PushMarkup(onMsg);
-            }
+            var onMsg = _itemToggle.IsActivated(uid)
+            ? Loc.GetString("comp-stunbaton-examined-on")
+            : Loc.GetString("comp-stunbaton-examined-off");
+            args.PushMarkup(onMsg);
 
             var chargeMessage = Loc.GetString("stunbaton-component-on-examine-charge",
                 ("charge", (int) (battery.CurrentCharge / battery.MaxCharge * 100)));
@@ -72,9 +67,6 @@ namespace Content.Server.Stunnable.Systems
 
         private void TryTurnOn(EntityUid uid, StunbatonComponent comp, ref ItemToggleActivateAttemptEvent args)
         {
-            if (!TryComp<ItemToggleComponent>(uid, out var itemToggle))
-                return;
-
             if (!TryComp<BatteryComponent>(uid, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
                 args.Cancelled = true;
@@ -101,11 +93,10 @@ namespace Content.Server.Stunnable.Systems
         {
             // Explode if baton is activated and rigged.
             if (!TryComp<RiggableComponent>(uid, out var riggable) ||
-                !TryComp<BatteryComponent>(uid, out var battery) ||
-                !TryComp<ItemToggleComponent>(uid, out var itemToggle))
+                !TryComp<BatteryComponent>(uid, out var battery))
                 return;
 
-            if (itemToggle.Activated && riggable.IsRigged)
+            if (_itemToggle.IsActivated(uid) && riggable.IsRigged)
                 _riggableSystem.Explode(uid, battery);
         }
 

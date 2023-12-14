@@ -75,7 +75,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         if (itemToggle.Activated)
             return true;
 
-        //The client cannot predict if the attempt to turn on fails or not since the battery and fuel systems are server side (for now). Potential future TODO
+        // The client cannot predict if the attempt to turn on fails or not since the battery and fuel systems are server side (for now). Potential future TODO
         if (_netManager.IsServer)
         {
             var attempt = new ItemToggleActivateAttemptEvent(user);
@@ -90,7 +90,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
             // At this point the server knows that the activation went through successfully, so we play the sounds and make the changes.
             _audio.PlayPvs(itemToggle.SoundActivate, uid);
-            //Starts the active sound (like humming).
+            // Starts the active sound (like humming).
             if (itemToggle.ActiveSound != null && itemToggle.PlayingStream == null)
             {
                 itemToggle.PlayingStream = _audio.PlayPvs(itemToggle.ActiveSound, uid, AudioParams.Default.WithLoop(true)).Value.Entity;
@@ -254,6 +254,14 @@ public abstract class SharedItemToggleSystem : EntitySystem
             _item.SetSize(uid, (ProtoId<ItemSizePrototype>) itemToggle.DeactivatedSize, item);
 
         Dirty(uid, item);
+    }
+
+    public bool IsActivated(EntityUid uid, ItemToggleComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp, false))
+            return true; // assume always activated if no component
+
+        return comp.Activated;
     }
 
     /// <summary>

@@ -15,6 +15,7 @@ namespace Content.Server.Tools
 {
     public sealed partial class ToolSystem
     {
+        [Dependency] private readonly SharedItemToggleSystem _itemToggle = default!;
         private readonly HashSet<EntityUid> _activeWelders = new();
 
         private const float WelderUpdateTimer = 1f;
@@ -66,9 +67,6 @@ namespace Content.Server.Tools
             // Logging
             _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(uid):welder} on");
 
-            var ev = new WelderToggledEvent(true);
-            RaiseLocalEvent(uid, ev);
-
             if (transform.GridUid is { } gridUid)
             {
                 var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
@@ -85,9 +83,6 @@ namespace Content.Server.Tools
             // Logging
             _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(uid):welder} off");
 
-            var ev = new WelderToggledEvent(false);
-            RaiseLocalEvent(uid, ev);
-
             Dirty(uid, welder);
 
             _activeWelders.Remove(uid);
@@ -95,16 +90,13 @@ namespace Content.Server.Tools
 
         private void OnWelderExamine(EntityUid uid, WelderComponent welder, ExaminedEvent args)
         {
-            if (TryComp<ItemToggleComponent>(uid, out var itemToggle))
+            if (_itemToggle.IsActivated(uid))
             {
-                if (itemToggle.Activated)
-                {
-                    args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message"));
-                }
-                else
-                {
-                    args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-not-lit-message"));
-                }
+                args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message"));
+            }
+            else
+            {
+                args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-not-lit-message"));
             }
 
             if (args.IsInDetailsRange)
@@ -157,14 +149,10 @@ namespace Content.Server.Tools
         {
             var user = args.DoAfter.Args.User;
 
-            if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
+            if (!_itemToggle.IsActivated(uid))
             {
-                if (!itemToggleComp.Activated)
-                {
-                    _popup.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, user);
-                    args.Cancel();
-                    return;
-                }
+                _popup.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, user);
+                args.Cancel();
             }
         }
 
@@ -176,10 +164,7 @@ namespace Content.Server.Tools
         private void OnWelderGetState(EntityUid uid, WelderComponent welder, ref ComponentGetState args)
         {
             var (fuel, capacity) = GetWelderFuelAndCapacity(uid, welder);
-            if (TryComp<ItemToggleComponent>(uid, out var itemToggleComp))
-            {
-                args.State = new WelderComponentState(capacity.Float(), fuel.Float());
-            }
+            args.State = new WelderComponentState(capacity.Float(), fuel.Float());
         }
 
         private void UpdateWelders(float frameTime)
@@ -210,16 +195,6 @@ namespace Content.Server.Tools
                 Dirty(tool, welder);
             }
             _welderTimer -= WelderUpdateTimer;
-        }
-    }
-
-    public sealed class WelderToggledEvent : EntityEventArgs
-    {
-        public bool WelderOn;
-
-        public WelderToggledEvent(bool welderOn)
-        {
-            WelderOn = welderOn;
         }
     }
 }
