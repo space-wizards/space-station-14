@@ -317,6 +317,8 @@
       behaviors:
       - !type:GibBehavior { }
   - type: NonSpreaderZombie
+  - type: Puller
+    needsHands: true
 
 - type: entity
   name: glockroach
@@ -443,6 +445,8 @@
     prototype: Mothroach
   - type: TypingIndicator
     proto: moth
+    - type: Puller
+    needsHands: true
 
 - type: entity
   name: mallard duck #Quack
