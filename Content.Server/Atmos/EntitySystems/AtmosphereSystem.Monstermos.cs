@@ -347,12 +347,17 @@ namespace Content.Server.Atmos.EntitySystems
                 for (var j = 0; j < Atmospherics.Directions; j++)
                 {
                     var direction = (AtmosDirection) (1 << j);
-                    if (!otherTile.AdjacentBits.IsFlagSet(direction)) continue;
+                    if (!otherTile.AdjacentBits.IsFlagSet(direction))
+                        continue;
+
                     var otherTile2 = otherTile.AdjacentTiles[j]!;
                     if (otherTile2.AdjacentBits == 0)
                         continue;
+
                     DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
-                    if (otherTile2.Air != null && CompareExchange(otherTile2.Air, tile.Air) == GasCompareResult.NoExchange) continue;
+                    if (otherTile2.Air != null && CompareExchange(otherTile2.Air, tile.Air) == GasCompareResult.NoExchange)
+                        continue;
+
                     AddActiveTile(gridAtmosphere, otherTile2);
                     break;
                 }

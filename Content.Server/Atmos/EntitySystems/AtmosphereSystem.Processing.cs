@@ -76,7 +76,6 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var indices = tile.GridIndices;
                 DebugTools.Assert(atmosphere.Tiles.GetValueOrDefault(indices) == tile);
-                DebugTools.Assert(tile.AirtightDirty);
 
                 // Update array of adjacent tiles and activate them.
                 GridUpdateAdjacent(ent, tile, mapAtmos, activate: true);

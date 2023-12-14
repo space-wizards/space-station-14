@@ -30,6 +30,7 @@ namespace Content.Server.Atmos.Components
         [DataField("noAirWhenFullyAirBlocked")]
         public bool NoAirWhenFullyAirBlocked { get; set; } = true;
 
+        [Access(Other = AccessPermissions.ReadWriteExecute)]
         public AtmosDirection AirBlockedDirection => (AtmosDirection)CurrentAirBlockedDirection;
     }
 }

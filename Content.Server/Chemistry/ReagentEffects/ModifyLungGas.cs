@@ -21,7 +21,10 @@ public sealed partial class ModifyLungGas : ReagentEffect
 
         foreach (var (gas, ratio) in _ratios)
         {
-            lung.Air.AdjustMoles(gas, ratio * args.Quantity.Float() / Atmospherics.BreathMolesToReagentMultiplier);
+            var quantity = ratio * args.Quantity.Float() / Atmospherics.BreathMolesToReagentMultiplier;
+            if (quantity < 0)
+                quantity = Math.Max(quantity, -lung.Air[(int)gas]);
+            lung.Air.AdjustMoles(gas, quantity);
         }
     }
 }
