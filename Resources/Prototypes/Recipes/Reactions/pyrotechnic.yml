@@ -41,10 +41,10 @@
   # TODO solution temperature!!
   - !type:ExplosionReactionEffect
     explosionType: Default # 15 damage per intensity.
-    maxIntensity: 1 # at most 15 damage per tile.
-    intensityPerUnit: 3 # 12 total input reagent units reach max total intensity
-    intensitySlope: 0.5
-    maxTotalIntensity: 9
+    maxIntensity: 200
+    intensityPerUnit: 5
+    intensitySlope: 5
+    maxTotalIntensity: 200
   - !type:PopupMessage
     messages: [ "clf3-explosion" ]
     type: Pvs

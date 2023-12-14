@@ -274,7 +274,7 @@ public sealed partial class ShuttleSystem
                     if (TryComp(uid, out body))
                     {
                         if (shuttle != null)
-                            Enable(uid, body, shuttle);
+                            Enable(uid, component: body, shuttle: shuttle);
                         _physics.SetLinearVelocity(uid, new Vector2(0f, 20f), body: body);
                         _physics.SetAngularVelocity(uid, 0f, body: body);
                         _physics.SetLinearDamping(body, 0f);
@@ -365,11 +365,11 @@ public sealed partial class ShuttleSystem
                         // to event ordering and awake body shenanigans (at least for now).
                         if (HasComp<MapGridComponent>(xform.MapUid))
                         {
-                            Disable(uid, body);
+                            Disable(uid, component: body);
                         }
                         else if (shuttle != null)
                         {
-                            Enable(uid, body, shuttle);
+                            Enable(uid, component: body, shuttle: shuttle);
                         }
                     }
 
@@ -701,6 +701,7 @@ public sealed partial class ShuttleSystem
         var transform = _physics.GetPhysicsTransform(uid, xform, _xformQuery);
         var aabbs = new List<Box2>(manager.Fixtures.Count);
         var immune = new HashSet<EntityUid>();
+        var tileSet = new List<(Vector2i, Tile)>();
 
         foreach (var fixture in manager.Fixtures.Values)
         {
@@ -711,6 +712,10 @@ public sealed partial class ShuttleSystem
             // Create a small border around it.
             aabb = aabb.Enlarged(0.2f);
             aabbs.Add(aabb);
+
+            // Handle clearing biome stuff as relevant.
+            tileSet.Clear();
+            _biomes.ReserveTiles(xform.MapUid.Value, aabb, tileSet);
 
             foreach (var ent in _lookup.GetEntitiesIntersecting(xform.MapUid.Value, aabb, LookupFlags.Uncontained))
             {

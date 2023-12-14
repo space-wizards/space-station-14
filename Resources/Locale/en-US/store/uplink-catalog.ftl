@@ -267,7 +267,7 @@ uplink-clothing-outer-hardsuit-juggernaut-desc = Hyper resilient armor made of m
 
 # Misc
 uplink-cyberpen-name = Cybersun Pen
-uplink-cyberpen-desc = Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
+uplink-cyberpen-desc = Cybersun's legal department pen, invaluable for forging documents and escaping prisons. Smells vaguely of hard-light and war profiteering.
 
 uplink-decoy-disk-name = Decoy Nuclear Disk
 uplink-decoy-disk-desc = A piece of plastic with a lenticular printing, made to look like a nuclear auth disk.

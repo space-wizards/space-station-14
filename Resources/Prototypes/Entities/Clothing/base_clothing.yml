@@ -29,3 +29,16 @@
   - type: ContainerContainer
     containers:
       item: !type:ContainerSlot
+
+# a piece of clothing that has explosion resistance *for its contents*, not the wearer
+- type: entity
+  abstract: true
+  id: ContentsExplosionResistanceBase
+  components:
+  - type: ExplosionResistance
+    worn: true # only apply to the clothing itself and items inside, not the wearer
+    examine: explosion-resistance-contents-coefficient-value
+  # to show explosion resistance examine
+  - type: GroupExamine
+  - type: Armor
+    modifiers: {}
