@@ -137,14 +137,13 @@ public sealed partial class GunSystem : SharedGunSystem
                             !gun.CompatibleAmmo.Exists(ammoAllowed => ammoAllowed.Equals(cartridge.Prototype))
                             && user != null)
                         {
-                            var damage = new DamageSpecifier();
                             if (gun.DamageOnWrongAmmo != null)
                                 Damageable.TryChangeDamage(user, gun.DamageOnWrongAmmo, origin: user);
                             _stun.TryParalyze(user.Value, TimeSpan.FromSeconds(3f), true);
 
                             Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gunUid);
 
-                            PopupSystem.PopupEntity(Loc.GetString("Wrong ammo!"), user.Value);
+                            PopupSystem.PopupEntity(Loc.GetString("gun-component-wrong-ammo"), user.Value);
                             _adminLogger.Add(LogType.EntityDelete, LogImpact.Medium, $"Shot wrong ammo by {ToPrettyString(user.Value)} deleted {ToPrettyString(gunUid)}");
                             userImpulse = false;
 
