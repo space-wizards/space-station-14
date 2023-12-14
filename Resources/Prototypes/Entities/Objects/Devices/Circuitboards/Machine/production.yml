@@ -339,6 +339,21 @@
     node: heater
 
 - type: entity
+  id: CondenserMachineCircuitBoard
+  parent: BaseMachineCircuitboard
+  name: condenser machine board
+  description: A machine printed circuit board for a condenser.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: BaseGasCondenser
+    requirements:
+      MatterBin: 1
+    materialRequirements:
+      Glass: 1
+
+- type: entity
   id: PortableScrubberMachineCircuitBoard
   parent: BaseMachineCircuitboard
   name: portable scrubber machine board
