@@ -279,15 +279,15 @@
   parent: BaseComputer
   id: ComputerCriminalRecords
   name: criminal records computer
-  description: This can be used to check criminal records.
+  description: This can be used to check criminal records. Only security can modify them.
   components:
-  - type: GeneralCriminalRecordConsole
+  - type: CriminalRecordsConsole
   - type: UserInterface
     interfaces:
-      - key: enum.GeneralCriminalRecordConsoleKey.Key
-        type: GeneralCriminalRecordConsoleBoundUserInterface
+    - key: enum.CriminalRecordsConsoleKey.Key
+      type: CriminalRecordsConsoleBoundUserInterface
   - type: ActivatableUI
-    key: enum.GeneralCriminalRecordConsoleKey.Key
+    key: enum.CriminalRecordsConsoleKey.Key
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
