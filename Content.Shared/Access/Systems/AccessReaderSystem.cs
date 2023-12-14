@@ -316,11 +316,7 @@ public sealed class AccessReaderSystem : EntitySystem
         if (TryComp<PdaComponent>(uid, out var pda) &&
             pda.ContainedId is { Valid: true } id)
         {
-            if (TryComp<StationRecordKeyStorageComponent>(id, out var pdastorage) && pdastorage.Key != null)
-            {
-                key = pdastorage.Key;
-                return true;
-            }
+            return FindStationRecordKeyItem(id, out key);
         }
 
         key = null;
