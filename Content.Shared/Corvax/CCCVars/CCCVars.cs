@@ -77,13 +77,13 @@ public sealed class CCCVars
     /// Default volume setting of TTS sound
     /// </summary>
     public static readonly CVarDef<float> TTSVolume =
-        CVarDef.Create("tts.volume", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("tts.volume", 0.50f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// Default volume setting of TTS Radio sound
     /// </summary>
     public static readonly CVarDef<float> TTSRadioVolume =
-        CVarDef.Create("tts.radio_volume", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("tts.radio_volume", 0.50f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// Count of in-memory cached tts voice lines.
@@ -107,7 +107,7 @@ public sealed class CCCVars
     /// Default volume setting of TTS Announce sound
     /// </summary>
     public static readonly CVarDef<float> TTSAnnounceVolume =
-        CVarDef.Create("tts.announce_volume", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("tts.announce_volume", 0.50f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /*
      * Peaceful Round End

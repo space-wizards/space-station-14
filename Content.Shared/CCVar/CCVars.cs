@@ -73,7 +73,7 @@ namespace Content.Shared.CCVar
         /// (SS220) AHelp sound volume.
         /// </summary>
         public static readonly CVarDef<float> AHelpVolume =
-        CVarDef.Create("ahelp.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
+        CVarDef.Create("ahelp.volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /// <summary>
         /// (SS220) AHelp Sound on/off.
