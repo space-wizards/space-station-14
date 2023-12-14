@@ -1,4 +1,4 @@
-namespace Content.Shared.Item;
+namespace Content.Server.Item;
 
 /// <summary>
 /// Handles whether this item applies a disarm malus when active. 
