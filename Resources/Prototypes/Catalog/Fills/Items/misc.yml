@@ -23,7 +23,8 @@
   parent: ClothingShoesBootsJackSec
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: CombatKnife
+  - type: ContainerFill
+    containers:
+      item:
+      - CombatKnife
       
