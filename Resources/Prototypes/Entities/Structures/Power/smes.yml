@@ -52,6 +52,7 @@
       group: SMES
       sourceNode: input
       loadNode: output
+      collectionName: smes
       sprite: Structures/Power/smes.rsi
       state: static
     - type: BatteryDischarger

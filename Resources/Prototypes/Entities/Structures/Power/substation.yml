@@ -44,6 +44,7 @@
     group: Substation
     sourceNode: input
     loadNode: output
+    collectionName: substation
     sprite: Structures/Power/substation.rsi
     state: substation_static
   - type: BatteryCharger

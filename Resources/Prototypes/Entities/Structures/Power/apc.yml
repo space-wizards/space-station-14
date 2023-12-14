@@ -69,6 +69,7 @@
     group: APC
     sourceNode: input
     loadNode: output
+    collectionName: apc
     sprite: Structures/Power/apc.rsi
     state: static
   - type: BatteryCharger

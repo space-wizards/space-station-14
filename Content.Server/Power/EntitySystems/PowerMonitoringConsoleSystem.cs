@@ -734,27 +734,29 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             return;
 
         // If the device is not attached to a network, exit
-        if (!nodeContainer.Nodes.TryGetValue(device.LoadNode, out var loadNode) ||
-            loadNode.ReachableNodes.Count == 0)
+        var nodeName = device.SourceNode == string.Empty ? device.LoadNode : device.SourceNode;
+
+        if (!nodeContainer.Nodes.TryGetValue(nodeName, out var node) ||
+            node.ReachableNodes.Count == 0)
         {
             // Make a child the new master of the collection if necessary
             if (device.ChildDevices.TryFirstOrNull(out var kvp))
             {
-                var master = kvp.Value.Key;
-                var masterDevice = kvp.Value.Value;
+                var newMaster = kvp.Value.Key;
+                var newMasterDevice = kvp.Value.Value;
 
-                masterDevice.CollectionMaster = master;
-                masterDevice.ChildDevices.Clear();
+                newMasterDevice.CollectionMaster = newMaster;
+                newMasterDevice.ChildDevices.Clear();
 
                 foreach ((var child, var childDevice) in device.ChildDevices)
                 {
-                    masterDevice.ChildDevices.Add(child, childDevice);
+                    newMasterDevice.ChildDevices.Add(child, childDevice);
 
-                    childDevice.CollectionMaster = master;
-                    UpdateCollectionChildMetaData(child, master);
+                    childDevice.CollectionMaster = newMaster;
+                    UpdateCollectionChildMetaData(child, newMaster);
                 }
 
-                UpdateCollectionMasterMetaData(master, masterDevice.ChildDevices.Count);
+                UpdateCollectionMasterMetaData(newMaster, newMasterDevice.ChildDevices.Count);
             }
 
             device.CollectionMaster = uid;
@@ -767,8 +769,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         // Check to see if the device has a valid existing master
         if (!device.IsCollectionMaster &&
             device.CollectionMaster.IsValid() &&
-            TryComp<PowerMonitoringDeviceComponent>(device.CollectionMaster, out var otherDevice) &&
-            DevicesHaveMatchingNodeGroups(device, otherDevice))
+            TryComp<NodeContainerComponent>(device.CollectionMaster, out var masterNodeContainer) &&
+            DevicesHaveMatchingNodes(nodeContainer, masterNodeContainer))
             return;
 
         // If not, make this a new master
@@ -779,57 +781,39 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         var query = AllEntityQuery<PowerMonitoringDeviceComponent, TransformComponent, NodeContainerComponent>();
         while (query.MoveNext(out var ent, out var entDevice, out var entXform, out var entNodeContainer))
         {
+            if (entDevice.CollectionName != device.CollectionName)
+                continue;
+
             if (ent == uid)
                 continue;
 
             if (entXform.GridUid != xform.GridUid)
                 continue;
 
-            if (!entNodeContainer.Nodes.TryGetValue(entDevice.LoadNode, out var entLoadNode) ||
-                entLoadNode.ReachableNodes.Count == 0)
+            if (!DevicesHaveMatchingNodes(nodeContainer, entNodeContainer))
                 continue;
 
-            // Matching netIds - this device should be represented by the master
-            if ((loadNode.NodeGroup as BaseNodeGroup)?.NetId == (entLoadNode.NodeGroup as BaseNodeGroup)?.NetId)
-            {
-                device.ChildDevices.Add(ent, entDevice);
+            device.ChildDevices.Add(ent, entDevice);
 
-                entDevice.CollectionMaster = uid;
-                UpdateCollectionChildMetaData(ent, uid);
-            }
+            entDevice.CollectionMaster = uid;
+            UpdateCollectionChildMetaData(ent, uid);
         }
 
         UpdateCollectionMasterMetaData(uid, device.ChildDevices.Count);
     }
 
-    private bool DevicesHaveMatchingNodeGroups(PowerMonitoringDeviceComponent deviceA, PowerMonitoringDeviceComponent deviceB)
+    private bool DevicesHaveMatchingNodes(NodeContainerComponent nodeContainerA, NodeContainerComponent nodeContainerB)
     {
-        if (!TryGetNodeGroup(deviceA.Owner, deviceA, out var nodeGroupA))
-            return false;
+        foreach ((var key, var nodeA) in nodeContainerA.Nodes)
+        {
+            if (!nodeContainerB.Nodes.TryGetValue(key, out var nodeB))
+                return false;
 
-        if (!TryGetNodeGroup(deviceB.Owner, deviceB, out var nodeGroupB))
-            return false;
+            if (nodeA.NodeGroup != nodeB.NodeGroup)
+                return false;
+        }
 
-        return nodeGroupA.NetId == nodeGroupB.NetId;
-    }
-
-    private bool TryGetNodeGroup(EntityUid uid, PowerMonitoringDeviceComponent device, [NotNullWhen(true)] out BaseNodeGroup? nodeGroup)
-    {
-        nodeGroup = null;
-
-        if (!TryComp<NodeContainerComponent>(uid, out var nodeContainer))
-            return false;
-
-        if (!nodeContainer.Nodes.TryGetValue(device.LoadNode, out var loadNode) ||
-            loadNode.ReachableNodes.Count == 0)
-            return false;
-
-        if (loadNode.NodeGroup is not BaseNodeGroup)
-            return false;
-
-        nodeGroup = loadNode.NodeGroup as BaseNodeGroup;
-
-        return nodeGroup != null;
+        return true;
     }
 
     private void UpdateCollectionChildMetaData(EntityUid child, EntityUid master)
@@ -868,9 +852,15 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                 continue;
 
             if (childCount > 0)
-                metaData.EntityName = Loc.GetString("power-monitoring-window-object-array", ("name", MetaData(master).EntityName), ("count", childCount + 1));
+            {
+                var name = MetaData(master).EntityPrototype?.Name ?? MetaData(master).EntityName;
+                metaData.EntityName = Loc.GetString("power-monitoring-window-object-array", ("name", name), ("count", childCount + 1));
+            }
+
             else
+            {
                 metaData.EntityName = MetaData(master).EntityName;
+            }
 
             metaData.CollectionMaster = null;
             entConsole.PowerMonitoringDeviceMetaData[netEntity] = metaData;
@@ -966,11 +956,15 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             if (entDevice.IsCollectionMasterOrChild)
             {
                 if (!entDevice.IsCollectionMaster)
+                {
                     metaData.CollectionMaster = EntityManager.GetNetEntity(entDevice.CollectionMaster);
-                else
-                    metaData.EntityName = Loc.GetString("power-monitoring-window-object-array",
-                        ("name", MetaData(ent).EntityName),
-                        ("count", entDevice.ChildDevices.Count + 1));
+                }
+
+                else if (entDevice.ChildDevices.Count > 0)
+                {
+                    name = MetaData(ent).EntityPrototype?.Name ?? MetaData(ent).EntityName;
+                    metaData.EntityName = Loc.GetString("power-monitoring-window-object-array", ("name", name), ("count", entDevice.ChildDevices.Count + 1));
+                }
             }
 
             component.PowerMonitoringDeviceMetaData.Add(netEntity, metaData);
