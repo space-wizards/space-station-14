@@ -356,7 +356,7 @@
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: BaseGasCondenser
   name: condenser
-  description: Now we just need some plumbing.
+  description: Condenses gases into liquids. Now we just need some plumbing.
   placement:
     mode: SnapgridCenter
   components:
