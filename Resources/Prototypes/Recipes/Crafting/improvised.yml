@@ -175,3 +175,16 @@
   icon:
     sprite: Objects/Weapons/Bombs/ied.rsi
     state: icon
+
+- type: construction
+  name: cotton woven cloth
+  id: CottonWovenCloth
+  graph: CottonObjects
+  startNode: start
+  targetNode: cottoncloth
+  category: construction-category-misc
+  description: "A homemade piece of cotton cloth, it feels coarse."
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: cloth_3
+  objectType: Item

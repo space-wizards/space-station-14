@@ -20,8 +20,6 @@
                 <Control MinSize="4 0" />
                 <OptionButton Name="HudThemeOption" />
             </BoxContainer>
-            <CheckBox Name="ShowHeldItemCheckBox" Text="{Loc 'ui-options-show-held-item'}" />
-            <CheckBox Name="ShowCombatModeIndicatorsCheckBox" Text="{Loc 'ui-options-show-combat-mode-indicators'}" />
             <BoxContainer Orientation="Horizontal">
                 <CheckBox Name="ViewportStretchCheckBox" Text="{Loc 'ui-options-vp-stretch'}" />
                 <BoxContainer Name="ViewportScaleBox" Orientation="Horizontal">

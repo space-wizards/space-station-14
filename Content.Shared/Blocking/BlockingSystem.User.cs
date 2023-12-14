@@ -1,6 +1,7 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Blocking;
@@ -43,6 +44,9 @@ public sealed partial class BlockingSystem
     {
         if (TryComp<BlockingComponent>(component.BlockingItem, out var blocking))
         {
+            if (args.Damage.GetTotal() <= 0)
+                return;
+
             var blockFraction = blocking.IsBlocking ? blocking.ActiveBlockFraction : blocking.PassiveBlockFraction;
             blockFraction = Math.Clamp(blockFraction, 0, 1);
             _damageable.TryChangeDamage(component.BlockingItem, blockFraction * args.OriginalDamage);
@@ -51,7 +55,7 @@ public sealed partial class BlockingSystem
 
             if (blocking.IsBlocking)
             {
-                _audio.PlayPvs(blocking.BlockSound, uid, AudioParams.Default.WithVariation(0.2f));
+                _audio.PlayPvs(blocking.BlockSound, uid);
             }
         }
     }

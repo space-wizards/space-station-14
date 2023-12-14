@@ -45,14 +45,21 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly WeldableSystem _weldable = default!;
 
+    private EntityQuery<PuddleComponent> _puddleQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
     private ObjectPool<HashSet<EntityUid>> _entPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
 
+    // Temporary caches.
+    private List<EntityUid> _entityList = new();
+    private HashSet<Entity<IComponent>> _entitySet = new();
+    private List<EntityPrototype.ComponentRegistryEntry> _compTypes = new();
+
     public override void Initialize()
     {
         base.Initialize();
+        _puddleQuery = GetEntityQuery<PuddleComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
@@ -360,12 +367,31 @@ public sealed class NPCUtilitySystem : EntitySystem
         {
             case ComponentQuery compQuery:
             {
-                var mapPos = Transform(owner).MapPosition;
-                var comps = compQuery.Components.Values.ToList();
-                var compZero = comps[0];
-                comps.RemoveAt(0);
+                if (compQuery.Components.Count == 0)
+                    return;
 
-                foreach (var comp in _lookup.GetEntitiesInRange(compZero.Component.GetType(), mapPos, vision))
+                var mapPos = _xformQuery.GetComponent(owner).MapPosition;
+                _compTypes.Clear();
+                var i = -1;
+                EntityPrototype.ComponentRegistryEntry compZero = default!;
+
+                foreach (var compType in compQuery.Components.Values)
+                {
+                    i++;
+
+                    if (i == 0)
+                    {
+                        compZero = compType;
+                        continue;
+                    }
+
+                    _compTypes.Add(compType);
+                }
+
+                _entitySet.Clear();
+                _lookup.GetEntitiesInRange(compZero.Component.GetType(), mapPos, vision, _entitySet);
+
+                foreach (var comp in _entitySet)
                 {
                     var ent = comp.Owner;
 
@@ -374,7 +400,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                     var othersFound = true;
 
-                    foreach (var compOther in comps)
+                    foreach (var compOther in _compTypes)
                     {
                         if (!HasComp(ent, compOther.Component.GetType()))
                         {
@@ -438,7 +464,7 @@ public sealed class NPCUtilitySystem : EntitySystem
         {
             case ComponentFilter compFilter:
             {
-                var toRemove = new ValueList<EntityUid>();
+                _entityList.Clear();
 
                 foreach (var ent in entities)
                 {
@@ -447,12 +473,12 @@ public sealed class NPCUtilitySystem : EntitySystem
                         if (HasComp(ent, comp.Value.Component.GetType()))
                             continue;
 
-                        toRemove.Add(ent);
+                        _entityList.Add(ent);
                         break;
                     }
                 }
 
-                foreach (var ent in toRemove)
+                foreach (var ent in _entityList)
                 {
                     entities.Remove(ent);
                 }
@@ -461,20 +487,19 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case PuddleFilter:
             {
-                var puddleQuery = GetEntityQuery<PuddleComponent>();
-                var toRemove = new ValueList<EntityUid>();
+                _entityList.Clear();
 
                 foreach (var ent in entities)
                 {
-                    if (!puddleQuery.TryGetComponent(ent, out var puddleComp) ||
+                    if (!_puddleQuery.TryGetComponent(ent, out var puddleComp) ||
                         !_solutions.TryGetSolution(ent, puddleComp.SolutionName, out var sol) ||
                         _puddle.CanFullyEvaporate(sol))
                     {
-                        toRemove.Add(ent);
+                        _entityList.Add(ent);
                     }
                 }
 
-                foreach (var ent in toRemove)
+                foreach (var ent in _entityList)
                 {
                     entities.Remove(ent);
                 }

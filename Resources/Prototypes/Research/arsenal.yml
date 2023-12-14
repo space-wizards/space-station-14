@@ -148,18 +148,6 @@
 # Tier 3
 
 - type: technology
-  id: HandheldElectricalPropulsion
-  name: research-technology-handheld-electrical-propulsion
-  icon:
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    state: icon
-  discipline: Arsenal
-  tier: 3
-  cost: 15000
-  recipeUnlocks:
-  - WeaponTaser
-
-- type: technology
   id: PortableMicrofusionWeaponry
   name: research-technology-portable-microfusion-weaponry
   icon:

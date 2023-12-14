@@ -108,9 +108,9 @@
   description: A yellow turtleneck designed specifically for work in conditions of the engineering department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ceturtle.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ceturtle.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -200,6 +200,27 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
     femaleMask: UniformTop
+  - type: Tag
+    tags:
+    - ClownSuit
+
+- type: entity
+  parent: ClothingUniformJumpsuitClown
+  id: ClothingUniformJumpsuitClownBanana
+  name: banana clown suit
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/clown_banana.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/clown_banana.rsi
+    femaleMask: UniformTop
+  - type: Construction
+    graph: BananaClownJumpsuit
+    node: jumpsuit
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.8
 
 - type: entity
   parent: ClothingUniformBase
@@ -1405,3 +1426,14 @@
       - state: equipped-INNERCLOTHING-jumpsuit
       - state: equipped-INNERCLOTHING-shirt
         color: "#b30000"
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitFamilyGuy
+  name: familiar garbs
+  description: Makes you remember the time you did something funny.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi

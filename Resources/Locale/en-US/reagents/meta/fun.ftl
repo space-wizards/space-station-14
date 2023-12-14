@@ -15,3 +15,6 @@ reagent-desc-saxoite = Smells like jazz.
 
 reagent-name-licoxide = Licoxide
 reagent-desc-licoxide = A synthetic battery acid. It looks... electrifying.
+
+reagent-name-razorium = Razorium
+reagent-desc-razorium = A strange, non-newtonian chemical. It is produced when two conflicting brute medications are combined. When force is applied to it, it temporarily hardens creating millions of tiny, sharp edges. Very painful.

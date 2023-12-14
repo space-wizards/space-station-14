@@ -166,6 +166,13 @@
   - type: Construction
     graph: WindowDirectional
     node: windowDirectional
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 2
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional.rsi
   - type: StaticPrice
     price: 10
 

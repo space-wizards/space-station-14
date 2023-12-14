@@ -14,7 +14,7 @@
       map: ["light"]
       visible: false
   - type: BorgChassis
-    maxModules: 5
+    maxModules: 6
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
@@ -42,7 +42,7 @@
       map: ["light"]
       visible: false
   - type: BorgChassis
-    maxModules: 3
+    maxModules: 4
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
@@ -51,6 +51,20 @@
     noMindState: miner_e_r
   - type: Construction
     node: mining
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Supply
+    - Binary
+    - Common
+    - Science
+  - type: ActiveRadio
+    channels:
+    - Supply
+    - Binary
+    - Common
+    - Science
+  - type: AccessReader
+    access: [["Cargo"], ["Salvage"], ["Command"], ["Research"]]
 
 - type: entity
   id: BorgChassisEngineer
@@ -69,7 +83,7 @@
       map: ["light"]
       visible: false
   - type: BorgChassis
-    maxModules: 3
+    maxModules: 4
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
@@ -78,6 +92,20 @@
     noMindState: engineer_e_r
   - type: Construction
     node: engineer
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Engineering
+    - Binary
+    - Common
+    - Science
+  - type: ActiveRadio
+    channels:
+    - Engineering
+    - Binary
+    - Common
+    - Science
+  - type: AccessReader
+    access: [["Engineering"], ["Command"], ["Research"]]
 
 - type: entity
   id: BorgChassisJanitor
@@ -96,7 +124,7 @@
       map: ["light"]
       visible: false
   - type: BorgChassis
-    maxModules: 3
+    maxModules: 4
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
@@ -105,6 +133,20 @@
     noMindState: janitor_e_r
   - type: Construction
     node: janitor
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Service
+    - Binary
+    - Common
+    - Science
+  - type: ActiveRadio
+    channels:
+    - Service
+    - Binary
+    - Common
+    - Science
+  - type: AccessReader
+    access: [["Service"], ["Command"], ["Research"]]
 
 - type: entity
   id: BorgChassisMedical
@@ -123,7 +165,7 @@
       map: ["light"]
       visible: false
   - type: BorgChassis
-    maxModules: 3
+    maxModules: 4
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
@@ -132,6 +174,20 @@
     noMindState: medical_e_r
   - type: Construction
     node: medical
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Medical
+    - Binary
+    - Common
+    - Science
+  - type: ActiveRadio
+    channels:
+    - Medical
+    - Binary
+    - Common
+    - Science
+  - type: AccessReader
+    access: [["Medical"], ["Command"], ["Research"]]
 
 - type: entity
   id: BorgChassisService
@@ -150,7 +206,7 @@
       map: ["light"]
       visible: false
   - type: BorgChassis
-    maxModules: 3
+    maxModules: 4
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
@@ -159,4 +215,17 @@
     noMindState: service_e_r
   - type: Construction
     node: service
-
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Service
+    - Binary
+    - Common
+    - Science
+  - type: ActiveRadio
+    channels:
+    - Service
+    - Binary
+    - Common
+    - Science
+  - type: AccessReader
+    access: [["Service"], ["Command"], ["Research"]]

@@ -49,6 +49,18 @@
   - type: Item
     heldPrefix: paper
   - type: Appearance
+  - type: SolutionContainerManager
+#This should maybe be cellulose later on, refer to the comments in materials.yml on wood.
+    solutions:
+      wood:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 2
+        - ReagentId: Oxygen
+          Quantity: 0.5
+        - ReagentId: Hydrogen
+          Quantity: 0.5
+
 
 - type: entity
   parent: SheetPaper

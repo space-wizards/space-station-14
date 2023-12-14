@@ -230,6 +230,11 @@
   description: flavor-complex-egg
 
 - type: flavor
+  id: raw-egg
+  flavorType: Complex
+  description: flavor-complex-raw-egg
+
+- type: flavor
   id: bacon
   flavorType: Complex
   description: flavor-complex-bacon
@@ -303,6 +308,11 @@
   id: peas
   flavorType: Complex
   description: flavor-complex-peas
+
+- type: flavor
+  id: lemoon
+  flavorType: Complex
+  description: flavor-complex-lemoon
 
 - type: flavor
   id: pineapple

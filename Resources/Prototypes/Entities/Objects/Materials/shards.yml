@@ -100,6 +100,14 @@
     tags:
       - GlassShard
       - Trash
+  - type: Extractable
+    grindableSolutionName: shardglass
+  - type: SolutionContainerManager
+    solutions:
+      shardglass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 11 #Half of the value of regular glass. TECHNICALLY, welding a single shard of glass gives you the full thing back with just 1 sheet, but that is stupid so I am making it half.
 
 - type: entity
   parent: ShardBase
@@ -121,6 +129,14 @@
     tags:
       - ReinforcedGlassShard
       - Trash
+  - type: Extractable
+    grindableSolutionName: shardrglass
+  - type: SolutionContainerManager
+    solutions:
+      shardrglass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 11 #I don't care enough to divide all of the reinforced glass materials by 2 because reinforced glass shards are due for removal anyways.
 
 - type: entity
   parent: ShardBase
@@ -142,6 +158,16 @@
     tags:
       - PlasmaGlassShard
       - Trash
+  - type: Extractable
+    grindableSolutionName: shardpglass
+  - type: SolutionContainerManager
+    solutions:
+      shardpglass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 11
+        - ReagentId: Plasma
+          Quantity: 5
 
 - type: entity
   parent: ShardBase
@@ -164,4 +190,13 @@
     tags:
       - UraniumGlassShard
       - Trash
-
+  - type: Extractable
+    grindableSolutionName: sharduglass
+  - type: SolutionContainerManager
+    solutions:
+      sharduglass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 11
+        - ReagentId: Uranium
+          Quantity: 5

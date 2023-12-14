@@ -29,6 +29,9 @@
   name: metal rods
   suffix: Full
   components:
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50 #Half of a regular steel sheet to reflect the crafting recipe
   - type: Stack
     stackType: MetalRod
     baseLayer: base
@@ -58,6 +61,16 @@
     price: 0
   - type: StackPrice
     price: 5
+  - type: Extractable
+    grindableSolutionName: rod
+  - type: SolutionContainerManager
+    solutions:
+      rod:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 11
+        - ReagentId: Carbon #Not 1.25 (half of 2.5) because that would probably be really weird
+          Quantity: 1
 
 - type: entity
   parent: PartRodMetal

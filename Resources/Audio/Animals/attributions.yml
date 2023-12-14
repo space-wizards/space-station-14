@@ -7,6 +7,11 @@
   license: "CC-BY-3.0"
   copyright: "Modified from 'Meow 4.wav' by freesound user 'TRNGLE. The original audio was trimmed, split to mono, and converted from WAV to OGG format"
   source: "https://freesound.org/people/TRNGLE/sounds/368006/"
+  
+- files: ["cat_meow2.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Created by freesound user 'TRNGLE. The original audio split to mono, and converted from WAV to OGG format"
+  source: "https://freesound.org/people/TRNGLE/sounds/362652/"
 
 - files: ["cat_hiss.ogg"]
   license: "CC0-1.0"

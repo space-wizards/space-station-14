@@ -1,8 +1,10 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
+using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Content.Shared.VoiceMask;
 using Robust.Server.GameObjects;
@@ -20,6 +22,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerNameEvent>(OnSpeakerNameTransform);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeNameMessage>(OnChangeName);
+        SubscribeLocalEvent<VoiceMaskComponent, ItemMaskToggledEvent>(OnMaskToggled);
         SubscribeLocalEvent<VoiceMaskerComponent, GotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<VoiceMaskerComponent, GotUnequippedEvent>(OnUnequip);
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OnSetName);
@@ -35,7 +38,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (message.Name.Length > HumanoidCharacterProfile.MaxNameLength || message.Name.Length <= 0)
         {
-            _popupSystem.PopupCursor(Loc.GetString("voice-mask-popup-failure"), message.Session);
+            _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-failure"), uid, message.Session, PopupType.SmallCaution);
             return;
         }
 
@@ -45,7 +48,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         else
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"Voice of {ToPrettyString(uid):mask} set: {component.VoiceName}");
 
-        _popupSystem.PopupCursor(Loc.GetString("voice-mask-popup-success"), message.Session);
+        _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-success"), uid, message.Session);
 
         TrySetLastKnownName(uid, message.Name);
 
@@ -64,6 +67,11 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
             args.Name = component.VoiceName;
         }
+    }
+
+    private void OnMaskToggled(Entity<VoiceMaskComponent> ent, ref ItemMaskToggledEvent args)
+    {
+        ent.Comp.Enabled = !args.IsToggled;
     }
 
     private void OpenUI(EntityUid player, ActorComponent? actor = null)
