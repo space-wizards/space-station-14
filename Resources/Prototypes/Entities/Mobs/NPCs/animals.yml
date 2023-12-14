@@ -443,9 +443,9 @@
     prototype: Mothroach
   - type: TypingIndicator
     proto: moth
-
   - type: Puller
     needsHands: true
+    
 - type: entity
   name: mallard duck #Quack
   parent: SimpleMobBase
