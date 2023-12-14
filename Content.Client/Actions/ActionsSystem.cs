@@ -87,8 +87,8 @@ namespace Content.Client.Actions
             component.Cooldown = state.Cooldown;
             component.UseDelay = state.UseDelay;
             component.Charges = state.Charges;
-            component.RemainingUses = state.RemainingUses;
-            component.UsesBeforeDelay = state.UsesBeforeDelay;
+            component.MaxCharges = state.MaxCharges;
+            component.RenewCharges = state.RenewCharges;
             component.Container = EnsureEntity<T>(state.Container, uid);
             component.EntityIcon = EnsureEntity<T>(state.EntityIcon, uid);
             component.CheckCanInteract = state.CheckCanInteract;

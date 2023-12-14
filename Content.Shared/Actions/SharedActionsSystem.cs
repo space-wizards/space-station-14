@@ -36,6 +36,10 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<InstantActionComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<EntityTargetActionComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<WorldTargetActionComponent, MapInitEvent>(OnInit);
+
         SubscribeLocalEvent<ActionsComponent, DidEquipEvent>(OnDidEquip);
         SubscribeLocalEvent<ActionsComponent, DidEquipHandEvent>(OnHandEquipped);
         SubscribeLocalEvent<ActionsComponent, DidUnequipEvent>(OnDidUnequip);
@@ -55,6 +59,12 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<WorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
+    }
+
+    private void OnInit(EntityUid uid, BaseActionComponent component, MapInitEvent args)
+    {
+        if (component.Charges != null)
+            component.MaxCharges = component.Charges.Value;
     }
 
     private void OnShutdown(EntityUid uid, ActionsComponent component, ComponentShutdown args)
@@ -279,36 +289,16 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId.Value, action);
     }
 
-    public void SetUsesBeforeDelay(EntityUid? actionId, int usesBeforeDelay)
-    {
-        if (!TryGetActionData(actionId, out var action) || action.UsesBeforeDelay == usesBeforeDelay)
-            return;
-
-        action.UsesBeforeDelay = usesBeforeDelay;
-        UpdateAction(actionId, action);
-        Dirty(actionId.Value, action);
-    }
-
-    public void AddUsesBeforeDelay(EntityUid? actionId, int addUses)
-    {
-        if (!TryGetActionData(actionId, out var action) || addUses < 1)
-            return;
-
-        action.UsesBeforeDelay += addUses;
-        UpdateAction(actionId, action);
-        Dirty(actionId.Value, action);
-    }
-
-    public void ResetRemainingUses(EntityUid? actionId)
+    public void ResetCharges(EntityUid? actionId)
     {
         if (!TryGetActionData(actionId, out var action))
             return;
 
-        action.RemainingUses = action.UsesBeforeDelay;
+        action.Charges = action.MaxCharges;
         UpdateAction(actionId, action);
         Dirty(actionId.Value, action);
     }
-    
+
     private void OnActionsGetState(EntityUid uid, ActionsComponent component, ref ComponentGetState args)
     {
         args.State = new ActionsComponentState(GetNetEntitySet(component.Actions));
@@ -355,8 +345,8 @@ public abstract class SharedActionsSystem : EntitySystem
         if (action.Cooldown.HasValue && action.Cooldown.Value.End > curTime)
             return;
 
-        if (action.RemainingUses < 1)
-            ResetRemainingUses(actionEnt);
+        if (action is { Charges: < 1, RenewCharges: true })
+            ResetCharges(actionEnt);
 
         BaseActionEvent? performEvent = null;
 
@@ -524,7 +514,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!handled)
             return; // no interaction occurred.
 
-        // reduce charges, reduce remaining uses, start cooldown, and mark as dirty (if required).
+        // reduce charges, start cooldown, and mark as dirty (if required).
 
         var dirty = toggledBefore == action.Toggled;
 
@@ -532,21 +522,12 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             dirty = true;
             action.Charges--;
-            if (action.Charges == 0)
-            {
+            if (action is { Charges: 0, RenewCharges: false })
                 action.Enabled = false;
-                action.RemainingUses = 0;
-            }
-        }
-
-        if (action.RemainingUses > 0)
-        {
-            dirty = true;
-            action.RemainingUses--;
         }
 
         action.Cooldown = null;
-        if (action.UseDelay != null && action.RemainingUses < 1)
+        if (action is { UseDelay: not null, Charges: null or < 1 })
         {
             dirty = true;
             action.Cooldown = (curTime, curTime + action.UseDelay.Value);

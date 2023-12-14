@@ -31,7 +31,8 @@
   components:
   - type: WorldTargetAction
     useDelay: 5
-    usesBeforeDelay: 3
+    charges: 3
+    renewCharges: true
     itemIconStyle: BigAction
     checkCanAccess: false
     range: 60
