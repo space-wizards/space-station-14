@@ -24,7 +24,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
         _window.OpenCentered();
     }
 
-    private void OnKeySelected((NetEntity, uint)? key)
+    private void OnKeySelected(uint? key)
     {
         SendMessage(new SelectGeneralStationRecord(key));
     }
@@ -41,9 +41,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
         base.UpdateState(state);
 
         if (state is not GeneralStationRecordConsoleState cast)
-        {
             return;
-        }
 
         _window?.UpdateState(cast);
     }
