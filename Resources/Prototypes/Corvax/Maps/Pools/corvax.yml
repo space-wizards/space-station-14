@@ -1,6 +1,0 @@
-﻿- type: gameMapPool
-  id: CorvaxMapPool
-  maps:
-    - CorvaxDelta
-    - CorvaxAvrite
-    - Box

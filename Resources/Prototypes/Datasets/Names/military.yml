@@ -6,7 +6,7 @@
   - Подполковник
   - Майор
   - Лейтенант
-  
+
 - type: dataset
   id: NamesFirstMilitary
   values:
@@ -16,3 +16,48 @@
   - Капрал
   - Ефрейтор
 
+- type: dataset
+  id: NamesLastMilitary
+  values:
+  - Agena
+  - Andromeda
+  - Antares
+  - Aquarius
+  - Beid
+  - Betelgeuse
+  - Canopus
+  - Capricorn
+  - Celaeno
+  - Centaur
+  - Chameleon
+  - Chau
+  - Cygnus
+  - Deneb
+  - Dragon
+  - Electra
+  - Fomalhaut
+  - Ginan
+  - Hercules
+  - Labr
+  - Leonis
+  - Matar
+  - Microscopium
+  - Nihal
+  - Ophiuchus
+  - Oculus
+  - Orion
+  - Perseus
+  - Phoenix
+  - Procyon
+  - Regulus
+  - Rigel
+  - Sargas
+  - Schedar
+  - Shaula
+  - Sirius
+  - Tabit
+  - Taurus
+  - Ukdah
+  - Vega
+  - Yildun
+  - Zosma

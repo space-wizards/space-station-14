@@ -126,8 +126,6 @@ entities:
     - pos: 4.5,0.5
       parent: 73
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - fixtures: {}
       type: Fixtures
   - uid: 60
@@ -186,8 +184,6 @@ entities:
     - pos: 0.5,0.5
       parent: 73
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - fixtures: {}
       type: Fixtures
   - uid: 44
@@ -237,8 +233,6 @@ entities:
     - pos: 0.5,3.5
       parent: 73
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - fixtures: {}
       type: Fixtures
 - proto: CableMV
@@ -248,8 +242,6 @@ entities:
     - pos: 0.5,3.5
       parent: 73
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - fixtures: {}
       type: Fixtures
   - uid: 52
@@ -299,8 +291,6 @@ entities:
     - pos: 4.5,0.5
       parent: 73
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - fixtures: {}
       type: Fixtures
 - proto: ChairPilotSeat
@@ -384,8 +374,6 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
     - type: ActiveEmergencyLight
 - proto: GeneratorWallmountAPU
   entities:
