@@ -69581,14 +69581,6 @@ entities:
       pos: 16.5,-3.5
       parent: 2
       type: Transform
-- proto: GasMinerPlasma
-  entities:
-  - uid: 1096
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 24.5,-3.5
-      parent: 2
-      type: Transform
 - proto: GasMinerWaterVapor
   entities:
   - uid: 1097

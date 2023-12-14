@@ -1081,6 +1081,9 @@
   id: WeaponPistolCHIMPUpgradeKit
 
 - type: Tag
+  id: WeaponShotgunKammerer
+
+- type: Tag
   id: Window
 
 - type: Tag
@@ -1108,6 +1111,9 @@
   id: Write
 
 - type: Tag
+  id: WriteIgnoreStamps
+
+- type: Tag
   id: RifleStock
 
 - type: Tag
@@ -1115,3 +1121,6 @@
 
 - type: Tag
   id: MindShield
+
+- type: Tag
+  id:  boots

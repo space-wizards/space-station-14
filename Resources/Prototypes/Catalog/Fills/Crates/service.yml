@@ -242,3 +242,14 @@
           prob: 0.1
         - id: ShardGlassPlasma
           prob: 0.1
+
+- type: entity
+  id: CrateJanitorExplosive
+  parent: ClosetJanitorBomb
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterSuitJanitorBomb
+        amount: 1
+      - id: ClothingHeadHelmetJanitorBombSuit
+        amount: 1

@@ -83,11 +83,23 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    maxIntensity: 2
-    totalIntensity: 10
+    maxIntensity: 3.4
+    intensitySlope: 3
+    totalIntensity: 20
     canCreateVacuum: false
   - type: DeleteOnTrigger
   - type: AnimationPlayer
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   parent: BaseItem

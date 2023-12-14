@@ -14,4 +14,4 @@ guidebook-reagent-recipes-mix = Mix
 guidebook-reagent-recipes-mix-and-heat = Mix at above {$temperature}K
 guidebook-reagent-effects-header = Effects
 guidebook-reagent-effects-metabolism-group-rate = [bold]{$group}[/bold] [color=gray]({$rate} units per second)[/color]
-guidebook-reagent-physical-description = Seems to be {$description}.
+guidebook-reagent-physical-description = [italic]Seems to be {$description}.[/italic]
