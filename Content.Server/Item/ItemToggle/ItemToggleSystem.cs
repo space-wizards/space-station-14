@@ -23,9 +23,13 @@ public sealed class ItemToggleSystem : SharedItemToggleSystem
                 EnsureComp<SharpComponent>(uid);
         }
 
+
         if (!TryComp<ItemToggleDisarmMalusComponent>(uid, out var itemToggleDisarmMalus) ||
             !TryComp<DisarmMalusComponent>(uid, out var malus))
             return;
+
+        //Default the deactivated DisarmMalus to the item's value before activation happens.
+        itemToggleDisarmMalus.DeactivatedDisarmMalus ??= malus.Malus;
 
         if (itemToggleDisarmMalus.ActivatedDisarmMalus != null)
         {
@@ -48,10 +52,6 @@ public sealed class ItemToggleSystem : SharedItemToggleSystem
         if (itemToggleDisarmMalus.DeactivatedDisarmMalus != null)
         {
             malus.Malus = (float) itemToggleDisarmMalus.DeactivatedDisarmMalus;
-        }
-        else
-        {
-            itemToggleDisarmMalus.DeactivatedDisarmMalus = malus.Malus;
         }
     }
 }

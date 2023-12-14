@@ -91,22 +91,25 @@
       path: /Audio/Weapons/ebladeoff.ogg
       params:
         volume: -6
-    activatedDisarmMalus: 0.4
   - type: ItemToggleMeleeWeapon
     activatedSoundOnSwing:
       path: /Audio/Weapons/eblademiss.ogg
       params:
         volume: -6
         variation: 0.250
-    activeSound:
-      path: /Audio/Weapons/ebladehum.ogg
-      params:
-        volume: -6
     activatedDamage:
         types:
             Slash: 9
             Heat: 9
+            Structural: 1
     deactivatedSecret: true
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: -6
+  - type: ItemToggleDisarmMalus
+    activatedDisarmMalus: 0.4
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:

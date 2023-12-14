@@ -185,7 +185,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
     private void TurnOffonUnwielded(EntityUid uid, ItemToggleComponent itemToggle, ItemUnwieldedEvent args)
     {
         if (itemToggle.Activated)
-            TryDeactivate(uid, itemToggle: itemToggle);
+            TryDeactivate(uid, args.User, itemToggle: itemToggle);
     }
 
     /// <summary>
@@ -196,7 +196,6 @@ public abstract class SharedItemToggleSystem : EntitySystem
         if (!itemToggle.Activated)
             TryActivate(uid, itemToggle: itemToggle);
     }
-
 
     /// <summary>
     /// Used to update item appearance.
