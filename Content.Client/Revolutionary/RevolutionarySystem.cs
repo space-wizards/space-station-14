@@ -14,11 +14,13 @@ public sealed class RevolutionarySystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private bool _revIconGhostVisibility;
+
+    private void OnRevGhostIconVisibilityChanged(bool value) => _revIconGhostVisibility = value;
     public override void Initialize()
     {
         base.Initialize();
 
-        _cfg.OnValueChanged(CCVars.RevIconsVisibleToGhosts, value => _revIconGhostVisibility = value, true);
+        _cfg.OnValueChanged(CCVars.RevIconsVisibleToGhosts, OnRevGhostIconVisibilityChanged, true);
         SubscribeLocalEvent<RevolutionaryComponent, CanDisplayStatusIconsEvent>(OnCanShowRevIcon);
         SubscribeLocalEvent<HeadRevolutionaryComponent, CanDisplayStatusIconsEvent>(OnCanShowRevIcon);
     }
@@ -26,8 +28,7 @@ public sealed class RevolutionarySystem : EntitySystem
     public override void Shutdown()
     {
         base.Shutdown();
-        EntityManager.EventBus.UnsubscribeLocalEvent<RevolutionaryComponent, CanDisplayStatusIconsEvent>();
-        EntityManager.EventBus.UnsubscribeLocalEvent<HeadRevolutionaryComponent, CanDisplayStatusIconsEvent>();
+        _cfg.UnsubValueChanged(CCVars.RevIconsVisibleToGhosts, OnRevGhostIconVisibilityChanged);
     }
 
     /// <summary>

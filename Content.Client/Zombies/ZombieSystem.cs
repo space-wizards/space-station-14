@@ -20,16 +20,18 @@ public sealed class ZombieSystem : EntitySystem
     {
         base.Initialize();
 
-        _cfg.OnValueChanged(CCVars.ZombieIconsVisibleToGhosts, value => _zombieIconGhostVisibility= value, true);
+        _cfg.OnValueChanged(CCVars.ZombieIconsVisibleToGhosts, OnZombieIconGhostVisibilityChanged, true);
         SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ZombieComponent, CanDisplayStatusIconsEvent>(OnCanDisplayStatusIcons);
     }
 
+    private void OnZombieIconGhostVisibilityChanged(bool value) => _zombieIconGhostVisibility = value;
+
     public override void Shutdown()
     {
         base.Shutdown();
-        EntityManager.EventBus.UnsubscribeLocalEvent<ZombieComponent, ComponentStartup>();
-        EntityManager.EventBus.UnsubscribeLocalEvent<ZombieComponent, CanDisplayStatusIconsEvent>();
+
+        _cfg.UnsubValueChanged(CCVars.ZombieIconsVisibleToGhosts, OnZombieIconGhostVisibilityChanged);
     }
 
     private void OnStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)

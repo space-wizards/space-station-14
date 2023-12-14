@@ -18,10 +18,12 @@ public sealed class SharedRevolutionarySystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private bool _revIconGhostVisibility;
+
+    private void OnRevIconGhostVisibilityChanged(bool value) => _revIconGhostVisibility = value;
     public override void Initialize()
     {
         base.Initialize();
-        _cfg.OnValueChanged(CCVars.RevIconsVisibleToGhosts, value => _revIconGhostVisibility = value, true);
+        _cfg.OnValueChanged(CCVars.RevIconsVisibleToGhosts, OnRevIconGhostVisibilityChanged, true);
 
         SubscribeLocalEvent<MindShieldComponent, MapInitEvent>(MindShieldImplanted);
         SubscribeLocalEvent<RevolutionaryComponent, ComponentGetStateAttemptEvent>(OnRevCompGetStateAttempt);
@@ -34,13 +36,7 @@ public sealed class SharedRevolutionarySystem : EntitySystem
     public override void Shutdown()
     {
         base.Shutdown();
-
-        EntityManager.EventBus.UnsubscribeLocalEvent<MindShieldComponent, MapInitEvent>();
-        EntityManager.EventBus.UnsubscribeLocalEvent<RevolutionaryComponent, ComponentGetStateAttemptEvent>();
-        EntityManager.EventBus.UnsubscribeLocalEvent<HeadRevolutionaryComponent, ComponentGetStateAttemptEvent>();
-        EntityManager.EventBus.UnsubscribeLocalEvent<RevolutionaryComponent, ComponentStartup>();
-        EntityManager.EventBus.UnsubscribeLocalEvent<HeadRevolutionaryComponent, ComponentStartup>();
-        EntityManager.EventBus.UnsubscribeLocalEvent<ShowRevIconsComponent, ComponentStartup>();
+        _cfg.UnsubValueChanged(CCVars.RevIconsVisibleToGhosts, OnRevIconGhostVisibilityChanged);
     }
 
     /// <summary>
