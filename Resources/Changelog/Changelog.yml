@@ -1,9 +1,4 @@
 Entries:
-- author: dahnte
-  changes:
-  - {message: Added frontal lisp as a character trait for all species!, type: Add}
-  id: 4862
-  time: '2023-09-20T04:51:50.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed most medkit fills, type: Tweak}
@@ -2899,3 +2894,8 @@ Entries:
   - {message: Fixed spray nozzle not getting ammo from the back pack tank, type: Fix}
   id: 5362
   time: '2023-12-14T20:49:40.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Mothroach crates are now twice as expensive, type: Tweak}
+  id: 5363
+  time: '2023-12-14T20:58:38.0000000+00:00'
