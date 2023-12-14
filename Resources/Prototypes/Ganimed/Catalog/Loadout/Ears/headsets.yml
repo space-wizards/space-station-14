@@ -110,6 +110,18 @@
   prototype: ClothingHeadsetCargo
 
 - type: loadout
+  id: LoadoutEarsClothingHeadsetMining
+  category: loadout-category-ears
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Quartermaster
+    - SalvageSpecialist
+    - CargoTechnician
+  prototype: ClothingHeadsetMining
+
+- type: loadout
   id: LoadoutEarsClothingHeadsetGrey
   category: loadout-category-ears
   cost: 1

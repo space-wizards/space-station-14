@@ -148,11 +148,18 @@
   prototype: ClothingEyesGlassesJamjar
 
 - type: loadout
-  id: LoadoutEyesClothingEyesGlassesSunglasses
+  id: LoadoutEyesClothingEyesSalesman
   category: loadout-category-eyes
   cost: 2
   exclusive: true
   sponsorOnly: true
+  prototype: ClothingEyesSalesman
+
+- type: loadout
+  id: LoadoutEyesClothingEyesGlassesSunglasses
+  category: loadout-category-eyes
+  cost: 2
+  exclusive: true
   whitelistJobs:
     - SecurityCadet
     - SecurityOfficer
@@ -173,7 +180,6 @@
   category: loadout-category-eyes
   cost: 2
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - SecurityCadet
     - SecurityOfficer

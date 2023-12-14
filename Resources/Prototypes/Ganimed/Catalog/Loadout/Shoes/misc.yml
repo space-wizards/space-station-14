@@ -52,7 +52,6 @@
   id: LoadoutShoesClothingShoeSlippersDuck
   category: loadout-category-shoes
   cost: 3
-  sponsorOnly: true
   exclusive: true
   prototype: ClothingShoeSlippersDuck
 
@@ -60,7 +59,6 @@
   id: LoadoutShoesClothingShoesSlippers
   category: loadout-category-shoes
   cost: 2
-  sponsorOnly: true
   exclusive: true
   prototype: ClothingShoesSlippers
 
@@ -95,5 +93,22 @@
   category: loadout-category-shoes
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingShoesDameDane
+
+- type: loadout
+  id: LoadoutShoesClothingShoesBootsLaceup
+  category: loadout-category-shoes
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingShoesBootsLaceup
+
+- type: loadout
+  id: LoadoutShoesClothingShoesJester
+  category: loadout-category-shoes
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingShoesJester

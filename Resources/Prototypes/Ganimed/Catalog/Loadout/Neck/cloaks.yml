@@ -184,7 +184,6 @@
   category: loadout-category-neck
   cost: 4
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - Captain
   prototype: ClothingNeckCloakCapFormal

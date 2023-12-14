@@ -210,7 +210,6 @@
   exclusive: true
   whitelistJobs:
     - Clown
-  sponsorOnly: true
   prototype: ClothingHandsGlovesCluwneRemoveable
 
 - type: loadout

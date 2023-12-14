@@ -95,7 +95,6 @@
   category: loadout-category-uniform
   cost: 2
   exclusive: false
-  sponsorOnly: true
   whitelistJobs:
     - HeadOfSecurity
   prototype: ClothingUniformJumpsuitHoSGrey
@@ -115,7 +114,6 @@
   category: loadout-category-uniform
   cost: 2
   exclusive: false
-  sponsorOnly: true
   prototype: ClothingUniformJumpskirtCasualPurple
 
 - type: loadout
@@ -123,7 +121,6 @@
   category: loadout-category-uniform
   cost: 2
   exclusive: false
-  sponsorOnly: true
   prototype: ClothingUniformJumpsuitCasualPurple
 
 - type: loadout
@@ -131,5 +128,12 @@
   category: loadout-category-uniform
   cost: 2
   exclusive: false
-  sponsorOnly: true
   prototype: ClothingUniformJumpsuitFlannel
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtOfLife
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpskirtOfLife

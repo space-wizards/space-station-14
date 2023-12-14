@@ -262,6 +262,24 @@
   prototype: ClothingOuterCoatDetective
 
 - type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatSecurityOvercoat
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - BlueShield
+    - Brigmedic
+  prototype: ClothingOuterCoatSecurityOvercoat
+
+- type: loadout
   id: LoadoutOuterClothingClothingOuterCoatDetectiveOriginal
   category: loadout-category-outerClothing
   cost: 3

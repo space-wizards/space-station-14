@@ -103,6 +103,14 @@
   prototype: ClothingOuterHoodieGrey
 
 - type: loadout
+  id: LoadoutOuterClothingClothingOuterHoodieBlack
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  prototype: ClothingOuterHoodieBlack
+  sponsorOnly: true
+
+- type: loadout
   id: LoadoutOuterClothingClothingOuterFlannelBlue
   category: loadout-category-outerClothing
   cost: 2
@@ -114,7 +122,6 @@
   category: loadout-category-outerClothing
   cost: 6
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingOuterStraightjacket
 
 - type: loadout
@@ -151,7 +158,6 @@
   category: loadout-category-outerClothing
   cost: 3
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - Bartender
     - ServiceWorker
@@ -163,7 +169,6 @@
   category: loadout-category-outerClothing
   cost: 3
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingOuterApron
 
 - type: loadout
@@ -171,7 +176,6 @@
   category: loadout-category-outerClothing
   cost: 3
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - Botanist
   prototype: ClothingOuterApronBotanist

@@ -54,7 +54,6 @@
   category: loadout-category-outerClothing
   cost: 5
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - SecurityCadet
     - SecurityOfficer
@@ -72,5 +71,4 @@
   category: loadout-category-outerClothing
   cost: 7
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingOuterWizardViolet

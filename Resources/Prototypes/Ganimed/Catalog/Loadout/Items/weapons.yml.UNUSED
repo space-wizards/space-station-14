@@ -377,6 +377,15 @@
   prototype: RockGuitarInstrument
 
 - type: loadout
+  id: LoadoutItemsElectricGuitarInstrument
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+	- Musician
+  prototype: ElectricGuitarInstrument
+
+- type: loadout
   id: LoadoutItemsWeaponFlareGun
   category: loadout-category-items
   cost: 4

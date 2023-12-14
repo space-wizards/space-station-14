@@ -53,3 +53,11 @@
   cost: 1
   exclusive: true
   prototype: ClothingNeckScarfStripedBlack
+
+- type: loadout
+  id: LoadoutNeckClothingNeckScarfStripedZebra
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  prototype: ClothingNeckScarfStripedZebra
+  sponsorOnly: true

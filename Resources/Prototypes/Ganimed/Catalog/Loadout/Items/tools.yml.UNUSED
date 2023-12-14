@@ -248,3 +248,23 @@
     - SeniorResearcher
 	- Roboticist
   prototype: GeigerCounter
+
+- type: loadout
+  id: LoadoutItemsMopItem
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: MopItem
+
+- type: loadout
+  id: LoadoutItemsBlackFountainPen
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  prototype: BlackFountainPen
+  whitelistJobs:
+    - IAA
+	- Lawyer
+	- Captain
+	- HeadOfSecurity
+	- HeadOfPersonnel

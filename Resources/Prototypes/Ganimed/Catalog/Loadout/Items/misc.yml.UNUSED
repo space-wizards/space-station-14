@@ -169,3 +169,10 @@
   whitelistJobs:
     - Clown
   prototype: CluwneHorn
+  
+- type: loadout
+  id: LoadoutItemsDrinkTeapot
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: DrinkTeapot
