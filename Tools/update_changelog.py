@@ -61,7 +61,6 @@ def main():
             "time", datetime.datetime.now(datetime.timezone.utc).isoformat()
         )
         changes = partyaml["changes"]
-        url = partyaml["url"]
 
         if not isinstance(changes, list):
             changes = [changes]
@@ -72,7 +71,7 @@ def main():
             new_id = max_id
 
             entries_list.append(
-                {"author": author, "time": time, "changes": changes, "id": new_id, "url": url}
+                {"author": author, "time": time, "changes": changes, "id": new_id}
             )
 
         os.remove(partpath)
