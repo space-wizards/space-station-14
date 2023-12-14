@@ -109,9 +109,6 @@
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_campbell_r_leg
-  sprites:
-  - sprite: Mobs/Customization/tattoos.rsi
-    state: tattoo_eye_r
 
 - type: marking
   id: TattooEyeLeft
