@@ -33,7 +33,7 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<HealthAnalyzerComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
             SubscribeLocalEvent<HealthAnalyzerComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
 
-            SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(OnDamageChanged);
+            SubscribeLocalEvent<HealthBeingAnalyzedComponent, DamageChangedEvent>(OnDamageChanged);
         }
 
         private void OnAfterInteract(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, AfterInteractEvent args)
@@ -56,8 +56,11 @@ namespace Content.Server.Medical
         /// </summary>
         private void OnInsertedIntoContainer(EntityUid uid, HealthAnalyzerComponent component, EntGotInsertedIntoContainerMessage args)
         {
-            component.ScannedEntity = EntityUid.Invalid;
-            _cell.SetPowerCellDrawEnabled(uid, false);
+            if (component.ScannedEntity.HasValue)
+            {
+                StopAnalyzingEntity(component.ScannedEntity.Value, uid, component);
+                _cell.SetPowerCellDrawEnabled(uid, false);
+            }
         }
 
         /// <summary>
@@ -65,7 +68,10 @@ namespace Content.Server.Medical
         /// </summary>
         private void OnPowerCellSlotEmpty(EntityUid uid, HealthAnalyzerComponent component, ref PowerCellSlotEmptyEvent args)
         {
-            component.ScannedEntity = EntityUid.Invalid;
+            if (component.ScannedEntity.HasValue)
+            {
+                StopAnalyzingEntity(component.ScannedEntity.Value, uid, component);
+            }
         }
 
         /// <summary>
@@ -73,8 +79,11 @@ namespace Content.Server.Medical
         /// </summary>
         private void OnDropped(EntityUid uid, HealthAnalyzerComponent component, DroppedEvent args)
         {
-            component.ScannedEntity = EntityUid.Invalid;
-            _cell.SetPowerCellDrawEnabled(uid, false);
+            if (component.ScannedEntity.HasValue)
+            {
+                StopAnalyzingEntity(component.ScannedEntity.Value, uid, component);
+                _cell.SetPowerCellDrawEnabled(uid, false);
+            }
         }
 
         private void OnDoAfter(EntityUid uid, HealthAnalyzerComponent component, DoAfterEvent args)
@@ -84,10 +93,15 @@ namespace Content.Server.Medical
 
             _audio.PlayPvs(component.ScanningEndSound, args.Args.User);
 
-            component.ScannedEntity = args.Args.Target.Value;
+            //If we were already analyzing someone, stop
+            if (component.ScannedEntity.HasValue)
+                StopAnalyzingEntity(component.ScannedEntity.Value, uid, component);
+
+            BeginAnalyzingEntity(args.Args.Target.Value, uid, component);
+
             _cell.SetPowerCellDrawEnabled(uid, true);
             OpenUserInterface(args.Args.User, uid);
-            UpdateScannedUser(uid, args.Args.Target.Value, component);
+            UpdateScannedUser(uid, args.Args.Target.Value);
             args.Handled = true;
         }
 
@@ -99,40 +113,81 @@ namespace Content.Server.Medical
             _uiSystem.OpenUi(ui, actor.PlayerSession);
         }
 
-        private void OnDamageChanged(EntityUid uid, MobStateComponent component, DamageChangedEvent args)
+        /// <summary>
+        /// Mark the entity as having its health analyzed, and link the analyzer to it
+        /// </summary>
+        private void BeginAnalyzingEntity(EntityUid uid, EntityUid healthAnalyzerUid, HealthAnalyzerComponent? component = null, HealthBeingAnalyzedComponent? healthBeingAnalyzedComponent = null)
         {
-            var query = EntityQueryEnumerator<HealthAnalyzerComponent>();
-            while (query.MoveNext(out var healthAnalyserUid, out var healthAnalyserComp))
+            if (!Resolve(healthAnalyzerUid, ref component))
+                return;
+
+            if (!Resolve(uid, ref healthBeingAnalyzedComponent, false))
             {
-                if (healthAnalyserComp.ScannedEntity != uid)
+                //No other active analyzers, create the component and attach to the scanned entity
+                healthBeingAnalyzedComponent = new HealthBeingAnalyzedComponent();
+                AddComp(uid, healthBeingAnalyzedComponent);
+            }
+
+            if (!healthBeingAnalyzedComponent.ActiveAnalyzers.Contains(healthAnalyzerUid))
+                healthBeingAnalyzedComponent.ActiveAnalyzers.Add(healthAnalyzerUid);
+
+            component.ScannedEntity = uid;
+        }
+
+        /// <summary>
+        /// Remove the analyzer from the active list, and remove the component if it has no active analyzers
+        /// </summary>
+        private void StopAnalyzingEntity(EntityUid uid, EntityUid healthAnalyzerUid, HealthAnalyzerComponent? component = null, HealthBeingAnalyzedComponent? healthBeingAnalyzedComponent = null)
+        {
+            if (!Resolve(healthAnalyzerUid, ref component))
+                return;
+
+            if (!Resolve(uid, ref healthBeingAnalyzedComponent, false))
+                return;
+
+            //If there is more than 1 analyzer currently monitoring this entity, just remove from the list
+            if (healthBeingAnalyzedComponent.ActiveAnalyzers.Count > 1)
+            {
+                healthBeingAnalyzedComponent.ActiveAnalyzers.Remove(healthAnalyzerUid);
+            }
+            else
+            {
+                //If we are the last, remove the component
+                RemComp<HealthBeingAnalyzedComponent>(uid);
+            }
+
+            component.ScannedEntity = null;
+        }
+
+        private void OnDamageChanged(EntityUid damagedEntityUid, HealthBeingAnalyzedComponent component, DamageChangedEvent args)
+        {
+            foreach (var healthAnalyzerUid in component.ActiveAnalyzers)
+            {
+                if (!TryComp<HealthAnalyzerComponent>(healthAnalyzerUid, out var healthAnalyzerComp))
                     continue;
 
-                //Get distance between health analyser and the scanned entity
-                var scannedEntityPosition = _transformSystem.GetMapCoordinates(uid);
-                var healthAnalyserPosition = _transformSystem.GetMapCoordinates(healthAnalyserUid);
+                //Get distance between health analyzer and the scanned entity
+                var scannedEntityPosition = _transformSystem.GetMapCoordinates(damagedEntityUid);
+                var healthAnalyserPosition = _transformSystem.GetMapCoordinates(healthAnalyzerUid);
                 var distance = (scannedEntityPosition.Position - healthAnalyserPosition.Position).Length();
 
-                //If they are on different maps, or the distance is greater than the Max Scan range
-                //Remove the scanned entity to prevent further updates
                 if (scannedEntityPosition.MapId != healthAnalyserPosition.MapId ||
-                    distance > healthAnalyserComp.MaxScanRange)
+                    distance > healthAnalyzerComp.MaxScanRange)
                 {
-                    healthAnalyserComp.ScannedEntity = EntityUid.Invalid;
-                    _cell.SetPowerCellDrawEnabled(uid, false);
+                    //Range too far, disable updates
+                    StopAnalyzingEntity(damagedEntityUid, healthAnalyzerUid, healthAnalyzerComp);
+                    _cell.SetPowerCellDrawEnabled(healthAnalyzerUid, false);
                 }
                 else
                 {
-                    UpdateScannedUser(healthAnalyserUid, uid, healthAnalyserComp);
+                    UpdateScannedUser(healthAnalyzerUid, damagedEntityUid);
                 }
             }
         }
 
-        public void UpdateScannedUser(EntityUid uid, EntityUid? target, HealthAnalyzerComponent? healthAnalyzer)
+        public void UpdateScannedUser(EntityUid healthAnalyzerUid, EntityUid? target)
         {
-            if (!Resolve(uid, ref healthAnalyzer))
-                return;
-
-            if (target == null || !_uiSystem.TryGetUi(uid, HealthAnalyzerUiKey.Key, out var ui))
+            if (target == null || !_uiSystem.TryGetUi(healthAnalyzerUid, HealthAnalyzerUiKey.Key, out var ui))
                 return;
 
             if (!HasComp<DamageableComponent>(target))

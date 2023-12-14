@@ -20,7 +20,7 @@ namespace Content.Server.Medical.Components
         /// <summary>
         /// Which entity has been scanned, for continuous updates
         /// </summary>
-        public EntityUid ScannedEntity;
+        public EntityUid? ScannedEntity;
 
         /// <summary>
         /// The maximum range at which the analyser can read an entities vitals
