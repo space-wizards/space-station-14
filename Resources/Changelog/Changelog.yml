@@ -1,50 +1,4 @@
 Entries:
-- author: PursuitinAshes
-  changes:
-  - {message: Nanotrasen now properly supplies its captains with appropriate headgear
-      in all of their lockers., type: Fix}
-  id: 4853
-  time: '2023-09-18T19:20:10.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The Syndicate has cracked the binary radio channel's encryption and
-      is offering keys for 4 TC., type: Add}
-  id: 4854
-  time: '2023-09-18T19:20:56.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Increased the amount of barotrauma damage you receive., type: Tweak}
-  id: 4855
-  time: '2023-09-18T19:21:36.0000000+00:00'
-- author: HerCoyote23
-  changes:
-  - {message: 'The Syndicate has grown tired of losing overconfident "Loud" agents,
-      and has reduced their stealth gear prices to encourage a more sneaky approach.',
-    type: Tweak}
-  id: 4856
-  time: '2023-09-18T21:07:00.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: Berry seeds are now available from the MegaSeed Servitor., type: Add}
-  - {message: Seeds for the bungo fruit are included in the exotic seed crate., type: Add}
-  id: 4857
-  time: '2023-09-19T03:29:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Skeletons have been reported in the closets of various station officials.
-      And maintenance., type: Add}
-  - {message: Skeletons can no longer have a pitch-black coloration., type: Tweak}
-  id: 4858
-  time: '2023-09-19T05:05:18.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Expeditions have been massively tweaked. Timer is 7 minutes, loot count
-      is significantly up, added significantly more loot to the loot table, mob count
-      is significantly up, and mobs overall have been nerfed (no more 15 damage carps
-      ending you). It also has a flat 13 minute cooldown. Better bring your fultons
-      if you expect to bring stuff back.', type: Tweak}
-  id: 4859
-  time: '2023-09-19T12:52:01.0000000+00:00'
 - author: Repo
   changes:
   - {message: Time out for particular uplink items for balancing. Syndicate Bomb can
@@ -2899,3 +2853,50 @@ Entries:
   - {message: Ninjas and Nukies now get new sprites for their pinpointers., type: Add}
   id: 5353
   time: '2023-12-13T08:53:05.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: A dying person's Last Words can no longer be sent to radio channels.,
+    type: Fix}
+  id: 5354
+  time: '2023-12-13T21:20:38.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Cybersun and centcom pens can now edit stamped paper., type: Tweak}
+  id: 5355
+  time: '2023-12-13T21:33:32.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Added a new "uneven" hair style., type: Add}
+  id: 5356
+  time: '2023-12-13T21:34:28.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Plasma and tritium fires spread more slowly and are now more survivable.,
+    type: Tweak}
+  id: 5357
+  time: '2023-12-14T02:39:38.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'A new type of grenade has been developed, these grenades release a
+      spray of bullets instead of exploding: Shrapnel grenade, Stinger grenade and
+      Incendiary grenade.', type: Add}
+  - {message: Stinger grenades and ClusterBangs are now available in the sectech.,
+    type: Add}
+  - {message: 'Incendiary grenades, Shrapnel grenades, Cluster grenades and the Slipocalypse
+      ClusterSoap are now available in the syndicate uplink, clowns also get a Clusterbanana
+      in their uplink.', type: Add}
+  - {message: Explosive banana peels are now more dangerous., type: Tweak}
+  id: 5358
+  time: '2023-12-14T03:30:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added gas condensers. These machines are available at the circuit imprinter
+      and can convert gases into liquids. Tasty!, type: Add}
+  id: 5359
+  time: '2023-12-14T03:35:44.0000000+00:00'
+- author: DangerRevolution
+  changes:
+  - {message: Extended emergency nitrogen tanks can now be found on the station.,
+    type: Add}
+  id: 5360
+  time: '2023-12-14T04:35:39.0000000+00:00'
