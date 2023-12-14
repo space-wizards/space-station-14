@@ -5,13 +5,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.CriminalRecords;
 
 [Serializable, NetSerializable]
-public enum GeneralCriminalRecordConsoleKey : byte
+public enum CriminalRecordsConsoleKey : byte
 {
     Key
 }
 
 /// <summary>
-///     General criminal records console state. There are a few states:
+///     Criminal records console state. There are a few states:
 ///     - SelectedKey null, Record null, RecordListing null
 ///         - The station record database could not be accessed.
 ///     - SelectedKey null, Record null, RecordListing non-null
@@ -29,38 +29,43 @@ public enum GeneralCriminalRecordConsoleKey : byte
 ///     Other states are erroneous.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class GeneralCriminalRecordConsoleState : BoundUserInterfaceState
+public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
 {
     /// <summary>
-    ///     Current selected key.
+    /// Currently selected crewmember record key.
     /// </summary>
-    public StationRecordKey? SelectedKey { get; }
+    public readonly uint? SelectedKey;
 
-    public GeneralCriminalRecord? CriminalRecord { get; }
-    public GeneralStationRecord? StationRecord { get; }
-    public Dictionary<StationRecordKey, string>? RecordListing { get; }
-    public GeneralStationRecordsFilter? Filter { get; }
-    public bool HasAccess { get; }
+    public readonly CriminalRecord? CriminalRecord;
+    public readonly GeneralStationRecord? StationRecord;
+    public readonly Dictionary<uint, string>? RecordListing;
+    public readonly GeneralStationRecordsFilter? Filter;
 
-    public GeneralCriminalRecordConsoleState(StationRecordKey? key, GeneralStationRecord? stationRecord, GeneralCriminalRecord? criminalRecord, Dictionary<StationRecordKey, string>? recordListing, bool hasAccess, GeneralStationRecordsFilter? newFilter)
+    public CriminalRecordsConsoleState(uint? key, GeneralStationRecord? stationRecord, CriminalRecord? criminalRecord, Dictionary<uint, string>? recordListing, GeneralStationRecordsFilter? newFilter)
     {
         SelectedKey = key;
         StationRecord = stationRecord;
         CriminalRecord = criminalRecord;
         RecordListing = recordListing;
         Filter = newFilter;
-        HasAccess = hasAccess;
+    }
+
+    /// <summary>
+    /// Default state for opening the console
+    /// </summary>
+    public CriminalRecordsConsoleState() : this(null, null, null, null, null)
+    {
     }
 
     public bool IsEmpty() => SelectedKey == null && StationRecord == null && CriminalRecord == null && RecordListing == null;
 }
 
 [Serializable, NetSerializable]
-public sealed class SelectGeneralCriminalRecord : BoundUserInterfaceMessage
+public sealed class SelectCriminalRecords : BoundUserInterfaceMessage
 {
-    public StationRecordKey? SelectedKey { get; }
+    public readonly uint? SelectedKey;
 
-    public SelectGeneralCriminalRecord(StationRecordKey? selectedKey)
+    public SelectCriminalRecords(uint? selectedKey)
     {
         SelectedKey = selectedKey;
     }
@@ -69,8 +74,8 @@ public sealed class SelectGeneralCriminalRecord : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class CriminalRecordArrestButtonPressed : BoundUserInterfaceMessage
 {
-    public string Reason;
-    public string Name;
+    public readonly string Reason;
+    public readonly string Name;
 
     public CriminalRecordArrestButtonPressed(string reason, string name)
     {
@@ -82,9 +87,9 @@ public sealed class CriminalRecordArrestButtonPressed : BoundUserInterfaceMessag
 [Serializable, NetSerializable]
 public sealed class CriminalStatusOptionButtonSelected : BoundUserInterfaceMessage
 {
-    public SecurityStatus Status;
-    public string Reason;
-    public string Name;
+    public readonly SecurityStatus Status;
+    public readonly string Reason;
+    public readonly string Name;
 
     public CriminalStatusOptionButtonSelected(SecurityStatus status, string reason, string name)
     {
@@ -98,9 +103,9 @@ public sealed class CriminalStatusOptionButtonSelected : BoundUserInterfaceMessa
 public sealed class CriminalRecordConsoleDataUIMessage
 {
     public readonly GeneralStationRecord StationRecord;
-    public readonly GeneralCriminalRecord CriminalRecord;
+    public readonly CriminalRecord CriminalRecord;
 
-    public CriminalRecordConsoleDataUIMessage(GeneralStationRecord stationRecord, GeneralCriminalRecord criminalRecord)
+    public CriminalRecordConsoleDataUIMessage(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
     {
         StationRecord = stationRecord;
         CriminalRecord = criminalRecord;
