@@ -18,10 +18,19 @@ public sealed class SuperBonkSystem: EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SuperBonkComponent, ComponentShutdown>(OnBonkShutdown);
+        SubscribeLocalEvent<SuperBonkComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     public void StartSuperBonk(EntityUid target, float delay = 0.1f, bool stopWhenDead = false )
     {
+
+        //The other check in the code to stop when the target dies does not work if the target is already dead.
+        if (stopWhenDead && TryComp<MobStateComponent>(target, out var mState))
+        {
+            if (mState.CurrentState == MobState.Dead)
+                return;
+        }
+
 
         var hadClumsy = EnsureComp<ClumsyComponent>(target, out _);
 
@@ -63,21 +72,11 @@ public sealed class SuperBonkSystem: EntitySystem
                 continue;
             }
 
-            if (comp.StopWhenDead)
-            {
-                if (TryComp<MobStateComponent>(comp.Target, out var mComp)
-                    && mComp.CurrentState == MobState.Dead)
-                {
-                    RemComp<SuperBonkComponent>(comp.Target);
-                    continue;
-                }
-            }
-
             comp.TimeRemaining = comp.InitialTime;
         }
     }
 
-    public void Bonk(SuperBonkComponent comp)
+    private void Bonk(SuperBonkComponent comp)
     {
         var uid = comp.Tables.Current.Key;
         var bonkComp = comp.Tables.Current.Value;
@@ -90,6 +89,14 @@ public sealed class SuperBonkSystem: EntitySystem
         _transformSystem.SetCoordinates(comp.Target, Transform(uid).Coordinates);
 
         _bonkSystem.TryBonk(comp.Target, uid, bonkComp);
+    }
+
+    private void OnMobStateChanged(EntityUid uid, SuperBonkComponent comp, MobStateChangedEvent args)
+    {
+        if (comp.StopWhenDead && args.NewMobState == MobState.Dead)
+        {
+            RemComp<SuperBonkComponent>(uid);
+        }
     }
 
     private void OnBonkShutdown(EntityUid uid, SuperBonkComponent comp, ComponentShutdown ev)
