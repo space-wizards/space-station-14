@@ -203,7 +203,7 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             // try to remove bulb from container
-            if (!light.LightBulbContainer.Remove(bulb))
+            if (!_containerSystem.Remove(bulb, light.LightBulbContainer))
                 return null;
 
             // try to place bulb in hands

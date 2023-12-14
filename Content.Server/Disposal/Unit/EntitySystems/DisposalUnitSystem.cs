@@ -681,7 +681,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public void Remove(EntityUid uid, SharedDisposalUnitComponent component, EntityUid toRemove)
     {
-        component.Container.Remove(toRemove);
+        _containerSystem.Remove(toRemove, component.Container);
 
         if (component.Container.ContainedEntities.Count == 0)
         {

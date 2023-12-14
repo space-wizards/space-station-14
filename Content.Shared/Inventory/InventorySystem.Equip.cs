@@ -374,7 +374,7 @@ public abstract partial class InventorySystem
             }
         }
 
-        if (!slotContainer.Remove(removedItem.Value, force: force))
+        if (!_containerSystem.Remove(removedItem.Value, slotContainer, force: force))
             return false;
 
         // TODO: Inventory needs a hot cleanup hoo boy

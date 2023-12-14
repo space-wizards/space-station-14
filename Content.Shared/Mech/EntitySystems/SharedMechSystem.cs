@@ -258,7 +258,7 @@ public abstract class SharedMechSystem : EntitySystem
             CycleEquipment(uid, component);
 
         equipmentComponent.EquipmentOwner = null;
-        component.EquipmentContainer.Remove(toRemove, EntityManager);
+        _container.Remove(toRemove, component.EquipmentContainer);
         UpdateUserInterface(uid, component);
     }
 

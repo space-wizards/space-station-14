@@ -133,14 +133,14 @@ namespace Content.Server.Construction
             {
                 foreach (var entity in container.ContainedEntities.ToArray())
                 {
-                    container.Remove(entity);
+                    _container.Remove(entity, container);
                 }
 
                 foreach (var cont in containers.Values)
                 {
                     foreach (var entity in cont.ContainedEntities.ToArray())
                     {
-                        cont.Remove(entity);
+                        _container.Remove(entity, cont);
                     }
                 }
 
@@ -284,7 +284,7 @@ namespace Content.Server.Construction
 
                 foreach (var entity in cont.ContainedEntities.ToArray())
                 {
-                    cont.ForceRemove(entity);
+                    _container.Remove(entity, cont, reparent: false, force: true);
                     _container.Insert(entity, newCont);
                 }
             }

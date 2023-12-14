@@ -280,7 +280,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return false;
 
         RemComp<InsideEntityStorageComponent>(toRemove);
-        component.Contents.Remove(toRemove, EntityManager);
+        _container.Remove(toRemove, component.Contents);
         var pos = TransformSystem.GetWorldPosition(xform) + TransformSystem.GetWorldRotation(xform).RotateVec(component.EnteringOffset);
         TransformSystem.SetWorldPosition(toRemove, pos);
         return true;

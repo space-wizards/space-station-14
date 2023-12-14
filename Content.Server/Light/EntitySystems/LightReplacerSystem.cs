@@ -137,7 +137,7 @@ public sealed class LightReplacerSystem : EntitySystem
         if (bulb.Valid) // FirstOrDefault can return default/invalid uid.
         {
             // try to remove it
-            var hasRemoved = replacer.InsertedBulbs.Remove(bulb);
+            var hasRemoved = _container.Remove(bulb, replacer.InsertedBulbs);
             if (!hasRemoved)
                 return false;
         }

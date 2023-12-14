@@ -114,7 +114,7 @@ public partial class SharedBodySystem
         if (!HasComp<BodyPartComponent>(parent))
             return false;
 
-        return container.Remove(organId);
+        return Containers.Remove(organId, container);
     }
 
     /// <summary>

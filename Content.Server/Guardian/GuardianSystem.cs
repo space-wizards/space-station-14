@@ -67,7 +67,7 @@ namespace Content.Server.Guardian
             if (!TryComp(host, out GuardianHostComponent? hostComponent))
                 return;
 
-            hostComponent.GuardianContainer.Remove(uid);
+            _container.Remove(uid, hostComponent.GuardianContainer);
             hostComponent.HostedGuardian = null;
             Dirty(host.Value, hostComponent);
             QueueDel(hostComponent.ActionEntity);
@@ -337,7 +337,7 @@ namespace Content.Server.Guardian
             }
 
             DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardian));
-            hostComponent.GuardianContainer.Remove(guardian);
+            _container.Remove(guardian, hostComponent.GuardianContainer);
             DebugTools.Assert(!hostComponent.GuardianContainer.Contains(guardian));
 
             guardianComponent.GuardianLoose = true;

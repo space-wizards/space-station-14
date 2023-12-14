@@ -78,7 +78,7 @@ public sealed class MechGrabberSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        component.ItemContainer.Remove(toRemove);
+        _container.Remove(toRemove, component.ItemContainer);
         var mechxform = Transform(mech);
         var xform = Transform(toRemove);
         _transform.AttachToGridOrMap(toRemove, xform);

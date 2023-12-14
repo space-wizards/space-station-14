@@ -351,7 +351,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// Useful for predicted interactions</param>
         private void Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
-            var ejected = slot.ContainerSlot?.Remove(item);
+            bool? ejected = slot.ContainerSlot != null ? _containers.Remove(item, slot.ContainerSlot) : null;
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
             // Logging

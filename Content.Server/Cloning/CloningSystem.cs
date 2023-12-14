@@ -326,7 +326,7 @@ namespace Content.Server.Cloning
                 return;
 
             EntityManager.RemoveComponent<BeingClonedComponent>(entity);
-            clonePod.BodyContainer.Remove(entity);
+            _containerSystem.Remove(entity, clonePod.BodyContainer);
             clonePod.CloningProgress = 0f;
             clonePod.UsedBiomass = 0;
             UpdateStatus(uid, CloningPodStatus.Idle, clonePod);

@@ -207,7 +207,7 @@ public sealed class StickySystem : EntitySystem
             return;
 
         // try to remove sticky item from target container
-        if (!_containerSystem.TryGetContainer(stuckTo, StickerSlotId, out var container) || !container.Remove(uid))
+        if (!_containerSystem.TryGetContainer(stuckTo, StickerSlotId, out var container) || !_containerSystem.Remove(uid, container))
             return;
         // delete container if it's now empty
         if (container.ContainedEntities.Count == 0)

@@ -62,7 +62,8 @@ public abstract class SharedImplanterSystem : EntitySystem
         var implantedComp = EnsureComp<ImplantedComponent>(target);
         var implantContainer = implantedComp.ImplantContainer;
 
-        component.ImplanterSlot.ContainerSlot?.Remove(implant.Value);
+        if (component.ImplanterSlot.ContainerSlot != null)
+            _container.Remove(implant.Value, component.ImplanterSlot.ContainerSlot);
         implantComp.ImplantedEntity = target;
         implantContainer.OccludesLight = false;
         _container.Insert(implant.Value, implantContainer);
@@ -136,7 +137,7 @@ public abstract class SharedImplanterSystem : EntitySystem
                     continue;
                 }
 
-                implantContainer.Remove(implant);
+                _container.Remove(implant, implantContainer);
                 implantComp.ImplantedEntity = null;
                 _container.Insert(implant, implanterContainer);
                 permanentFound = implantComp.Permanent;

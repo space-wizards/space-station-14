@@ -177,7 +177,7 @@ public sealed class AmeControllerSystem : EntitySystem
         if (!Exists(jar))
             return;
 
-        controller.JarSlot.Remove(jar!.Value);
+        _containerSystem.Remove(jar!.Value, controller.JarSlot);
         UpdateUi(uid, controller);
         if (Exists(user))
             _handsSystem.PickupOrDrop(user, jar!.Value);

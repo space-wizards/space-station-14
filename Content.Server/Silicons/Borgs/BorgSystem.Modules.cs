@@ -201,7 +201,7 @@ public sealed partial class BorgSystem
                     continue;
                 }
 
-                component.ProvidedContainer.Remove(item, EntityManager, force: true);
+                _container.Remove(item, component.ProvidedContainer, force: true);
             }
 
             if (!item.IsValid())

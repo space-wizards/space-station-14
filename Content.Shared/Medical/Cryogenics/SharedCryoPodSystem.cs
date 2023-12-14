@@ -117,7 +117,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         if (cryoPodComponent.BodyContainer.ContainedEntity is not {Valid: true} contained)
             return null;
 
-        cryoPodComponent.BodyContainer.Remove(contained);
+        _containerSystem.Remove(contained, cryoPodComponent.BodyContainer);
         // InsideCryoPodComponent is removed automatically in its EntGotRemovedFromContainerMessage listener
         // RemComp<InsideCryoPodComponent>(contained);
 

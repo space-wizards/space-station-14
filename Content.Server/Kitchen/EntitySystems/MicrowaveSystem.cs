@@ -173,7 +173,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                         if (metaData.EntityPrototype.ID == recipeSolid.Key)
                         {
-                            component.Storage.Remove(item);
+                            _sharedContainer.Remove(item, component.Storage);
                             EntityManager.DeleteEntity(item);
                             break;
                         }
@@ -504,7 +504,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid))
                 return;
 
-            component.Storage.Remove(EntityManager.GetEntity(args.EntityID));
+            _sharedContainer.Remove(EntityManager.GetEntity(args.EntityID), component.Storage);
             UpdateUserInterfaceState(uid, component);
         }
 

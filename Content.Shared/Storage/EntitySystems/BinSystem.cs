@@ -162,7 +162,7 @@ public sealed class BinSystem : EntitySystem
         if (toRemove == null || toRemove != component.Items.LastOrDefault())
             return false;
 
-        if (!component.ItemContainer.Remove(toRemove.Value))
+        if (!_container.Remove(toRemove.Value, component.ItemContainer))
             return false;
 
         component.Items.Remove(toRemove.Value);

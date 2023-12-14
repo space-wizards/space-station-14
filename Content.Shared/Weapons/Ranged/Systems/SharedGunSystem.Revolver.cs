@@ -283,7 +283,7 @@ public partial class SharedGunSystem
             else
             {
                 component.AmmoSlots[i] = null;
-                component.AmmoContainer.Remove(slot.Value);
+                Containers.Remove(slot.Value, component.AmmoContainer);
 
                 if (!_netManager.IsClient)
                     EjectCartridge(slot.Value);
@@ -366,7 +366,7 @@ public partial class SharedGunSystem
                     continue;
                 }
 
-                component.AmmoContainer.Remove(ent.Value);
+                Containers.Remove(ent.Value, component.AmmoContainer);
                 component.AmmoSlots[index] = null;
                 args.Ammo.Add((ent.Value, EnsureShootable(ent.Value)));
                 TransformSystem.SetCoordinates(ent.Value, args.Coordinates);

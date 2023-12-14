@@ -125,7 +125,7 @@ public sealed class GasCanisterSystem : EntitySystem
             return;
 
         _adminLogger.Add(LogType.CanisterTankEjected, LogImpact.Medium, $"Player {ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} ejected tank {ToPrettyString(container.ContainedEntities[0]):tank} from {ToPrettyString(uid):canister}");
-        container.Remove(container.ContainedEntities[0]);
+        _container.Remove(container.ContainedEntities[0], container);
     }
 
     private void OnCanisterChangeReleasePressure(EntityUid uid, GasCanisterComponent canister, GasCanisterChangeReleasePressureMessage args)

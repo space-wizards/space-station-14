@@ -289,7 +289,7 @@ namespace Content.Server.Hands.Systems
                 {
                     var lastStoredEntity = storageComponent.Container.ContainedEntities[^1];
 
-                    if (storageComponent.Container.Remove(lastStoredEntity))
+                    if (ContainerSystem.Remove(lastStoredEntity, storageComponent.Container))
                     {
                         PickupOrDrop(plyEnt, lastStoredEntity, animateUser: true, handsComp: hands);
                     }

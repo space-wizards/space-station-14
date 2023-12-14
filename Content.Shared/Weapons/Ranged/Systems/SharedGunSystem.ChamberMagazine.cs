@@ -290,7 +290,7 @@ public abstract partial class SharedGunSystem
         if (entity == null)
             return false;
 
-        container.Remove(entity.Value);
+        Containers.Remove(entity.Value, container);
         return true;
     }
 

@@ -127,7 +127,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 RemComp<BeingDisposedComponent>(entity);
 
                 var meta = _metaQuery.GetComponent(entity);
-                holder.Container.Remove(entity, EntityManager, meta: meta, reparent: false, force: true);
+                _containerSystem.Remove((entity, null, meta), holder.Container, reparent: false, force: true);
 
                 var xform = _xformQuery.GetComponent(entity);
                 if (xform.ParentUid != uid)
@@ -267,7 +267,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
                 // Past this point, we are performing inter-tube transfer!
                 // Remove current tube content
-                _disposalTubeQuery.GetComponent(currentTube).Contents.Remove(uid, reparent: false, force: true);
+                _containerSystem.Remove(uid, _disposalTubeQuery.GetComponent(currentTube).Contents, reparent: false, force: true);
 
                 // Find next tube
                 var nextTube = _disposalTubeSystem.NextTubeFor(currentTube, holder.CurrentDirection);

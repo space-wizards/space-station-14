@@ -54,7 +54,7 @@ public sealed partial class BuildMech : IGraphAction
             return;
         }
 
-        container.Remove(cell);
+        containerSystem.Remove(cell, container);
 
         var transform = entityManager.GetComponent<TransformComponent>(uid);
         var mech = entityManager.SpawnEntity(MechPrototype, transform.Coordinates);

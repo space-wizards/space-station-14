@@ -384,7 +384,7 @@ namespace Content.Shared.Cuffs
                 var container = cuffable.Container;
                 var entity = container.ContainedEntities[^1];
 
-                container.Remove(entity);
+                _container.Remove(entity, container);
                 _transform.SetWorldPosition(entity, _transform.GetWorldPosition(owner));
             }
 
@@ -634,7 +634,7 @@ namespace Content.Shared.Cuffs
 
             _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
 
-            cuffable.Container.Remove(cuffsToRemove);
+            _container.Remove(cuffsToRemove, cuffable.Container);
 
             if (_net.IsServer)
             {

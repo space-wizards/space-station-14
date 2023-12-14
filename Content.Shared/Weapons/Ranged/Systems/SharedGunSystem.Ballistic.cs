@@ -241,7 +241,7 @@ public abstract partial class SharedGunSystem
 
                 args.Ammo.Add((entity, EnsureShootable(entity)));
                 component.Entities.RemoveAt(component.Entities.Count - 1);
-                component.Container.Remove(entity);
+                Containers.Remove(entity, component.Container);
             }
             else if (component.UnspawnedCount > 0)
             {

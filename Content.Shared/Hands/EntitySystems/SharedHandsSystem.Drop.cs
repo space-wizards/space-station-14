@@ -180,7 +180,7 @@ public abstract partial class SharedHandsSystem
         if (TerminatingOrDeleted(uid) || TerminatingOrDeleted(entity))
             return;
 
-        if (!hand.Container.Remove(entity, EntityManager))
+        if (!ContainerSystem.Remove(entity, hand.Container))
         {
             Log.Error($"Failed to remove {ToPrettyString(entity)} from users hand container when dropping. User: {ToPrettyString(uid)}. Hand: {hand.Name}.");
             return;

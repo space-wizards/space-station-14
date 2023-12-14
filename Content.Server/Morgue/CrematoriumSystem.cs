@@ -128,7 +128,7 @@ public sealed class CrematoriumSystem : EntitySystem
             for (var i = storage.Contents.ContainedEntities.Count - 1; i >= 0; i--)
             {
                 var item = storage.Contents.ContainedEntities[i];
-                storage.Contents.Remove(item);
+                _containers.Remove(item, storage.Contents);
                 EntityManager.DeleteEntity(item);
             }
             var ash = Spawn("Ash", Transform(uid).Coordinates);
