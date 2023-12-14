@@ -151,6 +151,7 @@
     sprite: Objects/Tanks/Jetpacks/captain.rsi
     slots:
       - Back
+      - SuitStorage
   - type: Item
     sprite: Objects/Tanks/Jetpacks/captain.rsi
     size: Normal
@@ -189,6 +190,7 @@
       slots:
         - Back
         - suitStorage
+        - Belt
     - type: Item
       sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: GasTank
@@ -262,6 +264,7 @@
     slots:
       - Back
       - suitStorage
+      - Belt
 
 # Filled void
 - type: entity
