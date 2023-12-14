@@ -141,7 +141,7 @@
 
 - type: entity
   name: pink handcuffs
-  description: Used to detain "bad" boys and girls.
+  description: Very comfortable, soft handcuffs for criminals with taste.
   id: PinkHandcuffs
   parent: BaseItem
   components:
