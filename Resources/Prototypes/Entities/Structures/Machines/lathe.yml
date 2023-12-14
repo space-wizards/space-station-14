@@ -306,6 +306,8 @@
     producingSound: /Audio/Machines/circuitprinter.ogg
     idleState: icon
     runningState: building
+    staticRecipes:
+    - CondenserMachineCircuitBoard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard

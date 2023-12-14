@@ -628,6 +628,8 @@ namespace Content.Shared.CCVar
             CVarDef.Create("audio.admin_chat_sound_path", "/Audio/Items/pop.ogg", CVar.ARCHIVE | CVar.CLIENT | CVar.REPLICATED);
         public static readonly CVarDef<float> AdminChatSoundVolume =
             CVarDef.Create("audio.admin_chat_sound_volume", -5f, CVar.ARCHIVE | CVar.CLIENT | CVar.REPLICATED);
+        public static readonly CVarDef<string> AHelpSound =
+            CVarDef.Create("audio.ahelp_sound", "/Audio/Effects/adminhelp.ogg", CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * HUD
@@ -1046,12 +1048,19 @@ namespace Content.Shared.CCVar
 
         /// <summary>
         ///     Scale factor for how fast things happen in our atmosphere
-        ///     simulation compared to real life. 1x means that a room takes as
-        ///     long to heat up in game as real life. Players typically expect
-        ///     things to happen faster in-game.
+        ///     simulation compared to real life. 1x means pumps run at 1x
+        ///     speed. Players typically expect things to happen faster
+        ///     in-game.
         /// </summary>
         public static readonly CVarDef<float> AtmosSpeedup =
-            CVarDef.Create("atmos.speedup", 64f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.speedup", 8f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Like atmos.speedup, but only for gas and reaction heat values. 64x means
+        ///     gases heat up and cool down 64x faster than real life.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosHeatScale =
+            CVarDef.Create("atmos.heat_scale", 8f, CVar.SERVERONLY);
 
         /*
          * MIDI instruments

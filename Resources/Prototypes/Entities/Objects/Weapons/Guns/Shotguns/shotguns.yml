@@ -105,6 +105,10 @@
   id: WeaponShotgunDoubleBarreled
   description: An immortal classic. Uses .50 shotgun shells.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
   - type: Gun
@@ -158,12 +162,14 @@
   id: WeaponShotgunKammerer
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-  - type: Item
-    size: Normal
   - type: BallisticAmmoProvider
     capacity: 4
   - type: Tag
@@ -211,6 +217,9 @@
   id: WeaponShotgunHandmade
   description: Looks unreliable. Uses .50 shotgun shells.
   components:
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Clothing
@@ -233,6 +242,10 @@
   suffix: Pirate
   description: Deadly at close range.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/blunderbuss.rsi
   - type: Gun
@@ -248,6 +261,10 @@
   id: WeaponShotgunImprovised
   description: A shitty, hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Clothing

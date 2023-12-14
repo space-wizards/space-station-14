@@ -56,7 +56,7 @@ namespace Content.Server.Atmos.Reactions
                     mixture.AdjustMoles(Gas.CarbonDioxide, plasmaBurnRate * (1.0f - supersaturation));
 
                     energyReleased += Atmospherics.FirePlasmaEnergyReleased * plasmaBurnRate;
-                    energyReleased /= atmosphereSystem.Speedup; // adjust energy to make sure speedup doesn't cause mega temperature rise
+                    energyReleased /= atmosphereSystem.HeatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise
                     mixture.ReactionResults[GasReaction.Fire] += plasmaBurnRate * (1 + oxygenBurnRate);
                 }
             }
