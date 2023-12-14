@@ -16,7 +16,7 @@ namespace Content.Server.CriminalRecords.Systems;
 /// </summary>
 public sealed class CriminalRecordsSystem : EntitySystem
 {
-    [Dependency] private readonly StationRecordsSystem _stationRecordsSystem = default!;
+    [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
 
     public override void Initialize()
     {
@@ -27,27 +27,26 @@ public sealed class CriminalRecordsSystem : EntitySystem
 
     private void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
     {
-
-        var record = new GeneralCriminalRecord()
+        var record = new CriminalRecord()
         {
             Status = SecurityStatus.None,
             Reason = string.Empty
         };
 
-        _stationRecordsSystem.AddRecordEntry(ev.Key, record);
-        _stationRecordsSystem.Synchronize(ev.Key.OriginStation);
+        _stationRecords.AddRecordEntry(ev.Key, record);
+        _stationRecords.Synchronize(ev.Key);
     }
 
     /// <summary>
     /// Tries to change the status of the record found by the StationRecordKey
     /// </summary>
     /// <returns>True if the status is changed, false if not</returns>
-    public bool TryChangeStatus(EntityUid station, StationRecordKey key, SecurityStatus status,
+    public bool TryChangeStatus(StationRecordKey key, SecurityStatus status,
         [NotNullWhen(true)] out SecurityStatus? updatedStatus, string? reason)
     {
         updatedStatus = null;
 
-        if (!_stationRecordsSystem.TryGetRecord(station, key, out GeneralCriminalRecord? record)
+        if (!_stationRecords.TryGetRecord(key, out CriminalRecord? record)
             || status == record.Status)
             return false;
 
@@ -56,7 +55,7 @@ public sealed class CriminalRecordsSystem : EntitySystem
 
         updatedStatus = record.Status;
 
-        _stationRecordsSystem.Synchronize(station);
+        _stationRecords.Synchronize(key);
 
         return true;
     }
@@ -65,11 +64,11 @@ public sealed class CriminalRecordsSystem : EntitySystem
     /// Tries to change the status of the record to Detained or None found by the StationRecordKey
     /// </summary>
     /// <returns>True if the status is changed, false if not</returns>
-    public bool TryArrest(EntityUid station, StationRecordKey key, [NotNullWhen(true)] out SecurityStatus? updatedStatus, string? reason)
+    public bool TryArrest(StationRecordKey key, [NotNullWhen(true)] out SecurityStatus? updatedStatus, string? reason)
     {
         updatedStatus = null;
 
-        return TryChangeStatus(station, key, SecurityStatus.Detained, out updatedStatus, reason)
-               || TryChangeStatus(station, key, SecurityStatus.None, out updatedStatus, reason);
+        return TryChangeStatus(key, SecurityStatus.Detained, out updatedStatus, reason)
+               || TryChangeStatus(key, SecurityStatus.None, out updatedStatus, reason);
     }
 }
