@@ -24,10 +24,10 @@ public sealed class GasCondenserSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GasCondenserComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
+        SubscribeLocalEvent<GasCondenserComponent, AtmosDeviceUpdateEvent>(OnCondenserUpdated);
     }
 
-    private void OnThermoMachineUpdated(EntityUid uid, GasCondenserComponent component, AtmosDeviceUpdateEvent args)
+    private void OnCondenserUpdated(EntityUid uid, GasCondenserComponent component, AtmosDeviceUpdateEvent args)
     {
         if (!(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
             || !TryComp<NodeContainerComponent>(uid, out var nodeContainer)
@@ -42,7 +42,6 @@ public sealed class GasCondenserSystem : EntitySystem
 
         var molesToConvert = NumberOfMolesToConvert(receiver, inlet.Air, args.dt);
         var removed = inlet.Air.Remove(molesToConvert);
-
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
             var moles = removed.Moles[i];
@@ -66,7 +65,7 @@ public sealed class GasCondenserSystem : EntitySystem
     public float NumberOfMolesToConvert(ApcPowerReceiverComponent comp, GasMixture mix, float dt)
     {
         var hc = _atmosphereSystem.GetHeatCapacity(mix);
-        var alpha = 0.05f; // tuned to give us 5-ish u/second of reagent conversion
+        var alpha = 0.8f; // tuned to give us 5-ish u/second of reagent conversion
         // ignores the energy needed to cool down the solution to the condensation point, but that probably adds too much difficulty and so let's not simulate that
         var energy = comp.Load * dt;
         return energy / (alpha * hc);
