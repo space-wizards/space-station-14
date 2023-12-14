@@ -8,24 +8,13 @@
   },
   "states": [
     {
-      "name": "base-0",
-      "directions": 1
+      "name": "icon"
     },
     {
-      "name": "base-1",
-      "directions": 1
+      "name": "base-1"
     },
     {
-      "name": "base-2",
-      "directions": 1
-    },
-    {
-      "name": "base-3",
-      "directions": 1
-    },
-    {
-      "name": "icon",
-      "directions": 1
+      "name": "base-2"
     },
     {
       "name": "primed",

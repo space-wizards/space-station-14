@@ -129,6 +129,46 @@
       - punishment
 
 - type: entity
+  name: soaplet
+  id: SoapletSyndie
+  noSpawn: true
+  parent: Soap
+  description: A tiny piece of syndicate soap.
+  components:
+  - type: Sprite
+    layers:
+    - state: syndie-soaplet
+  - type: Slippery
+    paralyzeTime: 5
+    launchForwardsMultiplier: 2.5
+  - type: StepTrigger
+    intersectRatio: 0.04
+  - type: Item
+    heldPrefix: syndie
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.08,-0.06,0.08,0.06"
+        layer:
+        - SlipLayer
+        hard: false
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.08,-0.06,0.08,0.06"
+        density: 1
+        mask:
+        - ItemMask
+  - type: DeleteOnTrigger
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+      params:
+        volume: -20
+
+- type: entity
   name: soap
   id: SoapHomemade
   parent: Soap
