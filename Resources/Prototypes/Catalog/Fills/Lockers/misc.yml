@@ -63,7 +63,7 @@
         orGroup: EmergencyNitrogenOrRegularNitrogen
       - id: EmergencyNitrogenTankFilled
         prob: 0.20
-        orGroup: EmergencyNitrogenOrRegularNitrogen  
+        orGroup: EmergencyNitrogenOrRegularNitrogen
       - id: ToolboxEmergencyFilled
         prob: 0.4
       - id: MedkitOxygenFilled
@@ -152,6 +152,8 @@
           prob: 0.20
         - id: DrinkSpaceLube
           prob: 0.20
+        - id: PinkHandcuffs
+          prob: 0.1
         # Syndicate loot
         - id: null
           prob: 0.95

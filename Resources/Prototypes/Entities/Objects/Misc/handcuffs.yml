@@ -138,3 +138,28 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
     state: icon
+
+- type: entity
+  name: pink handcuffs
+  description: Used to detain "bad" boys and girls.
+  id: PinkHandcuffs
+  parent: BaseItem
+  components:
+  - type: Item
+    size: Small
+    storedRotation: 90
+  - type: Handcuff
+    cuffedRSI: Objects/Misc/handcuffs_pink.rsi
+    bodyIconState: body-overlay
+  - type: Sprite
+    sprite: Objects/Misc/handcuffs_pink.rsi
+    state: handcuff
+  - type: Tag
+    tags:
+    - Handcuffs
+  - type: MeleeWeapon
+    resetOnHandSelected: false
+    animation: WeaponArcDisarm
+    damage:
+      types:
+        Blunt: 0
