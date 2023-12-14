@@ -1,13 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Expeditions have been massively tweaked. Timer is 7 minutes, loot count
-      is significantly up, added significantly more loot to the loot table, mob count
-      is significantly up, and mobs overall have been nerfed (no more 15 damage carps
-      ending you). It also has a flat 13 minute cooldown. Better bring your fultons
-      if you expect to bring stuff back.', type: Tweak}
-  id: 4859
-  time: '2023-09-19T12:52:01.0000000+00:00'
 - author: Repo
   changes:
   - {message: Time out for particular uplink items for balancing. Syndicate Bomb can
@@ -2903,3 +2894,9 @@ Entries:
       and can convert gases into liquids. Tasty!, type: Add}
   id: 5359
   time: '2023-12-14T03:35:44.0000000+00:00'
+- author: DangerRevolution
+  changes:
+  - {message: Extended emergency nitrogen tanks can now be found on the station.,
+    type: Add}
+  id: 5360
+  time: '2023-12-14T04:35:39.0000000+00:00'
