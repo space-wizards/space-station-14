@@ -83,6 +83,9 @@ namespace Content.Server.Atmos.Components
         public readonly Queue<TileAtmosphere> CurrentRunInvalidatedTiles = new();
 
         [ViewVariables]
+        public readonly List<TileAtmosphere> PossiblyDisconnectedTiles = new(100);
+
+        [ViewVariables]
         public int InvalidatedCoordsCount => InvalidatedCoords.Count;
 
         [ViewVariables]

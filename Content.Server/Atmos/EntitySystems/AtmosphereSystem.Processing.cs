@@ -82,13 +82,8 @@ namespace Content.Server.Atmos.EntitySystems
                 GridUpdateAdjacent(ent, tile, mapAtmos, activate: true);
 
                 // Update tile air mixture.
-                UpdateTileAir(ent, mapAtmos, tile, volume, out var trimDisconnected);
+                UpdateTileAir(ent, mapAtmos, tile, volume);
                 InvalidateVisuals(uid, indices, visuals);
-
-                // This tile is a new map-atmosphere (a tile with no associated grid tile).
-                // In the event that it has no neighbouring grid tiles we will remove it.
-                if (trimDisconnected)
-                    TrimDisconnectedMapTiles(ent, tile);
 
                 if (number++ < InvalidCoordinatesLagCheckIterations)
                     continue;
@@ -96,47 +91,73 @@ namespace Content.Server.Atmos.EntitySystems
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
-                {
                     return false;
-                }
             }
 
+            TrimDisconnectedMapTiles(ent);
             return true;
         }
 
-        private void TrimDisconnectedMapTiles(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
-            TileAtmosphere tile)
+        /// <summary>
+        /// This method queued a tile and all of its neighbours up for processing by <see cref="TrimDisconnectedMapTiles"/>.
+        /// </summary>
+        public void QueueTileTrim(GridAtmosphereComponent atmos, TileAtmosphere tile)
         {
-            DebugTools.Assert(tile.MapAtmos);
+            if (!tile.TrimQueued)
+            {
+                tile.TrimQueued = true;
+                atmos.PossiblyDisconnectedTiles.Add(tile);
+            }
+
+            for (var i = 0; i < Atmospherics.Directions; i++)
+            {
+                var direction = (AtmosDirection) (1 << i);
+                var indices = tile.GridIndices.Offset(direction);
+                if (atmos.Tiles.TryGetValue(indices, out var adj)
+                    && adj.MapTile
+                    && !adj.TrimQueued)
+                {
+                    adj.TrimQueued = true;
+                    atmos.PossiblyDisconnectedTiles.Add(adj);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tiles in a <see cref="GridAtmosphereComponent"/> are either grid-tiles, or they they should be are tiles
+        /// adjacent to grid-tiles that represent the map's atmosphere. This method trims any map-tiles that are no longer
+        /// adjacent to any grid-tiles.
+        /// </summary>
+        private void TrimDisconnectedMapTiles(
+            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
+        {
             var atmos = ent.Comp1;
 
-            var connected = false;
-            for (var i = 0; i < Atmospherics.Directions; i++)
+            foreach (var tile in atmos.PossiblyDisconnectedTiles)
             {
-                var direction = (AtmosDirection) (1 << i);
-                var indices = tile.GridIndices.Offset(direction);
+                tile.TrimQueued = false;
+                if (!tile.MapTile)
+                    continue;
 
-                // TODO ATMOS PR  this is recursive... aaahhh!!!!!
-                // TODO ADD A TRIM QUEUE
-                if (atmos.Tiles.TryGetValue(indices, out var adj) && adj.MapAtmos)
-                    TrimDisconnectedMapTiles(ent, adj);
+                var connected = false;
+                for (var i = 0; i < Atmospherics.Directions; i++)
+                {
+                    var indices = tile.GridIndices.Offset((AtmosDirection) (1 << i));
+                    if (_map.TryGetTile(ent.Comp3, indices, out var gridTile) && !gridTile.IsEmpty)
+                    {
+                        connected = true;
+                        break;
+                    }
+                }
 
-                if (_map.TryGetTile(ent.Comp3, indices, out var gridTile) && !gridTile.IsEmpty)
-                    connected = true;
+                if (!connected)
+                {
+                    RemoveActiveTile(atmos, tile);
+                    atmos.Tiles.Remove(tile.GridIndices);
+                }
             }
 
-            for (var i = 0; i < Atmospherics.Directions; i++)
-            {
-                var direction = (AtmosDirection) (1 << i);
-                var indices = tile.GridIndices.Offset(direction);
-            }
-
-            if (connected)
-                return;
-
-            RemoveActiveTile(atmos, tile);
-            atmos.Tiles.Remove(tile.GridIndices);
+            atmos.PossiblyDisconnectedTiles.Clear();
         }
 
         /// <summary>
@@ -146,15 +167,13 @@ namespace Content.Server.Atmos.EntitySystems
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
             MapAtmosphereComponent? mapAtmos,
             TileAtmosphere tile,
-            float volume,
-            out bool trimDisconnected)
+            float volume)
         {
             var idx = tile.GridIndices;
 
             DebugTools.Assert(!tile.AirtightDirty);
             var data = tile.AirtightData;
             var fullyBlocked = data.BlockedDirections == AtmosDirection.All;
-            trimDisconnected = false;
 
             bool isSpace;
             if (_map.TryGetTileDef(ent.Comp3, idx, out var tileDef))
@@ -163,7 +182,7 @@ namespace Content.Server.Atmos.EntitySystems
                 isSpace = contentDef.IsSpace;
                 tile.ThermalConductivity = contentDef.ThermalConductivity;
                 tile.HeatCapacity = contentDef.HeatCapacity;
-                tile.MapAtmos = false;
+                tile.MapTile = false;
             }
             else
             {
@@ -171,10 +190,13 @@ namespace Content.Server.Atmos.EntitySystems
                 tile.ThermalConductivity =  0.5f;
                 tile.HeatCapacity = float.PositiveInfinity;
 
-                if (!tile.MapAtmos)
+                if (!tile.MapTile)
                 {
-                    trimDisconnected = true;
-                    tile.MapAtmos = true;
+                    tile.MapTile = true;
+
+                    // This tile just became a non-grid atmos tile.
+                    // It, or one of its neighbours, might now be completely disconnected from the grid.
+                    QueueTileTrim(ent.Comp1, tile);
                 }
             }
 
@@ -523,6 +545,7 @@ namespace Content.Server.Atmos.EntitySystems
                         }
 
                         atmosphere.ProcessingPaused = false;
+
                         // Next state depends on whether monstermos equalization is enabled or not.
                         // Note: We do this here instead of on the tile equalization step to prevent ending it early.
                         //       Therefore, a change to this CVar might only be applied after that step is over.
