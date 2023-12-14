@@ -211,7 +211,7 @@ public sealed class StickySystem : EntitySystem
             return;
         // delete container if it's now empty
         if (container.ContainedEntities.Count == 0)
-            container.Shutdown();
+            _containerSystem.ShutdownContainer(container);
 
         // try place dropped entity into user hands
         _handsSystem.PickupOrDrop(user, uid);

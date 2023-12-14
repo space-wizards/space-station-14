@@ -150,10 +150,10 @@ namespace Content.Server.Construction
 
             void ShutdownContainers()
             {
-                container.Shutdown();
+                _container.ShutdownContainer(container);
                 foreach (var c in containers.Values.ToArray())
                 {
-                    c.Shutdown();
+                    _container.ShutdownContainer(c);
                 }
             }
 
