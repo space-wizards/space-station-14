@@ -1,0 +1,63 @@
+- type: entity
+  id: BaseTabletopChemicalMachine
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  abstract: true
+  components:
+  - type: Transform
+    anchored: true
+  - type: SolutionContainerMixer
+  - type: ReactionMixer
+  - type: Sprite
+    drawdepth: SmallObjects
+    snapCardinals: true
+  - type: Appearance
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.17,0,0.20,0.4"
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: ItemSlots
+    slots:
+      mixer:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: Machine
+  - type: ContainerContainer
+    containers:
+      mixer: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+
+- type: entity
+  id: MachineElectrolysisUnit
+  parent: BaseTabletopChemicalMachine
+  name: electrolysis unit
+  description: The latest in medicinal electrocution technology.
+  components:
+  - type: SolutionContainerMixer
+    mixDuration: 5
+    mixingSound: /Audio/Machines/blender.ogg
+  - type: ReactionMixer
+    reactionTypes:
+    - Electrolysis
+  - type: Sprite
+    sprite: Structures/Machines/juicer.rsi
+    offset: "0.0,0.4"
+    layers:
+    - map: [ "grinder" ]
+      state: "juicer0"
+  #- type: GenericVisualizer
+  #  visuals:
+  #    enum.ReagentGrinderVisualState.BeakerAttached:
+  #      grinder:
+  #        True: {state: "juicer1"}
+  #        False: {state: "juicer0"}
+  - type: Machine
+    board: ReagentGrinderMachineCircuitboard
