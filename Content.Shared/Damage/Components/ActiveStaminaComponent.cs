@@ -4,7 +4,7 @@ namespace Content.Shared.Damage.Components;
 /// Tracks whether an entity has ANY stamina damage for update purposes only.
 /// </summary>
 [RegisterComponent]
-public sealed class ActiveStaminaComponent : Component
+public sealed partial class ActiveStaminaComponent : Component
 {
 
 }

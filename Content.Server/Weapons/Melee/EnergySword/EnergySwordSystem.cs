@@ -4,7 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
@@ -12,6 +12,8 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Wieldable;
 using Content.Shared.Wieldable.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -98,7 +100,7 @@ public sealed class EnergySwordSystem : EntitySystem
     {
         if (TryComp(uid, out ItemComponent? item))
         {
-            _item.SetSize(uid, 5, item);
+            _item.SetSize(uid, "Small", item);
         }
 
         if (TryComp<DisarmMalusComponent>(uid, out var malus))
@@ -110,13 +112,13 @@ public sealed class EnergySwordSystem : EntitySystem
         {
             weaponComp.HitSound = comp.OnHitOff;
             if (comp.Secret)
-                weaponComp.HideFromExamine = true;
+                weaponComp.Hidden = true;
         }
 
         if (comp.IsSharp)
             RemComp<SharpComponent>(uid);
 
-        _audio.Play(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
+        _audio.PlayEntity(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
 
         comp.Activated = false;
     }
@@ -125,7 +127,7 @@ public sealed class EnergySwordSystem : EntitySystem
     {
         if (TryComp(uid, out ItemComponent? item))
         {
-            _item.SetSize(uid, 9999, item);
+            _item.SetSize(uid, "Huge", item);
         }
 
         if (comp.IsSharp)
@@ -135,7 +137,7 @@ public sealed class EnergySwordSystem : EntitySystem
         {
             weaponComp.HitSound = comp.OnHitOn;
             if (comp.Secret)
-                weaponComp.HideFromExamine = false;
+                weaponComp.Hidden = false;
         }
 
         if (TryComp<DisarmMalusComponent>(uid, out var malus))
@@ -143,7 +145,7 @@ public sealed class EnergySwordSystem : EntitySystem
             malus.Malus += comp.LitDisarmMalus;
         }
 
-        _audio.Play(comp.ActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.ActivateSound.Params);
+        _audio.PlayEntity(comp.ActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.ActivateSound.Params);
 
         comp.Activated = true;
     }

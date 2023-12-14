@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
 {
     [TestFixture]
     [TestOf(typeof(DoAfterComponent))]
-    public sealed class DoAfterServerTest
+    public sealed partial class DoAfterServerTest
     {
         [TestPrototypes]
         private const string Prototypes = @"
@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
   - type: DoAfter
 ";
 
-        private sealed class TestDoAfterEvent : DoAfterEvent
+        private sealed partial class TestDoAfterEvent : DoAfterEvent
         {
             public override DoAfterEvent Clone()
             {
@@ -32,8 +32,8 @@ namespace Content.IntegrationTests.Tests.DoAfter
         [Test]
         public async Task TestSerializable()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             await server.WaitIdleAsync();
             var refMan = server.ResolveDependency<IReflectionManager>();
 
@@ -53,14 +53,14 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestFinished()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             await server.WaitIdleAsync();
 
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -73,7 +73,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
             {
                 var tickTime = 1.0f / timing.TickRate;
                 var mob = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
-                var args = new DoAfterArgs(mob, tickTime / 2, ev, null) { Broadcast = true };
+                var args = new DoAfterArgs(entityManager, mob, tickTime / 2, ev, null) { Broadcast = true };
 #pragma warning disable NUnit2045 // Interdependent assertions.
                 Assert.That(doAfterSystem.TryStartDoAfter(args));
                 Assert.That(ev.Cancelled, Is.False);
@@ -83,14 +83,14 @@ namespace Content.IntegrationTests.Tests.DoAfter
             await server.WaitRunTicks(1);
             Assert.That(ev.Cancelled, Is.False);
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestCancelled()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var entityManager = server.ResolveDependency<IEntityManager>();
             var timing = server.ResolveDependency<IGameTiming>();
             var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<SharedDoAfterSystem>();
@@ -101,7 +101,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 var tickTime = 1.0f / timing.TickRate;
 
                 var mob = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
-                var args = new DoAfterArgs(mob, tickTime * 2, ev, null) { Broadcast = true };
+                var args = new DoAfterArgs(entityManager, mob, tickTime * 2, ev, null) { Broadcast = true };
 
                 if (!doAfterSystem.TryStartDoAfter(args, out var id))
                 {
@@ -118,7 +118,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
             await server.WaitRunTicks(3);
             Assert.That(ev.Cancelled);
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
 [Access(typeof(LogSystem))]
-public sealed class LogComponent : Component
+public sealed partial class LogComponent : Component
 {
     [DataField("spawnedPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnedPrototype = "MaterialWoodPlank1";

@@ -9,7 +9,7 @@ namespace Content.Server.Alert.Click;
 /// </summary>
 [UsedImplicitly]
 [DataDefinition]
-public sealed class ToggleInternals : IAlertClick
+public sealed partial class ToggleInternals : IAlertClick
 {
     public void AlertClicked(EntityUid player)
     {

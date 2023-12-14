@@ -3,7 +3,7 @@ using Content.Shared.Whitelist;
 namespace Content.Server.Shuttles.Components;
 
 [RegisterComponent]
-public sealed class FTLDestinationComponent : Component
+public sealed partial class FTLDestinationComponent : Component
 {
     /// <summary>
     /// Should this destination be restricted in some form from console visibility.

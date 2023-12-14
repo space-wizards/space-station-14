@@ -7,7 +7,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     ///     Drop all items from specified containers
     /// </summary>
     [DataDefinition]
-    public sealed class EmptyContainersBehaviour : IThresholdBehavior
+    public sealed partial class EmptyContainersBehaviour : IThresholdBehavior
     {
         [DataField("containers")]
         public List<string> Containers = new();

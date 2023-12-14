@@ -6,4 +6,4 @@ namespace Content.Shared.Drugs;
 ///     Exists for use as a status effect. Adds a shader to the client that scales with the effect duration.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class SeeingRainbowsComponent : Component { }
+public sealed partial class SeeingRainbowsComponent : Component { }

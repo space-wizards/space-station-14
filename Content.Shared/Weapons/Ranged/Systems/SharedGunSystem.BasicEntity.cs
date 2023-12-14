@@ -37,7 +37,7 @@ public abstract partial class SharedGunSystem
             }
 
             var ent = Spawn(component.Proto, args.Coordinates);
-            args.Ammo.Add((ent, EnsureComp<AmmoComponent>(ent)));
+            args.Ammo.Add((ent, EnsureShootable(ent)));
         }
 
         _recharge.Reset(uid);

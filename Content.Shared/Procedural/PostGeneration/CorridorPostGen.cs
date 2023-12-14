@@ -3,7 +3,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Connects room entrances via corridor segments.
 /// </summary>
-public sealed class CorridorPostGen : IPostDunGen
+public sealed partial class CorridorPostGen : IPostDunGen
 {
     /// <summary>
     /// How far we're allowed to generate a corridor before calling it.

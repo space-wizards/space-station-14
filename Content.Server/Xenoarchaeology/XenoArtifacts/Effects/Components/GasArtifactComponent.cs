@@ -6,7 +6,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 ///     Spawn a random gas with random temperature when artifact activated.
 /// </summary>
 [RegisterComponent]
-public sealed class GasArtifactComponent : Component
+public sealed partial class GasArtifactComponent : Component
 {
     /// <summary>
     ///     Gas that will be spawned when artifact activated.

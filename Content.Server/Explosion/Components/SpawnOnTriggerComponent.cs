@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Explosion.Components;
 
 [RegisterComponent, Access(typeof(TriggerSystem))]
-public sealed class SpawnOnTriggerComponent : Component
+public sealed partial class SpawnOnTriggerComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Proto = string.Empty;

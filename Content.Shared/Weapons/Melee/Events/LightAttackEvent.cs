@@ -9,10 +9,10 @@ namespace Content.Shared.Weapons.Melee.Events;
 [Serializable, NetSerializable]
 public sealed class LightAttackEvent : AttackEvent
 {
-    public readonly EntityUid? Target;
-    public readonly EntityUid Weapon;
+    public readonly NetEntity? Target;
+    public readonly NetEntity Weapon;
 
-    public LightAttackEvent(EntityUid? target, EntityUid weapon, EntityCoordinates coordinates) : base(coordinates)
+    public LightAttackEvent(NetEntity? target, NetEntity weapon, NetCoordinates coordinates) : base(coordinates)
     {
         Target = target;
         Weapon = weapon;

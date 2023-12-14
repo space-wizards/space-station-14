@@ -1,38 +1,53 @@
-- type: instantAction
-  id: RevenantShop
-  icon: Interface/Actions/shop.png
+- type: entity
+  id: ActionRevenantShop
   name: Shop
   description: Opens the ability shop.
-  serverEvent: !type:RevenantShopActionEvent
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/shop.png
+    event: !type:RevenantShopActionEvent
 
-- type: instantAction
-  id: RevenantDefile
-  icon: Interface/Actions/defile.png
+- type: entity
+  id: ActionRevenantDefile
   name: Defile
   description: Costs 30 Essence.
-  serverEvent: !type:RevenantDefileActionEvent
-  useDelay: 15
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/defile.png
+    event: !type:RevenantDefileActionEvent
+    useDelay: 15
 
-- type: instantAction
-  id: RevenantOverloadLights
-  icon: Interface/Actions/overloadlight.png
+- type: entity
+  id: ActionRevenantOverloadLights
   name: Overload Lights
   description: Costs 40 Essence.
-  serverEvent: !type:RevenantOverloadLightsActionEvent
-  useDelay: 20
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/overloadlight.png
+    event: !type:RevenantOverloadLightsActionEvent
+    useDelay: 20
 
-#- type: instantAction
-#  id: RevenantBlight
-#  icon: Interface/Actions/blight.png
+#- type: entity
+#  id: ActionRevenantBlight
 #  name: Blight
 #  description: Costs 50 Essence.
-#  serverEvent: !type:RevenantBlightActionEvent
-#  useDelay: 20
+#  noSpawn: true
+#  components:
+#  - type: InstantAction
+#    icon: Interface/Actions/blight.png
+#    event: !type:RevenantBlightActionEvent
+#    useDelay: 20
 
-- type: instantAction
-  id: RevenantMalfunction
-  icon: Interface/Actions/malfunction.png
+- type: entity
+  id: ActionRevenantMalfunction
   name: Malfunction
   description: Costs 60 Essence.
-  serverEvent: !type:RevenantMalfunctionActionEvent
-  useDelay: 20
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/malfunction.png
+    event: !type:RevenantMalfunctionActionEvent
+    useDelay: 20

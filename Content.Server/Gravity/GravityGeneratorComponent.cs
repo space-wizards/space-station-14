@@ -6,7 +6,7 @@ namespace Content.Server.Gravity
 {
     [RegisterComponent]
     [Access(typeof(GravityGeneratorSystem))]
-    public sealed class GravityGeneratorComponent : SharedGravityGeneratorComponent
+    public sealed partial class GravityGeneratorComponent : SharedGravityGeneratorComponent
     {
         // 1% charge per second.
         [ViewVariables(VVAccess.ReadWrite)] [DataField("chargeRate")] public float ChargeRate { get; set; } = 0.01f;

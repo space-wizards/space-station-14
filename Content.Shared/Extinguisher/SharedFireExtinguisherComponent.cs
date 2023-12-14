@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Extinguisher;
 
-public abstract class SharedFireExtinguisherComponent : Component
+public abstract partial class SharedFireExtinguisherComponent : Component
 {
     [DataField("refillSound")] public SoundSpecifier RefillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 
@@ -12,7 +12,7 @@ public abstract class SharedFireExtinguisherComponent : Component
     [DataField("safety")] public bool Safety = true;
 
     [DataField("safetySound")]
-    public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+    public SoundSpecifier SafetySound { get; private set; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 }
 
 

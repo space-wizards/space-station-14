@@ -1,8 +1,5 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Explosion.EntitySystems;
+using Content.Server.Emp;
 using Content.Server.Power.Components;
-using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
@@ -14,7 +11,6 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Popups;
-using Robust.Shared.Timing;
 
 namespace Content.Server.PowerCell;
 
@@ -23,12 +19,8 @@ namespace Content.Server.PowerCell;
 /// </summary>
 public sealed partial class PowerCellSystem : SharedPowerCellSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ActivatableUISystem _activatable = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
-    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
@@ -41,6 +33,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
 
         SubscribeLocalEvent<PowerCellComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
+        SubscribeLocalEvent<PowerCellComponent, EmpAttemptEvent>(OnCellEmpAttempt);
 
         SubscribeLocalEvent<PowerCellDrawComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<PowerCellDrawComponent, ChargeChangedEvent>(OnDrawChargeChanged);
@@ -96,12 +89,8 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
     }
 
     #region Activatable
-
-    /// <summary>
-    /// Returns whether the entity has a slotted battery and <see cref="PowerCellDrawComponent.UseRate"/> charge.
-    /// </summary>
-    /// <param name="user">Popup to this user with the relevant detail if specified.</param>
-    public bool HasActivatableCharge(EntityUid uid, PowerCellDrawComponent? battery = null, PowerCellSlotComponent? cell = null, EntityUid? user = null)
+    /// <inheritdoc/>
+    public override bool HasActivatableCharge(EntityUid uid, PowerCellDrawComponent? battery = null, PowerCellSlotComponent? cell = null, EntityUid? user = null)
     {
         // Default to true if we don't have the components.
         if (!Resolve(uid, ref battery, ref cell, false))
@@ -109,6 +98,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
 
         return HasCharge(uid, battery.UseRate, cell, user);
     }
+
     /// <summary>
     /// Tries to use the <see cref="PowerCellDrawComponent.UseRate"/> for this entity.
     /// </summary>
@@ -129,11 +119,12 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         return false;
     }
 
-    /// <summary>
-    /// Whether the power cell has any power at all for the draw rate.
-    /// </summary>
-    public bool HasDrawCharge(EntityUid uid, PowerCellDrawComponent? battery = null,
-        PowerCellSlotComponent? cell = null, EntityUid? user = null)
+    /// <inheritdoc/>
+    public override bool HasDrawCharge(
+        EntityUid uid,
+        PowerCellDrawComponent? battery = null,
+        PowerCellSlotComponent? cell = null,
+        EntityUid? user = null)
     {
         if (!Resolve(uid, ref battery, ref cell, false))
             return true;
@@ -142,15 +133,6 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
     }
 
     #endregion
-
-    public void SetPowerCellDrawEnabled(EntityUid uid, bool enabled, PowerCellDrawComponent? component = null)
-    {
-        if (!Resolve(uid, ref component, false) || enabled == component.Drawing)
-            return;
-
-        component.Drawing = enabled;
-        component.NextUpdateTime = _timing.CurTime;
-    }
 
     /// <summary>
     /// Returns whether the entity has a slotted battery and charge for the requested action.
@@ -234,6 +216,14 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
     {
         TryComp<BatteryComponent>(uid, out var battery);
         OnBatteryExamined(uid, battery, args);
+    }
+
+    private void OnCellEmpAttempt(EntityUid uid, PowerCellComponent component, EmpAttemptEvent args)
+    {
+        var parent = Transform(uid).ParentUid;
+        // relay the attempt event to the slot so it can cancel it
+        if (HasComp<PowerCellSlotComponent>(parent))
+            RaiseLocalEvent(parent, args);
     }
 
     private void OnCellSlotExamined(EntityUid uid, PowerCellSlotComponent component, ExaminedEvent args)

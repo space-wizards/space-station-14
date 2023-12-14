@@ -5,7 +5,6 @@ using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.Guidebook.Richtext;
-using Content.Client.Verbs;
 using Content.Client.Verbs.UI;
 using Content.Shared.Input;
 using Content.Shared.Tag;
@@ -37,11 +36,9 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
     public bool Interactive;
 
-    public SpriteComponent? Sprite
-    {
-        get => View.Sprite;
-        set => View.Sprite = value;
-    }
+    public Entity<SpriteComponent>? Sprite => View.Entity == null || View.Sprite == null
+        ? null
+        : (View.Entity.Value, View.Sprite);
 
     public Vector2 Scale
     {
@@ -64,7 +61,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         Interactive = interactive;
 
         var ent = _entityManager.SpawnEntity(proto, MapCoordinates.Nullspace);
-        Sprite = _entityManager.GetComponent<SpriteComponent>(ent);
+        View.SetEntity(ent);
 
         if (caption)
             Caption.Text = _entityManager.GetComponent<MetaDataComponent>(ent).EntityName;
@@ -131,7 +128,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         base.Dispose(disposing);
 
         if (Sprite is not null)
-            _entityManager.DeleteEntity(Sprite.Owner);
+            _entityManager.DeleteEntity(Sprite);
     }
 
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
@@ -146,7 +143,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         var ent = _entityManager.SpawnEntity(proto, MapCoordinates.Nullspace);
 
         _tagSystem.AddTag(ent, GuidebookSystem.GuideEmbedTag);
-        Sprite = _entityManager.GetComponent<SpriteComponent>(ent);
+        View.SetEntity(ent);
 
         if (!args.TryGetValue("Caption", out var caption))
             caption = _entityManager.GetComponent<MetaDataComponent>(ent).EntityName;

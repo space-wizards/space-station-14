@@ -4,7 +4,7 @@
 /// This is used as a marker component, allows them to see gift contents.
 /// </summary>
 [RegisterComponent]
-public sealed class SantaComponent : Component
+public sealed partial class SantaComponent : Component
 {
 
 }

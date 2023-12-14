@@ -8,7 +8,7 @@ namespace Content.Server.Atmos.Reactions;
 ///     Takes in nitrogen and frezon and cools down the surrounding area.
 /// </summary>
 [UsedImplicitly]
-public sealed class FrezonCoolantReaction : IGasReactionEffect
+public sealed partial class FrezonCoolantReaction : IGasReactionEffect
 {
     public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
     {
@@ -45,6 +45,7 @@ public sealed class FrezonCoolantReaction : IGasReactionEffect
             energyReleased = burnRate * Atmospherics.FrezonCoolEnergyReleased * energyModifier;
         }
 
+        energyReleased /= atmosphereSystem.HeatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise
         if (energyReleased >= 0f)
             return ReactionResult.NoReaction;
 

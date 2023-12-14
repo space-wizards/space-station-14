@@ -6,6 +6,33 @@
   - type: MobMover
   - type: Mech
   - type: MechAir
+  - type: AirFilter
+    # everything except oxygen and nitrogen
+    gases:
+    - CarbonDioxide
+    - Plasma
+    - Tritium
+    - WaterVapor
+    - Miasma
+    - NitrousOxide
+    - Frezon
+    #- Helium3 TODO: fusion
+    # remove everything except oxygen to maintain oxygen ratio
+    overflowGases:
+    - Nitrogen
+    - CarbonDioxide
+    - Plasma
+    - Tritium
+    - WaterVapor
+    - Miasma
+    - NitrousOxide
+    - Frezon
+    #- Helium3 TODO: fusion
+  - type: AirIntake
+  # for intake and filter to work
+  - type: AtmosDevice
+    requireAnchored: false
+    joinSystem: true
   - type: DoAfter
   - type: Repairable
     fuelCost: 25
@@ -38,8 +65,8 @@
   - type: Clickable
   - type: WiresPanel
   - type: Wires #we just want the panel
-    BoardName: Mech
-    LayoutId: Mech
+    boardName: wires-board-name-mech
+    layoutId: Mech
   - type: Fixtures
     fixtures:
       fix1:

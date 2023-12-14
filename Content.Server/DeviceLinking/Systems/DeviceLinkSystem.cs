@@ -1,3 +1,4 @@
+﻿using Content.Server.DeviceLinking.Components;
 ﻿using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
@@ -72,7 +73,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
                 sinkComponent.InvokeCounter++;
 
                 //Just skip using device networking if the source or the sink doesn't support it
-                if (!HasComp<DeviceNetworkComponent>(uid) || !TryComp<DeviceNetworkComponent?>(sinkUid, out var sinkNetworkComponent))
+                if (!HasComp<DeviceNetworkComponent>(uid) || !TryComp<DeviceNetworkComponent>(sinkUid, out var sinkNetworkComponent))
                 {
                     var eventArgs = new SignalReceivedEvent(sink, uid);
 
@@ -95,9 +96,23 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
                     }
                 }
 
-                _deviceNetworkSystem.QueuePacket(uid, sinkNetworkComponent.Address, payload, sinkNetworkComponent.ReceiveFrequency);
+                // force using wireless network so things like atmos devices are able to send signals
+                var network = (int) DeviceNetworkComponent.DeviceNetIdDefaults.Wireless;
+                _deviceNetworkSystem.QueuePacket(uid, sinkNetworkComponent.Address, payload, sinkNetworkComponent.ReceiveFrequency, network);
             }
         }
+    }
+
+    /// <summary>
+    /// Helper function that invokes a port with a high/low binary logic signal.
+    /// </summary>
+    public void SendSignal(EntityUid uid, string port, bool signal, DeviceLinkSourceComponent? comp = null)
+    {
+        var data = new NetworkPayload
+        {
+            [DeviceNetworkConstants.LogicState] = signal ? SignalState.High : SignalState.Low
+        };
+        InvokePort(uid, port, data, comp);
     }
 
     /// <summary>

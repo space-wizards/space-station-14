@@ -19,6 +19,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Paper;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
@@ -38,6 +39,7 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     private const string PaperSlotId = "Paper";
 
@@ -469,9 +471,7 @@ public sealed class FaxSystem : EntitySystem
             }
         }
 
-        if (TryComp<MetaDataComponent>(printed, out var metadata))
-            metadata.EntityName = printout.Name;
-
+        _metaData.SetEntityName(printed, printout.Name);
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {ToPrettyString(uid)} printed {ToPrettyString(printed)}: {printout.Content}");
     }
 

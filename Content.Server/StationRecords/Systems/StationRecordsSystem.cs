@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameTicking;
-using Content.Server.Station.Systems;
 using Content.Server.Forensics;
+using Content.Server.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
@@ -31,10 +30,10 @@ namespace Content.Server.StationRecords.Systems;
 ///     depend on this general record being created. This is subject
 ///     to change.
 /// </summary>
-public sealed class StationRecordsSystem : EntitySystem
+public sealed class StationRecordsSystem : SharedStationRecordsSystem
 {
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly StationRecordKeyStorageSystem _keyStorageSystem = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly StationRecordKeyStorageSystem _keyStorage = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
@@ -62,7 +61,7 @@ public sealed class StationRecordsSystem : EntitySystem
             return;
         }
 
-        if (!_inventorySystem.TryGetSlotEntity(player, "id", out var idUid))
+        if (!_inventory.TryGetSlotEntity(player, "id", out var idUid))
         {
             return;
         }
@@ -105,14 +104,10 @@ public sealed class StationRecordsSystem : EntitySystem
         StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records))
-        {
             return;
-        }
 
-        if (!_prototypeManager.TryIndex(jobId, out JobPrototype? jobPrototype))
-        {
+        if (!_prototypeManager.TryIndex<JobPrototype>(jobId, out var jobPrototype))
             throw new ArgumentException($"Invalid job prototype ID: {jobId}");
-        }
 
         var record = new GeneralStationRecord()
         {
@@ -128,8 +123,12 @@ public sealed class StationRecordsSystem : EntitySystem
             DNA = dna
         };
 
-        var key = AddRecord(station, records);
-        AddRecordEntry(key, record, records);
+        var key = AddRecordEntry(station, record);
+        if (!key.IsValid())
+        {
+            Log.Warning($"Failed to add general record entry for {name}");
+            return;
+        }
 
         if (idUid != null)
         {
@@ -141,7 +140,7 @@ public sealed class StationRecordsSystem : EntitySystem
 
             if (keyStorageEntity != null)
             {
-                _keyStorageSystem.AssignKey(keyStorageEntity.Value, key);
+                _keyStorage.AssignKey(keyStorageEntity.Value, key);
             }
         }
 
@@ -151,20 +150,21 @@ public sealed class StationRecordsSystem : EntitySystem
     /// <summary>
     ///     Removes a record from this station.
     /// </summary>
-    /// <param name="station">Station to remove the record from.</param>
-    /// <param name="key">The key to remove.</param>
+    /// <param name="key">The station and key to remove.</param>
     /// <param name="records">Station records component.</param>
     /// <returns>True if the record was removed, false otherwise.</returns>
-    public bool RemoveRecord(EntityUid station, StationRecordKey key, StationRecordsComponent? records = null)
+    public bool RemoveRecord(StationRecordKey key, StationRecordsComponent? records = null)
     {
-        if (station != key.OriginStation || !Resolve(station, ref records))
-        {
+        if (!Resolve(key.OriginStation, ref records))
             return false;
+
+        if (records.Records.RemoveAllRecords(key.Id))
+        {
+            RaiseLocalEvent(new RecordRemovedEvent(key));
+            return true;
         }
 
-        RaiseLocalEvent(new RecordRemovedEvent(key));
-
-        return records.Records.RemoveAllRecords(key);
+        return false;
     }
 
     /// <summary>
@@ -172,22 +172,19 @@ public sealed class StationRecordsSystem : EntitySystem
     ///     from the provided station record key. Will always return
     ///     null if the key does not match the station.
     /// </summary>
-    /// <param name="station">Station to get the record from.</param>
-    /// <param name="key">Key to try and index from the record set.</param>
+    /// <param name="key">Station and key to try and index from the record set.</param>
     /// <param name="entry">The resulting entry.</param>
     /// <param name="records">Station record component.</param>
     /// <typeparam name="T">Type to get from the record set.</typeparam>
     /// <returns>True if the record was obtained, false otherwise.</returns>
-    public bool TryGetRecord<T>(EntityUid station, StationRecordKey key, [NotNullWhen(true)] out T? entry, StationRecordsComponent? records = null)
+    public bool TryGetRecord<T>(StationRecordKey key, [NotNullWhen(true)] out T? entry, StationRecordsComponent? records = null)
     {
         entry = default;
 
-        if (key.OriginStation != station || !Resolve(station, ref records))
-        {
+        if (!Resolve(key.OriginStation, ref records))
             return false;
-        }
 
-        return records.Records.TryGetRecordEntry(key, out entry);
+        return records.Records.TryGetRecordEntry(key.Id, out entry);
     }
 
     /// <summary>
@@ -197,41 +194,37 @@ public sealed class StationRecordsSystem : EntitySystem
     /// <param name="records">Station records component.</param>
     /// <typeparam name="T">Type of record to fetch</typeparam>
     /// <returns>Enumerable of pairs with a station record key, and the entry in question of type T.</returns>
-    public IEnumerable<(StationRecordKey, T)> GetRecordsOfType<T>(EntityUid station, StationRecordsComponent? records = null)
+    public IEnumerable<(uint, T)> GetRecordsOfType<T>(EntityUid station, StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records))
-        {
-            return Array.Empty<(StationRecordKey, T)>();
-        }
+            return Array.Empty<(uint, T)>();
 
         return records.Records.GetRecordsOfType<T>();
     }
 
     /// <summary>
-    ///     Adds a record to a station's record set.
+    ///     Adds a new record entry to a station's record set.
     /// </summary>
-    /// <param name="station">The station to add a record to.</param>
+    /// <param name="station">The station to add the record to.</param>
+    /// <param name="record">The record to add.</param>
     /// <param name="records">Station records component.</param>
-    /// <returns>
-    ///     A station record key, which can be used to add and get records.
-    /// </returns>
-    /// <exception cref="ArgumentException">
-    ///     Occurs when the entity given does not have a station records component.
-    /// </exception>
-    public StationRecordKey AddRecord(EntityUid station, StationRecordsComponent? records)
+    /// <typeparam name="T">The type of record to add.</typeparam>
+    public StationRecordKey AddRecordEntry<T>(EntityUid station, T record, StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records))
-        {
-            throw new ArgumentException($"Could not retrieve a {nameof(StationRecordsComponent)} from entity {station}");
-        }
+            return StationRecordKey.Invalid;
 
-        return records.Records.AddRecord(station);
+        var id = records.Records.AddRecordEntry(record);
+        if (id == null)
+            return StationRecordKey.Invalid;
+
+        return new StationRecordKey(id.Value, station);
     }
 
     /// <summary>
-    ///     Adds a record entry to a station's record set.
+    /// Adds a record to an existing entry.
     /// </summary>
-    /// <param name="key">The key to add the record to.</param>
+    /// <param name="key">The station and id of the existing entry.</param>
     /// <param name="record">The record to add.</param>
     /// <param name="records">Station records component.</param>
     /// <typeparam name="T">The type of record to add.</typeparam>
@@ -239,11 +232,9 @@ public sealed class StationRecordsSystem : EntitySystem
         StationRecordsComponent? records = null)
     {
         if (!Resolve(key.OriginStation, ref records))
-        {
             return;
-        }
 
-        records.Records.AddRecordEntry(key, record);
+        records.Records.AddRecordEntry(key.Id, record);
     }
 
     /// <summary>
@@ -254,16 +245,43 @@ public sealed class StationRecordsSystem : EntitySystem
     public void Synchronize(EntityUid station, StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records))
-        {
             return;
-        }
 
         foreach (var key in records.Records.GetRecentlyAccessed())
         {
-            RaiseLocalEvent(new RecordModifiedEvent(key));
+            RaiseLocalEvent(new RecordModifiedEvent(new StationRecordKey(key, station)));
         }
 
         records.Records.ClearRecentlyAccessed();
+    }
+
+    /// <summary>
+    /// Synchronizes a single record's entries for a station.
+    /// </summary>
+    /// <param name="key">The station and id of the record</param>
+    /// <param name="records">Station records component.</param>
+    public void Synchronize(StationRecordKey key, StationRecordsComponent? records = null)
+    {
+        if (!Resolve(key.OriginStation, ref records))
+            return;
+
+        RaiseLocalEvent(new RecordModifiedEvent(key));
+
+        records.Records.RemoveFromRecentlyAccessed(key.Id);
+    }
+}
+
+/// <summary>
+/// Base event for station record events
+/// </summary>
+public abstract class StationRecordEvent : EntityEventArgs
+{
+    public readonly StationRecordKey Key;
+    public EntityUid Station => Key.OriginStation;
+
+    protected StationRecordEvent(StationRecordKey key)
+    {
+        Key = key;
     }
 }
 
@@ -273,20 +291,19 @@ public sealed class StationRecordsSystem : EntitySystem
 ///     listening to this event, as it contains the character's record key.
 ///     Also stores the general record reference, to save some time.
 /// </summary>
-public sealed class AfterGeneralRecordCreatedEvent : EntityEventArgs
+public sealed class AfterGeneralRecordCreatedEvent : StationRecordEvent
 {
-    public StationRecordKey Key { get; }
-    public GeneralStationRecord Record { get; }
+    public readonly GeneralStationRecord Record;
     /// <summary>
     /// Profile for the related player. This is so that other systems can get further information
     ///     about the player character.
     ///     Optional - other systems should anticipate this.
     /// </summary>
-    public HumanoidCharacterProfile? Profile { get; }
+    public readonly HumanoidCharacterProfile? Profile;
 
-    public AfterGeneralRecordCreatedEvent(StationRecordKey key, GeneralStationRecord record, HumanoidCharacterProfile? profile)
+    public AfterGeneralRecordCreatedEvent(StationRecordKey key, GeneralStationRecord record,
+        HumanoidCharacterProfile? profile) : base(key)
     {
-        Key = key;
         Record = record;
         Profile = profile;
     }
@@ -298,13 +315,10 @@ public sealed class AfterGeneralRecordCreatedEvent : EntityEventArgs
 ///     that store record keys can then remove the key from their internal
 ///     fields.
 /// </summary>
-public sealed class RecordRemovedEvent : EntityEventArgs
+public sealed class RecordRemovedEvent : StationRecordEvent
 {
-    public StationRecordKey Key { get; }
-
-    public RecordRemovedEvent(StationRecordKey key)
+    public RecordRemovedEvent(StationRecordKey key) : base(key)
     {
-        Key = key;
     }
 }
 
@@ -313,12 +327,9 @@ public sealed class RecordRemovedEvent : EntityEventArgs
 ///     inform other systems that records stored in this key
 ///     may have changed.
 /// </summary>
-public sealed class RecordModifiedEvent : EntityEventArgs
+public sealed class RecordModifiedEvent : StationRecordEvent
 {
-    public StationRecordKey Key { get; }
-
-    public RecordModifiedEvent(StationRecordKey key)
+    public RecordModifiedEvent(StationRecordKey key) : base(key)
     {
-        Key = key;
     }
 }

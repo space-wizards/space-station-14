@@ -4,13 +4,15 @@ using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Cloning;
 using Content.Server.Drone.Components;
-using Content.Server.Inventory;
-using Content.Shared.Bed.Sleep;
 using Content.Server.Emoting.Systems;
-using Content.Server.Mind;
+using Content.Server.Inventory;
 using Content.Server.Speech.EntitySystems;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.Cloning;
 using Content.Shared.Damage;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -37,6 +39,16 @@ namespace Content.Server.Zombies
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
+
+        public const SlotFlags ProtectiveSlots =
+            SlotFlags.FEET |
+            SlotFlags.HEAD |
+            SlotFlags.EYES |
+            SlotFlags.GLOVES |
+            SlotFlags.MASK |
+            SlotFlags.NECK |
+            SlotFlags.INNERCLOTHING |
+            SlotFlags.OUTERCLOTHING;
 
         public override void Initialize()
         {
@@ -162,33 +174,27 @@ namespace Content.Server.Zombies
 
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
         {
-            var baseChance = component.MaxZombieInfectionChance;
+            var max = component.MaxZombieInfectionChance;
 
-            if (!TryComp<InventoryComponent>(uid, out var inventoryComponent))
-                return baseChance;
-
-            var enumerator =
-                new InventorySystem.ContainerSlotEnumerator(uid, inventoryComponent.TemplateId, _protoManager, _inv,
-                    SlotFlags.FEET |
-                    SlotFlags.HEAD |
-                    SlotFlags.EYES |
-                    SlotFlags.GLOVES |
-                    SlotFlags.MASK |
-                    SlotFlags.NECK |
-                    SlotFlags.INNERCLOTHING |
-                    SlotFlags.OUTERCLOTHING);
+            if (!_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator, ProtectiveSlots))
+                return max;
 
             var items = 0f;
             var total = 0f;
             while (enumerator.MoveNext(out var con))
             {
                 total++;
-
                 if (con.ContainedEntity != null)
                     items++;
             }
 
-            var max = component.MaxZombieInfectionChance;
+            if (total == 0)
+                return max;
+
+            // Everyone knows that when it comes to zombies, socks & sandals provide just as much protection as an
+            // armored vest. Maybe these should be weighted per-item. I.e. some kind of coverage/protection component.
+            // Or at the very least different weights per slot.
+
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
             var chance = (max-min) * ((total - items)/total) + min;
@@ -217,14 +223,14 @@ namespace Content.Server.Zombies
                 }
                 else
                 {
-                    if (!HasComp<ZombieImmuneComponent>(entity) && _random.Prob(GetZombieInfectionChance(entity, component)))
+                    if (!HasComp<ZombieImmuneComponent>(entity) && !HasComp<NonSpreaderZombieComponent>(args.User) && _random.Prob(GetZombieInfectionChance(entity, component)))
                     {
                         EnsureComp<PendingZombieComponent>(entity);
                         EnsureComp<ZombifyOnDeathComponent>(entity);
                     }
                 }
 
-                if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity))
+                if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity) && !HasComp<ZombieImmuneComponent>(entity))
                 {
                     ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;
@@ -254,9 +260,13 @@ namespace Content.Server.Zombies
             foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
             {
                 _humanoidAppearance.SetBaseLayerColor(target, layer, info.Color);
-                _humanoidAppearance.SetBaseLayerId(target, layer, info.ID);
+                _humanoidAppearance.SetBaseLayerId(target, layer, info.Id);
             }
-            _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
+            if(TryComp<HumanoidAppearanceComponent>(target, out var appcomp))
+            {
+                appcomp.EyeColor = zombiecomp.BeforeZombifiedEyeColor;
+            }
+            _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor, false);
             _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 
             _metaData.SetEntityName(target, zombiecomp.BeforeZombifiedEntityName);

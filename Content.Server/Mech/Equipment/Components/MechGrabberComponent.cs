@@ -10,7 +10,7 @@ namespace Content.Server.Mech.Equipment.Components;
 /// inside of a container so large objects can be moved.
 /// </summary>
 [RegisterComponent]
-public sealed class MechGrabberComponent : Component
+public sealed partial class MechGrabberComponent : Component
 {
     /// <summary>
     /// The change in energy after each grab.
@@ -43,7 +43,7 @@ public sealed class MechGrabberComponent : Component
     [DataField("grabSound")]
     public SoundSpecifier GrabSound = new SoundPathSpecifier("/Audio/Mecha/sound_mecha_hydraulic.ogg");
 
-    public IPlayingAudioStream? AudioStream;
+    public EntityUid? AudioStream;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public Container ItemContainer = default!;

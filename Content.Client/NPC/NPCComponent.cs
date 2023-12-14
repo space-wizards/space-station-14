@@ -2,7 +2,7 @@ using Content.Shared.NPC;
 
 namespace Content.Client.NPC;
 
-public abstract class NPCComponent : SharedNPCComponent
+public abstract partial class NPCComponent : SharedNPCComponent
 {
 
 }

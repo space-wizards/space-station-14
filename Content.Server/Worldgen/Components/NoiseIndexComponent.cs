@@ -8,7 +8,7 @@ namespace Content.Server.Worldgen.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(NoiseIndexSystem))]
-public sealed class NoiseIndexComponent : Component
+public sealed partial class NoiseIndexComponent : Component
 {
     /// <summary>
     ///     An index of generators, to avoid having to recreate them every time a noise channel is used.

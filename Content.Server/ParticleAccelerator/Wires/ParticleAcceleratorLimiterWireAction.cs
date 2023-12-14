@@ -5,11 +5,11 @@ using Content.Server.Wires;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Wires;
-using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.ParticleAccelerator.Wires;
 
-public sealed class ParticleAcceleratorLimiterWireAction : ComponentWireAction<ParticleAcceleratorControlBoxComponent>
+public sealed partial class ParticleAcceleratorLimiterWireAction : ComponentWireAction<ParticleAcceleratorControlBoxComponent>
 {
     public override string Name { get; set; } = "wire-name-pa-limiter";
     public override Color Color { get; set; } = Color.Teal;

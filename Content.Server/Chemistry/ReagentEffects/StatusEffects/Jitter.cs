@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
     ///     This doesn't use generic status effects because it needs to
     ///     take in some parameters that JitterSystem needs.
     /// </summary>
-    public sealed class Jitter : ReagentEffect
+    public sealed partial class Jitter : ReagentEffect
     {
         [DataField("amplitude")]
         public float Amplitude = 10.0f;

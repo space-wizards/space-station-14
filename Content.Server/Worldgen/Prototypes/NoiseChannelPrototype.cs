@@ -15,68 +15,68 @@ public class NoiseChannelConfig
     ///     The noise type used by the noise generator.
     /// </summary>
     [DataField("noiseType")]
-    public FastNoiseLite.NoiseType NoiseType { get; } = FastNoiseLite.NoiseType.Cellular;
+    public FastNoiseLite.NoiseType NoiseType { get; private set; } = FastNoiseLite.NoiseType.Cellular;
 
     /// <summary>
     ///     The fractal type used by the noise generator.
     /// </summary>
     [DataField("fractalType")]
-    public FastNoiseLite.FractalType FractalType { get; } = FastNoiseLite.FractalType.FBm;
+    public FastNoiseLite.FractalType FractalType { get; private set; } = FastNoiseLite.FractalType.FBm;
 
     /// <summary>
     ///     Multiplied by pi in code when used.
     /// </summary>
     [DataField("fractalLacunarityByPi")]
-    public float FractalLacunarityByPi { get; } = 2.0f / 3.0f;
+    public float FractalLacunarityByPi { get; private set; } = 2.0f / 3.0f;
 
     /// <summary>
     ///     Ranges of values that get clamped down to the "clipped" value.
     /// </summary>
     [DataField("clippingRanges")]
-    public List<Vector2> ClippingRanges { get; } = new();
+    public List<Vector2> ClippingRanges { get; private set; } = new();
 
     /// <summary>
     ///     The value clipped chunks are set to.
     /// </summary>
     [DataField("clippedValue")]
-    public float ClippedValue { get; }
+    public float ClippedValue { get; private set; }
 
     /// <summary>
     ///     A value the output is multiplied by.
     /// </summary>
     [DataField("outputMultiplier")]
-    public float OutputMultiplier { get; } = 1.0f;
+    public float OutputMultiplier { get; private set; } = 1.0f;
 
     /// <summary>
     ///     A value the input is multiplied by.
     /// </summary>
     [DataField("inputMultiplier")]
-    public float InputMultiplier { get; } = 1.0f;
+    public float InputMultiplier { get; private set; } = 1.0f;
 
     /// <summary>
     ///     Remaps the output of the noise function from the range (-1, 1) to (0, 1). This is done before all other output
     ///     transformations.
     /// </summary>
     [DataField("remapTo0Through1")]
-    public bool RemapTo0Through1 { get; }
+    public bool RemapTo0Through1 { get; private set; }
 
     /// <summary>
     ///     For when the transformation you need is too complex to describe in YAML.
     /// </summary>
     [DataField("noisePostProcess")]
-    public NoisePostProcess? NoisePostProcess { get; }
+    public NoisePostProcess? NoisePostProcess { get; private set; }
 
     /// <summary>
     ///     For when you need a complex transformation of the input coordinates.
     /// </summary>
     [DataField("noiseCoordinateProcess")]
-    public NoiseCoordinateProcess? NoiseCoordinateProcess { get; }
+    public NoiseCoordinateProcess? NoiseCoordinateProcess { get; private set; }
 
     /// <summary>
     ///     The "center" of the range of values. Or the minimum if mapped 0 through 1.
     /// </summary>
     [DataField("minimum")]
-    public float Minimum { get; }
+    public float Minimum { get; private set; }
 }
 
 [Prototype("noiseChannel")]
@@ -93,7 +93,7 @@ public sealed class NoiseChannelPrototype : NoiseChannelConfig, IPrototype, IInh
 
     /// <inheritdoc />
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 }
 
 /// <summary>
@@ -154,7 +154,7 @@ public struct NoiseGenerator
 ///     A processing class that adjusts the input coordinate space to a noise channel.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract class NoiseCoordinateProcess
+public abstract partial class NoiseCoordinateProcess
 {
     public abstract Vector2 Process(Vector2 inp);
 }
@@ -163,7 +163,7 @@ public abstract class NoiseCoordinateProcess
 ///     A processing class that adjusts the final result of the noise channel.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract class NoisePostProcess
+public abstract partial class NoisePostProcess
 {
     public abstract float Process(float inp);
 }

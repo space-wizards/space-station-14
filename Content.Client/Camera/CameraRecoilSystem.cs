@@ -13,7 +13,7 @@ public sealed class CameraRecoilSystem : SharedCameraRecoilSystem
 
     private void OnCameraKick(CameraKickEvent ev)
     {
-        KickCamera(ev.Euid, ev.Recoil);
+        KickCamera(GetEntity(ev.NetEntity), ev.Recoil);
     }
 
     public override void KickCamera(EntityUid uid, Vector2 recoil, CameraRecoilComponent? component = null)

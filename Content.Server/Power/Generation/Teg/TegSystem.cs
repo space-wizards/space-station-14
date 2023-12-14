@@ -270,15 +270,19 @@ public sealed class TegSystem : EntitySystem
         _appearance.SetData(uid, TegVisuals.CirculatorSpeed, speed);
         _appearance.SetData(uid, TegVisuals.CirculatorPower, powered);
 
-        if (TryComp(uid, out PointLightComponent? pointLight))
+        if (_pointLight.TryGetLight(uid, out var pointLight))
         {
             _pointLight.SetEnabled(uid, powered, pointLight);
-            pointLight.Color = speed == TegCirculatorSpeed.SpeedFast ? circ.LightColorFast : circ.LightColorSlow;
+            _pointLight.SetColor(uid, speed == TegCirculatorSpeed.SpeedFast ? circ.LightColorFast : circ.LightColorSlow, pointLight);
         }
     }
 
     private void GeneratorPowerChange(EntityUid uid, TegGeneratorComponent component, ref PowerChangedEvent args)
     {
+        // TODO: I wish power events didn't go out on shutdown.
+        if (TerminatingOrDeleted(uid))
+            return;
+
         var nodeGroup = GetNodeGroup(uid);
         if (nodeGroup == null)
             return;

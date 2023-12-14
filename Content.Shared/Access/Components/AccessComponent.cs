@@ -22,14 +22,14 @@ namespace Content.Shared.Access.Components
 
         [DataField("tags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
         [Access(typeof(SharedAccessSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
-        [AutoNetworkedField(true)]
+        [AutoNetworkedField]
         public HashSet<string> Tags = new();
 
         /// <summary>
         ///     Access Groups. These are added to the tags during map init. After map init this will have no effect.
         /// </summary>
         [DataField("groups", readOnly: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessGroupPrototype>))]
-        [AutoNetworkedField(true)]
+        [AutoNetworkedField]
         public HashSet<string> Groups = new();
     }
 

@@ -15,13 +15,14 @@ public sealed partial class ProjectileComponent : Component
     /// <summary>
     /// User that shot this projectile.
     /// </summary>
-    [DataField("shooter"), AutoNetworkedField] public EntityUid Shooter;
+    [DataField("shooter"), AutoNetworkedField]
+    public EntityUid? Shooter;
 
     /// <summary>
     /// Weapon used to shoot.
     /// </summary>
     [DataField("weapon"), AutoNetworkedField]
-    public EntityUid Weapon;
+    public EntityUid? Weapon;
 
     [DataField("ignoreShooter"), AutoNetworkedField]
     public bool IgnoreShooter = true;
@@ -41,5 +42,14 @@ public sealed partial class ProjectileComponent : Component
     [DataField("soundForce")]
     public bool ForceSound = false;
 
+    /// <summary>
+    ///     Whether this projectile will only collide with entities if it was shot from a gun (if <see cref="Weapon"/> is not null)
+    /// </summary>
+    [DataField("onlyCollideWhenShot")]
+    public bool OnlyCollideWhenShot = false;
+
+    /// <summary>
+    ///     Whether this projectile has already damaged an entity.
+    /// </summary>
     public bool DamagedEntity;
 }

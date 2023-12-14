@@ -137,3 +137,23 @@
   cost: 2000
   category: Service
   group: market
+
+- type: cargoProduct
+  id: ServiceAnimalCarrier
+  icon: 
+    sprite: Objects/Storage/petcarrier.rsi
+    state: icon
+  product: PetCarrier
+  cost: 500
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: JanitorExplosive
+  icon:
+    sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
+    state: icon
+  product: CrateJanitorExplosive
+  cost: 1000
+  category: Service
+  group: market

@@ -9,8 +9,10 @@ using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Construction.Steps;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Prying.Systems;
 using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -37,7 +39,7 @@ namespace Content.Server.Construction
 
             // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
             SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent,
-                new []{typeof(AnchorableSystem)},
+                new []{typeof(AnchorableSystem), typeof(PryingSystem), typeof(WeldableSystem)},
                 new []{typeof(EncryptionKeySystem)});
             SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
             SubscribeLocalEvent<ConstructionComponent, PartAssemblyPartInsertedEvent>(EnqueueEvent);
@@ -240,7 +242,7 @@ namespace Content.Server.Construction
                     interactDoAfter.User,
                     interactDoAfter.Used!.Value,
                     uid,
-                    interactDoAfter.ClickLocation);
+                    GetCoordinates(interactDoAfter.ClickLocation));
 
                 doAfterState = DoAfterState.Completed;
             }
@@ -281,9 +283,9 @@ namespace Content.Server.Construction
                     // If we still haven't completed this step's DoAfter...
                     if (doAfterState == DoAfterState.None && insertStep.DoAfter > 0)
                     {
-                        var doAfterEv = new ConstructionInteractDoAfterEvent(interactUsing);
+                        var doAfterEv = new ConstructionInteractDoAfterEvent(EntityManager, interactUsing);
 
-                        var doAfterEventArgs = new DoAfterArgs(interactUsing.User, step.DoAfter, doAfterEv, uid, uid, interactUsing.Used)
+                        var doAfterEventArgs = new DoAfterArgs(EntityManager, interactUsing.User, step.DoAfter, doAfterEv, uid, uid, interactUsing.Used)
                         {
                             BreakOnDamage = false,
                             BreakOnTargetMove = true,
@@ -367,7 +369,7 @@ namespace Content.Server.Construction
                         uid,
                         TimeSpan.FromSeconds(toolInsertStep.DoAfter),
                         new [] { toolInsertStep.Tool },
-                        new ConstructionInteractDoAfterEvent(interactUsing),
+                        new ConstructionInteractDoAfterEvent(EntityManager, interactUsing),
                         out var doAfter);
 
                     return result && doAfter != null ? HandleResult.DoAfter : HandleResult.False;
@@ -378,16 +380,28 @@ namespace Content.Server.Construction
                     if (ev is not OnTemperatureChangeEvent)
                         break;
 
-                    if (TryComp<TemperatureComponent>(uid, out var tempComp))
+                    // prefer using InternalTemperature since that's more accurate for cooking.
+                    float temp;
+                    if (TryComp<InternalTemperatureComponent>(uid, out var internalTemp))
                     {
-                        if ((!temperatureChangeStep.MinTemperature.HasValue || tempComp.CurrentTemperature >= temperatureChangeStep.MinTemperature.Value) &&
-                            (!temperatureChangeStep.MaxTemperature.HasValue || tempComp.CurrentTemperature <= temperatureChangeStep.MaxTemperature.Value))
-                        {
-                            return HandleResult.True;
-                        }
+                        temp = internalTemp.Temperature;
                     }
-                    return HandleResult.False;
+                    else if (TryComp<TemperatureComponent>(uid, out var tempComp))
+                    {
+                        temp = tempComp.CurrentTemperature;
+                    }
+                    else
+                    {
+                        return HandleResult.False;
+                    }
 
+                    if ((!temperatureChangeStep.MinTemperature.HasValue || temp >= temperatureChangeStep.MinTemperature.Value) &&
+                        (!temperatureChangeStep.MaxTemperature.HasValue || temp <= temperatureChangeStep.MaxTemperature.Value))
+                    {
+                        return HandleResult.True;
+                    }
+
+                    return HandleResult.False;
                 }
 
                 case PartAssemblyConstructionGraphStep partAssemblyStep:

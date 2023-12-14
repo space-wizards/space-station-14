@@ -8,7 +8,7 @@ namespace Content.Server.Fluids.Components;
 /// Added to puddles that contain water so it may evaporate over time.
 /// </summary>
 [RegisterComponent, Access(typeof(PuddleSystem))]
-public sealed class EvaporationComponent : Component
+public sealed partial class EvaporationComponent : Component
 {
     /// <summary>
     /// The next time we remove the EvaporationSystem reagent amount from this entity.

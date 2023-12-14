@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Body.Components;
-using Content.Server.Mind.Components;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Random;
 
@@ -15,7 +16,7 @@ public sealed class TransferMindOnGibSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -25,7 +26,7 @@ public sealed class TransferMindOnGibSystem : EntitySystem
 
     private void OnGib(EntityUid uid, TransferMindOnGibComponent component, BeingGibbedEvent args)
     {
-        if (!TryComp<MindContainerComponent>(uid, out var mindcomp) || mindcomp.Mind == null)
+        if (!_mindSystem.TryGetMind(uid, out var mindId, out var mind))
             return;
 
         var validParts = args.GibbedParts.Where(p => _tag.HasTag(p, component.TargetTag)).ToHashSet();
@@ -33,6 +34,6 @@ public sealed class TransferMindOnGibSystem : EntitySystem
             return;
 
         var ent = _random.Pick(validParts);
-        _mindSystem.TransferTo(mindcomp.Mind, ent);
+        _mindSystem.TransferTo(mindId, ent, mind: mind);
     }
 }

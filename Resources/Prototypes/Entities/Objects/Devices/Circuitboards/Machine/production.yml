@@ -218,6 +218,22 @@
         Cable: 1
 
 - type: entity
+  id: ArtifactCrusherMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: artifact crusher machine board
+  description: A machine printed circuit board for an artifact crusher.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: MachineArtifactCrusher
+    requirements:
+      Manipulator: 2
+    materialRequirements:
+      Glass: 1
+      Steel: 5
+
+- type: entity
   parent: BaseMachineCircuitboard
   id: AnomalyVesselCircuitboard
   name: anomaly vessel machine board
@@ -228,10 +244,43 @@
     - type: MachineBoard
       prototype: MachineAnomalyVessel
       requirements:
-        Capacitor: 5
+        Capacitor: 3
       materialRequirements:
         Cable: 1
         PlasmaGlass: 10
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: AnomalyVesselExperimentalCircuitboard
+  name: experimental anomaly vessel machine board
+  description: A machine printed circuit board for an experimental anomaly vessel.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: MachineAnomalyVesselExperimental
+    requirements:
+      Capacitor: 3
+    materialRequirements:
+      Cable: 5
+      PlasmaGlass: 15
+      MetalRod: 4
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: AnomalySynchronizerCircuitboard
+  name: anomaly synchronizer machine board
+  description: A machine printed circuit board for an anomaly synchronizer.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineAnomalySynchronizer
+      requirements:
+        Manipulator: 2
+        Capacitor: 5
+      materialRequirements:
+        PlasmaGlass: 25
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -435,7 +484,7 @@
     - type: Sprite
       state: service
     - type: MachineBoard
-      prototype: hydroponicsTray
+      prototype: HydroponicsTrayEmpty
       materialRequirements:
         # replacing the console screen
         Glass: 5
@@ -476,7 +525,10 @@
     - type: MachineBoard
       prototype: SMESBasicEmpty
       requirements:
-        Capacitor: 5
+        Capacitor: 1
+        PowerCell: 4
+      materialRequirements:
+        CableHV: 10
 
 - type: entity
   id: CellRechargerCircuitboard
@@ -553,7 +605,8 @@
     - type: MachineBoard
       prototype: SubstationBasicEmpty
       requirements:
-        Capacitor: 3
+        Capacitor: 1
+        PowerCell: 1
       materialRequirements:
         CableMV: 5
         CableHV: 5
@@ -599,14 +652,14 @@
           ExamineName: Woodwind Instrument
 
 - type: entity
-  id: GeneratorPlasmaMachineCircuitboard
+  id: PortableGeneratorPacmanMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: generator (plasma) machine board
+  name: P.A.C.M.A.N.-type portable generator machine board
   components:
     - type: Sprite
       state: engineering
     - type: MachineBoard
-      prototype: GeneratorPlasma
+      prototype: PortableGeneratorPacman
       requirements:
         Capacitor: 1
       materialRequirements:
@@ -643,18 +696,37 @@
       Glass: 2
 
 - type: entity
-  id: GeneratorUraniumMachineCircuitboard
+  id: PortableGeneratorSuperPacmanMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: generator (uranium) machine board
+  name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator machine board
   components:
     - type: Sprite
       state: engineering
     - type: MachineBoard
-      prototype: GeneratorUranium
+      prototype: PortableGeneratorSuperPacman
       requirements:
         Capacitor: 2
       materialRequirements:
         CableHV: 10
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 200
+      chemicalComposition:
+        Silicon: 20
+
+- type: entity
+  id: PortableGeneratorJrPacmanMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: J.R.P.A.C.M.A.N.-type portable generator machine board
+  components:
+    - type: Sprite
+      state: engineering
+    - type: MachineBoard
+      prototype: PortableGeneratorJrPacman
+      requirements:
+        Capacitor: 1
+      materialRequirements:
+        Cable: 10
     - type: PhysicalComposition
       materialComposition:
         Glass: 200
@@ -692,6 +764,20 @@
         Glass: 1
 
 - type: entity
+  parent: BaseMachineCircuitboard
+  id: ElectricGrillMachineCircuitboard
+  name: electric grill machine board
+  description: A machine printed circuit board for an electric grill.
+  components:
+  - type: MachineBoard
+    prototype: KitchenElectricGrill
+    requirements:
+      Capacitor: 4
+    materialRequirements:
+      Glass: 2
+      Cable: 5
+
+- type: entity
   id: StasisBedMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: Stasis Bed (Machine Board)
@@ -702,17 +788,10 @@
       prototype: StasisBed
       requirements:
         Capacitor: 1
+        Manipulator: 1
       materialRequirements:
         Cable: 3
-      tagRequirements:
-        Pipe:
-          Amount: 1
-          DefaultPrototype: GasPipeStraight
-          ExamineName: Pipe
-        Cryobeaker:
-          Amount: 2
-          DefaultPrototype: CryostasisBeaker
-          ExamineName: Cryostasis Beaker
+        Steel: 2
 
 - type: entity
   id: MaterialReclaimerMachineCircuitboard

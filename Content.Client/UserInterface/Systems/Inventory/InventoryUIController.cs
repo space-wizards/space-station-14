@@ -1,12 +1,12 @@
 using Content.Client.Gameplay;
 using Content.Client.Hands.Systems;
 using Content.Client.Inventory;
-using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Windows;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
+using Content.Shared.Storage;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -27,6 +27,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
+    [UISystemDependency] private readonly ContainerSystem _container = default!;
 
     private EntityUid? _playerUid;
     private InventorySlotsComponent? _playerInventory;
@@ -125,9 +126,8 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
                 container.AddButton(button);
             }
 
-            var sprite = _entities.GetComponentOrNull<SpriteComponent>(data.HeldEntity);
-            var showStorage = _entities.HasComponent<ClientStorageComponent>(data.HeldEntity);
-            var update = new SlotSpriteUpdate(data.SlotGroup, data.SlotName, sprite, showStorage);
+            var showStorage = _entities.HasComponent<StorageComponent>(data.HeldEntity);
+            var update = new SlotSpriteUpdate(data.HeldEntity, data.SlotGroup, data.SlotName, showStorage);
             SpriteUpdated(update);
         }
     }
@@ -151,9 +151,8 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
                 _strippingWindow!.InventoryButtons.AddButton(button, data.ButtonOffset);
             }
 
-            var sprite = _entities.GetComponentOrNull<SpriteComponent>(data.HeldEntity);
-            var showStorage = _entities.HasComponent<ClientStorageComponent>(data.HeldEntity);
-            var update = new SlotSpriteUpdate(data.SlotGroup, data.SlotName, sprite, showStorage);
+            var showStorage = _entities.HasComponent<StorageComponent>(data.HeldEntity);
+            var update = new SlotSpriteUpdate(data.HeldEntity, data.SlotGroup, data.SlotName, showStorage);
             SpriteUpdated(update);
         }
     }
@@ -283,12 +282,12 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         var hoverEntity = _entities.SpawnEntity("hoverentity", MapCoordinates.Nullspace);
         var hoverSprite = _entities.GetComponent<SpriteComponent>(hoverEntity);
         var fits = _inventorySystem.CanEquip(player.Value, held, control.SlotName, out _, slotDef) &&
-                   container.CanInsert(held, _entities);
+                   _container.CanInsert(held, container);
 
         hoverSprite.CopyFrom(sprite);
         hoverSprite.Color = fits ? new Color(0, 255, 0, 127) : new Color(255, 0, 0, 127);
 
-        control.HoverSpriteView.Sprite = hoverSprite;
+        control.HoverSpriteView.SetEntity(hoverEntity);
     }
 
     private void AddSlot(SlotData data)
@@ -338,18 +337,18 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private void SpriteUpdated(SlotSpriteUpdate update)
     {
-        var (group, name, sprite, showStorage) = update;
+        var (entity, group, name, showStorage) = update;
 
         if (_strippingWindow?.InventoryButtons.GetButton(update.Name) is { } inventoryButton)
         {
-            inventoryButton.SpriteView.Sprite = sprite;
+            inventoryButton.SpriteView.SetEntity(entity);
             inventoryButton.StorageButton.Visible = showStorage;
         }
 
         if (_slotGroups.GetValueOrDefault(group)?.GetButton(name) is not { } button)
             return;
 
-        button.SpriteView.Sprite = sprite;
+        button.SpriteView.SetEntity(entity);
         button.StorageButton.Visible = showStorage;
     }
 

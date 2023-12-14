@@ -4,7 +4,7 @@ using Content.Shared.Damage;
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Access(typeof(RespiratorSystem))]
-    public sealed class RespiratorComponent : Component
+    public sealed partial class RespiratorComponent : Component
     {
         /// <summary>
         ///     Saturation level. Reduced by CycleDelay each tick.

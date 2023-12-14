@@ -2,7 +2,7 @@ using Content.Shared.Interaction;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
-public sealed class RotateToTargetOperator : HTNOperator
+public sealed partial class RotateToTargetOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     private RotateToFaceSystem _rotate = default!;

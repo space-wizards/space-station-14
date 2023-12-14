@@ -4,14 +4,14 @@ using System.Threading;
 using Content.Server.Administration.Managers;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
-using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN.PrimitiveTasks;
 using Content.Server.NPC.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Mobs;
 using Content.Shared.NPC;
 using JetBrains.Annotations;
-using Robust.Server.Player;
-using Robust.Shared.Players;
+using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -32,6 +32,10 @@ public sealed class HTNSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<HTNComponent, MobStateChangedEvent>(_npc.OnMobStateChange);
+        SubscribeLocalEvent<HTNComponent, MapInitEvent>(_npc.OnNPCMapInit);
+        SubscribeLocalEvent<HTNComponent, PlayerAttachedEvent>(_npc.OnPlayerNPCAttach);
+        SubscribeLocalEvent<HTNComponent, PlayerDetachedEvent>(_npc.OnPlayerNPCDetach);
         SubscribeLocalEvent<HTNComponent, ComponentShutdown>(OnHTNShutdown);
         SubscribeNetworkEvent<RequestHTNMessage>(OnHTNMessage);
 
@@ -41,7 +45,7 @@ public sealed class HTNSystem : EntitySystem
 
     private void OnHTNMessage(RequestHTNMessage msg, EntitySessionEventArgs args)
     {
-        if (!_admin.HasAdminFlag((IPlayerSession) args.SenderSession, AdminFlags.Debug))
+        if (!_admin.HasAdminFlag(args.SenderSession, AdminFlags.Debug))
         {
             _subscribers.Remove(args.SenderSession);
             return;
@@ -132,6 +136,7 @@ public sealed class HTNSystem : EntitySystem
 
     private void OnHTNShutdown(EntityUid uid, HTNComponent component, ComponentShutdown args)
     {
+        _npc.OnNPCShutdown(uid, component, args);
         component.PlanningToken?.Cancel();
         component.PlanningJob = null;
     }
@@ -224,7 +229,7 @@ public sealed class HTNSystem : EntitySystem
 
                         RaiseNetworkEvent(new HTNMessage()
                         {
-                            Uid = uid,
+                            Uid = GetNetEntity(uid),
                             Text = text.ToString(),
                         }, session.ConnectedClient);
                     }

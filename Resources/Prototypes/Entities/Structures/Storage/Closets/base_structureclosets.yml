@@ -184,6 +184,8 @@
   name: suit storage unit
   description: A fancy hi-tech storage unit made for storing space suits.
   components:
+  - type: AccessReader
+  - type: Lock
   - type: Anchorable
     delay: 2
   - type: StaticPrice
@@ -196,11 +198,14 @@
     sprite: Structures/Storage/suit_storage.rsi
     layers:
     - state: base
-    - state: closed
+    - state: door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.StorageVisualLayers.Lock"]
+      shader: unshaded
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     damage:
@@ -257,5 +262,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBase: base
+    stateLocked: locked
+    stateUnlocked: unlocked
     stateDoorOpen: base
-    stateDoorClosed: closed
+    stateDoorClosed: door

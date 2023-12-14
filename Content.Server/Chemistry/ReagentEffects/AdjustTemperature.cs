@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
-    public sealed class AdjustTemperature : ReagentEffect
+    public sealed partial class AdjustTemperature : ReagentEffect
     {
         [DataField("amount")]
         public float Amount;

@@ -11,13 +11,13 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class MachineFrameComplete : IGraphCondition
+    public sealed partial class MachineFrameComplete : IGraphCondition
     {
         [DataField("guideIconBoard")]
-        public SpriteSpecifier? GuideIconBoard { get; }
+        public SpriteSpecifier? GuideIconBoard { get; private set; }
 
         [DataField("guideIconParts")]
-        public SpriteSpecifier? GuideIconPart { get; }
+        public SpriteSpecifier? GuideIconPart { get; private set; }
 
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
@@ -34,7 +34,7 @@ namespace Content.Server.Construction.Conditions
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!entityManager.TryGetComponent<MachineFrameComponent?>(entity, out var machineFrame))
+            if (!entityManager.TryGetComponent(entity, out MachineFrameComponent? machineFrame))
                 return false;
 
             if (!machineFrame.HasBoard)

@@ -2,7 +2,7 @@ using Robust.Shared.Audio;
 
 namespace Content.Shared.Weapons.Misc;
 
-public abstract class BaseForceGunComponent : Component
+public abstract partial class BaseForceGunComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("lineColor"), AutoNetworkedField]
     public Color LineColor = Color.Orange;
@@ -52,5 +52,5 @@ public abstract class BaseForceGunComponent : Component
         Params = AudioParams.Default.WithLoop(true).WithVolume(-8f),
     };
 
-    public IPlayingAudioStream? Stream;
+    public EntityUid? Stream;
 }

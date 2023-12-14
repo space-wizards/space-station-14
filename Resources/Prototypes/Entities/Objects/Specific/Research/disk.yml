@@ -8,6 +8,9 @@
     sprite: Objects/Specific/Research/researchdisk.rsi
     state: icon
   - type: ResearchDisk
+  - type: GuideHelp
+    guides:
+    - Science
 
 - type: entity
   parent: ResearchDisk
@@ -55,7 +58,7 @@
         datadisk_base: Sixteen
   - type: TechnologyDisk
   - type: StaticPrice
-    price: 1000
+    price: 100
 
 - type: entity
   parent: TechnologyDisk

@@ -326,6 +326,9 @@
     color: "#1f8c28"
   - type: Computer
     board: StationRecordsComputerCircuitboard
+  - type: GuideHelp
+    guides:
+    - DNA
 
 - type: entity
   parent: BaseComputer
@@ -380,6 +383,9 @@
       state: rd_key
   - type: ResearchClient
   - type: ResearchConsole
+  - type: ActiveRadio
+    channels:
+    - Science
   - type: TechnologyDatabase
   - type: ActivatableUI
     key: enum.ResearchConsoleUiKey.Key
@@ -400,6 +406,9 @@
     radius: 1.5
     energy: 1.6
     color: "#b53ca1"
+  - type: GuideHelp
+    guides:
+    - Science
 
 - type: entity
   parent: BaseComputer
@@ -525,7 +534,7 @@
   parent: BaseComputer
   id: ComputerComms
   name: communications computer
-  description: A computer used to make station wide announcements, set the appropriate alert level, and call the emergency shuttle.
+  description: A computer used to make station wide announcements via keyboard, set the appropriate alert level, and call the emergency shuttle.
   components:
   - type: Sprite
     layers:
@@ -561,7 +570,7 @@
   parent: ComputerComms
   id: SyndicateComputerComms
   name: syndicate communications computer
-  description: This can be used for various important functions. Still under development.
+  description: A computer capable of remotely hacking into the station's communications systems. Using this to make an announcement will alert the station to your presence.
   components:
   - type: Sprite
     layers:
@@ -682,6 +691,9 @@
     color: "#b89f25"
   - type: AccessReader
     access: [["Cargo"]]
+  - type: GuideHelp
+    guides:
+    - Cargo
 
 - type: entity
   id: ComputerCargoOrders
@@ -723,6 +735,9 @@
     range: 200
     ports:
       - OrderSender
+  - type: GuideHelp
+    guides:
+    - Cargo
 
 - type: entity
   id: ComputerCargoBounty
@@ -951,6 +966,9 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: GuideHelp
+    guides:
+    - Cargo
 
 - type: entity
   parent: BaseComputer

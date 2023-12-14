@@ -86,6 +86,7 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
+  - type: RatKingRummageable
 
 - type: entity
   id: MailingUnit

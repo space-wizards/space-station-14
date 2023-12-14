@@ -6,6 +6,6 @@ namespace Content.Server.StationEvents.Components;
 /// This is used to keep track of hallucinated entities to remove effects when event ends
 /// </summary>
 [RegisterComponent, Access(typeof(MassHallucinationsRule))]
-public sealed class MassHallucinationsComponent : Component
+public sealed partial class MassHallucinationsComponent : Component
 {
 }

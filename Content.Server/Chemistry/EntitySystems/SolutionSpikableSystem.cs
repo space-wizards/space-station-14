@@ -1,8 +1,9 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Robust.Shared.Player;
@@ -60,35 +61,11 @@ public sealed class SolutionSpikableSystem : EntitySystem
             return;
         }
 
-        if (_solutionSystem.TryMixAndOverflow(target,
-                targetSolution,
-                sourceSolution,
-                targetSolution.MaxVolume,
-                out var overflow))
-        {
-            if (overflow.Volume > 0)
-            {
-                RaiseLocalEvent(target, new SolutionSpikeOverflowEvent(overflow));
-            }
+        if (!_solutionSystem.ForceAddSolution(target, targetSolution, sourceSolution))
+            return;
 
-            _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);
-
-            sourceSolution.RemoveAllSolution();
-
-            _triggerSystem.Trigger(source, user);
-        }
-    }
-}
-
-public sealed class SolutionSpikeOverflowEvent : HandledEntityEventArgs
-{
-    /// <summary>
-    ///     The solution that's been overflowed from the spike.
-    /// </summary>
-    public Solution Overflow { get; }
-
-    public SolutionSpikeOverflowEvent(Solution overflow)
-    {
-        Overflow = overflow;
+        _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);
+        sourceSolution.RemoveAllSolution();
+        _triggerSystem.Trigger(source, user);
     }
 }

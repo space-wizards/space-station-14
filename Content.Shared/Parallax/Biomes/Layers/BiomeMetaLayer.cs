@@ -9,18 +9,18 @@ namespace Content.Shared.Parallax.Biomes.Layers;
 /// Can be used for sub-biomes.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class BiomeMetaLayer : IBiomeLayer
+public sealed partial class BiomeMetaLayer : IBiomeLayer
 {
     [DataField("noise")]
-    public FastNoiseLite Noise { get; } = new(0);
+    public FastNoiseLite Noise { get; private set; } = new(0);
 
     /// <inheritdoc/>
     [DataField("threshold")]
-    public float Threshold { get; } = -1f;
+    public float Threshold { get; private set; } = -1f;
 
     /// <inheritdoc/>
     [DataField("invert")]
-    public bool Invert { get; }
+    public bool Invert { get; private set; }
 
     [DataField("template", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
     public string Template = string.Empty;

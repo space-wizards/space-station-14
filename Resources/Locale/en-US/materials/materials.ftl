@@ -12,14 +12,18 @@ materials-plasteel = plasteel
 
 # Other
 materials-biomass = biomass
+materials-cardboard = cardboard
 materials-cloth = cloth
 materials-durathread = durathread
 materials-plasma = plasma
 materials-plastic = plastic
 materials-wood = wood
+materials-paper = paper
 materials-uranium = uranium
 materials-bananium = bananium
 materials-meat = meat
+materials-web = silk
+materials-bones = bone
 
 # Material Reclaimer
 material-reclaimer-upgrade-process-rate = process rate

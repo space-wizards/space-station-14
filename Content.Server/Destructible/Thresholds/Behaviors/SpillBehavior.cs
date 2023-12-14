@@ -1,13 +1,13 @@
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class SpillBehavior : IThresholdBehavior
+    public sealed partial class SpillBehavior : IThresholdBehavior
     {
         [DataField("solution")]
         public string? Solution;

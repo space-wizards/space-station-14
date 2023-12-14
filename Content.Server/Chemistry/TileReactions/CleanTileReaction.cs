@@ -1,6 +1,6 @@
 using System.Linq;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.TileReactions;
 /// Turns all of the reagents on a puddle into water.
 /// </summary>
 [DataDefinition]
-public sealed class CleanTileReaction : ITileReaction
+public sealed partial class CleanTileReaction : ITileReaction
 {
     /// <summary>
     /// How much it costs to clean 1 unit of reagent.

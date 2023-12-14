@@ -4,7 +4,7 @@
 ///     A component added to entities that are currently in disposals.
 /// </summary>
 [RegisterComponent]
-public sealed class BeingDisposedComponent : Component
+public sealed partial class BeingDisposedComponent : Component
 {
     [ViewVariables]
     public EntityUid Holder;

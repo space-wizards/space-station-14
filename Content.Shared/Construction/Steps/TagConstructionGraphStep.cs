@@ -3,7 +3,7 @@ using Content.Shared.Tag;
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public sealed class TagConstructionGraphStep : ArbitraryInsertConstructionGraphStep
+    public sealed partial class TagConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
         [DataField("tag")]
         private string? _tag;

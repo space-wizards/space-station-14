@@ -4,7 +4,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Maps.NameGenerators;
 
 [UsedImplicitly]
-public sealed class NanotrasenNameGenerator : StationNameGenerator
+public sealed partial class NanotrasenNameGenerator : StationNameGenerator
 {
     /// <summary>
     ///     Where the map comes from. Should be a two or three letter code, for example "VG" for Packedstation.

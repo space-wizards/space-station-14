@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Morgue.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class MorgueComponent : Component
+public sealed partial class MorgueComponent : Component
 {
     /// <summary>
     ///     Whether or not the morgue beeps if a living player is inside.

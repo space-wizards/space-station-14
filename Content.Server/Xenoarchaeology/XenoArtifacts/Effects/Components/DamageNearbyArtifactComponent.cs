@@ -7,7 +7,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 /// When activated, damages nearby entities.
 /// </summary>
 [RegisterComponent]
-public sealed class DamageNearbyArtifactComponent : Component
+public sealed partial class DamageNearbyArtifactComponent : Component
 {
     /// <summary>
     /// The radius of entities that will be affected

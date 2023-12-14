@@ -10,10 +10,10 @@ namespace Content.Server.Power.Components
     /// </summary>
     [RegisterComponent]
     [Access(typeof(CableSystem))]
-    public sealed class CableComponent : Component
+    public sealed partial class CableComponent : Component
     {
         [DataField("cableDroppedOnCutPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public readonly string CableDroppedOnCutPrototype = "CableHVStack1";
+        public string CableDroppedOnCutPrototype = "CableHVStack1";
 
         [DataField("cuttingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string CuttingQuality = "Cutting";

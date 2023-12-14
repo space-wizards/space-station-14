@@ -6,6 +6,7 @@ This is the "short" form of the rules, which has all the information any regular
 Should you need it. Some RP-specific documents available on the wiki such as Space Law, the Standard Operating Procedure, and the Alert Procedure will be mentioned here and are expected to be followed.
 
 [color=#ff0000]Recent Changes[/color]
+    - Revolutionary rules have been added (#12, #16)
     - Silicon rules have been added (#23)
     - Security/command rules have been updated to address forced borging (#22)
 
@@ -45,7 +46,7 @@ Should you need it. Some RP-specific documents available on the wiki such as Spa
     - [color=#ff0000]The arrivals station, shuttle, and general arrivals docking area are completely off-limits to any hostile activity, including activity by antagonists. Attacking newly spawned players in these areas or damaging/sabotaging these areas is strictly forbidden.[/color]
     - Do not intentionally make other players' lives hell for your own amusement.
     - [color=#ff0000]THE ROUND IS NOT OVER UNTIL THE GAME RETURNS TO THE LOBBY. ESCALATION AND SELF-ANTAG RULES APPLY EVEN AFTER THE ROUND SUMMARY APPEARS.[/color]
-    - Antagonists have a lot of leeway with this rule and may kill/sabotage as they see fit, however if your behavior degrades the experience for the majority of the server you will be told to stop. Antagonists are still forbidden from causing massive station damage early into the round (less than 30 minutes) and are forbidden from needlessly prolonging rounds.
+    - Antagonists have a lot of leeway with this rule and may kill/sabotage as they see fit, however if your behavior degrades the experience for the majority of the server you will be told to stop. Antagonists are still generally forbidden from causing massive station damage early into the round (less than 30 minutes) and are forbidden from needlessly prolonging rounds. For antagonist specific rules, see the "long" form of the rules at [color=#a4885c]wiki.spacestation14.io[/color].
 
 [color=#a4885c]13.[/color] Don't harass or target players across rounds for actions in prior rounds or for actions outside of the game (this is referred to as "Metagrudging".)
     - Annoying players for IC reasons in the current round is fine; doing it across rounds or as a ghost role after they kill you is not.
@@ -65,7 +66,7 @@ Should you need it. Some RP-specific documents available on the wiki such as Spa
     - Security may use less-lethal force to effect arrests of criminals.
     - Don't outright leave people to die if you get in a fight, make an effort to heal them or bring them to Medbay.
     - Adminhelp the situation if you think someone is over-escalating.
-    - Department strikes, revolutions (ex: cargonia and any variation thereof), riots, cults, and any other type of similar largely disruptive behavior are strictly forbidden. These activities are generally antagonist-only and all players regardless of antagonist status must obtain admin permission before engaging in this behavior (you are extremely unlikely to get permission).
+    - Department strikes, revolutions (ex: cargonia and any variation thereof), riots, cults, and any other type of similar largely disruptive behavior are strictly forbidden. Other than for revolutionary antagonists, these activities are strictly forbidden. All players, including antagonists other than revolutionaries, must obtain admin permission before engaging in this behavior (forewarning: you are unlikely to get permission).
 
 [color=#a4885c]17.[/color] Don't immediately ghost or suicide from your role if you do not get antagonist (referred to as "Antag-rolling") or from head roles without notifying your chain of command or administrators.
     - This is not fair to other players actually waiting patiently for an antagonist round. Alternatively, if you do not want to play an antagonist or do not want to cause conflict, do not opt-in for antagonist roles.

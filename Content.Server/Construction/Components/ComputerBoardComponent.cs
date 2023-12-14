@@ -7,7 +7,7 @@ namespace Content.Server.Construction.Components
     /// Used for construction graphs in building computers.
     /// </summary>
     [RegisterComponent]
-    public sealed class ComputerBoardComponent : Component
+    public sealed partial class ComputerBoardComponent : Component
     {
         [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? Prototype { get; private set; }

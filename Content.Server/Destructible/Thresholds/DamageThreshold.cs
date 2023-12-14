@@ -5,7 +5,7 @@ using Content.Shared.Damage;
 namespace Content.Server.Destructible.Thresholds
 {
     [DataDefinition]
-    public sealed class DamageThreshold
+    public sealed partial class DamageThreshold
     {
         [DataField("behaviors")]
         private List<IThresholdBehavior> _behaviors = new();

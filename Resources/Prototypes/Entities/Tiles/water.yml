@@ -7,9 +7,7 @@
     snap:
     - Wall
   components:
-  - type: StepTrigger
-    requiredTriggeredSpeed: 0
-    intersectRatio: 0.1
+  - type: FloorOccluder
   - type: Transform
     anchored: true
   - type: SyncSprite

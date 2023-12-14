@@ -10,10 +10,10 @@
     torso:
       part: TorsoSlime
       connections:
-      - left arm
       - right arm
-      - left leg
+      - left arm
       - right leg
+      - left leg
       organs:
         core: SentientSlimeCore
         lungs: OrganSlimeLungs

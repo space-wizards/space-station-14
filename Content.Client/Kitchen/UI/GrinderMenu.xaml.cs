@@ -57,7 +57,9 @@ namespace Content.Client.Kitchen.UI
             ChamberContentBox.EjectButton.Disabled = state.ChamberContents.Length <= 0;
             GrindButton.Disabled = !state.CanGrind || !state.Powered;
             JuiceButton.Disabled = !state.CanJuice || !state.Powered;
-            RefreshContentsDisplay(state.ReagentQuantities, state.ChamberContents, state.HasBeakerIn);
+
+            // TODO move this to a component state and ensure the net ids.
+            RefreshContentsDisplay(state.ReagentQuantities, _entityManager.GetEntityArray(state.ChamberContents), state.HasBeakerIn);
         }
 
         public void HandleMessage(BoundUserInterfaceMessage message)
@@ -83,7 +85,7 @@ namespace Content.Client.Kitchen.UI
             }
         }
 
-        private void RefreshContentsDisplay(IList<Solution.ReagentQuantity>? reagents, IReadOnlyList<EntityUid> containedSolids, bool isBeakerAttached)
+        private void RefreshContentsDisplay(IList<ReagentQuantity>? reagents, IReadOnlyList<EntityUid> containedSolids, bool isBeakerAttached)
         {
             //Refresh chamber contents
             _chamberVisualContents.Clear();
@@ -118,9 +120,11 @@ namespace Content.Client.Kitchen.UI
             }
             else
             {
-                foreach (var reagent in reagents)
+                foreach (var (reagent, quantity) in reagents)
                 {
-                    var reagentName = _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto) ? Loc.GetString($"{reagent.Quantity} {proto.LocalizedName}") : "???";
+                    var reagentName = _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto) 
+                        ? Loc.GetString($"{quantity} {proto.LocalizedName}") 
+                        : "???";
                     BeakerContentBox.BoxContents.AddItem(reagentName);
                 }
             }

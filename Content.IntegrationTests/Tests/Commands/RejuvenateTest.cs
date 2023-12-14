@@ -33,8 +33,8 @@ namespace Content.IntegrationTests.Tests.Commands
         [Test]
         public async Task RejuvenateDeadTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var entManager = server.ResolveDependency<IEntityManager>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var mobStateSystem = entManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
@@ -89,7 +89,7 @@ namespace Content.IntegrationTests.Tests.Commands
                     Assert.That(damageable.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
                 });
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

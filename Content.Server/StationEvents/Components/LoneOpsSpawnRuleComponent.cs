@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(LoneOpsSpawnRule))]
-public sealed class LoneOpsSpawnRuleComponent : Component
+public sealed partial class LoneOpsSpawnRuleComponent : Component
 {
     [DataField("loneOpsShuttlePath")]
     public string LoneOpsShuttlePath = "Maps/Shuttles/striker.yml";

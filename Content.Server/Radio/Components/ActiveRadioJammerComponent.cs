@@ -7,6 +7,6 @@ namespace Content.Server.Radio.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(JammerSystem))]
-public sealed class ActiveRadioJammerComponent : Component
+public sealed partial class ActiveRadioJammerComponent : Component
 {
 }

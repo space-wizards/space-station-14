@@ -8,9 +8,9 @@ namespace Content.IntegrationTests.Tests.Networking
         [Test]
         public async Task TestConnect()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+            var server = pair.Server;
+            var client = pair.Client;
 
             var clientCompFactory = client.ResolveDependency<IComponentFactory>();
             var serverCompFactory = server.ResolveDependency<IComponentFactory>();
@@ -38,7 +38,7 @@ namespace Content.IntegrationTests.Tests.Networking
                     Assert.That(clientNetComps[netId].Name, Is.EqualTo(serverNetComps[netId].Name));
                 }
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

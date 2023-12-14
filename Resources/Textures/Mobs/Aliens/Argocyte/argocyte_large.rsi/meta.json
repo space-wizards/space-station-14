@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by aleksh (discord) for Space Station 14.",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "founder",
+      "directions": 4
+    },
+    {
+      "name": "founder_dead"
+    },
+    {
+      "name": "leviathing",
+      "directions": 4
+    },
+    {
+      "name": "leviathing_dead"
+    }
+  ]
+}

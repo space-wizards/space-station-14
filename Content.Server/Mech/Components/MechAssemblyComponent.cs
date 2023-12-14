@@ -18,7 +18,7 @@ namespace Content.Server.Mech.Components;
 /// done via <see cref="ItemMapperComponent"/>
 /// </remarks>
 [RegisterComponent]
-public sealed class MechAssemblyComponent : Component
+public sealed partial class MechAssemblyComponent : Component
 {
     /// <summary>
     /// The parts needed to be placed within the assembly,

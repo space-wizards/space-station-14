@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using Content.Server.Shuttles.Systems;
 using Content.Tests;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Shuttle;
@@ -22,9 +25,9 @@ public sealed class DockTest : ContentUnitTest
     public async Task TestDockingConfig(Vector2 dock1Pos, Vector2 dock2Pos, Angle dock1Angle, Angle dock2Angle, bool result)
     {
         await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Pair.Server;
+        var server = pair.Server;
 
-        var map = await PoolManager.CreateTestMap(pair);
+        var map = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
@@ -76,6 +79,49 @@ public sealed class DockTest : ContentUnitTest
             var config = dockingSystem.GetDockingConfig(grid1Ent, grid2Ent);
 
             Assert.That(result, Is.EqualTo(config != null));
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task TestPlanetDock()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var map = await pair.CreateTestMap();
+        var otherMap = await pair.CreateTestMap();
+
+        var entManager = server.ResolveDependency<IEntityManager>();
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var dockingSystem = entManager.System<DockingSystem>();
+        var xformSystem = entManager.System<SharedTransformSystem>();
+        var mapSystem = entManager.System<SharedMapSystem>();
+
+        var mapGrid = entManager.AddComponent<MapGridComponent>(map.MapUid);
+        var shuttle = EntityUid.Invalid;
+
+        // Spawn shuttle and affirm no valid docks.
+        await server.WaitAssertion(() =>
+        {
+            entManager.DeleteEntity(map.GridUid);
+            Assert.That(entManager.System<MapLoaderSystem>().TryLoad(otherMap.MapId, "/Maps/Shuttles/emergency.yml", out var rootUids));
+            shuttle = rootUids[0];
+
+            var dockingConfig = dockingSystem.GetDockingConfig(shuttle, map.MapUid);
+            Assert.That(dockingConfig, Is.EqualTo(null));
+        });
+
+        // Spawn dock and affirm it docks with no blockers / doesn't dock with blockers
+        await server.WaitAssertion(() =>
+        {
+            mapSystem.SetTile(map.MapUid, mapGrid, Vector2i.Zero, new Tile(1));
+            var airlockEnt = entManager.SpawnEntity("AirlockShuttle", new EntityCoordinates(map.MapUid, Vector2.One / 2f));
+            Assert.That(entManager.GetComponent<TransformComponent>(airlockEnt).Anchored);
+
+            var dockingConfig = dockingSystem.GetDockingConfig(shuttle, map.MapUid);
+            Assert.That(dockingConfig, Is.Not.EqualTo(null));
         });
 
         await pair.CleanReturnAsync();

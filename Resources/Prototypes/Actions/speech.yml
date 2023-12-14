@@ -1,0 +1,11 @@
+﻿- type: entity
+  id: ActionConfigureMeleeSpeech
+  name: Set Battlecry
+  description: Set a custom battlecry for when you attack!
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: BigItem
+    priority: -20
+    useDelay: 1
+    event: !type:MeleeSpeechConfigureActionEvent

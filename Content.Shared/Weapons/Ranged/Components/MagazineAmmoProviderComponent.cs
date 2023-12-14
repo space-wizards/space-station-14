@@ -7,7 +7,7 @@ namespace Content.Shared.Weapons.Ranged;
 /// Wrapper around a magazine (handled via ItemSlot). Passes all AmmoProvider logic onto it.
 /// </summary>
 [RegisterComponent, Virtual]
-public class MagazineAmmoProviderComponent : AmmoProviderComponent
+public partial class MagazineAmmoProviderComponent : AmmoProviderComponent
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("soundAutoEject")]
     public SoundSpecifier? SoundAutoEject = new SoundPathSpecifier("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");

@@ -1,7 +1,7 @@
 namespace Content.Server.Mousetrap;
 
 [RegisterComponent]
-public sealed class MousetrapComponent : Component
+public sealed partial class MousetrapComponent : Component
 {
     [ViewVariables]
 	[DataField("isActive")]

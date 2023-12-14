@@ -4,6 +4,8 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Reaction
@@ -136,7 +138,9 @@ namespace Content.Shared.Chemistry.Reaction
                 var reactantName = reactantData.Key;
                 var reactantCoefficient = reactantData.Value.Amount;
 
-                if (!solution.TryGetReagent(reactantName, out var reactantQuantity))
+                var reactantQuantity = solution.GetTotalPrototypeQuantity(reactantName);
+
+                if (reactantQuantity <= FixedPoint2.Zero)
                     return false;
 
                 if (reactantData.Value.Catalyst)
@@ -260,12 +264,6 @@ namespace Content.Shared.Chemistry.Reaction
             if (products.Count == 0)
                 return true;
 
-            // remove excess product
-            // TODO spill excess?
-            var excessVolume = solution.Volume - maxVolume;
-            if (excessVolume > 0)
-                solution.RemoveSolution(excessVolume);
-
             // Add any reactions associated with the new products. This may re-add reactions that were already iterated
             // over previously. The new product may mean the reactions are applicable again and need to be processed.
             foreach (var product in products)
@@ -278,21 +276,15 @@ namespace Content.Shared.Chemistry.Reaction
         }
 
         /// <summary>
-        ///     Continually react a solution until no more reactions occur.
-        /// </summary>
-        public void FullyReactSolution(Solution solution, EntityUid owner) => FullyReactSolution(solution, owner, FixedPoint2.MaxValue, null);
-
-        /// <summary>
         ///     Continually react a solution until no more reactions occur, with a volume constraint.
-        ///     If a reaction's products would exceed the max volume, some product is deleted.
         /// </summary>
-        public void FullyReactSolution(Solution solution, EntityUid owner, FixedPoint2 maxVolume, ReactionMixerComponent? mixerComponent)
+        public void FullyReactSolution(Solution solution, EntityUid owner, FixedPoint2 maxVolume, ReactionMixerComponent? mixerComponent = null)
         {
             // construct the initial set of reactions to check.
             SortedSet<ReactionPrototype> reactions = new();
             foreach (var reactant in solution.Contents)
             {
-                if (_reactions.TryGetValue(reactant.ReagentId, out var reactantReactions))
+                if (_reactions.TryGetValue(reactant.Reagent.Prototype, out var reactantReactions))
                     reactions.UnionWith(reactantReactions);
             }
 

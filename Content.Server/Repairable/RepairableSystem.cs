@@ -1,12 +1,11 @@
 using Content.Server.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Repairable;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Server.Repairable
 {
@@ -14,6 +13,7 @@ namespace Content.Server.Repairable
     {
         [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger= default!;
 
         public override void Initialize()
@@ -33,7 +33,7 @@ namespace Content.Server.Repairable
             if (component.Damage != null)
             {
                 var damageChanged = _damageableSystem.TryChangeDamage(uid, component.Damage, true, false, origin: args.User);
-                _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {damageChanged?.Total}");
+                _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {damageChanged?.GetTotal()}");
             }
 
             else
@@ -43,10 +43,10 @@ namespace Content.Server.Repairable
                 _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} back to full health");
             }
 
-            uid.PopupMessage(args.User,
-                Loc.GetString("comp-repairable-repair",
-                    ("target", uid),
-                    ("tool", args.Used!)));
+            var str = Loc.GetString("comp-repairable-repair",
+                ("target", uid),
+                ("tool", args.Used!));
+            _popup.PopupEntity(str, uid, args.User);
         }
 
         public async void Repair(EntityUid uid, RepairableComponent component, InteractUsingEvent args)

@@ -186,8 +186,6 @@
   components:
   - type: WallMount
     arc: 180
-  - type: Sprite
-    offset: 0,-0.25
   - type: Construction
     graph: SignalSwitchDirectionalGraph
     node: SignalSwitchDirectionalNode
@@ -200,8 +198,6 @@
   components:
   - type: WallMount
     arc: 180
-  - type: Sprite
-    offset: 0,-0.25
   - type: Construction
     graph: SignalButtonDirectionalGraph
     node: SignalButtonDirectionalNode
@@ -214,8 +210,6 @@
   components:
   - type: WallMount
     arc: 180
-  - type: Sprite
-    offset: 0,-0.25
   - type: Construction
     graph: LightSwitchDirectionalGraph
     node: LightSwitchDirectionalNode

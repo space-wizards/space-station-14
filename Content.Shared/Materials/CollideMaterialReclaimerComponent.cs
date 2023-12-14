@@ -6,7 +6,7 @@
 /// <seealso cref="MaterialReclaimerComponent"/>
 /// </summary>
 [RegisterComponent]
-public sealed class CollideMaterialReclaimerComponent : Component
+public sealed partial class CollideMaterialReclaimerComponent : Component
 {
     /// <summary>
     /// The fixture that starts reclaiming on collision.

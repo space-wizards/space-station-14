@@ -7,6 +7,7 @@ using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Shuttles.Events;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -28,15 +29,17 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-        private ISawmill _sawmill = default!;
         private const string DockingFixture = "docking";
         private const string DockingJoint = "docking";
         private const float DockingRadius = 0.20f;
 
+        private EntityQuery<PhysicsComponent> _physicsQuery;
+
         public override void Initialize()
         {
             base.Initialize();
-            _sawmill = Logger.GetSawmill("docking");
+            _physicsQuery = GetEntityQuery<PhysicsComponent>();
+
             SubscribeLocalEvent<DockingComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DockingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
@@ -64,7 +67,7 @@ namespace Content.Server.Shuttles.Systems
                 args.Cancel();
         }
 
-        private DockingComponent? GetDockable(EntityUid uid, TransformComponent dockingXform)
+        private Entity<DockingComponent>? GetDockable(EntityUid uid, TransformComponent dockingXform)
         {
             // Did you know Saltern is the most dockable station?
 
@@ -94,12 +97,14 @@ namespace Content.Server.Shuttles.Systems
             var enlargedAABB = aabb.Value.Enlarged(DockingRadius * 1.5f);
 
             // Get any docking ports in range on other grids.
-            foreach (var otherGrid in _mapManager.FindGridsIntersecting(dockingXform.MapID, enlargedAABB))
+            var grids = new List<Entity<MapGridComponent>>();
+            _mapManager.FindGridsIntersecting(dockingXform.MapID, enlargedAABB, ref grids);
+            foreach (var otherGrid in grids)
             {
                 if (otherGrid.Owner == dockingXform.GridUid)
                     continue;
 
-                foreach (var ent in otherGrid.GetAnchoredEntities(enlargedAABB))
+                foreach (var ent in otherGrid.Comp.GetAnchoredEntities(enlargedAABB))
                 {
                     if (!TryComp(ent, out DockingComponent? otherDocking) ||
                         !otherDocking.Enabled ||
@@ -114,7 +119,7 @@ namespace Content.Server.Shuttles.Systems
                     if (otherDockingFixture == null)
                     {
                         DebugTools.Assert(false);
-                        _sawmill.Error($"Found null docking fixture on {ent}");
+                        Log.Error($"Found null docking fixture on {ent}");
                         continue;
                     }
 
@@ -127,7 +132,7 @@ namespace Content.Server.Shuttles.Systems
 
                         // TODO: Need CollisionManager's GJK for accurate bounds
                         // Realistically I want 2 fixtures anyway but I'll deal with that later.
-                        return otherDocking;
+                        return (ent, otherDocking);
                     }
                 }
             }
@@ -159,7 +164,7 @@ namespace Content.Server.Shuttles.Systems
                 !TryComp(dockBUid, out DockingComponent? dockB))
             {
                 DebugTools.Assert(false);
-                _sawmill.Error($"Tried to cleanup {dockAUid} but not docked?");
+                Log.Error($"Tried to cleanup {dockAUid} but not docked?");
 
                 dockA.DockedWith = null;
                 if (dockA.DockJoint != null)
@@ -288,7 +293,7 @@ namespace Content.Server.Shuttles.Systems
                 (dockAUid, dockBUid) = (dockBUid, dockAUid);
             }
 
-            _sawmill.Debug($"Docking between {dockAUid} and {dockBUid}");
+            Log.Debug($"Docking between {dockAUid} and {dockBUid}");
 
             // https://gamedev.stackexchange.com/questions/98772/b2distancejoint-with-frequency-equal-to-0-vs-b2weldjoint
 
@@ -441,12 +446,12 @@ namespace Content.Server.Shuttles.Systems
         /// <summary>
         /// Attempts to dock 2 ports together and will return early if it's not possible.
         /// </summary>
-        private void TryDock(EntityUid dockAUid, DockingComponent dockA, EntityUid dockBUid, DockingComponent dockB)
+        private void TryDock(EntityUid dockAUid, DockingComponent dockA, Entity<DockingComponent> dockB)
         {
-            if (!CanDock(dockAUid, dockBUid, dockA, dockB))
+            if (!CanDock(dockAUid, dockB, dockA, dockB))
                 return;
 
-            Dock(dockAUid, dockA, dockBUid, dockB);
+            Dock(dockAUid, dockA, dockB, dockB);
         }
 
         public void Undock(EntityUid dockUid, DockingComponent dock)

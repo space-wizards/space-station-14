@@ -4,6 +4,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Storage.EntitySystems;
 
 [Serializable, NetSerializable]
-public sealed class BluespaceLockerDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class BluespaceLockerDoAfterEvent : SimpleDoAfterEvent
 {
 }

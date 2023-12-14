@@ -10,7 +10,7 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// Used for borg stuff.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
-public sealed class MMIComponent : Component
+public sealed partial class MMIComponent : Component
 {
     /// <summary>
     /// The ID of the itemslot that holds the brain.

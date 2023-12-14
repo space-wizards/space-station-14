@@ -1,8 +1,6 @@
 using Content.Server.Advertisements;
-using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
-using Content.Server.VendingMachines;
 using Content.Shared.VendingMachines;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -17,9 +15,15 @@ namespace Content.Server.Advertise
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
 
-        private const float UpdateTimer = 5f;
+        /// <summary>
+        /// The maximum amount of time between checking if advertisements should be displayed
+        /// </summary>
+        private readonly TimeSpan _maximumNextCheckDuration = TimeSpan.FromSeconds(15);
 
-        private float _timer = 0f;
+        /// <summary>
+        /// The next time the game will check if advertisements should be displayed
+        /// </summary>
+        private TimeSpan _nextCheckTime = TimeSpan.MaxValue;
 
         public override void Initialize()
         {
@@ -28,11 +32,14 @@ namespace Content.Server.Advertise
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, AdvertiseEnableChangeAttemptEvent>(OnPowerReceiverEnableChangeAttempt);
             SubscribeLocalEvent<VendingMachineComponent, AdvertiseEnableChangeAttemptEvent>(OnVendingEnableChangeAttempt);
+
+            // The component inits will lower this.
+            _nextCheckTime = TimeSpan.MaxValue;
         }
 
         private void OnComponentInit(EntityUid uid, AdvertiseComponent advertise, ComponentInit args)
         {
-            RefreshTimer(uid, true, advertise);
+            RefreshTimer(uid, advertise);
         }
 
         private void OnPowerChanged(EntityUid uid, AdvertiseComponent advertise, ref PowerChangedEvent args)
@@ -40,94 +47,97 @@ namespace Content.Server.Advertise
             SetEnabled(uid, args.Powered, advertise);
         }
 
-        public void RefreshTimer(EntityUid uid, bool minimumBound = true, AdvertiseComponent? advertise = null)
+        public void RefreshTimer(EntityUid uid, AdvertiseComponent? advertise = null)
         {
             if (!Resolve(uid, ref advertise))
                 return;
 
-            var minWait = Math.Max(1, advertise.MinimumWait);
-            var maxWait = Math.Max(minWait, advertise.MaximumWait);
+            if (!advertise.Enabled)
+                return;
 
-            var waitSeconds = minimumBound ? _random.Next(minWait, maxWait) : _random.Next(maxWait);
-            advertise.NextAdvertisementTime = _gameTiming.CurTime.Add(TimeSpan.FromSeconds(waitSeconds));
+            var minDuration = Math.Max(1, advertise.MinimumWait);
+            var maxDuration = Math.Max(minDuration, advertise.MaximumWait);
+            var waitDuration = TimeSpan.FromSeconds(_random.Next(minDuration, maxDuration));
+            var nextTime = _gameTiming.CurTime + waitDuration;
+
+            advertise.NextAdvertisementTime = nextTime;
+
+            _nextCheckTime = MathHelper.Min(nextTime, _nextCheckTime);
         }
 
-        public void SayAdvertisement(EntityUid uid, bool refresh = true, AdvertiseComponent? advertise = null)
+        public void SayAdvertisement(EntityUid uid, AdvertiseComponent? advertise = null)
         {
             if (!Resolve(uid, ref advertise))
                 return;
 
             if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
-                _chat.TrySendInGameICMessage(advertise.Owner, Loc.GetString(_random.Pick(advertisements.Advertisements)), InGameICChatType.Speak, true);
-
-            if(refresh)
-                RefreshTimer(uid, true, advertise);
+                _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Advertisements)), InGameICChatType.Speak, true);
         }
 
-        public void SetEnabled(EntityUid uid, bool enabled, AdvertiseComponent? advertise = null)
+        public void SetEnabled(EntityUid uid, bool enable, AdvertiseComponent? advertise = null)
         {
             if (!Resolve(uid, ref advertise))
                 return;
 
-            var attemptEvent = new AdvertiseEnableChangeAttemptEvent(enabled, advertise.Enabled);
-            RaiseLocalEvent(uid, attemptEvent, false);
+            if (advertise.Enabled == enable)
+                return;
+
+            var attemptEvent = new AdvertiseEnableChangeAttemptEvent(enable);
+            RaiseLocalEvent(uid, attemptEvent);
 
             if (attemptEvent.Cancelled)
                 return;
 
-            if(enabled)
-                RefreshTimer(uid, !advertise.Enabled, advertise);
-
-            advertise.Enabled = enabled;
+            advertise.Enabled = enable;
+            RefreshTimer(uid, advertise);
         }
 
-        private void OnPowerReceiverEnableChangeAttempt(EntityUid uid, ApcPowerReceiverComponent component, AdvertiseEnableChangeAttemptEvent args)
+        private static void OnPowerReceiverEnableChangeAttempt(EntityUid uid, ApcPowerReceiverComponent component, AdvertiseEnableChangeAttemptEvent args)
         {
-            if(args.NewState && !component.Powered)
+            if(args.Enabling && !component.Powered)
                 args.Cancel();
         }
 
-        private void OnVendingEnableChangeAttempt(EntityUid uid, VendingMachineComponent component, AdvertiseEnableChangeAttemptEvent args)
+        private static void OnVendingEnableChangeAttempt(EntityUid uid, VendingMachineComponent component, AdvertiseEnableChangeAttemptEvent args)
         {
-            // TODO: Improve this...
-            if(args.NewState && component.Broken)
+            if(args.Enabling && component.Broken)
                 args.Cancel();
         }
 
         public override void Update(float frameTime)
         {
-            _timer += frameTime;
-
-            if (_timer < UpdateTimer)
+            var curTime = _gameTiming.CurTime;
+            if (_nextCheckTime > curTime)
                 return;
 
-            _timer -= UpdateTimer;
+            _nextCheckTime = curTime + _maximumNextCheckDuration;
 
-            var curTime = _gameTiming.CurTime;
-
-            foreach (var advertise in EntityManager.EntityQuery<AdvertiseComponent>())
+            var query = EntityQueryEnumerator<AdvertiseComponent>();
+            while (query.MoveNext(out var uid, out var advert))
             {
-                if (!advertise.Enabled)
+                if (!advert.Enabled)
                     continue;
 
-                // If it's still not time for the advertisement, do nothing.
-                if (advertise.NextAdvertisementTime > curTime)
+                // If this isn't advertising yet
+                if (advert.NextAdvertisementTime > curTime)
+                {
+                    _nextCheckTime = MathHelper.Min(advert.NextAdvertisementTime, _nextCheckTime);
                     continue;
+                }
 
-                SayAdvertisement(advertise.Owner, true, advertise);
+                SayAdvertisement(uid, advert);
+                RefreshTimer(uid, advert);
             }
         }
     }
 
     public sealed class AdvertiseEnableChangeAttemptEvent : CancellableEntityEventArgs
     {
-        public bool NewState { get; }
-        public bool OldState { get; }
+        public bool Enabling { get; }
 
-        public AdvertiseEnableChangeAttemptEvent(bool newState, bool oldEnabledState)
+        public AdvertiseEnableChangeAttemptEvent(bool enabling)
         {
-            NewState = newState;
-            OldState = oldEnabledState;
+            Enabling = enabling;
         }
     }
 }

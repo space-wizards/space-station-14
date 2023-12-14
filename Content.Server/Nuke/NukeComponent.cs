@@ -16,7 +16,7 @@ namespace Content.Server.Nuke
     /// </summary>
     [RegisterComponent]
     [Access(typeof(NukeSystem))]
-    public sealed class NukeComponent : SharedNukeComponent
+    public sealed partial class NukeComponent : SharedNukeComponent
     {
         /// <summary>
         ///     Default bomb timer value in seconds.
@@ -174,7 +174,7 @@ namespace Content.Server.Nuke
         /// </summary>
         public bool PlayedAlertSound = false;
 
-        public IPlayingAudioStream? AlertAudioStream = default;
+        public EntityUid? AlertAudioStream = default;
 
         /// <summary>
         ///     The radius from the nuke for which there must be floor tiles for it to be anchorable.

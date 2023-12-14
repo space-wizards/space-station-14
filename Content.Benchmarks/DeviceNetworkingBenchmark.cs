@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
+using Content.IntegrationTests.Pair;
 using Content.IntegrationTests.Tests.DeviceNetwork;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
@@ -16,7 +17,7 @@ namespace Content.Benchmarks;
 [MemoryDiagnoser]
 public class DeviceNetworkingBenchmark
 {
-    private PairTracker _pair = default!;
+    private TestPair _pair = default!;
     private DeviceNetworkTestSystem _deviceNetTestSystem = default!;
     private DeviceNetworkSystem _deviceNetworkSystem = default!;
     private EntityUid _sourceEntity;
@@ -58,8 +59,9 @@ public class DeviceNetworkingBenchmark
     public async Task SetupAsync()
     {
         ProgramShared.PathOffset = "../../../../";
+        PoolManager.Startup(typeof(DeviceNetworkingBenchmark).Assembly);
         _pair = await PoolManager.GetServerClient();
-        var server = _pair.Pair.Server;
+        var server = _pair.Server;
 
         await server.WaitPost(() =>
         {
@@ -90,14 +92,15 @@ public class DeviceNetworkingBenchmark
     public async Task Cleanup()
     {
         await _pair.DisposeAsync();
+        PoolManager.Shutdown();
     }
 
     [Benchmark(Baseline = true, Description = "Entity Events")]
     public async Task EventSentBaseline()
     {
-        var server = _pair.Pair.Server;
+        var server = _pair.Server;
 
-        _pair.Pair.Server.Post(() =>
+        _pair.Server.Post(() =>
         {
             foreach (var entity in _targetEntities)
             {
@@ -112,9 +115,9 @@ public class DeviceNetworkingBenchmark
     [Benchmark(Description = "Device Net Broadcast No Connection Checks")]
     public async Task DeviceNetworkBroadcastNoConnectionChecks()
     {
-        var server = _pair.Pair.Server;
+        var server = _pair.Server;
 
-        _pair.Pair.Server.Post(() =>
+        _pair.Server.Post(() =>
         {
             _deviceNetworkSystem.QueuePacket(_sourceEntity, null, _payload, 100);
         });
@@ -126,9 +129,9 @@ public class DeviceNetworkingBenchmark
     [Benchmark(Description = "Device Net Broadcast Wireless Connection Checks")]
     public async Task DeviceNetworkBroadcastWirelessConnectionChecks()
     {
-        var server = _pair.Pair.Server;
+        var server = _pair.Server;
 
-        _pair.Pair.Server.Post(() =>
+        _pair.Server.Post(() =>
         {
             _deviceNetworkSystem.QueuePacket(_sourceWirelessEntity, null, _payload, 100);
         });

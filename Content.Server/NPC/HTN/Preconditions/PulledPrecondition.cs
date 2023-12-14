@@ -5,7 +5,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// <summary>
 /// Checks if the owner is being pulled or not.
 /// </summary>
-public sealed class PulledPrecondition : HTNPrecondition
+public sealed partial class PulledPrecondition : HTNPrecondition
 {
     private SharedPullingSystem _pulling = default!;
 

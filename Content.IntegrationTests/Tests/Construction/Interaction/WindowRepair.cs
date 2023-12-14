@@ -19,7 +19,7 @@ public sealed class WindowRepair : InteractionTest
         var damageType = Server.ResolveDependency<IPrototypeManager>().Index<DamageTypePrototype>("Blunt");
         var damage = new DamageSpecifier(damageType, FixedPoint2.New(10));
         Assert.That(comp.Damage.Total, Is.EqualTo(FixedPoint2.Zero));
-        await Server.WaitPost(() => sys.TryChangeDamage(Target, damage, ignoreResistances: true));
+        await Server.WaitPost(() => sys.TryChangeDamage(SEntMan.GetEntity(Target), damage, ignoreResistances: true));
         await RunTicks(5);
         Assert.That(comp.Damage.Total, Is.GreaterThan(FixedPoint2.Zero));
 

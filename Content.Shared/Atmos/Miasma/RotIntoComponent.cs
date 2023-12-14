@@ -9,7 +9,7 @@ namespace Content.Shared.Atmos.Miasma;
 /// Used by raw meat to turn into rotten meat.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class RotIntoComponent : Component
+public sealed partial class RotIntoComponent : Component
 {
     /// <summary>
     /// Entity to rot into.

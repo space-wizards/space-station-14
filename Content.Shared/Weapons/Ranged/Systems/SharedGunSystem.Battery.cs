@@ -98,7 +98,7 @@ public abstract partial class SharedGunSystem
         {
             case ProjectileBatteryAmmoProviderComponent proj:
                 var ent = Spawn(proj.Prototype, coordinates);
-                return (ent, EnsureComp<AmmoComponent>(ent));
+                return (ent, EnsureShootable(ent));
             case HitscanBatteryAmmoProviderComponent hitscan:
                 return (null, ProtoManager.Index<HitscanPrototype>(hitscan.Prototype));
             default:

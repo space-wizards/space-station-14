@@ -13,10 +13,10 @@
     torso:
       part: TorsoHuman
       connections:
-      - left arm
       - right arm
-      - left leg
+      - left arm
       - right leg
+      - left leg
       organs:
         heart: OrganDwarfHeart
         lungs: OrganHumanLungs

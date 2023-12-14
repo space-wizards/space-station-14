@@ -6,7 +6,7 @@ namespace Content.Server.Botany
     /// Anything that can be used to cross-pollinate plants.
     /// </summary>
     [RegisterComponent]
-    public sealed class BotanySwabComponent : Component
+    public sealed partial class BotanySwabComponent : Component
     {
         [DataField("swabDelay")]
         public float SwabDelay = 2f;

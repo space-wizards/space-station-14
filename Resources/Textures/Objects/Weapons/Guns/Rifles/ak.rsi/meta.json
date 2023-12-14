@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken/modified from cev-eris at https://github.com/discordia-space/CEV-Eris/pull/6042/commits/64916c98f4847acc4adf3a2416bf78c005fd7dd7, https://github.com/discordia-space/CEV-Eris/raw/e1a3cbe9ba2e6e29b7f1cad1bb456b390aac936d/icons/obj/guns/projectile.dmi, backpack sprite by Peptide",
+    "copyright": "Taken/modified from cev-eris at https://github.com/discordia-space/CEV-Eris/pull/6042/commits/64916c98f4847acc4adf3a2416bf78c005fd7dd7, https://github.com/discordia-space/CEV-Eris/raw/e1a3cbe9ba2e6e29b7f1cad1bb456b390aac936d/icons/obj/guns/projectile.dmi, backpack sprite by Peptide, backpack sling sprite edited by Boaz1111",
     "size": {
         "x": 32,
         "y": 32

@@ -4,9 +4,10 @@
   roundStart: true
   prototype: MobDiona
   sprites: MobDionaSprites
+  defaultSkinTone: "#cdb369"
   markingLimits: MobDionaMarkingLimits
   dollPrototype: MobDionaDummy
-  skinColoration: TintedHues
+  skinColoration: Hues
   maleFirstNames: DionaFirst
   femaleFirstNames: DionaFirst
   lastNames: DionaLast
@@ -19,6 +20,7 @@
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
     Chest: MobDionaTorso
+    Eyes: MobDionaEyes
     LArm: MobDionaLArm
     RArm: MobDionaRArm
     LHand: MobDionaLHand
@@ -44,6 +46,16 @@
     Chest:
       points: 1
       required: false
+    Overlay:
+      points: 1
+      required: true
+      defaultMarkings: [ DionaVineOverlay ]
+
+- type: humanoidBaseSprite
+  id: MobDionaEyes
+  baseSprite:
+    sprite: Mobs/Customization/eyes.rsi
+    state: diona
 
 - type: humanoidBaseSprite
   id: MobDionaHead

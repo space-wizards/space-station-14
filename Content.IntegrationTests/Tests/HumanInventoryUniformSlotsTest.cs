@@ -26,7 +26,7 @@ namespace Content.IntegrationTests.Tests
   - type: Clothing
     slots: [innerclothing]
   - type: Item
-    size: 5
+    size: Tiny
 
 - type: entity
   name: IDCardDummy
@@ -36,7 +36,7 @@ namespace Content.IntegrationTests.Tests
     slots:
     - idcard
   - type: Item
-    size: 5
+    size: Tiny
   - type: IdCard
 
 - type: entity
@@ -44,21 +44,21 @@ namespace Content.IntegrationTests.Tests
   id: FlashlightDummy
   components:
   - type: Item
-    size: 5
+    size: Tiny
 
 - type: entity
   name: ToolboxDummy
   id: ToolboxDummy
   components:
   - type: Item
-    size: 9999
+    size: Huge
 ";
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
 
             EntityUid human = default;
@@ -132,7 +132,7 @@ namespace Content.IntegrationTests.Tests
                 mapMan.DeleteMap(testMap.MapId);
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         private static bool IsDescendant(EntityUid descendant, EntityUid parent, IEntityManager entManager)

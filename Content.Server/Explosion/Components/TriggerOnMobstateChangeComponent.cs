@@ -6,7 +6,7 @@ namespace Content.Server.Explosion.Components;
 /// Use where you want something to trigger on mobstate change
 /// </summary>
 [RegisterComponent]
-public sealed class TriggerOnMobstateChangeComponent : Component
+public sealed partial class TriggerOnMobstateChangeComponent : Component
 {
     /// <summary>
     /// What state should trigger this?

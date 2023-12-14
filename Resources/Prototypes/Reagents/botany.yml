@@ -145,6 +145,17 @@
             Asphyxiation: 1
             Burn: 2
             Poison: 1
+    Medicine:
+      effects:
+      - !type:Polymorph
+        prototype: TreeMorph
+        conditions:
+          - !type:OrganType
+            type: Plant
+          - !type:ReagentThreshold
+            min: 80
+
+
 - type: reagent
   id: WeedKiller
   name: reagent-name-weed-killer

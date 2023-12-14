@@ -9,7 +9,7 @@ namespace Content.Server.Atmos.Reactions;
 ///     Has a max temperature, but paradoxically gets more efficient the hotter it is.
 /// </summary>
 [UsedImplicitly]
-public sealed class FrezonProductionReaction : IGasReactionEffect
+public sealed partial class FrezonProductionReaction : IGasReactionEffect
 {
     public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
     {

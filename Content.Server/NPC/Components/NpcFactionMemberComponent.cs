@@ -5,7 +5,7 @@ namespace Content.Server.NPC.Components
 {
     [RegisterComponent]
     [Access(typeof(NpcFactionSystem))]
-    public sealed class NpcFactionMemberComponent : Component
+    public sealed partial class NpcFactionMemberComponent : Component
     {
         /// <summary>
         /// Factions this entity is a part of.

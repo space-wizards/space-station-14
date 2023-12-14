@@ -220,6 +220,19 @@
       - !type:DumpCanisterBehavior
 
 - type: entity
+  id: LiquidOxygenCanister
+  parent: OxygenCanister
+  components:
+  - type: GasCanister
+    gasMixture:
+      volume: 1000
+      moles:
+        - 18710.71051 # oxygen
+      temperature: 72
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
   parent: GasCanister
   id: NitrogenCanister
   components:
@@ -256,6 +269,20 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
+
+- type: entity
+  id: LiquidNitrogenCanister
+  parent: NitrogenCanister
+  components:
+  - type: GasCanister
+    gasMixture:
+      volume: 1000
+      moles:
+        - 0 # oxygen
+        - 18710.71051 # nitrogen
+      temperature: 72
+  - type: AccessReader
+    access: [["Atmospherics"]]
 
 - type: entity
   parent: GasCanister
@@ -297,6 +324,21 @@
         - !type:DumpCanisterBehavior
     - type: Lock
       locked: true
+
+- type: entity
+  id: LiquidCarbonDioxideCanister
+  parent: CarbonDioxideCanister
+  components:
+  - type: GasCanister
+    gasMixture:
+      volume: 1000
+      moles:
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 18710.71051 # CO2
+      temperature: 72
+  - type: AccessReader
+    access: [["Atmospherics"]]
 
 - type: entity
   parent: GasCanister

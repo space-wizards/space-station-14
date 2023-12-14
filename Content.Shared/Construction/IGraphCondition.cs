@@ -3,7 +3,7 @@
 namespace Content.Shared.Construction
 {
     [ImplicitDataDefinitionForInheritors]
-    public interface IGraphCondition
+    public partial interface IGraphCondition
     {
         bool Condition(EntityUid uid, IEntityManager entityManager);
         bool DoExamine(ExaminedEvent args);

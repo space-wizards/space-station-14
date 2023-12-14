@@ -1,0 +1,22 @@
+# egg explodes when heated!!!
+- type: constructionGraph
+  id: Egg
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: boiled
+      steps:
+      - minTemperature: 344
+  - node: boiled
+    entity: FoodEggBoiled
+    edges:
+    - to: explode
+      completed:
+      - !type:DamageEntity
+        damage:
+          Blunt: 10
+      steps:
+      # egg explodes some time after the water in it boils and increases pressure, guessing ~110C
+      - minTemperature: 383
+  - node: explode

@@ -21,11 +21,6 @@ namespace Content.Shared.Coordinates
             return new EntityCoordinates(id, x, y);
         }
 
-        public static EntityCoordinates ToCoordinates(this MapGridComponent grid, Vector2 offset)
-        {
-            return ToCoordinates(grid.Owner, offset);
-        }
-
         public static EntityCoordinates ToCoordinates(this MapGridComponent grid, float x, float y)
         {
             return ToCoordinates(grid.Owner, x, y);

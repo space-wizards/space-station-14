@@ -9,7 +9,7 @@ namespace Content.Shared.Nutrition.AnimalHusbandry;
 /// Infants have half the size, visually, and cannot breed.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class InfantComponent : Component
+public sealed partial class InfantComponent : Component
 {
     /// <summary>
     /// How long the entity remains an infant.

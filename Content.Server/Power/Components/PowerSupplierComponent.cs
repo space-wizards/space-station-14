@@ -4,7 +4,7 @@ using Content.Server.Power.Pow3r;
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    public sealed class PowerSupplierComponent : BasePowerNetComponent
+    public sealed partial class PowerSupplierComponent : BaseNetConnectorComponent<IBasePowerNet>
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("supplyRate")]
@@ -47,12 +47,12 @@ namespace Content.Server.Power.Components
         [ViewVariables]
         public PowerState.Supply NetworkSupply { get; } = new();
 
-        protected override void AddSelfToNet(IPowerNet powerNet)
+        protected override void AddSelfToNet(IBasePowerNet powerNet)
         {
             powerNet.AddSupplier(this);
         }
 
-        protected override void RemoveSelfFromNet(IPowerNet powerNet)
+        protected override void RemoveSelfFromNet(IBasePowerNet powerNet)
         {
             powerNet.RemoveSupplier(this);
         }

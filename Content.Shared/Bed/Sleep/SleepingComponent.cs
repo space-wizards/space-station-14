@@ -8,7 +8,7 @@ namespace Content.Shared.Bed.Sleep;
 /// Added to entities when they go to sleep.
 /// </summary>
 [NetworkedComponent, RegisterComponent]
-public sealed class SleepingComponent : Component
+public sealed partial class SleepingComponent : Component
 {
     /// <summary>
     /// How much damage of any type it takes to wake this entity.
@@ -25,4 +25,6 @@ public sealed class SleepingComponent : Component
 
     [DataField("cooldownEnd", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan CoolDownEnd;
+
+    [DataField("wakeAction")] public EntityUid? WakeAction;
 }

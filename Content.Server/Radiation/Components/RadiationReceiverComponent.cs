@@ -8,7 +8,7 @@ namespace Content.Server.Radiation.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(RadiationSystem))]
-public sealed class RadiationReceiverComponent : Component
+public sealed partial class RadiationReceiverComponent : Component
 {
     /// <summary>
     ///     Current radiation value in rads per second.

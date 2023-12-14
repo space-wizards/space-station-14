@@ -1,9 +1,14 @@
-namespace Content.Server.Access.Components
+using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
+
+namespace Content.Server.Access.Components;
+
+[RegisterComponent]
+public sealed partial class PresetIdCardComponent : Component
 {
-    [RegisterComponent]
-    public sealed class PresetIdCardComponent : Component
-    {
-        [DataField("job")]
-        public readonly string? JobName;
-    }
+    [DataField("job")]
+    public ProtoId<JobPrototype>? JobName;
+
+    [DataField("name")]
+    public string? IdName;
 }

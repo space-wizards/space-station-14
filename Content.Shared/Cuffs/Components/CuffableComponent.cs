@@ -8,7 +8,7 @@ namespace Content.Shared.Cuffs.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedCuffableSystem))]
-public sealed class CuffableComponent : Component
+public sealed partial class CuffableComponent : Component
 {
     /// <summary>
     /// The current RSI for the handcuff layer

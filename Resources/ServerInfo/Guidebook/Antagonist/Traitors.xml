@@ -35,11 +35,13 @@
 
   ## List of Possible Tasks
 
-  - Kill a randomly selected non-traitor.
-  - Kill a randomly selected department head.
+  - Kill or maroon a randomly selected non-traitor.
+  - Kill or maroon a randomly selected traitor.
+  - Kill or maroon a randomly selected department head.
   - Keep a randomly selected traitor alive.
   - Escape on the evacuation shuttle alive and uncuffed.
   - Help a randomly selected traitor finish 2/3 of their objectives.
+  - Die a glorious death.
   - Steal the Captain's [color=#a4885c]ID Card[/color].
   <Box>
     <GuideEntityEmbed Entity="CaptainIDCard" Caption="Captain's ID Card"/>
@@ -75,14 +77,6 @@
   - Steal the [color=#a4885c]Nuke Disk[/color].
   <Box>
     <GuideEntityEmbed Entity="NukeDisk" Caption="Nuke Disk"/>
-  </Box>
-  - Steal the [color=#a4885c]Supply Console Board[/color] from the Quartermaster's office.
-  <Box>
-    <GuideEntityEmbed Entity="CargoRequestComputerCircuitboard" Caption="Cargo Request Circuit Board"/>
-  </Box>
-  - Steal the [color=#a4885c]ID Computer Board[/color] from the Head of Personnel's office.
-  <Box>
-    <GuideEntityEmbed Entity="IDComputerCircuitboard" Caption="ID Circuit Board"/>
   </Box>
   - Steal [color=#a4885c]Corgi Meat[/color].
   <Box>

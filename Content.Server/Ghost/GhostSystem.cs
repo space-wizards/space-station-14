@@ -3,48 +3,51 @@ using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
-using Content.Server.Mind.Components;
-using Content.Server.Players;
-using Content.Server.Visible;
+using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
 using Content.Shared.Actions;
-using Content.Shared.Administration;
 using Content.Shared.Examine;
+using Content.Shared.Eye;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Storage.Components;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Console;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
 {
-    [UsedImplicitly]
     public sealed class GhostSystem : SharedGhostSystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly GameTicker _ticker = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
-        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedEyeSystem _eye = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly JobSystem _jobs = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly MindSystem _minds = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly GameTicker _ticker = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnGhostStartup);
+            SubscribeLocalEvent<GhostComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<GhostComponent, ComponentShutdown>(OnGhostShutdown);
 
             SubscribeLocalEvent<GhostComponent, ExaminedEvent>(OnGhostExamine);
@@ -60,9 +63,33 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
+            SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
+        }
+
+        private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
+        {
+            args.Handled = true;
+
+            if (HasComp<GhostHearingComponent>(uid))
+            {
+                RemComp<GhostHearingComponent>(uid);
+                _actions.SetToggled(component.ToggleGhostHearingActionEntity, true);
+            }
+            else
+            {
+                AddComp<GhostHearingComponent>(uid);
+                _actions.SetToggled(component.ToggleGhostHearingActionEntity, false);
+            }
+
+            var str = HasComp<GhostHearingComponent>(uid)
+                ? Loc.GetString("ghost-gui-toggle-hearing-popup-on")
+                : Loc.GetString("ghost-gui-toggle-hearing-popup-off");
+
+            Popup.PopupEntity(str, uid, uid);
+            Dirty(uid, component);
         }
 
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
@@ -70,10 +97,10 @@ namespace Content.Server.Ghost
             if (args.Handled)
                 return;
 
-            var ents = _lookup.GetEntitiesInRange(args.Performer, component.BooRadius);
+            var entities = _lookup.GetEntitiesInRange(args.Performer, component.BooRadius);
 
             var booCounter = 0;
-            foreach (var ent in ents)
+            foreach (var ent in entities)
             {
                 var handled = DoGhostBooEvent(ent);
 
@@ -90,65 +117,80 @@ namespace Content.Server.Ghost
         private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, ref MoveInputEvent args)
         {
             // Let's not ghost if our mind is visiting...
-            if (EntityManager.HasComponent<VisitingMindComponent>(uid))
+            if (HasComp<VisitingMindComponent>(uid))
                 return;
 
-            if (!EntityManager.TryGetComponent<MindContainerComponent>(uid, out var mind) || !mind.HasMind || mind.Mind.IsVisitingEntity)
+            if (!_minds.TryGetMind(uid, out var mindId, out var mind) || mind.IsVisitingEntity)
                 return;
 
             if (component.MustBeDead && (_mobState.IsAlive(uid) || _mobState.IsCritical(uid)))
                 return;
 
-            _ticker.OnGhostAttempt(mind.Mind, component.CanReturn);
+            _ticker.OnGhostAttempt(mindId, component.CanReturn, mind: mind);
         }
 
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
             // Allow this entity to be seen by other ghosts.
-            var visibility = EntityManager.EnsureComponent<VisibilityComponent>(component.Owner);
+            var visibility = EnsureComp<VisibilityComponent>(uid);
 
             if (_ticker.RunLevel != GameRunLevel.PostRound)
             {
-                _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Ghost, false);
-                _visibilitySystem.RemoveLayer(visibility, (int) VisibilityFlags.Normal, false);
-                _visibilitySystem.RefreshVisibility(visibility);
+                _visibilitySystem.AddLayer(uid, visibility, (int) VisibilityFlags.Ghost, false);
+                _visibilitySystem.RemoveLayer(uid, visibility, (int) VisibilityFlags.Normal, false);
+                _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
             }
 
-            if (EntityManager.TryGetComponent(component.Owner, out EyeComponent? eye))
-            {
-                eye.VisibilityMask |= (uint) VisibilityFlags.Ghost;
-            }
+            SetCanSeeGhosts(uid, true);
 
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
-
-            // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
-            if (component.Action.UseDelay != null)
-                component.Action.Cooldown = (time, time + component.Action.UseDelay.Value);
-            _actions.AddAction(uid, component.Action, null);
         }
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
         {
             // Perf: If the entity is deleting itself, no reason to change these back.
-            if (!Terminating(uid))
+            if (Terminating(uid))
+                return;
+
+            // Entity can't be seen by ghosts anymore.
+            if (TryComp(uid, out VisibilityComponent? visibility))
             {
-                // Entity can't be seen by ghosts anymore.
-                if (EntityManager.TryGetComponent(component.Owner, out VisibilityComponent? visibility))
-                {
-                    _visibilitySystem.RemoveLayer(visibility, (int) VisibilityFlags.Ghost, false);
-                    _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Normal, false);
-                    _visibilitySystem.RefreshVisibility(visibility);
-                }
-
-                // Entity can't see ghosts anymore.
-                if (EntityManager.TryGetComponent(component.Owner, out EyeComponent? eye))
-                {
-                    eye.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
-                }
-
-                _actions.RemoveAction(uid, component.Action);
+                _visibilitySystem.RemoveLayer(uid, visibility, (int) VisibilityFlags.Ghost, false);
+                _visibilitySystem.AddLayer(uid, visibility, (int) VisibilityFlags.Normal, false);
+                _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
             }
+
+            // Entity can't see ghosts anymore.
+            SetCanSeeGhosts(uid, false);
+            _actions.RemoveAction(uid, component.BooActionEntity);
+        }
+
+        private void SetCanSeeGhosts(EntityUid uid, bool canSee, EyeComponent? eyeComponent = null)
+        {
+            if (!Resolve(uid, ref eyeComponent, false))
+                return;
+
+            if (canSee)
+                _eye.SetVisibilityMask(uid, eyeComponent.VisibilityMask | (int) VisibilityFlags.Ghost, eyeComponent);
+            else
+                _eye.SetVisibilityMask(uid, eyeComponent.VisibilityMask & ~(int) VisibilityFlags.Ghost, eyeComponent);
+        }
+
+        private void OnMapInit(EntityUid uid, GhostComponent component, MapInitEvent args)
+        {
+            if (_actions.AddAction(uid, ref component.BooActionEntity, out var act, component.BooAction)
+                && act.UseDelay != null)
+            {
+                var start = _gameTiming.CurTime;
+                var end = start + act.UseDelay.Value;
+                _actions.SetCooldown(component.BooActionEntity.Value, start, end);
+            }
+
+            _actions.AddAction(uid, ref component.ToggleGhostHearingActionEntity, component.ToggleGhostHearingAction);
+            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
+            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
+            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
@@ -160,6 +202,8 @@ namespace Content.Server.Ghost
 
             args.PushMarkup(deathTimeInfo);
         }
+
+        #region Ghost Deletion
 
         private void OnMindRemovedMessage(EntityUid uid, GhostComponent component, MindRemovedMessage args)
         {
@@ -176,62 +220,6 @@ namespace Content.Server.Ghost
             DeleteEntity(uid);
         }
 
-        private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
-        {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} entity ||
-                !EntityManager.HasComponent<GhostComponent>(entity))
-            {
-                Logger.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
-                return;
-            }
-
-            var response = new GhostWarpsResponseEvent(GetPlayerWarps(entity).Concat(GetLocationWarps()).ToList());
-            RaiseNetworkEvent(response, args.SenderSession.ConnectedClient);
-        }
-
-        private void OnGhostReturnToBodyRequest(GhostReturnToBodyRequest msg, EntitySessionEventArgs args)
-        {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
-                !EntityManager.TryGetComponent(attached, out GhostComponent? ghost) ||
-                !ghost.CanReturnToBody ||
-                !EntityManager.TryGetComponent(attached, out ActorComponent? actor))
-            {
-                Logger.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
-                return;
-            }
-
-            _mindSystem.UnVisit(actor.PlayerSession.ContentData()!.Mind);
-        }
-
-        private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
-        {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
-                !EntityManager.TryGetComponent(attached, out GhostComponent? ghost))
-            {
-                Logger.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
-                return;
-            }
-
-            if (!EntityManager.EntityExists(msg.Target))
-            {
-                Logger.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
-                return;
-            }
-
-            if (TryComp(msg.Target, out WarpPointComponent? warp) && warp.Follow
-                || HasComp<MobStateComponent>(msg.Target))
-            {
-                 _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
-                 return;
-            }
-
-            var xform = Transform(ghost.Owner);
-            xform.Coordinates = Transform(msg.Target).Coordinates;
-            xform.AttachToGridOrMap();
-            if (TryComp(attached, out PhysicsComponent? physics))
-                _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
-        }
-
         private void DeleteEntity(EntityUid uid)
         {
             if (Deleted(uid) || Terminating(uid))
@@ -240,14 +228,74 @@ namespace Content.Server.Ghost
             QueueDel(uid);
         }
 
+        #endregion
+
+        private void OnGhostReturnToBodyRequest(GhostReturnToBodyRequest msg, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession.AttachedEntity is not {Valid: true} attached
+                || !TryComp(attached, out GhostComponent? ghost)
+                || !ghost.CanReturnToBody
+                || !TryComp(attached, out ActorComponent? actor))
+            {
+                Log.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
+                return;
+            }
+
+            _mindSystem.UnVisit(actor.PlayerSession);
+        }
+
+        #region Warp
+
+        private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession.AttachedEntity is not {Valid: true} entity
+                || !HasComp<GhostComponent>(entity))
+            {
+                Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
+                return;
+            }
+
+            var response = new GhostWarpsResponseEvent(GetPlayerWarps(entity).Concat(GetLocationWarps()).ToList());
+            RaiseNetworkEvent(response, args.SenderSession.ConnectedClient);
+        }
+
+        private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession.AttachedEntity is not {Valid: true} attached
+                || !TryComp(attached, out GhostComponent? _))
+            {
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
+                return;
+            }
+
+            var target = GetEntity(msg.Target);
+
+            if (!Exists(target))
+            {
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
+                return;
+            }
+
+            if ((TryComp(target, out WarpPointComponent? warp) && warp.Follow) || HasComp<MobStateComponent>(target))
+            {
+                _followerSystem.StartFollowingEntity(attached, target);
+                return;
+            }
+
+            var xform = Transform(attached);
+            _transformSystem.SetCoordinates(attached, xform, Transform(target).Coordinates);
+            _transformSystem.AttachToGridOrMap(attached, xform);
+            if (TryComp(attached, out PhysicsComponent? physics))
+                _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
+        }
+
         private IEnumerable<GhostWarp> GetLocationWarps()
         {
-            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
+            var allQuery = AllEntityQuery<WarpPointComponent>();
+
+            while (allQuery.MoveNext(out var uid, out var warp))
             {
-                if (warp.Location != null)
-                {
-                    yield return new GhostWarp(warp.Owner, warp.Location, true);
-                }
+                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true);
             }
         }
 
@@ -255,19 +303,22 @@ namespace Content.Server.Ghost
         {
             foreach (var player in _playerManager.Sessions)
             {
-                if (player.AttachedEntity is {Valid: true} attached)
-                {
-                    if (attached == except) continue;
+                if (player.AttachedEntity is not {Valid: true} attached)
+                    continue;
 
-                    TryComp<MindContainerComponent>(attached, out var mind);
+                if (attached == except) continue;
 
-                    string playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
+                TryComp<MindContainerComponent>(attached, out var mind);
 
-                    if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
-                        yield return new GhostWarp(attached, playerInfo, false);
-                }
+                var jobName = _jobs.MindTryGetJobName(mind?.Mind);
+                var playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({jobName})";
+
+                if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
+                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
             }
         }
+
+        #endregion
 
         private void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
         {
@@ -279,19 +330,20 @@ namespace Content.Server.Ghost
         /// </summary>
         public void MakeVisible(bool visible)
         {
-            foreach (var (_, vis) in EntityQuery<GhostComponent, VisibilityComponent>())
+            var entityQuery = EntityQueryEnumerator<GhostComponent, VisibilityComponent>();
+            while (entityQuery.MoveNext(out var uid, out _, out var vis))
             {
                 if (visible)
                 {
-                    _visibilitySystem.AddLayer(vis, (int) VisibilityFlags.Normal, false);
-                    _visibilitySystem.RemoveLayer(vis, (int) VisibilityFlags.Ghost, false);
+                    _visibilitySystem.AddLayer(uid, vis, (int) VisibilityFlags.Normal, false);
+                    _visibilitySystem.RemoveLayer(uid, vis, (int) VisibilityFlags.Ghost, false);
                 }
                 else
                 {
-                    _visibilitySystem.AddLayer(vis, (int) VisibilityFlags.Ghost, false);
-                    _visibilitySystem.RemoveLayer(vis, (int) VisibilityFlags.Normal, false);
+                    _visibilitySystem.AddLayer(uid, vis, (int) VisibilityFlags.Ghost, false);
+                    _visibilitySystem.RemoveLayer(uid, vis, (int) VisibilityFlags.Normal, false);
                 }
-                _visibilitySystem.RefreshVisibility(vis);
+                _visibilitySystem.RefreshVisibility(uid, visibilityComponent: vis);
             }
         }
 
@@ -301,29 +353,6 @@ namespace Content.Server.Ghost
             RaiseLocalEvent(target, ghostBoo, true);
 
             return ghostBoo.Handled;
-        }
-    }
-
-    [AnyCommand]
-    public sealed class ToggleGhostVisibility : IConsoleCommand
-    {
-        public string Command => "toggleghosts";
-        public string Description => "Toggles ghost visibility";
-        public string Help => $"{Command}";
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
-        {
-            if (shell.Player == null)
-                shell.WriteLine("You can only toggle ghost visibility on a client.");
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            var uid = shell.Player?.AttachedEntity;
-            if (uid == null
-                || !entityManager.HasComponent<GhostComponent>(uid)
-                || !entityManager.TryGetComponent<EyeComponent>(uid, out var eyeComponent))
-                return;
-
-            eyeComponent.VisibilityMask ^= (uint) VisibilityFlags.Ghost;
         }
     }
 }

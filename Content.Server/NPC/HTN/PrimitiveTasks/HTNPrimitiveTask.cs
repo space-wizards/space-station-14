@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks;
 
-public sealed class HTNPrimitiveTask : HTNTask
+public sealed partial class HTNPrimitiveTask : HTNTask
 {
     /// <summary>
     /// Should we re-apply our blackboard state as a result of our operator during startup?

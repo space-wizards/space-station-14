@@ -14,6 +14,9 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
     [GenerateTypedNameReferences]
     public sealed partial class PlayerTab : Control
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IPlayerManager _playerMan = default!;
+
         private const string ArrowUp = "↑";
         private const string ArrowDown = "↓";
         private readonly Color _altColor = Color.FromHex("#292B38");
@@ -29,7 +32,8 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
 
         public PlayerTab()
         {
-            _adminSystem = EntitySystem.Get<AdminSystem>();
+            IoCManager.InjectDependencies(this);
+            _adminSystem = _entManager.System<AdminSystem>();
             RobustXamlLoader.Load(this);
             RefreshPlayerList(_adminSystem.PlayerList);
 
@@ -93,13 +97,11 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
             foreach (var child in PlayerList.Children.ToArray())
             {
                 if (child is PlayerTabEntry)
-                    child.Orphan();
+                    child.Dispose();
             }
 
             _players = players;
-
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
-            PlayerCount.Text = $"Players: {playerManager.PlayerCount}";
+            PlayerCount.Text = $"Players: {_playerMan.PlayerCount}";
 
             var sortedPlayers = new List<PlayerInfo>(players);
             sortedPlayers.Sort(Compare);
@@ -118,9 +120,11 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                     player.StartingJob,
                     player.Antag ? "YES" : "NO",
                     new StyleBoxFlat(useAltColor ? _altColor : _defaultColor),
-                    player.Connected);
-                entry.PlayerUid = player.EntityUid;
+                    player.Connected,
+                    player.PlaytimeString);
+                entry.PlayerEntity = player.NetEntity;
                 entry.OnPressed += args => OnEntryPressed?.Invoke(args);
+                entry.ToolTip = Loc.GetString("player-tab-entry-tooltip");
                 PlayerList.AddChild(entry);
 
                 useAltColor ^= true;
@@ -146,6 +150,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                 Header.Character => Compare(x.CharacterName, y.CharacterName),
                 Header.Job => Compare(x.StartingJob, y.StartingJob),
                 Header.Antagonist => x.Antag.CompareTo(y.Antag),
+                Header.Playtime => TimeSpan.Compare(x.OverallPlaytime ?? default, y.OverallPlaytime ?? default),
                 _ => 1
             };
         }

@@ -7,7 +7,7 @@ namespace Content.Server.Explosion.Components;
 /// Will play sound from the attached entity upon a <see cref="TriggerEvent"/>.
 /// </summary>
 [RegisterComponent]
-public sealed class SoundOnTriggerComponent : Component
+public sealed partial class SoundOnTriggerComponent : Component
 {
     [DataField("removeOnTrigger")]
     public bool RemoveOnTrigger = true;

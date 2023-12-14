@@ -3,7 +3,7 @@ namespace Content.Shared.Humanoid.Markings;
 /// <summary>
 ///     Colors layer in skin color but much darker.
 /// </summary>
-public sealed class TattooColoring : LayerColoringType
+public sealed partial class TattooColoring : LayerColoringType
 {
     public override Color? GetCleanColor(Color? skin, Color? eyes, MarkingSet markingSet)
     {
@@ -11,7 +11,7 @@ public sealed class TattooColoring : LayerColoringType
         {
             return null;
         }
-        
+
         var newColor = Color.ToHsv(skin.Value);
         newColor.Z = .40f;
 

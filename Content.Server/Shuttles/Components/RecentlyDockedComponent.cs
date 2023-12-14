@@ -5,7 +5,7 @@ namespace Content.Server.Shuttles.Components;
 /// This checks for whether they've left the specified radius before allowing them to automatically dock again.
 /// </summary>
 [RegisterComponent]
-public sealed class RecentlyDockedComponent : Component
+public sealed partial class RecentlyDockedComponent : Component
 {
     [DataField("lastDocked")]
     public EntityUid LastDocked;

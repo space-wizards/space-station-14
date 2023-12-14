@@ -7,7 +7,7 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 /// being scanned by <see cref="ActiveArtifactAnalyzerComponent"/>
 /// </summary>
 [RegisterComponent]
-public sealed class ActiveScannedArtifactComponent : Component
+public sealed partial class ActiveScannedArtifactComponent : Component
 {
     /// <summary>
     /// The scanner that is scanning this artifact
