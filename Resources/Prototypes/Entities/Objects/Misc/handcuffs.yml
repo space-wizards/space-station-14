@@ -140,26 +140,12 @@
     state: icon
 
 - type: entity
+  parent: Handcuffs
+  id: PinkHandcuffs
   name: pink handcuffs
   description: Very comfortable, soft handcuffs for criminals with taste.
-  id: PinkHandcuffs
-  parent: BaseItem
   components:
-  - type: Item
-    size: Small
-    storedRotation: 90
   - type: Handcuff
     cuffedRSI: Objects/Misc/handcuffs_pink.rsi
-    bodyIconState: body-overlay
   - type: Sprite
     sprite: Objects/Misc/handcuffs_pink.rsi
-    state: handcuff
-  - type: Tag
-    tags:
-    - Handcuffs
-  - type: MeleeWeapon
-    resetOnHandSelected: false
-    animation: WeaponArcDisarm
-    damage:
-      types:
-        Blunt: 0
