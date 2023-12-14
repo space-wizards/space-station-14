@@ -8,7 +8,7 @@ namespace Content.Shared.Item;
 /// </summary>
 /// <remarks>
 /// If you need extended functionality (e.g. requiring power) then add a new component and use events:
-/// ItemToggleActivateAttemptEvent, ItemToggleDectivateAttemptEvent or ItemToggleForceToggleEvent.
+/// ItemToggleActivateAttemptEvent, ItemToggleDeactivateAttemptEvent or ItemToggleForceToggleEvent.
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ItemToggleComponent : Component
