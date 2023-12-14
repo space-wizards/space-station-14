@@ -122,7 +122,7 @@ namespace Content.Client.Administration.UI.CustomControls
                     }
                 }
             });
-            button.EnableAllKeybinds = true;
+
             button.AddStyleClass(ListContainer.StyleClassListContainerButton);
         }
     }

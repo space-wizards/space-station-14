@@ -1,0 +1,25 @@
+﻿<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Horizontal"
+              HorizontalAlignment="Stretch"
+              HorizontalExpand="True">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
+        <RichTextLabel Name="ReactantsLabel"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Access="Public"/>
+    </BoxContainer>
+    <BoxContainer Orientation="Vertical"  VerticalAlignment="Center">
+        <TextureRect TexturePath="/Textures/Interface/Misc/beakerlarge.png"
+                     HorizontalAlignment="Center"/>
+        <Label Name="MixLabel"
+               Text="{Loc 'guidebook-reagent-recipes-mix'}"
+               HorizontalAlignment="Center"
+               Access="Public"/>
+    </BoxContainer>
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
+        <RichTextLabel Name="ProductsLabel"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Access="Public"/>
+    </BoxContainer>
+</BoxContainer>

@@ -43,7 +43,7 @@
 - type: entity
   id: ToolboxElectricalTurretFilled
   name: electrical toolbox
-  suffix: Filled
+  suffix: Syndicate, Turret, Filled
   parent: ToolboxElectricalTurret
   components:
   - type: StorageFill
