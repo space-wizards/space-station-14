@@ -287,7 +287,7 @@ namespace Content.Client.Atmos.UI
                 {
                     Text = Loc.GetString("gas-analyzer-window-molarity-text",
                         ("mol", $"{gas.Amount:0.##}"),
-                        ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")),
+                        ("percentage", $"{(gas.Amount / totalGasAmount * 100):0}")),
                     Align = Label.AlignMode.Left,
                     HorizontalExpand = true
                 });
