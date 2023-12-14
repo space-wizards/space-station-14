@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Skeletons have been reported in the closets of various station officials.
-      And maintenance., type: Add}
-  - {message: Skeletons can no longer have a pitch-black coloration., type: Tweak}
-  id: 4858
-  time: '2023-09-19T05:05:18.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Expeditions have been massively tweaked. Timer is 7 minutes, loot count
@@ -2904,3 +2897,9 @@ Entries:
   - {message: Explosive banana peels are now more dangerous., type: Tweak}
   id: 5358
   time: '2023-12-14T03:30:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added gas condensers. These machines are available at the circuit imprinter
+      and can convert gases into liquids. Tasty!, type: Add}
+  id: 5359
+  time: '2023-12-14T03:35:44.0000000+00:00'
