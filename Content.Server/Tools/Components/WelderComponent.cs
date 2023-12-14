@@ -22,7 +22,7 @@ namespace Content.Server.Tools.Components
         public string FuelReagent { get; private set; } = "WeldingFuel";
 
         /// <summary>
-        ///     Fuel consumption per second, while the welder is active.
+        ///     Fuel consumption per second while the welder is active.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 FuelConsumption { get; private set; } = FixedPoint2.New(2.0f);

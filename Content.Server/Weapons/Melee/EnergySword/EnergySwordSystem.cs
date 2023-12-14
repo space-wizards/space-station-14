@@ -21,7 +21,7 @@ public sealed class EnergySwordSystem : EntitySystem
         SubscribeLocalEvent<EnergySwordComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EnergySwordComponent, InteractUsingEvent>(OnInteractUsing);
     }
-
+    // Used to pick a random color for the blade on map init.
     private void OnMapInit(EntityUid uid, EnergySwordComponent comp, MapInitEvent args)
     {
         if (comp.ColorOptions.Count != 0)
@@ -32,6 +32,7 @@ public sealed class EnergySwordSystem : EntitySystem
         _appearance.SetData(uid, ToggleableLightVisuals.Color, comp.ActivatedColor, appearanceComponent);
     }
 
+    // Used to make the make the blade multicolored when using a multitool on it.
     private void OnInteractUsing(EntityUid uid, EnergySwordComponent comp, InteractUsingEvent args)
     {
         if (args.Handled)
