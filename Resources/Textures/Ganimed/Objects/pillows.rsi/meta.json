@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "size": {"x": 32, "y": 32},
+  "license": "See repo CLA.",
+  "copyright": "By thedusteffin for Enterprise server use.",
+  "states": [
+    {
+      "name": "icon-one"
+    },
+    {
+      "name": "icon-one-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "icon-one-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "icon-two"
+    },
+    {
+      "name": "icon-two-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "icon-two-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "icon-three"
+    },
+    {
+      "name": "icon-three-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "icon-three-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "icon-four"
+    },
+    {
+      "name": "icon-four-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "icon-four-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "icon-five"
+    },
+    {
+      "name": "icon-five-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "icon-five-inhand-right",
+      "directions": 4
+    }
+  ]
+}
