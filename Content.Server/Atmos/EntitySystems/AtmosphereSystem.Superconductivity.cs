@@ -12,7 +12,8 @@ namespace Content.Server.Atmos.EntitySystems
             for(var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if (!directions.IsFlagSet(direction)) continue;
+                if (!directions.IsFlagSet(direction))
+                    continue;
 
                 var adjacent = tile.AdjacentTiles[direction.ToIndex()];
 

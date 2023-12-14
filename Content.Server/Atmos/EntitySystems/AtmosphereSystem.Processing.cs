@@ -37,7 +37,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return tile;
 
             // AAAH this is also recurusive
-            // TODO add a to-trim queue
+            // TODO ATMOS PR add a to-trim queue
             atmosphere.InvalidatedCoords.Add(index);
             tile.GridIndex = owner;
             tile.GridIndices = index;
@@ -117,7 +117,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var direction = (AtmosDirection) (1 << i);
                 var indices = tile.GridIndices.Offset(direction);
 
-                // TODO this is recursive... aaahhh!!!!!
+                // TODO ATMOS PR  this is recursive... aaahhh!!!!!
                 // TODO ADD A TRIM QUEUE
                 if (atmos.Tiles.TryGetValue(indices, out var adj) && adj.MapAtmos)
                     TrimDisconnectedMapTiles(ent, adj);
@@ -293,13 +293,11 @@ namespace Content.Server.Atmos.EntitySystems
                 excitedGroup.BreakdownCooldown++;
                 excitedGroup.DismantleCooldown++;
 
-                if(excitedGroup.BreakdownCooldown > Atmospherics.ExcitedGroupBreakdownCycles)
+                if (excitedGroup.BreakdownCooldown > Atmospherics.ExcitedGroupBreakdownCycles)
                     ExcitedGroupSelfBreakdown(gridAtmosphere, excitedGroup);
-
-                else if(excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
+                else if (excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
                     DeactivateGroupTiles(gridAtmosphere, excitedGroup);
-                // TODO atmos
-                // What is the point of this? why is this only de-exciting the group? Shouldn't it also dismantle it?
+                // TODO ATMOS. What is the point of this? why is this only de-exciting the group? Shouldn't it also dismantle it?
 
                 if (number++ < LagCheckIterations)
                     continue;

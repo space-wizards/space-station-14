@@ -72,7 +72,8 @@ namespace Content.Server.Atmos.EntitySystems
 
             var tileSize = excitedGroup.Tiles.Count;
 
-            if (excitedGroup.Disposed) return;
+            if (excitedGroup.Disposed)
+                return;
 
             if (tileSize == 0)
             {

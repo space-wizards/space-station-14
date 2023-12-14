@@ -409,11 +409,8 @@ public sealed partial class AtmosphereSystem
 
             totalTemperature += adj.Temperature;
 
-            // TODO ATMOS
-            // why is this removing and then re-adding air to the neighbouring tiles?
-            // is it some rounding issue to do with Atmospherics.GasMinMoles?
-            // because otherwise this is just unnecessary.
-            //
+            // TODO ATMOS. Why is this removing and then re-adding air to the neighbouring tiles?
+            // Is it some rounding issue to do with Atmospherics.GasMinMoles? because otherwise this is just unnecessary.
             // if we get rid of this, then this could also just add moles and then multiply by ratio at the end, rather
             // than having to iterate over adjacent tiles twice.
 
