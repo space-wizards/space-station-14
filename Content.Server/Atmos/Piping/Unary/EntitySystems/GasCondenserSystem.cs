@@ -64,7 +64,7 @@ public sealed class GasCondenserSystem : EntitySystem
 
     public float NumberOfMolesToConvert(ApcPowerReceiverComponent comp, GasMixture mix, float dt)
     {
-        var hc = _atmosphereSystem.GetHeatCapacity(mix);
+        var hc = _atmosphereSystem.GetHeatCapacity(mix, true);
         var alpha = 0.8f; // tuned to give us 1-ish u/second of reagent conversion
         // ignores the energy needed to cool down the solution to the condensation point, but that probably adds too much difficulty and so let's not simulate that
         var energy = comp.Load * dt;
