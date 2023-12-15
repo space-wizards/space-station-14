@@ -11,6 +11,7 @@ using Content.Shared.Power.Generator;
 using Content.Shared.Timing;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Systems;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
