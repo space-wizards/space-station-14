@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Robust.Shared.GameStates;
@@ -107,6 +108,18 @@ namespace Content.Shared.Decals
         {
             // used by client-side overlay code
         }
+
+        public virtual HashSet<(uint Index, Decal Decal)> GetDecalsInRange(EntityUid gridId, Vector2 position, float distance = 0.75f, Func<Decal, bool>? validDelegate = null)
+        {
+            // NOOP on client atm.
+            return new HashSet<(uint Index, Decal Decal)>();
+        }
+
+        public virtual bool RemoveDecal(EntityUid gridId, uint decalId, DecalGridComponent? component = null)
+        {
+            // NOOP on client atm.
+            return true;
+        }
     }
 
     // TODO: Pretty sure paul was moving this somewhere but just so people know
@@ -149,9 +162,9 @@ namespace Content.Shared.Decals
     public sealed class RequestDecalPlacementEvent : EntityEventArgs
     {
         public Decal Decal;
-        public EntityCoordinates Coordinates;
+        public NetCoordinates Coordinates;
 
-        public RequestDecalPlacementEvent(Decal decal, EntityCoordinates coordinates)
+        public RequestDecalPlacementEvent(Decal decal, NetCoordinates coordinates)
         {
             Decal = decal;
             Coordinates = coordinates;
@@ -161,9 +174,9 @@ namespace Content.Shared.Decals
     [Serializable, NetSerializable]
     public sealed class RequestDecalRemovalEvent : EntityEventArgs
     {
-        public EntityCoordinates Coordinates;
+        public NetCoordinates Coordinates;
 
-        public RequestDecalRemovalEvent(EntityCoordinates coordinates)
+        public RequestDecalRemovalEvent(NetCoordinates coordinates)
         {
             Coordinates = coordinates;
         }

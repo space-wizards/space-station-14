@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
-using Content.Client.Animations;
+using System.Linq;
 using Content.Client.Examine;
 using Content.Client.Strip;
 using Content.Client.Verbs.UI;
@@ -14,7 +13,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Hands.Systems
@@ -44,14 +43,12 @@ namespace Content.Client.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandsComponent, PlayerAttachedEvent>(HandlePlayerAttached);
-            SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(HandlePlayerDetached);
-            SubscribeLocalEvent<HandsComponent, ComponentAdd>(HandleCompAdd);
-            SubscribeLocalEvent<HandsComponent, ComponentRemove>(HandleCompRemove);
+            SubscribeLocalEvent<HandsComponent, LocalPlayerAttachedEvent>(HandlePlayerAttached);
+            SubscribeLocalEvent<HandsComponent, LocalPlayerDetachedEvent>(HandlePlayerDetached);
+            SubscribeLocalEvent<HandsComponent, ComponentStartup>(OnHandsStartup);
+            SubscribeLocalEvent<HandsComponent, ComponentShutdown>(OnHandsShutdown);
             SubscribeLocalEvent<HandsComponent, ComponentHandleState>(HandleComponentState);
             SubscribeLocalEvent<HandsComponent, VisualsChangedEvent>(OnVisualsChanged);
-
-            SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
 
             OnHandSetActive += OnHandActivated;
         }
@@ -63,6 +60,18 @@ namespace Content.Client.Hands.Systems
                 return;
 
             var handsModified = component.Hands.Count != state.Hands.Count;
+            // we need to check that, even if we have the same amount, that the individual hands didn't change.
+            if (!handsModified)
+            {
+                foreach (var hand in component.Hands.Values)
+                {
+                    if (state.Hands.Contains(hand))
+                        continue;
+                    handsModified = true;
+                    break;
+                }
+            }
+
             var manager = EnsureComp<ContainerManagerComponent>(uid);
 
             if (handsModified)
@@ -87,12 +96,14 @@ namespace Content.Client.Hands.Systems
                     }
                 }
 
-                foreach (var hand in addedHands)
+                component.SortedHands.Clear();
+                component.SortedHands.AddRange(state.HandNames);
+                var sorted = addedHands.OrderBy(hand => component.SortedHands.IndexOf(hand.Name));
+
+                foreach (var hand in sorted)
                 {
                     AddHand(uid, hand, component);
                 }
-
-                component.SortedHands = new(state.HandNames);
             }
 
             _stripSys.UpdateUi(uid);
@@ -104,30 +115,6 @@ namespace Content.Client.Hands.Systems
             {
                 SetActiveHand(uid, component.Hands[state.ActiveHand!], component);
             }
-        }
-        #endregion
-
-        #region PickupAnimation
-        private void HandlePickupAnimation(PickupAnimationEvent msg)
-        {
-            PickupAnimation(msg.ItemUid, msg.InitialPosition, msg.FinalPosition, msg.InitialAngle);
-        }
-
-        public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,
-            EntityUid? exclude)
-        {
-            PickupAnimation(item, initialPosition, finalPosition, initialAngle);
-        }
-
-        public void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle)
-        {
-            if (!_gameTiming.IsFirstTimePredicted)
-                return;
-
-            if (finalPosition.EqualsApprox(initialPosition.Position, tolerance: 0.1f))
-                return;
-
-            ReusableAnimations.AnimateEntityPickup(item, initialPosition, finalPosition, initialAngle);
         }
         #endregion
 
@@ -327,7 +314,7 @@ namespace Content.Client.Hands.Systems
             }
 
             var ev = new GetInhandVisualsEvent(uid, hand.Location);
-            RaiseLocalEvent(held, ev, false);
+            RaiseLocalEvent(held, ev);
 
             if (ev.Layers.Count == 0)
             {
@@ -340,7 +327,7 @@ namespace Content.Client.Hands.Systems
             {
                 if (!revealedLayers.Add(key))
                 {
-                    Logger.Warning($"Duplicate key for in-hand visuals: {key}. Are multiple components attempting to modify the same layer? Entity: {ToPrettyString(held)}");
+                    Log.Warning($"Duplicate key for in-hand visuals: {key}. Are multiple components attempting to modify the same layer? Entity: {ToPrettyString(held)}");
                     continue;
                 }
 
@@ -368,30 +355,30 @@ namespace Content.Client.Hands.Systems
             // update hands visuals if this item is in a hand (rather then inventory or other container).
             if (component.Hands.TryGetValue(args.ContainerId, out var hand))
             {
-                UpdateHandVisuals(uid, args.Item, hand, component);
+                UpdateHandVisuals(uid, GetEntity(args.Item), hand, component);
             }
         }
         #endregion
 
         #region Gui
 
-        private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
+        private void HandlePlayerAttached(EntityUid uid, HandsComponent component, LocalPlayerAttachedEvent args)
         {
             OnPlayerHandsAdded?.Invoke(component);
         }
 
-        private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
+        private void HandlePlayerDetached(EntityUid uid, HandsComponent component, LocalPlayerDetachedEvent args)
         {
             OnPlayerHandsRemoved?.Invoke();
         }
 
-        private void HandleCompAdd(EntityUid uid, HandsComponent component, ComponentAdd args)
+        private void OnHandsStartup(EntityUid uid, HandsComponent component, ComponentStartup args)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity == uid)
                 OnPlayerHandsAdded?.Invoke(component);
         }
 
-        private void HandleCompRemove(EntityUid uid, HandsComponent component, ComponentRemove args)
+        private void OnHandsShutdown(EntityUid uid, HandsComponent component, ComponentShutdown args)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity == uid)
                 OnPlayerHandsRemoved?.Invoke();
@@ -428,21 +415,21 @@ namespace Content.Client.Hands.Systems
             base.RemoveHand(uid, handName, handsComp);
         }
 
-        private void OnHandActivated(HandsComponent? handsComponent)
+        private void OnHandActivated(Entity<HandsComponent>? ent)
         {
-            if (handsComponent == null)
+            if (ent is not { } hand)
                 return;
 
-            if (_playerManager.LocalPlayer?.ControlledEntity != handsComponent.Owner)
+            if (_playerManager.LocalPlayer?.ControlledEntity != hand.Owner)
                 return;
 
-            if (handsComponent.ActiveHand == null)
+            if (hand.Comp.ActiveHand == null)
             {
                 OnPlayerSetActiveHand?.Invoke(null);
                 return;
             }
 
-            OnPlayerSetActiveHand?.Invoke(handsComponent.ActiveHand.Name);
+            OnPlayerSetActiveHand?.Invoke(hand.Comp.ActiveHand.Name);
         }
     }
 }

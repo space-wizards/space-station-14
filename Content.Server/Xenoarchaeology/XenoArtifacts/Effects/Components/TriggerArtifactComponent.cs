@@ -4,7 +4,7 @@
 /// This is used for an artifact that triggers when activated.
 /// </summary>
 [RegisterComponent]
-public sealed class TriggerArtifactComponent : Component
+public sealed partial class TriggerArtifactComponent : Component
 {
 
 }

@@ -6,7 +6,7 @@ namespace Content.Server.Speech.Components;
 ///     Applies accent to user while they wear entity as a clothing.
 /// </summary>
 [RegisterComponent]
-public sealed class AddAccentClothingComponent : Component
+public sealed partial class AddAccentClothingComponent : Component
 {
     /// <summary>
     ///     Component name for accent that will be applied.

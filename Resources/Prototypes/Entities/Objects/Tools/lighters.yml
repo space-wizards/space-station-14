@@ -40,11 +40,10 @@
       visible: false
     - state: basic_icon_top
   - type: Item
-    size: 1
+    size: Tiny
     sprite: Objects/Tools/lighters.rsi
     heldPrefix: off
   - type: ItemCooldown
-  - type: ItemStatus
   - type: RefillableSolution
     solution: Welder
   - type: SolutionContainerManager

@@ -11,10 +11,7 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
-using Robust.Shared.Network;
-using Robust.Shared.Player;
-using Robust.Shared.Timing;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Lock;
@@ -25,7 +22,6 @@ namespace Content.Shared.Lock;
 [UsedImplicitly]
 public sealed class LockSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -36,27 +32,12 @@ public sealed class LockSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LockComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<LockComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated);
         SubscribeLocalEvent<LockComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
         SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
         SubscribeLocalEvent<LockComponent, GotEmaggedEvent>(OnEmagged);
-    }
-
-    private void OnGetState(EntityUid uid, LockComponent component, ref ComponentGetState args)
-    {
-        args.State = new LockComponentState(component.Locked, component.LockOnClick);
-    }
-
-    private void OnHandleState(EntityUid uid, LockComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not LockComponentState state)
-            return;
-        component.Locked = state.Locked;
-        component.LockOnClick = state.LockOnClick;
     }
 
     private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
@@ -122,11 +103,11 @@ public sealed class LockSystem : EntitySystem
 
         _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-do-lock-success",
                 ("entityName", Identity.Name(uid, EntityManager))), uid, user);
-        _audio.PlayPredicted(lockComp.LockSound, uid, user, AudioParams.Default.WithVolume(-5));
+        _audio.PlayPredicted(lockComp.LockSound, uid, user);
 
         lockComp.Locked = true;
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, true);
-        Dirty(lockComp);
+        Dirty(uid, lockComp);
 
         var ev = new LockToggledEvent(true);
         RaiseLocalEvent(uid, ref ev, true);
@@ -150,11 +131,11 @@ public sealed class LockSystem : EntitySystem
                 ("entityName", Identity.Name(uid, EntityManager))), uid, user.Value);
         }
 
-        _audio.PlayPredicted(lockComp.UnlockSound, uid, user, AudioParams.Default.WithVolume(-5));
+        _audio.PlayPredicted(lockComp.UnlockSound, uid, user);
 
         lockComp.Locked = false;
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, false);
-        Dirty(lockComp);
+        Dirty(uid, lockComp);
 
         var ev = new LockToggledEvent(false);
         RaiseLocalEvent(uid, ref ev, true);
@@ -203,11 +184,11 @@ public sealed class LockSystem : EntitySystem
         if (!Resolve(uid, ref reader, false))
             return true;
 
-        if (_accessReader.IsAllowed(user, reader))
+        if (_accessReader.IsAllowed(user, uid, reader))
             return true;
 
-        if (!quiet && _timing.IsFirstTimePredicted)
-            _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), uid, Filter.Local(), true);
+        if (!quiet)
+            _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-has-user-access-fail"), uid, user);
         return false;
     }
 
@@ -233,7 +214,7 @@ public sealed class LockSystem : EntitySystem
     {
         if (!component.Locked || !component.BreakOnEmag)
             return;
-        _audio.PlayPredicted(component.UnlockSound, uid, null, AudioParams.Default.WithVolume(-5));
+        _audio.PlayPredicted(component.UnlockSound, uid, null);
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, false);
         RemComp<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged
         args.Handled = true;

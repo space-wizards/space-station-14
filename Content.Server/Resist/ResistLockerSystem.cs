@@ -6,15 +6,18 @@ using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Resist;
+using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 
 namespace Content.Server.Resist;
 
 public sealed class ResistLockerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly LockSystem _lockSystem = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
+    [Dependency] private readonly LockSystem _lockSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly WeldableSystem _weldable = default!;
 
     public override void Initialize()
     {
@@ -31,7 +34,7 @@ public sealed class ResistLockerSystem : EntitySystem
         if (!TryComp(uid, out EntityStorageComponent? storageComponent))
             return;
 
-        if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked || storageComponent.IsWeldedShut)
+        if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked || _weldable.IsWelded(uid))
         {
             AttemptResist(args.Entity, uid, storageComponent, component);
         }
@@ -42,7 +45,7 @@ public sealed class ResistLockerSystem : EntitySystem
         if (!Resolve(target, ref storageComponent, ref resistLockerComponent))
             return;
 
-        var doAfterEventArgs = new DoAfterArgs(user, resistLockerComponent.ResistTime, new ResistLockerDoAfterEvent(), target, target: target)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, resistLockerComponent.ResistTime, new ResistLockerDoAfterEvent(), target, target: target)
         {
             BreakOnTargetMove = false,
             BreakOnUserMove = true,
@@ -69,10 +72,11 @@ public sealed class ResistLockerSystem : EntitySystem
 
         component.IsResisting = false;
 
-        if (TryComp<EntityStorageComponent>(uid, out var storageComponent))
+        if (HasComp<EntityStorageComponent>(uid))
         {
-            if (storageComponent.IsWeldedShut)
-                storageComponent.IsWeldedShut = false;
+            WeldableComponent? weldable = null;
+            if (_weldable.IsWelded(uid, weldable))
+                _weldable.SetWeldedState(uid, false, weldable);
 
             if (TryComp<LockComponent>(args.Args.Target.Value, out var lockComponent))
                 _lockSystem.Unlock(uid, args.Args.User, lockComponent);

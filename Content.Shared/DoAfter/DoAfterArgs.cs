@@ -5,38 +5,53 @@ namespace Content.Shared.DoAfter;
 
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed class DoAfterArgs
+public sealed partial class DoAfterArgs
 {
     /// <summary>
     ///     The entity invoking do_after
     /// </summary>
+    [NonSerialized]
     [DataField("user", required: true)]
-    public readonly EntityUid User;
+    public EntityUid User;
+
+    public NetEntity NetUser;
 
     /// <summary>
     ///     How long does the do_after require to complete
     /// </summary>
     [DataField("delay", required: true)]
-    public readonly TimeSpan Delay;
+    public TimeSpan Delay;
 
     /// <summary>
     ///     Applicable target (if relevant)
     /// </summary>
+    [NonSerialized]
     [DataField("target")]
-    public readonly EntityUid? Target;
+    public EntityUid? Target;
+
+    public NetEntity? NetTarget;
 
     /// <summary>
     ///     Entity used by the User on the Target.
     /// </summary>
+    [NonSerialized]
     [DataField("using")]
-    public readonly EntityUid? Used;
+    public EntityUid? Used;
+
+    public NetEntity? NetUsed;
+
+    /// <summary>
+    /// Whether the progress bar for this DoAfter should be hidden from other players.
+    /// </summary>
+    [DataField]
+    public bool Hidden;
 
     #region Event options
     /// <summary>
     ///     The event that will get raised when the DoAfter has finished. If null, this will simply raise a <see cref="SimpleDoAfterEvent"/>
     /// </summary>
     [DataField("event", required: true)]
-    public readonly DoAfterEvent Event = default!;
+    public DoAfterEvent Event = default!;
 
     /// <summary>
     ///     This option determines how frequently the DoAfterAttempt event will get raised. Defaults to never raising the
@@ -48,8 +63,11 @@ public sealed class DoAfterArgs
     /// <summary>
     ///     Entity which will receive the directed event. If null, no directed event will be raised.
     /// </summary>
+    [NonSerialized]
     [DataField("eventTarget")]
-    public readonly EntityUid? EventTarget;
+    public EntityUid? EventTarget;
+
+    public NetEntity? NetEventTarget;
 
     /// <summary>
     /// Should the DoAfter event broadcast? If this is false, then <see cref="EventTarget"/> should be a valid entity.
@@ -173,6 +191,7 @@ public sealed class DoAfterArgs
     /// <param name="target">The entity being targeted by the DoAFter. Not the same as <see cref="EventTarget"/></param>.
     /// <param name="used">The entity being used during the DoAfter. E.g., a tool</param>
     public DoAfterArgs(
+        IEntityManager entManager,
         EntityUid user,
         TimeSpan delay,
         DoAfterEvent @event,
@@ -186,6 +205,10 @@ public sealed class DoAfterArgs
         Used = used;
         EventTarget = eventTarget;
         Event = @event;
+
+        NetUser = entManager.GetNetEntity(User);
+        NetTarget = entManager.GetNetEntity(Target);
+        NetUsed = entManager.GetNetEntity(Used);
     }
 
     private DoAfterArgs()
@@ -202,13 +225,14 @@ public sealed class DoAfterArgs
     /// <param name="target">The entity being targeted by the DoAfter. Not the same as <see cref="EventTarget"/></param>.
     /// <param name="used">The entity being used during the DoAfter. E.g., a tool</param>
     public DoAfterArgs(
+        IEntityManager entManager,
         EntityUid user,
         float seconds,
         DoAfterEvent @event,
         EntityUid? eventTarget,
         EntityUid? target = null,
         EntityUid? used = null)
-        : this(user, TimeSpan.FromSeconds(seconds), @event, eventTarget, target, used)
+        : this(entManager, user, TimeSpan.FromSeconds(seconds), @event, eventTarget, target, used)
     {
     }
 
@@ -221,6 +245,7 @@ public sealed class DoAfterArgs
         Delay = other.Delay;
         Target = other.Target;
         Used = other.Used;
+        Hidden = other.Hidden;
         EventTarget = other.EventTarget;
         Broadcast = other.Broadcast;
         NeedHand = other.NeedHand;
@@ -237,6 +262,12 @@ public sealed class DoAfterArgs
         BlockDuplicate = other.BlockDuplicate;
         CancelDuplicate = other.CancelDuplicate;
         DuplicateCondition = other.DuplicateCondition;
+
+        // Networked
+        NetUser = other.NetUser;
+        NetTarget = other.NetTarget;
+        NetUsed = other.NetUsed;
+        NetEventTarget = other.NetEventTarget;
 
         Event = other.Event.Clone();
     }

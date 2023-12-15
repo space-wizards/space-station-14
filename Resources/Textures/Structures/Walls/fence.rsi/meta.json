@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "tgstation at bcdd834d17c8c6b20ba53cb270b695ca884fec98",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon_straight"
+    },
+    {
+      "name": "icon_end"
+    },
+    {
+      "name": "straight",
+      "directions": 4
+    },
+    {
+      "name": "end",
+      "directions": 4
+    },
+    {
+      "name": "corner",
+      "directions": 4
+    },
+    {
+      "name": "door_closed",
+      "directions": 4
+    },
+    {
+      "name": "door_opened",
+      "directions": 4
+    },
+    {
+      "name": "straight_broken",
+      "directions": 4
+    }
+  ]
+}

@@ -9,7 +9,7 @@ namespace Content.Shared.Materials;
 /// <seealso cref="MaterialReclaimerComponent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedMaterialReclaimerSystem))]
-public sealed class ActiveMaterialReclaimerComponent : Component
+public sealed partial class ActiveMaterialReclaimerComponent : Component
 {
     /// <summary>
     /// Container used to store the item currently being reclaimed

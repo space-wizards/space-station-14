@@ -7,7 +7,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Iterates room edges and places the relevant tiles and walls on any free indices.
 /// </summary>
-public sealed class BoundaryWallPostGen : IPostDunGen
+public sealed partial class BoundaryWallPostGen : IPostDunGen
 {
     [DataField("tile", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
     public string Tile = "FloorSteel";

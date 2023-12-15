@@ -3,9 +3,9 @@
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public sealed class ComponentConstructionGraphStep : ArbitraryInsertConstructionGraphStep
+    public sealed partial class ComponentConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
-        [DataField("component")] public string Component { get; } = string.Empty;
+        [DataField("component")] public string Component { get; private set; } = string.Empty;
 
         public override bool EntityValid(EntityUid uid, IEntityManager entityManager, IComponentFactory compFactory)
         {

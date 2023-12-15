@@ -1,18 +1,21 @@
-﻿using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Anomaly.Effects.Components;
 
 [RegisterComponent]
-public sealed class EntitySpawnAnomalyComponent : Component
+public sealed partial class EntitySpawnAnomalyComponent : Component
 {
     /// <summary>
     /// A list of entities that are random picked to be spawned on each pulse
     /// </summary>
-    [DataField("spawns", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public List<string> Spawns = new();
+    [DataField]
+    public List<EntProtoId> Spawns = new();
+
+    /// <summary>
+    /// A list of entities that are random picked to be spawned when supercritical;
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> SuperCriticalSpawns = new();
 
     /// <summary>
     /// The maximum number of entities that spawn per pulse
@@ -30,14 +33,21 @@ public sealed class EntitySpawnAnomalyComponent : Component
     public float SpawnRange = 5f;
 
     /// <summary>
-    /// The tile that is spawned by the anomaly's effect
+    /// Whether or not anomaly spawns entities on Pulse
     /// </summary>
-    [DataField("floorTileId", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>)), ViewVariables(VVAccess.ReadWrite)]
-    public string FloorTileId = "FloorFlesh";
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool SpawnOnPulse = true;
 
     /// <summary>
-    /// The entity spawned when the anomaly goes supercritical
+    /// Whether or not anomaly spawns entities on SuperCritical
     /// </summary>
-    [DataField("superCriticalSpawn", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string SupercriticalSpawn = "FleshKudzu";
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool SpawnOnSuperCritical = true;
+
+    /// <summary>
+    /// Whether or not anomaly spawns entities on StabilityChanged
+    /// The idea was to spawn entities either on Pulse/Supercritical OR StabilityChanged
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool SpawnOnStabilityChanged = false;
 }

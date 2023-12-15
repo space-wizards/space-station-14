@@ -16,7 +16,10 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
@@ -260,7 +263,7 @@ public sealed class GasCanisterSystem : EntitySystem
             return;
 
         // Check the used item is valid...
-        if (!HasComp<GasTankComponent>(args.Used))
+        if (!TryComp<GasTankComponent>(args.Used, out var gasTank) || gasTank.IsValveOpen)
             return;
 
         // Preventing inserting a tank since if its locked you cant remove it.

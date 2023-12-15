@@ -2,7 +2,7 @@ using System.Numerics;
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Anomaly.Components;
@@ -14,8 +14,9 @@ namespace Content.Shared.Anomaly.Components;
 ///
 /// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedAnomalySystem))]
-public sealed class AnomalyComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedAnomalySystem))]
+public sealed partial class AnomalyComponent : Component
 {
     /// <summary>
     /// How likely an anomaly is to grow more dangerous. Moves both up and down.
@@ -27,7 +28,7 @@ public sealed class AnomalyComponent : Component
     /// Note that this doesn't refer to stability as a percentage: This is an arbitrary
     /// value that only matters in relation to the <see cref="GrowthThreshold"/> and <see cref="DecayThreshold"/>
     /// </remarks>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float Stability = 0f;
 
     /// <summary>
@@ -39,7 +40,7 @@ public sealed class AnomalyComponent : Component
     /// <remarks>
     /// Wacky-Stability scale lives on in my heart. - emo
     /// </remarks>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float Severity = 0f;
 
     #region Health
@@ -49,7 +50,7 @@ public sealed class AnomalyComponent : Component
     /// When the health of an anomaly reaches 0, it is destroyed without ever
     /// reaching a supercritical point.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float Health = 1f;
 
     /// <summary>
@@ -85,25 +86,26 @@ public sealed class AnomalyComponent : Component
     /// <summary>
     /// The time at which the next artifact pulse will occur.
     /// </summary>
-    [DataField("nextPulseTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextPulseTime = TimeSpan.Zero;
 
     /// <summary>
     /// The minimum interval between pulses.
     /// </summary>
-    [DataField("minPulseLength")]
+    [DataField]
     public TimeSpan MinPulseLength = TimeSpan.FromMinutes(1);
 
     /// <summary>
     /// The maximum interval between pulses.
     /// </summary>
-    [DataField("maxPulseLength")]
+    [DataField]
     public TimeSpan MaxPulseLength = TimeSpan.FromMinutes(2);
 
     /// <summary>
     /// A percentage by which the length of a pulse might vary.
     /// </summary>
-    [DataField("pulseVariation")]
+    [DataField]
     public float PulseVariation = 0.1f;
 
     /// <summary>
@@ -112,19 +114,19 @@ public sealed class AnomalyComponent : Component
     /// <remarks>
     /// This is more likely to trend upwards than donwards, because that's funny
     /// </remarks>
-    [DataField("pulseStabilityVariation")]
+    [DataField]
     public Vector2 PulseStabilityVariation = new(-0.1f, 0.15f);
 
     /// <summary>
     /// The sound played when an anomaly pulses
     /// </summary>
-    [DataField("pulseSound")]
+    [DataField]
     public SoundSpecifier? PulseSound = new SoundCollectionSpecifier("RadiationPulse");
 
     /// <summary>
     /// The sound plays when an anomaly goes supercritical
     /// </summary>
-    [DataField("supercriticalSound")]
+    [DataField]
     public SoundSpecifier? SupercriticalSound = new SoundCollectionSpecifier("explosion");
     #endregion
 
@@ -134,7 +136,7 @@ public sealed class AnomalyComponent : Component
     /// <remarks>
     /// +/- 0.2 from perfect stability (0.5)
     /// </remarks>
-    [DataField("initialStabilityRange")]
+    [DataField]
     public (float, float) InitialStabilityRange = (0.4f, 0.6f);
 
     /// <summary>
@@ -143,25 +145,25 @@ public sealed class AnomalyComponent : Component
     /// <remarks>
     /// Between 0 and 0.5, which should be all mild effects
     /// </remarks>
-    [DataField("initialSeverityRange")]
+    [DataField]
     public (float, float) InitialSeverityRange = (0.1f, 0.5f);
 
     /// <summary>
     /// The particle type that increases the severity of the anomaly.
     /// </summary>
-    [DataField("severityParticleType")]
+    [DataField]
     public AnomalousParticleType SeverityParticleType;
 
     /// <summary>
     /// The particle type that destabilizes the anomaly.
     /// </summary>
-    [DataField("destabilizingParticleType")]
+    [DataField]
     public AnomalousParticleType DestabilizingParticleType;
 
     /// <summary>
     /// The particle type that weakens the anomalys health.
     /// </summary>
-    [DataField("weakeningParticleType")]
+    [DataField]
     public AnomalousParticleType WeakeningParticleType;
 
     #region Points and Vessels
@@ -197,15 +199,27 @@ public sealed class AnomalyComponent : Component
     /// The amount of damage dealt when either a player touches the anomaly
     /// directly or by hitting the anomaly.
     /// </summary>
-    [DataField("anomalyContactDamage", required: true)]
+    [DataField(required: true)]
     public DamageSpecifier AnomalyContactDamage = default!;
 
     /// <summary>
     /// The sound effect played when a player
     /// burns themselves on an anomaly via contact.
     /// </summary>
-    [DataField("anomalyContactDamageSound")]
+    [DataField]
     public SoundSpecifier AnomalyContactDamageSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+
+    /// <summary>
+    /// A prototype entity that appears when an anomaly supercrit collapse.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId? CorePrototype;
+
+    /// <summary>
+    /// A prototype entity that appears when an anomaly decays.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId? CoreInertPrototype;
 
     #region Floating Animation
     /// <summary>
@@ -213,49 +227,33 @@ public sealed class AnomalyComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("animationTime")]
-    public readonly float AnimationTime = 2f;
+    public float AnimationTime = 2f;
 
     /// <summary>
     /// How far it goes in any direction.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("offset")]
-    public readonly Vector2 FloatingOffset = new(0, 0.15f);
+    public Vector2 FloatingOffset = new(0, 0.15f);
 
     public readonly string AnimationKey = "anomalyfloat";
     #endregion
 }
 
-[Serializable, NetSerializable]
-public sealed class AnomalyComponentState : ComponentState
-{
-    public float Severity;
-    public float Stability;
-    public float Health;
-    public TimeSpan NextPulseTime;
-
-    public AnomalyComponentState(float severity, float stability, float health, TimeSpan nextPulseTime)
-    {
-        Severity = severity;
-        Stability = stability;
-        Health = health;
-        NextPulseTime = nextPulseTime;
-    }
-}
-
 /// <summary>
 /// Event raised at regular intervals on an anomaly to do whatever its effect is.
 /// </summary>
+/// <param name="Anomaly">The anomaly pulsing</param>
 /// <param name="Stability"></param>
 /// <param name="Severity"></param>
 [ByRefEvent]
-public readonly record struct AnomalyPulseEvent(float Stability, float Severity);
+public readonly record struct AnomalyPulseEvent(EntityUid Anomaly, float Stability, float Severity);
 
 /// <summary>
 /// Event raised on an anomaly when it reaches a supercritical point.
 /// </summary>
 [ByRefEvent]
-public readonly record struct AnomalySupercriticalEvent;
+public readonly record struct AnomalySupercriticalEvent(EntityUid Anomaly);
 
 /// <summary>
 /// Event broadcast after an anomaly goes supercritical

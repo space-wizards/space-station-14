@@ -7,7 +7,7 @@ namespace Content.Server.Wires;
 
 /// <summary><see cref="IWireAction" /></summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract class BaseWireAction : IWireAction
+public abstract partial class BaseWireAction : IWireAction
 {
     private ISharedAdminLogManager _adminLogger = default!;
 

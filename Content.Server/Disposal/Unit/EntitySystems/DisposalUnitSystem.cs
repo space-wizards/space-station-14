@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
@@ -18,18 +19,21 @@ using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -42,6 +46,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
+    [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -95,7 +100,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             component.NextFlush,
             component.Powered,
             component.Engaged,
-            component.RecentlyEjected);
+            GetNetEntityList(component.RecentlyEjected));
     }
 
     private void OnUnpaused(EntityUid uid, SharedDisposalUnitComponent component, ref EntityUnpausedEvent args)
@@ -200,7 +205,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
     {
-        if (!Resolve(uid, ref disposal))
+        if (!ResolveDisposals(uid, ref disposal))
             return;
 
         if (!disposal.Container.Insert(toInsert))
@@ -301,12 +306,22 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     /// </summary>
     private void OnThrowCollide(EntityUid uid, SharedDisposalUnitComponent component, ThrowHitByEvent args)
     {
-        if (!CanInsert(uid, component, args.Thrown) ||
-            _robustRandom.NextDouble() > 0.75 ||
-            !component.Container.Insert(args.Thrown))
+        var canInsert = CanInsert(uid, component, args.Thrown);
+        var randDouble = _robustRandom.NextDouble();
+
+        if (!canInsert || randDouble > 0.75)
         {
+            _audioSystem.PlayPvs(component.MissSound, uid);
+
             _popupSystem.PopupEntity(Loc.GetString("disposal-unit-thrown-missed"), uid);
             return;
+        }
+
+        var inserted = _containerSystem.Insert(args.Thrown, component.Container);
+
+        if (!inserted)
+        {
+            throw new InvalidOperationException("Container insertion failed but CanInsert returned true");
         }
 
         if (args.Component.Thrower != null)
@@ -488,7 +503,12 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (!CanInsert(unitId, unit, toInsertId))
             return false;
 
-        var delay = userId == toInsertId ? unit.EntryDelay : unit.DraggedEntryDelay;
+        bool insertingSelf = userId == toInsertId;
+
+        var delay = insertingSelf ? unit.EntryDelay : unit.DraggedEntryDelay;
+
+        if (userId != null && !insertingSelf)
+            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-being-inserted", ("user", Identity.Entity((EntityUid) userId, EntityManager))), toInsertId, toInsertId, PopupType.Large);
 
         if (delay <= 0 || userId == null)
         {
@@ -498,7 +518,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         // Can't check if our target AND disposals moves currently so we'll just check target.
         // if you really want to check if disposals moves then add a predicate.
-        var doAfterArgs = new DoAfterArgs(userId.Value, delay, new DisposalDoAfterEvent(), unitId, target: toInsertId, used: unitId)
+        var doAfterArgs = new DoAfterArgs(EntityManager, userId.Value, delay, new DisposalDoAfterEvent(), unitId, target: toInsertId, used: unitId)
         {
             BreakOnDamage = true,
             BreakOnTargetMove = true,
@@ -541,7 +561,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (entry == default || component is not DisposalUnitComponent sDisposals)
         {
             component.Engaged = false;
-            Dirty(component);
+            Dirty(uid, component);
             return false;
         }
 
@@ -549,7 +569,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         _disposalTubeSystem.TryInsert(entry, sDisposals, beforeFlushArgs.Tags);
 
-        component.NextPressurized = GameTiming.CurTime + TimeSpan.FromSeconds(1f / PressurePerSecond);
+        component.NextPressurized = GameTiming.CurTime;
+        if (!component.DisablePressure)
+            component.NextPressurized += TimeSpan.FromSeconds(1f / PressurePerSecond);
+
         component.Engaged = false;
         // stop queuing NOW
         component.NextFlush = null;
@@ -557,7 +580,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         UpdateVisualState(uid, component, true);
         UpdateInterface(uid, component, component.Powered);
 
-        Dirty(component);
+        Dirty(uid, component);
 
         return true;
     }
@@ -565,7 +588,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     private void HandleAir(EntityUid uid, DisposalUnitComponent component, TransformComponent xform)
     {
         var air = component.Air;
-        var indices = _transformSystem.GetGridOrMapTilePosition(uid, xform);
+        var indices = _transformSystem.GetGridTilePositionOrDefault((uid, xform));
 
         if (_atmosSystem.GetTileMixture(xform.GridUid, xform.MapUid, indices, true) is { Temperature: > 0f } environment)
         {
@@ -673,7 +696,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             component.RecentlyEjected.Add(toRemove);
 
         UpdateVisualState(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public bool CanFlush(EntityUid unit, SharedDisposalUnitComponent component)
@@ -688,7 +711,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         component.Engaged = true;
         UpdateVisualState(uid, component);
         UpdateInterface(uid, component, component.Powered);
-        Dirty(component);
+        Dirty(uid, component);
 
         if (!CanFlush(uid, component))
             return;
@@ -712,7 +735,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         UpdateVisualState(uid, component);
         UpdateInterface(uid, component, component.Powered);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -728,16 +751,31 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (!component.Engaged)
         {
             component.NextFlush = null;
-            Dirty(component);
+            Dirty(uid, component);
         }
+    }
+
+    public override bool HasDisposals(EntityUid? uid)
+    {
+        return HasComp<DisposalUnitComponent>(uid);
+    }
+
+    public override bool ResolveDisposals(EntityUid uid, [NotNullWhen(true)] ref SharedDisposalUnitComponent? component)
+    {
+        if (component != null)
+            return true;
+
+        TryComp<DisposalUnitComponent>(uid, out var storage);
+        component = storage;
+        return component != null;
     }
 
     public override bool CanInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid entity)
     {
-        if (!base.CanInsert(uid, component, entity) || component is not SharedDisposalUnitComponent serverComp)
+        if (!base.CanInsert(uid, component, entity))
             return false;
 
-        return serverComp.Container.CanInsert(entity);
+        return _containerSystem.CanInsert(entity, component.Container);
     }
 
     /// <summary>
@@ -760,6 +798,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public void AfterInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid inserted, EntityUid? user = null)
     {
+        _audioSystem.PlayPvs(component.InsertSound, uid);
+
         if (!component.Container.Insert(inserted))
             return;
 

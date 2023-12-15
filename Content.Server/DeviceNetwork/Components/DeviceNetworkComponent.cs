@@ -6,7 +6,7 @@ namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
     [Access(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
-    public sealed class DeviceNetworkComponent : Component
+    public sealed partial class DeviceNetworkComponent : Component
     {
         public enum DeviceNetIdDefaults
         {

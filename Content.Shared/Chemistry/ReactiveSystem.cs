@@ -19,32 +19,33 @@ namespace Content.Shared.Chemistry
 
         public void DoEntityReaction(EntityUid uid, Solution solution, ReactionMethod method)
         {
-            foreach (var (reagentId, quantity) in solution.Contents.ToArray())
+            foreach (var reagent in solution.Contents.ToArray())
             {
-                ReactionEntity(uid, method, reagentId, quantity, solution);
+                ReactionEntity(uid, method, reagent, solution);
             }
         }
 
-        public void ReactionEntity(EntityUid uid, ReactionMethod method, string reagentId, FixedPoint2 reactVolume, Solution? source)
+        public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentQuantity reagentQuantity, Solution? source)
         {
             // We throw if the reagent specified doesn't exist.
-            ReactionEntity(uid, method, _prototypeManager.Index<ReagentPrototype>(reagentId), reactVolume, source);
+            var proto = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+            ReactionEntity(uid, method, proto, reagentQuantity, source);
         }
 
-        public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentPrototype reagent,
-            FixedPoint2 reactVolume, Solution? source)
+        public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentPrototype proto,
+            ReagentQuantity reagentQuantity, Solution? source)
         {
-            if (!EntityManager.TryGetComponent(uid, out ReactiveComponent? reactive))
+            if (!TryComp(uid, out ReactiveComponent? reactive))
                 return;
 
             // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
-            var args = new ReagentEffectArgs(uid, null, source, reagent,
-                source?.GetReagentQuantity(reagent.ID) ?? reactVolume, EntityManager, method, 1f);
+            var args = new ReagentEffectArgs(uid, null, source, proto,
+                source?.GetReagentQuantity(reagentQuantity.Reagent) ?? reagentQuantity.Quantity, EntityManager, method, 1f);
 
             // First, check if the reagent wants to apply any effects.
-            if (reagent.ReactiveEffects != null && reactive.ReactiveGroups != null)
+            if (proto.ReactiveEffects != null && reactive.ReactiveGroups != null)
             {
-                foreach (var (key, val) in reagent.ReactiveEffects)
+                foreach (var (key, val) in proto.ReactiveEffects)
                 {
                     if (!val.Methods.Contains(method))
                         continue;
@@ -64,7 +65,7 @@ namespace Content.Shared.Chemistry
                         {
                             var entity = args.SolutionEntity;
                             _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
-                                $"Reactive effect {effect.GetType().Name:effect} of reagent {reagent.ID:reagent} with method {method} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
+                                $"Reactive effect {effect.GetType().Name:effect} of reagent {proto.ID:reagent} with method {method} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
                         }
 
                         effect.Effect(args);
@@ -80,7 +81,7 @@ namespace Content.Shared.Chemistry
                     if (!entry.Methods.Contains(method))
                         continue;
 
-                    if (entry.Reagents != null && !entry.Reagents.Contains(reagent.ID))
+                    if (entry.Reagents != null && !entry.Reagents.Contains(proto.ID))
                         continue;
 
                     foreach (var effect in entry.Effects)
@@ -92,7 +93,7 @@ namespace Content.Shared.Chemistry
                         {
                             var entity = args.SolutionEntity;
                             _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
-                                $"Reactive effect {effect.GetType().Name:effect} of {ToPrettyString(entity):entity} using reagent {reagent.ID:reagent} with method {method} at {Transform(entity).Coordinates:coordinates}");
+                                $"Reactive effect {effect.GetType().Name:effect} of {ToPrettyString(entity):entity} using reagent {proto.ID:reagent} with method {method} at {Transform(entity).Coordinates:coordinates}");
                         }
 
                         effect.Effect(args);

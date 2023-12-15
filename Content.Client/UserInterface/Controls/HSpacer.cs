@@ -2,7 +2,6 @@
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
-using TerraFX.Interop.Windows;
 
 namespace Content.Client.UserInterface.Controls;
 

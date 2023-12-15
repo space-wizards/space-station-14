@@ -2,7 +2,7 @@
   id: FoodPizza
   icon:
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
-    state: margherita
+    state: margherita-slice
   product: CrateFoodPizza
   cost: 450
   category: Food
@@ -61,7 +61,7 @@
 - type: cargoProduct
   id: FoodSoftdrinks
   icon:
-    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    sprite: Objects/Consumable/Drinks/cola.rsi
     state: icon
   product: CrateFoodSoftdrinks
   cost: 1200
@@ -71,7 +71,7 @@
 - type: cargoProduct
   id: FoodSoftdrinksLarge
   icon:
-    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    sprite: Objects/Consumable/Drinks/colabottle.rsi
     state: icon
   product: CrateFoodSoftdrinksLarge
   cost: 2400

@@ -22,7 +22,7 @@ public sealed partial class PowerCellSystem
             if (!comp.Drawing)
                 continue;
 
-            if (_timing.CurTime < comp.NextUpdateTime)
+            if (Timing.CurTime < comp.NextUpdateTime)
                 continue;
 
             comp.NextUpdateTime += Delay;

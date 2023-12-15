@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Cargo.Components;
 
 [RegisterComponent]
-public sealed class CargoBountyConsoleComponent : Component
+public sealed partial class CargoBountyConsoleComponent : Component
 {
     /// <summary>
     /// The id of the label entity spawned by the print label button.

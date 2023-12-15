@@ -7,6 +7,7 @@
     - type: Sprite
       sprite: Structures/Decoration/crystal.rsi
       state: crystal_green
+      noRot: true
     - type: Reflect
       reflectProb: 0.5
       reflects:

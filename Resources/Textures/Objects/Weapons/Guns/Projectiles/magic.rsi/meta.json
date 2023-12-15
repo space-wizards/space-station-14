@@ -29,6 +29,39 @@
         ]
       ]
     },
+	{
+      "name": "magicm_yellow",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+	{
+      "name": "magicm_red",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+	{
+      "name": "magicm_cyan",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
     {
       "name": "spell",
       "delays": [

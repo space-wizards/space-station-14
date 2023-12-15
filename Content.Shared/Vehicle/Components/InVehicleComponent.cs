@@ -7,7 +7,7 @@ namespace Content.Shared.Vehicle.Components
     /// removing them.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed class InVehicleComponent : Component
+    public sealed partial class InVehicleComponent : Component
     {
         /// <summary>
         /// The vehicle this rider is currently riding.

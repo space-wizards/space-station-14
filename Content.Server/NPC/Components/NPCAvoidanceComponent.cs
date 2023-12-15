@@ -4,7 +4,7 @@ namespace Content.Server.NPC.Components;
 /// Should this entity be considered for collision avoidance
 /// </summary>
 [RegisterComponent]
-public sealed class NPCAvoidanceComponent : Component
+public sealed partial class NPCAvoidanceComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("enabled")]
     public bool Enabled = true;

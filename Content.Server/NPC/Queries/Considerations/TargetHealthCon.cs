@@ -1,6 +1,6 @@
 namespace Content.Server.NPC.Queries.Considerations;
 
-public sealed class TargetHealthCon : UtilityConsideration
+public sealed partial class TargetHealthCon : UtilityConsideration
 {
 
 }

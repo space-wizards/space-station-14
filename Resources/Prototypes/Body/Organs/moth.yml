@@ -11,9 +11,14 @@
     solutions:
       stomach:
         maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
   - type: Metabolizer
-    maxReagents: 6
-    metabolizerTypes: [ Plant ]
+    maxReagents: 3
+    metabolizerTypes: [ Moth ]
     removeEmpty: true
     groups:
       - id: Food

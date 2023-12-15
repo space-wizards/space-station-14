@@ -1,0 +1,39 @@
+﻿<Document>
+  # Thermo-electric Engine (TEG)
+
+  The TEG generates power by exchanging heat between hot and cold gases. On station, hot gas is usually created by burning plasma, and an array of heat-exchanging pipes in space radiates away heat to make a cold side.
+
+  The TEG relies heavily on atmospherics piping. The only truly special component about it is the generator core, the rest is all off-the-shelf atmospherics equipment. Note that while the exact layout may vary significantly depending on station, the general components and setup are usually the same.
+
+  ## Generator
+
+  The main generator itself is a machine made up of multiple parts: the core generator and two "circulators", in this arrangement:
+
+  <Box>
+    <GuideEntityEmbed Entity="TegCirculator" Rotation="180" Caption="" Margin="0" />
+    <GuideEntityEmbed Entity="TegCenter" Rotation="90" Caption="" Margin="0" />
+    <GuideEntityEmbed Entity="TegCirculator" Caption="" Margin="0" />
+  </Box>
+
+  The circulators take in either a hot or cold gas, and pass it through the machine to exchange heat. The gas then gets output on the other end of the circulator. The generator produces the actual power and outputs it over an HV wire.
+
+  Note that the circulators are [color=#a4885c]directional[/color]: they will only let gas through one way. You can see this direction in-game by examining the circulator itself. A pressure difference is required across the input and output, so pumps are generally provided and must be turned on.
+
+  There is no preference for which side must be hot or cold, there need only be a difference in temperature between them. The gases in the two "loops" are never mixed, only energy is exchanged between them. The hot side will cool down, the cold side will heat up.
+
+  ## Burn Chamber
+
+  As I'm sure a wise person once said: the best way to make something hot is to light it on fire. Well, depending on context that may not be very wise, but luckily your engineering department has just what's needed to do it wisely after all.
+
+  TODO: somebody fill this out once we settle on a general mapped layout for burn chambers.
+
+  ## Coolant Array
+
+  A whole bunch of heat-exchanger piping in space. There's not much to say here: gas goes through and cools down.
+
+  ## The Pipes
+
+  TODO: somebody fill this out once we settle on a general mapped layout for burn chambers.
+
+
+</Document>

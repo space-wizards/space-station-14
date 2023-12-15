@@ -6,7 +6,7 @@ namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class TritiumFireReaction : IGasReactionEffect
+    public sealed partial class TritiumFireReaction : IGasReactionEffect
     {
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
         {
@@ -47,6 +47,7 @@ namespace Content.Server.Atmos.Reactions
                 mixture.ReactionResults[GasReaction.Fire] += burnedFuel;
             }
 
+            energyReleased /= atmosphereSystem.HeatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise
             if (energyReleased > 0)
             {
                 var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture);

@@ -8,7 +8,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Places tiles / entities onto room entrances.
 /// </summary>
-public sealed class RoomEntrancePostGen : IPostDunGen
+public sealed partial class RoomEntrancePostGen : IPostDunGen
 {
     [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string?> Entities = new()

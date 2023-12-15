@@ -4,7 +4,7 @@ namespace Content.Client.PowerCell;
 
 [RegisterComponent]
 [Access(typeof(PowerChargerVisualizerSystem))]
-public sealed class PowerChargerVisualsComponent : Component
+public sealed partial class PowerChargerVisualsComponent : Component
 {
     /// <summary>
     /// The base sprite state used if the power cell charger does not contain a power cell.
@@ -12,14 +12,14 @@ public sealed class PowerChargerVisualsComponent : Component
     [DataField("emptyState")]
     [ViewVariables(VVAccess.ReadWrite)]
     public string EmptyState = "empty";
-    
+
     /// <summary>
     /// The base sprite state used if the power cell charger contains a power cell.
     /// </summary>
     [DataField("occupiedState")]
     [ViewVariables(VVAccess.ReadWrite)]
     public string OccupiedState = "full";
-    
+
     /// <summary>
     /// A mapping of the indicator light overlays for the power cell charger.
     /// <see cref="CellChargerStatus.Off"/> Maps to the state used when the charger is out of power/disabled.
@@ -29,7 +29,7 @@ public sealed class PowerChargerVisualsComponent : Component
     /// </summary>
     [DataField("lightStates")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public readonly Dictionary<CellChargerStatus, string> LightStates = new()
+    public Dictionary<CellChargerStatus, string> LightStates = new()
     {
         [CellChargerStatus.Off] = "light-off",
         [CellChargerStatus.Empty] = "light-empty",

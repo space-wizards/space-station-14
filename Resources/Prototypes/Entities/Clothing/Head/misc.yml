@@ -62,7 +62,7 @@
     node: hairflower
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadLightBase
   id: ClothingHeadHatPumpkin
   name: pumpkin hat
   description: A jack o' lantern! Believed to ward off evil spirits.
@@ -73,6 +73,18 @@
     sprite: Clothing/Head/Misc/pumpkin.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: PointLight
+    enabled: false
+    radius: 3
+    energy: 1
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    color: "#cc6600"
+    netsync: false
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
 
 - type: entity
   parent: ClothingHeadBase

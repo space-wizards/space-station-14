@@ -6,7 +6,7 @@ namespace Content.Server.Anomaly.Components;
 /// This component is used for handling gas producing anomalies. Will always spawn one on the tile with the anomaly, and in a random radius around it.
 /// </summary>
 [RegisterComponent]
-public sealed class GasProducerAnomalyComponent : Component
+public sealed partial class GasProducerAnomalyComponent : Component
 {
     /// <summary>
     /// Should this gas be released when an anomaly reaches max severity?
@@ -45,11 +45,11 @@ public sealed class GasProducerAnomalyComponent : Component
     public float spawnRadius = 3;
 
     /// <summary>
-    /// The number of tiles which will be modified. 
+    /// The number of tiles which will be modified.
     /// </summary>
     [DataField("tileCount")]
     public int tileCount = 1;
-    
+
     /// <summary>
     /// The the amount the tempurature should be modified by (negative for decreasing temp)
     /// </summary>

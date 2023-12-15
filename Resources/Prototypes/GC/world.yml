@@ -1,4 +1,0 @@
-﻿- type: gcQueue
-  id: SpaceDebris
-  depth: 512 # So there's a decent bit of time before roids unload.
-  minDepthToProcess: 256

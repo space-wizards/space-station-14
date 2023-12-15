@@ -12,7 +12,7 @@
       map: ["base"]
   - type: Item
     sprite: Objects/Weapons/Bombs/c4.rsi
-    size: 10
+    size: Small
   - type: OnUseTimerTrigger
     delay: 10
     delayOptions: [10, 30, 60, 120, 300]

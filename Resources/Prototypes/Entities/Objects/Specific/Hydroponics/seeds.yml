@@ -8,7 +8,7 @@
       sprite: Objects/Specific/Hydroponics/seeds.rsi
       state: seed
     - type: Item
-      size: 2
+      size: Tiny
     - type: StaticPrice
       price: 20
 
@@ -41,6 +41,16 @@
       seedId: banana
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/banana.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of mimana seeds
+  id: MimanaSeeds
+  components:
+    - type: Seed
+      seedId: mimana
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/mimana.rsi
 
 - type: entity
   parent: SeedBase
@@ -81,6 +91,16 @@
       seedId: lemon
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/lemon.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of lemoon seeds
+  id: LemoonSeeds
+  components:
+    - type: Seed
+      seedId: lemoon
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/lemoon.rsi
 
 - type: entity
   parent: SeedBase
@@ -144,6 +164,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of steel cap spores
+  id: SteelcapSeeds
+  components:
+    - type: Seed
+      seedId: steelcap
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/steelcap.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of tomato seeds
   id: TomatoSeeds
   components:
@@ -151,6 +181,26 @@
       seedId: tomato
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/tomato.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of blue tomato seeds
+  id: BlueTomatoSeeds
+  components:
+    - type: Seed
+      seedId: blueTomato
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/blue_tomato.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of blood tomato seeds
+  id: BloodTomatoSeeds
+  components:
+    - type: Seed
+      seedId: bloodTomato
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/blood_tomato.rsi
 
 - type: entity
   parent: SeedBase
@@ -237,6 +287,17 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of death nettle seeds
+  description: "Handle with very thick gloves."
+  id: DeathNettleSeeds
+  components:
+    - type: Seed
+      seedId: deathNettle
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/death_nettle.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of chili seeds
   description: "Spicy."
   id: ChiliSeeds
@@ -245,6 +306,17 @@
       seedId: chili
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/chili.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of chilly seeds
+  description: "Frostburn."
+  id: ChillySeeds
+  components:
+    - type: Seed
+      seedId: chilly
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/chilly.rsi
 
 - type: entity
   parent: SeedBase
@@ -289,6 +361,17 @@
       seedId: ambrosiaVulgaris
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of ambrosia deus seeds
+  description: "A medicinal plant for the gods themselves."
+  id: AmbrosiaDeusSeeds
+  components:
+    - type: Seed
+      seedId: ambrosiaDeus
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
 
 - type: entity
   parent: SeedBase
@@ -356,6 +439,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of koibean seeds
+  id: KoibeanSeeds
+  components:
+    - type: Seed
+      seedId: koibean
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/koibean.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of red onion seeds
   description: "Purple despite the name."
   id: OnionRedSeeds
@@ -374,7 +467,7 @@
       seedId: watermelon
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/watermelon.rsi
-      
+
 - type: entity
   parent: SeedBase
   name: packet of grape seeds
@@ -384,4 +477,65 @@
       seedId: grape
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/grape.rsi
-      
+
+- type: entity
+  parent: SeedBase
+  name: packet of cocoa seeds
+  id: CocoaSeeds
+  components:
+    - type: Seed
+      seedId: cocoa
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cocoa.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of berry seeds
+  id: BerrySeeds
+  components:
+    - type: Seed
+      seedId: berries
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/berries.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of bungo seeds
+  description: "Don't eat the pits."
+  id: BungoSeeds
+  components:
+    - type: Seed
+      seedId: bungo
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/bungo.rsi
+
+- type: entity
+  parent: SeedBase
+  id: PeaSeeds
+  name: packet of pea pods
+  description: "These humble plants were once a vital part in the study of genetics."
+  components:
+    - type: Seed
+      seedId: pea
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pea.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of pumpkin seeds
+  id: PumpkinSeeds
+  components:
+    - type: Seed
+      seedId: pumpkin
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pumpkin.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of cotton seeds
+  id: CottonSeeds
+  components:
+    - type: Seed
+      seedId: cotton
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cotton.rsi

@@ -124,6 +124,11 @@
         key: KnockedDown
         time: 3
         type: Remove
+      - !type:GenericStatusEffect
+        key: StaminaModifier
+        component: StaminaModifier
+        time: 3
+        type: Add
     Medicine:
       metabolismRate: 1.0
       effects:
@@ -235,6 +240,24 @@
   physicalDesc: reagent-physical-desc-syrupy
   flavor: bitter
   color: "#63806e"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+
+- type: reagent
+  id: Bananadine
+  name: reagent-name-bananadine
+  group: Narcotics
+  desc: reagent-desc-bananadine
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: bitter
+  color: "#ffff00"
   metabolisms:
     Narcotic:
       effects:

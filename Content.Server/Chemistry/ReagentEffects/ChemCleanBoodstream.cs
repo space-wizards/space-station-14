@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// Basically smoke and foam reactions.
     /// </summary>
     [UsedImplicitly]
-    public sealed class ChemCleanBloodstream : ReagentEffect
+    public sealed partial class ChemCleanBloodstream : ReagentEffect
     {
         [DataField("cleanseRate")]
         public float CleanseRate = 3.0f;

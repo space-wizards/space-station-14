@@ -16,7 +16,8 @@ Variations on this mix may be necessary for the long-term comfort of atypical cr
 <GuideEntityEmbed Entity="StorageCanister"/>
 </Box>
 ## Vents and Scrubbers
-Vents and scrubbers are core atmospherics devices that fill and cleanse rooms, respectively. They can be reconfigured by installing an air alarm, allowing you to change them from their default settings. By default, they are configured for filling rooms to standard pressure (101.24kPa) and to remove all non-O2/N2 gasses from a room.
+Vents and scrubbers are core atmospherics devices that fill and cleanse rooms, respectively. By default, they are configured for filling rooms to standard pressure (101.24kPa) and to remove all non-O2/N2 gasses from a room. They can be reconfigured from their default settings, allowing you to configure how they respond to various types of gasses or pressure levels. This can be done by interacting with an existing air alarm nearby, or installing and connecting them to a new one.
+
 <Box>
 <GuideEntityEmbed Entity="GasVentPump"/>
 <GuideEntityEmbed Entity="GasVentScrubber"/>
@@ -27,6 +28,32 @@ Should you encounter a situation where scrubbers aren't cleaning a room fast eno
 <Box>
 <GuideEntityEmbed Entity="PortableScrubber"/>
 </Box>
+# Gas mixes and Burn chambers
+In the event you finish all the tasks at hand, you can make some extra power or money by creating new chemical gasses.
+
+##Tritium
+Tritium is a clear, green gas that is highly flammable, radioactive, and combusts when in contact with oxygen making it very helpful when running the [color=#a4885c]TEG.[/color]
+It can be made by burning 1% Plasma and 96% or more Oxygen in the Burn Chamber. You can extract this gas through scrubbers.
+
+<Box>
+<GuideEntityEmbed Entity="PlasmaCanister" />
+<GuideEntityEmbed Entity="OxygenCanister" />
+<GuideEntityEmbed Entity="GasVentScrubber"/>
+<GuideEntityEmbed Entity="TritiumCanister" />
+</Box>
+
+##Frezon
+Frezon is a bluish-green gas that is very complex and very dangerous. To obtain frezon, you must mix Tritium, Oxygen, and Nitrogen in a 70K room to start the reaction, as well as prevent the Tritium from combusting with the oxygen.
+
+<Box>
+<GuideEntityEmbed Entity="TritiumCanister" />
+<GuideEntityEmbed Entity="AirCanister" />
+<GuideEntityEmbed Entity="GasVentScrubber"/>
+<GuideEntityEmbed Entity="StorageCanister" Caption="Frezon Canister"/>
+</Box>
+
+It is critical to understand that a frezon leak can devastate the station, causing a wintery hell filled with itchy sweaters and cold burns. Frezon is very cold, and can freeze the station to death if even a few moles get out, so make sure that you lock your canisters or just move your Frezon straight into a storage room.
+
 ## Reference Sheet
 - Standard atmospheric mix is [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color]
 - Gas obeys real math. You can use the equation PV = nRT (Pressure kPa * Volume L = Moles * R * Temperature K) to derive information you might need to know about a gas. R is approximately 8.31446

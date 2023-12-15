@@ -10,6 +10,8 @@ using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -73,7 +75,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         {
             if (_timing.CurTime > component.EffectCooldown)
             {
-                RaiseNetworkEvent(new PlayBoxEffectMessage(uid, component.Mover.Value));
+                RaiseNetworkEvent(new PlayBoxEffectMessage(GetNetEntity(uid), GetNetEntity(component.Mover.Value)));
                 _audio.PlayPvs(component.EffectSound, uid);
                 component.EffectCooldown = _timing.CurTime + component.CooldownDuration;
             }

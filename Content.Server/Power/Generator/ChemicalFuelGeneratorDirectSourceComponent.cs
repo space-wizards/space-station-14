@@ -4,7 +4,7 @@
 /// This is used for stuff that can directly be shoved into a generator.
 /// </summary>
 [RegisterComponent, Access(typeof(GeneratorSystem))]
-public sealed class ChemicalFuelGeneratorDirectSourceComponent : Component
+public sealed partial class ChemicalFuelGeneratorDirectSourceComponent : Component
 {
     /// <summary>
     /// The solution to pull fuel material from.

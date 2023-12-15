@@ -47,7 +47,6 @@ public sealed class ClientClothingSystem : ClothingSystem
 
     [Dependency] private readonly IResourceCache _cache = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -170,10 +169,12 @@ public sealed class ClientClothingSystem : ClothingSystem
 
     private void OnVisualsChanged(EntityUid uid, InventoryComponent component, VisualsChangedEvent args)
     {
-        if (!TryComp(args.Item, out ClothingComponent? clothing) || clothing.InSlot == null)
+        var item = GetEntity(args.Item);
+
+        if (!TryComp(item, out ClothingComponent? clothing) || clothing.InSlot == null)
             return;
 
-        RenderEquipment(uid, args.Item, clothing.InSlot, component, null, clothing);
+        RenderEquipment(uid, item, clothing.InSlot, component, null, clothing);
     }
 
     private void OnDidUnequip(EntityUid uid, SpriteComponent component, DidUnequipEvent args)
@@ -201,17 +202,15 @@ public sealed class ClientClothingSystem : ClothingSystem
         revealedLayers.Clear();
     }
 
-    public void InitClothing(EntityUid uid, InventoryComponent? component = null, SpriteComponent? sprite = null)
+    public void InitClothing(EntityUid uid, InventoryComponent component)
     {
-        if (!Resolve(uid, ref sprite, ref component) || !_inventorySystem.TryGetSlots(uid, out var slots, component))
+        if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        foreach (var slot in slots)
+        var enumerator = _inventorySystem.GetSlotEnumerator((uid, component));
+        while (enumerator.NextItem(out var item, out var slot))
         {
-            if (!_inventorySystem.TryGetSlotContainer(uid, slot.Name, out var containerSlot, out _, component) ||
-                !containerSlot.ContainedEntity.HasValue) continue;
-
-            RenderEquipment(uid, containerSlot.ContainedEntity.Value, slot.Name, component, sprite);
+            RenderEquipment(uid, item, slot.Name, component, sprite);
         }
     }
 

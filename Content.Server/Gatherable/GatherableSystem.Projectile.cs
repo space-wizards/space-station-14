@@ -16,7 +16,7 @@ public sealed partial class GatherableSystem
     private void OnProjectileCollide(EntityUid uid, GatheringProjectileComponent component, ref StartCollideEvent args)
     {
         if (!args.OtherFixture.Hard ||
-            args.OurFixture.ID != SharedProjectileSystem.ProjectileFixture ||
+            args.OurFixtureId != SharedProjectileSystem.ProjectileFixture ||
             component.Amount <= 0 ||
             !TryComp<GatherableComponent>(args.OtherEntity, out var gatherable))
         {

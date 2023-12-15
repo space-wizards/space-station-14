@@ -50,7 +50,6 @@
     - type: Tag
       tags:
         - DoorBumpOpener
-    - type: InteractionOutline
     - type: Construction
       graph: BaseBigBox
       node: basebigbox
@@ -66,6 +65,7 @@
     - type: Damageable
       damageModifierSet: FlimsyMetallic #Syndicate boxes should have a bit of protection
     - type: Stealth
+      hadOutline: true
     - type: StealthOnMove
       passiveVisibilityRate: -0.37
       movementVisibilityRate: 0.20
@@ -74,6 +74,7 @@
   id: BigBox
   parent: BaseBigBox
   components:
+  - type: InteractionOutline
   - type: Destructible
     thresholds:
     - trigger:

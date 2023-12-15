@@ -1,0 +1,71 @@
+- type: constructionGraph
+  id: WebObjects
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tile
+      completed:
+      - !type:SetStackCount
+        amount: 2
+      steps:
+      - material: WebSilk
+        amount: 1
+
+    - to: coat
+      steps:
+      - material: WebSilk
+        amount: 5
+        doAfter: 4
+
+    - to: jumpsuit
+      steps:
+      - material: WebSilk
+        amount: 8
+        doAfter: 6
+
+    - to: jumpskirt
+      steps:
+      - material: WebSilk
+        amount: 8
+        doAfter: 6
+
+    - to: cloth
+      steps:
+      - material: WebSilk
+        amount: 4
+        doAfter: 6
+
+    - to: shield
+      steps:
+      - material: WebSilk
+        amount: 12
+        doAfter: 6
+        
+    - to: boots
+      steps:
+      - material: WebSilk
+        amount: 2
+        doAfter: 4
+        
+  # Deconstruction
+  - node: tile
+    entity: FloorTileItemWeb
+
+  - node: coat
+    entity: ClothingOuterWinterWeb
+
+  - node: jumpsuit
+    entity: ClothingUniformJumpsuitWeb
+
+  - node: jumpskirt
+    entity: ClothingUniformJumpskirtWeb
+
+  - node: cloth
+    entity: MaterialCloth1
+
+  - node: shield
+    entity: WebShield
+
+  - node: boots
+    entity: ClothingShoesBootsWinterWeb

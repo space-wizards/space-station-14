@@ -31,14 +31,17 @@ public sealed class MachineBoardTest
     [Test]
     public async Task TestMachineBoardHasValidMachine()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var protoMan = server.ResolveDependency<IPrototypeManager>();
 
         await server.WaitAssertion(() =>
         {
-            foreach (var p in protoMan.EnumeratePrototypes<EntityPrototype>().Where(p => !p.Abstract && !_ignoredPrototypes.Contains(p.ID)))
+            foreach (var p in protoMan.EnumeratePrototypes<EntityPrototype>()
+                         .Where(p => !p.Abstract)
+                         .Where(p => !pair.IsTestPrototype(p))
+                         .Where(p => !_ignoredPrototypes.Contains(p.ID)))
             {
                 if (!p.TryGetComponent<MachineBoardComponent>(out var mbc))
                     continue;
@@ -57,7 +60,7 @@ public sealed class MachineBoardTest
             }
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -67,14 +70,17 @@ public sealed class MachineBoardTest
     [Test]
     public async Task TestComputerBoardHasValidComputer()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var protoMan = server.ResolveDependency<IPrototypeManager>();
 
         await server.WaitAssertion(() =>
         {
-            foreach (var p in protoMan.EnumeratePrototypes<EntityPrototype>().Where(p => !p.Abstract && !_ignoredPrototypes.Contains(p.ID)))
+            foreach (var p in protoMan.EnumeratePrototypes<EntityPrototype>()
+                         .Where(p => !p.Abstract)
+                         .Where(p => !pair.IsTestPrototype(p))
+                         .Where(p => !_ignoredPrototypes.Contains(p.ID)))
             {
                 if (!p.TryGetComponent<ComputerBoardComponent>(out var cbc))
                     continue;
@@ -93,6 +99,6 @@ public sealed class MachineBoardTest
             }
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

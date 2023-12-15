@@ -1,5 +1,5 @@
 reagent-name-cryptobiolin = cryptobiolin
-reagent-desc-cryptobiolin = Causes confusion and dizziness. This is essential to make Spaceacillin.
+reagent-desc-cryptobiolin = Causes confusion and dizziness.
 
 reagent-name-dylovene = dylovene
 reagent-desc-dylovene = A broad-spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain.
@@ -64,9 +64,6 @@ reagent-desc-pulped-banana-peel = Pulped banana peels have some effectiveness ag
 reagent-name-siderlac = siderlac
 reagent-desc-siderlac = A powerful anti-caustic medicine derived from plants.
 
-reagent-name-spaceacillin = spaceacillin
-reagent-desc-spaceacillin = A theta-lactam antibiotic, effective against space diseases. Side-effects may include cancer. Phalanximine is recommended after ingestion.
-
 reagent-name-stellibinin = stellibinin
 reagent-desc-stellibinin = A natual anti-toxin with particular effectiveness against amatoxin.
 
@@ -108,3 +105,12 @@ reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soo
 
 reagent-name-saline = saline
 reagent-desc-saline = "A mixture of salt and water. Commonly used to treat dehydration or low fluid presence in blood."
+
+reagent-name-lacerinol = lacerinol
+reagent-desc-lacerinol = A fairly unreactive chemical that boosts collagen sythesis to incredible levels, healing slash trauma.
+
+reagent-name-puncturase = puncturase
+reagent-desc-puncturase = A fizzy chemical that helps rebuild trauma caused by piercing damage, leaving a slight amount of tissue damage behind.
+
+reagent-name-bruizine = bruizine
+reagent-desc-bruizine = Originally developed as a cough medicine, it turns out this chemical is wildly effective at treating blunt force trauma.

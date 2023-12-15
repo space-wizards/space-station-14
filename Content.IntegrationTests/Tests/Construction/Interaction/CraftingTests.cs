@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.IntegrationTests.Tests.Interaction;
+using Content.Shared.DoAfter;
 using Content.Shared.Stacks;
 using Robust.Shared.Containers;
 
@@ -40,7 +41,7 @@ public sealed class CraftingTests : InteractionTest
     {
         // Spawn a full tack of rods in the user's hands.
         await PlaceInHands(Rod, 10);
-        await SpawnEntity((Cable, 10), PlayerCoords);
+        await SpawnEntity((Cable, 10), SEntMan.GetCoordinates(PlayerCoords));
 
         // Attempt (and fail) to craft without glass.
         await CraftItem(Spear, shouldSucceed: false);
@@ -69,9 +70,10 @@ public sealed class CraftingTests : InteractionTest
     [Test]
     public async Task CancelCraft()
     {
-        var rods = await SpawnEntity((Rod, 10), TargetCoords);
-        var wires = await SpawnEntity((Cable, 10), TargetCoords);
-        var shard = await SpawnEntity(ShardGlass, TargetCoords);
+        var serverTargetCoords = SEntMan.GetCoordinates(TargetCoords);
+        var rods = await SpawnEntity((Rod, 10), serverTargetCoords);
+        var wires = await SpawnEntity((Cable, 10), serverTargetCoords);
+        var shard = await SpawnEntity(ShardGlass, serverTargetCoords);
 
         var rodStack = SEntMan.GetComponent<StackComponent>(rods);
         var wireStack = SEntMan.GetComponent<StackComponent>(wires);
@@ -86,7 +88,7 @@ public sealed class CraftingTests : InteractionTest
         });
 
 #pragma warning disable CS4014 // Legacy construction code uses DoAfterAwait. If we await it we will be waiting forever.
-        await Server.WaitPost(() => SConstruction.TryStartItemConstruction(Spear, Player));
+        await Server.WaitPost(() => SConstruction.TryStartItemConstruction(Spear, SEntMan.GetEntity(Player)));
 #pragma warning restore CS4014
         await RunTicks(1);
 
@@ -116,7 +118,7 @@ public sealed class CraftingTests : InteractionTest
 
         // Re-attempt the do-after
 #pragma warning disable CS4014 // Legacy construction code uses DoAfterAwait. See above.
-        await Server.WaitPost(() => SConstruction.TryStartItemConstruction(Spear, Player));
+        await Server.WaitPost(() => SConstruction.TryStartItemConstruction(Spear, SEntMan.GetEntity(Player)));
 #pragma warning restore CS4014
         await RunTicks(1);
 

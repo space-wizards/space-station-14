@@ -3,7 +3,7 @@ namespace Content.Shared.Humanoid.Markings;
 /// <summary>
 ///     Colors layer in a specified color
 /// </summary>
-public sealed class SimpleColoring : LayerColoringType
+public sealed partial class SimpleColoring : LayerColoringType
 {
     [DataField("color", required: true)]
     public Color Color = Color.White;

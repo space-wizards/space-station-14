@@ -9,7 +9,7 @@ namespace Content.Server.Construction.Completions;
 ///     Generate an admin log upon reaching this node. Useful for dangerous construction (e.g., modular grenades)
 /// </summary>
 [UsedImplicitly]
-public sealed class AdminLog : IGraphAction
+public sealed partial class AdminLog : IGraphAction
 {
     [DataField("logType")]
     public LogType LogType = LogType.Construction;

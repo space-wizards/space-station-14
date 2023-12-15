@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Spawners.Components
 {
     [RegisterComponent]
-    public sealed class RandomSpawnerComponent : ConditionalSpawnerComponent
+    public sealed partial class RandomSpawnerComponent : ConditionalSpawnerComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("rarePrototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]

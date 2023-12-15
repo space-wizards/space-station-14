@@ -19,10 +19,11 @@ namespace Content.IntegrationTests.Tests.Body
     [TestOf(typeof(LungSystem))]
     public sealed class LungTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: HumanBodyDummy
-  id: HumanBodyDummy
+  name: HumanLungDummy
+  id: HumanLungDummy
   components:
   - type: SolutionContainerManager
   - type: Body
@@ -52,12 +53,8 @@ namespace Content.IntegrationTests.Tests.Body
         public async Task AirConsistencyTest()
         {
             // --- Setup
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             await server.WaitIdleAsync();
 
@@ -104,7 +101,7 @@ namespace Content.IntegrationTests.Tests.Body
             {
                 var coords = new Vector2(0.5f, -1f);
                 var coordinates = new EntityCoordinates(grid.Value, coords);
-                human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
+                human = entityManager.SpawnEntity("HumanLungDummy", coordinates);
                 respSys = entityManager.System<RespiratorSystem>();
                 metaSys = entityManager.System<MetabolizerSystem>();
                 relevantAtmos = entityManager.GetComponent<GridAtmosphereComponent>(grid.Value);
@@ -135,18 +132,14 @@ namespace Content.IntegrationTests.Tests.Body
                 });
             }
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task NoSuffocationTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -179,7 +172,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var center = new Vector2(0.5f, 0.5f);
 
                 var coordinates = new EntityCoordinates(grid.Value, center);
-                human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
+                human = entityManager.SpawnEntity("HumanLungDummy", coordinates);
 
                 var mixture = entityManager.System<AtmosphereSystem>().GetContainingMixture(human);
 #pragma warning disable NUnit2045
@@ -205,7 +198,7 @@ namespace Content.IntegrationTests.Tests.Body
                 });
             }
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

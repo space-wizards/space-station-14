@@ -7,15 +7,12 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
     [UsedImplicitly]
     public sealed class PressureControlledValveSystem : EntitySystem
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -42,7 +39,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 || !_nodeContainer.TryGetNode(nodeContainer, comp.ControlName, out PipeNode? controlNode)
                 || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outletNode))
             {
-                _ambientSoundSystem.SetAmbience(comp.Owner, false);
+                _ambientSoundSystem.SetAmbience(uid, false);
                 comp.Enabled = false;
                 return;
             }
@@ -65,19 +62,19 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             else
             {
                 comp.Enabled = true;
-                transferRate = Math.Min(control * comp.Gain, comp.MaxTransferRate);
+                transferRate = Math.Min(control * comp.Gain, comp.MaxTransferRate * _atmosphereSystem.PumpSpeedup());
             }
             UpdateAppearance(uid, comp);
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferVolume = (float)(transferRate * (_gameTiming.CurTime - device.LastProcess).TotalSeconds);
+            var transferVolume = transferRate * args.dt;
             if (transferVolume <= 0)
             {
-                _ambientSoundSystem.SetAmbience(comp.Owner, false);
+                _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
 
-            _ambientSoundSystem.SetAmbience(comp.Owner, true);
+            _ambientSoundSystem.SetAmbience(uid, true);
             var removed = inletNode.Air.RemoveVolume(transferVolume);
             _atmosphereSystem.Merge(outletNode.Air, removed);
         }
@@ -86,7 +83,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             comp.Enabled = false;
             UpdateAppearance(uid, comp);
-            _ambientSoundSystem.SetAmbience(comp.Owner, false);
+            _ambientSoundSystem.SetAmbience(uid, false);
         }
 
         private void UpdateAppearance(EntityUid uid, PressureControlledValveComponent? comp = null, AppearanceComponent? appearance = null)

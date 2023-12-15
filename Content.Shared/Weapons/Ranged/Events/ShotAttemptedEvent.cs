@@ -12,6 +12,11 @@ public record struct ShotAttemptedEvent
     /// </summary>
     public EntityUid User;
 
+    /// <summary>
+    /// The gun being shot.
+    /// </summary>
+    public EntityUid Used;
+
     public bool Cancelled { get; private set; }
 
     /// </summary>

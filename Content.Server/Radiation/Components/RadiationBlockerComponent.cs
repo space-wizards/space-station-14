@@ -7,7 +7,7 @@ namespace Content.Server.Radiation.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(RadiationSystem))]
-public sealed class RadiationBlockerComponent : Component
+public sealed partial class RadiationBlockerComponent : Component
 {
     /// <summary>
     ///     Does it block radiation at all?

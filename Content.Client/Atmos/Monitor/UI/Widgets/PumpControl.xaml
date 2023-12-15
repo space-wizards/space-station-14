@@ -19,7 +19,7 @@
                         <OptionButton Name="CPressureCheck" />
                     </BoxContainer>
                 </BoxContainer>
-                <!-- Lower row: pressure bounds -->
+                <!-- Lower row: pressure bounds, copy settings -->
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                     <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                         <Label Text="{Loc 'air-alarm-ui-vent-external-bound-label'}" Margin="0 0 0 1" />
@@ -29,6 +29,9 @@
                         <Label Text="{Loc 'air-alarm-ui-vent-internal-bound-label'}" Margin="0 0 0 1" />
                         <FloatSpinBox Name="CInternalBound" HorizontalExpand="True" />
                     </BoxContainer>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
+                    <Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-widget-copy'}" ToolTip="{Loc 'air-alarm-ui-widget-copy-tooltip'}" />
                 </BoxContainer>
             </BoxContainer>
         </CollapsibleBody>

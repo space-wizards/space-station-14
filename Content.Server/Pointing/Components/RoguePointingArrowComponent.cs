@@ -5,7 +5,7 @@ namespace Content.Server.Pointing.Components
 {
     [RegisterComponent]
     [Access(typeof(RoguePointingSystem))]
-    public sealed class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
+    public sealed partial class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
     {
         [ViewVariables]
         public EntityUid? Chasing;

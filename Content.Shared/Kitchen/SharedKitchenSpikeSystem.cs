@@ -33,6 +33,6 @@ public abstract class SharedKitchenSpikeSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed class SpikeDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class SpikeDoAfterEvent : SimpleDoAfterEvent
 {
 }

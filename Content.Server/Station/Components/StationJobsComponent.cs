@@ -10,7 +10,7 @@ namespace Content.Server.Station.Components;
 /// Stores information about a station's job selection.
 /// </summary>
 [RegisterComponent, Access(typeof(StationJobsSystem)), PublicAPI]
-public sealed class StationJobsComponent : Component
+public sealed partial class StationJobsComponent : Component
 {
     /// <summary>
     /// Total *round-start* jobs at station start.
@@ -77,5 +77,5 @@ public sealed class StationJobsComponent : Component
 
     [DataField("availableJobs", required: true,
         customTypeSerializer: typeof(PrototypeIdDictionarySerializer<List<int?>, JobPrototype>))]
-    public readonly Dictionary<string, List<int?>> SetupAvailableJobs = default!;
+    public Dictionary<string, List<int?>> SetupAvailableJobs = default!;
 }

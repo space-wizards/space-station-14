@@ -10,7 +10,7 @@ namespace Content.Shared.Weapons.Melee.Components;
 /// This exists only for event relays and doing entity shenanigans.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedMeleeWeaponSystem))]
-public sealed class BonusMeleeDamageComponent : Component
+public sealed partial class BonusMeleeDamageComponent : Component
 {
     /// <summary>
     /// The damage that will be added.

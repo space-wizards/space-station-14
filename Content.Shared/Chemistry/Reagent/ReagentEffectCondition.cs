@@ -6,7 +6,7 @@ namespace Content.Shared.Chemistry.Reagent
 {
     [ImplicitDataDefinitionForInheritors]
     [MeansImplicitUse]
-    public abstract class ReagentEffectCondition
+    public abstract partial class ReagentEffectCondition
     {
         [JsonPropertyName("id")] private protected string _id => this.GetType().Name;
 

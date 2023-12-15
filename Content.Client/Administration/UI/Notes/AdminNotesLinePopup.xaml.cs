@@ -53,8 +53,8 @@ public sealed partial class AdminNotesLinePopup : Popup
         DeleteButton.OnPressed += DeletePressed;
     }
 
-    private int NoteId { get; }
-    private NoteType NoteType { get; }
+    public int NoteId { get; }
+    public NoteType NoteType { get; }
     private TimeSpan? DeleteResetOn { get; set; }
 
     private void EditPressed(ButtonEventArgs args)

@@ -176,67 +176,6 @@
       supplyRate: 15000
 
 - type: entity
-  parent: [ BaseGenerator, ConstructibleMachine ]
-  id: GeneratorPlasma
-  suffix: Plasma, 20kW
-  components:
-  - type: PowerSupplier
-  - type: Sprite
-    sprite: Structures/Power/Generation/portable_generator.rsi
-    state: portgen0_1
-  - type: WiresPanel
-  - type: Wires
-    BoardName: "GeneratorPlasma"
-    LayoutId: GeneratorPlasma
-  - type: Machine
-    board: GeneratorPlasmaMachineCircuitboard
-  - type: UpgradePowerSupplier
-    powerSupplyMultiplier: 1.25
-    scaling: Exponential
-  - type: FuelGenerator
-    targetPower: 20000
-    optimalPower: 20000
-  - type: SolidFuelGeneratorAdapter
-    fuelMaterial: Plasma
-  - type: ActivatableUI
-    key: enum.GeneratorComponentUiKey.Key
-  - type: UserInterface
-    interfaces:
-      - key: enum.GeneratorComponentUiKey.Key
-        type: SolidFuelGeneratorBoundUserInterface
-
-- type: entity
-  parent: [ BaseGenerator, ConstructibleMachine ]
-  id: GeneratorUranium
-  suffix: Uranium, 30kW
-  components:
-  - type: PowerSupplier
-  - type: Sprite
-    sprite: Structures/Power/Generation/portable_generator.rsi
-    state: portgen1_1
-  - type: WiresPanel
-  - type: Wires
-    BoardName: "GeneratorUranium"
-    LayoutId: GeneratorUranium
-  - type: Machine
-    board: GeneratorUraniumMachineCircuitboard
-  - type: UpgradePowerSupplier
-    powerSupplyMultiplier: 1.25
-    scaling: Exponential
-  - type: FuelGenerator
-    targetPower: 30000
-    optimalPower: 30000
-    optimalBurnRate: 0.00416666666
-  - type: SolidFuelGeneratorAdapter
-    fuelMaterial: Uranium
-  - type: ActivatableUI
-    key: enum.GeneratorComponentUiKey.Key
-  - type: UserInterface
-    interfaces:
-      - key: enum.GeneratorComponentUiKey.Key
-        type: SolidFuelGeneratorBoundUserInterface
-
-- type: entity
   parent: BaseGeneratorWallmount
   id: GeneratorWallmountBasic
   suffix: Basic, 3kW
@@ -248,6 +187,12 @@
     node: generator
   - type: StaticPrice
     price: 14
+  - type: ContainerFill
+    containers:
+      board: [ WallmountGeneratorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -263,6 +208,12 @@
     node: APU
   - type: StaticPrice
     price: 38
+  - type: ContainerFill
+    containers:
+      board: [ WallmountGeneratorAPUElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
 
 # RTG - no fuel requirement
 

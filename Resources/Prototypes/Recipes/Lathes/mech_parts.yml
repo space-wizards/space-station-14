@@ -149,3 +149,12 @@
   materials:
     Steel: 400
     Plastic: 100
+
+# Vim
+- type: latheRecipe
+  id: VimHarness
+  result: VimHarness
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 200

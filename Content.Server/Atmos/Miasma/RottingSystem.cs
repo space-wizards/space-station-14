@@ -6,6 +6,7 @@ using Content.Server.Temperature.Components;
 using Content.Shared.Atmos.Miasma;
 using Content.Shared.Examine;
 using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Rejuvenate;
 using Robust.Server.Containers;
@@ -28,6 +29,7 @@ public sealed class RottingSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<PerishableComponent, MapInitEvent>(OnPerishableMapInit);
         SubscribeLocalEvent<PerishableComponent, EntityUnpausedEvent>(OnPerishableUnpaused);
         SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
 
@@ -39,6 +41,11 @@ public sealed class RottingSystem : EntitySystem
         SubscribeLocalEvent<RottingComponent, RejuvenateEvent>(OnRejuvenate);
 
         SubscribeLocalEvent<TemperatureComponent, IsRottingEvent>(OnTempIsRotting);
+    }
+
+    private void OnPerishableMapInit(EntityUid uid, PerishableComponent component, MapInitEvent args)
+    {
+        component.NextPerishUpdate = _timing.CurTime + component.PerishUpdateRate;
     }
 
     private void OnPerishableUnpaused(EntityUid uid, PerishableComponent component, ref EntityUnpausedEvent args)
@@ -81,8 +88,8 @@ public sealed class RottingSystem : EntitySystem
         if (!Resolve(uid, ref perishable, false))
             return false;
 
-        // only dead things perish
-        if (!_mobState.IsDead(uid))
+        // only dead things or inanimate objects can rot
+        if (TryComp<MobStateComponent>(uid, out var mobState) && !_mobState.IsDead(uid, mobState))
             return false;
 
         if (_container.TryGetOuterContainer(uid, Transform(uid), out var container) &&
@@ -111,18 +118,13 @@ public sealed class RottingSystem : EntitySystem
             return;
 
         var molsToDump = perishable.MolsPerSecondPerUnitMass * physics.FixturesMass * (float) component.TotalRotTime.TotalSeconds;
-        var transform = Transform(uid);
-        var indices = _transform.GetGridOrMapTilePosition(uid, transform);
-        var tileMix = _atmosphere.GetTileMixture(transform.GridUid, transform.MapUid, indices, true);
+        var tileMix = _atmosphere.GetTileMixture(uid, excite: true);
         tileMix?.AdjustMoles(Gas.Miasma, molsToDump);
     }
 
     private void OnExamined(EntityUid uid, RottingComponent component, ExaminedEvent args)
     {
-        if (!TryComp<PerishableComponent>(uid, out var perishable))
-            return;
-
-        var stage = (int) (component.TotalRotTime.TotalSeconds / perishable.RotAfter.TotalSeconds);
+        var stage = RotStage(uid, component);
         var description = stage switch
         {
             >= 2 => "miasma-extremely-bloated",
@@ -130,6 +132,17 @@ public sealed class RottingSystem : EntitySystem
                _ => "miasma-rotting"
         };
         args.PushMarkup(Loc.GetString(description));
+    }
+
+    /// <summary>
+    /// Return the rot stage, usually from 0 to 2 inclusive.
+    /// </summary>
+    public int RotStage(EntityUid uid, RottingComponent? comp = null, PerishableComponent? perishable = null)
+    {
+        if (!Resolve(uid, ref comp, ref perishable))
+            return 0;
+
+        return (int) (comp.TotalRotTime.TotalSeconds / perishable.RotAfter.TotalSeconds);
     }
 
     private void OnRejuvenate(EntityUid uid, RottingComponent component, RejuvenateEvent args)
@@ -183,13 +196,23 @@ public sealed class RottingSystem : EntitySystem
                 _damageable.TryChangeDamage(uid, damage, true, false);
             }
 
+            if (TryComp<RotIntoComponent>(uid, out var rotInto))
+            {
+                var stage = RotStage(uid, rotting, perishable);
+                if (stage >= rotInto.Stage)
+                {
+                    Spawn(rotInto.Entity, xform.Coordinates);
+                    QueueDel(uid);
+                    continue;
+                }
+            }
+
             if (!TryComp<PhysicsComponent>(uid, out var physics))
                 continue;
             // We need a way to get the mass of the mob alone without armor etc in the future
             // or just remove the mass mechanics altogether because they aren't good.
             var molRate = perishable.MolsPerSecondPerUnitMass * (float) rotting.RotUpdateRate.TotalSeconds;
-            var indices = _transform.GetGridOrMapTilePosition(uid);
-            var tileMix = _atmosphere.GetTileMixture(xform.GridUid, null, indices, true);
+            var tileMix = _atmosphere.GetTileMixture(uid, excite: true);
             tileMix?.AdjustMoles(Gas.Miasma, molRate * physics.FixturesMass);
         }
     }

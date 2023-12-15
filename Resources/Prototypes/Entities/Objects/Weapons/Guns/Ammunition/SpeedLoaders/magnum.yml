@@ -40,26 +40,6 @@
   - type: Appearance
 
 - type: entity
-  id: SpeedLoaderMagnumHighVelocity
-  name: "speed loader (.45 magnum high-velocity)"
-  parent: BaseSpeedLoaderMagnum
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumHighVelocity
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
-    layers:
-      - state: base
-        map: [ "enum.GunVisualLayers.Base" ]
-      - state: high-velocity-6
-        map: [ "enum.GunVisualLayers.Mag" ]
-  - type: MagazineVisuals
-    magState: high-velocity
-    steps: 7
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
   id: SpeedLoaderMagnumPractice
   name: "speed loader (.45 magnum practice)"
   parent: BaseSpeedLoaderMagnum

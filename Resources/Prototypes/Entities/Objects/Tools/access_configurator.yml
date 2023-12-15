@@ -1,0 +1,75 @@
+- type: entity
+  parent: BaseItem
+  id: AccessConfigurator
+  name: access configurator
+  description: Used to modify the access level requirements for airlocks and other lockable devices.
+  components:
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Items/multitool_drop.ogg
+    - type: Sprite
+      sprite: Objects/Tools/access_configurator.rsi
+      state: icon
+    - type: Item
+      size: Small
+    - type: Clothing
+      sprite: Objects/Tools/access_configurator.rsi
+      quickEquip: false
+      slots:
+        - Belt
+    - type: AccessOverrider
+      accessLevels:
+      - Armory
+      - Atmospherics
+      - Bar
+      - Brig
+      - Detective
+      - Captain
+      - Cargo
+      - Chapel
+      - Chemistry
+      - ChiefEngineer
+      - ChiefMedicalOfficer
+      - Command
+      - Engineering
+      - External
+      - HeadOfPersonnel
+      - HeadOfSecurity
+      - Hydroponics
+      - Janitor
+      - Kitchen
+      - Lawyer
+      - Maintenance
+      - Medical
+      - Quartermaster
+      - Research
+      - ResearchDirector
+      - Salvage
+      - Security
+      - Service
+      - Theatre
+      privilegedIdSlot:
+        name: id-card-console-privileged-id
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectOnBreak: true
+        swap: false
+        whitelist:
+          components:
+          - IdCard
+      denialSound:
+        path: /Audio/Machines/custom_deny.ogg
+      doAfter: 0.5
+    - type: UserInterface
+      interfaces:
+        - key: enum.AccessOverriderUiKey.Key
+          type: AccessOverriderBoundUserInterface
+    - type: ActivatableUI
+      key: enum.AccessOverriderUiKey.Key
+      requireHands: true
+      closeOnHandDeselect: false
+      singleUser: true
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        AccessOverrider-privilegedId: !type:ContainerSlot

@@ -1,4 +1,4 @@
-﻿# End points - the eventual goal is that almost all foods and drinks metabolize into either these, or reagents that build up (e.g. theobromine, caffeine,... )
+# End points - the eventual goal is that almost all foods and drinks metabolize into either these, or reagents that build up (e.g. theobromine, caffeine,... )
 - type: reagent
   id: Nutriment #Anything that isn't better suited to vitamin, protein, or sugar. we aren't doing a super in-depth simulator.
   name: reagent-name-nutriment
@@ -6,16 +6,16 @@
   desc: reagent-desc-nutriment
   physicalDesc: reagent-physical-desc-opaque
   flavor: nutriment
-  color: "#664330"
+  color: "#24591F"
   metabolisms:
     Food:
       effects:
       - !type:SatiateHunger
   plantMetabolism:
   - !type:PlantAdjustNutrition
-    amount: 1
+    amount: 1.5
   - !type:PlantAdjustHealth
-    amount: 0.5
+    amount: 0.75
   pricePerUnit: 2
 
 - type: reagent
@@ -39,6 +39,12 @@
       - !type:ModifyBleedAmount
         amount: -0.25
       - !type:SatiateHunger #Numbers are balanced with this in mind + it helps limit how much healing you can get from food
+  # Lets plants benefit too
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 0.5
+  - !type:PlantAdjustHealth
+    amount: 1.5
   pricePerUnit: 2.5
 
 - type: reagent
@@ -87,3 +93,11 @@
     amount: 2
   - !type:PlantAdjustPests
     amount: 2
+
+- type: reagent
+  id: PumpkinFlesh #Just so pumpkins spill orange stuff when smashed
+  parent: Nutriment
+  name: reagent-name-pumpkin-flesh
+  desc: reagent-desc-pumpkin-flesh
+  flavor: pumpkin
+  color: "#fc9300"

@@ -16,10 +16,13 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
+using Content.Shared.Tag;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -60,6 +63,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
     private bool _emergencyShuttleEnabled;
 
+    [ValidatePrototypeId<TagPrototype>]
     private const string DockTag = "DockEmergency";
 
     public override void Initialize()
@@ -138,7 +142,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     /// </summary>
     private void OnShuttleRequestPosition(EmergencyShuttleRequestPositionMessage msg, EntitySessionEventArgs args)
     {
-        if (!_admin.IsAdmin((IPlayerSession) args.SenderSession))
+        if (!_admin.IsAdmin(args.SenderSession))
             return;
 
         var player = args.SenderSession.AttachedEntity;
@@ -163,7 +167,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         RaiseNetworkEvent(new EmergencyShuttlePositionMessage()
         {
-            StationUid = targetGrid,
+            StationUid = GetNetEntity(targetGrid),
             Position = config.Area,
         });
     }

@@ -16,7 +16,7 @@
     proto: CartridgeLightRifle
     capacity: 30
   - type: Item
-    size: 5
+    size: Small
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -64,20 +64,6 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineLightRifleHighVelocity
-  name: "magazine (.30 rifle high-velocity)"
-  parent: BaseMagazineLightRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifleHighVelocity
-  - type: Sprite
-    layers:
-    - state: high_velocity
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

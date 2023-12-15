@@ -1,6 +1,7 @@
 - type: entity
   id: FloorLavaEntity
-  name: lava floor
+  name: lava
+  description: Don't jump in. It's not worth it, no matter how funny it is.
   placement:
     mode: SnapgridCenter
     snap:

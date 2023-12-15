@@ -52,7 +52,9 @@
       storagebase: !type:Container
         ents: [ ]
   - type: Storage
-    capacity: 50
+    maxItemSize: Huge
+    grid:
+    - 0,0,10,5
 
 - type: artifactEffect
   id: EffectPhasing
@@ -113,12 +115,6 @@
     components:
     - Item
   permanentComponents:
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 125
-    gatheringTime: 0.50
-    MaxGatheringEntities: 3
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:

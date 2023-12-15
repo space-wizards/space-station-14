@@ -20,7 +20,8 @@
                             <TextEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
                         </PanelContainer>
                     </BoxContainer>
-                    <BoxContainer Name="StampDisplay" Orientation="Vertical" VerticalAlignment="Bottom" Margin="6"/>
+                    <paper:StampCollection Name="StampDisplay" VerticalAlignment="Bottom" Margin="6"/>
+
                 </PanelContainer>
             </ScrollContainer>
         </PanelContainer>

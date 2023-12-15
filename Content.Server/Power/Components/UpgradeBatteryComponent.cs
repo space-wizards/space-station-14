@@ -5,13 +5,13 @@ namespace Content.Server.Power.Components
 {
 
     [RegisterComponent]
-    public sealed class UpgradeBatteryComponent : Component
+    public sealed partial class UpgradeBatteryComponent : Component
     {
         /// <summary>
         ///     The machine part that affects the power capacity.
         /// </summary>
         [DataField("machinePartPowerCapacity", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartPowerCapacity = "Capacitor";
+        public string MachinePartPowerCapacity = "PowerCell";
 
         /// <summary>
         ///     The machine part rating is raised to this power when calculating power gain

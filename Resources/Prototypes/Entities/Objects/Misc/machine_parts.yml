@@ -8,7 +8,7 @@
     - type: Sprite
       sprite: Objects/Misc/stock_parts.rsi
     - type: Item
-      size: 1
+      size: Tiny
     - type: GuideHelp
       guides:
       - MachineUpgrading
@@ -27,6 +27,9 @@
     - type: MachinePart
       part: Capacitor
       rating: 1
+    - type: Tag
+      tags:
+        - CapacitorStockPart
 
 - type: entity
   id: MicroManipulatorStockPart

@@ -9,23 +9,23 @@ namespace Content.Server.Storage.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(PickRandomSystem))]
-public sealed class PickRandomComponent : Component
+public sealed partial class PickRandomComponent : Component
 {
     /// <summary>
     /// Whitelist for potential picked items.
     /// </summary>
-    [DataField("whitelist"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// Locale id for the pick verb text.
     /// </summary>
-    [DataField("verbText"), ViewVariables(VVAccess.ReadWrite)]
-    public string VerbText = "comp-pick-random-verb-text";
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public LocId VerbText = "comp-pick-random-verb-text";
 
     /// <summary>
     /// Locale id for the empty storage message.
     /// </summary>
-    [DataField("emptyText"), ViewVariables(VVAccess.ReadWrite)]
-    public string EmptyText = "comp-pick-random-empty";
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public LocId EmptyText = "comp-pick-random-empty";
 }

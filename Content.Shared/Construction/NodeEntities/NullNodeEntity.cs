@@ -4,7 +4,7 @@ namespace Content.Shared.Construction.NodeEntities;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed class NullNodeEntity : IGraphNodeEntity
+public sealed partial class NullNodeEntity : IGraphNodeEntity
 {
     public string? GetId(EntityUid? uid, EntityUid? userUid, GraphNodeEntityArgs args)
     {

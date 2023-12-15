@@ -123,7 +123,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum temperature difference before the gas temperatures are just set to be equal.
         /// </summary>
-        public const float MinimumTemperatureDeltaToConsider = 0.5f;
+        public const float MinimumTemperatureDeltaToConsider = 0.1f;
 
         /// <summary>
         ///     Minimum temperature for starting superconduction.
@@ -179,11 +179,11 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
         /// </summary>
-        public const float FireHydrogenEnergyReleased = 560000f;
+        public const float FireHydrogenEnergyReleased = 284e3f; // hydrogen is 284 kJ/mol
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
-        public const float FirePlasmaEnergyReleased = 3000000f;
+        public const float FirePlasmaEnergyReleased = 16e3f; // methane is 16 kJ/mol
         public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;
@@ -198,7 +198,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
         /// </summary>
-        public const float MinimumTritiumOxyburnEnergy = 430000f;
+        public const float MinimumTritiumOxyburnEnergy = 143000f;
 
         public const float TritiumBurnOxyFactor = 100f;
         public const float TritiumBurnTritFactor = 10f;
@@ -216,7 +216,7 @@ namespace Content.Shared.Atmos
         ///     Remove X mol of nitrogen for each mol of frezon.
         /// </summary>
         public const float FrezonNitrogenCoolRatio = 5;
-        public const float FrezonCoolEnergyReleased = -3000000f;
+        public const float FrezonCoolEnergyReleased = -600e3f;
         public const float FrezonCoolRateModifier = 20f;
 
         public const float FrezonProductionMaxEfficiencyTemperature = 73.15f;
@@ -308,25 +308,6 @@ namespace Content.Shared.Atmos
         ///     The default maximum speed powered equipment can work at, in L/s.
         /// </summary>
         public const float MaxTransferRate = 200;
-
-        /// <summary>
-        ///     What fraction of air from a spaced tile escapes every tick.
-        ///     1.0 for instant spacing, 0.2 means 20% of remaining air lost each time
-        /// </summary>
-        public const float SpacingEscapeRatio = 0.05f;
-
-        /// <summary>
-        ///     Minimum amount of air allowed on a spaced tile before it is reset to 0 immediately in kPa
-        ///     Since the decay due to SpacingEscapeRatio follows a curve, it would never reach 0.0 exactly
-        ///     unless we truncate it somewhere.
-        /// </summary>
-        public const float SpacingMinGas = 2.0f;
-
-        /// <summary>
-        ///     How much wind can go through a single tile before that tile doesn't depressurize itself
-        ///     (I.e spacing is limited in large rooms heading into smaller spaces)
-        /// </summary>
-        public const float SpacingMaxWind = 500.0f;
 
         #endregion
     }

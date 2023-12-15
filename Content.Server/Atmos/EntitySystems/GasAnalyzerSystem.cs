@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -229,7 +230,7 @@ namespace Content.Server.Atmos.EntitySystems
             _userInterface.TrySendUiMessage(uid, GasAnalyzerUiKey.Key,
                 new GasAnalyzerUserMessage(gasMixList.ToArray(),
                     component.Target != null ? Name(component.Target.Value) : string.Empty,
-                    component.Target ?? EntityUid.Invalid,
+                    GetNetEntity(component.Target) ?? NetEntity.Invalid,
                     deviceFlipped));
             return true;
         }

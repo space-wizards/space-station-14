@@ -17,6 +17,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
     [TestOf(typeof(InteractionSystem))]
     public sealed class InteractionSystemTests
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   id: DummyDebugWall
@@ -38,12 +39,8 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Test]
         public async Task InteractionTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -66,11 +63,11 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             await server.WaitAssertion(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>();
+                sEntities.EnsureComponent<HandsComponent>(user);
                 handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, coords);
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<ItemComponent>();
+                sEntities.EnsureComponent<ItemComponent>(item);
             });
 
             await server.WaitRunTicks(1);
@@ -106,18 +103,14 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             });
 
             testInteractionSystem.ClearHandlers();
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task InteractionObstructionTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -141,11 +134,11 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             await server.WaitAssertion(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>();
+                sEntities.EnsureComponent<HandsComponent>(user);
                 handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates(new Vector2(1.9f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<ItemComponent>();
+                sEntities.EnsureComponent<ItemComponent>(item);
                 wall = sEntities.SpawnEntity("DummyDebugWall", new MapCoordinates(new Vector2(1, 0), sEntities.GetComponent<TransformComponent>(user).MapID));
             });
 
@@ -181,14 +174,14 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             });
 
             testInteractionSystem.ClearHandlers();
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task InteractionInRangeTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -211,11 +204,11 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             await server.WaitAssertion(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>();
+                sEntities.EnsureComponent<HandsComponent>(user);
                 handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates(new Vector2(SharedInteractionSystem.InteractionRange - 0.1f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<ItemComponent>();
+                sEntities.EnsureComponent<ItemComponent>(item);
             });
 
             await server.WaitRunTicks(1);
@@ -250,15 +243,15 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             });
 
             testInteractionSystem.ClearHandlers();
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
 
         [Test]
         public async Task InteractionOutOfRangeTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -281,11 +274,11 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             await server.WaitAssertion(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>();
+                sEntities.EnsureComponent<HandsComponent>(user);
                 handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates(new Vector2(SharedInteractionSystem.InteractionRange + 0.01f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<ItemComponent>();
+                sEntities.EnsureComponent<ItemComponent>(item);
             });
 
             await server.WaitRunTicks(1);
@@ -320,14 +313,14 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             });
 
             testInteractionSystem.ClearHandlers();
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task InsideContainerInteractionBlockTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -348,16 +341,16 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             EntityUid target = default;
             EntityUid item = default;
             EntityUid containerEntity = default;
-            IContainer container = null;
+            BaseContainer container = null;
 
             await server.WaitAssertion(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>();
+                sEntities.EnsureComponent<HandsComponent>(user);
                 handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, coords);
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<ItemComponent>();
+                sEntities.EnsureComponent<ItemComponent>(item);
                 containerEntity = sEntities.SpawnEntity(null, coords);
                 container = conSystem.EnsureContainer<Container>(containerEntity, "InteractionTestContainer");
             });
@@ -411,7 +404,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             });
 
             testInteractionSystem.ClearHandlers();
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Reflect(false)]

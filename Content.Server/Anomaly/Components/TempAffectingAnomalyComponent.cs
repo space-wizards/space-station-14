@@ -4,7 +4,7 @@ namespace Content.Server.Anomaly.Components;
 /// This component is used for handling anomalies that affect the temperature
 /// </summary>
 [RegisterComponent]
-public sealed class TempAffectingAnomalyComponent : Component
+public sealed partial class TempAffectingAnomalyComponent : Component
 {
 
     /// <summary>

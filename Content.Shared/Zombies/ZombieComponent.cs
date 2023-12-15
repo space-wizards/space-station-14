@@ -1,20 +1,19 @@
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
-using Content.Shared.Roles;
 using Content.Shared.Humanoid;
+using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Shared.Zombies;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class ZombieComponent : Component
+public sealed partial class ZombieComponent : Component
 {
     /// <summary>
     /// The baseline infection chance you have if you are completely nude
@@ -60,7 +59,7 @@ public sealed class ZombieComponent : Component
     /// The role prototype of the zombie antag role
     /// </summary>
     [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
-    public readonly string ZombieRoleId = "Zombie";
+    public string ZombieRoleId = "Zombie";
 
     /// <summary>
     /// The EntityName of the humanoid to restore in case of cloning
@@ -79,6 +78,12 @@ public sealed class ZombieComponent : Component
     /// </summary>
     [DataField("beforeZombifiedSkinColor")]
     public Color BeforeZombifiedSkinColor;
+
+    /// <summary>
+    /// The eye color of the humanoid to restore in case of cloning
+    /// </summary>
+    [DataField("beforeZombifiedEyeColor")]
+    public Color BeforeZombifiedEyeColor;
 
     [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
     public string? EmoteSoundsId = "Zombie";

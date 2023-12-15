@@ -3,7 +3,7 @@ using Content.Shared.Atmos;
 namespace Content.Server.Atmos.Piping.Trinary.Components
 {
     [RegisterComponent]
-    public sealed class PressureControlledValveComponent : Component
+    public sealed partial class PressureControlledValveComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]

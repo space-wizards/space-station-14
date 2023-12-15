@@ -4,7 +4,7 @@
   id: ClothingNeckBase
   components:
   - type: Item
-    size: 10
+    size: Small
   - type: Clothing
     quickEquip: true
     slots:
@@ -26,5 +26,6 @@
         - ReagentId: Fiber
           Quantity: 10
   - type: Tag
-    tags: 
-      - ClothMade
+    tags:
+    - ClothMade
+    - WhitelistChameleon

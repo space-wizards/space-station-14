@@ -6,7 +6,7 @@ namespace Content.Shared.IconSmoothing;
 /// Applies an edge sprite to <see cref="IconSmoothComponent"/> for non-smoothed directions.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class SmoothEdgeComponent : Component
+public sealed partial class SmoothEdgeComponent : Component
 {
 
 }

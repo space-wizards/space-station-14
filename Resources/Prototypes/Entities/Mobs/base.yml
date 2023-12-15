@@ -1,0 +1,210 @@
+﻿# The progenitor. This should only container the most basic components possible.
+# Only put things on here if every mob *must* have it. This includes ghosts.
+- type: entity
+  save: false
+  id: BaseMob
+  abstract: true
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Clickable
+  - type: InteractionOutline
+  - type: InputMover
+  - type: Input
+    context: "human"
+  - type: LagCompensation
+  - type: MobMover
+  - type: Actions
+  - type: Alerts
+  - type: Appearance
+  - type: RotationVisuals
+    defaultRotation: 0
+    horizontalRotation: 0
+  - type: DoAfter
+  - type: Examiner
+  - type: Eye
+  - type: ContentEye
+  - type: CameraRecoil
+  - type: MindContainer
+  - type: MovementSpeedModifier
+  - type: Polymorphable
+  - type: StatusIcon
+
+# Used for mobs that have health and can take damage.
+- type: entity
+  save: false
+  id: MobDamageable
+  abstract: true
+  components:
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
+  - type: RadiationReceiver
+  - type: Stamina
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      200: Dead
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
+  - type: Deathgasp
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: Pullable
+
+# Used for mobs that can enter combat mode and can attack.
+- type: entity
+  save: false
+  id: MobCombat
+  abstract: true
+  components:
+  - type: CombatMode
+  - type: MeleeWeapon
+    hidden: true
+    damage:
+      groups:
+        Brute: 5
+
+# Used for mobs that are affected by atmospherics, pressure, and heat
+- type: entity
+  save: false
+  id: MobAtmosExposed
+  abstract: true
+  components:
+  - type: AtmosExposed
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 0
+    currentTemperature: 310.15
+    coldDamage: #per second, scales with temperature & other constants
+      types:
+        Cold : 0.1
+    specificHeat: 42
+    heatDamage: #per second, scales with temperature & other constants
+      types:
+        Heat : 0.1
+  - type: ThermalRegulator
+    metabolismHeat: 800
+    radiatedHeat: 100
+    implicitHeatRegulation: 500
+    sweatHeatRegulation: 2000
+    shiveringHeatRegulation: 2000
+    normalBodyTemperature: 310.15
+    thermalRegulationTemperatureThreshold: 25
+  - type: MovedByPressure
+
+# Used for mobs that require regular atmospheric conditions.
+- type: entity
+  parent: MobAtmosExposed
+  id: MobAtmosStandard
+  abstract: true
+  components:
+  - type: ThermalRegulator
+    metabolismHeat: 800
+    radiatedHeat: 100
+    implicitHeatRegulation: 250
+    sweatHeatRegulation: 500
+    shiveringHeatRegulation: 500
+    normalBodyTemperature: 310.15
+    thermalRegulationTemperatureThreshold: 25
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    specificHeat: 42
+    coldDamage:
+      types:
+        Cold: 1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat: 1 #per second, scales with temperature & other constants
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.15 #per second, scales with pressure and other constants.
+
+# Used for mobs that can be set on fire
+- type: entity
+  save: false
+  id: MobFlammable
+  abstract: true
+  components:
+  - type: Flammable
+    fireSpread: true
+    canResistFire: true
+    damage: #per second, scales with number of fire 'stacks'
+      types:
+        Heat: 1
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Generic_mob_burning
+
+# Used for mobs that need to breathe
+- type: entity
+  save: false
+  id: MobRespirator
+  abstract: true
+  components:
+  - type: Internals
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+
+# Used for mobs that have a bloodstream
+- type: entity
+  save: false
+  id: MobBloodstream
+  abstract: true
+  components:
+  - type: SolutionContainerManager
+  - type: InjectableSolution
+    solution: chemicals
+  - type: Bloodstream
+    bloodlossDamage:
+      types:
+        Bloodloss: 1
+    bloodlossHealDamage:
+      types:
+        Bloodloss: -1

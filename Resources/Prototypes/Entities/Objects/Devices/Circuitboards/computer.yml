@@ -87,7 +87,6 @@
     - type: Tag
       tags:
       - DroneUsable
-      - HighRiskItem
 
 - type: entity
   id: CargoBountyComputerCircuitboard
@@ -378,3 +377,14 @@
       price: 150
     - type: ComputerBoard
       prototype: ComputerMassMedia
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SensorConsoleCircuitboard
+  name: sensor monitoring console board
+  description: A computer printed circuit board for a sensor monitoring console.
+  components:
+    - type: Sprite
+      state: cpu_engineering
+    - type: ComputerBoard
+      prototype: ComputerSensorMonitoring

@@ -6,10 +6,10 @@ namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class EmptyOrWindowValidInTile : IConstructionCondition
+    public sealed partial class EmptyOrWindowValidInTile : IConstructionCondition
     {
         [DataField("tileNotBlocked")]
-        private readonly TileNotBlocked _tileNotBlocked = new();
+        private TileNotBlocked _tileNotBlocked = new();
 
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {

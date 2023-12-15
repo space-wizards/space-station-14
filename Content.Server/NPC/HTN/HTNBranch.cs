@@ -6,7 +6,7 @@ namespace Content.Server.NPC.HTN;
 /// AKA Method. This is a branch available for a compound task.
 /// </summary>
 [DataDefinition]
-public sealed class HTNBranch
+public sealed partial class HTNBranch
 {
     // Made this its own class if we ever need to change it.
     [DataField("preconditions")]

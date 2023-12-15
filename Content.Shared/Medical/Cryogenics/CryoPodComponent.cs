@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Medical.Cryogenics;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class CryoPodComponent : Component
+public sealed partial class CryoPodComponent : Component
 {
     /// <summary>
     /// Specifies the name of the atmospherics port to draw gas from.

@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed class Drunk : ReagentEffect
+public sealed partial class Drunk : ReagentEffect
 {
     /// <summary>
     ///     BoozePower is how long each metabolism cycle will make the drunk effect last for.

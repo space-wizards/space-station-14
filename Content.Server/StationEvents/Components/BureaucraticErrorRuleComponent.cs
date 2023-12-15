@@ -3,7 +3,7 @@
 namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(BureaucraticErrorRule))]
-public sealed class BureaucraticErrorRuleComponent : Component
+public sealed partial class BureaucraticErrorRuleComponent : Component
 {
 
 }

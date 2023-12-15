@@ -1,7 +1,7 @@
 namespace Content.Server.Weapons.Ranged.Components
 {
     [RegisterComponent]
-    public sealed class ChemicalAmmoComponent : Component
+    public sealed partial class ChemicalAmmoComponent : Component
     {
         public const string DefaultSolutionName = "ammo";
 

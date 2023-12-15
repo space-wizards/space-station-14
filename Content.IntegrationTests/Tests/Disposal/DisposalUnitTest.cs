@@ -72,10 +72,11 @@ namespace Content.IntegrationTests.Tests.Disposal
             });
         }
 
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: HumanDummy
-  id: HumanDummy
+  name: HumanDisposalDummy
+  id: HumanDisposalDummy
   components:
   - type: Body
     prototype: Human
@@ -146,14 +147,10 @@ namespace Content.IntegrationTests.Tests.Disposal
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             EntityUid human = default!;
             EntityUid wrench = default!;
@@ -171,7 +168,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             {
                 // Spawn the entities
                 var coordinates = testMap.GridCoords;
-                human = entityManager.SpawnEntity("HumanDummy", coordinates);
+                human = entityManager.SpawnEntity("HumanDisposalDummy", coordinates);
                 wrench = entityManager.SpawnEntity("WrenchDummy", coordinates);
                 disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);
                 disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy",
@@ -243,7 +240,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Re-pressurizing
                 Flush(disposalUnit, unitComponent, false, disposalSystem);
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

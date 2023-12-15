@@ -6,7 +6,7 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Electrocution
 {
     [DataDefinition]
-    public sealed class ElectrocutionNode : Node
+    public sealed partial class ElectrocutionNode : Node
     {
         [DataField("cable")]
         public EntityUid CableEntity;

@@ -8,7 +8,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 /// Generates foam from the artifact when activated
 /// </summary>
 [RegisterComponent, Access(typeof(FoamArtifactSystem))]
-public sealed class FoamArtifactComponent : Component
+public sealed partial class FoamArtifactComponent : Component
 {
     /// <summary>
     /// The list of reagents that will randomly be picked from
@@ -33,7 +33,7 @@ public sealed class FoamArtifactComponent : Component
     /// How much reagent is in the foam?
     /// </summary>
     [DataField("reagentAmount"), ViewVariables(VVAccess.ReadWrite)]
-    public float ReagentAmount = 200;
+    public float ReagentAmount = 100;
 
     /// <summary>
     /// Minimum radius of foam spawned

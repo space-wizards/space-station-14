@@ -8,7 +8,7 @@ namespace Content.Server.Pinpointer;
 /// proximity to a specified component.
 /// </summary>
 [RegisterComponent, Access(typeof(ProximityBeeperSystem))]
-public sealed class ProximityBeeperComponent : Component
+public sealed partial class ProximityBeeperComponent : Component
 {
     /// <summary>
     /// Whether or not it's on.

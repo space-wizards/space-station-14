@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.Atmos.Components;
 
 [RegisterComponent]
-public sealed class TemperatureProtectionComponent : Component
+public sealed partial class TemperatureProtectionComponent : Component
 {
     /// <summary>
     ///     How much to multiply temperature deltas by.

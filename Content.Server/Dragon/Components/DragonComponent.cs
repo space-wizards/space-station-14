@@ -1,17 +1,11 @@
-using System.Threading;
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Dragon
 {
     [RegisterComponent]
-    public sealed class DragonComponent : Component
+    public sealed partial class DragonComponent : Component
     {
 
         /// <summary>
@@ -42,11 +36,14 @@ namespace Content.Server.Dragon
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("maxAccumulator")] public float RiftMaxAccumulator = 300f;
 
+        [DataField("spawnRiftAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string SpawnRiftAction = "ActionSpawnRift";
+
         /// <summary>
         /// Spawns a rift which can summon more mobs.
         /// </summary>
-        [DataField("spawnRiftAction")]
-        public InstantAction? SpawnRiftAction;
+        [DataField("spawnRiftActionEntity")]
+        public EntityUid? SpawnRiftActionEntity;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("riftPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string RiftPrototype = "CarpRift";
@@ -61,8 +58,4 @@ namespace Content.Server.Dragon
                 Params = AudioParams.Default.WithVolume(3f),
             };
     }
-
-    public sealed class DragonDevourActionEvent : EntityTargetActionEvent {}
-
-    public sealed class DragonSpawnRiftActionEvent : InstantActionEvent {}
 }

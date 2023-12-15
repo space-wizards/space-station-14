@@ -22,10 +22,10 @@
             <Control/>
         </BoxContainer>
         <BoxContainer Name="VoteMenu" Access="Public" Margin="0 10 0 10" Orientation="Vertical"/>
+        <actions:ActionsBar Name="Actions" Access="Protected" />
     </BoxContainer>
     <widgets:GhostGui Name="Ghost" Access="Protected" />
     <hotbar:HotbarGui Name="Hotbar" Access="Protected" />
-    <actions:ActionsBar Name="Actions" Access="Protected" />
     <chat:ResizableChatBox Name="Chat" Access="Protected" />
     <alerts:AlertsUI Name="Alerts" Access="Protected" />
 </screens:DefaultGameScreen>

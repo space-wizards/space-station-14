@@ -4,6 +4,7 @@
   roundStart: false
   prototype: MobSkeletonPerson
   sprites: MobSkeletonSprites
+  defaultSkinTone: "#fff9e2"
   markingLimits: MobHumanMarkingLimits
   maleFirstNames: skeletonNamesFirst
   femaleFirstNames: skeletonNamesFirst

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Weapons.Ranged.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class ProjectileBatteryAmmoProviderComponent : BatteryAmmoProviderComponent
+public sealed partial class ProjectileBatteryAmmoProviderComponent : BatteryAmmoProviderComponent
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = default!;

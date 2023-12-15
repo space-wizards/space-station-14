@@ -47,7 +47,7 @@ public sealed class MeleeArcOverlay : Overlay
             return;
 
         var mousePos = _inputManager.MouseScreenPosition;
-        var mapPos = _eyeManager.ScreenToMap(mousePos);
+        var mapPos = _eyeManager.PixelToMap(mousePos);
 
         if (mapPos.MapId != args.MapId)
             return;

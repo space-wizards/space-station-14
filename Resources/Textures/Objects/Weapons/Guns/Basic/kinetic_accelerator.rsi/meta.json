@@ -1,31 +1,43 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "tgstation at https://github.com/tgstation/tgstation/commit/8b7f8ba6a3327c7381967c550f185dffafd11a57",
+  "copyright": "icon by RiceMar1244 based on tgstation at https://github.com/tgstation/tgstation/commit/8b7f8ba6a3327c7381967c550f185dffafd11a57; inhand, wield, and belt equip sprites by RiceMar1244",
   "size": {
     "x": 32,
     "y": 32
   },
-  "states": [
-    {
-      "name": "gun"
-    },
-    {
-      "name": "empty",
-      "delays": [
-        [
-          0.2,
-          0.2
-        ]
-      ]
-    },
-	{
-	  "name": "inhand-right",
-	  "directions": 4
-	},
-	{
-	  "name": "inhand-left",
-	  "directions": 4
-	}
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "animation-icon",
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "equipped-BELT",
+            "directions": 4
+        }
+    ]
 }

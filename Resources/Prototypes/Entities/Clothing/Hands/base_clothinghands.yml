@@ -9,6 +9,8 @@
     slots: [gloves]
   - type: Food
     requiresSpecialDigestion: true
+  - type: Item
+    size: Small
   - type: SolutionContainerManager
     solutions:
       food:
@@ -17,5 +19,6 @@
         - ReagentId: Fiber
           Quantity: 10
   - type: Tag
-    tags: 
-      - ClothMade
+    tags:
+    - ClothMade
+    - WhitelistChameleon

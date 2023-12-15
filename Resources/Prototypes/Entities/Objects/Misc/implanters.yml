@@ -12,6 +12,12 @@
       containers:
         implanter_slot: !type:ContainerSlot { }
     - type: Implanter
+      whitelist:
+        components:
+        - Body # no chair microbomb
+      blacklist:
+        components:
+        - Guardian # no holoparasite macrobomb wombo combo
       currentMode: Draw
       implanterSlot:
         name: Implant
@@ -21,18 +27,19 @@
           tags:
             - SubdermalImplant
     - type: Sprite
-      sprite: Objects/Specific/Chemistry/syringe.rsi
-      state: syringe_base0
+      sprite: Objects/Specific/Medical/implanter.rsi
+      state: implanter0
       layers:
-        - state: syringe2
-          map: [ "implantFull" ]
-          color: '#1cd94e'
-          visible: false
-        - state: syringe_base0
+        - state: implanter0
           map: [ "implantOnly" ]
+          visible: true
+        - state: implanter1
+          map: [ "implantFull" ]
+          visible: false
     - type: Item
-      sprite: Objects/Specific/Chemistry/syringe.rsi
+      sprite: Objects/Specific/Medical/implanter.rsi
       heldPrefix: 0
+      size: Small
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -43,7 +50,7 @@
         enum.ImplanterImplantOnlyVisuals.ImplantOnly:
           implantOnly:
             True: {state: broken}
-            False: {state: syringe_base0}
+            False: {state: implanter0}
 
 - type: entity
   id: Implanter
@@ -55,24 +62,61 @@
         - Trash
 
 - type: entity
+  parent: Implanter
+  id: ImplanterAdmeme
+  suffix: Admeme
+  components:
+  - type: Implanter
+    # go wild with sentient chairs with macrobombs
+    whitelist: null
+    blacklist: null
+
+- type: entity
   id: BaseImplantOnlyImplanter
   parent: Implanter
   description: A disposable syringe exclusively designed for the injection of subdermal implants.
   abstract: true
   components:
     - type: Sprite
-      sprite: Objects/Specific/Chemistry/syringe.rsi
-      state: syringe_base0
+      sprite: Objects/Specific/Medical/implanter.rsi
+      state: implanter0
       layers:
-        - state: syringe2
+        - state: implanter1
           map: [ "implantFull" ]
-          color: '#1cd94e'
           visible: true
-        - state: syringe_base0
+        - state: implanter0
           map: [ "implantOnly" ]
     - type: Implanter
       currentMode: Inject
       implantOnly: true
+
+- type: entity
+  id: BaseImplantOnlyImplanterSyndi
+  parent: BaseImplantOnlyImplanter
+  description: A compact disposable syringe exclusively designed for the injection of subdermal implants.
+  abstract: true
+  components:
+    - type: Item
+      sprite: Objects/Specific/Medical/syndi_implanter.rsi
+    - type: Sprite
+      sprite: Objects/Specific/Medical/syndi_implanter.rsi
+      state: implanter1
+      layers:
+        - state: implanter0
+          map: [ "implantFull" ]
+          visible: true
+        - state: implanter1
+          map: [ "implantOnly" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.ImplanterVisuals.Full:
+          implantFull:
+            True: {visible: true}
+            False: {visible: false}
+        enum.ImplanterImplantOnlyVisuals.ImplantOnly:
+          implantOnly:
+            True: {state: broken}
+            False: {state: implanter1}
 
 #Fun implanters
 
@@ -115,7 +159,7 @@
 - type: entity
   id: StorageImplanter
   name: storage implanter
-  parent: BaseImplantOnlyImplanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: StorageImplant
@@ -123,7 +167,7 @@
 - type: entity
   id: FreedomImplanter
   name: freedom implanter
-  parent: BaseImplantOnlyImplanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: FreedomImplant
@@ -131,7 +175,7 @@
 - type: entity
   id: UplinkImplanter
   name: uplink implanter
-  parent: BaseImplantOnlyImplanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
   - type: Implanter
     implant: UplinkImplant
@@ -139,7 +183,7 @@
 - type: entity
   id: EmpImplanter
   name: EMP implanter
-  parent: BaseImplantOnlyImplanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: EmpImplant
@@ -147,19 +191,17 @@
 - type: entity
   id: DnaScramblerImplanter
   name: DNA scrambler implanter
-  parent: BaseImplantOnlyImplanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: DnaScramblerImplant
-      currentMode: Inject
-      implantOnly: false
 
 #Nuclear Operative/Special implanters
 
 - type: entity
   id: MicroBombImplanter
   name: micro-bomb implanter
-  parent: BaseImplantOnlyImplanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: MicroBombImplant
@@ -167,7 +209,7 @@
 - type: entity
   id: MacroBombImplanter
   name: macro-bomb implanter
-  parent: BaseImplantOnlyImplanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: MacroBombImplant
@@ -175,7 +217,25 @@
 - type: entity
   id: DeathRattleImplanter
   name: death rattle implanter
-  parent: BaseImplantOnlyImplanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: DeathRattleImplant
+
+- type: entity
+  id: DeathAcidifierImplanter
+  name: death acidifier implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: DeathAcidifierImplant
+
+# Security and Command implanters
+
+- type: entity
+  id: MindShieldImplanter
+  name: mind-shield implanter
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: MindShieldImplant

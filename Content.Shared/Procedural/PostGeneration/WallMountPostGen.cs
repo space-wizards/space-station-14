@@ -7,7 +7,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Spawns on the boundary tiles of rooms.
 /// </summary>
-public sealed class WallMountPostGen : IPostDunGen
+public sealed partial class WallMountPostGen : IPostDunGen
 {
     [DataField("tile", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
     public string Tile = "FloorSteel";

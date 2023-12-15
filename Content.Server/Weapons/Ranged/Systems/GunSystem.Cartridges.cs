@@ -1,11 +1,10 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -15,33 +14,17 @@ public sealed partial class GunSystem
     {
         base.InitializeCartridge();
         SubscribeLocalEvent<CartridgeAmmoComponent, ExaminedEvent>(OnCartridgeExamine);
-        SubscribeLocalEvent<CartridgeAmmoComponent, GetVerbsEvent<ExamineVerb>>(OnCartridgeVerbExamine);
+        SubscribeLocalEvent<CartridgeAmmoComponent, DamageExamineEvent>(OnCartridgeDamageExamine);
     }
 
-    private void OnCartridgeVerbExamine(EntityUid uid, CartridgeAmmoComponent component, GetVerbsEvent<ExamineVerb> args)
+    private void OnCartridgeDamageExamine(EntityUid uid, CartridgeAmmoComponent component, ref DamageExamineEvent args)
     {
-        if (!args.CanInteract || !args.CanAccess)
-            return;
-
         var damageSpec = GetProjectileDamage(component.Prototype);
 
         if (damageSpec == null)
             return;
 
-        var verb = new ExamineVerb()
-        {
-            Act = () =>
-            {
-                var markup = Damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-projectile"));
-                _examine.SendExamineTooltip(args.User, uid, markup, false, false);
-            },
-            Text = Loc.GetString("damage-examinable-verb-text"),
-            Message = Loc.GetString("damage-examinable-verb-message"),
-            Category = VerbCategory.Examine,
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
-        };
-
-        args.Verbs.Add(verb);
+        _damageExamine.AddDamageExamine(args.Message, damageSpec, Loc.GetString("damage-projectile"));
     }
 
     private DamageSpecifier? GetProjectileDamage(string proto)
@@ -54,7 +37,7 @@ public sealed partial class GunSystem
         {
             var p = (ProjectileComponent) projectile.Component;
 
-            if (p.Damage.Total > FixedPoint2.Zero)
+            if (!p.Damage.Empty)
             {
                 return p.Damage;
             }

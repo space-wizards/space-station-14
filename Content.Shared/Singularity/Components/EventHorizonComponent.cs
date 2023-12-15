@@ -11,7 +11,7 @@ namespace Content.Shared.Singularity.Components;
 /// </summary>
 [Access(friends: typeof(SharedEventHorizonSystem))]
 [RegisterComponent, NetworkedComponent]
-public sealed class EventHorizonComponent : Component
+public sealed partial class EventHorizonComponent : Component
 {
     /// <summary>
     /// The radius of the event horizon within which it will destroy all entities and tiles.

@@ -6,7 +6,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 ///     Change atmospherics temperature until it reach target.
 /// </summary>
 [RegisterComponent]
-public sealed class TemperatureArtifactComponent : Component
+public sealed partial class TemperatureArtifactComponent : Component
 {
     [DataField("targetTemp"), ViewVariables(VVAccess.ReadWrite)]
     public float TargetTemperature = Atmospherics.T0C;

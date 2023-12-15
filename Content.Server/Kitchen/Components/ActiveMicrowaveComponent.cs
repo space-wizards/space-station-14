@@ -6,7 +6,7 @@ namespace Content.Server.Kitchen.Components;
 /// Attached to a microwave that is currently in the process of cooking
 /// </summary>
 [RegisterComponent]
-public sealed class ActiveMicrowaveComponent : Component
+public sealed partial class ActiveMicrowaveComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public float CookTimeRemaining;

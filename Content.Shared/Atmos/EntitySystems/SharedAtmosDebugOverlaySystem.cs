@@ -39,13 +39,13 @@ namespace Content.Shared.Atmos.EntitySystems
         [Serializable, NetSerializable]
         public sealed class AtmosDebugOverlayMessage : EntityEventArgs
         {
-            public EntityUid GridId { get; }
+            public NetEntity GridId { get; }
 
             public Vector2i BaseIdx { get; }
             // LocalViewRange*LocalViewRange
             public AtmosDebugOverlayData[] OverlayData { get; }
 
-            public AtmosDebugOverlayMessage(EntityUid gridIndices, Vector2i baseIdx, AtmosDebugOverlayData[] overlayData)
+            public AtmosDebugOverlayMessage(NetEntity gridIndices, Vector2i baseIdx, AtmosDebugOverlayData[] overlayData)
             {
                 GridId = gridIndices;
                 BaseIdx = baseIdx;

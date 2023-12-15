@@ -4,7 +4,7 @@ namespace Content.Server.Explosion.Components
     /// Sends a trigger when the keyphrase is heard
     /// </summary>
     [RegisterComponent]
-    public sealed class TriggerOnVoiceComponent : Component
+    public sealed partial class TriggerOnVoiceComponent : Component
     {
         public bool IsListening => IsRecording || !string.IsNullOrWhiteSpace(KeyPhrase);
 

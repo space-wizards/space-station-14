@@ -8,7 +8,7 @@ namespace Content.Server.Shuttles.Components;
 /// This is used for controlling evacuation for a station.
 /// </summary>
 [RegisterComponent]
-public sealed class StationEmergencyShuttleComponent : Component
+public sealed partial class StationEmergencyShuttleComponent : Component
 {
     /// <summary>
     /// The emergency shuttle assigned to this station.

@@ -16,9 +16,13 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
         [Test]
         public async Task AlertsTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
+            {
+                Connected = true,
+                DummyTicker = false
+            });
+            var server = pair.Server;
+            var client = pair.Client;
 
             var clientPlayerMgr = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
             var clientUIMgr = client.ResolveDependency<IUserInterfaceManager>();
@@ -48,7 +52,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(alerts, Has.Count.EqualTo(alertCount + 2));
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
 
             AlertsUI clientAlertsUI = default;
             await client.WaitAssertion(() =>
@@ -94,7 +98,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 alertsSystem.ClearAlert(playerUid, AlertType.Debug1);
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
 
             await client.WaitAssertion(() =>
             {
@@ -106,7 +110,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

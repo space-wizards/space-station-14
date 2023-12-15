@@ -56,3 +56,6 @@
 
 - type: statusEffect
   id: RatvarianLanguage #Praise him
+
+- type: statusEffect
+  id: StaminaModifier

@@ -9,6 +9,8 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Graphics;
+using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Power;
@@ -64,7 +66,7 @@ public sealed partial class PowerMonitoringWindow : DefaultWindow, IComputerWind
             IRsiStateLike? iconState = null;
             if (entityPrototype != null)
                 iconState = _spriteSystem.GetPrototypeIcon(entityPrototype);
-            var icon = iconState?.GetFrame(RSI.State.Direction.South, 0);
+            var icon = iconState?.GetFrame(RsiDirection.South, 0);
             var item = list[i];
             item.Text = $"{ent.NameLocalized} {Loc.GetString("power-monitoring-window-value", ("value", ent.Size))}";
             item.Icon = icon;

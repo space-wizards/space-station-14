@@ -1,10 +1,11 @@
 using Content.Client.Actions;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Mapping;
 using Content.Shared.Maps;
 using Robust.Client.Placement;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using static Robust.Shared.Utility.SpriteSpecifier;
 
 namespace Content.Client.Mapping;
 
@@ -13,16 +14,17 @@ public sealed partial class MappingSystem : EntitySystem
     [Dependency] private readonly IPlacementManager _placementMan = default!;
     [Dependency] private readonly ITileDefinitionManager _tileMan = default!;
     [Dependency] private readonly ActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     /// <summary>
     ///     The icon to use for space tiles.
     /// </summary>
-    private readonly SpriteSpecifier _spaceIcon = new SpriteSpecifier.Texture(new ("Tiles/cropped_parallax.png"));
+    private readonly SpriteSpecifier _spaceIcon = new Texture(new ("Tiles/cropped_parallax.png"));
 
     /// <summary>
     ///     The icon to use for entity-eraser.
     /// </summary>
-    private readonly SpriteSpecifier _deleteIcon = new SpriteSpecifier.Texture(new ("Interface/VerbIcons/delete.svg.192dpi.png"));
+    private readonly SpriteSpecifier _deleteIcon = new Texture(new ("Interface/VerbIcons/delete.svg.192dpi.png"));
 
     public string DefaultMappingActions = "/mapping_actions.yml";
 
@@ -73,6 +75,9 @@ public sealed partial class MappingSystem : EntitySystem
         else
             return;
 
+        InstantActionComponent action;
+        string name;
+
         if (tileDef != null)
         {
             if (tileDef is not ContentTileDefinition contentTileDef)
@@ -80,45 +85,51 @@ public sealed partial class MappingSystem : EntitySystem
 
             var tileIcon = contentTileDef.IsSpace
                 ? _spaceIcon
-                : new SpriteSpecifier.Texture(contentTileDef.Sprite!.Value);
+                : new Texture(contentTileDef.Sprite!.Value);
 
-            ev.Action = new InstantAction()
+            action = new InstantActionComponent
             {
                 ClientExclusive = true,
                 CheckCanInteract = false,
                 Event = actionEvent,
-                DisplayName = Loc.GetString(tileDef.Name),
                 Icon = tileIcon
             };
 
-            return;
+            name = Loc.GetString(tileDef.Name);
         }
-
-        if (actionEvent.Eraser)
+        else if (actionEvent.Eraser)
         {
-            ev.Action = new InstantAction()
+            action = new InstantActionComponent
             {
                 ClientExclusive = true,
                 CheckCanInteract = false,
                 Event = actionEvent,
-                DisplayName = "action-name-mapping-erase",
                 Icon = _deleteIcon,
             };
 
-            return;
+            name = Loc.GetString("action-name-mapping-erase");
+        }
+        else
+        {
+            if (string.IsNullOrWhiteSpace(actionEvent.EntityType))
+                return;
+
+            action = new InstantActionComponent
+            {
+                ClientExclusive = true,
+                CheckCanInteract = false,
+                Event = actionEvent,
+                Icon = new EntityPrototype(actionEvent.EntityType),
+            };
+
+            name = actionEvent.EntityType;
         }
 
-        if (string.IsNullOrWhiteSpace(actionEvent.EntityType))
-            return;
+        var actionId = Spawn(null);
+        AddComp<Component>(actionId, action);
+        _metaData.SetEntityName(actionId, name);
 
-        ev.Action = new InstantAction()
-        {
-            ClientExclusive = true,
-            CheckCanInteract = false,
-            Event = actionEvent,
-            DisplayName = actionEvent.EntityType,
-            Icon = new SpriteSpecifier.EntityPrototype(actionEvent.EntityType),
-        };
+        ev.Action = actionId;
     }
 
     private void OnStartPlacementAction(StartPlacementActionEvent args)
@@ -139,19 +150,4 @@ public sealed partial class MappingSystem : EntitySystem
         if (_placementMan.Eraser != args.Eraser)
             _placementMan.ToggleEraser();
     }
-}
-
-public sealed class StartPlacementActionEvent : InstantActionEvent
-{
-    [DataField("entityType")]
-    public string? EntityType;
-
-    [DataField("tileId")]
-    public string? TileId;
-
-    [DataField("placementOption")]
-    public string? PlacementOption;
-
-    [DataField("eraser")]
-    public bool Eraser;
 }

@@ -49,6 +49,7 @@
     - type: Input
       context: "human"
     - type: Speech
+      speechVerb: Skeleton
     - type: SkeletonAccent
     - type: Actions
     - type: Vocal

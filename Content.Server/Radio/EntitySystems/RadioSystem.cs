@@ -1,19 +1,19 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
+using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
 using Content.Server.VoiceMask;
-using Content.Server.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Radio;
-using Robust.Server.GameObjects;
+using Content.Shared.Radio.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
-using Content.Shared.Popups;
-using Robust.Shared.Map;
-using Content.Shared.Radio.Components;
-using Content.Server.Power.Components;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -25,7 +25,9 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -55,9 +57,17 @@ public sealed class RadioSystem : EntitySystem
     /// <summary>
     /// Send radio message to all active radio listeners
     /// </summary>
+    public void SendRadioMessage(EntityUid messageSource, string message, ProtoId<RadioChannelPrototype> channel, EntityUid radioSource, bool escapeMarkup = true)
+    {
+        SendRadioMessage(messageSource, message, _prototype.Index(channel), radioSource, escapeMarkup: escapeMarkup);
+    }
+
+    /// <summary>
+    /// Send radio message to all active radio listeners
+    /// </summary>
     /// <param name="messageSource">Entity that spoke the message</param>
     /// <param name="radioSource">Entity that picked up the message and will send it, e.g. headset</param>
-    public void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource)
+    public void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, bool escapeMarkup = true)
     {
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))
@@ -69,12 +79,27 @@ public sealed class RadioSystem : EntitySystem
 
         name = FormattedMessage.EscapeText(name);
 
+        var speech = _chat.GetSpeechVerb(messageSource, message);
+        var content = escapeMarkup
+            ? FormattedMessage.EscapeText(message)
+            : message;
+
+        var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
+            ("color", channel.Color),
+            ("fontType", speech.FontId),
+            ("fontSize", speech.FontSize),
+            ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
+            ("channel", $"\\[{channel.LocalizedName}\\]"),
+            ("name", name),
+            ("message", content));
+
         // most radios are relayed to chat, so lets parse the chat message beforehand
         var chat = new ChatMessage(
             ChatChannel.Radio,
             message,
-            Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name), ("message", FormattedMessage.EscapeText(message))),
-            EntityUid.Invalid);
+            wrappedMessage,
+            NetEntity.Invalid,
+            null);
         var chatMsg = new MsgChatMessage { Message = chat };
         var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg);
 
@@ -89,11 +114,14 @@ public sealed class RadioSystem : EntitySystem
 
         var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
-        var sentAtLeastOnce = false;
         while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
-            if (!radio.Channels.Contains(channel.ID) || (TryComp<IntercomComponent>(receiver, out var intercom) && !intercom.SupportedChannels.Contains(channel.ID)))
-                continue;
+            if (!radio.ReceiveAllChannels)
+            {
+                if (!radio.Channels.Contains(channel.ID) || (TryComp<IntercomComponent>(receiver, out var intercom) &&
+                                                             !intercom.SupportedChannels.Contains(channel.ID)))
+                    continue;
+            }
 
             if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)
                 continue;
@@ -112,10 +140,7 @@ public sealed class RadioSystem : EntitySystem
 
             // send the message
             RaiseLocalEvent(receiver, ref ev);
-            sentAtLeastOnce = true;
         }
-        if (!sentAtLeastOnce)
-            _popup.PopupEntity(Loc.GetString("failed-to-send-message"), messageSource, messageSource, PopupType.MediumCaution);
 
         if (name != Name(messageSource))
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");

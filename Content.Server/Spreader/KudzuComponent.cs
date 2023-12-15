@@ -6,8 +6,14 @@ namespace Content.Server.Spreader;
 /// Handles entities that spread out when they reach the relevant growth level.
 /// </summary>
 [RegisterComponent]
-public sealed class KudzuComponent : Component
+public sealed partial class KudzuComponent : Component
 {
+    /// <summary>
+    /// At level 3 spreading can occur; prior to that we have a chance of increasing our growth level and changing our sprite.
+    /// </summary>
+    [DataField]
+    public int GrowthLevel = 1;
+
     /// <summary>
     /// Chance to spread whenever an edge spread is possible.
     /// </summary>

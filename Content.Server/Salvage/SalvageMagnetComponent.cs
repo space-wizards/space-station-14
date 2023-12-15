@@ -11,7 +11,7 @@ namespace Content.Server.Salvage
     /// </summary>
     [NetworkedComponent, RegisterComponent]
     [Access(typeof(SalvageSystem))]
-    public sealed class SalvageMagnetComponent : SharedSalvageMagnetComponent
+    public sealed partial class SalvageMagnetComponent : SharedSalvageMagnetComponent
     {
         /// <summary>
         /// Maximum distance from the offset position that will be used as a salvage's spawnpoint.
@@ -108,7 +108,7 @@ namespace Content.Server.Salvage
         /// A weighted random prototype corresponding to
         /// what asteroid entities will be generated.
         /// </summary>
-        [DataField("asteroidPool", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+        [DataField("asteroidPool", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomEntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
         public string AsteroidPool = "RandomAsteroidPool";
     }
 

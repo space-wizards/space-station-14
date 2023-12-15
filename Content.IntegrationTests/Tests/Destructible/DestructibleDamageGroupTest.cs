@@ -18,14 +18,10 @@ namespace Content.IntegrationTests.Tests.Destructible
         [Test]
         public async Task AndTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -197,7 +193,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 // No new thresholds reached as triggers once is set to true and it already triggered before
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }
