@@ -1,9 +1,4 @@
 Entries:
-- author: dahnte
-  changes:
-  - {message: Improved lisp letter matching and clarity., type: Fix}
-  id: 4875
-  time: '2023-09-23T05:39:47.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Skeletons no longer asphyxiate due to their lack of lungs., type: Fix}
@@ -2897,3 +2892,12 @@ Entries:
   - {message: 'Added 2 new artifact effect: attraction and repulsion', type: Add}
   id: 5375
   time: '2023-12-15T15:39:25.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Explosion visuals now last slightly longer, type: Add}
+  - {message: You will now hear a reverbed explosion sound effect for explosions that
+      are far away from you, type: Add}
+  - {message: Smaller explosions now make a distinct sound compared to larger ones,
+    type: Add}
+  id: 5376
+  time: '2023-12-15T16:57:46.0000000+00:00'
