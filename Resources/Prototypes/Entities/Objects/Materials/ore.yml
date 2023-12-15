@@ -218,5 +218,3 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 2
