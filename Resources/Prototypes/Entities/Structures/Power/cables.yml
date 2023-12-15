@@ -86,8 +86,9 @@
         acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: hvcable_
+  # TODO make this change on power
   - type: AmbientSound
-    enabled: false
+    enabled: true
     volume: -14
     range: 2
     sound:
