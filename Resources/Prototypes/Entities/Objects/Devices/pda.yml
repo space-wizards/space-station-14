@@ -375,10 +375,26 @@
     borderColor: "#858585"
   - type: Icon
     state: pda-library
+  - type: Pda
+    state: pda
+    penSlot:
+      startingItem: LuxuryPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+    idSlot:
+      name: ID Card
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+        - IdCard
 
 - type: entity
   parent: BasePDA
   id: LawyerPDA
+
   name: lawyer PDA
   description: For lawyers to poach dubious clients.
   components:
@@ -389,6 +405,21 @@
     borderColor: "#6f6192"
   - type: Icon
     state: pda-lawyer
+  - type: Pda
+    state: pda
+    penSlot:
+      startingItem: LuxuryPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+    idSlot:
+      name: ID Card
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+        - IdCard
 
 - type: entity
   parent: BasePDA
@@ -848,6 +879,21 @@
     borderColor: "#3f3f74"
   - type: Icon
     state: pda-reporter
+  - type: Pda
+    state: pda
+    penSlot:
+      startingItem: LuxuryPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+    idSlot:
+      name: ID Card
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+        - IdCard
 
 - type: entity
   parent: BasePDA
