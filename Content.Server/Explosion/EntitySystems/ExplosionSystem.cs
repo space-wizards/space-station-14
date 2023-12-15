@@ -349,7 +349,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // play far sound
         // far sound should play for anyone who wasn't in range of any of the effects of the bomb
         var farAudioRange = iterationIntensity.Count * 5;
-        var farFilter = Filter.Empty().AddInRange(epicenter, farAudioRange).RemoveInRange(epicenter, audioRange);
+        var farFilter = Filter.Empty().AddInRange(epicenter, farAudioRange).RemoveWhere(p => filter.Recipients.Contains(p));
         var farSound = iterationIntensity.Count < type.SmallSoundIterationThreshold
             ? type.SmallSoundFar
             : type.SoundFar;
