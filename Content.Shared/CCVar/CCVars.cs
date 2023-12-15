@@ -349,6 +349,11 @@ namespace Content.Shared.CCVar
             CVarDef.Create("discord.ahelp_avatar", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
+        /// URL of the Discord webhook which will relay all custom votes. If left empty, disables the webhook. 
+        /// </summary>
+        public static readonly CVarDef<string> DiscordVoteWebhook =
+            CVarDef.Create("discord.vote_webhook", string.Empty, CVar.SERVERONLY);
+
         /// URL of the Discord webhook which will relay round restart messages.
         /// </summary>
         public static readonly CVarDef<string> DiscordRoundUpdateWebhook =
@@ -359,6 +364,7 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> DiscordRoundEndRoleWebhook =
             CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
+
 
         /*
          * Suspicion

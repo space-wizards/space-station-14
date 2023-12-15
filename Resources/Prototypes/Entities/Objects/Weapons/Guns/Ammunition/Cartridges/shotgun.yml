@@ -165,3 +165,4 @@
     proto: PelletShotgunUranium
   - type: SpentAmmoVisuals
     state: "depleted-uranium"
+
