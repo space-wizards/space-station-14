@@ -228,11 +228,11 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: false # does not scale by quantity
+        scaleByQuantity: true 
         ignoreResistances: false
         damage:
           types:
-            Cold: 0.01
+            Cold: 0.05
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
