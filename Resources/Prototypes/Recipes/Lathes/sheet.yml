@@ -12,6 +12,7 @@
   completetime: 2
   materials:
     Steel: 3000
+    Coal: 1500
 
 - type: latheRecipe
   id: SheetGlass1
@@ -27,6 +28,7 @@
   completetime: 2
   materials:
     Glass: 3000
+    Coal: 1500
 
 - type: latheRecipe
   id: SheetRGlass
@@ -44,6 +46,7 @@
   materials:
     Glass: 3000
     Steel: 1500
+    Coal: 1500
 
 - type: latheRecipe
   id: SheetPGlass30
@@ -52,6 +55,7 @@
   materials:
     Glass: 3000
     Plasma: 3000
+    Coal: 1500
 
 - type: latheRecipe
   id: SheetRPGlass30
@@ -61,6 +65,7 @@
     Glass: 3000
     Plasma: 3000
     Steel: 1500
+    Coal: 1500
 
 - type: latheRecipe
   id: SheetPlasma30
@@ -68,6 +73,7 @@
   completetime: 2
   materials:
     Plasma: 3000
+    Coal: 1500
 
 - type: latheRecipe
   id: SheetUranium30
@@ -75,20 +81,23 @@
   completetime: 2
   materials:
     Uranium: 3000
-  
+    Coal: 1500
+
 - type: latheRecipe
   id: IngotGold30
   result: IngotGold
   completetime: 2
   materials:
     Gold: 3000
-  
+    Coal: 1500
+
 - type: latheRecipe
   id: IngotSilver30
   result: IngotSilver
   completetime: 2
   materials:
     Silver: 3000
+    Coal: 1500
 
 - type: latheRecipe
   id: MaterialBananium10
@@ -96,7 +105,8 @@
   completetime: 2
   materials:
     Bananium: 3000
-    
+    Coal: 1500
+
 - type: latheRecipe
   id: SheetUranium1
   result: SheetUranium1

@@ -195,3 +195,28 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: OreBase
+  id: Coal
+  name: coal
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Coal
+  - type: Sprite
+    state: coal
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Coal: 500
+
+- type: entity
+  parent: Coal
+  id: Coal1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+  - type: Item
+    size: 2
