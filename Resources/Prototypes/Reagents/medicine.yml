@@ -1014,6 +1014,9 @@
     Medicine:
       effects:
       - !type:HealthChange
+        condition:
+        - !type:TotalDamage
+          max: 50
         damage:
           types:
             Blunt: -0.2
