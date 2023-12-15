@@ -113,7 +113,10 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         component.FocusGroup = PowerMonitoringConsoleGroup.Generator;
 
         if (TryComp<PowerMonitoringCableNetworksComponent>(uid, out var cableNetworks))
+        {
             cableNetworks.FocusChunks.Clear();
+            Dirty(uid, cableNetworks);
+        }
     }
 
     private void OnGridSplit(ref GridSplitEvent args)
