@@ -17,6 +17,12 @@ public sealed partial class CognislimeComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("applyDuration"), AutoNetworkedField]
     public TimeSpan ApplyCognislimeDuration = TimeSpan.FromSeconds(3);
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("canSpeak"), AutoNetworkedField]
+    public bool CanSpeak = true;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("canMove"), AutoNetworkedField]
+    public bool CanMove = true;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("whitelist"), AutoNetworkedField]
     public EntityWhitelist? Whitelist = new()
     {
@@ -25,6 +31,15 @@ public sealed partial class CognislimeComponent : Component
             "EntityStorage",
             "Item",
             "ReagentTank",
+        }
+    };
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("blacklist"), AutoNetworkedField]
+    public EntityWhitelist? Blacklist = new()
+    {
+        Components = new[]
+    {
+            "NukeDisk",
         }
     };
 

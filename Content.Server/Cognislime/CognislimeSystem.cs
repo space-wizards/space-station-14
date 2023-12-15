@@ -2,90 +2,99 @@ using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Serialization;
 using Content.Shared.Emoting;
 using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Speech;
 using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Cognislime;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Cognislime;
 
 /// <summary>
 /// Makes stuff sentient.
 /// </summary>
-public sealed partial class CognislimeSystem : EntitySystem
+public sealed partial class CognislimeSystem : SharedCognislimeSystem
 {
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CognislimeComponent, AfterInteractEvent>(OnCognislimeInteract);
+        SubscribeLocalEvent<CognislimeComponent, AfterInteractEvent>(OnCognislimeAfterInteract);
+        SubscribeLocalEvent<CognislimeComponent, CognislimeDoAfterEvent>(ApplyCognislime);
     }
 
-    public void OnCognislimeInteract(EntityUid uid, CognislimeComponent component, AfterInteractEvent args)
+    public void OnCognislimeAfterInteract(EntityUid uid, CognislimeComponent component, AfterInteractEvent args)
     {
-        Logger.Debug("Got here");
-
         if (args.Target == null || args.Handled || !args.CanReach)
             return;
 
-        if (!CanCognislime(uid, uid, component))
+        if (!CheckTarget(args.Target.Value, component.Whitelist, component.Blacklist))
         {
-            _popup.PopupClient(Loc.GetString("fulton-invalid"), uid, uid);
             return;
         }
 
         args.Handled = true;
 
-        if (args.Target == null || !TryComp<CognislimeComponent>(args.Used, out var cognislime))
-            return;
-
-        var cognislimedEntity = args.Target.Value;
-
-        if (EntityManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
-        {
-            return;
-        }
-
-        if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(cognislimedEntity))
-        {
-            return;
-        }
-
-        ghostRole = EntityManager.AddComponent<GhostRoleComponent>(cognislimedEntity);
-        EntityManager.AddComponent<GhostTakeoverAvailableComponent>(cognislimedEntity);
-        ghostRole.RoleName = "cognislimzed";
-        ghostRole.RoleDescription = "something";
-        ghostRole.RoleRules = "thou shalt not kill";
-
-        EntityManager.EnsureComponent<MindContainerComponent>(cognislimedEntity);
-        EntityManager.EnsureComponent<InputMoverComponent>(cognislimedEntity);
-        EntityManager.EnsureComponent<MobMoverComponent>(cognislimedEntity);
-        EntityManager.EnsureComponent<MovementSpeedModifierComponent>(cognislimedEntity);
-
-
-
-        EntityManager.EnsureComponent<SpeechComponent>(cognislimedEntity);
-        EntityManager.EnsureComponent<EmotingComponent>(cognislimedEntity);
-
-        EntityManager.EnsureComponent<ExaminerComponent>(cognislimedEntity);
-
-        QueueDel(uid);
+        TryApplyCognizine(component, args.User, args.Target.Value, uid);
+    }
+    public bool CheckTarget(EntityUid target, EntityWhitelist? whitelist, EntityWhitelist? blacklist)
+    {
+        return whitelist?.IsValid(target, EntityManager) != false &&
+            blacklist?.IsValid(target, EntityManager) != true;
     }
 
-    private bool CanCognislime(EntityUid targetUid, EntityUid uid, CognislimeComponent component)
+    public void TryApplyCognizine(CognislimeComponent component, EntityUid user, EntityUid target, EntityUid cognislime)
     {
-        if (component.Whitelist?.IsValid(targetUid, EntityManager) != true)
+        var ev = new CognislimeDoAfterEvent();
+        var args = new DoAfterArgs(EntityManager, user, component.ApplyCognislimeDuration, ev, cognislime, target: target, used: cognislime)
         {
-            return false;
+            BreakOnUserMove = true,
+            BreakOnTargetMove = true,
+            BreakOnDamage = true,
+            NeedHand = true,
+        };
+
+        if (_doAfter.TryStartDoAfter(args))
+            _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
+    }
+    public void ApplyCognislime(EntityUid uid, CognislimeComponent component, CognislimeDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
+            return;
+
+        var target = args.Target.Value;
+
+        EntityManager.EnsureComponent<MindContainerComponent>(target);
+
+        if (!EntityManager.HasComponent<GhostRoleComponent>(uid))
+        {
+            var ghostRole = EntityManager.AddComponent<GhostRoleComponent>(target);
+            ghostRole.RoleName = "cognislimzed";
+            ghostRole.RoleDescription = "something";
+            ghostRole.RoleRules = "thou shalt not kill";
+            EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(target);
         }
 
-        return true;
+        if (component.CanMove)
+        {
+            EntityManager.EnsureComponent<InputMoverComponent>(target);
+            EntityManager.EnsureComponent<MobMoverComponent>(target);
+            EntityManager.EnsureComponent<MovementSpeedModifierComponent>(target);
+        }
+
+        if (component.CanSpeak)
+        {
+            EntityManager.EnsureComponent<SpeechComponent>(target);
+            EntityManager.EnsureComponent<EmotingComponent>(target);
+        }
+        _audio.PlayPredicted(component.CognislimeSound, target, args.User);
+        EntityManager.EnsureComponent<ExaminerComponent>(target);
+
+        QueueDel(uid);
     }
 }
