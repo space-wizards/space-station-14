@@ -171,7 +171,6 @@
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-    heldPrefix: pump
   - type: BallisticAmmoProvider
     capacity: 4
   - type: Tag
