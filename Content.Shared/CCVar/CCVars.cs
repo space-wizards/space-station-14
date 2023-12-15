@@ -349,7 +349,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("discord.ahelp_avatar", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
-        /// URL of the Discord webhook which will relay all custom votes. If left empty, disables the webhook. 
+        /// URL of the Discord webhook which will relay all custom votes. If left empty, disables the webhook.
         /// </summary>
         public static readonly CVarDef<string> DiscordVoteWebhook =
             CVarDef.Create("discord.vote_webhook", string.Empty, CVar.SERVERONLY);
@@ -846,7 +846,7 @@ namespace Content.Shared.CCVar
         ///     This determines for how many seconds an explosion should stay visible once it has finished expanding.
         /// </summary>
         public static readonly CVarDef<float> ExplosionPersistence =
-            CVarDef.Create("explosion.persistence", 0.3f, CVar.SERVERONLY);
+            CVarDef.Create("explosion.persistence", 1.0f, CVar.SERVERONLY);
 
         /// <summary>
         ///     If an explosion covers a larger area than this number, the damaging/processing will always start during
