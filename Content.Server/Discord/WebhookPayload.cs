@@ -13,7 +13,7 @@ public struct WebhookPayload
 
     [JsonPropertyName("username")]
     public string? Username { get; set; }
-    
+
     [JsonPropertyName("avatar_url")]
     public string? AvatarUrl { get; set; }
 
@@ -21,7 +21,7 @@ public struct WebhookPayload
     public List<WebhookEmbed>? Embeds { get; set; } = null;
 
     [JsonPropertyName("allowed_mentions")]
-    public WebhookMentions? AllowedMentions { get; set; }
+    public WebhookMentions AllowedMentions { get; set; } = new();
 
     public WebhookPayload()
     {
