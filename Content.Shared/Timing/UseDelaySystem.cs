@@ -13,7 +13,6 @@ public sealed class UseDelaySystem : EntitySystem
     {
         SubscribeLocalEvent<UseDelayComponent, EntityUnpausedEvent>(OnUnpaused);
 
-        SubscribeLocalEvent<UseDelayComponent, GettingInteractedWithAttemptEvent>(OnGettingInteracted);
         SubscribeLocalEvent<UseDelayComponent, ActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<UseDelayComponent, UseInHandEvent>(OnUseInHand);
     }
@@ -24,12 +23,6 @@ public sealed class UseDelaySystem : EntitySystem
         ent.Comp.DelayStartTime += args.PausedTime;
         ent.Comp.DelayEndTime += args.PausedTime;
         Dirty(ent);
-    }
-
-    private void OnGettingInteracted(Entity<UseDelayComponent> ent, ref GettingInteractedWithAttemptEvent args)
-    {
-        if (IsDelayed(ent))
-            args.Cancel();
     }
 
     private void OnUseInHand(Entity<UseDelayComponent> ent, ref UseInHandEvent args)

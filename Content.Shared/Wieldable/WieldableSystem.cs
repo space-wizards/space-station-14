@@ -25,12 +25,13 @@ public sealed class WieldableSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly UseDelaySystem _delay = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand, after: new[] { typeof(UseDelaySystem) });
+        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand, before: new[] { typeof(UseDelaySystem) });
         SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
@@ -124,6 +125,10 @@ public sealed class WieldableSystem : EntitySystem
 
     public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet = false)
     {
+        if (TryComp(uid, out UseDelayComponent? useDelay)
+            && !_delay.TryResetDelay((uid, useDelay), true))
+            return false;
+
         // Do they have enough hands free?
         if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
         {
@@ -202,6 +207,10 @@ public sealed class WieldableSystem : EntitySystem
     /// <returns>True if the attempt wasn't blocked.</returns>
     public bool TryUnwield(EntityUid used, WieldableComponent component, EntityUid user)
     {
+        if (TryComp(used, out UseDelayComponent? useDelay)
+            && _delay.IsDelayed((used, useDelay)))
+            return false;
+
         var ev = new BeforeUnwieldEvent();
         RaiseLocalEvent(used, ev);
 
