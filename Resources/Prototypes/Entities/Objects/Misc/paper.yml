@@ -251,6 +251,20 @@
       Steel: 25
 
 - type: entity
+  name: luxury pen
+  parent: Pen
+  id: LuxuryPen
+  description: A fancy and expensive pen that you only deserve to own if you're qualified to handle vast amounts of paperwork.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: luxury_pen
+  - type: Item
+    sprite: Objects/Misc/bureaucracy.rsi
+    heldPrefix: luxury_pen
+    size: Tiny
+
+- type: entity
   name: Cybersun pen
   parent: BaseItem
   id: CyberPen
