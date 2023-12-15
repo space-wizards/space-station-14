@@ -1,0 +1,576 @@
+- type: entity
+  id: Randombox
+  parent: [PresentBase, BaseItem]
+  name: PresentRandom
+  description: A little box with incredible surprises inside.
+  suffix: Hunger games
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: PresentTrashRed
+      - id: Bucket
+        orGroup: GiftPool
+      - id: PlushieGhost
+        orGroup: GiftPool
+      - id: PlushieRGBee
+        orGroup: GiftPool
+      - id: PlushieLizard #Weh!
+        orGroup: GiftPool
+      - id: ClothingNeckCloakMoth
+        orGroup: GiftPool
+      - id: ToySkeleton
+        orGroup: GiftPool
+      - id: FoamBlade
+        orGroup: GiftPool
+      - id: AcousticGuitarInstrument
+        orGroup: GiftPool
+      - id: HarmonicaInstrument
+        orGroup: GiftPool
+      - id: GlockenspielInstrument
+        orGroup: GiftPool
+      - id: ClothingNeckCloakTrans
+        orGroup: GiftPool
+      - id: ToySkeleton
+        orGroup: GiftPool
+      - id: Basketball
+        orGroup: GiftPool
+      - id: BalloonCorgi
+        orGroup: GiftPool
+      - id: PonderingOrb
+        orGroup: GiftPool
+      - id: Skub
+        orGroup: GiftPool
+      - id: ClothingEyesGlassesGarGiga
+        orGroup: GiftPool
+      - id: ClothingEyesGlassesGarOrange
+        orGroup: GiftPool
+      - id: ClothingEyesGlassesGar
+        orGroup: GiftPool
+      - id: ClothingNeckBling
+        orGroup: GiftPool
+      - id: ClothingHeadHelmetCosmonaut
+        orGroup: GiftPool
+      - id: ClothingShoeSlippersDuck
+        orGroup: GiftPool
+      - id: ClothingUnderSocksBee
+        orGroup: GiftPool
+
+      - id: ClothingBeltUtility
+        orGroup: GiftPool
+      - id: WeaponFlareGun
+        orGroup: GiftPool
+#weaponMelee
+      - id: Machete
+        orGroup: GiftPool
+      - id: BaseBallBat
+        orGroup: GiftPool
+      - id: CombatKnife
+        orGroup: GiftPool
+      - id: FlashlightLantern
+        orGroup: GiftPool
+      - id: Spear
+        orGroup: GiftPool
+      - id: Stunbaton
+        orGroup: GiftPool
+      - id: KitchenKnife
+        orGroup: GiftPool
+      - id: HydroponicsToolSpade
+        orGroup: GiftPool
+      - id: OxygenTankFilled
+        orGroup: GiftPool
+      - id: ScalpelShiv
+        orGroup: GiftPool
+      - id: Shovel
+        orGroup: GiftPool
+      - id: EnergyDagger
+        orGroup: GiftPool
+      #Other and soap
+      - id: LidSalami
+        orGroup: GiftPool
+      - id: Soap
+        orGroup: GiftPool
+      - id: SoapHomemade
+        orGroup: GiftPool
+      - id: SoapNT
+        orGroup: GiftPool
+      - id: SoapDeluxe
+        orGroup: GiftPool
+      - id: SoapSyndie
+        orGroup: GiftPool
+      - id: SoapOmega
+        orGroup: GiftPool
+      - id: BedsheetCosmos
+        orGroup: GiftPool
+      - id: BedsheetIan
+        orGroup: GiftPool
+        #Food
+      - id: FoodBoxDonkpocket
+        orGroup: GiftPool
+      - id: FoodBoxDonkpocketSpicy
+        orGroup: GiftPool
+      - id: FoodBoxDonkpocketTeriyaki
+        orGroup: GiftPool
+      - id: FoodBoxDonkpocketPizza
+        orGroup: GiftPool
+      - id: FoodBoxDonkpocketGondola
+        orGroup: GiftPool
+      - id: FoodBoxDonkpocketBerry
+        orGroup: GiftPool
+      - id: FoodBoxDonkpocketHonk
+        orGroup: GiftPool
+        #Clothing
+      - id: ClothingHandsGlovesColorPurple
+        orGroup: GiftPool
+      - id: ClothingHandsGlovesColorYellow
+        orGroup: GiftPool
+      - id: ClothingHandsGlovesColorYellowBudget
+        orGroup: GiftPool
+      - id: ClothingEyesGlassesSunglasses
+        orGroup: GiftPool
+      - id: ClothingHeadHatOutlawHat
+        orGroup: GiftPool
+      - id: ClothingHeadHatSantahat
+        orGroup: GiftPool
+      - id: ClothingHeadHatUshanka
+        orGroup: GiftPool
+      - id: ClothingOuterCoatGentle
+        orGroup: GiftPool
+      - id: ClothingOuterCoatJensen
+        orGroup: GiftPool
+      - id: ClothingOuterHoodieBlack
+        orGroup: GiftPool
+      - id: ClothingOuterHoodieGrey
+        orGroup: GiftPool
+      - id: ClothingOuterVestWebMerc
+        orGroup: GiftPool
+      - id: ClothingShoesFlippers
+        orGroup: GiftPool
+      - id: ClothingUniformJumpsuitAncient
+        orGroup: GiftPool
+      - id: ClothingUniformJumpsuitDetectiveGrey
+        orGroup: GiftPool
+      - id: ClothingUniformJumpsuitColorMaroon
+        orGroup: GiftPool
+      - id: ClothingUniformColorRainbow
+        orGroup: GiftPool
+      - id: ClothingUniformOveralls
+        orGroup: GiftPool
+      - id: ClothingUniformJumpskirtDetectiveGrey
+        orGroup: GiftPool
+      - id: ClothingUniformJumpskirtColorMaroon
+        orGroup: GiftPool
+      - id: ClothingUniformJumpskirtJanimaid
+        orGroup: GiftPool
+      - id: ClothingUniformJumpsuitHoSAlt
+        orGroup: GiftPool
+      - id: ClothingOuterCoatHoSTrench
+        orGroup: GiftPool
+      - id: ClothingHeadHelmetBasic
+        orGroup: GiftPool
+      - id: ClothingOuterArmorBasic
+        orGroup: GiftPool
+      #Other
+      - id: PersonalAI
+        orGroup: GiftPool
+      - id: DiceBag
+        orGroup: GiftPool
+      - id: CrayonBox
+        orGroup: GiftPool
+      - id: ClothingHeadHatCatEars
+        orGroup: GiftPool
+      - id: ToySword
+        orGroup: GiftPool
+      - id: RevolverCapGun
+        orGroup: GiftPool
+      - id: RevolverCapGunFake
+        orGroup: GiftPool
+      - id: WeaponShotgunDoubleBarreledRubber
+        prob: 1.5
+        orGroup: GiftPool
+      - id: WeaponRevolverDeckard
+        orGroup: GiftPool
+      - id: Ash
+        orGroup: GiftPool
+      - id: FlAsh
+        orGroup: GiftPool
+      - id: MiningDrill
+        orGroup: GiftPool
+      - id: CowToolboxFilled
+        orGroup: GiftPool
+      - id: ClothingUniformJumpsuitEngineeringHazard
+        orGroup: GiftPool
+      - id: Bola
+        orGroup: GiftPool
+      - id: GlowstickBase
+        orGroup: GiftPool
+      - id: GlowstickBlue
+        orGroup: GiftPool
+      - id: GlowstickPurple
+        orGroup: GiftPool
+      - id: GlowstickRed
+        orGroup: GiftPool
+      - id: GlowstickYellow
+        orGroup: GiftPool
+      - id: ToyRubberDuck
+        orGroup: GiftPool
+      - id: BalloonSyn
+        orGroup: GiftPool
+      - id: WeaponSniperHristov
+        prob: 1.5
+        orGroup: GiftPool
+      - id: MagazineBoxAntiMateriel
+        prob: 3
+        orGroup: GiftPool
+      - id: BoxBeanbag
+        prob: 3
+        orGroup: GiftPool
+      - id: WeaponPulseCarbine
+        prob: .1
+        orGroup: GiftPool
+      - id: RGBStaff
+        orGroup: GiftPool
+      - id: ClothingShoesGaloshes
+        orGroup: GiftPool
+      - id: ClothingEyesGlassesSecurity
+        orGroup: GiftPool
+      - id: WeaponDisabler
+        prob: 2
+        orGroup: GiftPool
+      - id: MagazinePistol
+        prob: 3
+        orGroup: GiftPool
+      - id: WeaponPistolMk58
+        orGroup: GiftPool
+      - id: WeaponPistolViper
+        orGroup: GiftPool
+      - id: ClothingShoesBootsMag
+        orGroup: GiftPool
+      - id: ClothingShoesBootsMagAdv
+        orGroup: GiftPool
+      - id: ClothingShoesBootsMagSyndie
+        orGroup: GiftPool
+      - id: Screwdriver
+        orGroup: GiftPool
+      - id: Crowbar
+        orGroup: GiftPool
+      - id: MopItem
+        orGroup: GiftPool
+      - id: LargeBeaker
+        orGroup: GiftPool
+      #Drink
+      - id: DrinkIcedTeaCan
+        orGroup: GiftPool
+      - id: DrinkSpaceUpCan
+        orGroup: GiftPool
+      - id: DrinkStarkistCan
+        orGroup: GiftPool
+      - id: DrinkEnergyDrinkCan
+        orGroup: GiftPool
+      - id: DrinkFourteenLokoCan # :)
+        orGroup: GiftPool
+      - id: DrinkCognacBottleFull
+        orGroup: GiftPool
+      - id: DrinkColaBottleFull
+        orGroup: GiftPool
+      - id: DrinkVodkaBottleFull
+        orGroup: GiftPool
+      - id: DrinkWaterBottleFull
+        orGroup: GiftPool
+      - id: DrinkVermouthBottleFull
+        orGroup: GiftPool
+      #Medical
+      - id: HandheldHealthAnalyzer
+        orGroup: GiftPool
+      - id: CombatMedipen
+        orGroup: GiftPool
+      - id: AntiPoisonMedipen
+        orGroup: GiftPool
+      - id: BruteAutoInjector
+        orGroup: GiftPool
+      - id: BurnAutoInjector
+        orGroup: GiftPool
+      - id: EmergencyMedipen
+        orGroup: GiftPool
+      - id: PillBicaridine
+        orGroup: GiftPool
+      - id: PillDexalin
+        orGroup: GiftPool
+      - id: PillKelotane
+        orGroup: GiftPool
+      - id: PillDylovene
+        orGroup: GiftPool
+      - id: Gauze
+        orGroup: GiftPool
+      - id: Ointment
+        orGroup: GiftPool
+      - id: Brutepack
+        orGroup: GiftPool
+      - id: Bloodpack
+        orGroup: GiftPool
+      - id: Syringe
+        orGroup: GiftPool
+      - id: MedicatedSuture
+        orGroup: GiftPool
+      - id: RegenerativeMesh
+        orGroup: GiftPool
+      - id: MedkitCombatFilled
+        orGroup: GiftPool
+      - id: MedkitFilled
+        orGroup: GiftPool
+  #Backs
+      - id: ClothingBackpackERTEngineer
+        orGroup: GiftPool
+      - id: ClothingBeltStorageWaistbag
+        orGroup: GiftPool
+      - id: ClothingBeltMilitaryWebbing
+        orGroup: GiftPool
+      - id: MedicatedSuture
+        orGroup: GiftPool
+      - id: RegenerativeMesh
+        orGroup: GiftPool
+      - id: MedkitCombatFilled
+        orGroup: GiftPool
+      - id: MedkitFilled
+        orGroup: GiftPool
+  #Hardsuits
+      - id: ClothingOuterHardsuitSecurity
+        orGroup: GiftPool
+      - id: ClothingOuterHardsuitRd
+        orGroup: GiftPool
+      - id: ClothingOuterHardsuitEngineeringWhite
+        orGroup: GiftPool
+      - id: ClothingOuterHardsuitEngineering
+        orGroup: GiftPool
+      - id: ClothingOuterHardsuitSpatio
+        orGroup: GiftPool
+      - id: ClothingOuterHardsuitEngineering
+        orGroup: GiftPool 
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  id: PresentRandomWeapon
+  parent: [PresentBase, BaseItem]
+  name: Present Weapon
+  description: A little box with a killer thing inside
+  suffix: Hunger Games
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/presents.rsi
+    layers:
+      - state: presentGreen
+  - type: SpawnItemsOnUse
+    items:
+      - id: PresentTrashGreen
+    #Melee
+      - id: Machete
+        orGroup: GiftPool
+      - id: BaseBallBat
+        orGroup: GiftPool
+      - id: CombatKnife
+        orGroup: GiftPool
+      - id: Spear
+        orGroup: GiftPool
+      - id: Stunbaton
+        orGroup: GiftPool
+      - id: KitchenKnife
+        orGroup: GiftPool
+      - id: HydroponicsToolSpade
+        orGroup: GiftPool
+      - id: OxygenTankFilled
+        orGroup: GiftPool
+      - id: ScalpelShiv
+        orGroup: GiftPool
+      - id: Shovel
+        orGroup: GiftPool
+      - id: EnergyDagger
+        orGroup: GiftPool
+      #Guns
+      - id: WeaponShotgunBlunderbuss
+        orGroup: GiftPool
+      - id: WeaponSniperMosin
+        orGroup: GiftPool
+      - id: WeaponRevolverDeckard
+        orGroup: GiftPool
+      - id: WeaponSniperHristov
+        orGroup: GiftPool
+        prob: 1
+      - id: WeaponShotgunSawn
+        orGroup: GiftPool
+      - id: WeaponShotgunDoubleBarreledRubber
+        orGroup: GiftPool
+      - id: WeaponDisabler
+        orGroup: GiftPool
+      - id: WeaponShotgunHandmade
+        orGroup: GiftPool
+      - id: WeaponPistolFlintlock
+        orGroup: GiftPool
+      - id: WeaponPistolMk58
+        orGroup: GiftPool
+      - id: WeaponPistolCobra
+        orGroup: GiftPool
+      #Ammo
+      - id: ShellShotgun
+        orGroup: GiftPool
+        prob: 3.5
+      - id: ShellShotgunBeanbag
+        orGroup: GiftPool
+        prob: 3.5
+      - id: SpeedLoaderMagnum
+        orGroup: GiftPool
+        prob: 3.5
+      - id: BoxShellTranquilizer
+        orGroup: GiftPool
+        prob: 1
+      - id: SpeedLoaderLightRifle
+        orGroup: GiftPool
+        prob: 3.5
+      - id: MagazinePistol
+        orGroup: GiftPool
+        prob: 3.5
+      - id: MagazinePistolCaselessRifle
+        orGroup: GiftPool
+        prob: 3.5
+      - id: WeaponShotguBoxShotgunSlugnHandmade
+        orGroup: GiftPool
+        prob: 1
+      - id: BoxBeanbag
+        orGroup: GiftPool
+        prob: 1
+      - id: BoxLethalshot
+        orGroup: GiftPool
+        prob: 1
+      #defence
+      - id: ClothingOuterHardsuitSecurity
+        orGroup: GiftPool
+      - id: ClothingOuterHardsuitRd
+        orGroup: GiftPool
+      - id: ClothingOuterHardsuitEngineeringWhite
+        orGroup: GiftPool
+      - id: ClothingOuterHardsuitEngineering
+        orGroup: GiftPool
+      - id: ClothingOuterHardsuitSpatio
+        orGroup: GiftPool
+      - id: ClothingOuterHardsuitEngineering
+        orGroup: GiftPool
+      - id: ClothingUniformJumpsuitHoSAlt
+        orGroup: GiftPool
+      - id: ClothingOuterCoatHoSTrench
+        orGroup: GiftPool
+      - id: ClothingHeadHelmetBasic
+        orGroup: GiftPool
+      - id: ClothingOuterArmorBasic
+        orGroup: GiftPool
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  id: PresentRandomMed
+  parent: [PresentBase, BaseItem]
+  name: Present Medical
+  description: A small box with medical care inside
+  suffix: Hunger Games
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/presents.rsi
+    layers:
+      - state: presentBlue
+  - type: SpawnItemsOnUse
+    items:
+      - id: PresentTrashBlue
+      - id: HandheldHealthAnalyzer
+        orGroup: GiftPool
+        prob: 5.5
+      - id: CombatMedipen
+        orGroup: GiftPool
+      - id: AntiPoisonMedipen
+        orGroup: GiftPool
+      - id: BruteAutoInjector
+        orGroup: GiftPool
+      - id: BurnAutoInjector
+        orGroup: GiftPool
+      - id: EmergencyMedipen
+        orGroup: GiftPool
+      - id: PillBicaridine
+        orGroup: GiftPool
+      - id: PillDexalin
+        orGroup: GiftPool
+      - id: PillKelotane
+        orGroup: GiftPool
+      - id: PillDylovene
+        orGroup: GiftPool
+      - id: Gauze
+        orGroup: GiftPool
+        prob: 5.5
+      - id: Ointment
+        orGroup: GiftPool
+        prob: 5.5
+      - id: Brutepack
+        orGroup: GiftPool
+        prob: 5.5
+      - id: Bloodpack
+        orGroup: GiftPool
+        prob: 5.5
+      - id: Syringe
+        orGroup: GiftPool
+        prob: 2
+      - id: MedicatedSuture
+        orGroup: GiftPool
+      - id: RegenerativeMesh
+        orGroup: GiftPool
+      - id: MedkitCombatFilled
+        orGroup: GiftPool
+        prob: 3
+      - id: MedkitFilled
+        orGroup: GiftPool
+        prob: 3.5
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  id: PresentTrashGreen
+  noSpawn: true
+  parent: BaseItem
+  name: Green wrapping Paper
+  description: There used to be a gift in it
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/presents.rsi
+    layers:
+      - state: unwrappedGreen
+  - type: Tag
+    tags:
+    - Trash
+  - type: SpaceGarbage
+
+- type: entity
+  id: PresentTrashBlue
+  noSpawn: true
+  parent: BaseItem
+  name: Blue wrapping Paper
+  description: There used to be a gift in it
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/presents.rsi
+    layers:
+      - state: unwrappedBlue
+  - type: Tag
+    tags:
+    - Trash
+  - type: SpaceGarbage
+
+- type: entity
+  id: PresentTrashRed
+  noSpawn: true
+  parent: BaseItem
+  name: Wrapping Paper
+  description: There used to be a gift in it
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/presents.rsi
+    layers:
+      - state: unwrapped
+  - type: Tag
+    tags:
+    - Trash
+  - type: SpaceGarbage
