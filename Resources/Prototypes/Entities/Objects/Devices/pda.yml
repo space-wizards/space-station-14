@@ -394,7 +394,6 @@
 - type: entity
   parent: BasePDA
   id: LawyerPDA
-
   name: lawyer PDA
   description: For lawyers to poach dubious clients.
   components:
