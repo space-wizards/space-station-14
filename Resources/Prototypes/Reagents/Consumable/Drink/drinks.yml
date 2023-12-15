@@ -17,6 +17,24 @@
         amount: 0.05
 
 - type: reagent
+  id: HotCocoa
+  name: reagent-name-cocoa
+  parent: BaseDrink
+  desc: reagent-desc-cocoa
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: chocolate
+  color: "#664300"
+  recognizable: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
+
+- type: reagent
   id: Cream
   name: reagent-name-cream
   group: Drinks
@@ -406,29 +424,3 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/rewriter.rsi
     state: icon
-
-- type: reagent
-  id: TheMartinez
-  name: reagent-name-the-martinez
-  parent: BaseDrink
-  desc: reagent-desc-the-martinez
-  physicalDesc: reagent-physical-desc-vibrant
-  flavor: themartinez
-  color: "#75b1f0"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/the_martinez.rsi
-    state: icon
-
-- type: reagent
-  id: WhiteGilgamesh
-  name: reagent-name-white-gilgamesh
-  parent: BaseDrink
-  desc: reagent-desc-white-gilgamesh
-  physicalDesc: reagent-physical-desc-creamy
-  flavor: white-gilgamesh
-  color: "#e5d27e"
-  metabolisms:
-    Drink:
-      effects:
-        - !type:SatiateThirst
-          factor: 1

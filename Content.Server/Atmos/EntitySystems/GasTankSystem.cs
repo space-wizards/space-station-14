@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -8,12 +9,13 @@ using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Examine;
+using Content.Shared.Throwing;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -33,6 +35,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly ThrowingSystem _throwing = default!;
 
         private const float TimerDelay = 0.5f;
         private float _timer = 0f;
@@ -60,18 +63,12 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGasTankToggleInternals(Entity<GasTankComponent> ent, ref GasTankToggleInternalsMessage args)
         {
-            if (args.Session is not IPlayerSession playerSession ||
-                playerSession.AttachedEntity == null)
-            {
-                return;
-            }
-
             ToggleInternals(ent);
         }
 
         private void OnGasTankSetPressure(Entity<GasTankComponent> ent, ref GasTankSetPressureMessage args)
         {
-            var pressure = Math.Min(args.Pressure, ent.Comp.MaxOutputPressure);
+            var pressure = Math.Clamp(args.Pressure, 0f, ent.Comp.MaxOutputPressure);
 
             ent.Comp.OutputPressure = pressure;
 
@@ -143,7 +140,7 @@ namespace Content.Server.Atmos.EntitySystems
             while (query.MoveNext(out var uid, out var comp))
             {
                 var gasTank = (uid, comp);
-                if (comp.IsValveOpen && !comp.IsLowPressure)
+                if (comp.IsValveOpen && !comp.IsLowPressure && comp.OutputPressure > 0)
                 {
                     ReleaseGas(gasTank);
                 }
@@ -178,9 +175,9 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 _atmosphereSystem.Merge(environment, removed);
             }
-            var impulse = removed.TotalMoles * removed.Temperature;
-            _physics.ApplyLinearImpulse(gasTank, _random.NextAngle().ToWorldVec() * impulse);
-            _physics.ApplyAngularImpulse(gasTank, _random.NextFloat(-3f, 3f));
+            var strength = removed.TotalMoles * MathF.Sqrt(removed.Temperature);
+            var dir = _random.NextAngle().ToWorldVec();
+            _throwing.TryThrow(gasTank, dir * strength, strength);
             _audioSys.PlayPvs(gasTank.Comp.RuptureSound, gasTank);
         }
 
@@ -246,10 +243,8 @@ namespace Content.Server.Atmos.EntitySystems
             if (!component.IsConnected)
                 return;
 
-            component.ConnectStream?.Stop();
-
-            if (component.ConnectSound != null)
-                component.ConnectStream = _audioSys.PlayPvs(component.ConnectSound, owner);
+            component.ConnectStream = _audioSys.Stop(component.ConnectStream);
+            component.ConnectStream = _audioSys.PlayPvs(component.ConnectSound, component.Owner)?.Entity;
 
             UpdateUserInterface(ent);
         }
@@ -266,10 +261,8 @@ namespace Content.Server.Atmos.EntitySystems
             _actions.SetToggled(component.ToggleActionEntity, false);
 
             _internals.DisconnectTank(internals);
-            component.DisconnectStream?.Stop();
-
-            if (component.DisconnectSound != null)
-                component.DisconnectStream = _audioSys.PlayPvs(component.DisconnectSound, owner);
+            component.DisconnectStream = _audioSys.Stop(component.DisconnectStream);
+            component.DisconnectStream = _audioSys.PlayPvs(component.DisconnectSound, component.Owner)?.Entity;
 
             UpdateUserInterface(ent);
         }
@@ -329,7 +322,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if(environment != null)
                         _atmosphereSystem.Merge(environment, component.Air);
 
-                    _audioSys.Play(component.RuptureSound, Filter.Pvs(owner), Transform(owner).Coordinates, true, AudioParams.Default.WithVariation(0.125f));
+                    _audioSys.PlayPvs(component.RuptureSound, Transform(component.Owner).Coordinates, AudioParams.Default.WithVariation(0.125f));
 
                     QueueDel(owner);
                     return;

@@ -7,6 +7,8 @@ using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Systems;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEvent;
 
 namespace Content.Server.DeviceLinking.Systems;

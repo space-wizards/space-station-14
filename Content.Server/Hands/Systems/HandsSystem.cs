@@ -8,6 +8,7 @@ using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Part;
 using Content.Shared.CombatMode;
+using Content.Shared.Explosion;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -18,12 +19,11 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Throwing;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Hands.Systems
@@ -55,6 +55,8 @@ namespace Content.Server.Hands.Systems
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
+            SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
+
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
@@ -72,6 +74,15 @@ namespace Content.Server.Hands.Systems
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
             args.State = new HandsComponentState(hands);
+        }
+
+        private void OnExploded(Entity<HandsComponent> ent, ref BeforeExplodeEvent args)
+        {
+            foreach (var hand in ent.Comp.Hands.Values)
+            {
+                if (hand.HeldEntity is {} uid)
+                    args.Contents.Add(uid);
+            }
         }
 
         private void OnDisarmed(EntityUid uid, HandsComponent component, DisarmedEvent args)
@@ -159,9 +170,9 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region interactions
-        private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coordinates, EntityUid entity)
+        private bool HandleThrowItem(ICommonSession? playerSession, EntityCoordinates coordinates, EntityUid entity)
         {
-            if (session is not IPlayerSession playerSession)
+            if (playerSession == null)
                 return false;
 
             if (playerSession.AttachedEntity is not {Valid: true} player ||
@@ -193,9 +204,9 @@ namespace Content.Server.Hands.Systems
             // Let other systems change the thrown entity (useful for virtual items)
             // or the throw strength.
             var ev = new BeforeThrowEvent(throwEnt, direction, throwStrength, player);
-            RaiseLocalEvent(player, ev, false);
+            RaiseLocalEvent(player, ref ev);
 
-            if (ev.Handled)
+            if (ev.Cancelled)
                 return true;
 
             // This can grief the above event so we raise it afterwards
@@ -220,7 +231,7 @@ namespace Content.Server.Hands.Systems
         // TODO: move to storage or inventory
         private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
         {
-            if (session is not IPlayerSession playerSession)
+            if (session is not { } playerSession)
                 return;
 
             if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !Exists(plyEnt))

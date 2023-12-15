@@ -26,7 +26,10 @@
       types:
         Structural: 10
   - type: Item
-    size: 80
+    size: Normal
+    shape:
+    - 0,0,2,0
+    - 1,1,1,2
     sprite: Objects/Weapons/Melee/pickaxe.rsi
   - type: UseDelay
     delay: 1

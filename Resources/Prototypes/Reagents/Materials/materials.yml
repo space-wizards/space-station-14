@@ -35,6 +35,14 @@
   price: 0.15 # 1-1 mix of plastic and cloth.
 
 - type: material
+  id: Paper
+  stackEntity: SheetPaper1
+  name: materials-paper
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: paper }
+  color: "#d9d9d9"
+  price: 0.05 #same as wood
+
+- type: material
   id: Plasma
   stackEntity: SheetPlasma1
   name: materials-plasma

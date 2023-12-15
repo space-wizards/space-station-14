@@ -1,0 +1,182 @@
+- type: marking
+  id: GauzeLefteyePatch
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lefteye_2
+
+- type: marking
+  id: GauzeLefteyeTape
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lefteye_1
+
+- type: marking
+  id: GauzeRighteyePatch
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_righteye_2
+
+- type: marking
+  id: GauzeRighteyeTape
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_righteye_1
+
+- type: marking
+  id: GauzeShoulder
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_shoulder
+    
+- type: marking
+  id: GauzeStomach
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_abdomen
+
+- type: marking
+  id: GauzeUpperArmRight
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_upperarm_r
+
+- type: marking
+  id: GauzeLowerArmRight
+  bodyPart: RArm, RHand
+  markingCategory: Arms
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lowerarm_r
+
+- type: marking
+  id: GauzeLeftArm
+  bodyPart: LArm, LHand
+  markingCategory: Arms
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_leftarm
+
+- type: marking
+  id: GauzeLowerLegLeft
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lowerleg_l
+
+- type: marking
+  id: GauzeUpperLegLeft
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_upperleg_l
+
+- type: marking
+  id: GauzeUpperLegRight
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_upperleg_r
+    
+- type: marking
+  id: GauzeLowerLegRight
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lowerleg_r
+

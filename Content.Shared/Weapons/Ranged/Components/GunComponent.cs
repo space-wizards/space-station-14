@@ -149,7 +149,7 @@ public partial class GunComponent : Component
     /// Whether or not someone with the
     /// clumsy trait can shoot this
     /// </summary>
-    [DataField("clumsyProof")]
+    [DataField("clumsyProof"), ViewVariables(VVAccess.ReadWrite)]
     public bool ClumsyProof = false;
 }
 

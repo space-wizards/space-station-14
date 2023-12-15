@@ -1,4 +1,4 @@
-using Content.Server.Construction.Components;
+using Content.Shared.Construction;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;

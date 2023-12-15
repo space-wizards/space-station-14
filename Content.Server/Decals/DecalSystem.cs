@@ -16,6 +16,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -36,9 +37,12 @@ namespace Content.Server.Decals
         [Dependency] private readonly MapSystem _mapSystem = default!;
 
         private readonly Dictionary<NetEntity, HashSet<Vector2i>> _dirtyChunks = new();
-        private readonly Dictionary<IPlayerSession, Dictionary<NetEntity, HashSet<Vector2i>>> _previousSentChunks = new();
+        private readonly Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> _previousSentChunks = new();
         private static readonly Vector2 _boundsMinExpansion = new(0.01f, 0.01f);
         private static readonly Vector2 _boundsMaxExpansion = new(1.01f, 1.01f);
+
+        private UpdatePlayerJob _updateJob;
+        private List<ICommonSession> _sessions = new();
 
         // If this ever gets parallelised then you'll want to increase the pooled count.
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
@@ -52,6 +56,12 @@ namespace Content.Server.Decals
         public override void Initialize()
         {
             base.Initialize();
+
+            _updateJob = new UpdatePlayerJob()
+            {
+                System = this,
+                Sessions = _sessions,
+            };
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
@@ -197,7 +207,7 @@ namespace Content.Server.Decals
 
         private void OnDecalPlacementRequest(RequestDecalPlacementEvent ev, EntitySessionEventArgs eventArgs)
         {
-            if (eventArgs.SenderSession is not IPlayerSession session)
+            if (eventArgs.SenderSession is not { } session)
                 return;
 
             // bad
@@ -226,7 +236,7 @@ namespace Content.Server.Decals
 
         private void OnDecalRemovalRequest(RequestDecalRemovalEvent ev, EntitySessionEventArgs eventArgs)
         {
-            if (eventArgs.SenderSession is not IPlayerSession session)
+            if (eventArgs.SenderSession is not { } session)
                 return;
 
             // bad
@@ -427,15 +437,24 @@ namespace Content.Server.Decals
 
             if (PvsEnabled)
             {
-                var players = _playerManager.ServerSessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
-                var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };
-                Parallel.ForEach(players, opts, UpdatePlayer);
+                _sessions.Clear();
+
+                foreach (var session in _playerManager.Sessions)
+                {
+                    if (session.Status != SessionStatus.InGame)
+                        continue;
+
+                    _sessions.Add(session);
+                }
+
+                if (_sessions.Count > 0)
+                    _parMan.ProcessNow(_updateJob, _sessions.Count);
             }
 
             _dirtyChunks.Clear();
         }
 
-        public void UpdatePlayer(IPlayerSession player)
+        public void UpdatePlayer(ICommonSession player)
         {
             var chunksInRange = _chunking.GetChunksForSession(player, ChunkSize, _chunkIndexPool, _chunkViewerPool);
             var staleChunks = _chunkViewerPool.Get();
@@ -453,11 +472,14 @@ namespace Content.Server.Decals
                     previouslySent.Remove(netGrid);
 
                     // Was the grid deleted?
-                    if (!TryGetEntity(netGrid, out var gridId) || !MapManager.IsGrid(gridId.Value))
+                    if (TryGetEntity(netGrid, out var gridId) && HasComp<MapGridComponent>(gridId.Value))
+                    {
+                        // no -> add it to the list of stale chunks
                         staleChunks[netGrid] = oldIndices;
+                    }
                     else
                     {
-                        // If grid was deleted then don't worry about telling the client to delete the chunk.
+                        // If the grid was deleted then don't worry about telling the client to delete the chunk.
                         oldIndices.Clear();
                         _chunkIndexPool.Return(oldIndices);
                     }
@@ -530,7 +552,7 @@ namespace Content.Server.Decals
         }
 
         private void SendChunkUpdates(
-            IPlayerSession session,
+            ICommonSession session,
             Dictionary<NetEntity, HashSet<Vector2i>> updatedChunks,
             Dictionary<NetEntity, HashSet<Vector2i>> staleChunks)
         {
@@ -560,5 +582,26 @@ namespace Content.Server.Decals
             ReturnToPool(updatedChunks);
             ReturnToPool(staleChunks);
         }
+
+        #region Jobs
+
+        /// <summary>
+        /// Updates per-player data for decals.
+        /// </summary>
+        private record struct UpdatePlayerJob : IParallelRobustJob
+        {
+            public int BatchSize => 2;
+
+            public DecalSystem System;
+
+            public List<ICommonSession> Sessions;
+
+            public void Execute(int index)
+            {
+                System.UpdatePlayer(Sessions[index]);
+            }
+        }
+
+        #endregion
     }
 }

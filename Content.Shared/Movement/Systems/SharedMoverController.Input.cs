@@ -6,7 +6,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;

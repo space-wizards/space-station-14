@@ -32,6 +32,9 @@
   id: Balloon
 
 - type: Tag
+  id: BananaPeel
+
+- type: Tag
   id: BaseballBat
 
 - type: Tag
@@ -234,7 +237,7 @@
 
 - type: Tag
   id: CanPilot
-  
+
 - type: Tag
   id: CannonRestrict
 
@@ -312,6 +315,9 @@
   id: ClownShoes
 
 - type: Tag
+  id: ClownSuit
+
+- type: Tag
   id: CluwneHorn
 
 - type: Tag #Ohioans die happy
@@ -375,6 +381,9 @@
   id: CubanCarp
 
 - type: Tag
+  id: DeathAcidifier
+
+- type: Tag
   id: Debug
 
 - type: Tag
@@ -406,6 +415,9 @@
 
 - type: Tag
   id: Donut
+
+- type: Tag
+  id: DrinkCan
 
 - type: Tag
   id: DrinkSpaceGlue
@@ -643,6 +655,9 @@
 
 - type: Tag
   id: Lemon
+
+- type: Tag
+  id: LightReplacer
 
 - type: Tag
   id: Lime
@@ -970,6 +985,9 @@
   id: SpeedLoaderRifle
 
 - type: Tag
+  id: SpiderCraft
+
+- type: Tag
   id: SpreaderIgnore
 
 - type: Tag
@@ -1021,6 +1039,9 @@
   id: Toolbox
 
 - type: Tag
+  id: Torch
+
+- type: Tag
   id: Trash
 
 - type: Tag
@@ -1060,6 +1081,9 @@
   id: WeaponPistolCHIMPUpgradeKit
 
 - type: Tag
+  id: WeaponShotgunKammerer
+
+- type: Tag
   id: Window
 
 - type: Tag
@@ -1087,6 +1111,9 @@
   id: Write
 
 - type: Tag
+  id: WriteIgnoreStamps
+
+- type: Tag
   id: RifleStock
 
 - type: Tag
@@ -1094,3 +1121,6 @@
 
 - type: Tag
   id: MindShield
+
+- type: Tag
+  id:  boots

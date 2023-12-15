@@ -40,7 +40,7 @@
       types:
         Piercing: 4
   - type: Item
-    size: 2
+    size: Tiny
     sprite: Objects/Fun/Darts/dart_red.rsi
   - type: ItemCooldown
   - type: SolutionContainerManager
@@ -86,7 +86,7 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: dart
-    
+
 - type: entity
   parent: Dart
   id: DartBlue
@@ -95,7 +95,7 @@
     sprite: Objects/Fun/Darts/dart_blue.rsi
   - type: Item
     sprite: Objects/Fun/Darts/dart_blue.rsi
-     
+
 - type: entity
   parent: Dart
   id: DartPurple
@@ -104,7 +104,7 @@
     sprite: Objects/Fun/Darts/dart_purple.rsi
   - type: Item
     sprite: Objects/Fun/Darts/dart_purple.rsi
-     
+
 - type: entity
   parent: Dart
   id: DartYellow

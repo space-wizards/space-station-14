@@ -10,15 +10,16 @@
       - state: closed
       - state: open
         map: ["openLayer"]
-  - type: Storage
-    capacity: 36
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
-    size: 36
+    size: Normal
+  - type: Storage
+    grid:
+    - 0,0,4,1
   - type: StorageFill
     contents:
       - id: CigPackGreen
-        amount: 6
+        amount: 5
   - type: Tag
     tags:
     - Trash
@@ -42,7 +43,7 @@
   - type: StorageFill
     contents:
       - id: CigPackRed
-        amount: 6
+        amount: 5
 
 - type: entity
   id: CigCartonBlue
@@ -59,7 +60,7 @@
   - type: StorageFill
     contents:
       - id: CigPackBlue
-        amount: 6
+        amount: 5
 
 - type: entity
   id: CigCartonBlack
@@ -76,7 +77,7 @@
   - type: StorageFill
     contents:
       - id: CigPackBlack
-        amount: 6
+        amount: 5
 
 - type: entity
   id: CigCartonMixed

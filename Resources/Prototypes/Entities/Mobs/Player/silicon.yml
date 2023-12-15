@@ -106,10 +106,7 @@
   #- type: GhostTakeoverAvailable
   - type: SiliconLawBound
   - type: SiliconLawProvider
-    laws:
-    - Drone1
-    - Drone2
-    - Drone3
+    laws: Drone
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5

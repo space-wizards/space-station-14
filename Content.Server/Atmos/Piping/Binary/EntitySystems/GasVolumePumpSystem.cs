@@ -18,6 +18,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -104,14 +105,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var removed = inlet.Air.RemoveVolume(pump.TransferRate * args.dt);
+            var removed = inlet.Air.RemoveVolume(pump.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt);
 
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)
             {
-                var transform = Transform(uid);
-                var indices = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-                var tile = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
+                var tile = _atmosphereSystem.GetTileMixture(uid, excite: true);
 
                 if (tile != null)
                 {

@@ -13,7 +13,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
@@ -528,7 +528,7 @@ namespace Content.Server.NPC.Pathfinding
 
         private void OnBreadcrumbs(RequestPathfindingDebugMessage msg, EntitySessionEventArgs args)
         {
-            var pSession = (IPlayerSession) args.SenderSession;
+            var pSession = args.SenderSession;
 
             if (!_adminManager.HasAdminFlag(pSession, AdminFlags.Debug))
             {

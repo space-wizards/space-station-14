@@ -5,8 +5,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.MagicMirror;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Server.MagicMirror;
 
@@ -147,7 +146,7 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void UpdateInterface(EntityUid uid, EntityUid playerUid, ICommonSession session, HumanoidAppearanceComponent? humanoid = null)
     {
-        if (!Resolve(playerUid, ref humanoid) || session is not IPlayerSession player)
+        if (!Resolve(playerUid, ref humanoid) || session is not { } player)
         {
             return;
         }

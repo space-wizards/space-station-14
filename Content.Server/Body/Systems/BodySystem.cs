@@ -15,6 +15,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Numerics;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Body.Systems;
 
@@ -116,7 +117,7 @@ public sealed class BodySystem : SharedBodySystem
         if (!Resolve(bodyId, ref body, false))
             return new HashSet<EntityUid>();
 
-        if (LifeStage(bodyId) >= EntityLifeStage.Terminating || EntityManager.IsQueuedForDeletion(bodyId))
+        if (TerminatingOrDeleted(bodyId) || EntityManager.IsQueuedForDeletion(bodyId))
             return new HashSet<EntityUid>();
 
         var xform = Transform(bodyId);
@@ -129,7 +130,7 @@ public sealed class BodySystem : SharedBodySystem
         var filter = Filter.Pvs(bodyId, entityManager: EntityManager);
         var audio = AudioParams.Default.WithVariation(0.025f);
 
-        _audio.Play(body.GibSound, filter, coordinates, true, audio);
+        _audio.PlayStatic(body.GibSound, filter, coordinates, true, audio);
 
         foreach (var entity in gibs)
         {

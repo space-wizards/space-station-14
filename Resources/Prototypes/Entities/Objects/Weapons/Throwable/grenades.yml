@@ -9,7 +9,7 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: Item
-    size: 5
+    size: Small
   - type: Clothing
     quickEquip: false
     slots:
@@ -29,7 +29,12 @@
         acts: ["Destruction"]
   - type: Appearance
   - type: AnimationPlayer
-  - type: TimerTriggerVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: icon }
 
 - type: entity
   name: explosive grenade
@@ -267,7 +272,7 @@
     - state: empty
       map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Item
-    size: 8
+    size: Small
   - type: PayloadCase
   - type: Construction
     graph: ModularGrenadeGraph

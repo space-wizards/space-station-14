@@ -13,5 +13,5 @@ public sealed partial class GeneratingAnomalyGeneratorComponent : Component
     [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan EndTime = TimeSpan.Zero;
 
-    public IPlayingAudioStream? AudioStream;
+    public EntityUid? AudioStream;
 }

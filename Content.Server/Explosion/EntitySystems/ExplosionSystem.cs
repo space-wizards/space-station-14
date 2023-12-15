@@ -20,6 +20,7 @@ using Content.Shared.Throwing;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -48,13 +49,14 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsSys = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     private EntityQuery<TransformComponent> _transformQuery;
     private EntityQuery<DamageableComponent> _damageQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<ProjectileComponent> _projectileQuery;
-    private EntityQuery<MindComponent> _mindQuery;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -107,7 +109,6 @@ public sealed partial class ExplosionSystem : EntitySystem
         _damageQuery = GetEntityQuery<DamageableComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
-        _mindQuery = GetEntityQuery<MindComponent>();
     }
 
     private void OnReset(RoundRestartCleanupEvent ev)
@@ -131,7 +132,8 @@ public sealed partial class ExplosionSystem : EntitySystem
     private void RelayedResistance(EntityUid uid, ExplosionResistanceComponent component,
         InventoryRelayedEvent<GetExplosionResistanceEvent> args)
     {
-        OnGetResistance(uid, component, ref args.Args);
+        if (component.Worn)
+            OnGetResistance(uid, component, ref args.Args);
     }
 
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, ref GetExplosionResistanceEvent args)
@@ -334,7 +336,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // play sound.
         var audioRange = iterationIntensity.Count * 5;
         var filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange);
-        SoundSystem.Play(type.Sound.GetSound(), filter, mapEntityCoords, _audioParams);
+        _audio.PlayStatic(type.Sound.GetSound(), filter, mapEntityCoords, true, _audioParams);
 
         return new Explosion(this,
             type,
@@ -377,9 +379,9 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     private void OnArmorExamine(EntityUid uid, ExplosionResistanceComponent component, ref ArmorExamineEvent args)
     {
+        var value = MathF.Round((1f - component.DamageCoefficient) * 100, 1);
+
         args.Msg.PushNewline();
-        args.Msg.AddMarkup(Loc.GetString("explosion-resistance-coefficient-value",
-            ("value", MathF.Round((1f - component.DamageCoefficient) * 100, 1))
-            ));
+        args.Msg.AddMarkup(Loc.GetString(component.Examine, ("value", value)));
     }
 }

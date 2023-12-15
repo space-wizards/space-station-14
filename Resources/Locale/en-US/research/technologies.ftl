@@ -19,6 +19,7 @@ research-technology-advanced-atmospherics = Advanced Atmospherics
 research-technology-advanced-tools = Advanced Tools
 research-technology-super-powercells = Super Powercells
 research-technology-bluespace-storage = Bluespace Storage
+research-technology-portable-fission = Portable Fission
 
 research-technology-chemistry = Chemistry
 research-technology-surgical-tools = Surgical Tools
@@ -40,7 +41,6 @@ research-technology-practice-ammunition = Practice Ammunition
 research-technology-concentrated-laser-weaponry = Concentrated Laser Weaponry
 research-technology-wave-particle-harnessing = Wave Particle Harnessing
 research-technology-advanced-riot-control = Advanced Riot Control
-research-technology-handheld-electrical-propulsion = Handheld Electrical Propulsion
 research-technology-portable-microfusion-weaponry = Portable Microfusion Weaponry
 
 research-technology-basic-robotics = Basic Robotics
@@ -52,7 +52,7 @@ research-technology-advanced-parts = Advanced Parts
 research-technology-grappling = Grappling
 research-technology-abnormal-artifact-manipulation = Abnormal Artifact Manipulation
 research-technology-gravity-manipulation = Gravity Manipulation
-research-technology-mobile-anomaly-tech = Mobile Anomaly Tech
+research-technology-advanced-anomaly-research = Advanced Anomaly Research
 research-technology-rped = Rapid Part Exchange
 research-technology-super-parts = Super Parts
 
@@ -69,3 +69,4 @@ research-technology-meat-manipulation = Meat Manipulation
 research-technology-honk-mech = H.O.N.K. Mech
 research-technology-advanced-spray = Advanced Spray
 research-technology-bluespace-cargo-transport = Bluespace Cargo Transport
+research-technology-quantum-fiber-weaving = Quantum Fiber Weaving

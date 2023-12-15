@@ -30,7 +30,7 @@
       types:
         Blunt: 4.5
   - type: Item
-    size: 5
+    size: Small
     sprite: Objects/Weapons/Melee/e_sword.rsi
   - type: UseDelay
     delay: 1.0
@@ -95,7 +95,7 @@
       types:
         Blunt: 1
   - type: Item
-    size: 2
+    size: Tiny
     sprite: Objects/Weapons/Melee/e_dagger.rsi
   - type: UseDelay
     delay: 1.0
@@ -128,6 +128,8 @@
   suffix: E-Dagger
   description: A small box containing an e-dagger. Packaging disintegrates when opened, leaving no evidence behind.
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Storage/penbox.rsi
     state: e_dagger
@@ -161,7 +163,7 @@
         shader: unshaded
         map: [ "blade" ]
   - type: Item
-    size: 5
+    size: Small
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
 
 - type: entity
@@ -198,7 +200,7 @@
         shader: unshaded
         map: [ "blade" ]
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
   - type: Reflect
     enabled: true

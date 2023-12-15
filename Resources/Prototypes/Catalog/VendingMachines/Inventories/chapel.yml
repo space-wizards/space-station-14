@@ -16,6 +16,8 @@
     ClothingOuterPlagueSuit: 1
     ClothingMaskPlague: 1
     ClothingHeadsetService: 2
+    BoxCandle: 2
+    BoxCandleSmall: 2
   emaggedInventory:
     ClothingOuterArmorCult: 1
     ClothingHeadHelmetCult: 1
