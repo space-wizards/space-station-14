@@ -109,25 +109,28 @@ namespace Content.Server.Atmos
         public float MaxFireTemperatureSustained { get; set; }
 
         /// <summary>
-        /// If true, this tile does not actually exist on the grid, it only exists to represent the map's atmosphere for\
+        /// If true, then this tile is directly exposed to the map's atmosphere, either because the grid has no tile at
+        /// this position, or because the tile type is not airtight.
+        /// </summary>
+        [ViewVariables]
+        public bool MapAtmosphere;
+
+        /// <summary>
+        /// If true, this tile does not actually exist on the grid, it only exists to represent the map's atmosphere for
         /// adjacent grid tiles.
         /// </summary>
-        public bool MapTile;
+        [ViewVariables]
+        public bool NoGridTile;
 
         /// <summary>
         /// If true, this tile is queued for processing in <see cref="GridAtmosphereComponent.PossiblyDisconnectedTiles"/>
         /// </summary>
+        [ViewVariables]
         public bool TrimQueued;
 
         /// <summary>
-        /// If true, the cached airtight data is invalid and needs to be recomputed. See <see cref="AirtightData"/>.
-        /// </summary>
-        public bool AirtightDirty = true;
-
-        /// <summary>
-        /// Cached information about airtight entities on this tile. This is only up to date if
-        /// <see cref="AirtightDirty"/> is false and the tile is not queued for processing (i.e., not in
-        /// <see cref="GridAtmosphereComponent.InvalidatedCoords"/>).
+        /// Cached information about airtight entities on this tile. This gets updated anytime a tile gets invalidated
+        /// (i.e., gets added to <see cref="GridAtmosphereComponent.InvalidatedCoords"/>).
         /// </summary>
         public AtmosphereSystem.AirtightData AirtightData;
 
@@ -147,6 +150,8 @@ namespace Content.Server.Atmos
             GridIndex = other.GridIndex;
             GridIndices = other.GridIndices;
             Space = other.Space;
+            NoGridTile = other.NoGridTile;
+            MapAtmosphere = other.MapAtmosphere;
             Air = other.Air?.Clone();
             Array.Copy(other.MolesArchived, MolesArchived, MolesArchived.Length);
         }

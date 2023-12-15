@@ -3,6 +3,7 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Maps;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
@@ -29,21 +30,18 @@ namespace Content.Server.Atmos.EntitySystems
         private int _currentRunAtmosphereIndex;
         private bool _simulationPaused;
 
-        private TileAtmosphere GetOrNewTile(EntityUid owner, GridAtmosphereComponent atmosphere,
-            MapAtmosphereComponent? mapAtmos, Vector2i index)
+        private TileAtmosphere GetOrNewTile(EntityUid owner, GridAtmosphereComponent atmosphere, Vector2i index)
         {
             var tile = atmosphere.Tiles.GetOrNew(index, out var existing);
             if (existing)
                 return tile;
 
-            // AAAH this is also recurusive
-            // TODO ATMOS PR add a to-trim queue
             atmosphere.InvalidatedCoords.Add(index);
             tile.GridIndex = owner;
             tile.GridIndices = index;
-            (tile.Air, tile.Space) = GetDefaultMapAtmosphere(mapAtmos);
             return tile;
         }
+
         private readonly List<Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>> _currentRunAtmosphere = new();
 
         /// <summary>
@@ -64,11 +62,16 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunInvalidatedTiles.EnsureCapacity(atmosphere.InvalidatedCoords.Count);
                 foreach (var indices in atmosphere.InvalidatedCoords)
                 {
-                    var tile = GetOrNewTile(uid, atmosphere, mapAtmos, indices);
-                    tile.AirtightDirty = true;
+                    var tile = GetOrNewTile(uid, atmosphere, indices);
                     atmosphere.CurrentRunInvalidatedTiles.Enqueue(tile);
+
+                    // Update tile.IsSpace and tile.MapAtmosphere, and tile.AirtightData.
+                    UpdateTileData(ent, mapAtmos, tile);
                 }
                 atmosphere.InvalidatedCoords.Clear();
+
+                if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
+                    return false;
             }
 
             var number = 0;
@@ -77,11 +80,8 @@ namespace Content.Server.Atmos.EntitySystems
                 var indices = tile.GridIndices;
                 DebugTools.Assert(atmosphere.Tiles.GetValueOrDefault(indices) == tile);
 
-                // Update array of adjacent tiles and activate them.
-                GridUpdateAdjacent(ent, tile, mapAtmos, activate: true);
-
-                // Update tile air mixture.
-                UpdateTileAir(ent, mapAtmos, tile, volume);
+                UpdateAdjacentTiles(ent, tile, activate: true);
+                UpdateTileAir(ent, tile, volume);
                 InvalidateVisuals(uid, indices, visuals);
 
                 if (number++ < InvalidCoordinatesLagCheckIterations)
@@ -113,7 +113,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var direction = (AtmosDirection) (1 << i);
                 var indices = tile.GridIndices.Offset(direction);
                 if (atmos.Tiles.TryGetValue(indices, out var adj)
-                    && adj.MapTile
+                    && adj.NoGridTile
                     && !adj.TrimQueued)
                 {
                     adj.TrimQueued = true;
@@ -135,7 +135,7 @@ namespace Content.Server.Atmos.EntitySystems
             foreach (var tile in atmos.PossiblyDisconnectedTiles)
             {
                 tile.TrimQueued = false;
-                if (!tile.MapTile)
+                if (!tile.NoGridTile)
                     continue;
 
                 var connected = false;
@@ -160,38 +160,33 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
-        /// Updates a tile's air mixture. This will check if the tile started or stopped being space
+        /// Checks whether a tile has a corresponding grid-tile, or whether it is a "map" tile. Also checks whether the
+        /// tile should be considered "space"
         /// </summary>
-        private void UpdateTileAir(
+        private void UpdateTileData(
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
             MapAtmosphereComponent? mapAtmos,
-            TileAtmosphere tile,
-            float volume)
+            TileAtmosphere tile)
         {
             var idx = tile.GridIndices;
-
-            DebugTools.Assert(!tile.AirtightDirty);
-            var data = tile.AirtightData;
-            var fullyBlocked = data.BlockedDirections == AtmosDirection.All;
-
-            bool isSpace;
-            if (_map.TryGetTileDef(ent.Comp3, idx, out var tileDef))
+            bool mapAtmosphere;
+            if (_map.TryGetTile(ent.Comp3, idx, out var gTile) && !gTile.IsEmpty)
             {
-                var contentDef = (ContentTileDefinition) tileDef;
-                isSpace = contentDef.IsSpace;
+                var contentDef = (ContentTileDefinition) _tileDefinitionManager[gTile.TypeId];
+                mapAtmosphere = contentDef.MapAtmosphere;
                 tile.ThermalConductivity = contentDef.ThermalConductivity;
                 tile.HeatCapacity = contentDef.HeatCapacity;
-                tile.MapTile = false;
+                tile.NoGridTile = false;
             }
             else
             {
-                isSpace = true;
+                mapAtmosphere = true;
                 tile.ThermalConductivity =  0.5f;
                 tile.HeatCapacity = float.PositiveInfinity;
 
-                if (!tile.MapTile)
+                if (!tile.NoGridTile)
                 {
-                    tile.MapTile = true;
+                    tile.NoGridTile = true;
 
                     // This tile just became a non-grid atmos tile.
                     // It, or one of its neighbours, might now be completely disconnected from the grid.
@@ -199,8 +194,58 @@ namespace Content.Server.Atmos.EntitySystems
                 }
             }
 
+            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, tile);
+
+            if (mapAtmosphere)
+            {
+                if (!tile.MapAtmosphere)
+                {
+                    (tile.Air, tile.Space) = GetDefaultMapAtmosphere(mapAtmos);
+                    tile.MapAtmosphere = true;
+                }
+
+                DebugTools.AssertNotNull(tile.Air);
+                DebugTools.Assert(tile.Air?.Immutable ?? false);
+                return;
+            }
+
+            if (!tile.MapAtmosphere)
+                return;
+
+            // Tile used to be exposed to the map's atmosphere, but isn't anymore.
+            tile.MapAtmosphere = false;
+            DebugTools.AssertNotNull(tile.Air);
+            DebugTools.Assert(tile.Air?.Immutable ?? false);
+            tile.Air = null;
+            Array.Clear(tile.MolesArchived);
+            tile.ArchivedCycle = 0;
+            tile.LastShare = 0f;
+            tile.Space = false;
+        }
+
+        /// <summary>
+        /// Check whether a grid-tile should have an air mixture, and give it one if it doesn't already have one.
+        /// </summary>
+        private void UpdateTileAir(
+            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            TileAtmosphere tile,
+            float volume)
+        {
+            if (tile.MapAtmosphere)
+            {
+                DebugTools.AssertNotNull(tile.Air);
+                DebugTools.Assert(tile.Air?.Immutable ?? false);
+                return;
+            }
+
+            var data = tile.AirtightData;
+            var fullyBlocked = data.BlockedDirections == AtmosDirection.All;
+
             if (fullyBlocked && data.NoAirWhenBlocked)
             {
+                if (tile.Air == null)
+                    return;
+
                 tile.Air = null;
                 Array.Clear(tile.MolesArchived);
                 tile.ArchivedCycle = 0;
@@ -209,29 +254,13 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
-            if (isSpace)
-            {
-                (tile.Air, tile.Space) = GetDefaultMapAtmosphere(mapAtmos);
+            if (tile.Air != null)
                 return;
-            }
 
-            if (tile.Air == null && data.FixVacuum)
-            {
+            tile.Air = new GasMixture(volume){Temperature = Atmospherics.T20C};
+
+            if (data.FixVacuum)
                 GridFixTileVacuum(ent, tile, volume);
-                return;
-            }
-
-            // Tile used to be space, but isn't anymore.
-            if (tile.Air?.Immutable == true)
-            {
-                tile.Air = null;
-                Array.Clear(tile.MolesArchived);
-                tile.ArchivedCycle = 0;
-                tile.LastShare = 0f;
-                tile.Space = false;
-            }
-
-            tile.Air ??= new GasMixture(volume){Temperature = Atmospherics.T20C};
         }
 
         private void QueueRunTiles(

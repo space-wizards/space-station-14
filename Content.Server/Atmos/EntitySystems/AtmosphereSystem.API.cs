@@ -179,10 +179,7 @@ public partial class AtmosphereSystem
         if (!Resolve(gridUid, ref mapGridComp))
             return false;
 
-        if (!TryComp(gridUid, out GridAtmosphereComponent? atmos))
-            return false;
-
-        var data = GetAirtightData(gridUid, atmos, mapGridComp, tile);
+        var data = GetAirtightData(gridUid, mapGridComp, tile);
         return data.BlockedDirections.IsFlagSet(directions);
     }
 

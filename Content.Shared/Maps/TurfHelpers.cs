@@ -68,7 +68,7 @@ namespace Content.Shared.Maps
         /// </summary>
         public static bool IsSpace(this Tile tile, ITileDefinitionManager? tileDefinitionManager = null)
         {
-            return tile.GetContentTileDefinition(tileDefinitionManager).IsSpace;
+            return tile.GetContentTileDefinition(tileDefinitionManager).MapAtmosphere;
         }
 
         /// <summary>

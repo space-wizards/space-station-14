@@ -458,13 +458,21 @@ namespace Content.Server.Atmos.EntitySystems
                     // Flood fill into this new direction
                     var direction = (AtmosDirection) (1 << j);
                     // Tiles in _depressurizeProgressionOrder cannot have null air.
-                    if (!otherTile.AdjacentBits.IsFlagSet(direction) && !otherTile.Space) continue;
+                    if (!otherTile.AdjacentBits.IsFlagSet(direction) && !otherTile.Space)
+                        continue;
+
                     var tile2 = otherTile.AdjacentTiles[j];
-                    if (tile2?.MonstermosInfo.LastQueueCycle != queueCycle) continue;
+                    if (tile2?.MonstermosInfo.LastQueueCycle != queueCycle)
+                        continue;
+
                     DebugTools.Assert(tile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
                     // If flood fill has already reached this tile, continue.
-                    if (tile2.MonstermosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
-                    if(tile2.Space) continue;
+                    if (tile2.MonstermosInfo.LastSlowQueueCycle == queueCycleSlow)
+                        continue;
+
+                    if(tile2.Space)
+                        continue;
+
                     tile2.MonstermosInfo.CurrentTransferDirection = direction.GetOpposite();
                     tile2.MonstermosInfo.CurrentTransferAmount = 0.0f;
                     tile2.PressureSpecificTarget = otherTile.PressureSpecificTarget;
@@ -588,9 +596,8 @@ namespace Content.Server.Atmos.EntitySystems
             if (!reconsiderAdjacent)
                 return;
 
-            TryComp(ent.Comp4.MapUid, out MapAtmosphereComponent? mapAtmos);
-            GridUpdateAdjacent(ent, tile, mapAtmos);
-            GridUpdateAdjacent(ent, other, mapAtmos);
+            UpdateAdjacentTiles(ent, tile);
+            UpdateAdjacentTiles(ent, other);
             InvalidateVisuals(tile.GridIndex, tile.GridIndices, ent);
             InvalidateVisuals(other.GridIndex, other.GridIndices, ent);
         }

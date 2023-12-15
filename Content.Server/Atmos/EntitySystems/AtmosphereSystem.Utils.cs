@@ -57,18 +57,17 @@ public partial class AtmosphereSystem
 
     private void UpdateAirtightData(EntityUid uid, GridAtmosphereComponent atmos, MapGridComponent grid, TileAtmosphere tile)
     {
-        if (!tile.AirtightDirty)
-            return;
-
         var oldBlocked = tile.AirtightData.BlockedDirections;
-        tile.AirtightDirty = false;
-        tile.AirtightData = GetAirtightData(uid, atmos, grid, tile.GridIndices);
+
+        tile.AirtightData = tile.NoGridTile
+            ? default
+            : GetAirtightData(uid, grid, tile.GridIndices);
 
         if (tile.AirtightData.BlockedDirections != oldBlocked && tile.ExcitedGroup != null)
             ExcitedGroupDispose(atmos, tile.ExcitedGroup);
     }
 
-    private AirtightData GetAirtightData(EntityUid uid, GridAtmosphereComponent atmos, MapGridComponent grid, Vector2i tile)
+    private AirtightData GetAirtightData(EntityUid uid, MapGridComponent grid, Vector2i tile)
     {
         var blockedDirs = AtmosDirection.Invalid;
         var noAirWhenBlocked = false;
