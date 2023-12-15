@@ -1,9 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Added a search filter to vending machines, type: Add}
-  id: 4867
-  time: '2023-09-20T19:40:41.0000000+00:00'
 - author: waylon531
   changes:
   - {message: Centcomm is tired of the crew drunkenly wandering the station and starting
@@ -2897,3 +2892,12 @@ Entries:
   - {message: Reptilians no longer innately take 30% less heat damage., type: Tweak}
   id: 5367
   time: '2023-12-15T09:37:05.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Added the Action Upgrade System - used to upgrade specific actions!,
+    type: Add}
+  - {message: Added commands to upgrade actions., type: Add}
+  - {message: Added Charges information to action tooltips for actions with charges,
+    type: Add}
+  id: 5368
+  time: '2023-12-15T09:41:44.0000000+00:00'
