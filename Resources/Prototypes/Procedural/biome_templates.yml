@@ -302,20 +302,6 @@
         cellularReturnType: Distance2
       entities:
         - WallRockBasalt
-    # chasm time
-    - !type:BiomeEntityLayer
-      allowedTiles:
-      - FloorBasalt
-      threshold: 0.6
-      noise:
-        seed: 3
-        frequency: 0.02
-        fractalType: FBm
-        octaves: 5
-        lacunarity: 2
-        gain: 0.4
-      entities:
-      - FloorChasmEntity
     - !type:BiomeDummyLayer
       id: Loot
     # Fill basalt
