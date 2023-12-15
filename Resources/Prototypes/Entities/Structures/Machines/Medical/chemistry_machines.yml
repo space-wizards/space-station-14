@@ -47,7 +47,10 @@
   components:
   - type: SolutionContainerMixer
     mixDuration: 5
-    mixingSound: /Audio/Machines/blender.ogg
+    mixingSound:
+      path: /Audio/Machines/buzz_loop.ogg
+      params:
+        volume: -5
   - type: ReactionMixer
     reactionTypes:
     - Electrolysis
@@ -82,8 +85,11 @@
   description: Around and around it goes...
   components:
   - type: SolutionContainerMixer
-    mixDuration: 30
-    mixingSound: /Audio/Machines/blender.ogg
+    mixDuration: 10
+    mixingSound:
+      path: /Audio/Machines/spinning.ogg
+      params:
+        volume: -4
   - type: ReactionMixer
     reactionTypes:
     - Centrifuge
