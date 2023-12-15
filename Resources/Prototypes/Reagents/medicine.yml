@@ -1001,3 +1001,26 @@
         damage:
           types:
             Poison: 4
+
+- type: reagent
+  id: Holywater
+  name: reagent-name-holywater
+  group: Medicine
+  desc: reagent-desc-holywater
+  physicalDesc: reagent-physical-desc-holy
+  flavor: holy
+  color: "#91C3F7"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        condition:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2

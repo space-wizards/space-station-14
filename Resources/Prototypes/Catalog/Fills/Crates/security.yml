@@ -86,4 +86,16 @@
       - id: ClothingMaskSterile
         amount: 2
 
+- type: entity
+  id: CrateSecurityTrackingMindshieldImplants
+  name: Implanter Crate
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: MindShieldImplanter
+        amount: 4
+      - id: TrackingImplanter
+        amount: 4
+        
 # Cosmetic Crates

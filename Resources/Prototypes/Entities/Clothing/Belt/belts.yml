@@ -88,6 +88,8 @@
   - type: Clothing
     sprite: Clothing/Belt/ce.rsi
   - type: Storage
+    grid:
+    - 0,0,9,1
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -366,6 +368,8 @@
         - Taser
         - SecBeltEquip
         - Radio
+        - Sidearm
+        - MagazinePistol
       components:
         - Stunbaton
         - FlashOnTrigger
@@ -469,8 +473,11 @@
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Item
-    size: Huge
+    size: Ginormous
   - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,3,3
     whitelist:
       components:
         - Gun
@@ -511,7 +518,7 @@
     sprite: Clothing/Belt/salvagewebbing.rsi
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase]
   id: ClothingBeltMilitaryWebbing
   name: chest rig
   description: A set of tactical webbing worn by Syndicate boarding parties.
@@ -520,9 +527,11 @@
     sprite: Clothing/Belt/militarywebbing.rsi
   - type: Clothing
     sprite: Clothing/Belt/militarywebbing.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: ClothingBeltMilitaryWebbing
   id: ClothingBeltMilitaryWebbingMed
   name: medical chest rig
   description: A set of tactical webbing worn by Gorlex Marauder medic operatives.

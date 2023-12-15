@@ -22,7 +22,7 @@
   - type: StorageFill
     contents:
       - id: PillCanister
-        amount: 4
+        amount: 9
   - type: Sprite
     layers:
       - state: box
