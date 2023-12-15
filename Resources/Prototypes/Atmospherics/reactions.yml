@@ -14,14 +14,12 @@
   id: TritiumFire
   priority: -1
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
-  minimumRequirements: # In this case, same as minimum mole count.
-    - 0.01  # oxygen
-    - 0     # nitrogen
-    - 0     # carbon dioxide
-    - 0     # plasma
-    - 0.01  # tritium
-  effects:
-    - !type:TritiumFireReaction {}
+  enthalpy: 284000
+  reactants:
+    4: 2 # 2 Tritium
+    0: 1 # 1 Oxygen
+  products:
+    5: 2 # 2 Water
 
 - type: gasReaction
   id: FrezonCoolant
@@ -61,18 +59,12 @@
   id: AmmoniaOxygenReaction
   priority: 2
   minimumTemperature: 323.149
-  minimumRequirements:
-  - 0.01  # oxygen
-  - 0     # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0.01  # ammonia
-  - 0     # n2o
-  - 0     # frezon
-  effects:
-  - !type:AmmoniaOxygenReaction {}
+  reactants:
+    6: 2 # 2 ammonia
+    0: 2 # 2 oxygen
+  products:
+    7: 1 # 1 nitrous
+    5: 3 # 3 water
 
 - type: gasReaction
   id: N2ODecomposition
