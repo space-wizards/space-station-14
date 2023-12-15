@@ -250,6 +250,8 @@
     materialComposition:
       Steel: 25
 
+#TODO: I want the luxury pen to write a cool font like Merriweather in the future.
+
 - type: entity
   name: luxury pen
   parent: Pen
