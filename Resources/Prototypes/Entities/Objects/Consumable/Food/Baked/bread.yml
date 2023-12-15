@@ -811,7 +811,7 @@
     description: ghost-role-information-BreadDog-description
     rules: ghost-role-information-BreadDog-rules
   - type: GhostTakeoverAvailable
-  - type: MobsterAccent
+  - type: BarkAccent
   - type: Speech
     speechSounds: Dog
     speechVerb: SmallMob
