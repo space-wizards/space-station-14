@@ -107,3 +107,40 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: SheetPlastic1
+
+- type: reaction
+  id: FlashFreezeIce
+  quantized: true
+  reactants:
+    Fresium:
+      amount: 1
+    Water:
+      amount: 1
+  effects:
+  - !type:CreateGas
+    gas: Frezon
+  products:
+    Ice: 5
+
+- type: reaction
+  id: Fresium
+  maxTemp: 520
+  reactants:
+    Frezon:
+      amount: 1
+    Plasma:
+      amount: 1
+      catalyst: true
+    Nitrogen:
+      amount: 2
+    Cryoxadone:
+      amount: 0.22
+    TableSalt:
+      amount: 0.08
+    Water:
+      amount: 1.5
+  effects:
+  - !type:CreateGas
+    gas: Nitrogen
+  products:
+    Fresium: 5
