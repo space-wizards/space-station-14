@@ -1,7 +1,7 @@
 - type: gameMap
   id: Reach
   mapName: 'Reach'
-  mapPath: /Maps/Reach.yml
+  mapPath: /Maps/reach.yml
   minPlayers: 0
   maxPlayers: 5
   stations:
