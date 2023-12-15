@@ -1,14 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'The rat king can now rummage through disposal units to get trash, cheese,
-      or gold.', type: Add}
-  - {message: 'The rat king now can command its servants to do various actions. They
-      can sit, follow, attack a target, or go buck-wild, all at the King''s command',
-    type: Add}
-  - {message: Rat servants are no longer ghost roles., type: Remove}
-  id: 4873
-  time: '2023-09-22T20:01:05.0000000+00:00'
 - author: waylon531
   changes:
   - {message: The surgeons at Centcomm have made it so drinking too much alcohol will
@@ -2902,3 +2892,9 @@ Entries:
     type: Tweak}
   id: 5373
   time: '2023-12-15T09:56:17.0000000+00:00'
+- author: MendaxxDev
+  changes:
+  - {message: 'The flare gun now explodes, damages and stuns the player when used
+      with wrong ammo', type: Tweak}
+  id: 5374
+  time: '2023-12-15T09:57:59.0000000+00:00'
