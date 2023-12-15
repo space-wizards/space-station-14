@@ -193,6 +193,8 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      - id: ClothingUniformJumpsuitCMOturtleneck
+      - id: ClothingUniformJumpsuitCMOturtleneckSkirt
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -216,6 +218,8 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      - id: ClothingUniformJumpsuitCMOturtleneck
+      - id: ClothingUniformJumpsuitCMOturtleneckSkirt
 
 - type: entity
   id: LockerResearchDirectorFilledHardsuit
