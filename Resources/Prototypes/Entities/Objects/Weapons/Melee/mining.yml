@@ -1,8 +1,8 @@
 - type: entity
-  name: crusher
+  abstract: true
   parent: BaseItem
   id: BaseWeaponCrusher # Crusher? But I...
-  abstract: true
+  name: crusher
   description: An early design of the proto-kinetic accelerator.
   components:
   - type: Sharp
@@ -13,7 +13,6 @@
     radius: 4
 
 - type: entity
-  name: crusher
   parent: BaseWeaponCrusher
   id: WeaponCrusher
   components:
@@ -65,9 +64,9 @@
   - type: Prying
 
 - type: entity
-  name: crusher dagger
   parent: BaseWeaponCrusher
   id: WeaponCrusherDagger
+  name: crusher dagger
   description: A scaled down version of a proto-kinetic crusher, usually used in a last ditch scenario.
   components:
   - type: Sprite
@@ -79,37 +78,27 @@
     damage:
       types:
         Slash: 6.5
-  - type: Item
-    size: Small
   - type: Tag
     tags:
     - Knife
 
 # Like a crusher... but better
 - type: entity
-  name: crusher glaive
   parent: WeaponCrusher
   id: WeaponCrusherGlaive
+  name: crusher glaive
   description: An early design of the proto-kinetic accelerator, in glaive form.
   components:
-  - type: Tag
-    tags:
-      - Pickaxe
-  - type: UseDelayOnShoot
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
   - type: UseDelay
     delay: 1.9
-  - type: Gun
-    fireRate: 1
-  - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 0.5
   - type: LeechOnMarker
     leech:
       groups:
         Brute: -15
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
   - type: MeleeWeapon
-    wideAnimationRotation: -135
     attackRate: 1.25
-  - type: Item
-    size: Ginormous
+  - type: Tag
+    tags:
+      - Pickaxe

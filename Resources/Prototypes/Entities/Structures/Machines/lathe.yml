@@ -265,6 +265,7 @@
       - SyringeBluespace
       - WeaponCrusher
       - WeaponCrusherDagger
+      - WeaponCrusherGlaive
       - WeaponForceGun
       - WeaponProtoKineticAccelerator
       - WeaponTetherGun
@@ -306,6 +307,10 @@
     producingSound: /Audio/Machines/circuitprinter.ogg
     idleState: icon
     runningState: building
+    staticRecipes:
+    - ElectrolysisUnitMachineCircuitboard
+    - CentrifugeMachineCircuitboard
+    - CondenserMachineCircuitBoard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard

@@ -1,135 +1,4 @@
 Entries:
-- author: PursuitinAshes
-  changes:
-  - {message: Nanotrasen now properly supplies its captains with appropriate headgear
-      in all of their lockers., type: Fix}
-  id: 4853
-  time: '2023-09-18T19:20:10.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The Syndicate has cracked the binary radio channel's encryption and
-      is offering keys for 4 TC., type: Add}
-  id: 4854
-  time: '2023-09-18T19:20:56.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Increased the amount of barotrauma damage you receive., type: Tweak}
-  id: 4855
-  time: '2023-09-18T19:21:36.0000000+00:00'
-- author: HerCoyote23
-  changes:
-  - {message: 'The Syndicate has grown tired of losing overconfident "Loud" agents,
-      and has reduced their stealth gear prices to encourage a more sneaky approach.',
-    type: Tweak}
-  id: 4856
-  time: '2023-09-18T21:07:00.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: Berry seeds are now available from the MegaSeed Servitor., type: Add}
-  - {message: Seeds for the bungo fruit are included in the exotic seed crate., type: Add}
-  id: 4857
-  time: '2023-09-19T03:29:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Skeletons have been reported in the closets of various station officials.
-      And maintenance., type: Add}
-  - {message: Skeletons can no longer have a pitch-black coloration., type: Tweak}
-  id: 4858
-  time: '2023-09-19T05:05:18.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Expeditions have been massively tweaked. Timer is 7 minutes, loot count
-      is significantly up, added significantly more loot to the loot table, mob count
-      is significantly up, and mobs overall have been nerfed (no more 15 damage carps
-      ending you). It also has a flat 13 minute cooldown. Better bring your fultons
-      if you expect to bring stuff back.', type: Tweak}
-  id: 4859
-  time: '2023-09-19T12:52:01.0000000+00:00'
-- author: Repo
-  changes:
-  - {message: Time out for particular uplink items for balancing. Syndicate Bomb can
-      only be purchased after 30min., type: Add}
-  id: 4860
-  time: '2023-09-19T23:51:15.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Reduced the crafting costs of the buckler and makeshift shield., type: Tweak}
-  id: 4861
-  time: '2023-09-20T04:49:43.0000000+00:00'
-- author: dahnte
-  changes:
-  - {message: Added frontal lisp as a character trait for all species!, type: Add}
-  id: 4862
-  time: '2023-09-20T04:51:50.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Changed most medkit fills, type: Tweak}
-  id: 4863
-  time: '2023-09-20T07:50:19.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Added U-shaped rails, type: Add}
-  id: 4864
-  time: '2023-09-20T08:26:17.0000000+00:00'
-- author: Just_Art
-  changes:
-  - {message: Added corn in butter., type: Add}
-  - {message: Increased popcorn cooking time., type: Tweak}
-  id: 4865
-  time: '2023-09-20T09:51:09.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Fix some do_afters mispredicting, e.g. removing encryption keys from
-      headsets.', type: Fix}
-  id: 4866
-  time: '2023-09-20T12:01:54.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Added a search filter to vending machines, type: Add}
-  id: 4867
-  time: '2023-09-20T19:40:41.0000000+00:00'
-- author: waylon531
-  changes:
-  - {message: Centcomm is tired of the crew drunkenly wandering the station and starting
-      brawls. Many mixed drinks now have half as much alcohol., type: Tweak}
-  id: 4868
-  time: '2023-09-21T00:58:57.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix xeno ghost roles showing up for expeditions., type: Fix}
-  id: 4869
-  time: '2023-09-21T13:21:43.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Added improvised bows & arrows to construction, have fun embedding
-      people with arrows', type: Add}
-  - {message: Added quivers as random maint loot drops, type: Add}
-  id: 4870
-  time: '2023-09-22T09:45:21.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: The guidebook now has a pop-out button. This will turn it into a system
-      window that you can drag wherever is convenient such as a second monitor., type: Add}
-  - {message: 'The Steam overlay has been disabled due to conflicts with pop-out windows.
-      Due to a bug with Steam, the game''s graphics will corrupt when overlay is enabled
-      and a popout window is opened.', type: Remove}
-  id: 4871
-  time: '2023-09-22T19:52:31.0000000+00:00'
-- author: TheArturZh
-  changes:
-  - {message: Station records console works properly again, type: Fix}
-  id: 4872
-  time: '2023-09-22T19:57:06.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'The rat king can now rummage through disposal units to get trash, cheese,
-      or gold.', type: Add}
-  - {message: 'The rat king now can command its servants to do various actions. They
-      can sit, follow, attack a target, or go buck-wild, all at the King''s command',
-    type: Add}
-  - {message: Rat servants are no longer ghost roles., type: Remove}
-  id: 4873
-  time: '2023-09-22T20:01:05.0000000+00:00'
 - author: waylon531
   changes:
   - {message: The surgeons at Centcomm have made it so drinking too much alcohol will
@@ -2899,3 +2768,133 @@ Entries:
   - {message: Ninjas and Nukies now get new sprites for their pinpointers., type: Add}
   id: 5353
   time: '2023-12-13T08:53:05.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: A dying person's Last Words can no longer be sent to radio channels.,
+    type: Fix}
+  id: 5354
+  time: '2023-12-13T21:20:38.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Cybersun and centcom pens can now edit stamped paper., type: Tweak}
+  id: 5355
+  time: '2023-12-13T21:33:32.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Added a new "uneven" hair style., type: Add}
+  id: 5356
+  time: '2023-12-13T21:34:28.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Plasma and tritium fires spread more slowly and are now more survivable.,
+    type: Tweak}
+  id: 5357
+  time: '2023-12-14T02:39:38.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'A new type of grenade has been developed, these grenades release a
+      spray of bullets instead of exploding: Shrapnel grenade, Stinger grenade and
+      Incendiary grenade.', type: Add}
+  - {message: Stinger grenades and ClusterBangs are now available in the sectech.,
+    type: Add}
+  - {message: 'Incendiary grenades, Shrapnel grenades, Cluster grenades and the Slipocalypse
+      ClusterSoap are now available in the syndicate uplink, clowns also get a Clusterbanana
+      in their uplink.', type: Add}
+  - {message: Explosive banana peels are now more dangerous., type: Tweak}
+  id: 5358
+  time: '2023-12-14T03:30:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added gas condensers. These machines are available at the circuit imprinter
+      and can convert gases into liquids. Tasty!, type: Add}
+  id: 5359
+  time: '2023-12-14T03:35:44.0000000+00:00'
+- author: DangerRevolution
+  changes:
+  - {message: Extended emergency nitrogen tanks can now be found on the station.,
+    type: Add}
+  id: 5360
+  time: '2023-12-14T04:35:39.0000000+00:00'
+- author: SlamBamActionman
+  changes:
+  - {message: Discord bot Changelog now includes hyperlinks to the PRs., type: Add}
+  id: 5361
+  time: '2023-12-14T18:19:25.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed spray nozzle not getting ammo from the back pack tank, type: Fix}
+  id: 5362
+  time: '2023-12-14T20:49:40.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Mothroach crates are now twice as expensive, type: Tweak}
+  id: 5363
+  time: '2023-12-14T20:58:38.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Crusher Glaives can be made with the Salvage Weapons technology., type: Add}
+  id: 5364
+  time: '2023-12-15T01:34:37.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Acidifier now has a sprite effect., type: Tweak}
+  id: 5365
+  time: '2023-12-15T01:56:42.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Mercury poisoning now causes stuttering., type: Tweak}
+  id: 5366
+  time: '2023-12-15T09:28:13.0000000+00:00'
+- author: ninruB
+  changes:
+  - {message: Reptilians no longer innately take 30% less heat damage., type: Tweak}
+  id: 5367
+  time: '2023-12-15T09:37:05.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Added the Action Upgrade System - used to upgrade specific actions!,
+    type: Add}
+  - {message: Added commands to upgrade actions., type: Add}
+  - {message: Added Charges information to action tooltips for actions with charges,
+    type: Add}
+  id: 5368
+  time: '2023-12-15T09:41:44.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Chaplains can smack their bible on water to create holy water., type: Add}
+  id: 5369
+  time: '2023-12-15T09:52:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the electrolysis unit and the centrifuge. These will be used for
+      chemistry in the future., type: Add}
+  id: 5370
+  time: '2023-12-15T09:52:46.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Gibbed body parts contain their victim's DNA, type: Tweak}
+  - {message: 'Implanters, syringes, hyposprays, medipens, and cigarettes transfer
+      DNA', type: Tweak}
+  - {message: Melee weapons that deal blunt/slash/pierce damage transfer DNA, type: Tweak}
+  - {message: 'Soap and rags can be used to clean evidence off of items, but leave
+      evidence of their own', type: Tweak}
+  id: 5371
+  time: '2023-12-15T09:52:56.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Added hypodart into uplink. It is capable of piercing armor and injecting
+      up to 7u reagents., type: Add}
+  id: 5372
+  time: '2023-12-15T09:55:57.0000000+00:00'
+- author: tgrkzus
+  changes:
+  - {message: Open tanks will no longer make noise at very low release pressure.,
+    type: Tweak}
+  id: 5373
+  time: '2023-12-15T09:56:17.0000000+00:00'
+- author: MendaxxDev
+  changes:
+  - {message: 'The flare gun now explodes, damages and stuns the player when used
+      with wrong ammo', type: Tweak}
+  id: 5374
+  time: '2023-12-15T09:57:59.0000000+00:00'

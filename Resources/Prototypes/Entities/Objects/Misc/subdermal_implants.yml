@@ -274,6 +274,8 @@
   - type: TriggerImplantAction
   - type: GibOnTrigger
     deleteItems: true
+  - type: SpawnOnTrigger
+    proto: Acidifier
   - type: Tag
     tags:
     - SubdermalImplant
