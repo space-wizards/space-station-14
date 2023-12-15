@@ -10,7 +10,7 @@ public partial class AtmosphereSystem
 {
     private void InitializeMap()
     {
-        SubscribeLocalEvent<MapAtmosphereComponent, ComponentStartup>(OnMapStartup);
+        SubscribeLocalEvent<MapAtmosphereComponent, ComponentInit>(OnMapStartup);
         SubscribeLocalEvent<MapAtmosphereComponent, ComponentRemove>(OnMapRemove);
         SubscribeLocalEvent<MapAtmosphereComponent, IsTileSpaceMethodEvent>(MapIsTileSpace);
         SubscribeLocalEvent<MapAtmosphereComponent, GetTileMixtureMethodEvent>(MapGetTileMixture);
@@ -19,9 +19,10 @@ public partial class AtmosphereSystem
         SubscribeLocalEvent<GridAtmosphereComponent, EntParentChangedMessage>(OnGridParentChanged);
     }
 
-    private void OnMapStartup(EntityUid uid, MapAtmosphereComponent component, ComponentStartup args)
+    private void OnMapStartup(EntityUid uid, MapAtmosphereComponent component, ComponentInit args)
     {
         component.Mixture.MarkImmutable();
+        component.Overlay = _gasTileOverlaySystem.GetOverlayData(component.Mixture);
     }
 
     private void OnMapRemove(EntityUid uid, MapAtmosphereComponent component, ComponentRemove args)
