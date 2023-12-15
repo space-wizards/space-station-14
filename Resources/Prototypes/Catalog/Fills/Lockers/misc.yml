@@ -84,6 +84,7 @@
         - id: ClothingHeadHelmetFire
         - id: ClothingMaskGas
         - id: YellowOxygenTankFilled
+        - id: NitrogenTankFilled
         - id: FireExtinguisher
           prob: 0.25
 - type: entity
@@ -97,6 +98,7 @@
         - id: ClothingHeadHelmetFire
         - id: ClothingMaskGas
         - id: YellowOxygenTankFilled
+        - id: NitrogenTankFilled
         - id: FireExtinguisher
           prob: 0.25
 - type: entity

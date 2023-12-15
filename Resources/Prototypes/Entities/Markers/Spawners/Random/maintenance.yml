@@ -143,6 +143,7 @@
         - DoubleEmergencyOxygenTankFilled
         - ToolboxEmergencyFilled
         - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
         - ToolboxElectricalFilled
         - ToolboxMechanicalFilled
         - ClothingBeltUtility
@@ -215,6 +216,8 @@
         - FlashlightLantern
         - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
+        - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
         - Lighter
         - Matchbox
         - Crowbar
