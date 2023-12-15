@@ -79,7 +79,7 @@
   - type: Strippable
   - type: InventorySlots
   - type: Inventory
-    templateId: head
+    templateId: borg
   - type: Hands
     showInHands: false
   - type: IntrinsicRadioReceiver
