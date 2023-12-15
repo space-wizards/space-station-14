@@ -69,7 +69,7 @@ public sealed partial class ExplosionPrototype : IPrototype
     ///     This value is tuned such that a minibomb is considered small, but just about anything larger is normal
     /// </remarks>
     [DataField("smallSoundIterationThreshold")]
-    public int SmallSoundIterationThreshold = 5;
+    public int SmallSoundIterationThreshold = 6;
 
     [DataField("sound")]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("Explosion");
