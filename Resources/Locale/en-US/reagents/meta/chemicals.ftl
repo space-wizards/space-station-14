@@ -12,3 +12,6 @@ reagent-desc-artifexium = A lavender mixture of microscopic artifact fragments a
 
 reagent-name-sodium-polyacrylate = Sodium Polyacrylate
 reagent-desc-sodium-polyacrylate = A super-absorbent polymer with assorted industrial uses.
+
+reagent-name-cellulose = cellulose fibers
+reagent-desc-cellulose = A crystaline polydextrose polymer, plants swear by this stuff.

@@ -49,17 +49,14 @@
   - type: Item
     heldPrefix: paper
   - type: Appearance
+  - type: Extractable
+    grindableSolutionName: paper
   - type: SolutionContainerManager
-#This should maybe be cellulose later on, refer to the comments in materials.yml on wood.
     solutions:
-      wood:
+      paper:
         reagents:
-        - ReagentId: Carbon
-          Quantity: 2
-        - ReagentId: Oxygen
-          Quantity: 0.5
-        - ReagentId: Hydrogen
-          Quantity: 0.5
+        - ReagentId: Cellulose
+          Quantity: 3
 
 
 - type: entity
@@ -151,7 +148,14 @@
   - type: Item
     heldPrefix: plastic
   - type: Appearance
-
+  - type: Extractable
+    grindableSolutionName: plastic
+  - type: SolutionContainerManager
+    solutions:
+      plastic:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 10
 - type: entity
   parent: SheetPlastic
   id: SheetPlastic10
