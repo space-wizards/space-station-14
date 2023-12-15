@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameTicking;
 using Content.Server.Forensics;
+using Content.Server.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
@@ -160,8 +160,13 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
         if (!Resolve(station, ref records))
             return false;
 
-        RaiseLocalEvent(new RecordRemovedEvent(station, key));
-        return records.Records.RemoveAllRecords(key);
+        if (records.Records.RemoveAllRecords(key))
+        {
+            RaiseLocalEvent(new RecordRemovedEvent(station, key));
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>

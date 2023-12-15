@@ -1,9 +1,5 @@
-<Control xmlns="https://spacestation14.io"
-         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
-    <PanelContainer>
-        <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BackgroundColor="#25252A"/>
-        </PanelContainer.PanelOverride>
+<Control xmlns="https://spacestation14.io">
+    <PanelContainer StyleClasses="BackgroundDark">
         <BoxContainer Orientation="Vertical">
             <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
                 <BoxContainer Orientation="Vertical" Name="Notes" Access="Public" VerticalExpand="True"/>

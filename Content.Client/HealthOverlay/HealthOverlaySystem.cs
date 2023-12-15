@@ -1,13 +1,10 @@
-using System.Collections.Generic;
 using Content.Client.HealthOverlay.UI;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Client.Player;
 
 namespace Content.Client.HealthOverlay
 {
@@ -16,9 +13,9 @@ namespace Content.Client.HealthOverlay
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IPlayerManager _player = default!;
 
         private readonly Dictionary<EntityUid, HealthOverlayGui> _guis = new();
-        private EntityUid? _attachedEntity;
         private bool _enabled;
 
         public bool Enabled
@@ -45,7 +42,6 @@ namespace Content.Client.HealthOverlay
             base.Initialize();
 
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -56,12 +52,6 @@ namespace Content.Client.HealthOverlay
             }
 
             _guis.Clear();
-            _attachedEntity = default;
-        }
-
-        private void HandlePlayerAttached(PlayerAttachSysMessage message)
-        {
-            _attachedEntity = message.AttachedEntity;
         }
 
         public override void FrameUpdate(float frameTime)
@@ -73,17 +63,16 @@ namespace Content.Client.HealthOverlay
                 return;
             }
 
-            if (_attachedEntity is not {} ent || Deleted(ent))
+            if (_player.LocalEntity is not {} ent || Deleted(ent))
             {
                 return;
             }
 
             var viewBox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
 
-            foreach (var (mobState, _) in EntityManager.EntityQuery<MobStateComponent, DamageableComponent>())
+            var query = EntityQueryEnumerator<MobStateComponent, DamageableComponent>();
+            while (query.MoveNext(out var entity, out var mobState, out _))
             {
-                var entity = mobState.Owner;
-
                 if (_entities.GetComponent<TransformComponent>(ent).MapID != _entities.GetComponent<TransformComponent>(entity).MapID ||
                     !viewBox.Contains(_entities.GetComponent<TransformComponent>(entity).WorldPosition))
                 {

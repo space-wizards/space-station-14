@@ -48,7 +48,10 @@ namespace Content.Shared.Alert
         Debug4,
         Debug5,
         Debug6,
-        SuitPower
+        SuitPower,
+        BorgHealth,
+        BorgCrit,
+        BorgDead
     }
 
 }

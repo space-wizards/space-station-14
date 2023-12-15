@@ -19,7 +19,7 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: 1
+    size: Tiny
 
 - type: entity
   id: CigarSpent
@@ -49,7 +49,7 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: 1
+    size: Tiny
 
 - type: entity
   id: CigarGoldSpent

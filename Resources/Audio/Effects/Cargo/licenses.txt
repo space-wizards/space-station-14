@@ -1,7 +1,0 @@
-The following sounds are taken from TGstation github (licensed under CC by 3.0):
-
-	buzz_sigh.ogg from https://github.com/tgstation/tgstation/tree/d6f15fb717e7c047f8befefabb4b7735b3c39a84/sound
-
-	buzz_two.ogg from https://github.com/tgstation/tgstation/tree/d6f15fb717e7c047f8befefabb4b7735b3c39a84/sound
-
-	ping.ogg from https://github.com/tgstation/tgstation/tree/d6f15fb717e7c047f8befefabb4b7735b3c39a84/sound

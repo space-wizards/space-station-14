@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
@@ -210,6 +209,19 @@ namespace Content.Shared.Pulling
             {
                 RaiseLocalEvent(pullable.Owner, new PullableMoveMessage(), true);
             }
+        }
+
+        /// <summary>
+        /// Changes if the entity needs a hand in order to be able to pull objects.
+        /// </summary>
+        public void ChangeHandRequirement(EntityUid uid, bool needsHands, SharedPullerComponent? comp)
+        {
+            if (!Resolve(uid, ref comp, false))
+                return;
+
+            comp.NeedsHands = needsHands;
+
+            Dirty(uid, comp);
         }
     }
 }

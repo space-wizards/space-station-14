@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_baked_whole.yml & food_baked_single.yml
 # Base
 
 - type: entity
@@ -28,7 +29,7 @@
   abstract: true
   components:
   - type: Item
-    size: 1
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - bread
@@ -92,6 +93,10 @@
     - state: banana
   - type: SliceableFood
     slice: FoodBreadBananaSlice
+  - type: Tag
+    tags:
+    - Fruit
+    - Bread
 # Tastes like bread, banana, nut.
 
 - type: entity
@@ -108,6 +113,9 @@
   - type: Sprite
     layers:
     - state: banana-slice
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: cornbread
@@ -234,6 +242,10 @@
           Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
+    - Bread
 # Tastes like bread, meat.
 
 - type: entity
@@ -259,6 +271,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 1.2
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: mimana bread
@@ -370,6 +385,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
+    - Bread
 
 - type: entity
   name: sausage bread slice
@@ -396,6 +415,9 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: spider meat bread
@@ -416,14 +438,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 60
+        maxVol: 45
         reagents:
         - ReagentId: Nutriment
           Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
-        - ReagentId: Toxin
-          Quantity: 15
+  - type: Tag
+    tags:
+    - Meat
+    - Bread
 # Tastes like bread, cobwebs.
 
 - type: entity
@@ -443,14 +467,15 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 1.2
-        - ReagentId: Toxin
-          Quantity: 3
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: tofu bread
@@ -528,6 +553,10 @@
           Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
+    - Bread
 # Tastes like bread, acid.
 
 - type: entity
@@ -553,6 +582,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 1.2
+  - type: Tag
+    tags:
+    - Meat
 
 # Other than bread/slices
 

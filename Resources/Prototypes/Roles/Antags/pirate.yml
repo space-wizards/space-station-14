@@ -5,10 +5,10 @@
     back: ClothingBackpackPirateFilled
     head: ClothingHeadBandBlack
     shoes: ClothingShoesBootsLaceup
-    id: PassengerPDA
+    id: PiratePDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
-  innerclothingskirt: ClothingUniformJumpsuitPirate
+  innerClothingSkirt: ClothingUniformJumpsuitPirate
   satchel: ClothingBackpackPirateFilled
   duffelbag: ClothingBackpackPirateFilled
 
@@ -19,12 +19,12 @@
     back: ClothingBackpackPirateFilled
     head: ClothingHeadHatPirate
     shoes: ClothingShoesBootsLaceup
-    id: PassengerPDA
+    id: PiratePDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
     pocket2: EnergyCutlass
     outerClothing: ClothingOuterCoatPirate
-  innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
+  innerClothingSkirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackPirateFilled
   duffelbag: ClothingBackpackPirateFilled
 
@@ -35,10 +35,10 @@
     back: ClothingBackpackPirateFilled
     head: ClothingHeadHatPirateTricord
     shoes: ClothingShoesBootsLaceup
-    id: PassengerPDA
+    id: PiratePDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
     outerClothing: ClothingOuterCoatGentle
-  innerclothingskirt: ClothingUniformJumpsuitPirate
+  innerClothingSkirt: ClothingUniformJumpsuitPirate
   satchel: ClothingBackpackPirateFilled
   duffelbag: ClothingBackpackPirateFilled

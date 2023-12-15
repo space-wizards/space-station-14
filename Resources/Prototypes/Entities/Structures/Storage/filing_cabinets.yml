@@ -6,7 +6,9 @@
   description: A cabinet for all your filing needs.
   components:
   - type: Storage
-    capacity: 80
+    grid:
+    - 0,0,9,3
+    maxItemSize: Normal
     whitelist:
       tags:
         - Document
@@ -65,7 +67,9 @@
   description: A small drawer for all your filing needs, Now with wheels!
   components:
   - type: Storage
-    capacity: 50
+    grid:
+    - 0,0,7,2
+    maxItemSize: Normal
     whitelist:
       tags:
         - Document

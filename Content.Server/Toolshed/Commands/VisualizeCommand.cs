@@ -4,7 +4,6 @@ using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Bql;
 using Content.Shared.Eui;
-using Robust.Server.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
 
@@ -30,7 +29,7 @@ public sealed class VisualizeCommand : ToolshedCommand
         var ui = new ToolshedVisualizeEui(
             input.Select(e => (EntName(e), EntityManager.GetNetEntity(e))).ToArray()
         );
-        _euiManager.OpenEui(ui, (IPlayerSession) ctx.Session);
+        _euiManager.OpenEui(ui, ctx.Session);
         _euiManager.QueueStateUpdate(ui);
     }
 }

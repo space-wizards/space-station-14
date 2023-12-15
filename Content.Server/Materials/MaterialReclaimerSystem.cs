@@ -1,17 +1,17 @@
 ﻿using System.Linq;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.GameTicking;
-using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.Wires;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.FixedPoint;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -29,6 +29,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedBodySystem _body = default!; //bobby
@@ -85,8 +86,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             if (TryComp<SolutionContainerManagerComponent>(args.Used, out var managerComponent) &&
                 managerComponent.Solutions.Any(s => s.Value.AvailableVolume > 0))
             {
-                if (TryComp<DrinkComponent>(args.Used, out var drink) &&
-                    !drink.Opened)
+                if (_openable.IsClosed(args.Used))
                     return;
 
                 if (TryComp<SolutionTransferComponent>(args.Used, out var transfer) &&
@@ -166,12 +166,16 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         var xform = Transform(uid);
 
         SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);
-        SpawnChemicalsFromComposition(uid, item, completion, component, xform);
 
         if (CanGib(uid, item, component))
         {
+            SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
             _body.GibBody(item, true);
             _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
+        }
+        else
+        {
+            SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
         }
 
         QueueDel(item);
@@ -213,6 +217,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     private void SpawnChemicalsFromComposition(EntityUid reclaimer,
         EntityUid item,
         float efficiency,
+        bool sound = true,
         MaterialReclaimerComponent? reclaimerComponent = null,
         TransformComponent? xform = null,
         PhysicalCompositionComponent? composition = null)
@@ -248,7 +253,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         _solutionContainer.TryTransferSolution(reclaimer, reclaimerComponent.OutputSolution, totalChemicals, totalChemicals.Volume);
         if (totalChemicals.Volume > 0)
         {
-            _puddle.TrySpillAt(reclaimer, totalChemicals, out _, transformComponent: xform);
+            _puddle.TrySpillAt(reclaimer, totalChemicals, out _, sound, transformComponent: xform);
         }
     }
 }

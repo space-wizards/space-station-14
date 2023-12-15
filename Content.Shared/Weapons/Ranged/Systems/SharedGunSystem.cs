@@ -8,6 +8,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Gravity;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
@@ -19,6 +20,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -88,6 +90,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
         SubscribeLocalEvent<GunComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
+        SubscribeLocalEvent<GunComponent, HandSelectedEvent>(OnGunSelected);
         SubscribeLocalEvent<GunComponent, EntityUnpausedEvent>(OnGunUnpaused);
 
 #if DEBUG
@@ -226,9 +229,14 @@ public abstract partial class SharedGunSystem : EntitySystem
         // check if anything wants to prevent shooting
         var prevention = new ShotAttemptedEvent
         {
-            User = user
+            User = user,
+            Used = gunUid
         };
         RaiseLocalEvent(gunUid, ref prevention);
+        if (prevention.Cancelled)
+            return;
+
+        RaiseLocalEvent(user, ref prevention);
         if (prevention.Cancelled)
             return;
 

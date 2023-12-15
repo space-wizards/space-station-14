@@ -1,10 +1,9 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Nutrition.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -29,11 +28,12 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
         [Dependency] private readonly SharedItemSystem _items = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         private const float UpdateTimer = 3f;
 
-        private float _timer = 0f;
+        private float _timer;
 
         /// <summary>
         ///     We keep a list of active smokables, because iterating all existing smokables would be dumb.
@@ -130,8 +130,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 // This is awful. I hate this so much.
                 // TODO: Please, someone refactor containers and free me from this bullshit.
-                if (!smokable.Owner.TryGetContainerMan(out var containerManager) ||
-                    !(_inventorySystem.TryGetSlotEntity(containerManager.Owner, "mask", out var inMaskSlotUid) && inMaskSlotUid == smokable.Owner) ||
+                if (!_container.TryGetContainingContainer(uid, out var containerManager) ||
+                    !(_inventorySystem.TryGetSlotEntity(containerManager.Owner, "mask", out var inMaskSlotUid) && inMaskSlotUid == uid) ||
                     !TryComp(containerManager.Owner, out BloodstreamComponent? bloodstream))
                 {
                     continue;

@@ -10,6 +10,9 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Store;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.Store.Systems;
 
@@ -163,7 +166,8 @@ public sealed partial class StoreSystem
         //give action
         if (!string.IsNullOrWhiteSpace(listing.ProductAction))
         {
-            _actions.AddAction(buyer, Spawn(listing.ProductAction), null);
+            // I guess we just allow duplicate actions?
+            _actions.AddAction(buyer, listing.ProductAction);
         }
 
         //broadcast event

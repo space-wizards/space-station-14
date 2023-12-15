@@ -121,8 +121,8 @@
 - type: cargoProduct
   id: FunSadTromboneImplants
   icon:
-    sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: syringe_base0
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
   product: CrateFunSadTromboneImplants
   cost: 1000
   category: Fun
@@ -131,8 +131,8 @@
 - type: cargoProduct
   id: FunLightImplants
   icon:
-    sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: syringe_base0
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
   product: CrateFunLightImplants
   cost: 1000
   category: Fun
@@ -171,8 +171,8 @@
 - type: cargoProduct
   id: FunBikeHornImplants
   icon:
-    sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: syringe_base0
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
   product: CrateFunBikeHornImplants
   cost: 1000
   category: Fun
@@ -185,5 +185,15 @@
     state: fig_box
   product: CrateFunMysteryFigurines
   cost: 4000
+  category: Fun
+  group: market
+  
+- type: cargoProduct
+  id: FunDartsSet
+  icon:
+    sprite: Objects/Fun/Darts/dart_red.rsi
+    state: icon
+  product: CrateFunDartsSet
+  cost: 900
   category: Fun
   group: market

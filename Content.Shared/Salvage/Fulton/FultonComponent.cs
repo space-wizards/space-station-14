@@ -19,7 +19,7 @@ public sealed partial class FultonComponent : Component
     /// <summary>
     /// Linked fulton beacon.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("beacon")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("beacon"), AutoNetworkedField]
     public EntityUid? Beacon;
 
     /// <summary>

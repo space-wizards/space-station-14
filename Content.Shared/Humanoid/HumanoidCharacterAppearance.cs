@@ -188,7 +188,7 @@ namespace Content.Shared.Humanoid
             return new(color.RByte, color.GByte, color.BByte);
         }
 
-        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, string species)
+        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, string species, Sex sex)
         {
             var hairStyleId = appearance.HairStyleId;
             var facialHairStyleId = appearance.FacialHairStyleId;
@@ -223,6 +223,7 @@ namespace Content.Shared.Humanoid
                 }
 
                 markingSet.EnsureSpecies(species, skinColor, markingManager);
+                markingSet.EnsureSexes(sex, markingManager);
             }
 
             return new HumanoidCharacterAppearance(

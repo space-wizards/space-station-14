@@ -9,6 +9,16 @@
   group: market
 
 - type: cargoProduct
+  id: CargoOreBox
+  icon:
+    sprite:  /Textures/Structures/Storage/orebox.rsi
+    state: orebox
+  product: OreBox
+  cost: 500
+  category: Cargo
+  group: market
+
+- type: cargoProduct
   id: CargoLuxuryHardsuit
   icon:
     sprite: Clothing/Head/Hardsuits/luxury.rsi

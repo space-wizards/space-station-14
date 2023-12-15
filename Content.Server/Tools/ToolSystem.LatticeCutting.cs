@@ -62,14 +62,14 @@ public sealed partial class ToolSystem
 
         var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
 
-        if (!_interactionSystem.InRangeUnobstructed(user, coordinates, popup: false))
+        if (!InteractionSystem.InRangeUnobstructed(user, coordinates, popup: false))
             return false;
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
             || !tileDef.CanWirecutter
             || string.IsNullOrEmpty(tileDef.BaseTurf)
-            || _tileDefinitionManager[tileDef.BaseTurf] is not ContentTileDefinition newDef
-            || tile.IsBlockedTurf(true))
+            || _tileDefinitionManager[tileDef.BaseTurf] is not ContentTileDefinition ||
+            tile.IsBlockedTurf(true))
         {
             return false;
         }

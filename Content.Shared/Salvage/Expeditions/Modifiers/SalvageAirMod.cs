@@ -10,7 +10,7 @@ namespace Content.Shared.Salvage.Expeditions.Modifiers;
 /// Which one is selected depends on the mission difficulty, different weightedRandoms are picked from.
 /// </summary>
 [Prototype("salvageAirMod")]
-public sealed class SalvageAirMod : IPrototype, IBiomeSpecificMod
+public sealed partial class SalvageAirMod : IPrototype, IBiomeSpecificMod
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
@@ -24,7 +24,7 @@ public sealed class SalvageAirMod : IPrototype, IBiomeSpecificMod
     public float Cost { get; private set; } = 0f;
 
     /// <inheritdoc/>
-    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeMod>))]
+    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeModPrototype>))]
     public List<string>? Biomes { get; private set; } = null;
 
     /// <summary>

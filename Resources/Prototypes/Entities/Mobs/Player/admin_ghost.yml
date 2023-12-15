@@ -1,6 +1,5 @@
 - type: entity
   parent: MobObserver
-  save: false
   id: AdminObserver
   name: admin observer
   noSpawn: true
@@ -16,12 +15,10 @@
     context: "aghost"
   - type: Ghost
     canInteract: true
+  - type: GhostHearing
   - type: Hands
   - type: Puller
-  - type: DoAfter
   - type: CombatMode
-  - type: Actions
-  - type: InputMover
   - type: Physics
     ignorePaused: true
     bodyType: Kinematic
@@ -64,7 +61,7 @@
         toggleAction: ActionAGhostShowStationRecords
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole
-    title: communicationsconsole-announcement-title-centcom
+    title: comms-console-announcement-title-centcom
     color: "#228b22"
   - type: RadarConsole
   - type: CargoOrderConsole

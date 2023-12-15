@@ -114,3 +114,28 @@
   name: signal-port-name-air-normal
   description: signal-port-description-air-normal
   defaultLinks: [ DoorBolt ]
+
+- type: sourcePort
+  id: Decaying
+  name: signal-port-name-decaying
+  description: signal-port-description-decaying
+
+- type: sourcePort
+  id: Stabilize
+  name: signal-port-name-stabilize
+  description: signal-port-description-stabilize
+
+- type: sourcePort
+  id: Growing
+  name: signal-port-name-growing
+  description: signal-port-description-growing
+  
+- type: sourcePort
+  id: Pulse
+  name: signal-port-name-pulse
+  description: signal-port-description-pulse
+  
+- type: sourcePort
+  id: Supercritical
+  name: signal-port-name-supercrit
+  description: signal-port-description-supercrit

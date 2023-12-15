@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-NC-4.0",
-    "copyright": "Taken from TerraGov Marine Corps at https://github.com/tgstation/TerraGov-Marine-Corps/pull/7678/commits/e7bc17b894aa4c1f882358016346c3be00236df8backpack, https://github.com/tgstation/TerraGov-Marine-Corps/blob/master/icons/obj/items/gun.dmi, backpack sprite by Peptide (copy of db), sprite modification by Jaсkal 298",
+    "copyright": "Taken from TerraGov Marine Corps at https://github.com/tgstation/TerraGov-Marine-Corps/pull/7678/commits/e7bc17b894aa4c1f882358016346c3be00236df8backpack, https://github.com/tgstation/TerraGov-Marine-Corps/blob/master/icons/obj/items/gun.dmi, backpack sprite by Peptide (copy of db), sprite modification by Jaсkal 298, backpack sling sprite edited by Boaz1111",
     "size": {
         "x": 32,
         "y": 32

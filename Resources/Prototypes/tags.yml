@@ -5,6 +5,9 @@
   id: AirAlarmElectronics
 
 - type: Tag
+  id: Airlock
+
+- type: Tag
   id: AirSensor
 
 - type: Tag
@@ -17,6 +20,9 @@
   id: ArtifactFragment
 
 - type: Tag
+  id: Arrow
+
+- type: Tag
   id: ATVKeys
 
 - type: Tag
@@ -26,7 +32,10 @@
   id: Balloon
 
 - type: Tag
-  id: BaseballBat 
+  id: BananaPeel
+
+- type: Tag
+  id: BaseballBat
 
 - type: Tag
   id: BBQsauce
@@ -230,6 +239,9 @@
   id: CanPilot
 
 - type: Tag
+  id: CannonRestrict
+
+- type: Tag
   id: CannotSuicide
 
 - type: Tag
@@ -303,10 +315,13 @@
   id: ClownShoes
 
 - type: Tag
+  id: ClownSuit
+
+- type: Tag
   id: CluwneHorn
 
 - type: Tag #Ohioans die happy
-  id: Corn 
+  id: Corn
 
 - type: Tag
   id: Coldsauce
@@ -366,6 +381,9 @@
   id: CubanCarp
 
 - type: Tag
+  id: DeathAcidifier
+
+- type: Tag
   id: Debug
 
 - type: Tag
@@ -397,6 +415,9 @@
 
 - type: Tag
   id: Donut
+
+- type: Tag
+  id: DrinkCan
 
 - type: Tag
   id: DrinkSpaceGlue
@@ -471,6 +492,9 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: Fruit
+
+- type: Tag
   id: Galaxythistle
 
 - type: Tag
@@ -486,6 +510,9 @@
   id: GeigerCounter
 
 - type: Tag
+  id: GlassAirlock
+
+- type: Tag
   id: GlassBeaker
 
 - type: Tag
@@ -499,7 +526,6 @@
 
 - type: Tag
   id: GuideEmbeded
-
 
 - type: Tag
   id: Hamster
@@ -553,6 +579,9 @@
   id: HighRiskItem
 
 - type: Tag
+  id: HighSecDoor
+
+- type: Tag
   id: Hoe
 
 - type: Tag
@@ -584,6 +613,9 @@
 
 - type: Tag
   id: Hotsauce
+
+- type: Tag
+  id: Igniter
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
@@ -623,6 +655,9 @@
 
 - type: Tag
   id: Lemon
+
+- type: Tag
+  id: LightReplacer
 
 - type: Tag
   id: Lime
@@ -699,6 +734,9 @@
   id: Matchstick
 
 - type: Tag
+  id: Meat
+
+- type: Tag
   id: Medkit
 
 - type: Tag
@@ -718,6 +756,12 @@
 
 - type: Tag
   id: Mop
+
+- type: Tag
+  id: MopAdv
+
+- type: Tag
+  id: MopBasic
 
 - type: Tag
   id: Mouse
@@ -757,6 +801,9 @@
   id: PetWearable
 
 - type: Tag
+  id: MonkeyWearable
+
+- type: Tag
   id: Pickaxe
 
 - type: Tag
@@ -764,6 +811,9 @@
 
 - type: Tag
   id: Pig
+
+- type: Tag
+  id: Pill
 
 - type: Tag
   id: PillCanister
@@ -795,6 +845,20 @@
 - type: Tag
   id: PlushieGhost
 
+- type: Tag
+  id: PlushieSharkBlue
+
+- type: Tag
+  id: PlushieSharkPink
+
+- type: Tag
+  id: PlushieSharkGrey
+
+- type: Tag
+  id: Potato
+
+- type: Tag
+  id: PotatoBattery
 
 - type: Tag
   id: PowerCellSmall
@@ -876,7 +940,13 @@
   id: Shovel
 
 - type: Tag
+  id: Sidearm
+
+- type: Tag
   id: SkeletonMotorcycleKeys
+
+- type: Tag
+  id: SmallAIChip
 
 - type: Tag
   id: SmallMech
@@ -913,6 +983,9 @@
 
 - type: Tag
   id: SpeedLoaderRifle
+
+- type: Tag
+  id: SpiderCraft
 
 - type: Tag
   id: SpreaderIgnore
@@ -966,6 +1039,9 @@
   id: Toolbox
 
 - type: Tag
+  id: Torch
+
+- type: Tag
   id: Trash
 
 - type: Tag
@@ -1000,9 +1076,12 @@
 
 - type: Tag
   id: WallmountSubstationElectronics
-  
+
 - type: Tag
   id: WeaponPistolCHIMPUpgradeKit
+
+- type: Tag
+  id: WeaponShotgunKammerer
 
 - type: Tag
   id: Window
@@ -1032,8 +1111,16 @@
   id: Write
 
 - type: Tag
+  id: WriteIgnoreStamps
+
+- type: Tag
   id: RifleStock
 
 - type: Tag
   id: ModularReceiver
 
+- type: Tag
+  id: MindShield
+
+- type: Tag
+  id:  boots

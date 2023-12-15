@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using Content.IntegrationTests.Tests.Interaction;
+using Content.Shared.Movement.Components;
 using Content.Shared.Slippery;
 using Content.Shared.Stunnable;
 using Robust.Shared.GameObjects;
@@ -30,6 +31,9 @@ public sealed class SlippingTest : MovementTest
     {
         var sys = SEntMan.System<SlipTestSystem>();
         await SpawnTarget("TrashBananaPeel");
+
+        var modifier = Comp<MovementSpeedModifierComponent>(Player).SprintSpeedModifier;
+        Assert.That(modifier, Is.EqualTo(1), "Player is not moving at full speed.");
 
         // Player is to the left of the banana peel and has not slipped.
 #pragma warning disable NUnit2045

@@ -4,10 +4,13 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -18,18 +21,21 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly MapSystem _mapSystem = default!;
 
         /// <summary>
         ///     Players allowed to see the atmos debug overlay.
         ///     To modify it see <see cref="AddObserver"/> and
         ///     <see cref="RemoveObserver"/>.
         /// </summary>
-        private readonly HashSet<IPlayerSession> _playerObservers = new();
+        private readonly HashSet<ICommonSession> _playerObservers = new();
 
         /// <summary>
         ///     Overlay update ticks per second.
         /// </summary>
         private float _updateCooldown;
+
+        private List<Entity<MapGridComponent>> _grids = new();
 
         public override void Initialize()
         {
@@ -43,17 +49,17 @@ namespace Content.Server.Atmos.EntitySystems
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
         }
 
-        public bool AddObserver(IPlayerSession observer)
+        public bool AddObserver(ICommonSession observer)
         {
             return _playerObservers.Add(observer);
         }
 
-        public bool HasObserver(IPlayerSession observer)
+        public bool HasObserver(ICommonSession observer)
         {
             return _playerObservers.Contains(observer);
         }
 
-        public bool RemoveObserver(IPlayerSession observer)
+        public bool RemoveObserver(ICommonSession observer)
         {
             if (!_playerObservers.Remove(observer))
             {
@@ -71,7 +77,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="observer">The observer to toggle.</param>
         /// <returns>true if added, false if removed.</returns>
-        public bool ToggleObserver(IPlayerSession observer)
+        public bool ToggleObserver(ICommonSession observer)
         {
             if (HasObserver(observer))
             {
@@ -137,7 +143,10 @@ namespace Content.Server.Atmos.EntitySystems
                 var worldBounds = Box2.CenteredAround(transform.WorldPosition,
                     new Vector2(LocalViewRange, LocalViewRange));
 
-                foreach (var grid in _mapManager.FindGridsIntersecting(transform.MapID, worldBounds))
+                _grids.Clear();
+                _mapManager.FindGridsIntersecting(transform.MapID, worldBounds, ref _grids);
+
+                foreach (var grid in _grids)
                 {
                     var uid = grid.Owner;
 
@@ -147,7 +156,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if (!TryComp(uid, out GridAtmosphereComponent? gridAtmos))
                         continue;
 
-                    var entityTile = grid.GetTileRef(transform.Coordinates).GridIndices;
+                    var entityTile = _mapSystem.GetTileRef(grid, grid, transform.Coordinates).GridIndices;
                     var baseTile = new Vector2i(entityTile.X - (LocalViewRange / 2), entityTile.Y - (LocalViewRange / 2));
                     var debugOverlayContent = new AtmosDebugOverlayData[LocalViewRange * LocalViewRange];
 
@@ -161,7 +170,7 @@ namespace Content.Server.Atmos.EntitySystems
                         }
                     }
 
-                    RaiseNetworkEvent(new AtmosDebugOverlayMessage(GetNetEntity(grid.Owner), baseTile, debugOverlayContent), session.ConnectedClient);
+                    RaiseNetworkEvent(new AtmosDebugOverlayMessage(GetNetEntity(grid), baseTile, debugOverlayContent), session.ConnectedClient);
                 }
             }
         }

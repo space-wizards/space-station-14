@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Text;
-using Content.Shared.FixedPoint;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -24,7 +23,7 @@ public sealed partial class LatheMenu : DefaultWindow
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
     public event Action<string, int>? RecipeQueueAction;
     public event Action<string, int>? OnEjectPressed;
-    public List<string> Recipes = new();
+    public List<ProtoId<LatheRecipePrototype>> Recipes = new();
 
     /// <summary>
     /// Default volume for a sheet if the material's entity prototype has no material composition.
@@ -115,7 +114,7 @@ public sealed partial class LatheMenu : DefaultWindow
         var recipesToShow = new List<LatheRecipePrototype>();
         foreach (var recipe in Recipes)
         {
-            if (!_prototypeManager.TryIndex<LatheRecipePrototype>(recipe, out var proto))
+            if (!_prototypeManager.TryIndex(recipe, out var proto))
                 continue;
 
             if (SearchBar.Text.Trim().Length != 0)

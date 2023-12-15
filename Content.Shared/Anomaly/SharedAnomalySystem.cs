@@ -1,11 +1,12 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.GameStates;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -30,10 +31,6 @@ public abstract class SharedAnomalySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AnomalyComponent, ComponentGetState>(OnAnomalyGetState);
-        SubscribeLocalEvent<AnomalyComponent, ComponentHandleState>(OnAnomalyHandleState);
-        SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentGetState>(OnSupercriticalGetState);
-        SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentHandleState>(OnSupercriticalHandleState);
         SubscribeLocalEvent<AnomalyComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<AnomalyComponent, AttackedEvent>(OnAttacked);
 
@@ -42,43 +39,6 @@ public abstract class SharedAnomalySystem : EntitySystem
         SubscribeLocalEvent<AnomalySupercriticalComponent, EntityUnpausedEvent>(OnSupercriticalUnpause);
 
         _sawmill = Logger.GetSawmill("anomaly");
-    }
-
-    private void OnAnomalyGetState(EntityUid uid, AnomalyComponent component, ref ComponentGetState args)
-    {
-        args.State = new AnomalyComponentState(
-            component.Severity,
-            component.Stability,
-            component.Health,
-            component.NextPulseTime);
-    }
-
-    private void OnAnomalyHandleState(EntityUid uid, AnomalyComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not AnomalyComponentState state)
-            return;
-        component.Severity = state.Severity;
-        component.Stability = state.Stability;
-        component.Health = state.Health;
-        component.NextPulseTime = state.NextPulseTime;
-    }
-
-    private void OnSupercriticalGetState(EntityUid uid, AnomalySupercriticalComponent component, ref ComponentGetState args)
-    {
-        args.State = new AnomalySupercriticalComponentState
-        {
-            EndTime = component.EndTime,
-            Duration = component.SupercriticalDuration
-        };
-    }
-
-    private void OnSupercriticalHandleState(EntityUid uid, AnomalySupercriticalComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not AnomalySupercriticalComponentState state)
-            return;
-
-        component.EndTime = state.EndTime;
-        component.SupercriticalDuration = state.Duration;
     }
 
     private void OnInteractHand(EntityUid uid, AnomalyComponent component, InteractHandEvent args)
@@ -151,9 +111,9 @@ public abstract class SharedAnomalySystem : EntitySystem
         var pulse = EnsureComp<AnomalyPulsingComponent>(uid);
         pulse.EndTime  = Timing.CurTime + pulse.PulseDuration;
         Appearance.SetData(uid, AnomalyVisuals.IsPulsing, true);
-
-        var ev = new AnomalyPulseEvent(component.Stability, component.Severity);
-        RaiseLocalEvent(uid, ref ev);
+        
+        var ev = new AnomalyPulseEvent(uid, component.Stability, component.Severity);
+        RaiseLocalEvent(uid, ref ev, true);
     }
 
     /// <summary>
@@ -196,8 +156,8 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (_net.IsServer)
             _sawmill.Info($"Raising supercritical event. Entity: {ToPrettyString(uid)}");
 
-        var ev = new AnomalySupercriticalEvent();
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new AnomalySupercriticalEvent(uid);
+        RaiseLocalEvent(uid, ref ev, true);
 
         EndAnomaly(uid, component, true);
     }
@@ -223,6 +183,9 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         if (Terminating(uid) || _net.IsClient)
             return;
+
+        Spawn(supercritical ? component.CorePrototype : component.CoreInertPrototype, Transform(uid).Coordinates);
+
         QueueDel(uid);
     }
 

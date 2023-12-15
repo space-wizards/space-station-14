@@ -1,8 +1,11 @@
 using System.Linq;
 using Content.Client.Eui;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 {
@@ -64,14 +67,26 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             if (state is not GhostRolesEuiState ghostState) return;
             _window.ClearEntries();
 
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var sysManager = entityManager.EntitySysManager;
+            var spriteSystem = sysManager.GetEntitySystem<SpriteSystem>();
+            var requirementsManager = IoCManager.Resolve<JobRequirementsManager>();
+
             var groupedRoles = ghostState.GhostRoles.GroupBy(
-                role => (role.Name, role.Description));
+                role => (role.Name, role.Description, role.Requirements));
             foreach (var group in groupedRoles)
             {
                 var name = group.Key.Name;
                 var description = group.Key.Description;
+                bool hasAccess = true;
+                FormattedMessage? reason;
 
-                _window.AddEntry(name, description, group);
+                if (!requirementsManager.CheckRoleTime(group.Key.Requirements, out reason))
+                {
+                    hasAccess = false;
+                }
+
+                _window.AddEntry(name, description, hasAccess, reason, group, spriteSystem);
             }
 
             var closeRulesWindow = ghostState.GhostRoles.All(role => role.Identifier != _windowRulesId);

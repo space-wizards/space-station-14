@@ -223,7 +223,7 @@ namespace Content.Server.VendingMachines
             if (!Resolve(uid, ref vendComponent))
                 return false;
 
-            if (!TryComp<AccessReaderComponent?>(uid, out var accessReader))
+            if (!TryComp<AccessReaderComponent>(uid, out var accessReader))
                 return true;
 
             if (_accessReader.IsAllowed(sender, uid, accessReader) || HasComp<EmaggedComponent>(uid))

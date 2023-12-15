@@ -18,6 +18,19 @@ public abstract partial class SharedDisposalUnitComponent : Component
     public SoundSpecifier? FlushSound = new SoundPathSpecifier("/Audio/Machines/disposalflush.ogg");
 
     /// <summary>
+    /// Sound played when an object is inserted into the disposal unit.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundInsert")]
+    public SoundSpecifier? InsertSound = new SoundPathSpecifier("/Audio/Effects/trashbag1.ogg");
+
+    /// <summary>
+    /// Sound played when an item is thrown and misses the disposal unit.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundMiss")]
+    public SoundSpecifier? MissSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
+
+
+    /// <summary>
     /// State for this disposals unit.
     /// </summary>
     [DataField("state")]
@@ -81,7 +94,7 @@ public abstract partial class SharedDisposalUnitComponent : Component
     ///     Delay from trying to shove someone else into disposals.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float DraggedEntryDelay = 0.5f;
+    public float DraggedEntryDelay = 2.0f;
 
     /// <summary>
     ///     Container of entities inside this disposal unit.
