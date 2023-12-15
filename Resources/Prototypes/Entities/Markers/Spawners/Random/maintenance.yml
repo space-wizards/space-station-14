@@ -142,6 +142,7 @@
         - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - ToolboxEmergencyFilled
+        - ToolboxArtisticFilled
         - NitrogenTankFilled
         - DoubleEmergencyNitrogenTankFilled
         - ToolboxElectricalFilled
