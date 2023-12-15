@@ -471,16 +471,16 @@
   result: ShellShotgunUranium
   completetime: 2
   materials:
-    Plastic: 20
-    Uranium: 2
+    Plastic: 15
+    Uranium: 10
 
 - type: latheRecipe
   id: CartridgePistolUranium
   result: CartridgePistolUranium
   completetime: 2
   materials:
-    Plastic: 10
-    Uranium: 1
+    Plastic: 5
+    Uranium: 10
 
 - type: latheRecipe
   id: CartridgeMagnumUranium
@@ -488,7 +488,7 @@
   completetime: 2
   materials:
     Plastic: 20
-    Uranium: 2
+    Uranium: 10
 
 - type: latheRecipe
   id: CartridgeLightRifleUranium
@@ -496,7 +496,7 @@
   completetime: 2
   materials:
     Plastic: 20
-    Uranium: 2
+    Uranium: 10
 
 - type: latheRecipe
   id: CartridgeRifleUranium
@@ -504,7 +504,7 @@
   completetime: 2
   materials:
     Plastic: 15
-    Uranium: 1.5
+    Uranium: 10
 
 - type: latheRecipe
   id: MagazineBoxPistolUranium

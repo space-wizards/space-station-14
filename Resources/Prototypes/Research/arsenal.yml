@@ -86,7 +86,7 @@
   - MagazineBoxRifleRubber
 
 - type: technology
-  id: DepletedUraniumMunitions
+  id: UraniumMunitions
   name: research-technology-uranium-munitions
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
