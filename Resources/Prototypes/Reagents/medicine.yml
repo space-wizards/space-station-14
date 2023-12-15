@@ -1003,7 +1003,7 @@
             Poison: 4
 
 - type: reagent
-  id: Holy water
+  id: Holywater
   name: reagent-name-holywater
   group: Medicine
   desc: reagent-desc-holywater
