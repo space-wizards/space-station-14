@@ -59,6 +59,6 @@
   id: Coal
   name: coal
   icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: coal }
-  spawn: GoldOre1
+  spawn: Coal1
   maxCount: 30
   itemSize: 2
