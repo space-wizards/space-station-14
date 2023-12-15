@@ -57,7 +57,7 @@ Continous radiation exposure will gradually convert the stored plasma into triti
 </Box>
 
 The Particle Accelerator (PA) is a multi-tile structure that launches accelerated particles from its emitters. Its emitters should always face the gravitational singularity generator.
-Some stations already have an unfinished PA. To complete, first ensure there is HV cable beneath the PA power box, anchor all parts, then add LV cable to each part.
+Some stations already have an unfinished PA. To complete, first ensure there is MV cable beneath the PA power box, anchor all parts, then add LV cable to each part.
 <Box>
 <GuideEntityEmbed Entity="CableApcStack"/>
 </Box>

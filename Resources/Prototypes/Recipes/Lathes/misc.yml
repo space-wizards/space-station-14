@@ -7,6 +7,22 @@
     Glass: 50
 
 - type: latheRecipe
+  id: SodiumLightTube
+  result: SodiumLightTube
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
+  id: ExteriorLightTube
+  result: ExteriorLightTube
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
   id: LightBulb
   result: LightBulb
   completetime: 2
@@ -84,6 +100,15 @@
   materials:
     Steel: 1000
     Plastic: 500
+
+- type: latheRecipe
+  id: ClothingShoesBootsSpeed
+  result: ClothingShoesBootsSpeed
+  completetime: 2
+  materials:
+    Steel: 1500
+    Plastic: 1000
+    Silver: 500
 
 - type: latheRecipe
   id: ModularReceiver

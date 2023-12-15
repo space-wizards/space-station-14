@@ -526,7 +526,7 @@ entities:
       type: Transform
     - enabled: True
       type: AmbientSound
-- proto: GeneratorUranium
+- proto: GeneratorBasic15kW
   entities:
   - uid: 34
     components:

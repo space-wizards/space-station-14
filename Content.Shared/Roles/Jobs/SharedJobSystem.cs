@@ -83,7 +83,7 @@ public abstract class SharedJobSystem : EntitySystem
 
     public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
     {
-        return CompOrNull<JobComponent>(mindId)?.PrototypeId == prototypeId;
+        return CompOrNull<JobComponent>(mindId)?.Prototype == prototypeId;
     }
 
     public bool MindTryGetJob(
@@ -95,8 +95,8 @@ public abstract class SharedJobSystem : EntitySystem
         prototype = null;
 
         return TryComp(mindId, out comp) &&
-               comp.PrototypeId != null &&
-               _prototypes.TryIndex(comp.PrototypeId, out prototype);
+               comp.Prototype != null &&
+               _prototypes.TryIndex(comp.Prototype, out prototype);
     }
 
     /// <summary>

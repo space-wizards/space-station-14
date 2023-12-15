@@ -49,6 +49,8 @@ public sealed class ActionButton : Control, IEntityControl
     private readonly SpriteView _smallItemSpriteView;
     private readonly SpriteView _bigItemSpriteView;
 
+    private Texture? _buttonBackgroundTexture;
+
     public EntityUid? ActionId { get; private set; }
     private BaseActionComponent? _action;
     public bool Locked { get; set; }
@@ -138,9 +140,9 @@ public sealed class ActionButton : Control, IEntityControl
         });
         Cooldown = new CooldownGraphic {Visible = false};
 
+        AddChild(Button);
         AddChild(_bigActionIcon);
         AddChild(_bigItemSpriteView);
-        AddChild(Button);
         AddChild(HighlightRect);
         AddChild(Label);
         AddChild(Cooldown);
@@ -167,7 +169,7 @@ public sealed class ActionButton : Control, IEntityControl
     protected override void OnThemeUpdated()
     {
         base.OnThemeUpdated();
-        Button.Texture = Theme.ResolveTexture("SlotBackground");
+        _buttonBackgroundTexture = Theme.ResolveTexture("SlotBackground");
         Label.FontColorOverride = Theme.ResolveColorOrSpecified("whiteText");
     }
 
@@ -263,6 +265,7 @@ public sealed class ActionButton : Control, IEntityControl
     public void UpdateIcons()
     {
         UpdateItemIcon();
+        UpdateBackground();
 
         if (_action == null)
         {
@@ -276,6 +279,20 @@ public sealed class ActionButton : Control, IEntityControl
             SetActionIcon(_spriteSys.Frame0(_action.IconOn));
         else
             SetActionIcon(_action.Icon != null ? _spriteSys.Frame0(_action.Icon) : null);
+    }
+
+    public void UpdateBackground()
+    {
+        _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
+        if (_action != null ||
+            _controller.IsDragging && GetPositionInParent() == Parent?.ChildCount - 1)
+        {
+            Button.Texture = _buttonBackgroundTexture;
+        }
+        else
+        {
+            Button.Texture = null;
+        }
     }
 
     public bool TryReplaceWith(EntityUid actionId, ActionsSystem system)
@@ -311,6 +328,9 @@ public sealed class ActionButton : Control, IEntityControl
     {
         base.FrameUpdate(args);
 
+        UpdateBackground();
+
+        Cooldown.Visible = _action != null && _action.Cooldown != null;
         if (_action == null)
             return;
 
@@ -363,7 +383,8 @@ public sealed class ActionButton : Control, IEntityControl
 
     public void DrawModeChanged()
     {
-        HighlightRect.Visible = _beingHovered;
+        _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
+        HighlightRect.Visible = _beingHovered && (_action != null || _controller.IsDragging);
 
         // always show the normal empty button style if no action in this slot
         if (_action == null)
@@ -373,15 +394,14 @@ public sealed class ActionButton : Control, IEntityControl
         }
 
         // show a hover only if the action is usable or another action is being dragged on top of this
-        _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
-        if (_beingHovered && (_controller.IsDragging || _action.Enabled))
+        if (_beingHovered && (_controller.IsDragging || _action!.Enabled))
         {
             SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassHover);
         }
 
         // it's only depress-able if it's usable, so if we're depressed
         // show the depressed style
-        if (_depressed)
+        if (_depressed && !_beingHovered)
         {
             HighlightRect.Visible = false;
             SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassPressed);

@@ -222,6 +222,59 @@
                   min: 1
                   max: 2
 
+- type: entity
+  name: web shield
+  parent: BaseShield
+  id: WebShield
+  description: A stringy shield. It's weak, and doesn't seem to do well against heat.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/web-shield.rsi
+      state: icon
+    - type: Item
+      sprite: Objects/Weapons/Melee/web-shield.rsi
+      heldPrefix: icon
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.95
+          Slash: 0.95
+          Piercing: 0.95
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.85
+        flatReductions:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.5
+    - type: Construction
+      graph: WebObjects
+      node: shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 40
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                MaterialWebSilk:
+                  min: 1
+                  max: 1
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/woodhit.ogg
+
 #Magic/Cult Shields (give these to wizard for now)
 
 - type: entity

@@ -72,6 +72,13 @@
   - type: Construction
     graph: WindowDirectional
     node: plasmaReinforcedWindowDirectional
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 36
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional.rsi
   - type: Destructible
     thresholds:
     - trigger:

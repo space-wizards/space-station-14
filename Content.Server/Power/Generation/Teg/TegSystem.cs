@@ -279,6 +279,10 @@ public sealed class TegSystem : EntitySystem
 
     private void GeneratorPowerChange(EntityUid uid, TegGeneratorComponent component, ref PowerChangedEvent args)
     {
+        // TODO: I wish power events didn't go out on shutdown.
+        if (TerminatingOrDeleted(uid))
+            return;
+
         var nodeGroup = GetNodeGroup(uid);
         if (nodeGroup == null)
             return;

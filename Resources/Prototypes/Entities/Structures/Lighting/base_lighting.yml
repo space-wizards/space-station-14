@@ -303,11 +303,11 @@
   components:
   - type: PointLight
     enabled: false
-    radius: 10
-    energy: 2.5
-    offset: "0, 0.2"
+    radius: 5
+    energy: 0.6
+    offset: "0, 0.4"
     color: "#FF4020"
-    mask: /Textures/Effects/LightMasks/cone.png
+    mask: /Textures/Effects/LightMasks/double_cone.png
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Battery
@@ -315,6 +315,7 @@
     startingCharge: 0
   - type: EmergencyLight
   - type: RotatingLight
+    speed: 40
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
     layers:
@@ -329,12 +330,6 @@
       shader: "unshaded"
       visible: false
   - type: Appearance
-  - type: AmbientSound
-    sound:
-      path: /Audio/Ambience/Objects/alarm.ogg
-    volume: -12
-    range: 5
-    enabled: false
   placement:
     mode: SnapgridCenter
     snap:

@@ -197,7 +197,14 @@
     state: durathread
   - type: Stack
     count: 1
-
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents: #Hell if I know what durathread is made out of.
+        - ReagentId: Fiber
+          Quantity: 6
+          
 - type: entity
   parent: MaterialBase
   id: MaterialWoodPlank
@@ -228,6 +235,20 @@
     - Wooden
     - DroneUsable
     - RawMaterial
+  - type: Extractable
+    grindableSolutionName: wood
+  - type: SolutionContainerManager
+#Apparently these all components of cellulose, which is what you got in /tg/ when grinding wood + a bunch of other shit.
+#Considering the frequency of it, maybe there should be a cellulose reagent instead?
+    solutions:
+      wood:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 10
+        - ReagentId: Oxygen
+          Quantity: 5
+        - ReagentId: Hydrogen
+          Quantity: 5
 
 - type: entity
   parent: MaterialWoodPlank
@@ -335,6 +356,14 @@
     state: diamond
   - type: Item
     heldPrefix: diamond
+  - type: Extractable
+    grindableSolutionName: diamond
+  - type: SolutionContainerManager
+    solutions:
+      diamond:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 20
 
 - type: entity
   parent: MaterialDiamond
@@ -372,6 +401,11 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
   - type: Tag
     tags:
       - ClothMade
@@ -472,6 +506,11 @@
       - cobwebs
     ignoreReagents:
       - Fiber
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
   - type: SolutionContainerManager
     solutions:
       food:

@@ -47,8 +47,93 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/sound/machines/warning-buzzer.ogg"
-  
+
 - files: ["anomaly_sync_connect.ogg"]
   license: "CC0-1.0"
-  copyright: Created by newagesoup, convert to ogg mono by TheShuEd"
+  copyright: "Created by newagesoup, convert to ogg mono by TheShuEd"
   source: "https://freesound.org/people/newagesoup/sounds/341172/"
+
+- files: ["circuitprinter.ogg"]
+  license: "CC0-1.0"
+  copyright: "OroborosNZ on freesound.org"
+  source: "https://freesound.org/people/OroborosNZ/sounds/273649/"
+
+- files: ["circuitprinter.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "170048@virtualwindow.co.za on freesound.org"
+  source: "https://freesound.org/people/170048@virtualwindow.co.za/sounds/408041/"
+
+- files: ["diagnoser_printing.ogg"]
+  license: "CC0-1.0"
+  copyright: "RobSp1derp1g on freesound.org"
+  source: "https://freesound.org/people/RobSp1derp1g/sounds/615419/"
+
+- files: ["genetics.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Citadel Station 13"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/5307e56a25a53fe1b4d34e7f1401ae8dfaa44922/sound/effects/genetics.ogg"
+
+- files: ["uniformprinter.ogg"]
+  license: "CC0-1.0"
+  copyright: "sukaton on freesound.org"
+  source: "https://freesound.org/people/sukaton/sounds/60640/"
+
+- files: ["vaccinator_running.ogg"]
+  license: "CC0-1.0"
+  copyright: "Rutger Muller www.rutgermuller.nl"
+  source: "https://freesound.org/people/RutgerMuller/sounds/365413/"
+
+- files: ["vending_jingle.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "hubismal on GitHub"
+  source: "https://github.com/space-wizards/space-station-14/commit/3421e4f4de2613df1e92a4169a778335bc9faac4"
+
+- files: ["lightswitch.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Skyrat-SS13"
+  source: "https://github.com/Skyrat-SS13/Skyrat-tg/blob/3f6099bbc3c2afdc609bf1991c2f06297a0f13c2/modular_skyrat/modules/aesthetics/lightswitch/sound/lightswitch.ogg"
+
+- files: ["reclaimer_startup.ogg"]
+  license: "CC0-1.0"
+  copyright: "cmorris035"
+  source: "https://freesound.org/people/cmorris035/sounds/319152/"
+
+- files: ["airlock_open.ogg", "airlock_close.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "/tg/station"
+  source: "https://github.com/tgstation/tgstation/tree/5f5002b21253354c20ea224be3f604d79299b37e/sound/machines"
+
+- files: ["machine_vend_hot_drink.ogg"]
+  license: "CC0-1.0"
+  copyright: "waxsocks on freesound.org"
+  source: "https://freesound.org/people/waxsocks/sounds/402603/"
+
+- files: ["scan_loop.ogg"]
+  license: "CC0-1.0"
+  copyright: "steaq on freesound.org"
+  source: "https://freesound.org/people/steaq/sounds/509249/"
+
+- files: ["scan_finish.ogg"]
+  license: "CC0-1.0"
+  copyright: "pan14 on freesound.org"
+  source: "https://freesound.org/people/steaq/sounds/509249/"
+
+- files: ["printer.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "/tg/station"
+  source: "https://github.com/tgstation/tgstation/blob/31c5aaf4b885a50c9d5a0777e2647af64e7193bf/sound/machines/printer.ogg"
+
+- files: ["hight_tech_confirm.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "/tg/station"
+  source: "https://github.com/tgstation/tgstation/blob/14aa5d2d8efca6370778d730e36ffcf258b9352e/sound/machines/high_tech_confirm.ogg"
+
+- files: ["tray_eject.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "/tg/station"
+  source: "https://github.com/tgstation/tgstation/blob/3eeba3899f22638595333c63b7b7433001f91bb2/sound/machines/eject.ogg"
+
+- files: ["scanning.ogg"]
+  license: "CC0-1.0"
+  copyright: "Samuel Gremaud on freesound.org"
+  source: "https://freesound.org/people/SamuelGremaud/sounds/455375/"

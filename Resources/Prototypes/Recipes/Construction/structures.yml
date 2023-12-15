@@ -179,6 +179,61 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: shuttle wall
+  id: ShuttleWall
+  graph: Girder
+  startNode: start
+  targetNode: shuttleWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/shuttle.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: interior shuttle wall
+  id: InteriorShuttleWall
+  graph: Girder
+  startNode: start
+  targetNode: shuttleInteriorWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/shuttleinterior.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+
+- type: construction
+  name: diagonal shuttle wall
+  id: DiagonalShuttleWall
+  graph: Girder
+  startNode: start
+  targetNode: diagonalshuttleWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/shuttle_diagonal.rsi
+    state: state0
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: bananium wall
   id: ClownWall
   graph: Girder
@@ -381,6 +436,25 @@
   canRotate: false
 
 - type: construction
+  name: shuttle window
+  id: ShuttleWindow
+  graph: Window
+  startNode: start
+  targetNode: shuttleWindow
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Extra sturdy to resist the pressure of FTL or sustain damage from munitions.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/shuttle_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction  
   name: diagonal plasma window
   id: PlasmaWindowDiagonal
   graph: WindowDiagonal

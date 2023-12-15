@@ -355,6 +355,17 @@
     Hooch: 3
 
 - type: reaction
+  id: HotCocoa
+  minTemp: 350
+  reactants:
+    Water:
+      amount: 1
+    CocoaPowder:
+      amount: 1
+  products:
+    HotCocoa: 2
+
+- type: reaction
   id: IceCream
   reactants:
     Cream:

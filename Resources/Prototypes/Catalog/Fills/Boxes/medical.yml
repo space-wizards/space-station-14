@@ -22,7 +22,7 @@
   - type: StorageFill
     contents:
       - id: PillCanister
-        amount: 4
+        amount: 9
   - type: Sprite
     layers:
       - state: box
@@ -94,7 +94,8 @@
   id: BoxMouthSwab
   components:
   - type: Storage
-    maxTotalWeight: 20
+    grid:
+    - 0,0,4,3
   - type: StorageFill
     contents:
       - id: DiseaseSwab

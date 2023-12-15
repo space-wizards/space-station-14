@@ -11,12 +11,14 @@
           state: icon-super
     - type: RandomSpawner
       rarePrototypes:
+        - ClothingUniformJumpsuitFamilyGuy
         - CigarGold
         - ClothingNeckCloakHerald
         - ClothingHeadHelmetTemplar
         - ClothingNeckCloakTrans
         - ClothingNeckCloakAdmin
         - ClothingNeckCloakMoth
+        - ClothingNeckCloakVoid
         - ClothingNeckCloakGoliathCloak
         - ToySkeleton
         - Basketball
@@ -95,6 +97,7 @@
         - ClothingNeckTieRed
         - ClothingOuterCoatGentle
         - ClothingOuterCoatJensen
+        - ClothingEyesGlassesJensen
         - ClothingOuterCoatLab
         - ClothingOuterCoatPirate
         - ClothingOuterHoodieBlack
@@ -140,6 +143,7 @@
         - DoubleEmergencyOxygenTankFilled
         - ToolboxEmergencyFilled
         - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
         - ToolboxElectricalFilled
         - ToolboxMechanicalFilled
         - ClothingBeltUtility
@@ -183,6 +187,7 @@
         - CableHVStack10
         - CableMVStack10
         - CableApcStack10
+        - PetCarrier
       chance: 0.6
       offset: 0.0
 
@@ -211,6 +216,8 @@
         - FlashlightLantern
         - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
+        - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
         - Lighter
         - Matchbox
         - Crowbar
