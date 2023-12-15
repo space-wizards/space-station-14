@@ -1,22 +1,4 @@
 Entries:
-- author: waylon531
-  changes:
-  - {message: Centcomm is tired of the crew drunkenly wandering the station and starting
-      brawls. Many mixed drinks now have half as much alcohol., type: Tweak}
-  id: 4868
-  time: '2023-09-21T00:58:57.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix xeno ghost roles showing up for expeditions., type: Fix}
-  id: 4869
-  time: '2023-09-21T13:21:43.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Added improvised bows & arrows to construction, have fun embedding
-      people with arrows', type: Add}
-  - {message: Added quivers as random maint loot drops, type: Add}
-  id: 4870
-  time: '2023-09-22T09:45:21.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: The guidebook now has a pop-out button. This will turn it into a system
@@ -2901,3 +2883,24 @@ Entries:
     type: Add}
   id: 5368
   time: '2023-12-15T09:41:44.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Chaplains can smack their bible on water to create holy water., type: Add}
+  id: 5369
+  time: '2023-12-15T09:52:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the electrolysis unit and the centrifuge. These will be used for
+      chemistry in the future., type: Add}
+  id: 5370
+  time: '2023-12-15T09:52:46.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Gibbed body parts contain their victim's DNA, type: Tweak}
+  - {message: 'Implanters, syringes, hyposprays, medipens, and cigarettes transfer
+      DNA', type: Tweak}
+  - {message: Melee weapons that deal blunt/slash/pierce damage transfer DNA, type: Tweak}
+  - {message: 'Soap and rags can be used to clean evidence off of items, but leave
+      evidence of their own', type: Tweak}
+  id: 5371
+  time: '2023-12-15T09:52:56.0000000+00:00'
