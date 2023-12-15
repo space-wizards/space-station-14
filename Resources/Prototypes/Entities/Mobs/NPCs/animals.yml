@@ -2406,22 +2406,9 @@
     description: ghost-role-information-SyndiCat-description
     rules: ghost-role-information-SyndiCat-rules
   - type: GhostTakeoverAvailable
-  - type: SubdermalImplant
-    permanent: true
-    implantAction: ActionActivateMicroBomb
-  - type: TriggerOnMobstateChange
-    mobState:
-    - Critical
-  - type: TriggerImplantAction
-  - type: ExplodeOnTrigger
-  - type: GibOnTrigger
-    deleteItems: true
-  - type: Explosive
-    explosionType: MicroBomb
-    totalIntensity: 120
-    intensitySlope: 5
-    maxIntensity: 30
-    canCreateVacuum: false
+  - type: AutoImplant
+    implants:
+    - MicroBombImplant
    
 - type: entity
   name: space cat
