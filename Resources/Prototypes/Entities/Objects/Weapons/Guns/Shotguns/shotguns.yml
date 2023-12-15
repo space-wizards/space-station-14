@@ -108,6 +108,9 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
   - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: db
   - type: Gun
@@ -163,6 +166,9 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
     size: Normal
     sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: pump
