@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Added U-shaped rails, type: Add}
-  id: 4864
-  time: '2023-09-20T08:26:17.0000000+00:00'
 - author: Just_Art
   changes:
   - {message: Added corn in butter., type: Add}
@@ -2899,3 +2894,8 @@ Entries:
   - {message: Crusher Glaives can be made with the Salvage Weapons technology., type: Add}
   id: 5364
   time: '2023-12-15T01:34:37.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Acidifier now has a sprite effect., type: Tweak}
+  id: 5365
+  time: '2023-12-15T01:56:42.0000000+00:00'
