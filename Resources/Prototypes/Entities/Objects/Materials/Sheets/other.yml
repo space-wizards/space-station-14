@@ -253,16 +253,16 @@
     - type: Item
       sprite: Objects/Materials/Sheets/meaterial.rsi
       heldPrefix: meat
-  - type: Extractable
-    grindableSolutionName: meatsheet
-  - type: SolutionContainerManager
-    solutions:
-      meatsheet:
-        reagents:
-        - ReagentId: Protein
-          Quantity: 22 #for consistency with other materials
-        - ReagentId: Fat
-          Quantity: 3
+    - type: Extractable
+      grindableSolutionName: meatsheet
+    - type: SolutionContainerManager
+      solutions:
+        meatsheet:
+          reagents:
+          - ReagentId: Protein
+            Quantity: 22 #for consistency with other materials
+          - ReagentId: Fat
+            Quantity: 3
 
 - type: entity
   parent: MaterialSheetMeat
