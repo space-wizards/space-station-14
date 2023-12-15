@@ -1,7 +1,5 @@
 - type: reaction
   id: Ammonia
-  requiredMixerCategories: #TODO TEMP. REMOVE.
-  - Electrolysis
   reactants:
     Hydrogen:
       amount: 3
