@@ -78,10 +78,10 @@ public sealed partial class ExplosionPrototype : IPrototype
     public SoundSpecifier SmallSound = new SoundCollectionSpecifier("ExplosionSmall");
 
     [DataField("soundFar")]
-    public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar");
+    public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar", AudioParams.Default.WithVolume(2f));
 
     [DataField("smallSoundFar")]
-    public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar");
+    public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar", AudioParams.Default.WithVolume(2f));
 
     [DataField("texturePath")]
     public ResPath TexturePath = new("/Textures/Effects/fire.rsi");
