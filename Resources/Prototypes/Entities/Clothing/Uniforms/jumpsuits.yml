@@ -1437,3 +1437,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCMOturtleneck
+  name: cheif medical officer's turtleneck
+  description: Its a turtleneck, worn by only the best medical doctors.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/cmo_alt.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/cmo_alt.rsi

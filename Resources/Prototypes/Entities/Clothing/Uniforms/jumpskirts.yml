@@ -925,3 +925,14 @@
       - state: equipped-INNERCLOTHING-jumpskirt
       - state: equipped-INNERCLOTHING-shirt
         color: "#b30000"
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpsuitCMOturtleneckSkirt
+  name: cheif medical officer's turtleneck
+  description: Its a turtleneck, worn by only the best medical doctors.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/cmo_alt.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/cmo_alt.rsi
