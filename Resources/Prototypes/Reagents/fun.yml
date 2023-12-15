@@ -241,7 +241,7 @@
     Extinguish:
       methods: [ Touch ]
       effects:
-      - !type:ExtinguishReaction
+      - !type:ExtinguishReaction # cold
   metabolisms:
     Poison:
       metabolismRate : 0.45
