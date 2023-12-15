@@ -13,6 +13,20 @@
   id: bebey
 
 - type: ttsVoice
+  name: Дмитрий Пучков
+  description: ''
+  sex: Male
+  speaker: puchkow
+  id: puchkow
+
+- type: ttsVoice
+  name: Мориарти
+  description: ''
+  sex: Male
+  speaker: moriarti
+  id: moriarti
+
+- type: ttsVoice
   name: Шарлотта
   description: Голос виртуального ютубера Charlotte Ch
   sex: Female
@@ -144,6 +158,27 @@
   sex: Female
   speaker: neco
   id: neco
+
+- type: ttsVoice
+  name: Неко-Арк 2
+  description: Голос персонажа Неко-Арк из Fate
+  sex: Female
+  speaker: neco_arc_2
+  id: neco_arc_2
+
+- type: ttsVoice
+  name: Злая Неко-Арк
+  description: Злой голос персонажа Неко-Арк из Fate
+  sex: Female
+  speaker: angry_neco_arc
+  id: angry_neco_arc
+
+- type: ttsVoice
+  name: Сквидвард
+  description: Голос персонажа Сквидвард из мультфильма Губка Боб
+  sex: Male
+  speaker: squidward
+  id: squidward
 
 - type: ttsVoice
   name: SentryBot
@@ -606,4 +641,46 @@
   sex: Male
   speaker: brukan
   id: brukan
+
+- type: ttsVoice
+  name: Гаррош Адский Крик
+  description: Голос персонажа Гаррош Адский Крик из игры Hearthstone
+  sex: Male
+  speaker: garrosh
+  id: garrosh
+
+- type: ttsVoice
+  name: Джайна Праудмур
+  description: Голос персонажа Джайна Праудмур из игры Hearthstone
+  sex: Female
+  speaker: jaina
+  id: jaina
+
+- type: ttsVoice
+  name: Адъютант
+  description: Голос персонажа Адъютант из игры StarCraft 2
+  sex: Female
+  speaker: adjutant
+  id: adjutant
+
+- type: ttsVoice
+  name: Ариэль Хэнсон
+  description: Голос персонажа Ариэль Хэнсон из игры StarCraft 2
+  sex: Female
+  speaker: hanson
+  id: hanson
+
+- type: ttsVoice
+  name: Бралик
+  description: Голос персонажа Бралик из игры StarCraft 2
+  sex: Male
+  speaker: bralik
+  id: bralik
+
+- type: ttsVoice
+  name: Мэтт Хорнер
+  description: Голос персонажа Мэтт Хорнер из игры StarCraft 2
+  sex: Male
+  speaker: horner
+  id: horner
 
