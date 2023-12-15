@@ -76,7 +76,7 @@
           True: { visible: True }
           False: { visible: False }
   - type: Machine
-    board: ReagentGrinderMachineCircuitboard
+    board: ElectrolysisUnitMachineCircuitboard
 
 - type: entity
   id: MachineCentrifuge
@@ -116,4 +116,4 @@
           True: { visible: True }
           False: { visible: False }
   - type: Machine
-    board: ReagentGrinderMachineCircuitboard
+    board: CentrifugeMachineCircuitboard
