@@ -253,7 +253,6 @@
     - type: Item
       sprite: Objects/Materials/Sheets/meaterial.rsi
       heldPrefix: meat
-    - type: Appearance
   - type: Extractable
     grindableSolutionName: meatsheet
   - type: SolutionContainerManager
