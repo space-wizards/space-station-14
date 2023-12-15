@@ -1,10 +1,4 @@
 Entries:
-- author: Just_Art
-  changes:
-  - {message: Added corn in butter., type: Add}
-  - {message: Increased popcorn cooking time., type: Tweak}
-  id: 4865
-  time: '2023-09-20T09:51:09.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Fix some do_afters mispredicting, e.g. removing encryption keys from
@@ -2899,3 +2893,8 @@ Entries:
   - {message: Acidifier now has a sprite effect., type: Tweak}
   id: 5365
   time: '2023-12-15T01:56:42.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Mercury poisoning now causes stuttering., type: Tweak}
+  id: 5366
+  time: '2023-12-15T09:28:13.0000000+00:00'
