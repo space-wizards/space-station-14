@@ -77,12 +77,10 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunInvalidatedTiles.TryDequeue(out var tile))
             {
-                var indices = tile.GridIndices;
-                DebugTools.Assert(atmosphere.Tiles.GetValueOrDefault(indices) == tile);
-
+                DebugTools.Assert(atmosphere.Tiles.GetValueOrDefault(tile.GridIndices) == tile);
                 UpdateAdjacentTiles(ent, tile, activate: true);
                 UpdateTileAir(ent, tile, volume);
-                InvalidateVisuals(uid, indices, visuals);
+                InvalidateVisuals(uid, tile.GridIndices, visuals);
 
                 if (number++ < InvalidCoordinatesLagCheckIterations)
                     continue;

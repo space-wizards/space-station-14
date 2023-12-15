@@ -97,11 +97,8 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        private AtmosDebugOverlayData ConvertTileToData(TileAtmosphere? tile)
+        private AtmosDebugOverlayData? ConvertTileToData(TileAtmosphere tile)
         {
-            if (tile == null)
-                return default;
-
             return new AtmosDebugOverlayData(
                 tile.GridIndices,
                 tile.Air?.Temperature ?? default,

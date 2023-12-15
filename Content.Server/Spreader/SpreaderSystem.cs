@@ -73,12 +73,7 @@ public sealed class SpreaderSystem : EntitySystem
 
     private void OnAirtightChanged(ref AirtightChanged ev)
     {
-        var neighbors = GetSpreadableNeighbors(ev.Entity, ev.Airtight, ev.Position);
-
-        foreach (var neighbor in neighbors)
-        {
-            EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
-        }
+        ActivateGetSpreadableNeighbors(ev.Entity, ev.Airtight, ev.Position);
     }
 
     private void OnGridInit(GridInitializeEvent ev)
@@ -88,13 +83,7 @@ public sealed class SpreaderSystem : EntitySystem
 
     private void OnTerminating(EntityUid uid, EdgeSpreaderComponent component, ref EntityTerminatingEvent args)
     {
-        var neighbors = GetSpreadableNeighbors(uid);
-
-        foreach (var neighbor in neighbors)
-        {
-            if (!TerminatingOrDeleted(neighbor))
-                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
-        }
+        ActivateGetSpreadableNeighbors(uid);
     }
 
     /// <inheritdoc/>
@@ -307,11 +296,10 @@ public sealed class SpreaderSystem : EntitySystem
     /// <summary>
     /// Given an entity, this returns a list of all adjacent entities with a <see cref="EdgeSpreaderComponent"/>.
     /// </summary>
-    public List<EntityUid> GetSpreadableNeighbors(EntityUid uid, AirtightComponent? comp = null,
+    public void ActivateGetSpreadableNeighbors(EntityUid uid, AirtightComponent? comp = null,
         (EntityUid Grid, Vector2i Tile)? position = null)
     {
         Resolve(uid, ref comp, false);
-        var neighbors = new List<EntityUid>();
 
         Vector2i tile;
         MapGridComponent? grid;
@@ -320,13 +308,13 @@ public sealed class SpreaderSystem : EntitySystem
         {
             var transform = Transform(uid);
             if (!_mapManager.TryGetGrid(transform.GridUid, out grid))
-                return neighbors;
+                return;
             tile = grid.TileIndicesFor(transform.Coordinates);
         }
         else
         {
             if (!_mapManager.TryGetGrid(position.Value.Grid, out grid))
-                return neighbors;
+                return;
             tile = position.Value.Tile;
         }
 
@@ -344,11 +332,9 @@ public sealed class SpreaderSystem : EntitySystem
             while (directionEnumerator.MoveNext(out var ent))
             {
                 DebugTools.Assert(Transform(ent.Value).Anchored);
-                if (spreaderQuery.HasComponent(ent))
-                    neighbors.Add(ent.Value);
+                if (spreaderQuery.HasComponent(ent) && !TerminatingOrDeleted(ent.Value))
+                    EnsureComp<ActiveEdgeSpreaderComponent>(ent.Value);
             }
         }
-
-        return neighbors;
     }
 }

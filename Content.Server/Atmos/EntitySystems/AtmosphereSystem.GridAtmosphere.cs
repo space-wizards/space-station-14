@@ -304,19 +304,19 @@ public sealed partial class AtmosphereSystem
                 AddActiveTile(atmos, adjacent);
 
             var oppositeDirection = direction.GetOpposite();
-            if (adjBlockDirs.IsFlagSet(oppositeDirection) && blockedDirs.IsFlagSet(direction))
+            if (adjBlockDirs.IsFlagSet(oppositeDirection) || blockedDirs.IsFlagSet(direction))
             {
+                // Adjacency is blocked by some airtight entity.
                 tile.AdjacentBits &= ~direction;
                 adjacent.AdjacentBits &= ~oppositeDirection;
-
                 tile.AdjacentTiles[i] = null;
                 adjacent.AdjacentTiles[oppositeDirection.ToIndex()] = null;
             }
             else
             {
+                // No airtight entity in the way.
                 tile.AdjacentBits |= direction;
                 adjacent.AdjacentBits |= oppositeDirection;
-
                 tile.AdjacentTiles[i] = adjacent;
                 adjacent.AdjacentTiles[oppositeDirection.ToIndex()] = tile;
             }
@@ -330,12 +330,6 @@ public sealed partial class AtmosphereSystem
 
         if (!tile.AdjacentBits.IsFlagSet(tile.MonstermosInfo.CurrentTransferDirection))
             tile.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
-    }
-
-    public (GasMixture Air, bool IsSpace) GetDefaultMapAtmosphere(Entity<MapAtmosphereComponent?> map)
-    {
-        Resolve(map.Owner, ref map.Comp, false);
-        return GetDefaultMapAtmosphere(map.Comp);
     }
 
     private (GasMixture Air, bool IsSpace) GetDefaultMapAtmosphere(MapAtmosphereComponent? map)
