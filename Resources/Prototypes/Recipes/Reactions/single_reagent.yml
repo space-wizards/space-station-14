@@ -28,3 +28,14 @@
       amount: 1
   products:
     Wine: 1
+
+- type: reaction
+  id: WatertoHolyWater
+  impact: Low
+  requiredMixerCategories:
+  - Holy
+  reactants:
+    Water:
+      amount: 1
+  products:
+    Holy water: 1
