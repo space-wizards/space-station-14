@@ -128,7 +128,7 @@
   maxTemp: 300
   reactants:
     Frezon:
-      amount: 1
+      amount: 3
     Plasma:
       amount: 1
       catalyst: true
