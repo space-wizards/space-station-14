@@ -274,6 +274,7 @@
       - SyringeBluespace
       - WeaponCrusher
       - WeaponCrusherDagger
+      - WeaponCrusherGlaive
       - WeaponForceGun
       - WeaponProtoKineticAccelerator
       - WeaponTetherGun
@@ -316,6 +317,8 @@
     idleState: icon
     runningState: building
     staticRecipes:
+    - ElectrolysisUnitMachineCircuitboard
+    - CentrifugeMachineCircuitboard
     - CondenserMachineCircuitBoard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
