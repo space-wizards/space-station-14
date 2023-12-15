@@ -4346,6 +4346,16 @@ entities:
     - pos: -6.5,7.5
       parent: 407
       type: Transform
+  - uid: 1737
+    components:
+    - pos: -23.5,-1.5
+      parent: 407
+      type: Transform
+  - uid: 1747
+    components:
+    - pos: -23.5,2.5
+      parent: 407
+      type: Transform
   - uid: 2082
     components:
     - pos: -20.5,4.5
@@ -5795,7 +5805,7 @@ entities:
       type: Transform
 - proto: ClosetRadiationSuitFilled
   entities:
-  - uid: 1870
+  - uid: 2107
     components:
     - pos: -18.5,-0.5
       parent: 407
@@ -5861,13 +5871,6 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-- proto: ClothingBeltUtilityFilled
-  entities:
-  - uid: 1832
-    components:
-    - pos: -16.476986,-4.3943577
-      parent: 407
-      type: Transform
 - proto: ClothingEyesGlassesMeson
   entities:
   - uid: 1797
@@ -5889,7 +5892,7 @@ entities:
       type: Transform
 - proto: ClothingEyesHudMedSec
   entities:
-  - uid: 1737
+  - uid: 1867
     components:
     - pos: 19.447674,-4.406915
       parent: 407
@@ -6135,6 +6138,22 @@ entities:
       pos: 25.5,3.5
       parent: 407
       type: Transform
+- proto: ComputerCrewMonitoring
+  entities:
+  - uid: 1864
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 12.5,-1.5
+      parent: 407
+      type: Transform
+- proto: ComputerCriminalRecords
+  entities:
+  - uid: 1865
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 19.5,-0.5
+      parent: 407
+      type: Transform
 - proto: ComputerId
   entities:
   - uid: 1936
@@ -6142,12 +6161,20 @@ entities:
     - pos: 24.5,4.5
       parent: 407
       type: Transform
-- proto: ComputerIFFSyndicate
+- proto: ComputerMassMedia
   entities:
-  - uid: 1938
+  - uid: 1832
     components:
     - rot: -1.5707963267948966 rad
       pos: 26.5,1.5
+      parent: 407
+      type: Transform
+- proto: ComputerMedicalRecords
+  entities:
+  - uid: 1863
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 12.5,-0.5
       parent: 407
       type: Transform
 - proto: ComputerPowerMonitoring
@@ -6191,6 +6218,14 @@ entities:
   - uid: 1961
     components:
     - pos: 2.5,11.5
+      parent: 407
+      type: Transform
+- proto: ComputerStationRecords
+  entities:
+  - uid: 1639
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 18.5,-0.5
       parent: 407
       type: Transform
 - proto: ComputerSurveillanceCameraMonitor
@@ -6258,6 +6293,13 @@ entities:
   - uid: 2069
     components:
     - pos: -18.5,-3.5
+      parent: 407
+      type: Transform
+- proto: CrewMonitoringServer
+  entities:
+  - uid: 1862
+    components:
+    - pos: 2.5,-2.5
       parent: 407
       type: Transform
 - proto: DisposalBend
@@ -6718,9 +6760,9 @@ entities:
       type: Transform
 - proto: EmergencyRollerBedSpawnFolded
   entities:
-  - uid: 1747
+  - uid: 1873
     components:
-    - pos: 2.4718885,-2.4683027
+    - pos: 2.3683515,-0.47065163
       parent: 407
       type: Transform
 - proto: FirelockEdge
@@ -6845,22 +6887,7 @@ entities:
     - pos: 14.5,2.5
       parent: 407
       type: Transform
-  - uid: 1629
-    components:
-    - pos: 11.5,-1.5
-      parent: 407
-      type: Transform
-  - uid: 1630
-    components:
-    - pos: 10.5,-1.5
-      parent: 407
-      type: Transform
-  - uid: 1631
-    components:
-    - pos: 12.5,-1.5
-      parent: 407
-      type: Transform
-  - uid: 1640
+  - uid: 1866
     components:
     - pos: 8.5,-1.5
       parent: 407
@@ -9301,7 +9328,7 @@ entities:
     - pos: -3.5,5.5
       parent: 407
       type: Transform
-  - uid: 1869
+  - uid: 2106
     components:
     - pos: 12.5,1.5
       parent: 407
@@ -9394,6 +9421,13 @@ entities:
   - uid: 1743
     components:
     - pos: 4.5,-4.5
+      parent: 407
+      type: Transform
+- proto: LockerMedicineFilled
+  entities:
+  - uid: 1871
+    components:
+    - pos: 12.5,-2.5
       parent: 407
       type: Transform
 - proto: LockerScienceFilled
@@ -9573,17 +9607,17 @@ entities:
       type: Transform
 - proto: PlasmaTankFilled
   entities:
-  - uid: 1866
+  - uid: 1938
     components:
     - pos: -21.613918,-2.399491
       parent: 407
       type: Transform
-  - uid: 1867
+  - uid: 1979
     components:
     - pos: -21.520168,-2.446366
       parent: 407
       type: Transform
-  - uid: 1868
+  - uid: 2070
     components:
     - pos: -21.379543,-2.540116
       parent: 407
@@ -9600,6 +9634,32 @@ entities:
   - uid: 1098
     components:
     - pos: -19.5,3.5
+      parent: 407
+      type: Transform
+- proto: Plunger
+  entities:
+  - uid: 2118
+    components:
+    - pos: -4.2076445,-6.1772423
+      parent: 407
+      type: Transform
+- proto: PortableGeneratorJrPacman
+  entities:
+  - uid: 1638
+    components:
+    - pos: -23.5,2.5
+      parent: 407
+      type: Transform
+  - uid: 1872
+    components:
+    - pos: 9.5,-8.5
+      parent: 407
+      type: Transform
+- proto: PortableGeneratorPacman
+  entities:
+  - uid: 1640
+    components:
+    - pos: -23.5,-1.5
       parent: 407
       type: Transform
 - proto: PortableScrubber
@@ -10280,7 +10340,7 @@ entities:
     - pos: 7.5,-16.5
       parent: 407
       type: Transform
-  - uid: 1638
+  - uid: 1629
     components:
     - pos: -21.5,-2.5
       parent: 407
@@ -10401,6 +10461,13 @@ entities:
     - pos: -3.5,9.5
       parent: 407
       type: Transform
+- proto: RandomBoard
+  entities:
+  - uid: 1631
+    components:
+    - pos: -16.5,-4.5
+      parent: 407
+      type: Transform
 - proto: RCD
   entities:
   - uid: 2066
@@ -10481,6 +10548,13 @@ entities:
   - uid: 2004
     components:
     - pos: -3.0838065,7.537944
+      parent: 407
+      type: Transform
+- proto: SheetPlasma
+  entities:
+  - uid: 1630
+    components:
+    - pos: -21.551367,-2.3599691
       parent: 407
       type: Transform
 - proto: SheetPlastic
@@ -11129,7 +11203,7 @@ entities:
     - pos: -6.5,3.5
       parent: 407
       type: Transform
-  - uid: 1862
+  - uid: 1869
     components:
     - pos: 8.5,-1.5
       parent: 407
@@ -11448,7 +11522,7 @@ entities:
       type: Transform
 - proto: SuitStorageSec
   entities:
-  - uid: 1863
+  - uid: 1870
     components:
     - pos: 17.5,-4.5
       parent: 407
@@ -11640,11 +11714,6 @@ entities:
     - pos: -3.5,5.5
       parent: 407
       type: Transform
-  - uid: 1800
-    components:
-    - pos: 12.5,1.5
-      parent: 407
-      type: Transform
   - uid: 1804
     components:
     - pos: -18.5,2.5
@@ -11658,6 +11727,11 @@ entities:
   - uid: 1818
     components:
     - pos: -16.5,-2.5
+      parent: 407
+      type: Transform
+  - uid: 1868
+    components:
+    - pos: 12.5,1.5
       parent: 407
       type: Transform
   - uid: 1964
@@ -12044,7 +12118,7 @@ entities:
       type: Transform
 - proto: VendingMachineChemicals
   entities:
-  - uid: 1639
+  - uid: 1800
     components:
     - pos: 10.5,1.5
       parent: 407
@@ -12133,7 +12207,7 @@ entities:
       type: Transform
 - proto: VendingMachineTankDispenserEngineering
   entities:
-  - uid: 1865
+  - uid: 1932
     components:
     - pos: -16.5,1.5
       parent: 407
@@ -13835,7 +13909,7 @@ entities:
       type: Transform
 - proto: WindoorSecureScienceLocked
   entities:
-  - uid: 1864
+  - uid: 1903
     components:
     - pos: -4.5,9.5
       parent: 407
@@ -13856,6 +13930,23 @@ entities:
     components:
     - rot: -1.5707963267948966 rad
       pos: -0.5,11.5
+      parent: 407
+      type: Transform
+- proto: WindoorServiceLocked
+  entities:
+  - uid: 2110
+    components:
+    - pos: -10.5,2.5
+      parent: 407
+      type: Transform
+  - uid: 2114
+    components:
+    - pos: -9.5,2.5
+      parent: 407
+      type: Transform
+  - uid: 2115
+    components:
+    - pos: -8.5,2.5
       parent: 407
       type: Transform
 - proto: WindowFrostedDirectional
