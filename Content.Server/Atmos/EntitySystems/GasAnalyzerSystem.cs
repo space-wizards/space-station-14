@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer;
@@ -269,16 +270,9 @@ namespace Content.Server.Atmos.EntitySystems
                 }
             }
 
-            gases.Sort(delegate(GasEntry a, GasEntry b)
-            {
-                if (a.Amount > b.Amount)
-                    return -1;
-                if (a.Amount < b.Amount)
-                    return 1;
-                return 0;
-            });
-
-            return gases.ToArray();
+            var gasesOrdered = gases.OrderByDescending(gas => gas.Amount);
+            
+            return gasesOrdered.ToArray();
         }
     }
 }
