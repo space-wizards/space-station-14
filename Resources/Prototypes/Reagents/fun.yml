@@ -220,8 +220,6 @@
   tileReactions:
   - !type:CreateEntityTileReaction
     entity: IceCrust
-    maxOnTileWhitelist:
-      entity: IceCrust 
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
@@ -231,11 +229,11 @@
         ignoreResistances: false
         damage:
           types:
-            Cold: 0.5
+            Cold: 0.01
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
-          min: 203.15
+          min: 160.15 # not quite enough for cryo, but can speed it up if you wanna take the risk
         amount: -30000
     Extinguish:
       methods: [ Touch ]
@@ -248,7 +246,8 @@
       - !type:HealthChange
         damage:
           types:
-             Cold : 0.05 # slightly nips directly, other cold damage comes from the temp change
+             Cold: 0.01 # slightly nips directly, other cold damage comes from the temp change
+             Burn: -3 # ghetto burn chem. i don't think anyone would use this intentionally but it's funny
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
@@ -296,4 +295,4 @@
         messages: [ "fresium-effect-frozen"]
         probability: 0.4
   tileReactions:
-    - !type:ExtinguishTileReaction { }
+    - !type:ExtinguishTileReaction { } 
