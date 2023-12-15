@@ -165,19 +165,12 @@
     size: Normal
     shape:
     - 0,0,4,0
+    sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
+    heldPrefix: pump
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-  - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
-<<<<<<< HEAD
-    size: Normal
-=======
->>>>>>> 3ce22a717a6a75006b10b9c90ae714670a53b136
-    sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: pump
   - type: BallisticAmmoProvider
     capacity: 4
