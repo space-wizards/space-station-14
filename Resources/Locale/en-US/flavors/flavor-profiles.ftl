@@ -44,7 +44,7 @@ flavor-base-sharp = sharp
 flavor-base-syrupy = syrupy
 flavor-base-spaceshroom = mysterious
 flavor-base-clean = clean
-flavor-base-clean = holy
+flavor-base-holy = holy
 
 # lmao
 flavor-base-terrible = terrible
