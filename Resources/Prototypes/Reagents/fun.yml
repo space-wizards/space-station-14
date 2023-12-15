@@ -222,6 +222,7 @@
     entity: IceCrust
     maxOnTileWhitelist:
       tags: [ Ice ]
+  - !type:ExtinguishTileReaction { } 
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
@@ -296,5 +297,4 @@
         visualType: LargeCaution
         messages: [ "fresium-effect-frozen"]
         probability: 0.4
-  tileReactions:
-    - !type:ExtinguishTileReaction { } 
+
