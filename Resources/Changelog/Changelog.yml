@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Fix some do_afters mispredicting, e.g. removing encryption keys from
-      headsets.', type: Fix}
-  id: 4866
-  time: '2023-09-20T12:01:54.0000000+00:00'
 - author: ike709
   changes:
   - {message: Added a search filter to vending machines, type: Add}
@@ -2898,3 +2892,8 @@ Entries:
   - {message: Mercury poisoning now causes stuttering., type: Tweak}
   id: 5366
   time: '2023-12-15T09:28:13.0000000+00:00'
+- author: ninruB
+  changes:
+  - {message: Reptilians no longer innately take 30% less heat damage., type: Tweak}
+  id: 5367
+  time: '2023-12-15T09:37:05.0000000+00:00'
