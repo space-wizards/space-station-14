@@ -241,6 +241,10 @@ namespace Content.Client.Atmos.UI
             {
                 Orientation = BoxContainer.LayoutOrientation.Vertical
             };
+            var tablePercent = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Vertical
+            };
             dataContainer.AddChild(new BoxContainer
             {
                 Orientation = BoxContainer.LayoutOrientation.Horizontal,
@@ -252,7 +256,13 @@ namespace Content.Client.Atmos.UI
                         MinSize = new Vector2(10, 0),
                         HorizontalExpand = true
                     },
-                    tableVal
+                    tableVal,
+                    new Control
+                    {
+                        MinSize = new Vector2(10, 0),
+                        HorizontalExpand = true
+                    },
+                    tablePercent
                 }
             });
             // This is the gas bar thingy
@@ -286,10 +296,14 @@ namespace Content.Client.Atmos.UI
                 tableVal.AddChild(new Label
                 {
                     Text = Loc.GetString("gas-analyzer-window-molarity-text",
-                        ("mol", $"{gas.Amount:0.##}"),
-                        ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")),
+                        ("mol", $"{gas.Amount:0.##}")),
                     Align = Label.AlignMode.Left,
-                    HorizontalExpand = true
+                });
+                tablePercent.AddChild(new Label
+                {
+                    Text = Loc.GetString("gas-analyzer-window-percentage-text",
+                        ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")),
+                    Align = Label.AlignMode.Right
                 });
 
                 // Add to the gas bar //TODO: highlight the currently hover one

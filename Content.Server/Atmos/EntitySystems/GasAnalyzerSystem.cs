@@ -271,7 +271,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             var gasesOrdered = gases.OrderByDescending(gas => gas.Amount);
-            
+
             return gasesOrdered.ToArray();
         }
     }
