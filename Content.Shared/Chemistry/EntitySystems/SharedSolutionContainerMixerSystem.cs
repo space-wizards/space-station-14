@@ -2,7 +2,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -27,12 +26,19 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<SolutionContainerMixerComponent, ActivateInWorldEvent>(OnGetVerb);
+        SubscribeLocalEvent<SolutionContainerMixerComponent, ActivateInWorldEvent>(OnActivateInWorld);
+        SubscribeLocalEvent<SolutionContainerMixerComponent, ContainerIsRemovingAttemptEvent>(OnRemoveAttempt);
     }
 
-    private void OnGetVerb(Entity<SolutionContainerMixerComponent> entity, ref ActivateInWorldEvent args)
+    private void OnActivateInWorld(Entity<SolutionContainerMixerComponent> entity, ref ActivateInWorldEvent args)
     {
         TryStartMix(entity, args.User);
+    }
+
+    private void OnRemoveAttempt(Entity<SolutionContainerMixerComponent> ent, ref ContainerIsRemovingAttemptEvent args)
+    {
+        if (args.Container.ID == ent.Comp.ContainerId && ent.Comp.Mixing)
+            args.Cancel();
     }
 
     protected virtual bool HasPower(Entity<SolutionContainerMixerComponent> entity)
