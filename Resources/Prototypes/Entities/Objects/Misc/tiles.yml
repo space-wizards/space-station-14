@@ -24,7 +24,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 30
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
@@ -33,7 +33,10 @@
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+          params:
+            volume: -8
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
@@ -353,7 +356,7 @@
       - FloorMiningLight
   - type: Stack
     stackType: FloorTileMiningLight
-    
+
 # Departamental
 - type: entity
   name: freezer tile
