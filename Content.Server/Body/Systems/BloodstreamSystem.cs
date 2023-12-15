@@ -2,7 +2,6 @@ using Content.Server.Body.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
-using Content.Server.Forensics;
 using Content.Server.HealthExaminable;
 using Content.Server.Popups;
 using Content.Shared.Alert;
@@ -20,6 +19,8 @@ using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Server.Audio;
+using Robust.Shared.GameObjects;
+using Content.Server.Forensics;
 
 namespace Content.Server.Body.Systems;
 
@@ -36,6 +37,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+    [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
 
     public override void Initialize()
     {
@@ -347,11 +349,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
             if (_puddleSystem.TrySpillAt(uid, tempSolution, out var puddleUid, false))
             {
-                if (TryComp<DnaComponent>(uid, out var dna))
-                {
-                    var comp = EnsureComp<ForensicsComponent>(puddleUid);
-                    comp.DNAs.Add(dna.DNA);
-                }
+                _forensicsSystem.TransferDna(puddleUid, uid, false);
             }
 
             tempSolution.RemoveAllSolution();
@@ -417,11 +415,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
         if (_puddleSystem.TrySpillAt(uid, tempSol, out var puddleUid))
         {
-            if (TryComp<DnaComponent>(uid, out var dna))
-            {
-                var comp = EnsureComp<ForensicsComponent>(puddleUid);
-                comp.DNAs.Add(dna.DNA);
-            }
+            _forensicsSystem.TransferDna(puddleUid, uid, false);
         }
     }
 

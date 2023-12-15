@@ -33,7 +33,11 @@ public partial class SharedGunSystem
     {
         slotEntity = null;
 
-        if (!_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator, component.TargetSlot))
+        if (!Containers.TryGetContainingContainer(uid, out var container))
+            return false;
+        var user = container.Owner;
+
+        if (!_inventory.TryGetContainerSlotEnumerator(user, out var enumerator, component.TargetSlot))
             return false;
 
         while (enumerator.NextItem(out var item))

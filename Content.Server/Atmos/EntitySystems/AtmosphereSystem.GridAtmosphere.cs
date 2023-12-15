@@ -3,6 +3,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
@@ -557,5 +558,13 @@ public sealed partial class AtmosphereSystem
             GridUpdateAdjacent(uid, gridAtmosphere, ref ev);
             InvalidateVisuals(uid, position, overlay);
         }
+    }
+
+    public TileRef GetTileRef(TileAtmosphere tile)
+    {
+        if (!TryComp(tile.GridIndex, out MapGridComponent? grid))
+            return default;
+        _map.TryGetTileRef(tile.GridIndex, grid, tile.GridIndices, out var tileRef);
+        return tileRef;
     }
 }

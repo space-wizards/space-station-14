@@ -16,6 +16,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Stacks;
 using Robust.Shared.Player;
+using Content.Shared.Forensics;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -297,7 +298,7 @@ public sealed partial class ChemistrySystem
                 ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
 
         Dirty(injector);
-        AfterInject(injector);
+        AfterInject(injector, target);
     }
 
     private void TryInject(Entity<InjectorComponent> injector, EntityUid targetEntity, Entity<SolutionComponent> targetSolution, EntityUid user, bool asRefill)
@@ -334,25 +335,33 @@ public sealed partial class ChemistrySystem
                 ("target", Identity.Entity(targetEntity, EntityManager))), injector.Owner, user);
 
         Dirty(injector);
-        AfterInject(injector);
+        AfterInject(injector, targetEntity);
     }
 
-    private void AfterInject(Entity<InjectorComponent> injector)
+    private void AfterInject(Entity<InjectorComponent> injector, EntityUid target)
     {
         // Automatically set syringe to draw after completely draining it.
         if (_solutionContainers.TryGetSolution(injector.Owner, InjectorComponent.SolutionName, out _, out var solution) && solution.Volume == 0)
         {
             injector.Comp.ToggleState = SharedInjectorComponent.InjectorToggleMode.Draw;
         }
+
+        // Leave some DNA from the injectee on it
+        var ev = new TransferDnaEvent { Donor = target, Recipient = injector };
+        RaiseLocalEvent(target, ref ev);
     }
 
-    private void AfterDraw(Entity<InjectorComponent> injector)
+    private void AfterDraw(Entity<InjectorComponent> injector, EntityUid target)
     {
         // Automatically set syringe to inject after completely filling it.
         if (_solutionContainers.TryGetSolution(injector.Owner, InjectorComponent.SolutionName, out _, out var solution) && solution.AvailableVolume == 0)
         {
             injector.Comp.ToggleState = SharedInjectorComponent.InjectorToggleMode.Inject;
         }
+
+        // Leave some DNA from the drawee on it
+        var ev = new TransferDnaEvent { Donor = target, Recipient = injector };
+        RaiseLocalEvent(target, ref ev);
     }
 
     private void TryDraw(Entity<InjectorComponent> injector, Entity<BloodstreamComponent?> target, Entity<SolutionComponent> targetSolution, EntityUid user)
@@ -392,7 +401,7 @@ public sealed partial class ChemistrySystem
                 ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
 
         Dirty(injector);
-        AfterDraw(injector);
+        AfterDraw(injector, target);
     }
 
     private void DrawFromBlood(Entity<InjectorComponent> injector, Entity<BloodstreamComponent> target, Entity<SolutionComponent> injectorSolution, FixedPoint2 transferAmount, EntityUid user)
@@ -417,7 +426,7 @@ public sealed partial class ChemistrySystem
                 ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
 
         Dirty(injector);
-        AfterDraw(injector);
+        AfterDraw(injector, target);
     }
 
 }

@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Reaction;
 
@@ -10,7 +11,7 @@ public sealed partial class ReactionMixerComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField]
-    public List<string> ReactionTypes = default!;
+    public List<ProtoId<MixingCategoryPrototype>> ReactionTypes = default!;
 
     /// <summary>
     ///     A string which identifies the string to be sent when successfully mixing a solution

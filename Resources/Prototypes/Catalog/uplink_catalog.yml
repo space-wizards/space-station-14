@@ -531,6 +531,17 @@
   categories:
   - UplinkUtility
 
+- type: listing
+  id: UplinkHypoDart
+  name: uplink-hypodart-name
+  description: uplink-hypodart-desc
+  icon: { sprite: /Textures/Objects/Fun/Darts/dart_red.rsi, state: icon }
+  productEntity: HypoDartBox
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkUtility
+  
 # Implants
 
 - type: listing

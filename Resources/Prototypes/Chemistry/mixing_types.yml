@@ -1,0 +1,8 @@
+- type: mixingCategory
+  id: Centrifuge
+
+- type: mixingCategory
+  id: Electrolysis
+
+- type: mixingCategory
+  id: Holy

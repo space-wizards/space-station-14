@@ -27,6 +27,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly ThirstSystem _thirst = default!;
+        [Dependency] private readonly ForensicsSystem _forensics = default!;
 
         /// <summary>
         /// Make an entity vomit, if they have a stomach.
@@ -87,9 +88,7 @@ namespace Content.Server.Medical
 
             if (_puddle.TrySpillAt(uid, solution, out var puddle, false))
             {
-                var forensics = EnsureComp<ForensicsComponent>(puddle);
-                if (TryComp<DnaComponent>(uid, out var dna))
-                    forensics.DNAs.Add(dna.DNA);
+                _forensics.TransferDna(puddle, uid, false);
             }
 
             // Force sound to play as spill doesn't work if solution is empty.
