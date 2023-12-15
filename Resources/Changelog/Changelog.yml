@@ -1,18 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: The guidebook now has a pop-out button. This will turn it into a system
-      window that you can drag wherever is convenient such as a second monitor., type: Add}
-  - {message: 'The Steam overlay has been disabled due to conflicts with pop-out windows.
-      Due to a bug with Steam, the game''s graphics will corrupt when overlay is enabled
-      and a popout window is opened.', type: Remove}
-  id: 4871
-  time: '2023-09-22T19:52:31.0000000+00:00'
-- author: TheArturZh
-  changes:
-  - {message: Station records console works properly again, type: Fix}
-  id: 4872
-  time: '2023-09-22T19:57:06.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'The rat king can now rummage through disposal units to get trash, cheese,
@@ -2904,3 +2890,15 @@ Entries:
       evidence of their own', type: Tweak}
   id: 5371
   time: '2023-12-15T09:52:56.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Added hypodart into uplink. It is capable of piercing armor and injecting
+      up to 7u reagents., type: Add}
+  id: 5372
+  time: '2023-12-15T09:55:57.0000000+00:00'
+- author: tgrkzus
+  changes:
+  - {message: Open tanks will no longer make noise at very low release pressure.,
+    type: Tweak}
+  id: 5373
+  time: '2023-12-15T09:56:17.0000000+00:00'
