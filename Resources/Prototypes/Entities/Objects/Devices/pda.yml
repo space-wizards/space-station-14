@@ -528,12 +528,9 @@
     accentVColor: "#2a4b5b"
   - type: Icon
     state: pda-paramedic
-  - type: GuideHelp
-    guides:
-    - Medical Doctor
     
 - type: entity
-  parent: MedicalInternPDA
+  parent: BaseMedicalPDA
   id: ChemistryPDA
   name: chemistry PDA
   description: It has a few discolored blotches here and there.
@@ -945,7 +942,7 @@
     state: pda-seniorresearcher
 
 - type: entity
-  parent: MedicalInternPDA
+  parent: BaseMedicalPDA
   id: SeniorPhysicianPDA
   name: senior physician PDA
   description: Smells faintly like iron and chemicals. Has a built-in health analyzer.
