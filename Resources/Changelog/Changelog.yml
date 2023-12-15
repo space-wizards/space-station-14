@@ -1,14 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed spellbooks not granting spell actions., type: Fix}
-  id: 4878
-  time: '2023-09-23T16:33:39.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Armed nuclear explosives can be seen on station maps., type: Tweak}
-  id: 4879
-  time: '2023-09-23T19:15:05.0000000+00:00'
 - author: Repo
   changes:
   - {message: Nukies can declare war again., type: Fix}
@@ -2899,3 +2889,13 @@ Entries:
   - {message: Cyborg jobs now start with a positronic brain., type: Tweak}
   id: 5378
   time: '2023-12-15T20:45:31.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Borgs can wear hats now. Time to get festive!, type: Tweak}
+  id: 5379
+  time: '2023-12-15T22:33:52.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Chasms no longer spawn on lava expeditions, type: Tweak}
+  id: 5380
+  time: '2023-12-15T22:34:09.0000000+00:00'
