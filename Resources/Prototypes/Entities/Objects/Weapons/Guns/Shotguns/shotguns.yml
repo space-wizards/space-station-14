@@ -265,15 +265,14 @@
   id: WeaponShotgunImprovised
   description: A shitty, hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
   components:
-  - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: improvised
   - type: Gun
