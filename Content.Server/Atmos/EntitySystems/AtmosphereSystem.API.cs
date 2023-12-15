@@ -295,9 +295,6 @@ public partial class AtmosphereSystem
     [ByRefEvent] private record struct GetAllMixturesMethodEvent
         (EntityUid Grid, bool Excite = false, IEnumerable<GasMixture>? Mixtures = null, bool Handled = false);
 
-    [ByRefEvent] private record struct InvalidateTileMethodEvent
-        (EntityUid Grid, Vector2i Tile, bool Handled = false);
-
     [ByRefEvent] private record struct GetTileMixturesMethodEvent
         (EntityUid? GridUid, EntityUid? MapUid, List<Vector2i> Tiles, bool Excite = false, GasMixture?[]? Mixtures = null, bool Handled = false);
 
@@ -325,9 +322,6 @@ public partial class AtmosphereSystem
 
     [ByRefEvent] private record struct IsHotspotActiveMethodEvent
         (EntityUid Grid, Vector2i Tile, bool Result = false, bool Handled = false);
-
-    [ByRefEvent] private record struct FixTileVacuumMethodEvent
-        (EntityUid Grid, Vector2i Tile, bool Handled = false);
 
     [ByRefEvent] private record struct AddPipeNetMethodEvent
         (EntityUid Grid, PipeNet PipeNet, bool Handled = false);
