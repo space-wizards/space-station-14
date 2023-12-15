@@ -1,12 +1,6 @@
 Entries:
 - author: DrSmugleaf
   changes:
-  - message: Fixed everyone being bald.
-    type: Fix
-  id: 4919
-  time: '2023-09-29T00:44:47.0000000+00:00'
-- author: DrSmugleaf
-  changes:
   - message: Fixed the HoP's id card computer not opening.
     type: Fix
   id: 4920
@@ -3821,3 +3815,31 @@ Entries:
     type: Fix
   id: 5352
   time: '2023-12-14T16:39:56.0000000+00:00'
+- author: Nonne
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E 11 \u043D\u043E\
+      \u0432\u044B\u0445 \u0433\u043E\u043B\u043E\u0441\u043E\u0432 \u0413\u0430\u0440\
+      \u0440\u043E\u0448 \u0410\u0434\u0441\u043A\u0438\u0439 \u041A\u0440\u0438\u043A\
+      , \u0414\u0436\u0430\u0439\u043D\u0430 \u041F\u0440\u0430\u0443\u0434\u043C\u0443\
+      \u0440, \u0410\u0434\u044A\u044E\u0442\u0430\u043D\u0442, \u0410\u0440\u0438\
+      \u044D\u043B\u044C \u0425\u044D\u043D\u0441\u043E\u043D, \u0411\u0440\u0430\u043B\
+      \u0438\u043A, \u041C\u044D\u0442\u0442 \u0425\u043E\u0440\u043D\u0435\u0440\
+      , \u0414\u043C\u0438\u0442\u0440\u0438\u0439 \u041F\u0443\u0447\u043A\u043E\u0432\
+      , \u041C\u043E\u0440\u0438\u0430\u0440\u0442\u0438, \u041D\u0435\u043A\u043E\
+      -\u0410\u0440\u043A 2, \u0417\u043B\u0430\u044F \u041D\u0435\u043A\u043E-\u0410\
+      \u0440\u043A \u0438 \u0421\u043A\u0432\u0438\u0434\u0432\u0430\u0440\u0434."
+    type: Add
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5353
+  time: '2023-12-15T06:30:04.0000000+00:00'
