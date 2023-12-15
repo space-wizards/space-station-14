@@ -220,6 +220,8 @@
   tileReactions:
   - !type:CreateEntityTileReaction
     entity: IceCrust
+    maxOnTileWhitelist:
+      tags: [ Ice ]
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
