@@ -927,16 +927,13 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         light.AmbientLightColor = Color.FromHex("#D8B059");
         Dirty(mapUid, light, metadata);
 
-        // Atmos
-        var atmos = EnsureComp<MapAtmosphereComponent>(mapUid);
-
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
         moles[(int) Gas.Nitrogen] = 82.10312f;
 
         var mixture = new GasMixture(moles, Atmospherics.T20C);
 
-        _atmos.SetMapAtmosphere(mapUid, false, mixture, atmos);
+        _atmos.SetMapAtmosphere(mapUid, false, mixture);
     }
 
     /// <summary>

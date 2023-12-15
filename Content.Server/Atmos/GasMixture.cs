@@ -135,10 +135,9 @@ namespace Content.Server.Atmos
             {
                 if (!float.IsFinite(quantity))
                     throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
-
-                Moles[gasId] += quantity;
-
-                var moles = Moles[gasId];
+                ;
+                ref var moles = ref Moles[gasId];
+                moles += quantity;
 
                 if (!float.IsFinite(moles) || float.IsNegative(moles))
                     throw new Exception($"Invalid mole quantity \"{moles}\" in gas Id {gasId} after adjusting moles with \"{quantity}\"!");

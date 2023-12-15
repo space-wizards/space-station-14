@@ -200,6 +200,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     (tile.Air, tile.Space) = GetDefaultMapAtmosphere(mapAtmos);
                     tile.MapAtmosphere = true;
+                    ent.Comp1.MapTiles.Add(tile);
                 }
 
                 DebugTools.AssertNotNull(tile.Air);
@@ -211,9 +212,16 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             // Tile used to be exposed to the map's atmosphere, but isn't anymore.
-            tile.MapAtmosphere = false;
+            RemoveMapAtmos(ent.Comp1, tile);
+        }
+
+        private void RemoveMapAtmos(GridAtmosphereComponent atmos, TileAtmosphere tile)
+        {
+            DebugTools.Assert(tile.MapAtmosphere);
             DebugTools.AssertNotNull(tile.Air);
             DebugTools.Assert(tile.Air?.Immutable ?? false);
+            tile.MapAtmosphere = false;
+            atmos.MapTiles.Remove(tile);
             tile.Air = null;
             Array.Clear(tile.MolesArchived);
             tile.ArchivedCycle = 0;

@@ -977,11 +977,10 @@ public abstract partial class InteractionTest
         await Server.WaitPost(() =>
         {
             var atmosSystem = SEntMan.System<AtmosphereSystem>();
-            var atmos = SEntMan.EnsureComponent<MapAtmosphereComponent>(target);
             var moles = new float[Atmospherics.AdjustedNumberOfGases];
             moles[(int) Gas.Oxygen] = 21.824779f;
             moles[(int) Gas.Nitrogen] = 82.10312f;
-            atmosSystem.SetMapAtmosphere(target, false, new GasMixture(moles, Atmospherics.T20C), atmos);
+            atmosSystem.SetMapAtmosphere(target, false, new GasMixture(moles, Atmospherics.T20C));
         });
     }
 
