@@ -340,7 +340,7 @@
       amount: 1
     Blood:
       amount: 1
-    Hydroxide
+    Hydroxide:
       amount: 2
   products:
     Oculine: 4
