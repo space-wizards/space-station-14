@@ -398,17 +398,6 @@
     Saline: 5
 
 - type: reaction
-  id: SalineBreakdown
-  requiredMixerCategories:
-  - Centrifuge
-  reactants:
-    Saline:
-      amount: 5
-  products:
-    Water: 4
-    TableSalt: 1
-
-- type: reaction
   id: Lacerinol
   impact: Medium
   minTemp: 335
