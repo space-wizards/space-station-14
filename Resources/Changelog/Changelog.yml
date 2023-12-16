@@ -1,9 +1,4 @@
 Entries:
-- author: Doru991
-  changes:
-  - {message: Trash spawns correctly after food is eaten., type: Fix}
-  id: 4881
-  time: '2023-09-24T17:20:03.0000000+00:00'
 - author: DrTeaSpoon
   changes:
   - {message: Arrows can now be doped with chemicals., type: Tweak}
@@ -2900,3 +2895,11 @@ Entries:
       mixing method, such as a chaplain''s blessing or electrolysis.', type: Fix}
   id: 5381
   time: '2023-12-15T23:59:54.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Added smoke grenades to the syndicate uplink for 1 TC, they create
+      a large smoke cloud to provide cover for your heinous activites.', type: Add}
+  - {message: 'Added tear gas grenades to the SecTech and security belts, use them
+      to control riots.', type: Add}
+  id: 5382
+  time: '2023-12-16T01:49:30.0000000+00:00'
