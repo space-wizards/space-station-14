@@ -141,6 +141,7 @@
   boilingPoint: 2962.0
   meltingPoint: 1638.0
 
+- type: reagent
   id: SodiumPolyacrylate
   name: reagent-name-sodium-polyacrylate
   desc: reagent-desc-sodium-polyacrylate
