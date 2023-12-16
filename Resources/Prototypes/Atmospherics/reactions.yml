@@ -78,7 +78,6 @@
   id: n2oDecomposition
   priority: 0
   minimumTemperature: 1400
-  maximumTemperature: 100000
   minimumRequirements:
   - 0     # oxygen
   - 0     # nitrogen
