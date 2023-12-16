@@ -63,16 +63,16 @@
     PolytrinicAcid: 3
 
 - type: reaction
-  id: SulfuricAcid
-  reactants:
+  id: SulfuricAcid 
+  reactants: 
+    Sulfur: 
+      amount: 1
     Hydrogen:
       amount: 1
-    Sulfur:
-      amount: 1
-    Oxygen:
+    Oxygen: 
       amount: 2
   products:
-    SulfuricAcid: 3
+    SulfuricAcid: 4
 
 - type: reaction
   id: FluorosulfuricAcid
@@ -338,10 +338,8 @@
   impact: Medium
   reactants:
     Uranium:
-      amount: 2
-    Hydrogen:
       amount: 1
-    Oxygen:
+    Epinephrine:  
       amount: 1
   products:
     NorepinephricAcid: 2
@@ -387,15 +385,17 @@
 
 - type: reaction
   id: Benzene
+  impact: Medium
   reactants:
     Hydrogen: 
-      Amount: 3
+      Amount: 1
     Carbon:
-      Amount: 3
+      Amount: 1
   products:
-    Benzene: 1
+    Benzene: 0.5
 
 - type: reaction
+  minTemp: 310
   id: Hydroxide
   reactants:
     Oxygen:
@@ -404,4 +404,26 @@
       Amount: 1
   products:
     Hydroxide: 2
+
+- type: reaction
+  id: SodiumHydroxide
+  impact: Medium
+  reactants:
+    Hydroxide:
+      Amount: 1
+    Sodium:
+      Amount: 1
+  products:
+    SodiumHydroxide: 2
+
+- type: reaction
+  id: Fersilicite
+  reactants:
+    Iron:
+      Amount: 1
+    Silicon:
+      Amount: 1
+  products:
+    Fersilicite: 2
+
   
