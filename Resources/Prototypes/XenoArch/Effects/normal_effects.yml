@@ -591,17 +591,16 @@
     totalIntensity: 500
     intensitySlope: 2.5
     maxIntensity: 50
-    
+
 - type: artifactEffect
-  id: EffectPortal
+  id: EffectCak
   targetDepth: 3
-  effectHint: artifact-effect-hint-displacement
-  blacklist:
-    components:
-    - Item
+  effectHint: artifact-effect-hint-creation
   components:
-  - type: Portal
-    maxRandomRadius: 5
+  - type: SpawnArtifact
+    maxSpawns: 1
+    spawns:
+    - id: MobCatCak
 
 - type: artifactEffect
   id: EffectSingulo
