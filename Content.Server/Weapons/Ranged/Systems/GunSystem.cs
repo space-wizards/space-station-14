@@ -313,26 +313,6 @@ public sealed partial class GunSystem : SharedGunSystem
         ShootProjectile(uid, mapDirection, gunVelocity, gunUid, user, gun.ProjectileSpeed);
     }
 
-    public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid gunUid, EntityUid? user = null, float speed = 20f)
-    {
-        var physics = EnsureComp<PhysicsComponent>(uid);
-        Physics.SetBodyStatus(physics, BodyStatus.InAir);
-
-        var targetMapVelocity = gunVelocity + direction.Normalized() * speed;
-        var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
-        var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
-        Physics.SetLinearVelocity(uid, finalLinear, body: physics);
-
-        if (user != null)
-        {
-            var projectile = EnsureComp<ProjectileComponent>(uid);
-            Projectiles.SetShooter(uid, projectile, user.Value);
-            projectile.Weapon = gunUid;
-        }
-
-        TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle());
-    }
-
     /// <summary>
     /// Gets a linear spread of angles between start and end.
     /// </summary>

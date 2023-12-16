@@ -26,6 +26,7 @@
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Magic\Components\" />
     <Folder Include="Objectives\Interfaces\" />
     <Folder Include="Tools\Systems\" />
   </ItemGroup>

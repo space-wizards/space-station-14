@@ -7,6 +7,8 @@
   - type: InstantAction
     useDelay: 10
     itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/knock.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: knock

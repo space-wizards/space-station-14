@@ -174,6 +174,65 @@ public sealed class ActionContainerSystem : EntitySystem
         DebugTools.AssertEqual(oldContainer.Container.Count, 0);
     }
 
+    // TODO: Re-evaluate if needed
+    /// <summary>
+    /// Transfers an actions from one container to another, while changing the attached entity.
+    /// </summary>
+    /// <remarks>
+    /// This will actually remove and then re-grant the action.
+    /// Useful where you need to transfer from one container to another but also change the attached entity (ie spellbook > mind > user)
+    /// </remarks>
+    public void TransferActionWithNewAttached(
+        EntityUid actionId,
+        EntityUid newContainer,
+        EntityUid newAttached,
+        BaseActionComponent? action = null,
+        ActionsContainerComponent? container = null)
+    {
+        if (!_actions.ResolveActionData(actionId, ref action))
+            return;
+
+        if (action.Container == newContainer)
+            return;
+
+        var attached = newAttached;
+        if (!AddAction(newContainer, actionId, action, container))
+            return;
+
+        DebugTools.AssertEqual(action.Container, newContainer);
+        DebugTools.AssertNull(action.AttachedEntity);
+
+        _actions.AddActionDirect(newAttached, actionId, action: action);
+
+        DebugTools.AssertEqual(action.AttachedEntity, attached);
+    }
+
+    // TODO: Re-evaluate if needed
+    /// <summary>
+    /// Transfers all actions from one container to another, while changing the attached entity.
+    /// </summary>
+    /// <remarks>
+    /// This will actually remove and then re-grant the action.
+    /// Useful where you need to transfer from one container to another but also change the attached entity (ie spellbook > mind > user)
+    /// </remarks>
+    public void TransferAllActionsWithNewAttached(
+        EntityUid from,
+        EntityUid to,
+        EntityUid newAttached,
+        ActionsContainerComponent? oldContainer = null,
+        ActionsContainerComponent? newContainer = null)
+    {
+        if (!Resolve(from, ref oldContainer) || !Resolve(to, ref newContainer))
+            return;
+
+        foreach (var action in oldContainer.Container.ContainedEntities.ToArray())
+        {
+            TransferActionWithNewAttached(action, to, newAttached, container: newContainer);
+        }
+
+        DebugTools.AssertEqual(oldContainer.Container.Count, 0);
+    }
+
     /// <summary>
     /// Adds a pre-existing action to an action container. If the action is already in some container it will first remove it.
     /// </summary>

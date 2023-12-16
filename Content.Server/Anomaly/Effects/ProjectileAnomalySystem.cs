@@ -5,6 +5,7 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -21,7 +22,7 @@ public sealed class ProjectileAnomalySystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly GunSystem _gunSystem = default!;
+    [Dependency] private readonly SharedGunSystem _gunSystem = default!;
 
     public override void Initialize()
     {

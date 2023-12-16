@@ -5,6 +5,7 @@ namespace Content.Shared.Magic.Events;
 
 public sealed partial class KnockSpellEvent : InstantActionEvent, ISpeakSpell
 {
+    // TODO: Move to magic component
     /// <summary>
     /// The range this spell opens doors in
     /// 4f is the default
@@ -12,15 +13,7 @@ public sealed partial class KnockSpellEvent : InstantActionEvent, ISpeakSpell
     [DataField("range")]
     public float Range = 4f;
 
-    [DataField("knockSound")]
-    public SoundSpecifier KnockSound = new SoundPathSpecifier("/Audio/Magic/knock.ogg");
-
-    /// <summary>
-    /// Volume control for the spell.
-    /// </summary>
-    [DataField("knockVolume")]
-    public float KnockVolume = 5f;
-
+    // TODO: Move to magic component
     [DataField("speech")]
     public string? Speech { get; private set; }
 }

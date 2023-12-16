@@ -8,6 +8,7 @@
     useDelay: 15
     itemIconStyle: BigAction
     checkCanAccess: false
+    raiseOnUser: true
     range: 60
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/fireball.ogg
@@ -16,7 +17,7 @@
       state: fireball
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
-      posData: !type:TargetCasterPos
+      posData: !type:TargetInFrontSingle
       speech: action-speech-spell-fireball
   - type: ActionUpgrade
     effectedLevels:
@@ -35,6 +36,7 @@
     renewCharges: true
     itemIconStyle: BigAction
     checkCanAccess: false
+    raiseOnUser: true
     range: 60
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/fireball.ogg
@@ -43,5 +45,5 @@
       state: fireball
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
-      posData: !type:TargetCasterPos
+      posData: !type:TargetInFrontSingle
       speech: action-speech-spell-fireball

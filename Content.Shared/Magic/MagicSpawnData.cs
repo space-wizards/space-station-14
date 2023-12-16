@@ -1,5 +1,6 @@
 ﻿namespace Content.Shared.Magic;
 
+// TODO: If still needed, move to magic component
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class MagicSpawnData
 {
@@ -17,4 +18,8 @@ public sealed partial class TargetCasterPos : MagicSpawnData {}
 public sealed partial class TargetInFront : MagicSpawnData
 {
     [DataField("width")] public int Width = 3;
+}
+
+public sealed partial class TargetInFrontSingle : MagicSpawnData
+{
 }
