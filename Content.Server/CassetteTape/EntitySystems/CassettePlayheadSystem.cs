@@ -135,7 +135,6 @@ public sealed class CassettePlayheadSystem : EntitySystem
     public void Speak(EntityUid uid, CassettePlayheadComponent component, string Speaker, string Message)
     {
         // TODO: Speech sounds.
-        Log.Debug($"Tried to speak from cassette {uid}, {Speaker}, {Message}");
         var name = Loc.GetString("speech-name-relay", ("speaker", Name(uid)),
             ("originalName", Speaker));
 
@@ -205,7 +204,6 @@ public sealed class CassettePlayheadSystem : EntitySystem
         LinkedList<CassetteTapeAudioInfo> flattenedAudioEvents = new();
         if (playheadComponent.CurrentTape != null && playheadComponent.CurrentTape.StoredAudioData.Count > 0)
         {
-            Log.Debug($"Flattening Audio events!");
             var sortedAudioData = playheadComponent.CurrentTape.StoredAudioData;
             sortedAudioData.Sort((a, b) => a.StartTime.CompareTo(b.StartTime));
             var currentNode = flattenedAudioEvents.AddFirst(sortedAudioData[0]);
@@ -246,7 +244,8 @@ public sealed class CassettePlayheadSystem : EntitySystem
             return false;
         }
 
-        // Start recording.
+        // Start recording, wiping the data first. It would be nice to be able to splice events together, but that's maybe for later.
+        playheadComponent.CurrentTape?.StoredAudioData.Clear();
         _popupSystem.PopupEntity(Loc.GetString("cassette-playhead-starts-moving-message"), uid);
         _audio.PlayPvs(playheadComponent.PlayMotorSound, uid);
         playheadComponent.PlayheadLocation = 0.0f;
@@ -293,12 +292,17 @@ public sealed class CassettePlayheadSystem : EntitySystem
 
         // Get max number of words for speech length.
         int maxCharsSpoken = numChars;
+        string storedSpeech = speech;
         if (speechLength != timeNeededToSpeak)
-            maxCharsSpoken = (int)Math.Floor(speechLength * CassetteTapeSystem.CharactersSpokenPerSecond);
+        {
+            maxCharsSpoken = (int) Math.Floor(speechLength * CassetteTapeSystem.CharactersSpokenPerSecond);
 
-        // Truncate the string to the maximum spoken, plus a couple of dashes for flavour.
-        // e.g, "Help help, we need backup in Security!" -> "Help help, we need backup in Se-- "
-        string storedSpeech = speech.Substring(maxCharsSpoken) + "-- ";
+            // Truncate the string to the maximum spoken, plus a couple of dashes for flavour.
+            // e.g, "Help help, we need backup in Security!" -> "Help help, we need backup in Se-- "
+            storedSpeech = speech.Substring(0, maxCharsSpoken) + "-- ";
+        }
+
+
 
         // Get the speakers (current!) name.
         var nameEv = new TransformSpeakerNameEvent(speaker, Name(speaker));

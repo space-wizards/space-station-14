@@ -4,15 +4,9 @@
   parent: BaseItem
   id: CassetteRecorder
   components:
-  - type: SurveillanceCameraMicrophone
-    blacklist:
-      components:
-      - SurveillanceCamera
-      - SurveillanceCameraMonitor
-      - SurveillanceCameraSpeaker
   - type: ActiveListener
     range: 10
-  - type: SurveillanceCameraSpeaker
+  - type: Speech
     speechVerb: Robotic
   - type: CassetteTapeSlot
     cassetteTapeSlotId: cassette_slot
