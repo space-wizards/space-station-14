@@ -396,3 +396,106 @@
       amount: 1
   products:
     Saline: 5
+
+- type: reaction
+  id: Lacerinol
+  impact: Medium
+  minTemp: 335
+  reactants:
+    Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    Lacerinol: 2
+
+- type: reaction
+  id: Puncturase
+  impact: Medium
+  minTemp: 325
+  reactants:
+    Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
+      amount: 1
+    Carbon:
+      amount: 1
+  products:
+    Puncturase: 2
+
+- type: reaction
+  id: Bruizine
+  impact: Medium
+  reactants:
+    Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
+      amount: 1
+    Lithium:
+      amount: 0.9
+    Sugar:
+      amount: 1
+  products:
+    Bruizine: 2
+
+- type: reaction
+  id: BicarLacerinol # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Lacerinol:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BicarPuncturase # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Puncturase:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BicarBruizine # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Bruizine:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BruizineLacerinol # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Lacerinol:
+      amount: 1
+    Bruizine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BruizinePuncturase # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Puncturase:
+      amount: 1
+    Bruizine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: PuncturaseLacerinol # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Lacerinol:
+      amount: 1
+    Puncturase:
+      amount: 1
+  products:
+    Razorium: 1

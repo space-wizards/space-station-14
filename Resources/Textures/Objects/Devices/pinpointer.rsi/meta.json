@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d, station and syndicate pinpointer resprited by Ubaser",
     "states": [
         {
             "name": "pinonalert",
@@ -139,16 +139,19 @@
             "name": "pinpointer"
         },
         {
-            "name": "pinpointer_crew"
+            "name": "pinpointer-crew"
         },
         {
-            "name": "pinpointer_crewprox"
+            "name": "pinpointer-crewprox"
         },
         {
-            "name": "pinpointer_syndicate"
+            "name": "pinpointer-syndicate"
         },
         {
-            "name": "pinpointer_way"
+            "name": "pinpointer-way"
+        },
+        {
+            "name": "pinpointer-station"
         },
         {
             "name": "inhand-left",

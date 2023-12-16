@@ -36,6 +36,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
@@ -157,6 +159,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassReinforced:
@@ -231,6 +235,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassPlasma:
@@ -357,6 +363,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassUranium:
