@@ -83,7 +83,7 @@ public sealed class HeatExchangerSystem : EntitySystem
         else
             xfer = outlet.Air.Remove(-n);
 
-        float CXfer = _atmosphereSystem.GetHeatCapacity(xfer);
+        float CXfer = _atmosphereSystem.GetHeatCapacity(xfer, true);
         if (CXfer < Atmospherics.MinimumHeatCapacity)
             return;
 
@@ -94,7 +94,7 @@ public sealed class HeatExchangerSystem : EntitySystem
         float CEnv = 0f;
         if (environment != null)
         {
-            CEnv = _atmosphereSystem.GetHeatCapacity(environment);
+            CEnv = _atmosphereSystem.GetHeatCapacity(environment, true);
             hasEnv = CEnv >= Atmospherics.MinimumHeatCapacity && environment.TotalMoles > 0f;
             if (hasEnv)
                 radTemp = environment.Temperature;

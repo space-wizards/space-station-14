@@ -183,7 +183,6 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.SwapHands);
             AddButton(ContentKeyFunctions.MoveStoredItem);
             AddButton(ContentKeyFunctions.RotateStoredItem);
-            AddCheckBox("ui-options-static-storage-ui", _cfg.GetCVar(CCVars.StaticStorageUI), HandleStaticStorageUI);
 
             AddHeader("ui-options-header-interaction-adv");
             AddButton(ContentKeyFunctions.SmartEquipBackpack);

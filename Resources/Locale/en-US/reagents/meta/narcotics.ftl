@@ -36,3 +36,6 @@ reagent-desc-mute-toxin = A thick chemical that coats the vocal cords, making th
 
 reagent-name-norepinephric-acid = norepinephric acid
 reagent-desc-norepinephric-acid = A smooth chemical that blocks the optical receptors, rendering the user blind during metabolization.
+
+reagent-name-tear-gas = tear gas
+reagent-desc-tear-gas = A chemical that causes severe irritation and crying, commonly used in riot control.
