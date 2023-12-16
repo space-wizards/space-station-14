@@ -1,0 +1,10 @@
+﻿# Toggle cassette record/play
+- type: entity
+  id: ActionToggleCassetteRecorder
+  name: Toggle Play/Record mode
+  description: Toggles whether this cassette deck is in play or record mode.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    priority: -13
+    event: !type:ToggleActionEvent {}

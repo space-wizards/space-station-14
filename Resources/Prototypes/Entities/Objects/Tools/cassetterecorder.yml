@@ -1,0 +1,52 @@
+﻿- type: entity
+  name: cassette recorder
+  description: A voice recorder that uses cassette tapes to store sound.
+  parent: BaseItem
+  id: CassetteRecorder
+  components:
+  - type: SurveillanceCameraMicrophone
+    blacklist:
+      components:
+      - SurveillanceCamera
+      - SurveillanceCameraMonitor
+      - SurveillanceCameraSpeaker
+  - type: ActiveListener
+    range: 10
+  - type: SurveillanceCameraSpeaker
+    speechVerb: Robotic
+  - type: CassetteTapeSlot
+    cassetteTapeSlotId: cassette_slot
+  - type: ContainerContainer
+    containers:
+      cassette_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cassette_slot:
+        name: cassette-tape-slot-component-slot-name-default
+  - type: CassettePlayhead
+    slotId: cassette_slot
+    playMotorSound: /Audio/Weapons/reel.ogg
+    stopClunkSound: /Audio/Items/Stamp/automatic_stamp.ogg
+  - type: Sprite
+    sprite: Objects/Devices/voicerecorder.rsi
+    layers:
+    - state: dictaphone-empty
+    - state: dictaphone-full
+    state: dictaphone-empty
+  - type: Item
+    sprite: Objects/Devices/communication.rsi
+    heldPrefix: signaller
+
+- type: entity
+  id: BaseCassetteTape
+  name: cassette tape
+  description: An audio cassette for use in a recorder or player. Hear that warbly retro sound!
+  parent: BaseItem
+  components:
+  - type: CassetteTape
+    lengthSeconds: 60
+  - type: CassetteTapeBody
+  - type: Sprite
+    sprite: Objects/Devices/voicerecorder.rsi
+    layers:
+    - state: cassette-yellow
