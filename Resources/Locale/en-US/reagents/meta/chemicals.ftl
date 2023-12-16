@@ -19,7 +19,7 @@ reagent-desc-hydroxide = A strong alkaline chemical, forming a base for many org
 reagent-name-sodium-hydroxide = sodium hydroxide
 reagent-desc-sodium-hydroxide = A white, odorless, water-soluble salt that yields an strong alkaline solution in water. Causes burns and vomiting when ingested.
 
-reagent-name-fersilicite = Fersilicite
+reagent-name-fersilicite = fersilicite
 reagent-desc-fersilicite = An intermetallic compound with unusual magnetic properties at low temperatures.
 
 reagent-name-sodium-polyacrylate = sodium polyacrylate
