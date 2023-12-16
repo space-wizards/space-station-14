@@ -594,7 +594,7 @@
     
 - type: artifactEffect
   id: EffectPortal
-  targetDepth: 4
+  targetDepth: 3
   effectHint: artifact-effect-hint-displacement
   blacklist:
     components:
