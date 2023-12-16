@@ -1,10 +1,4 @@
 Entries:
-- author: DrTeaSpoon
-  changes:
-  - {message: Arrows can now be doped with chemicals., type: Tweak}
-  - {message: Spears now correctly transfares chemicals when thrown., type: Fix}
-  id: 4882
-  time: '2023-09-24T19:46:16.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: You can now pick up items (and dead pickupable mobs) in combat mode,
@@ -2903,3 +2897,8 @@ Entries:
       to control riots.', type: Add}
   id: 5382
   time: '2023-12-16T01:49:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix map boundaries not pushing you back., type: Fix}
+  id: 5383
+  time: '2023-12-16T02:19:54.0000000+00:00'
