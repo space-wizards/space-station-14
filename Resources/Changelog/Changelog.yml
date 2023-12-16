@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Your character will now rotate in the direction of your mouse cursor
-      while in combat mode, type: Add}
-  id: 4893
-  time: '2023-09-24T21:22:45.0000000+00:00'
 - author: TK-A369
   changes:
   - {message: 'After several complaints from chemists, Nanotrasen decided to update
@@ -2901,3 +2895,9 @@ Entries:
       heart, cooked spaceshrooms and 15 second in microwave = bread dog.', type: Add}
   id: 5393
   time: '2023-12-16T08:30:20.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: 'Chemistry now has vials, similar to bottles but are much more durable.',
+    type: Add}
+  id: 5394
+  time: '2023-12-16T14:29:54.0000000+00:00'
