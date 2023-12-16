@@ -1,0 +1,50 @@
+- type: entity
+  id: DebugIDCard
+  parent: IDCardStandard
+  name: ID карта дебага
+  description: Карта, предназначенная для работы с конфигуратором доступа. Имеет абсолютно все доступы. Не маппить.
+  suffix: Debug, Маппинг
+  components:
+  - type: Sprite
+    sprite: SS220/Debugging/debug_id_card.rsi
+    layers:
+    - state: debug
+  - type: Clothing
+    slots:
+    - idcard
+    sprite: SS220/Debugging/debug_id_card.rsi
+  - type: Access
+    tags:
+      - Armory
+      - Atmospherics
+      - Bar
+      - Brig
+      - Blueshield
+      - Captain
+      - Cargo
+      - Chapel
+      - Chemistry
+      - ChiefEngineer
+      - ChiefMedicalOfficer
+      - Command
+      - Detective
+      - Engineering
+      - EmergencyShuttleRepealAll
+      - External
+      - HeadOfPersonnel
+      - HeadOfSecurity
+      - Hydroponics
+      - Janitor
+      - Kitchen
+      - Maintenance
+      - Medical
+      - NuclearOperative
+      - Paramedic
+      - Quartermaster
+      - Research
+      - ResearchDirector
+      - Salvage
+      - Security
+      - Service
+      - SyndicateAgent
+      - Theatre

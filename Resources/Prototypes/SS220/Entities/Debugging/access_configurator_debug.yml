@@ -1,0 +1,49 @@
+- type: entity
+  parent: AccessConfigurator
+  id: AccessConfiguratorDebug
+  name: конфигуратор доступа
+  description: Используется в маппинге для изменения требований уровня доступа к шлюзам и другим запираемым объектам. Не маппить.
+  suffix: Debug, Маппинг
+  components:
+    - type: Sprite
+      sprite: SS220/Debugging/debug_access_configurator.rsi
+      state: icon
+    - type: Item
+      size: Small
+    - type: Clothing
+      sprite: SS220/Debugging/debug_access_configurator.rsi
+    - type: AccessOverrider
+      accessLevels:
+      - Armory
+      - Atmospherics
+      - Bar
+      - Brig
+      - Blueshield
+      - Captain
+      - Cargo
+      - Chapel
+      - Chemistry
+      - ChiefEngineer
+      - ChiefMedicalOfficer
+      - Command
+      - Detective
+      - Engineering
+      - EmergencyShuttleRepealAll
+      - External
+      - HeadOfPersonnel
+      - HeadOfSecurity
+      - Hydroponics
+      - Janitor
+      - Kitchen
+      - Maintenance
+      - Medical
+      - NuclearOperative
+      - Paramedic
+      - Quartermaster
+      - Research
+      - ResearchDirector
+      - Salvage
+      - Security
+      - Service
+      - SyndicateAgent
+      - Theatre
