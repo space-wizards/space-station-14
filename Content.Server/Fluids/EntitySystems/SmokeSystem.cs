@@ -6,6 +6,7 @@ using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -59,6 +60,7 @@ public sealed class SmokeSystem : EntitySystem
         SubscribeLocalEvent<SmokeComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<SmokeComponent, EndCollideEvent>(OnEndCollide);
         SubscribeLocalEvent<SmokeComponent, ReactionAttemptEvent>(OnReactionAttempt);
+        SubscribeLocalEvent<SmokeComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<SmokeComponent, SpreadNeighborsEvent>(OnSmokeSpread);
         SubscribeLocalEvent<SmokeAffectedComponent, EntityUnpausedEvent>(OnAffectedUnpaused);
     }
@@ -191,9 +193,9 @@ public sealed class SmokeSystem : EntitySystem
 
     }
 
-    private void OnReactionAttempt(EntityUid uid, SmokeComponent component, ReactionAttemptEvent args)
+    private void OnReactionAttempt(EntityUid uid, SmokeComponent component, ref ReactionAttemptEvent args)
     {
-        if (args.Solution.Name != SmokeComponent.SolutionName)
+        if (args.Cancelled)
             return;
 
         // Prevent smoke/foam fork bombs (smoke creating more smoke).
@@ -201,10 +203,16 @@ public sealed class SmokeSystem : EntitySystem
         {
             if (effect is AreaReactionEffect)
             {
-                args.Cancel();
+                args.Cancelled = true;
                 return;
             }
         }
+    }
+
+    private void OnReactionAttempt(EntityUid uid, SmokeComponent component, ref SolutionRelayEvent<ReactionAttemptEvent> args)
+    {
+        if (args.Name == SmokeComponent.SolutionName)
+            OnReactionAttempt(uid, component, ref args.Event);
     }
 
     /// <summary>

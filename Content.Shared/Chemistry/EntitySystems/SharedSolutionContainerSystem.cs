@@ -184,7 +184,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         // Process reactions
         if (needsReactionsProcessing && solution.CanReact)
-            ChemicalReactionSystem.FullyReactSolution(solution, uid, solution.MaxVolume, mixerComponent);
+            ChemicalReactionSystem.FullyReactSolution(soln, mixerComponent);
 
         var overflow = solution.Volume - solution.MaxVolume;
         if (overflow > FixedPoint2.Zero)

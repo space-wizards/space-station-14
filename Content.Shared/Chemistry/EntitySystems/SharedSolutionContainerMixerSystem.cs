@@ -99,10 +99,10 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
 
         foreach (var ent in container.ContainedEntities)
         {
-            if (!_solution.TryGetFitsInDispenser(ent, out _, out var solution))
+            if (!_solution.TryGetFitsInDispenser(ent, out var soln, out _))
                 continue;
 
-            _chemicalReaction.FullyReactSolution(solution, ent, solution.MaxVolume, reactionMixer);
+            _chemicalReaction.FullyReactSolution(soln, reactionMixer);
         }
     }
 

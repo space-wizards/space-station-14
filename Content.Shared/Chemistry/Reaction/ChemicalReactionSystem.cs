@@ -105,8 +105,10 @@ namespace Content.Shared.Chemistry.Reaction
         /// <param name="reaction">The reaction to check.</param>
         /// <param name="lowestUnitReactions">How many times this reaction can occur.</param>
         /// <returns></returns>
-        private bool CanReact(Solution solution, ReactionPrototype reaction, EntityUid owner, ReactionMixerComponent? mixerComponent, out FixedPoint2 lowestUnitReactions)
+        private bool CanReact(Entity<SolutionComponent> soln, ReactionPrototype reaction, ReactionMixerComponent? mixerComponent, out FixedPoint2 lowestUnitReactions)
         {
+            var solution = soln.Comp.Solution;
+
             lowestUnitReactions = FixedPoint2.MaxValue;
             if (solution.Temperature < reaction.MinimumTemperature)
             {
@@ -126,8 +128,8 @@ namespace Content.Shared.Chemistry.Reaction
                 return false;
             }
 
-            var attempt = new ReactionAttemptEvent(reaction, solution);
-            RaiseLocalEvent(owner, attempt);
+            var attempt = new ReactionAttemptEvent(reaction, soln);
+            RaiseLocalEvent(soln, attempt);
             if (attempt.Cancelled)
             {
                 lowestUnitReactions = FixedPoint2.Zero;
@@ -173,8 +175,11 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Perform a reaction on a solution. This assumes all reaction criteria are met.
         ///     Removes the reactants from the solution, adds products, and returns a list of products.
         /// </summary>
-        private List<string> PerformReaction(Solution solution, EntityUid owner, ReactionPrototype reaction, FixedPoint2 unitReactions)
+        private List<string> PerformReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
+            var (uid, comp) = soln;
+            var solution = comp.Solution;
+
             var energy = reaction.ConserveEnergy ? solution.GetThermalEnergy(_prototypeManager) : 0;
 
             //Remove reactants
@@ -202,20 +207,20 @@ namespace Content.Shared.Chemistry.Reaction
                     solution.Temperature = energy / newCap;
             }
 
-            OnReaction(solution, reaction, null, owner, unitReactions);
+            OnReaction(soln, reaction, null, unitReactions);
 
             return products;
         }
 
-        private void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype? reagent, EntityUid owner, FixedPoint2 unitReactions)
+        private void OnReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, ReagentPrototype? reagent, FixedPoint2 unitReactions)
         {
-            var args = new ReagentEffectArgs(owner, null, solution,
+            var args = new ReagentEffectArgs(soln, null, soln.Comp.Solution,
                 reagent,
                 unitReactions, EntityManager, null, 1f);
 
-            var coordinates = Transform(owner).Coordinates;
+            var coordinates = Transform(soln).Coordinates;
             _adminLogger.Add(LogType.ChemicalReaction, reaction.Impact,
-                $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(owner):metabolizer} at {coordinates}");
+                $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(soln):metabolizer} at {coordinates}");
 
             foreach (var effect in reaction.Effects)
             {
@@ -232,7 +237,7 @@ namespace Content.Shared.Chemistry.Reaction
                 effect.Effect(args);
             }
 
-            _audio.PlayPvs(reaction.Sound, owner);
+            _audio.PlayPvs(reaction.Sound, soln);
         }
 
         /// <summary>
@@ -240,7 +245,7 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Removes the reactants from the solution, then returns a solution with all products.
         ///     WARNING: Does not trigger reactions between solution and new products.
         /// </summary>
-        private bool ProcessReactions(Solution solution, EntityUid owner, FixedPoint2 maxVolume, SortedSet<ReactionPrototype> reactions, ReactionMixerComponent? mixerComponent)
+        private bool ProcessReactions(Entity<SolutionComponent> soln, SortedSet<ReactionPrototype> reactions, ReactionMixerComponent? mixerComponent)
         {
             HashSet<ReactionPrototype> toRemove = new();
             List<string>? products = null;
@@ -248,13 +253,13 @@ namespace Content.Shared.Chemistry.Reaction
             // attempt to perform any applicable reaction
             foreach (var reaction in reactions)
             {
-                if (!CanReact(solution, reaction, owner, mixerComponent, out var unitReactions))
+                if (!CanReact(soln, reaction, mixerComponent, out var unitReactions))
                 {
                     toRemove.Add(reaction);
                     continue;
                 }
 
-                products = PerformReaction(solution, owner, reaction, unitReactions);
+                products = PerformReaction(soln, reaction, unitReactions);
                 break;
             }
 
@@ -279,11 +284,11 @@ namespace Content.Shared.Chemistry.Reaction
         /// <summary>
         ///     Continually react a solution until no more reactions occur, with a volume constraint.
         /// </summary>
-        public void FullyReactSolution(Solution solution, EntityUid owner, FixedPoint2 maxVolume, ReactionMixerComponent? mixerComponent = null)
+        public void FullyReactSolution(Entity<SolutionComponent> soln, ReactionMixerComponent? mixerComponent = null)
         {
             // construct the initial set of reactions to check.
             SortedSet<ReactionPrototype> reactions = new();
-            foreach (var reactant in solution.Contents)
+            foreach (var reactant in soln.Comp.Solution.Contents)
             {
                 if (_reactions.TryGetValue(reactant.Reagent.Prototype, out var reactantReactions))
                     reactions.UnionWith(reactantReactions);
@@ -293,11 +298,11 @@ namespace Content.Shared.Chemistry.Reaction
             // exceed the iteration limit.
             for (var i = 0; i < MaxReactionIterations; i++)
             {
-                if (!ProcessReactions(solution, owner, maxVolume, reactions, mixerComponent))
+                if (!ProcessReactions(soln, reactions, mixerComponent))
                     return;
             }
 
-            Logger.Error($"{nameof(Solution)} {owner} could not finish reacting in under {MaxReactionIterations} loops.");
+            Logger.Error($"{nameof(Solution)} {soln.Owner} could not finish reacting in under {MaxReactionIterations} loops.");
         }
     }
 
@@ -307,15 +312,10 @@ namespace Content.Shared.Chemistry.Reaction
     /// <reamrks>
     ///     Some solution containers (e.g., bloodstream, smoke, foam) use this to block certain reactions from occurring.
     /// </reamrks>
-    public sealed class ReactionAttemptEvent : CancellableEntityEventArgs
+    public partial record struct ReactionAttemptEvent(ReactionPrototype Reaction, Entity<SolutionComponent> Solution)
     {
-        public readonly ReactionPrototype Reaction;
-        public readonly Solution Solution;
-
-        public ReactionAttemptEvent(ReactionPrototype reaction, Solution solution)
-        {
-            Reaction = reaction;
-            Solution = solution;
-        }
+        public readonly ReactionPrototype Reaction = Reaction;
+        public readonly Entity<SolutionComponent> Solution = Solution;
+        public bool Cancelled = false;
     }
 }

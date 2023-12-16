@@ -7,6 +7,7 @@ using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Drunk;
@@ -49,14 +50,13 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
         SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
+        SubscribeLocalEvent<BloodstreamComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
     }
 
-    private void OnReactionAttempt(EntityUid uid, BloodstreamComponent component, ReactionAttemptEvent args)
+    private void OnReactionAttempt(EntityUid uid, BloodstreamComponent component, ref ReactionAttemptEvent args)
     {
-        if (args.Solution.Name != BloodstreamComponent.DefaultBloodSolutionName
-            && args.Solution.Name != BloodstreamComponent.DefaultChemicalsSolutionName
-            && args.Solution.Name != BloodstreamComponent.DefaultBloodTemporarySolutionName)
+        if (args.Cancelled)
             return;
 
         foreach (var effect in args.Reaction.Effects)
@@ -65,7 +65,7 @@ public sealed class BloodstreamSystem : EntitySystem
             {
                 case CreateEntityReactionEffect: // Prevent entities from spawning in the bloodstream
                 case AreaReactionEffect: // No spontaneous smoke or foam leaking out of blood vessels.
-                    args.Cancel();
+                    args.Cancelled = true;
                     return;
             }
         }
@@ -77,6 +77,16 @@ public sealed class BloodstreamSystem : EntitySystem
 
         // TODO apply organ damage instead of just blocking the reaction?
         // Having cheese-clots form in your veins can't be good for you.
+    }
+
+    private void OnReactionAttempt(EntityUid uid, BloodstreamComponent component, ref SolutionRelayEvent<ReactionAttemptEvent> args)
+    {
+        if (args.Name != BloodstreamComponent.DefaultBloodSolutionName
+            && args.Name != BloodstreamComponent.DefaultChemicalsSolutionName
+            && args.Name != BloodstreamComponent.DefaultBloodTemporarySolutionName)
+            return;
+
+        OnReactionAttempt(uid, component, ref args.Event);
     }
 
     public override void Update(float frameTime)
