@@ -13,6 +13,8 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 25
+  - type: FitsInDispenser
+    solution: beaker
   - type: SpaceGarbage
   - type: Sprite
     sprite: Objects/Specific/Chemistry/vial.rsi
@@ -26,6 +28,7 @@
     maxFillLevels: 6
     fillBaseName: vial-1-
   - type: Drink
+    solution: vial
   - type: SolutionContainerManager
     solutions:
       drink: # This solution name and target volume is hard-coded in ChemMasterComponent
@@ -91,3 +94,7 @@
         transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Spillable
+    solution: vial
+  - type: StaticPrice
+    price: 100
