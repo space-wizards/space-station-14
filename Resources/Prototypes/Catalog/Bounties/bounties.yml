@@ -564,5 +564,5 @@
   - name: bounty-food
     amount: 30
     whitelist:
-      components:
-      - Food
+      tags:
+      - Meat

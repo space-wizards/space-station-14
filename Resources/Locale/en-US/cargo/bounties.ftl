@@ -49,7 +49,7 @@ bounty-item-labeler = Hand labeler
 bounty-item-warm-cloth = Warm clothes
 bounty-item-battery = Battery
 bounty-lasergun = Laser gun
-bounty-food = Food
+bounty-food = Meat food
 
 bounty-description-artifact = NanoTrasen is in some hot water for stealing artifacts from non-spacefaring planets. Return one and we'll compensate you for it.
 bounty-description-baseball-bat = Baseball fever is going on at CentCom! Be a dear and ship them some baseball bats, so that management can live out their childhood dream.
@@ -101,4 +101,4 @@ bounty-description-labeler = Due to a bureaucratic error, our sorting center alm
 bounty-description-warm-cloth = The Unath construction crew freezes and is unable to restore power to their station. They need to be sent a set of any clothing to protect them from the cold.
 bounty-description-battery = As the Arachnid settlement prepares for a solar flare, they are requesting a large shipment of power batteries. We're sending out a request for delivery.
 bounty-description-lasergun = The Salvage Caravan requests a large shipment of laser weapons to mop up a hive of xenomorphs. 
-bounty-description-food = After the rat king invasion, a neighboring station was left completely without food. A large food shipment is needed.
+bounty-description-food = After the rat king invasion, a neighboring unathi station was left completely without food. A large meat food shipment is needed.
