@@ -10,7 +10,7 @@
     brokenState: broken
     normalState: normal-unshaded
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/capdrobe.rsi
+    sprite: Imperial/CapDrobe/capdrobe.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
