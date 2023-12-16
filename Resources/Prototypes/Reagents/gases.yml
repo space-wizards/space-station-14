@@ -391,6 +391,14 @@
   metabolisms:
     Gas:
       effects:
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: BZ
+          min: 0.2
+        emote: Cough
+        showInChat: true
+        probability: 0.1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
