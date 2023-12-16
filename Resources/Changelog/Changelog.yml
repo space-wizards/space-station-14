@@ -1,15 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: You can now pick up items (and dead pickupable mobs) in combat mode,
-    type: Add}
-  id: 4883
-  time: '2023-09-24T19:47:42.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Fixed people getting too thirsty., type: Fix}
-  id: 4884
-  time: '2023-09-24T19:50:41.0000000+00:00'
 - author: PixelTK
   changes:
   - {message: Arachnids have one new back marking., type: Add}
@@ -2902,3 +2891,13 @@ Entries:
   - {message: Fix map boundaries not pushing you back., type: Fix}
   id: 5383
   time: '2023-12-16T02:19:54.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Crayons boxes now hold a white crayon., type: Tweak}
+  id: 5384
+  time: '2023-12-16T03:20:40.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Chefs get black pepper packets in their lockers., type: Tweak}
+  id: 5385
+  time: '2023-12-16T03:20:51.0000000+00:00'
