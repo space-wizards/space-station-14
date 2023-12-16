@@ -1,4 +1,25 @@
 - type: mixingCategory
+  id: DefaultMix
+  verbText: mixing-verb-default-mix
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker_large.rsi
+    state: beakerlarge
+
+- type: mixingCategory
+  id: DefaultGrind
+  verbText: mixing-verb-default-grind
+  icon:
+    sprite: Structures/Machines/juicer.rsi
+    state: juicer0
+
+- type: mixingCategory
+  id: DefaultJuice
+  verbText: mixing-verb-default-juice
+  icon:
+    sprite: Structures/Machines/juicer.rsi
+    state: juicer0
+
+- type: mixingCategory
   id: Centrifuge
   verbText: mixing-verb-centrifuge
   icon:

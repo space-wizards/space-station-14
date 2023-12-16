@@ -300,6 +300,7 @@
 
 - type: reaction
   id: BananaBreakdown
+  source: true
   requiredMixerCategories:
   - Centrifuge
   reactants:
@@ -311,6 +312,7 @@
 
 - type: reaction
   id: SugarBreakdown
+  source: true
   minTemp: 520
   reactants:
     Sugar:

@@ -1,4 +1,7 @@
 # Types
+mixing-verb-default-mix = mix
+mixing-verb-default-grind = grind
+mixing-verb-default-juice = juice
 mixing-verb-centrifuge = centrifugation
 mixing-verb-electrolysis = electrolyze
 mixing-verb-holy = bless

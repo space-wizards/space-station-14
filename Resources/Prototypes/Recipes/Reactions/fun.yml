@@ -110,6 +110,7 @@
 
 - type: reaction
   id: FiberBreakdown
+  source: true
   requiredMixerCategories:
   - Centrifuge
   reactants:
