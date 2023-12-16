@@ -1,0 +1,21 @@
+﻿- type: reaction
+  id: CarbonDioxideBreakdown
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    CarbonDioxide:
+      amount: 3
+  products:
+    Carbon: 1
+    Oxygen: 2
+
+- type: reaction
+  id: NitrousOxideBreakdown
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    NitrousOxide:
+      amount: 3
+  products:
+    Nitrogen: 2
+    Oxygen: 1

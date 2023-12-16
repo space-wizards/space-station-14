@@ -19,11 +19,6 @@ public sealed class ExplosionOverlaySystem : EntitySystem
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
 
-    /// <summary>
-    ///     For how many seconds should an explosion stay on-screen once it has finished expanding?
-    /// </summary>
-    public float ExplosionPersistence = 0.3f;
-
     public override void Initialize()
     {
         base.Initialize();
