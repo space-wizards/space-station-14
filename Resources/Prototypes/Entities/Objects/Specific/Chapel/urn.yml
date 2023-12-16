@@ -12,8 +12,8 @@
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
   - type: Sprite
-    sprite: Objects/Specific/Chapel/urn.rsi
+    sprite: Objects/Specific/Chapel/chaplainurn.rsi
     state: icon
   - type: Item
     size: Normal
-    sprite: Objects/Specific/Chapel/urn.rsi
+    sprite: Objects/Specific/Chapel/chaplainurn.rsi
