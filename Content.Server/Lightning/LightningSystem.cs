@@ -18,16 +18,38 @@ namespace Content.Server.Lightning;
 //and the number of these branches is explicitly controlled in the new function.
 public sealed class LightningSystem : SharedLightningSystem
 {
-    [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
+    private Dictionary<int, HashSet<Entity<LightningTargetComponent>>> _allTargets = new Dictionary<int, HashSet<Entity<LightningTargetComponent>>>();
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<LightningComponent, ComponentRemove>(OnRemove);
+
+        SubscribeLocalEvent<LightningTargetComponent, MapInitEvent>(OnTargetInit);
+        SubscribeLocalEvent<LightningTargetComponent, ComponentRemove>(OnTargetRemove);
+    }
+
+    private void OnTargetInit(Entity<LightningTargetComponent> target, ref MapInitEvent args)
+    {
+        var priority = target.Comp.Priority;
+        if (!_allTargets.ContainsKey(priority))
+            _allTargets.Add(priority, new HashSet<Entity<LightningTargetComponent>>());
+
+        _allTargets[priority].Add(new Entity<LightningTargetComponent>(target.Owner, target.Comp));
+        Log.Debug($"Added {target}, priority = {priority}, count = {_allTargets[priority].Count}");
+    }
+
+    private void OnTargetRemove(Entity<LightningTargetComponent> target, ref ComponentRemove args)
+    {
+        var priority = target.Comp.Priority;
+
+        _allTargets[priority].Remove(target);
+
+        Log.Debug($"Remove {target}, priority = {priority}, count = {_allTargets[priority].Count}");
     }
 
     private void OnRemove(EntityUid uid, LightningComponent component, ComponentRemove args)
@@ -69,27 +91,70 @@ public sealed class LightningSystem : SharedLightningSystem
     public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0)
     {
         //To Do: add support to different priority target tablem for different lightning types
-        //To Do: Remove Hardcode LightningTargetComponent (this should be a parameter of the SharedLightningComponent)
-        //TO DO: Allocating list, Shuffle and Sort is VERY EXPENSIVE!
 
-        var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).MapPosition, range).ToList();
-        _random.Shuffle(targets);
-        targets.Sort((x, y) => y.Priority.CompareTo(x.Priority));
+        //var boltRemains = boltCount;
+        //var targetPriority = _allTargets.Keys.Max();
+        //
+        //var hashSet = _allTargets[targetPriority];
+        //_lookup.GetEntitiesInRange(Transform(user).MapPosition, range, hashSet);
+        //
+        //while (boltRemains > 0)
+        //{
+        //    //Move to lower priority
+        //    if (hashSet.Count == 0) //Move to next priority
+        //    {
+        //        targetPriority--;
+        //        hashSet = _allTargets[targetPriority];
+        //        _lookup.GetEntitiesInRange(Transform(user).MapPosition, range, hashSet);
+        //        continue;
+        //    }
+        //}
+        //
+        //for (int i = 0; i < boltCount; i++)
+        //{
+        //    //найти цель
+        //
+        //    if (hashSet.Count == 0) //Move to next priority
+        //    {
+        //        targetPriority--;
+        //        i++;
+        //        continue;
+        //    }
+        //    //выстрелить
+        //
+        //
+        //
+        //}
+        //
+        //while (boltRemains > 0)
+        //{
+        //    var hashSet = _allTargets[targetPriority];
+        //    _lookup.GetEntitiesInRange(Transform(user).MapPosition, range, hashSet);
+        //    for (int i = 0; i < boltRemains; i++)
+        //    {
+        //
+        //    }
+        //}
+        //
 
-        var realCount = Math.Min(targets.Count, boltCount);
-
-        if (realCount <= 0)
-            return;
-
-        for (int i = 0; i < realCount; i++)
-        {
-            ShootLightning(user, targets[i].Owner, lightningPrototype); //idk how to evade .Owner pls help
-
-            if (arcDepth > 0)
-            {
-                ShootRandomLightnings(targets[i].Owner, range, 1, lightningPrototype, arcDepth - targets[i].LightningResistance);
-            }
-        }
+        //var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).MapPosition, range).ToList();
+        //_random.Shuffle(targets);
+        //targets.Sort((x, y) => y.Priority.CompareTo(x.Priority));
+        //
+        //var realCount = Math.Min(targets.Count, boltCount);
+        //
+        //if (realCount <= 0)
+        //    return;
+        //
+        //for (int i = 0; i < realCount; i++)
+        //{
+        //    ShootLightning(user, targets[i].Owner, lightningPrototype); //idk how to evade .Owner pls help
+        //
+        //    if (arcDepth > 0)
+        //    {
+        //        ShootRandomLightnings(targets[i].Owner, range, 1, lightningPrototype, arcDepth - targets[i].LightningResistance);
+        //    }
+        //}
     }
 }
 
