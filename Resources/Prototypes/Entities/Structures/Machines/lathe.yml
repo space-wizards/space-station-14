@@ -276,6 +276,8 @@
       - WelderExperimental
       - JawsOfLife
       - ClothingEyesGlassesChemical
+      - FauxTileAstroGrass
+      - FauxTileAstroIce
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload

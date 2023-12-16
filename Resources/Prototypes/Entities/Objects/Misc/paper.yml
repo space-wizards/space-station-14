@@ -250,6 +250,19 @@
     materialComposition:
       Steel: 25
 
+#TODO: I want the luxury pen to write a cool font like Merriweather in the future.
+
+- type: entity
+  name: luxury pen
+  parent: Pen
+  id: LuxuryPen
+  description: A fancy and expensive pen that you only deserve to own if you're qualified to handle vast amounts of paperwork.
+  components:
+  - type: Sprite
+    state: luxury_pen
+  - type: Item
+    heldPrefix: luxury_pen
+
 - type: entity
   name: Cybersun pen
   parent: BaseItem

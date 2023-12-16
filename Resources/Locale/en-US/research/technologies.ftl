@@ -63,6 +63,7 @@ research-technology-critter-mechs = Critter Mechs
 research-technology-food-service = Food Service
 research-technology-advanced-entertainment = Advanced Entertainment
 research-technology-audio-visual-communication = A/V Communication
+research-technology-faux-astro-tiles = Faux Astro-Tiles
 research-technology-robotic-cleanliness = Robotic Cleanliness
 research-technology-advanced-cleaning = Advanced Cleaning
 research-technology-meat-manipulation = Meat Manipulation
