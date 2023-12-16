@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Ghosts can now toggle whether they hear out-of-range local messages
-      using an action, type: Add}
-  id: 4890
-  time: '2023-09-24T20:34:09.0000000+00:00'
 - author: daerSeebaer
   changes:
   - {message: The AME now shuts down when the inserted fuel jar is empty, type: Add}
@@ -2900,3 +2894,9 @@ Entries:
   - {message: 'Everyone can toggle fire alarms now, not just atmos', type: Tweak}
   id: 5390
   time: '2023-12-16T08:24:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: A variety of chemicals can now be decomposed via electrolysis or centrifugal
+      force., type: Add}
+  id: 5391
+  time: '2023-12-16T08:26:12.0000000+00:00'
