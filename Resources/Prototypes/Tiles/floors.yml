@@ -1187,7 +1187,7 @@
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
-    collection: FootstepFloor
+    collection: FootstepTile
   itemDrop: FloorTileItemShuttleTitanium
   heatCapacity: 10000
 
@@ -1211,7 +1211,7 @@
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
-    collection: FootstepFloor
+    collection: FootstepTile
   itemDrop: FloorTileItemShuttleWhite
   heatCapacity: 10000
 
@@ -1235,7 +1235,7 @@
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
-    collection: FootstepFloor
+    collection: FootstepTile
   itemDrop: FloorTileItemShuttleBlue
   heatCapacity: 10000
 
@@ -1254,19 +1254,19 @@
 - type: tile
   id: FloorShuttleOrange
   name: tiles-orange-tiled-shuttle-floor
-  sprite: /Textures/Tiles/Shuttle/titanium_tiled_yellow.png
+  sprite: /Textures/Tiles/Shuttle/titanium_tiled_orange.png
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
-    collection: FootstepFloor
+    collection: FootstepTile
   itemDrop: FloorTileItemShuttleOrange
   heatCapacity: 10000
 
 - type: tile
   id: FloorShuttleOrangeNonTiled
   name: tiles-orange-shuttle-floor
-  sprite: /Textures/Tiles/Shuttle/titanium_yellow.png
+  sprite: /Textures/Tiles/Shuttle/titanium_orange.png
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
@@ -1278,13 +1278,13 @@
 - type: tile
   id: FloorShuttleYellow
   name: tiles-yellow-shuttle-floor
-  sprite: /Textures/Tiles/Shuttle/noslip.png
+  sprite: /Textures/Tiles/Shuttle/yellow.png
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
-    collection: FootstepFloor
-  itemDrop: FloorTileItemShuttleOrange
+    collection: FootstepTile
+  itemDrop: FloorTileItemShuttleYellow
   heatCapacity: 10000
 
 - type: tile
@@ -1295,7 +1295,7 @@
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
-    collection: FootstepFloor
+    collection: FootstepTile
   itemDrop: FloorTileItemShuttlePurple
   heatCapacity: 10000
 

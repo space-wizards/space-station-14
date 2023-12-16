@@ -14,7 +14,7 @@
       "name": "titanium_blue"
     },
     {
-      "name": "titanium_yellow"
+      "name": "titanium_orange"
     },
     {
       "name": "titanium_white"
@@ -29,7 +29,7 @@
       "name": "titanium_tiled_blue"
     },
     {
-      "name": "titanium_tiled_yellow"
+      "name": "titanium_tiled_orange"
     },
     {
       "name": "titanium_tiled_white"
@@ -44,10 +44,7 @@
       "name": "plastitanium_red"
     },
     {
-      "name": "noslip"
-    },
-    {
-      "name": "podfloor"
+      "name": "yellow"
     }
   ]
 }

@@ -110,31 +110,81 @@
   maxCount: 30
   itemSize: 5
 
+# Shuttle
+- type: stack
+  id: FloorTileStackShuttleTitanium
+  name: tiled titanium shuttle tile
+  spawn: FloorTileItemShuttleTitanium
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileStackShuttleTitaniumNonTiled
+  name: titanium shuttle tile
+  spawn: FloorTileItemShuttleTitaniumNonTiled
+  maxCount: 30
+  itemSize: 5
+
 - type: stack
   id: FloorTileStackShuttleWhite
-  name: white shuttle tile
+  name: tiled white shuttle tile
   spawn: FloorTileItemShuttleWhite
   maxCount: 30
   itemSize: 5
 
 - type: stack
+  id: FloorTileStackShuttleWhiteNonTiled
+  name: white shuttle tile
+  spawn: FloorTileItemShuttleWhiteNonTiled
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileStackShuttleBlue
-  name: blue shuttle tile
+  name: tiled blue shuttle tile
   spawn: FloorTileItemShuttleBlue
   maxCount: 30
   itemSize: 5
 
 - type: stack
+  id: FloorTileStackShuttleBlueNonTiled
+  name: blue shuttle tile
+  spawn: FloorTileItemShuttleBlueNonTiled
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileStackShuttleOrange
-  name: orange shuttle tile
+  name: tiled orange shuttle tile
   spawn: FloorTileItemShuttleOrange
   maxCount: 30
   itemSize: 5
 
 - type: stack
+  id: FloorTileStackShuttleOrangeNonTiled
+  name: orange shuttle tile
+  spawn: FloorTileItemShuttleOrangeNonTiled
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileStackShuttleYellow
+  name: yellow shuttle tile
+  spawn: FloorTileItemShuttleYellow
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileStackShuttlePurple
-  name: purple shuttle tile
+  name: tiled purple shuttle tile
   spawn: FloorTileItemShuttlePurple
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileStackShuttlePurpleNonTiled
+  name: purple shuttle tile
+  spawn: FloorTileItemShuttlePurpleNonTiled
   maxCount: 30
   itemSize: 5
 
@@ -142,6 +192,13 @@
   id: FloorTileStackShuttleRed
   name: red shuttle tile
   spawn: FloorTileItemShuttleRed
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileStackShuttlePlastitanium
+  name: plastitanium shuttle tile
+  spawn: FloorTileItemShuttlePlastitanium
   maxCount: 30
   itemSize: 5
 
