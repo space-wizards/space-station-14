@@ -24,7 +24,7 @@
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
-    fillBaseName: bottle-1-
+    fillBaseName: vial-1-
   - type: Drink
   - type: SolutionContainerManager
     solutions:
@@ -49,6 +49,8 @@
   - type: Item
     size: Tiny
     sprite: Objects/Specific/Chemistry/vial.rsi
+    shape:
+    - 0,0,1,2
   - type: MeleeWeapon
     soundNoDamage:
       path: "/Audio/Effects/Fluids/splat.ogg"
@@ -73,7 +75,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 5
+        damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound:
