@@ -943,3 +943,39 @@
   - type: Construction
     graph: WebObjects
     node: tile
+
+# Faux science tiles
+
+- type: entity
+  id: FloorTileItemAstroGrass
+  parent: FloorTileItemBase
+  name: astro-grass
+  description: Fake grass that covers up wires and even comes with realistic NanoTrimmings!
+  components:
+  - type: Sprite
+    state: astrograss
+  - type: Item
+    heldPrefix: grass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroGrass
+  - type: Stack
+    stackType: FloorTileAstroGrass
+
+- type: entity
+  id: FloorTileItemAstroIce
+  parent: FloorTileItemBase
+  name: astro-ice
+  description: Fake ice that's as slippery as the real thing, while being easily removable!
+  components:
+  - type: Sprite
+    state: astroice
+  - type: Item
+    heldPrefix: snow
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroIce
+  - type: Stack
+    stackType: FloorTileAstroIce
