@@ -1,10 +1,4 @@
 Entries:
-- author: Psychpsyo
-  changes:
-  - {message: 'People and animals no longer have two hearts, livers, sets of lungs
-      or kidneys. You probably didn''t need the extra pair anyways.', type: Fix}
-  id: 4896
-  time: '2023-09-25T06:53:04.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Adds a new sprite for Syndicate implanters., type: Add}
@@ -2900,3 +2894,9 @@ Entries:
   - {message: Fixed explosion resistance from bags being applied to the wearer., type: Fix}
   id: 5396
   time: '2023-12-16T17:17:09.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Added the power sensor for checking power stats in logic circuits.,
+    type: Add}
+  id: 5397
+  time: '2023-12-16T18:32:42.0000000+00:00'
