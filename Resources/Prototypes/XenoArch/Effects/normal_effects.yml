@@ -600,7 +600,7 @@
   - type: SpawnArtifact
     maxSpawns: 1
     spawns:
-    - id: MobCatCak
+    - id: MobCatCake
 
 - type: artifactEffect
   id: EffectSingulo
