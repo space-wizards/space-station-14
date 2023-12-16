@@ -379,17 +379,6 @@
     state: pda
     penSlot:
       startingItem: LuxuryPen
-      priority: -1
-      whitelist:
-        tags:
-        - Write
-    idSlot:
-      name: ID Card
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-      whitelist:
-        components:
-        - IdCard
 
 - type: entity
   parent: BasePDA
@@ -408,17 +397,6 @@
     state: pda
     penSlot:
       startingItem: LuxuryPen
-      priority: -1
-      whitelist:
-        tags:
-        - Write
-    idSlot:
-      name: ID Card
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-      whitelist:
-        components:
-        - IdCard
 
 - type: entity
   parent: BasePDA
@@ -882,17 +860,6 @@
     state: pda
     penSlot:
       startingItem: LuxuryPen
-      priority: -1
-      whitelist:
-        tags:
-        - Write
-    idSlot:
-      name: ID Card
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-      whitelist:
-        components:
-        - IdCard
 
 - type: entity
   parent: BasePDA
