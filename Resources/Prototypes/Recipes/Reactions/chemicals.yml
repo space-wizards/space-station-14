@@ -76,9 +76,9 @@
     PolytrinicAcid: 3
 
 - type: reaction
-  id: SulfuricAcid 
-  reactants: 
-    Sulfur: 
+  id: SulfuricAcid
+  reactants:
+    Sulfur:
       amount: 1
     Hydrogen:
       amount: 1
@@ -364,7 +364,7 @@
   reactants:
     Uranium:
       amount: 1
-    Epinephrine:  
+    Epinephrine:
       amount: 1
   products:
     NorepinephricAcid: 2
@@ -412,7 +412,7 @@
   id: Benzene
   impact: Medium
   reactants:
-    Hydrogen: 
+    Hydrogen:
       Amount: 1
     Carbon:
       Amount: 1
