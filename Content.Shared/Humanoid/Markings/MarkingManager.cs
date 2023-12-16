@@ -23,7 +23,6 @@ namespace Content.Shared.Humanoid.Markings
         private void CachePrototypes()
         {
             _index.Clear();
-            var markings = new Dictionary<string, MarkingPrototype>();
             var markingDict = new Dictionary<MarkingCategories, Dictionary<string, MarkingPrototype>>();
 
             foreach (var category in Enum.GetValues<MarkingCategories>())
@@ -35,13 +34,12 @@ namespace Content.Shared.Humanoid.Markings
             {
                 _index.Add(prototype);
                 markingDict[prototype.MarkingCategory].Add(prototype.ID, prototype);
-                markings.Add(prototype.ID, prototype);
             }
 
-            Markings = markings.ToFrozenDictionary();
-            CategorizedMarkings = markingDict.Select(x =>
-                new KeyValuePair<MarkingCategories, FrozenDictionary<string, MarkingPrototype>>(x.Key,
-                    x.Value.ToFrozenDictionary())).ToFrozenDictionary();
+            Markings = _prototypeManager.EnumeratePrototypes<MarkingPrototype>().ToFrozenDictionary(x => x.ID);
+            CategorizedMarkings = markingDict.ToFrozenDictionary(
+                x => x.Key,
+                x => x.Value.ToFrozenDictionary());
         }
 
         public FrozenDictionary<string, MarkingPrototype> MarkingsByCategory(MarkingCategories category)

@@ -55,12 +55,8 @@ public abstract class SharedChatSystem : EntitySystem
 
     private void CacheRadios()
     {
-        var dict = new Dictionary<char, RadioChannelPrototype>();
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>())
-        {
-            dict.Add(proto.KeyCode, proto);
-        }
-        _keyCodes = dict.ToFrozenDictionary();
+        _keyCodes = _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>()
+            .ToFrozenDictionary(x => x.KeyCode);
     }
 
     /// <summary>

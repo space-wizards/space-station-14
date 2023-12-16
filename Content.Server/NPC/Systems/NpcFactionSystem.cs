@@ -230,16 +230,15 @@ public sealed partial class NpcFactionSystem : EntitySystem
 
     private void RefreshFactions()
     {
-        var dict = new Dictionary<string, FactionData>();
-        foreach (var faction in _protoManager.EnumeratePrototypes<NpcFactionPrototype>())
-        {
-            dict[faction.ID] = new FactionData()
+
+        _factions = _protoManager.EnumeratePrototypes<NpcFactionPrototype>().ToFrozenDictionary(
+            faction => faction.ID,
+            faction =>  new FactionData
             {
                 Friendly = faction.Friendly.ToHashSet(),
-                Hostile = faction.Hostile.ToHashSet(),
-            };
-        }
-        _factions = dict.ToFrozenDictionary();
+                Hostile = faction.Hostile.ToHashSet()
+
+            });
 
         foreach (var comp in EntityQuery<NpcFactionMemberComponent>(true))
         {
