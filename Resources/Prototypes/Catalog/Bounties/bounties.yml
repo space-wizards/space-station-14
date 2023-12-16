@@ -525,7 +525,7 @@
       
 - type: cargoBounty
   id: BountyWarmCloth
-  reward: 4500
+  reward: 6000
   description: bounty-description-warm-cloth
   entries:
   - name: bounty-item-warm-cloth
