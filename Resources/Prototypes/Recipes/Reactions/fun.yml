@@ -107,3 +107,17 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: SheetPlastic1
+
+- type: reaction
+  id: FiberBreakdown
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Fiber:
+      amount: 5
+    Water:
+      amount: 10
+      catalyst: true
+  products:
+    Carbon: 3
+    Sugar: 2
