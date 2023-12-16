@@ -21,7 +21,7 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
     [Dependency] private readonly ChemicalReactionSystem _chemicalReaction = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SolutionContainerSystem _solution = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -99,7 +99,7 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
 
         foreach (var ent in container.ContainedEntities)
         {
-            if (!_solution.TryGetFitsInDispenser(ent, out var solution))
+            if (!_solution.TryGetFitsInDispenser(ent, out _, out var solution))
                 continue;
 
             _chemicalReaction.FullyReactSolution(solution, ent, solution.MaxVolume, reactionMixer);
