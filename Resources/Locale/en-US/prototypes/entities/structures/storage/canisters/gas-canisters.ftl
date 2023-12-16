@@ -43,6 +43,9 @@ ent-NitrousOxideCanister = Nitrous oxide canister
 ent-FrezonCanister = Frezon canister
     .desc = A coolant with light hallucinogenic properties. Proceed.
 
+ent-BZCanister = BZ canister
+    .desc = A potent hallucinogenic that also puts slimes into stasis. Highly toxic.
+
 ent-GasCanisterBrokenBase = Broken gas canister
     .desc = A broken gas canister. Not useless yet, as it can be salvaged for high quality materials.
 
@@ -77,4 +80,7 @@ ent-NitrousOxideCanisterBroken = { ent-GasCanisterBrokenBase }
     .desc = { ent-GasCanisterBrokenBase.desc }
 
 ent-FrezonCanisterBroken = { ent-GasCanisterBrokenBase }
+    .desc = { ent-GasCanisterBrokenBase.desc }
+
+ent-BZCanisterBroken = { ent-GasCanisterBrokenBase }
     .desc = { ent-GasCanisterBrokenBase.desc }
