@@ -2409,6 +2409,9 @@
   - type: AutoImplant
     implants:
     - MicroBombImplant
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
    
 - type: entity
   name: space cat
