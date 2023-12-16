@@ -206,6 +206,17 @@
     TableSalt: 2
 
 - type: reaction
+  id: TableSaltBreakdown
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    TableSalt:
+      amount: 2
+  products:
+    Chlorine: 1
+    Sodium: 1
+
+- type: reaction
   id: Thermite
   impact: Medium
   reactants:
