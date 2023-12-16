@@ -1180,9 +1180,33 @@
 
 # Shuttle
 - type: tile
+  id: FloorShuttleTitanium
+  name: tiles-titanium-tiled-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/titanium_tiled.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemShuttleTitanium
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorShuttleTitaniumNonTiled
+  name: tiles-titanium-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/titanium.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemShuttleTitaniumNonTiled
+  heatCapacity: 10000
+
+- type: tile
   id: FloorShuttleWhite
-  name: tiles-white-shuttle-floor
-  sprite: /Textures/Tiles/shuttlewhite.png
+  name: tiles-white-tiled-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/titanium_tiled_white.png
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
@@ -1192,9 +1216,21 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorShuttleWhiteNonTiled
+  name: tiles-white-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/titanium_white.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemShuttleWhiteNonTiled
+  heatCapacity: 10000
+
+- type: tile
   id: FloorShuttleBlue
-  name: tiles-blue-shuttle-floor
-  sprite: /Textures/Tiles/shuttleblue.png
+  name: tiles-blue-tiled-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/titanium_tiled_blue.png
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
@@ -1204,9 +1240,45 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorShuttleBlueNonTiled
+  name: tiles-white-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/titanium_blue.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemShuttleBlueNonTiled
+  heatCapacity: 10000
+
+- type: tile
   id: FloorShuttleOrange
+  name: tiles-orange-tiled-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/titanium_tiled_yellow.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemShuttleOrange
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorShuttleOrangeNonTiled
   name: tiles-orange-shuttle-floor
-  sprite: /Textures/Tiles/shuttleorange.png
+  sprite: /Textures/Tiles/Shuttle/titanium_yellow.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemShuttleOrangeNonTiled
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorShuttleYellow
+  name: tiles-yellow-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/noslip.png
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
@@ -1217,8 +1289,8 @@
 
 - type: tile
   id: FloorShuttlePurple
-  name: tiles-purple-shuttle-floor
-  sprite: /Textures/Tiles/shuttlepurple.png
+  name: tiles-purple-tiled-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/titanium_tiled_purple.png
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
@@ -1228,9 +1300,33 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorShuttlePurpleNonTiled
+  name: tiles-purple-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/titanium_purple.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemShuttlePurpleNonTiled
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorShuttlePlastitanium
+  name: tiles-plastitanium-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/plastitanium.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemShuttlePlastitanium
+  heatCapacity: 10000
+
+- type: tile
   id: FloorShuttleRed
   name: tiles-red-shuttle-floor
-  sprite: /Textures/Tiles/shuttlered.png
+  sprite: /Textures/Tiles/Shuttle/plastitanium_red.png
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
@@ -1238,7 +1334,6 @@
     collection: FootstepFloor
   itemDrop: FloorTileItemShuttleRed
   heatCapacity: 10000
-
 
 # Materials
 - type: tile
