@@ -118,7 +118,7 @@ namespace Content.Client.Examine
                 return false;
             }
 
-            _playerEntity = _playerManager.LocalPlayer?.ControlledEntity ?? default;
+            _playerEntity = _playerManager.LocalSession?.AttachedEntity ?? default;
 
             if (_playerEntity == default || !CanExamine(_playerEntity, entity))
             {
@@ -356,7 +356,7 @@ namespace Content.Client.Examine
 
         public void DoExamine(EntityUid entity, bool centeredOnCursor = true, EntityUid? userOverride = null)
         {
-            var playerEnt = userOverride ?? _playerManager.LocalPlayer?.ControlledEntity;
+            var playerEnt = userOverride ?? _playerManager.LocalSession?.AttachedEntity;
             if (playerEnt == null)
                 return;
 
