@@ -1,11 +1,4 @@
 Entries:
-- author: TK-A369
-  changes:
-  - {message: 'After several complaints from chemists, Nanotrasen decided to update
-      their Chemistry Guidebook to include information about environment required
-      by reaction to occur.', type: Add}
-  id: 4894
-  time: '2023-09-24T21:33:25.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fire extinguishers now use less fluid per burst and launch the user
@@ -2901,3 +2894,10 @@ Entries:
     type: Add}
   id: 5394
   time: '2023-12-16T14:29:54.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Added Poppy the Safety Opposum!, type: Add}
+  - {message: Opossums have received some new sprites. Old sprites are still available
+      to be spawned in by admins., type: Tweak}
+  id: 5395
+  time: '2023-12-16T14:34:54.0000000+00:00'
