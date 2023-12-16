@@ -17,5 +17,5 @@ public sealed partial class BlurryVisionComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("magnitude"), AutoNetworkedField]
     public float Magnitude;
 
-    public const float MaxMagnitude = 10;
+    public const float MaxMagnitude = 3;
 }

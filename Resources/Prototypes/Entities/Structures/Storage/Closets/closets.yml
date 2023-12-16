@@ -63,6 +63,20 @@
     stateDoorOpen: bomb_open
     stateDoorClosed: bomb_door
 
+# Janitorial bomb suit closet
+- type: entity
+  id: ClosetJanitorBomb
+  name: janitorial bomb suit closet
+  parent: ClosetBase
+  description: It's a storage unit for janitorial explosion-protective suits.
+  suffix: DO NOT MAP
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: janitor_bomb
+    stateDoorOpen: janitor_bomb_open
+    stateDoorClosed: janitor_bomb_door
+
 # Biohazard
 
 # Base level 3 bio hazard closet

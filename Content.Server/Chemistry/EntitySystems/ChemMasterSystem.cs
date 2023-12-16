@@ -14,6 +14,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -354,7 +355,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return (Name(pill), quantity);
             })).ToList();
 
-            return new ContainerInfo(name, _storageSystem.GetCumulativeItemSizes(container.Value, storage), storage.MaxTotalWeight)
+            return new ContainerInfo(name, _storageSystem.GetCumulativeItemAreas((container.Value, storage)), storage.Grid.GetArea())
             {
                 Entities = pills
             };

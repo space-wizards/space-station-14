@@ -1,0 +1,47 @@
+- type: inventoryTemplate
+  id: borg
+  slots:
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    slotGroup: MainHotbar
+    uiWindowPos: 0,0
+    strippingWindowPos: 0,0
+    displayName: Head
+    offset: 0, -0.09375
+
+- type: inventoryTemplate
+  id: borgShort
+  slots:
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    slotGroup: MainHotbar
+    uiWindowPos: 0,0
+    strippingWindowPos: 0,0
+    displayName: Head
+    offset: 0, -0.1875
+
+- type: inventoryTemplate
+  id: borgTall
+  slots:
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    slotGroup: MainHotbar
+    uiWindowPos: 0,0
+    strippingWindowPos: 0,0
+    displayName: Head
+
+# taller than tall
+- type: inventoryTemplate
+  id: borgDutch
+  slots:
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    slotGroup: MainHotbar
+    uiWindowPos: 0,0
+    strippingWindowPos: 0,0
+    displayName: Head
+    offset: 0, 0.09375

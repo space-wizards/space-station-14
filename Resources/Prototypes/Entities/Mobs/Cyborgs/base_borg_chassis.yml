@@ -67,6 +67,8 @@
       type: SiliconLawBoundUserInterface
     - key: enum.BorgUiKey.Key
       type: BorgBoundUserInterface
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
@@ -74,6 +76,10 @@
     stunTime: 5
     emagLaws: SyndicateStatic
   - type: IonStormTarget
+  - type: Strippable
+  - type: InventorySlots
+  - type: Inventory
+    templateId: borg
   - type: Hands
     showInHands: false
   - type: IntrinsicRadioReceiver
@@ -124,6 +130,7 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai
+  - type: UnblockableSpeech
   - type: Construction
     graph: Cyborg
     containers:
@@ -148,7 +155,8 @@
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:EmptyContainersBehaviour
         containers:
         - borg_brain
@@ -193,6 +201,9 @@
     - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
   - type: Emoting
+  - type: GuideHelp
+    guides:
+      - Cyborgs
 
 - type: entity
   id: BaseBorgChassisNT
