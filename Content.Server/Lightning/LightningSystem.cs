@@ -18,6 +18,8 @@ namespace Content.Server.Lightning;
 //and the number of these branches is explicitly controlled in the new function.
 public sealed class LightningSystem : SharedLightningSystem
 {
+    private List<LightningTargetComponent> targets = new List<LightningTargetComponent>();
+
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -70,7 +72,7 @@ public sealed class LightningSystem : SharedLightningSystem
     {
         //To Do: add support to different priority target tablem for different lightning types
         //To Do: Remove Hardcode LightningTargetComponent (this should be a parameter of the SharedLightningComponent)
-        var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).MapPosition, range).ToList(); //To Do: remove hardcode component
+        targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).MapPosition, range).ToList(); //To Do: remove hardcode component
         _random.Shuffle(targets);
         targets.Sort((x, y) => y.Priority.CompareTo(x.Priority));
 
