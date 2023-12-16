@@ -24,9 +24,6 @@ public sealed partial class BZFormationReaction : IGasReactionEffect
         var plasmaRemoved = initPlasma * (1 / (.8f * (1 - n2oDecomposeFactor)));
         var bzFormed = Math.Min(Math.Min(.01f * ratioEfficiency * environmentEfficiency, n2oRemoved), plasmaRemoved) / Atmospherics.BZFormationRate;
 
-        //if (initN2O - bzFormed * .4f < 0 || initPlasma - .8f * bzFormed * (1 - n2oDecomposeFactor) < 0 || bzFormed < 0)
-        //    return ReactionResult.NoReaction;
-
         /* If n2o-plasma ratio is less than 1:3 start decomposing n2o.
 	     * Rate of decomposition vs BZ production increases as n2o concentration gets lower
 	     * Plasma acts as a catalyst on decomposition, so it doesn't get consumed in the process.
@@ -36,6 +33,7 @@ public sealed partial class BZFormationReaction : IGasReactionEffect
             var amountDecomposed = .4f * bzFormed * n2oDecomposeFactor;
             mixture.AdjustMoles(Gas.Nitrogen, -amountDecomposed);
             mixture.AdjustMoles(Gas.Oxygen, -amountDecomposed * .5f);
+            mixture.AdjustMoles(Gas.NitrousOxide, amountDecomposed * 1.5f);
         }
 
         mixture.AdjustMoles(Gas.BZ, bzFormed * (1 - n2oDecomposeFactor));
