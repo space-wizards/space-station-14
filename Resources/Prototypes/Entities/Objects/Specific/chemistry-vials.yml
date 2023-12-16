@@ -63,7 +63,7 @@
   - type: TrashOnSolutionEmpty
     solution: drink
   - type: StaticPrice
-    price: 0
+    price: 100
   - type: DamageOnLand
     damage:
       types:
@@ -96,5 +96,3 @@
         acts: [ "Destruction" ]
   - type: Spillable
     solution: vial
-  - type: StaticPrice
-    price: 100
