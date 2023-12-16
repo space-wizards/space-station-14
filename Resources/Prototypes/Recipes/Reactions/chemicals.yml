@@ -410,7 +410,6 @@
 
 - type: reaction
   id: Benzene
-  impact: Medium
   reactants:
     Hydrogen:
       Amount: 1
@@ -432,7 +431,6 @@
 
 - type: reaction
   id: SodiumHydroxide
-  impact: Medium
   reactants:
     Hydroxide:
       Amount: 1
