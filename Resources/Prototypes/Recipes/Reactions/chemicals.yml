@@ -208,6 +208,7 @@
 
 - type: reaction
   id: TableSalt
+  minTemp: 370
   reactants:
     Chlorine:
       amount: 1
