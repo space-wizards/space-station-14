@@ -168,7 +168,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 9;
+        public const int TotalNumberOfGases = 10;
 
         /// <summary>
         ///     This is the actual length of the gases arrays in mixtures.
@@ -235,6 +235,52 @@ namespace Content.Shared.Atmos
         ///     1 / X of the tritium is converted into Frezon each tick
         /// </summary>
         public const float FrezonProductionConversionRate = 50f;
+
+        /// <summary>
+        ///     The minimum temperature N2O can decompose at.
+        /// </summary>
+        public const float N2ODecompositionMinTemp = 1400f;
+
+        /// <summary>
+        ///     The maximum temperature N2O can decompose at.
+        /// </summary>
+        public const float N2ODecompositionMaxTemp = 100e3f;
+
+        /// <summary>
+        ///     The maximum portion of the N2O that can decompose each reaction tick. (50%)
+        /// </summary>
+        public const float N2ODecompositionRate = .5f;
+
+        /// <summary>
+        ///     One root of the parabola used to scale N2O decomposition rates.
+        /// </summary>
+        public const float N2ODecompositionMinScaleTemp = 0;
+
+        /// <summary>
+        ///     The other root of the parabola used to scale N2O decomposition rates.
+        /// </summary>
+        public const float N2ODecompositionMaxScaleTemp = 100e3f;
+
+        /// <summary>
+        ///     The divisor used to normalize the N2O decomp scaling parabola.
+        ///     Basically the value of the apex/nadir of (x - [N2ODecompositionMinScaleTemp]) * (x - [N2ODecompositionMaxScaleTemp]).
+        /// </summary>
+        public static readonly float N2ODecompositionScaleDivisor = (float) Math.Pow(-.25f * (N2ODecompositionMaxScaleTemp - N2ODecompositionMinScaleTemp), 2);
+
+        /// <summary>
+        ///     The amount of energy released when one mole of N2O decomposes into nitrogen and oxygen.
+        /// </summary>
+        public const float N2ODecompositionEnergy = 200e3f;
+
+        /// <summary>
+        ///     The amount of energy 1 mole of BZ forming from N2O and plasma releases.
+        /// </summary>
+        public const float BZFormationEnergy = 80e3f;
+
+        /// <summary>
+        ///     Some number taken from the air to keep BZ from instantly converting everything.
+        /// </summary>
+        public const float BZFormationRate = 50f;
 
         /// <summary>
         ///     How many mol of frezon can be converted into miasma in one cycle.
@@ -326,6 +372,7 @@ namespace Content.Shared.Atmos
         WaterVapor = 5,
         Miasma = 6,
         NitrousOxide = 7,
-        Frezon = 8
+        Frezon = 8,
+        BZ = 9,
     }
 }
