@@ -1,21 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fire extinguishers now use less fluid per burst and launch the user
-      farther in low-gravity., type: Tweak}
-  id: 4895
-  time: '2023-09-25T01:33:29.0000000+00:00'
-- author: Psychpsyo
-  changes:
-  - {message: 'People and animals no longer have two hearts, livers, sets of lungs
-      or kidneys. You probably didn''t need the extra pair anyways.', type: Fix}
-  id: 4896
-  time: '2023-09-25T06:53:04.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Adds a new sprite for Syndicate implanters., type: Add}
-  id: 4897
-  time: '2023-09-26T00:04:03.0000000+00:00'
 - author: Ubaser
   changes:
   - {message: Added four new lizard horn markings!, type: Add}
@@ -2901,3 +2884,22 @@ Entries:
       to be spawned in by admins., type: Tweak}
   id: 5395
   time: '2023-12-16T14:34:54.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed explosion resistance from bags being applied to the wearer., type: Fix}
+  id: 5396
+  time: '2023-12-16T17:17:09.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Added the power sensor for checking power stats in logic circuits.,
+    type: Add}
+  id: 5397
+  time: '2023-12-16T18:32:42.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Standardized all material sheets to 10u of total reagents when grinded.
+      Alloys are still worth the sum of their parts., type: Tweak}
+  - {message: You can now grind plastic into oil and phosphorous., type: Tweak}
+  - {message: Steel sheets no longer contain trace amounts of lead in them., type: Tweak}
+  id: 5398
+  time: '2023-12-16T20:52:11.0000000+00:00'
