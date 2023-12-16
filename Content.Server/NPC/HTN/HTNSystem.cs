@@ -38,8 +38,7 @@ public sealed class HTNSystem : EntitySystem
         SubscribeLocalEvent<HTNComponent, PlayerDetachedEvent>(_npc.OnPlayerNPCDetach);
         SubscribeLocalEvent<HTNComponent, ComponentShutdown>(OnHTNShutdown);
         SubscribeNetworkEvent<RequestHTNMessage>(OnHTNMessage);
-
-        _prototypeManager.PrototypesReloaded += OnPrototypeLoad;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeLoad);
         OnLoad();
     }
 
@@ -55,12 +54,6 @@ public sealed class HTNSystem : EntitySystem
             return;
 
         _subscribers.Remove(args.SenderSession);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _prototypeManager.PrototypesReloaded -= OnPrototypeLoad;
     }
 
     private void OnLoad()
@@ -93,7 +86,8 @@ public sealed class HTNSystem : EntitySystem
 
     private void OnPrototypeLoad(PrototypesReloadedEventArgs obj)
     {
-        OnLoad();
+        if (obj.WasModified<HTNCompoundPrototype>())
+            OnLoad();
     }
 
     private void UpdateCompound(HTNCompoundPrototype compound)

@@ -48,7 +48,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         _console.RegisterCommand("dungen", Loc.GetString("cmd-dungen-desc"), Loc.GetString("cmd-dungen-help"), GenerateDungeon, CompletionCallback);
         _console.RegisterCommand("dungen_preset_vis", Loc.GetString("cmd-dungen_preset_vis-desc"), Loc.GetString("cmd-dungen_preset_vis-help"), DungeonPresetVis, PresetCallback);
         _console.RegisterCommand("dungen_pack_vis", Loc.GetString("cmd-dungen_pack_vis-desc"), Loc.GetString("cmd-dungen_pack_vis-help"), DungeonPackVis, PackCallback);
-        _prototype.PrototypesReloaded += PrototypeReload;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(PrototypeReload);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
@@ -91,8 +91,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     public override void Shutdown()
     {
         base.Shutdown();
-        _prototype.PrototypesReloaded -= PrototypeReload;
-
         foreach (var token in _dungeonJobs.Values)
         {
             token.Cancel();

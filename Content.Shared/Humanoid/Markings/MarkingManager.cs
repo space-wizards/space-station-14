@@ -1,4 +1,6 @@
+using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
 
@@ -9,33 +11,43 @@ namespace Content.Shared.Humanoid.Markings
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly List<MarkingPrototype> _index = new();
-        private readonly Dictionary<MarkingCategories, Dictionary<string, MarkingPrototype>> _markingDict = new();
-        private readonly Dictionary<string, MarkingPrototype> _markings = new();
+        public FrozenDictionary<MarkingCategories, FrozenDictionary<string, MarkingPrototype>> CategorizedMarkings = default!;
+        public FrozenDictionary<string, MarkingPrototype> Markings = default!;
 
         public void Initialize()
         {
             _prototypeManager.PrototypesReloaded += OnPrototypeReload;
+            CachePrototypes();
+        }
+
+        private void CachePrototypes()
+        {
+            _index.Clear();
+            var markings = new Dictionary<string, MarkingPrototype>();
+            var markingDict = new Dictionary<MarkingCategories, Dictionary<string, MarkingPrototype>>();
 
             foreach (var category in Enum.GetValues<MarkingCategories>())
             {
-                _markingDict.Add(category, new Dictionary<string, MarkingPrototype>());
+                markingDict.Add(category, new());
             }
 
             foreach (var prototype in _prototypeManager.EnumeratePrototypes<MarkingPrototype>())
             {
                 _index.Add(prototype);
-                _markingDict[prototype.MarkingCategory].Add(prototype.ID, prototype);
-                _markings.Add(prototype.ID, prototype);
+                markingDict[prototype.MarkingCategory].Add(prototype.ID, prototype);
+                markings.Add(prototype.ID, prototype);
             }
+
+            Markings = markings.ToFrozenDictionary();
+            CategorizedMarkings = markingDict.Select(x =>
+                new KeyValuePair<MarkingCategories, FrozenDictionary<string, MarkingPrototype>>(x.Key,
+                    x.Value.ToFrozenDictionary())).ToFrozenDictionary();
         }
 
-        public IReadOnlyDictionary<string, MarkingPrototype> Markings => _markings;
-        public IReadOnlyDictionary<MarkingCategories, Dictionary<string, MarkingPrototype>> CategorizedMarkings => _markingDict;
-
-        public IReadOnlyDictionary<string, MarkingPrototype> MarkingsByCategory(MarkingCategories category)
+        public FrozenDictionary<string, MarkingPrototype> MarkingsByCategory(MarkingCategories category)
         {
             // all marking categories are guaranteed to have a dict entry
-            return _markingDict[category];
+            return CategorizedMarkings[category];
         }
 
         /// <summary>
@@ -143,7 +155,7 @@ namespace Content.Shared.Humanoid.Markings
 
         public bool TryGetMarking(Marking marking, [NotNullWhen(true)] out MarkingPrototype? markingResult)
         {
-            return _markings.TryGetValue(marking.MarkingId, out markingResult);
+            return Markings.TryGetValue(marking.MarkingId, out markingResult);
         }
 
         /// <summary>
@@ -178,17 +190,8 @@ namespace Content.Shared.Humanoid.Markings
 
         private void OnPrototypeReload(PrototypesReloadedEventArgs args)
         {
-            if(!args.ByType.TryGetValue(typeof(MarkingPrototype), out var set))
-                return;
-
-
-            _index.RemoveAll(i => set.Modified.ContainsKey(i.ID));
-
-            foreach (var prototype in set.Modified.Values)
-            {
-                var markingPrototype = (MarkingPrototype) prototype;
-                _index.Add(markingPrototype);
-            }
+            if (args.WasModified<MarkingPrototype>())
+                CachePrototypes();
         }
 
         public bool CanBeApplied(string species, Sex sex, Marking marking, IPrototypeManager? prototypeManager = null)
