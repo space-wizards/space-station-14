@@ -1,10 +1,4 @@
 Entries:
-- author: daerSeebaer
-  changes:
-  - {message: The AME now shuts down when the inserted fuel jar is empty, type: Add}
-  - {message: The AME no longer makes sounds if no fuel was injected, type: Tweak}
-  id: 4891
-  time: '2023-09-24T20:39:49.0000000+00:00'
 - author: gusxyz
   changes:
   - {message: Empty ore boxes are now orderable from cargo., type: Add}
@@ -2900,3 +2894,9 @@ Entries:
       force., type: Add}
   id: 5391
   time: '2023-12-16T08:26:12.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ejecting a tank from a canister will now try to put it in your hand
+      first, type: Fix}
+  id: 5392
+  time: '2023-12-16T08:28:28.0000000+00:00'
