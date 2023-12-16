@@ -140,15 +140,28 @@
   description: An emergency tank with extended capacity. Technically rated for prolonged use.
   components:
   - type: Sprite
-    sprite: Objects/Tanks/emergency_yellow.rsi
+    sprite: Objects/Tanks/emergency_extended.rsi
   - type: Item
-    sprite: Objects/Tanks/emergency_yellow.rsi
+    sprite: Objects/Tanks/emergency_extended.rsi
   - type: GasTank
     air:
       volume: 1.5
       temperature: 293.15
   - type: Clothing
-    sprite: Objects/Tanks/emergency_yellow.rsi
+    sprite: Objects/Tanks/emergency_extended.rsi
+
+- type: entity
+  parent: ExtendedEmergencyOxygenTank
+  id: ExtendedEmergencyNitrogenTank
+  name: extended-capacity emergency nitrogen tank
+  description: An emergency tank with extended capacity. Technically rated for prolonged use.
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/emergency_extended_red.rsi
+  - type: Item
+    sprite: Objects/Tanks/emergency_extended_red.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/emergency_extended_red.rsi
 
 - type: entity
   parent: ExtendedEmergencyOxygenTank
@@ -171,6 +184,19 @@
     damage:
       types:
         Blunt: 7.5
+
+- type: entity
+  parent: DoubleEmergencyOxygenTank
+  id: DoubleEmergencyNitrogenTank
+  name: double emergency nitrogen tank
+  description: A high-grade dual-tank emergency life support container. It holds a decent amount of nitrogen for its small size.
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/emergency_double_red.rsi
+  - type: Item
+    sprite: Objects/Tanks/emergency_double_red.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/emergency_double_red.rsi
 
 - type: entity
   parent: GasTankRoundBase

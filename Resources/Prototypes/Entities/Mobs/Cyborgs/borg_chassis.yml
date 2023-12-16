@@ -65,6 +65,8 @@
     - Science
   - type: AccessReader
     access: [["Cargo"], ["Salvage"], ["Command"], ["Research"]]
+  - type: Inventory
+    templateId: borgTall
 
 - type: entity
   id: BorgChassisEngineer
@@ -106,6 +108,8 @@
     - Science
   - type: AccessReader
     access: [["Engineering"], ["Command"], ["Research"]]
+  - type: Inventory
+    templateId: borgShort
 
 - type: entity
   id: BorgChassisJanitor
@@ -147,6 +151,8 @@
     - Science
   - type: AccessReader
     access: [["Service"], ["Command"], ["Research"]]
+  - type: Inventory
+    templateId: borgShort
 
 - type: entity
   id: BorgChassisMedical
@@ -188,6 +194,8 @@
     - Science
   - type: AccessReader
     access: [["Medical"], ["Command"], ["Research"]]
+  - type: Inventory
+    templateId: borgDutch
 
 - type: entity
   id: BorgChassisService
@@ -229,3 +237,5 @@
     - Science
   - type: AccessReader
     access: [["Service"], ["Command"], ["Research"]]
+  - type: Inventory
+    templateId: borgTall
