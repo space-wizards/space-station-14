@@ -154,9 +154,9 @@
     solutions:
       plastic:
         reagents:
-        - ReagentID: Oil
+        - ReagentId: Oil
           Quantity: 5
-        - ReagentID: Phosphorus
+        - ReagentId: Phosphorus
           Quantity: 5
 
 - type: entity
