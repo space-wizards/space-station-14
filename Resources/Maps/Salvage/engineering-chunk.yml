@@ -986,7 +986,7 @@ entities:
       type: Transform
 - proto: AirCanister
   entities:
-  - uid: 378
+  - uid: 393
     components:
     - pos: -8.5,10.5
       parent: 1
@@ -2945,7 +2945,7 @@ entities:
       type: Transform
 - proto: ClosetEmergencyFilledRandom
   entities:
-  - uid: 354
+  - uid: 356
     components:
     - pos: -9.5,9.5
       parent: 1
@@ -2959,7 +2959,7 @@ entities:
       type: Transform
 - proto: ClosetFireFilled
   entities:
-  - uid: 372
+  - uid: 377
     components:
     - pos: -7.5,12.5
       parent: 1
@@ -2971,7 +2971,7 @@ entities:
       type: Transform
 - proto: ClothingEyesGlassesMeson
   entities:
-  - uid: 352
+  - uid: 354
     components:
     - pos: -4.482297,-3.4676065
       parent: 1
@@ -3359,7 +3359,7 @@ entities:
     - pos: -13.5,-3.5
       parent: 1
       type: Transform
-  - uid: 367
+  - uid: 374
     components:
     - pos: -16.403109,-5.3417163
       parent: 1
@@ -4871,7 +4871,7 @@ entities:
       type: Transform
 - proto: LockerElectricalSuppliesFilled
   entities:
-  - uid: 351
+  - uid: 353
     components:
     - pos: -9.5,3.5
       parent: 1
@@ -4885,6 +4885,11 @@ entities:
       type: Transform
 - proto: LockerEngineer
   entities:
+  - uid: 348
+    components:
+    - pos: 3.5,-8.5
+      parent: 1
+      type: Transform
   - uid: 1211
     components:
     - pos: 4.5,-8.5
@@ -4892,16 +4897,14 @@ entities:
       type: Transform
 - proto: LockerEngineerFilled
   entities:
-  - uid: 1212
-    components:
-    - pos: 3.5,-8.5
-      parent: 1
-      type: Transform
-- proto: LockerEngineerFilledHardsuit
-  entities:
-  - uid: 1210
+  - uid: 349
     components:
     - pos: -8.5,-10.5
+      parent: 1
+      type: Transform
+  - uid: 362
+    components:
+    - pos: -11.5,-6.5
       parent: 1
       type: Transform
 - proto: LockerWeldingSuppliesFilled
@@ -4930,7 +4933,7 @@ entities:
     - pos: -1.5,3.5
       parent: 1
       type: Transform
-  - uid: 356
+  - uid: 358
     components:
     - pos: 3.5,-19.5
       parent: 1
@@ -4995,7 +4998,7 @@ entities:
       type: Transform
 - proto: Pickaxe
   entities:
-  - uid: 376
+  - uid: 380
     components:
     - pos: -16.496859,-3.802567
       parent: 1
@@ -5021,7 +5024,7 @@ entities:
     - pos: 1.5,-3.5
       parent: 1
       type: Transform
-  - uid: 374
+  - uid: 378
     components:
     - pos: 2.5,-1.5
       parent: 1
@@ -5033,7 +5036,7 @@ entities:
     - pos: -1.5,-5.5
       parent: 1
       type: Transform
-  - uid: 349
+  - uid: 351
     components:
     - pos: -2.5,-6.5
       parent: 1
@@ -5157,7 +5160,7 @@ entities:
       type: Transform
 - proto: ReinforcedGirder
   entities:
-  - uid: 357
+  - uid: 359
     components:
     - pos: 2.5,-18.5
       parent: 1
@@ -5167,7 +5170,7 @@ entities:
     - pos: 2.5,-16.5
       parent: 1
       type: Transform
-  - uid: 377
+  - uid: 381
     components:
     - rot: 3.141592653589793 rad
       pos: 15.5,16.5
@@ -5313,12 +5316,12 @@ entities:
     - pos: -10.5,5.5
       parent: 1
       type: Transform
-  - uid: 348
+  - uid: 350
     components:
     - pos: 4.5,-20.5
       parent: 1
       type: Transform
-  - uid: 353
+  - uid: 355
     components:
     - pos: -11.5,4.5
       parent: 1
@@ -5480,7 +5483,7 @@ entities:
       type: Transform
 - proto: SheetUranium
   entities:
-  - uid: 355
+  - uid: 357
     components:
     - pos: -4.468504,-1.4145174
       parent: 1
@@ -5577,7 +5580,7 @@ entities:
     - pos: -1.5,-2.5
       parent: 1
       type: Transform
-  - uid: 368
+  - uid: 376
     components:
     - pos: 5.5,-12.5
       parent: 1
@@ -5996,19 +5999,9 @@ entities:
     - pos: -10.5,-7.5
       parent: 1
       type: Transform
-  - uid: 350
+  - uid: 352
     components:
     - pos: -10.5,-8.5
-      parent: 1
-      type: Transform
-  - uid: 358
-    components:
-    - pos: -15.5,-6.5
-      parent: 1
-      type: Transform
-  - uid: 359
-    components:
-    - pos: -11.5,-6.5
       parent: 1
       type: Transform
   - uid: 361
@@ -6017,17 +6010,27 @@ entities:
       pos: -13.5,-4.5
       parent: 1
       type: Transform
-  - uid: 362
+  - uid: 363
+    components:
+    - pos: -15.5,-6.5
+      parent: 1
+      type: Transform
+  - uid: 364
+    components:
+    - pos: -11.5,-6.5
+      parent: 1
+      type: Transform
+  - uid: 367
     components:
     - pos: -11.5,-7.5
       parent: 1
       type: Transform
-  - uid: 363
+  - uid: 368
     components:
     - pos: -10.5,-5.5
       parent: 1
       type: Transform
-  - uid: 364
+  - uid: 372
     components:
     - pos: -10.5,-7.5
       parent: 1
@@ -7747,7 +7750,7 @@ entities:
     - pos: 2.5,0.5
       parent: 1
       type: Transform
-  - uid: 380
+  - uid: 409
     components:
     - pos: 1.5,2.5
       parent: 1
