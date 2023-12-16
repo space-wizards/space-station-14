@@ -248,7 +248,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - MMIFilled
+      - PositronicBrain
       borg_module:
       - BorgModuleTool
   - type: ItemSlots

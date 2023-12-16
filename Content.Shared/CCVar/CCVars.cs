@@ -349,6 +349,11 @@ namespace Content.Shared.CCVar
             CVarDef.Create("discord.ahelp_avatar", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
+        /// URL of the Discord webhook which will relay all custom votes. If left empty, disables the webhook.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordVoteWebhook =
+            CVarDef.Create("discord.vote_webhook", string.Empty, CVar.SERVERONLY);
+
         /// URL of the Discord webhook which will relay round restart messages.
         /// </summary>
         public static readonly CVarDef<string> DiscordRoundUpdateWebhook =
@@ -359,6 +364,7 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> DiscordRoundEndRoleWebhook =
             CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
+
 
         /*
          * Suspicion
@@ -628,6 +634,8 @@ namespace Content.Shared.CCVar
             CVarDef.Create("audio.admin_chat_sound_path", "/Audio/Items/pop.ogg", CVar.ARCHIVE | CVar.CLIENT | CVar.REPLICATED);
         public static readonly CVarDef<float> AdminChatSoundVolume =
             CVarDef.Create("audio.admin_chat_sound_volume", -5f, CVar.ARCHIVE | CVar.CLIENT | CVar.REPLICATED);
+        public static readonly CVarDef<string> AHelpSound =
+            CVarDef.Create("audio.ahelp_sound", "/Audio/Effects/adminhelp.ogg", CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * HUD
@@ -838,7 +846,7 @@ namespace Content.Shared.CCVar
         ///     This determines for how many seconds an explosion should stay visible once it has finished expanding.
         /// </summary>
         public static readonly CVarDef<float> ExplosionPersistence =
-            CVarDef.Create("explosion.persistence", 0.3f, CVar.SERVERONLY);
+            CVarDef.Create("explosion.persistence", 1.0f, CVar.SERVERONLY);
 
         /// <summary>
         ///     If an explosion covers a larger area than this number, the damaging/processing will always start during
@@ -968,6 +976,9 @@ namespace Content.Shared.CCVar
         /// <summary>
         ///     Whether monstermos explosive depressurization will rip tiles..
         ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
+		///     WARNING: This cvar causes MAJOR contrast issues, and usually tends to make any spaced scene look very cluttered.
+		///     This not only usually looks strange, but can also reduce playability for people with impaired vision. Please think twice before enabling this on your server.
+		///     Also looks weird on slow spacing for unrelated reasons. If you do want to enable this, you should probably turn on instaspacing.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosRipTiles =
             CVarDef.Create("atmos.monstermos_rip_tiles", false, CVar.SERVERONLY);
@@ -1040,6 +1051,22 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AtmosTickRate =
             CVarDef.Create("atmos.tickrate", 15f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Scale factor for how fast things happen in our atmosphere
+        ///     simulation compared to real life. 1x means pumps run at 1x
+        ///     speed. Players typically expect things to happen faster
+        ///     in-game.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosSpeedup =
+            CVarDef.Create("atmos.speedup", 8f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Like atmos.speedup, but only for gas and reaction heat values. 64x means
+        ///     gases heat up and cool down 64x faster than real life.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosHeatScale =
+            CVarDef.Create("atmos.heat_scale", 8f, CVar.SERVERONLY);
 
         /*
          * MIDI instruments
@@ -1245,6 +1272,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> CameraRotationLocked =
             CVarDef.Create("shuttle.camera_rotation_locked", false, CVar.REPLICATED);
+
+        /// <summary>
+        /// Whether the arrivals terminal should be on a planet map.
+        /// </summary>
+        public static readonly CVarDef<bool> ArrivalsPlanet =
+            CVarDef.Create("shuttle.arrivals_planet", true, CVar.SERVERONLY);
 
         /// <summary>
         /// Whether the arrivals shuttle is enabled.

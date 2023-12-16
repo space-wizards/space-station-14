@@ -265,6 +265,7 @@
       - SyringeBluespace
       - WeaponCrusher
       - WeaponCrusherDagger
+      - WeaponCrusherGlaive
       - WeaponForceGun
       - WeaponProtoKineticAccelerator
       - WeaponTetherGun
@@ -275,6 +276,8 @@
       - WelderExperimental
       - JawsOfLife
       - ClothingEyesGlassesChemical
+      - FauxTileAstroGrass
+      - FauxTileAstroIce
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload
@@ -282,7 +285,6 @@
       - WeaponAdvancedLaser
       - WeaponLaserCannon
       - WeaponXrayCannon
-      - WeaponTaser
 
 - type: entity
   id: CircuitImprinter
@@ -307,6 +309,10 @@
     producingSound: /Audio/Machines/circuitprinter.ogg
     idleState: icon
     runningState: building
+    staticRecipes:
+    - ElectrolysisUnitMachineCircuitboard
+    - CentrifugeMachineCircuitboard
+    - CondenserMachineCircuitBoard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
@@ -375,6 +381,7 @@
       - APECircuitboard
       - ArtifactAnalyzerMachineCircuitboard
       - TraversalDistorterMachineCircuitboard
+      - ArtifactCrusherMachineCircuitboard
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
@@ -589,7 +596,6 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponLaserCarbinePractice
-      - WeaponTaser
       - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:

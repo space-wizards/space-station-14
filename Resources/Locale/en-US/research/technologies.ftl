@@ -41,7 +41,6 @@ research-technology-practice-ammunition = Practice Ammunition
 research-technology-concentrated-laser-weaponry = Concentrated Laser Weaponry
 research-technology-wave-particle-harnessing = Wave Particle Harnessing
 research-technology-advanced-riot-control = Advanced Riot Control
-research-technology-handheld-electrical-propulsion = Handheld Electrical Propulsion
 research-technology-portable-microfusion-weaponry = Portable Microfusion Weaponry
 
 research-technology-basic-robotics = Basic Robotics
@@ -64,6 +63,7 @@ research-technology-critter-mechs = Critter Mechs
 research-technology-food-service = Food Service
 research-technology-advanced-entertainment = Advanced Entertainment
 research-technology-audio-visual-communication = A/V Communication
+research-technology-faux-astro-tiles = Faux Astro-Tiles
 research-technology-robotic-cleanliness = Robotic Cleanliness
 research-technology-advanced-cleaning = Advanced Cleaning
 research-technology-meat-manipulation = Meat Manipulation
