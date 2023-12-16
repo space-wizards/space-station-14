@@ -1,16 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Lowered the maximum explosion range of canister bombs., type: Tweak}
-  id: 4888
-  time: '2023-09-24T19:59:05.0000000+00:00'
-- author: CaptainSqrBeard
-  changes:
-  - {message: 'Now after killing all nuclear operatives, the emergency shuttle will
-      be called instead of instant round end. Shuttle arrives in 10 minutes and you
-      can recall it.', type: Tweak}
-  id: 4889
-  time: '2023-09-24T20:16:33.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Ghosts can now toggle whether they hear out-of-range local messages
@@ -2902,3 +2890,13 @@ Entries:
       PDA.', type: Add}
   id: 5388
   time: '2023-12-16T08:21:24.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Added 9 new cargo bounties!, type: Add}
+  id: 5389
+  time: '2023-12-16T08:23:35.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Everyone can toggle fire alarms now, not just atmos', type: Tweak}
+  id: 5390
+  time: '2023-12-16T08:24:00.0000000+00:00'
