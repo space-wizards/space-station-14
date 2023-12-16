@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fire extinguishers now use less fluid per burst and launch the user
-      farther in low-gravity., type: Tweak}
-  id: 4895
-  time: '2023-09-25T01:33:29.0000000+00:00'
 - author: Psychpsyo
   changes:
   - {message: 'People and animals no longer have two hearts, livers, sets of lungs
@@ -2901,3 +2895,8 @@ Entries:
       to be spawned in by admins., type: Tweak}
   id: 5395
   time: '2023-12-16T14:34:54.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed explosion resistance from bags being applied to the wearer., type: Fix}
+  id: 5396
+  time: '2023-12-16T17:17:09.0000000+00:00'
