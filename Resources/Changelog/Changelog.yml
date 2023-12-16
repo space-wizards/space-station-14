@@ -1,9 +1,4 @@
 Entries:
-- author: PixelTK
-  changes:
-  - {message: Arachnids have one new back marking., type: Add}
-  id: 4885
-  time: '2023-09-24T19:54:39.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: Syndicate agents can no longer buy hot potatoes because of food safety
@@ -2901,3 +2896,9 @@ Entries:
   - {message: Chefs get black pepper packets in their lockers., type: Tweak}
   id: 5385
   time: '2023-12-16T03:20:51.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Resprited the Kammerer, Double-Barrel, and Enforcer shotguns using
+      sprites courtesy of /tg/station.', type: Tweak}
+  id: 5386
+  time: '2023-12-16T04:23:57.0000000+00:00'
