@@ -207,6 +207,24 @@
   - type: Sprite
     state: coal
   - type: Material
+  - type: Extractable
+    grindableSolutionName: coal
+  - type: SolutionContainerManager
+    solutions:
+      plasma:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 21
+        - ReagentId: Oxygen
+          Quantity: 1.5
+        - ReagentId: Hydrogen
+          Quantity: 1.25
+        - ReagentId: Sulfer
+          Quantity: 0.5
+        - ReagentId: Nitrogen
+          Quantity: 0.5
+        - ReagentId: Nitrogen
+          Quantity: 0.25
   - type: PhysicalComposition
     materialComposition:
       Coal: 500
