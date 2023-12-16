@@ -16,7 +16,7 @@ reagent-desc-benzene = An aromatic, slightly carcinogenic, ring of carbon, formi
 reagent-name-hydroxide = hydroxide
 reagent-desc-hydroxide = A strong alkaline chemical, forming a base for many organic compounds.
 
-reagent-name-sodium-hydroxide = Sodium Hydroxide
+reagent-name-sodium-hydroxide = sodium hydroxide
 reagent-desc-sodium-hydroxide = A white, odorless, water-soluble salt that yields an strong alkaline solution in water. Causes burns and vomiting when ingested.
 
 reagent-name-fersilicite = Fersilicite
