@@ -684,7 +684,7 @@
     stackType: FloorTileStackShuttleTitanium
 
 - type: entity
-  name: white shuttle floor
+  name: titanium shuttle floor
   parent: FloorTileItemBase
   id: FloorTileItemShuttleTitaniumNonTiled
   components:
