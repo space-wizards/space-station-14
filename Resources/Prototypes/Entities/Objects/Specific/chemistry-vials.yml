@@ -52,7 +52,7 @@
     size: Tiny
     sprite: Objects/Specific/Chemistry/vial.rsi
     shape:
-    - 0,0,1,2
+    - 0,0,0,1
   - type: MeleeWeapon
     soundNoDamage:
       path: "/Audio/Effects/Fluids/splat.ogg"
