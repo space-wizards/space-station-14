@@ -5,13 +5,14 @@ using Robust.Shared.Timing;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics;
 using System.Numerics;
+using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers;
 
 /// <summary>
 /// A component which makes its entity periodically chaotic jumps arounds
 /// </summary>
-public sealed class ChaoticJumpSystem : EntitySystem
+public sealed class ChaoticJumpSystem : VirtualController
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -31,9 +32,9 @@ public sealed class ChaoticJumpSystem : EntitySystem
         chaotic.Comp.NextJumpTime = _gameTiming.CurTime + TimeSpan.FromSeconds(_random.NextFloat(chaotic.Comp.JumpMinInterval, chaotic.Comp.JumpMaxInterval));
     }
 
-    public override void Update(float frameTime)
+    public override void UpdateBeforeSolve(bool prediction, float frameTime)
     {
-        base.Update(frameTime);
+        base.UpdateBeforeSolve(prediction, frameTime);
 
         var query = EntityQueryEnumerator<ChaoticJumpComponent>();
         while (query.MoveNext(out var uid, out var chaotic))

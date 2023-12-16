@@ -69,17 +69,17 @@
   source: "https://freesound.org/people/InspectorJ/sounds/411642/"
 
 - files: ["tesla.ogg"]
-  license: "CC-BY-4.0"
+  license: "CC-BY-NC-4.0"
   copyright: "Taken from bzakirasantjago via freesound.org and mixed from stereo to mono."
   source: "https://freesound.org/people/bzakirasantjago/sounds/404462/"
 
 - files: ["tesla_collapse.ogg"]
-  license: "CC-BY-SA-3.0"
+  license: "CC-BY-NC-SA-3.0"
   copyright: "Taken from DragishaRambo21 via freesound.org and mixed from stereo to mono."
   source: "https://freesound.org/people/DragishaRambo21/sounds/345920/"
   
 - files: ["tesla_consume.ogg"]
-  license: "CC-BY-SA-3.0"
+  license: "CC0-1.0"
   copyright: "Taken from egomassive via freesound.org and mixed from stereo to mono."
   source: "https://freesound.org/people/egomassive/sounds/536741/"
   

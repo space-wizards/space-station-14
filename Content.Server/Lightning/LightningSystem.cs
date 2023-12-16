@@ -8,8 +8,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Lightning;
 
-// For maintainers (delete this text after the review)
-
+// TheShuEd:
 //I've redesigned the lightning system to be more optimized.
 //Previously, each lightning element, when it touched something, would try to branch into nearby entities.
 //So if a lightning bolt was 20 entities long, each one would check its surroundings and have a chance to create additional lightning...

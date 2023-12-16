@@ -6,13 +6,14 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Toolshed.TypeParsers;
+using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers;
 
 /// <summary>
 /// A system which makes its entity chasing another entity with selected component.
 /// </summary>
-public sealed class ChasingWalkSystem : EntitySystem
+public sealed class ChasingWalkSystem : VirtualController
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -29,9 +30,9 @@ public sealed class ChasingWalkSystem : EntitySystem
         _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
-    public override void Update(float frameTime)
+    public override void UpdateBeforeSolve(bool prediction, float frameTime)
     {
-        base.Update(frameTime);
+        base.UpdateBeforeSolve(prediction, frameTime);
 
         var query = EntityQueryEnumerator<ChasingWalkComponent>();
         while (query.MoveNext(out var uid, out var chasing))
