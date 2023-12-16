@@ -154,10 +154,11 @@
     solutions:
       plastic:
         reagents:
-        - ReagentId: Oil
+        - ReagentID: Oil
           Quantity: 5
         - ReagentID: Phosphorus
           Quantity: 5
+
 - type: entity
   parent: SheetPlastic
   id: SheetPlastic10
