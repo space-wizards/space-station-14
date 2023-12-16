@@ -215,15 +215,13 @@
         reagents:
         - ReagentId: Carbon
           Quantity: 21
-        - ReagentId: Oxygen
-          Quantity: 1.5
+        - ReagentId: Ammonia
+          Quantity: 2
         - ReagentId: Hydrogen
           Quantity: 1.25
-        - ReagentId: Sulfer
+        - ReagentId: Sulfur
           Quantity: 0.5
-        - ReagentId: Nitrogen
-          Quantity: 0.5
-        - ReagentId: Nitrogen
+        - ReagentId: Mercury
           Quantity: 0.25
   - type: PhysicalComposition
     materialComposition:
