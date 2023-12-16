@@ -8,6 +8,16 @@
   copyright: "Created by dotY21."
   source: "https://freesound.org/people/dotY21/sounds/330726/"
 
+- files: ["buzz_loop.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Duasun, converted to OGG by EmoGarbage404 (github)."
+  source: "https://freesound.org/people/Duasun/sounds/712127/"
+
+- files: ["spinning.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by MrLindstrom, modified and converted to OGG by EmoGarbage404 (github)."
+  source: "https://freesound.org/people/MrLindstrom/sounds/543964/"
+
 - files: ["vending_restock_start.ogg"]
   license: "CC0-1.0"
   copyright: "https://freesound.org/people/Defaultv/"
