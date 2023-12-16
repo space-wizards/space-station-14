@@ -450,7 +450,8 @@
       Amount: 1
   products:
     Fersilicite: 2
-   
+
+- type: reagent
   id: SodiumPolyacrylate
   impact: Medium
   reactants:
