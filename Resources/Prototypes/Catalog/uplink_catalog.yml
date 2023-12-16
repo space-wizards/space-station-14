@@ -139,6 +139,16 @@
   - UplinkExplosives
 
 - type: listing
+  id: UplinkSmokeGrenade
+  name: uplink-smoke-grenade-name
+  description: uplink-smoke-grenade-desc
+  productEntity: SmokeGrenade
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkExplosives
+
+- type: listing
   id: UplinkSyndieMiniBomb
   name: uplink-mini-bomb-name
   description: uplink-mini-bomb-desc
