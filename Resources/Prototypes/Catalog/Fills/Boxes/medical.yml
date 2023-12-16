@@ -139,7 +139,7 @@
   - type: StorageFill
     contents:
       - id: BaseChemistryEmptyVial
-        amount: 3
+        amount: 6
   - type: Sprite
     layers:
       - state: box

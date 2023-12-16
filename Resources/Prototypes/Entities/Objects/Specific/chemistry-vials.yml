@@ -28,7 +28,7 @@
     fillBaseName: vial-1-
   - type: SolutionContainerManager
     solutions:
-      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+      drink:
         maxVol: 30
         canMix: true
   - type: RefillableSolution
@@ -50,7 +50,7 @@
     size: Tiny
     sprite: Objects/Specific/Chemistry/vial.rsi
     shape:
-    - 0,0,0,1
+    - 0,0,0,0
   - type: MeleeWeapon
     soundNoDamage:
       path: "/Audio/Effects/Fluids/splat.ogg"
@@ -92,4 +92,4 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Spillable
-    solution: beaker
+    solution: drink
