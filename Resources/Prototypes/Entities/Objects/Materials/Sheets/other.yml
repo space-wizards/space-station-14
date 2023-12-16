@@ -154,7 +154,7 @@
     solutions:
       plastic:
         reagents:
-        - ReagentId: Carbon
+        - ReagentId: Oil
           Quantity: 10
 - type: entity
   parent: SheetPlastic
