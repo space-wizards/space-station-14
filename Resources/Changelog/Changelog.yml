@@ -1,17 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: Syndicate agents can no longer buy hot potatoes because of food safety
-      regulations, type: Remove}
-  id: 4886
-  time: '2023-09-24T19:56:07.0000000+00:00'
-- author: Tunguso4ka
-  changes:
-  - {message: Added gladiator`s helmet and uniform for both the station and planet
-      gladiators., type: Add}
-  - {message: Added bone armor and spear to please our lava planet habitats., type: Add}
-  id: 4887
-  time: '2023-09-24T19:57:10.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Lowered the maximum explosion range of canister bombs., type: Tweak}
@@ -2902,3 +2889,16 @@ Entries:
       sprites courtesy of /tg/station.', type: Tweak}
   id: 5386
   time: '2023-12-16T04:23:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Scientists can now fabricate faux grass planet and ice tiles with a
+      tier 2 civilian services research! They''re just as good as the real thing,
+      while being removable.', type: Add}
+  id: 5387
+  time: '2023-12-16T08:20:57.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: 'Lawyers, librarians and reporters now spawn with a luxury pen in their
+      PDA.', type: Add}
+  id: 5388
+  time: '2023-12-16T08:21:24.0000000+00:00'
