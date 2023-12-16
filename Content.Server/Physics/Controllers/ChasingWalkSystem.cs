@@ -5,6 +5,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Server.Physics.Controllers;
 
@@ -27,6 +28,7 @@ public sealed class ChasingWalkSystem : EntitySystem
 
         _xformQuery = GetEntityQuery<TransformComponent>();
     }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -56,28 +58,14 @@ public sealed class ChasingWalkSystem : EntitySystem
         //We find our coordinates and calculate the radius of the target search.
         var xform = Transform(uid);
         var range = component.MaxChaseRadius;
-        var compType = _random.Pick(component.ChasingComponent.Values).GetType();
-        var mapId = Transform(uid).MapID;
-
-        var allEnts = new List<EntityUid>();
-
-        foreach (var (otherId, _) in EntityManager.GetAllComponents(compType))
-        {
-            if (!_xformQuery.TryGetComponent(otherId, out var compXform) || compXform.MapID != mapId)
-                continue;
-
-            var dist = (_transform.GetWorldPosition(compXform) - _transform.GetWorldPosition(uid)).LengthSquared();
-            if (dist > range)
-                continue;
-
-            allEnts.Add(otherId);
-        }
+        var compType = _random.Pick(component.ChasingComponent.Values).Component.GetType();
+        var allEnts = _lookup.GetEntitiesInRange(compType, _transform.GetMapCoordinates(xform), range);
 
         //If there are no required components in the radius, don't moving.
         if (allEnts.Count <= 0) return;
 
         //In the case of finding required components, we choose a random one of them and remember its uid.
-        component.ChasingEntity = _random.Pick(allEnts);
+        component.ChasingEntity = _random.Pick(allEnts).Owner;
         component.Speed = _random.NextFloat(component.MinSpeed, component.MaxSpeed);
     }
 
@@ -95,7 +83,7 @@ public sealed class ChasingWalkSystem : EntitySystem
 
         //Calculating direction to the target.
         var xform = Transform(component.ChasingEntity.Value);
-        var delta = xform.MapPosition.Position - Transform(uid).MapPosition.Position;
+        var delta = _transform.GetMapCoordinates(xform).Position - _transform.GetMapCoordinates(_xformQuery.Get(uid)).Position;
 
         //Changing the direction of the entity.
         var speed = delta.Normalized() * component.Speed;
