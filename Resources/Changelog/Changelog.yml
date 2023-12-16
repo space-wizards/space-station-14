@@ -1,9 +1,4 @@
 Entries:
-- author: Repo
-  changes:
-  - {message: Nukies can declare war again., type: Fix}
-  id: 4880
-  time: '2023-09-23T20:00:13.0000000+00:00'
 - author: Doru991
   changes:
   - {message: Trash spawns correctly after food is eaten., type: Fix}
@@ -2899,3 +2894,9 @@ Entries:
   - {message: Chasms no longer spawn on lava expeditions, type: Tweak}
   id: 5380
   time: '2023-12-15T22:34:09.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The guidebook now shows you if a chemical''s recipe needs an alternative
+      mixing method, such as a chaplain''s blessing or electrolysis.', type: Fix}
+  id: 5381
+  time: '2023-12-15T23:59:54.0000000+00:00'
