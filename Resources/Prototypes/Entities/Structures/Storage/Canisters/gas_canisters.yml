@@ -80,7 +80,7 @@
       joinSystem: true
     - type: ContainerContainer
       containers:
-        GasCanisterTankHolder: !type:ContainerSlot {}
+        tank_slot: !type:ContainerSlot {}
     - type: NodeContainer
       nodes:
         port:
@@ -88,8 +88,14 @@
           nodeGroupID: Pipe
           rotationsEnabled: false
           volume: 1
+    - type: ItemSlots
     - type: GasPortable
     - type: GasCanister
+      tank_slot:
+        name: Gas Tank
+        whitelist:
+          component:
+            - GasTank
     - type: StaticPrice
       price: 1000
     - type: AccessReader
