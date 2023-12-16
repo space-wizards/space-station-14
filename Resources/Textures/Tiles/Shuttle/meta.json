@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "tgstation at d96dfd098b3b53043e00a975b91678370d13fdd5",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "titanium"
+    },
+    {
+      "name": "titanium_blue"
+    },
+    {
+      "name": "titanium_yellow"
+    },
+    {
+      "name": "titanium_white"
+    },
+    {
+      "name": "titanium_purple"
+    },
+    {
+      "name": "titanium_tiled"
+    },
+    {
+      "name": "titanium_tiled_blue"
+    },
+    {
+      "name": "titanium_tiled_yellow"
+    },
+    {
+      "name": "titanium_tiled_white"
+    },
+    {
+      "name": "titanium_tiled_purple"
+    },
+    {
+      "name": "plastitanium"
+    },
+    {
+      "name": "plastitanium_red"
+    },
+    {
+      "name": "noslip"
+    },
+    {
+      "name": "podfloor"
+    }
+  ]
+}
