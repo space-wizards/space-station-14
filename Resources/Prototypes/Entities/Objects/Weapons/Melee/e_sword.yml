@@ -239,8 +239,6 @@
     wideAnimationRotation: -135
     attackRate: 1.5
     angle: 100
-    soundHit:
-      path: /Audio/Weapons/genhit1.ogg
     damage:
       types:
         Blunt: 5.5

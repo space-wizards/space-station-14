@@ -134,7 +134,6 @@
     layers:
     - state: zippo_top
       map: ["top"]
-      # visible: false
     - state: zippo_icon_base
       map: ["base"]
     - state: zippo_open
