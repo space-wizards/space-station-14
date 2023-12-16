@@ -1,0 +1,163 @@
+- type: entity
+  name: tape recorder
+  parent: BaseItem
+  description: Anything said into this device can and will be used against you in a court of space law.
+  id: TapeRecorder
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/tape_recorder.rsi
+      layers:
+        - state: taperecorder_empty
+          map: ["base"]
+    - type: Item
+      sprite: Objects/Devices/tape_recorder.rsi
+      heldPrefix: taperecorder_empty
+    - type: TapeRecorder
+    - type: ActiveListener
+      range: 4
+    - type: Speech
+    - type: ItemSlots
+      slots:
+        cassette_tape:
+          priority: 4
+          whitelist:
+            components:
+              - TapeCassette
+    - type: ContainerContainer
+      containers:
+        cassette_tape: !type:ContainerSlot
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TapeRecorderVisuals.Status:
+          base:
+            Empty: { state: "taperecorder_empty" }
+            Stopped: { state: "taperecorder_idle" }
+            Playing: { state: "taperecorder_playing" }
+            Recording: { state: "taperecorder_recording" }
+            Rewinding: { state: "taperecorder_rewinding" }
+    #- type: Appearance
+    #  visuals:
+        #- type: GenericEnumVisualizer
+        #  key: enum.TapeRecorderMode.Status
+        #  states:
+        #    enum.TapeRecorderMode.Playing: taperecorder_playing
+        #    enum.TapeRecorderMode.Recording: taperecorder_recording
+        #    enum.TapeRecorderMode.Stopped: taperecorder_idle
+        #    enum.TapeRecorderMode.Empty: taperecorder_empty
+
+- type: entity
+  name: cassette tape
+  parent: BaseItem
+  description: A magnetic tape that can hold up to three minutes of content on either side.
+  id: BaseCassetteTape
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cassette_tapes.rsi
+      layers:
+      - state: tape_greyscale
+      - state: tape_ribbonoverlay
+        visible: false
+      netsync: false
+    - type: Item
+      sprite: Objects/Devices/cassette_tapes.rsi
+      heldPrefix: tape_greyscale
+    - type: Damageable
+    - type: TapeCassette
+      MaxCapacity: 180
+
+- type: entity
+  name: blue cassette tape
+  parent: BaseCassetteTape
+  id: BlueCassetteTape
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cassette_tapes.rsi
+      layers:
+        - state: tape_blue
+        - state: tape_ribbonoverlay
+          visible: false
+    - type: Item
+      sprite: Objects/Devices/cassette_tapes.rsi
+      heldPrefix: tape_blue
+
+- type: entity
+  name: red cassette tape
+  parent: BaseCassetteTape
+  id: RedCassetteTape
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cassette_tapes.rsi
+      layers:
+        - state: tape_red
+        - state: tape_ribbonoverlay
+          visible: false
+    - type: Item
+      sprite: Objects/Devices/cassette_tapes.rsi
+      heldPrefix: tape_red
+
+- type: entity
+  name: yellow cassette tape
+  parent: BaseCassetteTape
+  id: YellowCassetteTape
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cassette_tapes.rsi
+      layers:
+        - state: tape_yellow
+        - state: tape_ribbonoverlay
+          visible: false
+    - type: Item
+      sprite: Objects/Devices/cassette_tapes.rsi
+      heldPrefix: tape_yellow
+
+- type: entity
+  name: purple cassette tape
+  parent: BaseCassetteTape
+  id: PurpleCassetteTape
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cassette_tapes.rsi
+      layers:
+        - state: tape_purple
+        - state: tape_ribbonoverlay
+          visible: false
+    - type: Item
+      sprite: Objects/Devices/cassette_tapes.rsi
+      heldPrefix: tape_purple
+
+- type: entity
+  name: white cassette tape
+  parent: BaseCassetteTape
+  id: WhiteCassetteTape
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cassette_tapes.rsi
+      layers:
+        - state: tape_white
+        - state: tape_ribbonoverlay
+          visible: false
+    - type: Item
+      sprite: Objects/Devices/cassette_tapes.rsi
+      heldPrefix: tape_white
+
+
+- type: entity
+  name: tape recorder kit
+  parent: BoxCardboard
+  id: BoxTapeRecorder
+  description: A kit with colorful cassette tapes and a tape recorder.
+  components:
+    - type: StorageFill
+      contents:
+        - id: BlueCassetteTape
+          amount: 1
+        - id: RedCassetteTape
+          amount: 1
+        - id: PurpleCassetteTape
+          amount: 1
+        - id: WhiteCassetteTape
+          amount: 1
+        - id: TapeRecorder
+          amount: 1
