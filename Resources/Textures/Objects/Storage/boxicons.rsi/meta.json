@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from baystation at https://github.com/Baystation12/Baystation12/commit/bc9fbb1722530596e3aa7522ee407280b323ad43",
+  "copyright": "Taken from baystation at https://github.com/Baystation12/Baystation12/commit/bc9fbb1722530596e3aa7522ee407280b323ad43, vials drawn by Ubaser.",
   "size": {
     "x": 32,
     "y": 32
@@ -78,6 +78,9 @@
     },
     {
       "name": "ziptie"
+    },
+    {
+      "name": "vials"
     }
   ]
 }
