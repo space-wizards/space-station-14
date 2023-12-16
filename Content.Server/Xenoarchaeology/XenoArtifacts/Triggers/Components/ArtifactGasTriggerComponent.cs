@@ -19,7 +19,8 @@ public sealed partial class ArtifactGasTriggerComponent : Component
         Gas.Nitrogen,
         Gas.CarbonDioxide,
         Gas.Miasma,
-        Gas.NitrousOxide
+        Gas.NitrousOxide,
+        Gas.BZ,
     };
 
     /// <summary>
