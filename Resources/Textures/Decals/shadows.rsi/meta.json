@@ -1,0 +1,62 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "created by TheShuEd for SS14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "shadow_box"
+        },
+        {
+            "name": "shadow_corner_ne"
+        },
+        {
+            "name": "shadow_corner_se"
+        },
+        {
+            "name": "shadow_corner_nw"
+        },
+        {
+            "name": "shadow_corner_sw"
+        },
+        {
+            "name": "shadow_end_n"
+        },
+        {
+            "name": "shadow_end_e"
+        },
+        {
+            "name": "shadow_end_s"
+        },
+        {
+            "name": "shadow_end_w"
+        },
+        {
+            "name": "shadow_line_n"
+        },
+        {
+            "name": "shadow_line_e"
+        },
+        {
+            "name": "shadow_line_s"
+        },
+        {
+            "name": "shadow_line_w"
+        },
+        {
+            "name": "shadow_inner_ne"
+        },
+        {
+            "name": "shadow_inner_se"
+        },
+        {
+            "name": "shadow_inner_nw"
+        },
+        {
+            "name": "shadow_inner_sw"
+        }
+    ]
+}

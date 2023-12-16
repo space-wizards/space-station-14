@@ -1,0 +1,118 @@
+- type: decal
+  id: ShadowBox
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_box
+
+- type: decal
+  id: ShadowCornerNe
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_corner_ne
+
+- type: decal
+  id: ShadowCornerSe
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_corner_se
+
+- type: decal
+  id: ShadowCornerNw
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_corner_nw
+
+- type: decal
+  id: ShadowCornerSw
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_corner_sw
+
+- type: decal
+  id: ShadowInnerNe
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_inner_ne
+
+- type: decal
+  id: ShadowInnerSe
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_inner_se
+
+- type: decal
+  id: ShadowInnerNw
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_inner_nw
+
+- type: decal
+  id: ShadowInnerSw
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_inner_sw
+
+- type: decal
+  id: ShadowEndN
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_end_n
+
+- type: decal
+  id: ShadowEndE
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_end_e
+
+- type: decal
+  id: ShadowEndS
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_end_s
+
+- type: decal
+  id: ShadowEndW
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_end_w
+
+- type: decal
+  id: ShadowLineN
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_line_n
+
+- type: decal
+  id: ShadowLineE
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_line_e
+
+- type: decal
+  id: ShadowLineS
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_line_s
+
+- type: decal
+  id: ShadowLineW
+  tags: ["station"]
+  sprite:
+    sprite: Decals/shadows.rsi
+    state: shadow_line_w
