@@ -4,11 +4,10 @@
   name: vial
   parent: BaseItem
   id: BaseChemistryEmptyVial
-  description: A small viaL.
+  description: A small vial.
   components:
   - type: Tag
     tags:
-    - Vial
     - Trash
   - type: PhysicalComposition
     materialComposition:
@@ -95,4 +94,4 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Spillable
-    solution: vial
+    solution: beaker
