@@ -256,6 +256,37 @@
     - type: KnockArtifact
 
 - type: artifactEffect
+  id: EffectMagnet
+  targetDepth: 1
+  effectHint: artifact-effect-hint-magnet
+  components:
+  - type: GravityWell
+    maxRange: 3
+    baseRadialAcceleration: 1
+    baseTangentialAcceleration: 3
+  
+- type: artifactEffect
+  id: EffectAntiMagnet
+  targetDepth: 1
+  effectHint: artifact-effect-hint-magnet
+  components:
+  - type: GravityWell
+    maxRange: 3
+    baseRadialAcceleration: -1
+    baseTangentialAcceleration: -3
+
+- type: artifactEffect
+  id: EffectInvisibility
+  targetDepth: 2
+  effectHint: artifact-effect-hint-visual
+  components:
+  - type: Stealth
+    hadOutline: true
+  - type: StealthOnMove
+    passiveVisibilityRate: -0.10
+    movementVisibilityRate: 0.10
+
+- type: artifactEffect
   id: EffectExplosionScary
   targetDepth: 2
   effectHint: artifact-effect-hint-environment
@@ -560,27 +591,18 @@
     totalIntensity: 500
     intensitySlope: 2.5
     maxIntensity: 50
+    
+- type: artifactEffect
+  id: EffectPortal
+  targetDepth: 4
+  effectHint: artifact-effect-hint-displacement
+  blacklist:
+    components:
+    - Item
+  components:
+  - type: Portal
+    maxRandomRadius: 5
 
-- type: artifactEffect
-  id: EffectMagnet
-  targetDepth: 1
-  effectHint: artifact-effect-hint-magnet
-  components:
-  - type: GravityWell
-    maxRange: 3
-    baseRadialAcceleration: 1
-    baseTangentialAcceleration: 3
-  
-- type: artifactEffect
-  id: EffectAntiMagnet
-  targetDepth: 1
-  effectHint: artifact-effect-hint-magnet
-  components:
-  - type: GravityWell
-    maxRange: 3
-    baseRadialAcceleration: -1
-    baseTangentialAcceleration: -3
-  
 - type: artifactEffect
   id: EffectSingulo
   targetDepth: 10
