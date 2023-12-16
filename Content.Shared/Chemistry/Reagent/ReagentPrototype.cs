@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Frozen;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
@@ -14,7 +15,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry.Reagent
@@ -102,11 +102,11 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("viscosity")]
         public float Viscosity = 0;
 
-        [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
-        public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;
+        [DataField(serverOnly: true)]
+        public FrozenDictionary<ProtoId<MetabolismGroupPrototype>, ReagentEffectsEntry>? Metabolisms;
 
-        [DataField("reactiveEffects", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReactiveReagentEffectEntry, ReactiveGroupPrototype>))]
-        public Dictionary<string, ReactiveReagentEffectEntry>? ReactiveEffects = null;
+        [DataField(serverOnly: true)]
+        public Dictionary<ProtoId<ReactiveGroupPrototype>, ReactiveReagentEffectEntry>? ReactiveEffects;
 
         [DataField("tileReactions", serverOnly: true)]
         public List<ITileReaction> TileReactions = new(0);
@@ -177,8 +177,8 @@ namespace Content.Shared.Chemistry.Reagent
         {
             ReagentPrototype = proto.ID;
             GuideEntries = proto.Metabolisms?
-                .Select(x => (x.Key, x.Value.MakeGuideEntry(prototype, entSys)))
-                .ToDictionary(x => x.Key, x => x.Item2);
+                .Select(x => (x.Key.Id, x.Value.MakeGuideEntry(prototype, entSys)))
+                .ToDictionary(x => x.Id, x => x.Item2);
         }
     }
 
