@@ -474,7 +474,7 @@
   description: bounty-description-anomaly-core
   entries:
   - name: bounty-item-anomaly-core
-    amount: 3
+    amount: 1
     whitelist:
       components:
       - AnomalyCore
@@ -492,7 +492,7 @@
 
 - type: cargoBounty
   id: BountyArtifactFragment
-  reward: 12500
+  reward: 32500
   description: bounty-description-artifact-fragment
   entries:
   - name: bounty-item-artifact-fragment
@@ -511,17 +511,6 @@
     whitelist:
       components:
       - PointLight
-
-- type: cargoBounty
-  id: BountyNoSlip
-  reward: 7000
-  description: bounty-description-noslip
-  entries:
-  - name: bounty-item-noslip
-    amount: 3
-    whitelist:
-      components:
-      - NoSlip
 
 - type: cargoBounty
   id: BountyLabeler
