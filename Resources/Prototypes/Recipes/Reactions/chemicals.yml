@@ -9,6 +9,17 @@
     Ammonia: 4
 
 - type: reaction
+  id: CelluloseBreakdown
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Cellulose:
+      amount: 3
+  products:
+    Sugar: 2
+    Carbon: 1
+
+- type: reaction
   id: Diethylamine
   reactants:
     Ammonia:
@@ -20,6 +31,8 @@
 
 - type: reaction
   id: Phenol
+  minTemp: 325
+  maxTemp: 480
   reactants:
     Oxygen:
       amount: 1
@@ -197,6 +210,7 @@
 
 - type: reaction
   id: TableSalt
+  minTemp: 370
   reactants:
     Chlorine:
       amount: 1
@@ -204,6 +218,17 @@
       amount: 1
   products:
     TableSalt: 2
+
+- type: reaction
+  id: TableSaltBreakdown
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    TableSalt:
+      amount: 2
+  products:
+    Chlorine: 1
+    Sodium: 1
 
 - type: reaction
   id: Thermite

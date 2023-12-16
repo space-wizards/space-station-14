@@ -117,3 +117,17 @@
   materials:
     Steel: 750
     Plastic: 100
+
+- type: latheRecipe
+  id: FauxTileAstroGrass
+  result: FloorTileItemAstroGrass
+  completetime: 1
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: FauxTileAstroIce
+  result: FloorTileItemAstroIce
+  completetime: 1
+  materials:
+    Plastic: 100

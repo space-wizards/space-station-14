@@ -42,6 +42,8 @@
       - id: ReagentContainerSugar
       - id: FoodCondimentPacketSalt
         amount: 3
+      - id: FoodCondimentPacketPepper
+        amount: 3
       - id: FoodCondimentBottleEnzyme
       # really, milk should go in the fridge. Unfortunately saltern only has freezers.
       # yes, I'm using this as an excuse to not have to do extra work.

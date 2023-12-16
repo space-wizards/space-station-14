@@ -120,8 +120,8 @@ public sealed class TegSystem : EntitySystem
         var (airA, δpA) = GetCirculatorAirTransfer(inletA.Air, outletA.Air);
         var (airB, δpB) = GetCirculatorAirTransfer(inletB.Air, outletB.Air);
 
-        var cA = _atmosphere.GetHeatCapacity(airA);
-        var cB = _atmosphere.GetHeatCapacity(airB);
+        var cA = _atmosphere.GetHeatCapacity(airA, true);
+        var cB = _atmosphere.GetHeatCapacity(airB, true);
 
         // Shift ramp position based on demand and generation from previous tick.
         var curRamp = component.RampPosition;

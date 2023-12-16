@@ -85806,14 +85806,6 @@ entities:
       type: Transform
     - maxExternalPressure: 4500
       type: GasMiner
-- proto: GasMinerPlasma
-  entities:
-  - uid: 15548
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 27.5,-47.5
-      parent: 8364
-      type: Transform
 - proto: GasMinerWaterVapor
   entities:
   - uid: 16806

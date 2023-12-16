@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing.Components;
+using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -36,6 +37,7 @@ public sealed partial class PuddleSystem
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionOverflowEvent>(OnOverflow);
         SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<SpillableComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
     }
 
     private void OnExamined(EntityUid uid, SpillableComponent component, ExaminedEvent args)
@@ -150,6 +152,22 @@ public sealed partial class PuddleSystem
 
         var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.Volume);
         TrySplashSpillAt(uid, Transform(uid).Coordinates, drainedSolution, out _);
+    }
+
+    /// <summary>
+    /// Prevent Pacified entities from throwing items that can spill liquids.
+    /// </summary>
+    private void OnAttemptPacifiedThrow(Entity<SpillableComponent> ent, ref AttemptPacifiedThrowEvent args)
+    {
+        // Don’t care about closed containers.
+        if (_openable.IsClosed(ent))
+            return;
+
+        // Don’t care about empty containers.
+        if (!_solutionContainerSystem.TryGetSolution(ent, ent.Comp.SolutionName, out var solution))
+            return;
+
+        args.Cancel("pacified-cannot-throw-spill");
     }
 
     private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetVerbsEvent<Verb> args)
