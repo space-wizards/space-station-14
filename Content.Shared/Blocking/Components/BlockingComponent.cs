@@ -48,6 +48,17 @@ public sealed partial class BlockingComponent : Component
     [DataField("activeBlockModifier", required: true)]
     public DamageModifierSet ActiveBlockDamageModifier = default!;
 
+    /// <summary>
+    /// Can actively block?
+    /// </summary>
+    [DataField("allowActiveBlocking")]
+    public bool AllowActiveBlocking = true;
+
+    /// <summary>
+    /// Hide blocking information?
+    /// </summary>
+    [DataField("hidden")]
+    public bool Hidden = false;
     [DataField("blockingToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string BlockingToggleAction = "ActionToggleBlock";
 

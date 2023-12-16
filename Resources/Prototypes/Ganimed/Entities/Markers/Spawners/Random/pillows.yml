@@ -1,0 +1,18 @@
+- type: entity
+  id: RandomPillow
+  name: random pillow spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Ganimed/Objects/pillows.rsi
+        state: icon-one
+  - type: RandomSpawner
+    prototypes:
+      - Pillow1
+      - Pillow2
+      - Pillow3
+      - Pillow4
+      - Pillow5
+    chance: 1

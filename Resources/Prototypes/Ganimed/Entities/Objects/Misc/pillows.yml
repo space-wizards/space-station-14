@@ -1,0 +1,118 @@
+﻿- type: entity
+  name: pillow
+  parent: BaseItem
+  id: Pillow1
+  description: Large pillow with a person printed on top of it's covers. Definitely looks young.
+  components:
+    - type: Sprite
+      sprite: Ganimed/Objects/pillows.rsi
+      state: icon-one
+    - type: Item
+      sprite: Ganimed/Objects/pillows.rsi
+      size: Huge
+      heldPrefix: icon-one
+    - type: Blocking
+      passiveBlockFraction: 0.4
+      hidden: true
+      allowActiveBlocking: false
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0
+          Slash: 0.7
+          Piercing: 0.5
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0
+          Slash: 0.7
+          Piercing: 0.5
+    - type: Damageable
+      damageContainer: Shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 40
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/woodhit.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                MaterialCloth:
+                  min: 5
+                  max: 5
+    - type: StaticPrice
+      price: 200
+    - type: StaminaDamageOnHit
+      damage: 15
+    - type: MeleeWeapon
+      attackRate: 1
+      damage:
+        types:
+          Blunt: 0
+      hidden: true
+      soundHit:
+        collection: BoxingHit
+      angle: 50
+      range: 1.2
+    - type: StaminaProtection
+      coefficient: 0.75
+    - type: ClothingSpeedModifier
+      walkModifier: 0.9
+      sprintModifier: 0.9
+    - type: HeldSpeedModifier
+
+- type: entity
+  parent: Pillow1
+  id: Pillow2
+  description: Large pillow with a person printed on top of it's covers. From the decals you deduce it probably has healing powers.
+  components:
+    - type: Sprite
+      sprite: Ganimed/Objects/pillows.rsi
+      state: icon-two
+    - type: Item
+      sprite: Ganimed/Objects/pillows.rsi
+      heldPrefix: icon-two
+
+- type: entity
+  parent: Pillow1
+  id: Pillow3
+  description: Large pillow with a person printed on top of it's covers. A girl depicted looks like a physician would.
+  components:
+    - type: Sprite
+      sprite: Ganimed/Objects/pillows.rsi
+      state: icon-three
+    - type: Item
+      sprite: Ganimed/Objects/pillows.rsi
+      heldPrefix: icon-three
+
+- type: entity
+  parent: Pillow1
+  id: Pillow4
+  description: Large pillow with a person printed on top of it's covers. A bartender is covered in hearts.
+  components:
+    - type: Sprite
+      sprite: Ganimed/Objects/pillows.rsi
+      state: icon-four
+    - type: Item
+      sprite: Ganimed/Objects/pillows.rsi
+      heldPrefix: icon-four
+
+- type: entity
+  parent: Pillow1
+  id: Pillow5
+  description: Large pillow with a person printed on top of it's covers. Is it a schoolgirl or a coworker?
+  components:
+    - type: Sprite
+      sprite: Ganimed/Objects/pillows.rsi
+      state: icon-five
+    - type: Item
+      sprite: Ganimed/Objects/pillows.rsi
+      heldPrefix: icon-five

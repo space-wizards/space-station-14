@@ -89,12 +89,13 @@ public sealed partial class BlockingSystem : EntitySystem
 
     private void OnGetActions(EntityUid uid, BlockingComponent component, GetItemActionsEvent args)
     {
-        args.AddAction(ref component.BlockingToggleActionEntity, component.BlockingToggleAction);
+        if (component.AllowActiveBlocking)
+			args.AddAction(ref component.BlockingToggleActionEntity, component.BlockingToggleAction);
     }
 
     private void OnToggleAction(EntityUid uid, BlockingComponent component, ToggleActionEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !component.AllowActiveBlocking)
             return;
 
         var blockQuery = GetEntityQuery<BlockingComponent>();
@@ -128,7 +129,7 @@ public sealed partial class BlockingSystem : EntitySystem
     private void OnShutdown(EntityUid uid, BlockingComponent component, ComponentShutdown args)
     {
         //In theory the user should not be null when this fires off
-        if (component.User != null)
+        if (component.User != null && component.AllowActiveBlocking)
         {
             _actionsSystem.RemoveProvidedActions(component.User.Value, uid);
             StopBlockingHelper(uid, component, component.User.Value);
@@ -146,7 +147,7 @@ public sealed partial class BlockingSystem : EntitySystem
     /// <returns></returns>
     public bool StartBlocking(EntityUid item, BlockingComponent component, EntityUid user)
     {
-        if (component.IsBlocking)
+        if (component.IsBlocking || !component.AllowActiveBlocking)
             return false;
 
         var xform = Transform(user);
@@ -314,7 +315,7 @@ public sealed partial class BlockingSystem : EntitySystem
 
     private void OnVerbExamine(EntityUid uid, BlockingComponent component, GetVerbsEvent<ExamineVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess || !_net.IsServer)
+        if (!args.CanInteract || !args.CanAccess || !_net.IsServer || component.Hidden)
             return;
 
         var fraction = component.IsBlocking ? component.ActiveBlockFraction : component.PassiveBlockFraction;

@@ -65,6 +65,11 @@
         - ClothingShoesCult
         - ClothingUniformJumpsuitAncient
         - ClothingUniformJumpsuitPirate
+        - Pillow1
+        - Pillow2
+        - Pillow3
+        - Pillow4
+        - Pillow5
       rareChance: 0.01
       prototypes:
         - Lighter
