@@ -1,19 +1,16 @@
 - type: entity
   id: TeslaGenerator
   name: tesla generator
+  parent: BaseStructureDynamic
   description: An Odd Device which produces a powerful Tesla ball when set up.
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Sprite
+    noRot: true
     sprite: Structures/Power/Generation/Tesla/generator.rsi
     state: icon 
   - type: SingularityGenerator #To do: rename the generator
     spawnId: TeslaEnergyBall
   - type: InteractionOutline
-  - type: Clickable
-  - type: Physics
-    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -27,10 +24,6 @@
         - MachineMask
         layer:
         - Opaque
-  - type: Transform
-    anchored: true
-    noRot: true
   - type: Anchorable
-  - type: Pullable
   #- type: GuideHelp #   To Do - add Tesla Guide
 

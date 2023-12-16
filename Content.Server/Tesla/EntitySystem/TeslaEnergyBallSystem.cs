@@ -46,14 +46,10 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
 
     private void OnStartCollide(Entity<TeslaEnergyBallComponent> tesla, ref StartCollideEvent args)
     {
-        if (TryComp<ContainmentFieldComponent>(args.OtherEntity, out var field))
-            return;
-        if (TryComp<LightningComponent>(args.OtherEntity, out var lightning)) //its dirty. but idk how to setup colliders to not eating lightnings
+        if (HasComp<ContainmentFieldComponent>(args.OtherEntity))
             return;
         if (TryComp<SinguloFoodComponent>(args.OtherEntity, out var singuloFood))
-        {
             AdjustEnergy(tesla, tesla.Comp, singuloFood.Energy);
-        }
 
         var morsel = args.OtherEntity;
         if (!EntityManager.IsQueuedForDeletion(morsel) // I saw it log twice a few times for some reason? (singulo code copy)
