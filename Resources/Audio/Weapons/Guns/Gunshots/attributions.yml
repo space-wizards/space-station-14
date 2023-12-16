@@ -22,3 +22,9 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation"
   source: "https://github.com/tgstation/tgstation/tree/88d7dbfc105fbf40284d7b7c4587f8d23c0ac3ac"
+
+- files: ["nailgun.ogg]
+  license: "CC-BY-SA-3.0"
+  copyright: "Layering by KittenColony. Sounds from soundsnap & Rust"
+  source: "https://www.soundsnap.com/nailgun_01_wav, https://rust.facepunch.com"
+  
