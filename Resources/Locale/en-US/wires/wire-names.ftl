@@ -6,6 +6,7 @@ wires-board-name-thermomachine = Thermomachine
 wires-board-name-pa = Mk2 Particle Accelerator
 wires-board-name-highsec = HighSec Control
 wires-board-name-vessel = Vessel
+wires-board-name-crusher = Crusher
 wires-board-name-smes = SMES
 wires-board-name-substation = Substation
 wires-board-name-apc = APC

@@ -685,6 +685,24 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorSteelLime
+  name: tiles-lime-floor
+  sprite: /Textures/Tiles/lime.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemLime
+  heatCapacity: 10000
+
+- type: tile
   id: FloorMining
   name: tiles-mining-tile
   sprite: /Textures/Tiles/mining_floor.png
