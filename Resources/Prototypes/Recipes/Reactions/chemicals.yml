@@ -31,7 +31,8 @@
 
 - type: reaction
   id: Phenol
-  minTemp: 320
+  minTemp: 325
+  maxTemp: 480
   reactants:
     Oxygen:
       amount: 1

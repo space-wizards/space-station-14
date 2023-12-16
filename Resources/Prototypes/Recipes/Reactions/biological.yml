@@ -45,5 +45,6 @@
     ZombieBlood:
       amount: 4
   products:
-    Blood: 3
+    Mold: 2
+    Protein: 1
     Toxin: 1
