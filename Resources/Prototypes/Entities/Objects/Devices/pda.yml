@@ -371,14 +371,12 @@
   - type: Pda
     id: LibrarianIDCard
     state: pda-library
+    penSlot:
+      startingItem: LuxuryPen
   - type: PdaBorderColor
     borderColor: "#858585"
   - type: Icon
     state: pda-library
-  - type: Pda
-    state: pda
-    penSlot:
-      startingItem: LuxuryPen
 
 - type: entity
   parent: BasePDA
@@ -389,14 +387,12 @@
   - type: Pda
     id: LawyerIDCard
     state: pda-lawyer
+    penSlot:
+      startingItem: LuxuryPen
   - type: PdaBorderColor
     borderColor: "#6f6192"
   - type: Icon
     state: pda-lawyer
-  - type: Pda
-    state: pda
-    penSlot:
-      startingItem: LuxuryPen
 
 - type: entity
   parent: BasePDA
@@ -852,14 +848,12 @@
   - type: Pda
     id: ReporterIDCard
     state: pda-reporter
+    penSlot:
+      startingItem: LuxuryPen
   - type: PdaBorderColor
     borderColor: "#3f3f74"
   - type: Icon
     state: pda-reporter
-  - type: Pda
-    state: pda
-    penSlot:
-      startingItem: LuxuryPen
 
 - type: entity
   parent: BasePDA
