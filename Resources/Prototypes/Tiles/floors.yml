@@ -1241,7 +1241,7 @@
 
 - type: tile
   id: FloorShuttleBlueNonTiled
-  name: tiles-white-shuttle-floor
+  name: tiles-blue-shuttle-floor
   sprite: /Textures/Tiles/Shuttle/titanium_blue.png
   baseTurf: Plating
   isSubfloor: false

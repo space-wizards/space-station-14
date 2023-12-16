@@ -668,12 +668,12 @@
 # 'non-tiled' nomenclature is used here bc the 'tiled' variants were the old ones and i didnt want to
 # change their ids for maximum back compat
 - type: entity
-  name: tiled titanium shuttle floor
+  name: titanium tiled shuttle floor
   parent: FloorTileItemBase
   id: FloorTileItemShuttleTitanium
   components:
   - type: Sprite
-    state: shuttlewhite
+    state: shuttletitaniumtiled
   - type: Item
     heldPrefix: shuttlewhite
   - type: FloorTile
@@ -689,7 +689,7 @@
   id: FloorTileItemShuttleTitaniumNonTiled
   components:
   - type: Sprite
-    state: shuttlewhite
+    state: shuttletitanium
   - type: Item
     heldPrefix: shuttlewhite
   - type: FloorTile
@@ -700,12 +700,12 @@
     stackType: FloorTileStackShuttleTitaniumNonTiled
 
 - type: entity
-  name: tiled white shuttle floor
+  name: white tiled shuttle floor
   parent: FloorTileItemBase
   id: FloorTileItemShuttleWhite
   components:
   - type: Sprite
-    state: shuttlewhite
+    state: shuttlewhitetiled
   - type: Item
     heldPrefix: shuttlewhite
   - type: FloorTile
@@ -732,12 +732,12 @@
     stackType: FloorTileStackShuttleWhiteNonTiled
 
 - type: entity
-  name: tiled blue shuttle floor
+  name: blue tiled shuttle floor
   parent: FloorTileItemBase
   id: FloorTileItemShuttleBlue
   components:
   - type: Sprite
-    state: shuttleblue
+    state: shuttlebluetiled
   - type: Item
     heldPrefix: shuttleblue
   - type: FloorTile
@@ -764,12 +764,12 @@
     stackType: FloorTileStackShuttleBlueNonTiled
 
 - type: entity
-  name: tiled orange shuttle floor
+  name: orange tiled shuttle floor
   parent: FloorTileItemBase
   id: FloorTileItemShuttleOrange
   components:
   - type: Sprite
-    state: shuttleorange
+    state: shuttleorangetiled
   - type: Item
     heldPrefix: shuttleorange
   - type: FloorTile
@@ -801,7 +801,7 @@
   id: FloorTileItemShuttleYellow
   components:
   - type: Sprite
-    state: shuttleorange
+    state: shuttleyellow
   - type: Item
     heldPrefix: shuttleorange
   - type: FloorTile
@@ -812,12 +812,12 @@
     stackType: FloorTileStackShuttleYellow
 
 - type: entity
-  name: tiled purple shuttle floor
+  name: purple tiled shuttle floor
   parent: FloorTileItemBase
   id: FloorTileItemShuttlePurple
   components:
   - type: Sprite
-    state: shuttlepurple
+    state: shuttlepurpletiled
   - type: Item
     heldPrefix: shuttlepurple
   - type: FloorTile
@@ -849,7 +849,7 @@
   id: FloorTileItemShuttlePlastitanium
   components:
   - type: Sprite
-    state: shuttlered
+    state: shuttleplastitanium
   - type: Item
     heldPrefix: shuttlered
   - type: FloorTile

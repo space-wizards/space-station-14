@@ -113,7 +113,7 @@
 # Shuttle
 - type: stack
   id: FloorTileStackShuttleTitanium
-  name: tiled titanium shuttle tile
+  name: titanium tiled shuttle tile
   spawn: FloorTileItemShuttleTitanium
   maxCount: 30
   itemSize: 5
@@ -127,7 +127,7 @@
 
 - type: stack
   id: FloorTileStackShuttleWhite
-  name: tiled white shuttle tile
+  name: white tiled shuttle tile
   spawn: FloorTileItemShuttleWhite
   maxCount: 30
   itemSize: 5
@@ -141,7 +141,7 @@
 
 - type: stack
   id: FloorTileStackShuttleBlue
-  name: tiled blue shuttle tile
+  name: blue tiled shuttle tile
   spawn: FloorTileItemShuttleBlue
   maxCount: 30
   itemSize: 5
@@ -155,7 +155,7 @@
 
 - type: stack
   id: FloorTileStackShuttleOrange
-  name: tiled orange shuttle tile
+  name: orange tiled shuttle tile
   spawn: FloorTileItemShuttleOrange
   maxCount: 30
   itemSize: 5
@@ -176,7 +176,7 @@
 
 - type: stack
   id: FloorTileStackShuttlePurple
-  name: tiled purple shuttle tile
+  name: purple tiled shuttle tile
   spawn: FloorTileItemShuttlePurple
   maxCount: 30
   itemSize: 5
