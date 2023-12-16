@@ -503,14 +503,14 @@
 
 - type: cargoBounty
   id: BountyLightSource
-  reward: 3000
-  description: bounty-description-light-source
+  reward: 3500
+  description: bounty-description-organs
   entries:
-  - name: bounty-item-light-source
-    amount: 10
+  - name: bounty-item-organs
+    amount: 8
     whitelist:
       components:
-      - PointLight
+      - Organ
 
 - type: cargoBounty
   id: BountyLabeler
