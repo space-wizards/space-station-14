@@ -502,7 +502,7 @@
       - ArtifactFragment
 
 - type: cargoBounty
-  id: BountyLightSource
+  id: BountyOrgans
   reward: 3500
   description: bounty-description-organs
   entries:
