@@ -36,7 +36,7 @@
   id: ContentsExplosionResistanceBase
   components:
   - type: ExplosionResistance
-    worn: true # only apply to the clothing itself and items inside, not the wearer
+    worn: false # only apply to the clothing itself and items inside, not the wearer
     examine: explosion-resistance-contents-coefficient-value
   # to show explosion resistance examine
   - type: GroupExamine
