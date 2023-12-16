@@ -1,9 +1,4 @@
 Entries:
-- author: gusxyz
-  changes:
-  - {message: Empty ore boxes are now orderable from cargo., type: Add}
-  id: 4892
-  time: '2023-09-24T20:52:07.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Your character will now rotate in the direction of your mouse cursor
@@ -2900,3 +2895,9 @@ Entries:
       first, type: Fix}
   id: 5392
   time: '2023-12-16T08:28:28.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: 'Added brother of cak - bread dog! 5 cognizine, sausage bread, animal
+      heart, cooked spaceshrooms and 15 second in microwave = bread dog.', type: Add}
+  id: 5393
+  time: '2023-12-16T08:30:20.0000000+00:00'
