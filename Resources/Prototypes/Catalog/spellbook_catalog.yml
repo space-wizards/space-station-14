@@ -1,0 +1,31 @@
+﻿- type: listing
+  id: SpellbookFireball
+  name: spellbook-fireball-name
+  description: spellbook-fireball-desc
+  productAction: ActionFireball
+  cost:
+    WizCoin: 2
+  categories:
+    - SpellbookOffensive
+
+- type: listing
+  id: SpellbookBlink
+  name: spellbook-blink-name
+  description: spellbook-blink-desc
+  productAction: ActionBlink
+  cost:
+    WizCoin: 1
+  categories:
+    - SpellbookUtility
+
+- type: listing
+  id: SpellbookForceWall
+  name: spellbook-force-wall-name
+  description: spellbook-force-wall-desc
+  productAction: ActionForceWall
+  cost:
+    WizCoin: 3
+  categories:
+    - SpellbookDefensive
+
+
