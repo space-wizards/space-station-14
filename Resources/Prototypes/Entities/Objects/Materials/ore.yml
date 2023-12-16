@@ -211,7 +211,7 @@
     grindableSolutionName: coal
   - type: SolutionContainerManager
     solutions:
-      plasma:
+      coal:
         reagents:
         - ReagentId: Carbon
           Quantity: 21
