@@ -665,8 +665,42 @@
     stackType: FloorTileStackGym
 
 # Shuttles
+# 'non-tiled' nomenclature is used here bc the 'tiled' variants were the old ones and i didnt want to
+# change their ids for maximum back compat
+- type: entity
+  name: tiled titanium shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleTitanium
+  components:
+  - type: Sprite
+    state: shuttlewhite
+  - type: Item
+    heldPrefix: shuttlewhite
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttleTitanium
+  - type: Stack
+    stackType: FloorTileStackShuttleTitanium
+
 - type: entity
   name: white shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleTitaniumNonTiled
+  components:
+  - type: Sprite
+    state: shuttlewhite
+  - type: Item
+    heldPrefix: shuttlewhite
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttleTitaniumNonTiled
+  - type: Stack
+    stackType: FloorTileStackShuttleTitaniumNonTiled
+
+- type: entity
+  name: tiled white shuttle floor
   parent: FloorTileItemBase
   id: FloorTileItemShuttleWhite
   components:
@@ -682,7 +716,23 @@
     stackType: FloorTileStackShuttleWhite
 
 - type: entity
-  name: blue shuttle floor
+  name: white shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleWhiteNonTiled
+  components:
+  - type: Sprite
+    state: shuttlewhite
+  - type: Item
+    heldPrefix: shuttlewhite
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttleWhiteNonTiled
+  - type: Stack
+    stackType: FloorTileStackShuttleWhiteNonTiled
+
+- type: entity
+  name: tiled blue shuttle floor
   parent: FloorTileItemBase
   id: FloorTileItemShuttleBlue
   components:
@@ -698,7 +748,23 @@
     stackType: FloorTileStackShuttleBlue
 
 - type: entity
-  name: orange shuttle floor
+  name: blue shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleBlueNonTiled
+  components:
+  - type: Sprite
+    state: shuttleblue
+  - type: Item
+    heldPrefix: shuttleblue
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttleBlueNonTiled
+  - type: Stack
+    stackType: FloorTileStackShuttleBlueNonTiled
+
+- type: entity
+  name: tiled orange shuttle floor
   parent: FloorTileItemBase
   id: FloorTileItemShuttleOrange
   components:
@@ -714,7 +780,39 @@
     stackType: FloorTileStackShuttleOrange
 
 - type: entity
-  name: purple shuttle floor
+  name: orange shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleOrangeNonTiled
+  components:
+  - type: Sprite
+    state: shuttleorange
+  - type: Item
+    heldPrefix: shuttleorange
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttleOrangeNonTiled
+  - type: Stack
+    stackType: FloorTileStackShuttleOrangeNonTiled
+
+- type: entity
+  name: yellow shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleYellow
+  components:
+  - type: Sprite
+    state: shuttleorange
+  - type: Item
+    heldPrefix: shuttleorange
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttleYellow
+  - type: Stack
+    stackType: FloorTileStackShuttleYellow
+
+- type: entity
+  name: tiled purple shuttle floor
   parent: FloorTileItemBase
   id: FloorTileItemShuttlePurple
   components:
@@ -728,6 +826,38 @@
       - FloorShuttlePurple
   - type: Stack
     stackType: FloorTileStackShuttlePurple
+
+- type: entity
+  name: purple shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttlePurpleNonTiled
+  components:
+  - type: Sprite
+    state: shuttlepurple
+  - type: Item
+    heldPrefix: shuttlepurple
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttlePurpleNonTiled
+  - type: Stack
+    stackType: FloorTileStackShuttlePurple
+
+- type: entity
+  name: plastitanium shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttlePlastitanium
+  components:
+  - type: Sprite
+    state: shuttlered
+  - type: Item
+    heldPrefix: shuttlered
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttlePlastitanium
+  - type: Stack
+    stackType: FloorTileStackShuttlePlastitanium
 
 - type: entity
   name: red shuttle floor
