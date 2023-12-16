@@ -4,13 +4,13 @@
   - Centrifuge
   reactants:
     Blood:
-      amount: 10
+      amount: 20
   products:
-    Water: 5
-    Iron: 2
-    Sugar: 1
-    CarbonDioxide: 1
-    Protein: 1
+    Water: 11
+    Iron: 0.5
+    Sugar: 2
+    CarbonDioxide: 3
+    Protein: 4
 
 - type: reaction
   id: SlimeBloodBreakdown
@@ -29,13 +29,13 @@
   - Centrifuge
   reactants:
     CopperBlood:
-      amount: 10
+      amount: 20
   products:
-    Water: 5
-    Copper: 2
-    Sugar: 1
-    CarbonDioxide: 1
-    Protein: 1
+    Water: 11
+    Copper: 0.5
+    Sugar: 2
+    CarbonDioxide: 3
+    Protein: 4
 
 - type: reaction
   id: ZombieBloodBreakdown

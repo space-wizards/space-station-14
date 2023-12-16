@@ -9,6 +9,17 @@
     Ammonia: 4
 
 - type: reaction
+  id: CelluloseBreakdown
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Cellulose:
+      amount: 3
+  products:
+    Sugar: 2
+    Carbon: 1
+
+- type: reaction
   id: Diethylamine
   reactants:
     Ammonia:

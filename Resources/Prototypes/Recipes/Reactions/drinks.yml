@@ -262,6 +262,8 @@
 
 - type: reaction
   id: EthanolBreakdown
+  requiredMixerCategories:
+  - Electrolysis
   reactants:
     Ethanol:
       amount: 9
