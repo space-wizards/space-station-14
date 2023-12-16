@@ -5,6 +5,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -24,9 +25,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private const float OcclusionLerpRate = 4f;
-    private const float AlphaLerpRate = 4f;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -37,7 +35,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
     {
         base.Run(uid, weather, weatherProto, frameTime);
 
-        var ent = _playerManager.LocalPlayer?.ControlledEntity;
+        var ent = _playerManager.LocalEntity;
 
         if (ent == null)
             return;
@@ -48,8 +46,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
         // Maybe have the viewports manage this?
         if (mapUid == null || entXform.MapUid != mapUid)
         {
-            weather.LastOcclusion = 0f;
-            weather.LastAlpha = 0f;
             weather.Stream = _audio.Stop(weather.Stream);
             return;
         }
@@ -58,16 +54,10 @@ public sealed class WeatherSystem : SharedWeatherSystem
             return;
 
         weather.Stream ??= _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true).Value.Entity;
-        var volumeMod = MathF.Pow(10, weatherProto.Sound.Params.Volume / 10f);
 
         var stream = weather.Stream.Value;
         var comp = Comp<AudioComponent>(stream);
-        var alpha = weather.LastAlpha;
-        alpha = MathF.Pow(alpha, 2f) * volumeMod;
-        // TODO: Lerp this occlusion.
         var occlusion = 0f;
-        // TODO: Fade-out needs to be slower
-        // TODO: HELPER PLZ
 
         // Work out tiles nearby to determine volume.
         if (TryComp<MapGridComponent>(entXform.GridUid, out var grid))
@@ -79,8 +69,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
             frontier.Enqueue(seed);
             // If we don't have a nearest node don't play any sound.
             EntityCoordinates? nearestNode = null;
-            var bodyQuery = GetEntityQuery<PhysicsComponent>();
-            var weatherIgnoreQuery = GetEntityQuery<IgnoreWeatherComponent>();
             var visited = new HashSet<Vector2i>();
 
             while (frontier.TryDequeue(out var node))
@@ -88,7 +76,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 if (!visited.Add(node.GridIndices))
                     continue;
 
-                if (!CanWeatherAffect(grid, node, weatherIgnoreQuery, bodyQuery))
+                if (!CanWeatherAffect(grid, node))
                 {
                     // Add neighbors
                     // TODO: Ideally we pick some deterministically random direction and use that
@@ -112,50 +100,29 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 }
 
                 nearestNode = new EntityCoordinates(entXform.GridUid.Value,
-                    (Vector2) node.GridIndices + (grid.TileSizeHalfVector));
+                    node.GridIndices + grid.TileSizeHalfVector);
                 break;
             }
 
-            if (nearestNode == null)
-                alpha = 0f;
+            // Get occlusion to the targeted node if it exists, otherwise set a default occlusion.
+            if (nearestNode != null)
+            {
+                var entPos = _transform.GetMapCoordinates(entXform);
+                var nodePosition = nearestNode.Value.ToMap(EntityManager, _transform).Position;
+                var delta = nodePosition - entPos.Position;
+                var distance = delta.Length();
+                occlusion = _audio.GetOcclusion(entPos, delta, distance);
+            }
             else
             {
-                var entPos = _transform.GetWorldPosition(entXform);
-                var sourceRelative = nearestNode.Value.ToMap(EntityManager).Position - entPos;
-
-                if (sourceRelative.LengthSquared() > 1f)
-                {
-                    occlusion = _physics.IntersectRayPenetration(entXform.MapID,
-                        new CollisionRay(entPos, sourceRelative.Normalized(), _audio.OcclusionCollisionMask),
-                        sourceRelative.Length(), stream);
-                }
+                occlusion = 3f;
             }
         }
 
-        if (MathHelper.CloseTo(weather.LastOcclusion, occlusion, 0.01f))
-            weather.LastOcclusion = occlusion;
-        else
-            weather.LastOcclusion += (occlusion - weather.LastOcclusion) * OcclusionLerpRate * frameTime;
-
-        if (MathHelper.CloseTo(weather.LastAlpha, alpha, 0.01f))
-            weather.LastAlpha = alpha;
-        else
-            weather.LastAlpha += (alpha - weather.LastAlpha) * AlphaLerpRate * frameTime;
-
-        // Full volume if not on grid
-        comp.Gain = weather.LastAlpha;
-        comp.Occlusion = weather.LastOcclusion;
-    }
-
-    protected override void EndWeather(EntityUid uid, WeatherComponent component, string proto)
-    {
-        base.EndWeather(uid, component, proto);
-
-        if (!component.Weather.TryGetValue(proto, out var weather))
-            return;
-
-        weather.LastAlpha = 0f;
-        weather.LastOcclusion = 0f;
+        var alpha = GetPercent(weather, uid);
+        alpha *= SharedAudioSystem.VolumeToGain(weatherProto.Sound.Params.Volume);
+        _audio.SetGain(stream, alpha, comp);
+        comp.Occlusion = occlusion;
     }
 
     protected override bool SetState(WeatherState state, WeatherComponent comp, WeatherData weather, WeatherPrototype weatherProto)
@@ -199,7 +166,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
             // New weather
             StartWeather(component, ProtoMan.Index<WeatherPrototype>(proto), weather.EndTime);
-            weather.LastAlpha = 0f;
         }
     }
 }

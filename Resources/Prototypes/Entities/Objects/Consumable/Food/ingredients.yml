@@ -282,10 +282,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50 # you always need more mayo
         reagents:
         - ReagentId: Mayo
-          Quantity: 20
+          Quantity: 50
 
 # - type: entity
 #   parent: ReagentPacketBase

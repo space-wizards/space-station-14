@@ -49,6 +49,15 @@
   - type: Item
     heldPrefix: paper
   - type: Appearance
+  - type: Extractable
+    grindableSolutionName: paper
+  - type: SolutionContainerManager
+    solutions:
+      paper:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 3
+
 
 - type: entity
   parent: SheetPaper
@@ -139,7 +148,14 @@
   - type: Item
     heldPrefix: plastic
   - type: Appearance
-
+  - type: Extractable
+    grindableSolutionName: plastic
+  - type: SolutionContainerManager
+    solutions:
+      plastic:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 22
 - type: entity
   parent: SheetPlastic
   id: SheetPlastic10
@@ -237,7 +253,16 @@
     - type: Item
       sprite: Objects/Materials/Sheets/meaterial.rsi
       heldPrefix: meat
-    - type: Appearance
+    - type: Extractable
+      grindableSolutionName: meatsheet
+    - type: SolutionContainerManager
+      solutions:
+        meatsheet:
+          reagents:
+          - ReagentId: Protein
+            Quantity: 22 #for consistency with other materials
+          - ReagentId: Fat
+            Quantity: 3
 
 - type: entity
   parent: MaterialSheetMeat

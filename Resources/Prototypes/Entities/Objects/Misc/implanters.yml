@@ -222,6 +222,14 @@
     - type: Implanter
       implant: DeathRattleImplant
 
+- type: entity
+  id: DeathAcidifierImplanter
+  name: death acidifier implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: DeathAcidifierImplant
+
 # Security and Command implanters
 
 - type: entity

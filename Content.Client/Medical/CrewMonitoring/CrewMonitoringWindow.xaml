@@ -1,39 +1,49 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-               xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
+               xmlns:ui="clr-namespace:Content.Client.Medical.CrewMonitoring"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'crew-monitoring-user-interface-title'}"
-               SetSize="1130 700"
-               MinSize="1130 700">
-    <BoxContainer Orientation="Horizontal">
-        <ScrollContainer HorizontalExpand="True"
-                         VerticalExpand="True"
-                         Margin="8, 8, 8, 8">
-            <GridContainer Name="SensorsTable"
-                           HorizontalExpand="True"
-                           VerticalExpand="True"
-                           HSeparationOverride="5"
-                           VSeparationOverride="20"
-                           Columns="4">
-                <!-- Table header -->
-                <Label Text="{Loc 'crew-monitoring-user-interface-name'}"
-                       StyleClasses="LabelHeading"/>
-                <Label Text="{Loc 'crew-monitoring-user-interface-job'}"
-                       StyleClasses="LabelHeading"/>
-                <Label Text="{Loc 'crew-monitoring-user-interface-status'}"
-                       StyleClasses="LabelHeading"/>
-                <Label Text="{Loc 'crew-monitoring-user-interface-location'}"
-                       StyleClasses="LabelHeading"/>
+               SetSize="1200 700"
+               MinSize="1200 700">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
+            <ui:CrewMonitoringNavMapControl Name="NavMap" HorizontalExpand="True" VerticalExpand="True" Margin="5 20"/>
+            <BoxContainer Orientation="Vertical">
+                <controls:StripeBack>
+                    <PanelContainer>
+                        <Label Name="StationName" Text="Unknown station" Align="Center" />
+                    </PanelContainer>
+                </controls:StripeBack>
+                
+                <ScrollContainer Name="SensorScroller"
+                                 VerticalExpand="True"
+                                 SetWidth="520"
+                                 Margin="8, 8, 8, 8">
+                    <BoxContainer Name="SensorsTable"
+                                   Orientation="Vertical"
+                                   HorizontalExpand="True"
+                                   Margin="0 0 10 0">
+                        <!-- Table rows are filled by code -->
+                    </BoxContainer>
+                    <Label  Name="NoServerLabel"
+                            Text="{Loc 'crew-monitoring-user-interface-no-server'}"
+                            StyleClasses="LabelHeading"
+                            FontColorOverride="Red"
+                            HorizontalAlignment="Center"
+                            Visible="false"/>
+                </ScrollContainer>
+            </BoxContainer>
+        </BoxContainer>
 
-                <!-- Table rows are filled by code -->
-            </GridContainer>
-            <Label  Name="NoServerLabel"
-                    Text="{Loc 'crew-monitoring-user-interface-no-server'}"
-                    StyleClasses="LabelHeading"
-                    FontColorOverride="Red"
-                    HorizontalAlignment="Center"
-                    Visible="false"/>
-        </ScrollContainer>
-        <ui:NavMapControl Name="NavMap"
-                          Margin="5 5"/>
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'crew-monitoring-user-interface-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'crew-monitoring-user-interface-flavor-right'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

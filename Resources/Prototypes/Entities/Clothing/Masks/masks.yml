@@ -199,6 +199,19 @@
     - WhitelistChameleon
 
 - type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskClownBanana
+  name: banana clown wig and mask
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/clown_banana.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/clown_banana.rsi
+  - type: Construction
+    graph: BananaClownMask
+    node: mask
+
+- type: entity
   parent: ClothingMaskBase
   id: ClothingMaskJoy
   name: joy mask

@@ -65,7 +65,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferVol = filter.TransferRate * args.dt;
+            var transferVol = filter.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
 
             if (transferVol <= 0)
             {

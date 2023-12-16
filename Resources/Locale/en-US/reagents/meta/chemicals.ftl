@@ -4,7 +4,7 @@ reagent-desc-acetone = A slick, slightly carcinogenic liquid. Has a multitude of
 reagent-name-phenol = phenol
 reagent-desc-phenol = An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own.
 
-reagent-name-sodium-carbonate = Sodium Carbonate
+reagent-name-sodium-carbonate = sodium carbonate
 reagent-desc-sodium-carbonate = A white, odorless, water-soluble salt that yields an alkaline solution in water.  Also known as soda ash.
 
 reagent-name-artifexium = artifexium
@@ -21,3 +21,10 @@ reagent-desc-sodium-hydroxide = A white, odorless, water-soluble salt that yield
 
 reagent-name-fersilicite = Fersilicite
 reagent-desc-fersilicite = An intermetallic compound with unusual magnetic properties at low temperatures.
+
+reagent-name-sodium-polyacrylate = sodium polyacrylate
+reagent-desc-sodium-polyacrylate = A super-absorbent polymer with assorted industrial uses.
+
+reagent-name-cellulose = cellulose fibers
+reagent-desc-cellulose = A crystaline polydextrose polymer, plants swear by this stuff.
+

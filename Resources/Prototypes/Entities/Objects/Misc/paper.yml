@@ -250,6 +250,19 @@
     materialComposition:
       Steel: 25
 
+#TODO: I want the luxury pen to write a cool font like Merriweather in the future.
+
+- type: entity
+  name: luxury pen
+  parent: Pen
+  id: LuxuryPen
+  description: A fancy and expensive pen that you only deserve to own if you're qualified to handle vast amounts of paperwork.
+  components:
+  - type: Sprite
+    state: luxury_pen
+  - type: Item
+    heldPrefix: luxury_pen
+
 - type: entity
   name: Cybersun pen
   parent: BaseItem
@@ -259,6 +272,7 @@
   - type: Tag
     tags:
     - Write
+    - WriteIgnoreStamps
     - Pickaxe
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -337,10 +351,11 @@
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     size: Small
+    shape: null
   - type: Storage
-    maxSlots: 10
     maxItemSize: Small
-    maxTotalWeight: 20
+    grid:
+    - 0,0,4,3
     whitelist:
       tags:
         - Document
@@ -476,8 +491,8 @@
     quickEquip: false
     sprite: Objects/Misc/clipboard.rsi
   - type: Storage
-    maxSlots: 15
-    maxTotalWeight: 30
+    grid:
+    - 0,0,5,3
     whitelist:
       tags:
         - Document
@@ -535,7 +550,8 @@
     quickEquip: false
     sprite: Objects/Misc/qm_clipboard.rsi
   - type: Storage
-    maxSlots: 20
+    grid:
+    - 0,0,4,3
     quickInsert: true
     whitelist:
       tags:

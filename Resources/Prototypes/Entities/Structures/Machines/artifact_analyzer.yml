@@ -133,3 +133,81 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+
+- type: entity
+  id: MachineArtifactCrusher
+  parent: [ ConstructibleMachine, BaseMachinePowered ]
+  name: artifact crusher
+  description: Best not to let your fingers get stuck...
+  components:
+  - type: ArtifactCrusher
+    crushingWhitelist:
+      components:
+      - Artifact
+    crushingDamage:
+      types:
+        Blunt: 10
+  - type: Machine
+    board: ArtifactCrusherMachineCircuitboard
+  - type: Wires
+    boardName: wires-board-name-crusher
+    layoutId: Crusher
+  - type: WiresPanel
+  - type: Sprite
+    sprite: Structures/Machines/artifact_crusher.rsi
+    offset: 0,0.5
+    noRot: true
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: door-closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: piston
+      map: ["pistonlayer"]
+    - state: glass
+    - state: lights
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 50
+        mask:
+        - HighImpassable
+        layer:
+        - HighImpassable
+  - type: EntityStorage
+    capacity: 1
+    whitelist:
+      components:
+      - Artifact
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ArtifactCrusherVisuals.Crushing:
+        pistonlayer:
+          True: {state: piston-push}
+          False: {state: piston}
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: EntityStorageVisuals
+    stateDoorClosed: door-closed
+    openDrawDepth: 0
+    closedDrawDepth: 4
+  - type: Construction
+    containers:
+    - machine_board
+    - machine_parts
+    - entity_storage
+    - output_container
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      entity_storage: !type:Container
+      output_container: !type:Container

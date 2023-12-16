@@ -11,6 +11,7 @@
           state: icon-super
     - type: RandomSpawner
       rarePrototypes:
+        - ClothingUniformJumpsuitFamilyGuy
         - CigarGold
         - ClothingNeckCloakHerald
         - ClothingHeadHelmetTemplar
@@ -96,6 +97,7 @@
         - ClothingNeckTieRed
         - ClothingOuterCoatGentle
         - ClothingOuterCoatJensen
+        - ClothingEyesGlassesJensen
         - ClothingOuterCoatLab
         - ClothingOuterCoatPirate
         - ClothingOuterHoodieBlack
@@ -140,7 +142,9 @@
         - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - ToolboxEmergencyFilled
+        - ToolboxArtisticFilled
         - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
         - ToolboxElectricalFilled
         - ToolboxMechanicalFilled
         - ClothingBeltUtility
@@ -213,6 +217,8 @@
         - FlashlightLantern
         - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
+        - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
         - Lighter
         - Matchbox
         - Crowbar
