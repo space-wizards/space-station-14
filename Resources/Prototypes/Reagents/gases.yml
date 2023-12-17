@@ -409,8 +409,18 @@
         damage:
           types:
             Asphyxiation: 2.5
-            Poison: 1
-            Cellular: 0.15
+            Poison: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: BZ
+          min: 5
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Cellular: 3
+        probability: 0.33
       - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
