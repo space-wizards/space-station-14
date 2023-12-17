@@ -5,7 +5,7 @@ namespace Content.Server.CartridgeLoader.Cartridges;
 
 [RegisterComponent]
 [Access(typeof(LogProbeCartridgeSystem))]
-public sealed class LogProbeCartridgeComponent : Component
+public sealed partial class LogProbeCartridgeComponent : Component
 {
     /// <summary>
     /// The list of pulled access logs

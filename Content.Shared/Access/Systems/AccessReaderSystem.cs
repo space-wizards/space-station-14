@@ -14,13 +14,11 @@ using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Robust.Shared.Collections;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Access.Systems;
 
 public sealed class AccessReaderSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedGameTicker _gameTicker = default!;
@@ -100,7 +98,7 @@ public sealed class AccessReaderSystem : EntitySystem
         var access = FindAccessTags(user, accessSources);
         FindStationRecordKeys(user, out var stationKeys, accessSources);
 
-        return IsAllowed(access, stationKeys, target, reader);
+        return IsAllowed(access.AllTags(), stationKeys, target, reader);
     }
 
     /// <summary>
@@ -146,21 +144,21 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="accessTags">A list of access tags</param>
     /// <param name="reader">An access reader to check against</param>
     /// <param name="logAccess">Should successful access be logged</param>
-        public bool AreAccessTagsAllowed(IEnumerable<string> accessTags, AccessReaderComponent reader, bool logAccess = true)
-        {
-            var providedTags = new ProvidedAccessList();
-            providedTags.AddAccessTags("", accessTags, !logAccess);
+    public bool AreAccessTagsAllowed(IEnumerable<string> accessTags, AccessReaderComponent reader, bool logAccess = true)
+    {
+        var providedTags = new ProvidedAccessList();
+        providedTags.AddAccessTags("", accessTags, !logAccess);
 
-            return AreAccessTagsAllowed(providedTags, reader, logAccess);
-        }
+        return AreAccessTagsAllowed(providedTags, reader, logAccess);
+    }
 
-        /// <summary>
-        /// Compares the given tags with the readers access list to see if it is allowed.
-        /// </summary>
-        /// <param name="accessTagsList">A list of access tags</param>
-        /// <param name="reader">An access reader to check against</param>
-        /// <param name="logAccess">Should successful access be logged</param>
-        public bool AreAccessTagsAllowed(ProvidedAccessList accessTagsList, AccessReaderComponent reader, bool logAccess = true)
+    /// <summary>
+    /// Compares the given tags with the readers access list to see if it is allowed.
+    /// </summary>
+    /// <param name="accessTagsList">A list of access tags</param>
+    /// <param name="reader">An access reader to check against</param>
+    /// <param name="logAccess">Should successful access be logged</param>
+    public bool AreAccessTagsAllowed(ProvidedAccessList accessTagsList, AccessReaderComponent reader, bool logAccess = true)
     {
         if (accessTagsList.HasAnyAccessTags(reader.DenyTags, this, logAccess ? reader : null) != null)
         {
@@ -177,13 +175,11 @@ public sealed class AccessReaderSystem : EntitySystem
 
         foreach (var set in reader.AccessLists)
         {
-            if (set.IsSubsetOf(accessTags))
+            if (accessTagsList.HasAllAccessTags(set, this, logAccess ? reader : null) != null)
                 return true;
         }
 
         return false;
-        //TODO Merge conflict
-        //return reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => accessTagsList.HasAllAccessTags(a, this, logAccess ? reader : null) != null);
     }
 
     /// <summary>
@@ -290,7 +286,7 @@ public sealed class AccessReaderSystem : EntitySystem
         {
             // no existing tags, so now they're ours
             tags = new ProvidedAccessList();
-                tags.AddAccessTags(targetTags);
+            tags.AddAccessTags(targetTags);
             owned = false;
         }
     }
@@ -317,35 +313,35 @@ public sealed class AccessReaderSystem : EntitySystem
     ///     Try to find <see cref="AccessComponent"/> on this item
     ///     or inside this item (if it's pda)
     /// </summary>
-    private bool FindAccessTagsItem(EntityUid uid, out HashSet<string> tags)
+    // private bool FindAccessTagsItem(EntityUid uid, out HashSet<string> tags)
+    // {
+    //     tags = new();
+    //     var ev = new GetAccessTagsEvent(tags, _prototype);
+    //     RaiseLocalEvent(uid, ref ev);
+
+    //     return tags.Count != 0;
+    // }
+
+    private bool FindAccessTagsItem(EntityUid uid, [NotNullWhen(true)] out ProvidedAccessList? tags)
     {
-        tags = new();
-        var ev = new GetAccessTagsEvent(tags, _prototype);
-        RaiseLocalEvent(uid, ref ev);
+        tags = new ProvidedAccessList();
+        if (TryComp(uid, out AccessComponent? access))
+        {
+            tags.AddAccessTags(Identity.Name(uid, EntityManager), access.Tags, access.BypassLogging);
+            return true;
+        }
 
-        return tags.Count != 0;
+        if (TryComp(uid, out PdaComponent? pda) &&
+        pda.ContainedId is { Valid: true } id)
+        {
+            var accessComponent = EntityManager.GetComponent<AccessComponent>(id);
+            tags.AddAccessTags(Identity.Name(id, EntityManager), accessComponent.Tags, accessComponent.BypassLogging);
+            return true;
+        }
+
+        tags = null;
+        return false;
     }
-    //TODO gonflicts
-    //private bool FindAccessTagsItem(EntityUid uid, [NotNullWhen(true)] out ProvidedAccessList? tags)
-    //{
-    //        tags = new ProvidedAccessList();
-    //    if (TryComp(uid, out AccessComponent? access))
-    //    {
-    //        tags.AddAccessTags(Identity.Name(uid, EntityManager), access.Tags, access.BypassLogging);
-    //        return true;
-    //    }
-
-    //    if (TryComp(uid, out PdaComponent? pda) &&
-    //        pda.ContainedId is { Valid: true } id)
-    //    {
-    //        var accessComponent = EntityManager.GetComponent<AccessComponent>(id);
-    //            tags.AddAccessTags(Identity.Name(id, EntityManager), accessComponent.Tags, accessComponent.BypassLogging);
-    //        return true;
-    //    }
-
-    //    tags = null;
-    //    return false;
-    //}
 
     /// <summary>
     ///     Try to find <see cref="StationRecordKeyStorageComponent"/> on this item
@@ -369,137 +365,136 @@ public sealed class AccessReaderSystem : EntitySystem
             }
         }
 
-            key = null;
-            return false;
-        }
+        key = null;
+        return false;
+    }
 
-        /// <summary>
-        /// Logs an access
-        /// </summary>
-        /// <param name="reader">The reader to log the access on</param>
-        /// <param name="provider">The accessor to log</param>
-        private void LogAccess(AccessReaderComponent? reader, string provider)
+    /// <summary>
+    /// Logs an access
+    /// </summary>
+    /// <param name="reader">The reader to log the access on</param>
+    /// <param name="provider">The accessor to log</param>
+    internal void LogAccess(AccessReaderComponent? reader, string provider)
+    {
+        if (reader == null)
+            return;
+
+        if (reader.AccessLog.Count >= reader.AccessLogLimit)
+            reader.AccessLog.Dequeue();
+        reader.AccessLog.Enqueue(new AccessRecord(_gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan), provider));
+    }
+}
+
+public record ProvidedAccessList()
+{
+    private readonly Dictionary<string, ProvidedAccess> _accesses = new();
+
+    private record struct ProvidedAccess(HashSet<string> AccessTags, bool BypassLogging);
+
+    /// <summary>
+    /// Attempts to check for any access tag
+    /// </summary>
+    /// <param name="accessTag">Tag to check for</param>
+    /// <param name="accessReaderSystem"></param>
+    /// <param name="reader"><see cref="AccessReaderComponent"/> to log the access to</param>
+    /// <returns>The name of the matching access provider if the access check passes</returns>
+    public string? HasAnyAccessTags(string accessTag, AccessReaderSystem accessReaderSystem, AccessReaderComponent? reader = null)
+    {
+        foreach (var (provider, providedAccess) in _accesses)
         {
-            if (reader == null)
-                return;
+            if (!providedAccess.AccessTags.Contains(accessTag))
+                continue;
 
-            if (reader.AccessLog.Count >= reader.AccessLogLimit)
-                reader.AccessLog.Dequeue();
-            reader.AccessLog.Enqueue(new AccessRecord(_gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan), provider));
+            if (!providedAccess.BypassLogging)
+                accessReaderSystem.LogAccess(reader, provider);
+            return provider;
         }
 
-        public record ProvidedAccessList()
+        return null;
+    }
+
+    /// <summary>
+    /// Attempts to check for any access tags
+    /// </summary>
+    /// <param name="accessTags">Tags to check for</param>
+    /// <param name="accessReaderSystem"></param>
+    /// <param name="reader"><see cref="AccessReaderComponent"/> to log the access to</param>
+    /// <returns>The name of the matching access provider if the access check passes</returns>
+    public string? HasAnyAccessTags(IReadOnlyCollection<string> accessTags, AccessReaderSystem accessReaderSystem, AccessReaderComponent? reader = null)
+    {
+        foreach (var (provider, providedAccess) in _accesses)
         {
-            private readonly Dictionary<string, ProvidedAccess> _accesses = new();
+            if (!providedAccess.AccessTags.Overlaps(accessTags))
+                continue;
 
-            private record struct ProvidedAccess(HashSet<string> AccessTags, bool BypassLogging);
-
-            /// <summary>
-            /// Attempts to check for any access tag
-            /// </summary>
-            /// <param name="accessTag">Tag to check for</param>
-            /// <param name="accessReaderSystem"></param>
-            /// <param name="reader"><see cref="AccessReaderComponent"/> to log the access to</param>
-            /// <returns>The name of the matching access provider if the access check passes</returns>
-            public string? HasAnyAccessTags(string accessTag, AccessReaderSystem accessReaderSystem, AccessReaderComponent? reader = null)
-            {
-                foreach (var (provider, providedAccess) in _accesses)
-                {
-                    if (!providedAccess.AccessTags.Contains(accessTag))
-                        continue;
-
-                    if (!providedAccess.BypassLogging)
-                        accessReaderSystem.LogAccess(reader, provider);
-                    return provider;
-                }
-
-                return null;
-            }
-
-            /// <summary>
-            /// Attempts to check for any access tags
-            /// </summary>
-            /// <param name="accessTags">Tags to check for</param>
-            /// <param name="accessReaderSystem"></param>
-            /// <param name="reader"><see cref="AccessReaderComponent"/> to log the access to</param>
-            /// <returns>The name of the matching access provider if the access check passes</returns>
-            public string? HasAnyAccessTags(IReadOnlyCollection<string> accessTags, AccessReaderSystem accessReaderSystem, AccessReaderComponent? reader = null)
-            {
-                foreach (var (provider, providedAccess) in _accesses)
-                {
-                    if (!providedAccess.AccessTags.Overlaps(accessTags))
-                        continue;
-
-                    if (!providedAccess.BypassLogging)
-                        accessReaderSystem.LogAccess(reader, provider);
-                    return provider;
-                }
-
-                return null;
-            }
-
-            /// <summary>
-            /// Attempts to check for all access tags
-            /// </summary>
-            /// <param name="accessTags">Tags to check for</param>
-            /// <param name="accessReaderSystem"></param>
-            /// <param name="reader"><see cref="AccessReaderComponent"/> to log the access to</param>
-            /// <returns>The name of the matching access provider if the access check passes</returns>
-            public string? HasAllAccessTags(HashSet<string> accessTags, AccessReaderSystem accessReaderSystem, AccessReaderComponent? reader = null)
-            {
-                foreach (var (provider, providedAccess) in _accesses)
-                {
-                    if (!accessTags.IsSubsetOf(providedAccess.AccessTags))
-                        continue;
-
-                    if (!providedAccess.BypassLogging)
-                        accessReaderSystem.LogAccess(reader, provider);
-                    return provider;
-                }
-
-                return null;
-            }
-
-            /// <summary>
-            /// Adds access tags to the list of providable tags
-            /// </summary>
-            /// <param name="provider">Provider of the tags</param>
-            /// <param name="accessTags">Tags being provided</param>
-            /// <param name="bypassLogging">Determines if the access provider provide access without being logged</param>
-            public void AddAccessTags(string provider, IEnumerable<string> accessTags, bool bypassLogging)
-            {
-                if (_accesses.TryGetValue(provider, out var access))
-                    access.AccessTags.UnionWith(accessTags);
-                else
-                    _accesses.Add(provider, new ProvidedAccess(new HashSet<string>(accessTags), bypassLogging));
-            }
-
-            /// <summary>
-            /// Merges <paramref name="providedAccessList"/>
-            /// </summary>
-            public void AddAccessTags(ProvidedAccessList providedAccessList)
-            {
-                foreach (var (provider, accessTags) in providedAccessList._accesses)
-                {
-                    AddAccessTags(provider, accessTags.AccessTags, accessTags.BypassLogging);
-                }
-            }
-
-            /// <summary>
-            /// Gets all providable tags
-            /// </summary>
-            /// <returns>Every access tag that can be provided</returns>
-            public HashSet<string> AllTags()
-            {
-                var allTags = new HashSet<string>();
-
-                foreach (var (_, accessTags) in _accesses)
-                {
-                    allTags.UnionWith(accessTags.AccessTags);
-                }
-
-                return allTags;
-            }
+            if (!providedAccess.BypassLogging)
+                accessReaderSystem.LogAccess(reader, provider);
+            return provider;
         }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Attempts to check for all access tags
+    /// </summary>
+    /// <param name="accessTags">Tags to check for</param>
+    /// <param name="accessReaderSystem"></param>
+    /// <param name="reader"><see cref="AccessReaderComponent"/> to log the access to</param>
+    /// <returns>The name of the matching access provider if the access check passes</returns>
+    public string? HasAllAccessTags(HashSet<string> accessTags, AccessReaderSystem accessReaderSystem, AccessReaderComponent? reader = null)
+    {
+        foreach (var (provider, providedAccess) in _accesses)
+        {
+            if (!accessTags.IsSubsetOf(providedAccess.AccessTags))
+                continue;
+
+            if (!providedAccess.BypassLogging)
+                accessReaderSystem.LogAccess(reader, provider);
+            return provider;
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Adds access tags to the list of providable tags
+    /// </summary>
+    /// <param name="provider">Provider of the tags</param>
+    /// <param name="accessTags">Tags being provided</param>
+    /// <param name="bypassLogging">Determines if the access provider provide access without being logged</param>
+    public void AddAccessTags(string provider, IEnumerable<string> accessTags, bool bypassLogging)
+    {
+        if (_accesses.TryGetValue(provider, out var access))
+            access.AccessTags.UnionWith(accessTags);
+        else
+            _accesses.Add(provider, new ProvidedAccess(new HashSet<string>(accessTags), bypassLogging));
+    }
+
+    /// <summary>
+    /// Merges <paramref name="providedAccessList"/>
+    /// </summary>
+    public void AddAccessTags(ProvidedAccessList providedAccessList)
+    {
+        foreach (var (provider, accessTags) in providedAccessList._accesses)
+        {
+            AddAccessTags(provider, accessTags.AccessTags, accessTags.BypassLogging);
+        }
+    }
+
+    /// <summary>
+    /// Gets all providable tags
+    /// </summary>
+    /// <returns>Every access tag that can be provided</returns>
+    public HashSet<string> AllTags()
+    {
+        var allTags = new HashSet<string>();
+
+        foreach (var (_, accessTags) in _accesses)
+        {
+            allTags.UnionWith(accessTags.AccessTags);
+        }
+
+        return allTags;
     }
 }
