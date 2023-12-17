@@ -14,6 +14,8 @@
   # These are roundstart but not replenishable for salvage
   - WeaponCrusher
   - WeaponCrusherDagger
+  # This is not roundstart since its a direct upgrade
+  - WeaponCrusherGlaive
 
 - type: technology
   id: DraconicMunitions
@@ -156,3 +158,15 @@
   cost: 15000
   recipeUnlocks:
   - WeaponAdvancedLaser
+
+- type: technology
+  id: ExperimentalBatteryAmmo
+  name: research-technology-experimental-battery-ammo
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - WeaponLaserSvalinn
