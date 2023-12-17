@@ -52,6 +52,12 @@ namespace Content.Server.Atmos.EntitySystems
         /// <returns>Whether the process succeeded or got paused due to time constrains.</returns>
         private bool ProcessRevalidate(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
         {
+            if (ent.Comp4.MapUid == null)
+            {
+                Log.Error($"Attempted to process atmosphere on a map-less grid? Grid: {ToPrettyString(ent)}");
+                return true;
+            }
+
             var (uid, atmosphere, visuals, grid, xform) = ent;
             var volume = GetVolumeForTiles(grid);
             TryComp(xform.MapUid, out MapAtmosphereComponent? mapAtmos);
