@@ -99,9 +99,6 @@
   id: BaseChemistryVialFilled
   abstract: true
   components:
-  - type: Tag
-    tags:
-    - Vial
 
 - type: entity
   id: ToxinChemistryVial
