@@ -1,5 +1,4 @@
 using Content.Server.Actions;
-using Content.Server.Destructible;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
@@ -8,6 +7,7 @@ using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Buckle;
 using Content.Shared.Damage;
+using Content.Shared.Destructible;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
@@ -61,7 +61,7 @@ namespace Content.Server.Polymorph.Systems
             SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
             SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
             SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
-            SubscribeLocalEvent<PolymorphedEntityComponent, DamageThresholdReached>(OnDamageThresholdReached);
+            SubscribeLocalEvent<PolymorphedEntityComponent, DestructionEventArgs>(OnDestruction);
 
             InitializeCollide();
             InitializeMap();
@@ -129,7 +129,7 @@ namespace Content.Server.Polymorph.Systems
         /// It is possible to be polymorphed into an entity that can't "die", but is instead
         /// destroyed. This handler ensures that destruction is treated like death.
         /// </summary>
-        private void OnDamageThresholdReached(EntityUid uid, PolymorphedEntityComponent comp, DamageThresholdReached args)
+        private void OnDestruction(EntityUid uid, PolymorphedEntityComponent comp, DestructionEventArgs args)
         {
             if (!_proto.TryIndex<PolymorphPrototype>(comp.Prototype, out var proto))
             {
