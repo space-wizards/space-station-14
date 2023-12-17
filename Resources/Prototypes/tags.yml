@@ -879,6 +879,9 @@
   id: PotatoBattery
 
 - type: Tag
+  id: PowerCell
+
+- type: Tag
   id: PowerCellSmall
 
 - type: Tag
