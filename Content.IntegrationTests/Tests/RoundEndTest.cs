@@ -10,6 +10,22 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     public sealed class RoundEndTest : IEntityEventSubscriber
     {
+        public sealed class RoundEndTestSystem : EntitySystem
+        {
+            public int Count = 0;
+
+            public override void Initialize()
+            {
+                SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnEv);
+            }
+
+            private void OnEv(RoundEndSystemChangedEvent ev)
+            {
+                Count++;
+            }
+        }
+
+
         [Test]
         public async Task Test()
         {
@@ -21,14 +37,12 @@ namespace Content.IntegrationTests.Tests
             });
 
             var server = pair.Server;
-
-            var entManager = server.ResolveDependency<IEntityManager>();
             var config = server.ResolveDependency<IConfigurationManager>();
             var sysManager = server.ResolveDependency<IEntitySystemManager>();
             var ticker = sysManager.GetEntitySystem<GameTicker>();
             var roundEndSystem = sysManager.GetEntitySystem<RoundEndSystem>();
-
-            var eventCount = 0;
+            var testSystem = sysManager.GetEntitySystem<RoundEndTestSystem>();
+            testSystem.Count = 0;
 
             await server.WaitAssertion(() =>
             {
@@ -43,12 +57,6 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                var bus = entManager.EventBus;
-                bus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, _ =>
-                {
-                    Interlocked.Increment(ref eventCount);
-                });
-
                 // Press the shuttle call button
                 roundEndSystem.RequestRoundEnd();
                 Assert.Multiple(() =>
@@ -118,8 +126,8 @@ namespace Content.IntegrationTests.Tests
             async Task WaitForEvent()
             {
                 var timeout = Task.Delay(TimeSpan.FromSeconds(10));
-                var currentCount = Thread.VolatileRead(ref eventCount);
-                while (currentCount == Thread.VolatileRead(ref eventCount) && !timeout.IsCompleted)
+                var currentCount = Thread.VolatileRead(ref testSystem.Count);
+                while (currentCount == Thread.VolatileRead(ref testSystem.Count) && !timeout.IsCompleted)
                 {
                     await pair.RunTicksSync(5);
                 }
