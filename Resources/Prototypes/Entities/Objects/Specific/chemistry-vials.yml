@@ -95,15 +95,9 @@
     solution: drink
 
 - type: entity
-  parent: BaseChemistryEmptyVial
-  id: BaseChemistryVialFilled
-  abstract: true
-  components:
-
-- type: entity
   id: ToxinChemistryVial
   name: toxin vial
-  parent: BaseChemistryVialFilled
+  parent: BaseChemistryEmptyVial
   components:
     - type: SolutionContainerManager
       solutions:
@@ -116,7 +110,7 @@
 - type: entity
   id: HistamineChemistryVial
   name: histamine vial
-  parent: BaseChemistryVialFilled
+  parent: BaseChemistryEmptyVial
   components:
     - type: SolutionContainerManager
       solutions:
