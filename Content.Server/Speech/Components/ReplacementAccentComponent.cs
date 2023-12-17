@@ -1,4 +1,3 @@
-using System.Collections.Frozen;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -22,7 +21,7 @@ namespace Content.Server.Speech.Components
         ///     (words) will be replaced by the value, attempting to intelligently keep capitalization.
         /// </summary>
         [DataField("wordReplacements")]
-        public FrozenDictionary<string, string>? WordReplacements;
+        public Dictionary<string, string>? WordReplacements;
     }
 
     /// <summary>
