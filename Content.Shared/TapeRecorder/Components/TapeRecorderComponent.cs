@@ -1,23 +1,30 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Shared.TapeRecorder.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[Access(typeof(SharedTapeRecorderSystem))]
 public sealed partial class TapeRecorderComponent : Component
 {
 
+    /// <summary>
+    /// The current tape recorder mode, controls what using the item will do
+    /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
+    [AutoNetworkedField]
     public TapeRecorderMode Mode { get; set; } = TapeRecorderMode.Empty;
 
-    [DataField("ejectSound")]
-    public SoundSpecifier? EjectSound = new SoundPathSpecifier("/Audio/Items/Taperecorder/sound_items_taperecorder_taperecorder_close.ogg");
+    /// <summary>
+    /// How fast can this tape recorder rewind
+    /// </summary>
+    [DataField("rewindSpeed")]
+    public float RewindSpeed { get; set; } = 3f;
 
+    /// <summary>
+    /// Sounds for each mode, used when activated
+    /// </summary>
     [DataField("playSound")]
     public SoundSpecifier? PlaySound = new SoundPathSpecifier("/Audio/Items/Taperecorder/sound_items_taperecorder_taperecorder_play.ogg");
 

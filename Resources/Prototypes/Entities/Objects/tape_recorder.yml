@@ -6,15 +6,20 @@
   components:
     - type: Sprite
       sprite: Objects/Devices/tape_recorder.rsi
+      netsync: false
       layers:
         - state: taperecorder_empty
           map: ["base"]
     - type: Item
       sprite: Objects/Devices/tape_recorder.rsi
       heldPrefix: taperecorder_empty
+      size: Small
     - type: TapeRecorder
     - type: ActiveListener
       range: 4
+    - type: ItemCooldown
+    - type: UseDelay
+      delay: 1
     - type: Speech
     - type: ItemSlots
       slots:
@@ -22,7 +27,7 @@
           priority: 4
           whitelist:
             components:
-              - TapeCassette
+              - FitsInTapeRecorder
     - type: ContainerContainer
       containers:
         cassette_tape: !type:ContainerSlot
@@ -36,15 +41,6 @@
             Playing: { state: "taperecorder_playing" }
             Recording: { state: "taperecorder_recording" }
             Rewinding: { state: "taperecorder_rewinding" }
-    #- type: Appearance
-    #  visuals:
-        #- type: GenericEnumVisualizer
-        #  key: enum.TapeRecorderMode.Status
-        #  states:
-        #    enum.TapeRecorderMode.Playing: taperecorder_playing
-        #    enum.TapeRecorderMode.Recording: taperecorder_recording
-        #    enum.TapeRecorderMode.Stopped: taperecorder_idle
-        #    enum.TapeRecorderMode.Empty: taperecorder_empty
 
 - type: entity
   name: cassette tape
@@ -58,14 +54,24 @@
       layers:
       - state: tape_greyscale
       - state: tape_ribbonoverlay
+        map: [ "enum.ToggleVisuals.Layer" ]
         visible: false
       netsync: false
     - type: Item
       sprite: Objects/Devices/cassette_tapes.rsi
       heldPrefix: tape_greyscale
+      size: Tiny
     - type: Damageable
     - type: TapeCassette
-      MaxCapacity: 180
+      maxCapacity: 180
+    - type: FitsInTapeRecorder
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.ToggleVisuals.Toggled:
+          enum.ToggleVisuals.Layer:
+            True: { visible: true }
+            False: { visible: false }
 
 - type: entity
   name: blue cassette tape
@@ -77,6 +83,7 @@
       layers:
         - state: tape_blue
         - state: tape_ribbonoverlay
+          map: [ "enum.ToggleVisuals.Layer" ]
           visible: false
     - type: Item
       sprite: Objects/Devices/cassette_tapes.rsi
@@ -92,6 +99,7 @@
       layers:
         - state: tape_red
         - state: tape_ribbonoverlay
+          map: [ "enum.ToggleVisuals.Layer" ]
           visible: false
     - type: Item
       sprite: Objects/Devices/cassette_tapes.rsi
@@ -107,6 +115,7 @@
       layers:
         - state: tape_yellow
         - state: tape_ribbonoverlay
+          map: [ "enum.ToggleVisuals.Layer" ]
           visible: false
     - type: Item
       sprite: Objects/Devices/cassette_tapes.rsi
@@ -122,6 +131,7 @@
       layers:
         - state: tape_purple
         - state: tape_ribbonoverlay
+          map: [ "enum.ToggleVisuals.Layer" ]
           visible: false
     - type: Item
       sprite: Objects/Devices/cassette_tapes.rsi
@@ -137,6 +147,7 @@
       layers:
         - state: tape_white
         - state: tape_ribbonoverlay
+          map: [ "enum.ToggleVisuals.Layer" ]
           visible: false
     - type: Item
       sprite: Objects/Devices/cassette_tapes.rsi

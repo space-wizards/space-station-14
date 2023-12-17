@@ -1,38 +1,23 @@
-tape-recorder-no-cassette = [color=yellow]There is no cassette tape in the {THE($item)}.[/color]
-
-tape-recorder-switch-play = You switch {THE($item)} to play mode.
-
-tape-recorder-switch-rewind = You switch {THE($item)} to rewind mode.
-
-tape-recorder-switch-record = You switch {THE($item)} to record mode.
-
-tape-recorder-start-recording = {THE($item)} starts recording.
-
-tape-recorder-start-playback = {THE($item)} starts playback.
-
-tape-recorder-start-rewind = {THE($item)} starts rewinding.
-
-tape-recorder-stop = {THE($item)} stops.
-
-
 cassette-repair-start = You start winding the tape back into {THE($item)}.
 
 cassette-repair-finish = You manage to wind the tape back into {THE($item)}.
 
 tape-cassette-position = The cassette is about [color=green]{$position}%[/color] the way through.
 
-tape-recorder-playing = The tape recorder is [color=green]playing[/color].
+tape-cassette-damaged = The cassette is unspooled, use a pen or screwdriver to repair it.
+
+tape-recorder-playing = The tape recorder is in [color=green]playback[/color] mode.
 
 tape-recorder-stopped = The tape recorder is stopped.
 
 tape-recorder-empty = The tape recorder is empty.
 
-tape-recorder-recording = The tape recorder is [color=red]recording[/color].
+tape-recorder-recording = The tape recorder is in [color=red]recording[/color] mode.
 
-verb-tape-recorder-record = Begin Recording
+tape-recorder-rewinding = The tape recorder is in [color=yellow]rewinding[/color] mode.
 
-verb-tape-recorder-playback = Begin Playback
+verb-tape-recorder-record = Switch to Recording Mode
 
-verb-tape-recorder-rewind = Begin Rewinding
+verb-tape-recorder-playback = Switch to Playback Mode
 
-verb-tape-recorder-stop = Stop
+verb-tape-recorder-rewind = Switch to Rewinding Mode
