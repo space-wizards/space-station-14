@@ -336,3 +336,19 @@
       - id: ClothingHandsGlovesNitrile
       - id: SyringeTranexamicAcid
       - id: SyringeHyronalin
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateMedicalBundle
+  id: ClothingBackpackDuffelChemistryFilled
+  name: chemical synthesis kit
+  description: A starter kit for the aspiring chemist, includes toxin and histamine for all your criminal needs!
+  components:
+  - type: StorageFill
+    contents:
+      - id: ToxinChemistryVial
+        amount: 2
+      - id: HistamineChemistryVial
+      - id: SyringeStimulants
+      - id: Beaker
+        amount: 2
+      - id: Dropper

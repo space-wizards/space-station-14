@@ -41,7 +41,7 @@
     weight: 5
     reagents:
     - SpaceDrugs
-    - Toxin
+    - Amatoxin
 
 - type: entity
   name: strange pill

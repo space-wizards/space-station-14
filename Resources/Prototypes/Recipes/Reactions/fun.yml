@@ -1,4 +1,4 @@
-﻿- type: reaction
+- type: reaction
   id: Carpetium
   reactants:
     SpaceDrugs:
@@ -82,12 +82,15 @@
   products:
     SpaceGlue: 2
 
+# Requires a buffer chemical in the future which is histamine+something so that its not pure histamine used in this recipe
 - type: reaction
   id: Licoxide
   reactants:
     Lead:
       amount: 1
     Zinc:
+      amount: 1
+    Histamine:
       amount: 1
   products:
     Licoxide: 1

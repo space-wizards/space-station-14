@@ -93,3 +93,38 @@
         acts: [ "Destruction" ]
   - type: Spillable
     solution: drink
+
+- type: entity
+  parent: BaseChemistryEmptyVial
+  id: BaseChemistryVialFilled
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Vial
+
+- type: entity
+  id: ToxinChemistryVial
+  name: toxin vial
+  parent: BaseChemistryVialFilled
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Toxin
+              Quantity: 30
+
+- type: entity
+  id: HistamineChemistryVial
+  name: histamine vial
+  parent: BaseChemistryVialFilled
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Histamine
+              Quantity: 30
