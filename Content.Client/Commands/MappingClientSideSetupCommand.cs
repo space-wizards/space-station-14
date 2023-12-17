@@ -1,7 +1,9 @@
 using JetBrains.Annotations;
 using System;
+using Content.Client._CM14.Mapping;
 using Content.Client.Markers;
 using Robust.Client.Graphics;
+using Robust.Client.State;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 
@@ -27,7 +29,7 @@ internal sealed class MappingClientSideSetupCommand : IConsoleCommand
             EntitySystem.Get<MarkerSystem>().MarkersVisible = true;
             mgr.Enabled = false;
             shell.ExecuteCommand("showsubfloorforever");
-            shell.ExecuteCommand("loadmapacts");
+            IoCManager.Resolve<IStateManager>().RequestStateChange<MappingState>();
         }
     }
 }
