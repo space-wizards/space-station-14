@@ -28,6 +28,8 @@
   components:
   - type: Objective
     difficulty: 2.75
+  - type: ObjectiveLimit
+    limit: 1 # there is usually only 1 of each steal objective
 
 # state
 
@@ -287,8 +289,6 @@
     # it's close to being a stealth loneop
     difficulty: 4
   - type: NotCommandRequirement
-  - type: ObjectiveLimit
-    limit: 1
   - type: StealCondition
     prototype: NukeDisk
     owner: objective-condition-steal-station
