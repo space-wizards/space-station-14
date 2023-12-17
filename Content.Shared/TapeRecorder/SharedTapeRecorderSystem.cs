@@ -350,7 +350,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
 
     protected bool ToggleRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
-        if (HasComp<RecordingTapeRecorderComponent>(tapeRecorder))
+        if (component.Active)
         {
             return StopRecording(tapeRecorder, component, user);
         }
@@ -365,11 +365,12 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
     protected virtual bool StartRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
         //Are we already recording? if yes then abort
-        if (HasComp<RecordingTapeRecorderComponent>(tapeRecorder))
+        if (component.Mode != TapeRecorderMode.Recording || component.Active)
             return false;
 
         //Mark tape recorder as recording
         AddComp<RecordingTapeRecorderComponent>(tapeRecorder);
+        component.Active = true;
 
         UpdateAppearance(tapeRecorder, component);
 
@@ -389,10 +390,11 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
     protected virtual bool StopRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
         //Are we recording? if not then abort
-        if (!HasComp<RecordingTapeRecorderComponent>(tapeRecorder))
+        if (component.Mode != TapeRecorderMode.Recording || !component.Active)
             return false;
 
         RemComp<RecordingTapeRecorderComponent>(tapeRecorder);
+        component.Active = false;
 
         UpdateAppearance(tapeRecorder, component, TapeRecorderMode.Stopped);
 
@@ -406,7 +408,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
 
     protected bool TogglePlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
-        if (HasComp<PlayingTapeRecorderComponent>(tapeRecorder))
+        if (component.Active)
         {
             return StopPlayback(tapeRecorder, component, user);
         }
@@ -420,10 +422,11 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
     /// </summary>
     protected virtual bool StartPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
-        if (HasComp<PlayingTapeRecorderComponent>(tapeRecorder))
+        if (component.Mode != TapeRecorderMode.Playing || component.Active)
             return false;
 
         AddComp<PlayingTapeRecorderComponent>(tapeRecorder);
+        component.Active = true;
 
         UpdateAppearance(tapeRecorder, component);
 
@@ -440,10 +443,11 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
     /// </summary>
     protected virtual bool StopPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
-        if (!HasComp<PlayingTapeRecorderComponent>(tapeRecorder))
+        if (component.Mode != TapeRecorderMode.Playing || !component.Active)
             return false;
 
         RemComp<PlayingTapeRecorderComponent>(tapeRecorder);
+        component.Active = false;
 
         UpdateAppearance(tapeRecorder, component, TapeRecorderMode.Stopped);
 
@@ -457,7 +461,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
 
     protected bool ToggleRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
-        if (HasComp<RewindingTapeRecorderComponent>(tapeRecorder))
+        if (component.Active)
         {
             return StopRewinding(tapeRecorder, component, user);
         }
@@ -471,10 +475,11 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
     /// </summary>
     protected virtual bool StartRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
-        if (HasComp<RewindingTapeRecorderComponent>(tapeRecorder))
+        if (component.Mode != TapeRecorderMode.Rewinding || component.Active)
             return false;
 
         AddComp<RewindingTapeRecorderComponent>(tapeRecorder);
+        component.Active = true;
 
         UpdateAppearance(tapeRecorder, component);
 
@@ -491,10 +496,11 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
     /// </summary>
     protected virtual bool StopRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
-        if (!HasComp<RewindingTapeRecorderComponent>(tapeRecorder))
+        if (component.Mode != TapeRecorderMode.Rewinding || !component.Active)
             return false;
 
         RemComp<RewindingTapeRecorderComponent>(tapeRecorder);
+        component.Active = false;
 
         UpdateAppearance(tapeRecorder, component, TapeRecorderMode.Stopped);
 

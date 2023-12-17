@@ -12,9 +12,13 @@ public sealed partial class TapeRecorderComponent : Component
     /// <summary>
     /// The current tape recorder mode, controls what using the item will do
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public TapeRecorderMode Mode { get; set; } = TapeRecorderMode.Empty;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public bool Active { get; set; } = false;
 
     /// <summary>
     /// How fast can this tape recorder rewind

@@ -6,6 +6,7 @@ public sealed partial class TapeCassetteComponent : Component
     /// <summary>
     /// A list of all recorded voice, containing timestamp, name and spoken words
     /// </summary>
+    [DataField("recordedData")]
     public List<TapeCassetteRecordedMessage> RecordedData { get; set; } = new List<TapeCassetteRecordedMessage>();
 
     /// <summary>

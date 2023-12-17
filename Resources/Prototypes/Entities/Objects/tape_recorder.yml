@@ -153,6 +153,55 @@
       sprite: Objects/Devices/cassette_tapes.rsi
       heldPrefix: tape_white
 
+- type: entity
+  name: White Cassette Tape
+  suffix: Interview with Garry Smosh
+  parent: WhiteCassetteTape
+  id: WhiteCassetteTapeMedicalTraining
+  components:
+    - type: TapeCassette
+      maxCapacity: 180
+      recordedData:
+        - timestamp: 2
+          name: Phil Dervin
+          message: Its 11:43am, present in the room are Phil Dervin, Detective first class, Officer Belview and Grarry Smosh, Suspect of one count of secure tresspass, four counts of assault, two counts of theft and 85 counts of disturbing the peace.
+        - timestamp: 6
+          name: Phil Dervin
+          message: Mr Smosh, do you understand the charges you have been accused of?
+        - timestamp: 14
+          name: Grarry Smosh
+          message: I dont care what you say, i ain't done anything.
+        - timestamp: 18
+          name: Phil Dervin
+          message: Sir, you were caught redhanded in the Captains bedroom. In the middle of an attempt at stealing his whiskey reserve no less.
+        - timestamp: 23
+          name: Phil Dervin
+          message: You are lucky he didnt shoot you for that.
+        - timestamp: 28
+          name: Grarry Smosh
+          message: I didn't see no signs saying i couldnt be there.
+        - timestamp: 34
+          name: Phil Dervin
+          message: The Captains bedroom? I don't think we need a sign telling people to stay out - its common sense.
+        - timestamp: 38
+          name: Phil Dervin
+          message: Anyway thats besides the point, even if it were not off limits there is still the matter of the restricted items we found on your person and the subsequent attempt at evading arrest.
+        - timestamp: 42
+          name: Grarry Smosh
+          message: I ain't done nothing.
+        - timestamp: 46
+          name: Officer Belview
+          message: You slipped 3 officers, stole a stun baton and beat Ian with it. The HOP was very upset at that last part.
+        - timestamp: 50
+          name: Grarry Smosh
+          message: Which one of you gave the HOP a disabler?
+        - timestamp: 54
+          name: Phil Dervin
+          message: The Warden did, turned out to be a good idea eh?
+        - timestamp: 58
+          name: Officer Belview
+          message: I would say so.
+
 
 - type: entity
   name: tape recorder kit
