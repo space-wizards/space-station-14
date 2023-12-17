@@ -8,43 +8,22 @@
   },
   "states": [
     {
-      "name": "random_tape"
-    },
-    {
       "name": "tape_greyscale"
-    },
-    {
-      "name": "tape_greyscale_reverse"
     },
     {
       "name": "tape_white"
     },
     {
-      "name": "tape_white_reverse"
-    },
-    {
       "name": "tape_blue"
-    },
-    {
-      "name": "tape_blue_reverse"
     },
     {
       "name": "tape_red"
     },
     {
-      "name": "tape_red_reverse"
-    },
-    {
       "name": "tape_yellow"
     },
     {
-      "name": "tape_yellow_reverse"
-    },
-    {
       "name": "tape_purple"
-    },
-    {
-      "name": "tape_purple_reverse"
     },
     {
       "name": "tape_ribbonoverlay"
