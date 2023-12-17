@@ -82,15 +82,12 @@
   products:
     SpaceGlue: 2
 
-# Requires a buffer chemical in the future which is vestine+something so that its not pure vestine used in this recipe
 - type: reaction
   id: Licoxide
   reactants:
     Lead:
       amount: 1
     Zinc:
-      amount: 1
-    Vestine:
       amount: 1
   products:
     Licoxide: 1
