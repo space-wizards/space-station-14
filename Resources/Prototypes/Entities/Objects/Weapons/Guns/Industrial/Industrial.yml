@@ -1,7 +1,7 @@
 - type: entity
   name: Nailgun
   parent: BaseWeaponSubMachineGun
-  id: WeaponSubMachineGunNailgun
+  id: WeaponIndustrialNailgun
   description: A heavy duty industrial nailgun, designed by-and-for Nanotrasen labourers for use aboard company stations. Uses .10 nails.
   components:
   - type: Sprite
