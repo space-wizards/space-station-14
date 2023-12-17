@@ -30,6 +30,7 @@ public sealed class ActionContainerSystem : EntitySystem
         SubscribeLocalEvent<ActionsContainerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ActionsContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
         SubscribeLocalEvent<ActionsContainerComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
+        SubscribeLocalEvent<ActionsContainerComponent, ActionAddedEvent>(OnActionAdded);
         SubscribeLocalEvent<ActionsContainerComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<ActionsContainerComponent, MindRemovedMessage>(OnMindRemoved);
     }
@@ -339,6 +340,18 @@ public sealed class ActionContainerSystem : EntitySystem
         var ev = new ActionRemovedEvent(args.Entity, data);
         RaiseLocalEvent(uid, ref ev);
         data.Container = null;
+    }
+
+    // TODO: Grant singular action than regranting all actions
+    private void OnActionAdded(EntityUid uid, ActionsContainerComponent component, ActionAddedEvent args)
+    {
+        if (_mind.TryGetMind(uid, out var mind, out _))
+            _actions.GrantContainedActions(uid, mind);
+        else if (TryComp<MindComponent>(uid, out var mindComp))
+        {
+            if (mindComp.OwnedEntity != null)
+                _actions.GrantContainedActions(mindComp.OwnedEntity.Value, uid);
+        }
     }
 }
 

@@ -77,6 +77,16 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     [DataField("productAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ProductAction;
 
+    // ProductAction is bought
+    // This has a prebuy for that
+    // Next upgrade is displayed?
+    // Needs to track uids so it can upgrade
+    /// <summary>
+    /// The upgrade for the action
+    /// </summary>
+    [DataField("productActionUpgrade")]
+    public ProtoId<EntityPrototype> ProductActionUpgrade;
+
     /// <summary>
     /// The event that is broadcast when the listing is purchased.
     /// </summary>

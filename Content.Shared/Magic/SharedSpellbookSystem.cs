@@ -15,7 +15,6 @@ public sealed class SharedSpellbookSystem : EntitySystem
 
     public override void Initialize()
     {
-        // TODO: Make Master Spellbook (pointbuy)
         SubscribeLocalEvent<SpellbookComponent, MapInitEvent>(OnInit, before: new []{typeof(SharedMagicSystem)});
         SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
         SubscribeLocalEvent<SpellbookComponent, SpellbookDoAfterEvent>(OnDoAfter);

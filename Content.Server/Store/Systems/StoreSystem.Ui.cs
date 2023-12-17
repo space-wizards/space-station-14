@@ -5,9 +5,11 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Server.UserInterface;
+using Content.Shared.Actions;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Mind;
 using Content.Shared.Store;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -21,6 +23,8 @@ public sealed partial class StoreSystem
     [Dependency] private readonly IAdminLogManager _admin = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -163,11 +167,21 @@ public sealed partial class StoreSystem
             _hands.PickupOrDrop(buyer, product);
         }
 
+        // TODO: add action to mind instead(Test with Rev)
+        // TODO: Upgrade Action (listing.UpgradeAction)
         //give action
         if (!string.IsNullOrWhiteSpace(listing.ProductAction))
         {
-            // I guess we just allow duplicate actions?
-            _actions.AddAction(buyer, listing.ProductAction);
+            if (!_mind.TryGetMind(buyer, out var mind, out _))
+            {
+                // I guess we just allow duplicate actions?
+                // Allow duplicate actions and just have a single list buy for the buy-once ones.
+                _actions.AddAction(buyer, listing.ProductAction);
+            }
+            else
+            {
+                _actionContainer.AddAction(mind, listing.ProductAction);
+            }
         }
 
         //broadcast event
