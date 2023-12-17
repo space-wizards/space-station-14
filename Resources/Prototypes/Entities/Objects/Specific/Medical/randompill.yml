@@ -41,6 +41,9 @@
     weight: 5
     reagents:
     - SpaceDrugs
+  - quantity: 10
+    weight: 5
+    reagents:
     - Amatoxin
 
 - type: entity

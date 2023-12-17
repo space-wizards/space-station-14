@@ -10,3 +10,23 @@
           amount: 3
         - id: EmpImplanter
           amount: 1
+
+- type: entity
+  parent: BoxVial
+  id: ChemicalSynthesisKit
+  name: chemical synthesis kit
+  description: A starter kit for the aspiring chemist, includes toxin and histamine for all your criminal needs!
+  components:
+  - type: Storage
+    grid:
+    - 0,0,3,2
+  - type: StorageFill
+    contents:
+      - id: Beaker
+        amount: 2
+      - id: Dropper
+      - id: ClothingEyesGlassesChemical
+      - id: ToxinChemistryVial
+        amount: 2
+      - id: HistamineChemistryVial
+      - id: SyringeStimulants

@@ -722,8 +722,8 @@
 
 - type: listing
   id: UplinkChemistryKitBundle
-  name: uplink-chemistry-bundle-name
-  description: uplink-chemistry-bundle-desc
+  name: uplink-chemistry-kit-name
+  description: uplink-chemistry-kit-desc
   icon: { sprite: /Resources/Textures/Objects/Specific/Chemistry/vial.rsi, state: vial }
   productEntity: ClothingBackpackDuffelChemistryKitFilled
   cost:

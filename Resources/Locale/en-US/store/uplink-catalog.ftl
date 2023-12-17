@@ -375,5 +375,5 @@ uplink-bribe-desc = A heartfelt gift that can help you sway someone's opinion. R
 uplink-hypodart-name = Hypodart
 uplink-hypodart-desc = A seemingly unremarkable dart with an enlarged reservoir for chemicals. It can store up to 7u reagents in itself, and instantly inject when it hits the target. Starts empty.
 
-uplink-chemistry-name = Chemical Synthesis Kit
-uplink-chemistry-desc = A starter kit for the aspiring chemist, includes toxin and histamine for all your criminal needs!
+uplink-chemistry-kit-name = Chemical Synthesis Kit
+uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes toxin and histamine for all your criminal needs!
