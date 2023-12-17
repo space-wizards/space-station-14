@@ -279,6 +279,7 @@
       - ClothingEyesGlassesChemical
       - FauxTileAstroGrass
       - FauxTileAstroIce
+      - OreBagOfHolding
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload

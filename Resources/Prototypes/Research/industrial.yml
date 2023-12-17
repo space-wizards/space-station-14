@@ -209,6 +209,7 @@
   - ClothingBackpackHolding
   - ClothingBackpackSatchelHolding
   - ClothingBackpackDuffelHolding
+  - OreBagOfHolding
 
 - type: technology
   id: PortableFission
