@@ -82,7 +82,7 @@
   products:
     SpaceGlue: 2
 
-# Requires a buffer chemical in the future which is histamine+something so that its not pure histamine used in this recipe
+# Requires a buffer chemical in the future which is vestine+something so that its not pure vestine used in this recipe
 - type: reaction
   id: Licoxide
   reactants:
