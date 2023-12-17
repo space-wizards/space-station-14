@@ -6,13 +6,10 @@
   components:
     - type: Sprite
       sprite: Objects/Devices/tape_recorder.rsi
-      netsync: false
       layers:
         - state: taperecorder_empty
           map: ["base"]
     - type: Item
-      sprite: Objects/Devices/tape_recorder.rsi
-      heldPrefix: taperecorder_empty
       size: Small
     - type: TapeRecorder
     - type: ActiveListener
@@ -56,10 +53,7 @@
       - state: tape_ribbonoverlay
         map: [ "enum.ToggleVisuals.Layer" ]
         visible: false
-      netsync: false
     - type: Item
-      sprite: Objects/Devices/cassette_tapes.rsi
-      heldPrefix: tape_greyscale
       size: Tiny
     - type: Damageable
     - type: TapeCassette
@@ -79,15 +73,11 @@
   id: BlueCassetteTape
   components:
     - type: Sprite
-      sprite: Objects/Devices/cassette_tapes.rsi
       layers:
         - state: tape_blue
         - state: tape_ribbonoverlay
           map: [ "enum.ToggleVisuals.Layer" ]
           visible: false
-    - type: Item
-      sprite: Objects/Devices/cassette_tapes.rsi
-      heldPrefix: tape_blue
 
 - type: entity
   name: red cassette tape
@@ -95,15 +85,11 @@
   id: RedCassetteTape
   components:
     - type: Sprite
-      sprite: Objects/Devices/cassette_tapes.rsi
       layers:
         - state: tape_red
         - state: tape_ribbonoverlay
           map: [ "enum.ToggleVisuals.Layer" ]
           visible: false
-    - type: Item
-      sprite: Objects/Devices/cassette_tapes.rsi
-      heldPrefix: tape_red
 
 - type: entity
   name: yellow cassette tape
@@ -111,15 +97,11 @@
   id: YellowCassetteTape
   components:
     - type: Sprite
-      sprite: Objects/Devices/cassette_tapes.rsi
       layers:
         - state: tape_yellow
         - state: tape_ribbonoverlay
           map: [ "enum.ToggleVisuals.Layer" ]
           visible: false
-    - type: Item
-      sprite: Objects/Devices/cassette_tapes.rsi
-      heldPrefix: tape_yellow
 
 - type: entity
   name: purple cassette tape
@@ -127,15 +109,11 @@
   id: PurpleCassetteTape
   components:
     - type: Sprite
-      sprite: Objects/Devices/cassette_tapes.rsi
       layers:
         - state: tape_purple
         - state: tape_ribbonoverlay
           map: [ "enum.ToggleVisuals.Layer" ]
           visible: false
-    - type: Item
-      sprite: Objects/Devices/cassette_tapes.rsi
-      heldPrefix: tape_purple
 
 - type: entity
   name: white cassette tape
@@ -143,21 +121,16 @@
   id: WhiteCassetteTape
   components:
     - type: Sprite
-      sprite: Objects/Devices/cassette_tapes.rsi
       layers:
         - state: tape_white
         - state: tape_ribbonoverlay
           map: [ "enum.ToggleVisuals.Layer" ]
           visible: false
-    - type: Item
-      sprite: Objects/Devices/cassette_tapes.rsi
-      heldPrefix: tape_white
 
 - type: entity
-  name: White Cassette Tape
   suffix: Interview with Garry Smosh
   parent: WhiteCassetteTape
-  id: WhiteCassetteTapeMedicalTraining
+  id: WhiteCassetteTapeInterview
   components:
     - type: TapeCassette
       maxCapacity: 180
@@ -201,7 +174,6 @@
         - timestamp: 58
           name: Officer Belview
           message: I would say so.
-
 
 - type: entity
   name: tape recorder kit
