@@ -29,5 +29,5 @@
       - id: ClothingEyesGlassesChemical
       - id: ToxinChemistryVial
         amount: 2
-      - id: HistamineChemistryVial
+      - id: VestineChemistryVial
       - id: SyringeStimulants
