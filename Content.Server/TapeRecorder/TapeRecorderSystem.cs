@@ -56,7 +56,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
             return;
 
         //If we have tape capacity remaining
-        if (tapeCassetteComponent.MaxCapacity >= tapeCassetteComponent.CurrentPosition)
+        if (tapeCassetteComponent.MaxCapacity > tapeCassetteComponent.CurrentPosition)
         {
 
             if (component.Mode != TapeRecorderMode.Recording)
@@ -90,7 +90,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
             }
         }
 
-        //If there is tape to rewind
+        //If there is tape to rewind and we are not already rewinding
         if (tapeCassetteComponent.CurrentPosition > float.Epsilon && component.Mode != TapeRecorderMode.Rewinding)
         {
             args.Verbs.Add(new AlternativeVerb()
