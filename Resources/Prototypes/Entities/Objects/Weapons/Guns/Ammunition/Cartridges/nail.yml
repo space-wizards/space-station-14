@@ -21,7 +21,7 @@
 
 - type: entity
   id: CartridgeNail
-  name: nail (.10 engineering)
+  name: nail (.10 engineering)  
   parent: BaseCartridgeNail
   components:
   - type: CartridgeAmmo
