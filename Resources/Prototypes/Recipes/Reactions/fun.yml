@@ -145,3 +145,17 @@
     gas: Nitrogen
   products:
     Fresium: 5
+
+  id: FiberBreakdown
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Fiber:
+      amount: 5
+    Water:
+      amount: 10
+      catalyst: true
+  products:
+    Carbon: 3
+    Sugar: 2
+

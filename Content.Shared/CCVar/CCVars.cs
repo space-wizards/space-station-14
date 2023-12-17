@@ -180,6 +180,19 @@ namespace Content.Shared.CCVar
             GameMap = CVarDef.Create("game.map", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Controls whether to use world persistence or not.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            UsePersistence = CVarDef.Create("game.usepersistence", false, CVar.ARCHIVE);
+
+        /// <summary>
+        ///     If world persistence is used, what map prototype should be initially loaded.
+        ///     If the save file exists, it replaces MapPath but everything else stays the same (station name and such).
+        /// </summary>
+        public static readonly CVarDef<string>
+            PersistenceMap = CVarDef.Create("game.persistencemap", "Empty", CVar.ARCHIVE);
+
+        /// <summary>
         ///     Prototype to use for map pool.
         /// </summary>
         public static readonly CVarDef<string>
@@ -349,7 +362,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("discord.ahelp_avatar", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
-        /// URL of the Discord webhook which will relay all custom votes. If left empty, disables the webhook. 
+        /// URL of the Discord webhook which will relay all custom votes. If left empty, disables the webhook.
         /// </summary>
         public static readonly CVarDef<string> DiscordVoteWebhook =
             CVarDef.Create("discord.vote_webhook", string.Empty, CVar.SERVERONLY);
@@ -846,7 +859,7 @@ namespace Content.Shared.CCVar
         ///     This determines for how many seconds an explosion should stay visible once it has finished expanding.
         /// </summary>
         public static readonly CVarDef<float> ExplosionPersistence =
-            CVarDef.Create("explosion.persistence", 0.3f, CVar.SERVERONLY);
+            CVarDef.Create("explosion.persistence", 1.0f, CVar.SERVERONLY);
 
         /// <summary>
         ///     If an explosion covers a larger area than this number, the damaging/processing will always start during

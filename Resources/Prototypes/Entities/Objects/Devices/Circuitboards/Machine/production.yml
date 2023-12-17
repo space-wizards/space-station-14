@@ -809,6 +809,36 @@
         Steel: 2
 
 - type: entity
+  id: ElectrolysisUnitMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: electrolysis unit machine board
+  description: A machine printed circuit board for an electrolysis unit.
+  components:
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: MachineElectrolysisUnit
+    requirements:
+      Capacitor: 2
+    materialRequirements:
+      Cable: 1
+
+- type: entity
+  id: CentrifugeMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: centrifuge machine board
+  description: A machine printed circuit board for a centrifuge.
+  components:
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: MachineCentrifuge
+    requirements:
+      Manipulator: 1
+    materialRequirements:
+      Steel: 1
+
+- type: entity
   id: MaterialReclaimerMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: material reclaimer machine board
