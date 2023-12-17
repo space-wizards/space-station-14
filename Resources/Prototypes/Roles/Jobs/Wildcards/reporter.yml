@@ -14,7 +14,7 @@
   id: ReporterGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitReporter
-    back: ClothingBackpackFilled
+    back: ClothingBackpackReporterFilled
     shoes: ClothingShoesColorWhite
     id: ReporterPDA
     ears: ClothingHeadsetService

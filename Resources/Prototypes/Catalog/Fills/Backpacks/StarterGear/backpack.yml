@@ -227,6 +227,19 @@
       - id: HandLabeler
       - id: BoxForensicPad
 
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpack
+  id: ClothingBackpackReporterFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: TapeRecorder
+      - id: BlueCassetteTape
+      - id: RedCassetteTape
+      - id: YellowCassetteTape
+
 # ERT
 
 - type: entity
