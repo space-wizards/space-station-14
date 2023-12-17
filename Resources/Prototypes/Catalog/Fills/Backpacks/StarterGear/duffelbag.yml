@@ -60,7 +60,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackDuffelParamedic
+  parent: ClothingBackpackDuffelMedical
   id: ClothingBackpackDuffelParamedicFilled
   components:
   - type: StorageFill
