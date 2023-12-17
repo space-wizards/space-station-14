@@ -249,49 +249,6 @@
     zeroVisible: true
   - type: Appearance
 
-- type: entity
-  name: Nailgun
-  parent: BaseWeaponSubMachineGun
-  id: WeaponSubMachineGunNailgun
-  description: A heavy duty industrial nailgun, designed for Nanotrasen labourers. Uses .10 nails.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/nailgun.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-  - type: ChamberMagazineAmmoProvider
-    boltClosed: null
-  - type: Gun
-    fireRate: 14
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/nailgun.ogg
-    availableModes:
-    - FullAuto
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazinePistolCaselessRifle
-        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazinePistolCaselessRifle
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeCaselessRifle
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeCaselessRifle
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
-
-
 # Rubber
 - type: entity
   name: Drozd

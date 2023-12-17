@@ -796,3 +796,15 @@
             - Impassable
             - HighImpassable
     - type: GrapplingProjectile
+
+- type: entity
+  id: BulletNail
+  name: Nail (.10 Engineering)
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 2.5
+    ignoreResistances: true

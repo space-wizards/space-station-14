@@ -1,0 +1,45 @@
+- type: entity
+  name: Nailgun
+  parent: BaseWeaponSubMachineGun
+  id: WeaponSubMachineGunNailgun
+  description: A heavy duty industrial nailgun, designed by-and-for Nanotrasen labourers for use aboard company stations. Uses .10 nails.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Industrial/nailgun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: ChamberMagazineAmmoProvider
+    boltClosed: null
+  - type: Gun
+    minAngle: 10
+    maxAngle: 50
+    angleIncrease: 10
+    angleDecay: 16
+    fireRate: 14
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/nailgun.ogg
+    availableModes:
+    - FullAuto
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineNail
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineNail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeNail
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeNail
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+
