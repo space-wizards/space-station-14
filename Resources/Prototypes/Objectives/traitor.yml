@@ -70,7 +70,7 @@
   noSpawn: true
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomPersonObjective
-  description: objective-condition-kill-person-description
+  description: Сделайте это, как посчитаете нужным. Главное, чтобы цель не прилетела на станцию ЦентКома.
   components:
   - type: Objective
     difficulty: 1.75
@@ -83,7 +83,7 @@
   noSpawn: true
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomHeadObjective
-  description: objective-condition-kill-head-desc
+  description: Нам нужно, чтобы эта Глава исчез, и вы, наверное, знаете, почему. Удачи, агент.
   components:
   - type: Objective
     # technically its still possible for KillRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
@@ -104,7 +104,7 @@
   noSpawn: true
   parent: [BaseTraitorSocialObjective, BaseKeepAliveObjective]
   id: RandomTraitorAliveObjective
-  description: Identify yourself at your own risk. We just need them alive.
+  description: Выдавайте им себя на свой страх и риск. Они нам просто нужны живыми.
   components:
   - type: Objective
     difficulty: 1.75
@@ -116,7 +116,7 @@
   noSpawn: true
   parent: [BaseTraitorSocialObjective, BaseHelpProgressObjective]
   id: RandomTraitorProgressObjective
-  description: Identify yourself at your own risk. We just need them to succeed.
+  description: Выдавайте им себя на свой страх и риск. Нам просто нужно, чтобы они добились успеха.
   components:
   - type: Objective
     difficulty: 2.5

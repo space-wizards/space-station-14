@@ -177,10 +177,10 @@
     allowMovement: true
     allowSpeech: true
     makeSentient: true
-    name: sentient artifact
+    name: разумный артефакт
     description: |
-      Enact your eldritch whims.
-      Forcibly activate your nodes for good or for evil.
+      Реализуйте свои жуткие прихоти.
+      Насильно активируйте свои узлы во благо или во зло.
   - type: GhostTakeoverAvailable
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.25
