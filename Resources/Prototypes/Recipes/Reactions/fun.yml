@@ -146,6 +146,7 @@
   products:
     Fresium: 5
 
+- type: reaction
   id: FiberBreakdown
   requiredMixerCategories:
   - Centrifuge
