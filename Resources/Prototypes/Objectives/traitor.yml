@@ -232,6 +232,8 @@
   components:
   - type: NotJobRequirement
     job: HeadOfPersonnel
+  - type: ObjectiveLimit
+    limit: 2 # ian only has 2 slices
   - type: StealCondition
     prototype: FoodMeatCorgi
     owner: objective-condition-steal-Ian
@@ -285,6 +287,8 @@
     # it's close to being a stealth loneop
     difficulty: 4
   - type: NotCommandRequirement
+  - type: ObjectiveLimit
+    limit: 1
   - type: StealCondition
     prototype: NukeDisk
     owner: objective-condition-steal-station
