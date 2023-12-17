@@ -32,6 +32,41 @@
     price: 500
 
 - type: entity
+  id: BaseWeaponPowerCell
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+  - type: Item
+    size: Huge
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: MagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: PowerCellSmall
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+            - PowerCell
+            - PowerCellSmall
+  - type: Appearance
+  - type: StaticPrice
+    price: 500
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+
+- type: entity
   id: BaseWeaponBatterySmall
   parent: BaseWeaponBattery
   abstract: true
@@ -46,6 +81,43 @@
     quickEquip: false
     slots:
     - Belt
+
+- type: entity
+  id: BaseWeaponPowerCellSmall
+  parent: BaseWeaponPowerCell
+  abstract: true
+  components:
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    quickEquip: false
+    slots:
+    - Belt
+
+- type: entity
+  name: svalinn laser pistol
+  parent: BaseWeaponPowerCellSmall
+  id: WeaponLaserSvalinn
+  description: A cheap and widely used laser pistol.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
 
 - type: entity
   name: retro laser blaster
