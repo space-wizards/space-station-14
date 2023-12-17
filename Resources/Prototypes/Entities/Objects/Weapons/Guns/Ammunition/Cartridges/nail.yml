@@ -12,7 +12,7 @@
     deleteOnSpawn: true
   - type: Sprite
     noRot: false
-    sprite: (nail sprite)
+    sprite: Objects\Weapons\Guns\Ammunition\Casings\nail.rsi
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]

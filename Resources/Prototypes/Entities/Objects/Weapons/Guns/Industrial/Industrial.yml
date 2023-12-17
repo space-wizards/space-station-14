@@ -21,6 +21,7 @@
       path: /Audio/Weapons/Guns/Gunshots/nailgun.ogg
     availableModes:
     - FullAuto
+  - type: ItemSlots
     slots:
       gun_magazine:
         name: Magazine

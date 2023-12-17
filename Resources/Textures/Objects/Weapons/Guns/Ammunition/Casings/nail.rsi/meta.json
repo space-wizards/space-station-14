@@ -9,6 +9,8 @@
     "states": [
         {
             "name": "base"
+        },
+        {   "name": "base-spent"
         }
     ]
 }
