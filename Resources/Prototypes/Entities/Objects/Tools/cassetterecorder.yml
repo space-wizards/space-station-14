@@ -26,10 +26,19 @@
     layers:
     - state: dictaphone-empty
     - state: dictaphone-full
+      visible: false
+      map: [ "enum.ToggleVisuals.Layer" ]
     state: dictaphone-empty
   - type: Item
     sprite: Objects/Devices/communication.rsi
     heldPrefix: signaller
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
 
 - type: entity
   id: BaseCassetteTape

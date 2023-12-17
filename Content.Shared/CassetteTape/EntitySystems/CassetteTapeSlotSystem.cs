@@ -1,10 +1,14 @@
 ﻿using Content.Shared.CassetteTape.Components;
+using Content.Shared.Toggleable;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.CassetteTape.EntitySystems;
 
 public sealed class CassetteTapeSlotSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
+
     public override void Initialize()
     {
         base.Initialize();
@@ -36,7 +40,7 @@ public sealed class CassetteTapeSlotSystem : EntitySystem
         if (args.Container.ID != component.CassetteTapeSlotId)
             return;
 
-        // TODO: Change visual layer
+        _appearance.SetData(uid, ToggleVisuals.Toggled, false);
         RaiseLocalEvent(uid, new CassetteTapeChangedEvent(true, args.Entity), false);
     }
 
@@ -48,7 +52,7 @@ public sealed class CassetteTapeSlotSystem : EntitySystem
         if (args.Container.ID != component.CassetteTapeSlotId)
             return;
 
-        // TODO: Change visual layer
+        _appearance.SetData(uid, ToggleVisuals.Toggled, true);
         RaiseLocalEvent(uid, new CassetteTapeChangedEvent(false, args.Entity), false);
     }
 }
