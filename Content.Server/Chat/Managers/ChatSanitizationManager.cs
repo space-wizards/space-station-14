@@ -17,7 +17,6 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "о.о", "chatsan-wide-eyed" }, // cyrillic о
         { "0_о", "chatsan-wide-eyed" }, // cyrillic о
         { "о/", "chatsan-waves" }, // cyrillic о
-        { "о7", "chatsan-salutes" }, // cyrillic о
         { "0_o", "chatsan-wide-eyed" },
         { "лмао", "chatsan-laughs" },
         { "яхз", "chatsan-shrugs" },
