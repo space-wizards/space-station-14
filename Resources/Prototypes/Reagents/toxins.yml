@@ -316,7 +316,16 @@
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
-  # TODO hallucinations
+  metabolisms:
+    Poison:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 10
+        refresh: false
+  # TODO: PROPER hallucinations
 
 - type: reagent
   id: Histamine
