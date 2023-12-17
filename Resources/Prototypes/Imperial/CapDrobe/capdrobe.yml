@@ -1,0 +1,27 @@
+- type: entity
+  parent: VendingMachine
+  id: CapDrobe
+  name: capdrobe-name
+  description: capdrobe-desc
+  components:
+  - type: VendingMachine
+    pack: CapDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+  - type: Sprite
+    sprite: Imperial/CapDrobe/capdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#05DAF2"
+  - type: AccessReader
+    access: [["Captain"]]

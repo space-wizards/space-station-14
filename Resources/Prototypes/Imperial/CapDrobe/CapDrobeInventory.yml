@@ -1,0 +1,14 @@
+- type: vendingMachineInventory
+  id: CapDrobeInventory
+  startingInventory:
+    ClothingUniformJumpskirtWhiteCaptain: 1
+    ClothingUniformJumpsuitWhiteCaptain: 1
+    ClothingBeltWhiteSheath: 1
+    ClothingHeadHatBeretCaptainWhite: 1
+    ClothingHeadHatCapcapWhite: 1
+    ClothingHandsGlovesCaptainWhite: 1
+    ClothingUniformJumpsuitSheriffCaptain: 1
+    ClothingBeltSheriffSheath: 1
+    ClothingHeadHatBeretCaptainSheriff: 1
+    ClothingHeadHatCapcapSheriff: 1
+    ClothingHandsGlovesCaptainSheriff: 1

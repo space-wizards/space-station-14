@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Desingned im Imperial Space by @maksgab",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "broken"
+    },
+    {
+      "name": "off"
+    },
+    {
+      "name": "panel"
+    },
+    {
+      "name": "normal-unshaded",
+      "delays": [
+        [
+          1.5,
+          0.1,
+          1.5,
+          0.1
+        ]
+      ]
+    }
+  ]
+}
