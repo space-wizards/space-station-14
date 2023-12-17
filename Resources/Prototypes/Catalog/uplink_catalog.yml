@@ -721,11 +721,11 @@
           - SurplusBundle
 
 - type: listing
-  id: UplinkChemistryBundle
+  id: UplinkChemistryKitBundle
   name: uplink-chemistry-bundle-name
   description: uplink-chemistry-bundle-desc
-  icon: { sprite: /Resources/Textures/Objects/Specific/Chemistry/vial.rsi, state: icon }
-  productEntity: ClothingBackpackDuffelChemistryFilled
+  icon: { sprite: /Resources/Textures/Objects/Specific/Chemistry/vial.rsi, state: vial }
+  productEntity: ClothingBackpackDuffelChemistryKitFilled
   cost:
     Telecrystal: 8
   categories:

@@ -339,7 +339,7 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
-  id: ClothingBackpackDuffelChemistryFilled
+  id: ClothingBackpackDuffelChemistryKitFilled
   name: chemical synthesis kit
   description: A starter kit for the aspiring chemist, includes toxin and histamine for all your criminal needs!
   components:
