@@ -70,7 +70,7 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public FixedPoint2 FlavorMinimum = FixedPoint2.New(0.1f);
 
-        [DataField]
+        [DataField("color")]
         public Color SubstanceColor { get; private set; } = Color.White;
 
         /// <summary>
