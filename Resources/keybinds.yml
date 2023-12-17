@@ -163,6 +163,13 @@ binds:
 - function: SwapHands
   type: State
   key: X
+- function: MoveStoredItem
+  type: State
+  key: MouseLeft
+  canFocus: true
+- function: RotateStoredItem
+  type: State
+  key: MouseRight
 - function: Drop
   type: State
   key: Q
@@ -236,6 +243,13 @@ binds:
 - function: SmartEquipBelt
   type: State
   key: E
+  mod1: Shift
+- function: OpenBackpack
+  type: State
+  key: V
+- function: OpenBelt
+  type: State
+  key: V
   mod1: Shift
 - function: ShowDebugConsole
   type: State
