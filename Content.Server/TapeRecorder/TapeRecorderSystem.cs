@@ -130,4 +130,102 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
             tapeCassetteComponent.RecordedData.Add(new TapeCassetteRecordedMessage(tapeCassetteComponent.CurrentPosition, nameEv.Name, args.Message));
         }
     }
+
+    /// <summary>
+    /// Start recording if we are not already recording
+    /// </summary>
+    protected override bool StartRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    {
+        if (!base.StartRecording(tapeRecorder, component, user))
+            return false;
+
+        //If we dont know who triggered the sound, play here
+        //Otherwise its handled in SharedTapeRecorderSystem for prediction
+        if (!user.HasValue)
+        {
+            _audioSystem.PlayPvs(component.PlaySound, tapeRecorder);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Stop recording if we are currently recording
+    /// </summary>
+    protected override bool StopRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    {
+        if (!base.StopRecording(tapeRecorder, component, user))
+            return false;
+
+        if (!user.HasValue)
+        {
+            _audioSystem.PlayPvs(component.StopSound, tapeRecorder);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Start playback if we are not already playing
+    /// </summary>
+    protected override bool StartPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    {
+        if (!base.StartPlayback(tapeRecorder, component, user))
+            return false;
+
+        if (!user.HasValue)
+        {
+            _audioSystem.PlayPvs(component.PlaySound, tapeRecorder);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Stop playback if we are playing
+    /// </summary>
+    protected override bool StopPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    {
+        if (!base.StopPlayback(tapeRecorder, component, user))
+            return false;
+
+        if (!user.HasValue)
+        {
+            _audioSystem.PlayPvs(component.StopSound, tapeRecorder);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Start rewinding the tape if we are not already rewinding
+    /// </summary>
+    protected override bool StartRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    {
+        if (!base.StartRewinding(tapeRecorder, component, user))
+            return false;
+
+        if (!user.HasValue)
+        {
+            _audioSystem.PlayPvs(component.RewindSound, tapeRecorder);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Stop rewinding if we are rewinding
+    /// </summary>
+    protected override bool StopRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    {
+        if (!base.StopRewinding(tapeRecorder, component, user))
+            return false;
+
+        if (!user.HasValue)
+        {
+            _audioSystem.PlayPvs(component.StopSound, tapeRecorder);
+        }
+
+        return true;
+    }
 }

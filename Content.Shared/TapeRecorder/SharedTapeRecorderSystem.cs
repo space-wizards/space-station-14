@@ -348,25 +348,25 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         component.RecordedData[index] = corruptedEntry;
     }
 
-    protected void ToggleRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    protected bool ToggleRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
         if (HasComp<RecordingTapeRecorderComponent>(tapeRecorder))
         {
-            StopRecording(tapeRecorder, component, user);
+            return StopRecording(tapeRecorder, component, user);
         }
         else
         {
-            StartRecording(tapeRecorder, component, user);
+            return StartRecording(tapeRecorder, component, user);
         }
     }
     /// <summary>
     /// Start recording if we are not already recording
     /// </summary>
-    protected void StartRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    protected virtual bool StartRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
         //Are we already recording? if yes then abort
         if (HasComp<RecordingTapeRecorderComponent>(tapeRecorder))
-            return;
+            return false;
 
         //Mark tape recorder as recording
         AddComp<RecordingTapeRecorderComponent>(tapeRecorder);
@@ -379,20 +379,18 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         {
             _audioSystem.PlayPredicted(component.PlaySound, tapeRecorder, user);
         }
-        else
-        {
-            _audioSystem.PlayPvs(component.PlaySound, tapeRecorder);
-        }
+
+        return true;
     }
 
     /// <summary>
     /// Stop recording if we are currently recording
     /// </summary>
-    protected void StopRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    protected virtual bool StopRecording(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
         //Are we recording? if not then abort
         if (!HasComp<RecordingTapeRecorderComponent>(tapeRecorder))
-            return;
+            return false;
 
         RemComp<RecordingTapeRecorderComponent>(tapeRecorder);
 
@@ -402,30 +400,28 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         {
             _audioSystem.PlayPredicted(component.StopSound, tapeRecorder, user);
         }
-        else
-        {
-            _audioSystem.PlayPvs(component.StopSound, tapeRecorder);
-        }
+
+        return true;
     }
 
-    protected void TogglePlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    protected bool TogglePlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
         if (HasComp<PlayingTapeRecorderComponent>(tapeRecorder))
         {
-            StopPlayback(tapeRecorder, component, user);
+            return StopPlayback(tapeRecorder, component, user);
         }
         else
         {
-            StartPlayback(tapeRecorder, component, user);
+            return StartPlayback(tapeRecorder, component, user);
         }
     }
     /// <summary>
     /// Start playback if we are not already playing
     /// </summary>
-    protected void StartPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    protected virtual bool StartPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
         if (HasComp<PlayingTapeRecorderComponent>(tapeRecorder))
-            return;
+            return false;
 
         AddComp<PlayingTapeRecorderComponent>(tapeRecorder);
 
@@ -435,19 +431,17 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         {
             _audioSystem.PlayPredicted(component.PlaySound, tapeRecorder, user);
         }
-        else
-        {
-            _audioSystem.PlayPvs(component.PlaySound, tapeRecorder);
-        }
+
+        return true;
     }
 
     /// <summary>
     /// Stop playback if we are playing
     /// </summary>
-    protected void StopPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    protected virtual bool StopPlayback(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
         if (!HasComp<PlayingTapeRecorderComponent>(tapeRecorder))
-            return;
+            return false;
 
         RemComp<PlayingTapeRecorderComponent>(tapeRecorder);
 
@@ -457,30 +451,28 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         {
             _audioSystem.PlayPredicted(component.StopSound, tapeRecorder, user);
         }
-        else
-        {
-            _audioSystem.PlayPvs(component.StopSound, tapeRecorder);
-        }
+
+        return true;
     }
 
-    protected void ToggleRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    protected bool ToggleRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
         if (HasComp<RewindingTapeRecorderComponent>(tapeRecorder))
         {
-            StopRewinding(tapeRecorder, component, user);
+            return StopRewinding(tapeRecorder, component, user);
         }
         else
         {
-            StartRewinding(tapeRecorder, component, user);
+            return StartRewinding(tapeRecorder, component, user);
         }
     }
     /// <summary>
     /// Start rewinding the tape if we are not already rewinding
     /// </summary>
-    protected void StartRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    protected virtual bool StartRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
         if (HasComp<RewindingTapeRecorderComponent>(tapeRecorder))
-            return;
+            return false;
 
         AddComp<RewindingTapeRecorderComponent>(tapeRecorder);
 
@@ -490,19 +482,17 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         {
             _audioSystem.PlayPredicted(component.RewindSound, tapeRecorder, user);
         }
-        else
-        {
-            _audioSystem.PlayPvs(component.RewindSound, tapeRecorder);
-        }
+
+        return true;
     }
 
     /// <summary>
     /// Stop rewinding if we are rewinding
     /// </summary>
-    protected void StopRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
+    protected virtual bool StopRewinding(EntityUid tapeRecorder, TapeRecorderComponent component, EntityUid? user = null)
     {
         if (!HasComp<RewindingTapeRecorderComponent>(tapeRecorder))
-            return;
+            return false;
 
         RemComp<RewindingTapeRecorderComponent>(tapeRecorder);
 
@@ -512,9 +502,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         {
             _audioSystem.PlayPredicted(component.StopSound, tapeRecorder, user);
         }
-        else
-        {
-            _audioSystem.PlayPvs(component.StopSound, tapeRecorder);
-        }
+
+        return true;
     }
 }
