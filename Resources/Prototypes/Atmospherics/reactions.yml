@@ -99,11 +99,11 @@
   - 0     # oxygen
   - 0     # nitrogen
   - 0     # carbon dioxide
-  - 1     # plasma
+  - 10    # plasma
   - 0     # tritium
   - 0     # vapor
   - 0     # miasma
-  - 1     # n2o
+  - 10    # n2o
   - 0     # frezon
   effects:
   - !type:BZFormationReaction {}
