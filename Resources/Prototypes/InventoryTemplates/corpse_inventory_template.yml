@@ -80,7 +80,7 @@
       stripTime: 3
       uiWindowPos: 2,0
       strippingWindowPos: 2,5
-      dependsOn: outerClothing
+      dependsOn: jumpsuit
       displayName: Suit Storage
     - name: belt
       slotTexture: belt
