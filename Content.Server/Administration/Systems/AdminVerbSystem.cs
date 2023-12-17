@@ -136,7 +136,7 @@ namespace Content.Server.Administration.Systems
                             ? Loc.GetString("admin-verbs-unfreeze")
                             : Loc.GetString("admin-verbs-freeze"),
                         Category = VerbCategory.Admin,
-                        Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/snow.svg.192dpi.png")),
+                        Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/snow.svg.192dpi.png")),
                         Act = () =>
                         {
                             if (frozen)
@@ -165,49 +165,55 @@ namespace Content.Server.Administration.Systems
                         });
                     }
 
-                // Respawn
-                    args.Verbs.Add(new Verb()
+                    // Respawn
+                    if (_adminManager.HasAdminFlag(player, AdminFlags.Ban)) // SS220 Mentor buttons restrict
                     {
-                        Text = Loc.GetString("admin-player-actions-respawn"),
-                        Category = VerbCategory.Admin,
-                        Act = () =>
+                        args.Verbs.Add(new Verb()
                         {
-                            _console.ExecuteCommand(player, $"respawn {targetActor.PlayerSession.Name}");
-                        },
-                        ConfirmationPopup = true,
-                        // No logimpact as the command does it internally.
-                    });
+                            Text = Loc.GetString("admin-player-actions-respawn"),
+                            Category = VerbCategory.Admin,
+                            Act = () =>
+                            {
+                                _console.ExecuteCommand(player, $"respawn {targetActor.PlayerSession.Name}");
+                            },
+                            ConfirmationPopup = true,
+                            // No logimpact as the command does it internally.
+                        });
+                    }
 
                     // Spawn - Like respawn but on the spot.
-                    args.Verbs.Add(new Verb()
+                    if (_adminManager.HasAdminFlag(player, AdminFlags.Ban)) // SS220 Mentor buttons restrict
                     {
-                        Text = Loc.GetString("admin-player-actions-spawn"),
-                        Category = VerbCategory.Admin,
-                        Act = () =>
+                        args.Verbs.Add(new Verb()
                         {
-                            if (!_transformSystem.TryGetMapOrGridCoordinates(args.Target, out var coords))
+                            Text = Loc.GetString("admin-player-actions-spawn"),
+                            Category = VerbCategory.Admin,
+                            Act = () =>
                             {
-                                _popup.PopupEntity(Loc.GetString("admin-player-spawn-failed"), args.User, args.User);
-                                return;
-                            }
+                                if (!_transformSystem.TryGetMapOrGridCoordinates(args.Target, out var coords))
+                                {
+                                    _popup.PopupEntity(Loc.GetString("admin-player-spawn-failed"), args.User, args.User);
+                                    return;
+                                }
 
-                            var stationUid = _stations.GetOwningStation(args.Target);
+                                var stationUid = _stations.GetOwningStation(args.Target);
 
-                            var profile = _ticker.GetPlayerProfile(targetActor.PlayerSession);
-                            var mobUid = _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
-                            var targetMind = _mindSystem.GetMind(args.Target);
+                                var profile = _ticker.GetPlayerProfile(targetActor.PlayerSession);
+                                var mobUid = _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
+                                var targetMind = _mindSystem.GetMind(args.Target);
 
-                            if (targetMind != null)
-                            {
-                                _mindSystem.TransferTo(targetMind.Value, mobUid);
-                            }
-                        },
-                        ConfirmationPopup = true,
-                        Impact = LogImpact.High,
-                    });
+                                if (targetMind != null)
+                                {
+                                    _mindSystem.TransferTo(targetMind.Value, mobUid);
+                                }
+                            },
+                            ConfirmationPopup = true,
+                            Impact = LogImpact.High,
+                        });
+                    }
 
                     // Clone - Spawn but without the mind transfer, also spawns at the user's coordinates not the target's
-                    if (_adminManager.HasAdminFlag(player, AdminFlags.Ban)) 
+                    if (_adminManager.HasAdminFlag(player, AdminFlags.Ban)) // SS220 Mentor buttons restrict
                     {
                         args.Verbs.Add(new Verb()
                         {
@@ -233,7 +239,7 @@ namespace Content.Server.Administration.Systems
                 }
 
                 // Admin Logs
-                if (_adminManager.HasAdminFlag(player, AdminFlags.Logs)) // SS220 Mentor buttons restrict
+                if (_adminManager.HasAdminFlag(player, AdminFlags.Logs))
                 {
                     Verb logsVerbEntity = new()
                     {
