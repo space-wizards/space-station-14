@@ -10,7 +10,6 @@ using Content.Shared.Administration;
 using Content.Shared.Mobs;
 using Content.Shared.NPC;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -86,8 +85,7 @@ public sealed class HTNSystem : EntitySystem
 
     private void OnPrototypeLoad(PrototypesReloadedEventArgs obj)
     {
-        if (obj.WasModified<HTNCompoundPrototype>())
-            OnLoad();
+        OnLoad();
     }
 
     private void UpdateCompound(HTNCompoundPrototype compound)
