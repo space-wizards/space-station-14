@@ -25,6 +25,14 @@ anomaly-scanner-particle-unstable = - [color=plum]Unstable type:[/color] {$type}
 anomaly-scanner-particle-containment = - [color=goldenrod]Containment type:[/color] {$type}
 anomaly-scanner-pulse-timer = Time until next pulse: [color=gray]{$time}[/color]
 
+anomaly-sync-connected = Anomaly successfully attached
+anomaly-sync-disconnected = The connection to the anomaly has been lost!
+anomaly-sync-no-anomaly = No anomaly in range.
+anomaly-sync-examine-connected = It is [color=darkgreen]attached[/color] to an anomaly.
+anomaly-sync-examine-not-connected = It is [color=darkred]not attached[/color] to an anomaly.
+anomaly-sync-connect-verb-text = Attach anomaly
+anomaly-sync-connect-verb-message = Attach a nearby anomaly to {THE($machine)}.
+
 anomaly-generator-ui-title = Anomaly Generator
 anomaly-generator-fuel-display = Fuel:
 anomaly-generator-cooldown = Cooldown: [color=gray]{$time}[/color]

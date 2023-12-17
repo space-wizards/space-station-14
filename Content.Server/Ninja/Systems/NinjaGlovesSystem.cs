@@ -1,16 +1,10 @@
 using Content.Server.Communications;
-using Content.Server.DoAfter;
 using Content.Server.Mind;
 using Content.Server.Ninja.Events;
-using Content.Server.Power.Components;
-using Content.Server.Roles;
+using Content.Server.Objectives.Components;
 using Content.Shared.Communications;
-using Content.Shared.DoAfter;
-using Content.Shared.Interaction.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
-using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.Toggleable;
 
@@ -94,7 +88,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 
         EnsureComp<ResearchStealerComponent>(user);
         // prevent calling in multiple threats by toggling gloves after
-        if (_mind.TryGetRole<NinjaRoleComponent>(user, out var role) && !role.CalledInThreat)
+        if (_mind.TryGetObjectiveComp<TerrorConditionComponent>(user, out var obj) && !obj.CalledInThreat)
         {
             var hacker = EnsureComp<CommsHackerComponent>(user);
             var rule = _ninja.NinjaRule(user);

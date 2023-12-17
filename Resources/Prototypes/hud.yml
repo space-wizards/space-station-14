@@ -4,11 +4,31 @@
   path: Default
 
 - type: hudTheme
-  id: SS14ModernizedTheme
-  name: ui-options-hud-theme-modernized
-  path: Modernized
+  id: SS14PlasmafireTheme
+  name: ui-options-hud-theme-plasmafire
+  path: Plasmafire
+  
+- type: hudTheme
+  id: SS14SlimecoreTheme
+  name: ui-options-hud-theme-slimecore
+  path: Slimecore
 
 - type: hudTheme
-  id: SS14ClassicTheme
-  name: ui-options-hud-theme-classic
-  path: Classic
+  id: SS14ClockworkTheme
+  name: ui-options-hud-theme-clockwork
+  path: Clockwork
+
+- type: hudTheme
+  id: SS14RetroTheme
+  name: ui-options-hud-theme-retro
+  path: Retro
+
+- type: hudTheme
+  id: SS14MinimalistTheme
+  name: ui-options-hud-theme-minimalist
+  path: Minimalist
+
+- type: hudTheme
+  id: SS14ErisTheme
+  name: ui-options-hud-theme-eris
+  path: Eris

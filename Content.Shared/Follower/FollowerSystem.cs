@@ -138,7 +138,20 @@ public sealed class FollowerSystem : EntitySystem
             targetXform = Transform(targetXform.ParentUid);
         }
 
-        var followerComp = EnsureComp<FollowerComponent>(follower);
+        // Cleanup old following.
+        if (TryComp<FollowerComponent>(follower, out var followerComp))
+        {
+            // Already following you goob
+            if (followerComp.Following == entity)
+                return;
+
+            StopFollowingEntity(follower, followerComp.Following, deparent: false, removeComp: false);
+        }
+        else
+        {
+            followerComp = AddComp<FollowerComponent>(follower);
+        }
+
         followerComp.Following = entity;
 
         var followedComp = EnsureComp<FollowedComponent>(entity);
@@ -152,7 +165,7 @@ public sealed class FollowerSystem : EntitySystem
         _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
 
         var xform = Transform(follower);
-        _containerSystem.AttachParentToContainerOrGrid(xform);
+        _containerSystem.AttachParentToContainerOrGrid((follower, xform));
 
         // If we didn't get to parent's container.
         if (xform.ParentUid != Transform(xform.ParentUid).ParentUid)
@@ -167,14 +180,14 @@ public sealed class FollowerSystem : EntitySystem
 
         RaiseLocalEvent(follower, followerEv);
         RaiseLocalEvent(entity, entityEv);
-        Dirty(followedComp);
+        Dirty(entity, followedComp);
     }
 
     /// <summary>
     ///     Forces an entity to stop following another entity, if it is doing so.
     /// </summary>
     /// <param name="deparent">Should the entity deparent itself</param>
-    public void StopFollowingEntity(EntityUid uid, EntityUid target, FollowedComponent? followed = null, bool deparent = true)
+    public void StopFollowingEntity(EntityUid uid, EntityUid target, FollowedComponent? followed = null, bool deparent = true, bool removeComp = true)
     {
         if (!Resolve(target, ref followed, false))
             return;
@@ -186,8 +199,12 @@ public sealed class FollowerSystem : EntitySystem
         if (followed.Following.Count == 0)
             RemComp<FollowedComponent>(target);
 
-        RemComp<FollowerComponent>(uid);
-        RemComp<OrbitVisualsComponent>(uid);
+        if (removeComp)
+        {
+            RemComp<FollowerComponent>(uid);
+            RemComp<OrbitVisualsComponent>(uid);
+        }
+
         var uidEv = new StoppedFollowingEntityEvent(target, uid);
         var targetEv = new EntityStoppedFollowingEvent(target, uid);
 

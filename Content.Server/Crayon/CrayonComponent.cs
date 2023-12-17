@@ -24,7 +24,5 @@ namespace Content.Server.Crayon
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("deleteEmpty")]
         public bool DeleteEmpty = true;
-
-        [ViewVariables] public PlayerBoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
     }
 }

@@ -45,12 +45,16 @@
   oreEntity: MobIronCrab
 
 - type: ore
+  id: OreSilverCrab
+  oreEntity: MobSilverCrab
+
+- type: ore
   id: OreUraniumCrab
   oreEntity: MobUraniumCrab
 
 - type: ore
   id: OreArtifactFragment
-  oreEntity: ArtifactFragment
+  oreEntity: ArtifactFragment1
   minOreYield: 2
   maxOreYield: 4
 
@@ -71,4 +75,5 @@
   weights:
     OreQuartzCrab: 5
     OreIronCrab: 5
-    OreUraniumCrab: 3
+    OreUraniumCrab: 2
+    OreSilverCrab: 3

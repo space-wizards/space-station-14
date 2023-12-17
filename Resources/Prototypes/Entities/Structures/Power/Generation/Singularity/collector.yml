@@ -31,6 +31,18 @@
       - state: ca_off
         map: ["enum.RadiationCollectorVisualLayers.Main"]
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.RadiationCollectorVisuals.TankInserted:
+        tankInserted:
+          False: { state: ca-tank, visible: false }
+          True: { state: ca-tank, visible: true }
+      enum.RadiationCollectorVisuals.PressureState:
+        pressureLight:
+          0: { state: ca-o0, shader: "unshaded" }
+          1: { state: ca-o1, shader: "unshaded" }
+          2: { state: ca-o2, shader: "unshaded" }
+          3: { state: ca-o3, shader: "unshaded" }
   - type: AnimationPlayer
   - type: NodeContainer
     examinable: true
@@ -43,8 +55,7 @@
     radiationReactiveGases:
       - reactantPrototype: Plasma
         powerGenerationEfficiency: 1
-        reactantBreakdownRate: 0.0002
-        byproductPrototype: Tritium
+        reactantBreakdownRate: 0.0001
     # Note that this doesn't matter too much (see next comment)
     # However it does act as a cap on power receivable via the collector.
   - type: Battery

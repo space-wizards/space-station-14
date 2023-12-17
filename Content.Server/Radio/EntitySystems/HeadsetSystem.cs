@@ -5,8 +5,8 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Radio.EntitySystems;
-using Robust.Server.GameObjects;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Server.Radio.EntitySystems;
 

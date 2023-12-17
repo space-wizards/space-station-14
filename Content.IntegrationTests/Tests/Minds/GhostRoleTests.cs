@@ -5,6 +5,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Players;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
+using Content.Shared.Players;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -43,7 +44,7 @@ public sealed class GhostRoleTests
         var sPlayerMan = server.ResolveDependency<Robust.Server.Player.IPlayerManager>();
         var conHost = client.ResolveDependency<IConsoleHost>();
         var mindSystem = entMan.System<SharedMindSystem>();
-        var session = sPlayerMan.ServerSessions.Single();
+        var session = sPlayerMan.Sessions.Single();
         var originalMindId = session.ContentData()!.Mind!.Value;
 
         // Spawn player entity & attach

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Construction;
 using Content.Shared.Destructible;
 using Content.Shared.DragDrop;
 using Content.Shared.Foldable;
@@ -31,6 +32,7 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<StrapComponent, FoldAttemptEvent>(OnAttemptFold);
 
         SubscribeLocalEvent<StrapComponent, MoveEvent>(OnStrapMoveEvent);
+        SubscribeLocalEvent<StrapComponent, MachineDeconstructedEvent>((_, c, _) => StrapRemoveAll(c));
     }
 
     private void OnStrapStartup(EntityUid uid, StrapComponent component, ComponentStartup args)

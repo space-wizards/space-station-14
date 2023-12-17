@@ -119,34 +119,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("admin_log", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.AdminLogEntity", b =>
-                {
-                    b.Property<int>("Uid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("uid");
-
-                    b.Property<int?>("AdminLogId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("admin_log_id");
-
-                    b.Property<int?>("AdminLogRoundId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("admin_log_round_id");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("name");
-
-                    b.HasKey("Uid")
-                        .HasName("PK_admin_log_entity");
-
-                    b.HasIndex("AdminLogId", "AdminLogRoundId")
-                        .HasDatabaseName("IX_admin_log_entity_admin_log_id_admin_log_round_id");
-
-                    b.ToTable("admin_log_entity", (string)null);
-                });
-
             modelBuilder.Entity("Content.Server.Database.AdminLogPlayer", b =>
                 {
                     b.Property<Guid>("PlayerUserId")
@@ -526,6 +498,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("BLOB")
                         .HasColumnName("hwid");
 
+                    b.Property<int>("ServerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(0)
+                        .HasColumnName("server_id");
+
                     b.Property<DateTime>("Time")
                         .HasColumnType("TEXT")
                         .HasColumnName("time");
@@ -541,6 +519,9 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.HasKey("Id")
                         .HasName("PK_connection_log");
+
+                    b.HasIndex("ServerId")
+                        .HasDatabaseName("IX_connection_log_server_id");
 
                     b.HasIndex("UserId");
 
@@ -806,11 +787,19 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("server_id");
 
+                    b.Property<DateTime>("StartDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
+                        .HasColumnName("start_date");
+
                     b.HasKey("Id")
                         .HasName("PK_round");
 
                     b.HasIndex("ServerId")
                         .HasDatabaseName("IX_round_server_id");
+
+                    b.HasIndex("StartDate");
 
                     b.ToTable("round", (string)null);
                 });
@@ -1234,14 +1223,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Round");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.AdminLogEntity", b =>
-                {
-                    b.HasOne("Content.Server.Database.AdminLog", null)
-                        .WithMany("Entities")
-                        .HasForeignKey("AdminLogId", "AdminLogRoundId")
-                        .HasConstraintName("FK_admin_log_entity_admin_log_admin_log_id_admin_log_round_id");
-                });
-
             modelBuilder.Entity("Content.Server.Database.AdminLogPlayer", b =>
                 {
                     b.HasOne("Content.Server.Database.Player", "Player")
@@ -1426,6 +1407,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
+                {
+                    b.HasOne("Content.Server.Database.Server", "Server")
+                        .WithMany("ConnectionLogs")
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired()
+                        .HasConstraintName("FK_connection_log_server_server_id");
+
+                    b.Navigation("Server");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Job", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
@@ -1599,8 +1592,6 @@ namespace Content.Server.Database.Migrations.Sqlite
 
             modelBuilder.Entity("Content.Server.Database.AdminLog", b =>
                 {
-                    b.Navigation("Entities");
-
                     b.Navigation("Players");
                 });
 
@@ -1674,6 +1665,8 @@ namespace Content.Server.Database.Migrations.Sqlite
 
             modelBuilder.Entity("Content.Server.Database.Server", b =>
                 {
+                    b.Navigation("ConnectionLogs");
+
                     b.Navigation("Rounds");
                 });
 

@@ -337,7 +337,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
-                    foreach (var part in _bodySystem.GetBodyChildrenOfType(body.Owner, BodyPartType.Hand, body))
+                    foreach (var part in _bodySystem.GetBodyChildrenOfType(args.Target, BodyPartType.Hand, body))
                     {
                         _transformSystem.AttachToGridOrMap(part.Id);
                         break;

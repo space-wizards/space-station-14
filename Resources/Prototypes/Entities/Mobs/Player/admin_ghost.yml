@@ -61,7 +61,7 @@
         toggleAction: ActionAGhostShowStationRecords
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole
-    title: communicationsconsole-announcement-title-centcom
+    title: comms-console-announcement-title-centcom
     color: "#228b22"
   - type: RadarConsole
   - type: CargoOrderConsole

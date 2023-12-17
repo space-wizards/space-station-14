@@ -56,7 +56,7 @@ public sealed class StickySystem : EntitySystem
         {
             DoContactInteraction = true,
             Text = Loc.GetString("comp-sticky-unstick-verb-text"),
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
             Act = () => StartUnsticking(uid, args.User, component)
         });
     }
@@ -70,6 +70,11 @@ public sealed class StickySystem : EntitySystem
         if (component.Whitelist != null && !component.Whitelist.IsValid(target))
             return false;
         if (component.Blacklist != null && component.Blacklist.IsValid(target))
+            return false;
+
+        var attemptEv = new AttemptEntityStickEvent(target, user);
+        RaiseLocalEvent(uid, ref attemptEv);
+        if (attemptEv.Cancelled)
             return false;
 
         // check if delay is not zero to start do after
@@ -120,6 +125,14 @@ public sealed class StickySystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        if (component.StuckTo is not { } stuckTo)
+            return;
+
+        var attemptEv = new AttemptEntityUnstickEvent(stuckTo, user);
+        RaiseLocalEvent(uid, ref attemptEv);
+        if (attemptEv.Cancelled)
+            return;
+
         var delay = (float) component.UnstickDelay.TotalSeconds;
         if (delay > 0)
         {
@@ -152,6 +165,11 @@ public sealed class StickySystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        var attemptEv = new AttemptEntityStickEvent(target, user);
+        RaiseLocalEvent(uid, ref attemptEv);
+        if (attemptEv.Cancelled)
+            return;
+
         // add container to entity and insert sticker into it
         var container = _containerSystem.EnsureContainer<Container>(target, StickerSlotId);
         container.ShowContents = true;
@@ -179,12 +197,17 @@ public sealed class StickySystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
-        if (component.StuckTo == null)
+
+        if (component.StuckTo is not { } stuckTo)
+            return;
+
+        var attemptEv = new AttemptEntityUnstickEvent(stuckTo, user);
+        RaiseLocalEvent(uid, ref attemptEv);
+        if (attemptEv.Cancelled)
             return;
 
         // try to remove sticky item from target container
-        var target = component.StuckTo.Value;
-        if (!_containerSystem.TryGetContainer(target, StickerSlotId, out var container) || !container.Remove(uid))
+        if (!_containerSystem.TryGetContainer(stuckTo, StickerSlotId, out var container) || !container.Remove(uid))
             return;
         // delete container if it's now empty
         if (container.ContainedEntities.Count == 0)
@@ -207,6 +230,6 @@ public sealed class StickySystem : EntitySystem
         }
 
         component.StuckTo = null;
-        RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user), true);
+        RaiseLocalEvent(uid, new EntityUnstuckEvent(stuckTo, user), true);
     }
 }

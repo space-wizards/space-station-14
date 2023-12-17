@@ -77,13 +77,20 @@ public sealed class UseDelaySystem : EntitySystem
         }
     }
 
-    public void BeginDelay(EntityUid uid, UseDelayComponent? component = null)
+    /// <summary>
+    /// Attempts tp start a use-delay for some entity. Returns true unless there is already an active delay.
+    /// </summary>
+    /// <remarks>
+    /// Note that this will always return true if the entity does not have a use delay component, as in that case there
+    /// is no reason to block/prevent an interaction.
+    /// </remarks>
+    public bool BeginDelay(EntityUid uid, UseDelayComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
-            return;
+            return true;
 
         if (component.ActiveDelay)
-            return;
+            return false;
 
         DebugTools.Assert(!_activeDelays.Contains(component));
         _activeDelays.Add(component);
@@ -91,12 +98,12 @@ public sealed class UseDelaySystem : EntitySystem
         var currentTime = _gameTiming.CurTime;
         component.LastUseTime = currentTime;
         component.DelayEndTime = currentTime + component.Delay;
-        Dirty(component);
+        Dirty(uid, component);
 
-        // TODO just merge these components?
-        var cooldown = EnsureComp<ItemCooldownComponent>(component.Owner);
+        var cooldown = EnsureComp<ItemCooldownComponent>(uid);
         cooldown.CooldownStart = currentTime;
         cooldown.CooldownEnd = component.DelayEndTime;
+        return true;
     }
 
     public bool ActiveDelay(EntityUid uid, UseDelayComponent? component = null)

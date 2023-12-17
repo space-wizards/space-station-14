@@ -58,6 +58,7 @@
     time: 10
   - type: Airlock
   - type: DoorBolt
+  - type: AccessReader
   - type: Appearance
   - type: WiresVisuals
   - type: ApcPowerReceiver
@@ -67,10 +68,11 @@
     enabled: false
     usesApcPower: true
   - type: WiresPanel
-    securityLevel: Level5
+  - type: WiresPanelSecurity
+    securityLevel: maxSecurity
   - type: Wires
-    BoardName: wires-board-name-highsec
-    LayoutId: HighSec
+    boardName: wires-board-name-highsec
+    layoutId: HighSec
     alwaysRandomize: true
   - type: UserInterface
     interfaces:
@@ -94,5 +96,9 @@
     key: walls
     mode: NoSprite
   - type: Construction
-    graph: HighSecDoor
-    node: maxSecurity
+    graph: Airlock
+    node: highSecDoor
+  - type: Tag
+    tags:
+      - HighSecDoor
+      # This tag is used to nagivate the Airlock construction graph. It's needed because this construction graph is shared between Airlock, AirlockGlass, and HighSecDoor

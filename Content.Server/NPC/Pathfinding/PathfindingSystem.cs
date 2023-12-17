@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Destructible;
-using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Shared.Administration;
 using Content.Shared.NPC;
@@ -14,7 +13,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
@@ -529,7 +528,7 @@ namespace Content.Server.NPC.Pathfinding
 
         private void OnBreadcrumbs(RequestPathfindingDebugMessage msg, EntitySessionEventArgs args)
         {
-            var pSession = (IPlayerSession) args.SenderSession;
+            var pSession = args.SenderSession;
 
             if (!_adminManager.HasAdminFlag(pSession, AdminFlags.Debug))
             {
@@ -577,9 +576,10 @@ namespace Content.Server.NPC.Pathfinding
         {
             var msg = new PathBreadcrumbsMessage();
 
-            foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
+            var query = AllEntityQuery<GridPathfindingComponent>();
+            while (query.MoveNext(out var uid, out var comp))
             {
-                var netGrid = GetNetEntity(comp.Owner);
+                var netGrid = GetNetEntity(uid);
 
                 msg.Breadcrumbs.Add(netGrid, new Dictionary<Vector2i, List<PathfindingBreadcrumb>>(comp.Chunks.Count));
 
@@ -626,9 +626,10 @@ namespace Content.Server.NPC.Pathfinding
         {
             var msg = new PathPolysMessage();
 
-            foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
+            var query = AllEntityQuery<GridPathfindingComponent>();
+            while (query.MoveNext(out var uid, out var comp))
             {
-                var netGrid = GetNetEntity(comp.Owner);
+                var netGrid = GetNetEntity(uid);
 
                 msg.Polys.Add(netGrid, new Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>(comp.Chunks.Count));
 
