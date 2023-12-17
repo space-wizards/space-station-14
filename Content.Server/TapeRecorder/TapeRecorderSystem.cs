@@ -1,5 +1,6 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Speech;
+using Content.Server.VoiceMask;
 using Content.Shared.TapeRecorder;
 using Content.Shared.TapeRecorder.Components;
 using Content.Shared.Verbs;
@@ -25,12 +26,17 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     /// Given a time range, play all messages on a tape within said range
     /// Split into this system as shared does not have _chatSystem access
     /// </summary>
-    protected override void ReplayMessagesInSegment(EntityUid uid, TapeCassetteComponent component, float segmentStart, float segmentEnd)
+    protected override void ReplayMessagesInSegment(EntityUid uid, TapeRecorderComponent tapeRecorderComponent, TapeCassetteComponent tapeCassetteComponent, float segmentStart, float segmentEnd)
     {
-        foreach (var messageToBeReplayed in component.RecordedData.Where(x => x.Timestamp > component.CurrentPosition && x.Timestamp <= segmentEnd))
+        TryComp<VoiceMaskComponent>(uid, out var voiceMaskComponent);
+
+        foreach (var messageToBeReplayed in tapeCassetteComponent.RecordedData.Where(x => x.Timestamp > tapeCassetteComponent.CurrentPosition && x.Timestamp <= segmentEnd))
         {
-            //Play them
-            _chatSystem.TrySendInGameICMessage(uid, messageToBeReplayed.Message, InGameICChatType.Speak, false, nameOverride: messageToBeReplayed.Name);
+            //Change the voice to match the speaker
+            if (voiceMaskComponent != null)
+                voiceMaskComponent.VoiceName = messageToBeReplayed.Name;
+            //Play the message
+            _chatSystem.TrySendInGameICMessage(uid, messageToBeReplayed.Message, InGameICChatType.Speak, false);
         }
     }
 
@@ -171,6 +177,8 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         if (!base.StartPlayback(tapeRecorder, component, user))
             return false;
 
+        EnsureComp<VoiceMaskComponent>(tapeRecorder);
+
         if (!user.HasValue)
         {
             _audioSystem.PlayPvs(component.PlaySound, tapeRecorder);
@@ -186,6 +194,8 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     {
         if (!base.StopPlayback(tapeRecorder, component, user))
             return false;
+
+        RemComp<VoiceMaskComponent>(tapeRecorder);
 
         if (!user.HasValue)
         {

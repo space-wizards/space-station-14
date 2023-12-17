@@ -96,7 +96,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
                 //Get the segment of the tape to be played
                 //And any messages within that time period
                 var currentTime = tapeCassetteComponent.CurrentPosition + frameTime;
-                ReplayMessagesInSegment(uid, tapeCassetteComponent, tapeCassetteComponent.CurrentPosition, currentTime);
+                ReplayMessagesInSegment(uid, tapeRecorderComponent, tapeCassetteComponent, tapeCassetteComponent.CurrentPosition, currentTime);
 
                 //Update the tape's position
                 tapeCassetteComponent.CurrentPosition = currentTime;
@@ -133,7 +133,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
     /// <summary>
     /// Stub this as shared doesnt have access to ChatSystem
     /// </summary>
-    protected virtual void ReplayMessagesInSegment(EntityUid uid, TapeCassetteComponent component, float segmentStart, float segmentEnd)
+    protected virtual void ReplayMessagesInSegment(EntityUid uid, TapeRecorderComponent tapeRecorderComponent, TapeCassetteComponent tapeCassetteComponent, float segmentStart, float segmentEnd)
     {
 
     }
