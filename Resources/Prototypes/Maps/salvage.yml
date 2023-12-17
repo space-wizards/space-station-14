@@ -125,3 +125,8 @@
   id: SecurityChunk
   name: "Security Department Chunk"
   mapPath: /Maps/Salvage/security-chunk.yml
+
+- type: salvageMap
+  id: EngineeringChunk
+  name: "Engineering Department Chunk"
+  mapPath: /Maps/Salvage/engineering-chunk.yml

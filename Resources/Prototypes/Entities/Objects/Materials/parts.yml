@@ -68,9 +68,9 @@
       rod:
         reagents:
         - ReagentId: Iron
-          Quantity: 11
-        - ReagentId: Carbon #Not 1.25 (half of 2.5) because that would probably be really weird
-          Quantity: 1
+          Quantity: 4.5
+        - ReagentId: Carbon
+          Quantity: 0.5
 
 - type: entity
   parent: PartRodMetal

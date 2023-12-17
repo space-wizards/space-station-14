@@ -292,7 +292,7 @@ public sealed partial class CargoSystem
         var children = xform.ChildEnumerator;
         while (children.MoveNext(out var child))
         {
-            if (!CanSell(child.Value, _xformQuery.GetComponent(child.Value)))
+            if (!CanSell(child, _xformQuery.GetComponent(child)))
                 return false;
         }
 

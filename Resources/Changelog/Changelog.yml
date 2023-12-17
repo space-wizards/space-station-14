@@ -1,118 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed spellbooks not granting spell actions., type: Fix}
-  id: 4878
-  time: '2023-09-23T16:33:39.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Armed nuclear explosives can be seen on station maps., type: Tweak}
-  id: 4879
-  time: '2023-09-23T19:15:05.0000000+00:00'
-- author: Repo
-  changes:
-  - {message: Nukies can declare war again., type: Fix}
-  id: 4880
-  time: '2023-09-23T20:00:13.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: Trash spawns correctly after food is eaten., type: Fix}
-  id: 4881
-  time: '2023-09-24T17:20:03.0000000+00:00'
-- author: DrTeaSpoon
-  changes:
-  - {message: Arrows can now be doped with chemicals., type: Tweak}
-  - {message: Spears now correctly transfares chemicals when thrown., type: Fix}
-  id: 4882
-  time: '2023-09-24T19:46:16.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: You can now pick up items (and dead pickupable mobs) in combat mode,
-    type: Add}
-  id: 4883
-  time: '2023-09-24T19:47:42.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Fixed people getting too thirsty., type: Fix}
-  id: 4884
-  time: '2023-09-24T19:50:41.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: Arachnids have one new back marking., type: Add}
-  id: 4885
-  time: '2023-09-24T19:54:39.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Syndicate agents can no longer buy hot potatoes because of food safety
-      regulations, type: Remove}
-  id: 4886
-  time: '2023-09-24T19:56:07.0000000+00:00'
-- author: Tunguso4ka
-  changes:
-  - {message: Added gladiator`s helmet and uniform for both the station and planet
-      gladiators., type: Add}
-  - {message: Added bone armor and spear to please our lava planet habitats., type: Add}
-  id: 4887
-  time: '2023-09-24T19:57:10.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Lowered the maximum explosion range of canister bombs., type: Tweak}
-  id: 4888
-  time: '2023-09-24T19:59:05.0000000+00:00'
-- author: CaptainSqrBeard
-  changes:
-  - {message: 'Now after killing all nuclear operatives, the emergency shuttle will
-      be called instead of instant round end. Shuttle arrives in 10 minutes and you
-      can recall it.', type: Tweak}
-  id: 4889
-  time: '2023-09-24T20:16:33.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Ghosts can now toggle whether they hear out-of-range local messages
-      using an action, type: Add}
-  id: 4890
-  time: '2023-09-24T20:34:09.0000000+00:00'
-- author: daerSeebaer
-  changes:
-  - {message: The AME now shuts down when the inserted fuel jar is empty, type: Add}
-  - {message: The AME no longer makes sounds if no fuel was injected, type: Tweak}
-  id: 4891
-  time: '2023-09-24T20:39:49.0000000+00:00'
-- author: gusxyz
-  changes:
-  - {message: Empty ore boxes are now orderable from cargo., type: Add}
-  id: 4892
-  time: '2023-09-24T20:52:07.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Your character will now rotate in the direction of your mouse cursor
-      while in combat mode, type: Add}
-  id: 4893
-  time: '2023-09-24T21:22:45.0000000+00:00'
-- author: TK-A369
-  changes:
-  - {message: 'After several complaints from chemists, Nanotrasen decided to update
-      their Chemistry Guidebook to include information about environment required
-      by reaction to occur.', type: Add}
-  id: 4894
-  time: '2023-09-24T21:33:25.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fire extinguishers now use less fluid per burst and launch the user
-      farther in low-gravity., type: Tweak}
-  id: 4895
-  time: '2023-09-25T01:33:29.0000000+00:00'
-- author: Psychpsyo
-  changes:
-  - {message: 'People and animals no longer have two hearts, livers, sets of lungs
-      or kidneys. You probably didn''t need the extra pair anyways.', type: Fix}
-  id: 4896
-  time: '2023-09-25T06:53:04.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Adds a new sprite for Syndicate implanters., type: Add}
-  id: 4897
-  time: '2023-09-26T00:04:03.0000000+00:00'
 - author: Ubaser
   changes:
   - {message: Added four new lizard horn markings!, type: Add}
@@ -2899,3 +2785,121 @@ Entries:
   - {message: Cyborg jobs now start with a positronic brain., type: Tweak}
   id: 5378
   time: '2023-12-15T20:45:31.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Borgs can wear hats now. Time to get festive!, type: Tweak}
+  id: 5379
+  time: '2023-12-15T22:33:52.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Chasms no longer spawn on lava expeditions, type: Tweak}
+  id: 5380
+  time: '2023-12-15T22:34:09.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The guidebook now shows you if a chemical''s recipe needs an alternative
+      mixing method, such as a chaplain''s blessing or electrolysis.', type: Fix}
+  id: 5381
+  time: '2023-12-15T23:59:54.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Added smoke grenades to the syndicate uplink for 1 TC, they create
+      a large smoke cloud to provide cover for your heinous activites.', type: Add}
+  - {message: 'Added tear gas grenades to the SecTech and security belts, use them
+      to control riots.', type: Add}
+  id: 5382
+  time: '2023-12-16T01:49:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix map boundaries not pushing you back., type: Fix}
+  id: 5383
+  time: '2023-12-16T02:19:54.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Crayons boxes now hold a white crayon., type: Tweak}
+  id: 5384
+  time: '2023-12-16T03:20:40.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Chefs get black pepper packets in their lockers., type: Tweak}
+  id: 5385
+  time: '2023-12-16T03:20:51.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Resprited the Kammerer, Double-Barrel, and Enforcer shotguns using
+      sprites courtesy of /tg/station.', type: Tweak}
+  id: 5386
+  time: '2023-12-16T04:23:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Scientists can now fabricate faux grass planet and ice tiles with a
+      tier 2 civilian services research! They''re just as good as the real thing,
+      while being removable.', type: Add}
+  id: 5387
+  time: '2023-12-16T08:20:57.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: 'Lawyers, librarians and reporters now spawn with a luxury pen in their
+      PDA.', type: Add}
+  id: 5388
+  time: '2023-12-16T08:21:24.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Added 9 new cargo bounties!, type: Add}
+  id: 5389
+  time: '2023-12-16T08:23:35.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Everyone can toggle fire alarms now, not just atmos', type: Tweak}
+  id: 5390
+  time: '2023-12-16T08:24:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: A variety of chemicals can now be decomposed via electrolysis or centrifugal
+      force., type: Add}
+  id: 5391
+  time: '2023-12-16T08:26:12.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ejecting a tank from a canister will now try to put it in your hand
+      first, type: Fix}
+  id: 5392
+  time: '2023-12-16T08:28:28.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: 'Added brother of cak - bread dog! 5 cognizine, sausage bread, animal
+      heart, cooked spaceshrooms and 15 second in microwave = bread dog.', type: Add}
+  id: 5393
+  time: '2023-12-16T08:30:20.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: 'Chemistry now has vials, similar to bottles but are much more durable.',
+    type: Add}
+  id: 5394
+  time: '2023-12-16T14:29:54.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Added Poppy the Safety Opposum!, type: Add}
+  - {message: Opossums have received some new sprites. Old sprites are still available
+      to be spawned in by admins., type: Tweak}
+  id: 5395
+  time: '2023-12-16T14:34:54.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed explosion resistance from bags being applied to the wearer., type: Fix}
+  id: 5396
+  time: '2023-12-16T17:17:09.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Added the power sensor for checking power stats in logic circuits.,
+    type: Add}
+  id: 5397
+  time: '2023-12-16T18:32:42.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Standardized all material sheets to 10u of total reagents when grinded.
+      Alloys are still worth the sum of their parts., type: Tweak}
+  - {message: You can now grind plastic into oil and phosphorous., type: Tweak}
+  - {message: Steel sheets no longer contain trace amounts of lead in them., type: Tweak}
+  id: 5398
+  time: '2023-12-16T20:52:11.0000000+00:00'
