@@ -15,7 +15,6 @@ namespace Content.Server.Polymorph.Components
         /// <summary>
         /// Timestamp for when the most recent polymorph ended.
         /// </summary>
-
         [ViewVariables(VVAccess.ReadOnly)]
         public TimeSpan? LastPolymorphEnd = null;
 

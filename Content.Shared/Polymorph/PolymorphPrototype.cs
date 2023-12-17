@@ -102,7 +102,6 @@ namespace Content.Shared.Polymorph
         /// The amount of time that should pass after this polymorph has ended, before a new one
         /// can occur.
         /// </summary>
-
         [DataField("cooldown", serverOnly: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public TimeSpan Cooldown = TimeSpan.Zero;
