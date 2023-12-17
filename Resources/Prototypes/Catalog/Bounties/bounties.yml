@@ -467,3 +467,102 @@
     whitelist:
       tags:
       - Trash
+
+- type: cargoBounty
+  id: BountyAnomalyCore
+  reward: 10000
+  description: bounty-description-anomaly-core
+  entries:
+  - name: bounty-item-anomaly-core
+    amount: 1
+    whitelist:
+      components:
+      - AnomalyCore
+
+- type: cargoBounty
+  id: BountyBorgModule
+  reward: 3500
+  description: bounty-description-borg-module
+  entries:
+  - name: bounty-item-borg-module
+    amount: 3
+    whitelist:
+      components:
+      - BorgModule
+
+- type: cargoBounty
+  id: BountyArtifactFragment
+  reward: 32500
+  description: bounty-description-artifact-fragment
+  entries:
+  - name: bounty-item-artifact-fragment
+    amount: 7
+    whitelist:
+      tags:
+      - ArtifactFragment
+
+- type: cargoBounty
+  id: BountyOrgans
+  reward: 3500
+  description: bounty-description-organs
+  entries:
+  - name: bounty-item-organs
+    amount: 8
+    whitelist:
+      components:
+      - Organ
+
+- type: cargoBounty
+  id: BountyLabeler
+  reward: 6660
+  description: bounty-description-labeler
+  entries:
+  - name: bounty-item-labeler
+    amount: 5
+    whitelist:
+      components:
+      - HandLabeler
+      
+- type: cargoBounty
+  id: BountyWarmCloth
+  reward: 6000
+  description: bounty-description-warm-cloth
+  entries:
+  - name: bounty-item-warm-cloth
+    amount: 8
+    whitelist:
+      components:
+      - TemperatureProtection
+      
+- type: cargoBounty
+  id: BountyBattery
+  reward: 24500
+  description: bounty-description-battery
+  entries:
+  - name: bounty-item-battery
+    amount: 15
+    whitelist:
+      components:
+      - Battery
+
+- type: cargoBounty
+  id: BountyLaserGun
+  reward: 28500
+  description: bounty-description-lasergun
+  entries:
+  - name: bounty-lasergun
+    amount: 6
+    whitelist:
+      components:
+      - HitscanBatteryAmmoProvider
+
+- type: cargoBounty
+  id: BountyFood
+  reward: 9500
+  description: bounty-description-food
+  entries:
+  - name: bounty-food
+    amount: 30
+    whitelist:
+      tags:
+      - Meat

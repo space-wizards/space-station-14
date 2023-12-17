@@ -267,6 +267,7 @@
       - WeaponCrusherDagger
       - WeaponCrusherGlaive
       - WeaponForceGun
+      - WeaponLaserSvalinn
       - WeaponProtoKineticAccelerator
       - WeaponTetherGun
       - WeaponGrapplingGun
@@ -276,6 +277,8 @@
       - WelderExperimental
       - JawsOfLife
       - ClothingEyesGlassesChemical
+      - FauxTileAstroGrass
+      - FauxTileAstroIce
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload

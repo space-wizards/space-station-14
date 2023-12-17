@@ -422,6 +422,48 @@
     - VimPilot
 
 - type: entity
+  name: Morty
+  parent: MobPossumMorty
+  id: MobPossumMortyOld
+  suffix: Old sprite
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/possum_old.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: possum_old
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: possum_old
+      Dead:
+        Base: possum_dead_old
+
+- type: entity
+  name: Poppy # the Safety Possum
+  parent: MobPossumMorty
+  id: MobPossumPoppy
+  description: It's an opossum, a small scavenging marsupial. It's wearing appropriate personal protective equipment.
+  components:
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/possum.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: poppy
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: poppy
+      Dead:
+        Base: poppy_dead
+
+- type: entity
   name: Morticia
   parent: MobRaccoon
   id: MobRaccoonMorticia
