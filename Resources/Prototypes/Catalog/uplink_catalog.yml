@@ -725,7 +725,7 @@
   name: uplink-chemistry-kit-name
   description: uplink-chemistry-kit-desc
   icon: { sprite: /Resources/Textures/Objects/Specific/Chemistry/vial.rsi, state: vial }
-  productEntity: ClothingBackpackDuffelChemistryKitFilled
+  productEntity: ChemicalSynthesisKit
   cost:
     Telecrystal: 8
   categories:
