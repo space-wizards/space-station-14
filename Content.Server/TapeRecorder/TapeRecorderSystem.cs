@@ -52,9 +52,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
             return;
 
         //Dont allow mode changes when the mode is active
-        if (HasComp<PlayingTapeRecorderComponent>(uid) ||
-            HasComp<RecordingTapeRecorderComponent>(uid) ||
-            HasComp<RewindingTapeRecorderComponent>(uid))
+        if (component.Active)
             return;
 
         //If we have tape capacity remaining
