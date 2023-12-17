@@ -127767,6 +127767,11 @@ entities:
     - pos: -55.5,12.5
       parent: 60
       type: Transform
+  - uid: 24333
+    components:
+    - pos: -55.5,13.5
+      parent: 60
+      type: Transform
 - proto: SpawnPointSecurityCadet
   entities:
   - uid: 21069
