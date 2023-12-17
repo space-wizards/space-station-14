@@ -1,3 +1,6 @@
+# Default Mixing
+# Not actually used in reactions: only meant for guidebook display purposes.
+
 - type: mixingCategory
   id: DefaultMix
   verbText: mixing-verb-default-mix
@@ -18,6 +21,15 @@
   icon:
     sprite: Structures/Machines/juicer.rsi
     state: juicer0
+
+- type: mixingCategory
+  id: DefaultCondense
+  verbText: mixing-verb-default-condense
+  icon:
+    sprite: Structures/Piping/Atmospherics/condenser.rsi
+    state: display
+
+# Alternative Mixing Methods
 
 - type: mixingCategory
   id: Centrifuge
