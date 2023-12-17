@@ -282,13 +282,6 @@
           types:
             Asphyxiation: -3.5
             Bloodloss: -3
-      - !type:AdjustReagent
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Lexorin
-          min: 1
-        reagent: Lexorin
-        amount: -3
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
@@ -333,24 +326,6 @@
           types:
             Asphyxiation: 1
             Poison: 1
-      - !type:AdjustReagent
-        reagent: Lexorin
-        amount: -2
-      - !type:AdjustReagent
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Lexorin
-          min: 1
-        reagent: Epinephrine
-        amount: -1
-      - !type:AdjustReagent
-        probability: 0.1
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Lexorin
-          min: 1
-        reagent: Histamine
-        amount: 4
       - !type:GenericStatusEffect
         key: Stun
         time: 0.75

@@ -106,10 +106,12 @@
           reagents:
             - ReagentId: Toxin
               Quantity: 30
+    - type: Tag
+      tags: []
 
 - type: entity
-  id: HistamineChemistryVial
-  name: histamine vial
+  id: VestineChemistryVial
+  name: vestine vial
   parent: BaseChemistryEmptyVial
   components:
     - type: SolutionContainerManager
@@ -117,5 +119,7 @@
         drink:
           maxVol: 30
           reagents:
-            - ReagentId: Histamine
+            - ReagentId: Vestine
               Quantity: 30
+    - type: Tag
+      tags: []

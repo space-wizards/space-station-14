@@ -301,9 +301,9 @@
   impact: Medium
   minTemp: 370
   reactants:
-    Desoxyephedrine:
+    Ephedrine:
       amount: 1
-    Histamine:
+    Vestine:
       amount: 1
     Oxygen:
       amount: 2
@@ -439,3 +439,18 @@
       amount: 1
   products:
     SodiumPolyacrylate: 4
+
+- type: reaction
+  id: Nocturine
+  impact: Medium
+  reactants:
+    Licoxide:
+      amount: 2
+    Impedrezene:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Nocturine: 2
