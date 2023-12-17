@@ -442,15 +442,24 @@
 
 - type: reaction
   id: Nocturine
-  impact: Medium
+  impact: High
   reactants:
-    Licoxide:
+    Tazinide:
       amount: 2
-    Impedrezene:
-      amount: 1
     Nitrogen:
       amount: 1
     Oxygen:
       amount: 1
   products:
     Nocturine: 2
+
+- type: reaction
+  id: Tazinide
+  impact: Medium
+  reactants:
+    Licoxide:
+      amount: 1
+    Vestine:
+      amount: 1
+  products:
+    Tazinide: 1

@@ -285,7 +285,7 @@
       - !type:HealthChange
         damage:
           types:
-            Asphyxiation: 2
+            Asphyxiation: 5
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -303,7 +303,7 @@
       - !type:HealthChange
         damage:
           groups:
-            Airloss: 7
+            Airloss: 10
 
 - type: reagent
   id: MindbreakerToxin
@@ -592,4 +592,18 @@
         damage:
           groups:
             Airloss: 2
+
+- type: reagent
+  id: Tazinide
+  name: reagent-name-tazinide
+  group: Toxins
+  desc: reagent-desc-tazinide
+  physicalDesc: reagent-physical-desc-metallic
+  flavor: shocking
+  color: "#FDD023"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:Electrocute
+        probability: 0.8
 
