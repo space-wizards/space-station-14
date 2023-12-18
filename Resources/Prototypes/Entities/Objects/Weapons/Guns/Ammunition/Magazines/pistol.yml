@@ -143,6 +143,28 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
+  id: MagazineKolibri
+  name: pistol magazine (.1 auto)
+  parent: BaseMagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeTiny
+    capacity: 7
+  - type: Tag
+    tags:
+    - MagazineKolibri
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/kolibri_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+
+- type: entity
   id: MagazinePistolPractice
   name: pistol magazine (.35 auto practice)
   parent: BaseMagazinePistol

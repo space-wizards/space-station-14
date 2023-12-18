@@ -10,6 +10,20 @@
         Piercing: 16
 
 - type: entity
+  id: BulletTiny
+  name: bullet (.1 auto)
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 2
+        Blunt: 2
+  - type: StaminaDamageOnCollide
+    damage: 18
+
+- type: entity
   id: BulletPistolPractice
   name: bullet (.35 auto practice)
   parent: BaseBulletPractice

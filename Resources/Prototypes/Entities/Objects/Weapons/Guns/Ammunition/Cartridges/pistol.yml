@@ -51,3 +51,13 @@
   components:
   - type: CartridgeAmmo
     proto: BulletPistolIncendiary
+
+- type: entity
+  id: CartridgeTiny
+  name: cartridge (.1 auto)
+  parent: BaseCartridgePistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletTiny
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/tiny_casing.rsi

@@ -99,6 +99,56 @@
       gun_chamber: !type:ContainerSlot
 
 - type: entity
+  name: kolibri
+  parent: BaseWeaponPistol
+  id: WeaponPistolKolibri
+  description: Who the hell designed this puny thing?
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/kolibri.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Tiny
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/kolibri.rsi
+  - type: ChamberMagazineAmmoProvider
+    boltClosed: null
+  - type: Gun
+    fireRate: 2.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+      params:
+        volume: -4
+    availableModes:
+    - SemiAuto
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineKolibri
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineKolibri
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeTiny
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeTiny
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+
+- type: entity
   name: cobra
   parent: BaseWeaponPistol
   id: WeaponPistolCobra

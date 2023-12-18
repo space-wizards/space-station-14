@@ -269,6 +269,9 @@
   id: CartridgeHeavyRifle
 
 - type: Tag
+  id: CartridgeTiny
+
+- type: Tag
   id: CartridgeLightRifle
 
 - type: Tag
@@ -708,6 +711,9 @@
 
 - type: Tag
   id: MagazineHeavyRifleBox
+
+- type: Tag
+  id: MagazineKolibri
 
 - type: Tag
   id: MagazineLightRifle

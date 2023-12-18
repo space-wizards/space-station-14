@@ -41,6 +41,22 @@
 
 - type: entity
   parent: BaseMagazineBoxPistol
+  id: MagazineBoxTiny
+  name: ammunition box (.1 auto)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeTiny
+    capacity: 180
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/tiny.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseMagazineBoxPistol
   id: MagazineBoxPistolPractice
   name: ammunition box (.35 auto practice)
   components:
