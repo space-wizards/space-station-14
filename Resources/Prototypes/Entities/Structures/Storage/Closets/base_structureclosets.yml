@@ -88,6 +88,17 @@
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
 
+# steel closet base (that can be constructed/deconstructed)
+- type: entity
+  id: ClosetSteelBase
+  parent: ClosetBase
+  components:
+  - type: Construction
+    graph: ClosetSteel
+    node: done
+    containers:
+    - entity_storage
+
 #Wall Closet
 - type: entity
   id: BaseWallCloset
