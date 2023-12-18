@@ -47,10 +47,8 @@
     jumpsuit: ClothingUniformJumpsuitCentcomOfficer
     back: ClothingBackpackCaptain
     shoes: ClothingShoesBootsLaceup
-    head: ClothingHeadHatCentcom
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesHop
-    outerClothing: ClothingOuterArmorBasic
     belt: BoxFolderClipboard
     id: CentcomPDA
     ears: ClothingHeadsetAltCentCom

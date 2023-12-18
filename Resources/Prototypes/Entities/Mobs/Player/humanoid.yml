@@ -413,6 +413,27 @@
     - type: Loadout
       prototypes: [ CentcomGear ]
 
+- type: entity
+  name: CentCom representative
+  id: RandomHumanoidSpawnerCentcomRepresentative
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: centcom
+    - type: RandomHumanoidSpawner
+      settings: CentcomRepresentative
+
+- type: randomHumanoidSettings
+  id: CentcomRepresentative
+  components:
+    - type: MindShield
+    - type: GhostRole
+      name: ghost-role-information-centcom-official-name
+      description: ghost-role-information-centcom-official-description
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ CentcomRepGear ]
+
 ## Syndicate
 
 - type: entity
