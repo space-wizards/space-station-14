@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Explosion.Components
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed partial class OnUseTimerTriggerComponent : Component
     {
         [DataField("delay")] public float Delay = 1f;
