@@ -30,9 +30,9 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
             return;
         }
 
-        var healthIcons = DecideSecurityIcon(uid);
+        var securityIcons = DecideSecurityIcon(uid);
 
-        @event.StatusIcons.AddRange(healthIcons);
+        @event.StatusIcons.AddRange(securityIcons);
     }
 
     private IReadOnlyList<StatusIconPrototype> DecideSecurityIcon(EntityUid uid)

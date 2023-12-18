@@ -50,22 +50,28 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
         if (!IsActive || args.InContainer)
             return;
 
-        AppendHealthIcons(damageableComponent, args.StatusIcons);
+        var healthIcons = DecideHealthIcons(damageableComponent);
+
+        args.StatusIcons.AddRange(healthIcons);
     }
 
-    private void AppendHealthIcons(DamageableComponent damageableComponent, List<StatusIconData> statusIcons)
+    private IReadOnlyList<StatusIconPrototype> DecideHealthIcons(DamageableComponent damageableComponent)
     {
         if (damageableComponent.DamageContainerID == null ||
             !DamageContainers.Contains(damageableComponent.DamageContainerID))
         {
-            return;
+            return Array.Empty<StatusIconPrototype>();
         }
+
+        var result = new List<StatusIconPrototype>();
 
         // Here you could check health status, diseases, mind status, etc. and pick a good icon, or multiple depending on whatever.
         if (damageableComponent?.DamageContainerID == "Biological" &&
             _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconFine, out var healthyIcon))
         {
-            statusIcons.Add(healthyIcon);
+            result.Add(healthyIcon);
         }
+
+        return result;
     }
 }
