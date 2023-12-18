@@ -5,6 +5,7 @@ using Content.Server.Power.Components;
 namespace Content.Server.Power.NodeGroups
 {
     public abstract class BaseNetConnectorNodeGroup<TNetType> : BaseNodeGroup
+        where TNetType: class
     {
         protected IEntityManager EntMan = default!;
 
@@ -24,7 +25,7 @@ namespace Content.Server.Power.NodeGroups
                 // Replace this with TryComps or some other sane way of doing this, the current solution is awful.
                 // This allocates an array, copies ALL of an entities components over, and then iterates over them to
                 // yield any that implement the interface.
-                foreach (var comp in EntMan.GetComponents<IBaseNetConnectorComponent<TNetType>>(node.Owner))
+                foreach (var comp in EntMan.GetComponents<BaseNetConnectorComponent<TNetType>>(node.Owner))
                 {
                     if ((comp.NodeId == null ||
                          comp.NodeId == node.Name) &&

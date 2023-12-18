@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Power.NodeGroups;
 
 public abstract class BasePowerNet<TNetType> : BaseNetConnectorNodeGroup<TNetType>, IBasePowerNet
-    where TNetType : IBasePowerNet
+    where TNetType : class, IBasePowerNet
 {
     [ViewVariables] public readonly List<PowerConsumerComponent> Consumers = new();
     [ViewVariables] public readonly List<PowerSupplierComponent> Suppliers = new();

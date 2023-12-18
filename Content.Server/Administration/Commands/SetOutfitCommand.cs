@@ -48,7 +48,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!_entities.HasComponent<InventoryComponent?>(target))
+            if (!_entities.HasComponent<InventoryComponent>(target))
             {
                 shell.WriteLine(Loc.GetString("shell-target-entity-does-not-have-message", ("missing", "inventory")));
                 return;

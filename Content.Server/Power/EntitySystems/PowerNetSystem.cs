@@ -441,7 +441,7 @@ namespace Content.Server.Power.EntitySystems
         }
 
         private void DoReconnectBasePowerNet<TNetType>(BasePowerNet<TNetType> net, PowerState.Network netNode)
-            where TNetType : IBasePowerNet
+            where TNetType : class, IBasePowerNet
         {
             foreach (var consumer in net.Consumers)
             {
