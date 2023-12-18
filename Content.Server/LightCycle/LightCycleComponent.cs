@@ -14,7 +14,7 @@ namespace Content.Server.LightCycle
         [ViewVariables(VVAccess.ReadWrite), DataField("cycleDuration")]
         public double CycleDuration = 1200;
         [ViewVariables(VVAccess.ReadWrite), DataField("minLightLevel")]
-        public double MinLightLevel = 0.25;
+        public double MinLightLevel = 0.3;
         [ViewVariables(VVAccess.ReadWrite), DataField("maxLightLevel")]
         public double MaxLightLevel = 1.25;
         [ViewVariables(VVAccess.ReadWrite), DataField("clipLight")]
@@ -24,9 +24,9 @@ namespace Content.Server.LightCycle
         [ViewVariables(VVAccess.ReadWrite), DataField("clipGreen")]
         public double ClipGreen = 1;
         [ViewVariables(VVAccess.ReadWrite), DataField("clipBlue")]
-        public double ClipBlue = 1;
+        public double ClipBlue = 1.5;
         [ViewVariables(VVAccess.ReadWrite), DataField("minRedLevel")]
-        public double MinRedLevel = 0.125;
+        public double MinRedLevel = 0.1;
         [ViewVariables(VVAccess.ReadWrite), DataField("minGreenLevel")]
         public double MinGreenLevel = 0.2;
         [ViewVariables(VVAccess.ReadWrite), DataField("minBlueLevel")]
