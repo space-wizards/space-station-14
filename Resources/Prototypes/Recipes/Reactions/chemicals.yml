@@ -419,7 +419,7 @@
     Benzene: 0.5
 
 - type: reaction
-  minTemp: 310 # Emo, you could change this to use one of your fancy machines, provided that machine is roundstart
+  priority: -1 #reckon this'll be fine for now
   id: Hydroxide
   reactants:
     Oxygen:
