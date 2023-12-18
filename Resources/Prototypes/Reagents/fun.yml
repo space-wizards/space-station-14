@@ -216,7 +216,7 @@
   boilingPoint: 1000.0
   meltingPoint: -200.0
   metabolisms:
-    Narcotic:
+    Medicine:
       metabolismRate: 0.1
       effects:
       - !type:PopupMessage
@@ -262,7 +262,7 @@
   physicalDesc: reagent-physical-desc-feathered
   color: "#ddce90"
   metabolisms:
-    Narcotic:
+    Poison:
       effects:
       - !type:Polymorph
         prototype: Chicken
