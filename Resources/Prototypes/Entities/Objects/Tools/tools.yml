@@ -155,7 +155,6 @@
     damage:
       types:
         Blunt: 8
-        Structural: 15
   - type: Tool
     qualities:
       - Prying
