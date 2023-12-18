@@ -11,7 +11,7 @@
         canMix: true
         reagents:
           - ReagentId: Ambrosia
-            Quantity: 6 # 60 seconds of invulnerability
+            Quantity: 12 # 120 seconds of invulnerability
 
 - type: entity
   id: PoultriumVial
