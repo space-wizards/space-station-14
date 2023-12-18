@@ -806,5 +806,5 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 2.5
+        Piercing: 5
     ignoreResistances: true

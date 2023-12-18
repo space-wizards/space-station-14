@@ -12,10 +12,10 @@
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
   - type: Gun
-    minAngle: 10
+    minAngle: 5
     maxAngle: 50
-    angleIncrease: 10
-    angleDecay: 16
+    angleIncrease: 25
+    angleDecay: 40
     fireRate: 14
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/nailgun.ogg
