@@ -65,7 +65,6 @@
     damage:
       types:
         Piercing: 6
-  - type: Item
   - type: Sprite
     sprite: Clothing/Shoes/Boots/highheelboots.rsi
   - type: Clothing
