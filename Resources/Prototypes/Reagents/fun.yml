@@ -254,3 +254,15 @@
         component: StaminaModifier
         time: 5000
         type: Add
+
+- type: reagent
+  id: Poultrium
+  name: reagent-name-poultrium
+  desc: reagent-name-poultrium
+  physicalDesc: reagent-physical-desc-feathered
+  color: "#ddce90"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:Polymorph
+        prototype: Chicken

@@ -9,6 +9,7 @@
   entity: MobChicken
   forced: true
   inventory: Drop
+  duration: 30
 
 - type: polymorph
   id: Monkey

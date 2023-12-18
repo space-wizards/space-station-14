@@ -93,3 +93,4 @@ reagent-physical-desc-fluffy = fluffy
 reagent-physical-desc-reflective = reflective
 reagent-physical-desc-holy = holy
 reagent-physical-desc-transcendent = transcendent
+reagent-physical-desc-feathered = feathered
