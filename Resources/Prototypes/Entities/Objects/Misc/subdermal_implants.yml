@@ -163,6 +163,9 @@
     interfaces:
     - key: enum.StoreUiKey.Key
       type: StoreBoundUserInterface
+  - type: Tag
+    tags:
+    - TraitorUplink
 
 - type: entity
   parent: BaseSubdermalImplant

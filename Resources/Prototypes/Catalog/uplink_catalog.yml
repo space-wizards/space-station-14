@@ -74,6 +74,12 @@
     Telecrystal: 10
   categories:
   - UplinkWeapons
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+      - TraitorUplink
 
 - type: listing
   id: UplinkGlovesNorthStar
@@ -100,6 +106,7 @@
       blacklist:
         tags:
           - NukeOpsUplink
+          - TraitorUplink
 
 - type: listing
   id: UplinkDisposableTurret
@@ -551,7 +558,7 @@
     Telecrystal: 3
   categories:
   - UplinkUtility
-  
+
 # Implants
 
 - type: listing
