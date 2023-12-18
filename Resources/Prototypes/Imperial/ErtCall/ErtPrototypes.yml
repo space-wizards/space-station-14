@@ -177,7 +177,6 @@
       state: deadSquad
     - type: Loadout
       prototypes: [ ERTCallDeadSquadSecurityGearEVA ]
-    - type: RandomHumanoidAppearance
 #DEAD SQUAD END
 
 
