@@ -412,9 +412,9 @@
   id: Benzene
   reactants:
     Hydrogen:
-      Amount: 1
+      amount: 1
     Carbon:
-      Amount: 1
+      amount: 1
   products:
     Benzene: 0.5
 
@@ -423,9 +423,9 @@
   id: Hydroxide
   reactants:
     Oxygen:
-      Amount: 1
+      amount: 1
     Hydrogen:
-      Amount: 1
+      amount: 1
   products:
     Hydroxide: 2
 
@@ -433,9 +433,9 @@
   id: SodiumHydroxide
   reactants:
     Hydroxide:
-      Amount: 1
+      amount: 1
     Sodium:
-      Amount: 1
+      amount: 1
   products:
     SodiumHydroxide: 2
 
@@ -443,9 +443,9 @@
   id: Fersilicite
   reactants:
     Iron:
-      Amount: 1
+      amount: 1
     Silicon:
-      Amount: 1
+      amount: 1
   products:
     Fersilicite: 2
 

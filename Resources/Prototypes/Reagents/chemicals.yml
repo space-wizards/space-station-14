@@ -102,7 +102,6 @@
   name: reagent-name-hydroxide
   desc: reagent-desc-hydroxide
   physicalDesc: reagent-physical-desc-alkaline
-  flavor: alkaline
   color: "white"
   boilingPoint: 1661.0
   meltingPoint: 596.0
@@ -112,7 +111,6 @@
   name: reagent-name-sodium-hydroxide
   desc: reagent-desc-sodium-hydroxide
   physicalDesc: reagent-physical-desc-alkaline
-  flavor: alkaline
   color: "white"
   boilingPoint: 1661.0
   meltingPoint: 596.0
