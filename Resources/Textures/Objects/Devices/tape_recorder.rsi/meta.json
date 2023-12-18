@@ -11,6 +11,14 @@
       "name": "taperecorder_idle"
     },
     {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
       "name": "taperecorder_recording",
       "delays": [
         [
