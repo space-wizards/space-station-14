@@ -95,21 +95,6 @@
     solution: drink
 
 - type: entity
-  id: ToxinChemistryVial
-  name: toxin vial
-  parent: BaseChemistryEmptyVial
-  components:
-    - type: SolutionContainerManager
-      solutions:
-        drink:
-          maxVol: 30
-          reagents:
-            - ReagentId: Toxin
-              Quantity: 30
-    - type: Tag
-      tags: []
-
-- type: entity
   id: VestineChemistryVial
   name: vestine vial
   parent: BaseChemistryEmptyVial

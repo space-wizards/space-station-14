@@ -276,7 +276,6 @@
   products:
     Impedrezene: 1
 
-# In the future should probably have a buffer chemical so theres not two toxins in the same recipe
 - type: reaction
   id: Lexorin
   impact: High
@@ -285,7 +284,7 @@
       amount: 1
     Plasma:
       amount: 1
-    Toxin:
+    Vestine:
       amount: 1
   products:
     Lexorin: 2

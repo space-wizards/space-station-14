@@ -332,7 +332,7 @@
   reactants:
     Uranium:
       amount: 1
-    Toxin:
+    Vestine:
       amount: 2
     SpaceGlue:
       amount: 2
@@ -444,14 +444,12 @@
   id: Nocturine
   impact: High
   reactants:
-    Tazinide:
+    Impedrezene:
       amount: 2
-    Nitrogen:
-      amount: 1
-    Oxygen:
+    Vestine:
       amount: 1
   products:
-    Nocturine: 2
+    Nocturine: 1
 
 - type: reaction
   id: Tazinide
