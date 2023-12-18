@@ -344,7 +344,7 @@
       - id: ClothingOuterHardsuitSpatio
         orGroup: GiftPool
       - id: ClothingOuterHardsuitEngineering
-        orGroup: GiftPool 
+        orGroup: GiftPool
     sound:
       path: /Audio/Effects/unwrap.ogg
 
@@ -356,7 +356,7 @@
   suffix: Hunger Games
   components:
   - type: Sprite
-    sprite: Objects/Decoration/presents.rsi
+    sprite: Imperial/presents.rsi
     layers:
       - state: presentGreen
   - type: SpawnItemsOnUse
@@ -472,7 +472,7 @@
   suffix: Hunger Games
   components:
   - type: Sprite
-    sprite: Objects/Decoration/presents.rsi
+    sprite: Imperial/presents.rsi
     layers:
       - state: presentBlue
   - type: SpawnItemsOnUse
@@ -535,7 +535,7 @@
   description: There used to be a gift in it
   components:
   - type: Sprite
-    sprite: Objects/Decoration/presents.rsi
+    sprite: Imperial/presents.rsi
     layers:
       - state: unwrappedGreen
   - type: Tag
@@ -551,7 +551,7 @@
   description: There used to be a gift in it
   components:
   - type: Sprite
-    sprite: Objects/Decoration/presents.rsi
+    sprite: Imperial/presents.rsi
     layers:
       - state: unwrappedBlue
   - type: Tag
@@ -567,7 +567,7 @@
   description: There used to be a gift in it
   components:
   - type: Sprite
-    sprite: Objects/Decoration/presents.rsi
+    sprite: Imperial/presents.rsi
     layers:
       - state: unwrapped
   - type: Tag
