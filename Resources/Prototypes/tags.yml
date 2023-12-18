@@ -1130,3 +1130,9 @@
 
 - type: Tag
   id: CleansForensics
+
+- type: Tag
+  id: CartridgeNail
+
+- type: Tag
+  id: MagazineNail

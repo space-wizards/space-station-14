@@ -15,7 +15,7 @@
     minAngle: 5
     maxAngle: 50
     angleIncrease: 25
-    angleDecay: 40
+    angleDecay: 50 # If you tapfire it wont suck massive balls
     fireRate: 14
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/nailgun.ogg

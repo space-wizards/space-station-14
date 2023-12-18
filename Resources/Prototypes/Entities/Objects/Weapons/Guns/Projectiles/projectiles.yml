@@ -797,14 +797,38 @@
             - HighImpassable
     - type: GrapplingProjectile
 
+# God has forsaken me
 - type: entity
   id: BulletNail
   name: Nail (.10 Engineering)
-  parent: BaseBullet
+  parent: BaseArrow
   noSpawn: true
   components:
-  - type: Projectile
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/nail.rsi
+    layers:
+      - state: nail
+  - type: Item
+    size: Tiny
     damage:
       types:
         Piercing: 5
     ignoreResistances: true
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    embedOnThrow: false
+  - type: ThrowingAngle
+    angle: 0
+  - type: Ammo
+    muzzleFlash: null
+  - type: Tag
+    tags:
+    - Arrow
+    - CannonRestrict
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Piercing: 5
+    muzzleFlash: null
