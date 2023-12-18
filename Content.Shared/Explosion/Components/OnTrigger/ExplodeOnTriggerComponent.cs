@@ -1,4 +1,4 @@
-namespace Content.Server.Explosion.Components;
+namespace Content.Shared.Explosion.Components.OnTrigger;
 
 /// <summary>
 /// Explode using the entity's <see cref="ExplosiveComponent"/> if Triggered.
