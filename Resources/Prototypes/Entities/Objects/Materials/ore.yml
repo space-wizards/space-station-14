@@ -214,15 +214,15 @@
       coal:
         reagents:
         - ReagentId: Carbon
-          Quantity: 21
+          Quantity: 8.4
         - ReagentId: Ammonia
-          Quantity: 2
+          Quantity: 0.8
         - ReagentId: Hydrogen
-          Quantity: 1.25
-        - ReagentId: Sulfur
           Quantity: 0.5
+        - ReagentId: Sulfur
+          Quantity: 0.2
         - ReagentId: Mercury
-          Quantity: 0.25
+          Quantity: 0.1
   - type: PhysicalComposition
     materialComposition:
       Coal: 500
