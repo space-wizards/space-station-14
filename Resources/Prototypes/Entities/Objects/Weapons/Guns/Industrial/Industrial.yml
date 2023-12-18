@@ -34,11 +34,11 @@
             - MagazineNail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeNail
+        startingItem: BulletNail
         priority: 1
         whitelist:
           tags:
-            - CartridgeNail
+            - BulletNail
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
