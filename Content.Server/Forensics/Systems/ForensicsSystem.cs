@@ -80,7 +80,7 @@ namespace Content.Server.Forensics
 
             if((forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned) || (forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count > 0))
             {
-                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, forensicsComp.CleanDelay, new CleanForensicsDoAfterEvent(), uid, target: args.Target, used: args.Used)
+                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.CleanDelay, new CleanForensicsDoAfterEvent(), uid, target: args.Target, used: args.Used)
                 {
                     BreakOnHandChange = true,
                     NeedHand = true,

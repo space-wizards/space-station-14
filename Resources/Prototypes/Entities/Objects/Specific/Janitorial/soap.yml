@@ -137,6 +137,8 @@
     flavors:
       - clean
       - punishment
+  - type: CleansForensics
+    cleanDelay: 8.0
   - type: Residue
     residueAdjective: residue-slippery
     residueColor: residue-red
