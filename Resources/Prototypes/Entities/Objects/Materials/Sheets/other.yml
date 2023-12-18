@@ -154,8 +154,11 @@
     solutions:
       plastic:
         reagents:
-        - ReagentId: Carbon
-          Quantity: 22
+        - ReagentId: Oil
+          Quantity: 5
+        - ReagentId: Phosphorus
+          Quantity: 5
+
 - type: entity
   parent: SheetPlastic
   id: SheetPlastic10
@@ -213,7 +216,9 @@
       food:
         reagents:
         - ReagentId: Uranium
-          Quantity: 10
+          Quantity: 8
+        - ReagentId: Radium
+          Quantity: 2
 
 - type: entity
   parent: SheetUranium
@@ -260,7 +265,7 @@
         meatsheet:
           reagents:
           - ReagentId: Protein
-            Quantity: 22 #for consistency with other materials
+            Quantity: 7
           - ReagentId: Fat
             Quantity: 3
 
