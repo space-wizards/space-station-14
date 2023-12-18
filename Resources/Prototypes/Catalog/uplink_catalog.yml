@@ -548,7 +548,7 @@
   icon: { sprite: /Textures/Objects/Fun/Darts/dart_red.rsi, state: icon }
   productEntity: HypoDartBox
   cost:
-    Telecrystal: 3
+    Telecrystal: 2
   categories:
   - UplinkUtility
   
