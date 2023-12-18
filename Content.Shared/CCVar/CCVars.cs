@@ -1917,5 +1917,18 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> GatewayGeneratorEnabled =
             CVarDef.Create("gateway.generator_enabled", true);
+
+        /// <summary>
+        ///  This is the light cycle update frequency, in ticks.
+        ///  Larger values ​​increase the refresh interval. At 2, for example, the light should update every two ticks.
+        /// </summary>
+        public static readonly CVarDef<int> CycleUpdateFrequency =
+            CVarDef.Create("lightcycle.update_frequency", 2, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Defines whether the component will be active by default on planets.
+        /// </summary>
+        public static readonly CVarDef<bool> CycleEnabledByDefault =
+            CVarDef.Create("lightcycle.enabled_by_default", true, CVar.SERVERONLY);
     }
 }
