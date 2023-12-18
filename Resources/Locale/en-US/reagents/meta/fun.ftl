@@ -20,4 +20,4 @@ reagent-name-razorium = razorium
 reagent-desc-razorium = A strange, non-newtonian chemical. It is produced when two conflicting brute medications are combined. When force is applied to it, it temporarily hardens creating millions of tiny, sharp edges. Very painful.
 
 reagent-name-ambrosia = Ambrosia
-reagent-desc-ambrosia = The food of the gods.
+reagent-desc-ambrosia = The food of the gods. It glows with an unearthly golden light.
