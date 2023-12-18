@@ -1,9 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: Adds a new sprite for Syndicate implanters., type: Add}
-  id: 4897
-  time: '2023-09-26T00:04:03.0000000+00:00'
 - author: Ubaser
   changes:
   - {message: Added four new lizard horn markings!, type: Add}
@@ -2900,3 +2895,11 @@ Entries:
     type: Add}
   id: 5397
   time: '2023-12-16T18:32:42.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Standardized all material sheets to 10u of total reagents when grinded.
+      Alloys are still worth the sum of their parts., type: Tweak}
+  - {message: You can now grind plastic into oil and phosphorous., type: Tweak}
+  - {message: Steel sheets no longer contain trace amounts of lead in them., type: Tweak}
+  id: 5398
+  time: '2023-12-16T20:52:11.0000000+00:00'

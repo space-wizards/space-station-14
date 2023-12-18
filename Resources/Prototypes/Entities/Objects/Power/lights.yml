@@ -77,6 +77,37 @@
     sprite:  Objects/Power/light_tube.rsi
   - type: LightBulb
     bulb: Tube
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/
@@ -169,3 +200,100 @@
     lightSoftness: 0.5
     BurningTemperature: 350
     PowerUse: 100
+
+- type: entity
+  parent: BaseLightTube
+  name: cyan crystal light tube
+  description: A high power high energy bulb which has a small colored crystal inside.
+  id: LightTubeCrystalCyan
+  components:
+  - type: LightBulb
+    color: "#47f8ff"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: CyanLight
+    node: icon
+
+- type: entity
+  parent: LightTubeCrystalCyan
+  name: blue crystal light tube
+  id: LightTubeCrystalBlue
+  components:
+  - type: LightBulb
+    color: "#39a1ff"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: BlueLight
+    node: icon
+
+- type: entity
+  parent: LightTubeCrystalCyan
+  name: pink crystal light tube
+  id: LightTubeCrystalPink
+  components:
+  - type: LightBulb
+    color: "#ff66cc"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: PinkLight
+    node: icon
+
+- type: entity
+  parent: LightTubeCrystalCyan
+  name: orange crystal light tube
+  id: LightTubeCrystalOrange
+  components:
+  - type: LightBulb
+    color: "#ff8227"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: OrangeLight
+    node: icon
+
+- type: entity
+  parent: LightTubeCrystalCyan
+  name: red crystal light tube
+  id: LightTubeCrystalRed
+  components:
+  - type: LightBulb
+    color: "#fb4747"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: RedLight
+    node: icon
+
+- type: entity
+  parent: LightTubeCrystalCyan
+  name: green crystal light tube
+  id: LightTubeCrystalGreen
+  components:
+  - type: LightBulb
+    color: "#52ff39"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: GreenLight
+    node: icon
