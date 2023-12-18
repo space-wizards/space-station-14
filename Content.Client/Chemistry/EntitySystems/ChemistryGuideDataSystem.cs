@@ -16,13 +16,13 @@ namespace Content.Client.Chemistry.EntitySystems;
 public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
     [ValidatePrototypeId<MixingCategoryPrototype>]
-    private const string DefaultMixingCategory = "DefaultMix";
+    private const string DefaultMixingCategory = "DummyMix";
     [ValidatePrototypeId<MixingCategoryPrototype>]
-    private const string DefaultGrindCategory = "DefaultGrind";
+    private const string DefaultGrindCategory = "DummyGrind";
     [ValidatePrototypeId<MixingCategoryPrototype>]
-    private const string DefaultJuiceCategory = "DefaultJuice";
+    private const string DefaultJuiceCategory = "DummyJuice";
     [ValidatePrototypeId<MixingCategoryPrototype>]
-    private const string DefaultCondenseCategory = "DefaultCondense";
+    private const string DefaultCondenseCategory = "DummyCondense";
 
     private readonly Dictionary<string, List<ReagentSourceData>> _reagentSources = new();
 
