@@ -1,3 +1,4 @@
+using Content.Shared.Access.Systems;
 using Content.Shared.StationRecords;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -6,8 +7,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Access.Components;
 
 /// <summary>
-///     Stores access levels necessary to "use" an entity
-///     and allows checking if something or somebody is authorized with these access levels.
+/// Stores access levels necessary to "use" an entity
+/// and allows checking if something or somebody is authorized with these access levels.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class AccessReaderComponent : Component
@@ -16,13 +17,14 @@ public sealed partial class AccessReaderComponent : Component
     /// Whether or not the accessreader is enabled.
     /// If not, it will always let people through.
     /// </summary>
-    [DataField("enabled")]
+    [DataField]
     public bool Enabled = true;
 
     /// <summary>
-    ///     The set of tags that will automatically deny an allowed check, if any of them are present.
+    /// The set of tags that will automatically deny an allowed check, if any of them are present.
     /// </summary>
-    [DataField("denyTags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))] [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
     public HashSet<string> DenyTags = new();
 
     /// <summary>
@@ -36,7 +38,7 @@ public sealed partial class AccessReaderComponent : Component
     /// A list of <see cref="StationRecordKey"/>s that grant access. Only a single matching key is required tp gaim
     /// access.
     /// </summary>
-    [DataField("accessKeys")]
+    [DataField]
     public HashSet<StationRecordKey> AccessKeys = new();
 
     /// <summary>
@@ -48,20 +50,20 @@ public sealed partial class AccessReaderComponent : Component
     /// ignored, though <see cref="Enabled"/> is still respected. Access is denied if there are no valid entities or
     /// they all deny access.
     /// </remarks>
-    [DataField("containerAccessProvider")]
-    public string? ContainerAccessProvider = null;
+    [DataField]
+    public string? ContainerAccessProvider;
 
     /// <summary>
     /// A list of past authentications
     /// </summary>
-    [DataField("accessLog")]
+    [DataField]
     public Queue<AccessRecord> AccessLog = new();
 
     /// <summary>
     /// A limit on the max size of <see cref="AccessLog"/>
     /// </summary>
-    [DataField("accessLogLimit")] [ViewVariables(VVAccess.ReadWrite)]
-    public int AccessLogLimit = 100;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int AccessLogLimit = 50;
 }
 
 [Serializable, NetSerializable]

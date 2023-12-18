@@ -10,11 +10,12 @@ public sealed partial class LogProbeCartridgeComponent : Component
     /// <summary>
     /// The list of pulled access logs
     /// </summary>
-    [DataField("pulledAccessLog")] [ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables]
     public List<PulledAccessLog> PulledAccessLogs = new();
 
-    [DataField("soundScan")] [ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// The sound to make when we scan something with access
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier SoundScan = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 }
-
-

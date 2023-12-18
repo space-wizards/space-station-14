@@ -319,7 +319,7 @@
     board: StationRecordsComputerCircuitboard
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics
 
 - type: entity
   parent: BaseComputer

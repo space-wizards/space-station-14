@@ -60,7 +60,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (component.PrivilegedIdSlot.Item is { Valid: true } item)
         {
             privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(item).EntityName;
-            possibleAccess = _accessReader.FindAccessTags(item).AllTags().ToArray();
+            possibleAccess = _accessReader.FindAccessTags(item).ToArray();
         }
 
         IdCardConsoleBoundUserInterfaceState newState;
@@ -154,7 +154,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         // var difference = newAccessList.Difference(oldTags);
         var difference = newAccessList.Union(oldTags).Except(newAccessList.Intersect(oldTags)).ToHashSet();
         // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
-        var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).AllTags();
+        var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
         if (!difference.IsSubsetOf(privilegedPerms))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");

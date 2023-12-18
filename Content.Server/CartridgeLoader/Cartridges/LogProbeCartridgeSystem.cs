@@ -30,10 +30,9 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
     /// </summary>
     private void AfterInteract(EntityUid uid, LogProbeCartridgeComponent component, CartridgeAfterInteractEvent args)
     {
-        if (args.InteractEvent.Handled || !args.InteractEvent.CanReach || !args.InteractEvent.Target.HasValue)
+        if (args.InteractEvent.Handled || !args.InteractEvent.CanReach || args.InteractEvent.Target is not { } target)
             return;
 
-        var target = args.InteractEvent.Target.Value;
         AccessReaderComponent? accessReaderComponent = default;
 
         if (!TryComp(target, out accessReaderComponent))
