@@ -72,7 +72,7 @@ public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
 
     private void OnPlayerDetached(LocalPlayerDetachedEvent args)
     {
-        if (_player.LocalPlayer?.ControlledEntity == null)
+        if (_player.LocalSession?.AttachedEntity == null)
             Deactivate();
     }
 
@@ -104,7 +104,7 @@ public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
 
     private void RefreshOverlay(EntityUid uid)
     {
-        if (uid != _player.LocalPlayer?.ControlledEntity)
+        if (uid != _player.LocalSession?.AttachedEntity)
             return;
 
         var ev = new RefreshEquipmentHudEvent<T>(TargetSlots);
