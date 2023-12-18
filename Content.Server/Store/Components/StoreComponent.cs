@@ -59,6 +59,10 @@ public sealed partial class StoreComponent : Component
     [ViewVariables]
     public HashSet<ListingData> LastAvailableListings = new();
 
+    // TODO: store bought listings so refund button can take away
+    // TODO: Refund button
+    // TODO: Add ability to upgrade actions
+
     #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.
