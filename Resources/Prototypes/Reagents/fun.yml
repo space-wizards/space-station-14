@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Carpetium
   name: reagent-name-carpetium
   group: Special
@@ -165,7 +165,7 @@
     Poison:
       effects:
       - !type:Electrocute
-        probability: 0.5
+        probability: 0.35
 
 - type: reagent
   id: Razorium

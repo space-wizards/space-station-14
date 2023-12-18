@@ -721,6 +721,17 @@
           - SurplusBundle
 
 - type: listing
+  id: UplinkChemistryKitBundle
+  name: uplink-chemistry-kit-name
+  description: uplink-chemistry-kit-desc
+  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: vials }
+  productEntity: ChemicalSynthesisKit
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkBundles
+
+- type: listing
   id: UplinkMedsBundle
   name: uplink-meds-bundle-name
   description: uplink-meds-bundle-desc
