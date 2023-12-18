@@ -219,6 +219,13 @@
     Narcotic:
       metabolismRate: 0.1
       effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages:
+        - "ambrosia-effect-unstoppable"
+        - "ambrosia-effect-euphoria"
+        probability: 0.2
       - !type:HealthChange
         damage:
           types:
