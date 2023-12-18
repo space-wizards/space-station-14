@@ -4,14 +4,14 @@
   parent: BaseChemistryEmptyVial
   description: It glows a strange unearthly gold.
   components:
-    - type: SolutionContainerManager
+  - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 30
         canMix: true
         reagents:
-          - ReagentId: Ambrosia
-            Quantity: 12 # 120 seconds of invulnerability
+        - ReagentId: Ambrosia
+          Quantity: 12 # 120 seconds of invulnerability
 
 - type: entity
   id: PoultriumVial
@@ -19,11 +19,11 @@
   parent: BaseChemistryEmptyVial
   description: Smells like a barnyard.
   components:
-    - type: SolutionContainerManager
+  - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 30
         canMix: true
         reagents:
-          - ReagentId: Poultrium
-            Quantity: 30
+        - ReagentId: Poultrium
+          Quantity: 30
