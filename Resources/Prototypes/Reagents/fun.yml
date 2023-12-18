@@ -205,3 +205,45 @@
       - !type:Emote
         emote: Scream
         probability: 0.3
+
+- type: reagent
+  id: Ambrosia
+  name: reagent-name-ambrosia
+  desc: reagent-desc-ambrosia
+  physicalDesc: reagent-physical-desc-transcendent
+  flavor: ambrosia
+  color: "#ffcc00"
+  boilingPoint: 1000.0
+  meltingPoint: -200.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -5000
+            Slash: -5000
+            Piercing: -5000
+            Heat: -5000
+            Shock: -5000
+            Cold: -5000
+            Caustic: -5000
+            Asphyxiation: -5000
+            Bloodloss: -5000
+            Poison: -5000
+            Radiation: -5000
+            Cellular: -5000
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 5000
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 5000
+        type: Remove
+      - !type:GenericStatusEffect
+        key: StaminaModifier
+        component: StaminaModifier
+        time: 5000
+        type: Add
