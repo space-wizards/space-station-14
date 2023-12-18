@@ -34,6 +34,7 @@
   - type: DisposalUnit
     autoEngageEnabled: false
     humanoidCanEnter: false
+    soundInsert: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
   - type: Toilet
     sound: /Audio/Effects/toilet_seat_down.ogg
     seatUp: disposal-up
@@ -41,6 +42,7 @@
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
+      disposals: !type:Container
   - type: SolutionContainerManager
     solutions:
       drainBuffer:

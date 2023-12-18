@@ -2,10 +2,12 @@ using Content.Shared.Audio;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Shared.Hands.Components;
 
 namespace Content.Shared.Toilet
 {
@@ -31,7 +33,7 @@ namespace Content.Shared.Toilet
 
         private void OnToggleSeatVerb(EntityUid uid, ToiletComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanInteract || !args.CanAccess || !CanToggle(uid))
+            if (!args.CanInteract || !args.CanAccess || !CanToggle(uid) || !HasComp<HandsComponent>(args.User))
                 return;
 
             AlternativeVerb toggleVerb = new()
@@ -85,7 +87,6 @@ namespace Content.Shared.Toilet
 
         protected virtual void UpdateAppearance(EntityUid uid, ToiletComponent? component = null)
         {
-            // we don't fuck with appearance data, and instead just manually update the sprite on the client
         }
     }
 }
