@@ -21,7 +21,7 @@
     jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackCallERTLeaderFilled
     shoes: ClothingShoesBootsJack
-    mask: ClothingMaskBreath
+    mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTLeader
@@ -53,7 +53,7 @@
     jumpsuit: ClothingUniformJumpsuitERTMedic
     back: ClothingBackpackCallERTMedicalFilled
     shoes: ClothingShoesBootsJack
-    mask: ClothingMaskBreath
+    mask: ClothingMaskGasERT
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTMedical
@@ -85,7 +85,7 @@
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackCallERTSecurityFilled
     shoes: ClothingShoesBootsJack
-    mask: ClothingMaskBreath
+    mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTSecurity
@@ -117,7 +117,7 @@
     jumpsuit: ClothingUniformJumpsuitERTEngineer
     back: ClothingBackpackCallERTEngineerFilled
     shoes: ClothingShoesBootsJack
-    mask: ClothingMaskBreath
+    mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesColorYellow
     outerClothing: ClothingOuterHardsuitERTEngineer
@@ -148,7 +148,7 @@
     jumpsuit: ClothingUniformJumpsuitERTJanitor
     back: ClothingBackpackCallERTJanitorFilled
     shoes: ClothingShoesGaloshes
-    mask: ClothingMaskBreath
+    mask: ClothingMaskGasERT
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTJanitor
     suitstorage: OxygenTankFilled
