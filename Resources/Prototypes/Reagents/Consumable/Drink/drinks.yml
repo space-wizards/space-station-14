@@ -18,9 +18,9 @@
 
 - type: reagent
   id: HotCocoa
-  name: reagent-name-cocoa
+  name: reagent-name-hot-cocoa
   parent: BaseDrink
-  desc: reagent-desc-cocoa
+  desc: reagent-desc-hot-cocoa
   physicalDesc: reagent-physical-desc-aromatic
   flavor: chocolate
   color: "#664300"
