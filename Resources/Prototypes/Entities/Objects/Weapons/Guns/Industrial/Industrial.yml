@@ -38,6 +38,7 @@
         priority: 1
         whitelist:
           tags:
+            - Nail
             - CartridgeNail
   - type: ContainerContainer
     containers:

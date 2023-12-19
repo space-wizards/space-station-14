@@ -12,6 +12,7 @@
     whitelist:
       tags:
         - CartridgeNail
+        - Nail
     proto: CartridgeNail
     capacity: 20
   - type: Item

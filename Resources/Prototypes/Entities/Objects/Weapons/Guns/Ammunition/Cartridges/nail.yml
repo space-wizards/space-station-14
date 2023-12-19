@@ -6,6 +6,7 @@
   components:
   - type: Tag
     tags:
+      - Nail
       - Cartridge
       - CartridgeNail
   - type: CartridgeAmmo
