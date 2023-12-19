@@ -13,6 +13,7 @@
   - MiningDrill
   - BorgModuleMining
   - OreProcessorMachineCircuitboard
+  - OreBagOfHolding
 
 - type: technology
   id: AdvancedPowercells
@@ -209,7 +210,6 @@
   - ClothingBackpackHolding
   - ClothingBackpackSatchelHolding
   - ClothingBackpackDuffelHolding
-  - OreBagOfHolding
 
 - type: technology
   id: PortableFission
