@@ -85,6 +85,65 @@
   - type: Reflect
 
 - type: entity
+  name: plasma monosword
+  parent: Katana
+  id: PlasmaMonosword
+  description: A katana infused with strong energy.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/plasma_monosword.rsi
+    layers:
+      - state: icon
+      - state: icon_blade
+        visible: false
+        map: [ "blade" ]
+        shader: unshaded
+        color: "#b83dba"
+  - type: MeleeWeapon
+    wideAnimationRotation: -60
+    damage:
+      types:
+        Blunt: 4.5
+  - type: Item
+    size: Normal
+    sprite: Objects/Weapons/Melee/plasma_monosword.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/plasma_monosword.rsi
+    slots:
+    - Back
+    - Belt
+  - type: EnergySword
+    litDamageBonus:
+        types:
+            Caustic: 10
+            Heat: 20
+            Blunt: -4.5
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded
+
+- type: entity
+  name: persona plasma monosword
+  parent: PlasmaMonosword
+  id: PersonaPlasmaMonosword
+  description: A plasma monosword infused with a persona core.
+  components:
+  - type: GhostRole
+    prob: 1
+    name: ghost-role-information-Persona-Sword-name
+    allowMovement: false
+    description: ghost-role-information-Persona-Sword-description
+    rules: ghost-role-information-Persona-Sword-rules
+  - type: GhostTakeoverAvailable
+
+
+- type: entity
   name: machete
   parent: BaseItem
   id: Machete
