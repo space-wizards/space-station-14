@@ -1,11 +1,11 @@
-using Content.Server.Storage.EntitySystems;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Item;
 using Content.Shared.Toilet;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Storage.Components
+namespace Content.Shared.Storage.Components
 {
     /// <summary>
     ///     Logic for a secret slot stash, like plant pot or toilet cistern.
@@ -26,7 +26,7 @@ namespace Content.Server.Storage.Components
         ///     IC secret stash name. For example "the toilet cistern".
         ///     If empty string, will replace it with entity name in init.
         /// </summary>
-        [DataField("secretPartName", readOnly: true)]
+        [DataField, AutoNetworkedField]
         public string SecretPartName { get; set; } = "";
 
         /// <summary>

@@ -1,16 +1,16 @@
-using Content.Server.Popups;
-using Content.Server.Storage.Components;
+using Content.Shared.Popups;
+using Content.Shared.Storage.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Storage.EntitySystems
+namespace Content.Shared.Storage.EntitySystems
 {
     public sealed class SecretStashSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
@@ -62,7 +62,7 @@ namespace Content.Server.Storage.EntitySystems
             if (container.ContainedEntity != null)
             {
                 var msg = Loc.GetString("comp-secret-stash-action-hide-container-not-empty");
-                _popupSystem.PopupEntity(msg, uid, userUid);
+                _popupSystem.PopupClient(msg, uid, userUid);
                 return false;
             }
 
@@ -71,7 +71,7 @@ namespace Content.Server.Storage.EntitySystems
             {
                 var msg = Loc.GetString("comp-secret-stash-action-hide-item-too-big",
                     ("item", itemToHideUid), ("stash", GetSecretPartName(uid, component)));
-                _popupSystem.PopupEntity(msg, uid, userUid);
+                _popupSystem.PopupClient(msg, uid, userUid);
                 return false;
             }
 
@@ -84,7 +84,7 @@ namespace Content.Server.Storage.EntitySystems
             // all done, show success message
             var successMsg = Loc.GetString("comp-secret-stash-action-hide-success",
                 ("item", itemToHideUid), ("this", GetSecretPartName(uid, component)));
-            _popupSystem.PopupEntity(successMsg, uid, userUid);
+            _popupSystem.PopupClient(successMsg, uid, userUid);
             return true;
         }
 
@@ -113,7 +113,7 @@ namespace Content.Server.Storage.EntitySystems
             // show success message
             var successMsg = Loc.GetString("comp-secret-stash-action-get-item-found-something",
                 ("stash", GetSecretPartName(uid, component)));
-            _popupSystem.PopupEntity(successMsg, uid, userUid);
+            _popupSystem.PopupClient(successMsg, uid, userUid);
 
             return true;
         }

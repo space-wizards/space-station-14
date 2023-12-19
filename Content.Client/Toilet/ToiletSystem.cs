@@ -16,12 +16,16 @@ public sealed class ToiletSystem : SharedToiletSystem
             return;
 
         var state = component.ToggleSeat ? component.SeatUp : component.SeatDown;
+        var lidstate = component.ToggleLid ? component.LidOpen : component.LidClosed;
         if (state != null)
             sprite.LayerSetState(ToiletVisualLayers.Door, state);
+        if (lidstate != null)
+            sprite.LayerSetState(ToiletVisualLayers.Lid, lidstate);
     }
 }
 
 public enum ToiletVisualLayers
 {
-    Door
+    Door,
+    Lid
 }

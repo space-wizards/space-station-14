@@ -22,6 +22,8 @@
       map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
     - state: dispover-handle
       map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+    - state: disposal-open
+      map: [ "enum.ToiletVisualLayers.Lid" ]
     - state: disposal-up
       map: [ "enum.ToiletVisualLayers.Door" ]
   - type: Rotatable
@@ -34,11 +36,13 @@
   - type: DisposalUnit
     autoEngageEnabled: false
     humanoidCanEnter: false
-    soundInsert: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+    soundInsert: /Audio/Effects/Fluids/splash.ogg
   - type: Toilet
     sound: /Audio/Effects/toilet_seat_down.ogg
     seatUp: disposal-up
     seatDown: disposal-down
+    lidOpen: disposal-open
+    lidClosed: disposal-closed
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
@@ -55,6 +59,8 @@
     graph: Toilet
     node: toilet
   - type: Appearance
+  - type: SecretStash
+    secretPartName: secret-stash-part-toilet
   - type: Drain
     autoDrain: false
   - type: StaticPrice

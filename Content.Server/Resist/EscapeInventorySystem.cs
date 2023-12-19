@@ -1,6 +1,6 @@
 using Content.Server.Contests;
 using Content.Server.Popups;
-using Content.Server.Storage.Components;
+using Content.Shared.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
