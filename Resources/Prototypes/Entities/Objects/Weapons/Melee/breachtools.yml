@@ -1,0 +1,35 @@
+- type: entity
+  name: Dynamic Hammer
+  parent: BaseItem
+  id: SecBreachHammer
+  description: For when you need to get inside, or when you REALLY hate that door.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/dynamichammer.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    swingLeft: true
+    attackRate: 0.4 # Its a big fuckoff hammer
+    damage:
+      types:
+        # fuck I hate the structural damage removal
+        Blunt: 7
+        Structural: 10
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 13
+        Structural: 110 # fuck you
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/dynamichammer.rsi
+    quickEquip: false
+    slots:
+    - back
+  - type: ToolForcePowered
+    qualities:
+  - type: UseDelay
+    delay: 3
