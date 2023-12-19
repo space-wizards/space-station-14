@@ -32647,6 +32647,18 @@ entities:
     - pos: -12.532179,11.55442
       parent: 1668
       type: Transform
+- proto: Screen
+  entities:
+  - uid: 6988
+    components:
+    - pos: 33.5,3.5
+      parent: 1668
+      type: Transform
+  - uid: 6989
+    components:
+    - pos: 33.5,-4.5
+      parent: 1668
+      type: Transform
 - proto: SecurityTechFab
   entities:
   - uid: 2874

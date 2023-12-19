@@ -453,7 +453,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
         while (enumerator.MoveNext(out var child))
         {
-            RecursiveAdd(child.Value, entities);
+            RecursiveAdd(child, entities);
         }
     }
 

@@ -14,8 +14,9 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 public sealed partial class MedibotInjectOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
-    private SharedAudioSystem _audio = default!;
     private ChatSystem _chat = default!;
+    private MedibotSystem _medibot = default!;
+    private SharedAudioSystem _audio = default!;
     private SharedInteractionSystem _interaction = default!;
     private SharedPopupSystem _popup = default!;
     private SolutionContainerSystem _solutionContainer = default!;
@@ -29,8 +30,9 @@ public sealed partial class MedibotInjectOperator : HTNOperator
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
-        _audio = sysManager.GetEntitySystem<SharedAudioSystem>();
         _chat = sysManager.GetEntitySystem<ChatSystem>();
+        _medibot = sysManager.GetEntitySystem<MedibotSystem>();
+        _audio = sysManager.GetEntitySystem<SharedAudioSystem>();
         _interaction = sysManager.GetEntitySystem<SharedInteractionSystem>();
         _popup = sysManager.GetEntitySystem<SharedPopupSystem>();
         _solutionContainer = sysManager.GetEntitySystem<SolutionContainerSystem>();
@@ -73,8 +75,7 @@ public sealed partial class MedibotInjectOperator : HTNOperator
             return HTNOperatorStatus.Failed;
 
         var state = mobState.CurrentState;
-        var treatment = botComp.Treatments[mobState.CurrentState];
-        if (!treatment.IsValid(total))
+        if (!_medibot.TryGetTreatment(botComp, mobState.CurrentState, out var treatment) || !treatment.IsValid(total))
             return HTNOperatorStatus.Failed;
 
         _entMan.EnsureComponent<NPCRecentlyInjectedComponent>(target);
