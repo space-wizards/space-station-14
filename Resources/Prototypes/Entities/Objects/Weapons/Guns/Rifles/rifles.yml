@@ -189,7 +189,7 @@
 
 - type: entity
   name: Hellion 
-  parent: Lecter
+  parent: WeaponRifleLecter
   id: WeaponRifleHellion 
   description: A bullpup rifle designed for CQB. Uses .20 Ammo
   components:
