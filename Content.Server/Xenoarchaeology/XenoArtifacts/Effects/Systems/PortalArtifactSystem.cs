@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Mind;
+using Content.Shared.Speech;
 using Content.Shared.Storage;
 using Content.Shared.Teleportation.Systems;
 using Robust.Server.GameObjects;
@@ -27,7 +28,7 @@ public sealed class PortalArtifactSystem : EntitySystem
     {
         var firstPortal = Spawn(artifact.Comp.PortalProto, Transform(artifact.Owner).MapPosition);
 
-        var mindQuery = EntityQuery<MindComponent>().ToList();
+        var mindQuery = EntityQuery<SpeechComponent>().ToList();
         var target = _random.Pick(mindQuery);
 
         var secondPortal = Spawn(artifact.Comp.PortalProto, Transform(target.Owner).MapPosition);

@@ -594,7 +594,7 @@
 
 - type: artifactEffect
   id: EffectPortal
-  targetDepth: 1
+  targetDepth: 3
   effectHint: artifact-effect-hint-displacement
   components:
   - type: PortalArtifact
