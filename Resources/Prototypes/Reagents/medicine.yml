@@ -285,9 +285,9 @@
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
-          reagent: Lexorin
+          reagent: HeartbreakerToxin
           min: 1
-        reagent: Lexorin
+        reagent: HeartbreakerToxin
         amount: -3
       - !type:HealthChange
         conditions:
@@ -334,12 +334,12 @@
             Asphyxiation: 1
             Poison: 1
       - !type:AdjustReagent
-        reagent: Lexorin
+        reagent: HeartbreakerToxin
         amount: -2
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
-          reagent: Lexorin
+          reagent: 
           min: 1
         reagent: Epinephrine
         amount: -1
@@ -347,7 +347,7 @@
         probability: 0.1
         conditions:
         - !type:ReagentThreshold
-          reagent: Lexorin
+          reagent: HeartbreakerToxin
           min: 1
         reagent: Histamine
         amount: 4

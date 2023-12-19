@@ -9,13 +9,19 @@
   - type: Icon
     sprite: Structures/Windows/plasma_window.rsi
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 120
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
       behaviors:
       - !type:PlaySoundBehavior
         sound:
