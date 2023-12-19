@@ -60,3 +60,15 @@
       amount: 1
   products:
     Ash: 1
+
+- type: reaction
+  id: WeldingFuelBreakdown
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    WeldingFuel:
+      amount: 10
+  products:
+    Ethanol: 5
+    Hydrogen: 3
+    Sulfur: 2

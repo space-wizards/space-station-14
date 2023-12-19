@@ -15,7 +15,7 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Slash: 12
+        Slash: 10
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
@@ -62,7 +62,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 10
+        Slash: 13
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/cleaver.rsi
@@ -88,7 +88,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 10
+        Slash: 12
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
   - type: DamageOtherOnHit

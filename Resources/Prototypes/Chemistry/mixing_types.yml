@@ -1,8 +1,20 @@
 - type: mixingCategory
   id: Centrifuge
+  verbText: mixing-verb-centrifuge
+  icon:
+    sprite: Structures/Machines/Medical/centrifuge.rsi
+    state: base
 
 - type: mixingCategory
   id: Electrolysis
+  verbText: mixing-verb-electrolysis
+  icon:
+    sprite: Structures/Machines/Medical/electrolysis.rsi
+    state: base
 
 - type: mixingCategory
   id: Holy
+  verbText: mixing-verb-holy
+  icon:
+    sprite: Objects/Specific/Chapel/bible.rsi
+    state: icon
