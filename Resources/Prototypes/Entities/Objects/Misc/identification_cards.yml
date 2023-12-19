@@ -440,6 +440,20 @@
 
 - type: entity
   parent: IDCardStandard
+  id: CentcomInspectorIDCard
+  name: central inspector ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: idcentcominspector
+  - type: Item
+    heldPrefix: silver
+  - type: PresetIdCard
+    job: CentralCommandInspector
+
+- type: entity
+  parent: IDCardStandard
   id: CentcomIDCard
   name: command officer ID card
   components:

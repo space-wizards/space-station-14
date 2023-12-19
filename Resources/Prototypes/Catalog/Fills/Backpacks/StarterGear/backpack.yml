@@ -53,6 +53,17 @@
 - type: entity
   noSpawn: true
   parent: ClothingBackpackCaptain
+  id: ClothingBackpackCentcomInspectorFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: Flash
+      - id: RubberStampCentcomInspector
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackCaptain
   id: ClothingBackpackCaptainFilled
   components:
   - type: StorageFill

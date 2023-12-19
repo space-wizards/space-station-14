@@ -20,6 +20,7 @@ job-name-atmostech = Atmospheric Technician
 job-name-hop = Head of Personnel
 job-name-captain = Captain
 job-name-serviceworker = Service Worker
+job-name-centcomins = Central Inspector
 job-name-centcomoff = CentCom Official
 job-name-reporter = Reporter
 job-name-musician = Musician

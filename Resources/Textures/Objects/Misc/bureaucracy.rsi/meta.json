@@ -106,6 +106,9 @@
       "name": "paper_stamp-centcom"
     },
     {
+      "name": "paper_stamp-centcom-inspector"
+    },
+    {
       "name": "paper_stamp-chaplain"
     },
     {
@@ -253,6 +256,9 @@
     },
     {
       "name": "stamp-centcom"
+    },
+    {
+      "name": "stamp-centcom-inspector"
     },
     {
       "name": "stamp-chaplain"

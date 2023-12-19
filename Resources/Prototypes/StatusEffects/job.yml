@@ -48,6 +48,13 @@
 
 - type: statusIcon
   parent: JobIcon
+  id: JobIconCentralCommandInspector
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: CentComInspector
+
+- type: statusIcon
+  parent: JobIcon
   id: JobIconNanotrasen
   icon:
     sprite: Interface/Misc/job_icons.rsi

@@ -24,3 +24,56 @@
     ears: ClothingHeadsetAltCentCom
     pocket1: BoxFolderBlack
     pocket2: PenCentcom
+
+- type: job
+  id: CentralCommandInspector
+  name: job-name-centcomins
+  description: job-description-centcomins
+  playTimeTracker: JobCentralCommandInspector
+  setPreference: true
+  startingGear: CentcomInspectorGear
+  icon: "JobIconCentralCommandInspector"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  access:
+  - Command
+  - Bar
+  - Service
+  - Maintenance
+  - Janitor
+  - Theatre
+  - Kitchen
+  - Chapel
+  - Hydroponics
+  - External
+  - Chemistry
+  - Engineering
+  - Research
+  - Detective
+  - Salvage
+  - Security
+  - Brig
+  - Lawyer
+  - Cargo
+  - Atmospherics
+  - Medical
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+
+- type: startingGear
+  id: CentcomInspectorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomAgent
+    back: ClothingBackpackCentcomInspectorFilled
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesSunglasses
+    belt: BoxFolderCentComClipboard
+    id: CentcomInspectorPDA
+    ears: ClothingHeadsetAltCentCom
+    pocket1: PenCentcom
+    pocket2: BoxFolderGreen
+  inhand:
+    - BriefcaseBrownFilled
+  satchel: ClothingBackpackSatchelCentcomInspectorFilled
+  duffelbag: ClothingBackpackDuffelCentcomInspectorFilled

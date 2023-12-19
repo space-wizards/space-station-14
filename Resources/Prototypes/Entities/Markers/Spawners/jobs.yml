@@ -311,6 +311,18 @@
       - state: captain
 
 - type: entity
+  id: SpawnPointCentComInspector
+  parent: SpawnPointJobBase
+  name: centcom inspector
+  components:
+  - type: SpawnPoint
+    job_id: CentralCommandInspector
+  - type: Sprite
+    layers:
+      - state: green
+      - state: cci
+
+- type: entity
   id: SpawnPointHeadOfPersonnel
   parent: SpawnPointJobBase
   name: headofpersonnel

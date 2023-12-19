@@ -671,6 +671,20 @@
     state: stamp-cap
 
 - type: entity
+  name: central inspector rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCentcomInspector
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-centcom-inspector
+    stampedColor: "#006c47"
+    stampState: "paper_stamp-centcom-inspector"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-centcom-inspector
+
+- type: entity
   name: CentCom rubber stamp
   parent: RubberStampBase
   id: RubberStampCentcom

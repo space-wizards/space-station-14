@@ -31,6 +31,7 @@
           - Captain
           availableJobs:
             Captain: [ -1, -1 ]
+            CentralCommandInspector: [ -1, -1 ]
 
 - type: gameMap
   id: TestTeg

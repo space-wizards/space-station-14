@@ -413,6 +413,27 @@
     - type: Loadout
       prototypes: [ CentcomGear ]
 
+- type: entity
+  name: CentCom inspector
+  id: RandomHumanoidSpawnerCentcomInspector
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: cci
+    - type: RandomHumanoidSpawner
+      settings: CentcomInspector
+
+- type: randomHumanoidSettings
+  id: CentcomInspector
+  components:
+    - type: MindShield
+    - type: GhostRole
+      name: ghost-role-information-centcom-inspector-name
+      description: ghost-role-information-centcom-inspeector-description
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ CentcomInspectorGear ]
+
 ## Syndicate
 
 - type: entity

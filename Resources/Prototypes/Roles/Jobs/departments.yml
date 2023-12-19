@@ -36,6 +36,7 @@
   color: "#334E6D"
   roles:
   - Captain
+  - CentralCommandInspector
   - CentralCommandOfficial
   - ChiefEngineer
   - ChiefMedicalOfficer

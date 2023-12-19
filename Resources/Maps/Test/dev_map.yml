@@ -5023,6 +5023,13 @@ entities:
     - pos: -4.5,4.5
       parent: 179
       type: Transform
+- proto: SpawnPointCentComInspector
+  entities:
+  - uid: 1191
+    components:
+    - pos: -4.5,3.5
+      parent: 179
+      type: Transform
 - proto: SpawnPointLatejoin
   entities:
   - uid: 961

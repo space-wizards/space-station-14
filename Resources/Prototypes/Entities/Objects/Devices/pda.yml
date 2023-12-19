@@ -632,6 +632,25 @@
 
 - type: entity
   parent: BasePDA
+  id: CentcomInspectorPDA
+  name: central inspector PDA
+  description: The article for Space Law is bookmarked.
+  components:
+  - type: Pda
+    id: CentcomInspectorIDCard
+    state: pda-centcom-inspector
+    penSlot:
+      startingItem: PenCentcom
+      whitelist:
+        tags:
+        - Write
+  - type: PdaBorderColor
+    borderColor: "#006c47"
+  - type: Icon
+    state: pda-centcom-inspector
+
+- type: entity
+  parent: BasePDA
   id: CentcomPDA
   name: CentCom PDA
   description: Light green sign of walking bureaucracy.
