@@ -6,8 +6,6 @@ namespace Content.Server.Light
     public sealed partial class LightCycleSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override void Initialize()
         {
             base.Initialize();
