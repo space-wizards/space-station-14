@@ -1,10 +1,4 @@
 Entries:
-- author: casperr04
-  changes:
-  - {message: Fixed the true name of disguised players being shown when electrocuted.,
-    type: Fix}
-  id: 4924
-  time: '2023-09-29T15:01:19.0000000+00:00'
 - author: TsjipTsjip
   changes:
   - {message: Kettle's medical ward was reworked., type: Tweak}
@@ -2928,4 +2922,10 @@ Entries:
   - {message: Captain clothing items have been resprited, type: Tweak}
   id: 5424
   time: '2023-12-19T20:36:36.0000000+00:00'
+  url: null
+- author: Stanislav4ix
+  changes:
+  - {message: Added ore bag of holding!, type: Add}
+  id: 5425
+  time: '2023-12-19T22:28:56.0000000+00:00'
   url: null
