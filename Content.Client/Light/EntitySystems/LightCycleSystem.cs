@@ -1,83 +1,79 @@
+using Content.Shared.Light.Components;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Configuration;
-using Content.Shared.CCVar;
-using Content.Server.GameTicking;
+using Robust.Shared.Timing;
 
-
-namespace Content.Server.LightCycle
+namespace Content.Client.LightCycle
 {
-    public sealed partial class DayCycleSystem : EntitySystem
+    public sealed partial class LightCycleSystem : EntitySystem
     {
-        [Dependency] private readonly IConfigurationManager _configuration = default!;
-        [Dependency] private readonly GameTicker _gameTicker = default!;
-        private double _deltaTime;
-        private Dictionary<int, Color>? _mapColor;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _deltaTime = 0;
-            _mapColor = new Dictionary<int, Color>();
+            SubscribeLocalEvent<LightCycleComponent, ComponentStartup>(OnComponentStartup);
+
+            SubscribeLocalEvent<LightCycleComponent, ComponentShutdown>(OnComponentShutdown);
         }
-        public override void Update(float frameTime)
+
+        private void OnComponentStartup(EntityUid uid, LightCycleComponent cycle, ComponentStartup args)
         {
+            cycle.Offset = _gameTiming.RealTime.TotalSeconds;
+        }
 
-            // Prevents the light from being updated every tick, with an adjustable frequency.
-
-            if (_deltaTime / frameTime >= _configuration.GetCVar(CCVars.CycleUpdateFrequency))
+        private void OnComponentShutdown(EntityUid uid, LightCycleComponent cycle, ComponentShutdown args)
+        {
+            if (LifeStage(uid) >= EntityLifeStage.Terminating)
+                return;
+            if (_entityManager.TryGetComponent<MapLightComponent>(uid, out var map))
             {
-
-                // Iterates over the entities with the DayCycle component, in case of multiple maps with it added.
-
-                foreach (var comp in EntityQuery<LightCycleComponent>())
-                {
-
-                    // Checks whether the map has the MapLight component, which is essential to its operation, and, if so, it is provided.
-
-                    if (EntityManager.TryGetComponent<MapLightComponent>(comp.Owner, out var mapLight))
-                    {
-                        if (comp.IsEnabled)
-                        {
-
-                            // The original color must be added to a dictionary, as a fixed reference, as the color SHOULD NOT change itself during the process.
-
-                            if (!_mapColor!.TryGetValue(mapLight.Owner.Id, out var value))
-                            {
-                                _mapColor.Add(mapLight.Owner.Id, mapLight.AmbientLightColor);
-                            }
-                            else
-                            {
-
-                                // Performs color and luminosity calculations and sets the MapLight new color.
-
-                                comp.CurrentTime = _gameTicker.RoundDuration().TotalSeconds + comp.InitialTime;
-                                var lightLevel = CalculateLightLevel(comp);
-                                var color = GetCycleColor(comp, value);
-                                var red = (int) Math.Min(255, color.RByte * lightLevel);
-                                var green = (int) Math.Min(255, color.GByte * lightLevel);
-                                var blue = (int) Math.Min(255, color.BByte * lightLevel);
-                                mapLight.AmbientLightColor = System.Drawing.Color.FromArgb(red, green, blue);
-                                Dirty(mapLight.Owner, mapLight);
-                            }
-                        }
-                    }
-                }
-                _deltaTime = 0;
+                map.AmbientLightColor = Color.FromHex(cycle.OriginalColor);
             }
-            _deltaTime += frameTime;
+        }
+
+        public override void FrameUpdate(float frameTime)
+        {
+            var mapQuery = EntityQueryEnumerator<MapLightComponent, LightCycleComponent>();
+            while (mapQuery.MoveNext(out var uid, out var map, out var cycle))
+            {
+                if (cycle.OriginalColor != null && cycle.OriginalColor != "#0000FF")
+                {
+                    cycle.CurrentTime = _gameTiming.RealTime.TotalSeconds - cycle.Offset + cycle.InitialTime;
+                    map.AmbientLightColor = GetColor((uid, cycle), Color.FromHex(cycle.OriginalColor));
+                }
+                else
+                {
+                    cycle.OriginalColor = map.AmbientLightColor.ToHex();
+                }
+            }
         }
 
         // Decomposes the color into its components and multiplies each one by the individual color level as function of time, returning a new color.
-        public static Color GetCycleColor(LightCycleComponent comp, Color color)
+        public static Color GetColor(Entity<LightCycleComponent> cycle, Color color)
         {
-            if (comp.IsEnabled && comp.IsColorShiftEnabled)
+            if (cycle.Comp.IsEnabled)
             {
-                var colorLevel = CalculateColorLevel(comp);
-                var red = Math.Min(255, color.RByte * colorLevel[0]);
-                var green = Math.Min(255, color.GByte * colorLevel[1]);
-                var blue = Math.Min(255, color.BByte * colorLevel[2]);
-                return System.Drawing.Color.FromArgb((int) red, (int) green, (int) blue);
+                var lightLevel = CalculateLightLevel(cycle.Comp);
+                var colorLevel = CalculateColorLevel(cycle.Comp);
+                var rgb = new int[] { (int) Math.Min(255, color.RByte * colorLevel[0] * lightLevel),
+                                      (int) Math.Min(255, color.GByte * colorLevel[1] * lightLevel),
+                                      (int) Math.Min(255, color.BByte * colorLevel[2] * lightLevel) };
+                var hex = "#";
+                for (int i = 0, j = 0; i < 6; i++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        hex += (rgb[j] / 16).ToString("X");
+                    }
+                    else
+                    {
+                        hex += (rgb[j] % 16).ToString("X");
+                        j++;
+                    }
+                }
+                return Color.FromHex(hex);
             }
             else
                 return color;
@@ -107,20 +103,21 @@ namespace Content.Server.LightCycle
         {
             var wave_lenght = Math.Max(1, comp.CycleDuration);
             var color_level = new double[3];
+            var time = comp.CurrentTime;
             for (var i = 0; i < 3; i++)
             {
                 switch (i)
                 {
                     case 0:
-                        color_level[i] = Math.Min(comp.ClipRed, CalculateCurve(comp.CurrentTime, wave_lenght,
+                        color_level[i] = Math.Min(comp.ClipRed, CalculateCurve(time, wave_lenght,
                         Math.Max(0, comp.MaxRedLevel), Math.Max(0, comp.MinRedLevel), 4));
                         break;
                     case 1:
-                        color_level[i] = Math.Min(comp.ClipGreen, CalculateCurve(comp.CurrentTime, wave_lenght,
+                        color_level[i] = Math.Min(comp.ClipGreen, CalculateCurve(time, wave_lenght,
                         Math.Max(0, comp.MaxGreenLevel), Math.Max(0, comp.MinGreenLevel), 10));
                         break;
                     case 2:
-                        color_level[i] = Math.Min(comp.ClipBlue, CalculateCurve(comp.CurrentTime, wave_lenght / 2,
+                        color_level[i] = Math.Min(comp.ClipBlue, CalculateCurve(time, wave_lenght / 2,
                         Math.Max(0, comp.MaxBlueLevel), Math.Max(0, comp.MinBlueLevel), 2, wave_lenght / 4));
                         break;
                 }

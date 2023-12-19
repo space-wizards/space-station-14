@@ -19,4 +19,7 @@ public sealed partial class SalvageLightMod : IPrototype, IBiomeSpecificMod
     public List<string>? Biomes { get; private set; } = null;
 
     [DataField("color", required: true)] public Color? Color;
+    [DataField("hour", required: true)] public float InitialHour;
+    [DataField("minlight", required: true)] public double MinLight;
+    [DataField("maxlight", required: true)] public double MaxLight;
 }

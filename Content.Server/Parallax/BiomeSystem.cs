@@ -6,7 +6,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Decals;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.LightCycle;
+using Content.Shared.Light.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Atmos;
@@ -920,6 +920,13 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         gravity.Inherent = true;
         Dirty(mapUid, gravity, metadata);
 
+        // Add dynamic light to the map, which i'll start at a random time.
+
+        var cycle = EnsureComp<LightCycleComponent>(mapUid);
+        cycle.InitialTime = new Random().Next(0, (int) cycle.CycleDuration);
+
+        Dirty(mapUid, cycle, metadata);
+
         // Day lighting
         // Daylight: #D8B059
         // Midday: #E6CB8B
@@ -929,14 +936,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         var light = EnsureComp<MapLightComponent>(mapUid);
         light.AmbientLightColor = Color.FromHex("#D8B059");
         Dirty(mapUid, light, metadata);
-
-        // Add dynamic light to the map, which i'll start at a random time.
-
-        var cycle = EnsureComp<LightCycleComponent>(mapUid);
-        cycle.IsEnabled = _configManager.GetCVar(CCVars.CycleEnabledByDefault);
-        cycle.IsColorShiftEnabled = _configManager.GetCVar(CCVars.CycleEnabledByDefault);
-        cycle.InitialTime = new Random().Next(0, (int) cycle.CycleDuration);
-        Dirty(mapUid, cycle, metadata);
 
         // Atmos
         var atmos = EnsureComp<MapAtmosphereComponent>(mapUid);

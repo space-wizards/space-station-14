@@ -32,7 +32,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Server.LightCycle;
+using Content.Shared.Light.Components;
 using Robust.Shared.Configuration;
 using Content.Shared.CCVar;
 
@@ -136,17 +136,19 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
             if (mission.Color != null)
             {
+                // Add dynamic light to the map.
+
+                var cycle = _entManager.EnsureComponent<LightCycleComponent>(mapUid);
+                cycle.InitialTime = (int) ((mission.InitialHour / 24) * cycle.CycleDuration);
+                cycle.MinLightLevel = mission.MinLight;
+                cycle.ClipLight = mission.MaxLight;
+                _entManager.Dirty(mapUid, cycle, metadata);
+
                 var lighting = _entManager.EnsureComponent<MapLightComponent>(mapUid);
                 lighting.AmbientLightColor = mission.Color.Value;
                 _entManager.Dirty(mapUid, lighting);
 
-                // Add dynamic light to the map, which i'll start at a random time.
-
-                var cycle = _entManager.EnsureComponent<LightCycleComponent>(mapUid);
-                cycle.IsEnabled = _configurationManager.GetCVar(CCVars.CycleEnabledByDefault);
-                cycle.IsColorShiftEnabled = _configurationManager.GetCVar(CCVars.CycleEnabledByDefault);
-                cycle.InitialTime = random.Next(0, (int) cycle.CycleDuration);
-                _entManager.Dirty(mapUid, cycle, metadata);
+                Console.WriteLine(mapUid);
             }
         }
 
