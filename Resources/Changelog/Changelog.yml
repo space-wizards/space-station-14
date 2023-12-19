@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed AHelp progressively gaining more panels., type: Fix}
-  id: 4922
-  time: '2023-09-29T01:46:16.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed skeletons spawning in folded containers., type: Fix}
@@ -2925,4 +2920,11 @@ Entries:
   - {message: Fixed compatability with old changelog format., type: Fix}
   id: 5422
   time: '2023-12-19T05:22:24.0000000+00:00'
+  url: null
+- author: notafet
+  changes:
+  - {message: 'Security sunglasses, researchable from arsenal technology, now display
+      the security HUD.', type: Tweak}
+  id: 5423
+  time: '2023-12-19T08:29:07.0000000+00:00'
   url: null
