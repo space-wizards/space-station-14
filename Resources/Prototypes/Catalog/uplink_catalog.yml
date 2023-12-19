@@ -303,6 +303,17 @@
   categories:
   - UplinkAmmo
 
+- type: listing
+  id: UplinkPistol9mmMagazineRubber
+  name: uplink-pistol-rubber-magazine-name
+  description: uplink-pistol-rubber-magazine-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi, state: rubber }
+  productEntity: MagazinePistolRubber
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkAmmo
+
 # For the C20R
 - type: listing
   id: UplinkMagazinePistolSubMachineGun
