@@ -7,17 +7,6 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.RCD.Components;
 
-public enum RcdMode : byte
-{
-    None,
-    Deconstruct,
-    ConstructFlooring,
-    ConstructStructure,
-    Airlock,
-    Floors,
-    Walls,
-}
-
 /// <summary>
 /// Main component for the RCD
 /// Optionally uses LimitedChargesComponent.
@@ -45,12 +34,30 @@ public sealed partial class RCDComponent : Component
     [DataField("mode"), AutoNetworkedField]
     public RcdMode Mode = RcdMode.Floors;
 
+    [DataField("constructionPrototype"), AutoNetworkedField]
+    public string? ConstructionPrototype;
+
     /// <summary>
     /// ID of the floor to create when using the floor mode.
     /// </summary>
     [DataField("floor", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>))]
     [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public string Floor = "FloorSteel";
+}
+
+public enum RcdMode : byte
+{
+    None,
+    Deconstruct,
+    Floors,
+    Catwalks,
+    Walls,
+    Windows,
+    DirectionalWindows,
+    Grilles,
+    Airlocks,
+    Frames,
+    Lightning,
 }
 
 [Serializable, NetSerializable]

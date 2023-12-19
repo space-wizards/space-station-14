@@ -27,68 +27,68 @@
 
     <!-- Walls and flooring -->
     <ui:RadialContainer Name="WallsAndFlooring"  VerticalExpand="True" HorizontalExpand="True" Radius="64">
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Solid wall" RcdMode="ConstructStructure" ConstructionPrototype="WallSolid">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Solid wall" RcdMode="Walls" ConstructionPrototype="WallSolid">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/solid_wall.png"/>
         </rcd:RCDMenuButton>
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Steel tile" RcdMode="ConstructStructure" ConstructionPrototype="FloorSteel">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Steel tile" RcdMode="Floors" ConstructionPrototype="FloorSteel">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/metal_tile.png"/>
         </rcd:RCDMenuButton>
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Plating" RcdMode="ConstructStructure" ConstructionPrototype="Plating">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Plating" RcdMode="Floors" ConstructionPrototype="Plating">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/plating.png"/>
         </rcd:RCDMenuButton>
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Catwalk" RcdMode="ConstructStructure" ConstructionPrototype="Grille">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Catwalk" RcdMode="Catwalks" ConstructionPrototype="Catwalk">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/catwalk.png"/>
         </rcd:RCDMenuButton>
 	</ui:RadialContainer>
 
     <!-- Windows and grilles -->
 	<ui:RadialContainer Name="WindowsAndGrilles"  VerticalExpand="True" HorizontalExpand="True" Radius="64">
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Grille" RcdMode="ConstructStructure" ConstructionPrototype="Grille"> 
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Grille" RcdMode="Grilles" ConstructionPrototype="Grille"> 
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/grille.png"/>
         </rcd:RCDMenuButton>
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Window" RcdMode="ConstructStructure" ConstructionPrototype="Window">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Window" RcdMode="Windows" ConstructionPrototype="Window">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/window.png"/>
         </rcd:RCDMenuButton>
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Window" RcdMode="ConstructStructure" ConstructionPrototype="WindowDirectional">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Window" RcdMode="DirectionalWindows" ConstructionPrototype="WindowDirectional">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/directional.png"/>
         </rcd:RCDMenuButton>
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Reinforced Window" RcdMode="ConstructStructure" ConstructionPrototype="ReinforcedWindow">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Reinforced Window" RcdMode="Windows" ConstructionPrototype="ReinforcedWindow">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/directional_reinforced.png"/>
         </rcd:RCDMenuButton>
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Reinforced window" RcdMode="ConstructStructure" ConstructionPrototype="WindowReinforcedDirectional">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Reinforced window" RcdMode="DirectionalWindows" ConstructionPrototype="WindowReinforcedDirectional">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/window_reinforced.png"/>
         </rcd:RCDMenuButton>
 	</ui:RadialContainer>
 
     <!-- Airlocks -->
     <ui:RadialContainer Name="Airlocks"  VerticalExpand="True" HorizontalExpand="True" Radius="64">
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Normal airlock" RcdMode="ConstructStructure" ConstructionPrototype="Airlock">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Normal airlock" RcdMode="Airlocks" ConstructionPrototype="Airlock">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/airlock.png"/>
         </rcd:RCDMenuButton>
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Glass airlock" RcdMode="ConstructStructure" ConstructionPrototype="AirlockGlass">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Glass airlock" RcdMode="Airlocks" ConstructionPrototype="AirlockGlass">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/glass_airlock.png"/>
         </rcd:RCDMenuButton>
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Firelock" RcdMode="ConstructStructure" ConstructionPrototype="Firelock">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Firelock" RcdMode="Airlocks" ConstructionPrototype="Firelock">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/firelock.png"/>
         </rcd:RCDMenuButton>
 	</ui:RadialContainer>
 
     <!-- Computer and machine frames -->
     <ui:RadialContainer Name="ComputerAndMachineFrames"  VerticalExpand="True" HorizontalExpand="True" Radius="64">
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Computer frame" RcdMode="ConstructStructure" ConstructionPrototype="ComputerFrame">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Computer frame" RcdMode="Frames" ConstructionPrototype="ComputerFrame">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/computer.png"/>
         </rcd:RCDMenuButton>
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Machine frame" RcdMode="ConstructStructure" ConstructionPrototype="MachineFrame">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Machine frame" RcdMode="Frames" ConstructionPrototype="MachineFrame">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/machine_frame.png"/>
         </rcd:RCDMenuButton>
 	</ui:RadialContainer>
 
     <!-- Lighting -->
     <ui:RadialContainer Name="Lighting"  VerticalExpand="True" HorizontalExpand="True" Radius="64">
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Fluorescent light" RcdMode="ConstructStructure" ConstructionPrototype="Poweredlight">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Fluorescent light" RcdMode="Lighting" ConstructionPrototype="Poweredlight">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/fluorescent_light.png"/>
         </rcd:RCDMenuButton>
-        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Light bulb" RcdMode="ConstructStructure" ConstructionPrototype="PoweredSmallLight">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Light bulb" RcdMode="Lighting" ConstructionPrototype="PoweredSmallLight">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/light_bulb.png"/>
         </rcd:RCDMenuButton>
 	</ui:RadialContainer>

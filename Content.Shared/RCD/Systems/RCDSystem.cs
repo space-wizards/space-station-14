@@ -19,6 +19,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.RCD.Systems;
 
@@ -40,24 +41,23 @@ public sealed class RCDSystem : EntitySystem
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-    private readonly int RcdModeCount = Enum.GetValues(typeof(RcdMode)).Length;
-
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<RCDComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<RCDComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<RCDComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<RCDComponent, RCDDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<RCDComponent, DoAfterAttemptEvent<RCDDoAfterEvent>>(OnDoAfterAttempt);
-
         SubscribeLocalEvent<RCDComponent, RCDSystemMessage>(OnRCDSystemMessage);
     }
 
     private void OnRCDSystemMessage(EntityUid uid, RCDComponent component, RCDSystemMessage args)
     {
         Logger.Debug("RCD received message from " + uid + ": " + args.RcdMode + ", " + args.ConstructionPrototype);
+
+        component.Mode = args.RcdMode;
+        component.ConstructionPrototype = args.ConstructionPrototype;
     }
 
     private void OnExamine(EntityUid uid, RCDComponent comp, ExaminedEvent args)
@@ -67,15 +67,6 @@ public sealed class RCDSystem : EntitySystem
 
         var msg = Loc.GetString("rcd-component-examine-detail", ("mode", comp.Mode));
         args.PushMarkup(msg);
-    }
-
-    private void OnUseInHand(EntityUid uid, RCDComponent comp, UseInHandEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        NextMode(uid, comp, args.User);
-        args.Handled = true;
     }
 
     private void OnAfterInteract(EntityUid uid, RCDComponent comp, AfterInteractEvent args)
@@ -125,27 +116,34 @@ public sealed class RCDSystem : EntitySystem
 
     private void OnDoAfterAttempt(EntityUid uid, RCDComponent comp, DoAfterAttemptEvent<RCDDoAfterEvent> args)
     {
-        // sus client crash why
         if (args.Event?.DoAfter?.Args == null)
-            return;
-
-        var location = GetCoordinates(args.Event.Location);
-
-        var gridId = location.GetGridUid(EntityManager);
-        if (!HasComp<MapGridComponent>(gridId))
         {
-            location = location.AlignWithClosestGridTile();
-            gridId = location.GetGridUid(EntityManager);
-            // Check if fixing it failed / get final grid ID
-            if (!HasComp<MapGridComponent>(gridId))
-                return;
+            args.Cancel();
+            return;
         }
 
-        var mapGrid = _mapMan.GetGrid(gridId.Value);
-        var tile = mapGrid.GetTileRef(location);
+        var location = GetCoordinates(args.Event.Location);
+        var gridUid = location.GetGridUid(EntityManager);
+
+        if (gridUid == null)
+        {
+            args.Cancel();
+            return;
+        }
+
+        if (!TryGetMapGrid(gridUid, location, out var mapGrid))
+        {
+            args.Cancel();
+            return;
+        }
+
+        var tile = _mapSystem.GetTileRef(gridUid.Value, mapGrid, location);
 
         if (!IsRCDStillValid(uid, comp, args.Event.User, args.Event.Target, mapGrid, tile, args.Event.StartingMode))
+        {
             args.Cancel();
+            return;
+        }
     }
 
     private void OnDoAfter(EntityUid uid, RCDComponent comp, RCDDoAfterEvent args)
@@ -155,20 +153,16 @@ public sealed class RCDSystem : EntitySystem
 
         var user = args.User;
         var location = GetCoordinates(args.Location);
+        var gridUid = location.GetGridUid(EntityManager);
 
-        var gridId = location.GetGridUid(EntityManager);
-        if (!HasComp<MapGridComponent>(gridId))
-        {
-            location = location.AlignWithClosestGridTile();
-            gridId = location.GetGridUid(EntityManager);
-            // Check if fixing it failed / get final grid ID
-            if (!HasComp<MapGridComponent>(gridId))
-                return;
-        }
+        if (gridUid == null)
+            return;
 
-        var mapGrid = _mapMan.GetGrid(gridId.Value);
-        var tile = mapGrid.GetTileRef(location);
-        var snapPos = mapGrid.TileIndicesFor(location);
+        if (!TryGetMapGrid(gridUid, location, out var mapGrid))
+            return;
+
+        var tile = _mapSystem.GetTileRef(gridUid.Value, mapGrid, location);
+        var snapPos = _mapSystem.TileIndicesFor(gridUid.Value, mapGrid, location);
 
         // I love that this uses entirely separate code to construction and tile placement!!!
 
@@ -176,7 +170,7 @@ public sealed class RCDSystem : EntitySystem
         {
             //Floor mode just needs the tile to be a space tile (subFloor)
             case RcdMode.Floors:
-                if (!_floors.CanPlaceTile(gridId.Value, mapGrid, out var reason))
+                if (!_floors.CanPlaceTile(gridUid.Value, mapGrid, out var reason))
                 {
                     _popup.PopupClient(reason, user, user);
                     return;
@@ -185,6 +179,7 @@ public sealed class RCDSystem : EntitySystem
                 mapGrid.SetTile(snapPos, new Tile(_tileDefMan[comp.Floor].TileId));
                 _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridUid} {snapPos} to {comp.Floor}");
                 break;
+
             //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
             case RcdMode.Deconstruct:
                 if (!IsTileBlocked(tile)) // Delete the turf
@@ -199,6 +194,7 @@ public sealed class RCDSystem : EntitySystem
                     QueueDel(target);
                 }
                 break;
+
             //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile,
             // thus we early return to avoid the tile set code.
             case RcdMode.Walls:
@@ -210,7 +206,8 @@ public sealed class RCDSystem : EntitySystem
                     _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {tile.GridUid}");
                 }
                 break;
-            case RcdMode.Airlock:
+
+            case RcdMode.Airlocks:
                 // only spawn on the server
                 if (_net.IsServer)
                 {
@@ -219,6 +216,7 @@ public sealed class RCDSystem : EntitySystem
                     _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {tile.GridUid}");
                 }
                 break;
+
             default:
                 args.Handled = true;
                 return; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
@@ -297,7 +295,7 @@ public sealed class RCDSystem : EntitySystem
                     return false;
                 }
                 return true;
-            case RcdMode.Airlock:
+            case RcdMode.Airlocks:
                 if (tile.Tile.IsEmpty)
                 {
                     _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-airlock-tile-not-empty-message"), uid, user);
@@ -314,22 +312,24 @@ public sealed class RCDSystem : EntitySystem
         }
     }
 
-    private void NextMode(EntityUid uid, RCDComponent comp, EntityUid user)
-    {
-        _audio.PlayPredicted(comp.SwapModeSound, uid, user);
-
-        var mode = (int) comp.Mode;
-        mode = ++mode % RcdModeCount;
-        comp.Mode = (RcdMode) mode;
-        Dirty(comp);
-
-        var msg = Loc.GetString("rcd-component-change-mode", ("mode", comp.Mode.ToString()));
-        _popup.PopupClient(msg, uid, user);
-    }
-
     private bool IsTileBlocked(TileRef tile)
     {
         return _turf.IsTileBlocked(tile, CollisionGroup.MobMask);
+    }
+
+    private bool TryGetMapGrid(EntityUid? gridUid, EntityCoordinates location, [NotNullWhen(true)] out MapGridComponent? mapGrid)
+    {
+        if (!TryComp(gridUid, out mapGrid))
+        {
+            location = location.AlignWithClosestGridTile();
+            gridUid = location.GetGridUid(EntityManager);
+
+            // Check if fixing it failed / get final grid ID
+            if (!TryComp(gridUid, out mapGrid))
+                return false;
+        }
+
+        return true;
     }
 }
 
