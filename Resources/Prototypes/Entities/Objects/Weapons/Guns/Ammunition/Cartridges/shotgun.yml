@@ -157,12 +157,12 @@
   components:
   - type: Sprite
     layers:
-      - state: uranium
+      - state: depleted-uranium
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     count: 5
     spread: 6
     proto: PelletShotgunUranium
   - type: SpentAmmoVisuals
-    state: "uranium"
+    state: "depleted-uranium"
 
