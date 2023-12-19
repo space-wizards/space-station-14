@@ -44,7 +44,7 @@
   - type: UseDelay
     delay: 1
   - type: IgniteOnMeleeHit
-    fireStacks: -5
+    fireStacks: -4
 
 - type: entity
   id: FireAxeFlaming
