@@ -33,7 +33,7 @@ namespace Content.Client.LightCycle
             {
                 if (cycle.OriginalColor != null && cycle.OriginalColor != "#0000FF")
                 {
-                    cycle.CurrentTime = _gameTiming.RealTime.TotalSeconds - cycle.Offset + cycle.InitialTime;
+                    cycle.CurrentTime = (_gameTiming.RealTime - cycle.Offset).TotalSeconds + cycle.InitialTime;
                     map.AmbientLightColor = GetColor((uid, cycle), Color.FromHex(cycle.OriginalColor));
                 }
                 else

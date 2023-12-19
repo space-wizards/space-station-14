@@ -1,7 +1,7 @@
 using Content.Shared.Light.Components;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Light
+namespace Content.Server.Light.EntitySystems
 {
     public sealed partial class LightCycleSystem : EntitySystem
     {
@@ -15,7 +15,7 @@ namespace Content.Server.Light
 
         private void OnComponentStartup(EntityUid uid, LightCycleComponent cycle, ComponentStartup args)
         {
-            cycle.Offset = _gameTiming.RealTime.TotalSeconds;
+            cycle.Offset = _gameTiming.RealTime;
         }
 
     }
