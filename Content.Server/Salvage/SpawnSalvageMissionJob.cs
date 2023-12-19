@@ -34,7 +34,6 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Light.Components;
 using Robust.Shared.Configuration;
-using Content.Shared.CCVar;
 
 namespace Content.Server.Salvage;
 
