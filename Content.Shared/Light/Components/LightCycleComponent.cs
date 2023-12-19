@@ -9,6 +9,8 @@ namespace Content.Shared.Light.Components
 
         public string? OriginalColor;
 
+        [AutoNetworkedField]
+        [DataField("offset")]
         public double Offset;
 
         [ViewVariables(VVAccess.ReadOnly), DataField("currentTime")]

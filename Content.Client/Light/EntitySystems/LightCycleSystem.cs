@@ -13,14 +13,7 @@ namespace Content.Client.LightCycle
         {
             base.Initialize();
 
-            SubscribeLocalEvent<LightCycleComponent, ComponentStartup>(OnComponentStartup);
-
             SubscribeLocalEvent<LightCycleComponent, ComponentShutdown>(OnComponentShutdown);
-        }
-
-        private void OnComponentStartup(EntityUid uid, LightCycleComponent cycle, ComponentStartup args)
-        {
-            cycle.Offset = _gameTiming.RealTime.TotalSeconds;
         }
 
         private void OnComponentShutdown(EntityUid uid, LightCycleComponent cycle, ComponentShutdown args)
