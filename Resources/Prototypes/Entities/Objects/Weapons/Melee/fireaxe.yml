@@ -43,6 +43,8 @@
   - type: Prying
   - type: UseDelay
     delay: 1
+  - type: IgniteOnMeleeHit
+    fireStacks: -5
 
 - type: entity
   id: FireAxeFlaming
