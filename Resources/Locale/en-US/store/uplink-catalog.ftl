@@ -88,6 +88,9 @@ uplink-pistol-magazine-c20r-desc = Rifle magazine with 30 catridges. Compatible 
 uplink-pistol-magazine-caseless-name = Pistol Magazine (.25 caseless)
 uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compatible with the Cobra.
 
+uplink-pistol-rubber-magazine-caseless-name = Pistol Magazine (.25 caseless rubber)
+uplink-pistol-rubber-magazine-caseless-desc = Pistol magazine with 10 rubber bullets for non lethal takedowns. Compatible with the Cobra.
+
 uplink-speedloader-magnum-name = Speedloader (.45 magnum AP)
 uplink-speedloader-magnu-desc = Revolver speedloader with 6 armor-piercing catridges, capable of ignoring armor entirely. Compatible with the Python.
 
