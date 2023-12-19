@@ -17,7 +17,8 @@ namespace Content.Server.Eye.Blinding.EyeProtection
         {
             base.Initialize();
             SubscribeLocalEvent<RequiresEyeProtectionComponent, ToolUseAttemptEvent>(OnUseAttempt);
-            SubscribeLocalEvent<RequiresEyeProtectionComponent, ItemToggleActivatedEvent>(OnWelderToggled);
+            SubscribeLocalEvent<RequiresEyeProtectionComponent, ItemToggleActivatedEvent>(OnWelderToggledOn);
+            SubscribeLocalEvent<RequiresEyeProtectionComponent, ItemToggleDeactivatedEvent>(OnWelderToggledOff);
 
             SubscribeLocalEvent<EyeProtectionComponent, GetEyeProtectionEvent>(OnGetProtection);
             SubscribeLocalEvent<EyeProtectionComponent, InventoryRelayedEvent<GetEyeProtectionEvent>>(OnGetRelayedProtection);
@@ -56,7 +57,11 @@ namespace Content.Server.Eye.Blinding.EyeProtection
             _statusEffectsSystem.TryAddStatusEffect(args.User, TemporaryBlindnessSystem.BlindingStatusEffect,
                 statusTimeSpan, false, TemporaryBlindnessSystem.BlindingStatusEffect);
         }
-        private void OnWelderToggled(EntityUid uid, RequiresEyeProtectionComponent component, ItemToggleActivatedEvent args)
+        private void OnWelderToggledOn(EntityUid uid, RequiresEyeProtectionComponent component, ItemToggleActivatedEvent args)
+        {
+            component.Toggled = _itemToggle.IsActivated(uid);
+        }
+        private void OnWelderToggledOff(EntityUid uid, RequiresEyeProtectionComponent component, ItemToggleDeactivatedEvent args)
         {
             component.Toggled = _itemToggle.IsActivated(uid);
         }
