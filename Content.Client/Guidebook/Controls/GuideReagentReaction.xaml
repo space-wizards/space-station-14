@@ -8,13 +8,15 @@
                        VerticalAlignment="Center"
                        Access="Public"/>
     </BoxContainer>
-    <BoxContainer Orientation="Vertical"  VerticalAlignment="Center">
+    <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextureRect TexturePath="/Textures/Interface/Misc/beakerlarge.png"
-                     HorizontalAlignment="Center"/>
-        <Label Name="MixLabel"
-               Text="{Loc 'guidebook-reagent-recipes-mix'}"
-               HorizontalAlignment="Center"
-               Access="Public"/>
+                     HorizontalAlignment="Center"
+                     Name="MixTexture"
+                     Access="Public"/>
+        <RichTextLabel Name="MixLabel"
+                       HorizontalAlignment="Center"
+                       Access="Public"
+                       Margin="2 0 0 0"/>
     </BoxContainer>
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
         <RichTextLabel Name="ProductsLabel"

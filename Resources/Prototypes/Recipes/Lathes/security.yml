@@ -56,6 +56,14 @@
     Gold: 500
 
 - type: latheRecipe
+  id: WeaponLaserSvalinn
+  result: WeaponLaserSvalinn
+  completetime: 5
+  materials:
+    Steel: 2000
+    Gold: 500
+
+- type: latheRecipe
   id: WeaponXrayCannon
   result: WeaponXrayCannon
   completetime: 5

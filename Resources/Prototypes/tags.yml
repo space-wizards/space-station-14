@@ -366,6 +366,24 @@
   id: Cryobeaker
 
 - type: Tag
+  id: CrystalCyan
+
+- type: Tag
+  id: CrystalBlue
+
+- type: Tag
+  id: CrystalPink
+
+- type: Tag
+  id: CrystalGreen
+
+- type: Tag
+  id: CrystalOrange
+
+- type: Tag
+  id: CrystalRed
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -861,6 +879,9 @@
   id: PotatoBattery
 
 - type: Tag
+  id: PowerCell
+
+- type: Tag
   id: PowerCellSmall
 
 - type: Tag
@@ -929,6 +950,9 @@
 
 - type: Tag
   id: ShellShotgun
+
+- type: Tag
+  id: PelletShotgunFlare
 
 - type: Tag
   id: Shiv
@@ -1124,3 +1148,6 @@
 
 - type: Tag
   id:  boots
+
+- type: Tag
+  id: CleansForensics
