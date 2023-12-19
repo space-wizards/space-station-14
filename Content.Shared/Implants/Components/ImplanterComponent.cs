@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -14,6 +15,19 @@ public sealed partial class ImplanterComponent : Component
 {
     public const string ImplanterSlotId = "implanter_slot";
     public const string ImplantSlotId = "implant";
+
+    /// <summary>
+    /// Whitelist to check entities against before implanting.
+    /// Implants get their own whitelist which is checked afterwards.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Blacklist to check entities against before implanting.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     /// Used for implanters that start with specific implants

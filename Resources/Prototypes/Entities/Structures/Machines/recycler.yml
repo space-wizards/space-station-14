@@ -121,3 +121,9 @@
   - type: SlowContacts
     sprintSpeedModifier: 0.1
     walkSpeedModifier: 0.5
+  - type: InteractionPopup
+    successChance: 1.0
+    interactSuccessString: petting-success-recycler
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Items/drill_hit.ogg

@@ -7,13 +7,14 @@ using Content.Shared.PDA.Ringer;
 using Content.Shared.Popups;
 using Content.Shared.Store;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
+using Robust.Server.Audio;
 
 namespace Content.Server.PDA.Ringer
 {
@@ -182,7 +183,7 @@ namespace Content.Server.PDA.Ringer
                 _ui.SetUiState(bui, new RingerUpdateState(isPlaying, ringer.Ringtone));
         }
 
-        public bool ToggleRingerUI(EntityUid uid, IPlayerSession session)
+        public bool ToggleRingerUI(EntityUid uid, ICommonSession session)
         {
             if (_ui.TryGetUi(uid, RingerUiKey.Key, out var bui))
                 _ui.ToggleUi(bui, session);
@@ -204,7 +205,7 @@ namespace Content.Server.PDA.Ringer
                 ringer.TimeElapsed -= NoteDelay;
                 var ringerXform = Transform(uid);
 
-                _audio.Play(
+                _audio.PlayEntity(
                     GetSound(ringer.Ringtone[ringer.NoteCount]),
                     Filter.Empty().AddInRange(ringerXform.MapPosition, ringer.Range),
                     uid,

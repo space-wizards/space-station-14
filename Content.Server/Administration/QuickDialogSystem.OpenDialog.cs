@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Administration;
 using JetBrains.Annotations;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration;
 
@@ -16,7 +16,7 @@ public sealed partial class QuickDialogSystem
     /// <param name="cancelAction">The action to execute upon the dialog being cancelled.</param>
     /// <typeparam name="T1">Type of the input.</typeparam>
     [PublicAPI]
-    public void OpenDialog<T1>(IPlayerSession session, string title, string prompt, Action<T1> okAction,
+    public void OpenDialog<T1>(ICommonSession session, string title, string prompt, Action<T1> okAction,
         Action? cancelAction = null)
     {
         OpenDialogInternal(
@@ -53,7 +53,7 @@ public sealed partial class QuickDialogSystem
     /// <typeparam name="T1">Type of the first input.</typeparam>
     /// <typeparam name="T2">Type of the second input.</typeparam>
     [PublicAPI]
-    public void OpenDialog<T1, T2>(IPlayerSession session, string title, string prompt1, string prompt2,
+    public void OpenDialog<T1, T2>(ICommonSession session, string title, string prompt1, string prompt2,
         Action<T1, T2> okAction, Action? cancelAction = null)
     {
         OpenDialogInternal(
@@ -96,7 +96,7 @@ public sealed partial class QuickDialogSystem
     /// <typeparam name="T2">Type of the second input.</typeparam>
     /// <typeparam name="T3">Type of the third input.</typeparam>
     [PublicAPI]
-    public void OpenDialog<T1, T2, T3>(IPlayerSession session, string title, string prompt1, string prompt2,
+    public void OpenDialog<T1, T2, T3>(ICommonSession session, string title, string prompt1, string prompt2,
         string prompt3, Action<T1, T2, T3> okAction, Action? cancelAction = null)
     {
         OpenDialogInternal(
@@ -142,7 +142,7 @@ public sealed partial class QuickDialogSystem
     /// <typeparam name="T3">Type of the third input.</typeparam>
     /// <typeparam name="T4">Type of the fourth input.</typeparam>
     [PublicAPI]
-    public void OpenDialog<T1, T2, T3, T4>(IPlayerSession session, string title, string prompt1, string prompt2,
+    public void OpenDialog<T1, T2, T3, T4>(ICommonSession session, string title, string prompt1, string prompt2,
         string prompt3, string prompt4, Action<T1, T2, T3, T4> okAction, Action? cancelAction = null)
     {
         OpenDialogInternal(

@@ -1,8 +1,8 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Shared.Database;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Placement;
+using Robust.Shared.Player;
 
 namespace Content.Server.Placement;
 
@@ -10,7 +10,7 @@ public sealed class PlacementLoggerSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private readonly ActorSystem _actorSystem = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
 
     public override void Initialize()
     {
@@ -21,7 +21,8 @@ public sealed class PlacementLoggerSystem : EntitySystem
 
     private void OnEntityPlacement(PlacementEntityEvent ev)
     {
-        _actorSystem.TryGetActorFromUserId(ev.PlacerNetUserId, out var actor, out var actorEntity);
+        _player.TryGetSessionById(ev.PlacerNetUserId, out var actor);
+        var actorEntity = actor?.AttachedEntity;
 
         var logType = ev.PlacementEventAction switch
         {
@@ -43,7 +44,8 @@ public sealed class PlacementLoggerSystem : EntitySystem
 
     private void OnTilePlacement(PlacementTileEvent ev)
     {
-        _actorSystem.TryGetActorFromUserId(ev.PlacerNetUserId, out var actor, out var actorEntity);
+        _player.TryGetSessionById(ev.PlacerNetUserId, out var actor);
+        var actorEntity = actor?.AttachedEntity;
 
         if (actorEntity != null)
             _adminLogger.Add(LogType.Tile, LogImpact.High,

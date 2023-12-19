@@ -49,7 +49,7 @@ public sealed class CargoTest
         await pair.CleanReturnAsync();
     }
     [Test]
-    public async Task NoCargoBountyArbitageTest()
+    public async Task NoCargoBountyArbitrageTest()
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;

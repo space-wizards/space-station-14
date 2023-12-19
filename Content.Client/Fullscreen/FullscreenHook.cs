@@ -4,7 +4,7 @@ using Robust.Client.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Client.Fullscreen;
 public sealed class FullscreenHook

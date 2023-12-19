@@ -152,7 +152,7 @@ public abstract class SharedConveyorController : VirtualController
 
         foreach (var entity in comp.Intersecting)
         {
-            if (!xformQuery.TryGetComponent(entity, out var entityXform) || entityXform.ParentUid != grid.Owner)
+            if (!xformQuery.TryGetComponent(entity, out var entityXform) || entityXform.ParentUid != xform.GridUid!.Value)
                 continue;
 
             if (!bodyQuery.TryGetComponent(entity, out var physics) || physics.BodyType == BodyType.Static || physics.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(entity, physics, entityXform))

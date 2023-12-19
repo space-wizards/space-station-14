@@ -1,5 +1,5 @@
 - type: entity
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, MobCombat ]
   id: BaseMobFlesh
   name: aberrant flesh
   description: A shambling mass of flesh, animated through anomalous energy.
@@ -45,7 +45,6 @@
     bloodMaxVolume: 100
   - type: CombatMode
   - type: MeleeWeapon
-    hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
@@ -73,7 +72,6 @@
       Dead:
         Base: dead
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
@@ -103,7 +101,6 @@
       0: Alive
       50: Dead
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
@@ -190,7 +187,6 @@
     baseWalkSpeed: 1.5
     baseSprintSpeed: 2.5
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0

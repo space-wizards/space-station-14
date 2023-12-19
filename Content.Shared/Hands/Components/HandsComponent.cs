@@ -97,8 +97,9 @@ public sealed class HandsComponentState : ComponentState
 
     public HandsComponentState(HandsComponent handComp)
     {
+        // cloning lists because of test networking.
         Hands = new(handComp.Hands.Values);
-        HandNames = handComp.SortedHands;
+        HandNames = new(handComp.SortedHands);
         ActiveHand = handComp.ActiveHand?.Name;
     }
 }

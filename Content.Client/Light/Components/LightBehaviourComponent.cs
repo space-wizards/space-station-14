@@ -408,9 +408,9 @@ namespace Content.Client.Light.Components
         /// <summary>
         /// If we disable all the light behaviours we want to be able to revert the light to its original state.
         /// </summary>
-        private void CopyLightSettings(string property)
+        private void CopyLightSettings(EntityUid uid, string property)
         {
-            if (_entMan.TryGetComponent(Owner, out PointLightComponent? light))
+            if (_entMan.TryGetComponent(uid, out PointLightComponent? light))
             {
                 var propertyValue = AnimationHelper.GetAnimatableProperty(light, property);
                 if (propertyValue != null)
@@ -420,7 +420,7 @@ namespace Content.Client.Light.Components
             }
             else
             {
-                Logger.Warning($"{_entMan.GetComponent<MetaDataComponent>(Owner).EntityName} has a {nameof(LightBehaviourComponent)} but it has no {nameof(PointLightComponent)}! Check the prototype!");
+                Logger.Warning($"{_entMan.GetComponent<MetaDataComponent>(uid).EntityName} has a {nameof(LightBehaviourComponent)} but it has no {nameof(PointLightComponent)}! Check the prototype!");
             }
         }
 
@@ -445,7 +445,7 @@ namespace Content.Client.Light.Components
                 {
                     if (!animations.HasRunningAnimation(uid, animation, KeyPrefix + container.Key))
                     {
-                        CopyLightSettings(container.LightBehaviour.Property);
+                        CopyLightSettings(uid, container.LightBehaviour.Property);
                         container.LightBehaviour.UpdatePlaybackValues(container.Animation);
                         animations.Play(uid, animation, container.Animation, KeyPrefix + container.Key);
                     }

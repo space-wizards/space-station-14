@@ -255,7 +255,7 @@ namespace Content.Server.Communications
 
                 if (_idCardSystem.TryFindIdCard(mob, out var id))
                 {
-                    author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
+                    author = $"{id.Comp.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.Comp.JobTitle ?? string.Empty)})".Trim();
                 }
             }
 
