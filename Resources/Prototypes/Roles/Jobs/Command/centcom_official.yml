@@ -30,7 +30,19 @@
   name: job-name-centcomins
   description: job-description-centcomins
   playTimeTracker: JobCentralCommandInspector
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobCaptain
+      time: 36000 # 10 hours
+    - !type:RoleTimeRequirement
+      role: JobHeadOfSecurity
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 108000 # 30 hours
   setPreference: true
+  requireAdminNotify: true
+  weight: 20
   startingGear: CentcomInspectorGear
   icon: "JobIconCentralCommandInspector"
   supervisors: job-supervisors-centcom
@@ -47,6 +59,9 @@
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: CentcomInspectorGear
