@@ -76,23 +76,6 @@
   - !type:MiasmicSubsumationReaction {}
 
 - type: gasReaction
-  id: n2oDecomposition
-  priority: 0
-  minimumTemperature: 1400
-  minimumRequirements:
-  - 0     # oxygen
-  - 0     # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0     # miasma
-  - 0.01  # n2o
-  - 0     # frezon
-  effects:
-  - !type:N2ODecompositionReaction {}
-
-- type: gasReaction
   id: bzFormation
   priority: 2
   maximumTemperature: 313.149 # Atmospherics.FireMinimumTemperatureToExist - 60
