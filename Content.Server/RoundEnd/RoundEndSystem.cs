@@ -112,8 +112,13 @@ namespace Content.Server.RoundEnd
         /// </summary>
         public EntityUid? GetCentcomm()
         {
-            AllEntityQuery<StationCentcommComponent>().MoveNext(out var centcomm);
-            return centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId);
+            if (AllEntityQuery<StationCentcommComponent, TransformComponent>()
+                .MoveNext(out var centcomm, out var xform))
+            {
+                return xform.MapUid;
+            }
+
+            return null;
         }
 
         public bool CanCallOrRecall()
