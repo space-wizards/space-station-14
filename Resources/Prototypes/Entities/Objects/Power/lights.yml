@@ -140,7 +140,7 @@
   parent: BaseLightbulb
   name: service light bulb
   id: ServiceLightBulb
-  description: A low-brightness green lightbulb fit into janitorial service lights.
+  description: A low-brightness green lightbulb used in janitorial service lights.
   components:
   - type: LightBulb
     bulb: Bulb
