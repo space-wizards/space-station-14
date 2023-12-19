@@ -12,6 +12,10 @@ public sealed partial class BZFormationReaction : IGasReactionEffect
 {
     public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
     {
+        // If we're not reacting on a tile, do nothing.
+        if (holder is not TileAtmosphere tile)
+            return ReactionResult.NoReaction;
+
         var initN2O = mixture.GetMoles(Gas.NitrousOxide);
         var initPlasma = mixture.GetMoles(Gas.Plasma);
         var pressure = mixture.Pressure;
