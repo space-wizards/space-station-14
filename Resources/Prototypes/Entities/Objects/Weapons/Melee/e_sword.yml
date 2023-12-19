@@ -24,10 +24,15 @@
       path: /Audio/Weapons/eblade1.ogg
       params:
         variation: 0.250
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+        volume: -10
     activatedSoundOnSwing:
       path: /Audio/Weapons/eblademiss.ogg
       params:
-        variation: 0.250
+        variation: 0.125
     activatedDamage:
         types:
             Slash: 15

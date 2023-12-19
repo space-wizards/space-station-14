@@ -131,7 +131,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// Plays if no damage is done to the target entity.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("soundNoDamage")]
+    [DataField("soundNoDamage"), AutoNetworkedField]
     public SoundSpecifier NoDamageSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/tap.ogg");
 }
 

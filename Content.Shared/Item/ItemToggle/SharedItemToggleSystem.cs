@@ -228,8 +228,16 @@ public abstract class SharedItemToggleSystem : EntitySystem
         if (!TryComp(uid, out MeleeWeaponComponent? meleeWeapon))
             return;
 
-        //Sets the deactivated damage values to the item's default if none is stated.
+        //Sets the damage values to the item's default if none is stated.
+        itemToggleMelee.ActivatedDamage ??= meleeWeapon.Damage;
         itemToggleMelee.DeactivatedDamage ??= meleeWeapon.Damage;
+        //Sets the no damage sound to the item's default if none is stated.
+        itemToggleMelee.ActivatedSoundOnHitNoDamage ??= meleeWeapon.NoDamageSound;
+        itemToggleMelee.DeactivatedSoundOnHitNoDamage ??= meleeWeapon.NoDamageSound;
+        //Sets the swing sound to the item's default if none is stated.
+        itemToggleMelee.ActivatedSoundOnSwing ??= meleeWeapon.SwingSound;
+        itemToggleMelee.DeactivatedSoundOnSwing ??= meleeWeapon.SwingSound;
+
 
         if (IsActivated(uid))
         {
@@ -237,6 +245,9 @@ public abstract class SharedItemToggleSystem : EntitySystem
                 meleeWeapon.Damage = itemToggleMelee.ActivatedDamage;
 
             meleeWeapon.HitSound = itemToggleMelee.ActivatedSoundOnHit;
+
+            if (itemToggleMelee.ActivatedSoundOnHitNoDamage != null)
+                meleeWeapon.NoDamageSound = itemToggleMelee.ActivatedSoundOnHitNoDamage;
 
             if (itemToggleMelee.ActivatedSoundOnSwing != null)
                 meleeWeapon.SwingSound = itemToggleMelee.ActivatedSoundOnSwing;
@@ -247,7 +258,11 @@ public abstract class SharedItemToggleSystem : EntitySystem
         else
         {
             meleeWeapon.Damage = itemToggleMelee.DeactivatedDamage;
+
             meleeWeapon.HitSound = itemToggleMelee.DeactivatedSoundOnHit;
+
+            if (itemToggleMelee.DeactivatedSoundOnHitNoDamage != null)
+                meleeWeapon.NoDamageSound = itemToggleMelee.DeactivatedSoundOnHitNoDamage;
 
             if (itemToggleMelee.DeactivatedSoundOnSwing != null)
                 meleeWeapon.SwingSound = itemToggleMelee.DeactivatedSoundOnSwing;

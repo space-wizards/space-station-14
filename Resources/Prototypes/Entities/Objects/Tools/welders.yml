@@ -41,6 +41,11 @@
       params:
         variation: 0.250
         volume: -10
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+        volume: -12
     activatedDamage:
         types:
             Heat: 8
