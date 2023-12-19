@@ -10,5 +10,5 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 public sealed partial class PortalArtifactComponent : Component
 {
     [DataField]
-    public ProtoId<EntityPrototype> PortalProto = "PortalArtifact";
+    public EntProtoId PortalProto = "PortalArtifact";
 }

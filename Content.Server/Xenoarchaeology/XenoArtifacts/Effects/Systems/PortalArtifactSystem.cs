@@ -1,14 +1,8 @@
 using System.Linq;
-using System.Numerics;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Content.Shared.Mind;
-using Content.Shared.Speech;
-using Content.Shared.Storage;
+using Content.Shared.Mind.Components;
 using Content.Shared.Teleportation.Systems;
-using Robust.Server.GameObjects;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
@@ -26,10 +20,20 @@ public sealed class PortalArtifactSystem : EntitySystem
 
     private void OnActivate(Entity<PortalArtifactComponent> artifact, ref ArtifactActivatedEvent args)
     {
-        var firstPortal = Spawn(artifact.Comp.PortalProto, Transform(artifact.Owner).MapPosition);
+        var firstPortal = Spawn(artifact.Comp.PortalProto, Transform(artifact).MapPosition);
 
-        var mindQuery = EntityQuery<SpeechComponent>().ToList();
-        var target = _random.Pick(mindQuery);
+        var mindQuery = EntityQuery<MindContainerComponent>().ToList();
+        MindContainerComponent? target = null;
+        for (int i = 0; i < 50; i++)
+        {
+            var rndCheck = _random.Pick(mindQuery);
+            if (rndCheck.HasMind)
+            {
+                target = rndCheck;
+                break;
+            };
+        }
+        if (target == null) return;
 
         var secondPortal = Spawn(artifact.Comp.PortalProto, Transform(target.Owner).MapPosition);
 
