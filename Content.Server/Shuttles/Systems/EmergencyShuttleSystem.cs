@@ -20,8 +20,6 @@ using Content.Shared.Tag;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
-using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -89,13 +87,15 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
     private void OnCentcommShutdown(EntityUid uid, StationCentcommComponent component, ComponentShutdown args)
     {
+        ClearCentcomm(component);
+    }
+
+    private void ClearCentcomm(StationCentcommComponent component)
+    {
         QueueDel(component.Entity);
-        component.Entity = EntityUid.Invalid;
-
-        if (_mapManager.MapExists(component.MapId))
-            _mapManager.DeleteMap(component.MapId);
-
-        component.MapId = MapId.Nullspace;
+        QueueDel(component.MapEntity);
+        component.Entity = null;
+        component.MapEntity = null;
     }
 
     private void SetEmergencyShuttleEnabled(bool value)
@@ -232,7 +232,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         // Post mapinit? fancy
         if (TryComp<TransformComponent>(component.Entity, out var xform))
         {
-            component.MapId = xform.MapID;
+            component.MapEntity = xform.MapUid;
             return;
         }
 
@@ -293,46 +293,78 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
     private void AddCentcomm(StationCentcommComponent component)
     {
+        if (component.MapEntity != null || component.Entity != null)
+        {
+            _sawmill.Warning("Attempted to re-add an existing centcomm map.");
+            return;
+        }
+
         // Check for existing centcomms and just point to that
         var query = AllEntityQuery<StationCentcommComponent>();
-
         while (query.MoveNext(out var otherComp))
         {
             if (otherComp == component)
                 continue;
 
-            component.MapId = otherComp.MapId;
+            if (!Exists(otherComp.MapEntity) || !Exists(otherComp.Entity))
+            {
+                Log.Error($"Disconvered invalid centcomm component?");
+                ClearCentcomm(otherComp);
+                continue;
+            }
+
+            component.MapEntity = otherComp.MapEntity;
             component.ShuttleIndex = otherComp.ShuttleIndex;
             return;
         }
 
-        var mapId = _mapManager.CreateMap();
-        component.MapId = mapId;
-
-        if (!string.IsNullOrEmpty(component.Map.ToString()))
-        {
-            var ent = _map.LoadGrid(mapId, component.Map.ToString());
-
-            if (ent != null)
-            {
-                component.Entity = ent.Value;
-                _shuttle.AddFTLDestination(ent.Value, false);
-            }
-        }
-        else
+        if (string.IsNullOrEmpty(component.Map.ToString()))
         {
             _sawmill.Warning("No CentComm map found, skipping setup.");
+            return;
         }
+
+        var mapId = _mapManager.CreateMap();
+        var grid = _map.LoadGrid(mapId, component.Map.ToString());
+        var map = _mapManager.GetMapEntityId(mapId);
+
+        if (!Exists(map))
+        {
+            Log.Error($"Failed to set up centcomm map!");
+            QueueDel(grid);
+            return;
+        }
+
+        if (!Exists(grid))
+        {
+            Log.Error($"Failed to set up centcomm grid!");
+            QueueDel(map);
+            return;
+        }
+
+        var xform = Transform(grid.Value);
+        if (xform.ParentUid != map || xform.MapUid != map)
+        {
+            Log.Error($"Centcomm grid is not parented to its own map?");
+            QueueDel(map);
+            QueueDel(grid);
+            return;
+        }
+
+        component.MapEntity = map;
+        component.Entity = grid;
+        _shuttle.AddFTLDestination(grid.Value, false);
     }
 
-    public HashSet<MapId> GetCentcommMaps()
+    public HashSet<EntityUid> GetCentcommMaps()
     {
         var query = AllEntityQuery<StationCentcommComponent>();
-        var maps = new HashSet<MapId>(Count<StationCentcommComponent>());
+        var maps = new HashSet<EntityUid>(Count<StationCentcommComponent>());
 
         while (query.MoveNext(out var comp))
         {
-            maps.Add(comp.MapId);
+            if (comp.MapEntity != null)
+                maps.Add(comp.MapEntity.Value);
         }
 
         return maps;
@@ -342,14 +374,15 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     {
         if (!_emergencyShuttleEnabled
             || component.EmergencyShuttle != null ||
-            !TryComp<StationCentcommComponent>(uid, out var centcomm))
+            !TryComp<StationCentcommComponent>(uid, out var centcomm)
+            || !TryComp(centcomm.MapEntity, out MapComponent? map))
         {
             return;
         }
 
         // Load escape shuttle
         var shuttlePath = component.EmergencyShuttlePath;
-        var shuttle = _map.LoadGrid(centcomm.MapId, shuttlePath.ToString(), new MapLoadOptions()
+        var shuttle = _map.LoadGrid(map.MapId, shuttlePath.ToString(), new MapLoadOptions()
         {
             // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
             Offset = new Vector2(500f + centcomm.ShuttleIndex, 0f)
@@ -368,7 +401,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         while (query.MoveNext(out var comp))
         {
-            if (comp == centcomm || comp.MapId != centcomm.MapId)
+            if (comp == centcomm || comp.MapEntity != centcomm.MapEntity)
                 continue;
 
             comp.ShuttleIndex = centcomm.ShuttleIndex;

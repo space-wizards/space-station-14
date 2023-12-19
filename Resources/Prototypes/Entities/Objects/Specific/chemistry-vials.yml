@@ -93,3 +93,18 @@
         acts: [ "Destruction" ]
   - type: Spillable
     solution: drink
+
+- type: entity
+  id: VestineChemistryVial
+  name: vestine vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Vestine
+              Quantity: 30
+    - type: Tag
+      tags: []

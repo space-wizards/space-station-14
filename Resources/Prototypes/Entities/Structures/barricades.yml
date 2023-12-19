@@ -28,7 +28,7 @@
         - WallLayer
   - type: Damageable
     damageModifierSet: Wood
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -43,7 +43,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: AtmosExposed
-  
+
 #Regular Barricade
 - type: entity
   id: Barricade
