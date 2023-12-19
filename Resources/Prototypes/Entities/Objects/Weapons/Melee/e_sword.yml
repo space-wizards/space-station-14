@@ -32,7 +32,7 @@
         types:
             Slash: 15
             Heat: 15
-            Structural: 4
+            Structural: 20
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:
@@ -99,9 +99,8 @@
         variation: 0.250
     activatedDamage:
         types:
-            Slash: 9
-            Heat: 9
-            Structural: 1
+            Slash: 10
+            Heat: 10
     deactivatedSecret: true
   - type: ItemToggleActiveSound
     activeSound:
@@ -181,9 +180,8 @@
   - type: ItemToggleMeleeWeapon
     activatedDamage:
         types:
-            Slash: 14
-            Heat: 16
-            Structural: 3
+            Slash: 10
+            Heat: 12
     deactivatedSecret: true
   - type: ItemToggleDisarmMalus
     activatedDisarmMalus: 0.6
@@ -224,9 +222,9 @@
         variation: 0.250
     activatedDamage:
         types:
-            Slash: 17
-            Heat: 17
-            Structural: 20
+            Slash: 12
+            Heat: 12
+            Structural: 15
   - type: ItemToggleActiveSound
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
