@@ -1,7 +1,7 @@
 ﻿<BoxContainer xmlns="https://spacestation14.io"
               HorizontalExpand="True"
               Orientation="Horizontal"
-              Margin="4">
+              Margin="8">
     <Label Name="TimeLabel" HorizontalExpand="False" SetWidth="75" ClipText="True"/>
     <Label Name="AccessorLabel" HorizontalExpand="True" ClipText="True"/>
 </BoxContainer>

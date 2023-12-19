@@ -14,13 +14,13 @@
                                       BorderColor="#5a5a5a"
                                       BorderThickness="0 0 0 1"/>
                 </PanelContainer.PanelOverride>
-                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="4">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8">
                     <Label HorizontalExpand="False" SetWidth="75" Text="{Loc 'log-probe-label-time'}"/>
                     <Label HorizontalExpand="True" Text="{Loc 'log-probe-label-accessor'}"/>
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>
-        <ScrollContainer Name="ScrollContainer" HorizontalExpand="True" VerticalExpand="True">
+        <ScrollContainer Name="ScrollContainer" HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
             <BoxContainer Orientation="Vertical" Name="ProbedDeviceContainer" HorizontalExpand="True" VerticalExpand="True" VerticalAlignment="Top" Margin="3 0"/>
         </ScrollContainer>
     </BoxContainer>

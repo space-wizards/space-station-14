@@ -20,9 +20,6 @@ public sealed partial class LogProbeUiFragment : BoxContainer
         //Reverse the list so the oldest entries appear at the bottom
         logs.Reverse();
 
-        //Enable scrolling if there are more entries that can fit on the screen
-        ScrollContainer.HScrollEnabled = logs.Count > 9;
-
         foreach (var log in logs)
         {
             AddAccessLog(log);
