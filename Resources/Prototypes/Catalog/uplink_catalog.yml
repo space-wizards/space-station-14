@@ -292,6 +292,7 @@
 
 # Ammo
 
+# for the voper
 - type: listing
   id: UplinkPistol9mmMagazine
   name: uplink-pistol-magazine-name
@@ -338,6 +339,17 @@
   description: uplink-pistol-magazine-caseless-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi, state: red-icon }
   productEntity: MagazinePistolCaselessRifle
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkAmmo
+
+- type: listing
+  id: UplinkMagazinePistolCaselessRifleRubber
+  name: uplink-pistol-rubber-magazine-caseless-name
+  description: uplink-pistol-rubber-magazine-caseless-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi, state: rubber }
+  productEntity: MagazinePistolCaselessRifleRubber
   cost:
     Telecrystal: 1
   categories:
