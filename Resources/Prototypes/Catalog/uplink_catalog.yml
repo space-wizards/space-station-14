@@ -548,7 +548,7 @@
   icon: { sprite: /Textures/Objects/Fun/Darts/dart_red.rsi, state: icon }
   productEntity: HypoDartBox
   cost:
-    Telecrystal: 3
+    Telecrystal: 2
   categories:
   - UplinkUtility
   
@@ -719,6 +719,17 @@
       blacklist:
         components:
           - SurplusBundle
+
+- type: listing
+  id: UplinkChemistryKitBundle
+  name: uplink-chemistry-kit-name
+  description: uplink-chemistry-kit-desc
+  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: vials }
+  productEntity: ChemicalSynthesisKit
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkBundles
 
 - type: listing
   id: UplinkMedsBundle

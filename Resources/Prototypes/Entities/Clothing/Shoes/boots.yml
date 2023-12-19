@@ -57,6 +57,21 @@
 
 - type: entity
   parent: ClothingShoesMilitaryBase
+  id: ClothingShoesHighheelBoots
+  name: high-heeled boots
+  description: Snazy boots for when you want to be stylish, yet prepared.
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 6
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/highheelboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/highheelboots.rsi
+
+- type: entity
+  parent: ClothingShoesMilitaryBase
   id: ClothingShoesBootsMerc
   name: mercenary boots
   description: Boots that have gone through many conflicts and that have proven their combat reliability.
