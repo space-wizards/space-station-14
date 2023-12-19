@@ -322,6 +322,13 @@
         Base: paperwork_dead
       Dead:
         Base: paperwork_dead
+  - type: GhostRole
+    name: ghost-role-information-paperwork-name
+    description: ghost-role-information-paperwork-description
+  - type: GhostTakeoverAvailable
+  - type: Speech
+    speechSounds: Sloth
+    speechVerb: SmallMob
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -331,6 +338,16 @@
     interactSuccessString: petting-success-sloth
     interactFailureString: petting-failure-sloth
     interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/sloth_squeak.ogg  
+  - type: ReplacementAccent
+    accent: mouse
+  - type: Vocal
+    sounds:
+      Male: Sloth
+      Female: Sloth
+      Unsexed: Sloth
+    wilhelmProbability: 0.001
   - type: Grammar
     attributes:
       proper: true

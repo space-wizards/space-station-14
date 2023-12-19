@@ -42,6 +42,15 @@
     path: /Audio/Animals/mouse_squeak.ogg
   exclaimSound:
     path: /Audio/Animals/mouse_squeak.ogg
+    
+- type: speechSounds
+  id: Sloth
+  saySound:
+    path: /Audio/Animals/sloth_squeak.ogg
+  askSound:
+    path: /Audio/Animals/sloth_squeak.ogg
+  exclaimSound:
+    path: /Audio/Animals/sloth_squeak.ogg
 
 - type: speechSounds
   id: Vending

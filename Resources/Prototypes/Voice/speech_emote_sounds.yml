@@ -341,3 +341,10 @@
     path: /Audio/Animals/kangaroo_grunt.ogg
     params:
       variation: 0.125
+
+- type: emoteSounds
+  id: Sloth
+  sound:
+    path: /Audio/Animals/sloth_squeak.ogg
+    params:
+      variation: 0.125

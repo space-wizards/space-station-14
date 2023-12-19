@@ -20,6 +20,9 @@ ghost-role-information-hamster-description = A grumpy little ball of fluff.
 ghost-role-information-hamlet-name = Hamlet the hamster.
 ghost-role-information-hamlet-description = Lives in the station bridge, has a bit of a temper and is always hungry.
 
+ghost-role-information-paperwork-name = Paperwork the sloth.
+ghost-role-information-paperwork-description = The Librarian's trusty pet Sloth.
+
 ghost-role-information-slimes-name = Slime
 ghost-role-information-slimes-description = An ordinary slime with no special needs or interests. He just lives.
 ghost-role-information-angry-slimes-description = Everything around you irritates your instincts, destroy them!
