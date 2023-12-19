@@ -20,9 +20,10 @@ public sealed class PortalArtifactSystem : EntitySystem
 
     private void OnActivate(Entity<PortalArtifactComponent> artifact, ref ArtifactActivatedEvent args)
     {
+        var map = Transform(artifact).MapID);
         var firstPortal = Spawn(artifact.Comp.PortalProto, Transform(artifact).MapPosition);
 
-        var mindQuery = EntityQuery<MindContainerComponent>().ToList();
+        var mindQuery = EntityQuery<MindContainerComponent, TransformComponent>().Where((uid, mc, xform) => mc.HasMind && xform.MapID == map).ToList();
         MindContainerComponent? target = null;
         for (int i = 0; i < 50; i++)
         {
@@ -34,7 +35,7 @@ public sealed class PortalArtifactSystem : EntitySystem
             target = rndCheck;
             break;
         }
-    }
+
         if (target == null) return;
 
         var secondPortal = Spawn(artifact.Comp.PortalProto, Transform(target.Owner).MapPosition);
