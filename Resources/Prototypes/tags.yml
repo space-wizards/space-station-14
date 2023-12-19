@@ -32,6 +32,9 @@
   id: Balloon
 
 - type: Tag
+  id: BananaPeel
+
+- type: Tag
   id: BaseballBat
 
 - type: Tag
@@ -234,7 +237,7 @@
 
 - type: Tag
   id: CanPilot
-  
+
 - type: Tag
   id: CannonRestrict
 
@@ -312,6 +315,9 @@
   id: ClownShoes
 
 - type: Tag
+  id: ClownSuit
+
+- type: Tag
   id: CluwneHorn
 
 - type: Tag #Ohioans die happy
@@ -360,6 +366,24 @@
   id: Cryobeaker
 
 - type: Tag
+  id: CrystalCyan
+
+- type: Tag
+  id: CrystalBlue
+
+- type: Tag
+  id: CrystalPink
+
+- type: Tag
+  id: CrystalGreen
+
+- type: Tag
+  id: CrystalOrange
+
+- type: Tag
+  id: CrystalRed
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -373,6 +397,9 @@
 
 - type: Tag
   id: CubanCarp
+
+- type: Tag
+  id: DeathAcidifier
 
 - type: Tag
   id: Debug
@@ -852,6 +879,9 @@
   id: PotatoBattery
 
 - type: Tag
+  id: PowerCell
+
+- type: Tag
   id: PowerCellSmall
 
 - type: Tag
@@ -920,6 +950,9 @@
 
 - type: Tag
   id: ShellShotgun
+
+- type: Tag
+  id: PelletShotgunFlare
 
 - type: Tag
   id: Shiv
@@ -1072,6 +1105,9 @@
   id: WeaponPistolCHIMPUpgradeKit
 
 - type: Tag
+  id: WeaponShotgunKammerer
+
+- type: Tag
   id: Window
 
 - type: Tag
@@ -1099,6 +1135,9 @@
   id: Write
 
 - type: Tag
+  id: WriteIgnoreStamps
+
+- type: Tag
   id: RifleStock
 
 - type: Tag
@@ -1106,3 +1145,9 @@
 
 - type: Tag
   id: MindShield
+
+- type: Tag
+  id:  boots
+
+- type: Tag
+  id: CleansForensics

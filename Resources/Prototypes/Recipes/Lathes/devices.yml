@@ -150,6 +150,15 @@
     Plastic: 50
 
 - type: latheRecipe
+  id: WeaponCrusherGlaive
+  result: WeaponCrusherGlaive
+  completetime: 5
+  materials:
+    Steel: 1500
+    Glass: 250
+    Silver: 250
+
+- type: latheRecipe
   id: WeaponForceGun
   result: WeaponForceGun
   completetime: 5

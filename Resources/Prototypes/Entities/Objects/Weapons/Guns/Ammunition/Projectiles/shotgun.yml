@@ -75,7 +75,7 @@
   id: PelletShotgunImprovised
   name: improvised pellet
   noSpawn: true
-  parent: BaseBullet 
+  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -135,6 +135,9 @@
           - ItemMask
         restitution: 0.3
         friction: 0.2
+  - type: Tag
+    tags:
+      - PelletShotgunFlare
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot-flare

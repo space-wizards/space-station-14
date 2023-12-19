@@ -29,6 +29,7 @@ petting-success-dragon = Dodging teeth, claws, and flames, you pet {THE($target)
 petting-success-hamster = You pet {THE($target)} on {POSS-ADJ($target)} fluffy little head.
 petting-success-bear = You reluctantly pet {THE($target)} on {POSS-ADJ($target)} mystical head.
 petting-success-slimes = You pet {THE($target)} on {POSS-ADJ($target)} mucous surface.
+petting-success-snake = You pet {THE($target)} on {POSS-ADJ($target)} scaly large head.
 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
 
@@ -55,6 +56,7 @@ petting-success-honkbot = You pet {THE($target)} on {POSS-ADJ($target)} slippery
 petting-success-mimebot = You pet {THE($target)} on {POSS-ADJ($target)} cold metal head.
 petting-success-cleanbot = You pet {THE($target)} on {POSS-ADJ($target)} damp metal head.
 petting-success-medibot = You pet {THE($target)} on {POSS-ADJ($target)} sterile metal head.
+petting-success-recycler = You pet {THE($target)} on {POSS-ADJ($target)} mildly threatening steel exterior.
 
 petting-failure-honkbot = You reach out to pet {THE($target)}, but {SUBJECT($target)} honks in refusal!
 petting-failure-cleanbot = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy mopping!
