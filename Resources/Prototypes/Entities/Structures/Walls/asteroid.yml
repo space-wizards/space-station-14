@@ -205,6 +205,16 @@
 
 # Ore veins
 - type: entity
+  id: WallRockCoal
+  parent: WallRock
+  description: An ore vein rich with coal.
+  suffix: Coal
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreCoal
+
+- type: entity
   id: WallRockGold
   parent: WallRock
   description: An ore vein rich with gold.
@@ -402,6 +412,16 @@
           state: rock_wall_west
 
 - type: entity
+  id: WallRockBasaltCoal
+  parent: WallRockBasalt
+  description: An ore vein rich with coal.
+  suffix: Coal
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreCoal
+
+- type: entity
   id: WallRockBasaltGold
   parent: WallRockBasalt
   description: An ore vein rich with gold.
@@ -596,6 +616,16 @@
           state: rock_snow_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_snow_west
+
+- type: entity
+  id: WallRockSnowCoal
+  parent: WallRockSnow
+  description: An ore vein rich with coal.
+  suffix: Coal
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreCoal
 
 - type: entity
   id: WallRockSnowGold
@@ -795,6 +825,16 @@
           state: rock_sand_west
 
 - type: entity
+  id: WallRockSandCoal
+  parent: WallRockSand
+  description: An ore vein rich with coal.
+  suffix: Coal
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreCoal
+
+- type: entity
   id: WallRockSandGold
   parent: WallRockSand
   description: An ore vein rich with gold.
@@ -991,6 +1031,16 @@
           state: rock_chromite_west
 
 - type: entity
+  id: WallRockChromiteCoal
+  parent: WallRockChromite
+  description: An ore vein rich with coal.
+  suffix: Coal
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreCoal
+
+- type: entity
   id: WallRockChromiteGold
   parent: WallRockChromite
   description: An ore vein rich with gold.
@@ -1185,6 +1235,16 @@
           state: rock_andesite_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_andesite_west
+
+- type: entity
+  id: WallRockAndesiteCoal
+  parent: WallRockAndesite
+  description: An ore vein rich with coal.
+  suffix: Coal
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreCoal
 
 - type: entity
   id: WallRockAndesiteGold
