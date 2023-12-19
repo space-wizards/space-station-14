@@ -284,9 +284,12 @@ namespace Content.Client.Atmos.UI
                 totalGasAmount += gas.Amount;
             }
 
-            tableKey.AddChild(new Label { Text = Loc.GetString("gas-analyzer-window-gas-column-name") });
-            tableVal.AddChild(new Label { Text = Loc.GetString("gas-analyzer-window-molarity-column-name") });
-            tablePercent.AddChild(new Label { Text = Loc.GetString("gas-analyzer-window-percentage-column-name") });
+            tableKey.AddChild(new Label
+                { Text = Loc.GetString("gas-analyzer-window-gas-column-name"), Align = Label.AlignMode.Center });
+            tableVal.AddChild(new Label
+                { Text = Loc.GetString("gas-analyzer-window-molarity-column-name"), Align = Label.AlignMode.Center });
+            tablePercent.AddChild(new Label
+                { Text = Loc.GetString("gas-analyzer-window-percentage-column-name"), Align = Label.AlignMode.Center });
 
             tableKey.AddChild(new StripeBack());
             tableVal.AddChild(new StripeBack());
