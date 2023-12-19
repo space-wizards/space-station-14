@@ -268,11 +268,6 @@ namespace Content.Shared.Atmos
         public static readonly float N2ODecompositionScaleDivisor = (float) Math.Pow(-.25f * (N2ODecompositionMaxScaleTemp - N2ODecompositionMinScaleTemp), 2);
 
         /// <summary>
-        ///     The amount of energy released when one mole of N2O decomposes into nitrogen and oxygen.
-        /// </summary>
-        public const float N2ODecompositionEnergy = 200e3f;
-
-        /// <summary>
         ///     How many mol of frezon can be converted into miasma in one cycle.
         /// </summary>
         public const float MiasmicSubsumationMaxConversionRate = 5f;
