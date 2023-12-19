@@ -593,14 +593,11 @@
     maxIntensity: 50
 
 - type: artifactEffect
-  id: EffectCak
-  targetDepth: 3
-  effectHint: artifact-effect-hint-creation
+  id: EffectPortal
+  targetDepth: 1
+  effectHint: artifact-effect-hint-displacement
   components:
-  - type: SpawnArtifact
-    maxSpawns: 1
-    spawns:
-    - id: MobCatCake
+  - type: PortalArtifact
 
 - type: artifactEffect
   id: EffectSingulo
