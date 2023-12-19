@@ -12,7 +12,6 @@ research-technology-compact-power = Compact Power
 research-technology-industrial-engineering = Industrial Engineering
 research-technology-power-generation = Power Generation
 research-technology-atmospheric-tech = Atmospherics
-research-technology-rapid-construction = Rapid Construction
 research-technology-shuttlecraft = Shuttlecraft
 research-technology-ripley-aplu = Ripley APLU
 research-technology-advanced-atmospherics = Advanced Atmospherics
