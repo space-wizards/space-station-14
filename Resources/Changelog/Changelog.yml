@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed skeletons spawning in folded containers., type: Fix}
-  id: 4923
-  time: '2023-09-29T03:55:29.0000000+00:00'
 - author: casperr04
   changes:
   - {message: Fixed the true name of disguised players being shown when electrocuted.,
@@ -2927,4 +2922,10 @@ Entries:
       the security HUD.', type: Tweak}
   id: 5423
   time: '2023-12-19T08:29:07.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Captain clothing items have been resprited, type: Tweak}
+  id: 5424
+  time: '2023-12-19T20:36:36.0000000+00:00'
   url: null
