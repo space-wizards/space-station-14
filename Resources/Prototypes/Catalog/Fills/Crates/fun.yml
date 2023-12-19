@@ -130,7 +130,6 @@
   - type: StorageFill
     contents:
       - id: CrayonBox
-      - id: CrayonWhite
 
 - type: entity
   id: CrateFunBoardGames
