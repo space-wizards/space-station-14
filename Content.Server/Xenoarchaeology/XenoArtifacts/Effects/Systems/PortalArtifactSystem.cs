@@ -27,12 +27,14 @@ public sealed class PortalArtifactSystem : EntitySystem
         for (int i = 0; i < 50; i++)
         {
             var rndCheck = _random.Pick(mindQuery);
-            if (rndCheck.HasMind)
-            {
-                target = rndCheck;
-                break;
-            };
+
+            if (!rndCheck.HasMind) continue;
+            if (Transform(rndCheck.Owner).MapID != Transform(artifact).MapID) continue;
+
+            target = rndCheck;
+            break;
         }
+    }
         if (target == null) return;
 
         var secondPortal = Spawn(artifact.Comp.PortalProto, Transform(target.Owner).MapPosition);
