@@ -67,6 +67,8 @@
       type: SiliconLawBoundUserInterface
     - key: enum.BorgUiKey.Key
       type: BorgBoundUserInterface
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
@@ -74,6 +76,10 @@
     stunTime: 5
     emagLaws: SyndicateStatic
   - type: IonStormTarget
+  - type: Strippable
+  - type: InventorySlots
+  - type: Inventory
+    templateId: borg
   - type: Hands
     showInHands: false
   - type: IntrinsicRadioReceiver

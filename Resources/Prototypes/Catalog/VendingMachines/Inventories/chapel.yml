@@ -18,6 +18,7 @@
     ClothingHeadsetService: 2
     BoxCandle: 2
     BoxCandleSmall: 2
+    Urn: 5
   emaggedInventory:
     ClothingOuterArmorCult: 1
     ClothingHeadHelmetCult: 1

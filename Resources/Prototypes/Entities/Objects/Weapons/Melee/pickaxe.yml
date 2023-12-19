@@ -16,8 +16,6 @@
     damage:
       groups:
         Brute: 5
-      types:
-        Structural: 10
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
