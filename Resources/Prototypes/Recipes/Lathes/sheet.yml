@@ -12,7 +12,6 @@
   completetime: 2
   materials:
     Steel: 3000
-    Coal: 1000
 
 - type: latheRecipe
   id: SheetGlass1
