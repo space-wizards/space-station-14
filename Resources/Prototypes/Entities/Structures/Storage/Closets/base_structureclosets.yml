@@ -56,8 +56,8 @@
     placeCentered: true
     isPlaceable: false
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -87,6 +87,17 @@
     stateBaseClosed: generic
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
+
+# steel closet base (that can be constructed/deconstructed)
+- type: entity
+  id: ClosetSteelBase
+  parent: ClosetBase
+  components:
+  - type: Construction
+    graph: ClosetSteel
+    node: done
+    containers:
+    - entity_storage
 
 #Wall Closet
 - type: entity
