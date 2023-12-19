@@ -1,6 +1,7 @@
 using Content.Server.Body.Components;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Forensics.Components;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
@@ -90,7 +91,6 @@ namespace Content.Server.Forensics
                     DistanceThreshold = forensicsComp.CleanDistance,
                 };
 
-
                 _doAfterSystem.TryStartDoAfter(doAfterArgs);
                 _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning", ("target", args.Target)), args.User, args.User);
 
@@ -142,6 +142,9 @@ namespace Content.Server.Forensics
 
         private void ApplyEvidence(EntityUid user, EntityUid target)
         {
+            if (HasComp<IgnoresFingerprintsComponent>(target))
+                return;
+
             var component = EnsureComp<ForensicsComponent>(target);
             if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves))
             {
@@ -176,6 +179,7 @@ namespace Content.Server.Forensics
             {
                 EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
                 recipientComp.DNAs.Add(donorComp.DNA);
+                recipientComp.CanDnaBeCleaned = canDnaBeCleaned;
             }
         }
 

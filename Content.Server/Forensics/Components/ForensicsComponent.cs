@@ -23,7 +23,7 @@ namespace Content.Server.Forensics
 
         /// <summary>
         /// Can the DNA be cleaned off of this entity?
-        /// e.g. you can clean the DNA off of a knife, but not a puddle
+        /// e.g. you can wipe the DNA off of a knife, but not a cigarette
         /// </summary>
         [DataField("canDnaBeCleaned")]
         public bool CanDnaBeCleaned = true;

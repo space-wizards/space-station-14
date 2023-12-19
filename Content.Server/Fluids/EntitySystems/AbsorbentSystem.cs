@@ -98,16 +98,17 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         if (!args.CanReach || args.Handled || args.Target == null)
             return;
 
-        args.Handled = Mop(args.User, args.Target.Value, args.Used, component);
+        Mop(args.User, args.Target.Value, args.Used, component);
+        args.Handled = true;
     }
 
-    private bool Mop(EntityUid user, EntityUid target, EntityUid used, AbsorbentComponent component)
+    private void Mop(EntityUid user, EntityUid target, EntityUid used, AbsorbentComponent component)
     {
         if (!_solutionSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorberSoln))
-            return false;
+            return;
 
         if (_useDelay.ActiveDelay(used))
-            return false;
+            return;
 
         // If it's a puddle try to grab from
         if (!TryPuddleInteract(user, used, target, component, absorberSoln))
@@ -116,10 +117,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
             // If it's anything else transfer to
             if (!TryTransferAbsorber(user, used, target, component, absorberSoln))
-                return false;
+                return;
         }
-
-        return true;
     }
 
     /// <summary>
