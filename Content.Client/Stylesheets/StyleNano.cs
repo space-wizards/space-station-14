@@ -1473,7 +1473,29 @@ namespace Content.Client.Stylesheets
                         BackgroundColor = FancyTreeSelectedRowColor,
                     }),
 
-            }).ToList());
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonOpenRight)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenRight),
+
+                Element<TextureButton>().Class("RadialMenuButton")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/button_normal.png")),
+                Element<TextureButton>().Class("RadialMenuButton")
+                    .Pseudo(TextureButton.StylePseudoClassHover)
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/button_hover.png")),
+
+                Element<TextureButton>().Class("RadialMenuCloseButton")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/close_normal.png")),
+                Element<TextureButton>().Class("RadialMenuCloseButton")
+                    .Pseudo(TextureButton.StylePseudoClassHover)
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/close_hover.png")),
+
+                Element<TextureButton>().Class("RadialMenuBackButton")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/back_normal.png")),
+                Element<TextureButton>().Class("RadialMenuBackButton")
+                    .Pseudo(TextureButton.StylePseudoClassHover)
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/back_hover.png")),
+
+        }).ToList());
         }
     }
 }

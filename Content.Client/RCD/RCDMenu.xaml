@@ -1,0 +1,92 @@
+<ui:RadialMenu xmlns="https://spacestation14.io"
+                        xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                        xmlns:rcd="clr-namespace:Content.Client.RCD"
+                        MinSize="600 600">
+    
+    <ui:RadialContainer Name="MainMenu" VerticalExpand="True" HorizontalExpand="True" Radius="64">
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Deconstruct">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/deconstruct.png"/>
+        </ui:RadialMenuTextureButton>
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Walls and Flooring" TargetLayer="WallsAndFlooring">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/walls_and_flooring.png"/>
+        </ui:RadialMenuTextureButton>
+		<ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Windows and Grilles" TargetLayer="WindowsAndGrilles">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/windows_and_grilles.png"/>
+        </ui:RadialMenuTextureButton>
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Airlocks" TargetLayer="Airlocks">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/airlocks.png"/>
+        </ui:RadialMenuTextureButton>
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Computers and Machine Frames" TargetLayer="ComputersAndFrames">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/computers_and_frames.png"/>
+        </ui:RadialMenuTextureButton>
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Lighting" TargetLayer="Lighting">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/lighting.png"/>
+        </ui:RadialMenuTextureButton>
+    </ui:RadialContainer>
+    
+    <ui:RadialContainer Name="WallsAndFlooring"  VerticalExpand="True" HorizontalExpand="True" Radius="64">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Solid wall">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/solid_wall.png"/>
+        </rcd:RCDMenuButton>
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Steel tile">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/metal_tile.png"/>
+        </rcd:RCDMenuButton>
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Plating">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/plating.png"/>
+        </rcd:RCDMenuButton>
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Catwalk">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/catwalk.png"/>
+        </rcd:RCDMenuButton>
+	</ui:RadialContainer>
+	
+	<ui:RadialContainer Name="WindowsAndGrilles"  VerticalExpand="True" HorizontalExpand="True" Radius="64">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Grille">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/grille.png"/>
+        </rcd:RCDMenuButton>
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Window">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/window.png"/>
+        </rcd:RCDMenuButton>
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Window">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/directional.png"/>
+        </rcd:RCDMenuButton>
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Reinforced Window">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/directional_reinforced.png"/>
+        </rcd:RCDMenuButton>
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Reinforced window">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/window_reinforced.png"/>
+        </rcd:RCDMenuButton>
+	</ui:RadialContainer>
+
+    <ui:RadialContainer Name="Airlocks"  VerticalExpand="True" HorizontalExpand="True" Radius="64">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Normal airlock">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/airlock.png"/>
+        </rcd:RCDMenuButton>
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Glass airlock">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/glass_airlock.png"/>
+        </rcd:RCDMenuButton>
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Firelock">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/firelock.png"/>
+        </rcd:RCDMenuButton>
+	</ui:RadialContainer>
+
+    <ui:RadialContainer Name="ComputersAndFrames"  VerticalExpand="True" HorizontalExpand="True" Radius="64">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Computer frame">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/computer.png"
+                         RcdMode="ConstructStructure" ConstructionPrototype="ComputerFrame"/>
+        </rcd:RCDMenuButton>
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Machine frame">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/machine_frame.png"
+                         RcdMode="ConstructStructure" ConstructionPrototype="MachineFrame"/>
+        </rcd:RCDMenuButton>
+	</ui:RadialContainer>
+
+    <ui:RadialContainer Name="Lighting"  VerticalExpand="True" HorizontalExpand="True" Radius="64">
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Fluorescent light">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/fluorescent_light.png"/>
+        </rcd:RCDMenuButton>
+        <rcd:RCDMenuButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Light bulb">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/light_bulb.png"/>
+        </rcd:RCDMenuButton>
+	</ui:RadialContainer>
+
+</ui:RadialMenu>

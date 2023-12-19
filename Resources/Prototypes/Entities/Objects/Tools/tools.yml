@@ -369,6 +369,12 @@
       Plastic: 100
   - type: StaticPrice
     price: 100
+  - type: UserInterface
+    interfaces:
+    - key: enum.RcdUiKey.Key
+      type: RCDMenuBoundUserInterface
+  - type: ActivatableUI
+    key: enum.RcdUiKey.Key
 
 - type: entity
   id: RCDEmpty

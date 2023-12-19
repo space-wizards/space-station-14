@@ -9,10 +9,13 @@ namespace Content.Shared.RCD.Components;
 
 public enum RcdMode : byte
 {
+    None,
+    Deconstruct,
+    ConstructFlooring,
+    ConstructStructure,
+    Airlock,
     Floors,
     Walls,
-    Airlock,
-    Deconstruct
 }
 
 /// <summary>
@@ -48,4 +51,10 @@ public sealed partial class RCDComponent : Component
     [DataField("floor", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>))]
     [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public string Floor = "FloorSteel";
+}
+
+[Serializable, NetSerializable]
+public enum RcdUiKey
+{
+    Key
 }

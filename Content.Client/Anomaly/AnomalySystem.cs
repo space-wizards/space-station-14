@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Client.Gravity;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
