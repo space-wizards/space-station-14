@@ -49,11 +49,12 @@
   - 0.01  # nitrogen
   - 0     # carbon dioxide
   - 0     # plasma
-  - 0.01  # tritium
+  - 0     # tritium
   - 0     # vapor
   - 0     # miasma
   - 0     # n2o
   - 0     # frezon
+  - 0.01  # bz
   effects:
   - !type:FrezonProductionReaction {}
 
