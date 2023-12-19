@@ -26,13 +26,13 @@ public sealed partial class ItemToggleMeleeWeaponComponent : Component
     public SoundSpecifier? DeactivatedSoundOnHit;
 
     /// <summary>
-    ///     The noise this item makes when hitting something with it on when it does no damage.
+    ///     The noise this item makes when hitting something with it on and it does no damage.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public SoundSpecifier? ActivatedSoundOnHitNoDamage;
 
     /// <summary>
-    ///     The noise this item makes when hitting something with it off when it does no damage.
+    ///     The noise this item makes when hitting something with it off and it does no damage.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public SoundSpecifier? DeactivatedSoundOnHitNoDamage;
