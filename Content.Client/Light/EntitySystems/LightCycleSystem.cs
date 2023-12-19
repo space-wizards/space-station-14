@@ -1,3 +1,4 @@
+using Content.Client.GameTicking.Managers;
 using Content.Shared.Light.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
@@ -6,6 +7,7 @@ namespace Content.Client.LightCycle
 {
     public sealed partial class LightCycleSystem : EntitySystem
     {
+        [Dependency] private readonly ClientGameTicker _gameTicker = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -33,7 +35,7 @@ namespace Content.Client.LightCycle
             {
                 if (cycle.OriginalColor != null && cycle.OriginalColor != "#0000FF")
                 {
-                    cycle.CurrentTime = _gameTiming.RealTime.Subtract(cycle.Offset).TotalSeconds + cycle.InitialTime;
+                    cycle.CurrentTime = _gameTiming.CurTime.Subtract(cycle.Offset).Subtract(_gameTicker.RoundStartTimeSpan).TotalSeconds + cycle.InitialTime;
                     map.AmbientLightColor = GetColor((uid, cycle), Color.FromHex(cycle.OriginalColor));
                 }
                 else

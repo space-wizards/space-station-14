@@ -1,11 +1,11 @@
+using Content.Server.GameTicking;
 using Content.Shared.Light.Components;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Light.EntitySystems
 {
     public sealed partial class LightCycleSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -15,7 +15,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnComponentStartup(EntityUid uid, LightCycleComponent cycle, ComponentStartup args)
         {
-            cycle.Offset = _gameTiming.RealTime;
+            cycle.Offset = _gameTicker.RoundDuration();
         }
 
     }
