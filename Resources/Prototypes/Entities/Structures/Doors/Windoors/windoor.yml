@@ -230,11 +230,3 @@
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorSecureParamedicLocked
-  suffix: Paramedic, Locked
-  components:
-  - type: AccessReader
-    access: [["Paramedic"]]
