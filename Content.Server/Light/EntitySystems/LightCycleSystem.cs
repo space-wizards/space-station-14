@@ -15,7 +15,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnComponentStartup(EntityUid uid, LightCycleComponent cycle, ComponentStartup args)
         {
-            cycle.Offset = _gameTiming.CurTime;
+            cycle.Offset = _gameTiming.RealTime;
         }
 
     }
