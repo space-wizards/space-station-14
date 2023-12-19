@@ -54,7 +54,20 @@ public sealed partial class RCDComponent : Component
 }
 
 [Serializable, NetSerializable]
-public enum RcdUiKey
+public sealed class RCDSystemMessage : BoundUserInterfaceMessage
+{
+    public RcdMode RcdMode;
+    public string? ConstructionPrototype;
+
+    public RCDSystemMessage(RcdMode rcdMode, string? constructionPrototype)
+    {
+        RcdMode = rcdMode;
+        ConstructionPrototype = constructionPrototype;
+    }
+}
+
+[Serializable, NetSerializable]
+public enum RcdUiKey : byte
 {
     Key
 }

@@ -9,24 +9,11 @@ namespace Content.Client.UserInterface.Controls;
 [Virtual]
 public class RadialMenu : BaseWindow
 {
-    /// <summary>
-    /// This event triggers when the MultiLayerContainer opens
-    /// </summary>
-    //public event Action? OnOpen;
-
-    /// <summary>
-    /// This event triggers when the MultiLayerContainer closes
-    /// </summary>
-    //public event Action? OnClose;
-
-    // Local variables
     private TextureButton? _backButton;
     private List<Control> _path = new();
 
     public RadialMenu()
     {
-        IoCManager.InjectDependencies(this);
-
         _backButton = new TextureButton()
         {
             HorizontalAlignment = HAlignment.Center,
@@ -38,9 +25,6 @@ public class RadialMenu : BaseWindow
         _backButton.OnButtonUp += _ => ReturnToPreviousLayer();
 
         AddChild(_backButton);
-
-        //var r = new TextureRect();
-        //r.TextureScale
 
         OnChildAdded += child => child.Visible = ChildCount <= 2;
     }
@@ -137,7 +121,7 @@ public class RadialMenuButton : Button
 
     private RadialMenu? FindParentMultiLayerContainer(Control control)
     {
-        foreach (var ancestor in this.GetSelfAndLogicalAncestors())
+        foreach (var ancestor in control.GetSelfAndLogicalAncestors())
         {
             if (ancestor is RadialMenu)
                 return ancestor as RadialMenu;
@@ -154,8 +138,6 @@ public class RadialMenuTextureButton : TextureButton
     /// Upon clicking this button the radial menu will be moved to the named layer
     /// </summary>
     public string TargetLayer { get; set; } = string.Empty;
-
-    private string _iconTexturePath = string.Empty;
 
     public RadialMenuTextureButton()
     {
@@ -177,7 +159,7 @@ public class RadialMenuTextureButton : TextureButton
 
     private RadialMenu? FindParentMultiLayerContainer(Control control)
     {
-        foreach (var ancestor in this.GetSelfAndLogicalAncestors())
+        foreach (var ancestor in control.GetSelfAndLogicalAncestors())
         {
             if (ancestor is RadialMenu)
                 return ancestor as RadialMenu;

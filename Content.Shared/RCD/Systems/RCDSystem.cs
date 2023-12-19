@@ -51,6 +51,13 @@ public sealed class RCDSystem : EntitySystem
         SubscribeLocalEvent<RCDComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<RCDComponent, RCDDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<RCDComponent, DoAfterAttemptEvent<RCDDoAfterEvent>>(OnDoAfterAttempt);
+
+        SubscribeLocalEvent<RCDComponent, RCDSystemMessage>(OnRCDSystemMessage);
+    }
+
+    private void OnRCDSystemMessage(EntityUid uid, RCDComponent component, RCDSystemMessage args)
+    {
+        Logger.Debug("RCD received message from " + uid + ": " + args.RcdMode + ", " + args.ConstructionPrototype);
     }
 
     private void OnExamine(EntityUid uid, RCDComponent comp, ExaminedEvent args)
