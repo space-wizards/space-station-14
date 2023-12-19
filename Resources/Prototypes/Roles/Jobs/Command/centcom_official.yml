@@ -39,7 +39,7 @@
       time: 36000 # 10 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 108000 # 30 hours
+      time: 1620000 # 45 hours
   setPreference: true
   requireAdminNotify: true
   weight: 20
