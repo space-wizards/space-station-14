@@ -19,6 +19,16 @@
   group: market
 
 - type: cargoProduct
+  id: MedicalChemistryVials
+  icon:
+    sprite: Objects/Specific/Chemistry/vial.rsi
+    state: vial
+  product: CrateChemistryVials
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
   id: EmergencyBurnKit
   icon:
     sprite: Objects/Specific/Medical/firstaidkits.rsi

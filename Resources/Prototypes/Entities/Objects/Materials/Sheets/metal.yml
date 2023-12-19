@@ -63,11 +63,9 @@
       steel:
         reagents:
         - ReagentId: Iron
-          Quantity: 22
+          Quantity: 9
         - ReagentId: Carbon
-          Quantity: 2.5
-        - ReagentId: Lead
-          Quantity: 0.5
+          Quantity: 1
 
 - type: entity
   parent: SheetSteel
@@ -136,11 +134,9 @@
         - ReagentId: Plasma
           Quantity: 10
         - ReagentId: Iron
-          Quantity: 22
+          Quantity: 9
         - ReagentId: Carbon
-          Quantity: 2.5
-        - ReagentId: Lead
-          Quantity: 0.5
+          Quantity: 1
 
 - type: entity
   parent: SheetPlasteel

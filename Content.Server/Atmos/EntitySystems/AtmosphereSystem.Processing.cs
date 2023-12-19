@@ -4,6 +4,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Maps;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
@@ -448,6 +449,17 @@ namespace Content.Server.Atmos.EntitySystems
                 var ent = _currentRunAtmosphere[_currentRunAtmosphereIndex];
                 var (owner, atmosphere) = ent;
                 TryComp(owner, out GasTileOverlayComponent? visuals);
+
+                if (!TryComp(owner, out TransformComponent? x)
+                    || x.MapUid == null
+                    || TerminatingOrDeleted(x.MapUid.Value)
+                    || x.MapID == MapId.Nullspace)
+                {
+                    Log.Error($"Attempting to process atmos without a map? Entity: {ToPrettyString(owner)}");
+                    _simulationPaused = false;
+                    _currentRunAtmosphere.Clear();
+                    continue;
+                }
 
                 if (atmosphere.LifeStage >= ComponentLifeStage.Stopping || Paused(owner) || !atmosphere.Simulated)
                     continue;
