@@ -126,3 +126,19 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/soymilk.rsi
+
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkOatMilkCarton
+  name: oat milk
+  description: It's oat milk. Tan and nutritious goodness!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: MilkOat
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/oatmilk.rsi
