@@ -10,7 +10,6 @@ namespace Content.Client.LightCycle
         [Dependency] private readonly ClientGameTicker _gameTicker = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -33,10 +32,14 @@ namespace Content.Client.LightCycle
             var mapQuery = EntityQueryEnumerator<MapLightComponent, LightCycleComponent>();
             while (mapQuery.MoveNext(out var uid, out var map, out var cycle))
             {
-                if (cycle.OriginalColor != null && cycle.OriginalColor != "#0000FF")
+                if (cycle.OriginalColor != null && !cycle.OriginalColor.ToUpper().Equals("#0000FF"))
                 {
                     var time = _gameTiming.CurTime.Subtract(cycle.Offset).Subtract(_gameTicker.RoundStartTimeSpan).TotalSeconds + cycle.InitialTime;
-                    map.AmbientLightColor = GetColor((uid, cycle), Color.FromHex(cycle.OriginalColor), time);
+                    var color = GetColor((uid, cycle), Color.FromHex(cycle.OriginalColor), time);
+                    if (!color.Equals(map.AmbientLightColor.ToHex()))
+                    {
+                        map.AmbientLightColor = color;
+                    }
                 }
                 else
                 {
