@@ -804,8 +804,6 @@
   parent: BaseArrow
   noSpawn: true
   components:
-  - type: CartridgeAmmo
-    proto: BulletNail
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/nail.rsi
     layers:

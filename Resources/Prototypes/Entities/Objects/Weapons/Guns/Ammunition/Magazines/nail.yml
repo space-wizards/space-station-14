@@ -11,8 +11,8 @@
     mayTransfer: true
     whitelist:
       tags:
-        - BulletNail
-    proto: BulletNail
+        - CartridgeNail
+    proto: CartridgeNail
     capacity: 20
   - type: Item
     size: Small
@@ -38,7 +38,7 @@
   parent: BaseMagazineNail
   components:
   - type: BallisticAmmoProvider
-    proto: BulletNail
+    proto: CartridgeNail
     capacity: 20
   - type: Sprite
     layers:
