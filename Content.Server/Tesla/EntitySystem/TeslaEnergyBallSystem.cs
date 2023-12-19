@@ -62,7 +62,7 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
 
         Spawn(tesla.Comp.ConsumeEffectProto, Transform(args.OtherEntity).Coordinates);
         QueueDel(args.OtherEntity);
-        AdjustEnergy(tesla, tesla.Comp, 10f);
+        AdjustEnergy(tesla, tesla.Comp, tesla.Comp.ConsumeStuffEnergy);
     }
     public void AdjustEnergy(EntityUid uid, TeslaEnergyBallComponent component, float delta)
     {

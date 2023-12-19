@@ -16,6 +16,12 @@ public sealed partial class TeslaEnergyBallComponent : Component
     public float UpdateInterval = 3.0f;
 
     /// <summary>
+    /// how much energy will Tesla get by eating various things. Walls, people, anything.
+    /// </summary>
+    [DataField]
+    public float ConsumeStuffEnergy = 2f;
+
+    /// <summary>
     /// The amount of energy this entity contains. Once the limit is reached, the energy will be spent to spawn mini-energy balls
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]

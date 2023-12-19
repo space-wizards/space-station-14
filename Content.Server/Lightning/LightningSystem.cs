@@ -18,38 +18,16 @@ namespace Content.Server.Lightning;
 //and the number of these branches is explicitly controlled in the new function.
 public sealed class LightningSystem : SharedLightningSystem
 {
+    [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
-    private Dictionary<int, HashSet<Entity<LightningTargetComponent>>> _allTargets = new Dictionary<int, HashSet<Entity<LightningTargetComponent>>>();
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<LightningComponent, ComponentRemove>(OnRemove);
-
-        SubscribeLocalEvent<LightningTargetComponent, MapInitEvent>(OnTargetInit);
-        SubscribeLocalEvent<LightningTargetComponent, ComponentRemove>(OnTargetRemove);
-    }
-
-    private void OnTargetInit(Entity<LightningTargetComponent> target, ref MapInitEvent args)
-    {
-        var priority = target.Comp.Priority;
-        if (!_allTargets.ContainsKey(priority))
-            _allTargets.Add(priority, new HashSet<Entity<LightningTargetComponent>>());
-
-        _allTargets[priority].Add(new Entity<LightningTargetComponent>(target.Owner, target.Comp));
-        Log.Debug($"Added {target}, priority = {priority}, count = {_allTargets[priority].Count}");
-    }
-
-    private void OnTargetRemove(Entity<LightningTargetComponent> target, ref ComponentRemove args)
-    {
-        var priority = target.Comp.Priority;
-
-        _allTargets[priority].Remove(target);
-
-        Log.Debug($"Remove {target}, priority = {priority}, count = {_allTargets[priority].Count}");
     }
 
     private void OnRemove(EntityUid uid, LightningComponent component, ComponentRemove args)
@@ -91,38 +69,23 @@ public sealed class LightningSystem : SharedLightningSystem
     public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0)
     {
         //To Do: add support to different priority target tablem for different lightning types
-        List<Entity<LightningTargetComponent>> hitTargets = new List<Entity<LightningTargetComponent>>();
+        //To Do: Remove Hardcode LightningTargetComponent (this should be a parameter of the SharedLightningComponent)
+        var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).MapPosition, range).ToList(); //To Do: remove hardcode component
+        _random.Shuffle(targets);
+        targets.Sort((x, y) => y.Priority.CompareTo(x.Priority));
 
-        var targetPriority = _allTargets.Keys.Max();
+        var realCount = Math.Min(targets.Count, boltCount);
 
-        while (hitTargets.Count < boltCount)
+        if (realCount <= 0)
+            return;
+
+        for (int i = 0; i < realCount; i++)
         {
-            if (!_allTargets.ContainsKey(targetPriority))
-            {
-                targetPriority--;
-                continue;
-            }
-
-            var hashSet = _allTargets[targetPriority];
-            //hashset = _lookup.GetEntitiesInRange(Transform(user).MapPosition, range, hashSet);
-            //for sloth - I'm stumped, this function returns void. This approach doesn't seem to work either, and it's overcomplicated.
-            //in the current state, tesla hits all objects, ignoring priority
-            if (hashSet.Count == 0) {
-                targetPriority--;
-                continue;
-            }
-            var ent = _random.Pick(hashSet);
-            hitTargets.Add(ent);
-            hashSet.Remove(ent);
-        }
-
-        foreach (var item in hitTargets)
-        {
-            ShootLightning(user, item, lightningPrototype); //idk how to evade .Owner pls help
+            ShootLightning(user, targets[i].Owner, lightningPrototype); //idk how to evade .Owner pls help
 
             if (arcDepth > 0)
             {
-                ShootRandomLightnings(item, range, 1, lightningPrototype, arcDepth - item.Comp.LightningResistance);
+                ShootRandomLightnings(targets[i].Owner, range, 1, lightningPrototype, arcDepth - targets[i].LightningResistance);
             }
         }
     }

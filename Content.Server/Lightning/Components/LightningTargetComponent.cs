@@ -13,7 +13,7 @@ public sealed partial class LightningTargetComponent : Component
     /// <summary>
     /// Priority level for selecting a lightning target. 
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Priority;
 
     /// <summary>
