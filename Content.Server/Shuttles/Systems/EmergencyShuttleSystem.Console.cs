@@ -166,18 +166,19 @@ public sealed partial class EmergencyShuttleSystem
                     continue;
                 }
 
-                if (Deleted(centcomm.Entity))
+                if (!Deleted(centcomm.Entity))
+                {
+                    _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
+                        centcomm.Entity.Value, _consoleAccumulator, TransitTime, true);
+                    continue;
+                }
+
+                if (!Deleted(centcomm.MapEntity))
                 {
                     // TODO: Need to get non-overlapping positions.
                     _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
-                        new EntityCoordinates(
-                            _mapManager.GetMapEntityId(centcomm.MapId),
+                        new EntityCoordinates(centcomm.MapEntity.Value,
                             _random.NextVector2(1000f)), _consoleAccumulator, TransitTime);
-                }
-                else
-                {
-                    _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
-                        centcomm.Entity, _consoleAccumulator, TransitTime, true);
                 }
             }
 
@@ -205,7 +206,7 @@ public sealed partial class EmergencyShuttleSystem
             }
 
             // Don't dock them. If you do end up doing this then stagger launch.
-            _shuttle.FTLTravel(uid, shuttle, centcomm.Entity, hyperspaceTime: TransitTime);
+            _shuttle.FTLTravel(uid, shuttle, centcomm.Entity.Value, hyperspaceTime: TransitTime);
             RemCompDeferred<EscapePodComponent>(uid);
         }
 
@@ -229,7 +230,7 @@ public sealed partial class EmergencyShuttleSystem
                 if (Deleted(comp.Entity))
                     continue;
 
-                _shuttle.AddFTLDestination(comp.Entity, true);
+                _shuttle.AddFTLDestination(comp.Entity.Value, true);
             }
         }
     }

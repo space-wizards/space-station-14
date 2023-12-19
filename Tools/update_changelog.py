@@ -61,7 +61,7 @@ def main():
             "time", datetime.datetime.now(datetime.timezone.utc).isoformat()
         )
         changes = partyaml["changes"]
-        url = partyaml["url"]
+        url = partyaml.get("url")
 
         if not isinstance(changes, list):
             changes = [changes]

@@ -50,7 +50,7 @@ public sealed partial class PathfindingSystem
         SubscribeLocalEvent<CollisionLayerChangeEvent>(OnCollisionLayerChange);
         SubscribeLocalEvent<PhysicsBodyTypeChangedEvent>(OnBodyTypeChange);
         SubscribeLocalEvent<TileChangedEvent>(OnTileChange);
-        SubscribeLocalEvent<MoveEvent>(OnMoveEvent);
+        _transform.OnGlobalMoveEvent += OnMoveEvent;
     }
 
     private void OnTileChange(ref TileChangedEvent ev)

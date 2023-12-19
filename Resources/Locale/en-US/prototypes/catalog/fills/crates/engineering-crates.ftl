@@ -33,3 +33,9 @@ ent-CrateAirlockKit = Airlock kit
 
 ent-CrateEvaKit = EVA kit
     .desc = A set consisting of two prestigious EVA suits and helmets.
+
+ent-CrateRCDAmmo = RCD ammo crate
+    .desc = 3 RCD ammo, each restoring 5 charges.
+
+ent-CrateRCD = RCD crate
+    .desc = A crate containing a single Rapid Construction Device.
