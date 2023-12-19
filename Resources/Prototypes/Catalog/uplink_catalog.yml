@@ -1266,15 +1266,15 @@
 #   categories:
 #   - UplinkMisc
 
-- type: listing
-  id: UplinkNocturineChemistryBottle
-  name: uplink-nocturine-chemistry-bottle-name
-  description: uplink-nocturine-chemistry-bottle-desc
-  productEntity: NocturineChemistryBottle
-  cost:
-    Telecrystal: 5
-  categories:
-  - UplinkMisc
+# - type: listing
+#   id: UplinkNocturineChemistryBottle
+#   name: uplink-nocturine-chemistry-bottle-name
+#   description: uplink-nocturine-chemistry-bottle-desc
+#   productEntity: NocturineChemistryBottle
+#   cost:
+#     Telecrystal: 5
+#   categories:
+#   - UplinkMisc
 
 - type: listing
   id: UplinkCombatMedkit
