@@ -13,9 +13,6 @@ namespace Content.Shared.Light.Components
         [DataField("offset")]
         public TimeSpan Offset;
 
-        [ViewVariables(VVAccess.ReadOnly), DataField("currentTime")]
-        public double CurrentTime = 0;
-
         [AutoNetworkedField]
         [ViewVariables(VVAccess.ReadWrite), DataField("isEnabled")]
         public bool IsEnabled = true;

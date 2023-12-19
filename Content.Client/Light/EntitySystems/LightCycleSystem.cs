@@ -35,8 +35,8 @@ namespace Content.Client.LightCycle
             {
                 if (cycle.OriginalColor != null && cycle.OriginalColor != "#0000FF")
                 {
-                    cycle.CurrentTime = _gameTiming.CurTime.Subtract(cycle.Offset).Subtract(_gameTicker.RoundStartTimeSpan).TotalSeconds + cycle.InitialTime;
-                    map.AmbientLightColor = GetColor((uid, cycle), Color.FromHex(cycle.OriginalColor));
+                    var time = _gameTiming.CurTime.Subtract(cycle.Offset).Subtract(_gameTicker.RoundStartTimeSpan).TotalSeconds + cycle.InitialTime;
+                    map.AmbientLightColor = GetColor((uid, cycle), Color.FromHex(cycle.OriginalColor), time);
                 }
                 else
                 {
@@ -46,12 +46,12 @@ namespace Content.Client.LightCycle
         }
 
         // Decomposes the color into its components and multiplies each one by the individual color level as function of time, returning a new color.
-        public static Color GetColor(Entity<LightCycleComponent> cycle, Color color)
+        public static Color GetColor(Entity<LightCycleComponent> cycle, Color color, double time)
         {
             if (cycle.Comp.IsEnabled)
             {
-                var lightLevel = CalculateLightLevel(cycle.Comp);
-                var colorLevel = CalculateColorLevel(cycle.Comp);
+                var lightLevel = CalculateLightLevel(cycle.Comp, time);
+                var colorLevel = CalculateColorLevel(cycle.Comp, time);
                 var rgb = new int[] { (int) Math.Min(255, color.RByte * colorLevel[0] * lightLevel),
                                       (int) Math.Min(255, color.GByte * colorLevel[1] * lightLevel),
                                       (int) Math.Min(255, color.BByte * colorLevel[2] * lightLevel) };
@@ -77,12 +77,12 @@ namespace Content.Client.LightCycle
 
         // Calculates light intensity as a function of time.
 
-        public static double CalculateLightLevel(LightCycleComponent comp)
+        public static double CalculateLightLevel(LightCycleComponent comp, double time)
         {
             var wave_lenght = Math.Max(1, comp.CycleDuration);
             var crest = Math.Max(0, comp.MaxLightLevel);
             var shift = Math.Max(0, comp.MinLightLevel);
-            return Math.Min(comp.ClipLight, CalculateCurve(comp.CurrentTime, wave_lenght, crest, shift, 6));
+            return Math.Min(comp.ClipLight, CalculateCurve(time, wave_lenght, crest, shift, 6));
         }
 
         /// <summary>
@@ -94,11 +94,10 @@ namespace Content.Client.LightCycle
         /// they must be "clipped" so as not to distort the original color of the lighting. In practice, the maximum values, in fact, are the clip thresholds.
         /// </summary>
 
-        public static double[] CalculateColorLevel(LightCycleComponent comp)
+        public static double[] CalculateColorLevel(LightCycleComponent comp, double time)
         {
             var wave_lenght = Math.Max(1, comp.CycleDuration);
             var color_level = new double[3];
-            var time = comp.CurrentTime;
             for (var i = 0; i < 3; i++)
             {
                 switch (i)
