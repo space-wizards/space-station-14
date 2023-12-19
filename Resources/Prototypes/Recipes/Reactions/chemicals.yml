@@ -31,6 +31,8 @@
 
 - type: reaction
   id: Phenol
+  minTemp: 325
+  maxTemp: 480
   reactants:
     Hydroxide:
       amount: 1
