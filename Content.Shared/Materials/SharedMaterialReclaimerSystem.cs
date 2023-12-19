@@ -45,10 +45,10 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         SubscribeLocalEvent<CollideMaterialReclaimerComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, EntityUnpausedEvent>(OnActiveUnpaused);
-        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+        //SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
     }
 
-    private void OnMobStateChanged(MobStateChangedEvent ev)
+    /*private void OnMobStateChanged(MobStateChangedEvent ev)
     {
         if (ev.NewMobState != MobState.Dead)
             return;
@@ -60,7 +60,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
                 TryStartProcessItem(entity, ev.Target, reclaimer);
             }
         }
-    }
+    }*/
 
     private void OnMapInit(EntityUid uid, MaterialReclaimerComponent component, MapInitEvent args)
     {
@@ -112,6 +112,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         {
             args.Cancel();
         }
+        TryStartProcessItem(args.OtherUid, uid, component);
     }
 
     /// <summary>

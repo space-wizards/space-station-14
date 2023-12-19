@@ -59,7 +59,7 @@ public sealed class DamageContactsSystem : EntitySystem
     private void OnEntityEnter(EntityUid uid, DamageContactsComponent component, ref StartCollideEvent args)
     {
         var otherUid = args.OtherEntity;
-        var ev = new AttemptDamageContactEvent(uid);
+        var ev = new AttemptDamageContactEvent(uid, otherUid);
 
         RaiseLocalEvent(uid, ev);
 
@@ -79,12 +79,14 @@ public sealed class DamageContactsSystem : EntitySystem
     }
 }
 
-public class AttemptDamageContactEvent : CancellableEntityEventArgs
+public sealed class AttemptDamageContactEvent : CancellableEntityEventArgs
 {
-    private EntityUid Uid;
+    public readonly EntityUid Uid;
+    public readonly EntityUid OtherUid;
 
-    public AttemptDamageContactEvent(EntityUid uid)
+    public AttemptDamageContactEvent(EntityUid uid, EntityUid otherUid)
     {
         Uid = uid;
+        OtherUid = otherUid;
     }
 }
