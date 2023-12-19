@@ -169,7 +169,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: depleted-uranium
+    state: uranium
   - type: Projectile
     damage:
       types:
