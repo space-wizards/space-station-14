@@ -6,10 +6,10 @@
       amount: 1
     Nitrogen:
       amount: 1
-    Alosethasone: #imperial chemistryRework
-      amount: 1 #imperial chemistryRework
+    Potassium:
+      amount: 1
   products:
-    Dylovene: 3 
+    Dylovene: 3
 
 - type: reaction
   id: Ethylredoxrazine
@@ -43,19 +43,17 @@
     Hydrogen:
       amount: 1
   products:
-    Arithrazine: 2 
+    Arithrazine: 2
 
 - type: reaction
   id: Bicaridine
   reactants:
     Inaprovaline:
-      amount: 1 
-    Flexitaine: #imperial chemistryRework
-      amount: 1 #imperial Chemistry Fix
+      amount: 1
     Carbon:
       amount: 1
   products:
-    Bicaridine: 3
+    Bicaridine: 2
 
 - type: reaction
   id: Cryoxadone
