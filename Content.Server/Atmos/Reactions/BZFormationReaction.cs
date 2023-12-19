@@ -44,6 +44,11 @@ public sealed partial class BZFormationReaction : IGasReactionEffect
         mixture.AdjustMoles(Gas.NitrousOxide, -(bzFormed * .4f));
         mixture.AdjustMoles(Gas.Plasma, -(bzFormed * (1 - n2oDecomposeFactor) * .8f));
 
+        var energyReleased = bzFormed * (Atmospherics.BZFormationEnergy + n2oDecomposeFactor * (/*Atmospherics.N2ODecompositionEnergy*/200e3 - Atmospherics.BZFormationEnergy));
+        var heatCap = atmosphereSystem.GetHeatCapacity(mixture, true);
+        if (heatCap > Atmospherics.MinimumHeatCapacity)
+            mixture.Temperature = Math.Max((float) (mixture.Temperature * heatCap + energyReleased) / heatCap, Atmospherics.TCMB);
+
         return ReactionResult.Reacting;
     }
 }
