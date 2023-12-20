@@ -13,6 +13,4 @@ rcd-component-no-ammo-message = The RCD is out of ammo!
 rcd-component-tile-obstructed-message = That tile is obstructed!
 rcd-component-tile-indestructible-message = That tile can't be destroyed!
 rcd-component-deconstruct-target-not-on-whitelist-message = You can't deconstruct that!
-rcd-component-cannot-build-floor-tile-not-empty-message = You can only build a floor on space!
-rcd-component-cannot-build-wall-tile-not-empty-message = You cannot build a wall on space!
-rcd-component-cannot-build-airlock-tile-not-empty-message = Cannot build an airlock on space!
+rcd-component-cannot-build-as-tile-not-empty-message = You can not build that here!

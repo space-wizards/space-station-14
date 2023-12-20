@@ -49,15 +49,14 @@ public enum RcdMode : byte
 {
     None,
     Deconstruct,
+    Subfloors,
     Floors,
     Catwalks,
     Walls,
-    Windows,
-    DirectionalWindows,
-    Grilles,
     Airlocks,
-    Frames,
-    Lightning,
+    Windows,
+    Machines,
+    Lighting,
 }
 
 [Serializable, NetSerializable]
