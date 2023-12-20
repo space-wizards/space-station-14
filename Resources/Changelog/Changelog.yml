@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Fixed cognizine not creating ghost roles., type: Fix}
-  id: 4927
-  time: '2023-09-30T17:53:22.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Holofans can now be destroyed by explosions., type: Fix}
@@ -2930,4 +2925,10 @@ Entries:
   - {message: Ethylredoxrazine is more effective at treating drunkness., type: Tweak}
   id: 5427
   time: '2023-12-20T02:20:04.0000000+00:00'
+  url: null
+- author: Errant
+  changes:
+  - {message: HUD elements no longer violate the Geneva Conventions., type: Fix}
+  id: 5428
+  time: '2023-12-20T04:28:03.0000000+00:00'
   url: null
