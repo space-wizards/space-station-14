@@ -280,7 +280,7 @@
   completetime: 4
   materials:
      Steel: 100
-     Glass: 600
+     Glass: 700
      Silver: 100
 
 - type: latheRecipe
