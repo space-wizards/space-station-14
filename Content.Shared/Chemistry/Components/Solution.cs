@@ -71,7 +71,7 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     The name of this solution, if it is contained in some <see cref="SolutionContainerManagerComponent"/>
         /// </summary>
-        [ViewVariables]
+        [DataField]
         public string? Name;
 
         /// <summary>

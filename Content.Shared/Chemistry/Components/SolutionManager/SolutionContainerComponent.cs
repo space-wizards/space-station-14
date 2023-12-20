@@ -20,13 +20,13 @@ public sealed partial class SolutionContainerComponent : Component
     /// <summary>
     /// The entity that the solution is contained in.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public EntityUid Container;
 
     /// <summary>
     /// The name/key of the container the solution is located in.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public string Name = default!;
 }
 
