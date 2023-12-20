@@ -77,7 +77,7 @@
 - type: gasReaction
   id: n2oDecomposition
   priority: 0
-  minimumTemperature: 1400
+  minimumTemperature: 850
   minimumRequirements:
   - 0     # oxygen
   - 0     # nitrogen
