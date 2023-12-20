@@ -64,9 +64,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<SolutionComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<SolutionComponent, ComponentShutdown>(OnComponentShutdown);
 
-        SubscribeLocalEvent<SolutionContainerComponent, ComponentGetState>(OnComponentGetState);
-        SubscribeLocalEvent<SolutionContainerComponent, ComponentHandleState>(OnComponentHandleState);
-
         SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentInit>(OnComponentInit);
 
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
@@ -647,22 +644,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             ContainerSystem.EnsureContainer<ContainerSlot>(uid, $"solution@{name}", containerManager);
         }
     }
-
-
-    private void OnComponentGetState(EntityUid uid, SolutionContainerComponent comp, ComponentGetState args)
-    {
-        args.State = new SolutionContainerState(GetNetEntity(comp.Container), comp.Name);
-    }
-
-    private void OnComponentHandleState(EntityUid uid, SolutionContainerComponent comp, ComponentHandleState args)
-    {
-        if (args.Current is not SolutionContainerState state)
-            return;
-
-        comp.Container = GetEntity(state.Container);
-        comp.Name = state.Name;
-    }
-
 
     private void OnExamineSolution(EntityUid uid, ExaminableSolutionComponent examinableComponent, ExaminedEvent args)
     {
