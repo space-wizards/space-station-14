@@ -568,3 +568,54 @@
   - type: PointLight
     radius: 7
     energy: 3
+
+#Research Director's Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitRdAlter2
+  name: experimental research hardsuit helmet
+  description: High-tech hardsuit helmet that doesn't restrict your head movements.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Head/Hardsuits/rd.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Head/Hardsuits/rd.rsi
+  - type: PointLight
+    color: "#d6adff"
+  - type: PressureProtection
+    highPressureMultiplier: 0.60
+    lowPressureMultiplier: 1000
+
+#Chief Medical Officer's Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitMedicalAlter2
+  name: chief medical officer's hardsuit helmet
+  description: Reinforced medical hardsuit helmet that doesn't restrict your head movements.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Head/Hardsuits/medical.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Head/Hardsuits/medical.rsi
+  - type: PointLight
+    color: "#adf1ff"
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+
+#Chief Medical Officer's Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitHop
+  name: blue officer hardsuit helmet
+  description: A helmet to stand out from the crowd. Let them know that you are the one in control.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Head/Hardsuits/hop.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Head/Hardsuits/hop.rsi
+  - type: PointLight
+    color: "#7b9bf2"
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000

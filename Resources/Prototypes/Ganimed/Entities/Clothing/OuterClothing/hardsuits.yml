@@ -33,6 +33,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitAtmosAlter
   - type: StaminaProtection
     coefficient: 0.8
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -67,6 +68,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringAlter
   - type: StaminaProtection
     coefficient: 0.8
+  - type: HeldSpeedModifier
 
 #Salvage Hardsuit
 - type: entity
@@ -99,6 +101,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSalvageAlter
   - type: StaminaProtection
     coefficient: 0.7
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -129,6 +132,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityAlter
   - type: StaminaProtection
     coefficient: 0.55
+  - type: HeldSpeedModifier
 
 #Warden's Hardsuit
 - type: entity
@@ -160,6 +164,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitWardenAlter
   - type: StaminaProtection
     coefficient: 0.55
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -192,6 +197,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitCapAlter
   - type: StaminaProtection
     coefficient: 0.7
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -224,6 +230,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhiteAlter
   - type: StaminaProtection
     coefficient: 0.7
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -249,6 +256,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitMedicalAlter
   - type: StaminaProtection
     coefficient: 0.85
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -278,7 +286,7 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: Item
-    size: 50
+    size: Normal
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -289,6 +297,7 @@
     price: 750
   - type: StaminaProtection
     coefficient: 0.65
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitSecurity
@@ -320,6 +329,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRedAlter
   - type: StaminaProtection
     coefficient: 0.5
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -352,6 +362,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieAlter
   - type: StaminaProtection
     coefficient: 0.3
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -384,6 +395,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitCybersunAlter
   - type: StaminaProtection
     coefficient: 0.15
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -418,6 +430,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieEliteAlter
   - type: StaminaProtection
     coefficient: 0.3
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -450,6 +463,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommanderAlter
   - type: StaminaProtection
     coefficient: 0.25
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -482,6 +496,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitWizardAlter
   - type: StaminaProtection
     coefficient: 0.55
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -513,6 +528,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
   - type: StaminaProtection
     coefficient: 0.7
+  - type: HeldSpeedModifier
 
 
 - type: entity
@@ -527,6 +543,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertleader.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTLeaderAlter
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitSyndie
@@ -539,6 +556,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertengineer.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTEngineerAlter
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitSyndieElite
@@ -551,6 +569,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertmedical.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTMedicalAlter
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitSyndie
@@ -563,6 +582,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertsecurity.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTSecurityAlter
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitSyndie
@@ -575,6 +595,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertjanitor.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTJanitorAlter
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -609,6 +630,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquadAlter
   - type: StaminaProtection
     coefficient: 0.15
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -645,6 +667,7 @@
     clothingPrototype: ClothingHeadHelmetCBURNAlter
   - type: StaminaProtection
     coefficient: 0.6
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -678,6 +701,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitClownAlter
   - type: StaminaProtection
     coefficient: 0.9
+  - type: HeldSpeedModifier
 
 
 - type: entity
@@ -711,6 +735,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhiteAlter2
   - type: StaminaProtection
     coefficient: 0.7
+  - type: HeldSpeedModifier
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -742,3 +767,107 @@
     clothingPrototype: ClothingHeadHelmetHardsuitLuxuryAlter
   - type: StaminaProtection
     coefficient: 0.85
+  - type: HeldSpeedModifier
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitMedicalAlter2
+  name: chief medical officer's hardsuit
+  description: A special suit that protects against hazardous environments. Built with hard materials for extra protection.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/medical.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/medical.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.1
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.95
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMedicalAlter2
+  - type: StaminaProtection
+    coefficient: 0.85
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitRdAlter2
+  name: experimental research hardsuit
+  description: A special suit stuffed to the brim with electronics. Able to be compressed to small sizes but isn't very pleasant to walk in.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/rd.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/rd.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.3
+        Radiation: 0.1
+        Caustic: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: HeldSpeedModifier
+  - type: Item
+    size: Normal
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HighRiskItem
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitRdAlter2
+  - type: StaticPrice
+    price: 750
+  - type: StaminaProtection
+    coefficient: 0.65
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitHop
+  name: blue officer hardsuit
+  description: A hardened alloy is used to protect the wearer from various kinds of revolutions and any political nestabilities. Not too easy to wear, but status wins it all.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/hop.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/hop.rsi
+  - type: PressureProtection
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.8
+        Piercing: 0.5
+        Heat: 0.7
+        Caustic: 0.85
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitHop
+  - type: StaminaProtection
+    coefficient: 0.65
+  - type: StaticPrice
+    price: 0
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HighRiskItem
