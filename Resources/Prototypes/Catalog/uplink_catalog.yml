@@ -1272,7 +1272,7 @@
   description: uplink-nocturine-chemistry-bottle-desc
   productEntity: NocturineChemistryBottle
   cost:
-    Telecrystal: 5
+    Telecrystal: 6
   categories:
   - UplinkMisc
 

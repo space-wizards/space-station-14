@@ -310,6 +310,9 @@ uplink-combat-medkit-desc = A medkit made for fixing combat injuries.
 uplink-combat-medipen-name = Combat Medipen
 uplink-combat-medipen-desc = A single-use medipen containing chemicals that regenerate most types of damage.
 
+uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
+uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
+
 uplink-stimpack-name = Stimpack
 uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 30 seconds.
 
