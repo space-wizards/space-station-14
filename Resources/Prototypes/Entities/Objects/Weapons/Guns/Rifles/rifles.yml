@@ -212,10 +212,11 @@
           tags:
             - CartridgeRifle
 
+- type: entity
   name: Hellion 
   parent: WeaponRifleLecter
   id: WeaponRifleHellion 
-  description: A bullpup rifle designed for CQB. Uses .20 Ammo
+  description: An accurate bullpup rifle designed for CQC. Uses .20 Ammo
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/Hellion.rsi
