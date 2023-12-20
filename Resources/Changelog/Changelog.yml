@@ -1,9 +1,4 @@
 Entries:
-- author: Ubaser
-  changes:
-  - {message: 'QM now has a mantle, available at HoP''s uniform printer.', type: Add}
-  id: 4931
-  time: '2023-10-01T14:28:47.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Added new sprites for slime organs, type: Add}
@@ -2933,4 +2928,11 @@ Entries:
   - {message: 'Fland now has its own shuttle, ported from ss13', type: Add}
   id: 5431
   time: '2023-12-20T23:26:07.0000000+00:00'
+  url: null
+- author: joshepvodka
+  changes:
+  - {message: CentCom bureaucrats are now twice as powerful with their new custom-made
+      clipboards and folders., type: Add}
+  id: 5432
+  time: '2023-12-20T23:29:35.0000000+00:00'
   url: null
