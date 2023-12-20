@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Holofans can now be destroyed by explosions., type: Fix}
-  id: 4928
-  time: '2023-09-30T19:08:09.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Space dragons get a proper greentext in the round end summary, along
@@ -2931,4 +2926,10 @@ Entries:
   - {message: HUD elements no longer violate the Geneva Conventions., type: Fix}
   id: 5428
   time: '2023-12-20T04:28:03.0000000+00:00'
+  url: null
+- author: ERORR404V1
+  changes:
+  - {message: NanoTrasen botanists have bred a new blinking plant, type: Add}
+  id: 5429
+  time: '2023-12-20T04:57:02.0000000+00:00'
   url: null
