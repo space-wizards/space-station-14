@@ -68905,7 +68905,7 @@ entities:
     - pos: 19.5,-5.5
       parent: 2
       type: Transform
-- proto: SpawnMobCrab
+- proto: SpawnMobCrabAtmos
   entities:
   - uid: 5859
     components:

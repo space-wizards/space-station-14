@@ -31226,6 +31226,13 @@ entities:
     - pos: -31.680155,17.680439
       parent: 31
       type: Transform
+- proto: DrinkMilkCarton
+  entities:
+  - uid: 2283
+    components:
+    - pos: -11.776268,-3.7349403
+      parent: 31
+      type: Transform
 - proto: DrinkMilkshake
   entities:
   - uid: 1589
@@ -32337,7 +32344,7 @@ entities:
     - pos: 38.5,-5.5
       parent: 31
       type: Transform
-    - secondsUntilStateChange: -1647.1266
+    - secondsUntilStateChange: -1692.7433
       state: Closing
       type: Door
   - uid: 4019
@@ -53149,13 +53156,6 @@ entities:
     - pos: 40.557358,0.5514846
       parent: 31
       type: Transform
-- proto: ReagentContainerMilk
-  entities:
-  - uid: 2283
-    components:
-    - pos: -11.776268,-3.7349403
-      parent: 31
-      type: Transform
 - proto: Recycler
   entities:
   - uid: 9266
@@ -57058,6 +57058,13 @@ entities:
   - uid: 8906
     components:
     - pos: 9.5,20.5
+      parent: 31
+      type: Transform
+- proto: SpawnMobCrabAtmos
+  entities:
+  - uid: 3862
+    components:
+    - pos: 40.5,12.5
       parent: 31
       type: Transform
 - proto: SpawnMobDrone

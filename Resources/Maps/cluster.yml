@@ -66763,6 +66763,13 @@ entities:
     - pos: -1.5,19.5
       parent: 1
       type: Transform
+- proto: SpawnMobCrabAtmos
+  entities:
+  - uid: 5923
+    components:
+    - pos: 36.5,-9.5
+      parent: 1
+      type: Transform
 - proto: SpawnMobDrone
   entities:
   - uid: 9658
