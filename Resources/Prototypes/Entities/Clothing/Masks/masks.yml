@@ -537,7 +537,7 @@
   parent: ClothingMaskPullableBase
   id: ClothingMaskWelding
   name: welding gas mask
-  description: Welding gas mask for
+  description: Welding gas mask for work mainly in space.
   components:
   - type: Sprite
     sprite: Clothing/Mask/gaswelding.rsi
