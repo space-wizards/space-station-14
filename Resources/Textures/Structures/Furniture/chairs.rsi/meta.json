@@ -90,6 +90,10 @@
     {
       "name": "steel-bench",
       "directions": 4
+    },
+    {
+      "name": "chair-carp",
+      "directions": 4
     }
   ]
 }
