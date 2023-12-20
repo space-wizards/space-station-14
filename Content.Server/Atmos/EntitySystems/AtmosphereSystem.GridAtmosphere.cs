@@ -51,7 +51,7 @@ public sealed partial class AtmosphereSystem
                 continue;
 
             _currentRunAtmosphere.RemoveAt(i);
-            if (_currentRunAtmosphereIndex >= i)
+            if (_currentRunAtmosphereIndex > i)
                 _currentRunAtmosphereIndex--;
         }
     }
