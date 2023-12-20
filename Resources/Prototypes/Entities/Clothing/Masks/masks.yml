@@ -532,3 +532,25 @@
   - type: EyeProtection
   - type: BreathMask
   - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskWelding
+  name: welding gas mask
+  description: Welding gas mask for
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/gaswelding.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gaswelding.rsi
+  - type: EyeProtection
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
