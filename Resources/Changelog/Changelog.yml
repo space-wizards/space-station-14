@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Space dragons get a proper greentext in the round end summary, along
-      with objectives in the character menu.', type: Tweak}
-  id: 4929
-  time: '2023-09-30T20:18:02.0000000+00:00'
 - author: Ubaser
   changes:
   - {message: Winter Boots are now available in the Winterdrobe., type: Add}
@@ -2932,4 +2926,10 @@ Entries:
   - {message: NanoTrasen botanists have bred a new blinking plant, type: Add}
   id: 5429
   time: '2023-12-20T04:57:02.0000000+00:00'
+  url: null
+- author: qwerltaz
+  changes:
+  - {message: Improve the gas analyzer interface., type: Tweak}
+  id: 5430
+  time: '2023-12-20T17:56:57.0000000+00:00'
   url: null
