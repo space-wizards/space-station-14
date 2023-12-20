@@ -20,7 +20,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
 
         SubscribeLocalEvent<SolutionContainerManagerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentShutdown>(OnComponentShutdown);
-        SubscribeLocalEvent<SolutionContainerComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<ContainedSolutionComponent, ComponentShutdown>(OnComponentShutdown);
     }
 
 
@@ -78,7 +78,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         else
         {
             solutionComp = Comp<SolutionComponent>(solutionId);
-            DebugTools.Assert(TryComp(solutionId, out SolutionContainerComponent? relation) && relation.Container == uid && relation.Name == name);
+            DebugTools.Assert(TryComp(solutionId, out ContainedSolutionComponent? relation) && relation.Container == uid && relation.Name == name);
             DebugTools.Assert(solutionComp.Solution.Name == name);
 
             var solution = solutionComp.Solution;
@@ -126,7 +126,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
     }
 
 
-    private Entity<SolutionComponent, SolutionContainerComponent> SpawnSolutionUninitialized(ContainerSlot container, string name, FixedPoint2 minVol, Solution prototype)
+    private Entity<SolutionComponent, ContainedSolutionComponent> SpawnSolutionUninitialized(ContainerSlot container, string name, FixedPoint2 minVol, Solution prototype)
     {
         var coords = new EntityCoordinates(container.Owner, Vector2.Zero);
         var uid = EntityManager.CreateEntityUninitialized(null, coords, null);
@@ -134,7 +134,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         var solution = new SolutionComponent() { Solution = prototype };
         AddComp(uid, solution);
 
-        var relation = new SolutionContainerComponent() { Container = container.Owner, Name = name };
+        var relation = new ContainedSolutionComponent() { Container = container.Owner, Name = name };
         AddComp(uid, relation);
 
         ContainerSystem.Insert(uid, container, force: true);
@@ -168,7 +168,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         comp.Containers.Clear();
     }
 
-    private void OnComponentShutdown(EntityUid uid, SolutionContainerComponent comp, ComponentShutdown args)
+    private void OnComponentShutdown(EntityUid uid, ContainedSolutionComponent comp, ComponentShutdown args)
     {
         if (TryComp(comp.Container, out SolutionContainerManagerComponent? container))
         {

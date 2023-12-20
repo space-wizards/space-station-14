@@ -72,13 +72,13 @@ public abstract partial class SharedSolutionContainerSystem
 {
     protected void InitializeRelays()
     {
-        SubscribeLocalEvent<SolutionContainerComponent, SolutionChangedEvent>(OnSolutionChanged);
-        SubscribeLocalEvent<SolutionContainerComponent, SolutionOverflowEvent>(OnSolutionOverflow);
-        SubscribeLocalEvent<SolutionContainerComponent, ReactionAttemptEvent>(RelaySolutionValEvent);
+        SubscribeLocalEvent<ContainedSolutionComponent, SolutionChangedEvent>(OnSolutionChanged);
+        SubscribeLocalEvent<ContainedSolutionComponent, SolutionOverflowEvent>(OnSolutionOverflow);
+        SubscribeLocalEvent<ContainedSolutionComponent, ReactionAttemptEvent>(RelaySolutionValEvent);
     }
 
 
-    protected virtual void OnSolutionChanged(EntityUid uid, SolutionContainerComponent comp, ref SolutionChangedEvent args)
+    protected virtual void OnSolutionChanged(EntityUid uid, ContainedSolutionComponent comp, ref SolutionChangedEvent args)
     {
         var (solutionId, solutionComp) = args.Solution;
         var solution = solutionComp.Solution;
@@ -87,7 +87,7 @@ public abstract partial class SharedSolutionContainerSystem
         RaiseLocalEvent(comp.Container, new SolutionContainerChangedEvent(solution, comp.Name));
     }
 
-    protected virtual void OnSolutionOverflow(EntityUid uid, SolutionContainerComponent comp, ref SolutionOverflowEvent args)
+    protected virtual void OnSolutionOverflow(EntityUid uid, ContainedSolutionComponent comp, ref SolutionOverflowEvent args)
     {
         var solution = args.Solution.Comp.Solution;
         var overflow = solution.SplitSolution(args.Overflow);
@@ -102,13 +102,13 @@ public abstract partial class SharedSolutionContainerSystem
 
 
 
-    private void RelaySolutionValEvent<TEvent>(EntityUid uid, SolutionContainerComponent comp, TEvent @event)
+    private void RelaySolutionValEvent<TEvent>(EntityUid uid, ContainedSolutionComponent comp, TEvent @event)
     {
         var relayEvent = new SolutionRelayEvent<TEvent>(@event, uid, comp.Name);
         RaiseLocalEvent(comp.Container, ref relayEvent);
     }
 
-    private void RelaySolutionRefEvent<TEvent>(EntityUid uid, SolutionContainerComponent comp, ref TEvent @event)
+    private void RelaySolutionRefEvent<TEvent>(EntityUid uid, ContainedSolutionComponent comp, ref TEvent @event)
     {
         var relayEvent = new SolutionRelayEvent<TEvent>(@event, uid, comp.Name);
         RaiseLocalEvent(comp.Container, ref relayEvent);

@@ -15,7 +15,7 @@ namespace Content.Shared.Chemistry.Components.SolutionManager;
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedSolutionContainerSystem))]
-public sealed partial class SolutionContainerComponent : Component
+public sealed partial class ContainedSolutionComponent : Component
 {
     /// <summary>
     /// The entity that the solution is contained in.
