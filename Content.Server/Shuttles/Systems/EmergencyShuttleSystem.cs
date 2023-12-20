@@ -409,7 +409,10 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
 
         var mapId = _mapManager.CreateMap();
-        var grid = _map.LoadGrid(mapId, component.Map.ToString());
+        var grid = _map.LoadGrid(mapId, component.Map.ToString(),  new MapLoadOptions()
+        {
+            LoadMap = false,
+        });
         var map = _mapManager.GetMapEntityId(mapId);
 
         if (!Exists(map))
@@ -469,7 +472,9 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         var shuttle = _map.LoadGrid(map.MapId, shuttlePath.ToString(), new MapLoadOptions()
         {
             // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
-            Offset = new Vector2(500f + centcomm.ShuttleIndex, 0f)
+            Offset = new Vector2(500f + centcomm.ShuttleIndex, 0f),
+            // fun fact: if you just fucking yeet centcomm into nullspace anytime you try to spawn the shuttle, then any distance is far enough. so lets not do that
+            LoadMap = false,
         });
 
         if (shuttle == null)
