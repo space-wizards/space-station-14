@@ -1,10 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: Added new sprites for slime organs, type: Add}
-  - {message: Slimes now breathe nitrogen too., type: Tweak}
-  id: 4932
-  time: '2023-10-01T14:34:29.0000000+00:00'
 - author: casperr04
   changes:
   - {message: Space ninjas now have random appearance., type: Tweak}
@@ -2935,4 +2929,11 @@ Entries:
       clipboards and folders., type: Add}
   id: 5432
   time: '2023-12-20T23:29:35.0000000+00:00'
+  url: null
+- author: PJB3005
+  changes:
+  - {message: Fix starting to follow a moving player as a ghost causing your camera
+      to keep jumping around anymore., type: Fix}
+  id: 5433
+  time: '2023-12-20T23:33:00.0000000+00:00'
   url: null
