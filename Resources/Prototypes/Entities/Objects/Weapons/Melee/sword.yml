@@ -95,10 +95,10 @@
     layers:
       - state: icon
       - state: icon_blade
+        color: "#b83dba" 
         visible: false
-        map: [ "blade" ]
         shader: unshaded
-        color: "#b83dba"
+        map: [ "blade" ]
   - type: MeleeWeapon
     wideAnimationRotation: -60
     damage:
@@ -107,17 +107,19 @@
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/plasma_monosword.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Melee/plasma_monosword.rsi
-    slots:
-    - Back
-    - Belt
   - type: EnergySword
     litDamageBonus:
         types:
             Caustic: 10
             Heat: 20
             Blunt: -4.5
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 2
+    color: purple
+    netsync: false
+  - type: Appearance
   - type: ToggleableLightVisuals
     spriteLayer: blade
     inhandVisuals:
@@ -141,7 +143,12 @@
     description: ghost-role-information-Persona-Sword-description
     rules: ghost-role-information-Persona-Sword-rules
   - type: GhostTakeoverAvailable
-
+  - type: CombatMode
+  - type: MeleeWeapon
+    hidden: false
+    damage:
+      groups:
+        Burn: 5
 
 - type: entity
   name: machete
