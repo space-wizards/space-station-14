@@ -44,6 +44,7 @@
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 1, 1 ]
+            Borg: [ 1, 2 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             SecurityOfficer: [ 4, 4 ]

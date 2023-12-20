@@ -42,13 +42,13 @@ def main():
     most_recent = get_most_recent_workflow(session)
     last_sha = most_recent['head_commit']['id']
     print(f"Last successsful publish job was {most_recent['id']}: {last_sha}")
-    
+
     # Corvax-MultiChangelog-Start
     for changelog_file in CHANGELOG_FILES:
         last_changelog = yaml.safe_load(get_last_changelog(session, last_sha, changelog_file))
         with open(changelog_file, "r") as f:
             cur_changelog = yaml.safe_load(f)
-    
+
         diff = diff_changelog(last_changelog, cur_changelog)
         send_to_discord(diff)
     # Corvax-MultiChangelog-End
@@ -129,7 +129,11 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                     })
                     message = resp.json()['data']
                 # Corvax-Localization-End
-                content.write(f"{emoji} {message}\n")
+                url = entry.get("url")
+                if url and url.strip():
+                    content.write(f"{emoji} [-]({url}) {message}\n")
+                else:
+                    content.write(f"{emoji} - {message}\n")
         content.write(f"\n") # Corvax: Better formatting
 
     content.seek(0) # Corvax

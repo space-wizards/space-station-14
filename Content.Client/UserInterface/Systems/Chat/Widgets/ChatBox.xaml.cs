@@ -38,7 +38,7 @@ public partial class ChatBox : UIWidget
         ChatInput.Input.OnFocusEnter += OnFocusEnter; // Corvax-TypingIndicator
         ChatInput.Input.OnFocusExit += OnFocusExit; // Corvax-TypingIndicator
         ChatInput.ChannelSelector.OnChannelSelect += OnChannelSelect;
-        ChatInput.FilterButton.ChatFilterPopup.OnChannelFilter += OnChannelFilter;
+        ChatInput.FilterButton.Popup.OnChannelFilter += OnChannelFilter;
 
         _controller = UserInterfaceManager.GetUIController<ChatUIController>();
         _controller.MessageAdded += OnMessageAdded;
@@ -53,7 +53,7 @@ public partial class ChatBox : UIWidget
     private void OnMessageAdded(ChatMessage msg)
     {
         Logger.DebugS("chat", $"{msg.Channel}: {msg.Message}");
-        if (!ChatInput.FilterButton.ChatFilterPopup.IsActive(msg.Channel))
+        if (!ChatInput.FilterButton.Popup.IsActive(msg.Channel))
         {
             return;
         }

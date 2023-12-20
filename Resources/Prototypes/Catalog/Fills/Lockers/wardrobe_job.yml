@@ -159,7 +159,7 @@
        - id: ClothingBackpackSecurity
        - id: ClothingShoesBootsJack
        - id: ClothingEyesGlassesSecurity
-       - id: ClothingHeadHelmetBasic  # Corvax-Resprite
+       - id: ClothingHeadHelmetBasic
        - id: ClothingOuterArmorBasic
        - id: ClothingUniformJumpskirtSec
 

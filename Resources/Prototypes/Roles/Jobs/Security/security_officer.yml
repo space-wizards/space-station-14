@@ -29,8 +29,8 @@
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsCombatFilled
     eyes: ClothingEyesGlassesSecurity
-    head: ClothingHeadHatBeretSecurity # Corvax-Resprite
-    outerClothing: ClothingOuterVestArmorSec # Corvax-Resprite
+    head: ClothingHeadHelmetBasic
+    outerClothing: ClothingOuterArmorBasic
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled

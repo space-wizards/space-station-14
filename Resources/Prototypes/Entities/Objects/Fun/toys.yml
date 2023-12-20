@@ -843,6 +843,7 @@
     modifier: 0.001
 
 - type: entity
+  parent: BaseItem
   id: ToySword
   name: toy sword
   description: New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!

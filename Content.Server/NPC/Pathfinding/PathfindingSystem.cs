@@ -46,6 +46,7 @@ namespace Content.Server.NPC.Pathfinding
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private readonly Dictionary<ICommonSession, PathfindingDebugMode> _subscribedSessions = new();
 
@@ -75,6 +76,7 @@ namespace Content.Server.NPC.Pathfinding
             base.Shutdown();
             _subscribedSessions.Clear();
             _playerManager.PlayerStatusChanged -= OnPlayerChange;
+            _transform.OnGlobalMoveEvent -= OnMoveEvent;
         }
 
         public override void Update(float frameTime)
