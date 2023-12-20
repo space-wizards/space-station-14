@@ -344,7 +344,7 @@ public sealed class DrinkSystem : EntitySystem
             return;
         }
 
-        var firstStomach = stomachs.FirstOrNull(stomach => _stomach.CanTransferSolution(stomach.Comp.Owner, drained));
+        var firstStomach = stomachs.FirstOrNull(stomach => _stomach.CanTransferSolution(stomach.Comp.Owner, drained, stomach.Comp));
 
         //All stomachs are full or can't handle whatever solution we have.
         if (firstStomach == null)

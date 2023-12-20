@@ -232,10 +232,10 @@ public sealed class FoodSystem : EntitySystem
         foreach (var (stomach, _) in stomachs)
         {
             var owner = stomach.Owner;
-            if (!_stomach.CanTransferSolution(owner, split))
+            if (!_stomach.CanTransferSolution(owner, split, stomach))
                 continue;
 
-            if (!_solutionContainer.TryGetSolution(owner, StomachSystem.DefaultSolutionName, out _, out var stomachSol))
+            if (!_solutionContainer.ResolveSolution(owner, StomachSystem.DefaultSolutionName, ref stomach.Solution, out var stomachSol))
                 continue;
 
             if (stomachSol.AvailableVolume <= highestAvailable)

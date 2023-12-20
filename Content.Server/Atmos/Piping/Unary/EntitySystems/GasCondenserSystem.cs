@@ -5,10 +5,11 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
-using Content.Shared.Atmos;
-using JetBrains.Annotations;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Atmos;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.FixedPoint;
+using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
@@ -32,7 +33,7 @@ public sealed class GasCondenserSystem : EntitySystem
         if (!(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
             || !TryComp<NodeContainerComponent>(uid, out var nodeContainer)
             || !_nodeContainer.TryGetNode(nodeContainer, component.Inlet, out PipeNode? inlet)
-            || !_solution.TryGetSolution(uid, component.SolutionId, out var soln, out var solution))
+            || !_solution.ResolveSolution(uid, component.SolutionId, ref component.Solution, out var solution))
         {
             return;
         }
@@ -52,14 +53,17 @@ public sealed class GasCondenserSystem : EntitySystem
                 continue;
 
             var moleToReagentMultiplier = component.MolesToReagentMultiplier;
-            var amount = moles * moleToReagentMultiplier;
-
-            if (_solution.TryAddReagent(soln.Value, gasReagent, amount, out var remaining))
+            var amount = FixedPoint2.Min(FixedPoint2.New(moles * moleToReagentMultiplier), solution.AvailableVolume);
+            if (amount <= 0)
                 continue;
 
+            solution.AddReagent(gasReagent, amount);
+
             // if we have leftover reagent, then convert it back to moles and put it back in the mixture.
-            inlet.Air.AdjustMoles(i, remaining.Float() / moleToReagentMultiplier);
+            inlet.Air.AdjustMoles(i, moles - (amount.Float() / moleToReagentMultiplier));
         }
+
+        _solution.UpdateChemicals(component.Solution.Value);
     }
 
     public float NumberOfMolesToConvert(ApcPowerReceiverComponent comp, GasMixture mix, float dt)

@@ -147,8 +147,8 @@ namespace Content.Server.Body.Systems
                 _atmosSys.Merge(outGas, lung.Air);
                 lung.Air.Clear();
 
-                if (_solutionContainerSystem.TryGetSolution(lung.Owner, lung.Solution, out var lungSolution))
-                    _solutionContainerSystem.RemoveAllSolution(lungSolution.Value);
+                if (_solutionContainerSystem.ResolveSolution(lung.Owner, lung.SolutionName, ref lung.Solution))
+                    _solutionContainerSystem.RemoveAllSolution(lung.Solution.Value);
             }
 
             _atmosSys.Merge(ev.Gas, outGas);

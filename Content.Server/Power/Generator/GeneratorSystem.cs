@@ -67,16 +67,16 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
     private void ChemicalEmpty(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, GeneratorEmpty args)
     {
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var soln, out var solution))
+        if (!_solutionContainer.ResolveSolution(uid, component.SolutionName, ref component.Solution, out var solution))
             return;
 
-        var spillSolution = _solutionContainer.SplitSolution(soln.Value, solution.Volume);
+        var spillSolution = _solutionContainer.SplitSolution(component.Solution.Value, solution.Volume);
         _puddle.TrySpillAt(uid, spillSolution, out _);
     }
 
     private void ChemicalGetClogged(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, ref GeneratorGetCloggedEvent args)
     {
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out _, out var solution))
+        if (!_solutionContainer.ResolveSolution(uid, component.SolutionName, ref component.Solution, out var solution))
             return;
 
         foreach (var reagentQuantity in solution)
@@ -91,7 +91,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
     private void ChemicalUseFuel(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, GeneratorUseFuel args)
     {
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var soln, out var solution))
+        if (!_solutionContainer.ResolveSolution(uid, component.SolutionName, ref component.Solution, out var solution))
             return;
 
         var availableReagent = solution.GetTotalPrototypeQuantity(component.Reagent).Value;
@@ -101,7 +101,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
             component.Multiplier * FixedPoint2.Epsilon.Float(),
             availableReagent);
 
-        _solutionContainer.RemoveReagent(soln.Value, component.Reagent, FixedPoint2.FromCents(toRemove));
+        _solutionContainer.RemoveReagent(component.Solution.Value, component.Reagent, FixedPoint2.FromCents(toRemove));
     }
 
     private void ChemicalGetFuel(
@@ -109,7 +109,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         ChemicalFuelGeneratorAdapterComponent component,
         ref GeneratorGetFuelEvent args)
     {
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out _, out var solution))
+        if (!_solutionContainer.ResolveSolution(uid, component.SolutionName, ref component.Solution, out var solution))
             return;
 
         var availableReagent = solution.GetTotalPrototypeQuantity(component.Reagent).Float();

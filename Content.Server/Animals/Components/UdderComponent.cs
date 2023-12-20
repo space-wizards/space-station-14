@@ -1,4 +1,5 @@
 using Content.Server.Animals.Systems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
@@ -21,10 +22,16 @@ namespace Content.Server.Animals.Components
         public ProtoId<ReagentPrototype> ReagentId = "Milk";
 
         /// <summary>
-        ///     The solution to add reagent to.
+        ///     The name of <see cref="Solution"/>.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadOnly)]
-        public string Solution = "udder";
+        public string SolutionName = "udder";
+
+        /// <summary>
+        ///     The solution to add reagent to.
+        /// </summary>
+        [DataField]
+        public Entity<SolutionComponent>? Solution = null;
 
         /// <summary>
         ///     The amount of reagent to be generated on update.

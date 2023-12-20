@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -127,17 +128,29 @@ namespace Content.Server.Body.Components
         [DataField("bloodReagent")]
         public string BloodReagent = "Blood";
 
+        /// <summary>Name/Key that <see cref="BloodSolution"/> is indexed by.</summary>
+        [DataField]
+        public string BloodSolutionName = DefaultBloodSolutionName;
+
+        /// <summary>Name/Key that <see cref="ChemicalSolution"/> is indexed by.</summary>
+        [DataField]
+        public string ChemicalSolutionName = DefaultChemicalsSolutionName;
+
+        /// <summary>Name/Key that <see cref="TemporarySolution"/> is indexed by.</summary>
+        [DataField]
+        public string BloodTemporarySolutionName = DefaultBloodTemporarySolutionName;
+
         /// <summary>
         ///     Internal solution for blood storage
         /// </summary>
         [DataField]
-        public string BloodSolutionName = DefaultBloodSolutionName;
+        public Entity<SolutionComponent>? BloodSolution = null;
 
         /// <summary>
         ///     Internal solution for reagent storage
         /// </summary>
         [DataField]
-        public string ChemicalSolutionName = DefaultChemicalsSolutionName;
+        public Entity<SolutionComponent>? ChemicalSolution = null;
 
         /// <summary>
         ///     Temporary blood solution.
@@ -145,7 +158,7 @@ namespace Content.Server.Body.Components
         ///     solution hits a certain cap, the blood is actually spilled as a puddle.
         /// </summary>
         [DataField]
-        public string BloodTemporarySolutionName = DefaultBloodSolutionName;
+        public Entity<SolutionComponent>? TemporarySolution = null;
 
         /// <summary>
         /// Variable that stores the amount of status time added by having a low blood level.

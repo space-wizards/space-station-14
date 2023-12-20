@@ -15,7 +15,13 @@ public sealed partial class SolutionRegenerationComponent : Component
     /// The name of the solution to add to.
     /// </summary>
     [DataField("solution", required: true), ViewVariables(VVAccess.ReadWrite)]
-    public string Solution = string.Empty;
+    public string SolutionName = string.Empty;
+
+    /// <summary>
+    /// The solution to add reagents to.
+    /// </summary>
+    [DataField("solutionRef")]
+    public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>
     /// The reagent(s) to be regenerated in the solution.

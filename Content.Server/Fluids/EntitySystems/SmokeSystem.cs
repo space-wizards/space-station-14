@@ -130,7 +130,7 @@ public sealed class SmokeSystem : EntitySystem
 
     private void OnSmokeSpread(EntityUid uid, SmokeComponent component, ref SpreadNeighborsEvent args)
     {
-        if (component.SpreadAmount == 0 || !_solutionContainerSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out _, out var solution))
+        if (component.SpreadAmount == 0 || !_solutionContainerSystem.ResolveSolution(uid, SmokeComponent.SolutionName, ref component.Solution, out var solution))
         {
             RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
             return;
@@ -253,14 +253,14 @@ public sealed class SmokeSystem : EntitySystem
         if (!Resolve(smokeUid, ref component))
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(smokeUid, SmokeComponent.SolutionName, out _, out var solution) ||
+        if (!_solutionContainerSystem.ResolveSolution(smokeUid, SmokeComponent.SolutionName, ref component.Solution, out var solution) ||
             solution.Contents.Count == 0)
         {
             return;
         }
 
         ReactWithEntity(entity, smokeUid, solution, component);
-        UpdateVisuals(smokeUid);
+        UpdateVisuals((smokeUid, component));
     }
 
     private void ReactWithEntity(EntityUid entity, EntityUid smokeUid, Solution solution, SmokeComponent? component = null)
@@ -271,7 +271,7 @@ public sealed class SmokeSystem : EntitySystem
         if (!TryComp<BloodstreamComponent>(entity, out var bloodstream))
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(entity, bloodstream.ChemicalSolutionName, out _, out var chemSolution) || chemSolution.AvailableVolume <= 0)
+        if (!_solutionContainerSystem.ResolveSolution(entity, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution, out var chemSolution) || chemSolution.AvailableVolume <= 0)
             return;
 
         var blockIngestion = _internals.AreInternalsWorking(entity);
@@ -307,7 +307,7 @@ public sealed class SmokeSystem : EntitySystem
         if (!Resolve(uid, ref component, ref xform))
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out _, out var solution) || !solution.Any())
+        if (!_solutionContainerSystem.ResolveSolution(uid, SmokeComponent.SolutionName, ref component.Solution, out var solution) || !solution.Any())
             return;
 
         if (!_mapManager.TryGetGrid(xform.GridUid, out var mapGrid))
@@ -328,27 +328,30 @@ public sealed class SmokeSystem : EntitySystem
     /// <summary>
     /// Adds the specified solution to the relevant smoke solution.
     /// </summary>
-    private void TryAddSolution(EntityUid uid, Solution solution)
+    private void TryAddSolution(Entity<SmokeComponent?> smoke, Solution solution)
     {
         if (solution.Volume == FixedPoint2.Zero)
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solnArea, out var solutionArea))
+        if (!Resolve(smoke, ref smoke.Comp))
+            return;
+
+        if (!_solutionContainerSystem.ResolveSolution(smoke.Owner, SmokeComponent.SolutionName, ref smoke.Comp.Solution, out var solutionArea))
             return;
 
         var addSolution = solution.SplitSolution(FixedPoint2.Min(solution.Volume, solutionArea.AvailableVolume));
-        _solutionContainerSystem.TryAddSolution(solnArea.Value, addSolution);
+        _solutionContainerSystem.TryAddSolution(smoke.Comp.Solution.Value, addSolution);
 
-        UpdateVisuals(uid);
+        UpdateVisuals(smoke);
     }
 
-    private void UpdateVisuals(EntityUid uid)
+    private void UpdateVisuals(Entity<SmokeComponent?, AppearanceComponent?> smoke)
     {
-        if (!TryComp(uid, out AppearanceComponent? appearance) ||
-            !_solutionContainerSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out _, out var solution))
+        if (!Resolve(smoke, ref smoke.Comp1, ref smoke.Comp2) ||
+            !_solutionContainerSystem.ResolveSolution(smoke.Owner, SmokeComponent.SolutionName, ref smoke.Comp1.Solution, out var solution))
             return;
 
         var color = solution.GetColor(_prototype);
-        _appearance.SetData(uid, SmokeVisuals.Color, color, appearance);
+        _appearance.SetData(smoke.Owner, SmokeVisuals.Color, color, smoke.Comp2);
     }
 }

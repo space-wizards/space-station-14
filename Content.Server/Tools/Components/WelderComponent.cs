@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
@@ -11,10 +12,16 @@ namespace Content.Server.Tools.Components
     public sealed partial class WelderComponent : SharedWelderComponent
     {
         /// <summary>
-        ///     Solution on the entity that contains the fuel.
+        ///     Name of <see cref="FuelSolution"/>.
         /// </summary>
         [DataField("fuelSolution"), ViewVariables(VVAccess.ReadWrite)]
-        public string FuelSolution { get; private set; } = "Welder";
+        public string FuelSolutionName { get; private set; } = "Welder";
+
+        /// <summary>
+        ///     Solution on the entity that contains the fuel.
+        /// </summary>
+        [DataField("fuelSolutionRef")]
+        public Entity<SolutionComponent>? FuelSolution = null;
 
         /// <summary>
         ///     Reagent that will be used as fuel for welding.

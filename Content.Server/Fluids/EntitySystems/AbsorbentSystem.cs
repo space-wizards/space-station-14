@@ -214,7 +214,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         if (!TryComp(target, out PuddleComponent? puddle))
             return false;
 
-        if (!_solutionContainerSystem.TryGetSolution(target, puddle.SolutionName, out var puddleSoln, out var puddleSolution) || puddleSolution.Volume <= 0)
+        if (!_solutionContainerSystem.ResolveSolution(target, puddle.SolutionName, ref puddle.Solution, out var puddleSolution) || puddleSolution.Volume <= 0)
             return false;
 
         // Check if the puddle has any non-evaporative reagents
@@ -248,7 +248,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             _puddleSystem.DoTileReactions(mapGrid.GetTileRef(coordinates), absorberSplit);
         }
 
-        _solutionContainerSystem.AddSolution(puddleSoln.Value, absorberSplit);
+        _solutionContainerSystem.AddSolution(puddle.Solution.Value, absorberSplit);
         _solutionContainerSystem.AddSolution(absorberSoln, puddleSplit);
 
         _audio.PlayPvs(absorber.PickupSound, target);

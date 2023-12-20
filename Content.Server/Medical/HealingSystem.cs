@@ -176,7 +176,7 @@ public sealed class HealingSystem : EntitySystem
             return false;
 
         if (!HasDamage(targetDamage, component) &&
-            !(component.ModifyBloodLevel > 0 && _solutionContainerSystem.TryGetSolution(target, bloodstream.BloodSolutionName, out _, out var bloodSolution) && bloodSolution.Volume < bloodSolution.MaxVolume))
+            !(component.ModifyBloodLevel > 0 && _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution) && bloodSolution.Volume < bloodSolution.MaxVolume))
         {
             _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid, user);
             return false;

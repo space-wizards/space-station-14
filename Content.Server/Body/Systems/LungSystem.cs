@@ -46,7 +46,7 @@ public sealed class LungSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, LungComponent component, ComponentInit args)
     {
-        var solution = _solutionContainerSystem.EnsureSolution(uid, component.Solution);
+        var solution = _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
         solution.MaxVolume = 100.0f;
         solution.CanReact = false; // No dexalin lungs
     }
@@ -71,7 +71,7 @@ public sealed class LungSystem : EntitySystem
 
     public void GasToReagent(EntityUid uid, LungComponent lung)
     {
-        if (!_solutionContainerSystem.TryGetSolution(uid, lung.Solution, out var solution, out _))
+        if (!_solutionContainerSystem.ResolveSolution(uid, lung.SolutionName, ref lung.Solution, out var solution))
             return;
 
         foreach (var gas in Enum.GetValues<Gas>())
@@ -84,11 +84,13 @@ public sealed class LungSystem : EntitySystem
             if (reagent == null) continue;
 
             var amount = moles * Atmospherics.BreathMolesToReagentMultiplier;
-            _solutionContainerSystem.TryAddReagent(solution.Value, reagent, amount, out _);
+            solution.AddReagent(reagent, amount);
 
             // We don't remove the gas from the lung mix,
             // that's the responsibility of whatever gas is being metabolized.
             // Most things will just want to exhale again.
         }
+
+        _solutionContainerSystem.UpdateChemicals(lung.Solution.Value);
     }
 }
