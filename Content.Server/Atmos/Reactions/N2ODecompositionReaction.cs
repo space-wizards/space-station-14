@@ -14,13 +14,14 @@ public sealed partial class N2ODecompositionReaction : IGasReactionEffect
     {
         var cacheN2O = mixture.GetMoles(Gas.NitrousOxide);
 
-        var burnedFuel = cacheN2O * Atmospherics.N2ODecompositionRate * (mixture.Temperature - Atmospherics.N2ODecompositionMinScaleTemp) * (mixture.Temperature - Atmospherics.N2ODecompositionMaxScaleTemp) / Atmospherics.N2ODecompositionScaleDivisor;
+        var burnedFuel = cacheN2O / Atmospherics.N2ODecompositionRate;
 
-        //if (burnedFuel <= 0 || cacheN2O - burnedFuel < 0) return ReactionResult.NoReaction;
+        if (burnedFuel <= 0 || cacheN2O - burnedFuel < 0)
+            return ReactionResult.NoReaction;
 
-        mixture.AdjustMoles(Gas.NitrousOxide, burnedFuel * Atmospherics.N2ODecompositionRate);
-        mixture.AdjustMoles(Gas.Nitrogen, -burnedFuel * Atmospherics.N2ODecompositionRate);
-        mixture.AdjustMoles(Gas.Oxygen, (-burnedFuel / 2) * Atmospherics.N2ODecompositionRate);
+        mixture.AdjustMoles(Gas.NitrousOxide, -burnedFuel);
+        mixture.AdjustMoles(Gas.Nitrogen, burnedFuel);
+        mixture.AdjustMoles(Gas.Oxygen, burnedFuel / 2);
 
         return ReactionResult.Reacting;
     }

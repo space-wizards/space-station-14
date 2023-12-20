@@ -237,35 +237,9 @@ namespace Content.Shared.Atmos
         public const float FrezonProductionConversionRate = 50f;
 
         /// <summary>
-        ///     The minimum temperature N2O can decompose at.
-        /// </summary>
-        public const float N2ODecompositionMinTemp = 1400f;
-
-        /// <summary>
-        ///     The maximum temperature N2O can decompose at.
-        /// </summary>
-        public const float N2ODecompositionMaxTemp = 100e3f;
-
-        /// <summary>
         ///     The maximum portion of the N2O that can decompose each reaction tick. (50%)
         /// </summary>
-        public const float N2ODecompositionRate = .5f;
-
-        /// <summary>
-        ///     One root of the parabola used to scale N2O decomposition rates.
-        /// </summary>
-        public const float N2ODecompositionMinScaleTemp = 0;
-
-        /// <summary>
-        ///     The other root of the parabola used to scale N2O decomposition rates.
-        /// </summary>
-        public const float N2ODecompositionMaxScaleTemp = 100e3f;
-
-        /// <summary>
-        ///     The divisor used to normalize the N2O decomp scaling parabola.
-        ///     Basically the value of the apex/nadir of (x - [N2ODecompositionMinScaleTemp]) * (x - [N2ODecompositionMaxScaleTemp]).
-        /// </summary>
-        public static readonly float N2ODecompositionScaleDivisor = (float) Math.Pow(-.25f * (N2ODecompositionMaxScaleTemp - N2ODecompositionMinScaleTemp), 2);
+        public const float N2ODecompositionRate = 2f;
 
         /// <summary>
         ///     How many mol of frezon can be converted into miasma in one cycle.
