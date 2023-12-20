@@ -211,7 +211,8 @@
         map: [ "blade" ]
   - type: Item
     size: Small
-    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+    sprite: Objects/Weapons/Melee/inhands_64x.rsi
+    heldPrefix: e_sword_double
   - type: Reflect
     enabled: true
     reflectProb: .75
@@ -222,8 +223,8 @@
     spriteLayer: blade
     inhandVisuals:
       left:
-      - state: inhand-left-blade
+      - state: e_sword_double-inhand-left-blade
         shader: unshaded
       right:
-      - state: inhand-right-blade
+      - state: e_sword_double-inhand-right-blade
         shader: unshaded
