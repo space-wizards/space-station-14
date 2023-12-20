@@ -270,6 +270,7 @@ namespace Content.Client.Atmos.UI
             var gasBar = new SplitBar
             {
                 MinHeight = height,
+                MinBarSize = new Vector2(12, 0)
             };
             // Separator
             dataContainer.AddChild(new Control
