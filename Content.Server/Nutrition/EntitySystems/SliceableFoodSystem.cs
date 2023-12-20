@@ -57,7 +57,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var sliceUid = Slice(uid, user, component, transform);
 
-            var lostSolution = _solutionContainerSystem.SplitSolution(soln, solution.Volume / FixedPoint2.New(component.Count));
+            var lostSolution = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume / FixedPoint2.New(component.Count));
 
             // Fill new slice
             FillSlice(sliceUid, lostSolution);
@@ -136,10 +136,10 @@ namespace Content.Server.Nutrition.EntitySystems
             if (TryComp<FoodComponent>(sliceUid, out var sliceFoodComp) &&
                 _solutionContainerSystem.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSoln, out var itsSolution))
             {
-                _solutionContainerSystem.RemoveAllSolution(itsSoln);
+                _solutionContainerSystem.RemoveAllSolution(itsSoln.Value);
 
                 var lostSolutionPart = solution.SplitSolution(itsSolution.AvailableVolume);
-                _solutionContainerSystem.TryAddSolution(itsSoln, lostSolutionPart);
+                _solutionContainerSystem.TryAddSolution(itsSoln.Value, lostSolutionPart);
             }
         }
 

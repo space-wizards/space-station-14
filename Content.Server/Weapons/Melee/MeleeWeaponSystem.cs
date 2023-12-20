@@ -254,7 +254,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     {
         if (!args.IsHit ||
             !args.HitEntities.Any() ||
-            !_solutions.TryGetSolution(owner, comp.Solution, out _, out var solutionContainer))
+            !_solutions.TryGetSolution(owner, comp.Solution, out var solutionContainer))
         {
             return;
         }
@@ -281,7 +281,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!hitBloodstreams.Any())
             return;
 
-        var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
+        var removedSolution = _solutions.SplitSolution(solutionContainer.Value, comp.TransferAmount * hitBloodstreams.Count);
         var removedVol = removedSolution.Volume;
         var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);
         var volPerBloodstream = solutionToInject.Volume * (1 / hitBloodstreams.Count);

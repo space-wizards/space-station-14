@@ -223,7 +223,7 @@ public sealed class FoodSystem : EntitySystem
         args.Handled = true;
         var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, solution.Volume) : solution.Volume;
 
-        var split = _solutionContainer.SplitSolution(soln, transferAmount);
+        var split = _solutionContainer.SplitSolution(soln.Value, transferAmount);
 
         //TODO: Get the stomach UID somehow without nabbing owner
         // Get the stomach with the highest available solution volume
@@ -248,7 +248,7 @@ public sealed class FoodSystem : EntitySystem
         // No stomach so just popup a message that they can't eat.
         if (stomachToUse == null)
         {
-            _solutionContainer.TryAddSolution(soln, split);
+            _solutionContainer.TryAddSolution(soln.Value, split);
             _popup.PopupEntity(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other") : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Target.Value, args.User);
             return;
         }
@@ -294,7 +294,7 @@ public sealed class FoodSystem : EntitySystem
             if (stack.Count > 1)
             {
                 _stack.SetCount(uid, stack.Count - 1);
-                _solutionContainer.TryAddSolution(soln, split);
+                _solutionContainer.TryAddSolution(soln.Value, split);
                 return;
             }
         }

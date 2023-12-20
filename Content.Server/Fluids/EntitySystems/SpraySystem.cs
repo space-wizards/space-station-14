@@ -111,7 +111,7 @@ public sealed class SpraySystem : EntitySystem
                 target = userMapPos.Offset(diffNorm * component.SprayDistance);
 
             var adjustedSolutionAmount = component.TransferAmount / component.VaporAmount;
-            var newSolution = _solutionContainer.SplitSolution(soln, adjustedSolutionAmount);
+            var newSolution = _solutionContainer.SplitSolution(soln.Value, adjustedSolutionAmount);
 
             if (newSolution.Volume <= FixedPoint2.Zero)
                 break;

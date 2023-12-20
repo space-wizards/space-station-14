@@ -70,7 +70,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var soln, out var solution))
             return;
 
-        var spillSolution = _solutionContainer.SplitSolution(soln, solution.Volume);
+        var spillSolution = _solutionContainer.SplitSolution(soln.Value, solution.Volume);
         _puddle.TrySpillAt(uid, spillSolution, out _);
     }
 
@@ -101,7 +101,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
             component.Multiplier * FixedPoint2.Epsilon.Float(),
             availableReagent);
 
-        _solutionContainer.RemoveReagent(soln, component.Reagent, FixedPoint2.FromCents(toRemove));
+        _solutionContainer.RemoveReagent(soln.Value, component.Reagent, FixedPoint2.FromCents(toRemove));
     }
 
     private void ChemicalGetFuel(

@@ -83,8 +83,8 @@ public sealed class FireExtinguisherSystem : EntitySystem
 
         if (transfer > 0)
         {
-            var drained = _solutionContainerSystem.Drain(target, targetSoln, transfer);
-            _solutionContainerSystem.TryAddSolution(containerSoln, drained);
+            var drained = _solutionContainerSystem.Drain(target, targetSoln.Value, transfer);
+            _solutionContainerSystem.TryAddSolution(containerSoln.Value, drained);
 
             _audio.PlayPvs(component.RefillSound, uid);
             _popupSystem.PopupEntity(Loc.GetString("fire-extinguisher-component-after-interact-refilled-message", ("owner", uid)),

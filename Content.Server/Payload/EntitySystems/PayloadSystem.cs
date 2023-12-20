@@ -158,14 +158,14 @@ public sealed class PayloadSystem : EntitySystem
             $"Chemical bomb payload {ToPrettyString(uid):payload} at {Transform(uid).MapPosition:location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");
 
         solutionA.MaxVolume += solutionB.MaxVolume;
-        _solutionContainerSystem.TryAddSolution(solnA, solutionB);
-        _solutionContainerSystem.RemoveAllSolution(solnB);
+        _solutionContainerSystem.TryAddSolution(solnA.Value, solutionB);
+        _solutionContainerSystem.RemoveAllSolution(solnB.Value);
 
         // The grenade might be a dud. Redistribute solution:
-        var tmpSol = _solutionContainerSystem.SplitSolution(solnA, solutionA.Volume * solutionB.MaxVolume / solutionA.MaxVolume);
-        _solutionContainerSystem.TryAddSolution(solnB, tmpSol);
+        var tmpSol = _solutionContainerSystem.SplitSolution(solnA.Value, solutionA.Volume * solutionB.MaxVolume / solutionA.MaxVolume);
+        _solutionContainerSystem.TryAddSolution(solnB.Value, tmpSol);
         solutionA.MaxVolume -= solutionB.MaxVolume;
-        _solutionContainerSystem.UpdateChemicals(solnA);
+        _solutionContainerSystem.UpdateChemicals(solnA.Value);
 
         args.Handled = true;
     }

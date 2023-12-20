@@ -55,7 +55,7 @@ public sealed class InjectionAnomalySystem : EntitySystem
 
             if (_injectableQuery.TryGetComponent(ent, out var injEnt))
             {
-                _solutionContainer.TryTransferSolution(injectable, sol, maxInject);
+                _solutionContainer.TryTransferSolution(injectable.Value, sol, maxInject);
                 //Spawn Effect
                 var uidXform = Transform(ent);
                 Spawn(component.VisualEffectPrototype, uidXform.Coordinates);

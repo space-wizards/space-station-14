@@ -103,19 +103,19 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
     private void Mop(EntityUid user, EntityUid target, EntityUid used, AbsorbentComponent component)
     {
-        if (!_solutionContainerSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorberSoln, out _))
+        if (!_solutionContainerSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorberSoln))
             return;
 
         if (_useDelay.ActiveDelay(used))
             return;
 
         // If it's a puddle try to grab from
-        if (!TryPuddleInteract(user, used, target, component, absorberSoln))
+        if (!TryPuddleInteract(user, used, target, component, absorberSoln.Value))
         {
             // Do a transfer, try to get water onto us and transfer anything else to them.
 
             // If it's anything else transfer to
-            if (!TryTransferAbsorber(user, used, target, component, absorberSoln))
+            if (!TryTransferAbsorber(user, used, target, component, absorberSoln.Value))
                 return;
         }
     }
@@ -155,7 +155,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             absorberSolution.AvailableVolume;
 
         var water = refillableSolution.SplitSolutionWithOnly(transferAmount, PuddleSystem.EvaporationReagents);
-        _solutionContainerSystem.UpdateChemicals(refillableSoln);
+        _solutionContainerSystem.UpdateChemicals(refillableSoln.Value);
 
         if (water.Volume == FixedPoint2.Zero && nonWater.Volume == FixedPoint2.Zero)
         {
@@ -171,7 +171,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         // Attempt to transfer the full nonWater solution to the bucket.
         if (nonWater.Volume > 0)
         {
-            bool fullTransferSuccess = _solutionContainerSystem.TryAddSolution(refillableSoln, nonWater);
+            bool fullTransferSuccess = _solutionContainerSystem.TryAddSolution(refillableSoln.Value, nonWater);
 
             // If full transfer was unsuccessful, try a partial transfer.
             if (!fullTransferSuccess)
@@ -179,7 +179,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
                 var partiallyTransferSolution = nonWater.SplitSolution(refillableSolution.AvailableVolume);
 
                 // Try to transfer the split solution to the bucket.
-                if (_solutionContainerSystem.TryAddSolution(refillableSoln, partiallyTransferSolution))
+                if (_solutionContainerSystem.TryAddSolution(refillableSoln.Value, partiallyTransferSolution))
                 {
                     // The transfer was successful. nonWater now contains the amount that wasn't transferred.
                     // If there's any leftover nonWater solution, add it back to the mop.
@@ -248,7 +248,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             _puddleSystem.DoTileReactions(mapGrid.GetTileRef(coordinates), absorberSplit);
         }
 
-        _solutionContainerSystem.AddSolution(puddleSoln, absorberSplit);
+        _solutionContainerSystem.AddSolution(puddleSoln.Value, absorberSplit);
         _solutionContainerSystem.AddSolution(absorberSoln, puddleSplit);
 
         _audio.PlayPvs(absorber.PickupSound, target);

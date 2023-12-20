@@ -61,11 +61,11 @@ internal sealed class UdderSystem : EntitySystem
                 _hunger.ModifyHunger(uid, -udder.HungerUsage, hunger);
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, udder.Solution, out var solution, out _))
+            if (!_solutionContainerSystem.TryGetSolution(uid, udder.Solution, out var solution))
                 continue;
 
             //TODO: toxins from bloodstream !?
-            _solutionContainerSystem.TryAddReagent(solution, udder.ReagentId, udder.QuantityPerUpdate, out _);
+            _solutionContainerSystem.TryAddReagent(solution.Value, udder.ReagentId, udder.QuantityPerUpdate, out _);
         }
     }
 
@@ -107,8 +107,8 @@ internal sealed class UdderSystem : EntitySystem
         if (quantity > targetSolution.AvailableVolume)
             quantity = targetSolution.AvailableVolume;
 
-        var split = _solutionContainerSystem.SplitSolution(soln, quantity);
-        _solutionContainerSystem.TryAddSolution(targetSoln, split);
+        var split = _solutionContainerSystem.SplitSolution(soln.Value, quantity);
+        _solutionContainerSystem.TryAddSolution(targetSoln.Value, split);
 
         _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(args.Args.Used.Value, EntityManager))), uid,
             args.Args.User, PopupType.Medium);

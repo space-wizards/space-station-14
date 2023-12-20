@@ -337,7 +337,7 @@ public sealed class SmokeSystem : EntitySystem
             return;
 
         var addSolution = solution.SplitSolution(FixedPoint2.Min(solution.Volume, solutionArea.AvailableVolume));
-        _solutionContainerSystem.TryAddSolution(solnArea, addSolution);
+        _solutionContainerSystem.TryAddSolution(solnArea.Value, addSolution);
 
         UpdateVisuals(uid);
     }

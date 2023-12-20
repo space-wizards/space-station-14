@@ -71,30 +71,83 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
 
-    public bool TryGetSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [MaybeNullWhen(false)] out Entity<SolutionComponent> entity, [MaybeNullWhen(false)] out Solution solution)
+    /// <summary>
+    /// Attempts to resolve a solution associated with an entity.
+    /// </summary>
+    /// <param name="container">The entity that holdes the container the solution entity is in.</param>
+    /// <param name="name">The name of the solution entities container.</param>
+    /// <param name="entity">A reference to a solution entity to load the associated solution entity into. Will be unchanged if not null.</param>
+    /// <param name="solution">Returns the solution state of the solution entity.</param>
+    /// <returns>Whether the solution was successfully resolved.</returns>
+    public bool ResolveSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] ref Entity<SolutionComponent>? entity, [NotNullWhen(true)] out Solution? solution)
     {
-        entity = default!;
+        if (!ResolveSolution(container, name, ref entity))
+        {
+            solution = null;
+            return false;
+        }
+
+        solution = entity.Value.Comp.Solution;
+        return true;
+    }
+
+    /// <inheritdoc cref="ResolveSolution"/>
+    public bool ResolveSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] ref Entity<SolutionComponent>? entity)
+    {
+        if (entity is not null)
+            return true;
+
+        return TryGetSolution(container, name, out entity);
+    }
+
+    /// <summary>
+    /// Attempts to fetch a solution entity associated with an entity.
+    /// </summary>
+    /// <remarks>
+    /// If the solution entity will be frequently accessed please use the equivalent <see cref="ResolveSolution"/> method and cache the result.
+    /// </remarks>
+    /// <param name="container">The entity the solution entity should be associated with.</param>
+    /// <param name="name">The name of the solution entity to fetch.</param>
+    /// <param name="entity">Returns the solution entity that was fetched.</param>
+    /// <param name="solution">Returns the solution state of the solution entity that was fetched.</param>
+    /// <returns></returns>
+    public bool TryGetSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] out Entity<SolutionComponent>? entity, [NotNullWhen(true)] out Solution? solution)
+    {
+        if (!TryGetSolution(container, name, out entity))
+        {
+            solution = null;
+            return false;
+        }
+
+        solution = entity.Value.Comp.Solution;
+        return true;
+    }
+
+    /// <inheritdoc cref="TryGetSolution"/>
+    public bool TryGetSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] out Entity<SolutionComponent>? entity)
+    {
+        EntityUid uid;
         if (name is null)
-            entity.Owner = container;
+            uid = container;
         else if (
             ContainerSystem.TryGetContainer(container, $"solution@{name}", out var solutionContainer) &&
             solutionContainer is ContainerSlot solutionSlot &&
             solutionSlot.ContainedEntity is { } containedSolution
         )
-            entity.Owner = containedSolution;
+            uid = containedSolution;
         else
         {
-            solution = null;
+            entity = null;
             return false;
         }
 
-        if (!TryComp(entity, out entity.Comp!))
+        if (!TryComp(uid, out SolutionComponent? comp))
         {
-            solution = null;
+            entity = null;
             return false;
         }
 
-        solution = entity.Comp.Solution;
+        entity = (uid, comp);
         return true;
     }
 

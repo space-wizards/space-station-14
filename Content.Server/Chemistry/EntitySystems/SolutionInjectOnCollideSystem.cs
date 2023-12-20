@@ -44,7 +44,7 @@ namespace Content.Server.Chemistry.EntitySystems
                     return;
             }
 
-            var solRemoved = _solutionContainersSystem.SplitSolution(solution, component.TransferAmount);
+            var solRemoved = _solutionContainersSystem.SplitSolution(solution.Value, component.TransferAmount);
             var solRemovedVol = solRemoved.Volume;
 
             var solToInject = solRemoved.SplitSolution(solRemovedVol * component.TransferEfficiency);

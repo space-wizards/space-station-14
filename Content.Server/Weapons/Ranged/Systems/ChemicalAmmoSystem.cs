@@ -28,7 +28,7 @@ namespace Content.Server.Weapons.Ranged.Systems
                 if (_solutionContainerSystem
                     .TryGetSolution(projectile, component.SolutionName, out var projectileSoln, out _))
                 {
-                    projectileSolutionContainers.Add((uid, projectileSoln));
+                    projectileSolutionContainers.Add((uid, projectileSoln.Value));
                 }
             }
 
@@ -39,11 +39,11 @@ namespace Content.Server.Weapons.Ranged.Systems
 
             foreach (var (_, projectileSolution) in projectileSolutionContainers)
             {
-                var solutionToTransfer = _solutionContainerSystem.SplitSolution(ammoSoln, solutionPerProjectile);
+                var solutionToTransfer = _solutionContainerSystem.SplitSolution(ammoSoln.Value, solutionPerProjectile);
                 _solutionContainerSystem.TryAddSolution(projectileSolution, solutionToTransfer);
             }
 
-            _solutionContainerSystem.RemoveAllSolution(ammoSoln);
+            _solutionContainerSystem.RemoveAllSolution(ammoSoln.Value);
         }
     }
 }

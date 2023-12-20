@@ -23,20 +23,19 @@ public sealed partial class PuddleSystem
         // Dump reagents into DumpableSolution
         if (TryComp<DumpableSolutionComponent>(args.Target, out var dump))
         {
-            _solutionContainerSystem.TryGetDumpableSolution((args.Target, dump, null), out var dumpableSoln, out var dumpableSolution);
-            if (dumpableSolution == null)
+            if (!_solutionContainerSystem.TryGetDumpableSolution((args.Target, dump, null), out var dumpableSoln, out var dumpableSolution))
                 return;
 
             bool success = true;
             if (dump.Unlimited)
             {
-                var split = _solutionContainerSystem.SplitSolution(soln, solution.Volume);
+                var split = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume);
                 dumpableSolution.AddSolution(split, _prototypeManager);
             }
             else
             {
-                var split = _solutionContainerSystem.SplitSolution(soln, dumpableSolution.AvailableVolume);
-                success = _solutionContainerSystem.TryAddSolution(dumpableSoln, split);
+                var split = _solutionContainerSystem.SplitSolution(soln.Value, dumpableSolution.AvailableVolume);
+                success = _solutionContainerSystem.TryAddSolution(dumpableSoln.Value, split);
             }
 
             if (success)
@@ -57,9 +56,9 @@ public sealed partial class PuddleSystem
             if (!_solutionContainerSystem.TryGetDrainableSolution((args.Target, drainable, null), out var drainableSolution, out _))
                 return;
 
-            var split = _solutionContainerSystem.SplitSolution(drainableSolution, solution.AvailableVolume);
+            var split = _solutionContainerSystem.SplitSolution(drainableSolution.Value, solution.AvailableVolume);
 
-            if (_solutionContainerSystem.TryAddSolution(soln, split))
+            if (_solutionContainerSystem.TryAddSolution(soln.Value, split))
             {
                 _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, uid);
             }

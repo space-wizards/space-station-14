@@ -76,7 +76,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             if (anomaly.Severity >= 0.97) reagentProducingAmount *= component.SupercriticalReagentProducingModifier;
 
             newSol.AddReagent(component.ProducingReagent, reagentProducingAmount);
-            _solutionContainer.TryAddSolution(producerSol, newSol); //TO DO - the container is not fully filled. 
+            _solutionContainer.TryAddSolution(producerSol.Value, newSol); //TO DO - the container is not fully filled. 
 
             component.AccumulatedFrametime = 0;
 

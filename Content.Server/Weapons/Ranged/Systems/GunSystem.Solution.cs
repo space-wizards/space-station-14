@@ -62,7 +62,7 @@ public sealed partial class GunSystem
         if (!_solutionContainer.TryGetSolution(uid, component.SolutionId, out var solution, out _))
             return (ent, shootable);
 
-        var newSolution = _solutionContainer.SplitSolution(solution, component.FireCost);
+        var newSolution = _solutionContainer.SplitSolution(solution.Value, component.FireCost);
 
         if (newSolution.Volume <= FixedPoint2.Zero)
             return (ent, shootable);
@@ -76,7 +76,7 @@ public sealed partial class GunSystem
         // Add the solution to the vapor and actually send the thing
         if (_solutionContainer.TryGetSolution(ent, VaporComponent.SolutionName, out var vaporSolution, out _))
         {
-            _solutionContainer.TryAddSolution(vaporSolution, newSolution);
+            _solutionContainer.TryAddSolution(vaporSolution.Value, newSolution);
         }
         return (ent, shootable);
     }

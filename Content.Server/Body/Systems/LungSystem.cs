@@ -84,7 +84,7 @@ public sealed class LungSystem : EntitySystem
             if (reagent == null) continue;
 
             var amount = moles * Atmospherics.BreathMolesToReagentMultiplier;
-            _solutionContainerSystem.TryAddReagent(solution, reagent, amount, out _);
+            _solutionContainerSystem.TryAddReagent(solution.Value, reagent, amount, out _);
 
             // We don't remove the gas from the lung mix,
             // that's the responsibility of whatever gas is being metabolized.

@@ -48,7 +48,7 @@ public sealed class SolutionRegenerationSystem : EntitySystem
                     generated = regen.Generated.Clone().SplitSolution(amount);
                 }
 
-                _solutionContainer.TryAddSolution(soln, generated);
+                _solutionContainer.TryAddSolution(soln.Value, generated);
             }
         }
     }

@@ -59,7 +59,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
             return;
         }
 
-        if (!_solutionContainerSystem.ForceAddSolution(targetSoln, sourceSolution))
+        if (!_solutionContainerSystem.ForceAddSolution(targetSoln.Value, sourceSolution))
             return;
 
         _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);

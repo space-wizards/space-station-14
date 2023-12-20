@@ -72,7 +72,7 @@ public sealed class SolutionSystemTests
 
             solution.AddSolution(originalWater, protoMan);
             Assert.That(containerSystem
-                .TryAddSolution(solutionEnt, oilAdded));
+                .TryAddSolution(solutionEnt.Value, oilAdded));
 
             var water = solution.GetTotalPrototypeQuantity("Water");
             var oil = solution.GetTotalPrototypeQuantity("Oil");
@@ -117,7 +117,7 @@ public sealed class SolutionSystemTests
 
             solution.AddSolution(originalWater, protoMan);
             Assert.That(containerSystem
-                .TryAddSolution(solutionEnt, oilAdded), Is.False);
+                .TryAddSolution(solutionEnt.Value, oilAdded), Is.False);
 
             var water = solution.GetTotalPrototypeQuantity("Water");
             var oil = solution.GetTotalPrototypeQuantity("Oil");
@@ -163,7 +163,7 @@ public sealed class SolutionSystemTests
 
             solution.AddSolution(originalWater, protoMan);
             Assert.That(containerSystem
-                .TryMixAndOverflow(solutionEnt, oilAdded, threshold, out var overflowingSolution));
+                .TryMixAndOverflow(solutionEnt.Value, oilAdded, threshold, out var overflowingSolution));
 
             Assert.Multiple(() =>
             {
@@ -217,7 +217,7 @@ public sealed class SolutionSystemTests
 
             solution.AddSolution(originalWater, protoMan);
             Assert.That(containerSystem
-                .TryMixAndOverflow(solutionEnt, oilAdded, threshold, out _),
+                .TryMixAndOverflow(solutionEnt.Value, oilAdded, threshold, out _),
                 Is.False);
         });
 

@@ -130,7 +130,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     }
                 }
 
-                var inhaledSolution = _solutionContainerSystem.SplitSolution(soln, smokable.InhaleAmount * _timer);
+                var inhaledSolution = _solutionContainerSystem.SplitSolution(soln.Value, smokable.InhaleAmount * _timer);
 
                 if (solution.Volume == FixedPoint2.Zero)
                 {

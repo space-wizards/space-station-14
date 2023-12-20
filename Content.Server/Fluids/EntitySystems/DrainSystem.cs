@@ -83,10 +83,10 @@ public sealed class DrainSystem : SharedDrainSystem
 
         // Try to transfer as much solution as possible to the drain
 
-        var transferSolution = _solutionContainerSystem.SplitSolution(containerSoln,
+        var transferSolution = _solutionContainerSystem.SplitSolution(containerSoln.Value,
             FixedPoint2.Min(containerSolution.Volume, drainSolution.AvailableVolume));
 
-        _solutionContainerSystem.TryAddSolution(drainSoln, transferSolution);
+        _solutionContainerSystem.TryAddSolution(drainSoln.Value, transferSolution);
 
         _audioSystem.PlayPvs(drain.ManualDrainSound, target);
         _ambientSoundSystem.SetAmbience(target, true);
@@ -141,7 +141,7 @@ public sealed class DrainSystem : SharedDrainSystem
             }
 
             // Remove a bit from the buffer
-            _solutionContainerSystem.SplitSolution(drainSoln, (drain.UnitsDestroyedPerSecond * drain.DrainFrequency));
+            _solutionContainerSystem.SplitSolution(drainSoln.Value, (drain.UnitsDestroyedPerSecond * drain.DrainFrequency));
 
             // This will ensure that UnitsPerSecond is per second...
             var amount = drain.UnitsPerSecond * drain.DrainFrequency;
@@ -185,10 +185,10 @@ public sealed class DrainSystem : SharedDrainSystem
                 // the drain component's units per second adjusted for # of puddles
                 // the puddle's remaining volume (making it cleanly zero)
                 // the drain's remaining volume in its buffer.
-                var transferSolution = _solutionContainerSystem.SplitSolution(puddleSoln,
+                var transferSolution = _solutionContainerSystem.SplitSolution(puddleSoln.Value,
                     FixedPoint2.Min(FixedPoint2.New(amount), puddleSolution.Volume, drainSolution.AvailableVolume));
 
-                _solutionContainerSystem.TryAddSolution(drainSoln, transferSolution);
+                _solutionContainerSystem.TryAddSolution(drainSoln.Value, transferSolution);
 
                 if (puddleSolution.Volume <= 0)
                 {
@@ -254,13 +254,13 @@ public sealed class DrainSystem : SharedDrainSystem
         }
 
 
-        if (!_solutionContainerSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName, out var drainSolution, out _))
+        if (!_solutionContainerSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName, out var drainSolution))
         {
             return;
         }
 
 
-        _solutionContainerSystem.RemoveAllSolution(drainSolution);
+        _solutionContainerSystem.RemoveAllSolution(drainSolution.Value);
         _audioSystem.PlayPvs(component.UnclogSound, args.Target.Value);
         _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-success", ("object", args.Target.Value)), args.Target.Value);
     }

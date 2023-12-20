@@ -62,7 +62,7 @@ namespace Content.Server.Medical
                 {
                     solution.AddSolution(sol, _proto);
                     sol.RemoveAllSolution();
-                    _solutionContainer.UpdateChemicals(solEnt);
+                    _solutionContainer.UpdateChemicals(solEnt.Value);
                 }
             }
             // Adds a tiny amount of the chem stream from earlier along with vomit
@@ -73,9 +73,9 @@ namespace Content.Server.Medical
                 var vomitAmount = solutionSize;
 
                 // Takes 10% of the chemicals removed from the chem stream
-                if (_solutionContainer.TryGetSolution(uid, bloodStream.ChemicalSolutionName, out var chemSolution, out _))
+                if (_solutionContainer.TryGetSolution(uid, bloodStream.ChemicalSolutionName, out var chemSolution))
                 {
-                    var vomitChemstreamAmount = _solutionContainer.SplitSolution(chemSolution, vomitAmount);
+                    var vomitChemstreamAmount = _solutionContainer.SplitSolution(chemSolution.Value, vomitAmount);
                     vomitChemstreamAmount.ScaleSolution(chemMultiplier);
                     solution.AddSolution(vomitChemstreamAmount, _proto);
 

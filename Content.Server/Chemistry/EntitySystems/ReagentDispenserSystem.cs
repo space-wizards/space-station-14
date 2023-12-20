@@ -126,7 +126,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
                 return;
 
-            if (_solutionContainerSystem.TryAddReagent(solution, message.ReagentId, (int) reagentDispenser.Comp.DispenseAmount, out var dispensedAmount)
+            if (_solutionContainerSystem.TryAddReagent(solution.Value, message.ReagentId, (int) reagentDispenser.Comp.DispenseAmount, out var dispensedAmount)
                 && message.Session.AttachedEntity is not null)
             {
                 _adminLogger.Add(LogType.ChemicalReaction, LogImpact.Medium,
@@ -143,7 +143,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
                 return;
 
-            _solutionContainerSystem.RemoveAllSolution(solution);
+            _solutionContainerSystem.RemoveAllSolution(solution.Value);
             UpdateUiState(reagentDispenser);
             ClickSound(reagentDispenser);
         }

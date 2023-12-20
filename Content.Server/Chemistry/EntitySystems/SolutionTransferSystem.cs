@@ -107,7 +107,7 @@ namespace Content.Server.Chemistry.EntitySystems
                     transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill); // if the receiver has a smaller transfer limit, use that instead
                 }
 
-                var transferred = Transfer(args.User, target, targetSoln, uid, ownerSoln, transferAmount);
+                var transferred = Transfer(args.User, target, targetSoln.Value, uid, ownerSoln.Value, transferAmount);
                 if (transferred > 0)
                 {
                     var toTheBrim = ownerRefill.AvailableVolume == 0;
@@ -133,7 +133,7 @@ namespace Content.Server.Chemistry.EntitySystems
                     transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill);
                 }
 
-                var transferred = Transfer(args.User, uid, ownerSoln, target, targetSoln, transferAmount);
+                var transferred = Transfer(args.User, uid, ownerSoln.Value, target, targetSoln.Value, transferAmount);
 
                 if (transferred > 0)
                 {

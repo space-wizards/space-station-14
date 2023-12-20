@@ -108,7 +108,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         QueueDel(item);
                     }
 
-                    _solutionContainersSystem.TryAddSolution(containerSoln, solution);
+                    _solutionContainersSystem.TryAddSolution(containerSoln.Value, solution);
                 }
 
                 _userInterfaceSystem.TrySendUiMessage(uid, ReagentGrinderUiKey.Key,

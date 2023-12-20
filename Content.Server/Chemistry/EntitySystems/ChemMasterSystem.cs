@@ -141,12 +141,12 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 amount = FixedPoint2.Min(amount, containerSolution.AvailableVolume);
                 amount = bufferSolution.RemoveReagent(id, amount);
-                _solutionContainerSystem.TryAddReagent(containerSoln, id, amount, out var _);
+                _solutionContainerSystem.TryAddReagent(containerSoln.Value, id, amount, out var _);
             }
             else // Container to buffer
             {
                 amount = FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(id));
-                _solutionContainerSystem.RemoveReagent(containerSoln, id, amount);
+                _solutionContainerSystem.RemoveReagent(containerSoln.Value, id, amount);
                 bufferSolution.AddReagent(id, amount);
             }
 
@@ -168,7 +168,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 if (container is not null &&
                     _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution, out _))
                 {
-                    _solutionContainerSystem.RemoveReagent(containerSolution, id, amount);
+                    _solutionContainerSystem.RemoveReagent(containerSolution.Value, id, amount);
                 }
                 else
                     return;
@@ -258,7 +258,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
 
             _labelSystem.Label(container, message.Label);
-            _solutionContainerSystem.TryAddSolution(soln, withdrawal);
+            _solutionContainerSystem.TryAddSolution(soln.Value, withdrawal);
 
             if (user.HasValue)
             {

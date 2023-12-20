@@ -52,10 +52,10 @@ public sealed class WoolySystem : EntitySystem
                 _hunger.ModifyHunger(uid, -wooly.HungerUsage, hunger);
             }
 
-            if (!_solutionContainer.TryGetSolution(uid, wooly.Solution, out var solution, out _))
+            if (!_solutionContainer.TryGetSolution(uid, wooly.Solution, out var solution))
                 continue;
 
-            _solutionContainer.TryAddReagent(solution, wooly.ReagentId, wooly.Quantity, out _);
+            _solutionContainer.TryAddReagent(solution.Value, wooly.ReagentId, wooly.Quantity, out _);
         }
     }
 

@@ -25,7 +25,7 @@ public sealed class PuddleCreateAnomalySystem : EntitySystem
             return;
 
         var xform = Transform(uid);
-        var puddleSol = _solutionContainer.SplitSolution(sol, component.MaxPuddleSize * args.Severity);
+        var puddleSol = _solutionContainer.SplitSolution(sol.Value, component.MaxPuddleSize * args.Severity);
         _puddle.TrySplashSpillAt(uid, xform.Coordinates, puddleSol, out _);
     }
     private void OnSupercritical(EntityUid uid, PuddleCreateAnomalyComponent component, ref AnomalySupercriticalEvent args)

@@ -133,7 +133,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
                 var split = overflow.SplitSolution(remaining);
 
-                if (!_solutionContainerSystem.TryAddSolution(neighborSoln, split))
+                if (!_solutionContainerSystem.TryAddSolution(neighborSoln.Value, split))
                     continue;
 
                 args.Updates--;
@@ -189,7 +189,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
                 var split = overflow.SplitSolution(spillPerNeighbor);
 
-                if (!_solutionContainerSystem.TryAddSolution(neighborSoln, split))
+                if (!_solutionContainerSystem.TryAddSolution(neighborSoln.Value, split))
                     continue;
 
                 EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
@@ -201,9 +201,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
 
         // Add the remainder back
-        if (_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var puddleSolution, out _))
+        if (_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var puddleSolution))
         {
-            _solutionContainerSystem.TryAddSolution(puddleSolution, overflow);
+            _solutionContainerSystem.TryAddSolution(puddleSolution.Value, overflow);
         }
     }
 
@@ -226,7 +226,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             args.Slipped, args.Slipped, PopupType.SmallCaution);
 
         // Take 15% of the puddle solution
-        var splitSol = _solutionContainerSystem.SplitSolution(soln, solution.Volume * 0.15f);
+        var splitSol = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume * 0.15f);
         _reactive.DoEntityReaction(args.Slipped, splitSol, ReactionMethod.Touch);
     }
 
@@ -418,13 +418,12 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return false;
 
         if (addedSolution.Volume == 0 ||
-            !_solutionContainerSystem.TryGetSolution(puddleUid, puddleComponent.SolutionName, out var soln, out var solution))
+            !_solutionContainerSystem.TryGetSolution(puddleUid, puddleComponent.SolutionName, out var soln))
         {
             return false;
         }
 
-        solution.AddSolution(addedSolution, _prototypeManager);
-        _solutionContainerSystem.UpdateChemicals(soln);
+        _solutionContainerSystem.AddSolution(soln.Value, addedSolution);
 
         if (checkForOverflow && IsOverflowing(puddleUid, puddleComponent))
         {
@@ -474,7 +473,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         // TODO: This is going to fail with struct solutions.
         var remaining = puddle.OverflowVolume;
-        var split = _solutionContainerSystem.SplitSolution(solution, CurrentVolume(uid, puddle) - remaining);
+        var split = _solutionContainerSystem.SplitSolution(solution.Value, CurrentVolume(uid, puddle) - remaining);
         return split;
     }
 

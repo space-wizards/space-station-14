@@ -43,7 +43,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
                 Console.WriteLine($"Testing {reactionPrototype.ID}");
 
                 EntityUid beaker = default;
-                Entity<SolutionComponent> solutionEnt = default!;
+                Entity<SolutionComponent>? solutionEnt = default!;
                 Solution solution = null;
 
                 await server.WaitAssertion(() =>
@@ -55,19 +55,19 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     {
 #pragma warning disable NUnit2045
                         Assert.That(solutionContainerSystem
-                            .TryAddReagent(solutionEnt, id, reactant.Amount, out var quantity));
+                            .TryAddReagent(solutionEnt.Value, id, reactant.Amount, out var quantity));
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
 #pragma warning restore NUnit2045
                     }
 
-                    solutionContainerSystem.SetTemperature(solutionEnt, reactionPrototype.MinimumTemperature);
+                    solutionContainerSystem.SetTemperature(solutionEnt.Value, reactionPrototype.MinimumTemperature);
 
                     if (reactionPrototype.MixingCategories != null)
                     {
                         var dummyEntity = entityManager.SpawnEntity(null, MapCoordinates.Nullspace);
                         var mixerComponent = entityManager.AddComponent<ReactionMixerComponent>(dummyEntity);
                         mixerComponent.ReactionTypes = reactionPrototype.MixingCategories;
-                        solutionContainerSystem.UpdateChemicals(solutionEnt, true, mixerComponent);
+                        solutionContainerSystem.UpdateChemicals(solutionEnt.Value, true, mixerComponent);
                     }
                 });
 

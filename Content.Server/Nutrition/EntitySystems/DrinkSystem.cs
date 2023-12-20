@@ -191,7 +191,7 @@ public sealed class DrinkSystem : EntitySystem
             // using SetOpen instead of TryOpen to not play 2 sounds
             _openable.SetOpen(uid, true, openable);
 
-            var solution = _solutionContainer.SplitSolution(soln, interactions.Volume);
+            var solution = _solutionContainer.SplitSolution(soln.Value, interactions.Volume);
             _puddle.TrySpillAt(uid, solution, out _);
 
             _audio.PlayPvs(comp.BurstSound, uid);
@@ -244,7 +244,7 @@ public sealed class DrinkSystem : EntitySystem
         if (_openable.IsClosed(item, user))
             return true;
 
-        if (!_solutionContainer.TryGetSolution(item, drink.Solution, out var drinkSoln, out var drinkSolution) || drinkSolution.Volume <= 0)
+        if (!_solutionContainer.TryGetSolution(item, drink.Solution, out _, out var drinkSolution) || drinkSolution.Volume <= 0)
         {
             if (drink.IgnoreEmpty)
                 return false;
@@ -323,7 +323,7 @@ public sealed class DrinkSystem : EntitySystem
             return;
 
         var transferAmount = FixedPoint2.Min(component.TransferAmount, solution.Volume);
-        var drained = _solutionContainer.SplitSolution(soln, transferAmount);
+        var drained = _solutionContainer.SplitSolution(soln.Value, transferAmount);
         var forceDrink = args.User != args.Target;
 
         args.Handled = true;
@@ -340,7 +340,7 @@ public sealed class DrinkSystem : EntitySystem
                 return;
             }
 
-            _solutionContainer.Refill(args.Target.Value, soln, drained);
+            _solutionContainer.Refill(args.Target.Value, soln.Value, drained);
             return;
         }
 
@@ -357,7 +357,7 @@ public sealed class DrinkSystem : EntitySystem
                 _puddle.TrySpillAt(args.Target.Value, drained, out _);
             }
             else
-                _solutionContainer.TryAddSolution(soln, drained);
+                _solutionContainer.TryAddSolution(soln.Value, drained);
 
             return;
         }

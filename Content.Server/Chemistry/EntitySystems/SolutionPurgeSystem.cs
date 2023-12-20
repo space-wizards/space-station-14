@@ -29,8 +29,8 @@ public sealed class SolutionPurgeSystem : EntitySystem
 
             // timer ignores if it's empty, it's just a fixed cycle
             purge.NextPurgeTime += purge.Duration;
-            if (_solutionContainer.TryGetSolution((uid, manager), purge.Solution, out var solution, out _))
-                _solutionContainer.SplitSolutionWithout(solution, purge.Quantity, purge.Preserve.ToArray());
+            if (_solutionContainer.TryGetSolution((uid, manager), purge.Solution, out var solution))
+                _solutionContainer.SplitSolutionWithout(solution.Value, purge.Quantity, purge.Preserve.ToArray());
         }
     }
 

@@ -54,7 +54,7 @@ public sealed class GasCondenserSystem : EntitySystem
             var moleToReagentMultiplier = component.MolesToReagentMultiplier;
             var amount = moles * moleToReagentMultiplier;
 
-            if (_solution.TryAddReagent(soln, gasReagent, amount, out var remaining))
+            if (_solution.TryAddReagent(soln.Value, gasReagent, amount, out var remaining))
                 continue;
 
             // if we have leftover reagent, then convert it back to moles and put it back in the mixture.

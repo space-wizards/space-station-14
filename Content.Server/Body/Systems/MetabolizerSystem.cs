@@ -95,7 +95,7 @@ namespace Content.Server.Body.Systems
 
             // First step is get the solution we actually care about
             Solution? solution = null;
-            Entity<SolutionComponent> soln = default!;
+            Entity<SolutionComponent>? soln = default!;
             EntityUid? solutionEntityUid = null;
 
             SolutionContainerManagerComponent? manager = null;
@@ -120,7 +120,7 @@ namespace Content.Server.Body.Systems
                 solutionEntityUid = uid;
             }
 
-            if (solutionEntityUid == null || solution == null || solution.Contents.Count == 0)
+            if (solutionEntityUid == null || soln is null || solution is null || solution.Contents.Count == 0)
                 return;
 
             // randomize the reagent list so we don't have any weird quirks
@@ -206,7 +206,7 @@ namespace Content.Server.Body.Systems
                 }
             }
 
-            _solutionContainerSystem.UpdateChemicals(soln);
+            _solutionContainerSystem.UpdateChemicals(soln.Value);
         }
     }
 

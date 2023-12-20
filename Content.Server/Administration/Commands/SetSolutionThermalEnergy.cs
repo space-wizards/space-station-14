@@ -63,7 +63,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            solutionContainerSystem.SetThermalEnergy(solutionEnt, quantity);
+            solutionContainerSystem.SetThermalEnergy(solutionEnt.Value, quantity);
         }
     }
 }

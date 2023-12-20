@@ -36,7 +36,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var solutionContainerSystem = _entManager.System<SolutionContainerSystem>();
-            if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solution, out _))
+            if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solution))
             {
                 var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
                 shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions are:\n{validSolutions}");
@@ -55,7 +55,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            solutionContainerSystem.SetTemperature(solution, quantity);
+            solutionContainerSystem.SetTemperature(solution.Value, quantity);
         }
     }
 }

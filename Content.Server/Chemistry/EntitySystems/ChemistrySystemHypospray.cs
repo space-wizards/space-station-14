@@ -93,9 +93,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 target = user;
             }
 
-            _solutionContainers.TryGetSolution(uid, component.SolutionName, out var hypoSpraySoln, out var hypoSpraySolution);
-
-            if (hypoSpraySolution == null || hypoSpraySolution.Volume == 0)
+            if (!_solutionContainers.TryGetSolution(uid, component.SolutionName, out var hypoSpraySoln, out var hypoSpraySolution) || hypoSpraySolution.Volume == 0)
             {
                 _popup.PopupCursor(Loc.GetString("hypospray-component-empty-message"), user);
                 return true;
@@ -133,12 +131,12 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution = _solutionContainers.SplitSolution(hypoSpraySoln, realTransferAmount);
+            var removedSolution = _solutionContainers.SplitSolution(hypoSpraySoln.Value, realTransferAmount);
 
             if (!targetSolution.CanAddSolution(removedSolution))
                 return true;
             _reactiveSystem.DoEntityReaction(target.Value, removedSolution, ReactionMethod.Injection);
-            _solutionContainers.TryAddSolution(targetSoln, removedSolution);
+            _solutionContainers.TryAddSolution(targetSoln.Value, removedSolution);
 
             var ev = new TransferDnaEvent { Donor = target.Value, Recipient = uid };
             RaiseLocalEvent(target.Value, ref ev);

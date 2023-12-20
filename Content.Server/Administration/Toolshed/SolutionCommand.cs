@@ -24,8 +24,8 @@ public sealed class SolutionCommand : ToolshedCommand
     {
         _solutionContainer ??= GetSys<SolutionContainerSystem>();
 
-        if (_solutionContainer.TryGetSolution(input, name.Evaluate(ctx)!, out var solution, out _))
-            return new SolutionRef(solution);
+        if (_solutionContainer.TryGetSolution(input, name.Evaluate(ctx)!, out var solution))
+            return new SolutionRef(solution.Value);
 
         return null;
     }
