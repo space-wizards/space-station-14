@@ -10,6 +10,17 @@
     Heat: 5
 
 - type: damageModifierSet
+  id: StructuralMetallic
+  coefficients:
+    Shock: 1.2
+  flatReductions:
+    Blunt: 25
+    Slash: 25
+    Piercing: 25
+    Heat: 25
+    Structural: 40
+
+- type: damageModifierSet
   id: PerforatedMetallic
   coefficients:
     Blunt: 2
@@ -64,22 +75,25 @@
     Heat: 0.8
     Shock: 0 #glass is an insulator!
   flatReductions:
-    Blunt: 5
     Slash: 5
+    Piercing: 5
+    Heat: 5
+    Structural: 10
 
 - type: damageModifierSet
   id: RGlass
   coefficients:
-    Blunt: 1.0
+    Blunt: 0.5
     Slash: 0.3
     Piercing: 0.6
     Heat: 0.5
     Shock: 0
   flatReductions:
     Blunt: 5
-    Slash: 7
+    Slash: 5
     Piercing: 5
     Heat: 5
+    Structural: 12.5
 
 - type: damageModifierSet
   id: Wood

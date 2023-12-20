@@ -455,9 +455,7 @@ namespace Content.Server.Atmos.EntitySystems
                     || TerminatingOrDeleted(x.MapUid.Value)
                     || x.MapID == MapId.Nullspace)
                 {
-                    Log.Error($"Attempting to process atmos without a map? Entity: {ToPrettyString(owner)}");
-                    _simulationPaused = false;
-                    _currentRunAtmosphere.Clear();
+                    Log.Error($"Attempted to process atmos without a map? Entity: {ToPrettyString(owner)}. Map: {ToPrettyString(x?.MapUid)}. MapId: {x?.MapID}");
                     continue;
                 }
 

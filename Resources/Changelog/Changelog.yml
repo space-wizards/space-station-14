@@ -1,178 +1,4 @@
 Entries:
-- author: Ubaser
-  changes:
-  - {message: Added four new lizard horn markings!, type: Add}
-  id: 4898
-  time: '2023-09-26T02:24:09.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: The health analyzer no longer shows zero-damage groups., type: Fix}
-  id: 4899
-  time: '2023-09-26T04:37:23.0000000+00:00'
-- author: waylon531
-  changes:
-  - {message: Nocturine and welder blindness work again., type: Fix}
-  id: 4900
-  time: '2023-09-26T17:46:14.0000000+00:00'
-- author: gusxyz
-  changes:
-  - {message: Syndicate bomb no longer has anomalous properties., type: Tweak}
-  id: 4901
-  time: '2023-09-26T22:05:46.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - {message: 'Interaction outlines have been slightly reworked, and feature finer
-      artistic control. Edge cases no longer result in interaction outlines being
-      faintly visible in pitch black areas, out-of-range outlines are far less visible
-      in dim conditions, outlines now properly fade when over a fullbright backdrop
-      like parallax, and outlines now do a much better job at fading with penumbras.',
-    type: Tweak}
-  id: 4902
-  time: '2023-09-27T09:22:32.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed there being no confirmation for role bans., type: Fix}
-  id: 4903
-  time: '2023-09-27T15:27:08.0000000+00:00'
-- author: c0rigin
-  changes:
-  - {message: What moths consider as food is now more consistent., type: Tweak}
-  id: 4904
-  time: '2023-09-27T16:50:59.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed getting moved briefly when closing a crematorium that you are
-      standing over., type: Fix}
-  id: 4905
-  time: '2023-09-27T23:41:07.0000000+00:00'
-- author: Psychpsyo
-  changes:
-  - {message: 'You can now pet Runtime instead of petting >the< Runtime. Also, Smile
-      is now a girl.', type: Fix}
-  id: 4906
-  time: '2023-09-28T04:05:50.0000000+00:00'
-- author: Psychpsyo
-  changes:
-  - {message: Bingus is no longer fuzzy., type: Fix}
-  id: 4907
-  time: '2023-09-28T04:06:13.0000000+00:00'
-- author: Psychpsyo
-  changes:
-  - {message: The wet floor sign can now be worn as an outer clothing. This now gives
-      syndicate janitors access to a suicide vest in form the wet floor sign mine.,
-    type: Add}
-  id: 4908
-  time: '2023-09-28T04:09:45.0000000+00:00'
-- author: LEVELcat
-  changes:
-  - {message: Eyeglass are now available from the ClothesMate., type: Add}
-  id: 4909
-  time: '2023-09-28T10:52:05.0000000+00:00'
-- author: Repo
-  changes:
-  - {message: Pun Pun now showing on crew monitoring., type: Fix}
-  id: 4910
-  time: '2023-09-28T10:53:54.0000000+00:00'
-- author: nikthechampiongr
-  changes:
-  - {message: Mappers can now place airlocks that can be pried open while unpowered
-      without tools., type: Add}
-  id: 4911
-  time: '2023-09-28T11:34:22.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: Arcade machine maintenance panels can be opened again., type: Fix}
-  id: 4912
-  time: '2023-09-28T14:00:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The health alerts now have text to help discern how gravely injured
-      you are., type: Tweak}
-  id: 4913
-  time: '2023-09-28T14:05:42.0000000+00:00'
-- author: NULL882
-  changes:
-  - {message: Added Necropolis Wall., type: Add}
-  - {message: Added Mine Wall., type: Add}
-  - {message: Added Sings for Mine Wall., type: Add}
-  id: 4914
-  time: '2023-09-28T17:07:13.0000000+00:00'
-- author: lunarcomets
-  changes:
-  - {message: 'Tweaked archaic issues to fix capitalization issues, and removed the
-      replacement for ''request'' for consistency.', type: Tweak}
-  id: 4915
-  time: '2023-09-28T19:19:58.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Changed the player actions panel to ask for confirmation when kicking
-      and respawning players., type: Tweak}
-  id: 4916
-  time: '2023-09-28T22:46:07.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not being able to choose a role that you were unbanned from in
-      the same round without reconnecting., type: Fix}
-  id: 4917
-  time: '2023-09-28T23:46:39.0000000+00:00'
-- author: Micr0byte
-  changes:
-  - {message: Pressing F11 now toggles between full-screen and windowed modes., type: Add}
-  id: 4918
-  time: '2023-09-28T23:55:10.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed everyone being bald., type: Fix}
-  id: 4919
-  time: '2023-09-29T00:44:47.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed the HoP's id card computer not opening., type: Fix}
-  id: 4920
-  time: '2023-09-29T00:59:14.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Being damaged, being stunned, or going into crit will now force you
-      to send whatever message you were typing, if it was in local/whisper/radio.
-      You''ll sometimes find yours-AUGH', type: Add}
-  id: 4921
-  time: '2023-09-29T01:05:37.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed AHelp progressively gaining more panels., type: Fix}
-  id: 4922
-  time: '2023-09-29T01:46:16.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed skeletons spawning in folded containers., type: Fix}
-  id: 4923
-  time: '2023-09-29T03:55:29.0000000+00:00'
-- author: casperr04
-  changes:
-  - {message: Fixed the true name of disguised players being shown when electrocuted.,
-    type: Fix}
-  id: 4924
-  time: '2023-09-29T15:01:19.0000000+00:00'
-- author: TsjipTsjip
-  changes:
-  - {message: Kettle's medical ward was reworked., type: Tweak}
-  id: 4925
-  time: '2023-09-29T19:14:53.0000000+00:00'
-- author: daerSeebaer
-  changes:
-  - {message: Volumetric pumps now indicate if they can't pump., type: Add}
-  id: 4926
-  time: '2023-09-30T03:35:23.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixed cognizine not creating ghost roles., type: Fix}
-  id: 4927
-  time: '2023-09-30T17:53:22.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Holofans can now be destroyed by explosions., type: Fix}
-  id: 4928
-  time: '2023-09-30T19:08:09.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Space dragons get a proper greentext in the round end summary, along
@@ -2903,3 +2729,207 @@ Entries:
   - {message: Steel sheets no longer contain trace amounts of lead in them., type: Tweak}
   id: 5398
   time: '2023-12-16T20:52:11.0000000+00:00'
+- author: SlamBamActionman
+  changes:
+  - {message: Discord bot Changelog now includes hyperlinks to the PRs., type: Add}
+  id: 5399
+  time: '2023-12-16T21:00:59.0000000+00:00'
+  url: null
+- author: brainfood1183
+  changes:
+  - {message: 'Crystals now drop crystal shards, you can use them to craft colored
+      light tubes.', type: Add}
+  id: 5400
+  time: '2023-12-16T22:20:14.0000000+00:00'
+  url: null
+- author: Ilya246
+  changes:
+  - {message: Pens now embed and deal damage on throw like spears., type: Add}
+  id: 5401
+  time: '2023-12-16T22:23:08.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Svalinn Laser Pistol and accompanying T3 tech., type: Add}
+  id: 5402
+  time: '2023-12-17T03:43:50.0000000+00:00'
+  url: null
+- author: mirrorcult
+  changes:
+  - {message: You can now pet the recycler, type: Add}
+  id: 5403
+  time: '2023-12-17T07:44:37.0000000+00:00'
+  url: null
+- author: Ubaser
+  changes:
+  - {message: Mindbreaker is now hallucinogenic., type: Tweak}
+  id: 5404
+  time: '2023-12-17T07:44:54.0000000+00:00'
+  url: null
+- author: JoeHammad
+  changes:
+  - {message: Paramedics now have a rollerbed in their bag by default, type: Add}
+  id: 5405
+  time: '2023-12-17T09:55:29.0000000+00:00'
+  url: null
+- author: Ilya246
+  changes:
+  - {message: Large cardboard boxes and stealth boxes now inherit their mover's access.,
+    type: Fix}
+  id: 5406
+  time: '2023-12-17T09:55:40.0000000+00:00'
+  url: null
+- author: TheShuEd
+  changes:
+  - {message: Changed hypodart cost from 3 to 2 tc, type: Tweak}
+  id: 5407
+  time: '2023-12-17T16:08:11.0000000+00:00'
+  url: null
+- author: yathxyz
+  changes:
+  - {message: Fixed nix devShell, type: Fix}
+  id: 5408
+  time: '2023-12-17T16:55:37.0000000+00:00'
+  url: null
+- author: Ubaser
+  changes:
+  - {message: HoS parade uniforms are available at the uniform printer., type: Add}
+  id: 5409
+  time: '2023-12-17T23:20:04.0000000+00:00'
+  url: null
+- author: Alzore
+  changes:
+  - {message: Security zipties are now tiny and easier to store., type: Tweak}
+  id: 5410
+  time: '2023-12-17T23:27:01.0000000+00:00'
+  url: null
+- author: Aexxie
+  changes:
+  - {message: Added RCDs to all engineering lockers., type: Add}
+  id: 5411
+  time: '2023-12-18T02:38:37.0000000+00:00'
+  url: null
+- author: Ubaser
+  changes:
+  - {message: Traitors and Nukies can now purchase a Chemical Synthesis Kit for 4TC
+      which contains Vestine., type: Add}
+  - {message: 'Nocturine, Tazinide, Stimulants, Lexorin and Mute Toxin are now locked
+      behind Vestine.', type: Tweak}
+  - {message: 'Lexorin and Heartbreaker toxin are buffed, while Licoxide is nerfed.',
+    type: Tweak}
+  - {message: You can no longer purchase Nocturine through the uplink., type: Remove}
+  id: 5412
+  time: '2023-12-18T02:40:28.0000000+00:00'
+  url: null
+- author: Ubaser
+  changes:
+  - {message: Janitors now get rubber gloves for cleaning., type: Add}
+  id: 5413
+  time: '2023-12-18T03:11:19.0000000+00:00'
+  url: null
+- author: Velcroboy
+  changes:
+  - {message: Added coal. Coal has been added to the steel recipe in the Ore Processor.
+      Coal can be ground up for Carbon and other elements. Coal can be mined or received
+      as a gift if you've been naughty., type: Add}
+  id: 5414
+  time: '2023-12-18T19:38:12.0000000+00:00'
+  url: null
+- author: Flareguy
+  changes:
+  - {message: 'You can now walk into external and shuttle airlocks to open them, like
+      all other airlocks.', type: Tweak}
+  id: 5415
+  time: '2023-12-18T19:44:50.0000000+00:00'
+  url: null
+- author: iacore
+  changes:
+  - {message: normal closets can now be constructed and deconstructed, type: Add}
+  id: 5416
+  time: '2023-12-18T19:46:16.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Walls are stronger and windows are weaker., type: Tweak}
+  - {message: Secure crates and lockers are a lot stronger., type: Tweak}
+  - {message: Melee weapons are now more balanced within a closer range of damage.,
+    type: Tweak}
+  - {message: Double energy sword and fireaxe are now unavailable in uplink., type: Tweak}
+  id: 5417
+  time: '2023-12-19T02:38:49.0000000+00:00'
+  url: null
+- author: EmoGarbage404
+  changes:
+  - {message: Added the RCD and RCD ammo crates to cargo., type: Add}
+  id: 5418
+  time: '2023-12-19T02:40:55.0000000+00:00'
+  url: null
+- author: ElectroJr
+  changes:
+  - {message: The fireaxe can now fight fires (melee hits reduce fire stacks)., type: Tweak}
+  id: 5419
+  time: '2023-12-19T02:41:33.0000000+00:00'
+  url: null
+- author: SapphicOverload
+  changes:
+  - {message: EVA and hardsuit helmets now allow breathing from gas tanks without
+      a mask., type: Tweak}
+  id: 5420
+  time: '2023-12-19T02:50:06.0000000+00:00'
+  url: null
+- author: RiceMar
+  changes:
+  - {message: Station department exteriors now feature janitorial service lights for
+      directing janitors to the big messes they cant see!, type: Add}
+  id: 5421
+  time: '2023-12-19T04:21:12.0000000+00:00'
+  url: null
+- author: SlamBamActionman
+  changes:
+  - {message: Fixed compatability with old changelog format., type: Fix}
+  id: 5422
+  time: '2023-12-19T05:22:24.0000000+00:00'
+  url: null
+- author: notafet
+  changes:
+  - {message: 'Security sunglasses, researchable from arsenal technology, now display
+      the security HUD.', type: Tweak}
+  id: 5423
+  time: '2023-12-19T08:29:07.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Captain clothing items have been resprited, type: Tweak}
+  id: 5424
+  time: '2023-12-19T20:36:36.0000000+00:00'
+  url: null
+- author: Stanislav4ix
+  changes:
+  - {message: Added ore bag of holding!, type: Add}
+  id: 5425
+  time: '2023-12-19T22:28:56.0000000+00:00'
+  url: null
+- author: TGODiamond
+  changes:
+  - {message: Item size cannot be misinterpreted now., type: Fix}
+  id: 5426
+  time: '2023-12-20T00:31:39.0000000+00:00'
+  url: null
+- author: Veritius
+  changes:
+  - {message: Ethylredoxrazine is more effective at treating drunkness., type: Tweak}
+  id: 5427
+  time: '2023-12-20T02:20:04.0000000+00:00'
+  url: null
+- author: Errant
+  changes:
+  - {message: HUD elements no longer violate the Geneva Conventions., type: Fix}
+  id: 5428
+  time: '2023-12-20T04:28:03.0000000+00:00'
+  url: null
+- author: ERORR404V1
+  changes:
+  - {message: NanoTrasen botanists have bred a new blinking plant, type: Add}
+  id: 5429
+  time: '2023-12-20T04:57:02.0000000+00:00'
+  url: null

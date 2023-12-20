@@ -77,7 +77,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 6.5
+        Slash: 12
   - type: Tag
     tags:
     - Knife
