@@ -1,9 +1,9 @@
 - type: reagent
   id: UnknownSuperStim
-  name: неизвестный раствор
+  name: reagent-name-superstim
   group: Medicine
   desc: reagent-desc-leporazine
-  physicalDesc: Раствор неизвестного происхождения.
+  physicalDesc: reagent-desc-superstim
   flavor: medicine
   color: "#ff7db5"
   # Just in case you REALLY want to water your plants
