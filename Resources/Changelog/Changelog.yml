@@ -1,9 +1,4 @@
 Entries:
-- author: casperr04
-  changes:
-  - {message: Space ninjas now have random appearance., type: Tweak}
-  id: 4933
-  time: '2023-10-01T14:51:35.0000000+00:00'
 - author: TomCruize
   changes:
   - {message: Made Space Cats lungs ROBUST (They now don't suffocate in space), type: Fix}
@@ -2936,4 +2931,10 @@ Entries:
       to keep jumping around anymore., type: Fix}
   id: 5433
   time: '2023-12-20T23:33:00.0000000+00:00'
+  url: null
+- author: Velcroboy
+  changes:
+  - {message: Fixed coal not generating!, type: Fix}
+  id: 5434
+  time: '2023-12-20T23:46:20.0000000+00:00'
   url: null
