@@ -42,8 +42,6 @@
   - type: Clickable
   - type: InteractionOutline
   - type: FireAlarm
-  - type: AccessReader
-    access: [ [ "Atmospherics" ] ]
   - type: ContainerFill
     containers:
       board: [ FireAlarmElectronics ]
