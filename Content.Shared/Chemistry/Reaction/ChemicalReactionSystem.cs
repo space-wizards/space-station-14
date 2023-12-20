@@ -129,7 +129,7 @@ namespace Content.Shared.Chemistry.Reaction
             }
 
             var attempt = new ReactionAttemptEvent(reaction, soln);
-            RaiseLocalEvent(soln, attempt);
+            RaiseLocalEvent(soln, ref attempt);
             if (attempt.Cancelled)
             {
                 lowestUnitReactions = FixedPoint2.Zero;
@@ -312,7 +312,8 @@ namespace Content.Shared.Chemistry.Reaction
     /// <reamrks>
     ///     Some solution containers (e.g., bloodstream, smoke, foam) use this to block certain reactions from occurring.
     /// </reamrks>
-    public partial record struct ReactionAttemptEvent(ReactionPrototype Reaction, Entity<SolutionComponent> Solution)
+    [ByRefEvent]
+    public record struct ReactionAttemptEvent(ReactionPrototype Reaction, Entity<SolutionComponent> Solution)
     {
         public readonly ReactionPrototype Reaction = Reaction;
         public readonly Entity<SolutionComponent> Solution = Solution;
