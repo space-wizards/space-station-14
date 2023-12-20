@@ -429,7 +429,7 @@
     Carbon:
       amount: 1
   products:
-    Benzene: 0.5
+    Benzene: 1
 
 - type: reaction
   priority: -1 #reckon this'll be fine for now
