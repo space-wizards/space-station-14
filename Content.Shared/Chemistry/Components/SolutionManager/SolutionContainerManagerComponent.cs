@@ -27,6 +27,9 @@ public sealed partial class SolutionContainerManagerComponent : Component
     /// <summary>
     /// The set of solutions to load onto this entity during mapinit.
     /// </summary>
+    /// <remarks>
+    /// Should be null after mapinit.
+    /// </remarks>
     [DataField(serverOnly: true)] // Needs to be serverOnly or these will get loaded on the client and never cleared. Can be reworked when entity spawning is predicted.
     public Dictionary<string, Solution>? Solutions = null;
 }
