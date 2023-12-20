@@ -181,7 +181,7 @@
           conditions:
           - !type:Temperature
             # this is a little arbitrary but they gotta be pretty cold
-            max: 150.0
+            max: 213.0
           damage:
           # todo scale with temp like SS13
             groups:
