@@ -1,9 +1,4 @@
 Entries:
-- author: daerSeebaer
-  changes:
-  - {message: Volumetric pumps now indicate if they can't pump., type: Add}
-  id: 4926
-  time: '2023-09-30T03:35:23.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Fixed cognizine not creating ghost roles., type: Fix}
@@ -2929,4 +2924,10 @@ Entries:
   - {message: Item size cannot be misinterpreted now., type: Fix}
   id: 5426
   time: '2023-12-20T00:31:39.0000000+00:00'
+  url: null
+- author: Veritius
+  changes:
+  - {message: Ethylredoxrazine is more effective at treating drunkness., type: Tweak}
+  id: 5427
+  time: '2023-12-20T02:20:04.0000000+00:00'
   url: null
