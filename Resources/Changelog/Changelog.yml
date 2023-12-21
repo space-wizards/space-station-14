@@ -1,10 +1,4 @@
 Entries:
-- author: Velcroboy
-  changes:
-  - {message: Nanotrasen suppliers now carry restocks for ChefVends and popular condiments.
-      Get them at your nearest cargo depot., type: Add}
-  id: 4941
-  time: '2023-10-01T20:49:10.0000000+00:00'
 - author: chromiumboy
   changes:
   - {message: Fix praying door hacking protections., type: Fix}
@@ -2948,4 +2942,11 @@ Entries:
       OR SPLASH ON YOUR FRIENDS!', type: Add}
   id: 5441
   time: '2023-12-21T05:35:22.0000000+00:00'
+  url: null
+- author: RiceMar
+  changes:
+  - {message: Energy swords and double energy swords now look as long as they seem
+      to be in your hand., type: Tweak}
+  id: 5442
+  time: '2023-12-21T06:32:11.0000000+00:00'
   url: null
