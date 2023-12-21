@@ -357,6 +357,7 @@
 #      white: "#e6e6e6"
 #      grey: "#999999"
 #      black: "#3f3f3f"
+#      green: "#43bc38"
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     size: Small
@@ -463,6 +464,31 @@
     - state: folder-base
 
 - type: entity
+  id: BoxFolderGreen
+  parent: BoxFolderBase
+  suffix: Green
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+      color: "#43bc38"
+    - state: folder-base
+
+- type: entity
+  id: BoxFolderCentCom
+  name: centcom folder
+  parent: BoxFolderBase
+  suffix: DO NOT MAP
+  description: CentCom's miserable little pile of secrets!
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-centcom
+    - state: folder-base
+
+- type: entity
   id: BoxFolderClipboard
   parent: BoxFolderBase
   name: clipboard
@@ -520,6 +546,31 @@
     damage:
       types:
         Blunt: 6
+
+- type: entity
+  id: BoxFolderCentComClipboard
+  parent: BoxFolderClipboard
+  name: centcom clipboard
+  description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentCom officials, seldom seen actually used. 
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/cc-clipboard.rsi
+    layers:
+    - state: clipboard
+    - state: clipboard_paper
+      map: ["clipboard_paper"]
+      visible: false
+    - state: clipboard_pen
+      map: ["clipboard_pen"]
+      visible: false
+    - state: clipboard_over
+  - type: Item
+    sprite: Objects/Misc/cc-clipboard.rsi
+    size: Small
+  - type: Clothing
+    slots: [belt]
+    quickEquip: false
+    sprite: Objects/Misc/cc-clipboard.rsi
 
 - type: entity
   id: BoxFolderQmClipboard

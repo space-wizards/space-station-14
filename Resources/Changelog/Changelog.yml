@@ -1,31 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Space dragons get a proper greentext in the round end summary, along
-      with objectives in the character menu.', type: Tweak}
-  id: 4929
-  time: '2023-09-30T20:18:02.0000000+00:00'
-- author: Ubaser
-  changes:
-  - {message: Winter Boots are now available in the Winterdrobe., type: Add}
-  id: 4930
-  time: '2023-10-01T14:28:14.0000000+00:00'
-- author: Ubaser
-  changes:
-  - {message: 'QM now has a mantle, available at HoP''s uniform printer.', type: Add}
-  id: 4931
-  time: '2023-10-01T14:28:47.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Added new sprites for slime organs, type: Add}
-  - {message: Slimes now breathe nitrogen too., type: Tweak}
-  id: 4932
-  time: '2023-10-01T14:34:29.0000000+00:00'
-- author: casperr04
-  changes:
-  - {message: Space ninjas now have random appearance., type: Tweak}
-  id: 4933
-  time: '2023-10-01T14:51:35.0000000+00:00'
 - author: TomCruize
   changes:
   - {message: Made Space Cats lungs ROBUST (They now don't suffocate in space), type: Fix}
@@ -2932,4 +2905,36 @@ Entries:
   - {message: NanoTrasen botanists have bred a new blinking plant, type: Add}
   id: 5429
   time: '2023-12-20T04:57:02.0000000+00:00'
+  url: null
+- author: qwerltaz
+  changes:
+  - {message: Improve the gas analyzer interface., type: Tweak}
+  id: 5430
+  time: '2023-12-20T17:56:57.0000000+00:00'
+  url: null
+- author: JoeHammad
+  changes:
+  - {message: 'Fland now has its own shuttle, ported from ss13', type: Add}
+  id: 5431
+  time: '2023-12-20T23:26:07.0000000+00:00'
+  url: null
+- author: joshepvodka
+  changes:
+  - {message: CentCom bureaucrats are now twice as powerful with their new custom-made
+      clipboards and folders., type: Add}
+  id: 5432
+  time: '2023-12-20T23:29:35.0000000+00:00'
+  url: null
+- author: PJB3005
+  changes:
+  - {message: Fix starting to follow a moving player as a ghost causing your camera
+      to keep jumping around anymore., type: Fix}
+  id: 5433
+  time: '2023-12-20T23:33:00.0000000+00:00'
+  url: null
+- author: Velcroboy
+  changes:
+  - {message: Fixed coal not generating!, type: Fix}
+  id: 5434
+  time: '2023-12-20T23:46:20.0000000+00:00'
   url: null
