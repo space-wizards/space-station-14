@@ -3,7 +3,6 @@
   id: PlayableCardJokerRed
   name: playablecard
   suffix: Joker, PlayableCards, Red
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -32,7 +31,6 @@
   id: PlayableCardJokerBlack
   name: playablecard
   suffix: Joker, PlayableCards, Red
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -55,13 +53,11 @@
   - type: Tag
     tags:
     - PlayableCard
-
 - type: entity
   parent: BaseItem
   id: PlayableCardKingRedC
   name: playablecard
   suffix: King, PlayableCards, Hearts
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -90,7 +86,6 @@
   id: PlayableCardKingBlackP
   name: playablecard
   suffix: King, PlayableCards, Spades
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -119,7 +114,6 @@
   id: PlayableCardKingRedB
   name: playablecard
   suffix: King, PlayableCards, Diamonds
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -148,7 +142,6 @@
   id: PlayableCardKingBlackT
   name: playablecard
   suffix: King, PlayableCards, Clubs
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -177,7 +170,6 @@
   id: PlayableCardQueenRedC
   name: playablecard
   suffix: Queen, PlayableCards, Hearts
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -206,7 +198,6 @@
   id: PlayableCardQueenBlackT
   name: playablecard
   suffix: Queen, PlayableCards, Clubs
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -235,7 +226,6 @@
   id: PlayableCardQueenRedB
   name: playablecard
   suffix: Queen, PlayableCards, Diamonds
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -264,7 +254,6 @@
   id: PlayableCardQueenBlackP
   name: playablecard
   suffix: Queen, PlayableCards, Spades
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -293,7 +282,6 @@
   id: PlayableCardJackRedB
   name: playablecard
   suffix: Jack, PlayableCards, Diamonds
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -322,7 +310,6 @@
   id: PlayableCardJackBlackT
   name: playablecard
   suffix: Jack, PlayableCards, Clubs
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -351,7 +338,6 @@
   id: PlayableCardJackRedC
   name: playablecard
   suffix: Jack, PlayableCards, Hearts
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -380,7 +366,6 @@
   id: PlayableCardJackBlackP
   name: playablecard
   suffix: Jack, PlayableCards, Spades
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -409,7 +394,6 @@
   id: PlayableCardTenRedB
   name: playablecard
   suffix: Ten, PlayableCards, Diamonds
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -438,7 +422,6 @@
   id: PlayableCardTenBlackP
   name: playablecard
   suffix: Ten, PlayableCards, Spades
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -467,7 +450,6 @@
   id: PlayableCardTenRedC
   name: playablecard
   suffix: Ten, PlayableCards, Hearts
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -496,7 +478,6 @@
   id: PlayableCardTenBlackT
   name: playablecard
   suffix: Ten, PlayableCards, Clubs
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -525,7 +506,6 @@
   id: PlayableCardSevenRedB
   name: playablecard
   suffix: Seven, PlayableCards, Diamonds
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -554,7 +534,6 @@
   id: PlayableCardSevenBlackP
   name: playablecard
   suffix: Seven, PlayableCards, Spades
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -583,7 +562,6 @@
   id: PlayableCardSevenRedC
   name: playablecard
   suffix: Seven, PlayableCards, Hearts
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -612,7 +590,6 @@
   id: PlayableCardSevenBlackT
   name: playablecard
   suffix: Seven, PlayableCards, Clubs
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -641,7 +618,6 @@
   id: PlayableCardSixRedB
   name: playablecard
   suffix: Six, PlayableCards, Diamonds
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -670,7 +646,6 @@
   id: PlayableCardSixBlackP
   name: playablecard
   suffix: Six, PlayableCards, Spades
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -699,7 +674,6 @@
   id: PlayableCardSixRedC
   name: playablecard
   suffix: Six, PlayableCards, Hearts
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -728,7 +702,6 @@
   id: PlayableCardSixBlackT
   name: playablecard
   suffix: Six, PlayableCards, Clubs
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -757,7 +730,6 @@
   id: PlayableCardAceRedB
   name: playablecard
   suffix: Ace, PlayableCards, Diamonds
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -786,7 +758,6 @@
   id: PlayableCardAceBlackP
   name: playablecard
   suffix: Ace, PlayableCards, Spades
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -815,7 +786,6 @@
   id: PlayableCardAceRedC
   name: playablecard
   suffix: Ace, PlayableCards, Hearts
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -844,7 +814,6 @@
   id: PlayableCardAceBlackT
   name: playablecard
   suffix: Ace, PlayableCards, Clubs
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -873,7 +842,6 @@
   id: PlayableCardNineRedB
   name: playablecard
   suffix: Nine, PlayableCards, Diamonds
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -902,7 +870,6 @@
   id: PlayableCardNineBlackP
   name: playablecard
   suffix: Nine, PlayableCards, Spades
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -931,7 +898,6 @@
   id: PlayableCardNineRedC
   name: playablecard
   suffix: Nine, PlayableCards, Hearts
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -960,7 +926,6 @@
   id: PlayableCardNineBlackT
   name: playablecard
   suffix: Nine, PlayableCards, Clubs
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -989,7 +954,6 @@
   id: PlayableCardEightRedB
   name: playablecard
   suffix: Eight, PlayableCards, Diamonds
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -1018,7 +982,6 @@
   id: PlayableCardEightBlackP
   name: playablecard
   suffix: Eight, PlayableCards, Spades
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -1047,7 +1010,6 @@
   id: PlayableCardEightRedC
   name: playablecard
   suffix: Eight, PlayableCards, Hearts
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -1076,7 +1038,6 @@
   id: PlayableCardEightBlackT
   name: playablecard
   suffix: Eight, PlayableCards, Clubs
-  description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
@@ -1129,9 +1090,7 @@
   - type: ItemCounter
     count:
       tags: [PlayableCard]
-    composite: true
-    layerStates:
-    - cig1
+    BaseLayer: cig1
   - type: Appearance
 
 
