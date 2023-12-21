@@ -273,6 +273,52 @@
             Radiation: 3
 
 - type: reagent
+  id: Nanomachines
+  name: reagent-name-nanomachines
+  group: Toxins
+  flavor: mechanism
+  desc: reagent-name-nanomachines
+  physicalDesc: reagent-physical-desc-feathered
+  color: "#c7bdbd"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:MovespeedModifier
+          walkSpeedModifier: 0.55
+          sprintSpeedModifier: 0.55
+        - !type:Polymorph
+          prototype: Cyborg
+          conditions:
+            - !type:ReagentThreshold
+              min: 20
+            - !type:OrganType
+               type: Human
+        - !type:HealthChange
+          damage:
+            types:
+              Blunt: 2
+        - !type:PopupMessage
+          type: Local
+          visualType: Large
+          messages: ["nanomachines-effect-mechanization"]
+          probability: 40.0
+          conditions:
+            - !type:OrganType
+               type: Human
+        - !type:AdjustReagent
+          reagent: Nanomachines
+          conditions:
+            - !type:MobStateCondition
+              mobstate: Critical
+            - !type:ReagentThreshold
+              min: 5
+              max: 20
+            - !type:OrganType
+               type: Human
+          amount: 15
+      metabolismRate: 0.2
+
+- type: reagent
   id: HeartbreakerToxin
   name: reagent-name-heartbreaker-toxin
   group: Toxins
