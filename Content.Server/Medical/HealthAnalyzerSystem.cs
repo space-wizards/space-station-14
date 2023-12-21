@@ -139,9 +139,6 @@ namespace Content.Server.Medical
         /// </summary>
         private void StopAnalyzingEntity(EntityUid uid, EntityUid healthAnalyzerUid, HealthAnalyzerComponent? component = null, HealthBeingAnalyzedComponent? healthBeingAnalyzedComponent = null)
         {
-            if (!Resolve(healthAnalyzerUid, ref component))
-                return;
-
             if (!Resolve(uid, ref healthBeingAnalyzedComponent, false))
                 return;
 
@@ -156,15 +153,33 @@ namespace Content.Server.Medical
                 RemComp<HealthBeingAnalyzedComponent>(uid);
             }
 
-            component.ScannedEntity = null;
+            //If we can find the health analyzer, update it
+            if (Resolve(healthAnalyzerUid, ref component))
+            {
+                component.ScannedEntity = null;
+            }
         }
 
         private void OnDamageChanged(EntityUid damagedEntityUid, HealthBeingAnalyzedComponent component, DamageChangedEvent args)
         {
+
+            //On the off chance that somehow this component is left behing with no entries - remove it
+            //Dont want this eating cpu cycles for no reason
+            if (component.ActiveAnalyzers.Count == 0)
+            {
+                RemComp<HealthBeingAnalyzedComponent>(damagedEntityUid);
+                return;
+            }
+
             foreach (var healthAnalyzerUid in component.ActiveAnalyzers)
             {
-                if (!TryComp<HealthAnalyzerComponent>(healthAnalyzerUid, out var healthAnalyzerComp))
+                //Strangeness catchall
+                //Should catch admin deleting the health analyzer, or something thats not an analyser ending up in the list
+                if (LifeStage(healthAnalyzerUid) >= EntityLifeStage.Terminating || !TryComp<HealthAnalyzerComponent>(healthAnalyzerUid, out var healthAnalyzerComp))
+                {
+                    StopAnalyzingEntity(damagedEntityUid, healthAnalyzerUid);
                     continue;
+                }
 
                 //Get distance between health analyzer and the scanned entity
                 var scannedEntityPosition = _transformSystem.GetMapCoordinates(damagedEntityUid);
