@@ -54,11 +54,11 @@
   priority: 2
   minimumTemperature: 323.149
   reactants:
-    6: 2 # 2 ammonia
-    0: 2 # 2 oxygen
+    Ammonia: 2
+    Oxygen: 2
   products:
-    7: 1 # 1 nitrous
-    5: 3 # 3 water
+    NitrousOxide: 1
+    WaterVapor: 3
 
 - type: gasReaction
   id: N2ODecomposition
