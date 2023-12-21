@@ -359,8 +359,6 @@
     anchored: true
   - type: Physics
     bodyType: Static
-  - type: Anchorable
-  - type: Rotatable
   - type: Sprite
     state: chair-carp
   - type: Construction
