@@ -562,7 +562,7 @@
     sprite: Structures/Walls/riveted.rsi
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
     - trigger:
