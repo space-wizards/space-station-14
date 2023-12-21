@@ -29,4 +29,6 @@
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
     - SalvageMagnetMachineCircuitboard
+    - APCElectronicsHigh
+    - APCElectronicsSuper
     rareChance: 0.05
