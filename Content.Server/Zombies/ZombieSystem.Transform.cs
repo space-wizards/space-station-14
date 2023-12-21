@@ -38,6 +38,7 @@ using Robust.Shared.Audio;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Prying.Components;
 using Robust.Shared.Audio.Systems;
+using Content.Shared.Clothing;
 
 namespace Content.Server.Zombies
 {
@@ -202,6 +203,11 @@ namespace Content.Server.Zombies
             _inventory.TryUnequip(target, "gloves", true, true);
             //Should prevent instances of zombies using comms for information they shouldnt be able to have.
             _inventory.TryUnequip(target, "ears", true, true);
+
+            //SS220-zombie-skates-fix begin
+            if (_inventory.TryGetSlotEntity(target, "shoes", out var shoes) && HasComp<SkatesComponent>(shoes))
+                _inventory.TryUnequip(target, "shoes", true, true);
+            //SS220-zombie-skates-fix end
 
             //popup
             _popup.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
