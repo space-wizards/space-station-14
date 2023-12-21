@@ -348,9 +348,28 @@
   description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
   components:
   - type: RCD
+    availablePrototypes:
+    - Deconstruct
+    - WallSolid
+    - FloorSteel
+    - Plating
+    - Catwalk
+    - WallReinforced
+    - Grille
+    - Window
+    - ReinforcedWindow
+    - WindowDirectional
+    - WindowReinforcedDirectional
+    - Airlock
+    - AirlockGlass
+    - Firelock
+    - ComputerFrame
+    - MachineFrame
+    - TubeLight
+    - BulbLight
   - type: LimitedCharges
-    maxCharges: 5
-    charges: 5
+    maxCharges: 20
+    charges: 20
   - type: UseDelay
     delay: 1.0
   - type: Sprite
@@ -382,7 +401,7 @@
   suffix: Empty
   components:
   - type: LimitedCharges
-    maxCharges: 5
+    maxCharges: 20
     charges: 0
 
 - type: entity
@@ -393,10 +412,10 @@
   suffix: AutoRecharge
   components:
   - type: LimitedCharges
-    maxCharges: 3
-    charges: 3
+    maxCharges: 15
+    charges: 15
   - type: AutoRecharge
-    rechargeDuration: 30
+    rechargeDuration: 3
 
 - type: entity
   id: RCDExperimental
@@ -406,7 +425,7 @@
   description: A bluespace-enhanced RCD that regenerates charges passively.
   components:
   - type: AutoRecharge
-    rechargeDuration: 5
+    rechargeDuration: 1
 
 - type: entity
   name: RCD Ammo

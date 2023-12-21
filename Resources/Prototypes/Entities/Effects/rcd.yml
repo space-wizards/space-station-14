@@ -5,6 +5,7 @@
   - type: Transform
     anchored: True
   - type: Sprite
+    snapCardinals: true
     drawdepth: Effects
     sprite: /Textures/Effects/rcd.rsi
     state: construct

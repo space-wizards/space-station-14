@@ -2,20 +2,20 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.RCD.Components;
 using Content.Shared.Tag;
 using Content.Shared.Tiles;
-using Pidgin;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -25,13 +25,13 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 
 namespace Content.Shared.RCD.Systems;
 
 public sealed class RCDSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
@@ -46,6 +46,8 @@ public sealed class RCDSystem : EntitySystem
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
 
     public override void Initialize()
     {
@@ -57,6 +59,8 @@ public sealed class RCDSystem : EntitySystem
         SubscribeLocalEvent<RCDComponent, DoAfterAttemptEvent<RCDDoAfterEvent>>(OnDoAfterAttempt);
         SubscribeLocalEvent<RCDComponent, RCDSystemMessage>(OnRCDSystemMessage);
     }
+
+    #region Event handling
 
     private void OnRCDSystemMessage(EntityUid uid, RCDComponent component, RCDSystemMessage args)
     {
@@ -95,8 +99,11 @@ public sealed class RCDSystem : EntitySystem
             return;
 
         var gridUid = location.GetGridUid(EntityManager);
-        if (!TryGetMapGrid(gridUid, location, out var _))
+
+        if (!TryGetMapGrid(gridUid, location, out var mapGrid))
             return;
+
+        gridUid = mapGrid.Owner;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, component.Delay,
             new RCDDoAfterEvent(GetNetCoordinates(location), component.Mode, component.ConstructionPrototype),
@@ -116,7 +123,10 @@ public sealed class RCDSystem : EntitySystem
             _gameTiming.IsFirstTimePredicted &&
             _net.IsServer &&
             TryToFinalizeConstruction(uid, component, component.Mode, component.ConstructionPrototype, location, args.Target, args.User, true))
-            Spawn("EffectRCDConstruction", location);
+        {
+            var effect = Spawn("EffectRCDConstruction", location);
+            //Transform(effect).LocalRotation = Transform(gridUid.Value).LocalRotation.GetCardinalDir().ToAngle();
+        }
     }
 
     private void OnDoAfterAttempt(EntityUid uid, RCDComponent component, DoAfterAttemptEvent<RCDDoAfterEvent> args)
@@ -151,6 +161,8 @@ public sealed class RCDSystem : EntitySystem
         _charges.UseCharge(uid);
     }
 
+    #endregion
+
     private bool TryToFinalizeConstruction
         (EntityUid uid,
         RCDComponent component,
@@ -172,11 +184,10 @@ public sealed class RCDSystem : EntitySystem
         // Gather location data
         var gridUid = location.GetGridUid(EntityManager);
 
-        if (gridUid == null)
-            return false;
-
         if (!TryGetMapGrid(gridUid, location, out var mapGrid))
             return false;
+
+        gridUid = mapGrid.Owner;
 
         var tile = _mapSystem.GetTileRef(gridUid.Value, mapGrid, location);
         var position = _mapSystem.TileIndicesFor(gridUid.Value, mapGrid, location);
@@ -194,34 +205,38 @@ public sealed class RCDSystem : EntitySystem
         switch (component.Mode)
         {
             case RcdMode.Deconstruct: return TryToDeconstruct(uid, component, mapGridData, target, user, dryRun);
-            case RcdMode.Subfloors: return TryToConstructSubFloor(uid, component, mapGridData, user, dryRun);
             case RcdMode.Floors: return TryToConstructFloor(uid, component, mapGridData, user, dryRun);
+            case RcdMode.Catwalks: return TryToConstructCatwalk(uid, component, mapGridData, user, dryRun);
             case RcdMode.Walls: return TryToConstructWall(uid, component, mapGridData, user, dryRun);
             case RcdMode.Airlocks: return TryToConstructAirlock(uid, component, mapGridData, user, dryRun);
-            case RcdMode.Windows: return TryToConstructWindow(uid, component, mapGridData, user, dryRun);
-            case RcdMode.Machines: return TryToConstructMachine(uid, component, mapGridData, user, dryRun);
+            case RcdMode.Windows: return TryToConstructWindow(uid, component, mapGridData, user, false, dryRun);
+            case RcdMode.DirectionalWindows: return TryToConstructWindow(uid, component, mapGridData, user, true, dryRun);
+            case RcdMode.Machines: return TryToConstructMachine(uid, component, mapGridData, user, false, dryRun);
+            case RcdMode.Computers: return TryToConstructMachine(uid, component, mapGridData, user, true, dryRun);
             case RcdMode.Lighting: return TryToConstructLighting(uid, component, mapGridData, user, dryRun);
         }
 
         return false;
     }
 
+    #region Entity construction/deconstruction checks and entity spawning/deletion
+
     private bool TryToDeconstruct(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid? target, EntityUid user, bool dryRun = true)
     {
         if (mapGridData.Tile.Tile.IsEmpty)
             return false;
 
-        // Attempt to dconstruct a tile
+        // Attempt to deconstruct a floor tile
         if (target == null)
         {
-            // the turf is blocked
-            if (IsTileBlocked(mapGridData, uid, user))
+            // The tile has a structure sitting on it
+            if (IsStructurePlaceable(mapGridData, uid, user))
             {
                 _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
                 return false;
             }
 
-            // the turf can't be destroyed (planet probably)
+            // The floor tile cannot be destroyed
             var tileDef = (ContentTileDefinition) _tileDefMan[mapGridData.Tile.Tile.TypeId];
             if (tileDef.Indestructible)
             {
@@ -230,7 +245,7 @@ public sealed class RCDSystem : EntitySystem
             }
         }
 
-        // Attept to deconstruct an object They tried to decon a non-turf but it's not in the whitelist
+        // Attempt to deconstruct an object They tried to decon a non-turf but it's not in the whitelist
         else
         {
             if (!_tag.HasTag(target.Value, "RCDDeconstructWhitelist"))
@@ -244,7 +259,7 @@ public sealed class RCDSystem : EntitySystem
             return true;
 
         // Deconstruct the tile
-        if (!IsTileBlocked(mapGridData, uid, user))
+        if (!IsStructurePlaceable(mapGridData, uid, user))
         {
             _mapSystem.SetTile(mapGridData.GridUid, mapGridData.Component, mapGridData.Position, Tile.Empty);
             _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {mapGridData.GridUid} tile: {mapGridData.Position} to space");
@@ -260,29 +275,30 @@ public sealed class RCDSystem : EntitySystem
         return true;
     }
 
-    private bool TryToConstructSubFloor(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user, bool dryRun = true)
-    {
-        return false;
-    }
-
     private bool TryToConstructFloor(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user, bool dryRun = true)
     {
-        if (!mapGridData.Tile.Tile.IsEmpty)
-        {
-            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-not-empty-message"), uid, user);
+        if (!IsFloorPlaceable(component.ConstructionPrototype, mapGridData, uid, user))
             return false;
-        }
-
-        if (!_floors.CanPlaceTile(mapGridData.GridUid, mapGridData.Component, out var reason))
-        {
-            _popup.PopupClient(reason, user, user);
-            return false;
-        }
 
         if (dryRun || !_net.IsServer)
             return true;
 
-        _mapSystem.SetTile(mapGridData.GridUid, mapGridData.Component, mapGridData.Position, new Tile(_tileDefMan[component.Floor].TileId));
+        _mapSystem.SetTile(mapGridData.GridUid, mapGridData.Component, mapGridData.Position, new Tile(_tileDefMan[component.ConstructionPrototype!].TileId));
+
+        _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {mapGridData.GridUid} {mapGridData.Position} to {component.ConstructionPrototype}");
+        return true;
+    }
+
+    private bool TryToConstructCatwalk(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user, bool dryRun = true)
+    {
+        if (!IsCatwalkPlaceable(component.ConstructionPrototype, mapGridData, uid, user))
+            return false;
+
+        if (dryRun || !_net.IsServer)
+            return true;
+
+        var ent = Spawn(component.ConstructionPrototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
+        Transform(ent).LocalRotation = Angle.Zero;
 
         _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {mapGridData.GridUid} {mapGridData.Position} to {component.ConstructionPrototype}");
         return true;
@@ -290,7 +306,7 @@ public sealed class RCDSystem : EntitySystem
 
     private bool TryToConstructWall(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user, bool dryRun = true)
     {
-        if (IsTileBlocked(mapGridData, uid, user))
+        if (!IsStructurePlaceable(mapGridData, uid, user))
             return false;
 
         if (dryRun || !_net.IsServer)
@@ -305,7 +321,7 @@ public sealed class RCDSystem : EntitySystem
 
     private bool TryToConstructAirlock(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user, bool dryRun = true)
     {
-        if (IsTileBlocked(mapGridData, uid, user))
+        if (!IsStructurePlaceable(mapGridData, uid, user))
             return false;
 
         if (dryRun || !_net.IsServer)
@@ -318,31 +334,50 @@ public sealed class RCDSystem : EntitySystem
         return true;
     }
 
-    private bool TryToConstructWindow(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user, bool dryRun = true)
+    private bool TryToConstructWindow(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user, bool isDirectional = false, bool dryRun = true)
     {
-        if (IsWindowBlocked(mapGridData, uid, user))
+        if (!IsWindowPlaceable(isDirectional, mapGridData, uid, user))
             return false;
 
         if (dryRun || !_net.IsServer)
             return true;
 
         var ent = Spawn(component.ConstructionPrototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
-        Transform(ent).LocalRotation = Transform(user).LocalRotation.GetCardinalDir().ToAngle();
+        Transform(ent).LocalRotation = GetAngleFromUserFacing(user);
 
         _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to spawn {ToPrettyString(ent)} at {mapGridData.Position} on grid {mapGridData.GridUid}");
         return true;
     }
 
-    private bool TryToConstructMachine(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user, bool dryRun = true)
+    private bool TryToConstructMachine(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user, bool isComputer, bool dryRun = true)
     {
-        if (IsTileBlocked(mapGridData, uid, user))
+        if (!IsStructurePlaceable(mapGridData, uid, user))
             return false;
 
         if (dryRun || !_net.IsServer)
             return true;
 
-        var ent = Spawn(component.ConstructionPrototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
-        Transform(ent).LocalRotation = Transform(user).LocalRotation.Opposite().GetCardinalDir().ToAngle();
+        string? prototype = component.ConstructionPrototype;
+
+        foreach (var heldObject in _hands.EnumerateHeld(user))
+        {
+            if (isComputer && TryComp<ComputerBoardComponent>(heldObject, out var computerBoard))
+            {
+                prototype = computerBoard.Prototype;
+                QueueDel(heldObject);
+                break;
+            }
+
+            else if (!isComputer && TryComp<MachineBoardComponent>(heldObject, out var machineBoard))
+            {
+                prototype = machineBoard.Prototype;
+                QueueDel(heldObject);
+                break;
+            }
+        }
+
+        var ent = Spawn(prototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
+        Transform(ent).LocalRotation = GetAngleOppositeOfUserFacing(user);
 
         _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to spawn {ToPrettyString(ent)} at {mapGridData.Position} on grid {mapGridData.GridUid}");
         return true;
@@ -350,78 +385,168 @@ public sealed class RCDSystem : EntitySystem
 
     private bool TryToConstructLighting(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user, bool dryRun = true)
     {
-        if (IsWallMountBlocked(mapGridData, uid, user))
+        if (!IsWallAttachmentPlaceable(mapGridData, uid, user))
             return false;
 
         if (dryRun || !_net.IsServer)
             return true;
 
         var ent = Spawn(component.ConstructionPrototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
-        Transform(ent).LocalRotation = Transform(user).LocalRotation.Opposite().GetCardinalDir().ToAngle();
+        Transform(ent).LocalRotation = GetAngleOppositeOfUserFacing(user);
 
         _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to spawn {ToPrettyString(ent)} at {mapGridData.Position} on grid {mapGridData.GridUid}");
         return true;
     }
 
-    private bool IsWindowBlocked(MapGridData mapGridData, EntityUid uid, EntityUid user)
+    #endregion
+
+    #region Entity placement checks
+
+    private bool IsFloorPlaceable(string? floorPrototype, MapGridData mapGridData, EntityUid uid, EntityUid user)
     {
-        if (mapGridData.Tile.Tile.IsEmpty)
+        if (floorPrototype == null)
+            return false;
+
+        if (!mapGridData.Tile.Tile.IsEmpty &&
+            mapGridData.Tile.Tile.GetContentTileDefinition().ID == floorPrototype)
         {
             _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-not-empty-message"), uid, user);
-            return true;
+            return false;
         }
 
-        foreach (var ent in mapGridData.Location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static))
+        if (!_floors.CanPlaceTile(mapGridData.GridUid, mapGridData.Component, out var reason))
         {
-            if (!TryComp<FixturesComponent>(ent, out var fixtures))
-                continue;
-
-            if (fixtures.Fixtures.Any(x => (x.Value.CollisionLayer & (int) CollisionGroup.MobMask) == 0))
-                continue;
-
-            if (!HasComp<SharedCanBuildWindowOnTopComponent>(ent))
-            {
-                _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
-                return true;
-            }
+            _popup.PopupClient(reason, user, user);
+            return false;
         }
 
-        return false;
+        return true;
     }
 
-    private bool IsWallMountBlocked(MapGridData mapGridData, EntityUid uid, EntityUid user)
+    private bool IsCatwalkPlaceable(string? catwalkPrototype, MapGridData mapGridData, EntityUid uid, EntityUid user)
     {
+        if (catwalkPrototype == null)
+            return false;
+
         if (mapGridData.Tile.Tile.IsEmpty)
         {
-            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-not-empty-message"), uid, user);
-            return true;
+            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-on-empty-space-message"), uid, user);
+            return false;
         }
 
-        if (_turf.IsTileBlocked(mapGridData.Tile, CollisionGroup.FlyingMobMask))
+        if (!mapGridData.Tile.Tile.GetContentTileDefinition().IsSubFloor)
         {
-            _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
-            return true;
+            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-requires-subfloor-message"), uid, user);
+            return false;
         }
 
-        return false;
+        if (_turf.IsTileBlocked(mapGridData.Tile, CollisionGroup.SmallMobLayer))
+        {
+            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-not-empty-message"), uid, user);
+            return false;
+        }
+
+        return true;
     }
 
-    private bool IsTileBlocked(MapGridData mapGridData, EntityUid uid, EntityUid user)
+    private bool IsStructurePlaceable(MapGridData mapGridData, EntityUid uid, EntityUid user)
     {
         if (mapGridData.Tile.Tile.IsEmpty)
         {
-            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-not-empty-message"), uid, user);
-            return true;
+            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-on-empty-space-message"), uid, user);
+            return false;
         }
 
         if (_turf.IsTileBlocked(mapGridData.Tile, CollisionGroup.MobMask))
         {
-            _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
-            return true;
+            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-not-empty-message"), uid, user);
+            return false;
         }
 
-        return false;
+        return true;
     }
+
+    private bool IsWallAttachmentPlaceable(MapGridData mapGridData, EntityUid uid, EntityUid user)
+    {
+        if (mapGridData.Tile.Tile.IsEmpty)
+        {
+            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-on-empty-space-message"), uid, user);
+            return false;
+        }
+
+        if (_turf.IsTileBlocked(mapGridData.Tile, CollisionGroup.FlyingMobMask))
+        {
+            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-not-empty-message"), uid, user);
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool IsWindowPlaceable(bool isDirectional, MapGridData mapGridData, EntityUid uid, EntityUid user)
+    {
+        if (mapGridData.Tile.Tile.IsEmpty)
+        {
+            _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-on-empty-space-message"), uid, user);
+            return false;
+        }
+
+        foreach (var ent in _lookup.GetEntitiesIntersecting(mapGridData.Tile, -0.1f, LookupFlags.Approximate | LookupFlags.Static))
+        {
+            // Windows can be built on this entity; continue
+            if (HasComp<SharedCanBuildWindowOnTopComponent>(ent))
+                continue;
+
+            // This entity has no fixtures; continue
+            if (!TryComp<FixturesComponent>(ent, out var fixtures))
+                continue;
+
+            for (int i = 0; i < fixtures.FixtureCount; i++)
+            {
+                (var _, var fixture) = fixtures.Fixtures.ElementAt(i);
+
+                // This fixture does not collison with the window; continue
+                if ((fixture.CollisionLayer & (int) CollisionGroup.MobMask) == 0)
+                    continue;
+
+                // Directional windows have slim profiles and may not intersect with the fixture
+                if (isDirectional)
+                {
+                    // Make a small collision box for the directional window being built
+                    var (entWorldPos, entWorldRot) = _transform.GetWorldPositionRotation(Transform(ent));
+                    var entXform = new Transform(entWorldPos, entWorldRot);
+
+                    var box2 = new Box2(-0.23f, -0.49f, 0.23f, -0.36f);
+                    var verts = new ValueList<Vector2>()
+                    {
+                        box2.BottomLeft,
+                        box2.BottomRight,
+                        box2.TopRight,
+                        box2.TopLeft
+                    };
+
+                    var poly = new PolygonShape();
+                    poly.Set(verts.Span, 4);
+
+                    var polyXform = new Transform(entWorldPos, (float) GetAngleFromUserFacing(user));
+
+                    // The directional window being built will not collide with the fixture after all; continue
+                    if (!poly.ComputeAABB(polyXform, 0).Intersects(fixture.Shape.ComputeAABB(entXform, 0)))
+                        continue;
+                }
+
+                // Collision detected
+                _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tile-not-empty-message"), uid, user);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    #endregion
+
+    #region Data retrieval functions
 
     private bool TryGetMapGrid(EntityUid? gridUid, EntityCoordinates location, [NotNullWhen(true)] out MapGridComponent? mapGrid)
     {
@@ -437,6 +562,18 @@ public sealed class RCDSystem : EntitySystem
 
         return true;
     }
+
+    private Angle GetAngleFromUserFacing(EntityUid user)
+    {
+        return Transform(user).LocalRotation.GetCardinalDir().ToAngle();
+    }
+
+    private Angle GetAngleOppositeOfUserFacing(EntityUid user)
+    {
+        return Transform(user).LocalRotation.Opposite().GetCardinalDir().ToAngle();
+    }
+
+    #endregion
 }
 
 [Serializable, NetSerializable]

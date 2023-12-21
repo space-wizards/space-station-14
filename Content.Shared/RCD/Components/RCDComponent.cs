@@ -2,6 +2,7 @@ using Content.Shared.Maps;
 using Content.Shared.RCD.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -32,30 +33,33 @@ public sealed partial class RCDComponent : Component
     /// What mode are we on? Can be floors, walls, airlock, deconstruct.
     /// </summary>
     [DataField("mode"), AutoNetworkedField]
-    public RcdMode Mode = RcdMode.Floors;
+    public RcdMode Mode = RcdMode.Invalid;
 
+    /// <summary>
+    /// Prototype to be constructed
+    /// </summary>
     [DataField("constructionPrototype"), AutoNetworkedField]
     public string? ConstructionPrototype;
 
     /// <summary>
-    /// ID of the floor to create when using the floor mode.
+    /// List of RCD prototypes that the device comes loaded with
     /// </summary>
-    [DataField("floor", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>))]
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public string Floor = "FloorSteel";
+    [DataField("availablePrototypes"), AutoNetworkedField]
+    public List<ProtoId<RCDPrototype>> AvailablePrototypes = new();
 }
 
 public enum RcdMode : byte
 {
-    None,
+    Invalid,
     Deconstruct,
-    Subfloors,
     Floors,
     Catwalks,
     Walls,
     Airlocks,
     Windows,
+    DirectionalWindows,
     Machines,
+    Computers,
     Lighting,
 }
 
