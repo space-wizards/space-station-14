@@ -1,9 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Science can now research practice ammunition for security., type: Add}
-  id: 4939
-  time: '2023-10-01T20:18:05.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Adds Advanced treatment cyborg module to the medical borg., type: Add}
@@ -2947,4 +2942,10 @@ Entries:
       are now magenta colored and epi pens have a green band on them., type: Tweak}
   id: 5439
   time: '2023-12-21T05:30:58.0000000+00:00'
+  url: null
+- author: Hqlle
+  changes:
+  - {message: Resprited carpet sprites., type: Add}
+  id: 5440
+  time: '2023-12-21T05:32:38.0000000+00:00'
   url: null
