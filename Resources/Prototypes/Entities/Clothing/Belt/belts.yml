@@ -415,8 +415,8 @@
     slots:
       item:
         name: Sabre
-        insertVerbText: Sheathe
-        ejectVerbText: Unsheathe
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
         whitelist:
           tags:
           - CaptainSabre
