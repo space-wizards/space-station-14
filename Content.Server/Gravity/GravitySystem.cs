@@ -60,7 +60,7 @@ namespace Content.Server.Gravity
         /// This means it does nothing if Inherent is set and it might be wiped away with a refresh
         ///  if you're not supposed to be doing whatever you're doing.
         /// </summary>
-        public void EnableGravity(EntityUid uid, GravityComponent? gravity = null)
+        public void EnableGravity(EntityUid uid, GravityComponent? gravity = null, bool shake = true)
         {
             if (!Resolve(uid, ref gravity))
                 return;
@@ -73,7 +73,7 @@ namespace Content.Server.Gravity
             RaiseLocalEvent(uid, ref ev, true);
             Dirty(gravity);
 
-            if (HasComp<MapGridComponent>(uid))
+            if (shake && HasComp<MapGridComponent>(uid))
             {
                 StartGridShake(uid);
             }

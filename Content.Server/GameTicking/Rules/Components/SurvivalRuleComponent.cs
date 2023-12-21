@@ -1,7 +1,9 @@
-﻿namespace Content.Server.StationEvents.Components;
+﻿using Content.Server.StationEvents;
 
-[RegisterComponent, Access(typeof(RampingStationEventSchedulerSystem))]
-public sealed partial class RampingStationEventSchedulerComponent : Component
+namespace Content.Server.GameTicking.Rules.Components;
+
+[RegisterComponent, Access(typeof(SurvivalRuleSystem))]
+public sealed partial class SurvivalRuleComponent : Component
 {
     [DataField("endTime"), ViewVariables(VVAccess.ReadWrite)]
     public float EndTime;

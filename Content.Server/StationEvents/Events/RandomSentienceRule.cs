@@ -11,7 +11,6 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
     {
         HashSet<EntityUid> stationsToNotify = new();
 
-        var mod = GetSeverityModifier();
         var targetList = new List<Entity<SentienceTargetComponent>>();
         var query = EntityQueryEnumerator<SentienceTargetComponent>();
         while (query.MoveNext(out var targetUid, out var target))
@@ -21,7 +20,7 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
 
         RobustRandom.Shuffle(targetList);
 
-        var toMakeSentient = (int) (RobustRandom.Next(2, 5) * Math.Sqrt(mod));
+        var toMakeSentient = RobustRandom.Next(2, 5);
         var groups = new HashSet<string>();
 
         foreach (var target in targetList)
