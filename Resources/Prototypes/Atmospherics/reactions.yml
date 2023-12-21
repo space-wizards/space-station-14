@@ -74,6 +74,23 @@
   effects:
   - !type:MiasmicSubsumationReaction {}
 
+- type: gasReaction
+  id: MiasmaOxygenReaction
+  priority: 2
+  minimumTemperature: 323.149
+  minimumRequirements:
+  - 0.01  # oxygen
+  - 0     # nitrogen
+  - 0     # carbon dioxide
+  - 0     # plasma
+  - 0     # tritium
+  - 0     # vapor
+  - 0.01  # miasma
+  - 0     # n2o
+  - 0     # frezon
+  effects:
+  - !type:MiasmaOxygenReaction {}
+
 #- type: gasReaction
 #  id: WaterVaporPuddle
 #  priority: 1

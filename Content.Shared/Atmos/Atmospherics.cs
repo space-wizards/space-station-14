@@ -242,6 +242,11 @@ namespace Content.Shared.Atmos
         public const float MiasmicSubsumationMaxConversionRate = 5f;
 
         /// <summary>
+        ///     Divisor for Miasma Oxygen reaction so that it doesn't happen instantaneously.
+        /// </summary>
+        public const float MiasmaOxygenReactionRate = 10f;
+
+        /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
         /// </summary>
         public const float HazardHighPressure = 550f;
