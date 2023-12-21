@@ -24,3 +24,6 @@ reagent-desc-ambrosia = The food of the gods. It glows with an unearthly golden 
 
 reagent-name-poultrium = poultrium
 reagent-desc-poultrium = Smells like a barnyard.
+
+reagent-name-fresium = Fresium
+reagent-desc-fresium = A mysterious compound that slows the vibration of atoms and molecules... somehow. In layman's terms, it makes things cold... REALLY cold. Can cause long-lasting movement issues if ingested.

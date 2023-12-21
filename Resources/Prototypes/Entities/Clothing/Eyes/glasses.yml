@@ -149,8 +149,8 @@
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesSecurity
-  name: security sunglasses
-  description: Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes. Often worn by budget security officers.
+  name: security glasses
+  description: Upgraded sunglasses that provide flash immunity and a security HUD.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/secglasses.rsi
@@ -166,6 +166,7 @@
   - type: GuideHelp
     guides:
     - Security
+  - type: ShowSecurityIcons
 
 - type: entity
   parent: ClothingEyesBase
