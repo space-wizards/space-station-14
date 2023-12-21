@@ -204,7 +204,7 @@
         - !type:HealthChange
           conditions:
           - !type:Temperature
-            max: 150.0
+            max: 213.0
           damage:
             types:
              Cellular: -2
