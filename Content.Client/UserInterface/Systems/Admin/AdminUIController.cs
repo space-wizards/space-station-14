@@ -99,7 +99,7 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
             _window.PanicBunkerControl.UpdateStatus(_panicBunker);
 
         _window.PlayerTabControl.OnEntryKeyBindDown += PlayerTabEntryKeyBindDown;
-        _window.ObjectsTabControl.OnEntryPressed += ObjectsTabEntryPressed;
+        _window.ObjectsTabControl.OnEntryKeyBindDown += ObjectsTabEntryKeyBindDown;
         _window.OnOpen += OnWindowOpen;
         _window.OnClose += OnWindowClosed;
         _window.OnDisposed += OnWindowDisposed;
@@ -146,7 +146,7 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
             return;
 
         _window.PlayerTabControl.OnEntryKeyBindDown -= PlayerTabEntryKeyBindDown;
-        _window.ObjectsTabControl.OnEntryPressed -= ObjectsTabEntryPressed;
+        _window.ObjectsTabControl.OnEntryKeyBindDown -= ObjectsTabEntryKeyBindDown;
         _window.OnOpen -= OnWindowOpen;
         _window.OnClose -= OnWindowClosed;
         _window.OnDisposed -= OnWindowDisposed;
@@ -194,13 +194,10 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         args.Handle();
     }
 
-    private void ObjectsTabEntryPressed(ButtonEventArgs args)
+    private void ObjectsTabEntryKeyBindDown(ObjectsTabEntry entry, GUIBoundKeyEventArgs args)
     {
-        if (args.Button is not ObjectsTabEntry button)
-            return;
-
-        var uid = button.AssocEntity;
-        var function = args.Event.Function;
+        var uid = entry.AssocEntity;
+        var function = args.Function;
 
         if (function == EngineKeyFunctions.UIClick)
             _conHost.ExecuteCommand($"vv {uid}");
@@ -209,6 +206,6 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         else
             return;
 
-        args.Event.Handle();
+        args.Handle();
     }
 }
