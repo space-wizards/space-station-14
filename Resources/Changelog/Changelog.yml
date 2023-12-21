@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Nuclear Operative medics now come with a custom hardsuit., type: Add}
-  id: 4937
-  time: '2023-10-01T17:36:20.0000000+00:00'
 - author: DrTeaSpoon
   changes:
   - {message: Plant species mutation no longer resets other mutations., type: Fix}
@@ -2943,4 +2938,11 @@ Entries:
   - {message: Solid walls are easier to break but reinforced are the same., type: Tweak}
   id: 5437
   time: '2023-12-21T03:03:06.0000000+00:00'
+  url: null
+- author: mirrorcult
+  changes:
+  - {message: Miasma has been renamed to Ammonia, type: Add}
+  - {message: Miasmic subsumation reaction has been removed, type: Remove}
+  id: 5438
+  time: '2023-12-21T04:19:50.0000000+00:00'
   url: null
