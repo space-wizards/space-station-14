@@ -1,0 +1,35 @@
+- type: entity
+  id: GoldenSpoon
+  parent: UtensilBase
+  name: golden spoon
+  description: Some babies are born with them in their mouths. This is the only way to get such rare spoons.
+  components:
+  - type: Sprite
+    sprite: Imperial/TFG/GoldenLife/goldenSpoon.rsi
+    state: icon
+  - type: Item
+    sprite: Imperial/TFG/GoldenLife/goldenSpoon.rsi
+  - type: Utensil
+    types:
+    - Spoon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 2
+  - type: StaticPrice
+    price: 400
+
+- type: entity
+  id: GoldenFork
+  parent: Fork
+  name: golden fork
+  description: Having such a fork in itself will make any dish great.
+  components:
+  - type: Sprite
+    sprite: Imperial/TFG/GoldenLife/goldenFork.rsi
+    state: icon
+  - type: Item
+    sprite: Imperial/TFG/GoldenLife/goldenFork.rsi
+  - type: StaticPrice
+    price: 400

@@ -1,0 +1,7 @@
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconMaid
+  icon:
+    sprite: Imperial/TFG/NewMaidClothing/maidIcon.rsi
+    state: BaseMaid
+
