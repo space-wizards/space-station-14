@@ -17,28 +17,112 @@
       "name": "redjoker"
     },
     {
-      "name": "blackking"
+      "name": "blackkingt"
     },
     {
-      "name": "redking"
+      "name": "redkingb"
     },
     {
-      "name": "blackqueen"
+      "name": "blackqueent"
     },
     {
-      "name": "redqueen"
+      "name": "redqueenb"
     },
     {
-      "name": "blackjack"
+      "name": "blackjackt"
     },
     {
-      "name": "redjack"
+      "name": "redjackb"
     },
     {
-      "name": "blackten"
+      "name": "blacktent"
     },
     {
-      "name": "redten"
+      "name": "redtenb"
+    },
+    {
+      "name": "blackkingp"
+    },
+    {
+      "name": "redkingc"
+    },
+    {
+      "name": "blackqueenp"
+    },
+    {
+      "name": "redqueenc"
+    },
+    {
+      "name": "blackjackp"
+    },
+    {
+      "name": "redjackc"
+    },
+    {
+      "name": "blacktenp"
+    },
+    {
+      "name": "redtenc"
+    },
+    {
+      "name": "redacec"
+    },
+    {
+      "name": "redaceb"
+    },
+    {
+      "name": "blackacep"
+    },
+    {
+      "name": "blackacet"
+    },
+    {
+      "name": "redsevenc"
+    },
+    {
+      "name": "redsevenb"
+    },
+    {
+      "name": "blacksevenp"
+    },
+    {
+      "name": "blacksevent"
+    },
+    {
+      "name": "redsixc"
+    },
+    {
+      "name": "redsixb"
+    },
+    {
+      "name": "blacksixp"
+    },
+    {
+      "name": "blacksixt"
+    },
+    {
+      "name": "redninec"
+    },
+    {
+      "name": "rednineb"
+    },
+    {
+      "name": "blackninep"
+    },
+    {
+      "name": "blackninet"
+    },
+    {
+      "name": "redeightc"
+    },
+    {
+      "name": "redeightb"
+    },
+    {
+      "name": "blackeightp"
+    },
+    {
+      "name": "blackeightt"
     }
   ]
 }
