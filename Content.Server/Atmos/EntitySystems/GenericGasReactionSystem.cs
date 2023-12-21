@@ -87,8 +87,6 @@ public sealed class GenericGasReactionSystem : EntitySystem
             rate = rateLim;
 
             // Go through and remove all the reactants
-            // If any of the reactants were zero, then the code above would have already set
-            // rate to zero, so we don't have to check that again here.
             foreach (var (reactant, num) in reaction.Reactants)
             {
                 mix.AdjustMoles(reactant, -num*rate);
