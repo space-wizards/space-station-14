@@ -274,7 +274,7 @@
 
 - type: entity
   name: Cybersun pen
-  parent: BaseItem
+  parent: Pen
   id: CyberPen
   description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write.
   components:
@@ -289,6 +289,10 @@
   - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -45
+    damage:
+      types:
+        Piercing: 15
+  - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 15
