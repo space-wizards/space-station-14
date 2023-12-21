@@ -10,6 +10,8 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -203,7 +205,7 @@ public sealed partial class DragonSystem : EntitySystem
     private void Roar(EntityUid uid, DragonComponent comp)
     {
         if (comp.SoundRoar != null)
-            _audio.Play(comp.SoundRoar, Filter.Pvs(uid, 4f, EntityManager), uid, true);
+            _audio.PlayPvs(comp.SoundRoar, uid);
     }
 
     /// <summary>

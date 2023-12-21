@@ -46,6 +46,7 @@
   recipeUnlocks:
   - CryostasisBeaker
   - StasisBedMachineCircuitboard
+  - SyringeCryostasis
 
 - type: technology
   id: MechanizedTreatment

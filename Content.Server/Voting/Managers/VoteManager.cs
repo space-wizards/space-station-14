@@ -373,10 +373,16 @@ namespace Content.Server.Voting.Managers
                 .First()
                 .Select(e => e.Data)
                 .ToImmutableArray();
+            // Store all votes in order for webhooks
+            var voteTally = new List<int>(); 
+            foreach(var entry in v.Entries)
+            {
+                voteTally.Add(entry.Votes);
+            }
 
             v.Finished = true;
             v.Dirty = true;
-            var args = new VoteFinishedEventArgs(winners.Length == 1 ? winners[0] : null, winners);
+            var args = new VoteFinishedEventArgs(winners.Length == 1 ? winners[0] : null, winners, voteTally);
             v.OnFinished?.Invoke(_voteHandles[v.Id], args);
             DirtyCanCallVoteAll();
         }

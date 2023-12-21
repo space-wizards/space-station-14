@@ -29,6 +29,14 @@
         amount: 2
 
 - type: entity
+  id: CrateChemistryVials
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxVial
+
+- type: entity
   id: CrateMindShieldImplants
   parent: CrateMedical
   components:

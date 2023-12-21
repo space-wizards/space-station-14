@@ -176,6 +176,14 @@
     access: [["Salvage"]]
 
 - type: entity
+  parent: AirlockMining
+  id: AirlockMiningLocked
+  suffix: Mining(Salvage), Locked
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
+
+- type: entity
   parent: AirlockMedical
   id: AirlockMedicalLocked
   suffix: Medical, Locked
@@ -476,6 +484,14 @@
   - type: AccessReader
     access: [["Salvage"]]
 
+- type: entity
+  parent: AirlockMiningGlass
+  id: AirlockMiningGlassLocked
+  suffix: Mining(Salvage), Locked
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
+    
 - type: entity
   parent: AirlockChemistryGlass
   id: AirlockChemistryGlassLocked

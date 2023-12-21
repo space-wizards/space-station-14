@@ -66,8 +66,20 @@ public abstract partial class BaseActionComponent : Component
     /// <summary>
     ///     Convenience tool for actions with limited number of charges. Automatically decremented on use, and the
     ///     action is disabled when it reaches zero. Does NOT automatically remove the action from the action bar.
+    ///     However, charges will regenerate if <see cref="RenewCharges"/> is enabled and the action will not disable
+    ///     when charges reach zero.
     /// </summary>
     [DataField("charges")] public int? Charges;
+
+    /// <summary>
+    ///     The max charges this action has, set automatically from <see cref="Charges"/>
+    /// </summary>
+    public int MaxCharges;
+
+    /// <summary>
+    ///     If enabled, charges will regenerate after a <see cref="Cooldown"/> is complete
+    /// </summary>
+    [DataField("renewCharges")]public bool RenewCharges;
 
     /// <summary>
     /// The entity that contains this action. If the action is innate, this may be the user themselves.
@@ -159,6 +171,8 @@ public abstract class BaseActionComponentState : ComponentState
     public (TimeSpan Start, TimeSpan End)? Cooldown;
     public TimeSpan? UseDelay;
     public int? Charges;
+    public int MaxCharges;
+    public bool RenewCharges;
     public NetEntity? Container;
     public NetEntity? EntityIcon;
     public bool CheckCanInteract;
@@ -186,6 +200,8 @@ public abstract class BaseActionComponentState : ComponentState
         Cooldown = component.Cooldown;
         UseDelay = component.UseDelay;
         Charges = component.Charges;
+        MaxCharges = component.MaxCharges;
+        RenewCharges = component.RenewCharges;
         CheckCanInteract = component.CheckCanInteract;
         ClientExclusive = component.ClientExclusive;
         Priority = component.Priority;

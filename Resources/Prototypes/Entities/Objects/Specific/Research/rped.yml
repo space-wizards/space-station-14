@@ -15,7 +15,8 @@
     - MachineUpgrading
   - type: PartExchanger
   - type: Storage
-    maxSlots: 30
+    grid:
+    - 0,0,9,2
     quickInsert: true
     areaInsert: true
     whitelist:
