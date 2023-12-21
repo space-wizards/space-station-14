@@ -1,10 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: The immovable rod gibs you instead of deleting your character again.,
-    type: Fix}
-  id: 4947
-  time: '2023-10-02T18:30:51.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Pizza recipes now require flat dough. Get a rolling pin from the dinnerware
@@ -2953,4 +2947,10 @@ Entries:
   - {message: Mice can no longer spill containers., type: Tweak}
   id: 5447
   time: '2023-12-21T10:23:01.0000000+00:00'
+  url: null
+- author: Lukasz825700516
+  changes:
+  - {message: Gas tanks no longer predict insertion of random items., type: Fix}
+  id: 5448
+  time: '2023-12-21T10:37:35.0000000+00:00'
   url: null
