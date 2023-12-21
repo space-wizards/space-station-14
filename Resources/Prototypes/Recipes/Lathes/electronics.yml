@@ -466,6 +466,30 @@
      Glass: 250
 
 - type: latheRecipe
+  id: APCElectronicsHigh
+  result: APCElectronicsHigh
+  completetime: 2
+  materials:
+     Steel: 50
+     Glass: 250
+
+- type: latheRecipe
+  id: APCElectronicsSuper
+  result: APCElectronicsSuper
+  completetime: 2
+  materials:
+     Steel: 50
+     Glass: 250
+
+- type: latheRecipe
+  id: APCElectronicsHyper
+  result: APCElectronicsHyper
+  completetime: 2
+  materials:
+     Steel: 50
+     Glass: 250
+
+- type: latheRecipe
   id: SubstationMachineCircuitboard
   result: SubstationMachineCircuitboard
   completetime: 4

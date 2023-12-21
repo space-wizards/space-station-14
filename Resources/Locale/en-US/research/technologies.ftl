@@ -11,6 +11,7 @@ research-technology-advanced-powercells = Advanced Powercells
 research-technology-compact-power = Compact Power
 research-technology-industrial-engineering = Industrial Engineering
 research-technology-power-generation = Power Generation
+research-technology-advanced-power-generation = Advanced Power Generation
 research-technology-atmospheric-tech = Atmospherics
 research-technology-shuttlecraft = Shuttlecraft
 research-technology-ripley-aplu = Ripley APLU

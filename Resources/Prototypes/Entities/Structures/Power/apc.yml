@@ -82,7 +82,7 @@
     key: enum.ApcUiKey.Key
   - type: Construction
     graph: APC
-    node: apc
+    node: apcBasic
   - type: PowerNetworkBattery
     maxSupply: 10000
     maxChargeRate: 5000
@@ -195,6 +195,9 @@
   id: APCHighCapacity
   suffix: High Capacity, 100kW
   components:
+  - type: Construction
+    graph: APC
+    node: apcHigh
   - type: Battery
     maxCharge: 100000
     startingCharge: 100000
@@ -204,6 +207,9 @@
   id: APCSuperCapacity
   suffix: Super Capacity, 150kW
   components:
+  - type: Construction
+    graph: APC
+    node: apcSuper
   - type: Battery
     maxCharge: 150000
     startingCharge: 150000
@@ -213,6 +219,9 @@
   id: APCHyperCapacity
   suffix: Hyper Capacity, 200kW
   components:
+  - type: Construction
+    graph: APC
+    node: apcHyper
   - type: Battery
     maxCharge: 200000
     startingCharge: 200000

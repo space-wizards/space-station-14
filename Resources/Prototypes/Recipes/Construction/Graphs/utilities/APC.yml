@@ -12,10 +12,41 @@
     - node: apcFrame
       entity: APCFrame
       edges:
-        - to: apc
+        - to: apcBasic
           steps:
-            - component: ApcElectronics
-              name: "APC electronics"
+            - tag: APCElectronicsBasic
+              store: board
+              name: "APC electronics standard capacity"
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "charger_APC"
+              doAfter: 2
+        - to: apcHigh
+          steps:
+            - tag: APCElectronicsHigh
+              store: board
+              name: "APC electronics high capacity"
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "charger_APC"
+              doAfter: 2
+        - to: apcSuper
+          steps:
+            - tag: APCElectronicsSuper
+              store: board
+              name: "APC electronics super capacity"
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "charger_APC"
+              doAfter: 2
+        - to: apcHyper
+          steps:
+            - tag: APCElectronicsHyper
+              store: board
+              name: "APC electronics hyper capacity"
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "charger_APC"
               doAfter: 2
         - to: start
           completed:
@@ -27,13 +58,58 @@
             - tool: Screwing
               doAfter: 2
 
-    - node: apc
-      entity: APCConstructed
+    - node: apcBasic
+      entity: APCBasic
       edges:
         - to: apcFrame
           completed:
             - !type:GivePrototype
               prototype: APCElectronics
+              amount: 1
+          conditions:
+            - !type:WirePanel
+              open: true
+          steps:
+            - tool: Prying
+              doAfter: 4
+
+    - node: apcHigh
+      entity: APCHighCapacity
+      edges:
+        - to: apcFrame
+          completed:
+            - !type:GivePrototype
+              prototype: APCElectronicsHigh
+              amount: 1
+          conditions:
+            - !type:WirePanel
+              open: true
+          steps:
+            - tool: Prying
+              doAfter: 4
+
+    - node: apcSuper
+      entity: APCSuperCapacity
+      edges:
+        - to: apcFrame
+          completed:
+            - !type:GivePrototype
+              prototype: APCElectronicsSuper
+              amount: 1
+          conditions:
+            - !type:WirePanel
+              open: true
+          steps:
+            - tool: Prying
+              doAfter: 4
+
+    - node: apcHyper
+      entity: APCHyperCapacity
+      edges:
+        - to: apcFrame
+          completed:
+            - !type:GivePrototype
+              prototype: APCElectronicsHyper
               amount: 1
           conditions:
             - !type:WirePanel

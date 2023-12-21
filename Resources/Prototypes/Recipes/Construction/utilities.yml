@@ -48,11 +48,56 @@
 
 # POWER
 - type: construction
-  name: APC
+  name: APC standard capacity
   id: APC
   graph: APC
   startNode: start
-  targetNode: apc
+  targetNode: apcBasic
+  category: construction-category-utilities
+  description: "Area Power Controller (APC). Controls power. In an area."
+  icon:
+    sprite: Structures/Power/apc.rsi
+    state: base
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  name: APC high capacity
+  id: APCHigh
+  graph: APC
+  startNode: start
+  targetNode: apcHigh
+  category: construction-category-utilities
+  description: "Area Power Controller (APC). Controls power. In an area."
+  icon:
+    sprite: Structures/Power/apc.rsi
+    state: base
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  name: APC super capacity
+  id: APCSuper
+  graph: APC
+  startNode: start
+  targetNode: apcSuper
+  category: construction-category-utilities
+  description: "Area Power Controller (APC). Controls power. In an area."
+  icon:
+    sprite: Structures/Power/apc.rsi
+    state: base
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  name: APC hyper capacity
+  id: APCHyper
+  graph: APC
+  startNode: start
+  targetNode: apcHyper
   category: construction-category-utilities
   description: "Area Power Controller (APC). Controls power. In an area."
   icon:

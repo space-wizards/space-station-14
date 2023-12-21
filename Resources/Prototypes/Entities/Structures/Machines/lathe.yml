@@ -138,6 +138,10 @@
       - CellRechargerCircuitboard
       - BorgChargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
+    dynamicRecipes:
+      - APCElectronicsHigh
+      - APCElectronicsSuper
+      - APCElectronicsHyper
   - type: EmagLatheRecipes
     emagStaticRecipes:
        - CartridgePistol
