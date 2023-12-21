@@ -15,6 +15,7 @@ using Content.Shared.Physics;
 using Content.Shared.Tag;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -172,7 +173,7 @@ namespace Content.Server.Flash
             }
             if (sound != null)
             {
-                SoundSystem.Play(sound.GetSound(), Filter.Pvs(transform), source);
+                _audio.PlayPvs(sound, source);
             }
         }
 

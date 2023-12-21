@@ -111,7 +111,7 @@
     damage: 16
 
 - type: entity
-  id: MobLuminousОbject
+  id: MobLuminousObject
   parent: MobLivingLight
   name: luminous object
   description: A small glowing object that causes burns on the skin with its glow.

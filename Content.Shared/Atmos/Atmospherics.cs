@@ -123,7 +123,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum temperature difference before the gas temperatures are just set to be equal.
         /// </summary>
-        public const float MinimumTemperatureDeltaToConsider = 0.1f;
+        public const float MinimumTemperatureDeltaToConsider = 0.01f;
 
         /// <summary>
         ///     Minimum temperature for starting superconduction.
@@ -179,11 +179,11 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
         /// </summary>
-        public const float FireHydrogenEnergyReleased = 560000f;
+        public const float FireHydrogenEnergyReleased = 284e3f; // hydrogen is 284 kJ/mol
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
-        public const float FirePlasmaEnergyReleased = 3000000f;
+        public const float FirePlasmaEnergyReleased = 16e3f; // methane is 16 kJ/mol
         public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;
@@ -216,7 +216,7 @@ namespace Content.Shared.Atmos
         ///     Remove X mol of nitrogen for each mol of frezon.
         /// </summary>
         public const float FrezonNitrogenCoolRatio = 5;
-        public const float FrezonCoolEnergyReleased = -3000000f;
+        public const float FrezonCoolEnergyReleased = -600e3f;
         public const float FrezonCoolRateModifier = 20f;
 
         public const float FrezonProductionMaxEfficiencyTemperature = 73.15f;
@@ -240,6 +240,11 @@ namespace Content.Shared.Atmos
         ///     How many mol of frezon can be converted into miasma in one cycle.
         /// </summary>
         public const float MiasmicSubsumationMaxConversionRate = 5f;
+
+        /// <summary>
+        ///     Divisor for Miasma Oxygen reaction so that it doesn't happen instantaneously.
+        /// </summary>
+        public const float MiasmaOxygenReactionRate = 10f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.

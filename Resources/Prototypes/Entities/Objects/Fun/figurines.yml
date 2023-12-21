@@ -455,3 +455,12 @@
   components:
   - type: Sprite
     state: skeletonprize
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineThief
+  name: thief character figure
+  description: Hiding in the shadows...
+  components:
+  - type: Sprite
+    state: thiefcharacter

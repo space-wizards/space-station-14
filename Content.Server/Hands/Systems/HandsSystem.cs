@@ -8,6 +8,7 @@ using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Part;
 using Content.Shared.CombatMode;
+using Content.Shared.Explosion;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -54,6 +55,8 @@ namespace Content.Server.Hands.Systems
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
+            SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
+
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
@@ -71,6 +74,15 @@ namespace Content.Server.Hands.Systems
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
             args.State = new HandsComponentState(hands);
+        }
+
+        private void OnExploded(Entity<HandsComponent> ent, ref BeforeExplodeEvent args)
+        {
+            foreach (var hand in ent.Comp.Hands.Values)
+            {
+                if (hand.HeldEntity is {} uid)
+                    args.Contents.Add(uid);
+            }
         }
 
         private void OnDisarmed(EntityUid uid, HandsComponent component, DisarmedEvent args)
@@ -192,9 +204,9 @@ namespace Content.Server.Hands.Systems
             // Let other systems change the thrown entity (useful for virtual items)
             // or the throw strength.
             var ev = new BeforeThrowEvent(throwEnt, direction, throwStrength, player);
-            RaiseLocalEvent(player, ev, false);
+            RaiseLocalEvent(player, ref ev);
 
-            if (ev.Handled)
+            if (ev.Cancelled)
                 return true;
 
             // This can grief the above event so we raise it afterwards

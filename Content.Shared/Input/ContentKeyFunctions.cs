@@ -30,8 +30,12 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenInventoryMenu = "OpenInventoryMenu";
         public static readonly BoundKeyFunction SmartEquipBackpack = "SmartEquipBackpack";
         public static readonly BoundKeyFunction SmartEquipBelt = "SmartEquipBelt";
+        public static readonly BoundKeyFunction OpenBackpack = "OpenBackpack";
+        public static readonly BoundKeyFunction OpenBelt = "OpenBelt";
         public static readonly BoundKeyFunction OpenAHelp = "OpenAHelp";
         public static readonly BoundKeyFunction SwapHands = "SwapHands";
+        public static readonly BoundKeyFunction MoveStoredItem = "MoveStoredItem";
+        public static readonly BoundKeyFunction RotateStoredItem = "RotateStoredItem";
         public static readonly BoundKeyFunction ThrowItemInHand = "ThrowItemInHand";
         public static readonly BoundKeyFunction TryPullObject = "TryPullObject";
         public static readonly BoundKeyFunction MovePulledObject = "MovePulledObject";
@@ -82,23 +86,6 @@ namespace Content.Shared.Input
             new[]
             {
                 Hotbar1, Hotbar2, Hotbar3, Hotbar4, Hotbar5, Hotbar6, Hotbar7, Hotbar8, Hotbar9, Hotbar0
-            };
-
-        public static readonly BoundKeyFunction Loadout0 = "Loadout0";
-        public static readonly BoundKeyFunction Loadout1 = "Loadout1";
-        public static readonly BoundKeyFunction Loadout2 = "Loadout2";
-        public static readonly BoundKeyFunction Loadout3 = "Loadout3";
-        public static readonly BoundKeyFunction Loadout4 = "Loadout4";
-        public static readonly BoundKeyFunction Loadout5 = "Loadout5";
-        public static readonly BoundKeyFunction Loadout6 = "Loadout6";
-        public static readonly BoundKeyFunction Loadout7 = "Loadout7";
-        public static readonly BoundKeyFunction Loadout8 = "Loadout8";
-        public static readonly BoundKeyFunction Loadout9 = "Loadout9";
-
-        public static BoundKeyFunction[] GetLoadoutBoundKeys() =>
-            new[]
-            {
-                Loadout1, Loadout2, Loadout3, Loadout4, Loadout5, Loadout6, Loadout7, Loadout8, Loadout9, Loadout0
             };
 
         public static readonly BoundKeyFunction Vote0 = "Vote0";

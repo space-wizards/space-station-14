@@ -6,6 +6,7 @@
   components:
   - type: Item
     size: Small
+    storedRotation: 90
   - type: Handcuff
     cuffedRSI: Objects/Misc/handcuffs.rsi
     bodyIconState: body-overlay
@@ -62,6 +63,9 @@
   id: Zipties
   parent: Handcuffs
   components:
+  - type: Item
+    size: Tiny
+    storedRotation: 0
   - type: Handcuff
     breakoutTime: 20  # halfway between improvised cablecuffs and metal ones
     cuffedRSI: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine

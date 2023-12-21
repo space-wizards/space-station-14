@@ -101,7 +101,7 @@
       effects:
       - !type:GenericStatusEffect
         key: Drunk
-        time: 2.0
+        time: 6.0
         type: Remove
       - !type:HealthChange
         damage:
@@ -285,9 +285,9 @@
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
-          reagent: Lexorin
+          reagent: HeartbreakerToxin
           min: 1
-        reagent: Lexorin
+        reagent: HeartbreakerToxin
         amount: -3
       - !type:HealthChange
         conditions:
@@ -334,12 +334,12 @@
             Asphyxiation: 1
             Poison: 1
       - !type:AdjustReagent
-        reagent: Lexorin
+        reagent: HeartbreakerToxin
         amount: -2
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
-          reagent: Lexorin
+          reagent: 
           min: 1
         reagent: Epinephrine
         amount: -1
@@ -347,7 +347,7 @@
         probability: 0.1
         conditions:
         - !type:ReagentThreshold
-          reagent: Lexorin
+          reagent: HeartbreakerToxin
           min: 1
         reagent: Histamine
         amount: 4
@@ -931,3 +931,96 @@
         - !type:ReagentThreshold
           min: 30
         probability: 0.02
+
+- type: reagent
+  id: Lacerinol
+  name: reagent-name-lacerinol
+  group: Medicine
+  desc: reagent-desc-lacerinol
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: syrupy
+  color: "#283332"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Slash: -3
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 12
+        damage:
+          types:
+            Cold: 3
+
+- type: reagent
+  id: Puncturase
+  name: reagent-name-puncturase
+  group: Medicine
+  desc: reagent-desc-puncturase
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: fizzy
+  color: "#b9bf93"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Piercing: -4
+            Blunt: 0.1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 11
+        damage:
+          types:
+            Blunt: 5
+
+- type: reagent
+  id: Bruizine
+  name: reagent-name-bruizine
+  group: Medicine
+  desc: reagent-desc-bruizine
+  physicalDesc: reagent-physical-desc-mucus-like
+  flavor: sour
+  color: "#ff3636"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -3.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 10.5
+        damage:
+          types:
+            Poison: 4
+
+- type: reagent
+  id: Holywater
+  name: reagent-name-holywater
+  group: Medicine
+  desc: reagent-desc-holywater
+  physicalDesc: reagent-physical-desc-holy
+  flavor: holy
+  color: "#91C3F7"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        condition:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
