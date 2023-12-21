@@ -31,7 +31,7 @@
         Blunt: 4.5
   - type: Item
     size: Small
-    sprite: Objects/Weapons/Melee/e_sword.rsi
+    sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: UseDelay
     delay: 1.0
   - type: PointLight
@@ -165,6 +165,15 @@
   - type: Item
     size: Small
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded
 
 - type: entity
   name: Double Bladed Energy Sword
@@ -201,10 +210,19 @@
         map: [ "blade" ]
   - type: Item
     size: Small
-    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+    sprite: Objects/Weapons/Melee/e_sword_double-inhands.rsi
   - type: Reflect
     enabled: true
     reflectProb: .75
     spread: 75
   - type: UseDelay
     delay: 1
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded
