@@ -17,6 +17,7 @@
       state: ertleadereva
     - type: Loadout
       prototypes: [ ERTCallLeaderGearEVA ]
+    - type: RandomHumanoidAppearance
 
 #Medic
 - type: entity
@@ -36,6 +37,7 @@
       state: ertmedicaleva
     - type: Loadout
       prototypes: [ ERTCallMedicalGearEVA ]
+    - type: RandomHumanoidAppearance
 
 #Security
 - type: entity
@@ -55,6 +57,7 @@
       state: ertsecurityeva
     - type: Loadout
       prototypes: [ ERTCallSecurityGearEVA ]
+    - type: RandomHumanoidAppearance
 
 #Engineer
 - type: entity
@@ -74,6 +77,7 @@
       state: ertengineereva
     - type: Loadout
       prototypes: [ ERTCallEngineerGearEVA ]
+    - type: RandomHumanoidAppearance
 
 #Junitor
 - type: entity
@@ -93,6 +97,7 @@
       state: ertjanitoreva
     - type: Loadout
       prototypes: [ ERTCallJanitorGearEVA ]
+    - type: RandomHumanoidAppearance
 
 #ERT END
 
@@ -114,6 +119,7 @@
       state: cburnLeader
     - type: Loadout
       prototypes: [ ERTCallCBURNLeaderGearEVA ]
+    - type: RandomHumanoidAppearance
 
 #Security
 - type: entity
@@ -132,6 +138,7 @@
       state: cburn
     - type: Loadout
       prototypes: [ ERTCallCBURNSecurityGearEVA ]
+    - type: RandomHumanoidAppearance
 
 #Medic
 - type: entity
@@ -150,6 +157,7 @@
       state: cburnMedic
     - type: Loadout
       prototypes: [ ERTCallCBURNMedicGearEVA ]
+    - type: RandomHumanoidAppearance
 #CBURN END
 
 #DEAD SQUAD START
