@@ -747,7 +747,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-        - ReagentId: SulfuricAcid
+        - ReagentId: Nanomachines
           Quantity: 5
   - type: Tag
     tags:
