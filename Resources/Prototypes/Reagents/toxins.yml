@@ -293,6 +293,22 @@
               min: 20
             - !type:OrganType
                type: Human
+        - !type:Polymorph
+          prototype: Cyborg
+          conditions:
+            - !type:ReagentThreshold
+              min: 20
+            - !type:OrganType
+               type: Human
+        - !type:Polymorph
+          prototype: Cyborg
+          conditions:
+            - !type:MobStateCondition
+              mobstate: Critical
+            - !type:OrganType
+               type: Human
+            - !type:ReagentThreshold
+              min: 5
         - !type:HealthChange
           damage:
             types:
@@ -301,7 +317,7 @@
           type: Local
           visualType: Large
           messages: ["nanomachines-effect-mechanization"]
-          probability: 40.0
+          probability: 100.0
           conditions:
             - !type:OrganType
                type: Human
@@ -311,11 +327,11 @@
             - !type:MobStateCondition
               mobstate: Critical
             - !type:ReagentThreshold
-              min: 5
-              max: 20
+              min: 0
+              max: 25
             - !type:OrganType
                type: Human
-          amount: 15
+          amount: -25
       metabolismRate: 0.2
 
 - type: reagent
