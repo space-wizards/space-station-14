@@ -1,9 +1,4 @@
 Entries:
-- author: TomCruize
-  changes:
-  - {message: Made Space Cats lungs ROBUST (They now don't suffocate in space), type: Fix}
-  id: 4934
-  time: '2023-10-01T14:55:59.0000000+00:00'
 - author: TheShuEd
   changes:
   - {message: Added wide-spectrum anomaly locator., type: Add}
@@ -2937,4 +2932,11 @@ Entries:
   - {message: Fixed coal not generating!, type: Fix}
   id: 5434
   time: '2023-12-20T23:46:20.0000000+00:00'
+  url: null
+- author: whateverusername0
+  changes:
+  - {message: "Miasma now reacts with oxygen at 50\xB0C to produce nitrous oxide and\
+      \ water vapor.", type: Add}
+  id: 5435
+  time: '2023-12-21T00:14:59.0000000+00:00'
   url: null
