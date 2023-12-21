@@ -1,10 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - {message: 'the north star gloves have had their damage changed back to 8, as was
-      originally intended', type: Tweak}
-  id: 4946
-  time: '2023-10-02T15:34:22.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: The immovable rod gibs you instead of deleting your character again.,
@@ -2953,4 +2947,10 @@ Entries:
   - {message: Nukies don't start with agent ID anymore, type: Tweak}
   id: 5446
   time: '2023-12-21T09:59:06.0000000+00:00'
+  url: null
+- author: Repo
+  changes:
+  - {message: Mice can no longer spill containers., type: Tweak}
+  id: 5447
+  time: '2023-12-21T10:23:01.0000000+00:00'
   url: null
