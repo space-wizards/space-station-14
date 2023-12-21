@@ -8,10 +8,10 @@
   },
   "states": [
     {
-      "name": "paper_bin"
+      "name": "closed"
     },
     {
-      "name": "paper_bin1"
+      "name": "card1"
     }
   ]
 }
