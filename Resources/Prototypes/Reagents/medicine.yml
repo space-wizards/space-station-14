@@ -101,7 +101,7 @@
       effects:
       - !type:GenericStatusEffect
         key: Drunk
-        time: 2.0
+        time: 6.0
         type: Remove
       - !type:HealthChange
         damage:

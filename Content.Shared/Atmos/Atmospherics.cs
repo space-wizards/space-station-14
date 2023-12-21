@@ -123,7 +123,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum temperature difference before the gas temperatures are just set to be equal.
         /// </summary>
-        public const float MinimumTemperatureDeltaToConsider = 0.1f;
+        public const float MinimumTemperatureDeltaToConsider = 0.01f;
 
         /// <summary>
         ///     Minimum temperature for starting superconduction.
@@ -245,6 +245,11 @@ namespace Content.Shared.Atmos
         ///     How many mol of frezon can be converted into miasma in one cycle.
         /// </summary>
         public const float MiasmicSubsumationMaxConversionRate = 5f;
+
+        /// <summary>
+        ///     Divisor for Miasma Oxygen reaction so that it doesn't happen instantaneously.
+        /// </summary>
+        public const float MiasmaOxygenReactionRate = 10f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.

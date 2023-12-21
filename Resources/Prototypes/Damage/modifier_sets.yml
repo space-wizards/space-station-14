@@ -90,7 +90,7 @@
     Shock: 0
   flatReductions:
     Blunt: 5
-    Slash: 7
+    Slash: 5
     Piercing: 5
     Heat: 5
     Structural: 12.5
