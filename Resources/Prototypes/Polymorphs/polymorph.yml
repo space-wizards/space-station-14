@@ -11,6 +11,14 @@
   inventory: Drop
 
 - type: polymorph
+  id: Cyborg
+  entity: PlayerBorgBattery
+  forced: true
+  inventory: Drop
+  revertOnCrit: false
+  revertOnDeath: true
+
+- type: polymorph
   id: Monkey
   entity: MobMonkey
   forced: true
