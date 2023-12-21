@@ -1,9 +1,4 @@
 Entries:
-- author: DrTeaSpoon
-  changes:
-  - {message: Plant species mutation no longer resets other mutations., type: Fix}
-  id: 4938
-  time: '2023-10-01T17:52:45.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Science can now research practice ammunition for security., type: Add}
@@ -2945,4 +2940,11 @@ Entries:
   - {message: Miasmic subsumation reaction has been removed, type: Remove}
   id: 5438
   time: '2023-12-21T04:19:50.0000000+00:00'
+  url: null
+- author: joshepvodka
+  changes:
+  - {message: NanoTrasen updated the designs for their emergency medipens. Space medipens
+      are now magenta colored and epi pens have a green band on them., type: Tweak}
+  id: 5439
+  time: '2023-12-21T05:30:58.0000000+00:00'
   url: null
