@@ -27,8 +27,7 @@ namespace Content.Client.Atmos.UI
             {
                 CTopBox.AddChild(new Label
                 {
-                    Text = Loc.GetString("gas-analyzer-window-error-text", ("errorText", msg.Error)),
-                    FontColorOverride = Color.Red
+                    Text = Loc.GetString("gas-analyzer-window-error-text", ("errorText", msg.Error)),FontColorOverride = Color.Red
                 });
                 return;
             }

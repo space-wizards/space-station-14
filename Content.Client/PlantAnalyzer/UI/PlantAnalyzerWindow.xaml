@@ -10,23 +10,29 @@
             Text="{Loc plant-analyzer-window-no-seed-information-text}" />
         <BoxContainer
                 Name="PlantDataContainer"
-                Orientation="Vertical">
+                Orientation="Vertical"
+                Margin="0 0 5 10">
             <Label
-                Name="PlantName"/>
+                Name="PlantName"
+                Margin="0 0 5 10"/>
             <Label
-                Name="Yield"/>
+                Name="Yield"
+                Margin="0 10 5 10"/>
             <Label
-                Name="Potency"/>
+                Name="Potency"
+                Margin="0 10 5 10"/>
             <Label
-                Name="Chemicals"/>
+                Name="Repeat"
+                Margin="0 10 5 10"/>
             <Label
-                Name="TraitsName"/>
+                Name="Chemicals"
+                Margin="0 10 5 10"/>           
             <Label
-                Name="PlantTray" />
+                Name="Gases"
+                Margin="0 10 5 10"/>
             <Label
-                Name="HealthName"/>
-            <Label
-                Name="ProblemsName"/>
+                Name="Traits"
+                Margin="0 10 5 10"/>
         </BoxContainer>
         <BoxContainer
             Name="GroupsContainer"

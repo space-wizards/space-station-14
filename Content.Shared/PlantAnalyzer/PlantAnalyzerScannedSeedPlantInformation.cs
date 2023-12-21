@@ -9,34 +9,29 @@ namespace Content.Shared.PlantAnalyzer;
 public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfaceMessage
 {
     public readonly NetEntity? TargetEntity;
-    public float SeedEndurance;
-
-    public string SeedYield = "";
-    public string SeedPotency = "";
-    public string SeedChem = "";
-    public string SeedHarvestType = "";
-
-    public float SeedMinTemp;
-    public float SeedMaxTemp;
-
-    public string SeedMut = "";
 
     public string SeedName = "";
-    public float SeedHealth;
-    public string SeedProblems = "";
+    public string SeedYield = "";
+    public string SeedPotency = "";
+    public string Repeat = "";
+    public string SeedChem = "";
+    public string SeedMutations = "";
+    public string ExudeGases = "";
 
     public bool IsTray;
     public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntit, string seedName, string seedYield, string seedPotency,
-        string seedChem)
+        string seedChem, string plantHarvestType, string exudeGases, string seedMutations)
     {
         TargetEntity = targetEntit;
+
         SeedName = seedName;
         SeedYield = seedYield;
         SeedPotency = seedPotency;
         SeedChem = seedChem;
+        Repeat = plantHarvestType;
 
+        ExudeGases = exudeGases;
+        SeedMutations = seedMutations;
 
-        //SeedMinTemp = seedMinTemp;
-       // SeedMaxTemp = seedMaxTemp;
     }
 }
