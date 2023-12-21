@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Pizza recipes now require flat dough. Get a rolling pin from the dinnerware
-      vendor., type: Add}
-  id: 4948
-  time: '2023-10-02T19:21:15.0000000+00:00'
 - author: VigersRay
   changes:
   - {message: The syndicate has begun to recruit more experienced people into the
@@ -2953,4 +2947,11 @@ Entries:
   - {message: Gas tanks no longer predict insertion of random items., type: Fix}
   id: 5448
   time: '2023-12-21T10:37:35.0000000+00:00'
+  url: null
+- author: mirrorcult
+  changes:
+  - {message: Smart equipping now works with item slots, type: Add}
+  - {message: Smart equipping is now predicted, type: Tweak}
+  id: 5449
+  time: '2023-12-21T14:17:09.0000000+00:00'
   url: null
