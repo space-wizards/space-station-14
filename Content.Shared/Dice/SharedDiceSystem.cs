@@ -21,7 +21,7 @@ public abstract class SharedDiceSystem : EntitySystem
     private void OnHandleState(EntityUid uid, DiceComponent component, ref ComponentHandleState args)
     {
         if (args.Current is DiceComponent.DiceState state)
-            component.CurrentValue = state.CurrentValue;
+            SetCurrentValue(uid, state.CurrentValue, component);
 
         UpdateVisuals(uid, component);
     }
