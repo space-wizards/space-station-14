@@ -8,20 +8,6 @@
   },
   "states": [
     {
-      "name": "icon"
-    },
-    {
-      "name": "ammo"
-    },
-    {
-      "name": "ammo-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "ammo-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "equipped-BELT",
       "directions": 4
     },
