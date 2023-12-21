@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Wagging;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 [Access(typeof(WaggingSystem))]
 public sealed partial class WaggingComponent : Component
 {
