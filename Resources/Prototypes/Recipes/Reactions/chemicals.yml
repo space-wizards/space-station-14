@@ -102,10 +102,10 @@
   effects:
     - !type:ExplosionReactionEffect
       explosionType: Default
-      maxIntensity: 5
+      maxIntensity: 100
       intensityPerUnit: 0.5 # 50+50 reagent for maximum explosion
-      intensitySlope: .5
-      maxTotalIntensity: 30
+      intensitySlope: 4
+      maxTotalIntensity: 100
 
 - type: reaction
   id: Smoke

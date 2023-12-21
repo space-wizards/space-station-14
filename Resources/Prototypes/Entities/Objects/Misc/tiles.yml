@@ -291,6 +291,22 @@
     stackType: FloorTileBlue
 
 - type: entity
+  name: lime tile
+  parent: FloorTileItemBase
+  id: FloorTileItemLime
+  components:
+  - type: Sprite
+    state: lime
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelLime
+  - type: Stack
+    stackType: FloorTileLime
+
+- type: entity
   name: mining tile
   parent: FloorTileItemBase
   id: FloorTileItemMining

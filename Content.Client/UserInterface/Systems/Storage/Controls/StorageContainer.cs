@@ -12,7 +12,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
@@ -156,6 +155,15 @@ public sealed class StorageContainer : BaseWindow
         {
             Close();
         };
+        exitButton.OnKeyBindDown += args =>
+        {
+            // it just makes sense...
+            if (!args.Handled && args.Function == ContentKeyFunctions.ActivateItemInWorld)
+            {
+                Close();
+                args.Handle();
+            }
+        };
         var exitContainer = new BoxContainer
         {
             Children =
@@ -241,6 +249,7 @@ public sealed class StorageContainer : BaseWindow
 
         var boundingGrid = storageComp.Grid.GetBoundingBox();
         var size = _emptyTexture!.Size * 2;
+        var lastEntity = storageComp.Container.ContainedEntities.LastOrDefault();
 
         //todo. at some point, we may want to only rebuild the pieces that have actually received new data.
 
@@ -270,6 +279,7 @@ public sealed class StorageContainer : BaseWindow
                         var gridPiece = new ItemGridPiece((itemEnt, itemEntComponent), item.Value, _entity)
                         {
                             MinSize = size,
+                            Marked = itemEnt == lastEntity
                         };
                         gridPiece.OnPiecePressed += OnPiecePressed;
                         gridPiece.OnPieceUnpressed += OnPieceUnpressed;
@@ -448,6 +458,6 @@ public sealed class StorageContainer : BaseWindow
         if (StorageEntity == null)
             return;
 
-        _entity.System<StorageSystem>().CloseStorageUI(StorageEntity.Value);
+        _entity.System<StorageSystem>().CloseStorageWindow(StorageEntity.Value);
     }
 }

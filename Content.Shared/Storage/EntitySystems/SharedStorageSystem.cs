@@ -37,7 +37,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] protected readonly SharedItemSystem ItemSystem = default!;
     [Dependency] private   readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private   readonly SharedHandsSystem _sharedHandsSystem = default!;
-    [Dependency] private   readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] protected readonly ActionBlockerSystem ActionBlocker = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
@@ -52,6 +52,8 @@ public abstract class SharedStorageSystem : EntitySystem
 
     [ValidatePrototypeId<ItemSizePrototype>]
     public const string DefaultStorageMaxItemSize = "Normal";
+
+    public bool CheckingCanInsert;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -334,7 +336,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
         }
 
-        if (!_actionBlockerSystem.CanInteract(player, entity) || !storageComp.Container.Contains(entity))
+        if (!ActionBlocker.CanInteract(player, entity) || !storageComp.Container.Contains(entity))
             return;
 
         // Does the player have hands?
@@ -377,7 +379,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
         }
 
-        if (!_actionBlockerSystem.CanInteract(player, itemEnt))
+        if (!ActionBlocker.CanInteract(player, itemEnt))
             return;
 
         TrySetItemStorageLocation((itemEnt, null), (storageEnt, storageComp), msg.Location);
@@ -404,7 +406,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
         }
 
-        if (!_actionBlockerSystem.CanInteract(player, itemEnt) || !_sharedHandsSystem.IsHolding(player, itemEnt, out _))
+        if (!ActionBlocker.CanInteract(player, itemEnt) || !_sharedHandsSystem.IsHolding(player, itemEnt, out _))
             return;
 
         InsertAt((storageEnt, storageComp), (itemEnt, null), msg.Location, out _, player, stackAutomatically: false);
@@ -465,7 +467,11 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Cancelled || args.Container.ID != StorageComponent.ContainerId)
             return;
 
-        if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true, includeContainerChecks: false))
+        // don't run cyclical CanInsert() loops
+        if (CheckingCanInsert)
+            return;
+
+        if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true))
             args.Cancel();
     }
 
@@ -534,8 +540,7 @@ public abstract class SharedStorageSystem : EntitySystem
         StorageComponent? storageComp = null,
         ItemComponent? item = null,
         bool ignoreStacks = false,
-        bool ignoreLocation = false,
-        bool includeContainerChecks = true)
+        bool ignoreLocation = false)
     {
         if (!Resolve(uid, ref storageComp) || !Resolve(insertEnt, ref item, false))
         {
@@ -592,11 +597,14 @@ public abstract class SharedStorageSystem : EntitySystem
             }
         }
 
-        if (includeContainerChecks && !_containerSystem.CanInsert(insertEnt, storageComp.Container))
+        CheckingCanInsert = true;
+        if (!_containerSystem.CanInsert(insertEnt, storageComp.Container))
         {
+            CheckingCanInsert = false;
             reason = null;
             return false;
         }
+        CheckingCanInsert = false;
 
         reason = null;
         return true;
@@ -819,7 +827,7 @@ public abstract class SharedStorageSystem : EntitySystem
         {
             for (var x = storageBounding.Left; x <= storageBounding.Right; x++)
             {
-                for (var angle = Angle.Zero; angle <= Angle.FromDegrees(360); angle += Math.PI / 2f)
+                for (var angle = Angle.FromDegrees(-itemEnt.Comp.StoredRotation); angle <= Angle.FromDegrees(360 - itemEnt.Comp.StoredRotation); angle += Math.PI / 2f)
                 {
                     var location = new ItemStorageLocation(angle, (x, y));
                     if (ItemFitsInGridLocation(itemEnt, storageEnt, location))

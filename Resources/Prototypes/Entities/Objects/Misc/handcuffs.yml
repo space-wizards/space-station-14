@@ -6,6 +6,7 @@
   components:
   - type: Item
     size: Small
+    storedRotation: 90
   - type: Handcuff
     cuffedRSI: Objects/Misc/handcuffs.rsi
     bodyIconState: body-overlay

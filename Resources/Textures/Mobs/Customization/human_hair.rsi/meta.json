@@ -171,6 +171,10 @@
         "name": "classiccia",
         "directions": 4
       },
+	  {
+        "name": "classiccornrows2",
+        "directions": 4
+      },
       {
         "name": "classicfloorlength_bedhead",
         "directions": 4
