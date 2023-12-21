@@ -1,25 +1,25 @@
 - type: construction
-  name: ��������
+  name: cleanbot
   id: cleanbot
   graph: CleanBot
   startNode: start
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  description: ������� ��� ������� �������.
+  description: The creep of automation now threatening space janitors.
   icon:
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
     state: cleanbot
 
 - type: construction
-  name: �������
+  name: honkbot
   id: honkbot
   graph: HonkBot
   startNode: start
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  description: ���� ��� ������� � ���������� �����
+  description: Horrifying.
   icon:
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
@@ -58,33 +58,33 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  description: ���� ������ ����� �������, ������ � ���������� �����
+  description: Horrifying.
   icon:
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: jonkbot
 
 - type: construction
-  name: �������
+  name: medibot
   id: medibot
   graph: MediBot
   startNode: start
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  description: ���� ��� ����� ������ � ��������
+  description: No substitute for a doctor, but better than nothing.
   icon:
     sprite: Mobs/Silicon/Bots/medibot.rsi
     state: medibot
 
 - type: construction
-  name: ������
+  name: mimebot
   id: mimebot
   graph: MimeBot
   startNode: start
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  description: ���� ��� ����� ���������
+  description: Why not give mimebot a friendly wave.
   icon:
     sprite: Mobs/Silicon/Bots/mimebot.rsi
     state: mimebot
