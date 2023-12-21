@@ -4198,7 +4198,7 @@ entities:
             threshold: 1.5
             enabled: True
           ignore: False
-        Miasma:
+        Ammonia:
           lowerWarnAround:
             threshold: 0
             enabled: False
@@ -4364,7 +4364,7 @@ entities:
             threshold: 1.5
             enabled: True
           ignore: False
-        Miasma:
+        Ammonia:
           lowerWarnAround:
             threshold: 0
             enabled: False
@@ -4530,7 +4530,7 @@ entities:
             threshold: 1.5
             enabled: True
           ignore: False
-        Miasma:
+        Ammonia:
           lowerWarnAround:
             threshold: 0
             enabled: False
@@ -4696,7 +4696,7 @@ entities:
             threshold: 1.5
             enabled: True
           ignore: False
-        Miasma:
+        Ammonia:
           lowerWarnAround:
             threshold: 0
             enabled: False
@@ -4866,7 +4866,7 @@ entities:
             threshold: 1.5
             enabled: True
           ignore: False
-        Miasma:
+        Ammonia:
           lowerWarnAround:
             threshold: 0
             enabled: False

@@ -242,14 +242,9 @@ namespace Content.Shared.Atmos
         public const float N2ODecompositionRate = 2f;
 
         /// <summary>
-        ///     How many mol of frezon can be converted into miasma in one cycle.
+        ///     Divisor for Ammonia Oxygen reaction so that it doesn't happen instantaneously.
         /// </summary>
-        public const float MiasmicSubsumationMaxConversionRate = 5f;
-
-        /// <summary>
-        ///     Divisor for Miasma Oxygen reaction so that it doesn't happen instantaneously.
-        /// </summary>
-        public const float MiasmaOxygenReactionRate = 10f;
+        public const float AmmoniaOxygenReactionRate = 10f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
@@ -334,7 +329,7 @@ namespace Content.Shared.Atmos
         Plasma = 3,
         Tritium = 4,
         WaterVapor = 5,
-        Miasma = 6,
+        Ammonia = 6,
         NitrousOxide = 7,
         Frezon = 8
     }
