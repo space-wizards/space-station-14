@@ -1,7 +1,6 @@
 ﻿using Content.Server.GameTicking;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
-using Content.Shared.Roles;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -14,34 +13,9 @@ public sealed class SpawnPointSystem : EntitySystem
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
 
-    private Dictionary<JobPrototype, List<EntityCoordinates>> _jobSpawnPoints = new();
-
     public override void Initialize()
     {
         SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer);
-        SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialized);
-    }
-
-    // TODO: is this a good moment to populate the spawn points?
-    private void OnStationInitialized(StationInitializedEvent args)
-    {
-        _jobSpawnPoints.Clear();
-
-        var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
-
-        while (points.MoveNext(out var uid, out var spawnPoint, out var xform))
-        {
-            if (spawnPoint.SpawnType != SpawnPointType.Job)
-                continue;
-
-            if (!_jobSpawnPoints.TryGetValue(spawnPoint.Job!, out var list))
-            {
-                list = new List<EntityCoordinates>();
-                _jobSpawnPoints.Add(spawnPoint.Job!, list);
-            }
-
-            list.Add(xform.Coordinates);
-        }
     }
 
     private void OnSpawnPlayer(PlayerSpawningEvent args)
@@ -88,8 +62,7 @@ public sealed class SpawnPointSystem : EntitySystem
             }
         }
 
-        // TODO: `possiblePositions` is redefined for each player spawn. Need something to hold the positions between.
-        var spawnLoc = _random.PickAndTake(possiblePositions);
+        var spawnLoc = _random.Pick(possiblePositions);
 
         args.SpawnResult = _stationSpawning.SpawnPlayerMob(
             spawnLoc,
