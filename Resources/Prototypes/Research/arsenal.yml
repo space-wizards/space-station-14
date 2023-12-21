@@ -25,7 +25,7 @@
     state: incendiarydisplay
   discipline: Arsenal
   tier: 1
-  cost: 6000
+  cost: 10000
   recipeUnlocks:
   - ShellShotgunIncendiary
   - CartridgePistolIncendiary
@@ -95,7 +95,7 @@
     state: uranium
   discipline: Arsenal
   tier: 1
-  cost: 6000
+  cost: 7500
   recipeUnlocks:
   - ShellShotgunUranium
   - CartridgePistolUranium
