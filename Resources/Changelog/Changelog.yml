@@ -1,11 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: Adds Advanced treatment cyborg module to the medical borg., type: Add}
-  - {message: Adds two new medical tools for the borg. Borghypo and Borgdropper.,
-    type: Add}
-  id: 4940
-  time: '2023-10-01T20:45:17.0000000+00:00'
 - author: Velcroboy
   changes:
   - {message: Nanotrasen suppliers now carry restocks for ChefVends and popular condiments.
@@ -2948,4 +2941,11 @@ Entries:
   - {message: Resprited carpet sprites., type: Add}
   id: 5440
   time: '2023-12-21T05:32:38.0000000+00:00'
+  url: null
+- author: CrigCrag
+  changes:
+  - {message: 'Added Fresium, a military grade coolant that you SHOULD NOT INGEST
+      OR SPLASH ON YOUR FRIENDS!', type: Add}
+  id: 5441
+  time: '2023-12-21T05:35:22.0000000+00:00'
   url: null
