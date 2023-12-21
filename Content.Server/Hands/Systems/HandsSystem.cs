@@ -45,7 +45,7 @@ namespace Content.Server.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] { typeof(StunSystem) });
+            SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] {typeof(StunSystem)});
 
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
@@ -78,7 +78,7 @@ namespace Content.Server.Hands.Systems
         {
             foreach (var hand in ent.Comp.Hands.Values)
             {
-                if (hand.HeldEntity is {} uid)
+                if (hand.HeldEntity is { } uid)
                     args.Contents.Add(uid);
             }
         }
@@ -89,7 +89,8 @@ namespace Content.Server.Hands.Systems
                 return;
 
             // Break any pulls
-            if (TryComp(uid, out SharedPullerComponent? puller) && puller.Pulling is EntityUid pulled && TryComp(pulled, out SharedPullableComponent? pullable))
+            if (TryComp(uid, out SharedPullerComponent? puller) && puller.Pulling is EntityUid pulled &&
+                TryComp(pulled, out SharedPullableComponent? pullable))
                 _pullingSystem.TryStopPull(pullable);
 
             if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
@@ -98,7 +99,8 @@ namespace Content.Server.Hands.Systems
             args.Handled = true; // no shove/stun.
         }
 
-        protected override void HandleEntityRemoved(EntityUid uid, HandsComponent hands, EntRemovedFromContainerMessage args)
+        protected override void HandleEntityRemoved(EntityUid uid, HandsComponent hands,
+            EntRemovedFromContainerMessage args)
         {
             base.HandleEntityRemoved(uid, hands, args);
 
@@ -133,6 +135,7 @@ namespace Content.Server.Hands.Systems
         }
 
         #region pulling
+
         private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
             if (args.Puller.Owner != uid)
@@ -165,17 +168,25 @@ namespace Content.Server.Hands.Systems
                 break;
             }
         }
+
         #endregion
 
         #region interactions
+
         private bool HandleThrowItem(ICommonSession? playerSession, EntityCoordinates coordinates, EntityUid entity)
         {
-            if (playerSession == null)
+            if (playerSession?.AttachedEntity is not {Valid: true} player || !Exists(player))
                 return false;
 
-            if (playerSession.AttachedEntity is not {Valid: true} player ||
-                !Exists(player) ||
-                ContainerSystem.IsEntityInContainer(player) ||
+            return ThrowHeldItem(player, coordinates);
+        }
+
+        /// <summary>
+        /// Throw the player's currently held item.
+        /// </summary>
+        public bool ThrowHeldItem(EntityUid player, EntityCoordinates coordinates, float minDistance = 0.1f)
+        {
+            if (ContainerSystem.IsEntityInContainer(player) ||
                 !TryComp(player, out HandsComponent? hands) ||
                 hands.ActiveHandEntity is not { } throwEnt ||
                 !_actionBlockerSystem.CanThrow(player, throwEnt))
@@ -195,7 +206,9 @@ namespace Content.Server.Hands.Systems
             if (direction == Vector2.Zero)
                 return true;
 
-            direction = direction.Normalized() * Math.Min(direction.Length(), hands.ThrowRange);
+            var length = direction.Length();
+            var distance = Math.Clamp(length, minDistance, hands.ThrowRange);
+            direction *= distance/length;
 
             var throwStrength = hands.ThrowForceMultiplier;
 
