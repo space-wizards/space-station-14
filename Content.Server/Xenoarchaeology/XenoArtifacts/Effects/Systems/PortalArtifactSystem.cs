@@ -20,26 +20,25 @@ public sealed class PortalArtifactSystem : EntitySystem
 
     private void OnActivate(Entity<PortalArtifactComponent> artifact, ref ArtifactActivatedEvent args)
     {
-        var map = Transform(artifact).MapID);
+        var map = Transform(artifact).MapID;
         var firstPortal = Spawn(artifact.Comp.PortalProto, Transform(artifact).MapPosition);
 
-        var mindQuery = EntityQuery<MindContainerComponent, TransformComponent>().Where((uid, mc, xform) => mc.HasMind && xform.MapID == map).ToList();
-        MindContainerComponent? target = null;
-        for (int i = 0; i < 50; i++)
+        var mindQuery = EntityQueryEnumerator<MindContainerComponent, TransformComponent>();
+        while (mindQuery.MoveNext(out var uid, out var mind))
         {
-            var rndCheck = _random.Pick(mindQuery);
-
-            if (!rndCheck.HasMind) continue;
-            if (Transform(rndCheck.Owner).MapID != Transform(artifact).MapID) continue;
-
-            target = rndCheck;
-            break;
+            
         }
 
-        if (target == null) return;
-
+        var target = _random.Pick(mindQuery);
         var secondPortal = Spawn(artifact.Comp.PortalProto, Transform(target.Owner).MapPosition);
 
         _link.TryLink(firstPortal, secondPortal, true);
+
+        //var query = EntityQueryEnumerator();
+        //while (query.MoveNext(out var uid, out var egg))
+        //{
+        //    Hatch(uid, egg);
+        //}
+        //.Where((uid, mc, xform) => mc.HasMind && xform.MapID == map)
     }
 }
