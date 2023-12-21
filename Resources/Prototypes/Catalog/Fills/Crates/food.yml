@@ -42,9 +42,9 @@
       amount: 3
     - id: ReagentContainerRice
       amount: 3
-    - id: ReagentContainerMilk
+    - id: DrinkMilkCarton
       amount: 4
-    - id: ReagentContainerMilkSoy
+    - id: DrinkSoyMilkCarton
       amount: 2
     - id: ReagentContainerSugar
       amount: 2

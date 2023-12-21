@@ -2,7 +2,7 @@
 - type: entity
   id: ClosetTool
   name: tool closet
-  parent: ClosetBase
+  parent: ClosetSteelBase
   description: It's a storage unit for tools.
   components:
   - type: Appearance
@@ -15,7 +15,7 @@
 - type: entity
   id: ClosetRadiationSuit
   name: radiation suit closet
-  parent: ClosetBase
+  parent: ClosetSteelBase
   description: "More comfortable than radiation poisioning."
   components:
   - type: Appearance
@@ -28,7 +28,7 @@
 - type: entity
   id: ClosetEmergency
   name: emergency closet
-  parent: ClosetBase
+  parent: ClosetSteelBase
   description: It's a storage unit for emergency breath masks and O2 tanks.
   components:
   - type: Appearance
@@ -41,7 +41,7 @@
 - type: entity
   id: ClosetFire
   name: fire-safety closet
-  parent: ClosetBase
+  parent: ClosetSteelBase
   description: It's a storage unit for fire-fighting supplies.
   components:
   - type: Appearance
@@ -54,7 +54,7 @@
 - type: entity
   id: ClosetBomb
   name: EOD closet
-  parent: ClosetBase
+  parent: ClosetSteelBase
   description: It's a storage unit for explosion-protective suits.
   components:
   - type: Appearance
@@ -82,7 +82,7 @@
 # Base level 3 bio hazard closet
 - type: entity
   id: ClosetL3
-  parent: ClosetBase
+  parent: ClosetSteelBase
   name: level 3 biohazard gear closet
   description: It's a storage unit for level 3 biohazard gear.
   components:
@@ -129,7 +129,7 @@
 - type: entity
   id: ClosetMaintenance
   name: maintenance closet
-  parent: ClosetBase
+  parent: ClosetSteelBase
   description: It's a storage unit.
   components:
   - type: Appearance

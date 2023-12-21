@@ -98,3 +98,13 @@
         type: Local
         messages: [ "generic-reagent-effect-parched" ]
         probability: 0.1
+
+- type: reagent
+  id: Cellulose
+  name: reagent-name-cellulose
+  group: Biological
+  desc: reagent-desc-cellulose
+  flavor: bitter
+  color: "#E6E6DA"
+  physicalDesc: reagent-physical-desc-crystalline
+  slippery: false

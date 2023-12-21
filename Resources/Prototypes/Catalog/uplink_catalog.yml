@@ -66,16 +66,6 @@
   - UplinkWeapons
 
 - type: listing
-  id: UplinkFireAxeFlaming
-  name: uplink-fire-axe-flaming-name
-  description: uplink-fire-axe-flaming-desc
-  productEntity: FireAxeFlaming
-  cost:
-    Telecrystal: 10
-  categories:
-  - UplinkWeapons
-
-- type: listing
   id: UplinkGlovesNorthStar
   name: uplink-gloves-north-star-name
   description: uplink-gloves-north-star-desc
@@ -84,22 +74,6 @@
     Telecrystal: 8
   categories:
   - UplinkWeapons
-
-- type: listing
-  id: UplinkEswordDouble
-  name: uplink-esword-double-name
-  description: uplink-esword-double-desc
-  icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword_double.rsi, state: icon }
-  productEntity: EnergySwordDouble
-  cost:
-    Telecrystal: 20 #(Originally 16)
-  categories:
-  - UplinkWeapons
-  conditions:
-    - !type:StoreWhitelistCondition
-      blacklist:
-        tags:
-          - NukeOpsUplink
 
 - type: listing
   id: UplinkDisposableTurret
@@ -133,6 +107,16 @@
   name: uplink-flash-grenade-name
   description: uplink-flash-grenade-desc
   productEntity: GrenadeFlashBang
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkExplosives
+
+- type: listing
+  id: UplinkSmokeGrenade
+  name: uplink-smoke-grenade-name
+  description: uplink-smoke-grenade-desc
+  productEntity: SmokeGrenade
   cost:
     Telecrystal: 1
   categories:
@@ -249,6 +233,36 @@
   categories:
     - UplinkExplosives
   restockTime: 30
+
+- type: listing
+  id: UplinkClusterGrenade
+  name: uplink-cluster-grenade-name
+  description: uplink-cluster-grenade-desc
+  productEntity: ClusterGrenade
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkExplosives
+
+- type: listing
+  id: UplinkGrenadeShrapnel
+  name: uplink-shrapnel-grenade-name
+  description: uplink-shrapnel-grenade-desc
+  productEntity: GrenadeShrapnel
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkExplosives
+
+- type: listing
+  id: UplinkGrenadeIncendiary
+  name: uplink-incendiary-grenade-name
+  description: uplink-incendiary-grenade-desc
+  productEntity: GrenadeIncendiary
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkExplosives
 
 # Ammo
 
@@ -501,6 +515,17 @@
   categories:
   - UplinkUtility
 
+- type: listing
+  id: UplinkHypoDart
+  name: uplink-hypodart-name
+  description: uplink-hypodart-desc
+  icon: { sprite: /Textures/Objects/Fun/Darts/dart_red.rsi, state: icon }
+  productEntity: HypoDartBox
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkUtility
+
 # Implants
 
 - type: listing
@@ -668,6 +693,17 @@
       blacklist:
         components:
           - SurplusBundle
+
+- type: listing
+  id: UplinkChemistryKitBundle
+  name: uplink-chemistry-kit-name
+  description: uplink-chemistry-kit-desc
+  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: vials }
+  productEntity: ChemicalSynthesisKit
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkBundles
 
 - type: listing
   id: UplinkMedsBundle
@@ -957,6 +993,20 @@
     - Clown
 
 - type: listing
+  id: UplinkClusterBananaPeel
+  name: uplink-cluster-banana-peel-name
+  description: uplink-cluster-banana-peel-desc
+  productEntity: ClusterBananaPeel
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Clown
+
+- type: listing
   id: UplinkHoloclownKit
   name: uplink-holoclown-kit-name
   description: uplink-holoclown-kit-desc
@@ -1035,7 +1085,6 @@
     whitelist:
     - Zookeeper
     - Scientist
-    - SeniorResearcher
     - ResearchDirector
     - Chef
 
@@ -1188,6 +1237,16 @@
   - UplinkMisc
 
 - type: listing
+  id: UplinkSlipocalypseClusterSoap
+  name: uplink-slipocalypse-clustersoap-name
+  description: uplink-slipocalypse-clustersoap-desc
+  productEntity: SlipocalypseClusterSoap
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkMisc
+
+- type: listing
   id: UplinkUltrabrightLantern
   name: uplink-ultrabright-lantern-name
   description: uplink-ultrabright-lantern-desc
@@ -1213,7 +1272,7 @@
   description: uplink-nocturine-chemistry-bottle-desc
   productEntity: NocturineChemistryBottle
   cost:
-    Telecrystal: 5
+    Telecrystal: 6
   categories:
   - UplinkMisc
 
