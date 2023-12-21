@@ -51,7 +51,7 @@
     anchored: true
     noRot: false
   - type: ApcPowerReceiver
-    powerLoad: 5000
+    powerLoad: 15000
     needsPower: true 
   - type: UpgradePowerDraw
     powerDrawMultiplier: 0.80
