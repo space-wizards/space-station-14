@@ -13,6 +13,7 @@ using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.Input;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -97,8 +98,8 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         if (_panicBunker != null)
             _window.PanicBunkerControl.UpdateStatus(_panicBunker);
 
-        _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
-        _window.ObjectsTabControl.OnEntryPressed += ObjectsTabEntryPressed;
+        _window.PlayerTabControl.OnEntryKeyBindDown += PlayerTabEntryKeyBindDown;
+        _window.ObjectsTabControl.OnEntryKeyBindDown += ObjectsTabEntryKeyBindDown;
         _window.OnOpen += OnWindowOpen;
         _window.OnClose += OnWindowClosed;
         _window.OnDisposed += OnWindowDisposed;
@@ -144,8 +145,8 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         if (_window == null)
             return;
 
-        _window.PlayerTabControl.OnEntryPressed -= PlayerTabEntryPressed;
-        _window.ObjectsTabControl.OnEntryPressed -= ObjectsTabEntryPressed;
+        _window.PlayerTabControl.OnEntryKeyBindDown -= PlayerTabEntryKeyBindDown;
+        _window.ObjectsTabControl.OnEntryKeyBindDown -= ObjectsTabEntryKeyBindDown;
         _window.OnOpen -= OnWindowOpen;
         _window.OnClose -= OnWindowClosed;
         _window.OnDisposed -= OnWindowDisposed;
@@ -175,32 +176,28 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         }
     }
 
-    private void PlayerTabEntryPressed(ButtonEventArgs args)
+    private void PlayerTabEntryKeyBindDown(PlayerTabEntry entry, GUIBoundKeyEventArgs args)
     {
-        if (args.Button is not PlayerTabEntry button
-            || button.PlayerEntity == null)
+        if (entry.PlayerEntity == null)
             return;
 
-        var entity = button.PlayerEntity.Value;
-        var function = args.Event.Function;
+        var entity = entry.PlayerEntity.Value;
+        var function = args.Function;
 
         if (function == EngineKeyFunctions.UIClick)
             _conHost.ExecuteCommand($"vv {entity}");
-        else if (function == EngineKeyFunctions.UseSecondary)
+        else if (function == EngineKeyFunctions.UIRightClick)
             _verb.OpenVerbMenu(entity, true);
         else
             return;
 
-        args.Event.Handle();
+        args.Handle();
     }
 
-    private void ObjectsTabEntryPressed(ButtonEventArgs args)
+    private void ObjectsTabEntryKeyBindDown(ObjectsTabEntry entry, GUIBoundKeyEventArgs args)
     {
-        if (args.Button is not ObjectsTabEntry button)
-            return;
-
-        var uid = button.AssocEntity;
-        var function = args.Event.Function;
+        var uid = entry.AssocEntity;
+        var function = args.Function;
 
         if (function == EngineKeyFunctions.UIClick)
             _conHost.ExecuteCommand($"vv {uid}");
@@ -209,6 +206,6 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         else
             return;
 
-        args.Event.Handle();
+        args.Handle();
     }
 }

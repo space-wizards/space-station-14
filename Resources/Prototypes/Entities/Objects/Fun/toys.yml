@@ -853,7 +853,7 @@
       colorOptions:
         - DodgerBlue
     - type: Sprite
-      sprite: Objects/Weapons/Melee/e_sword.rsi
+      sprite: Objects/Fun/toy_sword.rsi
       layers:
         - state: e_sword
         - state: e_sword_blade
@@ -863,7 +863,7 @@
           map: [ "blade" ]
     - type: Item
       size: Small
-      sprite: Objects/Weapons/Melee/e_sword.rsi
+      sprite: Objects/Fun/toy_sword.rsi
     - type: UseDelay
       delay: 1.0
     - type: PointLight
