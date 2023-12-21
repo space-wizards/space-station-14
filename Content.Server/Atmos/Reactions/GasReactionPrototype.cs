@@ -25,7 +25,8 @@ namespace Content.Server.Atmos.Reactions
         public string ID { get; private set; } = default!;
 
         /// <summary>
-        ///     Minimum gas amount requirements.
+        ///     Minimum gas amount requirements. Reactions that meet these minimum mole requirements
+        ///     have their reaction effects run. Generic gas reactions do not have minimum requirements.
         /// </summary>
         [DataField("minimumRequirements")]
         public float[] MinimumRequirements { get; private set; } = new float[Atmospherics.TotalNumberOfGases];
@@ -60,11 +61,15 @@ namespace Content.Server.Atmos.Reactions
         /// </summary>
         [DataField("effects")] private List<IGasReactionEffect> _effects = new();
 
+        /// <summary>
+        ///     Energy released by the reaction.
+        /// </summary>
         [DataField("enthalpy")]
         public float Enthalpy;
 
         /// <summary>
-        /// Integer gas IDs and integer ratios required in the reaction.
+        /// Integer gas IDs and integer ratios required in the reaction. If this is defined, the
+        /// generic gas reaction will run.
         /// </summary>
         [DataField("reactants")]
         public Dictionary<Gas, int> Reactants = new();

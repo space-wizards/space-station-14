@@ -47,6 +47,11 @@ public sealed class GenericGasReactionSystem : EntitySystem
             float rate = 1f; // rate of this reaction
             int reactants = 0;
 
+            // Reactions that have a maximum temperature really don't make physical sense since increasing
+            // kinetic energy always increases reaction rate. But begrudgingly implement this anyway.
+            if (mix.Temperature > reaction.MaximumTemperatureRequirement)
+                continue;
+
             // Add concentration-dependent reaction rate
             // For 1A + 2B -> 3C, the concentration-dependence is [A]^1 * [B]^2
             float nTotal = mix.TotalMoles;
