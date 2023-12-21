@@ -1,18 +1,22 @@
 {
-    "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Esword inhands by RiceMar1244. Double esword inhands modified by RiceMar1244 based on originals taken from tgstation at https://github.com/tgstation/tgstation",
-    "size": {
-        "x": 64,
-        "y": 64
-    },
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation and modified by RiceMar1244",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
     "states": [
         {
-            "name": "e_sword-inhand-left",
+            "name": "inhand-left",
             "directions": 4
         },
         {
-            "name": "e_sword-inhand-left-blade",
+            "name": "wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-blade",
             "directions": 4,
             "delays": [
                 [
@@ -34,11 +38,15 @@
             ]
         },
         {
-            "name": "e_sword-inhand-right",
+            "name": "inhand-right",
             "directions": 4
         },
         {
-            "name": "e_sword-inhand-right-blade",
+            "name": "wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-blade",
             "directions": 4,
             "delays": [
                 [

@@ -31,8 +31,7 @@
         Blunt: 4.5
   - type: Item
     size: Small
-    sprite: Objects/Weapons/Melee/inhands_64x.rsi
-    heldPrefix: e_sword
+    sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: UseDelay
     delay: 1.0
   - type: PointLight
@@ -46,10 +45,10 @@
     spriteLayer: blade
     inhandVisuals:
       left:
-      - state: e_sword-inhand-left-blade
+      - state: inhand-left-blade
         shader: unshaded
       right:
-      - state: e_sword-inhand-right-blade
+      - state: inhand-right-blade
         shader: unshaded
   - type: DisarmMalus
     malus: 0
@@ -211,7 +210,7 @@
         map: [ "blade" ]
   - type: Item
     size: Small
-    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+    sprite: Objects/Weapons/Melee/e_sword_double-inhands.rsi
   - type: Reflect
     enabled: true
     reflectProb: .75
