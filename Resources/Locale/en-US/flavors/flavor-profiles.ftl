@@ -136,6 +136,7 @@ flavor-complex-nachos = like nachos
 flavor-complex-donk = like cheap pizza
 flavor-complex-copypasta = like a repetitive joke
 flavor-complex-bad-joke = like a bad joke
+flavor-complex-mechanism = like a mechanism
 flavor-complex-memory-leek = like a fork bomb
 flavor-complex-gunpowder = like gunpowder
 flavor-complex-validhunting = like validhunting
