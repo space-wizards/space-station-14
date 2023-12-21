@@ -1,9 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Small firearms now fit in boots., type: Tweak}
-  id: 4943
-  time: '2023-10-01T21:23:41.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Added the Electric Grill for cooking steaks quickly, research food
@@ -2950,4 +2945,10 @@ Entries:
   - {message: Borgs now see who is crew, type: Tweak}
   id: 5443
   time: '2023-12-21T07:09:53.0000000+00:00'
+  url: null
+- author: KittenColony
+  changes:
+  - {message: Rotated fireaxe 'icon' 45 degrees, type: Tweak}
+  id: 5444
+  time: '2023-12-21T08:03:52.0000000+00:00'
   url: null
