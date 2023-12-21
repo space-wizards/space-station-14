@@ -11,6 +11,7 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Audio;
@@ -20,14 +21,14 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
+using Robust.Shared.Audio;
 
 namespace Content.Client.UserInterface.Systems.Bwoink;
 
@@ -35,6 +36,7 @@ namespace Content.Client.UserInterface.Systems.Bwoink;
 public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSystem>, IOnStateChanged<GameplayState>, IOnStateChanged<LobbyState>
 {
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
@@ -49,18 +51,24 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     public IAHelpUIHandler? UIHelper;
     private bool _discordRelayActive;
     private bool _hasUnreadAHelp;
+    private string? _aHelpSound;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        // SS220 Ahelp-Volume begin
         _AHelpParams = new(_configManager.GetCVar(CCVars.AHelpVolume), 1, "Master", 0, 0, 0, false, 0f); // Set AHelp volume on start
         _AHelpSoundsEnabled = _configManager.GetCVar(CCVars.AHelpSoundsEnabled);
         _configManager.OnValueChanged(CCVars.AHelpVolume, AHelpVolumeCVarChanged); // Track AHekp volume change
         _configManager.OnValueChanged(CCVars.AHelpSoundsEnabled, AHelpSoundsEnabledCVarChanged); // Track AHekp sound change
+        // SS220 Ahelp-Volume end
+
         SubscribeNetworkEvent<BwoinkDiscordRelayUpdated>(DiscordRelayUpdated);
         SubscribeNetworkEvent<BwoinkPlayerTypingUpdated>(PeopleTypingUpdated);
 
         _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
+        _config.OnValueChanged(CCVars.AHelpSound, v => _aHelpSound = v, true);
     }
 
     private void AHelpVolumeCVarChanged(float volume)
@@ -154,7 +162,8 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
              || (UIHelper!.IsAdmin && !message.IsSenderAdmin) // SS220
              || (!UIHelper!.IsAdmin))) // SS220
         {
-            _audio.PlayGlobal("/Audio/SS220/Admin_sounds/ahelp_sound.ogg", Filter.Local(), false, _AHelpParams);
+            if (_aHelpSound != null)
+                _audio.PlayGlobal(_aHelpSound, Filter.Local(), false, _AHelpParams);
             _clyde.RequestWindowAttention();
         }
 

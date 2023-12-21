@@ -1,60 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed the HoP's id card computer not opening.
-    type: Fix
-  id: 4920
-  time: '2023-09-29T00:59:14.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - message: Being damaged, being stunned, or going into crit will now force you to
-      send whatever message you were typing, if it was in local/whisper/radio. You'll
-      sometimes find yours-AUGH
-    type: Add
-  id: 4921
-  time: '2023-09-29T01:05:37.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - message: Fixed AHelp progressively gaining more panels.
-    type: Fix
-  id: 4922
-  time: '2023-09-29T01:46:16.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Fixed skeletons spawning in folded containers.
-    type: Fix
-  id: 4923
-  time: '2023-09-29T03:55:29.0000000+00:00'
-- author: casperr04
-  changes:
-  - message: Fixed the true name of disguised players being shown when electrocuted.
-    type: Fix
-  id: 4924
-  time: '2023-09-29T15:01:19.0000000+00:00'
-- author: TsjipTsjip
-  changes:
-  - message: Kettle's medical ward was reworked.
-    type: Tweak
-  id: 4925
-  time: '2023-09-29T19:14:53.0000000+00:00'
-- author: daerSeebaer
-  changes:
-  - message: Volumetric pumps now indicate if they can't pump.
-    type: Add
-  id: 4926
-  time: '2023-09-30T03:35:23.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Fixed cognizine not creating ghost roles.
-    type: Fix
-  id: 4927
-  time: '2023-09-30T17:53:22.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Holofans can now be destroyed by explosions.
-    type: Fix
-  id: 4928
-  time: '2023-09-30T19:08:09.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Space dragons get a proper greentext in the round end summary, along
@@ -3843,3 +3787,502 @@ Entries:
     type: Fix
   id: 5353
   time: '2023-12-15T06:30:04.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: 'Added a General settings tab, and moved a bunch of options into it.',
+    type: Add}
+  - {message: Added the ability to toggle on and off the Discord Rich Presence., type: Add}
+  id: 5350
+  time: '2023-12-13T01:58:20.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: RD now has a custom-made lab coat., type: Add}
+  id: 5351
+  time: '2023-12-13T08:51:00.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Some jetpacks can be now worn in more slots., type: Tweak}
+  id: 5352
+  time: '2023-12-13T08:51:09.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Ninjas and Nukies now get new sprites for their pinpointers., type: Add}
+  id: 5353
+  time: '2023-12-13T08:53:05.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: A dying person's Last Words can no longer be sent to radio channels.,
+    type: Fix}
+  id: 5354
+  time: '2023-12-13T21:20:38.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Cybersun and centcom pens can now edit stamped paper., type: Tweak}
+  id: 5355
+  time: '2023-12-13T21:33:32.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Added a new "uneven" hair style., type: Add}
+  id: 5356
+  time: '2023-12-13T21:34:28.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Plasma and tritium fires spread more slowly and are now more survivable.,
+    type: Tweak}
+  id: 5357
+  time: '2023-12-14T02:39:38.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'A new type of grenade has been developed, these grenades release a
+      spray of bullets instead of exploding: Shrapnel grenade, Stinger grenade and
+      Incendiary grenade.', type: Add}
+  - {message: Stinger grenades and ClusterBangs are now available in the sectech.,
+    type: Add}
+  - {message: 'Incendiary grenades, Shrapnel grenades, Cluster grenades and the Slipocalypse
+      ClusterSoap are now available in the syndicate uplink, clowns also get a Clusterbanana
+      in their uplink.', type: Add}
+  - {message: Explosive banana peels are now more dangerous., type: Tweak}
+  id: 5358
+  time: '2023-12-14T03:30:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added gas condensers. These machines are available at the circuit imprinter
+      and can convert gases into liquids. Tasty!, type: Add}
+  id: 5359
+  time: '2023-12-14T03:35:44.0000000+00:00'
+- author: DangerRevolution
+  changes:
+  - {message: Extended emergency nitrogen tanks can now be found on the station.,
+    type: Add}
+  id: 5360
+  time: '2023-12-14T04:35:39.0000000+00:00'
+- author: SlamBamActionman
+  changes:
+  - {message: Discord bot Changelog now includes hyperlinks to the PRs., type: Add}
+  id: 5361
+  time: '2023-12-14T18:19:25.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed spray nozzle not getting ammo from the back pack tank, type: Fix}
+  id: 5362
+  time: '2023-12-14T20:49:40.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Mothroach crates are now twice as expensive, type: Tweak}
+  id: 5363
+  time: '2023-12-14T20:58:38.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Crusher Glaives can be made with the Salvage Weapons technology., type: Add}
+  id: 5364
+  time: '2023-12-15T01:34:37.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Acidifier now has a sprite effect., type: Tweak}
+  id: 5365
+  time: '2023-12-15T01:56:42.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Mercury poisoning now causes stuttering., type: Tweak}
+  id: 5366
+  time: '2023-12-15T09:28:13.0000000+00:00'
+- author: ninruB
+  changes:
+  - {message: Reptilians no longer innately take 30% less heat damage., type: Tweak}
+  id: 5367
+  time: '2023-12-15T09:37:05.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Added the Action Upgrade System - used to upgrade specific actions!,
+    type: Add}
+  - {message: Added commands to upgrade actions., type: Add}
+  - {message: Added Charges information to action tooltips for actions with charges,
+    type: Add}
+  id: 5368
+  time: '2023-12-15T09:41:44.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Chaplains can smack their bible on water to create holy water., type: Add}
+  id: 5369
+  time: '2023-12-15T09:52:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the electrolysis unit and the centrifuge. These will be used for
+      chemistry in the future., type: Add}
+  id: 5370
+  time: '2023-12-15T09:52:46.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Gibbed body parts contain their victim's DNA, type: Tweak}
+  - {message: 'Implanters, syringes, hyposprays, medipens, and cigarettes transfer
+      DNA', type: Tweak}
+  - {message: Melee weapons that deal blunt/slash/pierce damage transfer DNA, type: Tweak}
+  - {message: 'Soap and rags can be used to clean evidence off of items, but leave
+      evidence of their own', type: Tweak}
+  id: 5371
+  time: '2023-12-15T09:52:56.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Added hypodart into uplink. It is capable of piercing armor and injecting
+      up to 7u reagents., type: Add}
+  id: 5372
+  time: '2023-12-15T09:55:57.0000000+00:00'
+- author: tgrkzus
+  changes:
+  - {message: Open tanks will no longer make noise at very low release pressure.,
+    type: Tweak}
+  id: 5373
+  time: '2023-12-15T09:56:17.0000000+00:00'
+- author: MendaxxDev
+  changes:
+  - {message: 'The flare gun now explodes, damages and stuns the player when used
+      with wrong ammo', type: Tweak}
+  id: 5374
+  time: '2023-12-15T09:57:59.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: 'Added 2 new artifact effect: attraction and repulsion', type: Add}
+  id: 5375
+  time: '2023-12-15T15:39:25.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Explosion visuals now last slightly longer, type: Add}
+  - {message: You will now hear a reverbed explosion sound effect for explosions that
+      are far away from you, type: Add}
+  - {message: Smaller explosions now make a distinct sound compared to larger ones,
+    type: Add}
+  id: 5376
+  time: '2023-12-15T16:57:46.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Artistic toolboxes now have a filled variant that can be found in maintenance
+      occasionally., type: Tweak}
+  id: 5377
+  time: '2023-12-15T20:44:42.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Cyborg jobs now start with a positronic brain., type: Tweak}
+  id: 5378
+  time: '2023-12-15T20:45:31.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Borgs can wear hats now. Time to get festive!, type: Tweak}
+  id: 5379
+  time: '2023-12-15T22:33:52.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Chasms no longer spawn on lava expeditions, type: Tweak}
+  id: 5380
+  time: '2023-12-15T22:34:09.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The guidebook now shows you if a chemical''s recipe needs an alternative
+      mixing method, such as a chaplain''s blessing or electrolysis.', type: Fix}
+  id: 5381
+  time: '2023-12-15T23:59:54.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Added smoke grenades to the syndicate uplink for 1 TC, they create
+      a large smoke cloud to provide cover for your heinous activites.', type: Add}
+  - {message: 'Added tear gas grenades to the SecTech and security belts, use them
+      to control riots.', type: Add}
+  id: 5382
+  time: '2023-12-16T01:49:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix map boundaries not pushing you back., type: Fix}
+  id: 5383
+  time: '2023-12-16T02:19:54.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Crayons boxes now hold a white crayon., type: Tweak}
+  id: 5384
+  time: '2023-12-16T03:20:40.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Chefs get black pepper packets in their lockers., type: Tweak}
+  id: 5385
+  time: '2023-12-16T03:20:51.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Resprited the Kammerer, Double-Barrel, and Enforcer shotguns using
+      sprites courtesy of /tg/station.', type: Tweak}
+  id: 5386
+  time: '2023-12-16T04:23:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Scientists can now fabricate faux grass planet and ice tiles with a
+      tier 2 civilian services research! They''re just as good as the real thing,
+      while being removable.', type: Add}
+  id: 5387
+  time: '2023-12-16T08:20:57.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: 'Lawyers, librarians and reporters now spawn with a luxury pen in their
+      PDA.', type: Add}
+  id: 5388
+  time: '2023-12-16T08:21:24.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Added 9 new cargo bounties!, type: Add}
+  id: 5389
+  time: '2023-12-16T08:23:35.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Everyone can toggle fire alarms now, not just atmos', type: Tweak}
+  id: 5390
+  time: '2023-12-16T08:24:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: A variety of chemicals can now be decomposed via electrolysis or centrifugal
+      force., type: Add}
+  id: 5391
+  time: '2023-12-16T08:26:12.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ejecting a tank from a canister will now try to put it in your hand
+      first, type: Fix}
+  id: 5392
+  time: '2023-12-16T08:28:28.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: 'Added brother of cak - bread dog! 5 cognizine, sausage bread, animal
+      heart, cooked spaceshrooms and 15 second in microwave = bread dog.', type: Add}
+  id: 5393
+  time: '2023-12-16T08:30:20.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: 'Chemistry now has vials, similar to bottles but are much more durable.',
+    type: Add}
+  id: 5394
+  time: '2023-12-16T14:29:54.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Added Poppy the Safety Opposum!, type: Add}
+  - {message: Opossums have received some new sprites. Old sprites are still available
+      to be spawned in by admins., type: Tweak}
+  id: 5395
+  time: '2023-12-16T14:34:54.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed explosion resistance from bags being applied to the wearer., type: Fix}
+  id: 5396
+  time: '2023-12-16T17:17:09.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Added the power sensor for checking power stats in logic circuits.,
+    type: Add}
+  id: 5397
+  time: '2023-12-16T18:32:42.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Standardized all material sheets to 10u of total reagents when grinded.
+      Alloys are still worth the sum of their parts., type: Tweak}
+  - {message: You can now grind plastic into oil and phosphorous., type: Tweak}
+  - {message: Steel sheets no longer contain trace amounts of lead in them., type: Tweak}
+  id: 5398
+  time: '2023-12-16T20:52:11.0000000+00:00'
+- author: SlamBamActionman
+  changes:
+  - {message: Discord bot Changelog now includes hyperlinks to the PRs., type: Add}
+  id: 5399
+  time: '2023-12-16T21:00:59.0000000+00:00'
+  url: null
+- author: brainfood1183
+  changes:
+  - {message: 'Crystals now drop crystal shards, you can use them to craft colored
+      light tubes.', type: Add}
+  id: 5400
+  time: '2023-12-16T22:20:14.0000000+00:00'
+  url: null
+- author: Ilya246
+  changes:
+  - {message: Pens now embed and deal damage on throw like spears., type: Add}
+  id: 5401
+  time: '2023-12-16T22:23:08.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Svalinn Laser Pistol and accompanying T3 tech., type: Add}
+  id: 5402
+  time: '2023-12-17T03:43:50.0000000+00:00'
+  url: null
+- author: mirrorcult
+  changes:
+  - {message: You can now pet the recycler, type: Add}
+  id: 5403
+  time: '2023-12-17T07:44:37.0000000+00:00'
+  url: null
+- author: Ubaser
+  changes:
+  - {message: Mindbreaker is now hallucinogenic., type: Tweak}
+  id: 5404
+  time: '2023-12-17T07:44:54.0000000+00:00'
+  url: null
+- author: JoeHammad
+  changes:
+  - {message: Paramedics now have a rollerbed in their bag by default, type: Add}
+  id: 5405
+  time: '2023-12-17T09:55:29.0000000+00:00'
+  url: null
+- author: Ilya246
+  changes:
+  - {message: Large cardboard boxes and stealth boxes now inherit their mover's access.,
+    type: Fix}
+  id: 5406
+  time: '2023-12-17T09:55:40.0000000+00:00'
+  url: null
+- author: TheShuEd
+  changes:
+  - {message: Changed hypodart cost from 3 to 2 tc, type: Tweak}
+  id: 5407
+  time: '2023-12-17T16:08:11.0000000+00:00'
+  url: null
+- author: yathxyz
+  changes:
+  - {message: Fixed nix devShell, type: Fix}
+  id: 5408
+  time: '2023-12-17T16:55:37.0000000+00:00'
+  url: null
+- author: Ubaser
+  changes:
+  - {message: HoS parade uniforms are available at the uniform printer., type: Add}
+  id: 5409
+  time: '2023-12-17T23:20:04.0000000+00:00'
+  url: null
+- author: Alzore
+  changes:
+  - {message: Security zipties are now tiny and easier to store., type: Tweak}
+  id: 5410
+  time: '2023-12-17T23:27:01.0000000+00:00'
+  url: null
+- author: Aexxie
+  changes:
+  - {message: Added RCDs to all engineering lockers., type: Add}
+  id: 5411
+  time: '2023-12-18T02:38:37.0000000+00:00'
+  url: null
+- author: Ubaser
+  changes:
+  - {message: Traitors and Nukies can now purchase a Chemical Synthesis Kit for 4TC
+      which contains Vestine., type: Add}
+  - {message: 'Nocturine, Tazinide, Stimulants, Lexorin and Mute Toxin are now locked
+      behind Vestine.', type: Tweak}
+  - {message: 'Lexorin and Heartbreaker toxin are buffed, while Licoxide is nerfed.',
+    type: Tweak}
+  - {message: You can no longer purchase Nocturine through the uplink., type: Remove}
+  id: 5412
+  time: '2023-12-18T02:40:28.0000000+00:00'
+  url: null
+- author: Ubaser
+  changes:
+  - {message: Janitors now get rubber gloves for cleaning., type: Add}
+  id: 5413
+  time: '2023-12-18T03:11:19.0000000+00:00'
+  url: null
+- author: Velcroboy
+  changes:
+  - {message: Added coal. Coal has been added to the steel recipe in the Ore Processor.
+      Coal can be ground up for Carbon and other elements. Coal can be mined or received
+      as a gift if you've been naughty., type: Add}
+  id: 5414
+  time: '2023-12-18T19:38:12.0000000+00:00'
+  url: null
+- author: Flareguy
+  changes:
+  - {message: 'You can now walk into external and shuttle airlocks to open them, like
+      all other airlocks.', type: Tweak}
+  id: 5415
+  time: '2023-12-18T19:44:50.0000000+00:00'
+  url: null
+- author: iacore
+  changes:
+  - {message: normal closets can now be constructed and deconstructed, type: Add}
+  id: 5416
+  time: '2023-12-18T19:46:16.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Walls are stronger and windows are weaker., type: Tweak}
+  - {message: Secure crates and lockers are a lot stronger., type: Tweak}
+  - {message: Melee weapons are now more balanced within a closer range of damage.,
+    type: Tweak}
+  - {message: Double energy sword and fireaxe are now unavailable in uplink., type: Tweak}
+  id: 5417
+  time: '2023-12-19T02:38:49.0000000+00:00'
+  url: null
+- author: EmoGarbage404
+  changes:
+  - {message: Added the RCD and RCD ammo crates to cargo., type: Add}
+  id: 5418
+  time: '2023-12-19T02:40:55.0000000+00:00'
+  url: null
+- author: ElectroJr
+  changes:
+  - {message: The fireaxe can now fight fires (melee hits reduce fire stacks)., type: Tweak}
+  id: 5419
+  time: '2023-12-19T02:41:33.0000000+00:00'
+  url: null
+- author: SapphicOverload
+  changes:
+  - {message: EVA and hardsuit helmets now allow breathing from gas tanks without
+      a mask., type: Tweak}
+  id: 5420
+  time: '2023-12-19T02:50:06.0000000+00:00'
+  url: null
+- author: RiceMar
+  changes:
+  - {message: Station department exteriors now feature janitorial service lights for
+      directing janitors to the big messes they cant see!, type: Add}
+  id: 5421
+  time: '2023-12-19T04:21:12.0000000+00:00'
+  url: null
+- author: SlamBamActionman
+  changes:
+  - {message: Fixed compatability with old changelog format., type: Fix}
+  id: 5422
+  time: '2023-12-19T05:22:24.0000000+00:00'
+  url: null
+- author: notafet
+  changes:
+  - {message: 'Security sunglasses, researchable from arsenal technology, now display
+      the security HUD.', type: Tweak}
+  id: 5423
+  time: '2023-12-19T08:29:07.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Captain clothing items have been resprited, type: Tweak}
+  id: 5424
+  time: '2023-12-19T20:36:36.0000000+00:00'
+  url: null
+- author: Stanislav4ix
+  changes:
+  - {message: Added ore bag of holding!, type: Add}
+  id: 5425
+  time: '2023-12-19T22:28:56.0000000+00:00'
+  url: null
+- author: TGODiamond
+  changes:
+  - {message: Item size cannot be misinterpreted now., type: Fix}
+  id: 5426
+  time: '2023-12-20T00:31:39.0000000+00:00'
+  url: null
+- author: Veritius
+  changes:
+  - {message: Ethylredoxrazine is more effective at treating drunkness., type: Tweak}
+  id: 5427
+  time: '2023-12-20T02:20:04.0000000+00:00'
+  url: null
+- author: Errant
+  changes:
+  - {message: HUD elements no longer violate the Geneva Conventions., type: Fix}
+  id: 5428
+  time: '2023-12-20T04:28:03.0000000+00:00'
+  url: null
+- author: ERORR404V1
+  changes:
+  - {message: NanoTrasen botanists have bred a new blinking plant, type: Add}
+  id: 5429
+  time: '2023-12-20T04:57:02.0000000+00:00'
+  url: null

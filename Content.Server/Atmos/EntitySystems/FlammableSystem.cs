@@ -85,8 +85,9 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!TryComp<FlammableComponent>(entity, out var flammable))
                     continue;
 
-                flammable.FireStacks += component.FireStacks;
-                Ignite(entity, args.Weapon, flammable, args.User);
+                AdjustFireStacks(entity, component.FireStacks, flammable);
+                if (component.FireStacks >= 0)
+                    Ignite(entity, args.Weapon, flammable, args.User);
             }
         }
 

@@ -9,7 +9,7 @@
   - type: Icon
     sprite: Structures/Windows/reinforced_plasma_window.rsi
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
   - type: RadiationBlocker
     resistance: 4
@@ -17,13 +17,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1000
+        damage: 200
       behaviors: #excess damage, don't spawn entities.
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 600
+        damage: 100
       behaviors:
       - !type:PlaySoundBehavior
         sound:

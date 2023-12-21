@@ -71,7 +71,7 @@
     denyState: deny-unshaded
     loopDeny: false
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/smartfridge.rsi
+    sprite: SS220/Structures/Machines/smartfridge.rsi
     layers:
     - state: off
       map: ["enum.SmartFridgeVisualLayers.Base"]
