@@ -114,10 +114,9 @@
   parent: ClothingBeltSheath
   suffix: Filled
   components:
-  - type: ContainerFill
-    containers:
-      item:
-      - CaptainSabre
+  - type: StorageFill
+    contents:
+      - id: CaptainSabre
 
 - type: entity
   id: ClothingBeltMilitaryWebbingGrenadeFilled
