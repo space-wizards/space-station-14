@@ -69,6 +69,7 @@ namespace Content.Client.Administration.UI.CustomControls
                 return;
 
             _uiManager.GetUIController<VerbMenuUIController>().OpenVerbMenu(selectedPlayer.NetEntity.Value, true);
+            args.Handle();
         }
 
         public void StopFiltering()
