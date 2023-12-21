@@ -2,7 +2,7 @@ using Content.Shared.Damage;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Atmos.Miasma;
+namespace Content.Shared.Atmos.Rotting;
 
 /// <summary>
 /// Tracking component for stuff that has started to rot.
@@ -17,7 +17,7 @@ public sealed partial class RottingComponent : Component
     public bool DealDamage = true;
 
     /// <summary>
-    /// When the next check will happen for rot progression + effects like damage and miasma
+    /// When the next check will happen for rot progression + effects like damage and ammonia
     /// </summary>
     [DataField("nextRotUpdate", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextRotUpdate = TimeSpan.Zero;

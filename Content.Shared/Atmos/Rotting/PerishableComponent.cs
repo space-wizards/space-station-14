@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Atmos.Miasma;
+namespace Content.Shared.Atmos.Rotting;
 
 /// <summary>
 /// This makes mobs eventually start rotting when they die.

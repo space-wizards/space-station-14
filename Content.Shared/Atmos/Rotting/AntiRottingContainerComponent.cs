@@ -1,4 +1,4 @@
-namespace Content.Shared.Atmos.Miasma;
+namespace Content.Shared.Atmos.Rotting;
 
 /// <summary>
 /// Entities inside this container will not rot.

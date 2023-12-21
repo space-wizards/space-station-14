@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Atmos.Miasma;
+namespace Content.Shared.Atmos.Rotting;
 
 /// <summary>
 /// Lets an entity rot into another entity.

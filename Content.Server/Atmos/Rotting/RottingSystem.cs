@@ -3,7 +3,7 @@ using Content.Shared.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
-using Content.Shared.Atmos.Miasma;
+using Content.Shared.Atmos.Rotting;
 using Content.Shared.Examine;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -14,7 +14,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Atmos.Miasma;
+namespace Content.Server.Atmos.Rotting;
 
 public sealed class RottingSystem : EntitySystem
 {
@@ -119,7 +119,7 @@ public sealed class RottingSystem : EntitySystem
 
         var molsToDump = perishable.MolsPerSecondPerUnitMass * physics.FixturesMass * (float) component.TotalRotTime.TotalSeconds;
         var tileMix = _atmosphere.GetTileMixture(uid, excite: true);
-        tileMix?.AdjustMoles(Gas.Miasma, molsToDump);
+        tileMix?.AdjustMoles(Gas.Ammonia, molsToDump);
     }
 
     private void OnExamined(EntityUid uid, RottingComponent component, ExaminedEvent args)
@@ -127,9 +127,9 @@ public sealed class RottingSystem : EntitySystem
         var stage = RotStage(uid, component);
         var description = stage switch
         {
-            >= 2 => "miasma-extremely-bloated",
-            >= 1 => "miasma-bloated",
-               _ => "miasma-rotting"
+            >= 2 => "rotting-extremely-bloated",
+            >= 1 => "rotting-bloated",
+               _ => "rotting-rotting"
         };
         args.PushMarkup(Loc.GetString(description));
     }
@@ -213,7 +213,7 @@ public sealed class RottingSystem : EntitySystem
             // or just remove the mass mechanics altogether because they aren't good.
             var molRate = perishable.MolsPerSecondPerUnitMass * (float) rotting.RotUpdateRate.TotalSeconds;
             var tileMix = _atmosphere.GetTileMixture(uid, excite: true);
-            tileMix?.AdjustMoles(Gas.Miasma, molRate * physics.FixturesMass);
+            tileMix?.AdjustMoles(Gas.Ammonia, molRate * physics.FixturesMass);
         }
     }
 }
