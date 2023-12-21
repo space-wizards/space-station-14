@@ -888,6 +888,9 @@
   id: PowerCellSmall
 
 - type: Tag
+  id: PowerCellMedium
+
+- type: Tag
   id: Powerdrill
 
 - type: Tag
