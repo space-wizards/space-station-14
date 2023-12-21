@@ -16,10 +16,10 @@
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
   enthalpy: 284000
   reactants:
-    4: 2 # 2 Tritium
-    0: 1 # 1 Oxygen
+    Tritium: 2
+    Oxygen: 1
   products:
-    5: 2 # 2 Water
+    WaterVapor: 2
 
 - type: gasReaction
   id: FrezonCoolant
@@ -27,10 +27,10 @@
   minimumTemperature: 23.15
   enthalpy: -600000
   reactants:
-    8: 1 # 1 frezon
-    1: 5 # 5 nitrogen
+    Frezon: 1
+    Nitrogen: 5
   products:
-    7: 6 # 6 nitrous
+    NitrousOxide: 6
 
 - type: gasReaction
   id: FrezonProduction
@@ -65,10 +65,10 @@
   priority: 0
   minimumTemperature: 850
   reactants:
-    7: 2 # 2 nitrous
+    NitrousOxide: 2
   products:
-    1: 2 # 2 nitrogen
-    0: 1 # 1 oxygen
+    Nitrogen: 2
+    Oxygen: 1
 
 #- type: gasReaction
 #  id: WaterVaporPuddle
