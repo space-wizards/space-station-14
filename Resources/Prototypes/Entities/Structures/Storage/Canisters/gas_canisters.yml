@@ -91,10 +91,10 @@
     - type: ItemSlots
     - type: GasPortable
     - type: GasCanister
-      tank_slot:
+      gasTankSlot:
         name: Gas Tank
         whitelist:
-          component:
+          components:
             - GasTank
     - type: StaticPrice
       price: 1000
