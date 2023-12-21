@@ -1,9 +1,4 @@
 Entries:
-- author: Pigeonpeas
-  changes:
-  - {message: 'Added a new lizard horn marking for the head, kobold ears!', type: Add}
-  id: 4945
-  time: '2023-10-02T07:08:20.0000000+00:00'
 - author: JoeHammad
   changes:
   - {message: 'the north star gloves have had their damage changed back to 8, as was
@@ -2952,4 +2947,10 @@ Entries:
   - {message: Syndie soap cleans evidence a little faster than other soap, type: Tweak}
   id: 5445
   time: '2023-12-21T08:54:52.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Nukies don't start with agent ID anymore, type: Tweak}
+  id: 5446
+  time: '2023-12-21T09:59:06.0000000+00:00'
   url: null
