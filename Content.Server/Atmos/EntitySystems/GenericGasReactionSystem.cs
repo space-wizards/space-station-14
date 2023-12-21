@@ -30,7 +30,7 @@ public sealed class GenericGasReactionSystem : EntitySystem
         float RateScaleFactor = 10; // not necessarily the same as TScaleFactor! Don't get confused!
         float A = MathF.Exp(TScaleFactor) / RateScaleFactor;
 
-        return A*MathF.Exp(-Ea/(Atmospherics.R*temp));
+        return reaction.RateMultiplier*A*MathF.Exp(-Ea/(Atmospherics.R*temp));
     }
 
     /// <summary>

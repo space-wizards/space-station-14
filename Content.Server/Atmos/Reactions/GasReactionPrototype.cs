@@ -44,6 +44,13 @@ namespace Content.Server.Atmos.Reactions
         public float MinimumTemperatureRequirement { get; private set; } = Atmospherics.TCMB;
 
         /// <summary>
+        /// If this is a generic gas reaction, multiply the initial rate by this. The default is reasonable for
+        /// synthesis reactions. Consider raising this for fires.
+        /// </summary>
+        [DataField("rateMultiplier")]
+        public float RateMultiplier = 1f;
+
+        /// <summary>
         ///     Minimum energy requirement.
         /// </summary>
         [DataField("minimumEnergy")]
