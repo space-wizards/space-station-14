@@ -123,7 +123,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum temperature difference before the gas temperatures are just set to be equal.
         /// </summary>
-        public const float MinimumTemperatureDeltaToConsider = 0.1f;
+        public const float MinimumTemperatureDeltaToConsider = 0.01f;
 
         /// <summary>
         ///     Minimum temperature for starting superconduction.
@@ -235,7 +235,17 @@ namespace Content.Shared.Atmos
         ///     1 / X of the tritium is converted into Frezon each tick
         /// </summary>
         public const float FrezonProductionConversionRate = 50f;
-
+      
+        /// <summary>
+        ///     The maximum portion of the N2O that can decompose each reaction tick. (50%)
+        /// </summary>
+        public const float N2ODecompositionRate = 2f;
+      
+        /// <summary>
+        ///     Divisor for Ammonia Oxygen reaction so that it doesn't happen instantaneously.
+        /// </summary>
+        public const float AmmoniaOxygenReactionRate = 10f;
+      
         /// <summary>
         ///     The amount of energy 1 mole of BZ forming from N2O and plasma releases.
         /// </summary>
@@ -245,11 +255,6 @@ namespace Content.Shared.Atmos
         ///     Some number taken from the air to keep BZ from instantly converting everything.
         /// </summary>
         public const float BZFormationRate = 50f;
-
-        /// <summary>
-        ///     How many mol of frezon can be converted into miasma in one cycle.
-        /// </summary>
-        public const float MiasmicSubsumationMaxConversionRate = 5f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
@@ -334,7 +339,7 @@ namespace Content.Shared.Atmos
         Plasma = 3,
         Tritium = 4,
         WaterVapor = 5,
-        Miasma = 6,
+        Ammonia = 6,
         NitrousOxide = 7,
         Frezon = 8,
         BZ = 9,

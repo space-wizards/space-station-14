@@ -13,6 +13,7 @@
   - MiningDrill
   - BorgModuleMining
   - OreProcessorMachineCircuitboard
+  - OreBagOfHolding
 
 - type: technology
   id: AdvancedPowercells

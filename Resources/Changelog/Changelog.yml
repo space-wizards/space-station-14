@@ -1,143 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed AHelp progressively gaining more panels., type: Fix}
-  id: 4922
-  time: '2023-09-29T01:46:16.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed skeletons spawning in folded containers., type: Fix}
-  id: 4923
-  time: '2023-09-29T03:55:29.0000000+00:00'
-- author: casperr04
-  changes:
-  - {message: Fixed the true name of disguised players being shown when electrocuted.,
-    type: Fix}
-  id: 4924
-  time: '2023-09-29T15:01:19.0000000+00:00'
-- author: TsjipTsjip
-  changes:
-  - {message: Kettle's medical ward was reworked., type: Tweak}
-  id: 4925
-  time: '2023-09-29T19:14:53.0000000+00:00'
-- author: daerSeebaer
-  changes:
-  - {message: Volumetric pumps now indicate if they can't pump., type: Add}
-  id: 4926
-  time: '2023-09-30T03:35:23.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixed cognizine not creating ghost roles., type: Fix}
-  id: 4927
-  time: '2023-09-30T17:53:22.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Holofans can now be destroyed by explosions., type: Fix}
-  id: 4928
-  time: '2023-09-30T19:08:09.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Space dragons get a proper greentext in the round end summary, along
-      with objectives in the character menu.', type: Tweak}
-  id: 4929
-  time: '2023-09-30T20:18:02.0000000+00:00'
-- author: Ubaser
-  changes:
-  - {message: Winter Boots are now available in the Winterdrobe., type: Add}
-  id: 4930
-  time: '2023-10-01T14:28:14.0000000+00:00'
-- author: Ubaser
-  changes:
-  - {message: 'QM now has a mantle, available at HoP''s uniform printer.', type: Add}
-  id: 4931
-  time: '2023-10-01T14:28:47.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Added new sprites for slime organs, type: Add}
-  - {message: Slimes now breathe nitrogen too., type: Tweak}
-  id: 4932
-  time: '2023-10-01T14:34:29.0000000+00:00'
-- author: casperr04
-  changes:
-  - {message: Space ninjas now have random appearance., type: Tweak}
-  id: 4933
-  time: '2023-10-01T14:51:35.0000000+00:00'
-- author: TomCruize
-  changes:
-  - {message: Made Space Cats lungs ROBUST (They now don't suffocate in space), type: Fix}
-  id: 4934
-  time: '2023-10-01T14:55:59.0000000+00:00'
-- author: TheShuEd
-  changes:
-  - {message: Added wide-spectrum anomaly locator., type: Add}
-  id: 4935
-  time: '2023-10-01T16:41:32.0000000+00:00'
-- author: michaelcu
-  changes:
-  - {message: Telescopic Shield no longer glows in the dark when deployed., type: Fix}
-  id: 4936
-  time: '2023-10-01T17:16:54.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Nuclear Operative medics now come with a custom hardsuit., type: Add}
-  id: 4937
-  time: '2023-10-01T17:36:20.0000000+00:00'
-- author: DrTeaSpoon
-  changes:
-  - {message: Plant species mutation no longer resets other mutations., type: Fix}
-  id: 4938
-  time: '2023-10-01T17:52:45.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: Science can now research practice ammunition for security., type: Add}
-  id: 4939
-  time: '2023-10-01T20:18:05.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Adds Advanced treatment cyborg module to the medical borg., type: Add}
-  - {message: Adds two new medical tools for the borg. Borghypo and Borgdropper.,
-    type: Add}
-  id: 4940
-  time: '2023-10-01T20:45:17.0000000+00:00'
-- author: Velcroboy
-  changes:
-  - {message: Nanotrasen suppliers now carry restocks for ChefVends and popular condiments.
-      Get them at your nearest cargo depot., type: Add}
-  id: 4941
-  time: '2023-10-01T20:49:10.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Fix praying door hacking protections., type: Fix}
-  id: 4942
-  time: '2023-10-01T21:08:03.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: Small firearms now fit in boots., type: Tweak}
-  id: 4943
-  time: '2023-10-01T21:23:41.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Added the Electric Grill for cooking steaks quickly, research food
-      service to make it.', type: Add}
-  id: 4944
-  time: '2023-10-02T00:17:50.0000000+00:00'
-- author: Pigeonpeas
-  changes:
-  - {message: 'Added a new lizard horn marking for the head, kobold ears!', type: Add}
-  id: 4945
-  time: '2023-10-02T07:08:20.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: 'the north star gloves have had their damage changed back to 8, as was
-      originally intended', type: Tweak}
-  id: 4946
-  time: '2023-10-02T15:34:22.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: The immovable rod gibs you instead of deleting your character again.,
-    type: Fix}
-  id: 4947
-  time: '2023-10-02T18:30:51.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Pizza recipes now require flat dough. Get a rolling pin from the dinnerware
@@ -2925,4 +2786,171 @@ Entries:
   - {message: Fixed compatability with old changelog format., type: Fix}
   id: 5422
   time: '2023-12-19T05:22:24.0000000+00:00'
+  url: null
+- author: notafet
+  changes:
+  - {message: 'Security sunglasses, researchable from arsenal technology, now display
+      the security HUD.', type: Tweak}
+  id: 5423
+  time: '2023-12-19T08:29:07.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Captain clothing items have been resprited, type: Tweak}
+  id: 5424
+  time: '2023-12-19T20:36:36.0000000+00:00'
+  url: null
+- author: Stanislav4ix
+  changes:
+  - {message: Added ore bag of holding!, type: Add}
+  id: 5425
+  time: '2023-12-19T22:28:56.0000000+00:00'
+  url: null
+- author: TGODiamond
+  changes:
+  - {message: Item size cannot be misinterpreted now., type: Fix}
+  id: 5426
+  time: '2023-12-20T00:31:39.0000000+00:00'
+  url: null
+- author: Veritius
+  changes:
+  - {message: Ethylredoxrazine is more effective at treating drunkness., type: Tweak}
+  id: 5427
+  time: '2023-12-20T02:20:04.0000000+00:00'
+  url: null
+- author: Errant
+  changes:
+  - {message: HUD elements no longer violate the Geneva Conventions., type: Fix}
+  id: 5428
+  time: '2023-12-20T04:28:03.0000000+00:00'
+  url: null
+- author: ERORR404V1
+  changes:
+  - {message: NanoTrasen botanists have bred a new blinking plant, type: Add}
+  id: 5429
+  time: '2023-12-20T04:57:02.0000000+00:00'
+  url: null
+- author: qwerltaz
+  changes:
+  - {message: Improve the gas analyzer interface., type: Tweak}
+  id: 5430
+  time: '2023-12-20T17:56:57.0000000+00:00'
+  url: null
+- author: JoeHammad
+  changes:
+  - {message: 'Fland now has its own shuttle, ported from ss13', type: Add}
+  id: 5431
+  time: '2023-12-20T23:26:07.0000000+00:00'
+  url: null
+- author: joshepvodka
+  changes:
+  - {message: CentCom bureaucrats are now twice as powerful with their new custom-made
+      clipboards and folders., type: Add}
+  id: 5432
+  time: '2023-12-20T23:29:35.0000000+00:00'
+  url: null
+- author: PJB3005
+  changes:
+  - {message: Fix starting to follow a moving player as a ghost causing your camera
+      to keep jumping around anymore., type: Fix}
+  id: 5433
+  time: '2023-12-20T23:33:00.0000000+00:00'
+  url: null
+- author: Velcroboy
+  changes:
+  - {message: Fixed coal not generating!, type: Fix}
+  id: 5434
+  time: '2023-12-20T23:46:20.0000000+00:00'
+  url: null
+- author: whateverusername0
+  changes:
+  - {message: "Miasma now reacts with oxygen at 50\xB0C to produce nitrous oxide and\
+      \ water vapor.", type: Add}
+  id: 5435
+  time: '2023-12-21T00:14:59.0000000+00:00'
+  url: null
+- author: whateverusername0
+  changes:
+  - {message: Nitrous oxide now decomposes at high temperatures., type: Add}
+  id: 5436
+  time: '2023-12-21T01:33:08.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Crates and lockers are slightly easier to bust open but still harder
+      than before., type: Tweak}
+  - {message: Solid walls are easier to break but reinforced are the same., type: Tweak}
+  id: 5437
+  time: '2023-12-21T03:03:06.0000000+00:00'
+  url: null
+- author: mirrorcult
+  changes:
+  - {message: Miasma has been renamed to Ammonia, type: Add}
+  - {message: Miasmic subsumation reaction has been removed, type: Remove}
+  id: 5438
+  time: '2023-12-21T04:19:50.0000000+00:00'
+  url: null
+- author: joshepvodka
+  changes:
+  - {message: NanoTrasen updated the designs for their emergency medipens. Space medipens
+      are now magenta colored and epi pens have a green band on them., type: Tweak}
+  id: 5439
+  time: '2023-12-21T05:30:58.0000000+00:00'
+  url: null
+- author: Hqlle
+  changes:
+  - {message: Resprited carpet sprites., type: Add}
+  id: 5440
+  time: '2023-12-21T05:32:38.0000000+00:00'
+  url: null
+- author: CrigCrag
+  changes:
+  - {message: 'Added Fresium, a military grade coolant that you SHOULD NOT INGEST
+      OR SPLASH ON YOUR FRIENDS!', type: Add}
+  id: 5441
+  time: '2023-12-21T05:35:22.0000000+00:00'
+  url: null
+- author: RiceMar
+  changes:
+  - {message: Energy swords and double energy swords now look as long as they seem
+      to be in your hand., type: Tweak}
+  id: 5442
+  time: '2023-12-21T06:32:11.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Borgs now see who is crew, type: Tweak}
+  id: 5443
+  time: '2023-12-21T07:09:53.0000000+00:00'
+  url: null
+- author: KittenColony
+  changes:
+  - {message: Rotated fireaxe 'icon' 45 degrees, type: Tweak}
+  id: 5444
+  time: '2023-12-21T08:03:52.0000000+00:00'
+  url: null
+- author: themias
+  changes:
+  - {message: Damp rags can mop puddles again, type: Fix}
+  - {message: Syndie soap cleans evidence a little faster than other soap, type: Tweak}
+  id: 5445
+  time: '2023-12-21T08:54:52.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Nukies don't start with agent ID anymore, type: Tweak}
+  id: 5446
+  time: '2023-12-21T09:59:06.0000000+00:00'
+  url: null
+- author: Repo
+  changes:
+  - {message: Mice can no longer spill containers., type: Tweak}
+  id: 5447
+  time: '2023-12-21T10:23:01.0000000+00:00'
+  url: null
+- author: Lukasz825700516
+  changes:
+  - {message: Gas tanks no longer predict insertion of random items., type: Fix}
+  id: 5448
+  time: '2023-12-21T10:37:35.0000000+00:00'
   url: null
