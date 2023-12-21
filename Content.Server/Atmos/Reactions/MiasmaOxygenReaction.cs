@@ -9,11 +9,18 @@ public sealed partial class MiasmaOxygenReaction : IGasReactionEffect
 {
     public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
     {
-        var cacheMiasma = mixture.GetMoles(Gas.Miasma);
+        var nMiasma = mixture.GetMoles(Gas.Miasma);
+        var nOxygen = mixture.GetMoles(Gas.Oxygen);
+        var nTotal = mixture.TotalMoles;
 
-        var deltaMoles = cacheMiasma / Atmospherics.MiasmaOxygenReactionRate * 2;
+        // Concentration-dependent reaction rate
+        var fMiasma = nMiasma/nTotal;
+        var fOxygen = nOxygen/nTotal;
+        var rate = MathF.Pow(fMiasma, 2) * MathF.Pow(fOxygen, 2);
 
-        if (deltaMoles <= 0 || cacheMiasma - deltaMoles < 0)
+        var deltaMoles = nMiasma / Atmospherics.MiasmaOxygenReactionRate * 2 * rate;
+
+        if (deltaMoles <= 0 || nMiasma - deltaMoles < 0)
             return ReactionResult.NoReaction;
 
         mixture.AdjustMoles(Gas.Miasma, -deltaMoles);
