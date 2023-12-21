@@ -94,7 +94,7 @@
       tank_slot:
         name: Gas Tank
         whitelist:
-          component:
+          components:
             - GasTank
     - type: StaticPrice
       price: 1000
