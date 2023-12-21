@@ -7,16 +7,18 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    internal sealed class SliceableFoodSystem : EntitySystem
+    public sealed class SliceableFoodSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -55,7 +57,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
             }
 
-            var sliceUid = Spawn(component.Slice, transform.Coordinates);
+            var sliceUid = Slice(uid, user, component, transform);
 
             var lostSolution = _solutionContainerSystem.SplitSolution(uid, solution,
                 solution.Volume / FixedPoint2.New(component.Count));
@@ -63,20 +65,7 @@ namespace Content.Server.Nutrition.EntitySystems
             // Fill new slice
             FillSlice(sliceUid, lostSolution);
 
-            var inCont = _containerSystem.IsEntityInContainer(component.Owner);
-            if (inCont)
-            {
-                _handsSystem.PickupOrDrop(user, sliceUid);
-            }
-            else
-            {
-                var xform = Transform(sliceUid);
-                _containerSystem.AttachParentToContainerOrGrid((sliceUid, xform));
-                xform.LocalRotation = 0;
-            }
-
-            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid),
-                transform.Coordinates, AudioParams.Default.WithVolume(-2));
+            _audio.PlayPvs(component.Sound, transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
             // Decrease size of item based on count - Could implement in the future
             // Bug with this currently is the size in a container is not updated
@@ -98,11 +87,26 @@ namespace Content.Server.Nutrition.EntitySystems
             if (component.Count > 1)
                 return true;
 
-            sliceUid = Spawn(component.Slice, transform.Coordinates);
+            sliceUid = Slice(uid, user, component, transform);
 
             // Fill last slice with the rest of the solution
             FillSlice(sliceUid, solution);
 
+            DeleteFood(uid, user);
+            return true;
+        }
+
+        /// <summary>
+        /// Create a new slice in the world and returns its entity.
+        /// The solutions must be set afterwards.
+        /// </summary>
+        public EntityUid Slice(EntityUid uid, EntityUid user, SliceableFoodComponent? comp = null, TransformComponent? transform = null)
+        {
+            if (!Resolve(uid, ref comp, ref transform))
+                return EntityUid.Invalid;
+
+            var sliceUid = Spawn(comp.Slice, transform.Coordinates);
+            var inCont = _containerSystem.IsEntityInContainer(uid);
             if (inCont)
             {
                 _handsSystem.PickupOrDrop(user, sliceUid);
@@ -114,8 +118,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 xform.LocalRotation = 0;
             }
 
-            DeleteFood(uid, user);
-            return true;
+            return sliceUid;
         }
 
         private void DeleteFood(EntityUid uid, EntityUid user)

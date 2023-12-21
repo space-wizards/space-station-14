@@ -157,6 +157,9 @@ public sealed partial class LatheMenu : DefaultWindow
                 sb.Append(Loc.GetString("lathe-menu-tooltip-display", ("material", name), ("amount", amountText)));
             }
 
+            sb.Append('\n');
+            sb.Append(Loc.GetString("lathe-menu-description-display", ("description", prototype.Description)));
+
             var icon = prototype.Icon == null
                 ? _spriteSystem.GetPrototypeIcon(prototype.Result).Default
                 : _spriteSystem.Frame0(prototype.Icon);

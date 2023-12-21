@@ -3,7 +3,6 @@
 [game]
 desc = "Official English Space Station 14 servers. Roleplay required, you must be whitelisted through Discord to play if there are more than 15 online players."
 hostname = "[EN] Wizard's Den Salamander [US West RP]"
-artifact_round_end_timer = 0.0
 
 [server]
 rules_file = "RP_Rules.txt"

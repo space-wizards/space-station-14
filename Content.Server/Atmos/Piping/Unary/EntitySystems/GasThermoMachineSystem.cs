@@ -80,7 +80,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             float dQ = thermoMachine.HeatCapacity * thermoMachine.Cp * args.dt;
 
             // Clamps the heat transferred to not overshoot
-            float Cin = _atmosphereSystem.GetHeatCapacity(inlet.Air);
+            float Cin = _atmosphereSystem.GetHeatCapacity(inlet.Air, true);
             float dT = targetTemp - temp;
             float dQLim = dT * Cin;
             float scale = 1f;

@@ -893,37 +893,6 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingMachineSmartFridge
-  name: SmartFridge
-  description: A refrigerated storage unit for keeping items cold and fresh.
-  components:
-  - type: VendingMachine
-    pack: SmartFridgeInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    denyState: deny-unshaded
-    loopDeny: false
-  - type: Advertise
-    pack: SmartFridgeAds
-  - type: Speech
-  - type: Sprite
-    sprite: Structures/Machines/VendingMachines/smartfridge.rsi
-    layers:
-    - state: off
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: off
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#9dc5c9"
-
-- type: entity
-  parent: VendingMachine
   id: VendingMachineSnack
   name: Getmore Chocolate Corp
   description: A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars.
@@ -2034,4 +2003,4 @@
     ejectDelay: 2
   - type: AccessReader
     access: [["SyndicateAgent"]]
-  
+

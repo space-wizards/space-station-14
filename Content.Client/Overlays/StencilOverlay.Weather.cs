@@ -8,6 +8,8 @@ namespace Content.Client.Overlays;
 
 public sealed partial class StencilOverlay
 {
+    private List<Entity<MapGridComponent>> _grids = new();
+
     private void DrawWeather(in OverlayDrawArgs args, WeatherPrototype weatherProto, float alpha, Matrix3 invMatrix)
     {
         var worldHandle = args.WorldHandle;
@@ -21,15 +23,13 @@ public sealed partial class StencilOverlay
         // particularly for planet maps or stations.
         worldHandle.RenderInRenderTarget(_blep!, () =>
         {
-            var bodyQuery = _entManager.GetEntityQuery<PhysicsComponent>();
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
-            var weatherIgnoreQuery = _entManager.GetEntityQuery<IgnoreWeatherComponent>();
+            _grids.Clear();
 
             // idk if this is safe to cache in a field and clear sloth help
-            var grids = new List<Entity<MapGridComponent>>();
-            _mapManager.FindGridsIntersecting(mapId, worldAABB, ref grids);
+            _mapManager.FindGridsIntersecting(mapId, worldAABB, ref _grids);
 
-            foreach (var grid in grids)
+            foreach (var grid in _grids)
             {
                 var matrix = _transform.GetWorldMatrix(grid, xformQuery);
                 Matrix3.Multiply(in matrix, in invMatrix, out var matty);
@@ -38,7 +38,7 @@ public sealed partial class StencilOverlay
                 foreach (var tile in grid.Comp.GetTilesIntersecting(worldAABB))
                 {
                     // Ignored tiles for stencil
-                    if (_weather.CanWeatherAffect(grid, tile, weatherIgnoreQuery, bodyQuery))
+                    if (_weather.CanWeatherAffect(grid, tile))
                     {
                         continue;
                     }

@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Server.Doors.Systems;
+using Content.Server.Parallax;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
@@ -9,6 +10,8 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -26,6 +29,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly BiomeSystem _biomes = default!;
     [Dependency] private readonly BodySystem _bobby = default!;
     [Dependency] private readonly DockingSystem _dockSystem = default!;
     [Dependency] private readonly DoorSystem _doors = default!;
@@ -35,6 +39,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
@@ -113,7 +118,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
         if (component.Enabled)
         {
-            Enable(uid, physicsComponent, component);
+            Enable(uid, component: physicsComponent, shuttle: component);
         }
     }
 
@@ -126,17 +131,18 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
         if (component.Enabled)
         {
-            Enable(uid, physicsComponent, component);
+            Enable(uid, component: physicsComponent, shuttle: component);
         }
         else
         {
-            Disable(uid, physicsComponent);
+            Disable(uid, component: physicsComponent);
         }
     }
 
-    private void Enable(EntityUid uid, PhysicsComponent component, ShuttleComponent shuttle)
+    public void Enable(EntityUid uid, FixturesComponent? manager = null, PhysicsComponent? component = null, ShuttleComponent? shuttle = null)
     {
-        FixturesComponent? manager = null;
+        if (!Resolve(uid, ref manager, ref component, ref shuttle, false))
+            return;
 
         _physics.SetBodyType(uid, BodyType.Dynamic, manager: manager, body: component);
         _physics.SetBodyStatus(component, BodyStatus.InAir);
@@ -145,9 +151,10 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         _physics.SetAngularDamping(component, shuttle.AngularDamping);
     }
 
-    private void Disable(EntityUid uid, PhysicsComponent component)
+    public void Disable(EntityUid uid, FixturesComponent? manager = null, PhysicsComponent? component = null)
     {
-        FixturesComponent? manager = null;
+        if (!Resolve(uid, ref manager, ref component, false))
+            return;
 
         _physics.SetBodyType(uid, BodyType.Static, manager: manager, body: component);
         _physics.SetBodyStatus(component, BodyStatus.OnGround);
@@ -160,11 +167,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
-        if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
-        {
-            return;
-        }
-
-        Disable(uid, physicsComponent);
+        Disable(uid);
     }
 }

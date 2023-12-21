@@ -13,6 +13,7 @@ using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -37,7 +38,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         protected override void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie)
         {
-            _audio.Play(_audio.GetSound(creamPie.Sound), Filter.Pvs(uid), uid, false, new AudioParams().WithVariation(0.125f));
+            _audio.PlayPvs(_audio.GetSound(creamPie.Sound), uid, AudioParams.Default.WithVariation(0.125f));
 
             if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
             {
