@@ -19,7 +19,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public string ContainerName { get; set; } = "tank_slot";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("tank_slot")]
+        [DataField]
         public ItemSlot GasTankSlot = new();
 
         [ViewVariables(VVAccess.ReadWrite)]

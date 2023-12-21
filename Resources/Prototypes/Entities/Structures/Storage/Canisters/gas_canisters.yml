@@ -91,7 +91,7 @@
     - type: ItemSlots
     - type: GasPortable
     - type: GasCanister
-      tank_slot:
+      gasTankSlot:
         name: Gas Tank
         whitelist:
           components:
