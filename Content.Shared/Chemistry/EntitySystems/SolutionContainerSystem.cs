@@ -381,6 +381,22 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="targetSolution">Container to which we are adding reagent</param>
     /// <param name="prototype">The Id of the reagent to add.</param>
     /// <param name="quantity">The amount of reagent to add.</param>
+    /// <returns>If all the reagent could be added.</returns>
+    [PublicAPI]
+    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string prototype, FixedPoint2 quantity,
+        float? temperature = null, ReagentData? data = null)
+    {
+        var reagent = new ReagentQuantity(prototype, quantity, data);
+        return TryAddReagent(targetUid, targetSolution, reagent, out _, temperature);
+    }
+
+    /// <summary>
+    ///     Adds reagent of an Id to the container.
+    /// </summary>
+    /// <param name="targetUid"></param>
+    /// <param name="targetSolution">Container to which we are adding reagent</param>
+    /// <param name="prototype">The Id of the reagent to add.</param>
+    /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
     public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string prototype, FixedPoint2 quantity,

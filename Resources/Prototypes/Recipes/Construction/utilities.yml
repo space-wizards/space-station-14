@@ -477,7 +477,7 @@
   conditions:
     - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
-    
+
 - type: construction
   name: passive vent
   description: Unpowered vent that equalises gases on both sides.
@@ -499,7 +499,7 @@
   conditions:
     - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
-    
+
 - type: construction
   name: air scrubber
   description: Sucks gas into connected pipes.
@@ -521,7 +521,7 @@
   conditions:
     - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
-    
+
 - type: construction
   name: air injector
   description: Injects air into the atmosphere.
@@ -543,7 +543,7 @@
   conditions:
     - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
-    
+
 # ATMOS BINARY
 - type: construction
   name: gas pump
@@ -852,8 +852,8 @@
   category: construction-category-utilities
   description: "A wallmounted timer for sending timed signals to things. This one has a screen for displaying text."
   icon:
-    sprite: Structures/Wallmounts/textscreen.rsi
-    state: textscreen
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
   objectType: Structure
   canRotate: false
   placementMode: SnapgridCenter
@@ -870,8 +870,8 @@
   category: construction-category-utilities
   description: "A wallmounted timer for sending timed signals to things. This one has a screen for displaying text and requires security access to use."
   icon:
-    sprite: Structures/Wallmounts/textscreen.rsi
-    state: textscreen
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
   objectType: Structure
   canRotate: false
   placementMode: SnapgridCenter
