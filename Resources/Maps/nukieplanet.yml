@@ -9969,22 +9969,7 @@ entities:
       parent: 104
       type: Transform
     - maxShots: 200
-      shots: 200
       type: SolutionAmmoProvider
-    - solutions:
-        tank:
-          temperature: 293.15
-          canMix: False
-          canReact: True
-          maxVol: 1000
-          reagents:
-          - data: null
-            ReagentId: ChlorineTrifluoride
-            Quantity: 100
-          - data: null
-            ReagentId: Napalm
-            Quantity: 900
-      type: SolutionContainerManager
 - proto: ClothingBeltUtilityFilled
   entities:
   - uid: 212
@@ -9994,7 +9979,7 @@ entities:
       type: Transform
 - proto: ClothingEyesGlassesChemical
   entities:
-  - uid: 1825
+  - uid: 1738
     components:
     - pos: 3.5303125,-10.872155
       parent: 104
@@ -10056,7 +10041,7 @@ entities:
       type: Transform
 - proto: ComputerPowerMonitoring
   entities:
-  - uid: 1739
+  - uid: 1730
     components:
     - rot: -1.5707963267948966 rad
       pos: 27.5,-14.5
@@ -12220,25 +12205,6 @@ entities:
       pos: -10.5,1.5
       parent: 104
       type: Transform
-- proto: RCD
-  entities:
-  - uid: 1699
-    components:
-    - pos: 17.491886,-15.518038
-      parent: 104
-      type: Transform
-- proto: RCDAmmo
-  entities:
-  - uid: 1703
-    components:
-    - pos: 17.257511,-15.814913
-      parent: 104
-      type: Transform
-  - uid: 1718
-    components:
-    - pos: 17.491886,-16.018038
-      parent: 104
-      type: Transform
 - proto: ReinforcedPlasmaWindow
   entities:
   - uid: 1842
@@ -12513,12 +12479,12 @@ entities:
       type: Transform
 - proto: ShellShotgunIncendiary
   entities:
-  - uid: 1737
+  - uid: 1718
     components:
     - pos: 5.65919,13.292731
       parent: 104
       type: Transform
-  - uid: 1738
+  - uid: 1728
     components:
     - pos: 5.65919,13.292731
       parent: 104
@@ -12544,7 +12510,7 @@ entities:
       type: Transform
 - proto: SignEscapePods
   entities:
-  - uid: 1810
+  - uid: 1737
     components:
     - desc: steel rain babey
       name: drop pod sign
@@ -12722,7 +12688,7 @@ entities:
       type: Transform
 - proto: SprayBottle
   entities:
-  - uid: 1728
+  - uid: 1699
     components:
     - pos: 14.060668,-16.439913
       parent: 104
@@ -13324,7 +13290,7 @@ entities:
     - pos: 14.638793,-16.908663
       parent: 104
       type: Transform
-  - uid: 1730
+  - uid: 1703
     components:
     - pos: 14.341918,-16.877413
       parent: 104
