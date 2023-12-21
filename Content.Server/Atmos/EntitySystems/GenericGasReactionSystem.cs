@@ -38,6 +38,10 @@ public sealed class GenericGasReactionSystem : EntitySystem
     /// </summary>
     public ReactionResult ReactAll(IEnumerable<GasReactionPrototype> reactions, GasMixture mix, IGasMixtureHolder? holder)
     {
+        // It is possible for reactions to change the specific heat capacity, so we need to save initial
+        // internal energy so that we can conserve energy at the end
+        float initialE = _atmosphere.GetThermalEnergy(mix);
+        float reactionE = 0; // heat added by reaction enthalpy
         foreach (var reaction in reactions)
         {
             float rate = 1f; // rate of this reaction
@@ -99,18 +103,22 @@ public sealed class GenericGasReactionSystem : EntitySystem
             // Add heat from the reaction
             if (reaction.Enthalpy != 0)
             {
-                _atmosphere.AddHeat(mix, reaction.Enthalpy/_atmosphere.HeatScale * rate);
+                reactionE += reaction.Enthalpy/_atmosphere.HeatScale * rate;
                 if (reaction.Enthalpy > 0)
-                {
                     mix.ReactionResults[GasReaction.Fire] += rate;
-                    var location = holder as TileAtmosphere;
-                    if (location != null)
-                    {
-                        if (mix.Temperature > Atmospherics.FireMinimumTemperatureToExist)
-                        {
-                            _atmosphere.HotspotExpose(location.GridIndex, location.GridIndices, mix.Temperature, mix.Volume);
-                        }
-                    }
+            }
+        }
+
+        float newHeatCapacity = _atmosphere.GetHeatCapacity(mix, true);
+        mix.Temperature = (initialE + reactionE)/newHeatCapacity;
+        if (reactionE > 0)
+        {
+            var location = holder as TileAtmosphere;
+            if (location != null)
+            {
+                if (mix.Temperature > Atmospherics.FireMinimumTemperatureToExist)
+                {
+                    _atmosphere.HotspotExpose(location.GridIndex, location.GridIndices, mix.Temperature, mix.Volume);
                 }
             }
         }
