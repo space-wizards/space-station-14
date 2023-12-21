@@ -31,7 +31,7 @@
       - map: [ "enum.EdgeLayer.West" ]
         state: rock_asteroid_west
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
