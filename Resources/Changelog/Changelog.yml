@@ -1,9 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - {message: Fix praying door hacking protections., type: Fix}
-  id: 4942
-  time: '2023-10-01T21:08:03.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Small firearms now fit in boots., type: Tweak}
@@ -2949,4 +2944,10 @@ Entries:
       to be in your hand., type: Tweak}
   id: 5442
   time: '2023-12-21T06:32:11.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Borgs now see who is crew, type: Tweak}
+  id: 5443
+  time: '2023-12-21T07:09:53.0000000+00:00'
   url: null
