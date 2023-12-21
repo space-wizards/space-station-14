@@ -3,3 +3,4 @@ marking-ScarEyeRight = Eye Scar (Right)
 
 marking-ScarEyeLeft-eyescarleft = Eye scar (Left)
 marking-ScarEyeLeft = Eye Scar (Left)
+marking-ScarTopSurgery = Top Surgery Scar

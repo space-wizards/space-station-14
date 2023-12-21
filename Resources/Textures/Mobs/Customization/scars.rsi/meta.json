@@ -12,8 +12,12 @@
       "directions": 4
     },
     {
-      "name": "scar_eye_right",
-      "directions": 4
+        "name": "scar_eye_right",
+        "directions": 4
+    },
+    {
+        "name": "scar_top_surgery",
+        "directions":  4
     }
   ]
 }
