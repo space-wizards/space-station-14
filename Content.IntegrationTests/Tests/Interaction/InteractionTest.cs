@@ -64,6 +64,9 @@ public abstract partial class InteractionTest
     /// </summary>
     protected NetEntity Player;
 
+    protected EntityUid SPlayer => ToServer(Player);
+    protected EntityUid CPlayer => ToClient(Player);
+
     protected ICommonSession ClientSession = default!;
     protected ICommonSession ServerSession = default!;
 
@@ -78,6 +81,9 @@ public abstract partial class InteractionTest
     /// the target entity. See <see cref="CheckTargetChange"/>
     /// </remarks>
     protected NetEntity? Target;
+
+    protected EntityUid? STarget => ToServer(Target);
+    protected EntityUid? CTarget => ToClient(Target);
 
     /// <summary>
     /// When attempting to start construction, this is the client-side ID of the construction ghost.

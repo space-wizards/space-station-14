@@ -1088,4 +1088,35 @@ public abstract partial class InteractionTest
     }
 
     #endregion
+
+    #region Networking
+
+    protected EntityUid ToServer(NetEntity nent) => SEntMan.GetEntity(nent);
+    protected EntityUid ToClient(NetEntity nent) => CEntMan.GetEntity(nent);
+    protected EntityUid? ToServer(NetEntity? nent) => SEntMan.GetEntity(nent);
+    protected EntityUid? ToClient(NetEntity? nent) => CEntMan.GetEntity(nent);
+    protected EntityUid ToServer(EntityUid cuid) => SEntMan.GetEntity(CEntMan.GetNetEntity(cuid));
+    protected EntityUid ToClient(EntityUid cuid) => CEntMan.GetEntity(SEntMan.GetNetEntity(cuid));
+    protected EntityUid? ToServer(EntityUid? cuid) => SEntMan.GetEntity(CEntMan.GetNetEntity(cuid));
+    protected EntityUid? ToClient(EntityUid? cuid) => CEntMan.GetEntity(SEntMan.GetNetEntity(cuid));
+
+    protected EntityCoordinates ToServer(NetCoordinates coords) => SEntMan.GetCoordinates(coords);
+    protected EntityCoordinates ToClient(NetCoordinates coords) => CEntMan.GetCoordinates(coords);
+    protected EntityCoordinates? ToServer(NetCoordinates? coords) => SEntMan.GetCoordinates(coords);
+    protected EntityCoordinates? ToClient(NetCoordinates? coords) => CEntMan.GetCoordinates(coords);
+
+    #endregion
+
+    #region Metadata & Transforms
+
+    protected MetaDataComponent Meta(NetEntity uid) => Meta(ToServer(uid));
+    protected MetaDataComponent Meta(EntityUid uid) => SEntMan.GetComponent<MetaDataComponent>(uid);
+
+    protected TransformComponent Xform(NetEntity uid) => Xform(ToServer(uid));
+    protected TransformComponent Xform(EntityUid uid) => SEntMan.GetComponent<TransformComponent>(uid);
+
+    protected EntityCoordinates Position(NetEntity uid) => Position(ToServer(uid));
+    protected EntityCoordinates Position(EntityUid uid) => Xform(uid).Coordinates;
+    
+    #endregion
 }

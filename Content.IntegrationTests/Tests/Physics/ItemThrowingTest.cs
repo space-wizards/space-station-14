@@ -100,7 +100,7 @@ public sealed class ItemThrowingTest : InteractionTest
         Assert.That(physics.CanCollide);
 
         // Attempt to make it sleep mid-air. This happens automatically due to the sleep timer, but we just do it manually.
-        await Server.WaitPost(() => SEntMan.System<PhysicsSystem>().SetAwake((SEntMan.GetEntity(pen), physics), false));
+        await Server.WaitPost(() => Server.System<PhysicsSystem>().SetAwake((ToServer(pen), physics), false));
 
         // Then try and delete it
         await Delete(pen);
