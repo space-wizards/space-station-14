@@ -1,10 +1,4 @@
 Entries:
-- author: VigersRay
-  changes:
-  - {message: The syndicate has begun to recruit more experienced people into the
-      ranks of nuclear operatives., type: Tweak}
-  id: 4949
-  time: '2023-10-02T21:20:09.0000000+00:00'
 - author: Doru991
   changes:
   - {message: Plant species mutations correctly mutate reagents., type: Fix}
@@ -2954,4 +2948,11 @@ Entries:
   - {message: Smart equipping is now predicted, type: Tweak}
   id: 5449
   time: '2023-12-21T14:17:09.0000000+00:00'
+  url: null
+- author: DrMelon
+  changes:
+  - {message: Mice and other small creatures can no longer hurt Pun Pun or the Clown
+      by smashing them into tables., type: Fix}
+  id: 5450
+  time: '2023-12-21T15:18:26.0000000+00:00'
   url: null
