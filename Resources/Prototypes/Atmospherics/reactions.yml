@@ -25,18 +25,12 @@
   id: FrezonCoolant
   priority: 1
   minimumTemperature: 23.15
-  minimumRequirements:
-  - 0     # oxygen
-  - 0.01  # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0     # ammonia
-  - 0     # n2o
-  - 0.01  # frezon
-  effects:
-  - !type:FrezonCoolantReaction {}
+  enthalpy: -600000
+  reactants:
+    8: 1 # 1 frezon
+    1: 5 # 5 nitrogen
+  products:
+    7: 6 # 6 nitrous
 
 - type: gasReaction
   id: FrezonProduction
@@ -70,18 +64,11 @@
   id: N2ODecomposition
   priority: 0
   minimumTemperature: 850
-  minimumRequirements:
-  - 0     # oxygen
-  - 0     # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0     # ammonia
-  - 0.01  # n2o
-  - 0     # frezon
-  effects:
-  - !type:N2ODecompositionReaction {}
+  reactants:
+    7: 2 # 2 nitrous
+  products:
+    1: 2 # 2 nitrogen
+    0: 1 # 1 oxygen
 
 #- type: gasReaction
 #  id: WaterVaporPuddle
