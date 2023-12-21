@@ -73,6 +73,15 @@ public sealed class GenericGasReactionSystem : EntitySystem
             if (rate <= 0)
                 continue;
 
+            // Pass to check the maximum rate, limited by the minimum available
+            // reactant to avoid going negative
+            float rateLim = rate;
+            foreach (var (reactant, num) in reaction.Reactants)
+            {
+                rateLim = MathF.Min(mix.GetMoles(reactant)/num, rateLim);
+            }
+            rate = rateLim;
+
             // Go through and remove all the reactants
             // If any of the reactants were zero, then the code above would have already set
             // rate to zero, so we don't have to check that again here.
