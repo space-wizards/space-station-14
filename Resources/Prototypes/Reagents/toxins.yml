@@ -317,10 +317,21 @@
           type: Local
           visualType: Large
           messages: ["nanomachines-effect-mechanization"]
-          probability: 100.0
+          probability: 300.0
           conditions:
             - !type:OrganType
                type: Human
+        - !type:PopupMessage
+          type: Local
+          visualType: Large
+          messages: ["nanomachines-effect-mechanization-ends"]
+          probability: 300.0
+          conditions:
+            - !type:OrganType
+               type: Human
+            - !type:ReagentThreshold
+              min: 0
+              max: 0.3
         - !type:AdjustReagent
           reagent: Nanomachines
           conditions:
