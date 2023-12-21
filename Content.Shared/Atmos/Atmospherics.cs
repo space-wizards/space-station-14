@@ -237,6 +237,11 @@ namespace Content.Shared.Atmos
         public const float FrezonProductionConversionRate = 50f;
 
         /// <summary>
+        ///     The maximum portion of the N2O that can decompose each reaction tick. (50%)
+        /// </summary>
+        public const float N2ODecompositionRate = 2f;
+
+        /// <summary>
         ///     How many mol of frezon can be converted into miasma in one cycle.
         /// </summary>
         public const float MiasmicSubsumationMaxConversionRate = 5f;
