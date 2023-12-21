@@ -788,14 +788,14 @@
   id: MobCrabAtmos
   description: The noble and stalwart defender of Atmosia. Viva!
   components:
-  - type: GhostRole
-    prob: 1
-    makeSentient: true
-    allowSpeech: true
-    allowMovement: true
-    name: ghost-role-information-tropico-name
-    description: ghost-role-information-tropico-description
-  - type: GhostTakeoverAvailable
+#  - type: GhostRole
+#    prob: 1
+#    makeSentient: true
+#    allowSpeech: true
+#    allowMovement: true
+#    name: ghost-role-information-tropico-name
+#    description: ghost-role-information-tropico-description
+#  - type: GhostTakeoverAvailable
   - type: Flashable
   - type: Tag
     tags:
