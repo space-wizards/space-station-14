@@ -491,6 +491,9 @@
         visualType: Medium
         messages: [ "leporazine-effect-temperature-adjusting" ]
         probability: 0.2
+      - !type:AdjustReagent
+        reagent: Fresium
+        amount: -5
 
 - type: reagent
   id: Barozine
