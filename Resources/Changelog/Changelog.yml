@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Added the Electric Grill for cooking steaks quickly, research food
-      service to make it.', type: Add}
-  id: 4944
-  time: '2023-10-02T00:17:50.0000000+00:00'
 - author: Pigeonpeas
   changes:
   - {message: 'Added a new lizard horn marking for the head, kobold ears!', type: Add}
@@ -2951,4 +2945,11 @@ Entries:
   - {message: Rotated fireaxe 'icon' 45 degrees, type: Tweak}
   id: 5444
   time: '2023-12-21T08:03:52.0000000+00:00'
+  url: null
+- author: themias
+  changes:
+  - {message: Damp rags can mop puddles again, type: Fix}
+  - {message: Syndie soap cleans evidence a little faster than other soap, type: Tweak}
+  id: 5445
+  time: '2023-12-21T08:54:52.0000000+00:00'
   url: null
