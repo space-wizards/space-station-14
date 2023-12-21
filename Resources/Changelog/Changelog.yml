@@ -1,9 +1,4 @@
 Entries:
-- author: TheShuEd
-  changes:
-  - {message: Added wide-spectrum anomaly locator., type: Add}
-  id: 4935
-  time: '2023-10-01T16:41:32.0000000+00:00'
 - author: michaelcu
   changes:
   - {message: Telescopic Shield no longer glows in the dark when deployed., type: Fix}
@@ -2939,4 +2934,10 @@ Entries:
       \ water vapor.", type: Add}
   id: 5435
   time: '2023-12-21T00:14:59.0000000+00:00'
+  url: null
+- author: whateverusername0
+  changes:
+  - {message: Nitrous oxide now decomposes at high temperatures., type: Add}
+  id: 5436
+  time: '2023-12-21T01:33:08.0000000+00:00'
   url: null
