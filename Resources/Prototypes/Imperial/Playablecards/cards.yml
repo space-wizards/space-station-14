@@ -2,6 +2,7 @@
   parent: BaseItem
   id: PlayableCardJokerRed
   name: playablecard
+  suffix: Joker, PlayableCards, Red
   description:
   components:
   - type: Sprite
@@ -30,6 +31,7 @@
   parent: BaseItem
   id: PlayableCardJokerBlack
   name: playablecard
+  suffix: Joker, PlayableCards, Red
   description:
   components:
   - type: Sprite
@@ -56,14 +58,15 @@
 
 - type: entity
   parent: BaseItem
-  id: PlayableCardKingRed
+  id: PlayableCardKingRedC
   name: playablecard
+  suffix: King, PlayableCards, Hearts
   description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
     layers:
-    - state: redking
+    - state: redkingc
     - state: back
       map: ["base"]
   - type: Item
@@ -71,27 +74,28 @@
     size: 1
   - type: Appearance
   - type: FoldableCard
-    Description: redking-description
+    Description: redkingc-description
   - type: GenericVisualizer
     visuals:
       enum.FoldedCardVisuals.State:
         base:
           True: {state: back}
-          False: {state: redking}
+          False: {state: redkingc}
   - type: Tag
     tags:
     - PlayableCard
 
 - type: entity
   parent: BaseItem
-  id: PlayableCardKingBlack
+  id: PlayableCardKingBlackP
   name: playablecard
+  suffix: King, PlayableCards, Spades
   description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
     layers:
-    - state: blackking
+    - state: blackkingp
     - state: back
       map: ["base"]
   - type: Item
@@ -99,27 +103,28 @@
     size: 1
   - type: Appearance
   - type: FoldableCard
-    Description: blackking-description
+    Description: blackkingp-description
   - type: GenericVisualizer
     visuals:
       enum.FoldedCardVisuals.State:
         base:
           True: {state: back}
-          False: {state: blackking}
+          False: {state: blackkingp}
   - type: Tag
     tags:
     - PlayableCard
 
 - type: entity
   parent: BaseItem
-  id: PlayableCardQueenRed
+  id: PlayableCardKingRedB
   name: playablecard
+  suffix: King, PlayableCards, Diamonds
   description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
     layers:
-    - state: redqueen
+    - state: redkingb
     - state: back
       map: ["base"]
   - type: Item
@@ -127,27 +132,28 @@
     size: 1
   - type: Appearance
   - type: FoldableCard
-    Description: redqueen-description
+    Description: redkingb-description
   - type: GenericVisualizer
     visuals:
       enum.FoldedCardVisuals.State:
         base:
           True: {state: back}
-          False: {state: redqueen}
+          False: {state: redkingb}
   - type: Tag
     tags:
     - PlayableCard
 
 - type: entity
   parent: BaseItem
-  id: PlayableCardQueenBlack
+  id: PlayableCardKingBlackT
   name: playablecard
+  suffix: King, PlayableCards, Clubs
   description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
     layers:
-    - state: blackqueen
+    - state: blackkingt
     - state: back
       map: ["base"]
   - type: Item
@@ -155,27 +161,28 @@
     size: 1
   - type: Appearance
   - type: FoldableCard
-    Description: blackqueen-description
+    Description: blackkingt-description
   - type: GenericVisualizer
     visuals:
       enum.FoldedCardVisuals.State:
         base:
           True: {state: back}
-          False: {state: blackqueen}
+          False: {state: blackkingt}
   - type: Tag
     tags:
     - PlayableCard
 
 - type: entity
   parent: BaseItem
-  id: PlayableCardJackRed
+  id: PlayableCardQueenRedC
   name: playablecard
+  suffix: Queen, PlayableCards, Hearts
   description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
     layers:
-    - state: redjack
+    - state: redqueenc
     - state: back
       map: ["base"]
   - type: Item
@@ -183,27 +190,28 @@
     size: 1
   - type: Appearance
   - type: FoldableCard
-    Description: redjack-description
+    Description: redqueenc-description
   - type: GenericVisualizer
     visuals:
       enum.FoldedCardVisuals.State:
         base:
           True: {state: back}
-          False: {state: redjack}
+          False: {state: redqueenc}
   - type: Tag
     tags:
     - PlayableCard
 
 - type: entity
   parent: BaseItem
-  id: PlayableCardJackBlack
+  id: PlayableCardQueenBlackT
   name: playablecard
+  suffix: Queen, PlayableCards, Clubs
   description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
     layers:
-    - state: blackjack
+    - state: blackqueent
     - state: back
       map: ["base"]
   - type: Item
@@ -211,27 +219,28 @@
     size: 1
   - type: Appearance
   - type: FoldableCard
-    Description: blackjack-description
+    Description: blackqueent-description
   - type: GenericVisualizer
     visuals:
       enum.FoldedCardVisuals.State:
         base:
           True: {state: back}
-          False: {state: blackjack}
+          False: {state: blackqueent}
   - type: Tag
     tags:
     - PlayableCard
 
 - type: entity
   parent: BaseItem
-  id: PlayableCardTenRed
+  id: PlayableCardQueenRedB
   name: playablecard
+  suffix: Queen, PlayableCards, Diamonds
   description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
     layers:
-    - state: redten
+    - state: redqueenb
     - state: back
       map: ["base"]
   - type: Item
@@ -239,27 +248,28 @@
     size: 1
   - type: Appearance
   - type: FoldableCard
-    Description: redten-description
+    Description: redqueenb-description
   - type: GenericVisualizer
     visuals:
       enum.FoldedCardVisuals.State:
         base:
           True: {state: back}
-          False: {state: redten}
+          False: {state: redqueenb}
   - type: Tag
     tags:
     - PlayableCard
 
 - type: entity
   parent: BaseItem
-  id: PlayableCardTenBlack
+  id: PlayableCardQueenBlackP
   name: playablecard
+  suffix: Queen, PlayableCards, Spades
   description:
   components:
   - type: Sprite
     sprite: Imperial/Playablecards/playablecard.rsi
     layers:
-    - state: blackten
+    - state: blackqueenp
     - state: back
       map: ["base"]
   - type: Item
@@ -267,72 +277,906 @@
     size: 1
   - type: Appearance
   - type: FoldableCard
-    Description: blackten-description
+    Description: blackqueenp-description
   - type: GenericVisualizer
     visuals:
       enum.FoldedCardVisuals.State:
         base:
           True: {state: back}
-          False: {state: blackten}
+          False: {state: blackqueenp}
   - type: Tag
     tags:
     - PlayableCard
 
 - type: entity
-  parent: BaseStructureDynamic
+  parent: BaseItem
+  id: PlayableCardJackRedB
+  name: playablecard
+  suffix: Jack, PlayableCards, Diamonds
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redjackb
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redjackb-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redjackb}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardJackBlackT
+  name: playablecard
+  suffix: Jack, PlayableCards, Clubs
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blackjackt
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackjackt-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackjackt}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardJackRedC
+  name: playablecard
+  suffix: Jack, PlayableCards, Hearts
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redjackc
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redjackc-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redjackc}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardJackBlackP
+  name: playablecard
+  suffix: Jack, PlayableCards, Spades
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blackjackp
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackjackp-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackjackp}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardTenRedB
+  name: playablecard
+  suffix: Ten, PlayableCards, Diamonds
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redtenb
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redtenb-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redtenb}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardTenBlackP
+  name: playablecard
+  suffix: Ten, PlayableCards, Spades
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blacktenp
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blacktenp-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blacktenp}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardTenRedC
+  name: playablecard
+  suffix: Ten, PlayableCards, Hearts
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redtenc
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redtenc-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redtenc}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardTenBlackT
+  name: playablecard
+  suffix: Ten, PlayableCards, Clubs
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blacktent
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blacktent-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blacktent}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardSevenRedB
+  name: playablecard
+  suffix: Seven, PlayableCards, Diamonds
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redsevenb
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redsevenb-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redsevenb}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardSevenBlackP
+  name: playablecard
+  suffix: Seven, PlayableCards, Spades
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blacksevenp
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blacksevenp-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blacksevenp}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardSevenRedC
+  name: playablecard
+  suffix: Seven, PlayableCards, Hearts
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redsevenc
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redsevenc-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redsevenc}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardSevenBlackT
+  name: playablecard
+  suffix: Seven, PlayableCards, Clubs
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blacksevent
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blacksevent-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blacksevent}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardSixRedB
+  name: playablecard
+  suffix: Six, PlayableCards, Diamonds
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redsixb
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redsixb-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redsixb}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardSixBlackP
+  name: playablecard
+  suffix: Six, PlayableCards, Spades
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blacksixp
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blacksixp-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blacksixp}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardSixRedC
+  name: playablecard
+  suffix: Six, PlayableCards, Hearts
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redsixc
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redsixc-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redsixc}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardSixBlackT
+  name: playablecard
+  suffix: Six, PlayableCards, Clubs
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blacksixt
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blacksixt-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blacksixt}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardAceRedB
+  name: playablecard
+  suffix: Ace, PlayableCards, Diamonds
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redaceb
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redaceb-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redaceb}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardAceBlackP
+  name: playablecard
+  suffix: Ace, PlayableCards, Spades
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blackacep
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackacep-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackacep}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardAceRedC
+  name: playablecard
+  suffix: Ace, PlayableCards, Hearts
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redacec
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redacec-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redacec}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardAceBlackT
+  name: playablecard
+  suffix: Ace, PlayableCards, Clubs
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blackacet
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackacet-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackacet}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardNineRedB
+  name: playablecard
+  suffix: Nine, PlayableCards, Diamonds
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: rednineb
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: rednineb-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: rednineb}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardNineBlackP
+  name: playablecard
+  suffix: Nine, PlayableCards, Spades
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blackninep
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackninep-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackninep}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardNineRedC
+  name: playablecard
+  suffix: Nine, PlayableCards, Hearts
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redninec
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redninec-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redninec}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardNineBlackT
+  name: playablecard
+  suffix: Nine, PlayableCards, Clubs
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blackninet
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackninet-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackninet}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardEightRedB
+  name: playablecard
+  suffix: Eight, PlayableCards, Diamonds
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redeightb
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redeightb-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redeightb}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardEightBlackP
+  name: playablecard
+  suffix: Eight, PlayableCards, Spades
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blackeightp
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackeightp-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackeightp}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardEightRedC
+  name: playablecard
+  suffix: Eight, PlayableCards, Hearts
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: redeightc
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: redeightc-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: redeightc}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
+  parent: BaseItem
+  id: PlayableCardEightBlackT
+  name: playablecard
+  suffix: Eight, PlayableCards, Clubs
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/Playablecards/playablecard.rsi
+    layers:
+    - state: blackeightt
+    - state: back
+      map: ["base"]
+  - type: Item
+    sprite: Imperial/Playablecards/playablecard.rsi
+    size: 1
+  - type: Appearance
+  - type: FoldableCard
+    Description: blackeightt-description
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedCardVisuals.State:
+        base:
+          True: {state: back}
+          False: {state: blackeightt}
+  - type: Tag
+    tags:
+    - PlayableCard
+
+- type: entity
   id: CardBin
-  name: card bin
+  parent: [ BaseStorageItem, BaseBagOpenClose ]
+  name: card box
+  suffix: PlayableCards, Empty
   description: What secrets lie at the bottom of its endless stack?
-  suffix: Empty
   components:
   - type: Sprite
-    sprite: Imperial/Playablecards/cardbin.rsi
-    state: paper_bin
-    drawdepth: SmallObjects
-    noRot: true
-  - type: Appearance
-  - type: ItemMapper
-    sprite: Imperial/Playablecards/cardbin.rsi
-    mapLayers:
-      paper_bin1:
-        whitelist:
-          tags:
-          - PlayableCard
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.10,-0.10,0.10,0.10"
-        density: 500
-        mask:
-          - TabletopMachineMask
-  - type: InteractionOutline
-  - type: Bin
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
+    layers:
+    - state: closed
+    - state: open
+      map: ["openLayer"]
+      visible: false
+    - state: cig1
+      map: ["cig1"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+  - type: Storage
+    capacity: 38
     whitelist:
       tags:
-      - PlayableCard
-  - type: ContainerContainer
-    containers:
-      bin-container: !type:Container
+        - PlayableCard
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
+    size: 10
+  - type: ItemCounter
+    count:
+      tags: [PlayableCard]
+    composite: true
+    layerStates:
+    - cig1
+  - type: Appearance
+
 
 - type: entity
   parent: CardBin
-  id: CardBin10
-  suffix: 10
+  id: CardBin38
+  suffix: 38
   components:
-  - type: Bin
-    initialContents:
-    - PlayableCardJokerRed
-    - PlayableCardJokerBlack
-    - PlayableCardKingRed
-    - PlayableCardKingBlack
-    - PlayableCardQueenRed
-    - PlayableCardQueenBlack
-    - PlayableCardJackRed
-    - PlayableCardJackBlack
-    - PlayableCardTenRed
-    - PlayableCardTenBlack
-    whitelist:
-      tags:
-      - PlayableCard
+  - type: StorageFill
+    contents:
+    - id: PlayableCardJokerRed
+    - id: PlayableCardJokerBlack
+    - id: PlayableCardAceRedC
+    - id: PlayableCardAceBlackT
+    - id: PlayableCardAceRedB
+    - id: PlayableCardAceBlackP
+    - id: PlayableCardKingRedC
+    - id: PlayableCardKingBlackT
+    - id: PlayableCardKingRedB
+    - id: PlayableCardKingBlackP
+    - id: PlayableCardQueenRedC
+    - id: PlayableCardQueenBlackT
+    - id: PlayableCardQueenRedB
+    - id: PlayableCardQueenBlackP
+    - id: PlayableCardJackRedC
+    - id: PlayableCardJackBlackT
+    - id: PlayableCardJackRedB
+    - id: PlayableCardJackBlackP
+    - id: PlayableCardTenRedC
+    - id: PlayableCardTenBlackT
+    - id: PlayableCardTenRedB
+    - id: PlayableCardTenBlackP
+    - id: PlayableCardNineRedC
+    - id: PlayableCardNineBlackT
+    - id: PlayableCardNineRedB
+    - id: PlayableCardNineBlackP
+    - id: PlayableCardEightRedC
+    - id: PlayableCardEightBlackT
+    - id: PlayableCardEightRedB
+    - id: PlayableCardEightBlackP
+    - id: PlayableCardSevenRedC
+    - id: PlayableCardSevenBlackT
+    - id: PlayableCardSevenRedB
+    - id: PlayableCardSevenBlackP
+    - id: PlayableCardSixRedC
+    - id: PlayableCardSixBlackT
+    - id: PlayableCardSixRedB
+    - id: PlayableCardSixBlackP

@@ -15,7 +15,7 @@ namespace Content.Shared.FoldableCard;
 public sealed partial class FoldableCardComponent : Component
 {
     [DataField("folded")]
-    public bool IsFolded = false;
+    public bool IsFolded = true;
 
     [DataField("Description")]
     public string Description = string.Empty;
