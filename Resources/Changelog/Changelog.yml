@@ -1,9 +1,4 @@
 Entries:
-- author: michaelcu
-  changes:
-  - {message: Telescopic Shield no longer glows in the dark when deployed., type: Fix}
-  id: 4936
-  time: '2023-10-01T17:16:54.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Nuclear Operative medics now come with a custom hardsuit., type: Add}
@@ -2940,4 +2935,12 @@ Entries:
   - {message: Nitrous oxide now decomposes at high temperatures., type: Add}
   id: 5436
   time: '2023-12-21T01:33:08.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - {message: Crates and lockers are slightly easier to bust open but still harder
+      than before., type: Tweak}
+  - {message: Solid walls are easier to break but reinforced are the same., type: Tweak}
+  id: 5437
+  time: '2023-12-21T03:03:06.0000000+00:00'
   url: null
