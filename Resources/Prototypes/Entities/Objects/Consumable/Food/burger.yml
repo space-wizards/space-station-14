@@ -738,6 +738,7 @@
       - bun
       - leafy
       - metallic
+      - mechanism
   - type: Sprite
     state: ro
   - type: SolutionContainerManager
