@@ -321,6 +321,9 @@
           conditions:
             - !type:OrganType
                type: Human
+            - !type:ReagentThreshold
+              min: 0.3
+              max: 25
         - !type:PopupMessage
           type: Local
           visualType: Large
