@@ -26,6 +26,12 @@
       "name": "hypovolemic_empty"
     },
     {
+      "name": "machpen"
+    },
+    {
+      "name": "machpen_empty"
+    },
+    {
       "name": "stimpen"
     },
     {
