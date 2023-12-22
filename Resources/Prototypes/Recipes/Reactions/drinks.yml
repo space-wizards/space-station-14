@@ -260,17 +260,17 @@
   products:
     ErikaSurprise: 6
 
-- type: reaction
-  id: EthanolBreakdown
-  requiredMixerCategories:
-  - Electrolysis
-  reactants:
-    Ethanol:
-      amount: 9
-  products:
-    Hydrogen: 6
-    Carbon: 2
-    Oxygen: 1
+#- type: reaction emo told me to do this
+#  id: EthanolBreakdown
+#  requiredMixerCategories:
+#  - Electrolysis
+#  reactants:
+#   Ethanol:
+#     amount: 9
+#  products:
+#   Hydrogen: 6
+#   Carbon: 2
+#  Oxygen: 1
 
 - type: reaction
   id: FourteenLoko
