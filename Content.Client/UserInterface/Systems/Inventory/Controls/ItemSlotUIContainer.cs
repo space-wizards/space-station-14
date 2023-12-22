@@ -68,7 +68,7 @@ public abstract class ItemSlotUIContainer<T> : GridContainer, IItemslotUIContain
     {
         if (!Children.Contains(newButton) && newButton.Parent == null && newButton.SlotName != "")
             AddChild(newButton);
-        Columns = ChildCount;
+        //Columns = ChildCount;
         return AddButtonToDict(newButton);
     }
 

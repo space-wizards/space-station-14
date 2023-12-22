@@ -1,0 +1,29 @@
+﻿<widgets:InventoryGui
+    xmlns="https://spacestation14.io"
+    xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Widgets"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Name="InventoryInterface"
+    VerticalExpand="True"
+    VerticalAlignment="Bottom"
+    Orientation="Vertical"
+    HorizontalAlignment="Center">
+    <Control HorizontalAlignment="Center">
+        <inventory:ItemSlotButtonContainer
+            Name="InventoryHotbar"
+            Access="Public"
+            Visible="False"
+            Columns="1"
+            SlotGroup="Default"
+            ExpandBackwards="True"
+            VerticalExpand="True"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+        />
+        <controls:SlotButton
+            Name="InventoryButton"
+            Access="Public"
+            VerticalAlignment="Bottom"
+            ButtonTexturePath="Slots/toggle"/>
+    </Control>
+</widgets:InventoryGui>
