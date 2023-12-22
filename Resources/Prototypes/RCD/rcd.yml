@@ -6,9 +6,8 @@
   mode: Deconstruct
   cost: 8
   delay: 4
-  visualfx: EffectRCDLong
-  finishfx: EffectRCDRemoved
-  
+  fx: EffectRCDDeconstructSlow
+
 - type: rcd
   id: WallSolid
   name: rcd-component-wall-solid
@@ -18,8 +17,7 @@
   prototype: WallSolid 
   cost: 4
   delay: 2
-  visualfx: EffectRCDNormal
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructNormal
   
 - type: rcd
   id: FloorSteel
@@ -30,8 +28,7 @@
   prototype: FloorSteel
   cost: 1
   delay: 1
-  visualfx: EffectRCDShort
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructFast
   
 - type: rcd
   id: Plating
@@ -42,8 +39,7 @@
   prototype: Plating
   cost: 1
   delay: 1
-  visualfx: EffectRCDShort
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructFast
   
 - type: rcd
   id: Catwalk
@@ -54,8 +50,7 @@
   prototype: Catwalk
   cost: 1
   delay: 1
-  visualfx: EffectRCDShort
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructFast
   
 - type: rcd
   id: WallReinforced
@@ -66,8 +61,7 @@
   prototype: WallReinforced
   cost: 8
   delay: 4
-  visualfx: EffectRCDLong
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructSlow
   
 - type: rcd
   id: Grille
@@ -78,8 +72,7 @@
   prototype: Grille
   cost: 4
   delay: 2
-  visualfx: EffectRCDNormal
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructNormal
   
 - type: rcd
   id: Window
@@ -90,8 +83,7 @@
   prototype: Window
   cost: 4
   delay: 2
-  visualfx: EffectRCDNormal
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructNormal
   
 - type: rcd
   id: WindowDirectional
@@ -102,8 +94,7 @@
   prototype: WindowDirectional
   cost: 2
   delay: 1
-  visualfx: EffectRCDShort
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructFast
   
 - type: rcd
   id: WindowReinforcedDirectional
@@ -114,8 +105,7 @@
   prototype: WindowReinforcedDirectional
   cost: 2
   delay: 1
-  visualfx: EffectRCDShort
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructFast
   
 - type: rcd
   id: ReinforcedWindow
@@ -126,8 +116,7 @@
   prototype: ReinforcedWindow
   cost: 4
   delay: 2
-  visualfx: EffectRCDNormal
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructNormal
   
 - type: rcd
   id: Airlock
@@ -138,8 +127,7 @@
   prototype: Airlock
   cost: 4
   delay: 2
-  visualfx: EffectRCDNormal
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructNormal
   
 - type: rcd
   id: AirlockGlass
@@ -150,20 +138,18 @@
   prototype: AirlockGlass
   cost: 4
   delay: 2
-  visualfx: EffectRCDNormal
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructNormal
   
 - type: rcd
   id: Firelock
-  name: rcd-component-window-firelock
+  name: rcd-component-firelock
   category: Airlocks
   texture: "/Textures/Interface/Radial/RCD/firelock.png"
   mode: Airlocks
   prototype: Firelock
   cost: 4
   delay: 2
-  visualfx: EffectRCDNormal
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructNormal
   
 - type: rcd
   id: ComputerFrame
@@ -174,32 +160,29 @@
   prototype: ComputerFrame
   cost: 4
   delay: 2
-  visualfx: EffectRCDNormal
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructNormal
   
 - type: rcd
   id: MachineFrame
-  name: rcd-component-window-machine-frame
+  name: rcd-component-machine-frame
   category: ComputerAndMachineFrames
   texture: "/Textures/Interface/Radial/RCD/machine_frame.png"
   mode: Machines
   prototype: MachineFrame
   cost: 4
   delay: 2
-  visualfx: EffectRCDNormal
-  finishfx: EffectRCDFinished
+  fx: EffectRCDConstructNormal
   
 - type: rcd
   id: TubeLight
-  name: rcd-component-window-tube-light
+  name: rcd-component-tube-light
   category: Lighting
   texture: "/Textures/Interface/Radial/RCD/tube_light.png"
   mode: Lighting
   prototype: Poweredlight
   cost: 2
   delay: 1
-  visualfx: EffectRCDShort
-  finishfx: EffectRCDFinished 
+  fx: EffectRCDConstructFast
   
 - type: rcd
   id: BulbLight
@@ -210,6 +193,5 @@
   prototype: PoweredSmallLight
   cost: 2
   delay: 1
-  visualfx: EffectRCDShort
-  finishfx: EffectRCDFinished 
+  fx: EffectRCDConstructFast
   

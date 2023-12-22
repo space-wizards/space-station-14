@@ -1,10 +1,8 @@
-using Content.Shared.Maps;
 using Content.Shared.RCD.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.RCD.Components;
 
@@ -18,28 +16,24 @@ namespace Content.Shared.RCD.Components;
 public sealed partial class RCDComponent : Component
 {
     /// <summary>
-    /// Time taken to do an action like placing a wall
+    /// Sound that plays when a RCD operation successfully completes
     /// </summary>
-    [DataField("delay"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public float Delay = 2f;
-
-    [DataField("swapModeSound")]
-    public SoundSpecifier SwapModeSound = new SoundPathSpecifier("/Audio/Items/genhit.ogg");
-
     [DataField("successSound")]
     public SoundSpecifier SuccessSound = new SoundPathSpecifier("/Audio/Items/deconstruct.ogg");
 
     /// <summary>
-    /// What mode are we on? Can be floors, walls, airlock, deconstruct.
+    /// The ProtoId of the currently selected RCD prototype
     /// </summary>
-    [DataField("mode"), AutoNetworkedField]
-    public RcdMode Mode = RcdMode.Invalid;
+    [AutoNetworkedField]
+    public ProtoId<RCDPrototype> ProtoId = default!;
 
     /// <summary>
-    /// Prototype to be constructed
+    /// A cached copy of currently selected RCD prototype
     /// </summary>
-    [DataField("constructionPrototype"), AutoNetworkedField]
-    public string? ConstructionPrototype;
+    /// <remarks>
+    /// If the ProtoId is changed, make sure to update the CachedPrototype as well
+    /// </remarks>
+    public RCDPrototype CachedPrototype = default!;
 
     /// <summary>
     /// List of RCD prototypes that the device comes loaded with
@@ -66,13 +60,11 @@ public enum RcdMode : byte
 [Serializable, NetSerializable]
 public sealed class RCDSystemMessage : BoundUserInterfaceMessage
 {
-    public RcdMode RcdMode;
-    public string? ConstructionPrototype;
+    public ProtoId<RCDPrototype> ProtoId;
 
-    public RCDSystemMessage(RcdMode rcdMode, string? constructionPrototype)
+    public RCDSystemMessage(ProtoId<RCDPrototype> protoId)
     {
-        RcdMode = rcdMode;
-        ConstructionPrototype = constructionPrototype;
+        ProtoId = protoId;
     }
 }
 

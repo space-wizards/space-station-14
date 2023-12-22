@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: EffectRCDConstruction
+  id: EffectRCDBase
   noSpawn: true
   components:
   - type: Transform
@@ -8,10 +8,86 @@
     snapCardinals: true
     drawdepth: Effects
     sprite: /Textures/Effects/rcd.rsi
-    state: construct
+    state: constructNormal
   - type: TimedDespawn
     lifetime: 3.2
   - type: Tag
     tags:
     - HideContextMenu
   - type: AnimationPlayer
+  
+- type: entity
+  parent: EffectRCDBase
+  id: EffectRCDConstructInstant
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: constructInstant
+  - type: TimedDespawn
+    lifetime: 1.2
+    
+- type: entity
+  parent: EffectRCDBase
+  id: EffectRCDConstructFast
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: constructFast 
+  - type: TimedDespawn
+    lifetime: 2.2
+    
+- type: entity
+  parent: EffectRCDBase
+  id: EffectRCDConstructNormal
+  noSpawn: true
+  components:
+  - type: Transform
+    anchored: True
+  - type: Sprite
+    state: constructNormal
+  - type: TimedDespawn
+    lifetime: 3.2
+    
+- type: entity
+  parent: EffectRCDBase
+  id: EffectRCDConstructSlow
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: constructSlow
+  - type: TimedDespawn
+    lifetime: 5.2
+    
+- type: entity
+  parent: EffectRCDBase
+  id: EffectRCDConstructVerySlow
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: constructVerySlow
+  - type: TimedDespawn
+    lifetime: 9.2
+    
+- type: entity
+  parent: EffectRCDBase
+  id: EffectRCDDeconstructSlow
+  noSpawn: true
+  components:
+  - type: Transform
+    anchored: True
+  - type: Sprite
+    state: deconstructSlow
+  - type: TimedDespawn
+    lifetime: 5.2
+
+- type: entity
+  parent: EffectRCDBase
+  id: EffectRCDDeconstructVerySlow
+  noSpawn: true
+  components:
+  - type: Transform
+    anchored: True
+  - type: Sprite
+    state: deconstructVerySlow
+  - type: TimedDespawn
+    lifetime: 9.2

@@ -5,13 +5,13 @@
 
     <!-- Entry layer (shows main categories) -->
     <ui:RadialContainer Name="Main" VerticalExpand="True" HorizontalExpand="True" Radius="64">
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="rcd-component-walls-and-flooring" TargetLayer="WallsAndFlooring">
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-walls-and-flooring'}" TargetLayer="WallsAndFlooring">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/walls_and_flooring.png"/>
         </ui:RadialMenuTextureButton>
-		<ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="rcd-component-Qindows-and-Grilles" TargetLayer="WindowsAndGrilles">
+		<ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="rcd-component-windows-and-grilles" TargetLayer="WindowsAndGrilles">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/windows_and_grilles.png"/>
         </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="rcd-component-Airlocks" TargetLayer="Airlocks">
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="rcd-component-airlocks" TargetLayer="Airlocks">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/airlocks.png"/>
         </ui:RadialMenuTextureButton>
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="rcd-component-computer-and-machine-frames" TargetLayer="ComputerAndMachineFrames">

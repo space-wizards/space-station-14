@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Content.Shared.RCD;
 using Content.Shared.RCD.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.RCD;
 
@@ -31,9 +33,9 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
         base.UpdateState(state);
     }
 
-    public void SendRCDSystemMessage(RcdMode rcdMode, string? constructionPrototype)
+    public void SendRCDSystemMessage(ProtoId<RCDPrototype> protoId)
     {
-        SendMessage(new RCDSystemMessage(rcdMode, constructionPrototype));
+        SendMessage(new RCDSystemMessage(protoId));
     }
 
     protected override void Dispose(bool disposing)

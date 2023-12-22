@@ -348,8 +348,7 @@
   description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
   components:
   - type: RCD
-    availablePrototypes:
-    - Deconstruct
+    availablePrototypes:   
     - WallSolid
     - FloorSteel
     - Plating
@@ -367,6 +366,7 @@
     - MachineFrame
     - TubeLight
     - BulbLight
+    - Deconstruct
   - type: LimitedCharges
     maxCharges: 20
     charges: 20

@@ -21,6 +21,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
@@ -48,11 +49,13 @@ public sealed class RCDSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<RCDComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<RCDComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RCDComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<RCDComponent, RCDDoAfterEvent>(OnDoAfter);
@@ -62,20 +65,63 @@ public sealed class RCDSystem : EntitySystem
 
     #region Event handling
 
-    private void OnRCDSystemMessage(EntityUid uid, RCDComponent component, RCDSystemMessage args)
+    private void OnInit(EntityUid uid, RCDComponent component, ComponentInit args)
     {
-        component.Mode = args.RcdMode;
-        component.ConstructionPrototype = args.ConstructionPrototype;
+        // On init, set the RCD to its first available recipe
+        foreach (var protoId in component.AvailablePrototypes)
+        {
+            var proto = _protoManager.Index(protoId);
 
-        Dirty(uid, component);
+            if (proto != null)
+            {
+                component.ProtoId = protoId;
+                component.CachedPrototype = proto;
+                Dirty(uid, component);
+
+                return;
+            }
+        }
+
+        // The RCD has no valid recipes somehow? Get rid of it
+        QueueDel(uid);
     }
 
-    private void OnExamine(EntityUid uid, RCDComponent comp, ExaminedEvent args)
+    private void OnRCDSystemMessage(EntityUid uid, RCDComponent component, RCDSystemMessage args)
+    {
+        // Exit if the RCD doesn't actually know the supplied prototype
+        if (!component.AvailablePrototypes.Contains(args.ProtoId))
+            return;
+
+        var proto = _protoManager.Index(args.ProtoId);
+
+        if (proto == null)
+            return;
+
+        // Update the current RCD prototype to the one supplied
+        component.ProtoId = args.ProtoId;
+        component.CachedPrototype = proto;
+        Dirty(uid, component);
+
+        if (args.Session.AttachedEntity != null)
+        {
+            // Popup message
+            var msg = (component.CachedPrototype.Prototype != null) ?
+                Loc.GetString("rcd-component-change-build-mode", ("name", Loc.GetString(component.CachedPrototype.SetName))) :
+                Loc.GetString("rcd-component-change-mode", ("mode", Loc.GetString(component.CachedPrototype.SetName)));
+
+            _popup.PopupEntity(msg, uid, args.Session.AttachedEntity.Value);
+        }
+    }
+
+    private void OnExamine(EntityUid uid, RCDComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        var msg = Loc.GetString("rcd-component-examine-detail", ("mode", comp.Mode));
+        var msg = (component.CachedPrototype.Prototype != null) ?
+            Loc.GetString("rcd-component-examine-build-details", ("name", Loc.GetString(component.CachedPrototype.SetName))) :
+            Loc.GetString("rcd-component-examine-mode-details", ("mode", Loc.GetString(component.CachedPrototype.SetName)));
+
         args.PushMarkup(msg);
     }
 
@@ -86,28 +132,44 @@ public sealed class RCDSystem : EntitySystem
 
         var user = args.User;
 
+        // Check that the RCD has enough ammo to get the job done
         TryComp<LimitedChargesComponent>(uid, out var charges);
-        if (_charges.IsEmpty(uid, charges))
+
+        // Both of these were messages were suppose to be predicted, but HasInsufficientCharges
+        // wasn't being checked on the client for some reason
+        if (_charges.IsEmpty(uid, charges) && _net.IsServer)
         {
-            _popup.PopupClient(Loc.GetString("rcd-component-no-ammo-message"), uid, user);
+            _popup.PopupEntity(Loc.GetString("rcd-component-no-ammo-message"), uid, user);
+            return;
+        }
+
+        if (_charges.HasInsufficientCharges(uid, component.CachedPrototype.Cost, charges) && _net.IsServer)
+        {
+            _popup.PopupEntity(Loc.GetString("rcd-component-insufficient-ammo-message"), uid, user);
             return;
         }
 
         var location = args.ClickLocation;
-        // Initial validity check
+
+        // Initial validity checks
         if (!location.IsValid(EntityManager))
             return;
 
         var gridUid = location.GetGridUid(EntityManager);
 
-        if (!TryGetMapGrid(gridUid, location, out var mapGrid))
+        if (!TryGetMapGrid(gridUid, location, out var _))
             return;
 
-        gridUid = mapGrid.Owner;
+        if (!_gameTiming.IsFirstTimePredicted ||
+            !_net.IsServer ||
+            !TryToFinalizeConstruction(uid, component, component.ProtoId, location, args.Target, args.User, true))
+            return;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, component.Delay,
-            new RCDDoAfterEvent(GetNetCoordinates(location), component.Mode, component.ConstructionPrototype),
-            uid, target: args.Target, used: uid)
+        // Try to start the do after
+        var effect = Spawn(component.CachedPrototype.Effect, location);
+        var ev = new RCDDoAfterEvent(GetNetCoordinates(location), component.ProtoId, EntityManager.GetNetEntity(effect));
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, component.CachedPrototype.Delay, ev, uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
             NeedHand = true,
@@ -117,16 +179,8 @@ public sealed class RCDSystem : EntitySystem
             AttemptFrequency = AttemptFrequency.EveryTick
         };
 
-        args.Handled = true;
-
-        if (_doAfter.TryStartDoAfter(doAfterArgs) &&
-            _gameTiming.IsFirstTimePredicted &&
-            _net.IsServer &&
-            TryToFinalizeConstruction(uid, component, component.Mode, component.ConstructionPrototype, location, args.Target, args.User, true))
-        {
-            var effect = Spawn("EffectRCDConstruction", location);
-            //Transform(effect).LocalRotation = Transform(gridUid.Value).LocalRotation.GetCardinalDir().ToAngle();
-        }
+        if (_doAfter.TryStartDoAfter(doAfterArgs))
+            args.Handled = true;
     }
 
     private void OnDoAfterAttempt(EntityUid uid, RCDComponent component, DoAfterAttemptEvent<RCDDoAfterEvent> args)
@@ -136,8 +190,15 @@ public sealed class RCDSystem : EntitySystem
 
         var location = GetCoordinates(args.Event.Location);
 
-        if (!TryToFinalizeConstruction(uid, component, args.Event.StartingMode, args.Event.StartingPrototype, location, args.Event.Target, args.Event.User, true))
+        if (!TryToFinalizeConstruction(uid, component, args.Event.StartingProtoId, location, args.Event.Target, args.Event.User, true))
         {
+            if (_net.IsServer && args.Event.Effect != null)
+            {
+                Logger.Debug("Delete effect");
+                QueueDel(EntityManager.GetEntity(args.Event.Effect));
+                //Spawn("EffectRCDCancelled", location);
+            }
+            Logger.Debug("Cancel action");
             args.Cancel();
             return;
         }
@@ -153,12 +214,12 @@ public sealed class RCDSystem : EntitySystem
         var location = GetCoordinates(args.Location);
 
         // Try to construct the prototype
-        if (!TryToFinalizeConstruction(uid, component, component.Mode, component.ConstructionPrototype, location, args.Target, args.User, false))
+        if (!TryToFinalizeConstruction(uid, component, component.ProtoId, location, args.Target, args.User, false))
             return;
 
-        // Play audio and consume charge if successful
+        // Play audio and consume charges
         _audio.PlayPredicted(component.SuccessSound, uid, args.User);
-        _charges.UseCharge(uid);
+        _charges.UseCharges(uid, component.CachedPrototype.Cost);
     }
 
     #endregion
@@ -166,19 +227,14 @@ public sealed class RCDSystem : EntitySystem
     private bool TryToFinalizeConstruction
         (EntityUid uid,
         RCDComponent component,
-        RcdMode rcdMode,
-        string? constructionPrototype,
+        ProtoId<RCDPrototype> protoId,
         EntityCoordinates location,
         EntityUid? target,
         EntityUid user,
         bool dryRun = true)
     {
-        // Exit if the construction mode has changed
-        if (component.Mode != rcdMode)
-            return false;
-
-        // Exit if the construction prototype has changed
-        if (component.ConstructionPrototype != constructionPrototype)
+        // Exit if the RCD prototype has changed
+        if (component.ProtoId != protoId)
             return false;
 
         // Gather location data
@@ -202,7 +258,7 @@ public sealed class RCDSystem : EntitySystem
             return false;
 
         // Try to construct the prototype (or if this is a dry run, check that the construct is still valid instead)
-        switch (component.Mode)
+        switch (component.CachedPrototype.Mode)
         {
             case RcdMode.Deconstruct: return TryToDeconstruct(uid, component, mapGridData, target, user, dryRun);
             case RcdMode.Floors: return TryToConstructFloor(uid, component, mapGridData, user, dryRun);
@@ -277,30 +333,33 @@ public sealed class RCDSystem : EntitySystem
 
     private bool TryToConstructFloor(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user, bool dryRun = true)
     {
-        if (!IsFloorPlaceable(component.ConstructionPrototype, mapGridData, uid, user))
+        if (component.CachedPrototype.Prototype == null)
+            return false;
+
+        if (!IsFloorPlaceable(component.CachedPrototype.Prototype, mapGridData, uid, user))
             return false;
 
         if (dryRun || !_net.IsServer)
             return true;
 
-        _mapSystem.SetTile(mapGridData.GridUid, mapGridData.Component, mapGridData.Position, new Tile(_tileDefMan[component.ConstructionPrototype!].TileId));
+        _mapSystem.SetTile(mapGridData.GridUid, mapGridData.Component, mapGridData.Position, new Tile(_tileDefMan[component.CachedPrototype.Prototype!].TileId));
 
-        _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {mapGridData.GridUid} {mapGridData.Position} to {component.ConstructionPrototype}");
+        _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {mapGridData.GridUid} {mapGridData.Position} to {component.CachedPrototype.Prototype}");
         return true;
     }
 
     private bool TryToConstructCatwalk(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid user, bool dryRun = true)
     {
-        if (!IsCatwalkPlaceable(component.ConstructionPrototype, mapGridData, uid, user))
+        if (!IsCatwalkPlaceable(component.CachedPrototype.Prototype, mapGridData, uid, user))
             return false;
 
         if (dryRun || !_net.IsServer)
             return true;
 
-        var ent = Spawn(component.ConstructionPrototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
+        var ent = Spawn(component.CachedPrototype.Prototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
         Transform(ent).LocalRotation = Angle.Zero;
 
-        _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {mapGridData.GridUid} {mapGridData.Position} to {component.ConstructionPrototype}");
+        _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to spawn {ToPrettyString(ent)} at {mapGridData.Position} on grid {mapGridData.GridUid}");
         return true;
     }
 
@@ -312,7 +371,7 @@ public sealed class RCDSystem : EntitySystem
         if (dryRun || !_net.IsServer)
             return true;
 
-        var ent = Spawn(component.ConstructionPrototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
+        var ent = Spawn(component.CachedPrototype?.Prototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
         Transform(ent).LocalRotation = Angle.Zero;
 
         _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to spawn {ToPrettyString(ent)} at {mapGridData.Position} on grid {mapGridData.GridUid}");
@@ -327,7 +386,7 @@ public sealed class RCDSystem : EntitySystem
         if (dryRun || !_net.IsServer)
             return true;
 
-        var ent = Spawn(component.ConstructionPrototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
+        var ent = Spawn(component.CachedPrototype?.Prototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
         Transform(ent).LocalRotation = Transform(uid).LocalRotation;
 
         _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to spawn {ToPrettyString(ent)} at {mapGridData.Position} on grid {mapGridData.GridUid}");
@@ -342,7 +401,7 @@ public sealed class RCDSystem : EntitySystem
         if (dryRun || !_net.IsServer)
             return true;
 
-        var ent = Spawn(component.ConstructionPrototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
+        var ent = Spawn(component.CachedPrototype?.Prototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
         Transform(ent).LocalRotation = GetAngleFromUserFacing(user);
 
         _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to spawn {ToPrettyString(ent)} at {mapGridData.Position} on grid {mapGridData.GridUid}");
@@ -357,7 +416,7 @@ public sealed class RCDSystem : EntitySystem
         if (dryRun || !_net.IsServer)
             return true;
 
-        string? prototype = component.ConstructionPrototype;
+        string? prototype = component.CachedPrototype?.Prototype;
 
         foreach (var heldObject in _hands.EnumerateHeld(user))
         {
@@ -391,7 +450,7 @@ public sealed class RCDSystem : EntitySystem
         if (dryRun || !_net.IsServer)
             return true;
 
-        var ent = Spawn(component.ConstructionPrototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
+        var ent = Spawn(component.CachedPrototype?.Prototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
         Transform(ent).LocalRotation = GetAngleOppositeOfUserFacing(user);
 
         _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to spawn {ToPrettyString(ent)} at {mapGridData.Position} on grid {mapGridData.GridUid}");
@@ -610,21 +669,21 @@ public struct MapGridData
 public sealed partial class RCDDoAfterEvent : DoAfterEvent
 {
     [DataField("location", required: true)]
-    public NetCoordinates Location = default!;
+    public NetCoordinates Location { get; private set; } = default!;
 
-    [DataField("startingMode", required: true)]
-    public RcdMode StartingMode = default!;
+    [DataField("startingProtoId")]
+    public ProtoId<RCDPrototype> StartingProtoId { get; private set; } = default!;
 
-    [DataField("startingPrototype")]
-    public string? StartingPrototype = null;
+    [DataField("fx")]
+    public NetEntity? Effect { get; private set; } = null;
 
     private RCDDoAfterEvent() { }
 
-    public RCDDoAfterEvent(NetCoordinates location, RcdMode startingMode, string? startingPrototype = null)
+    public RCDDoAfterEvent(NetCoordinates location, ProtoId<RCDPrototype> startingProtoId, NetEntity? effect = null)
     {
         Location = location;
-        StartingMode = startingMode;
-        StartingPrototype = startingPrototype;
+        StartingProtoId = startingProtoId;
+        Effect = effect;
     }
 
     public override DoAfterEvent Clone() => this;

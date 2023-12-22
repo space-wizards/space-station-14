@@ -99,6 +99,9 @@ public class RadialMenu : BaseWindow
 [Virtual]
 public class RadialMenuButton : Button
 {
+    /// <summary>
+    /// Upon clicking this button the radial menu will be moved to the named layer
+    /// </summary>
     public string? TargetLayer { get; set; }
 
     public RadialMenuButton()

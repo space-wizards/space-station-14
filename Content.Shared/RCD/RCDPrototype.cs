@@ -1,24 +1,22 @@
-using Content.Shared.Random;
 using Content.Shared.RCD.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.RCD;
 
 /// <summary>
-/// Conatins the parameters for a RCD construction / operation
+/// Contains the parameters for a RCD construction / operation
 /// </summary>
 [Prototype("rcd")]
 public sealed class RCDPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = string.Empty;
+    [IdDataField]
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// The name associated with the prototype
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("name")]
-    public string SetName { get; private set; } = "???";
+    [ViewVariables(VVAccess.ReadWrite), DataField("name", required: true)]
+    public string SetName { get; private set; } = string.Empty;
 
     /// <summary>
     /// The category this prototype is filed under
@@ -39,7 +37,7 @@ public sealed class RCDPrototype : IPrototype
     public RcdMode Mode { get; private set; } = RcdMode.Invalid;
 
     /// <summary>
-    /// The entity prototype to be constructed
+    /// The entity prototype that will be constructed (mode dependent)
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("prototype")]
     public string? Prototype { get; private set; }
@@ -59,12 +57,6 @@ public sealed class RCDPrototype : IPrototype
     /// <summary>
     /// The visual effect that plays during this operation
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("visualFX")]
-    public string? VisualEffect { get; private set; }
-
-    /// <summary>
-    /// The visual effect that plays when the operation is finished
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("finishFX")]
-    public string? FinishEffect { get; private set; }
+    [ViewVariables(VVAccess.ReadWrite), DataField("fx")]
+    public string? Effect { get; private set; }
 }
