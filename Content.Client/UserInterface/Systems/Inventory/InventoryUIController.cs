@@ -158,23 +158,25 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         }
 
         var clothing = clientInv.SlotData.Where(p => !p.Value.HasSlotGroup).ToList();
+        var maxWidth = clothing.Max(p => p.Value.ButtonOffset.X) + 1;
         var maxIndex = clothing.Select(p => GetIndex(p.Value.ButtonOffset)).Max();
+
+        _inventoryHotbar.MaxColumns = maxWidth;
+
         for (var i = 0; i <= maxIndex; i++)
         {
             var index = i;
-            if (clothing.FirstOrNull(p => GetIndex(p.Value.ButtonOffset) == index) is not { } pair)
-            {
-                var ctrl = new Control
-                {
-                    MaxSize = new Vector2(64, 64)
-                };
-
-                _inventoryHotbar.AddChild(ctrl);
-            }
-            else
+            if (clothing.FirstOrNull(p => GetIndex(p.Value.ButtonOffset) == index) is { } pair)
             {
                 if (_inventoryHotbar.TryGetButton(pair.Key, out var slot))
                     slot.SetPositionLast();
+            }
+            else
+            {
+                _inventoryHotbar.AddChild(new Control
+                {
+                    MaxSize = new Vector2(64, 64)
+                });
             }
         }
 
@@ -182,7 +184,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
         int GetIndex(Vector2i position)
         {
-            return (position.Y * 3) + position.X;
+            return position.Y * maxWidth + position.X;
         }
     }
 
