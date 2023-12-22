@@ -330,6 +330,8 @@
         orGroup: GiftPool
       - id: Ash
         orGroup: GiftPool
+      - id: Coal1
+        orGroup: GiftPool
       - id: MiningDrill
         orGroup: GiftPool
       - id: CowToolboxFilled

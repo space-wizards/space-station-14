@@ -221,6 +221,22 @@
     Durathread: 100
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitHoSParadeMale
+  result: ClothingUniformJumpsuitHoSParadeMale
+  completetime: 5
+  materials:
+    Cloth: 300
+    Durathread: 100
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtHoSParadeMale
+  result: ClothingUniformJumpskirtHoSParadeMale
+  completetime: 5
+  materials:
+    Cloth: 300
+    Durathread: 100
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitHoSAlt
   result: ClothingUniformJumpsuitHoSAlt
   completetime: 4

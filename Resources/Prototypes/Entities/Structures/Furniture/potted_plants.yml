@@ -235,34 +235,42 @@
   - type: Sprite
     state: plant-25
 
-#these are all the plastic plants. They inherit from the first one because they don't have
-#enough differences to warrant getting a unique abstract prototype. It's just the name and description.
 - type: entity
   id: PottedPlant26
   parent: PottedPlantBase
-  name: plastic potted plant
-  description: A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch.
+  description: Is it just me, or is it blinking?
   components:
   - type: Sprite
     state: plant-26
 
+#these are all the plastic plants. They inherit from the first one because they don't have
+#enough differences to warrant getting a unique abstract prototype. It's just the name and description.
 - type: entity
   id: PottedPlant27
-  parent: PottedPlant26
+  parent: PottedPlantBase
+  name: plastic potted plant
+  description: A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch.
   components:
   - type: Sprite
     state: plant-27
 
 - type: entity
   id: PottedPlant28
-  parent: PottedPlant26
+  parent: PottedPlant27
   components:
   - type: Sprite
     state: plant-28
 
 - type: entity
   id: PottedPlant29
-  parent: PottedPlant26
+  parent: PottedPlant27
   components:
   - type: Sprite
     state: plant-29
+
+- type: entity
+  id: PottedPlant30
+  parent: PottedPlant27
+  components:
+  - type: Sprite
+    state: plant-30
