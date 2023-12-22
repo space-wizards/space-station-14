@@ -53,9 +53,9 @@
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 7, 7 ]
             Detective: [ 1, 1 ]
-            SecurityPilot: [ 1, 1 ]
+            SecurityPilot: [ 1, 1 ] # SS220-PILOT
             SecurityCadet: [ 4, 4 ]
-            #Lawyer: [ 1, 1 ] # Corvax-IAA
+            # Lawyer: [ 1, 1 ] # Corvax-IAA
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
