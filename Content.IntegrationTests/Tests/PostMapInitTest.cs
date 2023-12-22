@@ -75,6 +75,7 @@ namespace Content.IntegrationTests.Tests
             "Nox",
             "Snout",
             "220Avrite",
+            "220Marathon",
         };
 
         /// <summary>
