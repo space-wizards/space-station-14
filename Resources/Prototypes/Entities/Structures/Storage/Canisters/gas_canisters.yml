@@ -91,10 +91,10 @@
     - type: ItemSlots
     - type: GasPortable
     - type: GasCanister
-      tank_slot:
+      gasTankSlot:
         name: Gas Tank
         whitelist:
-          component:
+          components:
             - GasTank
     - type: StaticPrice
       price: 1000
@@ -120,7 +120,7 @@
           - 0 # Plasma
           - 0 # Tritium
           - 0 # Water vapor
-          - 0 # Miasma
+          - 0 # Ammonia
           - 0 # N2O
           - 0 # Frezon
         temperature: 293.15
@@ -475,7 +475,7 @@
 
 - type: entity
   parent: GasCanister
-  id: MiasmaCanister
+  id: AmmoniaCanister
   components:
     - type: Sprite
       layers:
@@ -490,7 +490,7 @@
           - 0 # Plasma
           - 0 # Tritium
           - 0 #  Water vapor
-          - 1871.71051 # Miasma
+          - 1871.71051 # Ammonia
         temperature: 293.15
     - type: Destructible
       thresholds:
@@ -509,7 +509,7 @@
             path: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
           spawn:
-            MiasmaCanisterBroken:
+            AmmoniaCanisterBroken:
               min: 1
               max: 1
         - !type:DoActsBehavior
@@ -535,7 +535,7 @@
           - 0 # Plasma
           - 0 # Tritium
           - 0 #  Water vapor
-          - 0 # Miasma
+          - 0 # Ammonia
           - 1871.71051 # N2O
         temperature: 293.15
     - type: Destructible
@@ -578,8 +578,8 @@
       - 0 # CO2
       - 0 # Plasma
       - 0 # Tritium
-      - 0 #  Water vapor
-      - 0 # Miasma
+      - 0 # Water vapor
+      - 0 # Ammonia
       - 0 # N2O
       - 1871.71051 # Frezon
       temperature: 293.15
@@ -730,7 +730,7 @@
 
 - type: entity
   parent: GasCanisterBrokenBase
-  id: MiasmaCanisterBroken
+  id: AmmoniaCanisterBroken
   noSpawn: true
   components:
     - type: Sprite

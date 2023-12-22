@@ -54,7 +54,7 @@
     threshold: 0.5
 
 - type: alarmThreshold
-  id: stationMiasma
+  id: stationAmmonia
   upperBound: !type:AlarmThresholdSetting
     threshold: 0.05
   upperWarnAround: !type:AlarmThresholdSetting

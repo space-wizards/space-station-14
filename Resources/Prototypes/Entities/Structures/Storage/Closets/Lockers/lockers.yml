@@ -21,7 +21,7 @@
 # Cargo
 - type: entity
   id: LockerQuarterMaster
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: quartermaster's locker
   components:
   - type: Appearance

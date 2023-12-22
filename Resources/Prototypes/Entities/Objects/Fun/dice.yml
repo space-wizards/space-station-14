@@ -61,9 +61,10 @@
   components:
   - type: Dice
     sides: 10
-    currentValue: 10
+    offset: 1
+    currentValue: 0
   - type: Sprite
-    state: d10_10
+    state: d10_0
 
 - type: entity
   parent: BaseDice
