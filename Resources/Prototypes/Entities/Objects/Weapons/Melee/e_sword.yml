@@ -244,7 +244,7 @@
     angle: 100
     damage:
       types:
-        Blunt: 5.5
+        Blunt: 4.5
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
     layers:

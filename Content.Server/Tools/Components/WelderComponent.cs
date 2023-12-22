@@ -2,7 +2,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tools.Components
 {
@@ -18,8 +18,8 @@ namespace Content.Server.Tools.Components
         /// <summary>
         ///     Reagent that will be used as fuel for welding.
         /// </summary>
-        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-        public string FuelReagent { get; private set; } = "WeldingFuel";
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public ProtoId<ReagentPrototype> FuelReagent { get; private set; } = "WeldingFuel";
 
         /// <summary>
         ///     Fuel consumption per second while the welder is active.
