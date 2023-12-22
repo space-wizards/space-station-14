@@ -287,35 +287,35 @@
           walkSpeedModifier: 0.55
           sprintSpeedModifier: 0.55
         - !type:Polymorph
-          prototype: Cyborg
+          prototype: Cyborg2
           conditions:
             - !type:ReagentThreshold
               min: 20
             - !type:OrganType
                type: Human
-        - !type:Polymorph
-          prototype: Cyborg
-          conditions:
-            - !type:ReagentThreshold
-              min: 20
-            - !type:OrganType
-               type: Dwarf
-        - !type:Polymorph
-          prototype: Cyborg
-          conditions:
-            - !type:ReagentThreshold
-              min: 20
-            - !type:OrganType
-               type: Human
-        - !type:Polymorph
-          prototype: Cyborg
-          conditions:
-            - !type:ReagentThreshold
-              min: 20
-            - !type:OrganType
-               type: Dwarf
         - !type:Polymorph
           prototype: Cyborg2
+          conditions:
+            - !type:ReagentThreshold
+              min: 20
+            - !type:OrganType
+               type: Dwarf
+        - !type:Polymorph
+          prototype: Cyborg
+          conditions:
+            - !type:ReagentThreshold
+              min: 20
+            - !type:OrganType
+               type: Human
+        - !type:Polymorph
+          prototype: Cyborg
+          conditions:
+            - !type:ReagentThreshold
+              min: 20
+            - !type:OrganType
+               type: Dwarf
+        - !type:Polymorph
+          prototype: Cyborg
           conditions:
             - !type:MobStateCondition
               mobstate: Critical
@@ -324,7 +324,7 @@
             - !type:ReagentThreshold
               min: 5
         - !type:Polymorph
-          prototype: Cyborg2
+          prototype: Cyborg
           conditions:
             - !type:MobStateCondition
               mobstate: Critical
@@ -417,6 +417,7 @@
                type: Dwarf
           amount: -35
       metabolismRate: 0.02
+
 
 - type: reagent
   id: HeartbreakerToxin
