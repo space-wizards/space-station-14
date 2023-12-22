@@ -154,6 +154,8 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
                 .Where(x => !Deleted(x.Value))
                 .Select(static x => x.Key)
                 .ToList();
+
+            component.OwnedDebris.Clear();
         }
 
         points ??= GeneratePointsInChunk(args.Chunk, density, chunk.Coordinates, chunk.Map);
