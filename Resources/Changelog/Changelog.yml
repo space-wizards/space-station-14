@@ -1,10 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - message: Reduced the bombsuit helmet's explosive resistance.
-    type: Tweak
-  id: 5005
-  time: '2023-10-14T17:34:58.0000000+00:00'
 - author: JoeHammad
   changes:
   - message: mindshields to meta station armory
@@ -3911,4 +3905,12 @@ Entries:
     type: Add
   id: 5434
   time: '2023-12-22T17:55:55.0000000+00:00'
+  url: null
+- author: spo9k
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 Gate Station"
+    type: Add
+  id: 5435
+  time: '2023-12-22T18:26:01.0000000+00:00'
   url: null
