@@ -9,19 +9,19 @@
   - type: Icon
     sprite: Structures/Windows/reinforced_uranium_window.rsi
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1500
-      behaviors: #excess damage, don't spawn entities.
+        damage: 200
+      behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 850
+        damage: 100
       behaviors:
       - !type:PlaySoundBehavior
         sound:

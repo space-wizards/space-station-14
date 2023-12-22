@@ -7,7 +7,6 @@
   - type: Tag
     tags:
     - Soap
-    - CleansForensics
   - type: Sprite
     sprite: Objects/Specific/Janitorial/soap.rsi
     layers:
@@ -69,6 +68,7 @@
   - type: Food
     solution: soap
   - type: BadFood
+  - type: CleansForensics
   - type: Residue
     residueAdjective: residue-slippery
     residueColor: residue-green
@@ -137,6 +137,8 @@
     flavors:
       - clean
       - punishment
+  - type: CleansForensics
+    cleanDelay: 8.0
   - type: Residue
     residueAdjective: residue-slippery
     residueColor: residue-red
