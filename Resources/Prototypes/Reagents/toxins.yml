@@ -375,7 +375,7 @@
 
 - type: reagent
   id: HeartbreakerToxin
-  name: reagent-name-heartbreaker-toxn
+  name: reagent-name-heartbreaker-toxin
   group: Toxins
   desc: reagent-desc-heartbreaker-toxin
   physicalDesc: reagent-physical-desc-strong-smelling
