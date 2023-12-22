@@ -256,16 +256,12 @@
   reactants:
     WeldingFuel:
       amount: 1
-<<<<<<< HEAD
     Hydrogen:
-=======
-    Benzene:
->>>>>>> 13bfa48f7de5a2205ce32073460476753e4891b8
       amount: 1
-    Carbon
+    Carbon:
       amount: 1
   products:
-    Oil: 2
+    Oil: 3
 
 - type: reaction
   id: Fluorosurfactant
