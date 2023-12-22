@@ -299,9 +299,23 @@
             - !type:ReagentThreshold
               min: 20
             - !type:OrganType
+               type: Dwarf
+        - !type:Polymorph
+          prototype: Cyborg
+          conditions:
+            - !type:ReagentThreshold
+              min: 20
+            - !type:OrganType
                type: Human
         - !type:Polymorph
           prototype: Cyborg
+          conditions:
+            - !type:ReagentThreshold
+              min: 20
+            - !type:OrganType
+               type: Dwarf
+        - !type:Polymorph
+          prototype: Cyborg2
           conditions:
             - !type:MobStateCondition
               mobstate: Critical
@@ -309,32 +323,77 @@
                type: Human
             - !type:ReagentThreshold
               min: 5
+        - !type:Polymorph
+          prototype: Cyborg2
+          conditions:
+            - !type:MobStateCondition
+              mobstate: Critical
+            - !type:OrganType
+               type: Dwarf
+            - !type:ReagentThreshold
+              min: 5
         - !type:HealthChange
           damage:
             types:
-              Blunt: 2
-        - !type:PopupMessage
-          type: Local
-          visualType: Large
-          messages: ["nanomachines-effect-mechanization"]
-          probability: 300.0
+              Blunt: 1
+        - !type:Electrocute
+          probability: 0.01
+          conditions:
+            - !type:OrganType
+               type: Dwarf
+            - !type:ReagentThreshold
+              min: 5
+        - !type:Electrocute
+          probability: 0.01
           conditions:
             - !type:OrganType
                type: Human
             - !type:ReagentThreshold
-              min: 0.3
+              min: 5
+        - !type:PopupMessage
+          type: Local
+          visualType: Large
+          messages: ["nanomachines-effect-mechanization"]
+          probability: 1000.0
+          conditions:
+            - !type:OrganType
+               type: Human
+            - !type:ReagentThreshold
+              min: 0.4
+              max: 25
+        - !type:PopupMessage
+          type: Local
+          visualType: Large
+          messages: ["nanomachines-effect-mechanization"]
+          probability: 1000.0
+          conditions:
+            - !type:OrganType
+               type: Dwarf
+            - !type:ReagentThreshold
+              min: 0.05
               max: 25
         - !type:PopupMessage
           type: Local
           visualType: Large
           messages: ["nanomachines-effect-mechanization-ends"]
-          probability: 300.0
+          probability: 1000.0
           conditions:
             - !type:OrganType
                type: Human
             - !type:ReagentThreshold
               min: 0
-              max: 0.3
+              max: 0.04
+        - !type:PopupMessage
+          type: Local
+          visualType: Large
+          messages: ["nanomachines-effect-mechanization-ends"]
+          probability: 1000.0
+          conditions:
+            - !type:OrganType
+               type: Dwarf
+            - !type:ReagentThreshold
+              min: 0
+              max: 0.04
         - !type:AdjustReagent
           reagent: Nanomachines
           conditions:
@@ -342,11 +401,22 @@
               mobstate: Critical
             - !type:ReagentThreshold
               min: 0
-              max: 25
+              max: 35
             - !type:OrganType
                type: Human
-          amount: -25
-      metabolismRate: 0.2
+          amount: -35
+        - !type:AdjustReagent
+          reagent: Nanomachines
+          conditions:
+            - !type:MobStateCondition
+              mobstate: Critical
+            - !type:ReagentThreshold
+              min: 0
+              max: 35
+            - !type:OrganType
+               type: Dwarf
+          amount: -35
+      metabolismRate: 0.02
 
 - type: reagent
   id: HeartbreakerToxin
