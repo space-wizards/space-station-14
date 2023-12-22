@@ -117,13 +117,13 @@
     - id: WeaponSniperMosin
       prob: 0.01
       orGroup: Weapons
-    - id: WeaponMakeShiftLaser
+    - id: WeaponMakeshiftLaser
       prob: 0.01
       orGroup: Weapons
     - id: Sledgehammer
       prob: 0.01
       orGroup: Weapons
-    - id: WeaponMeleeRobustToolbox
+    - id: WeaponMeleeToolboxRobust
       prob: 0.01
       orGroup: Weapons
     - id: ThrowingStar
@@ -167,7 +167,7 @@
     - id: ClothingNeckBling
       prob: 0.01
       orGroup: Swag
-    - id: ClothingShoesBlind
+    - id: ClothingShoesBling
       prob: 0.01
       orGroup: Swag
     - id: IngotGold1
@@ -185,7 +185,7 @@
     - id: DrinkGoldenCup
       prob: 0.01
       orGroup: Swag
-    - id: ToolboxGoldenFilled
+    - id: ToolboxGoldFilled
       prob: 0.01
       orGroup: Swag
     - id: ClothingEyesGlassesGar
