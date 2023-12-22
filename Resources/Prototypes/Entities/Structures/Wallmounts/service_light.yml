@@ -1,0 +1,25 @@
+- type: entity
+  parent: Poweredlight
+  id: JanitorServiceLight
+  name: janitorial service light
+  description: A wall-mounted janitorial sign. If the light is blinking, a janitor's service is required.
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/service_light.rsi
+    drawdepth: WallMountedItems
+    layers:
+    - state: off
+      map: ["enum.PoweredLightLayers.Base"]
+    state: off
+  - type: PointLight
+    radius: 1
+    energy: 1
+    softness: 1
+    enabled: false
+  - type: PoweredLight
+    bulb: Bulb
+    on: false
+    hasLampOnSpawn: ServiceLightBulb
+    damage:
+      types:
+        Heat: 5

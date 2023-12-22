@@ -131,14 +131,14 @@
       spawnGas: WaterVapor
 
 - type: entity
-  name: Miasma gas miner
+  name: Ammonia gas miner
   parent: GasMinerBase
-  id: GasMinerMiasma
+  id: GasMinerAmmonia
   placement:
     mode: SnapgridCenter
   components:
     - type: GasMiner
-      spawnGas: Miasma
+      spawnGas: Ammonia
 
 - type: entity
   name: Nitrous Oxide gas miner

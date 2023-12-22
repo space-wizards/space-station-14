@@ -12,19 +12,19 @@
     fuelCost: 10
     doAfterDelay: 2
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300 #excess damage (nuke?). Avoid computational cost of spawning entities.
+        damage: 150
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 75
       behaviors:
       - !type:PlaySoundBehavior
         sound:
