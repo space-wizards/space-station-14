@@ -25,10 +25,7 @@
     speed: 1.5
     useSound: /Audio/Items/jaws_pry.ogg
   - type: Prying
-    pryPowered: !type:Bool
-      true
-    force: !type:Bool
-      true
+    pryPowered: true
     useSound: /Audio/Items/jaws_pry.ogg
   - type: ToolForcePowered
   - type: MultipleTool
@@ -66,6 +63,8 @@
     qualities:
       - Prying
     speed: 3.0
+  - type: Prying
+    force: true # syndie jaws bypass bolts
   - type: MultipleTool
     entries:
       - behavior: Prying
