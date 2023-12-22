@@ -21,12 +21,7 @@ public abstract class SharedDiceSystem : EntitySystem
     private void OnHandleState(EntityUid uid, DiceComponent component, ref ComponentHandleState args)
     {
         if (args.Current is DiceComponent.DiceState state)
-        {
-            if (IsValidValue(state.CurrentValue, component) && IsValidSide(ValueToSide(state.CurrentValue, component), component))
-            {
-                SetCurrentValue(uid, state.CurrentValue, component);
-            }
-        }
+            component.CurrentValue = state.CurrentValue;
 
         UpdateVisuals(uid, component);
     }
@@ -68,7 +63,7 @@ public abstract class SharedDiceSystem : EntitySystem
             return;
         }
 
-        die.CurrentValue = SideToValue(side, die);
+        die.CurrentValue = (side - die.Offset) * die.Multiplier;
         Dirty(die);
         UpdateVisuals(uid, die);
     }
@@ -78,33 +73,13 @@ public abstract class SharedDiceSystem : EntitySystem
         if (!Resolve(uid, ref die))
             return;
 
-        if (!IsValidValue(value, die))
+        if (value % die.Multiplier != 0 || value/ die.Multiplier + die.Offset < 1)
         {
             Log.Error($"Attempted to set die {ToPrettyString(uid)} to an invalid value ({value}).");
             return;
         }
 
-        SetCurrentSide(uid, ValueToSide(value, die), die);
-    }
-
-    private int SideToValue(int side, DiceComponent die)
-    {
-        return (side - die.Offset) * die.Multiplier;
-    }
-
-    private int ValueToSide(int value, DiceComponent die)
-    {
-        return value / die.Multiplier + die.Offset;
-    }
-
-    private bool IsValidValue(int value, DiceComponent die)
-    {
-        return !(value % die.Multiplier != 0 || value / die.Multiplier + die.Offset < 1);
-    }
-
-    private bool IsValidSide(int side, DiceComponent die)
-    {
-        return !(side < 1 || side > die.Sides);
+        SetCurrentSide(uid, value / die.Multiplier + die.Offset, die);
     }
 
     protected virtual void UpdateVisuals(EntityUid uid, DiceComponent? die = null)

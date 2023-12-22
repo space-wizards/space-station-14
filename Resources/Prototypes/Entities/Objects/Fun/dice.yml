@@ -62,7 +62,7 @@
   - type: Dice
     sides: 10
     offset: 1
-    currentValue: 10
+    currentValue: 0
   - type: Sprite
     state: d10_0
 
