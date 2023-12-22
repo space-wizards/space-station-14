@@ -108,6 +108,7 @@ reagent-desc-saline = "A mixture of salt and water. Commonly used to treat dehyd
 
 reagent-name-amnesia = oblivizine
 reagent-desc-amnesia = "A chemical which will make the user forget."
+reagent-desc-effect-amnesia = Causes complete memory loss after a short delay. Can be treated using Mindbreaker toxin.
 
 reagent-name-lacerinol = lacerinol
 reagent-desc-lacerinol = A fairly unreactive chemical that boosts collagen sythesis to incredible levels, healing slash trauma.

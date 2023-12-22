@@ -865,7 +865,8 @@
         component: Amnesia
         type: Add
         refresh: true
-        time: 90
+        time: 185
+        guidebookTextOverride: reagent-desc-effect-amnesia
         conditions:
         - !type:ReagentThreshold
           min: 15
