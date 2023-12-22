@@ -47,6 +47,9 @@ public abstract class SharedItemToggleSystem : EntitySystem
         Toggle(uid, args.User, itemToggle);
     }
 
+    /// <summary>
+    /// Used when an item is attempted to be toggled. 
+    /// </summary>
     public void Toggle(EntityUid uid, EntityUid? user = null, ItemToggleComponent? itemToggle = null)
     {
         if (!Resolve(uid, ref itemToggle))
@@ -62,6 +65,9 @@ public abstract class SharedItemToggleSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Used when an item is attempting to be activated. It returns false if the attempt fails any reason, interrupting the activation.
+    /// </summary>
     public bool TryActivate(EntityUid uid, EntityUid? user = null, ItemToggleComponent? itemToggle = null)
     {
         if (!Resolve(uid, ref itemToggle))
@@ -105,6 +111,9 @@ public abstract class SharedItemToggleSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Used when an item is attempting to be deactivated. It returns false if the attempt fails any reason, interrupting the deactivation.
+    /// </summary>
     public bool TryDeactivate(EntityUid uid, EntityUid? user = null, ItemToggleComponent? itemToggle = null)
     {
         if (!Resolve(uid, ref itemToggle))
@@ -143,7 +152,9 @@ public abstract class SharedItemToggleSystem : EntitySystem
         }
     }
 
-    //Makes the actual changes to the item's components on activation.
+    /// <summary>
+    /// Used to make the actual changes to the item's components on activation.
+    /// </summary>
     private void Activate(EntityUid uid, ItemToggleComponent itemToggle)
     {
         itemToggle.Activated = true;
@@ -162,7 +173,9 @@ public abstract class SharedItemToggleSystem : EntitySystem
         Dirty(uid, itemToggle);
     }
 
-    //Makes the actual changes to the item's components on deactivation.
+    /// <summary>
+    /// Used to make the actual changes to the item's components on deactivation.
+    /// </summary>
     private void Deactivate(EntityUid uid, ItemToggleComponent itemToggle)
     {
         itemToggle.Activated = false;

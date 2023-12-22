@@ -22,19 +22,19 @@ public sealed partial class ItemToggleComponent : Component
     /// <summary>
     ///     The noise this item makes when it is toggled on.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), DataField]
+    [ViewVariables(VVAccess.ReadOnly), DataField, AutoNetworkedField]
     public SoundSpecifier? SoundActivate;
 
     /// <summary>
     ///     The noise this item makes when it is toggled off.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), DataField]
+    [ViewVariables(VVAccess.ReadOnly), DataField, AutoNetworkedField]
     public SoundSpecifier? SoundDeactivate;
 
     /// <summary>
     ///     The noise this item makes when it is toggled on.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), DataField]
+    [ViewVariables(VVAccess.ReadOnly), DataField, AutoNetworkedField]
     public SoundSpecifier? SoundFailToActivate;
 }
 
