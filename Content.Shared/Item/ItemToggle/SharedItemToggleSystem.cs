@@ -32,7 +32,6 @@ public abstract class SharedItemToggleSystem : EntitySystem
         SubscribeLocalEvent<ItemToggleHotComponent, IsHotEvent>(OnIsHotEvent);
         SubscribeLocalEvent<ItemToggleComponent, ItemUnwieldedEvent>(TurnOffonUnwielded);
         SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnonWielded);
-        SubscribeLocalEvent<ItemToggleComponent, ItemToggleForceToggleEvent>(ForceToggle);
     }
 
     private void OnUseInHand(EntityUid uid, ItemToggleComponent itemToggle, UseInHandEvent args)
@@ -61,11 +60,6 @@ public abstract class SharedItemToggleSystem : EntitySystem
         {
             TryActivate(uid, user, itemToggle: itemToggle);
         }
-    }
-
-    public void ForceToggle(EntityUid uid, ItemToggleComponent itemToggle, ref ItemToggleForceToggleEvent args)
-    {
-        Toggle(uid, args.User, itemToggle);
     }
 
     public bool TryActivate(EntityUid uid, EntityUid? user = null, ItemToggleComponent? itemToggle = null)

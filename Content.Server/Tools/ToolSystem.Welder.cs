@@ -189,8 +189,7 @@ namespace Content.Server.Tools
 
                 if (solution.GetTotalPrototypeQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
                 {
-                    var ev = new ItemToggleForceToggleEvent();
-                    RaiseLocalEvent(tool, ref ev);
+                    _itemToggle.Toggle(tool);
                 }
 
                 Dirty(tool, welder);

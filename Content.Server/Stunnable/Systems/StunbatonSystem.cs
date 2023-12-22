@@ -42,8 +42,7 @@ namespace Content.Server.Stunnable.Systems
 
             if (battery.CurrentCharge < component.EnergyPerUse)
             {
-                var ev = new ItemToggleForceToggleEvent();
-                RaiseLocalEvent(uid, ref ev);
+                _itemToggle.Toggle(uid);
             }
         }
 

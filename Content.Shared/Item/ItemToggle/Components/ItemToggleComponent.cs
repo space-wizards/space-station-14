@@ -78,12 +78,3 @@ public record struct ItemToggleDoneEvent(EntityUid? User)
 {
     public EntityUid? User = User;
 }
-
-/// <summary>
-/// Raised directed on an entity when another component forces a toggle (like running out of battery).
-/// </summary>
-[ByRefEvent]
-public record struct ItemToggleForceToggleEvent(EntityUid? User)
-{
-    public EntityUid? User = User;
-}
