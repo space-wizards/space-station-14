@@ -273,6 +273,31 @@
     tags: []
 
 - type: entity
+  name: nanomachines auto-injector
+  parent: ChemicalMedipen
+  id: NanomachinesMedipen
+  description: Quick dose of nanomachines. Contains the ability to rid oneself of responsibility... or life?
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: machpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: machpen_empty
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 15
+        reagents:
+        - ReagentId: NanomachinesPlus
+          Quantity: 6
+  - type: Tag
+    tags: []
+
+- type: entity
   name: space medipen
   parent: ChemicalMedipen
   id: SpaceMedipen
