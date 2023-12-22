@@ -418,7 +418,6 @@
           amount: -35
       metabolismRate: 0.02
 
-
 - type: reagent
   id: HeartbreakerToxin
   name: reagent-name-heartbreaker-toxin
