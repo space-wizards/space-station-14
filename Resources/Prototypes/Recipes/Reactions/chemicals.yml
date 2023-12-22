@@ -256,9 +256,9 @@
   reactants:
     WeldingFuel:
       amount: 1
-    Carbon:
-      amount: 1
     Hydrogen:
+      amount: 1
+    Carbon
       amount: 1
   products:
     Oil: 3
@@ -423,6 +423,7 @@
 
 - type: reaction
   id: Benzene
+  minTemp: 310
   reactants:
     Hydrogen:
       amount: 1
@@ -432,7 +433,7 @@
     Benzene: 1
 
 - type: reaction
-  priority: -1 #reckon this'll be fine for now
+  minTemp: 310
   id: Hydroxide
   reactants:
     Oxygen:
