@@ -1663,7 +1663,7 @@ entities:
       type: Transform
 - proto: Ashtray
   entities:
-  - uid: 2224
+  - uid: 2225
     components:
     - pos: -3.2747555,-3.4928942
       parent: 407
@@ -3564,29 +3564,24 @@ entities:
     - pos: 6.5,7.5
       parent: 407
       type: Transform
-  - uid: 2119
+  - uid: 2137
     components:
     - pos: 7.5,18.5
       parent: 407
       type: Transform
-  - uid: 2137
+  - uid: 2147
     components:
     - pos: 7.5,17.5
       parent: 407
       type: Transform
-  - uid: 2147
+  - uid: 2163
     components:
     - pos: 7.5,19.5
       parent: 407
       type: Transform
-  - uid: 2163
-    components:
-    - pos: 7.5,20.5
-      parent: 407
-      type: Transform
   - uid: 2166
     components:
-    - pos: 7.5,22.5
+    - pos: 7.5,20.5
       parent: 407
       type: Transform
   - uid: 2186
@@ -3630,6 +3625,11 @@ entities:
       parent: 407
       type: Transform
   - uid: 2210
+    components:
+    - pos: 7.5,22.5
+      parent: 407
+      type: Transform
+  - uid: 2211
     components:
     - pos: 7.5,21.5
       parent: 407
@@ -5798,12 +5798,12 @@ entities:
     - pos: 11.5,12.5
       parent: 407
       type: Transform
-  - uid: 2215
+  - uid: 2216
     components:
     - pos: 9.5,3.5
       parent: 407
       type: Transform
-  - uid: 2216
+  - uid: 2217
     components:
     - pos: 5.5,3.5
       parent: 407
@@ -6000,7 +6000,7 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-  - uid: 2217
+  - uid: 2218
     components:
     - pos: -4.567293,7.5605726
       parent: 407
@@ -6794,6 +6794,66 @@ entities:
   - uid: 1802
     components:
     - pos: -20.785645,3.762307
+      parent: 407
+      type: Transform
+- proto: EmergencyLight
+  entities:
+  - uid: 2119
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 7.5,3.5
+      parent: 407
+      type: Transform
+  - uid: 2228
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 0.5,-8.5
+      parent: 407
+      type: Transform
+  - uid: 2229
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -7.5,-0.5
+      parent: 407
+      type: Transform
+  - uid: 2230
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -16.5,-0.5
+      parent: 407
+      type: Transform
+  - uid: 2231
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -23.5,-1.5
+      parent: 407
+      type: Transform
+  - uid: 2232
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 0.5,9.5
+      parent: 407
+      type: Transform
+  - uid: 2233
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -1.5,9.5
+      parent: 407
+      type: Transform
+  - uid: 2234
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 5.5,12.5
+      parent: 407
+      type: Transform
+  - uid: 2235
+    components:
+    - pos: 17.5,1.5
+      parent: 407
+      type: Transform
+  - uid: 2236
+    components:
+    - pos: 9.5,-2.5
       parent: 407
       type: Transform
 - proto: EmergencyRollerBedSpawnFolded
@@ -9515,7 +9575,7 @@ entities:
       type: Transform
 - proto: LockerChemistryFilled
   entities:
-  - uid: 2220
+  - uid: 2221
     components:
     - pos: 10.198524,-0.49005228
       parent: 407
@@ -9610,7 +9670,7 @@ entities:
       type: Transform
 - proto: MachineCentrifuge
   entities:
-  - uid: 2219
+  - uid: 2220
     components:
     - pos: 8.5,-0.5
       parent: 407
@@ -9892,7 +9952,7 @@ entities:
       type: Transform
 - proto: PosterLegitAnatomyPoster
   entities:
-  - uid: 2213
+  - uid: 2214
     components:
     - pos: 13.5,-2.5
       parent: 407
@@ -9927,7 +9987,7 @@ entities:
       type: Transform
 - proto: PosterLegitHighClassMartini
   entities:
-  - uid: 2225
+  - uid: 2226
     components:
     - pos: -2.5,-3.5
       parent: 407
@@ -9975,7 +10035,7 @@ entities:
       type: Transform
 - proto: PosterLegitNTTGC
   entities:
-  - uid: 2212
+  - uid: 2213
     components:
     - pos: 11.5,2.5
       parent: 407
@@ -9989,7 +10049,7 @@ entities:
       type: Transform
 - proto: PosterLegitPeriodicTable
   entities:
-  - uid: 2214
+  - uid: 2215
     components:
     - pos: 9.5,1.5
       parent: 407
@@ -10031,7 +10091,7 @@ entities:
       type: Transform
 - proto: PosterLegitVacation
   entities:
-  - uid: 2211
+  - uid: 2212
     components:
     - pos: 7.5,2.5
       parent: 407
@@ -10827,7 +10887,7 @@ entities:
       parent: 407
       type: Transform
     - links:
-      - 2223
+      - 2224
       type: DeviceLinkSink
   - uid: 2162
     components:
@@ -10836,15 +10896,15 @@ entities:
       parent: 407
       type: Transform
     - links:
-      - 2223
+      - 2224
       type: DeviceLinkSink
-  - uid: 2221
+  - uid: 2222
     components:
     - pos: -14.5,2.5
       parent: 407
       type: Transform
     - links:
-      - 2222
+      - 2223
       type: DeviceLinkSink
 - proto: ShuttersRadiation
   entities:
@@ -11321,17 +11381,17 @@ entities:
         1651:
         - Pressed: Toggle
       type: DeviceLinkSource
-  - uid: 2222
+  - uid: 2223
     components:
     - rot: 1.5707963267948966 rad
       pos: -15.5,3.5
       parent: 407
       type: Transform
     - linkedPorts:
-        2221:
+        2222:
         - Pressed: Toggle
       type: DeviceLinkSource
-  - uid: 2223
+  - uid: 2224
     components:
     - rot: 1.5707963267948966 rad
       pos: -6.5,5.5
@@ -11352,7 +11412,7 @@ entities:
       type: Transform
 - proto: SignBar
   entities:
-  - uid: 2226
+  - uid: 2227
     components:
     - pos: -2.5,2.5
       parent: 407
@@ -12135,7 +12195,7 @@ entities:
       pos: 11.5,3.5
       parent: 407
       type: Transform
-  - uid: 2218
+  - uid: 2219
     components:
     - pos: 8.5,1.5
       parent: 407
