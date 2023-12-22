@@ -916,7 +916,21 @@
     - Botanist
 
 - type: listing
-  id: uplinkRiggedBoxingGloves
+  id: uplinkRiggedBoxingGlovesPassenger
+  name: uplink-rigged-boxing-gloves-name
+  description: uplink-rigged-boxing-gloves-desc
+  productEntity: ClothingHandsGlovesBoxingRigged
+  cost:
+    Telecrystal: 8
+  categories:
+    - UplinkJob
+  conditions:
+    - !type:BuyerJobCondition
+      whitelist:
+        - Passenger
+
+- type: listing
+  id: uplinkRiggedBoxingGlovesBoxer
   name: uplink-rigged-boxing-gloves-name
   description: uplink-rigged-boxing-gloves-desc
   productEntity: ClothingHandsGlovesBoxingRigged
@@ -927,7 +941,6 @@
   conditions:
     - !type:BuyerJobCondition
       whitelist:
-        - Passenger
         - Boxer
 
 - type: listing
