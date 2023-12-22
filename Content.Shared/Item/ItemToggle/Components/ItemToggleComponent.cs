@@ -45,7 +45,7 @@ public sealed partial class ItemToggleComponent : Component
 public record struct ItemToggleActivateAttemptEvent(EntityUid? User)
 {
     public bool Cancelled = false;
-    public EntityUid? User { get; set; } = User;
+    public EntityUid? User = User;
 }
 
 /// <summary>
@@ -61,7 +61,7 @@ public readonly record struct ItemToggleActivatedEvent;
 public record struct ItemToggleDeactivateAttemptEvent(EntityUid? User)
 {
     public bool Cancelled = false;
-    public EntityUid? User { get; set; } = User;
+    public EntityUid? User = User;
 }
 
 /// <summary>
@@ -76,7 +76,7 @@ public readonly record struct ItemToggleDeactivatedEvent;
 [ByRefEvent]
 public record struct ItemToggleDoneEvent(EntityUid? User)
 {
-    public EntityUid? User { get; set; } = User;
+    public EntityUid? User = User;
 }
 
 /// <summary>
@@ -85,5 +85,5 @@ public record struct ItemToggleDoneEvent(EntityUid? User)
 [ByRefEvent]
 public record struct ItemToggleForceToggleEvent(EntityUid? User)
 {
-    public EntityUid? User { get; set; } = User;
+    public EntityUid? User = User;
 }
