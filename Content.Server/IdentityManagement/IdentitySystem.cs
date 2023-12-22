@@ -1,6 +1,7 @@
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Humanoid;
+using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
@@ -33,6 +34,7 @@ public class IdentitySystem : SharedIdentitySystem
         SubscribeLocalEvent<IdentityComponent, DidEquipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
     }
 

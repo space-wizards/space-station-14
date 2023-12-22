@@ -28,11 +28,11 @@ Jetpacks will be needed to move thoughout space, since without floors and gravit
 Internals will be important, given all species need to breathe, and space doesnt have any gases. Your mask is used to connect the gas tank to your mouth to breath, while the gas tanks hold consumable gases and can be refilled at gas canisters. All species breathe oxygen (blue + yellow tanks) except slimes, which need nitrogen (red tanks)
 
 <Box>
-<GuideEntityEmbed Entity="WeaponCrusherGlaive"/>
+<GuideEntityEmbed Entity="WeaponCrusher"/>
 <GuideEntityEmbed Entity="WeaponCrusherDagger"/>
 <GuideEntityEmbed Entity="WeaponProtoKineticAccelerator"/>
 </Box>
-The crusher devices are your first and last line of defense against space fauna and other things that want to bring cargo harm. While the dagger is just a standard knife, the glaive is has a special property that if you shoot something with it, then follow up with a melee attack, it deals 2x more damage. The protokinetic accelerator is like a recharging weapon that can provide thrust in the scenerio that your jetpack runs dry, or mine for you.
+The crusher devices are your first and last line of defense against space fauna and other things that want to bring cargo harm. While the dagger is just a standard knife, the crusher is has a special property that if you shoot something with it, then follow up with a melee attack, it deals 2x more damage. The protokinetic accelerator is like a recharging weapon that can provide thrust in the scenerio that your jetpack runs dry, or mine for you.
 
 <Box>
 <GuideEntityEmbed Entity="Pickaxe"/>

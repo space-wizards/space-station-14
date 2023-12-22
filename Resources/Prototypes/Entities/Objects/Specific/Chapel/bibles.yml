@@ -31,13 +31,14 @@
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: Small
     sprite: Objects/Specific/Chapel/bible.rsi
   - type: Clothing
     slots:
     - Belt
   - type: Storage
-    maxSlots: 1
+    grid:
+    - 0,0,0,1
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
@@ -72,13 +73,8 @@
     respawnTime: 300
   - type: Sprite
     sprite: Objects/Specific/Chapel/necronomicon.rsi
-    state: icon
   - type: Item
-    size: Normal
     sprite: Objects/Specific/Chapel/necronomicon.rsi
-  - type: Clothing
-    slots:
-    - Belt
 
 - type: entity
   id: ActionBibleSummon

@@ -26,6 +26,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -45,6 +46,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
+    [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -304,12 +306,22 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     /// </summary>
     private void OnThrowCollide(EntityUid uid, SharedDisposalUnitComponent component, ThrowHitByEvent args)
     {
-        if (!CanInsert(uid, component, args.Thrown) ||
-            _robustRandom.NextDouble() > 0.75 ||
-            !component.Container.Insert(args.Thrown))
+        var canInsert = CanInsert(uid, component, args.Thrown);
+        var randDouble = _robustRandom.NextDouble();
+
+        if (!canInsert || randDouble > 0.75)
         {
+            _audioSystem.PlayPvs(component.MissSound, uid);
+
             _popupSystem.PopupEntity(Loc.GetString("disposal-unit-thrown-missed"), uid);
             return;
+        }
+
+        var inserted = _containerSystem.Insert(args.Thrown, component.Container);
+
+        if (!inserted)
+        {
+            throw new InvalidOperationException("Container insertion failed but CanInsert returned true");
         }
 
         if (args.Component.Thrower != null)
@@ -786,6 +798,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public void AfterInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid inserted, EntityUid? user = null)
     {
+        _audioSystem.PlayPvs(component.InsertSound, uid);
+
         if (!component.Container.Insert(inserted))
             return;
 

@@ -1,6 +1,5 @@
 ﻿<ContainerButton xmlns="https://spacestation14.io"
-                 xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-                 EnableAllKeybinds="True">
+                 xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls">
     <PanelContainer Name="BackgroundColorPanel"/>
     <BoxContainer Orientation="Horizontal"
                   HorizontalExpand="True"

@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Derived by sprites from tgstation at https://github.com/tgstation/tgstation/commit/d0d81185f09ca30d3b0856d476544240dba0de53 and adapted by Saveliy360",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "blank_flag"
+    },
+    {
+      "name": "NT_flag"
+    },
+    {
+      "name": "syndie_flag"
+    },
+    {
+      "name": "lgbtq_flag"
+    },
+    {
+      "name": "pirate_flag"
+    }
+  ]
+}

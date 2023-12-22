@@ -246,6 +246,62 @@
 # Tastes like sweetness, cake, lemons.
 
 - type: entity
+  name: lemoon cake
+  parent: FoodCakeBase
+  id: FoodCakeLemoon
+  description: A cake that represents the moon of earth
+  components:
+  - type: Sprite
+    state: lemoon
+  - type: FlavorProfile
+    flavors:
+      - lemoon
+      - berry
+  - type: SliceableFood
+    slice: FoodCakeLemoonSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Milk
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Fruit
+
+- type: entity
+  name: shard of lemoon cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeLemoonSlice
+  description: A shard of moon, has the smell of milk.
+  components:
+  - type: Sprite
+    state: lemoon-slice
+  - type: FlavorProfile
+    flavors:
+      - lemoon
+      - berry
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Milk
+          Quantity: 1
+  - type: Tag
+    tags:
+    - Fruit
+
+- type: entity
   name: chocolate cake
   parent: FoodCakeBase
   id: FoodCakeChocolate
