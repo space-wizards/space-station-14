@@ -12,7 +12,7 @@
 
 - type: polymorph
   id: Cyborg
-  entity: PlayerBorgPolymorph
+  entity: PlayerBorgPolymorphPositronicBrain
   forced: true
   inventory: Drop
   revertOnCrit: false
@@ -20,7 +20,7 @@
 
 - type: polymorph
   id: Cyborg2
-  entity: BorgChassisGeneric
+  entity: PlayerBorgPolymorph
   forced: true
   inventory: Drop
   revertOnCrit: false
