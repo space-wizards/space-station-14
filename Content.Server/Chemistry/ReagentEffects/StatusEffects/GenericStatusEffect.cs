@@ -38,6 +38,12 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
         [DataField("type")]
         public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Add;
 
+        /// <summary>
+        /// Overrides the text in the guidebook for this reagent effect. If not set, the default text is used.
+        /// </summary>
+        [DataField("guidebookTextOverride")]
+        public string GuidebookTextOverride = string.Empty;
+
         public override void Effect(ReagentEffectArgs args)
         {
             var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>();
@@ -59,12 +65,19 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
             }
         }
 
-        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString(
-            "reagent-effect-guidebook-status-effect",
-            ("chance", Probability),
-            ("type", Type),
-            ("time", Time),
-            ("key", $"reagent-effect-status-effect-{Key}"));
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        {
+            if (GuidebookTextOverride != string.Empty)
+                return GuidebookTextOverride;
+
+
+            return Loc.GetString(
+                "reagent-effect-guidebook-status-effect",
+                ("chance", Probability),
+                ("type", Type),
+                ("time", Time),
+                ("key", $"reagent-effect-status-effect-{Key}"));
+        }
     }
 
     public enum StatusEffectMetabolismType
