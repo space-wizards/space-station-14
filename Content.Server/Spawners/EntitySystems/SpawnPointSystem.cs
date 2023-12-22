@@ -1,7 +1,10 @@
 ﻿using Content.Server.GameTicking;
 using Content.Server.Spawners.Components;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Roles;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Spawners.EntitySystems;
@@ -23,25 +26,45 @@ public sealed class SpawnPointSystem : EntitySystem
         if (args.SpawnResult != null)
             return;
 
-        // TODO: Cache all this if it ends up important.
-        var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
         var possiblePositions = new List<EntityCoordinates>();
 
-        while ( points.MoveNext(out var uid, out var spawnPoint, out var xform))
+        TryComp<StationSpawningComponent>(args.Station, out var stationSpawning);
+        var jobSpawnsDict = stationSpawning?.JobSpawnPoints;
+
+        if (jobSpawnsDict is not null && args.Job?.Prototype != null)
         {
-            if (args.Station != null && _stationSystem.GetOwningStation(uid, xform) != args.Station)
-                continue;
+            if (jobSpawnsDict.TryGetValue((ProtoId<JobPrototype>) args.Job.Prototype, out var coordinatesList))
+                possiblePositions.AddRange(coordinatesList);
+        }
+        else
+        {
+            var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
+            jobSpawnsDict = new ();
 
-            if (_gameTicker.RunLevel == GameRunLevel.InRound && spawnPoint.SpawnType == SpawnPointType.LateJoin)
+            while (points.MoveNext(out var uid, out var spawnPoint, out var xform))
             {
-                possiblePositions.Add(xform.Coordinates);
-            }
+                if (args.Station != null && _stationSystem.GetOwningStation(uid, xform) != args.Station)
+                    continue;
 
-            if (_gameTicker.RunLevel != GameRunLevel.InRound &&
-                spawnPoint.SpawnType == SpawnPointType.Job &&
-                (args.Job == null || spawnPoint.Job?.ID == args.Job.Prototype))
-            {
-                possiblePositions.Add(xform.Coordinates);
+                if (spawnPoint.Job is not null)
+                {
+                    var spawnPointJobProto = new ProtoId<JobPrototype>(spawnPoint.Job.ID);
+                    if (jobSpawnsDict.TryGetValue(spawnPointJobProto, out var coordinatesList))
+                        coordinatesList.Add(xform.Coordinates);
+                    else
+                        jobSpawnsDict.Add(spawnPointJobProto, new List<EntityCoordinates> { xform.Coordinates });
+                }
+
+                if (_gameTicker.RunLevel == GameRunLevel.InRound && spawnPoint.SpawnType == SpawnPointType.LateJoin)
+                {
+                    possiblePositions.Add(xform.Coordinates);
+                }
+                else if (_gameTicker.RunLevel != GameRunLevel.InRound &&
+                         spawnPoint.SpawnType == SpawnPointType.Job &&
+                         (args.Job == null || spawnPoint.Job?.ID == args.Job.Prototype))
+                {
+                    possiblePositions.Add(xform.Coordinates);
+                }
             }
         }
 
@@ -63,6 +86,12 @@ public sealed class SpawnPointSystem : EntitySystem
         }
 
         var spawnLoc = _random.Pick(possiblePositions);
+
+        if (args.Job?.Prototype != null)
+            jobSpawnsDict[(ProtoId<JobPrototype>) args.Job.Prototype].Remove(spawnLoc);
+
+        if (stationSpawning != null)
+            stationSpawning.JobSpawnPoints = jobSpawnsDict;
 
         args.SpawnResult = _stationSpawning.SpawnPlayerMob(
             spawnLoc,
