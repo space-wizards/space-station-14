@@ -200,6 +200,9 @@
   id: BoxHug
 
 - type: Tag
+  id: Burnt
+
+- type: Tag
   id: BrassInstrument
 
 - type: Tag
