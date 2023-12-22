@@ -1,11 +1,8 @@
 using System.Numerics;
-using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Doors.Systems;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
-using Content.Shared.Atmos;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Shuttles.Events;
@@ -22,7 +19,6 @@ namespace Content.Server.Shuttles.Systems
 {
     public sealed partial class DockingSystem : EntitySystem
     {
-        [Dependency] private readonly AirtightSystem _airtight = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DoorBoltSystem _bolts = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
@@ -365,13 +361,6 @@ namespace Content.Server.Shuttles.Systems
                 if (_doorSystem.TryOpen(dockAUid, doorA))
                 {
                     doorA.ChangeAirtight = false;
-                    if (TryComp(dockAUid, out AirtightComponent? doorAAirtight) && TryComp(dockAUid, out TransformComponent? doorATransform) )
-                    {
-                        var doorAEntity = new Entity<AirtightComponent>(dockAUid, doorAAirtight);
-                        _airtight.SetAirblocked(doorAEntity, true);
-                        doorAAirtight.CurrentAirBlockedDirection = (int) doorATransform.LocalRotation.ToAtmosDirection();
-                    }
-
                     if (TryComp<DoorBoltComponent>(dockAUid, out var airlockA))
                     {
                         _bolts.SetBoltsWithAudio(dockAUid, airlockA, true);
@@ -384,13 +373,6 @@ namespace Content.Server.Shuttles.Systems
                 if (_doorSystem.TryOpen(dockBUid, doorB))
                 {
                     doorB.ChangeAirtight = false;
-                    if (TryComp(dockBUid, out AirtightComponent? doorBAirtight) && TryComp(dockBUid, out TransformComponent? doorBTransform))
-                    {
-                        var doorBEntity = new Entity<AirtightComponent>(dockAUid, doorBAirtight);
-                        _airtight.SetAirblocked(doorBEntity, true);
-                        doorBAirtight.CurrentAirBlockedDirection = (int) doorBTransform.LocalRotation.ToAtmosDirection();
-                    }
-
                     if (TryComp<DoorBoltComponent>(dockBUid, out var airlockB))
                     {
                         _bolts.SetBoltsWithAudio(dockBUid, airlockB, true);
@@ -422,9 +404,7 @@ namespace Content.Server.Shuttles.Systems
             if (!dockA.Enabled ||
                 !dockB.Enabled ||
                 dockA.DockedWith != null ||
-                dockB.DockedWith != null ||
-                _bolts.IsBolted(dockAUid) ||
-                _bolts.IsBolted(dockBUid))
+                dockB.DockedWith != null)
             {
                 return false;
             }
@@ -479,6 +459,10 @@ namespace Content.Server.Shuttles.Systems
             if (dock.DockedWith == null)
                 return;
 
+            OnUndock(dockUid, dock.DockedWith.Value);
+            OnUndock(dock.DockedWith.Value, dockUid);
+
+            // TODO: Move this down to OnUndock() ---------
             if (TryComp<DoorBoltComponent>(dockUid, out var airlockA))
             {
                 _bolts.SetBoltsWithAudio(dockUid, airlockA, false);
@@ -519,7 +503,24 @@ namespace Content.Server.Shuttles.Systems
                 recentlyDocked.LastDocked = dock.DockedWith.Value;
             }
 
+            // --------
+
             Cleanup(dockUid, dock);
+        }
+
+        private void OnUndock(EntityUid dockUid, EntityUid other)
+        {
+            if (TerminatingOrDeleted(dockUid))
+                return;
+
+            if (TryComp<DoorBoltComponent>(dockUid, out var airlock))
+                _bolts.SetBoltsWithAudio(dockUid, airlock, false);
+
+            if (TryComp(dockUid, out DoorComponent? door) && _doorSystem.TryClose(dockUid, door))
+                door.ChangeAirtight = true;
+
+            var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dockUid);
+            recentlyDocked.LastDocked = other;
         }
     }
 }

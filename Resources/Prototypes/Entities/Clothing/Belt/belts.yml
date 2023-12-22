@@ -399,7 +399,7 @@
   - type: Appearance
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ClothingBeltBase, ClothingSlotBase]
   id: ClothingBeltSheath
   name: sabre sheath
   description: An ornate sheath designed to hold an officer's blade.
@@ -409,12 +409,17 @@
     state: sheath
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
-  - type: Storage
-    grid:
-    - 0,0,1,1
-    whitelist:
-      tags:
-        - CaptainSabre
+  - type: Item
+    size: Ginormous
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        whitelist:
+          tags:
+          - CaptainSabre
   - type: ItemMapper
     mapLayers:
       sheath-sabre:
@@ -422,7 +427,7 @@
           tags:
           - CaptainSabre
   - type: Appearance
-
+ 
 # Belts without visualizers
 
 - type: entity
