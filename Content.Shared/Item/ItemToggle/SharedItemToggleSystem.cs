@@ -104,6 +104,9 @@ public abstract class SharedItemToggleSystem : EntitySystem
             var ev = new ItemToggleActivatedEvent();
             RaiseLocalEvent(uid, ref ev);
         }
+        var toggleUsed = new ItemToggleDoneEvent(user);
+        RaiseLocalEvent(uid, ref toggleUsed);
+
         return true;
     }
 
@@ -137,6 +140,9 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
             var ev = new ItemToggleDeactivatedEvent();
             RaiseLocalEvent(uid, ref ev);
+
+            var toggleUsed = new ItemToggleDoneEvent(user);
+            RaiseLocalEvent(uid, ref toggleUsed);
 
             return true;
         }

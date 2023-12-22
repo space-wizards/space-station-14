@@ -71,6 +71,15 @@ public record struct ItemToggleDeactivateAttemptEvent(EntityUid? User)
 public readonly record struct ItemToggleDeactivatedEvent;
 
 /// <summary>
+/// Raised directed on an entity any sort of toggle is complete.
+/// </summary>
+[ByRefEvent]
+public record struct ItemToggleDoneEvent(EntityUid? User)
+{
+    public EntityUid? User { get; set; } = User;
+}
+
+/// <summary>
 /// Raised directed on an entity when another component forces a toggle (like running out of battery).
 /// </summary>
 [ByRefEvent]
