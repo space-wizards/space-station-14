@@ -70,7 +70,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     private void OnShutdown(EntityUid uid, NetworkConfiguratorComponent component, ComponentShutdown args)
     {
         ClearDevices(uid, component);
-        
+
         if (TryComp(component.ActiveDeviceList, out DeviceListComponent? list))
             list.Configurators.Remove(uid);
         component.ActiveDeviceList = null;
@@ -753,6 +753,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
                 ClearDevices(uid, component);
 
+                var query = GetEntityQuery<DeviceNetworkComponent>();
                 foreach (var (addr, device) in _deviceListSystem.GetDeviceList(component.ActiveDeviceList.Value))
                 {
                     if (query.TryGetComponent(device, out var comp))
