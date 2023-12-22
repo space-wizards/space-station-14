@@ -204,6 +204,6 @@
   description: Fluffy hat of red racoon!
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/red_racoon.rsi
+    sprite: Clothing/Head/Misc/red_racoon.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/red_racoon.rsi
+    sprite: Clothing/Head/Misc/red_racoon.rsi
