@@ -67,3 +67,13 @@ public sealed partial class ItemToggleMeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadOnly), DataField, AutoNetworkedField]
     public bool DeactivatedSecret = false;
 }
+
+/// <summary>
+/// Raised in order to effect changes upon the MeleeWeaponComponent of the entity.
+/// </summary>
+[ByRefEvent]
+public record struct ItemToggleMeleeWeaponUpdateEvent(bool Activated)
+{
+    public bool Activated = Activated;
+}
+

@@ -42,7 +42,7 @@ namespace Content.Server.Stunnable.Systems
 
             if (battery.CurrentCharge < component.EnergyPerUse)
             {
-                _itemToggle.Toggle(uid);
+                _itemToggle.Toggle(uid, predicted: false);
             }
         }
 

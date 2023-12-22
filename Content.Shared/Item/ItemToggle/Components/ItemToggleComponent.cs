@@ -78,3 +78,42 @@ public record struct ItemToggleDoneEvent(EntityUid? User)
 {
     public EntityUid? User = User;
 }
+
+/// <summary>
+/// Raised in order to play a toggle sound effect.
+/// </summary>
+[ByRefEvent]
+public record struct ItemTogglePlayToggleSoundEvent(bool Activated, bool Predicted, EntityUid? User)
+{
+    public bool Activated = Activated;
+    public bool Predicted = Predicted;
+    public EntityUid? User = User;
+}
+
+/// <summary>
+/// Raised in order to play a failure to toggle sound effect.
+/// </summary>
+[ByRefEvent]
+public record struct ItemTogglePlayFailSoundEvent(bool Predicted, EntityUid? User)
+{
+    public bool Predicted = Predicted;
+    public EntityUid? User = User;
+}
+
+/// <summary>
+/// Raised in order to effect changes upon the Light component of the entity.
+/// </summary>
+[ByRefEvent]
+public record struct ItemToggleLightUpdateEvent(bool Activated)
+{
+    public bool Activated = Activated;
+}
+
+/// <summary>
+/// Raised in order to effect changes upon the Appearance component of the entity.
+/// </summary>
+[ByRefEvent]
+public record struct ItemToggleAppearanceUpdateEvent(bool Activated)
+{
+    public bool Activated = Activated;
+}

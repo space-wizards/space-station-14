@@ -189,7 +189,7 @@ namespace Content.Server.Tools
 
                 if (solution.GetTotalPrototypeQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
                 {
-                    _itemToggle.Toggle(tool);
+                    _itemToggle.Toggle(tool, predicted: false);
                 }
 
                 Dirty(tool, welder);

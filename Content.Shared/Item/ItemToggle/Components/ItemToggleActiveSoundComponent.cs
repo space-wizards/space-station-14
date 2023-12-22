@@ -21,3 +21,14 @@ public sealed partial class ItemToggleActiveSoundComponent : Component
     [ViewVariables(VVAccess.ReadOnly), DataField, AutoNetworkedField]
     public EntityUid? PlayingStream;
 }
+
+/// <summary>
+/// Raised in order to effect changes upon the ActiveSound of the entity.
+/// </summary>
+[ByRefEvent]
+public record struct ItemToggleActiveSoundUpdateEvent(bool Activated, bool Predicted, EntityUid? User)
+{
+    public bool Activated = Activated;
+    public bool Predicted = Predicted;
+    public EntityUid? User = User;
+}

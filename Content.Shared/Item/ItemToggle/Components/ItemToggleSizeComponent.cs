@@ -24,3 +24,12 @@ public sealed partial class ItemToggleSizeComponent : Component
     [ViewVariables(VVAccess.ReadOnly), DataField, AutoNetworkedField]
     public ProtoId<ItemSizePrototype>? DeactivatedSize = null;
 }
+
+/// <summary>
+/// Raised in order to effect changes upon the MeleeWeaponComponent of the entity.
+/// </summary>
+[ByRefEvent]
+public record struct ItemToggleSizeUpdateEvent(bool Activated)
+{
+    public bool Activated = Activated;
+}
