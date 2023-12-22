@@ -80,7 +80,7 @@
       amount: 1
     Sulfur:
       amount: 1
-    Oxygen:
+    Oxygen: 
       amount: 2
   products:
     SulfuricAcid: 3
