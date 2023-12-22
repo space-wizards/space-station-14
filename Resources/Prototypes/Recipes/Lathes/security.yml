@@ -214,15 +214,6 @@
     Steel: 5
 
 - type: latheRecipe
-  id: ShellTranquilizer
-  result: ShellTranquilizer
-  completetime: 4
-  materials:
-    Plastic: 15
-    Steel: 10
-    Glass: 5
-
-- type: latheRecipe
   id: TargetHuman
   result: TargetHuman
   completetime: 5
@@ -463,3 +454,15 @@
     Steel: 500
     Glass: 100
     Plastic: 200
+
+#SS220 taserback
+- type: latheRecipe
+  id: WeaponTaser
+  result: WeaponTaser
+  completetime: 5
+  materials:
+    Steel: 700
+    Plastic: 300
+    Gold: 250
+    Silver: 500
+#SS220 taserback end

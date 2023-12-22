@@ -118,3 +118,6 @@ ClothingOuterHardsuitMedic: ClothingOuterHardsuitSyndieMedic
 ReagentContainerMilk: DrinkMilkCarton
 ReagentContainerMilkSoy: DrinkSoyMilkCarton
 ReagentContainerMilkOat: DrinkOatMilkCarton
+
+# 2023-12-21 - SS220 taserback
+BoxShellTranquilizer: null
