@@ -189,3 +189,5 @@ ghost-role-information-Cak-rules = You are a living edible sweet cat. Your task 
 ghost-role-information-BreadDog-name = BreadDog
 ghost-role-information-BreadDog-description = You are the chef's favorite child. You're a living bread dog.
 ghost-role-information-BreadDog-rules = You're an edible dog made of bread. Your task is to find your place in this world where everything wants to eat you.
+
+ghost-role-information-amnesia-description = You can't remember anything. You don't know who you are or where you are. You don't even know what you are.

@@ -339,7 +339,7 @@
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
-          reagent: 
+          reagent:
           min: 1
         reagent: Epinephrine
         amount: -1
@@ -860,38 +860,15 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:PopupMessage
-        type: Local
-        visualType: LargeCaution
-        messages: [ "amnesia-effect-not-enough" ]
-        probability: 0.5
-        conditions:
-        - !type:TotalDamage
-          max: 79
-          min: 0
-      - !type:PopupMessage
-        type: Local
-        visualType: LargeCaution
-        messages: [ "amnesia-effect-forget" ]
-        probability: 1
-        conditions:
-        - !type:TotalDamage
-          min: 80
       - !type:GenericStatusEffect
-        key: ForcedSleep
-        component: ForcedSleeping
+        key: Amnesia
+        component: Amnesia
         type: Add
-        refresh: false
-        time: 3
-        conditions:
-        - !type:TotalDamage
-          min: 80
-      - !type:MakeGhostRole
+        refresh: true
+        time: 90
         conditions:
         - !type:ReagentThreshold
           min: 15
-        - !type:TotalDamage
-          min: 80
 
 - type: reagent
   id: Ethyloxyephedrine

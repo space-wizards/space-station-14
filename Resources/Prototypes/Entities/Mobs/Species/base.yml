@@ -138,6 +138,7 @@
     - TemporaryBlindness
     - Pacified
     - StaminaModifier
+    - Amnesia
   - type: Reflect
     enabled: false
     reflectProb: 0
@@ -263,6 +264,7 @@
     - Muted
     - Pacified
     - StaminaModifier
+    - Amnesia
   - type: Blindable
   # Other
   - type: Temperature

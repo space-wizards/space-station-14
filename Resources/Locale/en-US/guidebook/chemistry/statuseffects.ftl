@@ -11,3 +11,4 @@ reagent-effect-status-effect-PressureImmunity = pressure immunity
 reagent-effect-status-effect-Pacified = combat pacification
 reagent-effect-status-effect-RatvarianLanguage = ratvarian language patterns
 reagent-effect-status-effect-StaminaModifier = modified stamina
+reagent-effect-status-effect-Amnesia = complete memory loss
