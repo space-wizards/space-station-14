@@ -2,7 +2,7 @@
   # Minor Antagonists
 
   Most if not all Minor Antagonists are ghost-controlled roles that gives dead people new ways to cause chaos around the station. They are spawned by random events.
-  
+
   # Revenant
 
   <Box>
@@ -42,7 +42,7 @@
    <GuideEntityEmbed Entity="MobRatServant" Caption="Rat Servant"/>
   </Box>
   - Raise an Army of [color=#a4885c]Rat Servants[/color].
-  - Conjure a cloud of miasma.
+  - Conjure a cloud of ammonia.
 
   # Space Dragon
 
@@ -53,9 +53,9 @@
   A Space Dragon is a giant dragon that creates space carp rifts and eat the crew.
 
   ## Abilities
-  
+
   - Devour critical or dead victims.
-  
+
   <Box>
     <GuideEntityEmbed Entity="MobCarp" Caption=""/>
     <GuideEntityEmbed Entity="CarpRift" Caption=""/>

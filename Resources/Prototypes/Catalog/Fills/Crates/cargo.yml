@@ -5,3 +5,285 @@
   - type: StorageFill
     contents:
     - id: ClothingOuterHardsuitLuxury
+
+- type: entity
+  id: CrateCargoGambling
+  name: the grand lottery $$$
+  description: A box containing treasure beyond your greatest imaginations!
+  parent: CratePrivateSecure
+  components:
+  #never make a storage fill this large
+  - type: StorageFill
+    contents:
+    - id: SpaceCash1000000
+      prob: 0.001
+      orGroup: Money
+    - id: SpaceCash10000
+      prob: 0.01
+      orGroup: Money
+    - id: SpaceCash5000
+      prob: 0.1
+      orGroup: Money
+    - id: SpaceCash2500
+      prob: 0.4
+      orGroup: Money
+    - id: SpaceCash500
+      prob: 0.3
+      orGroup: Money
+    - id: SpaceCash100
+      prob: 0.1
+      orGroup: Money
+    - id: SpaceCash10
+      prob: 0.05
+      orGroup: Money
+    - id: SpaceCash
+      prob: 0.01
+      orGroup: Money
+    #junk
+    - id: CigaretteSpent
+      prob: 0.1
+      orGroup: Junk
+    - id: FoodBowlBigTrash
+      prob: 0.1
+      orGroup: Junk
+    - id: FoodFrozenPopsicleTrash
+      prob: 0.1
+      orGroup: Junk
+    - id: FoodCornTrash
+      prob: 0.1
+      orGroup: Junk
+    - id: TrashBananaPeel
+      prob: 0.1
+      orGroup: Junk
+    - id: TrashBananaPeelExplosive
+      prob: 0.001
+      orGroup: Junk
+    - id: FoodTinBeansTrash
+      prob: 0.1
+      orGroup: Junk
+    - id: TrashBakedBananaPeel
+      prob: 0.1
+      orGroup: Junk
+    - id: TrashMimanaPeel
+      prob: 0.1
+      orGroup: Junk
+    - id: TrashBananiumPeel
+      prob: 0.1
+      orGroup: Junk
+    #canisters
+    - id: AirCanister
+      prob: 0.01
+      orGroup: Canister
+    - id: AmmoniaCanister
+      prob: 0.01
+      orGroup: Canister
+    - id: CarbonDioxideCanister
+      prob: 0.01
+      orGroup: Canister
+    - id: FrezonCanister
+      prob: 0.001
+      orGroup: Canister
+    - id: NitrogenCanister
+      prob: 0.01
+      orGroup: Canister
+    - id: NitrousOxideCanister
+      prob: 0.01
+      orGroup: Canister
+    - id: OxygenCanister
+      prob: 0.01
+      orGroup: Canister
+    - id: PlasmaCanister
+      prob: 0.01
+      orGroup: Canister
+    - id: TritiumCanister
+      prob: 0.01
+      orGroup: Canister
+    - id: WaterVaporCanister
+      prob: 0.01
+      orGroup: Canister
+    #weapons
+    - id: WeaponPulseCarbine
+      prob: 0.001
+      orGroup: Weapons
+    - id: WeaponRifleAk
+      prob: 0.001
+      orGroup: Weapons
+    - id: WeaponLauncherPirateCannon
+      prob: 0.001
+      orGroup: Weapons
+    - id: WeaponPistolCHIMP
+      prob: 0.01
+      orGroup: Weapons
+    - id: WeaponSniperMosin
+      prob: 0.01
+      orGroup: Weapons
+    - id: WeaponMakeshiftLaser
+      prob: 0.01
+      orGroup: Weapons
+    - id: Sledgehammer
+      prob: 0.01
+      orGroup: Weapons
+    - id: WeaponMeleeToolboxRobust
+      prob: 0.01
+      orGroup: Weapons
+    - id: ThrowingStar
+      prob: 0.01
+      orGroup: Weapons
+    - id: WeaponLaserGun
+      prob: 0.01
+      orGroup: Weapons
+    #clothing
+    - id: ClothingUniformJumpsuitFamilyGuy
+      prob: 0.05
+      orGroup: Clothes
+    - id: ClothingOuterHardsuitCBURN
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingBackpackERTClown
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingNeckCloakAdmin
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingOuterFlannelBlue
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingHeadHelmetBone
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingOuterSuitCarp
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingHeadHatCatEars
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingOuterArmorReflective
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingUniformJumpskirtSyndieFormalDress
+      prob: 0.01
+      orGroup: Clothes
+    #swag
+    - id: ClothingNeckBling
+      prob: 0.01
+      orGroup: Swag
+    - id: ClothingShoesBling
+      prob: 0.01
+      orGroup: Swag
+    - id: IngotGold1
+      prob: 0.01
+      orGroup: Swag
+    - id: IngotGold
+      prob: 0.01
+      orGroup: Swag
+    - id: GoldOre1
+      prob: 0.01
+      orGroup: Swag
+    - id: GoldOre
+      prob: 0.01
+      orGroup: Swag
+    - id: DrinkGoldenCup
+      prob: 0.01
+      orGroup: Swag
+    - id: ToolboxGoldFilled
+      prob: 0.01
+      orGroup: Swag
+    - id: ClothingEyesGlassesGar
+      prob: 0.01
+      orGroup: Swag
+    - id: ClothingHeadHatChameleon
+      prob: 0.01
+      orGroup: Swag
+    #plushies
+    - id: PlushieRGBee
+      prob: 0.01
+      orGroup: Plushies
+    - id: PlushieGhost
+      prob: 0.01
+      orGroup: Plushies
+    - id: PlushieHampter
+      prob: 0.01
+      orGroup: Plushies
+    - id: PlushieGhostRevenant
+      prob: 0.01
+      orGroup: Plushies
+    - id: PlushiePenguin
+      prob: 0.01
+      orGroup: Plushies
+    - id: PlushieLizard
+      prob: 0.01
+      orGroup: Plushies
+    - id: PlushieRouny
+      prob: 0.01
+      orGroup: Plushies
+    - id: PlushieLamp
+      prob: 0.01
+      orGroup: Plushies
+    - id: PlushieSharkBlue
+      prob: 0.01
+      orGroup: Plushies
+    - id: PlushieMoth
+      prob: 0.01
+      orGroup: Plushies
+    #useful
+    - id: AmeJar
+      prob: 0.01
+      orGroup: Useful
+    - id: Omnitool
+      prob: 0.01
+      orGroup: Useful
+    - id: SoapOmega
+      prob: 0.01
+      orGroup: Useful
+    - id: ClothingEyesGlassesMeson
+      prob: 0.01
+      orGroup: Useful
+    - id: MechVim
+      prob: 0.01
+      orGroup: Useful
+    - id: Chainsaw
+      prob: 0.01
+      orGroup: Useful
+    - id: Crowbar
+      prob: 0.01
+      orGroup: Useful
+    - id: WelderIndustrial
+      prob: 0.01
+      orGroup: Useful
+    - id: HydroponicsToolHatchet
+      prob: 0.01
+      orGroup: Useful
+    - id: ToyAmongPequeno
+      prob: 0.01
+      orGroup: Useful
+    #notuseful
+    - id: LidSalami
+      prob: 0.01
+      orGroup: NotUseful
+    - id: MobHamsterHamlet
+      prob: 0.01
+      orGroup: NotUseful
+    - id: MobLaserRaptor
+      prob: 0.01
+      orGroup: NotUseful
+    - id: DrinkNothing
+      prob: 0.01
+      orGroup: NotUseful
+    - id: FoodOatmeal
+      prob: 0.01
+      orGroup: NotUseful
+    - id: FoodDonutChaos
+      prob: 0.01
+      orGroup: NotUseful
+    - id: RagItem
+      prob: 0.01
+      orGroup: NotUseful
+    - id: ClothingHandsGlovesColorYellowBudget
+      prob: 0.01
+      orGroup: NotUseful
+    - id: CartridgeCap
+      prob: 0.01
+      orGroup: NotUseful
+    - id: EncryptionKeyCommon
+      prob: 0.01
+      orGroup: NotUseful

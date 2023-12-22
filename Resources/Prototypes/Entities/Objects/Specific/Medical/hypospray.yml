@@ -97,7 +97,7 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
-    - state: medipen
+    - state: firstaid
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: Item
     sprite: Objects/Specific/Medical/medipen.rsi
@@ -115,7 +115,7 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
-    emptySpriteName: medipen_empty
+    emptySpriteName: firstaid_empty
   - type: Tag
     tags:
     - Trash
@@ -134,6 +134,15 @@
   id: EmergencyMedipen
   description: A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine and tranexamic acid.
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: medipen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: medipen_empty
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -157,6 +166,10 @@
     layers:
     - state: penacid
       map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: penacid_empty
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -180,6 +193,10 @@
     layers:
     - state: bicpen
       map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: bicpen_empty
   - type: Hypospray
     solutionName: pen
     transferAmount: 20
@@ -206,6 +223,10 @@
     layers:
     - state: dermpen
       map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: dermpen_empty
   - type: Hypospray
     solutionName: pen
     transferAmount: 20
@@ -232,6 +253,10 @@
     layers:
     - state: arithpen
       map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: arithpen_empty
   - type: Hypospray
     solutionName: pen
     transferAmount: 20
@@ -289,8 +314,6 @@
     layers:
     - state: stimpen
       map: ["enum.SolutionContainerLayers.Fill"]
-  - type: Item
-    sprite: Objects/Specific/Medical/medipen.rsi
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -298,6 +321,10 @@
         reagents:
         - ReagentId: Stimulants
           Quantity: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: stimpen_empty
   - type: Hypospray
     solutionName: pen
     transferAmount: 30
@@ -315,11 +342,8 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
-    - state: stimpen
+    - state: microstimpen
       map: ["enum.SolutionContainerLayers.Fill"]
-  - type: Item
-    sprite: Objects/Specific/Medical/medipen.rsi
-    size: Tiny
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -327,6 +351,10 @@
         reagents:
         - ReagentId: Stimulants
           Quantity: 15
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: microstimpen_empty
   - type: StaticPrice
     price: 100
   - type: Tag
@@ -343,8 +371,10 @@
     layers:
     - state: morphen
       map: ["enum.SolutionContainerLayers.Fill"]
-  - type: Item
-    sprite: Objects/Specific/Medical/medipen.rsi
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: morphen_empty
   - type: SolutionContainerManager
     solutions:
       pen:
