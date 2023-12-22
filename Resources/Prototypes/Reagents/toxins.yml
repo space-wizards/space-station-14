@@ -299,7 +299,7 @@
             - !type:ReagentThreshold
               min: 20
             - !type:OrganType
-               type: Dwarf
+               type: Dwarf # idk how to optimize my double texting
         - !type:Polymorph
           prototype: Cyborg
           conditions:
