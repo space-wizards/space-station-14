@@ -7,7 +7,7 @@ public sealed partial class AmnesiaComponent : Component
     /// The time in seconds left until the entity gets force ghosted.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public TimeSpan TimeUntilForget = TimeSpan.FromSeconds(90);
+    public TimeSpan TimeUntilForget = TimeSpan.FromSeconds(180);
 
     [ViewVariables(VVAccess.ReadWrite)]
     public int Stage = 0;

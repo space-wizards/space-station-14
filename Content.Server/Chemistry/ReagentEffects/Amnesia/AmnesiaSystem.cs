@@ -4,6 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Popups;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Drunk;
 using Content.Shared.Jittering;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
@@ -18,6 +19,7 @@ public sealed class AmnesiaSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKeySleep = "ForcedSleep";
@@ -52,43 +54,44 @@ public sealed class AmnesiaSystem : EntitySystem
             amnesiaComponent.TimeUntilForget -= _timing.CurTime - amnesiaComponent.LastTime;
             amnesiaComponent.LastTime = _timing.CurTime;
 
-
+            // Switch statement to determine what stage of the amnesia effect the entity is in.
             switch (amnesiaComponent.Stage)
             {
-                // Message for 85s
-                case 0 when amnesiaComponent.TimeUntilForget.TotalSeconds < 85:
-                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-1"), uid, PopupType.LargeCaution);
+                case 0 when amnesiaComponent.TimeUntilForget.TotalSeconds < 180:
+                    _drunkSystem.TryApplyDrunkenness(uid, 300, false); // general dizzy effect.
                     amnesiaComponent.Stage++;
                     break;
-                // Message for 70s
-                case 1 when amnesiaComponent.TimeUntilForget.TotalSeconds < 70:
-                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-2"), uid, PopupType.LargeCaution);
+                case 1 when amnesiaComponent.TimeUntilForget.TotalSeconds < 100:
+                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-1"), uid, uid,PopupType.LargeCaution);
                     amnesiaComponent.Stage++;
                     break;
-                // Message for 50s
-                case 2 when amnesiaComponent.TimeUntilForget.TotalSeconds < 50:
-                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-3"), uid, PopupType.LargeCaution);
+                case 2 when amnesiaComponent.TimeUntilForget.TotalSeconds < 70:
+                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-2"), uid, uid, PopupType.LargeCaution);
+                    amnesiaComponent.Stage++;
+                    _drunkSystem.TryApplyDrunkenness(uid, 300, true); // Apply slurred speech.
+                    break;
+                case 3 when amnesiaComponent.TimeUntilForget.TotalSeconds < 50:
+                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-3"), uid, uid, PopupType.LargeCaution);
                     amnesiaComponent.Stage++;
                     break;
-                // Message for 30s
-                case 3 when amnesiaComponent.TimeUntilForget.TotalSeconds < 30:
-                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-4"), uid, PopupType.LargeCaution);
+                case 4 when amnesiaComponent.TimeUntilForget.TotalSeconds < 30:
+                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-4"), uid, uid, PopupType.LargeCaution);
                     amnesiaComponent.Stage++;
                     break;
-                case 4 when amnesiaComponent.TimeUntilForget.TotalSeconds < 27:
+                case 5 when amnesiaComponent.TimeUntilForget.TotalSeconds < 27:
                     _statusEffectsSystem.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKeySleep,
                         TimeSpan.FromSeconds(50), true);
                     amnesiaComponent.Stage++;
                     break;
-                case 5 when amnesiaComponent.TimeUntilForget.TotalSeconds < 15:
-                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-5"), uid, PopupType.LargeCaution);
+                case 6 when amnesiaComponent.TimeUntilForget.TotalSeconds < 15:
+                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-5"), uid, uid, PopupType.LargeCaution);
                     _statusEffectsSystem.TryAddStatusEffect<JitteringComponent>(uid, StatusEffectKeyJitter,
                         TimeSpan.FromSeconds(25), true);
                     amnesiaComponent.Stage++;
                     break;
-                case 6 when amnesiaComponent.TimeUntilForget.TotalSeconds < 3:
+                case 7 when amnesiaComponent.TimeUntilForget.TotalSeconds < 3:
                     EntityManager.RemoveComponent<AmnesiaComponent>(uid);
-                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-6"), uid, PopupType.LargeCaution);
+                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-6"), uid, uid, PopupType.LargeCaution);
                     ForceGhostRoleAmnesia(uid);
                     break;
             }
