@@ -62,7 +62,7 @@ void fragment() {
     COLOR = zTextureSpec(SCREEN_TEXTURE, coord + effectScale * (DistortionScale * centergradient) * offset);
     
     // apply rainbow effect.
-    highp float hue = 1. + mixNoise(Pos, 10.);
+    highp float hue = 1. + mixNoise(coord, 10.);
     highp vec3 color = hsv2rgb_smooth(vec3(hue,1.0,1.0));
     highp float coloration = pow((COLOR.x + COLOR.y + COLOR.z) * BaseColorMult, BaseColorPow);
     COLOR.xyz = mix(COLOR.xyz, color, MaxColorMix * effectScale * effectScale * coloration);
