@@ -9,13 +9,13 @@ public sealed partial class ItemToggleDisarmMalusComponent : Component
     /// <summary>
     ///     Item has this modifier to the chance to disarm when activated.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [ViewVariables(VVAccess.ReadOnly), DataField]
     public float? ActivatedDisarmMalus = null;
 
     /// <summary>
     ///     Item has this modifier to the chance to disarm when deactivated. If none is mentioned, it uses the item's default disarm modifier.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [ViewVariables(VVAccess.ReadOnly), DataField]
     public float? DeactivatedDisarmMalus = null;
 }
 

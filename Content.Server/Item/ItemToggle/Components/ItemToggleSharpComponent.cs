@@ -9,7 +9,7 @@ public sealed partial class ItemToggleSharpComponent : Component
     /// <summary>
     ///     Item can be used to butcher when activated.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [ViewVariables(VVAccess.ReadOnly), DataField]
     public bool ActivatedSharp = true;
 }
 

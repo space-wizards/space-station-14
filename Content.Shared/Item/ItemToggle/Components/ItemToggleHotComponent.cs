@@ -9,7 +9,7 @@ public sealed partial class ItemToggleHotComponent : Component
     /// <summary>
     ///     Item becomes hot when active.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [ViewVariables(VVAccess.ReadOnly), DataField]
     public bool IsHotWhenActivated = true;
 }
 

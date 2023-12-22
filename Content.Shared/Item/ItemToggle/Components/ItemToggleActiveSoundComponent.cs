@@ -12,13 +12,13 @@ public sealed partial class ItemToggleActiveSoundComponent : Component
     /// <summary>
     ///     The continuous noise this item makes when it's activated (like an e-sword's hum). This loops.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [ViewVariables(VVAccess.ReadOnly), DataField]
     public SoundSpecifier? ActiveSound;
 
     /// <summary>
     ///     Used when the item emits sound while active.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? PlayingStream;
 }
 
