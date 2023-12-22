@@ -196,3 +196,14 @@
     sprite: Clothing/Head/Misc/squiddy.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRedPanda
+  name: red panda hat
+  description: Fluffy hat of red panda!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/red_panda.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/red_panda.rsi

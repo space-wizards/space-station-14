@@ -363,3 +363,14 @@
         color: "#000000"
   - type: TemperatureProtection
     coefficient: 0.3
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterRedPanda
+  name: red panda suit
+  description: Fluffy suit of red panda!
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/red_panda.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/red_panda.rsi
