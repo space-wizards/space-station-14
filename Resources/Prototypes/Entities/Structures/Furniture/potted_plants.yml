@@ -20,7 +20,7 @@
         mask:
         - Impassable
   - type: Sprite
-    drawdepth: Overdoors
+    drawdepth: SmallObjects
     offset: "0.0,0.3"
     sprite: Structures/Furniture/potted_plants.rsi
     noRot: true
