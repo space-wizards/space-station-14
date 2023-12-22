@@ -8,7 +8,7 @@ reagent-name-mold = mold
 reagent-desc-mold = A fungal growth, often found in dark, humid places or on expired bread. Will cause you to develop a disease if ingested.
 
 reagent-name-nanomachines = nanomachines
-reagent-desc-nanomachines = Mechanized substance.
+reagent-desc-nanomachines = Substance capable of ROBOTizing a living being. The operation scenario is difficult to understand..
 
 reagent-name-polytrinic-acid = polytrinic acid
 reagent-desc-polytrinic-acid = An extremely corrosive chemical substance. Severely burns anyone who comes directly into contact with it.
