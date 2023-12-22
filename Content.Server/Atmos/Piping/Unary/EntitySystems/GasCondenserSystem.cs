@@ -27,7 +27,7 @@ public sealed class GasCondenserSystem : EntitySystem
         SubscribeLocalEvent<GasCondenserComponent, AtmosDeviceUpdateEvent>(OnCondenserUpdated);
     }
 
-    private void OnCondenserUpdated(EntityUid uid, GasCondenserComponent component, AtmosDeviceUpdateEvent args)
+    private void OnCondenserUpdated(EntityUid uid, GasCondenserComponent component, ref AtmosDeviceUpdateEvent args)
     {
         if (!(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
             || !TryComp<NodeContainerComponent>(uid, out var nodeContainer)
