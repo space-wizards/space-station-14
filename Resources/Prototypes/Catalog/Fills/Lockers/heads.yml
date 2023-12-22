@@ -147,6 +147,8 @@
       - id: ClothingHeadsetAltEngineering
       - id: BoxEncryptionKeyEngineering
       - id: AccessConfigurator
+      - id: RCD
+      - id: RCDAmmo
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -169,6 +171,8 @@
       - id: ClothingHeadsetAltEngineering
       - id: BoxEncryptionKeyEngineering
       - id: AccessConfigurator
+      - id: RCD
+      - id: RCDAmmo
 
 - type: entity
   id: LockerChiefMedicalOfficerFilledHardsuit
@@ -279,7 +283,7 @@
       - id: ClothingMaskGasSwat
       - id: ClothingBeltSecurityFilled
       - id: ClothingHeadsetAltSecurity
-      - id: ClothingEyesGlassesSecurity
+      - id: ClothingEyesGlassesSunglasses
       - id: ClothingShoesBootsJack
       - id: CigarGoldCase
         prob: 0.50
@@ -310,7 +314,7 @@
       - id: ClothingUniformJumpsuitHoSAlt
       - id: ClothingBeltSecurityFilled
       - id: ClothingHeadsetAltSecurity
-      - id: ClothingEyesGlassesSecurity
+      - id: ClothingEyesGlassesSunglasses
       - id: ClothingShoesBootsJack
       - id: CigarGoldCase
         prob: 0.50
@@ -322,3 +326,19 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
+
+- type: entity
+  id: LockerFreezerVaultFilled
+  suffix: Vault, Locked
+  parent: LockerFreezerBase
+  components:
+  - type: AccessReader
+    access: [ [ "Command" ] ]
+  - type: StorageFill
+    contents:
+    - id: WeaponRevolverDeckard
+    - id: ClothingOuterHardsuitBasic
+    - id: JetpackBlue
+    - id: SpaceCash1000
+    - id: BeachBall
+    - id: BikeHorn

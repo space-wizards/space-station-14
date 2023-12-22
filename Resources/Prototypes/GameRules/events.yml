@@ -128,7 +128,7 @@
     endAnnouncement: station-event-gas-leak-end-announcement
     earliestStart: 10
     minimumPlayers: 5
-    weight: 5
+    weight: 10
     startDelay: 20
   - type: GasLeakRule
 

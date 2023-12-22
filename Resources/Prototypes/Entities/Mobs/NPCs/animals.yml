@@ -104,9 +104,12 @@
         Base: 0
       Dead:
         Base: dead
+  - type: Item
+    size: Tiny
   - type: Tag
     tags:
     - Bee
+    - Trash
   - type: Bloodstream
     bloodMaxVolume: 0.1
   - type: MobPrice
@@ -417,6 +420,8 @@
     grindableSolutionName: food
   - type: ReplacementAccent
     accent: mothroach
+  - type: ZombieAccentOverride
+    accent: zombieMoth
   - type: Vocal
     sounds:
       Male: UnisexMoth
@@ -1115,6 +1120,7 @@
       amount: 3
   - type: MonkeyAccent
   - type: Puller
+    needsHands: false
   - type: CanHostGuardian
   - type: NPCRetaliation
     attackMemoryLength: 10
@@ -1284,6 +1290,7 @@
     needsHands: true
   - type: BadFood
   - type: NonSpreaderZombie
+  - type: PreventSpiller
 
 - type: entity
   parent: MobMouse
@@ -2023,6 +2030,25 @@
   - type: Tag
     tags:
     - VimPilot
+
+- type: entity
+  name: possum
+  parent: MobPossum
+  suffix: Old sprite
+  id: MobPossumOld
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/possum_old.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: possum_old
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: possum_old
+      Dead:
+        Base: possum_dead_old
 
 - type: entity
   name: raccoon

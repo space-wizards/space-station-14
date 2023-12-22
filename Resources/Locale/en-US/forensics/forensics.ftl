@@ -2,6 +2,7 @@ forensic-scanner-interface-title = Forensic scanner
 forensic-scanner-interface-fingerprints = Fingerprints
 forensic-scanner-interface-fibers = Fibers
 forensic-scanner-interface-dnas = DNAs
+forensic-scanner-interface-residues = Residues
 forensic-scanner-interface-no-data = No scan data available
 forensic-scanner-interface-print = Print
 forensic-scanner-interface-clear = Clear
@@ -23,3 +24,5 @@ forensic-scanner-verb-message = Perform a forensic scan
 
 forensic-pad-fingerprint-name = {$entity}'s fingerprints
 forensic-pad-gloves-name = fibers from {$entity}
+
+forensics-cleaning = You begin cleaning the evidence off of {THE($target)}...

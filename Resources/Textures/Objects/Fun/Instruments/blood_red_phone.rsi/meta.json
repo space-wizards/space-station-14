@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from red_phone in https://github.com/tgstation/tgstation/blob/ed17dde468fc8a2b5743d9f64c5afd7eab2f23f5/icons/obj/device.dmi and modified by deltanedas (github) for ss14",
+  "states": [
+    {
+      "name": "icon"
+    }
+  ]
+}

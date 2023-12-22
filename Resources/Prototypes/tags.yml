@@ -200,6 +200,9 @@
   id: BoxHug
 
 - type: Tag
+  id: Burnt
+
+- type: Tag
   id: BrassInstrument
 
 - type: Tag
@@ -364,6 +367,24 @@
 
 - type: Tag
   id: Cryobeaker
+
+- type: Tag
+  id: CrystalCyan
+
+- type: Tag
+  id: CrystalBlue
+
+- type: Tag
+  id: CrystalPink
+
+- type: Tag
+  id: CrystalGreen
+
+- type: Tag
+  id: CrystalOrange
+
+- type: Tag
+  id: CrystalRed
 
 - type: Tag
   id: ConveyorAssembly
@@ -615,6 +636,9 @@
   id: Hotsauce
 
 - type: Tag
+  id: Ice
+
+- type: Tag
   id: Igniter
 
 - type: Tag #Drop this innate tool instead of deleting it.
@@ -861,6 +885,9 @@
   id: PotatoBattery
 
 - type: Tag
+  id: PowerCell
+
+- type: Tag
   id: PowerCellSmall
 
 - type: Tag
@@ -929,6 +956,9 @@
 
 - type: Tag
   id: ShellShotgun
+
+- type: Tag
+  id: PelletShotgunFlare
 
 - type: Tag
   id: Shiv
@@ -1081,6 +1111,9 @@
   id: WeaponPistolCHIMPUpgradeKit
 
 - type: Tag
+  id: WeaponShotgunKammerer
+
+- type: Tag
   id: Window
 
 - type: Tag
@@ -1108,6 +1141,9 @@
   id: Write
 
 - type: Tag
+  id: WriteIgnoreStamps
+
+- type: Tag
   id: RifleStock
 
 - type: Tag
@@ -1115,3 +1151,6 @@
 
 - type: Tag
   id: MindShield
+
+- type: Tag
+  id:  boots

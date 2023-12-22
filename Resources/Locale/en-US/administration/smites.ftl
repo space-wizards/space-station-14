@@ -55,7 +55,8 @@ admin-smite-lung-removal-description = Removes their lungs, drowning them.
 admin-smite-remove-hand-description = Removes only one of their hands instead of all of them.
 admin-smite-disarm-prone-description = Makes them get disarmed 100% of the time and cuffed instantly.
 admin-smite-garbage-can-description = Turn them into a garbage bin to emphasize what they remind you of.
-
+admin-smite-super-bonk-description = Slams them on every single table on the Station and beyond.
+admin-smite-super-bonk-lite-description= Slams them on every single table on the Station and beyond. Stops when the target is dead.
 
 ## Tricks descriptions
 
