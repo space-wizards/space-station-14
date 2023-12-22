@@ -41,8 +41,8 @@ public sealed class ItemToggleSystem : SharedItemToggleSystem
     {
         if (TryComp<ItemToggleSharpComponent>(uid, out var itemSharpness))
         {
-            if (!itemSharpness.ActivatedSharp)
-                RemComp<SharpComponent>(uid);
+            if (itemSharpness.ActivatedSharp)
+                RemCompDeferred<SharpComponent>(uid);
         }
 
         if (!TryComp<ItemToggleDisarmMalusComponent>(uid, out var itemToggleDisarmMalus) ||
