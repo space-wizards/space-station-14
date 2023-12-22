@@ -21,7 +21,12 @@ public abstract class SharedDiceSystem : EntitySystem
     private void OnHandleState(EntityUid uid, DiceComponent component, ref ComponentHandleState args)
     {
         if (args.Current is DiceComponent.DiceState state)
-            SetCurrentValue(uid, state.CurrentValue, component);
+        {
+            if (IsValidValue(uid, state.CurrentValue, component))
+            {
+                SetCurrentValue(uid, state.CurrentValue, component);
+            }
+        }
 
         UpdateVisuals(uid, component);
     }
@@ -73,13 +78,21 @@ public abstract class SharedDiceSystem : EntitySystem
         if (!Resolve(uid, ref die))
             return;
 
-        if (value % die.Multiplier != 0 || value/ die.Multiplier + die.Offset < 1)
+        if (!IsValidValue(uid, value, die))
         {
             Log.Error($"Attempted to set die {ToPrettyString(uid)} to an invalid value ({value}).");
             return;
         }
 
         SetCurrentSide(uid, value / die.Multiplier + die.Offset, die);
+    }
+
+    private bool IsValidValue(EntityUid uid, int value, DiceComponent? die = null)
+    {
+        if (!Resolve(uid, ref die))
+            return false;
+
+        return value % die.Multiplier == 0 && value / die.Multiplier + die.Offset >= 1;
     }
 
     protected virtual void UpdateVisuals(EntityUid uid, DiceComponent? die = null)
