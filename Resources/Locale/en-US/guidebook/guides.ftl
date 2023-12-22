@@ -54,3 +54,4 @@ guide-entry-minor-antagonists = Minor Antagonists
 guide-entry-space-ninja = Space Ninja
 
 guide-entry-writing = Writing
+guide-entry-glossary = Glossary
