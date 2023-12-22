@@ -179,12 +179,11 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         if (!Resolve(uid, ref deviceList))
             return DeviceListUpdateResult.NoComponent;
 
-        var oldDevices = deviceList.Devices.ToList();
         var list = devices.ToList();
         var newDevices = new HashSet<EntityUid>(list);
 
         if (merge)
-            newDevices.UnionWith(list);
+            newDevices.UnionWith(deviceList.Devices);
 
         if (newDevices.Count > deviceList.DeviceLimit)
         {
@@ -192,6 +191,7 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         }
 
         var query = GetEntityQuery<DeviceNetworkComponent>();
+        var oldDevices = deviceList.Devices.ToList();
         foreach (var device in oldDevices)
         {
             if (newDevices.Contains(device))
