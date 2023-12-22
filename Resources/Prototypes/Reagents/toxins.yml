@@ -277,8 +277,8 @@
   name: reagent-name-nanomachines
   group: Toxins
   flavor: mechanism
-  desc: reagent-name-nanomachines
-  physicalDesc: reagent-desc-nanomachines
+  desc: reagent-desc-nanomachines
+  physicalDesc: reagent-physical-desc-nanomachines
   color: "#c7bdbd"
   metabolisms:
     Poison:
