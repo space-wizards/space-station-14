@@ -321,7 +321,7 @@
         - !type:HealthChange
           damage:
             types:
-              Blunt: 1
+              Blunt: 0.3
         - !type:Electrocute
           probability: 0.09
           conditions:
@@ -331,47 +331,90 @@
           type: Local
           visualType: Large
           messages: ["nanomachines-effect-mechanization"]
-          probability: 1000.0
+          probability: 3000.0
           conditions:
             - !type:OrganType
                type: Human
             - !type:ReagentThreshold
-              min: 0.05
-              max: 25
+              min: 5
+              max: 20
         - !type:PopupMessage
           type: Local
           visualType: Large
           messages: ["nanomachines-effect-mechanization"]
-          probability: 1000.0
+          probability: 3000.0
           conditions:
             - !type:OrganType
                type: Dwarf
             - !type:ReagentThreshold
-              min: 0.05
-              max: 25
+              min: 5
+              max: 20
         - !type:PopupMessage
           type: Local
           visualType: Large
           messages: ["nanomachines-effect-mechanization-ends"]
-          probability: 1000.0
+          probability: 3000.0
           conditions:
             - !type:OrganType
                type: Human
             - !type:ReagentThreshold
               min: 0
-              max: 0.04
+              max: 0.5
         - !type:PopupMessage
           type: Local
           visualType: Large
           messages: ["nanomachines-effect-mechanization-ends"]
-          probability: 1000.0
+          probability: 3000.0
           conditions:
             - !type:OrganType
                type: Dwarf
             - !type:ReagentThreshold
               min: 0
-              max: 0.05
+              max: 0.5
       metabolismRate: 0.02
+
+- type: reagent
+  id: NanomachinesPlus
+  name: reagent-name-nanomachines-plus
+  group: Toxins
+  flavor: mechanism
+  desc: reagent-desc-nanomachines-plus
+  physicalDesc: reagent-physical-desc-electric
+  color: "#2f3536"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:MovespeedModifier
+          walkSpeedModifier: 0.3
+          sprintSpeedModifier: 0.3
+        - !type:Polymorph
+          prototype: Cyborg2
+          conditions:
+            - !type:ReagentThreshold
+              reagent: NanomachinesPlus
+              min: 30
+            - !type:MobStateCondition
+              mobstate: Alive
+        - !type:AdjustReagent
+          conditions:
+          - !type:ReagentThreshold
+            reagent: NanomachinesPlus
+            min: 4
+          reagent: NanomachinesPlus
+          amount: 6
+        - !type:ModifyBleedAmount
+          amount: 3
+        - !type:Emote
+          emote: Scream
+          probability: 0.3
+        - !type:Electrocute
+          probability: 0.4
+        - !type:PopupMessage
+          type: Local
+          visualType: Large
+          messages: [ "generic-reagent-effect-burning-insides", "generic-reagent-effect-burning-eyes", "generic-reagent-effect-thirsty", "nanomachines-effect-mechanization" ]
+          probability: 1000.0
+      metabolismRate: 3
 
 - type: reagent
   id: HeartbreakerToxin
@@ -716,4 +759,3 @@
       effects:
       - !type:Electrocute
         probability: 0.8
-
