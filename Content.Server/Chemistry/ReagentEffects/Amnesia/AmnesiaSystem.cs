@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using Content.Server.Drunk;
-using Content.Server.GameTicking;
+﻿using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Popups;
 using Content.Shared.Bed.Sleep;
@@ -30,7 +28,7 @@ public sealed class AmnesiaSystem : EntitySystem
     /// <summary>
     /// Used to keep track of entities that have the amnesia component.
     /// </summary>
-    private List<EntityUid> _amnesiaEntities = new();
+    private readonly List<EntityUid>_amnesiaEntities = new();
 
     public override void Initialize()
     {
