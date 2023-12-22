@@ -1,11 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed librarians, lawyers, ninjas and nukeops having their starting in-hand
-      items dropped on the floor.
-    type: Fix
-  id: 5004
-  time: '2023-10-14T17:28:52.0000000+00:00'
 - author: liltenhead
   changes:
   - message: Reduced the bombsuit helmet's explosive resistance.
@@ -3910,4 +3903,12 @@ Entries:
     type: Remove
   id: 5433
   time: '2023-12-22T17:03:17.0000000+00:00'
+  url: null
+- author: spo9k
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 Marathon"
+    type: Add
+  id: 5434
+  time: '2023-12-22T17:55:55.0000000+00:00'
   url: null
