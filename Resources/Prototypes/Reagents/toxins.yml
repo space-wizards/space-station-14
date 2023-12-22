@@ -303,20 +303,6 @@
         - !type:Polymorph
           prototype: Cyborg
           conditions:
-            - !type:ReagentThreshold
-              min: 20
-            - !type:OrganType
-               type: Human
-        - !type:Polymorph
-          prototype: Cyborg
-          conditions:
-            - !type:ReagentThreshold
-              min: 20
-            - !type:OrganType
-               type: Dwarf
-        - !type:Polymorph
-          prototype: Cyborg
-          conditions:
             - !type:MobStateCondition
               mobstate: Critical
             - !type:OrganType
@@ -337,14 +323,14 @@
             types:
               Blunt: 1
         - !type:Electrocute
-          probability: 0.01
+          probability: 0.09
           conditions:
             - !type:OrganType
                type: Dwarf
             - !type:ReagentThreshold
               min: 5
         - !type:Electrocute
-          probability: 0.01
+          probability: 0.09
           conditions:
             - !type:OrganType
                type: Human
@@ -359,7 +345,7 @@
             - !type:OrganType
                type: Human
             - !type:ReagentThreshold
-              min: 0.4
+              min: 0.05
               max: 25
         - !type:PopupMessage
           type: Local
