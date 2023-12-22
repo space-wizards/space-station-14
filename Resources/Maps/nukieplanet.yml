@@ -12477,18 +12477,6 @@ entities:
     - pos: 20.5,-15.5
       parent: 104
       type: Transform
-- proto: ShellShotgunIncendiary
-  entities:
-  - uid: 1718
-    components:
-    - pos: 5.65919,13.292731
-      parent: 104
-      type: Transform
-  - uid: 1728
-    components:
-    - pos: 5.65919,13.292731
-      parent: 104
-      type: Transform
 - proto: SignalTrigger
   entities:
   - uid: 1330
