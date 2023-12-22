@@ -12,11 +12,19 @@
 
 - type: polymorph
   id: Cyborg
-  entity: PlayerBorgBattery
+  entity: PlayerBorgPolymorph
   forced: true
   inventory: Drop
   revertOnCrit: false
   revertOnDeath: true
+
+- type: polymorph
+  id: Cyborg2
+  entity: BorgChassisGeneric
+  forced: true
+  inventory: Drop
+  revertOnCrit: false
+  revertOnDeath: false
 
 - type: polymorph
   id: Monkey
