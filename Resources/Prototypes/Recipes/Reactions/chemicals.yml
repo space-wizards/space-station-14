@@ -76,14 +76,14 @@
 - type: reaction
   id: SulfuricAcid
   reactants:
-    Sulfur:
-      amount: 1
     Hydrogen:
+      amount: 1
+    Sulfur:
       amount: 1
     Oxygen: 
       amount: 2
   products:
-    SulfuricAcid: 4
+    SulfuricAcid: 3
 
 - type: reaction
   id: FluorosulfuricAcid
