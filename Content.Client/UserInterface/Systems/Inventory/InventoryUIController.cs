@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Numerics;
 using Content.Client.Gameplay;
 using Content.Client.Hands.Systems;
 using Content.Client.Inventory;
@@ -144,6 +146,43 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
             var showStorage = _entities.HasComponent<StorageComponent>(data.HeldEntity);
             var update = new SlotSpriteUpdate(data.HeldEntity, data.SlotGroup, data.SlotName, showStorage);
             SpriteUpdated(update);
+        }
+
+        if (_inventoryHotbar == null)
+            return;
+
+        foreach (var child in new List<Control>(_inventoryHotbar.Children))
+        {
+            if (child is not SlotControl)
+                _inventoryHotbar.RemoveChild(child);
+        }
+
+        var clothing = clientInv.SlotData.Where(p => !p.Value.HasSlotGroup).ToList();
+        var maxIndex = clothing.Select(p => GetIndex(p.Value.ButtonOffset)).Max();
+        for (var i = 0; i <= maxIndex; i++)
+        {
+            var index = i;
+            if (clothing.FirstOrNull(p => GetIndex(p.Value.ButtonOffset) == index) is not { } pair)
+            {
+                var ctrl = new Control
+                {
+                    MaxSize = new Vector2(64, 64)
+                };
+
+                _inventoryHotbar.AddChild(ctrl);
+            }
+            else
+            {
+                if (_inventoryHotbar.TryGetButton(pair.Key, out var slot))
+                    slot.SetPositionLast();
+            }
+        }
+
+        return;
+
+        int GetIndex(Vector2i position)
+        {
+            return (position.Y * 3) + position.X;
         }
     }
 

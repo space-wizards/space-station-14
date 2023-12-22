@@ -6,24 +6,25 @@
     Name="InventoryInterface"
     VerticalExpand="True"
     VerticalAlignment="Bottom"
-    Orientation="Vertical"
+    Orientation="Horizontal"
     HorizontalAlignment="Center">
     <Control HorizontalAlignment="Center">
-        <inventory:ItemSlotButtonContainer
-            Name="InventoryHotbar"
-            Access="Public"
-            Visible="False"
-            Columns="1"
-            SlotGroup="Default"
-            ExpandBackwards="True"
-            VerticalExpand="True"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-        />
         <controls:SlotButton
             Name="InventoryButton"
             Access="Public"
             VerticalAlignment="Bottom"
+            HorizontalExpand="False"
+            VerticalExpand="False"
             ButtonTexturePath="Slots/toggle"/>
+        <inventory:ItemSlotButtonContainer
+            Name="InventoryHotbar"
+            Access="Public"
+            Visible="False"
+            MaxColumns="3"
+            SlotGroup="Default"
+            ExpandBackwards="True"
+            VerticalExpand="True"
+            HorizontalAlignment="Center"
+        />
     </Control>
 </widgets:InventoryGui>
