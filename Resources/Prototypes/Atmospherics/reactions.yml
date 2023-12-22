@@ -14,31 +14,23 @@
   id: TritiumFire
   priority: -1
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
-  minimumRequirements: # In this case, same as minimum mole count.
-    - 0.01  # oxygen
-    - 0     # nitrogen
-    - 0     # carbon dioxide
-    - 0     # plasma
-    - 0.01  # tritium
-  effects:
-    - !type:TritiumFireReaction {}
+  enthalpy: 284000
+  reactants:
+    Tritium: 2
+    Oxygen: 1
+  products:
+    WaterVapor: 2
 
 - type: gasReaction
   id: FrezonCoolant
   priority: 1
   minimumTemperature: 23.15
-  minimumRequirements:
-  - 0     # oxygen
-  - 0.01  # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0     # ammonia
-  - 0     # n2o
-  - 0.01  # frezon
-  effects:
-  - !type:FrezonCoolantReaction {}
+  enthalpy: -600000
+  reactants:
+    Frezon: 1
+    Nitrogen: 5
+  products:
+    NitrousOxide: 6
 
 - type: gasReaction
   id: FrezonProduction
@@ -61,35 +53,22 @@
   id: AmmoniaOxygenReaction
   priority: 2
   minimumTemperature: 323.149
-  minimumRequirements:
-  - 0.01  # oxygen
-  - 0     # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0.01  # ammonia
-  - 0     # n2o
-  - 0     # frezon
-  effects:
-  - !type:AmmoniaOxygenReaction {}
+  reactants:
+    Ammonia: 2
+    Oxygen: 2
+  products:
+    NitrousOxide: 1
+    WaterVapor: 3
 
 - type: gasReaction
   id: N2ODecomposition
   priority: 0
   minimumTemperature: 850
-  minimumRequirements:
-  - 0     # oxygen
-  - 0     # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0     # ammonia
-  - 0.01  # n2o
-  - 0     # frezon
-  effects:
-  - !type:N2ODecompositionReaction {}
+  reactants:
+    NitrousOxide: 2
+  products:
+    Nitrogen: 2
+    Oxygen: 1
 
 #- type: gasReaction
 #  id: WaterVaporPuddle

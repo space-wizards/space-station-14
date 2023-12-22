@@ -45,10 +45,12 @@ public partial class NavMapControl : MapGridControl
     protected float UpdateTime = 1.0f;
     protected float MaxSelectableDistance = 10f;
     protected float RecenterMinimum = 0.05f;
+    protected float MinDragDistance = 5f;
 
     // Local variables
     private Vector2 _offset;
     private bool _draggin;
+    private Vector2 _startDragPosition = default!;
     private bool _recentering = false;
     private readonly Font _font;
     private float _updateTimer = 0.25f;
@@ -168,21 +170,29 @@ public partial class NavMapControl : MapGridControl
         base.KeyBindDown(args);
 
         if (args.Function == EngineKeyFunctions.Use)
+        {
+            _startDragPosition = args.PointerLocation.Position;
             _draggin = true;
+        }
     }
 
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
         base.KeyBindUp(args);
 
+        if (args.Function == EngineKeyFunctions.Use)
+            _draggin = false;
+
         if (TrackedEntitySelectedAction == null)
             return;
 
         if (args.Function == EngineKeyFunctions.Use)
         {
-            _draggin = false;
-
             if (_xform == null || _physics == null || TrackedEntities.Count == 0)
+                return;
+
+            // If the cursor has moved a significant distance, exit
+            if ((_startDragPosition - args.PointerLocation.Position).Length() > MinDragDistance)
                 return;
 
             // Get the clicked position
