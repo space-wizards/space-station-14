@@ -325,6 +325,12 @@
         type: Add
         time: 10
         refresh: false
+      - !type:GenericStatusEffect
+        key: Amnesia
+        component: Amnesia
+        type: Remove
+        time: 90
+        guidebookTextOverride: reagent-desc-effect-mindbreaker
   # TODO: PROPER hallucinations
 
 - type: reagent
