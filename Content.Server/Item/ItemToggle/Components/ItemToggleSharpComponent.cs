@@ -12,6 +12,3 @@ public sealed partial class ItemToggleSharpComponent : Component
     [ViewVariables(VVAccess.ReadOnly), DataField]
     public bool ActivatedSharp = true;
 }
-
-
-

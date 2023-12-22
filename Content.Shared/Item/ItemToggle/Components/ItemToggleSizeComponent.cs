@@ -24,6 +24,3 @@ public sealed partial class ItemToggleSizeComponent : Component
     [ViewVariables(VVAccess.ReadOnly), DataField]
     public ProtoId<ItemSizePrototype>? DeactivatedSize = null;
 }
-
-
-

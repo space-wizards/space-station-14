@@ -21,6 +21,3 @@ public sealed partial class ItemToggleActiveSoundComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? PlayingStream;
 }
-
-
-

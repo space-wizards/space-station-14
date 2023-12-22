@@ -18,6 +18,3 @@ public sealed partial class ItemToggleDisarmMalusComponent : Component
     [ViewVariables(VVAccess.ReadOnly), DataField]
     public float? DeactivatedDisarmMalus = null;
 }
-
-
-

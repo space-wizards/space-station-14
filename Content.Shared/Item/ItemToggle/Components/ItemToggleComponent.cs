@@ -87,6 +87,3 @@ public record struct ItemToggleForceToggleEvent(EntityUid? User)
 {
     public EntityUid? User { get; set; } = User;
 }
-
-
-

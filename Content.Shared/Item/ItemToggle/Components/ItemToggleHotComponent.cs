@@ -12,6 +12,3 @@ public sealed partial class ItemToggleHotComponent : Component
     [ViewVariables(VVAccess.ReadOnly), DataField]
     public bool IsHotWhenActivated = true;
 }
-
-
-
