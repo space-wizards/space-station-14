@@ -8,6 +8,9 @@ using Content.Shared.Mobs.Components;
 using Robust.Server.GameObjects;
 using Content.Server.Temperature.Components;
 using Content.Server.Body.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.Medical
 {
@@ -51,12 +54,12 @@ namespace Content.Server.Medical
             args.Handled = true;
         }
 
-        private void OpenUserInterface(EntityUid user, HealthAnalyzerComponent healthAnalyzer)
+        private void OpenUserInterface(EntityUid user, EntityUid analyzer)
         {
-            if (!TryComp<ActorComponent>(user, out var actor) || healthAnalyzer.UserInterface == null)
+            if (!TryComp<ActorComponent>(user, out var actor) || !_uiSystem.TryGetUi(analyzer, HealthAnalyzerUiKey.Key, out var ui))
                 return;
 
-            _uiSystem.OpenUi(healthAnalyzer.UserInterface ,actor.PlayerSession);
+            _uiSystem.OpenUi(ui ,actor.PlayerSession);
         }
 
         public void UpdateScannedUser(EntityUid uid, EntityUid user, EntityUid? target, HealthAnalyzerComponent? healthAnalyzer)
@@ -64,7 +67,7 @@ namespace Content.Server.Medical
             if (!Resolve(uid, ref healthAnalyzer))
                 return;
 
-            if (target == null || healthAnalyzer.UserInterface == null)
+            if (target == null || !_uiSystem.TryGetUi(uid, HealthAnalyzerUiKey.Key, out var ui))
                 return;
 
             if (!HasComp<DamageableComponent>(target))
@@ -73,9 +76,9 @@ namespace Content.Server.Medical
             TryComp<TemperatureComponent>(target, out var temp);
             TryComp<BloodstreamComponent>(target, out var bloodstream);
 
-            OpenUserInterface(user, healthAnalyzer);
+            OpenUserInterface(user, uid);
 
-            _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(GetNetEntity(target), temp != null ? temp.CurrentTemperature : float.NaN,
+            _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(GetNetEntity(target), temp != null ? temp.CurrentTemperature : float.NaN,
                 bloodstream != null ? bloodstream.BloodSolution.FillFraction : float.NaN));
         }
     }

@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Anomaly.Components;
@@ -126,7 +127,7 @@ public sealed partial class AnomalyComponent : Component
     /// The sound plays when an anomaly goes supercritical
     /// </summary>
     [DataField]
-    public SoundSpecifier? SupercriticalSound = new SoundCollectionSpecifier("explosion");
+    public SoundSpecifier? SupercriticalSound = new SoundCollectionSpecifier("Explosion");
     #endregion
 
     /// <summary>
@@ -208,6 +209,18 @@ public sealed partial class AnomalyComponent : Component
     [DataField]
     public SoundSpecifier AnomalyContactDamageSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
+    /// <summary>
+    /// A prototype entity that appears when an anomaly supercrit collapse.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId? CorePrototype;
+
+    /// <summary>
+    /// A prototype entity that appears when an anomaly decays.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId? CoreInertPrototype;
+
     #region Floating Animation
     /// <summary>
     /// How long it takes to go from the bottom of the animation to the top.
@@ -230,16 +243,17 @@ public sealed partial class AnomalyComponent : Component
 /// <summary>
 /// Event raised at regular intervals on an anomaly to do whatever its effect is.
 /// </summary>
+/// <param name="Anomaly">The anomaly pulsing</param>
 /// <param name="Stability"></param>
 /// <param name="Severity"></param>
 [ByRefEvent]
-public readonly record struct AnomalyPulseEvent(float Stability, float Severity);
+public readonly record struct AnomalyPulseEvent(EntityUid Anomaly, float Stability, float Severity);
 
 /// <summary>
 /// Event raised on an anomaly when it reaches a supercritical point.
 /// </summary>
 [ByRefEvent]
-public readonly record struct AnomalySupercriticalEvent;
+public readonly record struct AnomalySupercriticalEvent(EntityUid Anomaly);
 
 /// <summary>
 /// Event broadcast after an anomaly goes supercritical

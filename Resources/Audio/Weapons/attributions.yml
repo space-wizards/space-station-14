@@ -32,3 +32,48 @@
   license: "CC-BY-SA-3.0"
   copyright: "User Nimfar11 on GitHub."
   source: "https://github.com/Nimfar11"
+
+- files: ["dodgeball.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/5d264fbea0124e5af511af3fed24203e196d108b/sound/items/dodgeball.ogg"
+
+- files: ["grille_hit.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/803ca4537df35cf252b056d8460d510be8a4f353/sound/effects/grillehit.ogg"
+
+- files: ["slash.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/5d264fbea0124e5af511af3fed24203e196d108b/sound/weapons/slash.ogg"
+
+- files: ["tap.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/803ca4537df35cf252b056d8460d510be8a4f353/sound/weapons/tap.ogg"
+
+- files: ["boxingpunch1.ogg", "boxingpunch2.ogg", "boxingpunch3.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Taken from Ryan Conway on freesound.org"
+  source: "https://freesound.org/people/ryanconway/sounds/260739/"
+
+- files: ["boxingbell.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from Herkules92 on freesound.org"
+  source: "https://freesound.org/people/Herkules92/sounds/520998/"
+
+- files: ["block_metal1.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel Station 13"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/31c5996a5db8cce0cb431cb1dc20d99cac83f268"
+
+- files: ["pierce.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/commit/106cd26fc00851a51dd362f3131120318d848a53"
+
+- files: ["rubberhammer.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from ScreamStudio on freesound.org"
+  source: "https://freesound.org/people/ScreamStudio/sounds/392617/"

@@ -9,6 +9,7 @@
   parent: MobHuman
   id: MobHumanSyndicateAgent
   name: Syndicate Agent
+  suffix: Human
   components:
     - type: Loadout
       prototypes: [SyndicateOperativeGearExtremelyBasic]
@@ -73,7 +74,7 @@
     rule: Ninja
   - type: AutoImplant
     implants:
-    - MicroBombImplant
+    - DeathAcidifierImplant
   - type: RandomMetadata
     nameSegments:
     - names_ninja_title

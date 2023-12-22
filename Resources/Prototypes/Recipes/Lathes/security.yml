@@ -56,6 +56,14 @@
     Gold: 500
 
 - type: latheRecipe
+  id: WeaponLaserSvalinn
+  result: WeaponLaserSvalinn
+  completetime: 5
+  materials:
+    Steel: 2000
+    Gold: 500
+
+- type: latheRecipe
   id: WeaponXrayCannon
   result: WeaponXrayCannon
   completetime: 5
@@ -64,16 +72,6 @@
     Glass: 500
     Plastic: 250
     Gold: 100
-
-- type: latheRecipe
-  id: WeaponTaser
-  result: WeaponTaser
-  completetime: 5
-  materials:
-    Steel: 700
-    Plastic: 300
-    Gold: 250
-    Silver: 500
 
 - type: latheRecipe
   id: ForensicPad
@@ -89,7 +87,7 @@
   materials:
     Steel: 300
     Glass: 200
-    
+
 - type: latheRecipe
   id: ClothingEyesHudSecurity
   result: ClothingEyesHudSecurity
@@ -465,3 +463,75 @@
     Steel: 500
     Glass: 100
     Plastic: 200
+
+- type: latheRecipe
+  id: ShellShotgunUranium
+  result: ShellShotgunUranium
+  completetime: 2
+  materials:
+    Plastic: 15
+    Uranium: 10
+
+- type: latheRecipe
+  id: CartridgePistolUranium
+  result: CartridgePistolUranium
+  completetime: 2
+  materials:
+    Plastic: 5
+    Uranium: 10
+
+- type: latheRecipe
+  id: CartridgeMagnumUranium
+  result: CartridgeMagnumUranium
+  completetime: 2
+  materials:
+    Plastic: 20
+    Uranium: 10
+
+- type: latheRecipe
+  id: CartridgeLightRifleUranium
+  result: CartridgeLightRifleUranium
+  completetime: 2
+  materials:
+    Plastic: 20
+    Uranium: 10
+
+- type: latheRecipe
+  id: CartridgeRifleUranium
+  result: CartridgeRifleUranium
+  completetime: 2
+  materials:
+    Plastic: 15
+    Uranium: 10
+
+- type: latheRecipe
+  id: MagazineBoxPistolUranium
+  result: MagazineBoxPistolUranium
+  completetime: 5
+  materials:
+    Plastic: 650
+    Uranium: 65
+
+- type: latheRecipe
+  id: MagazineBoxMagnumUranium
+  result: MagazineBoxMagnumUranium
+  completetime: 5
+  materials:
+    Plastic: 1250
+    Uranium: 125
+
+- type: latheRecipe
+  id: MagazineBoxLightRifleUranium
+  result: MagazineBoxLightRifleUranium
+  completetime: 5
+  materials:
+    Plastic: 1800
+    Uranium: 180
+
+- type: latheRecipe
+  id: MagazineBoxRifleUranium
+  result: MagazineBoxRifleUranium
+  completetime: 5
+  materials:
+    Plastic: 950
+    Uranium: 95

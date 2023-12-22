@@ -1,6 +1,5 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReagentEffects;
 using Content.Server.Fluids.EntitySystems;
@@ -12,6 +11,8 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -26,6 +27,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -52,6 +54,7 @@ public sealed class DrinkSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
+    [Dependency] private readonly ForensicsSystem _forensics = default!;
 
     public override void Initialize()
     {
@@ -397,9 +400,7 @@ public sealed class DrinkSystem : EntitySystem
         //TODO: Grab the stomach UIDs somehow without using Owner
         _stomach.TryTransferSolution(firstStomach.Value.Comp.Owner, drained, firstStomach.Value.Comp);
 
-        var comp = EnsureComp<ForensicsComponent>(uid);
-        if (TryComp<DnaComponent>(args.Target, out var dna))
-            comp.DNAs.Add(dna.DNA);
+        _forensics.TransferDna(uid, args.Target.Value);
 
         if (!forceDrink && solution.Volume > 0)
             args.Repeat = true;

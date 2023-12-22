@@ -1,9 +1,9 @@
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
@@ -13,6 +13,7 @@ using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -37,7 +38,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         protected override void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie)
         {
-            _audio.Play(_audio.GetSound(creamPie.Sound), Filter.Pvs(uid), uid, false, new AudioParams().WithVariation(0.125f));
+            _audio.PlayPvs(_audio.GetSound(creamPie.Sound), uid, AudioParams.Default.WithVariation(0.125f));
 
             if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
             {
@@ -45,9 +46,9 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     _puddle.TrySpillAt(uid, solution, out _, false);
                 }
-                if (!string.IsNullOrEmpty(foodComp.TrashPrototype))
+                if (!string.IsNullOrEmpty(foodComp.Trash))
                 {
-                    EntityManager.SpawnEntity(foodComp.TrashPrototype, Transform(uid).Coordinates);
+                    EntityManager.SpawnEntity(foodComp.Trash, Transform(uid).Coordinates);
                 }
             }
             ActivatePayload(uid);

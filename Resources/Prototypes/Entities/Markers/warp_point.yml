@@ -13,6 +13,8 @@
   name: warp point (beacon)
   components:
   - type: NavMapBeacon
+  - type: WarpPoint
+    location: beacon
 
 - type: entity
   parent: WarpPoint
@@ -21,6 +23,8 @@
   suffix: ninja bombing target
   components:
   - type: BombingTarget
+  - type: WarpPoint
+    location: bombing target
   - type: Sprite
     layers:
     - state: pink
@@ -36,6 +40,8 @@
   - type: NavMapBeacon
     text: bar
     color: "#791500"
+  - type: WarpPoint
+    location: bar
 
 - type: entity
   id: WarpPointBeaconCargo
@@ -45,6 +51,8 @@
   - type: NavMapBeacon
     text: cargo
     color: "#A46106"
+  - type: WarpPoint
+    location: cargo
 
 - type: entity
   id: WarpPointBeaconCommand
@@ -54,6 +62,8 @@
   - type: NavMapBeacon
     text: command
     color: "#334E6D"
+  - type: WarpPoint
+    location: command
 
 - type: entity
   id: WarpPointBeaconEngineering
@@ -63,6 +73,8 @@
   - type: NavMapBeacon
     text: engineering
     color: "#EFB341"
+  - type: WarpPoint
+    location: engineering
 
 - type: entity
   id: WarpPointBeaconMedical
@@ -72,6 +84,8 @@
   - type: NavMapBeacon
     text: medical
     color: "#52B4E9"
+  - type: WarpPoint
+    location: medical
 
 - type: entity
   id: WarpPointBeaconNeutral
@@ -81,6 +95,8 @@
   - type: NavMapBeacon
     text: neutral
     color: "#D4D4D4"
+  - type: WarpPoint
+    location: neutral
 
 - type: entity
   id: WarpPointBeaconScience
@@ -90,6 +106,19 @@
   - type: NavMapBeacon
     text: science
     color: "#D381C9"
+  - type: WarpPoint
+    location: science
+
+- type: entity
+  id: WarpPointBeaconSecurity
+  parent: WarpPointBeacon
+  name: warp point (security)
+  components:
+  - type: NavMapBeacon
+    text: security
+    color: "#DE3A3A"
+  - type: WarpPoint
+    location: security
 
 - type: entity
   id: WarpPointBeaconService
@@ -99,3 +128,5 @@
   - type: NavMapBeacon
     text: service
     color: "#9FED58"
+  - type: WarpPoint
+    location: service

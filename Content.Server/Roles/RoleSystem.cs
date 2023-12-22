@@ -13,6 +13,7 @@ public sealed class RoleSystem : SharedRoleSystem
         SubscribeAntagEvents<InitialInfectedRoleComponent>();
         SubscribeAntagEvents<NinjaRoleComponent>();
         SubscribeAntagEvents<NukeopsRoleComponent>();
+        SubscribeAntagEvents<RevolutionaryRoleComponent>();
         SubscribeAntagEvents<SubvertedSiliconRoleComponent>();
         SubscribeAntagEvents<TraitorRoleComponent>();
         SubscribeAntagEvents<ZombieRoleComponent>();
@@ -34,4 +35,28 @@ public sealed class RoleSystem : SharedRoleSystem
 /// Handlers can either replace or append to the briefing, whichever is more appropriate.
 /// </summary>
 [ByRefEvent]
-public record struct GetBriefingEvent(string? Briefing = null);
+public sealed class GetBriefingEvent
+{
+    public string? Briefing;
+
+    public GetBriefingEvent(string? briefing = null)
+    {
+        Briefing = briefing;
+    }
+
+    /// <summary>
+    /// If there is no briefing, sets it to the string.
+    /// If there is a briefing, adds a new line to separate it from the appended string.
+    /// </summary>
+    public void Append(string text)
+    {
+        if (Briefing == null)
+        {
+            Briefing = text;
+        }
+        else
+        {
+            Briefing += "\n" + text;
+        }
+    }
+}

@@ -1,8 +1,9 @@
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -13,6 +14,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Timing;
 using Robust.Shared.GameStates;
+using Content.Shared.Forensics;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -136,6 +138,9 @@ namespace Content.Server.Chemistry.EntitySystems
                 return true;
             _reactiveSystem.DoEntityReaction(target.Value, removedSolution, ReactionMethod.Injection);
             _solutions.TryAddSolution(target.Value, targetSolution, removedSolution);
+
+            var ev = new TransferDnaEvent { Donor = target.Value, Recipient = uid };
+            RaiseLocalEvent(target.Value, ref ev);
 
             // same LogType as syringes...
             _adminLogger.Add(LogType.ForceFeed, $"{_entMan.ToPrettyString(user):user} injected {_entMan.ToPrettyString(target.Value):target} with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {_entMan.ToPrettyString(uid):using}");

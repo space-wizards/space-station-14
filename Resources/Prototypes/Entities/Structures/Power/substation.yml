@@ -20,6 +20,9 @@
   - type: UpgradeBattery
     maxChargeMultiplier: 2
     baseMaxCharge: 2500000
+  - type: UpgradePowerSupplyRamping
+    scaling: Linear
+    supplyRampingMultiplier: 1
   - type: Battery
     startingCharge: 0
   - type: ExaminableBattery
@@ -87,8 +90,8 @@
     totalIntensity: 200
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-substation
-    LayoutId: Substation
+    boardName: wires-board-name-substation
+    layoutId: Substation
   - type: Machine
     board: SubstationMachineCircuitboard
   - type: StationInfiniteBatteryTarget

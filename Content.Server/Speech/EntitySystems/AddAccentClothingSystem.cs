@@ -23,16 +23,17 @@ public sealed class AddAccentClothingSystem : EntitySystem
         // check if entity was actually used as clothing
         // not just taken in pockets or something
         var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
-        if (!isCorrectSlot) return;
+        if (!isCorrectSlot)
+            return;
 
         // does the user already has this accent?
         var componentType = _componentFactory.GetRegistration(component.Accent).Type;
-        if (EntityManager.HasComponent(args.Equipee, componentType)) return;
+        if (HasComp(args.Equipee, componentType))
+            return;
 
         // add accent to the user
         var accentComponent = (Component) _componentFactory.GetComponent(componentType);
-        accentComponent.Owner = args.Equipee;
-        EntityManager.AddComponent(args.Equipee, accentComponent);
+        AddComp(args.Equipee, accentComponent);
 
         // snowflake case for replacement accent
         if (accentComponent is ReplacementAccentComponent rep)

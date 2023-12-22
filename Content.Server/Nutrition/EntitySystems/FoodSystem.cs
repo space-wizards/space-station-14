@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Inventory;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
@@ -10,6 +9,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -18,17 +18,20 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
-using Content.Shared.Verbs;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Tag;
 using Content.Shared.Storage;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -96,11 +99,14 @@ public sealed class FoodSystem : EntitySystem
     public (bool Success, bool Handled) TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
     {
         //Suppresses eating yourself and alive mobs
-        if (food == user || _mobState.IsAlive(food))
+        if (food == user || (_mobState.IsAlive(food) && foodComp.RequireDead))
             return (false, false);
 
         // Target can't be fed or they're already eating
         if (!TryComp<BodyComponent>(target, out var body))
+            return (false, false);
+
+        if (HasComp<UnremoveableComponent>(food))
             return (false, false);
 
         if (_openable.IsClosed(food, user))
@@ -120,7 +126,7 @@ public sealed class FoodSystem : EntitySystem
             return (false, false);
 
         // Check for used storage on the food item
-        if (TryComp<StorageComponent>(food, out var storageState) && storageState.StorageUsed != 0)
+        if (TryComp<StorageComponent>(food, out var storageState) && storageState.Container.ContainedEntities.Any())
         {
             _popup.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
             return (false, true);
@@ -276,7 +282,7 @@ public sealed class FoodSystem : EntitySystem
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(uid):food}");
         }
 
-        _audio.Play(component.UseSound, Filter.Pvs(args.Target.Value), args.Target.Value, true, AudioParams.Default.WithVolume(-1f));
+        _audio.PlayPvs(component.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-1f));
 
         // Try to break all used utensils
         foreach (var utensil in utensils)
@@ -301,33 +307,38 @@ public sealed class FoodSystem : EntitySystem
             return;
         }
 
+        // don't try to repeat if its being deleted
+        args.Repeat = false;
+        DeleteAndSpawnTrash(component, uid, args.User);
+    }
+
+    public void DeleteAndSpawnTrash(FoodComponent component, EntityUid food, EntityUid user)
+    {
         var ev = new BeforeFullyEatenEvent
         {
-            User = args.User
+            User = user
         };
-        RaiseLocalEvent(uid, ev);
+        RaiseLocalEvent(food, ev);
         if (ev.Cancelled)
             return;
 
-        if (string.IsNullOrEmpty(component.TrashPrototype))
-            QueueDel(uid);
-        else
-            DeleteAndSpawnTrash(component, uid, args.User);
-    }
+        if (string.IsNullOrEmpty(component.Trash))
+        {
+            QueueDel(food);
+            return;
+        }
 
-    public void DeleteAndSpawnTrash(FoodComponent component, EntityUid food, EntityUid? user = null)
-    {
         //We're empty. Become trash.
         var position = Transform(food).MapPosition;
-        var finisher = Spawn(component.TrashPrototype, position);
+        var finisher = Spawn(component.Trash, position);
 
         // If the user is holding the item
-        if (user != null && _hands.IsHolding(user.Value, food, out var hand))
+        if (_hands.IsHolding(user, food, out var hand))
         {
             Del(food);
 
             // Put the trash in the user's hand
-            _hands.TryPickup(user.Value, finisher, hand);
+            _hands.TryPickup(user, finisher, hand);
             return;
         }
 
@@ -344,7 +355,7 @@ public sealed class FoodSystem : EntitySystem
             return;
 
         // have to kill mouse before eating it
-        if (_mobState.IsAlive(uid))
+        if (_mobState.IsAlive(uid) && component.RequireDead)
             return;
 
         // only give moths eat verb for clothes since it would just fail otherwise

@@ -1,6 +1,6 @@
 using System.Linq;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

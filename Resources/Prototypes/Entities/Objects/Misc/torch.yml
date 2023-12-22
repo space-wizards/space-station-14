@@ -74,3 +74,6 @@
           maxDuration: 4.0
           startValue: 6.0
           endValue: 1.0
+    - type: Tag
+      tags:
+      - Torch

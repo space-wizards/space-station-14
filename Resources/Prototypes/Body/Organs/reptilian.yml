@@ -4,6 +4,12 @@
   noSpawn: true
   components:
   - type: Stomach
+    specialDigestible:
+      tags:
+      - Fruit
+      - Meat
+      - Pill
+      - Crayon
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -11,5 +17,5 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5

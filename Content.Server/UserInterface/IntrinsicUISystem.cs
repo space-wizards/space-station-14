@@ -1,7 +1,7 @@
 ﻿using Content.Server.Actions;
-using Content.Shared.Actions;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.UserInterface;
 
@@ -36,19 +36,19 @@ public sealed class IntrinsicUISystem : EntitySystem
 
         if (key is null)
         {
-            Logger.ErrorS("bui", $"Entity {ToPrettyString(uid)} has an invalid intrinsic UI.");
+            Log.Error($"Entity {ToPrettyString(uid)} has an invalid intrinsic UI.");
         }
 
         var ui = GetUIOrNull(uid, key, iui);
 
         if (ui is null)
         {
-            Logger.ErrorS("bui", $"Couldn't get UI {key} on {ToPrettyString(uid)}");
+            Log.Error($"Couldn't get UI {key} on {ToPrettyString(uid)}");
             return false;
         }
 
         var attempt = new IntrinsicUIOpenAttemptEvent(uid, key);
-        RaiseLocalEvent(uid, attempt, false);
+        RaiseLocalEvent(uid, attempt);
         if (attempt.Cancelled)
             return false;
 
@@ -61,7 +61,7 @@ public sealed class IntrinsicUISystem : EntitySystem
         if (!Resolve(uid, ref component))
             return null;
 
-        return key is null ? null : uid.GetUIOrNull(key);
+        return key is null ? null : _uiSystem.GetUiOrNull(uid, key);
     }
 }
 

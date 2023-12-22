@@ -1,3 +1,4 @@
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
@@ -6,8 +7,8 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Utility;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Systems;
 
@@ -17,6 +18,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
+    [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
 
     // All antag verbs have names so invokeverb works.
@@ -100,5 +102,22 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-pirate"),
         };
         args.Verbs.Add(pirate);
+
+        //todo come here at some point dear lort.
+        Verb headRev = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-head-rev"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Misc/job_icons.rsi/HeadRevolutionary.png")),
+            Act = () =>
+            {
+                if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
+                    return;
+                _revolutionaryRule.OnHeadRevAdmin(mindId, mind);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-head-rev"),
+        };
+        args.Verbs.Add(headRev);
     }
 }

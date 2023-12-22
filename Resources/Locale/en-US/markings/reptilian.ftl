@@ -87,3 +87,9 @@ marking-LizardHornsBighorn = Lizard Horns (Bighorn)
 
 marking-LizardHornsKoboldEars-horns_kobold_ears = Lizard Ears (Kobold)
 marking-LizardHornsKoboldEars = Lizard Ears (Kobold)
+
+marking-LizardHornsFloppyKoboldEars-horns_floppy_kobold_ears = Lizard Ears (Floppy Kobold)
+marking-LizardHornsFloppyKoboldEars = Lizard Ears (Floppy Kobold)
+
+marking-LizardChestUnderbelly-body_underbelly = Lizard Chest (Underbelly)
+marking-LizardChestUnderbelly = Lizard Chest (Underbelly)

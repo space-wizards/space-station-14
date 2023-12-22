@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.Buckle;
@@ -13,6 +12,8 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Vehicle.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
@@ -35,7 +36,6 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedHandVirtualItemSystem _virtualItemSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
@@ -176,8 +176,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
         // TODO: Need audio refactor maybe, just some way to null it when the stream is over.
         // For now better to just not loop to keep the code much cleaner.
-        vehicle.HonkPlayingStream?.Stop();
-        vehicle.HonkPlayingStream = _audioSystem.PlayPredicted(vehicle.HornSound, uid, uid);
+        vehicle.HonkPlayingStream = _audioSystem.PlayPredicted(vehicle.HornSound, uid, uid)?.Entity;
         args.Handled = true;
     }
 
@@ -326,11 +325,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     {
         if (component.Rider == null)
             return;
-        var rider = component.Rider.Value;
-
-        args.Entities.Add(rider);
-        _access.FindAccessItemsInventory(rider, out var items);
-        args.Entities.UnionWith(items);
+        args.Entities.Add(component.Rider.Value);
     }
 
     /// <summary>
