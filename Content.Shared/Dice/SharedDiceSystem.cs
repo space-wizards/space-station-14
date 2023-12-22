@@ -22,7 +22,7 @@ public abstract class SharedDiceSystem : EntitySystem
     {
         if (args.Current is DiceComponent.DiceState state)
         {
-            if (IsValidValue(uid, state.CurrentValue, component))
+            if (IsValidValue(state.CurrentValue, component) && IsValidSide(ValueToSide(state.CurrentValue, component), component))
             {
                 SetCurrentValue(uid, state.CurrentValue, component);
             }
@@ -68,7 +68,7 @@ public abstract class SharedDiceSystem : EntitySystem
             return;
         }
 
-        die.CurrentValue = (side - die.Offset) * die.Multiplier;
+        die.CurrentValue = SideToValue(side, die);
         Dirty(die);
         UpdateVisuals(uid, die);
     }
@@ -78,21 +78,33 @@ public abstract class SharedDiceSystem : EntitySystem
         if (!Resolve(uid, ref die))
             return;
 
-        if (!IsValidValue(uid, value, die))
+        if (!IsValidValue(value, die))
         {
             Log.Error($"Attempted to set die {ToPrettyString(uid)} to an invalid value ({value}).");
             return;
         }
 
-        SetCurrentSide(uid, value / die.Multiplier + die.Offset, die);
+        SetCurrentSide(uid, ValueToSide(value, die), die);
     }
 
-    private bool IsValidValue(EntityUid uid, int value, DiceComponent? die = null)
+    private int SideToValue(int side, DiceComponent die)
     {
-        if (!Resolve(uid, ref die))
-            return false;
+        return (side - die.Offset) * die.Multiplier;
+    }
 
-        return value % die.Multiplier == 0 && value / die.Multiplier + die.Offset >= 1;
+    private int ValueToSide(int value, DiceComponent die)
+    {
+        return value / die.Multiplier + die.Offset;
+    }
+
+    private bool IsValidValue(int value, DiceComponent die)
+    {
+        return !(value % die.Multiplier != 0 || value / die.Multiplier + die.Offset < 1);
+    }
+
+    private bool IsValidSide(int side, DiceComponent die)
+    {
+        return !(side < 1 || side > die.Sides);
     }
 
     protected virtual void UpdateVisuals(EntityUid uid, DiceComponent? die = null)
