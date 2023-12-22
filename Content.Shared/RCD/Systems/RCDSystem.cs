@@ -157,30 +157,47 @@ public sealed class RCDSystem : EntitySystem
 
         var gridUid = location.GetGridUid(EntityManager);
 
-        if (!TryGetMapGrid(gridUid, location, out var _))
+        if (!TryGetMapGrid(gridUid, location, out var mapGrid))
             return;
+
+        gridUid = mapGrid.Owner;
 
         if (!_gameTiming.IsFirstTimePredicted ||
             !_net.IsServer ||
             !TryToFinalizeConstruction(uid, component, component.ProtoId, location, args.Target, args.User, true))
             return;
 
+        // If not placing a tile on, make the construction instant
+        var delay = component.CachedPrototype.Delay;
+        var effectPrototype = component.CachedPrototype.Effect;
+        var tile = _mapSystem.GetTileRef(gridUid.Value, mapGrid, location);
+
+        if (component.CachedPrototype.Mode == RcdMode.Floors && !tile.Tile.IsEmpty)
+        {
+            delay = 0;
+            effectPrototype = "EffectRCDConstructInstant";
+        }
+
         // Try to start the do after
-        var effect = Spawn(component.CachedPrototype.Effect, location);
+        var effect = Spawn(effectPrototype, location);
         var ev = new RCDDoAfterEvent(GetNetCoordinates(location), component.ProtoId, EntityManager.GetNetEntity(effect));
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, component.CachedPrototype.Delay, ev, uid, target: args.Target, used: uid)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, ev, uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
-            NeedHand = true,
             BreakOnHandChange = true,
             BreakOnUserMove = true,
             BreakOnTargetMove = args.Target != null,
-            AttemptFrequency = AttemptFrequency.EveryTick
+            AttemptFrequency = AttemptFrequency.EveryTick,
+            CancelDuplicate = false,
+            BlockDuplicate = false
         };
 
         if (_doAfter.TryStartDoAfter(doAfterArgs))
             args.Handled = true;
+
+        else
+            QueueDel(effect);
     }
 
     private void OnDoAfterAttempt(EntityUid uid, RCDComponent component, DoAfterAttemptEvent<RCDDoAfterEvent> args)
@@ -191,21 +208,14 @@ public sealed class RCDSystem : EntitySystem
         var location = GetCoordinates(args.Event.Location);
 
         if (!TryToFinalizeConstruction(uid, component, args.Event.StartingProtoId, location, args.Event.Target, args.Event.User, true))
-        {
-            if (_net.IsServer && args.Event.Effect != null)
-            {
-                Logger.Debug("Delete effect");
-                QueueDel(EntityManager.GetEntity(args.Event.Effect));
-                //Spawn("EffectRCDCancelled", location);
-            }
-            Logger.Debug("Cancel action");
             args.Cancel();
-            return;
-        }
     }
 
     private void OnDoAfter(EntityUid uid, RCDComponent component, RCDDoAfterEvent args)
     {
+        if (args.Cancelled)
+            QueueDel(EntityManager.GetEntity(args.Effect));
+
         if (args.Handled || args.Cancelled || !_timing.IsFirstTimePredicted)
             return;
 
@@ -311,11 +321,11 @@ public sealed class RCDSystem : EntitySystem
             }
         }
 
-        if (dryRun || !_net.IsServer)
+        if (dryRun)
             return true;
 
         // Deconstruct the tile
-        if (!IsStructurePlaceable(mapGridData, uid, user))
+        if (!IsStructurePlaceable(mapGridData, uid, user) && _net.IsServer)
         {
             _mapSystem.SetTile(mapGridData.GridUid, mapGridData.Component, mapGridData.Position, Tile.Empty);
             _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {mapGridData.GridUid} tile: {mapGridData.Position} to space");

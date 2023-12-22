@@ -1,7 +1,7 @@
 
 ### UI
 
-rcd-component-examine-mode-details = It's currently set to '($mode)' mode.
+rcd-component-examine-mode-details = It's currently set to '{$mode}' mode.
 rcd-component-examine-build-details = It's currently set to build {MAKEPLURAL($name)}.
 
 
@@ -31,7 +31,6 @@ rcd-component-lighting = Lighting
 
 
 ### Prototype names
-
 
 rcd-component-deconstruct = deconstruct
 rcd-component-wall-solid = solid wall
