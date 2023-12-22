@@ -4,6 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Popups;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Jittering;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
@@ -20,6 +21,9 @@ public sealed class AmnesiaSystem : EntitySystem
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKeySleep = "ForcedSleep";
+
+    [ValidatePrototypeId<StatusEffectPrototype>]
+    private const string StatusEffectKeyJitter = "Jitter";
 
     /// <summary>
     /// Used to keep track of entities that have the amnesia component.
@@ -66,17 +70,25 @@ public sealed class AmnesiaSystem : EntitySystem
                     _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-3"), uid, PopupType.LargeCaution);
                     amnesiaComponent.Stage++;
                     break;
-                // Message for 10s
-                case 3 when amnesiaComponent.TimeUntilForget.TotalSeconds < 10:
+                // Message for 30s
+                case 3 when amnesiaComponent.TimeUntilForget.TotalSeconds < 30:
                     _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-4"), uid, PopupType.LargeCaution);
                     amnesiaComponent.Stage++;
                     break;
-                // Message for 3s
-                case 4 when amnesiaComponent.TimeUntilForget.TotalSeconds < 3:
-                    EntityManager.RemoveComponent<AmnesiaComponent>(uid);
+                case 4 when amnesiaComponent.TimeUntilForget.TotalSeconds < 27:
                     _statusEffectsSystem.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKeySleep,
-                        TimeSpan.FromSeconds(20), true);
-
+                        TimeSpan.FromSeconds(50), true);
+                    amnesiaComponent.Stage++;
+                    break;
+                case 5 when amnesiaComponent.TimeUntilForget.TotalSeconds < 15:
+                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-5"), uid, PopupType.LargeCaution);
+                    _statusEffectsSystem.TryAddStatusEffect<JitteringComponent>(uid, StatusEffectKeyJitter,
+                        TimeSpan.FromSeconds(25), true);
+                    amnesiaComponent.Stage++;
+                    break;
+                case 6 when amnesiaComponent.TimeUntilForget.TotalSeconds < 3:
+                    EntityManager.RemoveComponent<AmnesiaComponent>(uid);
+                    _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-6"), uid, PopupType.LargeCaution);
                     ForceGhostRoleAmnesia(uid);
                     break;
             }
