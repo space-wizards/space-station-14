@@ -18,6 +18,6 @@ public sealed partial class ItemToggleActiveSoundComponent : Component
     /// <summary>
     ///     Used when the item emits sound while active.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly), DataField, AutoNetworkedField]
     public EntityUid? PlayingStream;
 }
