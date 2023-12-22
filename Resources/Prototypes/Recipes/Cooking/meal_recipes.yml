@@ -261,6 +261,7 @@
   solids:
     FoodBreadBun: 1
     PositronicBrain: 1
+    CapacitorStockPart: 2 # rollback for the balance of the universe.
     # i would add steel to this recipe but the microwave explodes
 
 - type: microwaveMealRecipe
