@@ -261,6 +261,8 @@
   solids:
     FoodBreadBun: 1
     CapacitorStockPart: 2
+    Plasma: 10
+    OrganHumanBrain: 1
     # i would add steel to this recipe but the microwave explodes
 
 - type: microwaveMealRecipe
