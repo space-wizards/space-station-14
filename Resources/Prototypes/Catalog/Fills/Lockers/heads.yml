@@ -261,6 +261,7 @@
       - id: ClothingHandsGlovesColorPurple
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
+      - id: NanomachinesMedipen
       - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
 
@@ -291,6 +292,7 @@
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal
       - id: RubberStampHos
+      - id: NanomachinesMedipen
       - id: SecurityTechFabCircuitboard
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
