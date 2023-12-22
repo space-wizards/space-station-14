@@ -45246,11 +45246,6 @@ entities:
       type: Transform
 - proto: DrinkMilkCarton
   entities:
-  - uid: 5276
-    components:
-    - pos: -52.395008,21.71115
-      parent: 1
-      type: Transform
   - uid: 6957
     components:
     - pos: -35.398277,47.715622
@@ -81116,6 +81111,13 @@ entities:
     - pos: -33.757652,44.762497
       parent: 1
       type: Transform
+- proto: ReagentContainerMilk
+  entities:
+  - uid: 5276
+    components:
+    - pos: -52.395008,21.71115
+      parent: 1
+      type: Transform
 - proto: ReagentContainerSugar
   entities:
   - uid: 6956
@@ -84325,13 +84327,6 @@ entities:
   - uid: 7575
     components:
     - pos: -22.5,38.5
-      parent: 1
-      type: Transform
-- proto: SpawnMobCrabAtmos
-  entities:
-  - uid: 5576
-    components:
-    - pos: -81.5,39.5
       parent: 1
       type: Transform
 - proto: SpawnMobFoxRenault

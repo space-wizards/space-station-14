@@ -14164,7 +14164,7 @@ entities:
     - pos: 0.5,-22.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -1192.0897
+    - secondsUntilStateChange: -1150.2668
       state: Opening
       type: Door
   - uid: 426
@@ -14471,7 +14471,7 @@ entities:
       pos: -1.5,10.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24152.398
+    - secondsUntilStateChange: -24110.576
       state: Opening
       type: Door
 - proto: AirlockResearchDirectorLocked
@@ -14482,7 +14482,7 @@ entities:
       pos: -2.5,11.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24152.033
+    - secondsUntilStateChange: -24110.21
       state: Opening
       type: Door
 - proto: AirlockSalvageGlassLocked
@@ -14518,7 +14518,7 @@ entities:
       pos: 24.5,72.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22706.168
+    - secondsUntilStateChange: -22664.346
       state: Opening
       type: Door
   - uid: 505
@@ -14545,7 +14545,7 @@ entities:
       pos: 18.5,68.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -38579.582
+    - secondsUntilStateChange: -38537.758
       state: Opening
       type: Door
   - uid: 512
@@ -14560,7 +14560,7 @@ entities:
       pos: 23.5,72.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -22706.6
+    - secondsUntilStateChange: -22664.777
       state: Opening
       type: Door
   - uid: 13063
@@ -14590,7 +14590,7 @@ entities:
     - pos: 10.5,6.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24154.965
+    - secondsUntilStateChange: -24113.143
       state: Opening
       type: Door
   - uid: 496
@@ -14598,7 +14598,7 @@ entities:
     - pos: -0.5,15.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24148.666
+    - secondsUntilStateChange: -24106.844
       state: Opening
       type: Door
   - uid: 497
@@ -14608,7 +14608,7 @@ entities:
     - pos: 2.5,7.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -23609.633
+    - secondsUntilStateChange: -23567.81
       state: Opening
       type: Door
   - uid: 498
@@ -14617,7 +14617,7 @@ entities:
       pos: 11.5,3.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -61370.01
+    - secondsUntilStateChange: -61328.188
       state: Opening
       type: Door
   - uid: 499
@@ -14625,7 +14625,7 @@ entities:
     - pos: 5.5,19.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24164.766
+    - secondsUntilStateChange: -24122.943
       state: Opening
       type: Door
   - uid: 500
@@ -14633,7 +14633,7 @@ entities:
     - pos: -0.5,16.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24148.898
+    - secondsUntilStateChange: -24107.076
       state: Opening
       type: Door
   - uid: 501
@@ -14641,7 +14641,7 @@ entities:
     - pos: 13.5,13.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24163.2
+    - secondsUntilStateChange: -24121.377
       state: Opening
       type: Door
   - uid: 502
@@ -14649,7 +14649,7 @@ entities:
     - pos: 14.5,13.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24163.5
+    - secondsUntilStateChange: -24121.678
       state: Opening
       type: Door
 - proto: AirlockScienceLocked
@@ -14659,7 +14659,7 @@ entities:
     - pos: 27.5,13.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24125
+    - secondsUntilStateChange: -24083.178
       state: Opening
       type: Door
   - uid: 504
@@ -14667,7 +14667,7 @@ entities:
     - pos: 30.5,13.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24123.432
+    - secondsUntilStateChange: -24081.61
       state: Opening
       type: Door
   - uid: 513
@@ -14676,7 +14676,7 @@ entities:
       pos: 17.5,15.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24162.166
+    - secondsUntilStateChange: -24120.344
       state: Opening
       type: Door
   - uid: 514
@@ -14684,7 +14684,7 @@ entities:
     - pos: 30.5,12.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24123.7
+    - secondsUntilStateChange: -24081.877
       state: Opening
       type: Door
   - uid: 515
@@ -14692,7 +14692,7 @@ entities:
     - pos: 27.5,12.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24125.299
+    - secondsUntilStateChange: -24083.477
       state: Opening
       type: Door
   - uid: 516
@@ -14700,7 +14700,7 @@ entities:
     - pos: 15.5,19.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -65455.87
+    - secondsUntilStateChange: -65414.047
       state: Opening
       type: Door
   - uid: 517
@@ -14708,7 +14708,7 @@ entities:
     - pos: 11.5,19.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24166.566
+    - secondsUntilStateChange: -24124.744
       state: Opening
       type: Door
   - uid: 518
@@ -14717,7 +14717,7 @@ entities:
       pos: 17.5,14.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24162.432
+    - secondsUntilStateChange: -24120.61
       state: Opening
       type: Door
   - uid: 520
@@ -14726,7 +14726,7 @@ entities:
       pos: 22.5,15.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24160.7
+    - secondsUntilStateChange: -24118.877
       state: Opening
       type: Door
   - uid: 521
@@ -14735,7 +14735,7 @@ entities:
       pos: 22.5,14.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -24160.432
+    - secondsUntilStateChange: -24118.61
       state: Opening
       type: Door
 - proto: AirlockSecurity
@@ -77968,18 +77968,6 @@ entities:
     - pos: -14.630993,23.719898
       parent: 2
       type: Transform
-- proto: DrinkOatMilkCarton
-  entities:
-  - uid: 19378
-    components:
-    - pos: -13.154188,23.53672
-      parent: 2
-      type: Transform
-  - uid: 19379
-    components:
-    - pos: -13.354187,23.692276
-      parent: 2
-      type: Transform
 - proto: DrinkRumBottleFull
   entities:
   - uid: 11532
@@ -78011,18 +77999,6 @@ entities:
   - uid: 18338
     components:
     - pos: 28.285908,66.675316
-      parent: 2
-      type: Transform
-- proto: DrinkSoyMilkCarton
-  entities:
-  - uid: 19380
-    components:
-    - pos: -12.998632,23.692276
-      parent: 2
-      type: Transform
-  - uid: 19381
-    components:
-    - pos: -12.798634,23.558945
       parent: 2
       type: Transform
 - proto: DrinkTeacup
@@ -82179,7 +82155,7 @@ entities:
     - pos: 19.5,62.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -61951.242
+    - secondsUntilStateChange: -61909.418
       state: Closing
       type: Door
   - uid: 12058
@@ -119231,7 +119207,7 @@ entities:
     - pos: 29.5,63.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -37721.88
+    - secondsUntilStateChange: -37680.055
       state: Opening
       type: Door
 - proto: HospitalCurtainsOpen
@@ -132643,6 +132619,30 @@ entities:
     - pos: 19.297472,9.530105
       parent: 2
       type: Transform
+- proto: ReagentContainerMilkOat
+  entities:
+  - uid: 19378
+    components:
+    - pos: -13.154188,23.53672
+      parent: 2
+      type: Transform
+  - uid: 19379
+    components:
+    - pos: -13.354187,23.692276
+      parent: 2
+      type: Transform
+- proto: ReagentContainerMilkSoy
+  entities:
+  - uid: 19380
+    components:
+    - pos: -12.998632,23.692276
+      parent: 2
+      type: Transform
+  - uid: 19381
+    components:
+    - pos: -12.798634,23.558945
+      parent: 2
+      type: Transform
 - proto: ReagentContainerRice
   entities:
   - uid: 19382
@@ -143388,13 +143388,6 @@ entities:
   - uid: 21148
     components:
     - pos: -7.5,1.5
-      parent: 2
-      type: Transform
-- proto: SpawnMobCrabAtmos
-  entities:
-  - uid: 10121
-    components:
-    - pos: -0.5,73.5
       parent: 2
       type: Transform
 - proto: SpawnMobDrone

@@ -55855,13 +55855,6 @@ entities:
     - pos: -6.3873754,21.667553
       parent: 1
       type: Transform
-- proto: DrinkOatMilkCarton
-  entities:
-  - uid: 9297
-    components:
-    - pos: 5.35893,2.077802
-      parent: 1
-      type: Transform
 - proto: DrinkRumBottleFull
   entities:
   - uid: 8362
@@ -55896,13 +55889,6 @@ entities:
   - uid: 17302
     components:
     - pos: -11.013691,6.5249143
-      parent: 1
-      type: Transform
-- proto: DrinkSoyMilkCarton
-  entities:
-  - uid: 9298
-    components:
-    - pos: 5.504763,1.973635
       parent: 1
       type: Transform
 - proto: DrinkWaterCup
@@ -94395,6 +94381,20 @@ entities:
     - pos: 7.857181,-3.1736069
       parent: 1
       type: Transform
+- proto: ReagentContainerMilkOat
+  entities:
+  - uid: 9297
+    components:
+    - pos: 5.35893,2.077802
+      parent: 1
+      type: Transform
+- proto: ReagentContainerMilkSoy
+  entities:
+  - uid: 9298
+    components:
+    - pos: 5.504763,1.973635
+      parent: 1
+      type: Transform
 - proto: ReagentContainerRice
   entities:
   - uid: 608
@@ -100978,9 +100978,9 @@ entities:
       type: Transform
 - proto: SpawnMobCatException
   entities:
-  - uid: 8578
+  - uid: 2613
     components:
-    - pos: 10.5,-22.5
+    - pos: -7.5,-22.5
       parent: 1
       type: Transform
 - proto: SpawnMobCatFloppa
@@ -101002,13 +101002,6 @@ entities:
   - uid: 9217
     components:
     - pos: 24.5,2.5
-      parent: 1
-      type: Transform
-- proto: SpawnMobCrabAtmos
-  entities:
-  - uid: 2613
-    components:
-    - pos: -7.5,-22.5
       parent: 1
       type: Transform
 - proto: SpawnMobDrone
