@@ -370,34 +370,12 @@
                type: Dwarf
             - !type:ReagentThreshold
               min: 0
-              max: 0.04
-        - !type:AdjustReagent
-          reagent: Nanomachines
-          conditions:
-            - !type:MobStateCondition
-              mobstate: Critical
-            - !type:ReagentThreshold
-              min: 0
-              max: 35
-            - !type:OrganType
-               type: Human
-          amount: -35
-        - !type:AdjustReagent
-          reagent: Nanomachines
-          conditions:
-            - !type:MobStateCondition
-              mobstate: Critical
-            - !type:ReagentThreshold
-              min: 0
-              max: 35
-            - !type:OrganType
-               type: Dwarf
-          amount: -35
+              max: 0.05
       metabolismRate: 0.02
 
 - type: reagent
   id: HeartbreakerToxin
-  name: reagent-name-heartbreaker-toxin
+  name: reagent-name-heartbreaker-toxn
   group: Toxins
   desc: reagent-desc-heartbreaker-toxin
   physicalDesc: reagent-physical-desc-strong-smelling
