@@ -264,7 +264,7 @@
       coefficients:
         Blunt: 0.8
         Slash: 0.8
-        Piercing: 0.8
+        Piercing: 0.6
         Heat: 0.5
         Radiation: 0.5
         Caustic: 0.6

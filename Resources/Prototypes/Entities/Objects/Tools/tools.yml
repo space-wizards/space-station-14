@@ -155,7 +155,6 @@
     damage:
       types:
         Blunt: 8
-        Structural: 3
   - type: Tool
     qualities:
       - Prying
@@ -337,7 +336,7 @@
     attackRate: 1.5
     damage:
       types:
-        Piercing: 8
+        Piercing: 10
     soundHit:
       path: "/Audio/Items/drill_hit.ogg"
 
