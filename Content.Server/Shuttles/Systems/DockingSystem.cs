@@ -461,50 +461,6 @@ namespace Content.Server.Shuttles.Systems
 
             OnUndock(dockUid, dock.DockedWith.Value);
             OnUndock(dock.DockedWith.Value, dockUid);
-
-            // TODO: Move this down to OnUndock() ---------
-            if (TryComp<DoorBoltComponent>(dockUid, out var airlockA))
-            {
-                _bolts.SetBoltsWithAudio(dockUid, airlockA, false);
-            }
-
-            if (TryComp<DoorBoltComponent>(dock.DockedWith, out var airlockB))
-            {
-                _bolts.SetBoltsWithAudio(dock.DockedWith.Value, airlockB, false);
-            }
-
-            if (TryComp(dockUid, out DoorComponent? doorA))
-            {
-                if (_doorSystem.TryClose(dockUid, doorA) && TryComp(dockUid, out AirtightComponent? doorAAirtight))
-                {
-                    doorA.ChangeAirtight = true;
-                    doorAAirtight.CurrentAirBlockedDirection = (int) AtmosDirection.All;
-                }
-            }
-
-            if (TryComp(dock.DockedWith, out DoorComponent? doorB))
-            {
-                if (_doorSystem.TryClose(dock.DockedWith.Value, doorB) && TryComp(dock.DockedWith, out AirtightComponent? doorBAirtight))
-                {
-                    doorB.ChangeAirtight = true;
-                    doorBAirtight.CurrentAirBlockedDirection = (int) AtmosDirection.All;
-                }
-            }
-
-            if (LifeStage(dockUid) < EntityLifeStage.Terminating)
-            {
-                var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dockUid);
-                recentlyDocked.LastDocked = dock.DockedWith.Value;
-            }
-
-            if (TryComp(dock.DockedWith.Value, out MetaDataComponent? meta) && meta.EntityLifeStage < EntityLifeStage.Terminating)
-            {
-                var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.DockedWith.Value);
-                recentlyDocked.LastDocked = dock.DockedWith.Value;
-            }
-
-            // --------
-
             Cleanup(dockUid, dock);
         }
 
