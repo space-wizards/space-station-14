@@ -200,6 +200,9 @@
   id: BoxHug
 
 - type: Tag
+  id: Burnt
+
+- type: Tag
   id: BrassInstrument
 
 - type: Tag
@@ -631,6 +634,9 @@
 
 - type: Tag
   id: Hotsauce
+
+- type: Tag
+  id: Ice
 
 - type: Tag
   id: Igniter
@@ -1148,6 +1154,3 @@
 
 - type: Tag
   id:  boots
-
-- type: Tag
-  id: CleansForensics

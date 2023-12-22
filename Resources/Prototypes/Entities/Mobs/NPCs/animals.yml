@@ -1297,6 +1297,7 @@
     needsHands: true
   - type: BadFood
   - type: NonSpreaderZombie
+  - type: PreventSpiller
 
 - type: entity
   parent: MobMouse
