@@ -1,11 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - message: Increased the stability of the AME, it now takes about three minutes
-      for the AME to overload.
-    type: Tweak
-  id: 5002
-  time: '2023-10-13T23:42:46.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Added the igniter for sparking flames, can be found in the vendomat and
@@ -3904,4 +3897,12 @@ Entries:
     type: Add
   id: 5431
   time: '2023-12-21T18:43:24.0000000+00:00'
+  url: null
+- author: Kit0vras
+  changes:
+  - message: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 NSS Nox."
+    type: Tweak
+  id: 5432
+  time: '2023-12-22T13:51:40.0000000+00:00'
   url: null
