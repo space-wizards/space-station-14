@@ -214,16 +214,16 @@
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
       params:
-        volume: +3
+        volume: 3
     soundDeactivate:
       path: /Audio/Weapons/ebladeoff.ogg
       params:
-        volume: +3
+        volume: 3
   - type: ItemToggleMeleeWeapon
     activatedSoundOnSwing:
       path: /Audio/Weapons/eblademiss.ogg
       params:
-        volume: +3
+        volume: 3
         variation: 0.250
     activatedDamage:
         types:
@@ -234,7 +234,7 @@
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
       params:
-        volume: +3
+        volume: 3
   - type: ItemToggleDisarmMalus
     activatedDisarmMalus: 0.7
   - type: Wieldable

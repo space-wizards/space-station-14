@@ -34,6 +34,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnonWielded);
         SubscribeLocalEvent<ItemToggleComponent, ItemToggleForceToggleEvent>(ForceToggle);
     }
+
     private void OnUseInHand(EntityUid uid, ItemToggleComponent itemToggle, UseInHandEvent args)
     {
         if (args.Handled)
@@ -122,7 +123,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         var attempt = new ItemToggleDeactivateAttemptEvent(user);
         RaiseLocalEvent(uid, ref attempt);
 
-        if (attempt.Cancelled && uid.Id == GetNetEntity(uid).Id)
+        if (attempt.Cancelled)
         {
             return false;
         }
@@ -166,6 +167,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
         Dirty(uid, itemToggle);
     }
+
     //Makes the actual changes to the item's components on deactivation.
     private void Deactivate(EntityUid uid, ItemToggleComponent itemToggle)
     {
