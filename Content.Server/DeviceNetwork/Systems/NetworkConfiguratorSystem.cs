@@ -43,6 +43,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         base.Initialize();
 
         SubscribeLocalEvent<NetworkConfiguratorComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<NetworkConfiguratorComponent, ComponentShutdown>(OnShutdown);
 
         //Interaction
         SubscribeLocalEvent<NetworkConfiguratorComponent, AfterInteractEvent>(AfterInteract); //TODO: Replace with utility verb?
@@ -64,6 +65,15 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         SubscribeLocalEvent<NetworkConfiguratorComponent, ActivatableUIOpenAttemptEvent>(OnUiOpenAttempt);
 
         SubscribeLocalEvent<DeviceListComponent, ComponentRemove>(OnComponentRemoved);
+    }
+
+    private void OnShutdown(EntityUid uid, NetworkConfiguratorComponent component, ComponentShutdown args)
+    {
+        ClearDevices(uid, component);
+        
+        if (TryComp(component.ActiveDeviceList, out DeviceListComponent? list))
+            list.Configurators.Remove(uid);
+        component.ActiveDeviceList = null;
     }
 
     public override void Update(float frameTime)
@@ -570,6 +580,12 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
                 $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} cleared buffered devices from {ToPrettyString(uid):tool}");
 
 
+        ClearDevices(uid, component);
+        UpdateListUiState(uid, component);
+    }
+
+    private void ClearDevices(EntityUid uid, NetworkConfiguratorComponent component)
+    {
         var query = GetEntityQuery<DeviceNetworkComponent>();
         foreach (var device in component.Devices.Values)
         {
@@ -578,7 +594,6 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         }
 
         component.Devices.Clear();
-        UpdateListUiState(uid, component);
     }
 
     private void OnClearLinks(EntityUid uid, NetworkConfiguratorComponent configurator, NetworkConfiguratorClearLinksMessage args)
@@ -736,12 +751,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
                     _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
                         $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} copied devices from {ToPrettyString(component.ActiveDeviceList.Value):subject} to {ToPrettyString(uid):tool}");
 
-                var query = GetEntityQuery<DeviceNetworkComponent>();
-                foreach (var device in component.Devices.Values)
-                {
-                    if (query.TryGetComponent(device, out var comp))
-                        comp.Configurators.Remove(uid);
-                }
+                ClearDevices(uid, component);
 
                 foreach (var (addr, device) in _deviceListSystem.GetDeviceList(component.ActiveDeviceList.Value))
                 {

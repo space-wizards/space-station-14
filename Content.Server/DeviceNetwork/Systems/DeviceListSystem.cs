@@ -32,6 +32,14 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         {
             _configurator.OnDeviceListShutdown(conf, (uid, component));
         }
+
+        var query = GetEntityQuery<DeviceNetworkComponent>();
+        foreach (var device in component.Devices)
+        {
+            if (query.TryGetComponent(device, out var comp))
+                comp.DeviceLists.Remove(uid);
+        }
+        component.Devices.Clear();
     }
 
     /// <summary>
