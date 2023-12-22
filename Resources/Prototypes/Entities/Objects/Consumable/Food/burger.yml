@@ -749,7 +749,7 @@
         - ReagentId: Nutriment
           Quantity: 5
         - ReagentId: Nanomachines
-          Quantity: 5
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
