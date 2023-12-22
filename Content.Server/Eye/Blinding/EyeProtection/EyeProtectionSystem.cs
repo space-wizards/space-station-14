@@ -13,6 +13,7 @@ namespace Content.Server.Eye.Blinding.EyeProtection
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly BlindableSystem _blindingSystem = default!;
         [Dependency] private readonly SharedItemToggleSystem _itemToggle = default!;
+        
         public override void Initialize()
         {
             base.Initialize();
