@@ -325,15 +325,6 @@
         - !type:Electrocute
           probability: 0.09
           conditions:
-            - !type:OrganType
-               type: Dwarf
-            - !type:ReagentThreshold
-              min: 5
-        - !type:Electrocute
-          probability: 0.09
-          conditions:
-            - !type:OrganType
-               type: Human
             - !type:ReagentThreshold
               min: 5
         - !type:PopupMessage
