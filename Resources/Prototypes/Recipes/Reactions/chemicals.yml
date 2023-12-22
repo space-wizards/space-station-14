@@ -78,8 +78,6 @@
   reactants:
     Sulfur:
       amount: 1
-    Hydrogen:
-      amount: 1
     Oxygen: 
       amount: 2
   products:
