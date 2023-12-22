@@ -145,10 +145,12 @@
   - type: GhostTakeoverAvailable
   - type: CombatMode
   - type: MeleeWeapon
+    altDisarm: false
+    angle: 45
     hidden: false
     damage:
       groups:
-        Burn: 5
+        Blunt: 4.5
 
 - type: entity
   name: machete
