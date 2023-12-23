@@ -11,47 +11,47 @@ public sealed class ItemToggleSystem : SharedItemToggleSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ItemToggleComponent, ItemToggleActivatedEvent>(Activate);
-        SubscribeLocalEvent<ItemToggleComponent, ItemToggleDeactivatedEvent>(Deactivate);
+        SubscribeLocalEvent<ItemToggleComponent, ItemToggleDoneEvent>(Toggle);
     }
 
-    private void Activate(EntityUid uid, ItemToggleComponent comp, ref ItemToggleActivatedEvent args)
+    private void Toggle(EntityUid uid, ItemToggleComponent comp, ref ItemToggleDoneEvent args)
     {
-        if (TryComp<ItemToggleSharpComponent>(uid, out var itemSharpness))
+        if (args.Activated == true)
         {
-            if (itemSharpness.ActivatedSharp)
-                EnsureComp<SharpComponent>(uid);
+            if (TryComp<ItemToggleSharpComponent>(uid, out var itemSharpness))
+            {
+                if (itemSharpness.ActivatedSharp)
+                    EnsureComp<SharpComponent>(uid);
+            }
+
+            if (!TryComp<ItemToggleDisarmMalusComponent>(uid, out var itemToggleDisarmMalus) ||
+                !TryComp<DisarmMalusComponent>(uid, out var malus))
+                return;
+
+            //Default the deactivated DisarmMalus to the item's value before activation happens.
+            itemToggleDisarmMalus.DeactivatedDisarmMalus ??= malus.Malus;
+
+            if (itemToggleDisarmMalus.ActivatedDisarmMalus != null)
+            {
+                malus.Malus = (float) itemToggleDisarmMalus.ActivatedDisarmMalus;
+            }
         }
-
-
-        if (!TryComp<ItemToggleDisarmMalusComponent>(uid, out var itemToggleDisarmMalus) ||
-            !TryComp<DisarmMalusComponent>(uid, out var malus))
-            return;
-
-        //Default the deactivated DisarmMalus to the item's value before activation happens.
-        itemToggleDisarmMalus.DeactivatedDisarmMalus ??= malus.Malus;
-
-        if (itemToggleDisarmMalus.ActivatedDisarmMalus != null)
+        else
         {
-            malus.Malus = (float) itemToggleDisarmMalus.ActivatedDisarmMalus;
-        }
-    }
+            if (TryComp<ItemToggleSharpComponent>(uid, out var itemSharpness))
+            {
+                if (itemSharpness.ActivatedSharp)
+                    RemCompDeferred<SharpComponent>(uid);
+            }
 
-    private void Deactivate(EntityUid uid, ItemToggleComponent comp, ref ItemToggleDeactivatedEvent args)
-    {
-        if (TryComp<ItemToggleSharpComponent>(uid, out var itemSharpness))
-        {
-            if (itemSharpness.ActivatedSharp)
-                RemCompDeferred<SharpComponent>(uid);
-        }
+            if (!TryComp<ItemToggleDisarmMalusComponent>(uid, out var itemToggleDisarmMalus) ||
+                !TryComp<DisarmMalusComponent>(uid, out var malus))
+                return;
 
-        if (!TryComp<ItemToggleDisarmMalusComponent>(uid, out var itemToggleDisarmMalus) ||
-            !TryComp<DisarmMalusComponent>(uid, out var malus))
-            return;
-
-        if (itemToggleDisarmMalus.DeactivatedDisarmMalus != null)
-        {
-            malus.Malus = (float) itemToggleDisarmMalus.DeactivatedDisarmMalus;
+            if (itemToggleDisarmMalus.DeactivatedDisarmMalus != null)
+            {
+                malus.Malus = (float) itemToggleDisarmMalus.DeactivatedDisarmMalus;
+            }
         }
     }
 }

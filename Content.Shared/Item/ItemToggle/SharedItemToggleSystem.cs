@@ -103,10 +103,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         var evActiveSound = new ItemToggleActiveSoundUpdateEvent(Activated: true, Predicted: predicted, user);
         RaiseLocalEvent(uid, ref evActiveSound);
 
-        var evActivated = new ItemToggleActivatedEvent();
-        RaiseLocalEvent(uid, ref evActivated);
-
-        var toggleUsed = new ItemToggleDoneEvent(user);
+        var toggleUsed = new ItemToggleDoneEvent(Activated: true, user);
         RaiseLocalEvent(uid, ref toggleUsed);
 
         return true;
@@ -143,10 +140,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         var evActiveSound = new ItemToggleActiveSoundUpdateEvent(Activated: false, Predicted: predicted, user);
         RaiseLocalEvent(uid, ref evActiveSound);
 
-        var ev = new ItemToggleDeactivatedEvent();
-        RaiseLocalEvent(uid, ref ev);
-
-        var toggleUsed = new ItemToggleDoneEvent(user);
+        var toggleUsed = new ItemToggleDoneEvent(Activated: false, user);
         RaiseLocalEvent(uid, ref toggleUsed);
 
         return true;

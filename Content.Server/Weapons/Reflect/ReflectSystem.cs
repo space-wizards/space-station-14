@@ -9,19 +9,12 @@ public sealed class ReflectSystem : SharedReflectSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ReflectComponent, ItemToggleActivatedEvent>(EnableReflect);
-        SubscribeLocalEvent<ReflectComponent, ItemToggleDeactivatedEvent>(DisableReflect);
+        SubscribeLocalEvent<ReflectComponent, ItemToggleDoneEvent>(ToggleReflect);
     }
 
-    private void EnableReflect(EntityUid uid, ReflectComponent comp, ref ItemToggleActivatedEvent args)
+    private void ToggleReflect(EntityUid uid, ReflectComponent comp, ref ItemToggleDoneEvent args)
     {
-        comp.Enabled = true;
-        Dirty(uid, comp);
-    }
-
-    private void DisableReflect(EntityUid uid, ReflectComponent comp, ref ItemToggleDeactivatedEvent args)
-    {
-        comp.Enabled = false;
+        comp.Enabled = args.Activated;
         Dirty(uid, comp);
     }
 }

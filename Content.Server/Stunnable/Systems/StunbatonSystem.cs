@@ -28,7 +28,7 @@ namespace Content.Server.Stunnable.Systems
             SubscribeLocalEvent<StunbatonComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
             SubscribeLocalEvent<StunbatonComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
-            SubscribeLocalEvent<StunbatonComponent, ItemToggleDeactivatedEvent>(TurnOff);
+            SubscribeLocalEvent<StunbatonComponent, ItemToggleDoneEvent>(ToggleDone);
         }
 
         private void OnStaminaHitAttempt(EntityUid uid, StunbatonComponent component, ref StaminaDamageOnHitAttemptEvent args)
@@ -58,11 +58,11 @@ namespace Content.Server.Stunnable.Systems
             args.PushMarkup(chargeMessage);
         }
 
-        private void TurnOff(EntityUid uid, StunbatonComponent comp, ref ItemToggleDeactivatedEvent args)
+        private void ToggleDone(EntityUid uid, StunbatonComponent comp, ref ItemToggleDoneEvent args)
         {
             if (!TryComp<ItemComponent>(uid, out var item))
                 return;
-            _item.SetHeldPrefix(uid, "off", item);
+            _item.SetHeldPrefix(uid, args.Activated ? "on" : "off", item);
         }
 
         private void TryTurnOn(EntityUid uid, StunbatonComponent comp, ref ItemToggleActivateAttemptEvent args)
@@ -80,11 +80,6 @@ namespace Content.Server.Stunnable.Systems
             if (TryComp<RiggableComponent>(uid, out var rig) && rig.IsRigged)
             {
                 _riggableSystem.Explode(uid, battery, args.User);
-            }
-
-            if (TryComp<ItemComponent>(uid, out var item))
-            {
-                _item.SetHeldPrefix(uid, "on", item);
             }
         }
 

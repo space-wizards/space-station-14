@@ -58,12 +58,6 @@ public record struct ItemToggleActivateAttemptEvent(EntityUid? User)
 }
 
 /// <summary>
-/// Raised directed on an entity when its ItemToggle is activated.
-/// </summary>
-[ByRefEvent]
-public readonly record struct ItemToggleActivatedEvent;
-
-/// <summary>
 /// Raised directed on an entity when its ItemToggle is attempted to be deactivated.
 /// </summary>
 [ByRefEvent]
@@ -74,17 +68,12 @@ public record struct ItemToggleDeactivateAttemptEvent(EntityUid? User)
 }
 
 /// <summary>
-/// Raised directed on an entity when its ItemToggle is deactivated.
-/// </summary>
-[ByRefEvent]
-public readonly record struct ItemToggleDeactivatedEvent;
-
-/// <summary>
 /// Raised directed on an entity any sort of toggle is complete.
 /// </summary>
 [ByRefEvent]
-public record struct ItemToggleDoneEvent(EntityUid? User)
+public record struct ItemToggleDoneEvent(bool Activated, EntityUid? User)
 {
+    public bool Activated = Activated;
     public EntityUid? User = User;
 }
 
