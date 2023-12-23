@@ -911,16 +911,16 @@
       runningState: building
       canEjectStoredMaterials: false
       staticRecipes:
-        - SheetSteel1
-        - SheetGlass1
-        - SheetRGlass1
-        - SheetPlasma1
-        - SheetPGlass1
-        - SheetRPGlass1
-        - SheetUranium1
-        - IngotGold1
-        - IngotSilver1
-        - MaterialBananium1
+      - SheetSteel
+      - SheetGlass
+      - SheetRGlass
+      - SheetPlasma
+      - SheetPGlass
+      - SheetRPGlass
+      - SheetUranium
+      - IngotGold
+      - IngotSilver
+      - MaterialBananium
 
 - type: entity
   parent: BaseLathe
