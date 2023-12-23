@@ -280,7 +280,8 @@
         Manipulator: 2
         Capacitor: 5
       materialRequirements:
-        PlasmaGlass: 25
+        PlasmaGlass: 5
+        Cable: 5
 
 - type: entity
   parent: BaseMachineCircuitboard

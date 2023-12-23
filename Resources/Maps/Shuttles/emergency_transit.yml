@@ -23,7 +23,7 @@ entities:
     - name: NT Evac Transit
       type: MetaData
     - pos: -4.3957214,6.3308363
-      parent: 161
+      parent: invalid
       type: Transform
     - chunks:
         0,-2:
@@ -430,18 +430,6 @@ entities:
       type: GridAtmosphere
     - type: GasTileOverlay
     - type: GridPathfinding
-  - uid: 161
-    components:
-    - name: map 20
-      type: MetaData
-    - type: Transform
-    - type: Map
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
-    - type: LoadedMap
 - proto: AirAlarm
   entities:
   - uid: 3
