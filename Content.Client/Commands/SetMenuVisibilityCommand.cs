@@ -7,6 +7,7 @@ namespace Content.Client.Commands
     [UsedImplicitly]
     internal sealed class SetMenuVisibilityCommand : IConsoleCommand
     {
+        // ReSharper disable once StringLiteralTypo
         public string Command => "menuvis";
         public string Description => Loc.GetString("set-menu-visibility-command-description");
         public string Help => Loc.GetString("set-menu-visibility-command-help", ("command", Command));

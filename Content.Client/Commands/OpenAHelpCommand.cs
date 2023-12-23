@@ -9,6 +9,7 @@ namespace Content.Client.Commands
     [AnyCommand]
     public sealed class OpenAHelpCommand : IConsoleCommand
     {
+        // ReSharper disable once StringLiteralTypo
         public string Command => "openahelp";
         public string Description => Loc.GetString("open-a-help-command-description");
         public string Help => Loc.GetString("open-a-help-command-help", ("command", Command));

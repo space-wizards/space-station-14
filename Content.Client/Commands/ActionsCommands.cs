@@ -40,6 +40,7 @@ public sealed class SaveActionsCommand : IConsoleCommand
 [AnyCommand]
 public sealed class LoadActionsCommand : IConsoleCommand
 {
+    // ReSharper disable once StringLiteralTypo
     public string Command => "loadacts";
     public string Description => Loc.GetString("actions-command-load-description");
     public string Help => Loc.GetString("actions-command-load-help", ("command", Command));
@@ -66,6 +67,7 @@ public sealed class LoadActionsCommand : IConsoleCommand
 [AnyCommand]
 public sealed class LoadMappingActionsCommand : IConsoleCommand
 {
+    // ReSharper disable once StringLiteralTypo
     public string Command => "loadmapacts";
     public string Description => Loc.GetString("actions-command-load-mapping-description");
     public string Help => Loc.GetString("actions-command-load-mapping-help", ("command", Command));

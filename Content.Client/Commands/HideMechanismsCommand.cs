@@ -8,8 +8,9 @@ namespace Content.Client.Commands
 {
     public sealed class HideMechanismsCommand : IConsoleCommand
     {
+        // ReSharper disable once StringLiteralTypo
         public string Command => "hidemechanisms";
-        public string Description => Loc.GetString("hide-mechanisms-command-description", ("showMechanismsCommand", ShowMechanismsCommand.CommandName));
+        public string Description => Loc.GetString("hide-mechanisms-command-description", ("showMechanismsCommand", ShowMechanismsCommand.Command));
         public string Help => Loc.GetString("hide-mechanisms-command-help", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)

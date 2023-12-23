@@ -8,6 +8,7 @@ namespace Content.Client.Commands
     [AnyCommand]
     public sealed class ToggleOutlineCommand : IConsoleCommand
     {
+        // ReSharper disable once StringLiteralTypo
         public string Command => "toggleoutline";
         public string Description => Loc.GetString("toggle-outline-command-description");
         public string Help => Loc.GetString("toggle-outline-command-help", ("command", Command));

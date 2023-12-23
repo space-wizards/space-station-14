@@ -8,6 +8,7 @@ namespace Content.Client.Commands
     [UsedImplicitly]
     internal sealed class AtvRangeCommand : IConsoleCommand
     {
+        // ReSharper disable once StringLiteralTypo
         public string Command => "atvrange";
         public string Description => Loc.GetString("atmos-debug-command-range-description");
         public string Help => Loc.GetString("atmos-debug-command-range-help", ("command", Command));
@@ -43,6 +44,7 @@ namespace Content.Client.Commands
     [UsedImplicitly]
     internal sealed class AtvModeCommand : IConsoleCommand
     {
+        // ReSharper disable once StringLiteralTypo
         public string Command => "atvmode";
         public string Description => Loc.GetString("atmos-debug-command-mode-description");
         public string Help => Loc.GetString("atmos-debug-command-mode-help", ("command", Command));
@@ -100,6 +102,7 @@ namespace Content.Client.Commands
     [UsedImplicitly]
     internal sealed class AtvCBMCommand : IConsoleCommand
     {
+        // ReSharper disable once StringLiteralTypo
         public string Command => "atvcbm";
         public string Description => Loc.GetString("atmos-debug-command-cbm-description");
         public string Help => Loc.GetString("atmos-debug-command-cbm-help", ("command", Command));

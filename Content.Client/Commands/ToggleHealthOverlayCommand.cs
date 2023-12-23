@@ -5,6 +5,7 @@ namespace Content.Client.Commands
 {
     public sealed class ToggleHealthOverlayCommand : IConsoleCommand
     {
+        // ReSharper disable once StringLiteralTypo
         public string Command => "togglehealthoverlay";
         public string Description => Loc.GetString("toggle-health-overlay-command-description");
         public string Help => Loc.GetString("toggle-health-overlay-command-help", ("command", Command));

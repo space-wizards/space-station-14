@@ -7,6 +7,7 @@ namespace Content.Client.Commands
 {
     public sealed class GroupingEntityMenuCommand : IConsoleCommand
     {
+        // ReSharper disable once StringLiteralTypo
         public string Command => "entitymenug";
         public string Description => Loc.GetString("grouping-entity-menu-command-description");
         public string Help => Loc.GetString("grouping-entity-menu-command-help", ("command", Command), ("groupingTypesCount", EntityMenuUIController.GroupingTypesCount));

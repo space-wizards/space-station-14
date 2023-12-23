@@ -7,7 +7,9 @@ namespace Content.Client.Commands
 {
     public sealed class ShowMechanismsCommand : IConsoleCommand
     {
-        public string Command => "showmechanisms";
+        // ReSharper disable once StringLiteralTypo
+        public const string CommandName = "showmechanisms";
+        public string Command => CommandName;
         public string Description => Loc.GetString("show-mechanisms-command-description");
         public string Help => Loc.GetString("show-mechanisms-command-help", ("command", Command));
 
