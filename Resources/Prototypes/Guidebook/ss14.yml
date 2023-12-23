@@ -9,6 +9,7 @@
   - Chemicals
   - Antagonists
   - Writing
+  - Glossary
 
 - type: guideEntry
   id: Writing
@@ -50,3 +51,10 @@
   id: AlertProcedure
   name: guide-entry-alert-procedure
   text: "/ServerInfo/Guidebook/Rules/AlertProcedure.xml"
+
+- type: guideEntry
+  id: Glossary
+  name: guide-entry-glossary
+  text: "/ServerInfo/Guidebook/Glossary.xml"
+
+

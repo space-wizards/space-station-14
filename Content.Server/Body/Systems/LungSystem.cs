@@ -34,7 +34,7 @@ public sealed class LungSystem : EntitySystem
     private void OnGotEquipped(EntityUid uid, BreathToolComponent component, GotEquippedEvent args)
     {
 
-        if ((args.SlotFlags & component.AllowedSlots) != component.AllowedSlots) return;
+        if ((args.SlotFlags & component.AllowedSlots) == 0) return;
         component.IsFunctional = true;
 
         if (TryComp(args.Equipee, out InternalsComponent? internals))

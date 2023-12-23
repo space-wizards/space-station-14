@@ -776,6 +776,11 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AdminDeadminOnJoin =
             CVarDef.Create("admin.deadmin_on_join", false, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Overrides the name the client sees in ahelps. Set empty to disable.
+        /// </summary>
+        public static readonly CVarDef<string> AdminAhelpOverrideClientName =
+            CVarDef.Create("admin.override_adminname_in_client_ahelp", string.Empty, CVar.SERVERONLY);
         /*
          * Explosions
          */
