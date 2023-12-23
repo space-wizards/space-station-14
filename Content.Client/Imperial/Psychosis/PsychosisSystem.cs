@@ -73,7 +73,6 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
             psychosis.MinTimeBetweenSounds = 10f;
             psychosis.MaxTimeBetweenItems = 20f;
             psychosis.MinTimeBetweenItems = 10f;
-            psychosis.ChanceForCreature = 0.5f;
         }
         if (psychosis.Stage == 2)
         {
