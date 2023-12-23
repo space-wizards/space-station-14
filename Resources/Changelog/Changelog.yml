@@ -3914,3 +3914,175 @@ Entries:
   id: 5435
   time: '2023-12-22T18:26:01.0000000+00:00'
   url: null
+- author: qwerltaz
+  changes:
+  - message: Improve the gas analyzer interface.
+    type: Tweak
+  id: 5430
+  time: '2023-12-20T17:56:57.0000000+00:00'
+  url: null
+- author: JoeHammad
+  changes:
+  - message: Fland now has its own shuttle, ported from ss13
+    type: Add
+  id: 5431
+  time: '2023-12-20T23:26:07.0000000+00:00'
+  url: null
+- author: joshepvodka
+  changes:
+  - message: CentCom bureaucrats are now twice as powerful with their new custom-made
+      clipboards and folders.
+    type: Add
+  id: 5432
+  time: '2023-12-20T23:29:35.0000000+00:00'
+  url: null
+- author: PJB3005
+  changes:
+  - message: Fix starting to follow a moving player as a ghost causing your camera
+      to keep jumping around anymore.
+    type: Fix
+  id: 5433
+  time: '2023-12-20T23:33:00.0000000+00:00'
+  url: null
+- author: Velcroboy
+  changes:
+  - message: Fixed coal not generating!
+    type: Fix
+  id: 5434
+  time: '2023-12-20T23:46:20.0000000+00:00'
+  url: null
+- author: whateverusername0
+  changes:
+  - message: "Miasma now reacts with oxygen at 50\xB0C to produce nitrous oxide and\
+      \ water vapor."
+    type: Add
+  id: 5435
+  time: '2023-12-21T00:14:59.0000000+00:00'
+  url: null
+- author: whateverusername0
+  changes:
+  - message: Nitrous oxide now decomposes at high temperatures.
+    type: Add
+  id: 5436
+  time: '2023-12-21T01:33:08.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - message: Crates and lockers are slightly easier to bust open but still harder
+      than before.
+    type: Tweak
+  - message: Solid walls are easier to break but reinforced are the same.
+    type: Tweak
+  id: 5437
+  time: '2023-12-21T03:03:06.0000000+00:00'
+  url: null
+- author: mirrorcult
+  changes:
+  - message: Miasma has been renamed to Ammonia
+    type: Add
+  - message: Miasmic subsumation reaction has been removed
+    type: Remove
+  id: 5438
+  time: '2023-12-21T04:19:50.0000000+00:00'
+  url: null
+- author: joshepvodka
+  changes:
+  - message: NanoTrasen updated the designs for their emergency medipens. Space medipens
+      are now magenta colored and epi pens have a green band on them.
+    type: Tweak
+  id: 5439
+  time: '2023-12-21T05:30:58.0000000+00:00'
+  url: null
+- author: Hqlle
+  changes:
+  - message: Resprited carpet sprites.
+    type: Add
+  id: 5440
+  time: '2023-12-21T05:32:38.0000000+00:00'
+  url: null
+- author: CrigCrag
+  changes:
+  - message: Added Fresium, a military grade coolant that you SHOULD NOT INGEST OR
+      SPLASH ON YOUR FRIENDS!
+    type: Add
+  id: 5441
+  time: '2023-12-21T05:35:22.0000000+00:00'
+  url: null
+- author: RiceMar
+  changes:
+  - message: Energy swords and double energy swords now look as long as they seem
+      to be in your hand.
+    type: Tweak
+  id: 5442
+  time: '2023-12-21T06:32:11.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - message: Borgs now see who is crew
+    type: Tweak
+  id: 5443
+  time: '2023-12-21T07:09:53.0000000+00:00'
+  url: null
+- author: KittenColony
+  changes:
+  - message: Rotated fireaxe 'icon' 45 degrees
+    type: Tweak
+  id: 5444
+  time: '2023-12-21T08:03:52.0000000+00:00'
+  url: null
+- author: themias
+  changes:
+  - message: Damp rags can mop puddles again
+    type: Fix
+  - message: Syndie soap cleans evidence a little faster than other soap
+    type: Tweak
+  id: 5445
+  time: '2023-12-21T08:54:52.0000000+00:00'
+  url: null
+- author: Emisse
+  changes:
+  - message: Nukies don't start with agent ID anymore
+    type: Tweak
+  id: 5446
+  time: '2023-12-21T09:59:06.0000000+00:00'
+  url: null
+- author: Repo
+  changes:
+  - message: Mice can no longer spill containers.
+    type: Tweak
+  id: 5447
+  time: '2023-12-21T10:23:01.0000000+00:00'
+  url: null
+- author: Lukasz825700516
+  changes:
+  - message: Gas tanks no longer predict insertion of random items.
+    type: Fix
+  id: 5448
+  time: '2023-12-21T10:37:35.0000000+00:00'
+  url: null
+- author: mirrorcult
+  changes:
+  - message: Smart equipping now works with item slots
+    type: Add
+  - message: Smart equipping is now predicted
+    type: Tweak
+  id: 5449
+  time: '2023-12-21T14:17:09.0000000+00:00'
+  url: null
+- author: DrMelon
+  changes:
+  - message: Mice and other small creatures can no longer hurt Pun Pun or the Clown
+      by smashing them into tables.
+    type: Fix
+  id: 5450
+  time: '2023-12-21T15:18:26.0000000+00:00'
+  url: null
+- author: Boaz1111
+  changes:
+  - message: Added uranium munitions, a new T1 arsenal research.
+    type: Add
+  - message: Made practice munitions and weapons roundstart
+    type: Tweak
+  id: 5451
+  time: '2023-12-21T17:19:45.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22824

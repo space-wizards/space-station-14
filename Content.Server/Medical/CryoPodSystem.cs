@@ -236,7 +236,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
 
     #region Atmos handler
 
-    private void OnCryoPodUpdateAtmosphere(EntityUid uid, CryoPodComponent cryoPod, AtmosDeviceUpdateEvent args)
+    private void OnCryoPodUpdateAtmosphere(EntityUid uid, CryoPodComponent cryoPod, ref AtmosDeviceUpdateEvent args)
     {
         if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
             return;
