@@ -1,4 +1,5 @@
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.NPC.Components;
 using Content.Server.StationEvents.Components;
 using Content.Server.Traits.Assorted;
 using Content.Shared.Mind.Components;
@@ -30,6 +31,14 @@ public sealed class MassPsychosisRule : StationEventSystem<MassPsychosisRuleComp
         {
             if (TryComp<PsychosisComponent>(entuid, out var psychosis))
                 continue;
+            if (TryComp<NpcFactionMemberComponent>(entuid, out var faction))
+            {
+                foreach (var fact in faction.Factions)
+                {
+                    if (fact == "Zombie")
+                        continue;
+                }
+            }
             AddComp<PsychosisComponent>(entuid);
         }
     }
