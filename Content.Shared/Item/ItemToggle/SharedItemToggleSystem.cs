@@ -182,6 +182,9 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
         var evLight = new ItemToggleLightUpdateEvent(activated);
         RaiseLocalEvent(uid, ref evLight);
+
+        var evReflect = new ItemToggleReflectUpdateEvent(activated);
+        RaiseLocalEvent(uid, ref evReflect);
     }
 
     /// <summary>

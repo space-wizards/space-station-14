@@ -115,3 +115,12 @@ public record struct ItemToggleAppearanceUpdateEvent(bool Activated)
 {
     public bool Activated = Activated;
 }
+
+/// <summary>
+/// Raised in order to effect changes upon the Reflect component of the entity.
+/// </summary>
+[ByRefEvent]
+public record struct ItemToggleReflectUpdateEvent(bool Activated)
+{
+    public bool Activated = Activated;
+}

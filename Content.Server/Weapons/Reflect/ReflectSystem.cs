@@ -9,10 +9,10 @@ public sealed class ReflectSystem : SharedReflectSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ReflectComponent, ItemToggleDoneEvent>(ToggleReflect);
+        SubscribeLocalEvent<ReflectComponent, ItemToggleReflectUpdateEvent>(ToggleReflect);
     }
 
-    private void ToggleReflect(EntityUid uid, ReflectComponent comp, ref ItemToggleDoneEvent args)
+    private void ToggleReflect(EntityUid uid, ReflectComponent comp, ref ItemToggleReflectUpdateEvent args)
     {
         comp.Enabled = args.Activated;
         Dirty(uid, comp);
