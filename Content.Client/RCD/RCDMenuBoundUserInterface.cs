@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Content.Shared.RCD;
 using Content.Shared.RCD.Components;
 using JetBrains.Annotations;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.RCD;
@@ -13,10 +10,14 @@ namespace Content.Client.RCD;
 [UsedImplicitly]
 public sealed class RCDMenuBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly IClyde _displayManager = default!;
+    [Dependency] private readonly IInputManager _inputManager = default!;
+
     private RCDMenu? _menu;
 
     public RCDMenuBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
+        IoCManager.InjectDependencies(this);
     }
 
     protected override void Open()
@@ -25,7 +26,10 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
 
         _menu = new(Owner, this);
         _menu.OnClose += Close;
-        _menu.OpenCentered();
+
+        // Open the menu, centered on the mouse
+        var vpSize = _displayManager.ScreenSize;
+        _menu.OpenCenteredAt(_inputManager.MouseScreenPosition.Position / vpSize);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
