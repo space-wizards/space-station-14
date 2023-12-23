@@ -85,7 +85,7 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
     {
         if (component.Stage > 1)
         {
-            var chance = 0.15f * (component.Stage - 1);
+            var chance = 0.30f * (component.Stage - 1);
             if (_random.Prob(chance))
             {
                 args.Message = Accentuate(args.Message);
