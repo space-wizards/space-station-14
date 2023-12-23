@@ -24,17 +24,17 @@ internal sealed class AtvRangeCommand : IConsoleCommand
         }
         if (!float.TryParse(args[0], out var xStart))
         {
-            shell.WriteLine(Loc.GetString("atmos-debug-command-range-error-start"));
+            shell.WriteError(Loc.GetString("atmos-debug-command-range-error-start"));
             return;
         }
         if (!float.TryParse(args[1], out var xEnd))
         {
-            shell.WriteLine(Loc.GetString("atmos-debug-command-range-error-end"));
+            shell.WriteError(Loc.GetString("atmos-debug-command-range-error-end"));
             return;
         }
         if (xStart == xEnd)
         {
-            shell.WriteLine(Loc.GetString("atmos-debug-command-range-error-zero"));
+            shell.WriteError(Loc.GetString("atmos-debug-command-range-error-zero"));
             return;
         }
         var sys = _entitySystemManager.GetEntitySystem<AtmosDebugOverlaySystem>();
@@ -62,7 +62,7 @@ internal sealed class AtvModeCommand : IConsoleCommand
         }
         if (!Enum.TryParse<AtmosDebugOverlayMode>(args[0], out var xMode))
         {
-            shell.WriteLine(Loc.GetString("atmos-debug-command-mode-error-invalid"));
+            shell.WriteError(Loc.GetString("atmos-debug-command-mode-error-invalid"));
             return;
         }
         int xSpecificGas = 0;
@@ -72,12 +72,12 @@ internal sealed class AtvModeCommand : IConsoleCommand
         {
             if (args.Length != 2)
             {
-                shell.WriteLine(Loc.GetString("atmos-debug-command-mode-error-target-gas"));
+                shell.WriteError(Loc.GetString("atmos-debug-command-mode-error-target-gas"));
                 return;
             }
             if (!AtmosCommandUtils.TryParseGasID(args[1], out xSpecificGas))
             {
-                shell.WriteLine(Loc.GetString("atmos-debug-command-mode-error-oor"));
+                shell.WriteError(Loc.GetString("atmos-debug-command-mode-error-oor"));
                 return;
             }
         }
@@ -122,7 +122,7 @@ internal sealed class AtvCBMCommand : IConsoleCommand
         }
         if (!bool.TryParse(args[0], out var xFlag))
         {
-            shell.WriteLine(Loc.GetString("atmos-debug-command-cbm-error"));
+            shell.WriteError(Loc.GetString("atmos-debug-command-cbm-error"));
             return;
         }
         var sys = _entitySystemManager.GetEntitySystem<AtmosDebugOverlaySystem>();

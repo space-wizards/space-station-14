@@ -61,7 +61,7 @@ public sealed class LoadActionsCommand : IConsoleCommand
         }
         catch
         {
-            shell.WriteLine(Loc.GetString("actions-command-load-error"));
+            shell.WriteError(Loc.GetString("actions-command-load-error"));
         }
     }
 }
@@ -84,7 +84,7 @@ public sealed class LoadMappingActionsCommand : IConsoleCommand
         }
         catch
         {
-            shell.WriteLine(Loc.GetString("actions-command-load-mapping-error"));
+            shell.WriteError(Loc.GetString("actions-command-load-mapping-error"));
         }
     }
 }
