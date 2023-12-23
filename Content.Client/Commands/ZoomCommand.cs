@@ -11,8 +11,8 @@ namespace Content.Client.Commands;
 [UsedImplicitly]
 public sealed class ZoomCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IEyeManager _eyeMan = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     public string Command => "zoom";
@@ -61,12 +61,12 @@ public sealed class ZoomCommand : IConsoleCommand
 
         var player = _playerManager.LocalSession?.AttachedEntity;
 
-        if (_entManager.TryGetComponent<ContentEyeComponent>(player, out var content))
+        if (_entityManager.TryGetComponent<ContentEyeComponent>(player, out var content))
         {
-            _entManager.System<ContentEyeSystem>().RequestZoom(player.Value, zoom, true, content);
+            _entityManager.System<ContentEyeSystem>().RequestZoom(player.Value, zoom, true, content);
             return;
         }
 
-        _eyeMan.CurrentEye.Zoom = zoom;
+        _eyeManager.CurrentEye.Zoom = zoom;
     }
 }

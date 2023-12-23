@@ -7,6 +7,8 @@ namespace Content.Client.Commands
 {
     public sealed class GroupingEntityMenuCommand : IConsoleCommand
     {
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "entitymenug";
         public string Description => Loc.GetString("grouping-entity-menu-command-description");
@@ -32,11 +34,10 @@ namespace Content.Client.Commands
                 return;
             }
 
-            var configurationManager = IoCManager.Resolve<IConfigurationManager>();
             var cvar = CCVars.EntityMenuGroupingType;
 
-            configurationManager.SetCVar(cvar, id);
-            shell.WriteLine(Loc.GetString("grouping-entity-menu-command-notify", ("cvar", configurationManager.GetCVar(cvar))));
+            _configurationManager.SetCVar(cvar, id);
+            shell.WriteLine(Loc.GetString("grouping-entity-menu-command-notify", ("cvar", _configurationManager.GetCVar(cvar))));
         }
     }
 }

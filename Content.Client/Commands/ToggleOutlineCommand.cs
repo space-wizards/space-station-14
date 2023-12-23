@@ -8,6 +8,8 @@ namespace Content.Client.Commands
     [AnyCommand]
     public sealed class ToggleOutlineCommand : IConsoleCommand
     {
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "toggleoutline";
         public string Description => Loc.GetString("toggle-outline-command-description");
@@ -15,12 +17,11 @@ namespace Content.Client.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var configurationManager = IoCManager.Resolve<IConfigurationManager>();
             var cvar = CCVars.OutlineEnabled;
-            var old = configurationManager.GetCVar(cvar);
+            var old = _configurationManager.GetCVar(cvar);
 
-            configurationManager.SetCVar(cvar, !old);
-            shell.WriteLine(Loc.GetString("toggle-outline-command-notify", ("state", configurationManager.GetCVar(cvar))));
+            _configurationManager.SetCVar(cvar, !old);
+            shell.WriteLine(Loc.GetString("toggle-outline-command-notify", ("state", _configurationManager.GetCVar(cvar))));
         }
     }
 }

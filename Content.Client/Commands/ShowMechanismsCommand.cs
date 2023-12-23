@@ -7,6 +7,8 @@ namespace Content.Client.Commands
 {
     public sealed class ShowMechanismsCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public const string CommandName = "showmechanisms";
         public string Command => CommandName;
@@ -15,8 +17,7 @@ namespace Content.Client.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var query = entityManager.AllEntityQueryEnumerator<OrganComponent, SpriteComponent>();
+            var query = _entManager.AllEntityQueryEnumerator<OrganComponent, SpriteComponent>();
 
             while (query.MoveNext(out _, out var sprite))
             {

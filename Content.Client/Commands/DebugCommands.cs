@@ -10,6 +10,8 @@ namespace Content.Client.Commands
 {
     internal sealed class ShowMarkersCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "showmarkers";
         public string Description => Loc.GetString("debug-command-show-markers-description");
@@ -17,12 +19,14 @@ namespace Content.Client.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<MarkerSystem>().MarkersVisible ^= true;
+            _entitySystemManager.GetEntitySystem<MarkerSystem>().MarkersVisible ^= true;
         }
     }
 
     internal sealed class ShowSubFloor : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "showsubfloor";
         public string Description => Loc.GetString("debug-command-show-sub-floor-description");
@@ -30,12 +34,14 @@ namespace Content.Client.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SubFloorHideSystem>().ShowAll ^= true;
+            _entitySystemManager.GetEntitySystem<SubFloorHideSystem>().ShowAll ^= true;
         }
     }
 
     internal sealed class ShowSubFloorForever : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "showsubfloorforever";
         public string Description => Loc.GetString("debug-command-show-sub-floor-forever-description");
@@ -43,7 +49,7 @@ namespace Content.Client.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            EntitySystem.Get<SubFloorHideSystem>().ShowAll = true;
+            _entitySystemManager.GetEntitySystem<SubFloorHideSystem>().ShowAll = true;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
             var components = entMan.EntityQuery<SubFloorHideComponent, SpriteComponent>(true);
@@ -57,6 +63,8 @@ namespace Content.Client.Commands
 
     internal sealed class NotifyCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
         public string Command => "notify";
         public string Description => Loc.GetString("debug-command-notify-description");
         public string Help => Loc.GetString("debug-command-notify-help", ("command", Command));
@@ -65,7 +73,7 @@ namespace Content.Client.Commands
         {
             var message = args[0];
 
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PopupSystem>().PopupCursor(message);
+            _entitySystemManager.GetEntitySystem<PopupSystem>().PopupCursor(message);
         }
     }
 }

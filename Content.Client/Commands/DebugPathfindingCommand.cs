@@ -9,6 +9,8 @@ namespace Content.Client.Commands
     [UsedImplicitly]
     public sealed class DebugPathfindingCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "pathfinder";
         public string Description => Loc.GetString("debug-pathfinding-command-description");
@@ -16,7 +18,7 @@ namespace Content.Client.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PathfindingSystem>();
+            var system = _entitySystemManager.GetEntitySystem<PathfindingSystem>();
 
             if (args.Length == 0)
             {

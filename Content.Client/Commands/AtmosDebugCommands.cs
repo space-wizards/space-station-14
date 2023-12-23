@@ -8,6 +8,8 @@ namespace Content.Client.Commands
     [UsedImplicitly]
     internal sealed class AtvRangeCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "atvrange";
         public string Description => Loc.GetString("atmos-debug-command-range-description");
@@ -35,7 +37,7 @@ namespace Content.Client.Commands
                 shell.WriteLine(Loc.GetString("atmos-debug-command-range-error-zero"));
                 return;
             }
-            var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
+            var sys = _entitySystemManager.GetEntitySystem<AtmosDebugOverlaySystem>();
             sys.CfgBase = xStart;
             sys.CfgScale = xEnd - xStart;
         }
@@ -44,6 +46,8 @@ namespace Content.Client.Commands
     [UsedImplicitly]
     internal sealed class AtvModeCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "atvmode";
         public string Description => Loc.GetString("atmos-debug-command-mode-description");
@@ -91,7 +95,7 @@ namespace Content.Client.Commands
                     xScale = -160;
                 }
             }
-            var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
+            var sys = _entitySystemManager.GetEntitySystem<AtmosDebugOverlaySystem>();
             sys.CfgMode = xMode;
             sys.CfgSpecificGas = xSpecificGas;
             sys.CfgBase = xBase;
@@ -102,6 +106,8 @@ namespace Content.Client.Commands
     [UsedImplicitly]
     internal sealed class AtvCBMCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "atvcbm";
         public string Description => Loc.GetString("atmos-debug-command-cbm-description");
@@ -119,7 +125,7 @@ namespace Content.Client.Commands
                 shell.WriteLine(Loc.GetString("atmos-debug-command-cbm-error"));
                 return;
             }
-            var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
+            var sys = _entitySystemManager.GetEntitySystem<AtmosDebugOverlaySystem>();
             sys.CfgCBM = xFlag;
         }
     }

@@ -9,6 +9,8 @@ namespace Content.Client.Commands
     [AnyCommand]
     public sealed class OpenAHelpCommand : IConsoleCommand
     {
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "openahelp";
         public string Description => Loc.GetString("open-a-help-command-description");
@@ -23,14 +25,14 @@ namespace Content.Client.Commands
             }
             if (args.Length == 0)
             {
-                IoCManager.Resolve<IUserInterfaceManager>().GetUIController<AHelpUIController>().Open();
+                _userInterfaceManager.GetUIController<AHelpUIController>().Open();
             }
             else
             {
                 if (Guid.TryParse(args[0], out var guid))
                 {
                     var targetUser = new NetUserId(guid);
-                    IoCManager.Resolve<IUserInterfaceManager>().GetUIController<AHelpUIController>().Open(targetUser);
+                    _userInterfaceManager.GetUIController<AHelpUIController>().Open(targetUser);
                 }
                 else
                 {

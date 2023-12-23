@@ -8,20 +8,21 @@ namespace Content.Client.Commands
 {
     public sealed class HideMechanismsCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "hidemechanisms";
-        public string Description => Loc.GetString("hide-mechanisms-command-description", ("showMechanismsCommand", ShowMechanismsCommand.Command));
+        public string Description => Loc.GetString("hide-mechanisms-command-description", ("showMechanismsCommand", ShowMechanismsCommand.CommandName));
         public string Help => Loc.GetString("hide-mechanisms-command-help", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var containerSys = entityManager.System<SharedContainerSystem>();
-            var query = entityManager.AllEntityQueryEnumerator<OrganComponent>();
+            var containerSys = _entityManager.System<SharedContainerSystem>();
+            var query = _entityManager.AllEntityQueryEnumerator<OrganComponent>();
 
             while (query.MoveNext(out var uid, out _))
             {
-                if (!entityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+                if (!_entityManager.TryGetComponent(uid, out SpriteComponent? sprite))
                 {
                     continue;
                 }
@@ -41,6 +42,7 @@ namespace Content.Client.Commands
                 }
             }
 
+            // ReSharper disable once StringLiteralTypo
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("hidecontainedcontext");
         }
     }

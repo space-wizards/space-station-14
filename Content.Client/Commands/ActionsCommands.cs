@@ -40,6 +40,8 @@ public sealed class SaveActionsCommand : IConsoleCommand
 [AnyCommand]
 public sealed class LoadActionsCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
     // ReSharper disable once StringLiteralTypo
     public string Command => "loadacts";
     public string Description => Loc.GetString("actions-command-load-description");
@@ -55,7 +57,7 @@ public sealed class LoadActionsCommand : IConsoleCommand
 
         try
         {
-            EntitySystem.Get<ActionsSystem>().LoadActionAssignments(args[0], true);
+            _entitySystemManager.GetEntitySystem<ActionsSystem>().LoadActionAssignments(args[0], true);
         }
         catch
         {
@@ -67,6 +69,8 @@ public sealed class LoadActionsCommand : IConsoleCommand
 [AnyCommand]
 public sealed class LoadMappingActionsCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
     // ReSharper disable once StringLiteralTypo
     public string Command => "loadmapacts";
     public string Description => Loc.GetString("actions-command-load-mapping-description");
@@ -76,7 +80,7 @@ public sealed class LoadMappingActionsCommand : IConsoleCommand
     {
         try
         {
-            EntitySystem.Get<MappingSystem>().LoadMappingActions();
+            _entitySystemManager.GetEntitySystem<MappingSystem>().LoadMappingActions();
         }
         catch
         {

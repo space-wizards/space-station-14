@@ -7,6 +7,8 @@ namespace Content.Client.Commands
     [UsedImplicitly]
     internal sealed class SetMenuVisibilityCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "menuvis";
         public string Description => Loc.GetString("set-menu-visibility-command-description");
@@ -17,7 +19,7 @@ namespace Content.Client.Commands
             if (!TryParseArguments(shell, args, out var visibility))
                 return;
 
-            EntitySystem.Get<VerbSystem>().Visibility = visibility;
+            _entitySystemManager.GetEntitySystem<VerbSystem>().Visibility = visibility;
         }
 
         private bool TryParseArguments(IConsoleShell shell, string[] args, out MenuVisibility visibility)
@@ -28,9 +30,11 @@ namespace Content.Client.Commands
             {
                 switch (arg.ToLower())
                 {
+                    // ReSharper disable once StringLiteralTypo
                     case "nofov":
                         visibility |= MenuVisibility.NoFov;
                         break;
+                    // ReSharper disable once StringLiteralTypo
                     case "incontainer":
                         visibility |= MenuVisibility.InContainer;
                         break;

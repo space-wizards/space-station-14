@@ -5,13 +5,12 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Commands;
 
-/// <summary>
-/// Sent by mapping command to client.
-/// This is because the debug commands for some of these options are on toggles.
-/// </summary>
 [UsedImplicitly]
 internal sealed class MappingClientSideSetupCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private readonly ILightManager _lightManager = default!;
+
     // ReSharper disable once StringLiteralTypo
     public string Command => "mappingclientsidesetup";
     public string Description => Loc.GetString("mapping-client-side-setup-command-description");
@@ -19,12 +18,13 @@ internal sealed class MappingClientSideSetupCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var mgr = IoCManager.Resolve<ILightManager>();
-        if (!mgr.LockConsoleAccess)
+        if (!_lightManager.LockConsoleAccess)
         {
-            EntitySystem.Get<MarkerSystem>().MarkersVisible = true;
-            mgr.Enabled = false;
+            _entitySystemManager.GetEntitySystem<MarkerSystem>().MarkersVisible = true;
+            _lightManager.Enabled = false;
+            // ReSharper disable once StringLiteralTypo
             shell.ExecuteCommand("showsubfloorforever");
+            // ReSharper disable once StringLiteralTypo
             shell.ExecuteCommand("loadmapacts");
         }
     }
