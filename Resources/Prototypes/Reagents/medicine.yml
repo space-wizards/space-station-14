@@ -222,7 +222,7 @@
             types:
              Cellular: -2
 
-- type: reagent 
+- type: reagent
   id: Dermaline
   name: reagent-name-dermaline
   group: Medicine
@@ -411,7 +411,7 @@
         - !type:Temperature
           max: 157.0
         damage:
-          types: 
+          types:
             Poison: -3.25 #imperial chemistryRework end
 
 - type: reagent
@@ -927,6 +927,12 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
+      - !type:HealPsychosis # psychosis
+        reagent: Eth
+        stage: 2
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 10 # psychosis
       - !type:ResetNarcolepsy
         conditions:
         - !type:ReagentThreshold
@@ -935,7 +941,7 @@
         visualType: Medium
         messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
         type: Local
-        probability: 0.1
+        probability: 0.2 # psychosis
 
 - type: reagent
   id: Diphenylmethylamine

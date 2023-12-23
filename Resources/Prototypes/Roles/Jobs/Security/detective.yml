@@ -3,6 +3,7 @@
   name: job-name-detective
   description: job-description-detective
   playTimeTracker: JobDetective
+  psychosisGainResist: 0.75 # psychosis
   requirements:
   - !type:DepartmentTimeRequirement
     department: Security

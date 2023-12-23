@@ -5,6 +5,7 @@
   name: job-name-cmo
   description: job-description-cmo
   playTimeTracker: JobChiefMedicalOfficer
+  psychosisGainResist: 0.70 # psychosis
   requirements:
     - !type:RoleTimeRequirement
       role: JobChemist

@@ -3,6 +3,7 @@
   name: job-name-cadet
   description: job-description-cadet
   playTimeTracker: JobSecurityCadet
+  psychosisGainResist: 0.75 # psychosis
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 21600 #Imperial role timers

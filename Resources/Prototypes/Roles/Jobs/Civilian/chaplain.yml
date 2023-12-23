@@ -3,6 +3,7 @@
   name: job-name-chaplain
   description: job-description-chaplain
   playTimeTracker: JobChaplain
+  psychosisGainResist: 1 # psychosis
   startingGear: ChaplainGear
   icon: "JobIconChaplain"
   supervisors: job-supervisors-hop

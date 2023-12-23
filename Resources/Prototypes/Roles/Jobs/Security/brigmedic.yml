@@ -3,6 +3,7 @@
   name: job-name-brigmedic
   description: job-description-brigmedic
   playTimeTracker: JobBrigmedic
+  psychosisGainResist: 0.75 # psychosis
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
@@ -20,9 +21,6 @@
   - Brig
   - Maintenance
   - External
-  special: #Imperia start
-  - !type:AddImplantSpecial
-    implants: [ MindShieldImplant ] #Imperia end
 
 - type: startingGear
   id: NewBrigmedicGear

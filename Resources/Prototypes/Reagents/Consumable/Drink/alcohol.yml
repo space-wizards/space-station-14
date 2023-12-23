@@ -122,6 +122,12 @@
   metabolisms:
     Alcohol:
       effects:
+      - !type:HealPsychosis # psychosis
+        reagent: Etanol
+        stage: 1
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 1 # psychosis
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold

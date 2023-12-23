@@ -108,6 +108,7 @@
       Male: UnisexVox
       Female: UnisexVox
       Unsexed: UnisexVox
+  - type: PsychosisGain # psychosis
 
 - type: entity
   parent: BaseSpeciesDummy

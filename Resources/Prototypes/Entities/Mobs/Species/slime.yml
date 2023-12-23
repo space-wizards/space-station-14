@@ -20,6 +20,7 @@
   - type: Speech
     speechVerb: Slime
     speechSounds: Slime
+  - type: PsychosisGain # psychosis
   - type: Vocal
     sounds:
       Male: MaleSlime

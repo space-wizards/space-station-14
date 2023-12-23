@@ -10,6 +10,12 @@
   metabolisms:
     Drink:
       effects:
+      - !type:HealPsychosis # psychosis
+        reagent: Coffee
+        stage: 1
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 1 # psychosis
       - !type:SatiateThirst
         factor: 2
       - !type:AdjustReagent

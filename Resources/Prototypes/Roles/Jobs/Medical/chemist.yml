@@ -3,6 +3,7 @@
   name: job-name-chemist
   description: job-description-chemist
   playTimeTracker: JobChemist
+  psychosisGainResist: 0.70 # psychosis
   requirements:
     - !type:RoleTimeRequirement
       role: JobMedicalDoctor
