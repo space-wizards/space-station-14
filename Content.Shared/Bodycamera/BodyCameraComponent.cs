@@ -1,9 +1,9 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.Bodycamera;
+namespace Content.Shared.Bodycamera;
 
 [RegisterComponent]
-[Access(typeof(BodyCameraSystem))]
+[Access(typeof(SharedBodyCameraSystem))]
 public sealed partial class BodyCameraComponent : Component
 {
     /// <summary>
@@ -19,8 +19,14 @@ public sealed partial class BodyCameraComponent : Component
     public bool Equipped;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("powerOnSound")]
-    public SoundSpecifier? PowerOnSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_success.ogg");
+    public SoundSpecifier? PowerOnSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_success.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(2f)
+    };
 
     [ViewVariables(VVAccess.ReadWrite), DataField("powerOffSound")]
-    public SoundSpecifier? PowerOffSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_failed.ogg");
+    public SoundSpecifier? PowerOffSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_failed.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(2f)
+    };
 }

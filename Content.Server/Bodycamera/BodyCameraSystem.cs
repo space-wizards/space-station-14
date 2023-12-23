@@ -7,76 +7,43 @@ using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Bodycamera;
 using Content.Shared.Timing;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Bodycamera;
 
-public sealed class BodyCameraSystem : EntitySystem
+public sealed class BodyCameraSystem : SharedBodyCameraSystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SurveillanceCameraSystem _camera = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IdCardSystem _idCardSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BodyCameraComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<BodyCameraComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
         SubscribeLocalEvent<BodyCameraComponent, PowerCellChangedEvent>(OnPowerCellChanged);
-        SubscribeLocalEvent<BodyCameraComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<BodyCameraComponent, GotEquippedEvent>(OnEquipped);
-        SubscribeLocalEvent<BodyCameraComponent, GotUnequippedEvent>(OnUnequipped);
     }
 
     /// <summary>
     /// Sync the SurveillanceCameraComponent state (default enabled) to the BodyCamera state (default disabled)
     /// </summary>
-    private void OnComponentStartup(EntityUid uid, BodyCameraComponent component, ComponentStartup args)
+    protected override void OnComponentStartup(EntityUid uid, BodyCameraComponent component, ComponentStartup args)
     {
+        base.OnComponentStartup(uid, component, args);
+
         if (HasComp<SurveillanceCameraComponent>(uid))
             _camera.SetActive(uid, false);
     }
 
     /// <summary>
-    /// Disable camera once battery is dead
+    /// Set the camera name to the equipee name and job role
     /// </summary>
-    private void OnPowerCellSlotEmpty(EntityUid uid, BodyCameraComponent component, ref PowerCellSlotEmptyEvent args)
+    protected override void OnEquipped(EntityUid uid, BodyCameraComponent comp, GotEquippedEvent args)
     {
-        if (component.Enabled)
-            TryDisable(uid, component);
-    }
-
-    private void OnPowerCellChanged(EntityUid uid, BodyCameraComponent comp, PowerCellChangedEvent args)
-    {
-        //If the battery is changed while equipped, try to re-enable
-        //Prevents needing to unequip and re-equip the camera after the battery runs out
-        if (comp.Equipped
-            && !comp.Enabled
-            && !args.Ejected)
-            TryEnable(uid, comp);
-    }
-
-    /// <summary>
-    /// Enable the camera and rename it
-    /// Only when equipped to a slot specified in the Clothing component - not pockets
-    /// </summary>
-    private void OnEquipped(EntityUid uid, BodyCameraComponent comp, GotEquippedEvent args)
-    {
-        //Dont enable the camera unless placed into a slot allowed by the ClothingComponent
-        //Primary purpose is to stop it being activated in pockets
-        if (TryComp<ClothingComponent>(uid, out var clothingComp)
-            && (clothingComp.Slots & args.SlotFlags) != args.SlotFlags)
-        {
-            return;
-        }
-
-        comp.Equipped = true;
-
-        if (!TryEnable(uid, comp))
-            return;
+        base.OnEquipped(uid, comp, args);
 
         //Construct the camera name using the players name and job (from ID card)
         //Use defaults if no ID card is found
@@ -91,69 +58,74 @@ public sealed class BodyCameraSystem : EntitySystem
                 userJob = card.Comp.JobTitle;
         }
 
-        string cameraName = $"{userJob} - {userName}";
-        _camera.SetName(uid, cameraName);
-
-        var state = Loc.GetString("bodycamera-component-on-state");
-        var message = Loc.GetString("bodycamera-component-on-use", ("state", state));
-        _popup.PopupEntity(message, args.Equipee);
+        _camera.SetName(uid, $"{userJob} - {userName}");
     }
 
     /// <summary>
-    /// Disable the camera when unequipped
+    /// Disable camera once battery is dead
     /// </summary>
-    private void OnUnequipped(EntityUid uid, BodyCameraComponent comp, GotUnequippedEvent args)
+    protected override void OnPowerCellSlotEmpty(EntityUid uid, BodyCameraComponent comp, ref PowerCellSlotEmptyEvent args)
     {
-        comp.Equipped = false;
         if (!TryDisable(uid, comp))
             return;
 
-        var state = Loc.GetString("bodycamera-component-off-state");
-        var message = Loc.GetString("bodycamera-component-on-use", ("state", state));
-        _popup.PopupEntity(message, args.Equipee);
+        //Since these trigger on the server side only, play sounds here
+        _audio.PlayPvs(comp.PowerOffSound, uid);
+        if (_containerSystem.TryGetContainingContainer(uid, out var container))
+        {
+            var message = Loc.GetString("bodycamera-component-on-use", ("state", Loc.GetString("bodycamera-component-off-state")));
+            _popup.PopupEntity(message, uid, container.Owner);
+        }
+    }
+
+    protected override void OnPowerCellChanged(EntityUid uid, BodyCameraComponent comp, PowerCellChangedEvent args)
+    {
+        //If the battery is changed while equipped, try to re-enable
+        //Prevents needing to unequip and re-equip the camera after the battery runs out
+        if (!comp.Equipped)
+            return;
+
+        if (args.Ejected)
+            return;
+
+        if (!TryEnable(uid, comp))
+            return;
+
+        //Since these trigger on the server side only, play sounds here
+        _audio.PlayPvs(comp.PowerOnSound, uid);
+        if (_containerSystem.TryGetContainingContainer(uid, out var container))
+        {
+            var message = Loc.GetString("bodycamera-component-on-use", ("state", Loc.GetString("bodycamera-component-on-state")));
+            _popup.PopupEntity(message, uid, container.Owner);
+        }
     }
 
     /// <summary>
-    /// Indicate if the camera is powered via examination
+    /// Enable the camera and start drawing power
     /// </summary>
-    private void OnExamine(EntityUid uid, BodyCameraComponent comp, ExaminedEvent args)
+    protected override bool TryEnable(EntityUid uid, BodyCameraComponent comp)
     {
-        var msg = comp.Enabled
-            ? Loc.GetString("bodycamera-component-examine-on-state")
-            : Loc.GetString("bodycamera-component-examine-off-state");
-        args.PushMarkup(msg);
-    }
-
-    /// <summary>
-    /// Enable the camera and play sound if there is enough charge
-    /// </summary>
-    private bool TryEnable(EntityUid uid, BodyCameraComponent comp)
-    {
-        if (comp.Enabled)
-            return false;
-
-        if (!_powerCell.HasDrawCharge(uid))
+        if (!base.TryEnable(uid, comp))
             return false;
 
         _camera.SetActive(uid, true);
         _powerCell.SetPowerCellDrawEnabled(uid, true);
-        _audio.PlayPvs(comp.PowerOnSound, uid);
         comp.Enabled = true;
         return true;
     }
 
     /// <summary>
-    /// Disable the camera and play sound
+    /// Disable the camera and stop drawing power
     /// </summary>
-    private bool TryDisable(EntityUid uid, BodyCameraComponent comp)
+    protected override bool TryDisable(EntityUid uid, BodyCameraComponent comp)
     {
-        if (!comp.Enabled)
+        if (!base.TryDisable(uid, comp))
             return false;
 
         _camera.SetActive(uid, false);
         _powerCell.SetPowerCellDrawEnabled(uid, false);
-        _audio.PlayPvs(comp.PowerOffSound, uid);
         comp.Enabled = false;
         return true;
     }
+
 }
