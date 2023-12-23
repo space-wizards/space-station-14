@@ -1,7 +1,10 @@
-﻿using Content.Server.GameTicking;
+﻿using Content.Server.Administration.Logs;
+using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Popups;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Database;
 using Content.Shared.Drunk;
 using Content.Shared.Jittering;
 using Content.Shared.Mind;
@@ -18,6 +21,8 @@ public sealed class AmnesiaSystem : EntitySystem
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKeySleep = "ForcedSleep";
@@ -58,34 +63,41 @@ public sealed class AmnesiaSystem : EntitySystem
                 case 0 when amnesiaComponent.TimeUntilForget.TotalSeconds < 180:
                     _drunkSystem.TryApplyDrunkenness(uid, 300, false); // general dizzy effect.
                     amnesiaComponent.Stage++;
+                    _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} has entered stage 1 of amnesia");
                     break;
                 case 1 when amnesiaComponent.TimeUntilForget.TotalSeconds < 100:
                     _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-1"), uid, uid,PopupType.LargeCaution);
                     amnesiaComponent.Stage++;
+                    _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} has entered stage 2 of amnesia");
                     break;
                 case 2 when amnesiaComponent.TimeUntilForget.TotalSeconds < 70:
                     _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-2"), uid, uid, PopupType.LargeCaution);
                     amnesiaComponent.Stage++;
                     _drunkSystem.TryApplyDrunkenness(uid, 300, true); // Apply slurred speech.
+                    _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} has entered stage 3 of amnesia");
                     break;
                 case 3 when amnesiaComponent.TimeUntilForget.TotalSeconds < 50:
                     _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-3"), uid, uid, PopupType.LargeCaution);
                     amnesiaComponent.Stage++;
+                    _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} has entered stage 4 of amnesia");
                     break;
                 case 4 when amnesiaComponent.TimeUntilForget.TotalSeconds < 30:
                     _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-4"), uid, uid, PopupType.LargeCaution);
                     amnesiaComponent.Stage++;
+                    _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} has entered stage 5 of amnesia");
                     break;
                 case 5 when amnesiaComponent.TimeUntilForget.TotalSeconds < 27:
                     _statusEffectsSystem.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKeySleep,
                         TimeSpan.FromSeconds(50), true);
                     amnesiaComponent.Stage++;
+                    _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} has entered stage 6 of amnesia");
                     break;
                 case 6 when amnesiaComponent.TimeUntilForget.TotalSeconds < 15:
                     _popupSystem.PopupEntity(Loc.GetString("amnesia-effect-stage-5"), uid, uid, PopupType.LargeCaution);
                     _statusEffectsSystem.TryAddStatusEffect<JitteringComponent>(uid, StatusEffectKeyJitter,
                         TimeSpan.FromSeconds(25), true);
                     amnesiaComponent.Stage++;
+                    _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} has entered stage 7 of amnesia");
                     break;
                 case 7 when amnesiaComponent.TimeUntilForget.TotalSeconds < 3:
                     EntityManager.RemoveComponent<AmnesiaComponent>(uid);
@@ -98,6 +110,7 @@ public sealed class AmnesiaSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, AmnesiaComponent component, ComponentInit args)
     {
+        _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} is starting to be affected by amnesia");
         component.LastTime = _timing.CurTime;
         _amnesiaEntities.Add(uid);
     }
@@ -113,6 +126,7 @@ public sealed class AmnesiaSystem : EntitySystem
     /// </summary>
     public void ForceGhostRoleAmnesia(EntityUid uid)
     {
+        _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} is being turned into a ghost role due to amnesia");
         // If the entity already has a ghost role, don't add another one.
         if (_entityManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole) && !ghostRole.Taken)
         {
@@ -142,5 +156,7 @@ public sealed class AmnesiaSystem : EntitySystem
         ghostRole.RoleDescription = Loc.GetString("ghost-role-information-amnesia-description");
         // This is done so that doing /ghost will not show the entity in the ghost role menu.
         ghostRole.ReregisterOnGhost = false;
+        _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} has turned into a ghost due to amnesia");
+        _chatManager.SendAdminAnnouncement($"{ToPrettyString(uid):player} has been turned into a ghost role to due amnesia!");
     }
 }
