@@ -1,8 +1,8 @@
-using System.Linq;
 using Content.Client.NPC;
 using Content.Shared.NPC;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
+using System.Linq;
 
 namespace Content.Client.Commands
 {
@@ -11,8 +11,8 @@ namespace Content.Client.Commands
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "pathfinder";
-        public string Description => "Toggles visibility of pathfinding debuggers.";
-        public string Help => "pathfinder [options]";
+        public string Description => Loc.GetString("debug-pathfinding-command-description");
+        public string Help => Loc.GetString("debug-pathfinding-command-help", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -28,12 +28,12 @@ namespace Content.Client.Commands
             {
                 if (!Enum.TryParse<PathfindingDebugMode>(arg, out var mode))
                 {
-                    shell.WriteError($"Unrecognised pathfinder args {arg}");
+                    shell.WriteError(Loc.GetString("debug-pathfinding-command-error", ("arg", arg)));
                     continue;
                 }
 
                 system.Modes ^= mode;
-                shell.WriteLine($"Toggled {arg} to {(system.Modes & mode) != 0x0}");
+                shell.WriteLine(Loc.GetString("debug-pathfinding-command-notify", ("arg", arg), ("newMode", (system.Modes & mode) != 0x0)));
             }
         }
 
