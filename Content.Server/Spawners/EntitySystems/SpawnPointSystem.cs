@@ -53,7 +53,7 @@ public sealed class SpawnPointSystem : EntitySystem
                 if (args.Station != null && _stationSystem.GetOwningStation(uid, xform) != args.Station)
                     continue;
 
-                if (spawnPoint.Job is not null)
+                if (spawnPoint.Job != null)
                 {
                     var spawnPointJobProto = new ProtoId<JobPrototype>(spawnPoint.Job.ID);
                     if (jobSpawnsDict.TryGetValue(spawnPointJobProto, out var coordinatesList))
@@ -96,8 +96,11 @@ public sealed class SpawnPointSystem : EntitySystem
 
         var spawnLoc = _random.Pick(possiblePositions);
 
-        if (args.Job?.Prototype != null && jobSpawnsDict != null)
-            jobSpawnsDict[(ProtoId<JobPrototype>) args.Job.Prototype].Remove(spawnLoc);
+        if (args.Job?.Prototype != null
+            && jobSpawnsDict?.TryGetValue((ProtoId<JobPrototype>) args.Job.Prototype!, out var jobSpawns) == true)
+        {
+                jobSpawns.Remove(spawnLoc);
+        }
         lateJoinSpawnsList?.Remove(spawnLoc);
 
         if (stationSpawning != null)
