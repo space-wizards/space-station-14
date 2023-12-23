@@ -23,17 +23,18 @@ namespace Content.Client.LateJoin
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
 
-        public event Action<(EntityUid, string)> SelectedId;
+        public event Action<(NetEntity, string)> SelectedId;
 
         private readonly ClientGameTicker _gameTicker;
         private readonly SpriteSystem _sprites;
         private readonly CrewManifestSystem _crewManifest;
 
-        private readonly Dictionary<EntityUid, Dictionary<string, JobButton>> _jobButtons = new();
-        private readonly Dictionary<EntityUid, Dictionary<string, BoxContainer>> _jobCategories = new();
+        private readonly Dictionary<NetEntity, Dictionary<string, JobButton>> _jobButtons = new();
+        private readonly Dictionary<NetEntity, Dictionary<string, BoxContainer>> _jobCategories = new();
         private readonly List<ScrollContainer> _jobLists = new();
 
         private readonly Control _base;
@@ -256,9 +257,11 @@ namespace Content.Client.LateJoin
                         {
                             jobButton.Disabled = true;
 
-                            if (!string.IsNullOrEmpty(reason))
+                            if (!reason.IsEmpty)
                             {
-                                jobButton.ToolTip = reason;
+                                var tooltip = new Tooltip();
+                                tooltip.SetMessage(reason);
+                                jobButton.TooltipSupplier = _ => tooltip;
                             }
 
                             jobSelector.AddChild(new TextureRect
@@ -281,7 +284,7 @@ namespace Content.Client.LateJoin
             }
         }
 
-        private void JobsAvailableUpdated(IReadOnlyDictionary<EntityUid, Dictionary<string, uint?>> _)
+        private void JobsAvailableUpdated(IReadOnlyDictionary<NetEntity, Dictionary<string, uint?>> _)
         {
             RebuildUI();
         }

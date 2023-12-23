@@ -9,7 +9,7 @@
     shoes: ClothingShoesWizard
     id: PassengerPDA
     ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpskirtColorDarkBlue
+  innerClothingSkirt: ClothingUniformJumpskirtColorDarkBlue
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
@@ -23,7 +23,7 @@
     shoes: ClothingShoesWizard
     id: PassengerPDA
     ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpskirtColorRed
+  innerClothingSkirt: ClothingUniformJumpskirtColorRed
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
@@ -37,7 +37,7 @@
     shoes: ClothingShoesWizard
     id: PassengerPDA
     ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpskirtColorPurple
+  innerClothingSkirt: ClothingUniformJumpskirtColorPurple
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
@@ -50,6 +50,6 @@
     shoes: ClothingShoesWizard
     id: PassengerPDA
     ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpskirtColorPurple
+  innerClothingSkirt: ClothingUniformJumpskirtColorPurple
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

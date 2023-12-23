@@ -1,16 +1,14 @@
 using System.Numerics;
-using Content.Server.Cargo.Components;
 using Content.Server.Shuttle.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Player;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -249,8 +247,8 @@ namespace Content.Server.Physics.Controllers
 
             var horizIndex = vel.X > 0 ? 1 : 3; // east else west
             var vertIndex = vel.Y > 0 ? 2 : 0; // north else south
-            var horizComp = MathF.Pow(Vector2.Dot(vel, new (shuttle.BaseLinearThrust[horizIndex] / shuttle.LinearThrust[horizIndex], 0f)), 2);
-            var vertComp = MathF.Pow(Vector2.Dot(vel, new (0f, shuttle.BaseLinearThrust[vertIndex] / shuttle.LinearThrust[vertIndex])), 2);
+            var horizComp = vel.X != 0 ? MathF.Pow(Vector2.Dot(vel, new (shuttle.BaseLinearThrust[horizIndex] / shuttle.LinearThrust[horizIndex], 0f)), 2) : 0;
+            var vertComp = vel.Y != 0 ? MathF.Pow(Vector2.Dot(vel, new (0f, shuttle.BaseLinearThrust[vertIndex] / shuttle.LinearThrust[vertIndex])), 2) : 0;
 
             return shuttle.BaseMaxLinearVelocity * vel * MathF.ReciprocalSqrtEstimate(horizComp + vertComp);
         }

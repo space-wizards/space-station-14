@@ -12,13 +12,6 @@
     - type: Clothing
       sprite: Clothing/Shoes/Boots/magboots.rsi
     - type: Magboots
-      toggleAction:
-        icon: { sprite: Clothing/Shoes/Boots/magboots.rsi, state: icon }
-        iconOn: { sprite : Clothing/Shoes/Boots/magboots.rsi, state: icon-on }
-        name: action-name-magboot-toggle
-        description: action-decription-magboot-toggle
-        itemIconStyle: NoItem
-        event: !type:ToggleMagbootsEvent
     - type: ClothingSpeedModifier
       walkModifier: 0.85
       sprintModifier: 0.8
@@ -48,13 +41,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
   - type: Magboots
-    toggleAction:
-      icon: { sprite: Clothing/Shoes/Boots/magboots-advanced.rsi, state: icon }
-      iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
-      name: action-name-magboot-toggle
-      description: action-decription-magboot-toggle
-      itemIconStyle: NoItem
-      event: !type:ToggleMagbootsEvent
+    toggleAction: ActionToggleMagbootsAdvanced
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
@@ -92,29 +79,12 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
   - type: Magboots
-    toggleAction:
-      icon: { sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi, state: icon }
-      iconOn: Clothing/Shoes/Boots/magboots-syndicate.rsi/icon-on.png
-      name: action-name-magboot-toggle
-      description: action-decription-magboot-toggle
-      itemIconStyle: NoItem
-      event: !type:ToggleMagbootsEvent
+    toggleAction: ActionToggleMagbootsSyndie
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.9
     enabled: false
   - type: GasTank
-    toggleAction:
-      name: action-name-internals-toggle
-      description: action-description-internals-toggle
-      icon:
-        sprite: Interface/Alerts/internals.rsi
-        state: internal2
-      iconOn:
-        sprite: Interface/Alerts/internals.rsi
-        state: internal1
-      event: !type:ToggleActionEvent
-      useDelay: 1
     outputPressure: 42.6
     air:
       # 2 minutes of thrust
@@ -134,17 +104,7 @@
     maxIntensity: 20
   - type: Jetpack
     moleUsage: 0.00085
-    toggleAction:
-      icon:
-        sprite: Objects/Tanks/Jetpacks/blue.rsi
-        state: icon
-      iconOn:
-        sprite: Objects/Tanks/Jetpacks/blue.rsi
-        state: icon-on
-      name: action-name-jetpack-toggle
-      description: action-description-jetpack-toggle
-      useDelay: 1.0
-      event: !type:ToggleJetpackEvent
+  - type: CanMoveInAir
   - type: InputMover
     toParent: true
   - type: MovementSpeedModifier
@@ -154,3 +114,40 @@
   - type: Tag
     tags:
       - WhitelistChameleon
+
+- type: entity
+  id: ActionBaseToggleMagboots
+  name: Toggle Magboots
+  description: Toggles the magboots on and off.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    event: !type:ToggleMagbootsEvent
+
+- type: entity
+  id: ActionToggleMagboots
+  parent: ActionBaseToggleMagboots
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Shoes/Boots/magboots.rsi, state: icon }
+    iconOn: { sprite : Clothing/Shoes/Boots/magboots.rsi, state: icon-on }
+
+- type: entity
+  id: ActionToggleMagbootsAdvanced
+  parent: ActionBaseToggleMagboots
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Shoes/Boots/magboots-advanced.rsi, state: icon }
+    iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
+
+- type: entity
+  id: ActionToggleMagbootsSyndie
+  parent: ActionBaseToggleMagboots
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi, state: icon }
+    iconOn: Clothing/Shoes/Boots/magboots-syndicate.rsi/icon-on.png

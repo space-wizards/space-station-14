@@ -17,6 +17,7 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -45,6 +46,7 @@ namespace Content.Server.Administration.Systems
         private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
         private readonly HashSet<NetUserId> _processingChannels = new();
         private readonly Dictionary<NetUserId, (TimeSpan Timestamp, bool Typing)> _typingUpdateTimestamps = new();
+        private string _overrideClientName = string.Empty;
 
         // Max embed description length is 4096, according to https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
         // Keep small margin, just to be safe
@@ -66,12 +68,18 @@ namespace Content.Server.Administration.Systems
             _config.OnValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
             _config.OnValueChanged(CCVars.DiscordAHelpAvatar, OnAvatarChanged, true);
             _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
+            _config.OnValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
             _maxAdditionalChars = GenerateAHelpMessage("", "", true).Length;
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
             SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
+        }
+
+        private void OnOverrideChanged(string obj)
+        {
+            _overrideClientName = obj;
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -119,7 +127,7 @@ namespace Content.Server.Administration.Systems
             _typingUpdateTimestamps[args.SenderSession.UserId] = (_timing.RealTime, msg.Typing);
 
             // Non-admins can only ever type on their own ahelp, guard against fake messages
-            var isAdmin = _adminManager.GetAdminData((IPlayerSession) args.SenderSession)?.HasFlag(AdminFlags.Adminhelp) ?? false;
+            var isAdmin = _adminManager.GetAdminData(args.SenderSession)?.HasFlag(AdminFlags.Adminhelp) ?? false;
             var channel = isAdmin ? msg.Channel : args.SenderSession.UserId;
             var update = new BwoinkPlayerTypingUpdated(channel, args.SenderSession.Name, msg.Typing);
 
@@ -143,6 +151,7 @@ namespace Content.Server.Administration.Systems
             _config.UnsubValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged);
             _config.UnsubValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged);
             _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
+            _config.UnsubValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged);
         }
 
         private async void OnWebhookChanged(string url)
@@ -376,7 +385,7 @@ namespace Content.Server.Administration.Systems
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             base.OnBwoinkTextMessage(message, eventArgs);
-            var senderSession = (IPlayerSession) eventArgs.SenderSession;
+            var senderSession = eventArgs.SenderSession;
 
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
@@ -392,14 +401,20 @@ namespace Content.Server.Administration.Systems
 
             var escapedText = FormattedMessage.EscapeText(message.Text);
 
-            var bwoinkText = senderAdmin switch
+            string bwoinkText;
+
+            if (senderAdmin is not null && senderAdmin.Flags == AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
             {
-                var x when x is not null && x.Flags == AdminFlags.Adminhelp =>
-                    $"[color=purple]{senderSession.Name}[/color]: {escapedText}",
-                var x when x is not null && x.HasFlag(AdminFlags.Adminhelp) =>
-                    $"[color=red]{senderSession.Name}[/color]: {escapedText}",
-                _ => $"{senderSession.Name}: {escapedText}",
-            };
+                bwoinkText = $"[color=purple]{senderSession.Name}[/color]: {escapedText}";
+            }
+            else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
+            {
+                bwoinkText = $"[color=red]{senderSession.Name}[/color]: {escapedText}";
+            }
+            else
+            {
+                bwoinkText = $"{senderSession.Name}: {escapedText}";
+            }
 
             var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText);
 
@@ -417,7 +432,30 @@ namespace Content.Server.Administration.Systems
             if (_playerManager.TryGetSessionById(message.UserId, out var session))
             {
                 if (!admins.Contains(session.ConnectedClient))
-                    RaiseNetworkEvent(msg, session.ConnectedClient);
+                {
+                    // If _overrideClientName is set, we generate a new message with the override name. The admins name will still be the original name for the webhooks.
+                    if (_overrideClientName != string.Empty)
+                    {
+                        string overrideMsgText;
+                        // Doing the same thing as above, but with the override name. Theres probably a better way to do this.
+                        if (senderAdmin is not null && senderAdmin.Flags == AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
+                        {
+                            overrideMsgText = $"[color=purple]{_overrideClientName}[/color]: {escapedText}";
+                        }
+                        else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
+                        {
+                            overrideMsgText = $"[color=red]{_overrideClientName}[/color]: {escapedText}";
+                        }
+                        else
+                        {
+                            overrideMsgText = $"{senderSession.Name}: {escapedText}"; // Not an admin, name is not overridden.
+                        }
+
+                        RaiseNetworkEvent(new BwoinkTextMessage(message.UserId, senderSession.UserId, overrideMsgText), session.ConnectedClient);
+                    }
+                    else
+                        RaiseNetworkEvent(msg, session.ConnectedClient);
+                }
             }
 
             var sendsWebhook = _webhookUrl != string.Empty;

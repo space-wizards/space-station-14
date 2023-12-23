@@ -23,7 +23,7 @@
   - type: WiresPanel
   - type: Wires
     alwaysRandomize: true
-    LayoutId: SurveillanceCamera
+    layoutId: SurveillanceCamera
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -64,6 +64,8 @@
           - !type:PlaySoundBehavior
             sound:
               path: /Audio/Effects/metalbreak.ogg
+              params:
+                volume: -8
   placement:
     mode: SnapgridCenter
     snap:

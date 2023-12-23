@@ -1,11 +1,4 @@
-using System;
 using Content.Shared.Chemistry;
-using JetBrains.Annotations;
-using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Chemistry.Visualizers
@@ -13,40 +6,40 @@ namespace Content.Client.Chemistry.Visualizers
     [RegisterComponent]
     public sealed partial class SolutionContainerVisualsComponent : Component
     {
-        [DataField("maxFillLevels")]
+        [DataField]
         public int MaxFillLevels = 0;
-        [DataField("fillBaseName")]
+        [DataField]
         public string? FillBaseName = null;
-        [DataField("layer")]
-        public SolutionContainerLayers FillLayer = SolutionContainerLayers.Fill;
-        [DataField("baseLayer")]
+        [DataField]
+        public SolutionContainerLayers Layer = SolutionContainerLayers.Fill;
+        [DataField]
         public SolutionContainerLayers BaseLayer = SolutionContainerLayers.Base;
-        [DataField("overlayLayer")]
+        [DataField]
         public SolutionContainerLayers OverlayLayer = SolutionContainerLayers.Overlay;
-        [DataField("changeColor")]
+        [DataField]
         public bool ChangeColor = true;
-        [DataField("emptySpriteName")]
+        [DataField]
         public string? EmptySpriteName = null;
-        [DataField("emptySpriteColor")]
+        [DataField]
         public Color EmptySpriteColor = Color.White;
-        [DataField("metamorphic")]
+        [DataField]
         public bool Metamorphic = false;
-        [DataField("metamorphicDefaultSprite")]
+        [DataField]
         public SpriteSpecifier? MetamorphicDefaultSprite;
-        [DataField("metamorphicNameFull")]
-        public string MetamorphicNameFull = "transformable-container-component-glass";
+        [DataField]
+        public LocId MetamorphicNameFull = "transformable-container-component-glass";
 
         /// <summary>
         /// Which solution of the SolutionContainerManagerComponent to represent.
         /// If not set, will work as default.
         /// </summary>
-        [DataField("solutionName")]
+        [DataField]
         public string? SolutionName;
 
-        [DataField("initialName")]
+        [DataField]
         public string InitialName = string.Empty;
 
-        [DataField("initialDescription")]
+        [DataField]
         public string InitialDescription = string.Empty;
     }
 }

@@ -8,6 +8,8 @@ namespace Content.Server.Electrocution
     [AdminCommand(AdminFlags.Fun)]
     public sealed class ElectrocuteCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public string Command => "electrocute";
         public string Description => Loc.GetString("electrocute-command-description");
         public string Help => $"{Command} <uid> <seconds> <damage>";
@@ -24,15 +26,15 @@ namespace Content.Server.Electrocution
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!EntityUid.TryParse(args[0], out var uid) || !entityManager.EntityExists(uid))
+            if (!NetEntity.TryParse(args[0], out var uidNet) ||
+                !_entManager.TryGetEntity(uidNet, out var uid) ||
+                !_entManager.EntityExists(uid))
             {
                 shell.WriteError($"Invalid entity specified!");
                 return;
             }
 
-            if (!entityManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>().CanApplyEffect(uid, ElectrocutionStatusEffect))
+            if (!_entManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>().CanApplyEffect(uid.Value, ElectrocutionStatusEffect))
             {
                 shell.WriteError(Loc.GetString("electrocute-command-entity-cannot-be-electrocuted"));
                 return;
@@ -48,8 +50,8 @@ namespace Content.Server.Electrocution
                 damage = 10;
             }
 
-            entityManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>()
-                .TryDoElectrocution(uid, null, damage, TimeSpan.FromSeconds(seconds), refresh: true, ignoreInsulation: true);
+            _entManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>()
+                .TryDoElectrocution(uid.Value, null, damage, TimeSpan.FromSeconds(seconds), refresh: true, ignoreInsulation: true);
         }
     }
 }

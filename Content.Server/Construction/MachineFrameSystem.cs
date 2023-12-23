@@ -75,7 +75,7 @@ public sealed class MachineFrameSystem : EntitySystem
         }
 
         // Handle stacks
-        if (TryComp<StackComponent?>(args.Used, out var stack))
+        if (TryComp<StackComponent>(args.Used, out var stack))
         {
             if (TryInsertStack(uid, args.Used, component, stack))
                 args.Handled = true;
@@ -150,7 +150,7 @@ public sealed class MachineFrameSystem : EntitySystem
     /// <returns>Whether or not the function had any effect. Does not indicate success.</returns>
     private bool TryInsertBoard(EntityUid uid, EntityUid used, MachineFrameComponent component)
     {
-        if (!TryComp<MachineBoardComponent?>(used, out var machineBoard))
+        if (!TryComp<MachineBoardComponent>(used, out var machineBoard))
             return false;
 
         if (!_container.TryRemoveFromContainer(used))

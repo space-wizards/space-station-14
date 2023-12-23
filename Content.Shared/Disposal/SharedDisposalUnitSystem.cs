@@ -142,9 +142,9 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         public TimeSpan? NextFlush;
         public bool Powered;
         public bool Engaged;
-        public List<EntityUid> RecentlyEjected;
+        public List<NetEntity> RecentlyEjected;
 
-        public DisposalUnitComponentState(SoundSpecifier? flushSound, DisposalsPressureState state, TimeSpan nextPressurized, TimeSpan automaticEngageTime, TimeSpan? nextFlush, bool powered, bool engaged, List<EntityUid> recentlyEjected)
+        public DisposalUnitComponentState(SoundSpecifier? flushSound, DisposalsPressureState state, TimeSpan nextPressurized, TimeSpan automaticEngageTime, TimeSpan? nextFlush, bool powered, bool engaged, List<NetEntity> recentlyEjected)
         {
             FlushSound = flushSound;
             State = state;

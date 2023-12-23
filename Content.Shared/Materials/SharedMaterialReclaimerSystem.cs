@@ -8,8 +8,9 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Stacks;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
@@ -32,38 +33,24 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<MaterialReclaimerComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<MaterialReclaimerComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MaterialReclaimerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<MaterialReclaimerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<MaterialReclaimerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MaterialReclaimerComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<MaterialReclaimerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<CollideMaterialReclaimerComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, EntityUnpausedEvent>(OnActiveUnpaused);
     }
 
-    private void OnGetState(EntityUid uid, MaterialReclaimerComponent component, ref ComponentGetState args)
+    private void OnMapInit(EntityUid uid, MaterialReclaimerComponent component, MapInitEvent args)
     {
-        args.State = new MaterialReclaimerComponentState(component.Powered,
-            component.Enabled,
-            component.MaterialProcessRate,
-            component.ItemsProcessed);
-    }
-
-    private void OnHandleState(EntityUid uid, MaterialReclaimerComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MaterialReclaimerComponentState state)
-            return;
-        component.Powered = state.Powered;
-        component.Enabled = state.Enabled;
-        component.MaterialProcessRate = state.MaterialProcessRate;
-        component.ItemsProcessed = state.ItemsProcessed;
+        component.NextSound = Timing.CurTime;
     }
 
     private void OnShutdown(EntityUid uid, MaterialReclaimerComponent component, ComponentShutdown args)
     {
-        component.Stream?.Stop();
+        _audio.Stop(component.Stream);
     }
 
     private void OnUnpaused(EntityUid uid, MaterialReclaimerComponent component, ref EntityUnpausedEvent args)
@@ -130,8 +117,10 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         }
 
         if (Timing.CurTime > component.NextSound)
-            component.Stream = _audio.PlayPvs(component.Sound, uid);
-        component.NextSound = Timing.CurTime + component.SoundCooldown;
+        {
+            component.Stream = _audio.PlayPredicted(component.Sound, uid, user)?.Entity;
+            component.NextSound = Timing.CurTime + component.SoundCooldown;
+        }
 
         var duration = GetReclaimingDuration(uid, item, component);
         // if it's instant, don't bother with all the active comp stuff.
@@ -179,9 +168,11 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
         component.ItemsProcessed++;
         if (component.CutOffSound)
-            component.Stream?.Stop();
+        {
+            _audio.Stop(component.Stream);
+        }
 
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -193,7 +184,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
             return;
         component.Enabled = enabled;
         AmbientSound.SetAmbience(uid, enabled && component.Powered);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     /// <summary>

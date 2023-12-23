@@ -1,13 +1,14 @@
+using System.Linq;
 using System.Numerics;
 using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Server.Stack;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Part;
 using Content.Shared.CombatMode;
+using Content.Shared.Explosion;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -16,22 +17,18 @@ using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
 using Content.Shared.Throwing;
-using JetBrains.Annotations;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Hands.Systems
 {
-    [UsedImplicitly]
-    internal sealed class HandsSystem : SharedHandsSystem
+    public sealed class HandsSystem : SharedHandsSystem
     {
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
@@ -43,8 +40,6 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
-        [Dependency] private readonly ISharedPlayerManager _player = default!;
-        [Dependency] private readonly IConfigurationManager _configuration = default!;
 
         public override void Initialize()
         {
@@ -60,10 +55,10 @@ namespace Content.Server.Hands.Systems
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
+            SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
+
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
-                .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
-                .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
                 .Register<HandsSystem>();
         }
 
@@ -77,6 +72,15 @@ namespace Content.Server.Hands.Systems
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
             args.State = new HandsComponentState(hands);
+        }
+
+        private void OnExploded(Entity<HandsComponent> ent, ref BeforeExplodeEvent args)
+        {
+            foreach (var hand in ent.Comp.Hands.Values)
+            {
+                if (hand.HeldEntity is {} uid)
+                    args.Contents.Add(uid);
+            }
         }
 
         private void OnDisarmed(EntityUid uid, HandsComponent component, DisarmedEvent args)
@@ -94,26 +98,12 @@ namespace Content.Server.Hands.Systems
             args.Handled = true; // no shove/stun.
         }
 
-        public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,
-            EntityUid? exclude)
-        {
-            if (finalPosition.EqualsApprox(initialPosition.Position, tolerance: 0.1f))
-                return;
-
-            var filter = Filter.Pvs(item, entityManager: EntityManager, playerManager: _player, cfgManager: _configuration);
-
-            if (exclude != null)
-                filter = filter.RemoveWhereAttachedEntity(entity => entity == exclude);
-
-            RaiseNetworkEvent(new PickupAnimationEvent(item, initialPosition, finalPosition, initialAngle), filter);
-        }
-
         protected override void HandleEntityRemoved(EntityUid uid, HandsComponent hands, EntRemovedFromContainerMessage args)
         {
             base.HandleEntityRemoved(uid, hands, args);
 
             if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
-                _virtualSystem.Delete(@virtual, uid);
+                _virtualSystem.Delete((args.Entity, @virtual), uid);
         }
 
         private void HandleBodyPartAdded(EntityUid uid, HandsComponent component, ref BodyPartAddedEvent args)
@@ -178,16 +168,16 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region interactions
-        private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleThrowItem(ICommonSession? playerSession, EntityCoordinates coordinates, EntityUid entity)
         {
-            if (session is not IPlayerSession playerSession)
+            if (playerSession == null)
                 return false;
 
             if (playerSession.AttachedEntity is not {Valid: true} player ||
                 !Exists(player) ||
-                player.IsInContainer() ||
+                ContainerSystem.IsEntityInContainer(player) ||
                 !TryComp(player, out HandsComponent? hands) ||
-                hands.ActiveHandEntity is not EntityUid throwEnt ||
+                hands.ActiveHandEntity is not { } throwEnt ||
                 !_actionBlockerSystem.CanThrow(player, throwEnt))
                 return false;
 
@@ -201,7 +191,7 @@ namespace Content.Server.Hands.Systems
                 throwEnt = splitStack.Value;
             }
 
-            var direction = coords.ToMapPos(EntityManager) - Transform(player).WorldPosition;
+            var direction = coordinates.ToMapPos(EntityManager) - Transform(player).WorldPosition;
             if (direction == Vector2.Zero)
                 return true;
 
@@ -212,9 +202,9 @@ namespace Content.Server.Hands.Systems
             // Let other systems change the thrown entity (useful for virtual items)
             // or the throw strength.
             var ev = new BeforeThrowEvent(throwEnt, direction, throwStrength, player);
-            RaiseLocalEvent(player, ev, false);
+            RaiseLocalEvent(player, ref ev);
 
-            if (ev.Handled)
+            if (ev.Cancelled)
                 return true;
 
             // This can grief the above event so we raise it afterwards
@@ -225,84 +215,7 @@ namespace Content.Server.Hands.Systems
 
             return true;
         }
-        private void HandleSmartEquipBackpack(ICommonSession? session)
-        {
-            HandleSmartEquip(session, "back");
-        }
 
-        private void HandleSmartEquipBelt(ICommonSession? session)
-        {
-            HandleSmartEquip(session, "belt");
-        }
-
-        // why tf is this even in hands system.
-        // TODO: move to storage or inventory
-        private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
-        {
-            if (session is not IPlayerSession playerSession)
-                return;
-
-            if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !Exists(plyEnt))
-                return;
-
-            if (!_actionBlockerSystem.CanInteract(plyEnt, null))
-                return;
-
-            if (!TryComp<HandsComponent>(plyEnt, out var hands) ||  hands.ActiveHand == null)
-                return;
-
-            if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
-                !TryComp(slotEntity, out ServerStorageComponent? storageComponent))
-            {
-                if (_inventorySystem.HasSlot(plyEnt, equipmentSlot))
-                {
-                    if (hands.ActiveHand.HeldEntity == null && slotEntity != null)
-                    {
-                        _inventorySystem.TryUnequip(plyEnt, equipmentSlot);
-                        PickupOrDrop(plyEnt, slotEntity.Value);
-                        return;
-                    }
-                    if (hands.ActiveHand.HeldEntity == null)
-                        return;
-                    if (!_inventorySystem.CanEquip(plyEnt, hands.ActiveHand.HeldEntity.Value, equipmentSlot, out var reason))
-                    {
-                        _popupSystem.PopupEntity(Loc.GetString(reason), plyEnt, session);
-                        return;
-                    }
-                    if (slotEntity == null)
-                    {
-                        _inventorySystem.TryEquip(plyEnt, hands.ActiveHand.HeldEntity.Value, equipmentSlot);
-                        return;
-                    }
-                    _inventorySystem.TryUnequip(plyEnt, equipmentSlot);
-                    _inventorySystem.TryEquip(plyEnt, hands.ActiveHand.HeldEntity.Value, equipmentSlot);
-                    PickupOrDrop(plyEnt, slotEntity.Value);
-                    return;
-                }
-                _popupSystem.PopupEntity(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", equipmentSlot)), plyEnt, session);
-                return;
-            }
-
-            if (hands.ActiveHand.HeldEntity != null)
-            {
-                _storageSystem.PlayerInsertHeldEntity(slotEntity.Value, plyEnt, storageComponent);
-            }
-            else if (storageComponent.StoredEntities != null)
-            {
-                if (storageComponent.StoredEntities.Count == 0)
-                {
-                    _popupSystem.PopupEntity(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", equipmentSlot)), plyEnt,  session);
-                }
-                else
-                {
-                    var lastStoredEntity = storageComponent.StoredEntities[^1];
-                    if (storageComponent.Remove(lastStoredEntity))
-                    {
-                        PickupOrDrop(plyEnt, lastStoredEntity, animateUser: true, handsComp: hands);
-                    }
-                }
-            }
-        }
         #endregion
     }
 }

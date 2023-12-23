@@ -4,6 +4,7 @@ using System.IO;
 using Content.Shared.Decals;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -16,7 +17,7 @@ namespace Content.MapRenderer.Painters;
 
 public sealed class DecalPainter
 {
-    private readonly IResourceCache _cResourceCache;
+    private readonly IResourceManager _resManager;
 
     private readonly IPrototypeManager _sPrototypeManager;
 
@@ -24,7 +25,7 @@ public sealed class DecalPainter
 
     public DecalPainter(ClientIntegrationInstance client, ServerIntegrationInstance server)
     {
-        _cResourceCache = client.ResolveDependency<IResourceCache>();
+        _resManager = client.ResolveDependency<IResourceManager>();
         _sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
     }
 
@@ -63,7 +64,7 @@ public sealed class DecalPainter
         Stream stream;
         if (sprite is SpriteSpecifier.Texture texture)
         {
-            stream = _cResourceCache.ContentFileRead(texture.TexturePath);
+            stream = _resManager.ContentFileRead(texture.TexturePath);
         }
         else if (sprite is SpriteSpecifier.Rsi rsi)
         {
@@ -73,7 +74,7 @@ public sealed class DecalPainter
                 path = $"/Textures/{path}";
             }
 
-            stream = _cResourceCache.ContentFileRead(path);
+            stream = _resManager.ContentFileRead(path);
         }
         else
         {

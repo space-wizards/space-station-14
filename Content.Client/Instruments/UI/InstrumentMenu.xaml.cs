@@ -174,8 +174,9 @@ namespace Content.Client.Instruments.UI
             if (localPlayer.ControlledEntity == instrumentEnt)
                 return true;
 
+            var container = _owner.Entities.System<SharedContainerSystem>();
             // If we're a handheld instrument, we might be in a container. Get it just in case.
-            instrumentEnt.TryGetContainerMan(out var conMan);
+            container.TryGetContainingContainer(instrumentEnt, out var conMan);
 
             // If the instrument is handheld and we're not holding it, we return.
             if ((instrument.Handheld && (conMan == null || conMan.Owner != localPlayer.ControlledEntity)))

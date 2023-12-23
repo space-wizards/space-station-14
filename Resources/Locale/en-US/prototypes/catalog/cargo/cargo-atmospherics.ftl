@@ -9,3 +9,12 @@ ent-AtmosphericsNitrogen = { ent-NitrogenCanister }
 
 ent-AtmosphericsCarbonDioxide = { ent-CarbonDioxideCanister }
     .desc = { ent-CarbonDioxideCanister.desc }
+
+ent-AtmosphericsLiquidOxygen = { ent-LiquidOxygenCanister }
+    .desc = { ent-LiquidOxygenCanister.desc }
+
+ent-AtmosphericsLiquidNitrogen = { ent-LiquidNitrogenCanister }
+    .desc = { ent-LiquidNitrogenCanister.desc }
+
+ent-AtmosphericsLiquidCarbonDioxide = { ent-LiquidCarbonDioxideCanister }
+    .desc = { ent-LiquidCarbonDioxideCanister.desc }

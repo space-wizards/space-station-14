@@ -2,42 +2,42 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Lathe
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class LatheComponent : Component
     {
         /// <summary>
         /// All of the recipes that the lathe has by default
         /// </summary>
-        [DataField("staticRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public List<string> StaticRecipes = new();
+        [DataField]
+        public List<ProtoId<LatheRecipePrototype>> StaticRecipes = new();
 
         /// <summary>
         /// All of the recipes that the lathe is capable of researching
         /// </summary>
-        [DataField("dynamicRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public List<string> DynamicRecipes = new();
+        [DataField]
+        public List<ProtoId<LatheRecipePrototype>> DynamicRecipes = new();
 
         /// <summary>
         /// The lathe's construction queue
         /// </summary>
-        [DataField("queue")]
+        [DataField]
         public List<LatheRecipePrototype> Queue = new();
 
         /// <summary>
         /// The sound that plays when the lathe is producing an item, if any
         /// </summary>
-        [DataField("producingSound")]
+        [DataField]
         public SoundSpecifier? ProducingSound;
+
         #region Visualizer info
-        [DataField("idleState", required: true)]
+        [DataField(required: true)]
         public string IdleState = default!;
 
-        [DataField("runningState", required: true)]
+        [DataField(required: true)]
         public string RunningState = default!;
         #endregion
 
@@ -50,7 +50,7 @@ namespace Content.Shared.Lathe
         /// <summary>
         /// Whether the lathe can eject the materials stored within it
         /// </summary>
-        [DataField("canEjectStoredMaterials")]
+        [DataField]
         public bool CanEjectStoredMaterials = true;
 
         #region MachineUpgrading
@@ -63,31 +63,31 @@ namespace Content.Shared.Lathe
         /// <summary>
         /// The machine part that reduces how long it takes to print a recipe.
         /// </summary>
-        [DataField("machinePartPrintSpeed", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartPrintTime = "Manipulator";
+        [DataField]
+        public ProtoId<MachinePartPrototype> MachinePartPrintSpeed = "Manipulator";
 
         /// <summary>
         /// The value that is used to calculate the modified <see cref="TimeMultiplier"/>
         /// </summary>
-        [DataField("partRatingPrintTimeMultiplier")]
+        [DataField]
         public float PartRatingPrintTimeMultiplier = 0.5f;
 
         /// <summary>
         /// A modifier that changes how much of a material is needed to print a recipe
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         public float MaterialUseMultiplier = 1;
 
         /// <summary>
         /// The machine part that reduces how much material it takes to print a recipe.
         /// </summary>
-        [DataField("machinePartMaterialUse", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartMaterialUse = "MatterBin";
+        [DataField]
+        public ProtoId<MachinePartPrototype> MachinePartMaterialUse = "MatterBin";
 
         /// <summary>
         /// The value that is used to calculate the modifier <see cref="MaterialUseMultiplier"/>
         /// </summary>
-        [DataField("partRatingMaterialUseMultiplier")]
+        [DataField]
         public float PartRatingMaterialUseMultiplier = DefaultPartRatingMaterialUseMultiplier;
 
         public const float DefaultPartRatingMaterialUseMultiplier = 0.85f;
@@ -98,7 +98,7 @@ namespace Content.Shared.Lathe
     {
         public readonly EntityUid Lathe;
 
-        public List<string> Recipes = new();
+        public List<ProtoId<LatheRecipePrototype>> Recipes = new();
 
         public LatheGetRecipesEvent(EntityUid lathe)
         {

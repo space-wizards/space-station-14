@@ -80,7 +80,7 @@
       joinSystem: true
     - type: ContainerContainer
       containers:
-        GasCanisterTankHolder: !type:ContainerSlot {}
+        tank_slot: !type:ContainerSlot {}
     - type: NodeContainer
       nodes:
         port:
@@ -88,8 +88,14 @@
           nodeGroupID: Pipe
           rotationsEnabled: false
           volume: 1
+    - type: ItemSlots
     - type: GasPortable
     - type: GasCanister
+      gasTankSlot:
+        name: Gas Tank
+        whitelist:
+          components:
+            - GasTank
     - type: StaticPrice
       price: 1000
     - type: AccessReader
@@ -114,7 +120,7 @@
           - 0 # Plasma
           - 0 # Tritium
           - 0 # Water vapor
-          - 0 # Miasma
+          - 0 # Ammonia
           - 0 # N2O
           - 0 # Frezon
         temperature: 293.15
@@ -220,6 +226,19 @@
       - !type:DumpCanisterBehavior
 
 - type: entity
+  id: LiquidOxygenCanister
+  parent: OxygenCanister
+  components:
+  - type: GasCanister
+    gasMixture:
+      volume: 1000
+      moles:
+        - 18710.71051 # oxygen
+      temperature: 72
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
   parent: GasCanister
   id: NitrogenCanister
   components:
@@ -256,6 +275,20 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
+
+- type: entity
+  id: LiquidNitrogenCanister
+  parent: NitrogenCanister
+  components:
+  - type: GasCanister
+    gasMixture:
+      volume: 1000
+      moles:
+        - 0 # oxygen
+        - 18710.71051 # nitrogen
+      temperature: 72
+  - type: AccessReader
+    access: [["Atmospherics"]]
 
 - type: entity
   parent: GasCanister
@@ -297,6 +330,21 @@
         - !type:DumpCanisterBehavior
     - type: Lock
       locked: true
+
+- type: entity
+  id: LiquidCarbonDioxideCanister
+  parent: CarbonDioxideCanister
+  components:
+  - type: GasCanister
+    gasMixture:
+      volume: 1000
+      moles:
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 18710.71051 # CO2
+      temperature: 72
+  - type: AccessReader
+    access: [["Atmospherics"]]
 
 - type: entity
   parent: GasCanister
@@ -427,7 +475,7 @@
 
 - type: entity
   parent: GasCanister
-  id: MiasmaCanister
+  id: AmmoniaCanister
   components:
     - type: Sprite
       layers:
@@ -442,7 +490,7 @@
           - 0 # Plasma
           - 0 # Tritium
           - 0 #  Water vapor
-          - 1871.71051 # Miasma
+          - 1871.71051 # Ammonia
         temperature: 293.15
     - type: Destructible
       thresholds:
@@ -461,7 +509,7 @@
             path: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
           spawn:
-            MiasmaCanisterBroken:
+            AmmoniaCanisterBroken:
               min: 1
               max: 1
         - !type:DoActsBehavior
@@ -487,7 +535,7 @@
           - 0 # Plasma
           - 0 # Tritium
           - 0 #  Water vapor
-          - 0 # Miasma
+          - 0 # Ammonia
           - 1871.71051 # N2O
         temperature: 293.15
     - type: Destructible
@@ -530,8 +578,8 @@
       - 0 # CO2
       - 0 # Plasma
       - 0 # Tritium
-      - 0 #  Water vapor
-      - 0 # Miasma
+      - 0 # Water vapor
+      - 0 # Ammonia
       - 0 # N2O
       - 1871.71051 # Frezon
       temperature: 293.15
@@ -682,7 +730,7 @@
 
 - type: entity
   parent: GasCanisterBrokenBase
-  id: MiasmaCanisterBroken
+  id: AmmoniaCanisterBroken
   noSpawn: true
   components:
     - type: Sprite

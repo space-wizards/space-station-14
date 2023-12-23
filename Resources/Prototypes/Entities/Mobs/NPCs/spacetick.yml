@@ -59,7 +59,6 @@
     bloodMaxVolume: 50
   - type: CombatMode
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Effects/bite.ogg
     angle: 0
@@ -85,6 +84,7 @@
     accent: genericAggressive
   - type: Speech
     speechVerb: SmallMob
+  - type: NonSpreaderZombie
 
 - type: entity
   id: MobTickSalvage

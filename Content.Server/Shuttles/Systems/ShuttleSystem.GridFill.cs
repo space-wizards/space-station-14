@@ -80,7 +80,7 @@ public sealed partial class ShuttleSystem
 
             if (!valid)
             {
-                _sawmill.Error($"Error loading gridspawn for {ToPrettyString(uid)} / {path}");
+                Log.Error($"Error loading gridspawn for {ToPrettyString(uid)} / {path}");
             }
         }
 
@@ -129,7 +129,7 @@ public sealed partial class ShuttleSystem
 
         if (!valid)
         {
-            _sawmill.Error($"Error loading gridfill dock for {ToPrettyString(uid)} / {component.Path}");
+            Log.Error($"Error loading gridfill dock for {ToPrettyString(uid)} / {component.Path}");
         }
 
         _mapManager.DeleteMap(mapId);
@@ -148,7 +148,7 @@ public sealed partial class ShuttleSystem
             if (!dockQuery.TryGetComponent(child, out var dock))
                 continue;
 
-            return (child.Value, dock);
+            return (child, dock);
         }
 
         return null;

@@ -6,6 +6,8 @@ using Content.Shared.Emag.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Events;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
@@ -46,7 +48,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         component.Powered = state.Powered;
         component.Engaged = state.Engaged;
         component.RecentlyEjected.Clear();
-        component.RecentlyEjected.AddRange(state.RecentlyEjected);
+        component.RecentlyEjected.AddRange(EnsureEntityList<DisposalUnitComponent>(state.RecentlyEjected, uid));
     }
 
     public override bool HasDisposals(EntityUid? uid)

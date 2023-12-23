@@ -4,7 +4,6 @@ using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.PDA;
 using Content.Client.Resources;
-using Content.Client.Targeting.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Controls.FancyTree;
 using Content.Client.Verbs.UI;
@@ -14,6 +13,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Graphics;
 using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
@@ -56,6 +56,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassTooltipActionDescription = "tooltipActionDesc";
         public const string StyleClassTooltipActionCooldown = "tooltipActionCooldown";
         public const string StyleClassTooltipActionRequirements = "tooltipActionCooldown";
+        public const string StyleClassTooltipActionCharges = "tooltipActionCharges";
         public const string StyleClassHotbarSlotNumber = "hotbarSlotNumber";
         public const string StyleClassActionSearchBox = "actionSearchBox";
         public const string StyleClassActionMenuItemRevoked = "actionMenuItemRevoked";
@@ -940,6 +941,10 @@ namespace Content.Client.Stylesheets
                 {
                     new StyleProperty("font", notoSans15)
                 }),
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionCharges}, null, null), new[]
+                {
+                    new StyleProperty("font", notoSans15)
+                }),
 
                 // small number for the entity counter in the entity menu
                 new StyleRule(new SelectorElement(typeof(Label), new[] {ContextMenuElement.StyleClassEntityMenuIconLabel}, null, null), new[]
@@ -1145,29 +1150,6 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
-                    }),
-
-                // Targeting doll
-
-                new StyleRule(
-                    new SelectorElement(typeof(TextureButton), new[] {TargetingDoll.StyleClassTargetDollZone}, null,
-                        new[] {TextureButton.StylePseudoClassNormal}), new[]
-                    {
-                        new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDefault),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(TextureButton), new[] {TargetingDoll.StyleClassTargetDollZone}, null,
-                        new[] {TextureButton.StylePseudoClassHover}), new[]
-                    {
-                        new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorHovered),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(TextureButton), new[] {TargetingDoll.StyleClassTargetDollZone}, null,
-                        new[] {TextureButton.StylePseudoClassPressed}), new[]
-                    {
-                        new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorPressed),
                     }),
 
                 // NanoHeading

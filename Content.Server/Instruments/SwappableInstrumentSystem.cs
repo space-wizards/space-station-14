@@ -22,7 +22,7 @@ public sealed class SwappableInstrumentSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess || component.InstrumentList.Count <= 1)
             return;
 
-        if (!TryComp<SharedInstrumentComponent>(uid, out var instrument))
+        if (!TryComp<InstrumentComponent>(uid, out var instrument))
             return;
 
         var priority = 0;

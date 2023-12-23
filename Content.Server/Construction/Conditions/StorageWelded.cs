@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Conditions
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            return entityManager.System<WeldableSystem>().IsWelded(uid);
+            return entityManager.System<WeldableSystem>().IsWelded(uid) == Welded;
         }
 
         public bool DoExamine(ExaminedEvent args)

@@ -8,6 +8,5 @@
         <cc:CommandButton Command="shutdown" Text="{Loc server-shutdown}" />
         <cc:CommandButton Name="SetOocButton" Command="setooc" Text="{Loc server-ooc-toggle}" ToggleMode="True" />
         <cc:CommandButton Name="SetLoocButton" Command="setlooc" Text="{Loc server-looc-toggle}" ToggleMode="True" />
-        <cc:CommandButton Name="SetPanicbunkerButton" Command="panicbunker" Text="{Loc server-panicbunker-toggle}" ToggleMode="True" />
     </GridContainer>
 </Control>

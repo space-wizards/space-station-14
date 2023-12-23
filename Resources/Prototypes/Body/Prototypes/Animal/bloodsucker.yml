@@ -1,0 +1,21 @@
+﻿- type: body
+  id: Bloodsucker
+  name: "bloodsucker"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - legs
+      organs:
+        lungs: OrganAnimalLungs
+        stomach: OrganBloodsuckerStomach
+        liver: OrganBloodsuckerLiver
+        heart: OrganBloodsuckerHeart
+        kidneys: OrganAnimalKidneys
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal

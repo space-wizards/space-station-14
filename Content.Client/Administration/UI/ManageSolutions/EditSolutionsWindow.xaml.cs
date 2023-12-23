@@ -17,7 +17,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private EntityUid _target = EntityUid.Invalid;
+        private NetEntity _target = NetEntity.Invalid;
         private string? _selectedSolution;
         private AddReagentWindow? _addReagentWindow;
         private Dictionary<string, Solution>? _solutions;
@@ -38,12 +38,13 @@ namespace Content.Client.Administration.UI.ManageSolutions
             _addReagentWindow?.Dispose();
         }
 
-        public void SetTargetEntity(EntityUid target)
+        public void SetTargetEntity(NetEntity target)
         {
             _target = target;
+            var uid = _entityManager.GetEntity(target);
 
-            var targetName = _entityManager.EntityExists(target)
-                ? IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(target).EntityName
+            var targetName = _entityManager.EntityExists(uid)
+                ? _entityManager.GetComponent<MetaDataComponent>(uid).EntityName
                 : string.Empty;
 
             Title = Loc.GetString("admin-solutions-window-title", ("targetName", targetName));

@@ -1,8 +1,9 @@
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -13,6 +14,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Timing;
 using Robust.Shared.GameStates;
+using Content.Shared.Forensics;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -74,7 +76,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!Resolve(uid, ref component))
                 return false;
 
-            if (!EligibleEntity(target, _entMan))
+            if (!EligibleEntity(target, _entMan, component))
                 return false;
 
             if (TryComp(uid, out UseDelayComponent? delayComp) && _useDelay.ActiveDelay(uid, delayComp))
@@ -84,7 +86,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (target == user)
                 msgFormat = "hypospray-component-inject-self-message";
-            else if (EligibleEntity(user, _entMan) && _interaction.TryRollClumsy(user, component.ClumsyFailChance))
+            else if (EligibleEntity(user, _entMan, component) && _interaction.TryRollClumsy(user, component.ClumsyFailChance))
             {
                 msgFormat = "hypospray-component-inject-self-clumsy-message";
                 target = user;
@@ -137,19 +139,24 @@ namespace Content.Server.Chemistry.EntitySystems
             _reactiveSystem.DoEntityReaction(target.Value, removedSolution, ReactionMethod.Injection);
             _solutions.TryAddSolution(target.Value, targetSolution, removedSolution);
 
+            var ev = new TransferDnaEvent { Donor = target.Value, Recipient = uid };
+            RaiseLocalEvent(target.Value, ref ev);
+
             // same LogType as syringes...
             _adminLogger.Add(LogType.ForceFeed, $"{_entMan.ToPrettyString(user):user} injected {_entMan.ToPrettyString(target.Value):target} with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {_entMan.ToPrettyString(uid):using}");
 
             return true;
         }
 
-        static bool EligibleEntity([NotNullWhen(true)] EntityUid? entity, IEntityManager entMan)
+        static bool EligibleEntity([NotNullWhen(true)] EntityUid? entity, IEntityManager entMan, HyposprayComponent component)
         {
             // TODO: Does checking for BodyComponent make sense as a "can be hypospray'd" tag?
             // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.
-
-            return entMan.HasComponent<SolutionContainerManagerComponent>(entity)
-                && entMan.HasComponent<MobStateComponent>(entity);
+            // But this is 14, we dont do what SS13 does just because SS13 does it.
+            return component.OnlyMobs
+                ? entMan.HasComponent<SolutionContainerManagerComponent>(entity) &&
+                  entMan.HasComponent<MobStateComponent>(entity)
+                : entMan.HasComponent<SolutionContainerManagerComponent>(entity);
         }
     }
 }

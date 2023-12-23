@@ -5,7 +5,8 @@
   parent: BaseItem
   components:
   - type: Item
-    size: 3
+    size: Small
+    storedRotation: 90
   - type: Handcuff
     cuffedRSI: Objects/Misc/handcuffs.rsi
     bodyIconState: body-overlay
@@ -31,8 +32,6 @@
   id: Cablecuffs
   parent: Handcuffs
   components:
-  - type: Item
-    size: 5
   - type: Handcuff
     breakoutTime: 15
     cuffedRSI: Objects/Misc/cablecuffs.rsi
@@ -65,7 +64,8 @@
   parent: Handcuffs
   components:
   - type: Item
-    size: 2
+    size: Tiny
+    storedRotation: 0
   - type: Handcuff
     breakoutTime: 20  # halfway between improvised cablecuffs and metal ones
     cuffedRSI: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine
@@ -92,7 +92,7 @@
   abstract: true
   components:
   - type: Item
-    size: 2
+    size: Small
   - type: Tag
     tags:
     - Trash
@@ -128,7 +128,7 @@
   description: Used to restrain those who may cause harm to themselves or others.
   components:
   - type: Item
-    size: 20
+    size: Normal
   - type: Handcuff
     cuffedRSI: Clothing/OuterClothing/Misc/straight_jacket.rsi
     breakoutTime: 100

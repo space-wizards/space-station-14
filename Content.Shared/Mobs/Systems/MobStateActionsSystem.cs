@@ -1,7 +1,5 @@
 ﻿using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Mobs.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -10,7 +8,6 @@ namespace Content.Shared.Mobs.Systems;
 /// </summary>
 public sealed class MobStateActionsSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
 
     /// <inheritdoc/>
@@ -24,31 +21,22 @@ public sealed class MobStateActionsSystem : EntitySystem
         if (!TryComp<ActionsComponent>(uid, out var action))
             return;
 
-        foreach (var (state, acts) in component.Actions)
+        foreach (var act in component.GrantedActions)
         {
-            if (state != args.NewMobState && state != args.OldMobState)
-                continue;
-
-            foreach (var item in acts)
-            {
-                if (!_proto.TryIndex<InstantActionPrototype>(item, out var proto))
-                    continue;
-
-                var instance = new InstantAction(proto);
-                if (state == args.OldMobState)
-                {
-                    // Don't remove actions that would be getting readded anyway
-                    if (component.Actions.TryGetValue(args.NewMobState, out var value)
-                        && value.Contains(item))
-                        continue;
-
-                    _actions.RemoveAction(uid, instance, action);
-                }
-                else if (state == args.NewMobState)
-                {
-                    _actions.AddAction(uid, instance, null, action);
-                }
-            }
+            Del(act);
         }
+        component.GrantedActions.Clear();
+
+        if (!component.Actions.TryGetValue(args.NewMobState, out var toGrant))
+            return;
+
+        foreach (var id in toGrant)
+        {
+            EntityUid? act = null;
+            if (_actions.AddAction(uid, ref act, id, uid, action))
+                component.GrantedActions.Add(act.Value);
+        }
+
+        Dirty(uid, component);
     }
 }

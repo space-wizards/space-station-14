@@ -52,7 +52,9 @@
       storagebase: !type:Container
         ents: [ ]
   - type: Storage
-    capacity: 50
+    maxItemSize: Huge
+    grid:
+    - 0,0,10,5
 
 - type: artifactEffect
   id: EffectPhasing
