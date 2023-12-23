@@ -1,12 +1,7 @@
-using System;
-using Content.Client.Administration;
-using Content.Client.Administration.Systems;
 using Content.Client.UserInterface.Systems.Bwoink;
-using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Shared.Administration;
 using Robust.Client.UserInterface;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 
 namespace Content.Client.Commands
@@ -15,8 +10,8 @@ namespace Content.Client.Commands
     public sealed class OpenAHelpCommand : IConsoleCommand
     {
         public string Command => "openahelp";
-        public string Description => $"Opens AHelp channel for a given NetUserID, or your personal channel if none given.";
-        public string Help => $"{Command} [<netuserid>]";
+        public string Description => Loc.GetString("open-a-help-command-description");
+        public string Help => Loc.GetString("open-a-help-command-help", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -38,7 +33,7 @@ namespace Content.Client.Commands
                 }
                 else
                 {
-                    shell.WriteLine("Bad GUID!");
+                    shell.WriteError(Loc.GetString("open-a-help-command-error"));
                 }
             }
         }
