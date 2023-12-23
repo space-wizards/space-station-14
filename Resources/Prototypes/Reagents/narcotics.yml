@@ -173,7 +173,7 @@
         stage: 2
         conditions: # psychosis
         - !type:ReagentThreshold # psychosis
-          min: 1 # psychosis
+          min: 10 # psychosis
       - !type:GenericStatusEffect
         key: SeeingRainbows
         component: SeeingRainbows
@@ -199,7 +199,7 @@
         stage: 2
         conditions: # psychosis
         - !type:ReagentThreshold # psychosis
-          min: 1 # psychosis
+          min: 10 # psychosis
       - !type:GenericStatusEffect
         key: SeeingRainbows
         component: SeeingRainbows
