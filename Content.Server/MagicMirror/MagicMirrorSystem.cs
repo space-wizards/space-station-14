@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.DoAfter;
 using Content.Server.Humanoid;
 using Content.Server.UserInterface;
@@ -18,6 +19,7 @@ public sealed class MagicMirrorSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly MarkingManager _markings = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
@@ -47,7 +49,6 @@ public sealed class MagicMirrorSystem : EntitySystem
         {
             mirror.Comp.Target = new Entity<HumanoidAppearanceComponent>(args.Target.Value, humanoid);
             UpdateInterface(mirror.Owner, mirror.Comp.Target.Value.Owner, actor.PlayerSession);
-            Log.Debug($"Target {mirror.Comp.Target}!");
         };
     }
 
@@ -61,6 +62,10 @@ public sealed class MagicMirrorSystem : EntitySystem
     {
         if (component.Target == null) return;
         if (message.Session.AttachedEntity == null) return;
+
+        var p1 = _transform.GetWorldPosition(component.Target.Value);
+        var p2 = _transform.GetWorldPosition(uid);
+        if (Vector2.Distance(p1, p2) > component.Range) return;
 
         var doAfter = new SelectDoAfterEvent(message);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.SelectSlotTime, doAfter, uid, target: component.Target.Value.Owner, used: uid)
@@ -104,6 +109,10 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (component.Target == null) return;
         if (message.Session.AttachedEntity == null) return;
 
+        var p1 = _transform.GetWorldPosition(component.Target.Value);
+        var p2 = _transform.GetWorldPosition(uid);
+        if (Vector2.Distance(p1, p2) > component.Range) return;
+
         var doAfter = new ChangeColorDoAfterEvent(message);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.ChangeSlotTime, doAfter, uid, target: component.Target.Value.Owner, used: uid)
         {
@@ -144,6 +153,10 @@ public sealed class MagicMirrorSystem : EntitySystem
     {
         if (component.Target == null) return;
         if (message.Session.AttachedEntity == null) return;
+
+        var p1 = _transform.GetWorldPosition(component.Target.Value);
+        var p2 = _transform.GetWorldPosition(uid);
+        if (Vector2.Distance(p1, p2) > component.Range) return;
 
         var doAfter = new RemoveSlotDoAfterEvent(message);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.RemoveSlotTime, doAfter, uid, target: component.Target.Value.Owner, used: uid)
@@ -187,6 +200,10 @@ public sealed class MagicMirrorSystem : EntitySystem
     {
         if (component.Target == null) return;
         if (message.Session.AttachedEntity == null) return;
+
+        var p1 = _transform.GetWorldPosition(component.Target.Value);
+        var p2 = _transform.GetWorldPosition(uid);
+        if (Vector2.Distance(p1, p2) > component.Range) return;
 
         var doAfter = new AddSlotDoAfterEvent(message);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.AddSlotTime, doAfter, uid, target: component.Target.Value.Owner, used: uid)
@@ -256,7 +273,9 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void AfterUIOpen(EntityUid uid, MagicMirrorComponent component, AfterActivatableUIOpenEvent args)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(args.User, out var humanoid)) return;
+        var humanoid = Comp<HumanoidAppearanceComponent>(args.User);
+        if (humanoid == null) return;
+
         component.Target = new Entity<HumanoidAppearanceComponent>(args.User, humanoid);
 
         UpdateInterface(uid, args.User, args.Session);
