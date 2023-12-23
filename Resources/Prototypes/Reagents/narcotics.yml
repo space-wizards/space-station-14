@@ -222,9 +222,6 @@
         - !type:HealPsychosis # psychosis
           reagent: Nicotine # psychosis
           stage: 1 # psychosis
-          conditions: # psychosis
-          - !type:ReagentThreshold # psychosis
-            min: 1 # psychosis
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5
