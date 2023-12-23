@@ -47,11 +47,14 @@ public sealed partial class RCDMenu : RadialMenu
             if (parent == null)
                 continue;
 
+            var name = Loc.GetString(proto.SetName);
+            name = char.ToUpper(name[0]) + name.Remove(0, 1);
+
             var button = new RCDMenuButton()
             {
                 StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64f, 64f),
-                ToolTip = Loc.GetString(proto.SetName),
+                ToolTip = name,
                 ProtoId = protoId,
             };
 
