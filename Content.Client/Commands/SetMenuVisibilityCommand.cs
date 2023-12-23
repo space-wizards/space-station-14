@@ -1,18 +1,15 @@
 using Content.Client.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Commands
 {
     [UsedImplicitly]
     internal sealed class SetMenuVisibilityCommand : IConsoleCommand
     {
-        public const string CommandName = "menuvis";
-
-        public string Command => CommandName;
-        public string Description => "Set restrictions about what entities to show on the entity context menu.";
-        public string Help => $"Usage: {Command} [NoFoV] [InContainer] [Invisible] [All]";
+        public string Command => "menuvis";
+        public string Description => Loc.GetString("set-menu-visibility-command-description");
+        public string Help => Loc.GetString("set-menu-visibility-command-help", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -43,7 +40,7 @@ namespace Content.Client.Commands
                         visibility |= MenuVisibility.All;
                         break;
                     default:
-                        shell.WriteLine($"Unknown visibility argument '{arg}'. Only 'NoFov', 'InContainer', 'Invisible' or 'All' are valid. Provide no arguments to set to default.");
+                        shell.WriteError(Loc.GetString("set-menu-visibility-command-error", ("arg", arg)));
                         return false;
                 }
             }
