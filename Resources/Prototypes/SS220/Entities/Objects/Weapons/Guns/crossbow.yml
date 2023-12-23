@@ -19,7 +19,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: Item
-    size: Large
+    size: Normal
 
 - type: entity
   name: mini energy crossbow
