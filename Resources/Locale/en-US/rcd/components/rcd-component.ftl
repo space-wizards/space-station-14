@@ -30,12 +30,12 @@ rcd-component-computer-and-machine-frames = Computer and machine frames
 rcd-component-lighting = Lighting
 
 
-### Prototype names
+### Prototype names (note: constructable items will be puralized)
 
 rcd-component-deconstruct = deconstruct
 rcd-component-wall-solid = solid wall
-rcd-component-floor-steel = steel flooring
-rcd-component-plating = hull plating
+rcd-component-floor-steel = steel tile
+rcd-component-plating = hull plate
 rcd-component-catwalk = catwalk
 rcd-component-wall-reinforced = reinforced wall
 rcd-component-grille = grille

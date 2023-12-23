@@ -8,16 +8,16 @@
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-walls-and-flooring'}" TargetLayer="WallsAndFlooring">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/walls_and_flooring.png"/>
         </ui:RadialMenuTextureButton>
-		<ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="rcd-component-windows-and-grilles" TargetLayer="WindowsAndGrilles">
+		<ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-windows-and-grilles'}" TargetLayer="WindowsAndGrilles">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/windows_and_grilles.png"/>
         </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="rcd-component-airlocks" TargetLayer="Airlocks">
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-airlocks'}" TargetLayer="Airlocks">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/airlocks.png"/>
         </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="rcd-component-computer-and-machine-frames" TargetLayer="ComputerAndMachineFrames">
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-computer-and-machine-frames'}" TargetLayer="ComputerAndMachineFrames">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/computers_and_frames.png"/>
         </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="rcd-component-lighting" TargetLayer="Lighting">
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-lighting'}" TargetLayer="Lighting">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/lighting.png"/>
         </ui:RadialMenuTextureButton>
     </ui:RadialContainer>
