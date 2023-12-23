@@ -66,3 +66,5 @@
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
             Reporter: [ 2, 2 ]
+            #wildcard
+            Prisoner: [ 1, 1 ]
