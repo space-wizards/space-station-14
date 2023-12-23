@@ -87,3 +87,23 @@
   cost: 5000
   category: Engineering
   group: market
+
+- type: cargoProduct
+  id: EngineeringRCDAmmo
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: icon
+  product: CrateRCDAmmo
+  cost: 2500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringRCD
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: ammo
+  product: CrateRCD
+  cost: 800
+  category: Engineering
+  group: market
