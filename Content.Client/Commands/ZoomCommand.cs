@@ -1,11 +1,10 @@
-using System.Numerics;
 using Content.Client.Movement.Systems;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Systems;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Console;
+using System.Numerics;
 
 namespace Content.Client.Commands;
 
