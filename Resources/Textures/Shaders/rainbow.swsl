@@ -10,6 +10,9 @@ const highp float BaseColorPow = 0.8; // exponent for the rainbow effect's
 const highp float CenterRadius = 200; // radius of the gradient used to tone down the distortion effect
 const highp float CenterMinDist = 0.4; // minimum distance from the center of the screen for the distortion to appear at all
 const highp float CenterPow = 3; // the exponent used for the distortion center
+const highp float CenterColorRadius = 250; // radius of the gradient used to tone down the color effect
+const highp float CenterColorMinDist = 0.2; // minimum distance from the center of the screen for the color to appear at all
+const highp float CenterColorPow = 1.25; // the exponent used for the color's center
 
 // hash(),  noise(), and hsv2rgb_smooth() were converted from shadertoy examples, which were released under the MIT License:
 // The MIT License
@@ -64,7 +67,8 @@ void fragment() {
     // apply rainbow effect.
     highp float hue = 1. + mixNoise(coord, 10.);
     highp vec3 color = hsv2rgb_smooth(vec3(hue,1.0,1.0));
-    highp float coloration = pow((COLOR.x + COLOR.y + COLOR.z) * BaseColorMult, BaseColorPow);
+    highp float centercolor = pow(clamp((length(center - FRAGCOORD.xy) / CenterColorRadius) - CenterColorMinDist, 0.0, 1.0), CenterColorPow);
+    highp float coloration = pow((COLOR.x + COLOR.y + COLOR.z) * BaseColorMult, BaseColorPow) * centercolor;
     COLOR.xyz = mix(COLOR.xyz, color, MaxColorMix * effectScale * effectScale * coloration);
 }
 
