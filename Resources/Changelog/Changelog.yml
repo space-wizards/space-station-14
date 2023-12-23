@@ -1,158 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - message: mindshields to meta station armory
-    type: Add
-  id: 5006
-  time: '2023-10-14T21:50:44.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - message: chem dispensers to barratry, you can stop crying now
-    type: Add
-  id: 5007
-  time: '2023-10-14T21:51:33.0000000+00:00'
-- author: ike709
-  changes:
-  - message: All non-high-security airlocks can now be pried open by hand when unpowered,
-      albeit much slower than using a crowbar
-    type: Tweak
-  id: 5008
-  time: '2023-10-15T22:17:45.0000000+00:00'
-- author: iacore
-  changes:
-  - message: Secure crates are now weldable!
-    type: Fix
-  id: 5009
-  time: '2023-10-16T05:27:23.0000000+00:00'
-- author: brainfood1183
-  changes:
-  - message: Behonkers are fixed (in combat use right click to fire laser)
-    type: Fix
-  id: 5010
-  time: '2023-10-16T05:29:14.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - message: Fixed material reclaimer sound error when processing something.
-    type: Fix
-  - message: Fixed duplicate gib sound when the material reclaimer processes a mob.
-    type: Fix
-  id: 5011
-  time: '2023-10-16T05:30:35.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Fixed being permanently cuffed if you transformed into a zombie with
-      cuffs on.
-    type: Fix
-  id: 5012
-  time: '2023-10-16T05:31:04.0000000+00:00'
-- author: Lomcastar
-  changes:
-  - message: Uranium crabs are more radioactive!
-    type: Tweak
-  id: 5013
-  time: '2023-10-16T05:34:18.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - message: Stun batons now take three hits to stun and have had their battery use
-      dropped by half
-    type: Tweak
-  id: 5014
-  time: '2023-10-16T11:39:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix item drops mispredicting.
-    type: Fix
-  id: 5015
-  time: '2023-10-16T11:49:41.0000000+00:00'
-- author: Vasilis
-  changes:
-  - message: Pneumatic Cannons can no longer shoot arrows.
-    type: Tweak
-  id: 5016
-  time: '2023-10-17T22:58:05.0000000+00:00'
-- author: Vasilis
-  changes:
-  - message: Spears and arrows can now only hold up to 2u of liquids instead of 5u.
-    type: Tweak
-  id: 5017
-  time: '2023-10-17T23:01:25.0000000+00:00'
-- author: notquitehadouken
-  changes:
-  - message: The grey stick that shows up when you wide swing a weapon now looks like
-      the weapon used.
-    type: Tweak
-  id: 5018
-  time: '2023-10-18T01:12:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix vaulting mispredict.
-    type: Fix
-  id: 5019
-  time: '2023-10-18T05:11:33.0000000+00:00'
-- author: daerSeebaer
-  changes:
-  - message: The AME controller now shows the current load and maximum capacity.
-    type: Add
-  id: 5020
-  time: '2023-10-18T17:46:33.0000000+00:00'
-- author: Errant
-  changes:
-  - message: Temperature alerts are now more accurate for different species.
-    type: Fix
-  id: 5021
-  time: '2023-10-18T18:05:15.0000000+00:00'
-- author: Phunny
-  changes:
-  - message: Added Tortilla doughs and variants.
-    type: Add
-  - message: Added Taco shells and recipe
-    type: Add
-  - message: Added various types of Tacos
-    type: Add
-  - message: Changed naming of the original taco to soft shell taco
-    type: Tweak
-  id: 5022
-  time: '2023-10-18T21:03:23.0000000+00:00'
-- author: TemporalOroboros
-  changes:
-  - message: Electric shocks now scale with the amount of power in the cables instead
-      of the type of cable.
-    type: Tweak
-  id: 5023
-  time: '2023-10-18T21:04:47.0000000+00:00'
-- author: Doru991
-  changes:
-  - message: Being gibbed through normal means will no longer delete all items on
-      the body.
-    type: Fix
-  id: 5024
-  time: '2023-10-18T21:15:17.0000000+00:00'
-- author: KingFroozy
-  changes:
-  - message: Atmospheric technician's casual jumpsuit was resprited.
-    type: Tweak
-  id: 5025
-  time: '2023-10-19T03:44:58.0000000+00:00'
-- author: Vasilis
-  changes:
-  - message: You will no longer be picked as a head revolutionary if you have not
-      checked it in the antag picker. Note you can still become a revolutionary if
-      someone converts you.
-    type: Fix
-  id: 5026
-  time: '2023-10-19T03:48:56.0000000+00:00'
-- author: TheShuEd
-  changes:
-  - message: Added dart game!
-    type: Add
-  id: 5027
-  time: '2023-10-19T03:55:30.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - message: C4 now costs 2 TC instead of 4TC, the bundle costs 12TC instead of 20TC
-    type: Tweak
-  id: 5028
-  time: '2023-10-19T15:19:33.0000000+00:00'
 - author: IntegerTempest
   changes:
   - message: Added lathe printing for rollerbed & wheelchairs.
@@ -3868,6 +3714,13 @@ Entries:
   id: 5430
   time: '2023-12-22T13:50:30.0000000+00:00'
   url: null
+- author: qwerltaz
+  changes:
+  - message: Improve the gas analyzer interface.
+    type: Tweak
+  id: 5430
+  time: '2023-12-20T17:56:57.0000000+00:00'
+  url: null
 - author: Dexler
   changes:
   - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0441\u0431\u0440\u043E\
@@ -3878,6 +3731,13 @@ Entries:
   id: 5431
   time: '2023-12-21T18:43:24.0000000+00:00'
   url: null
+- author: JoeHammad
+  changes:
+  - message: Fland now has its own shuttle, ported from ss13
+    type: Add
+  id: 5431
+  time: '2023-12-20T23:26:07.0000000+00:00'
+  url: null
 - author: Kit0vras
   changes:
   - message: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
@@ -3885,6 +3745,14 @@ Entries:
     type: Tweak
   id: 5432
   time: '2023-12-22T13:51:40.0000000+00:00'
+  url: null
+- author: joshepvodka
+  changes:
+  - message: CentCom bureaucrats are now twice as powerful with their new custom-made
+      clipboards and folders.
+    type: Add
+  id: 5432
+  time: '2023-12-20T23:29:35.0000000+00:00'
   url: null
 - author: ZoNeSRuS
   changes:
@@ -3898,44 +3766,6 @@ Entries:
   id: 5433
   time: '2023-12-22T17:03:17.0000000+00:00'
   url: null
-- author: spo9k
-  changes:
-  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
-      \u0442\u0430 Marathon"
-    type: Add
-  id: 5434
-  time: '2023-12-22T17:55:55.0000000+00:00'
-  url: null
-- author: spo9k
-  changes:
-  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
-      \u0442\u0430 Gate Station"
-    type: Add
-  id: 5435
-  time: '2023-12-22T18:26:01.0000000+00:00'
-  url: null
-- author: qwerltaz
-  changes:
-  - message: Improve the gas analyzer interface.
-    type: Tweak
-  id: 5430
-  time: '2023-12-20T17:56:57.0000000+00:00'
-  url: null
-- author: JoeHammad
-  changes:
-  - message: Fland now has its own shuttle, ported from ss13
-    type: Add
-  id: 5431
-  time: '2023-12-20T23:26:07.0000000+00:00'
-  url: null
-- author: joshepvodka
-  changes:
-  - message: CentCom bureaucrats are now twice as powerful with their new custom-made
-      clipboards and folders.
-    type: Add
-  id: 5432
-  time: '2023-12-20T23:29:35.0000000+00:00'
-  url: null
 - author: PJB3005
   changes:
   - message: Fix starting to follow a moving player as a ghost causing your camera
@@ -3944,12 +3774,28 @@ Entries:
   id: 5433
   time: '2023-12-20T23:33:00.0000000+00:00'
   url: null
+- author: spo9k
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 Marathon"
+    type: Add
+  id: 5434
+  time: '2023-12-22T17:55:55.0000000+00:00'
+  url: null
 - author: Velcroboy
   changes:
   - message: Fixed coal not generating!
     type: Fix
   id: 5434
   time: '2023-12-20T23:46:20.0000000+00:00'
+  url: null
+- author: spo9k
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 Gate Station"
+    type: Add
+  id: 5435
+  time: '2023-12-22T18:26:01.0000000+00:00'
   url: null
 - author: whateverusername0
   changes:
@@ -4086,3 +3932,13 @@ Entries:
   id: 5451
   time: '2023-12-21T17:19:45.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22824
+- author: Kit0vras
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D \u0440\u0430\u0437\
+      \u043C\u0435\u0440 \u043C\u0438\u043D\u0438 \u044D\u043D\u0435\u0440\u0433\u0435\
+      \u0442\u0438\u0447\u0435\u0441\u043A\u043E\u0433\u043E \u0430\u0440\u0431\u0430\
+      \u043B\u0435\u0442\u0430 \u0432 \u0441\u0443\u043C\u043A\u0435."
+    type: Fix
+  id: 5452
+  time: '2023-12-23T17:23:14.0000000+00:00'
+  url: null
