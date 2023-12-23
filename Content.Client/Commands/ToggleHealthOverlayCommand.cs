@@ -14,7 +14,7 @@ namespace Content.Client.Commands
             var system = EntitySystem.Get<HealthOverlaySystem>();
             system.Enabled = !system.Enabled;
 
-            shell.WriteLine(Loc.GetString("toggle-health-overlay-command-notify", ("state", (system.Enabled ? "enabled" : "disabled"))));
+            shell.WriteLine(Loc.GetString("toggle-health-overlay-command-notify", ("state", system.Enabled ? "enabled" : "disabled")));
         }
     }
 }
