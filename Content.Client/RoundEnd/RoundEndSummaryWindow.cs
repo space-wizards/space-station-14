@@ -125,20 +125,31 @@ namespace Content.Client.RoundEnd
                     VerticalExpand = true,
                 };
 
-                var playerUid = _entityManager.GetEntity(playerInfo.PlayerNetEntity);
-
-                if (_entityManager.HasComponent<SpriteComponent>(playerUid))
+                //cyberfinn: dying here for me, likely because it's running on localhost - so can't determine player network ID
+                //todo: uncomment below after debugging
+                try
                 {
-                    var spriteView = new SpriteView
+                    var playerUid = _entityManager.GetEntity(playerInfo.PlayerNetEntity);
+
+                    if (_entityManager.HasComponent<SpriteComponent>(playerUid))
                     {
-                        OverrideDirection = Direction.South,
-                        VerticalAlignment = VAlignment.Center,
-                        SetSize = new Vector2(32, 32),
-                        VerticalExpand = true,
-                    };
-                    spriteView.SetEntity(playerUid);
-                    hBox.AddChild(spriteView);
+                        var spriteView = new SpriteView
+                        {
+                            OverrideDirection = Direction.South,
+                            VerticalAlignment = VAlignment.Center,
+                            SetSize = new Vector2(32, 32),
+                            VerticalExpand = true,
+                        };
+                        spriteView.SetEntity(playerUid);
+                        hBox.AddChild(spriteView);
+                    }
                 }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+
 
                 if (playerInfo.PlayerICName != null)
                 {
