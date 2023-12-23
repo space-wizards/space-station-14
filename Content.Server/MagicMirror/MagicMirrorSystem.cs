@@ -47,8 +47,8 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (!TryComp<ActorComponent>(args.User, out var actor)) return;
         if (TryComp<HumanoidAppearanceComponent>(args.Target, out var humanoid))
         {
-            mirror.Comp.Target = new Entity<HumanoidAppearanceComponent>(args.Target.Value, humanoid);
-            UpdateInterface(mirror.Owner, mirror.Comp.Target.Value.Owner, actor.PlayerSession);
+            mirror.Comp.Target = args.Target.Value;
+            UpdateInterface(mirror.Owner, mirror.Comp.Target.Value, actor.PlayerSession);
         };
     }
 
@@ -68,7 +68,7 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (Vector2.Distance(p1, p2) > component.Range) return;
 
         var doAfter = new SelectDoAfterEvent(message);
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.SelectSlotTime, doAfter, uid, target: component.Target.Value.Owner, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.SelectSlotTime, doAfter, uid, target: component.Target.Value, used: uid)
         {
             BreakOnTargetMove = true,
             BreakOnDamage = true,
@@ -99,9 +99,9 @@ public sealed class MagicMirrorSystem : EntitySystem
                 return;
         }
 
-        _humanoid.SetMarkingId(component.Target.Value.Owner, category, args.Message.Slot, args.Message.Marking);
+        _humanoid.SetMarkingId(component.Target.Value, category, args.Message.Slot, args.Message.Marking);
 
-        UpdateInterface(uid, component.Target.Value.Owner, args.Message.Session);
+        UpdateInterface(uid, component.Target.Value, args.Message.Session);
     }
 
     private void OnTryMagicMirrorChangeColor(EntityUid uid, MagicMirrorComponent component, MagicMirrorChangeColorMessage message)
@@ -114,7 +114,7 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (Vector2.Distance(p1, p2) > component.Range) return;
 
         var doAfter = new ChangeColorDoAfterEvent(message);
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.ChangeSlotTime, doAfter, uid, target: component.Target.Value.Owner, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.ChangeSlotTime, doAfter, uid, target: component.Target.Value, used: uid)
         {
             BreakOnTargetMove = true,
             BreakOnDamage = true,
@@ -143,7 +143,7 @@ public sealed class MagicMirrorSystem : EntitySystem
                 return;
         }
 
-        _humanoid.SetMarkingColor(component.Target.Value.Owner, category, args.Message.Slot, args.Message.Colors);
+        _humanoid.SetMarkingColor(component.Target.Value, category, args.Message.Slot, args.Message.Colors);
 
         // using this makes the UI feel like total ass
         // UpdateInterface(uid, component.Target, message.Session);
@@ -159,7 +159,7 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (Vector2.Distance(p1, p2) > component.Range) return;
 
         var doAfter = new RemoveSlotDoAfterEvent(message);
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.RemoveSlotTime, doAfter, uid, target: component.Target.Value.Owner, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.RemoveSlotTime, doAfter, uid, target: component.Target.Value, used: uid)
         {
             BreakOnTargetMove = true,
             BreakOnDamage = true,
@@ -191,9 +191,9 @@ public sealed class MagicMirrorSystem : EntitySystem
                 return;
         }
 
-        _humanoid.RemoveMarking(component.Target.Value.Owner, category, args.Message.Slot);
+        _humanoid.RemoveMarking(component.Target.Value, category, args.Message.Slot);
 
-        UpdateInterface(uid, component.Target.Value.Owner, args.Message.Session);
+        UpdateInterface(uid, component.Target.Value, args.Message.Session);
     }
 
     private void OnTryMagicMirrorAddSlot(EntityUid uid, MagicMirrorComponent component, MagicMirrorAddSlotMessage message)
@@ -206,7 +206,7 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (Vector2.Distance(p1, p2) > component.Range) return;
 
         var doAfter = new AddSlotDoAfterEvent(message);
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.AddSlotTime, doAfter, uid, target: component.Target.Value.Owner, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.AddSlotTime, doAfter, uid, target: component.Target.Value, used: uid)
         {
             BreakOnTargetMove = true,
             BreakOnDamage = true,
@@ -237,15 +237,17 @@ public sealed class MagicMirrorSystem : EntitySystem
                 return;
         }
 
-        var marking = _markings.MarkingsByCategoryAndSpecies(category, component.Target.Value.Comp.Species).Keys.FirstOrDefault();
+        var target = component.Target.Value;
+        var humanoid = Comp<HumanoidAppearanceComponent>(target);
+        var marking = _markings.MarkingsByCategoryAndSpecies(category, humanoid.Species).Keys.FirstOrDefault();
         if (string.IsNullOrEmpty(marking))
         {
             return;
         }
 
-        _humanoid.AddMarking(component.Target.Value.Owner, marking, Color.Black);
+        _humanoid.AddMarking(component.Target.Value, marking, Color.Black);
 
-        UpdateInterface(uid, component.Target.Value.Owner, args.Message.Session);
+        UpdateInterface(uid, component.Target.Value, args.Message.Session);
     }
 
     private void UpdateInterface(EntityUid uid, EntityUid playerUid, ICommonSession session)

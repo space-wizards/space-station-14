@@ -6,7 +6,7 @@ namespace Content.Server.MagicMirror;
 [RegisterComponent]
 public sealed partial class MagicMirrorComponent : Component
 {
-    public Entity<HumanoidAppearanceComponent>? Target;
+    public EntityUid? Target;
 
     /// <summary>
     /// radius in which the component can edit hairstyles
@@ -18,25 +18,25 @@ public sealed partial class MagicMirrorComponent : Component
     /// doafter time required to add a new slot
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float AddSlotTime = 5f;
+    public TimeSpan AddSlotTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// doafter time required to remove a existing slot
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float RemoveSlotTime = 2f;
+    public TimeSpan RemoveSlotTime = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// doafter time required to change slot
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float SelectSlotTime = 3f;
+    public TimeSpan SelectSlotTime = TimeSpan.FromSeconds(3);
 
     /// <summary>
     /// doafter time required to recolor slot
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ChangeSlotTime = 1f;
+    public TimeSpan ChangeSlotTime = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// sound emitted when slots are changed
