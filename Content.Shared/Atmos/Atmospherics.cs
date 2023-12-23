@@ -195,30 +195,6 @@ namespace Content.Shared.Atmos
         public const float PlasmaOxygenFullburn = 10f;
         public const float PlasmaBurnRateDelta = 9f;
 
-        /// <summary>
-        ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
-        /// </summary>
-        public const float MinimumTritiumOxyburnEnergy = 143000f;
-
-        public const float TritiumBurnOxyFactor = 100f;
-        public const float TritiumBurnTritFactor = 10f;
-
-        public const float FrezonCoolLowerTemperature = 23.15f;
-
-        /// <summary>
-        ///     Frezon cools better at higher temperatures.
-        /// </summary>
-        public const float FrezonCoolMidTemperature = 373.15f;
-
-        public const float FrezonCoolMaximumEnergyModifier = 10f;
-
-        /// <summary>
-        ///     Remove X mol of nitrogen for each mol of frezon.
-        /// </summary>
-        public const float FrezonNitrogenCoolRatio = 5;
-        public const float FrezonCoolEnergyReleased = -600e3f;
-        public const float FrezonCoolRateModifier = 20f;
-
         public const float FrezonProductionMaxEfficiencyTemperature = 73.15f;
 
         /// <summary>
