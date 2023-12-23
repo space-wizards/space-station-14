@@ -6,6 +6,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Anchorable
+  - type: Rotatable
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -58,8 +60,6 @@
     anchored: true
   - type: Physics
     bodyType: Static
-  - type: Anchorable
-  - type: Rotatable
   - type: Sprite
     state: chair
   - type: Construction
@@ -81,7 +81,6 @@
   parent: SeatBase
   description: Apply butt.
   components:
-  - type: Anchorable
   - type: Sprite
     state: stool
   - type: Construction
@@ -99,7 +98,6 @@
     rotateWhileAnchored: true
   - type: Physics
     bodyType: Static
-  - type: Anchorable
   - type: Sprite
     state: bar
   - type: Construction
@@ -140,8 +138,6 @@
     anchored: true
   - type: Physics
     bodyType: Static
-  - type: Anchorable
-  - type: Rotatable
   - type: Sprite
     state: comfy
   - type: Construction
@@ -158,8 +154,6 @@
     anchored: true
   - type: Physics
     bodyType: Static
-  - type: Anchorable
-  - type: Rotatable
   - type: Sprite
     state: shuttle
   - type: Construction
@@ -173,7 +167,6 @@
   components:
   - type: Sprite
     state: wooden
-  - type: Rotatable
   - type: Construction
     graph: Seat
     node: chairWood
@@ -207,8 +200,6 @@
   parent: SeatBase
   description: Looks uncomfortable.
   components:
-  - type: Anchorable
-  - type: Rotatable
   - type: Sprite
     state: ritual
   - type: Construction
@@ -221,8 +212,6 @@
   name: meat chair
   description: Uncomfortably sweaty.
   components:
-  - type: Anchorable
-  - type: Rotatable
   - type: Sprite
     state: meat
   - type: Construction
@@ -235,8 +224,6 @@
   parent: SeatBase
   description: It's staring back.
   components:
-  - type: Anchorable
-  - type: Rotatable
   - type: Sprite
     state: cursed
   - type: Strap
@@ -266,8 +253,6 @@
     anchored: true
   - type: Physics
     bodyType: Static
-  - type: Anchorable
-  - type: Rotatable
   - type: Sprite
     sprite: Structures/Web/chair.rsi
     state: icon
@@ -304,7 +289,6 @@
   name: folding chair
   description: If you carry six of these you become the coolest kid at church.
   components:
-  - type: Rotatable
   - type: Sprite
     sprite: Structures/Furniture/folding_chair.rsi
     layers:
@@ -344,8 +328,6 @@
     anchored: true
   - type: Physics
     bodyType: Static
-  - type: Anchorable
-  - type: Rotatable
   - type: Sprite
     state: steel-bench
 
