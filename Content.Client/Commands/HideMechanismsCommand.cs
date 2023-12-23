@@ -1,5 +1,4 @@
 using Content.Shared.Body.Organ;
-using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
@@ -41,8 +40,5 @@ public sealed class HideMechanismsCommand : IConsoleCommand
                 tempParent = container.Owner;
             }
         }
-
-        // ReSharper disable once StringLiteralTypo
-        IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("hidecontainedcontext");
     }
 }

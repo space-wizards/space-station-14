@@ -23,9 +23,9 @@ internal sealed class MappingClientSideSetupCommand : IConsoleCommand
             _entitySystemManager.GetEntitySystem<MarkerSystem>().MarkersVisible = true;
             _lightManager.Enabled = false;
             // ReSharper disable once StringLiteralTypo
-            shell.ExecuteCommand("showsubfloorforever");
+            shell.ExecuteCommand(ShowSubFloorForever.CommandName);
             // ReSharper disable once StringLiteralTypo
-            shell.ExecuteCommand("loadmapacts");
+            shell.ExecuteCommand(LoadMappingActionsCommand.CommandName);
         }
     }
 }

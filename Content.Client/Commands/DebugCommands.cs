@@ -43,7 +43,8 @@ internal sealed class ShowSubFloorForever : IConsoleCommand
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     // ReSharper disable once StringLiteralTypo
-    public string Command => "showsubfloorforever";
+    public const string CommandName = "showsubfloorforever";
+    public string Command => CommandName;
     public string Description => Loc.GetString("debug-command-show-sub-floor-forever-description");
     public string Help => Loc.GetString("debug-command-show-sub-floor-forever-help", ("command", Command));
 

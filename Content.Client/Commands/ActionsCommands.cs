@@ -72,7 +72,8 @@ public sealed class LoadMappingActionsCommand : IConsoleCommand
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     // ReSharper disable once StringLiteralTypo
-    public string Command => "loadmapacts";
+    public const string CommandName = "loadmapacts";
+    public string Command => CommandName;
     public string Description => Loc.GetString("actions-command-load-mapping-description");
     public string Help => Loc.GetString("actions-command-load-mapping-help", ("command", Command));
 

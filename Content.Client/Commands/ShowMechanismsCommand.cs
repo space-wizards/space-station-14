@@ -1,5 +1,4 @@
 using Content.Shared.Body.Organ;
-using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
 
@@ -23,7 +22,5 @@ public sealed class ShowMechanismsCommand : IConsoleCommand
         {
             sprite.ContainerOccluded = false;
         }
-
-        IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("showcontainedcontext");
     }
 }
