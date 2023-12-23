@@ -26,10 +26,10 @@ public abstract class SharedItemToggleSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ItemToggleComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<ItemToggleHotComponent, IsHotEvent>(OnIsHotEvent);
         SubscribeLocalEvent<ItemToggleComponent, ItemUnwieldedEvent>(TurnOffonUnwielded);
         SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnonWielded);
+        SubscribeLocalEvent<ItemToggleComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<ItemToggleHotComponent, IsHotEvent>(OnIsHotEvent);
         SubscribeLocalEvent<ItemToggleActiveSoundComponent, ItemToggleActiveSoundUpdateEvent>(UpdateActiveSound);
         SubscribeLocalEvent<AppearanceComponent, ItemToggleAppearanceUpdateEvent>(UpdateAppearance);
         SubscribeLocalEvent<ItemToggleComponent, ItemToggleLightUpdateEvent>(UpdateLight);
@@ -43,9 +43,6 @@ public abstract class SharedItemToggleSystem : EntitySystem
             return;
 
         args.Handled = true;
-
-        if (TryComp<WieldableComponent>(uid, out var wieldableComp))
-            return;
 
         Toggle(uid, args.User, predicted: itemToggle.Predictable, itemToggle: itemToggle);
     }
