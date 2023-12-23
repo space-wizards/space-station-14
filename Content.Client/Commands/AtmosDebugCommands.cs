@@ -1,9 +1,7 @@
-using JetBrains.Annotations;
-using Content.Shared.Atmos;
-using System;
 using Content.Client.Atmos.EntitySystems;
+using Content.Shared.Atmos;
+using JetBrains.Annotations;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Commands
 {
@@ -11,8 +9,9 @@ namespace Content.Client.Commands
     internal sealed class AtvRangeCommand : IConsoleCommand
     {
         public string Command => "atvrange";
-        public string Description => "Sets the atmos debug range (as two floats, start [red] and end [blue])";
-        public string Help => "atvrange <start> <end>";
+        public string Description => Loc.GetString("atmos-debug-command-range-description");
+        public string Help => Loc.GetString("atmos-debug-command-range-help", ("command", Command));
+
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
@@ -22,17 +21,17 @@ namespace Content.Client.Commands
             }
             if (!float.TryParse(args[0], out var xStart))
             {
-                shell.WriteLine("Bad float START");
+                shell.WriteLine(Loc.GetString("atmos-debug-command-range-error-start"));
                 return;
             }
             if (!float.TryParse(args[1], out var xEnd))
             {
-                shell.WriteLine("Bad float END");
+                shell.WriteLine(Loc.GetString("atmos-debug-command-range-error-end"));
                 return;
             }
             if (xStart == xEnd)
             {
-                shell.WriteLine("Scale cannot be zero, as this would cause a division by zero in AtmosDebugOverlay.");
+                shell.WriteLine(Loc.GetString("atmos-debug-command-range-error-zero"));
                 return;
             }
             var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
@@ -45,8 +44,9 @@ namespace Content.Client.Commands
     internal sealed class AtvModeCommand : IConsoleCommand
     {
         public string Command => "atvmode";
-        public string Description => "Sets the atmos debug mode. This will automatically reset the scale.";
-        public string Help => "atvmode <TotalMoles/GasMoles/Temperature> [<gas ID (for GasMoles)>]";
+        public string Description => Loc.GetString("atmos-debug-command-mode-description");
+        public string Help => Loc.GetString("atmos-debug-command-mode-help", ("command", Command));
+
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
@@ -56,7 +56,7 @@ namespace Content.Client.Commands
             }
             if (!Enum.TryParse<AtmosDebugOverlayMode>(args[0], out var xMode))
             {
-                shell.WriteLine("Invalid mode");
+                shell.WriteLine(Loc.GetString("atmos-debug-command-mode-error-invalid"));
                 return;
             }
             int xSpecificGas = 0;
@@ -66,12 +66,12 @@ namespace Content.Client.Commands
             {
                 if (args.Length != 2)
                 {
-                    shell.WriteLine("A target gas must be provided for this mode.");
+                    shell.WriteLine(Loc.GetString("atmos-debug-command-mode-error-target-gas"));
                     return;
                 }
                 if (!AtmosCommandUtils.TryParseGasID(args[1], out xSpecificGas))
                 {
-                    shell.WriteLine("Gas ID not parsable or out of range.");
+                    shell.WriteLine(Loc.GetString("atmos-debug-command-mode-error-oor"));
                     return;
                 }
             }
@@ -79,7 +79,7 @@ namespace Content.Client.Commands
             {
                 if (args.Length != 1)
                 {
-                    shell.WriteLine("No further information is required for this mode.");
+                    shell.WriteLine(Loc.GetString("atmos-debug-command-mode-error-info"));
                     return;
                 }
                 if (xMode == AtmosDebugOverlayMode.Temperature)
@@ -101,8 +101,9 @@ namespace Content.Client.Commands
     internal sealed class AtvCBMCommand : IConsoleCommand
     {
         public string Command => "atvcbm";
-        public string Description => "Changes from red/green/blue to greyscale";
-        public string Help => "atvcbm <true/false>";
+        public string Description => Loc.GetString("atmos-debug-command-cbm-description");
+        public string Help => Loc.GetString("atmos-debug-command-cbm-help", ("command", Command));
+
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -112,7 +113,7 @@ namespace Content.Client.Commands
             }
             if (!bool.TryParse(args[0], out var xFlag))
             {
-                shell.WriteLine("Invalid flag");
+                shell.WriteLine(Loc.GetString("atmos-debug-command-cbm-error"));
                 return;
             }
             var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
