@@ -5,6 +5,7 @@
   description: "A simple plastic cigarette lighter."
   components:
   - type: ItemToggle
+    predictable: false
     soundActivate:
       collection: lighterOnSounds
     soundDeactivate:
@@ -144,6 +145,7 @@
       visible: false
       shader: unshaded
   - type: ItemToggle
+    predictable: false
     soundActivate:
       collection: lighterOnSounds
     soundDeactivate:

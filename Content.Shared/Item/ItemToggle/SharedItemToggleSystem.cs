@@ -20,6 +20,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
 
     public override void Initialize()
     {
@@ -46,7 +47,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
         if (TryComp<WieldableComponent>(uid, out var wieldableComp))
             return;
 
-        Toggle(uid, args.User, itemToggle: itemToggle);
+        Toggle(uid, args.User, predicted: itemToggle.Predictable, itemToggle: itemToggle);
     }
 
     /// <summary>
@@ -89,6 +90,10 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
             return false;
         }
+        // If the item's toggle is unpredictable because of something like requiring fuel or charge, then clients exit here.
+        // Otherwise you get stuff like an item activating client-side and then turning back off when it synchronizes with the server.
+        if (predicted == false && _netManager.IsClient)
+            return true;
 
         Activate(uid, itemToggle);
 
@@ -125,24 +130,26 @@ public abstract class SharedItemToggleSystem : EntitySystem
         {
             return false;
         }
-        else
-        {
-            Deactivate(uid, itemToggle);
 
-            var evPlayToggleSound = new ItemTogglePlayToggleSoundEvent(Activated: false, Predicted: predicted, user);
-            RaiseLocalEvent(uid, ref evPlayToggleSound);
-
-            var evActiveSound = new ItemToggleActiveSoundUpdateEvent(Activated: false, Predicted: predicted, user);
-            RaiseLocalEvent(uid, ref evActiveSound);
-
-            var ev = new ItemToggleDeactivatedEvent();
-            RaiseLocalEvent(uid, ref ev);
-
-            var toggleUsed = new ItemToggleDoneEvent(user);
-            RaiseLocalEvent(uid, ref toggleUsed);
-
+        // If the item's toggle is unpredictable because of something like requiring fuel or charge, then clients exit here.
+        if (predicted == false && _netManager.IsClient)
             return true;
-        }
+
+        Deactivate(uid, itemToggle);
+
+        var evPlayToggleSound = new ItemTogglePlayToggleSoundEvent(Activated: false, Predicted: predicted, user);
+        RaiseLocalEvent(uid, ref evPlayToggleSound);
+
+        var evActiveSound = new ItemToggleActiveSoundUpdateEvent(Activated: false, Predicted: predicted, user);
+        RaiseLocalEvent(uid, ref evActiveSound);
+
+        var ev = new ItemToggleDeactivatedEvent();
+        RaiseLocalEvent(uid, ref ev);
+
+        var toggleUsed = new ItemToggleDoneEvent(user);
+        RaiseLocalEvent(uid, ref toggleUsed);
+
+        return true;
     }
 
     /// <summary>

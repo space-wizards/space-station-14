@@ -20,6 +20,15 @@ public sealed partial class ItemToggleComponent : Component
     public bool Activated = false;
 
     /// <summary>
+    ///     Whether the item's toggle can be predicted by the client.
+    /// </summary>
+    /// /// <remarks>
+    /// If server-side systems affect the item's toggle, like charge/fuel systems, then the item is not predictable.
+    /// </remarks>
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    public bool Predictable = true;
+
+    /// <summary>
     ///     The noise this item makes when it is toggled on.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]

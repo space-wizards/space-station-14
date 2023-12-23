@@ -12,6 +12,7 @@
   - type: Stunbaton
     energyPerUse: 50
   - type: ItemToggle
+    predictable: false
     soundActivate:
       collection: sparks
       params:
