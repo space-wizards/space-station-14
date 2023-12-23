@@ -12,8 +12,8 @@ namespace Content.Client.Commands
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "showmarkers";
-        public string Description => "Toggles visibility of markers such as spawn points.";
-        public string Help => "";
+        public string Description => Loc.GetString("debug-command-show-markers-description");
+        public string Help => Loc.GetString("debug-command-show-markers-help", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -25,8 +25,8 @@ namespace Content.Client.Commands
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "showsubfloor";
-        public string Description => "Makes entities below the floor always visible.";
-        public string Help => $"Usage: {Command}";
+        public string Description => Loc.GetString("debug-command-show-sub-floor-description");
+        public string Help => Loc.GetString("debug-command-show-sub-floor-help", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -38,8 +38,8 @@ namespace Content.Client.Commands
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "showsubfloorforever";
-        public string Description => "Makes entities below the floor always visible until the client is restarted.";
-        public string Help => $"Usage: {Command}";
+        public string Description => Loc.GetString("debug-command-show-sub-floor-forever-description");
+        public string Help => Loc.GetString("debug-command-show-sub-floor-forever-help", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -58,8 +58,8 @@ namespace Content.Client.Commands
     internal sealed class NotifyCommand : IConsoleCommand
     {
         public string Command => "notify";
-        public string Description => "Send a notify client side.";
-        public string Help => "notify <message>";
+        public string Description => Loc.GetString("debug-command-notify-description");
+        public string Help => Loc.GetString("debug-command-notify-help", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
