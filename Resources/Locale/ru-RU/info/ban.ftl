@@ -2,12 +2,12 @@
 cmd-ban-desc = Банит кого-либо
 cmd-ban-help = Использование: ban <name or user ID> <reason> [продолжительность в минутах, без указания или 0 для пермабана]
 cmd-ban-player = Не удалось найти игрока с таким именем.
-cmd-ban-invalid-minutes = ${ minutes } is not a valid amount of minutes!
-cmd-ban-invalid-severity = ${ severity } is not a valid severity!
-cmd-ban-invalid-arguments = Invalid amount of arguments
+cmd-ban-invalid-minutes = ${ minutes } не является корректным значеним для минут!
+cmd-ban-invalid-severity = ${ severity } не является корректным значением строгости!
+cmd-ban-invalid-arguments = Недостаточно аргументов.
 cmd-ban-hint = <name/user ID>
-cmd-ban-hint-reason = <reason>
-cmd-ban-hint-severity = [severity]
+cmd-ban-hint-reason = <причина>
+cmd-ban-hint-severity = [строгость]
 cmd-ban-hint-duration = [продолжительность]
 cmd-ban-hint-duration-1 = Навсегда
 cmd-ban-hint-duration-2 = 1 день
@@ -70,7 +70,7 @@ ban-panel-ip-hwid-tooltip = Оставьте пустым и поставьте 
 ban-panel-severity = Тяжесть:
 ban-panel-erase = Очистить следы игрока из чата и раунда
 # Ban string
-server-ban-string = { $admin } выдал серверную блокировку { $severity } тяжести, истекающую { $expires } [{ $name }, { $ip }, { $hwid }] по причине: { $reason }
+server-ban-string = { $admin } выдал серверную блокировку { $severity } тяжести, истекающую { $expires }. Игроку [{ $name }, { $ip }, { $hwid }] по причине: { $reason }
 server-ban-string-never = никогда
-server-ban-string-no-pii = { $admin } выдал серверную блокировку { $severity } тяжести, истекающую { $expires } { $name } по причине: { $reason }
+server-ban-string-no-pii = { $admin } выдал серверную блокировку { $severity } тяжести, истекающую { $expires }. Игроку { $name } по причине: { $reason }
 cmd-ban_exemption_get-arg-player = <player>
