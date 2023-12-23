@@ -1,4 +1,4 @@
-﻿using Content.Client.Actions;
+using Content.Client.Actions;
 using Content.Client.Mapping;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -41,10 +41,8 @@ public sealed class SaveActionsCommand : IConsoleCommand
 public sealed class LoadActionsCommand : IConsoleCommand
 {
     public string Command => "loadacts";
-
-    public string Description => "Loads action toolbar assignments from a user-file.";
-
-    public string Help => $"Usage: {Command} <user resource path>";
+    public string Description => Loc.GetString("actions-command-load-description");
+    public string Help => Loc.GetString("actions-command-load-help", ("command", Command));
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -60,7 +58,7 @@ public sealed class LoadActionsCommand : IConsoleCommand
         }
         catch
         {
-            shell.WriteLine("Failed to load action assignments");
+            shell.WriteLine(Loc.GetString("actions-command-load-error"));
         }
     }
 }
@@ -69,10 +67,8 @@ public sealed class LoadActionsCommand : IConsoleCommand
 public sealed class LoadMappingActionsCommand : IConsoleCommand
 {
     public string Command => "loadmapacts";
-
-    public string Description => "Loads the mapping preset action toolbar assignments.";
-
-    public string Help => $"Usage: {Command}";
+    public string Description => Loc.GetString("actions-command-load-mapping-description");
+    public string Help => Loc.GetString("actions-command-load-mapping-help", ("command", Command));
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -82,7 +78,7 @@ public sealed class LoadMappingActionsCommand : IConsoleCommand
         }
         catch
         {
-            shell.WriteLine("Failed to load action assignments");
+            shell.WriteLine(Loc.GetString("actions-command-load-mapping-error"));
         }
     }
 }
