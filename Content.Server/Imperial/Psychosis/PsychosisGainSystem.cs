@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.NPC.Components;
+using Content.Shared.Imperial.ICCVar;
 using Content.Shared.Roles;
 using Content.Shared.Traits.Assorted;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traits.Assorted;
@@ -10,6 +12,7 @@ namespace Content.Server.Traits.Assorted;
 public sealed class PsychosisGainSystem : SharedPsychosisGainSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -18,6 +21,8 @@ public sealed class PsychosisGainSystem : SharedPsychosisGainSystem
     }
     private void Spawned(PlayerSpawnCompleteEvent ev)
     {
+        if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == false)
+            return;
         if (ev.JobId == null || !_prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job))
             return;
 

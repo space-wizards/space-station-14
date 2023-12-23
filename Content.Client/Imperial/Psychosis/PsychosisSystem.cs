@@ -10,6 +10,8 @@ using Content.Shared.Dataset;
 using Content.Client.Chat.Managers;
 using Content.Shared.Tag;
 using System.Linq;
+using Content.Shared.Imperial.ICCVar;
+using Robust.Shared.Configuration;
 namespace Content.Client.Psychosis;
 
 public sealed class PsychosisSystem : SharedPsychosisSystem
@@ -21,6 +23,7 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public override void Initialize()
     {
@@ -36,13 +39,19 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        if (_player.LocalPlayer?.ControlledEntity is not EntityUid localPlayer)
-            return;
-        Checks(localPlayer);
+        if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == true)
+        {
+
+            if (_player.LocalPlayer?.ControlledEntity is not EntityUid localPlayer)
+                return;
+            Checks(localPlayer);
+        }
     }
 
     private void OnComponentStartup(EntityUid uid, PsychosisComponent component, ComponentStartup args)
     {
+        if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == false)
+            return;
         var dataset = _prototypeManager.Index<DatasetPrototype>("PsychosisSoundTableStage1").Values;
         foreach (var thing in dataset)
         {
@@ -63,10 +72,14 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
 
     private void OnPlayerDetach(EntityUid uid, PsychosisComponent component, PlayerDetachedEvent args)
     {
+        if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == false)
+            return;
         component.Stream?.Stop();
     }
     private void StageChanged(EntityUid uid, PsychosisComponent psychosis)
     {
+        if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == false)
+            return;
         if (psychosis.Stage == 3)
         {
             psychosis.MaxTimeBetweenSounds = 20f;
@@ -97,6 +110,8 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
     }
     private void PlaySounds(EntityUid uid, PsychosisComponent psychosis)
     {
+        if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == false)
+            return;
         var timeInterval = _random.NextFloat(psychosis.MinTimeBetweenSounds, psychosis.MaxTimeBetweenSounds);
         psychosis.NextSoundTime = _timing.CurTime + TimeSpan.FromSeconds(timeInterval);
         psychosis.Sounds = _random.Pick(psychosis.SoundsTable);
@@ -184,6 +199,8 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
     }
     private void Checks(EntityUid uid)
     {
+        if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == false)
+            return;
         if (!TryComp<PsychosisComponent>(uid, out var psychosis))
             return;
         if (_timing.CurTime > psychosis.NextSoundTime)

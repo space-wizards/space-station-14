@@ -1,14 +1,14 @@
-using Content.Server.Ghost.Roles.Components;
-using Content.Server.Mind;
-using Content.Server.Speech.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Imperial.ICCVar;
 using Content.Shared.Traits.Assorted;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class HealPsychosis : ReagentEffect
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [DataField("reagent")]
     public string Reagent = "";
 
@@ -16,6 +16,8 @@ public sealed partial class HealPsychosis : ReagentEffect
     public int Stage = 0;
     public override void Effect(ReagentEffectArgs args)
     {
+        if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == false)
+            return;
         var entityManager = args.EntityManager;
         var uid = args.SolutionEntity;
         if (!entityManager.TryGetComponent<PsychosisComponent>(uid, out var psychosis))

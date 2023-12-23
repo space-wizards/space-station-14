@@ -5,6 +5,8 @@ using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
 using Content.Server.GameTicking;
 using Content.Shared.Dataset;
+using Robust.Shared.Configuration;
+using Content.Shared.Imperial.ICCVar;
 
 namespace Content.Server.Traits.Assorted;
 
@@ -12,8 +14,8 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private static string _firstHeal = "";
 
@@ -83,12 +85,15 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
     }
     private void OnAccent(EntityUid uid, PsychosisComponent component, AccentGetEvent args)
     {
-        if (component.Stage > 1)
+        if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == true)
         {
-            var chance = 0.30f * (component.Stage - 1);
-            if (_random.Prob(chance))
+        if (component.Stage > 1)
             {
-                args.Message = Accentuate(args.Message);
+                var chance = 0.30f * (component.Stage - 1);
+                if (_random.Prob(chance))
+                {
+                    args.Message = Accentuate(args.Message);
+                }
             }
         }
     }

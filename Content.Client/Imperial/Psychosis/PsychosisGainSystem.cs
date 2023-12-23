@@ -6,6 +6,8 @@ using Robust.Shared.Prototypes;
 using Content.Client.Chat.Managers;
 using Content.Shared.Mobs.Components;
 using Robust.Client.Graphics;
+using Robust.Shared.Configuration;
+using Content.Shared.Imperial.ICCVar;
 namespace Content.Client.Psychosis;
 
 public sealed class PsychosisGainSystem : SharedPsychosisGainSystem
@@ -18,6 +20,7 @@ public sealed class PsychosisGainSystem : SharedPsychosisGainSystem
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public override void Initialize()
     {
@@ -38,13 +41,17 @@ public sealed class PsychosisGainSystem : SharedPsychosisGainSystem
 
         if (!_timing.IsFirstTimePredicted)
             return;
-
-        if (_player.LocalPlayer?.ControlledEntity is not EntityUid localPlayer)
-            return;
-        Checks(localPlayer);
+        if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == true)
+        {
+            if (_player.LocalPlayer?.ControlledEntity is not EntityUid localPlayer)
+                return;
+            Checks(localPlayer);
+        }
     }
     private void Checks(EntityUid uid)
     {
+        if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == false)
+            return;
         if (!TryComp<PsychosisGainComponent>(uid, out var component))
             return;
         if (TryComp<PsychosisComponent>(uid, out var psychosis))
