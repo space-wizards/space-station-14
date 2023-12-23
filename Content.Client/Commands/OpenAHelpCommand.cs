@@ -4,40 +4,39 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
 
-namespace Content.Client.Commands
+namespace Content.Client.Commands;
+
+[AnyCommand]
+public sealed class OpenAHelpCommand : IConsoleCommand
 {
-    [AnyCommand]
-    public sealed class OpenAHelpCommand : IConsoleCommand
+    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+
+    // ReSharper disable once StringLiteralTypo
+    public string Command => "openahelp";
+    public string Description => Loc.GetString("open-a-help-command-description");
+    public string Help => Loc.GetString("open-a-help-command-help", ("command", Command));
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-
-        // ReSharper disable once StringLiteralTypo
-        public string Command => "openahelp";
-        public string Description => Loc.GetString("open-a-help-command-description");
-        public string Help => Loc.GetString("open-a-help-command-help", ("command", Command));
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        if (args.Length >= 2)
         {
-            if (args.Length >= 2)
+            shell.WriteLine(Help);
+            return;
+        }
+        if (args.Length == 0)
+        {
+            _userInterfaceManager.GetUIController<AHelpUIController>().Open();
+        }
+        else
+        {
+            if (Guid.TryParse(args[0], out var guid))
             {
-                shell.WriteLine(Help);
-                return;
-            }
-            if (args.Length == 0)
-            {
-                _userInterfaceManager.GetUIController<AHelpUIController>().Open();
+                var targetUser = new NetUserId(guid);
+                _userInterfaceManager.GetUIController<AHelpUIController>().Open(targetUser);
             }
             else
             {
-                if (Guid.TryParse(args[0], out var guid))
-                {
-                    var targetUser = new NetUserId(guid);
-                    _userInterfaceManager.GetUIController<AHelpUIController>().Open(targetUser);
-                }
-                else
-                {
-                    shell.WriteError(Loc.GetString("open-a-help-command-error"));
-                }
+                shell.WriteError(Loc.GetString("open-a-help-command-error"));
             }
         }
     }
