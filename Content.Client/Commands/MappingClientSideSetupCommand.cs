@@ -1,9 +1,7 @@
-using JetBrains.Annotations;
-using System;
 using Content.Client.Markers;
+using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Commands;
 
@@ -16,8 +14,8 @@ internal sealed class MappingClientSideSetupCommand : IConsoleCommand
 {
     // ReSharper disable once StringLiteralTypo
     public string Command => "mappingclientsidesetup";
-    public string Description => "Sets up the lighting control and such settings client-side. Sent by 'mapping' to client.";
-    public string Help => "";
+    public string Description => Loc.GetString("mapping-client-side-setup-command-description");
+    public string Help => Loc.GetString("mapping-client-side-setup-command-help", ("command", Command));
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
