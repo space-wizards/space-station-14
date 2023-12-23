@@ -183,7 +183,7 @@ namespace Content.Shared.Atmos
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
-        public const float FirePlasmaEnergyReleased = 16e3f; // methane is 16 kJ/mol
+        public const float FirePlasmaEnergyReleased = 160e3f; // methane is 16 kJ/mol, plus plasma's spark of magic
         public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;
