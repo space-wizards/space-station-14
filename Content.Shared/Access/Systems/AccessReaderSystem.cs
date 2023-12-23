@@ -79,6 +79,7 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         args.Handled = true;
         reader.Enabled = false;
+        reader.AccessLog.Clear();
         Dirty(uid, reader);
     }
 
@@ -351,12 +352,13 @@ public sealed class AccessReaderSystem : EntitySystem
         if (ent.Comp.AccessLog.Count >= ent.Comp.AccessLogLimit)
             ent.Comp.AccessLog.Dequeue();
 
-        if (TryComp(accessor, out AccessComponent? access) && access.BypassLogging)
-            return;
-
-        var name = Loc.GetString("access-reader-unknown-id");
-        if (_idCardSystem.TryFindIdCard(accessor, out var idCard) && idCard.Comp.FullName != null)
+        string? name = null;
+        // Set name if the accessor has a card and that card has a name and allows itself to be recorded
+        if (_idCardSystem.TryFindIdCard(accessor, out var idCard)
+            && idCard.Comp is { BypassLogging: false, FullName: not null })
             name = idCard.Comp.FullName;
+
+        name ??= Loc.GetString("access-reader-unknown-id");
 
         var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
         ent.Comp.AccessLog.Enqueue(new AccessRecord(stationTime, name));

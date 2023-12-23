@@ -30,7 +30,6 @@
     tags:
     - NuclearOperative
     - SyndicateAgent
-    bypassLogging: true
   - type: UserInterface
     interfaces:
       - key: enum.SolarControlConsoleUiKey.Key

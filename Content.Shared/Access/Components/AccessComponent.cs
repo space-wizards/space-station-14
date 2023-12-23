@@ -32,11 +32,6 @@ public sealed partial class AccessComponent : Component
     [AutoNetworkedField]
     public HashSet<string> Groups = new();
 
-    /// <summary>
-    /// Determines if accesses from this component should be logged by <see cref="AccessReaderComponent"/>
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool BypassLogging;
 }
 
 /// <summary>
