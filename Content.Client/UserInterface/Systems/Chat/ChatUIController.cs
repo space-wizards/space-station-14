@@ -712,19 +712,22 @@ public sealed class ChatUIController : UIController
 
         var msg = chatBox.ChatInput.Input.Text.TrimEnd();
         // Don't send on OOC/LOOC obviously!
-        if (SplitInputContents(msg).chatChannel
-                is not (
-                    ChatSelectChannel.Local or
-                    ChatSelectChannel.Radio or
-                    ChatSelectChannel.Whisper
-                )
-            )
+
+        // we need to handle selected channel
+        // and prefix-channel separately..
+        var allowedChannels = ChatSelectChannel.Local | ChatSelectChannel.Whisper;
+        if ((chatBox.SelectedChannel & allowedChannels) == ChatSelectChannel.None)
+            return;
+
+        // none can be returned from this if theres no prefix,
+        // so we allow it in that case (assuming the previous check will have exited already if its an invalid channel)
+        var prefixChannel = SplitInputContents(msg).chatChannel;
+        if (prefixChannel != ChatSelectChannel.None && (prefixChannel & allowedChannels) == ChatSelectChannel.None)
             return;
 
         if (_player.LocalSession?.AttachedEntity is not { } ent
             || !EntityManager.TryGetComponent<DamageForceSayComponent>(ent, out var forceSay))
             return;
-
 
         if (string.IsNullOrWhiteSpace(msg))
             return;

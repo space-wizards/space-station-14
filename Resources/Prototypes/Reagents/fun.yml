@@ -205,3 +205,96 @@
       - !type:Emote
         emote: Scream
         probability: 0.3
+
+- type: reagent
+  id: Fresium
+  name: reagent-name-fresium
+  group: Toxins
+  slippery: true
+  desc: reagent-desc-fresium
+  physicalDesc: reagent-physical-desc-frosty
+  flavor: cold
+  color: "#b3f1ff"
+  boilingPoint: 50.0
+  meltingPoint: 45.0
+  tileReactions:
+  - !type:CreateEntityTileReaction
+    entity: IceCrust
+    maxOnTileWhitelist:
+      tags: [ Ice ]
+  - !type:ExtinguishTileReaction { } 
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true 
+        ignoreResistances: false
+        damage:
+          types:
+            Cold: 0.05
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 160.15 
+        amount: -30000
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction # cold
+  metabolisms:
+    Poison:
+      metabolismRate : 0.45
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+             Cold: 0.01 # slightly nips directly, other cold damage comes from the temp change
+             Burn: -3 # ghetto burn chem. i don't think anyone would use this intentionally but it's funny
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          max: 35
+        type: Local
+        visualType: LargeCaution
+        messages: [ "fresium-effect-freeze-insides"]
+        probability: 0.05
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          max: 35
+        type: Local
+        visualType: LargeCaution
+        messages: [ "fresium-effect-slow"]
+        probability: 0.2
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 160.15 # not quite enough for cryo, but can speed it up if you wanna take the risk
+        amount: -10000
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          max: 40 # slows when less than 40
+        walkSpeedModifier: 0.6
+        sprintSpeedModifier: 0.6
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          min: 40 # your legs stop working when above 40
+        walkSpeedModifier: 0.00
+        sprintSpeedModifier: 0.00
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          min: 40
+        type: Local
+        visualType: LargeCaution
+        messages: [ "fresium-effect-frozen"]
+        probability: 0.4
+

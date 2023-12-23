@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
@@ -36,35 +37,26 @@ public abstract class SharedChatSystem : EntitySystem
     /// <summary>
     /// Cache of the keycodes for faster lookup.
     /// </summary>
-    private Dictionary<char, RadioChannelPrototype> _keyCodes = new();
+    private FrozenDictionary<char, RadioChannelPrototype> _keyCodes = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         DebugTools.Assert(_prototypeManager.HasIndex<RadioChannelPrototype>(CommonChannel));
-        _prototypeManager.PrototypesReloaded += OnPrototypeReload;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
         CacheRadios();
     }
 
-    private void OnPrototypeReload(PrototypesReloadedEventArgs obj)
+    protected virtual void OnPrototypeReload(PrototypesReloadedEventArgs obj)
     {
-        if (obj.ByType.ContainsKey(typeof(RadioChannelPrototype)))
+        if (obj.WasModified<RadioChannelPrototype>())
             CacheRadios();
     }
 
     private void CacheRadios()
     {
-        _keyCodes.Clear();
-
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>())
-        {
-            _keyCodes.Add(proto.KeyCode, proto);
-        }
-    }
-
-    public override void Shutdown()
-    {
-        _prototypeManager.PrototypesReloaded -= OnPrototypeReload;
+        _keyCodes = _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>()
+            .ToFrozenDictionary(x => x.KeyCode);
     }
 
     /// <summary>
