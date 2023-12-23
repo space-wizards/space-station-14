@@ -33,7 +33,6 @@ public sealed class SpawnPointSystem : EntitySystem
         var lateJoinSpawnsList = stationSpawning?.LateJoinSpawnPoints;
 
 
-        // a
         if (_gameTicker.RunLevel == GameRunLevel.InRound && lateJoinSpawnsList is { Count: > 0 })
         {
             possiblePositions.AddRange(lateJoinSpawnsList);
