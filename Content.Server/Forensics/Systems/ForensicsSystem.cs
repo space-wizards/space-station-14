@@ -1,12 +1,13 @@
 using Content.Server.Body.Components;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
+using Content.Server.Fluids.EntitySystems;
+using Content.Server.Forensics.Components;
+using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
-using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 
@@ -16,8 +17,8 @@ namespace Content.Server.Forensics
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         public override void Initialize()
         {
             SubscribeLocalEvent<FingerprintComponent, ContactInteractionEvent>(OnInteract);
@@ -26,7 +27,7 @@ namespace Content.Server.Forensics
 
             SubscribeLocalEvent<DnaComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
-            SubscribeLocalEvent<ForensicsComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
         }
@@ -70,15 +71,15 @@ namespace Content.Server.Forensics
             }
         }
 
-        private void OnAfterInteract(EntityUid uid, ForensicsComponent component, AfterInteractEvent args)
+        private void OnAfterInteract(EntityUid uid, CleansForensicsComponent component, AfterInteractEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (!_tagSystem.HasTag(args.Used, "CleansForensics"))
+            if (!TryComp<ForensicsComponent>(args.Target, out var forensicsComp))
                 return;
 
-            if((component.DNAs.Count > 0 && component.CanDnaBeCleaned) || (component.Fingerprints.Count + component.Fibers.Count > 0))
+            if((forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned) || (forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count > 0))
             {
                 var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.CleanDelay, new CleanForensicsDoAfterEvent(), uid, target: args.Target, used: args.Used)
                 {
@@ -87,11 +88,11 @@ namespace Content.Server.Forensics
                     BreakOnDamage = true,
                     BreakOnTargetMove = true,
                     MovementThreshold = 0.01f,
-                    DistanceThreshold = component.CleanDistance,
+                    DistanceThreshold = forensicsComp.CleanDistance,
                 };
 
-
                 _doAfterSystem.TryStartDoAfter(doAfterArgs);
+                _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning", ("target", args.Target)), args.User, args.User);
 
                 args.Handled = true;
             }
@@ -141,6 +142,9 @@ namespace Content.Server.Forensics
 
         private void ApplyEvidence(EntityUid user, EntityUid target)
         {
+            if (HasComp<IgnoresFingerprintsComponent>(target))
+                return;
+
             var component = EnsureComp<ForensicsComponent>(target);
             if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves))
             {
@@ -175,6 +179,7 @@ namespace Content.Server.Forensics
             {
                 EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
                 recipientComp.DNAs.Add(donorComp.DNA);
+                recipientComp.CanDnaBeCleaned = canDnaBeCleaned;
             }
         }
 

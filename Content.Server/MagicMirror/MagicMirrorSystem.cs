@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+
 using Content.Server.DoAfter;
 using Content.Server.Humanoid;
 using Content.Server.UserInterface;
@@ -69,6 +70,7 @@ public sealed class MagicMirrorSystem : EntitySystem
 
         var doAfter = new SelectDoAfterEvent(message);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.SelectSlotTime, doAfter, uid, target: component.Target.Value, used: uid)
+
         {
             BreakOnTargetMove = true,
             BreakOnDamage = true,
@@ -115,6 +117,7 @@ public sealed class MagicMirrorSystem : EntitySystem
 
         var doAfter = new ChangeColorDoAfterEvent(message);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.ChangeSlotTime, doAfter, uid, target: component.Target.Value, used: uid)
+
         {
             BreakOnTargetMove = true,
             BreakOnDamage = true,
@@ -160,6 +163,7 @@ public sealed class MagicMirrorSystem : EntitySystem
 
         var doAfter = new RemoveSlotDoAfterEvent(message);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.RemoveSlotTime, doAfter, uid, target: component.Target.Value, used: uid)
+
         {
             BreakOnTargetMove = true,
             BreakOnDamage = true,
@@ -194,6 +198,7 @@ public sealed class MagicMirrorSystem : EntitySystem
         _humanoid.RemoveMarking(component.Target.Value, category, args.Message.Slot);
 
         UpdateInterface(uid, component.Target.Value, args.Message.Session);
+
     }
 
     private void OnTryMagicMirrorAddSlot(EntityUid uid, MagicMirrorComponent component, MagicMirrorAddSlotMessage message)
@@ -207,6 +212,7 @@ public sealed class MagicMirrorSystem : EntitySystem
 
         var doAfter = new AddSlotDoAfterEvent(message);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.AddSlotTime, doAfter, uid, target: component.Target.Value, used: uid)
+
         {
             BreakOnTargetMove = true,
             BreakOnDamage = true,
@@ -240,6 +246,7 @@ public sealed class MagicMirrorSystem : EntitySystem
         var target = component.Target.Value;
         var humanoid = Comp<HumanoidAppearanceComponent>(target);
         var marking = _markings.MarkingsByCategoryAndSpecies(category, humanoid.Species).Keys.FirstOrDefault();
+
         if (string.IsNullOrEmpty(marking))
         {
             return;
@@ -248,6 +255,7 @@ public sealed class MagicMirrorSystem : EntitySystem
         _humanoid.AddMarking(component.Target.Value, marking, Color.Black);
 
         UpdateInterface(uid, component.Target.Value, args.Message.Session);
+
     }
 
     private void UpdateInterface(EntityUid uid, EntityUid playerUid, ICommonSession session)
@@ -277,6 +285,7 @@ public sealed class MagicMirrorSystem : EntitySystem
     {
         var humanoid = Comp<HumanoidAppearanceComponent>(args.User);
         if (humanoid == null) return;
+
 
         component.Target = new Entity<HumanoidAppearanceComponent>(args.User, humanoid);
 
