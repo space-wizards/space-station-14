@@ -1,5 +1,4 @@
 using Content.Client.Credits;
-using Content.Client.UserInterface;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
@@ -10,8 +9,8 @@ namespace Content.Client.Commands
     public sealed class CreditsCommand : IConsoleCommand
     {
         public string Command => "credits";
-        public string Description => "Opens the credits window";
-        public string Help => "credits";
+        public string Description => Loc.GetString("credits-command-description");
+        public string Help => Loc.GetString("credits-command-help", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
