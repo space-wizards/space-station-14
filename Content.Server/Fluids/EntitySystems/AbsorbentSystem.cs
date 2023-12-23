@@ -98,7 +98,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         args.Handled = Mop(args.User, args.Target.Value, args.Used, component);
     }
 
-    private bool Mop(EntityUid user, EntityUid target, EntityUid used, AbsorbentComponent component)
+    public bool Mop(EntityUid user, EntityUid target, EntityUid used, AbsorbentComponent component)
     {
         if (!_solutionSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorbentSolution))
             return false;

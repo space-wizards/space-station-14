@@ -141,6 +141,10 @@
       - id: Flare
       - id: FoodTinMRE
       - id: DrinkWaterBottleFull
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,3,2
   - type: Sprite
     layers:
       - state: internals
