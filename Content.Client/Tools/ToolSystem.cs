@@ -50,10 +50,7 @@ namespace Content.Client.Tools
 
         private void OnWelderGetStatusMessage(EntityUid uid, WelderComponent component, ItemStatusCollectMessage args)
         {
-            if (!TryComp<ItemToggleComponent>(uid, out var itemToggle))
-                return;
-
-            args.Controls.Add(new WelderStatusControl(component, itemToggle));
+            args.Controls.Add(new WelderStatusControl(component, uid));
         }
 
         private void OnWelderHandleState(EntityUid uid, WelderComponent welder, ref ComponentHandleState args)

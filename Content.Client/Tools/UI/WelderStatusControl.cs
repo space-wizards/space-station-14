@@ -10,14 +10,18 @@ namespace Content.Client.Tools.UI;
 
 public sealed class WelderStatusControl : Control
 {
+    [Dependency] private readonly IEntityManager _entMan = default!;
+
     private readonly WelderComponent _parent;
-    private readonly ItemToggleComponent _toggleComponent;
+    private readonly ItemToggleComponent? _toggleComponent;
     private readonly RichTextLabel _label;
 
-    public WelderStatusControl(WelderComponent parent, ItemToggleComponent itemToggle)
+    public WelderStatusControl(WelderComponent parent, EntityUid? uid = null)
     {
         _parent = parent;
-        _toggleComponent = itemToggle;
+        _entMan = IoCManager.Resolve<IEntityManager>();
+        if (_entMan.TryGetComponent<ItemToggleComponent>(uid, out var itemToggle))
+            _toggleComponent = itemToggle;
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
         AddChild(_label);
 
@@ -42,7 +46,11 @@ public sealed class WelderStatusControl : Control
 
         var fuelCap = _parent.FuelCapacity;
         var fuel = _parent.Fuel;
-        var lit = _toggleComponent.Activated;
+        var lit = false;
+        if (_toggleComponent != null)
+        {
+            lit = _toggleComponent.Activated;
+        }
 
         _label.SetMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
             ("colorName", fuel < fuelCap / 4f ? "darkorange" : "orange"),
