@@ -184,11 +184,5 @@
   components:
   - type: StorageFill
     contents:
-    - id: KitchenKnife
-    - id: ButchCleaver
-    - id: FoodCondimentBottleColdsauce
-    - id: FoodCondimentBottleHotsauce
-    - id: FoodCondimentBottleKetchup
-    - id: FoodCondimentBottleBBQ
     - id: FoodShakerSalt
     - id: FoodShakerPepper
