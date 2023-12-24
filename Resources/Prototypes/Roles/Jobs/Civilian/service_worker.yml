@@ -1,4 +1,4 @@
-﻿- type: job
+- type: job
   id: ServiceWorker
   name: job-name-serviceworker
   description: job-description-serviceworker
@@ -12,8 +12,9 @@
   - Maintenance
   - Bar
   - Kitchen
-  extendedAccess:
   - Hydroponics
+  extendedAccess:
+  - Janitor
 
 - type: startingGear
   id: ServiceWorkerGear
