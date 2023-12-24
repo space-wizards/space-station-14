@@ -9,11 +9,10 @@ public sealed class LandMineSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly TriggerSystem _trigger = default!;
 
-
     public override void Initialize()
     {
-        SubscribeLocalEvent<LandMineComponent, StepOffTriggeredEvent>(HandleTriggered);
-        SubscribeLocalEvent<LandMineComponent, StepTriggerAttemptEvent>(HandleTriggerAttempt);
+        SubscribeLocalEvent<LandMineComponent, StepOffTriggeredEvent>(HandleStepOffTriggered);
+        SubscribeLocalEvent<LandMineComponent, StepTriggerAttemptEvent>(HandleStepTriggerAttempt);
     }
 
     private static void HandleStepTriggerAttempt(
