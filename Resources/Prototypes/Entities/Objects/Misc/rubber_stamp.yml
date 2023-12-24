@@ -12,6 +12,8 @@
     state: stamp-mime
   - type: Item
     size: Tiny
+  - type: StealTarget
+    stealGroup: Stamp
 
 - type: entity
   name: generic rubber stamp
