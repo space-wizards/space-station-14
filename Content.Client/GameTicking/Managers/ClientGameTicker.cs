@@ -29,7 +29,6 @@ namespace Content.Client.GameTicking.Managers
         private Dictionary<NetEntity, Dictionary<string, uint?>> _jobsAvailable = new();
         private Dictionary<NetEntity, string> _stationNames = new();
 
-        //cyberfinn Round-End Summary change
         public static ClientGameTicker_RoundEndData_Container _roundEndContainer = new();
 
         /// <summary>
@@ -141,7 +140,7 @@ namespace Content.Client.GameTicking.Managers
         {
             _stateManager.RequestStateChange<GameplayState>();
 
-            //CyberFinn round-end changes:
+
             //going to disable the button as soon as they join the game (this helps for late joiners to also have their "show round end summary" disabled) - should catch anyone joining the game
             DisableRoundEndSummaryButton();
         }
@@ -162,7 +161,7 @@ namespace Content.Client.GameTicking.Managers
             if (_window?.RoundId == message.RoundId)
                 return;
 
-            //Cyberfinn changes:
+
             //back up the round info, to show it later when requested:
             _roundEndContainer._message = message;
             DisplayRoundEndSummary(_roundEndContainer._message);
@@ -170,7 +169,7 @@ namespace Content.Client.GameTicking.Managers
             //enable the button, so that users can review the summary after closing the window
             EnableRoundEndSummaryButton();
         }
-        //Cyberfinn changes: moved this out to its own method
+        
         public void DisplayRoundEndSummary(RoundEndMessageEvent? message)
         {
             if (message != null)
