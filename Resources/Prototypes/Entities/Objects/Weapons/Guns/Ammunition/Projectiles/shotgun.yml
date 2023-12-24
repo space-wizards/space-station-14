@@ -160,3 +160,18 @@
     color: "#FF8080"
     radius: 15.0
     energy: 9.0
+
+- type: entity
+  id: PelletShotgunUranium
+  name: pellet (.50 uranium)
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: depleted-uranium
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 3
+        Piercing: 5

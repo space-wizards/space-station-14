@@ -12,7 +12,6 @@ research-technology-compact-power = Compact Power
 research-technology-industrial-engineering = Industrial Engineering
 research-technology-power-generation = Power Generation
 research-technology-atmospheric-tech = Atmospherics
-research-technology-rapid-construction = Rapid Construction
 research-technology-shuttlecraft = Shuttlecraft
 research-technology-ripley-aplu = Ripley APLU
 research-technology-advanced-atmospherics = Advanced Atmospherics
@@ -34,6 +33,7 @@ research-technology-cloning = Cloning
 
 research-technology-salvage-weapons = Salvage Weapons
 research-technology-draconic-munitions = Draconic Munitions
+research-technology-uranium-munitions = Uranium Munitions
 research-technology-explosive-technology = Explosive Technology
 research-technology-weaponized-laser-manipulation = Weaponized Laser Manipulation
 research-technology-nonlethal-ammunition = Nonlethal Ammunition

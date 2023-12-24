@@ -63,7 +63,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             }
         }
 
-        private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, AtmosDeviceUpdateEvent args)
+        private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, ref AtmosDeviceUpdateEvent args)
         {
             if (!pump.Enabled
                 || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
@@ -94,7 +94,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             }
         }
 
-        private void OnPumpLeaveAtmosphere(EntityUid uid, GasPressurePumpComponent pump, AtmosDeviceDisabledEvent args)
+        private void OnPumpLeaveAtmosphere(EntityUid uid, GasPressurePumpComponent pump, ref AtmosDeviceDisabledEvent args)
         {
             pump.Enabled = false;
             UpdateAppearance(uid, pump);

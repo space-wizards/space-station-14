@@ -5,6 +5,19 @@
                   xmlns:s="clr-namespace:Content.Client.Stylesheets">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
+            <Label Text="{Loc 'ui-options-general-ui-style'}"
+                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                   StyleClasses="LabelKeyText"/>
+            <BoxContainer Orientation="Horizontal">
+                <Label Text="{Loc 'ui-options-hud-theme'}" />
+                <Control MinSize="4 0" />
+                <OptionButton Name="HudThemeOption" />
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal">
+                <Label Text="{Loc 'ui-options-hud-layout'}" />
+                <Control MinSize="4 0" />
+                <OptionButton Name="HudLayoutOption" />
+            </BoxContainer>
             <Label Text="{Loc 'ui-options-general-discord'}"
                    FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
                    StyleClasses="LabelKeyText"/>

@@ -14,6 +14,10 @@
   id: OreSpaceQuartz
   oreEntity: SpaceQuartz1
 
+- type: ore
+  id: OreCoal
+  oreEntity: Coal1
+
 # Medium yields
 - type: ore
   id: OreGold
@@ -62,6 +66,7 @@
   id: RandomOreDistributionStandard
   weights:
     OreSteel: 10
+    OreCoal: 10
     OreSpaceQuartz: 8
     OreGold: 2
     OrePlasma: 4
