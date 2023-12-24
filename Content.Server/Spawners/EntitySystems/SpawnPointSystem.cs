@@ -40,9 +40,9 @@ public sealed class SpawnPointSystem : EntitySystem
         {
             possiblePositions.AddRange(lateJoinSpawnsList);
         }
-        else if (args.Job?.Prototype != null)
+        else if (args.Job?.Prototype != null
+            && jobSpawnsDict.TryGetValue((ProtoId<JobPrototype>) args.Job.Prototype, out var coordinatesList))
         {
-            if (jobSpawnsDict.TryGetValue((ProtoId<JobPrototype>) args.Job.Prototype, out var coordinatesList))
                 possiblePositions.AddRange(coordinatesList);
         }
         else
@@ -57,8 +57,8 @@ public sealed class SpawnPointSystem : EntitySystem
                 if (spawnPoint.Job != null)
                 {
                     var spawnPointJobProto = new ProtoId<JobPrototype>(spawnPoint.Job.ID);
-                    if (jobSpawnsDict.TryGetValue(spawnPointJobProto, out var coordinatesList))
-                        coordinatesList.Add(xform.Coordinates);
+                    if (jobSpawnsDict.TryGetValue(spawnPointJobProto, out var coordsList))
+                        coordsList.Add(xform.Coordinates);
                     else
                         jobSpawnsDict.Add(spawnPointJobProto, new List<EntityCoordinates>() { xform.Coordinates });
                 }
