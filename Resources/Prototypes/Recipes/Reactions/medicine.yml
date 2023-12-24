@@ -83,14 +83,12 @@
       amount: 1
     Acetone:
       amount: 1
-    Oxygen:
-      amount: 1
     Chlorine:
       amount: 1
-    Hydrogen:
+    Hydroxide:
       amount: 1
   products:
-    Epinephrine: 5
+    Epinephrine: 4
 
 - type: reaction
   id: Dermaline
@@ -344,10 +342,8 @@
       amount: 1
     Blood:
       amount: 1
-    Carbon:
-      amount: 1
-    Hydrogen:
-      amount: 1
+    Hydroxide:
+      amount: 2
   products:
     Oculine: 4
 

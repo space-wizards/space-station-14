@@ -137,11 +137,11 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
             }
             else
             {
-                laws.Laws.Insert(0, new SiliconLaw()
+                laws.Laws.Insert(0, new SiliconLaw
                 {
                     LawString = newLaw,
                     Order = -1,
-                    LawIdentifierOverride = "#"
+                    LawIdentifierOverride = Loc.GetString("ion-storm-law-scrambled-number", ("length", RobustRandom.Next(5, 10)))
                 });
             }
 
