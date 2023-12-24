@@ -309,14 +309,14 @@
     Sugar: 9
     Potassium: 1
 
-- type: reaction
-  id: SugarBreakdown
-  minTemp: 520
-  reactants:
-    Sugar:
-      amount: 4
-  products:
-    Carbon: 1
-    Oxygen: 1
-    Hydrogen: 2
+#- type: reaction
+#  id: SugarBreakdown
+# minTemp: 520
+ # reactants:
+ #   Sugar:
+ #     amount: 4
+ # products:
+ #   Carbon: 1
+ #   Oxygen: 1
+ #   Hydrogen: 2
 
