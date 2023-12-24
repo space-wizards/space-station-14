@@ -16,8 +16,6 @@
     - state: vehicle
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     noRot: true
-  - type: RandomMetadata
-    descriptionSegments: [ATVDescriptions]
   - type: MovementSpeedModifier
     acceleration: 1
     friction: 1
