@@ -70,4 +70,3 @@
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
     canCreateVacuum: false
-    deleteAfterExplosion: true

@@ -90,6 +90,9 @@ public sealed class StepTriggerSystem : EntitySystem
 
         if (!ourAabb.Intersects(otherAabb))
         {
+            var evStepOff = new StepOffTriggeredEvent { Source = uid, Tripper = otherUid };
+            RaiseLocalEvent(uid, ref evStepOff, true);
+
             if (component.CurrentlySteppedOn.Remove(otherUid))
             {
                 Dirty(uid, component);
@@ -109,8 +112,8 @@ public sealed class StepTriggerSystem : EntitySystem
             return;
         }
 
-        var ev = new StepTriggeredEvent { Source = uid, Tripper = otherUid };
-        RaiseLocalEvent(uid, ref ev, true);
+        var evStep = new StepTriggeredEvent { Source = uid, Tripper = otherUid };
+        RaiseLocalEvent(uid, ref evStep, true);
 
         component.CurrentlySteppedOn.Add(otherUid);
         Dirty(uid, component);
@@ -159,9 +162,6 @@ public sealed class StepTriggerSystem : EntitySystem
 
         if (!component.Colliding.Remove(otherUid))
             return;
-
-        var ev = new StepOffTriggeredEvent { Source = uid, Tripper = otherUid };
-        RaiseLocalEvent(uid, ref ev, true);
 
         component.CurrentlySteppedOn.Remove(otherUid);
         Dirty(uid, component);
