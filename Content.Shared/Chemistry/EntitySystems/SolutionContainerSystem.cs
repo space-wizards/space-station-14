@@ -174,10 +174,19 @@ public sealed partial class SolutionContainerSystem : EntitySystem
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
             ("desc", primary.LocalizedPhysicalDescription)));
 
+
+        var reagentPrototypes = solution.GetReagentPrototypes(_prototypeManager);
+
+        // Sort the reagents by amount, descending then alphabetically
+        var sortedReagentPrototypes = reagentPrototypes
+            .OrderByDescending(pair => pair.Value.Value)
+            .ThenBy(pair => pair.Key.LocalizedName);
+
         // Add descriptions of immediately recognizable reagents, like water or beer
         var recognized = new List<ReagentPrototype>();
-        foreach (var proto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        foreach (var keyValuePair in sortedReagentPrototypes)
         {
+            var proto = keyValuePair.Key;
             if (!proto.Recognizable)
             {
                 continue;
@@ -363,6 +372,22 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         UpdateChemicals(targetUid, targetSolution, true);
         return acceptedQuantity == reagentQuantity.Quantity;
+    }
+
+    /// <summary>
+    ///     Adds reagent of an Id to the container.
+    /// </summary>
+    /// <param name="targetUid"></param>
+    /// <param name="targetSolution">Container to which we are adding reagent</param>
+    /// <param name="prototype">The Id of the reagent to add.</param>
+    /// <param name="quantity">The amount of reagent to add.</param>
+    /// <returns>If all the reagent could be added.</returns>
+    [PublicAPI]
+    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string prototype, FixedPoint2 quantity,
+        float? temperature = null, ReagentData? data = null)
+    {
+        var reagent = new ReagentQuantity(prototype, quantity, data);
+        return TryAddReagent(targetUid, targetSolution, reagent, out _, temperature);
     }
 
     /// <summary>

@@ -215,6 +215,8 @@
           path: /Audio/Effects/Vehicle/vehiclestartup.ogg
           params:
             volume: -3
+  - type: StealTarget
+    stealGroup: VehicleSecway
 
 - type: entity
   parent: BaseVehicleRideable
@@ -451,6 +453,8 @@
             - MobMask
           layer:
             - TableLayer
+    - type: StaticPrice
+      price: 70
 
 - type: entity
   parent: VehicleWheelchair

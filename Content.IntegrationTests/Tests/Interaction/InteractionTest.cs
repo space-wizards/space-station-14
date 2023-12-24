@@ -5,7 +5,6 @@ using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.IntegrationTests.Pair;
 using Content.Server.Body.Systems;
-using Content.Server.Players;
 using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Shared.Body.Part;
@@ -13,12 +12,11 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Server.Item;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -26,6 +24,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
+using Content.Shared.Item.ItemToggle;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -100,9 +99,9 @@ public abstract partial class InteractionTest
     protected Content.Server.Construction.ConstructionSystem SConstruction = default!;
     protected SharedDoAfterSystem DoAfterSys = default!;
     protected ToolSystem ToolSys = default!;
+    protected SharedItemToggleSystem ItemToggleSys = default!;
     protected InteractionTestSystem STestSystem = default!;
     protected SharedTransformSystem Transform = default!;
-    protected ActorSystem Actor = default!;
     protected ISawmill SLogger = default!;
 
     // CLIENT dependencies
@@ -144,7 +143,7 @@ public abstract partial class InteractionTest
     [SetUp]
     public virtual async Task Setup()
     {
-        Pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        Pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true});
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();
@@ -156,12 +155,12 @@ public abstract partial class InteractionTest
         HandSys = SEntMan.System<SharedHandsSystem>();
         InteractSys = SEntMan.System<SharedInteractionSystem>();
         ToolSys = SEntMan.System<ToolSystem>();
+        ItemToggleSys = SEntMan.System<SharedItemToggleSystem>();
         DoAfterSys = SEntMan.System<SharedDoAfterSystem>();
         Transform = SEntMan.System<SharedTransformSystem>();
         SConstruction = SEntMan.System<Server.Construction.ConstructionSystem>();
         STestSystem = SEntMan.System<InteractionTestSystem>();
         Stack = SEntMan.System<StackSystem>();
-        Actor = SEntMan.System<ActorSystem>();
         SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
 
         // client dependencies
@@ -197,17 +196,17 @@ public abstract partial class InteractionTest
             // Mind system is a time vampire
             SEntMan.System<SharedMindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
 
-            old = cPlayerMan.LocalPlayer.ControlledEntity;
+            old = cPlayerMan.LocalEntity;
             Player = SEntMan.GetNetEntity(SEntMan.SpawnEntity(PlayerPrototype, SEntMan.GetCoordinates(PlayerCoords)));
             var serverPlayerEnt = SEntMan.GetEntity(Player);
-            Actor.Attach(serverPlayerEnt, ServerSession);
+            Server.PlayerMan.SetAttachedEntity(ServerSession, serverPlayerEnt);
             Hands = SEntMan.GetComponent<HandsComponent>(serverPlayerEnt);
             DoAfters = SEntMan.GetComponent<DoAfterComponent>(serverPlayerEnt);
         });
 
         // Check player got attached.
         await RunTicks(5);
-        Assert.That(CEntMan.GetNetEntity(cPlayerMan.LocalPlayer.ControlledEntity), Is.EqualTo(Player));
+        Assert.That(CEntMan.GetNetEntity(cPlayerMan.LocalEntity), Is.EqualTo(Player));
 
         // Delete old player entity.
         await Server.WaitPost(() =>
@@ -234,7 +233,7 @@ public abstract partial class InteractionTest
         await Pair.ReallyBeIdle(5);
         Assert.Multiple(() =>
         {
-            Assert.That(CEntMan.GetNetEntity(cPlayerMan.LocalPlayer.ControlledEntity), Is.EqualTo(Player));
+            Assert.That(CEntMan.GetNetEntity(cPlayerMan.LocalEntity), Is.EqualTo(Player));
             Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(SEntMan.GetEntity(Player)));
         });
     }

@@ -171,4 +171,5 @@
     size: Ginormous
   - type: Storage
     maxItemSize: Huge
-    maxTotalWeight: 56 #14 normal-sized items.
+    grid:
+    - 0,0,19,9

@@ -3,12 +3,14 @@ using System.Linq;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Implants;
 
@@ -71,6 +73,9 @@ public abstract class SharedImplanterSystem : EntitySystem
         else
             ImplantMode(implanter, component);
 
+        var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
+        RaiseLocalEvent(target, ref ev);
+
         Dirty(component);
     }
 
@@ -82,7 +87,7 @@ public abstract class SharedImplanterSystem : EntitySystem
         [NotNullWhen(true)] out EntityUid? implant,
         [NotNullWhen(true)] out SubdermalImplantComponent? implantComp)
     {
-        implant = component.ImplanterSlot.ContainerSlot?.ContainedEntities.FirstOrDefault();
+        implant = component.ImplanterSlot.ContainerSlot?.ContainedEntities.FirstOrNull();
         if (!TryComp(implant, out implantComp))
             return false;
 
@@ -139,6 +144,10 @@ public abstract class SharedImplanterSystem : EntitySystem
                 implantComp.ImplantedEntity = null;
                 implanterContainer.Insert(implant);
                 permanentFound = implantComp.Permanent;
+
+                var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
+                RaiseLocalEvent(target, ref ev);
+
                 //Break so only one implant is drawn
                 break;
             }

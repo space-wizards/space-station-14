@@ -82,7 +82,7 @@ public sealed partial class GeigerComponent : Component
     ///     Current stream of geiger counter audio.
     ///     Played only for current user.
     /// </summary>
-    public IPlayingAudioStream? Stream;
+    public EntityUid? Stream;
 }
 
 [Serializable, NetSerializable]

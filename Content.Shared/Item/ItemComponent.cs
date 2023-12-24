@@ -1,6 +1,8 @@
 using Content.Shared.Hands.Components;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Item;
 
@@ -15,7 +17,7 @@ public sealed partial class ItemComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     [Access(typeof(SharedItemSystem))]
-    public ItemSize Size = ItemSize.Small;
+    public ProtoId<ItemSizePrototype> Size = "Small";
 
     [Access(typeof(SharedItemSystem))]
     [DataField]
@@ -33,15 +35,34 @@ public sealed partial class ItemComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sprite")]
     public string? RsiPath;
+
+    /// <summary>
+    /// An optional override for the shape of the item within the grid storage.
+    /// If null, a default shape will be used based on <see cref="Size"/>.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<Box2i>? Shape;
+
+    /// <summary>
+    /// A sprite used to depict this entity specifically when it is displayed in the storage UI.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SpriteSpecifier? StoredSprite;
+
+    /// <summary>
+    /// An additional angle offset, in degrees, applied to the visual depiction of the item when displayed in the storage UI.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float StoredRotation = 0;
 }
 
 [Serializable, NetSerializable]
 public sealed class ItemComponentState : ComponentState
 {
-    public ItemSize Size { get; }
+    public ProtoId<ItemSizePrototype> Size { get; }
     public string? HeldPrefix { get; }
 
-    public ItemComponentState(ItemSize size, string? heldPrefix)
+    public ItemComponentState(ProtoId<ItemSizePrototype> size, string? heldPrefix)
     {
         Size = size;
         HeldPrefix = heldPrefix;
@@ -63,41 +84,4 @@ public sealed class VisualsChangedEvent : EntityEventArgs
         Item = item;
         ContainerId = containerId;
     }
-}
-
-/// <summary>
-/// Abstracted sizes for items.
-/// Used to determine what can fit into inventories.
-/// </summary>
-public enum ItemSize
-{
-    /// <summary>
-    /// Items that can be held completely in one's hand.
-    /// </summary>
-    Tiny = 1,
-
-    /// <summary>
-    /// Items that can fit inside of a standard pocket.
-    /// </summary>
-    Small = 2,
-
-    /// <summary>
-    /// Items that can fit inside of a standard bag.
-    /// </summary>
-    Normal = 4,
-
-    /// <summary>
-    /// Items that are too large to fit inside of standard bags, but can worn in exterior slots or placed in custom containers.
-    /// </summary>
-    Large = 8,
-
-    /// <summary>
-    /// Items that are too large to place inside of any kind of container.
-    /// </summary>
-    Huge = 16,
-
-    /// <summary>
-    /// Picture furry gf
-    /// </summary>
-    Ginormous = 32
 }

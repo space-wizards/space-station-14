@@ -9,6 +9,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Verbs.UI
 {
@@ -29,7 +30,7 @@ namespace Content.Client.Verbs.UI
         [UISystemDependency] private readonly CombatModeSystem _combatMode = default!;
         [UISystemDependency] private readonly VerbSystem _verbSystem = default!;
 
-        public EntityUid CurrentTarget;
+        public NetEntity CurrentTarget;
         public SortedSet<Verb> CurrentVerbs = new();
 
         /// <summary>
@@ -64,8 +65,25 @@ namespace Content.Client.Verbs.UI
         /// </param>
         public void OpenVerbMenu(EntityUid target, bool force = false, ContextMenuPopup? popup=null)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} user ||
-                _combatMode.IsInCombatMode(user))
+            DebugTools.Assert(target.IsValid());
+            OpenVerbMenu(EntityManager.GetNetEntity(target), force, popup);
+        }
+
+        /// <summary>
+        ///     Open a verb menu and fill it with verbs applicable to the given target entity.
+        /// </summary>
+        /// <param name="target">Entity to get verbs on.</param>
+        /// <param name="force">Used to force showing all verbs. Only works on networked entities if the user is an admin.</param>
+        /// <param name="popup">
+        ///     If this is not null, verbs will be placed into the given popup instead.
+        /// </param>
+        public void OpenVerbMenu(NetEntity target, bool force = false, ContextMenuPopup? popup=null)
+        {
+            DebugTools.Assert(target.IsValid());
+            if (_playerManager.LocalEntity is not {Valid: true} user)
+                return;
+
+            if (!force && _combatMode.IsInCombatMode(user))
                 return;
 
             Close();
@@ -82,7 +100,7 @@ namespace Content.Client.Verbs.UI
 
             // Add indicator that some verbs may be missing.
             // I long for the day when verbs will all be predicted and this becomes unnecessary.
-            if (!EntityManager.IsClientSide(target))
+            if (!target.IsClientSide())
             {
                 _context.AddElement(menu, new ContextMenuElement(Loc.GetString("verb-system-waiting-on-server-text")));
             }
@@ -248,7 +266,7 @@ namespace Content.Client.Verbs.UI
 
         private void HandleVerbsResponse(VerbsResponseEvent msg)
         {
-            if (OpenMenu == null || !OpenMenu.Visible || CurrentTarget != EntityManager.GetEntity(msg.Entity))
+            if (OpenMenu == null || !OpenMenu.Visible || CurrentTarget != msg.Entity)
                 return;
 
             AddServerVerbs(msg.Verbs, OpenMenu);

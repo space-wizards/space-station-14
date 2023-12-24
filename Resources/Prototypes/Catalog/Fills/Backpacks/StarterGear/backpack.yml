@@ -52,6 +52,16 @@
 
 - type: entity
   noSpawn: true
+  parent: ClothingBackpackMedical
+  id: ClothingBackpackParamedicFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalMedical
+      - id: EmergencyRollerBedSpawnFolded
+
+- type: entity
+  noSpawn: true
   parent: ClothingBackpackCaptain
   id: ClothingBackpackCaptainFilled
   components:
@@ -318,7 +328,8 @@
   description: Holds the kit of CentComm's most feared agents.
   components:
     - type: Storage
-      maxTotalWeight: 56
+      grid:
+      - 0,0,7,6
     - type: StorageFill
       contents:
         - id: BoxSurvivalEngineering
@@ -331,7 +342,7 @@
         - id: ToolDebug # spanish army knife
         - id: WelderExperimental
         - id: Hypospray
-        - id: MicroBombImplanter # crew will try to steal their amazing hardsuits
+        - id: DeathAcidifierImplanter # crew will try to steal their amazing hardsuits
         - id: FreedomImplanter
 
 # Cargo
