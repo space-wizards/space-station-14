@@ -1,7 +1,7 @@
 using Content.Client.Items;
 using Content.Client.Tools.Components;
 using Content.Client.Tools.UI;
-using Content.Shared.Tools;
+using Content.Shared.Item;
 using Content.Shared.Tools.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
@@ -50,7 +50,7 @@ namespace Content.Client.Tools
 
         private void OnWelderGetStatusMessage(EntityUid uid, WelderComponent component, ItemStatusCollectMessage args)
         {
-            args.Controls.Add(new WelderStatusControl(component));
+            args.Controls.Add(new WelderStatusControl(component, uid));
         }
 
         private void OnWelderHandleState(EntityUid uid, WelderComponent welder, ref ComponentHandleState args)
@@ -60,7 +60,6 @@ namespace Content.Client.Tools
 
             welder.FuelCapacity = state.FuelCapacity;
             welder.Fuel = state.Fuel;
-            welder.Lit = state.Lit;
             welder.UiUpdateNeeded = true;
         }
 

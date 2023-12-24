@@ -383,7 +383,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 continue;
 
             // UH OH
-            if (centcomms.Contains(nukeTransform.MapID))
+            if (nukeTransform.MapUid != null && centcomms.Contains(nukeTransform.MapUid.Value))
             {
                 component.WinConditions.Add(WinCondition.NukeActiveAtCentCom);
                 SetWinType(uid, WinType.OpsMajor, component);
@@ -447,8 +447,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         while (diskQuery.MoveNext(out _, out var transform))
         {
-            var diskMapId = transform.MapID;
-            diskAtCentCom = centcomms.Contains(diskMapId);
+            diskAtCentCom = transform.MapUid != null && centcomms.Contains(transform.MapUid.Value);
 
             // TODO: The target station should be stored, and the nuke disk should store its original station.
             // This is fine for now, because we can assume a single station in base SS14.

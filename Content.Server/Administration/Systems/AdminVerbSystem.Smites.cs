@@ -42,7 +42,6 @@ using Content.Shared.Popups;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -80,6 +79,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SuperBonkSystem _superBonkSystem = default!;
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -796,6 +796,34 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-smite-super-speed-description"),
         };
         args.Verbs.Add(superSpeed);
+
+        //Bonk
+        Verb superBonkLite = new()
+        {
+            Text = "Super Bonk Lite",
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new("Structures/Furniture/Tables/glass.rsi"), "full"),
+            Act = () =>
+            {
+                _superBonkSystem.StartSuperBonk(args.Target, stopWhenDead: true);
+            },
+            Message = Loc.GetString("admin-smite-super-bonk-lite-description"),
+            Impact = LogImpact.Extreme,
+        };
+        args.Verbs.Add(superBonkLite);
+        Verb superBonk= new()
+        {
+            Text = "Super Bonk",
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new("Structures/Furniture/Tables/generic.rsi"), "full"),
+            Act = () =>
+            {
+                _superBonkSystem.StartSuperBonk(args.Target);
+            },
+            Message = Loc.GetString("admin-smite-super-bonk-description"),
+            Impact = LogImpact.Extreme,
+        };
+        args.Verbs.Add(superBonk);
 
         Verb terminate = new()
         {

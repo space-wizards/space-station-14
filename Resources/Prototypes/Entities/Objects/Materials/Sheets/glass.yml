@@ -81,7 +81,7 @@
       glass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 22
+          Quantity: 10
 
 - type: entity
   parent: SheetGlass
@@ -187,11 +187,11 @@
       rglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 22
+          Quantity: 10
         - ReagentId: Iron
-          Quantity: 11
+          Quantity: 4.5
         - ReagentId: Carbon
-          Quantity: 1
+          Quantity: 0.5
 
 - type: entity
   parent: SheetGlassBase
@@ -263,7 +263,7 @@
       pglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 22
+          Quantity: 10
         - ReagentId: Plasma
           Quantity: 10
 
@@ -301,13 +301,13 @@
       rpglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 22
+          Quantity: 10
         - ReagentId: Plasma
           Quantity: 10
         - ReagentId: Iron
-          Quantity: 11
+          Quantity: 4.5
         - ReagentId: Carbon
-          Quantity: 1
+          Quantity: 0.5
 
 - type: entity
   parent: SheetRPGlass
@@ -379,7 +379,7 @@
       uglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 22
+          Quantity: 10
         - ReagentId: Uranium
           Quantity: 10
 
@@ -428,13 +428,13 @@
       ruglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 22
+          Quantity: 10
         - ReagentId: Uranium
           Quantity: 10
         - ReagentId: Iron
-          Quantity: 11
+          Quantity: 4.5
         - ReagentId: Carbon
-          Quantity: 1
+          Quantity: 0.5
 - type: entity
   parent: SheetRUGlass
   id: SheetRUGlass1

@@ -44,6 +44,8 @@ entities:
       type: BecomesStation
     - type: OccluderTree
     - type: Shuttle
+    - type: DeviceNetwork
+      transmitFrequencyId: ArrivalsShuttleTimer
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -231,6 +233,18 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: -0.5,3.5
+      parent: 292
+      type: Transform
+- proto: ArrivalsShuttleTimer
+  entities:
+  - uid: 294
+    components:
+    - pos: -4.5,3.5
+      parent: 292
+      type: Transform
+  - uid: 295
+    components:
+    - pos: 3.5,3.5
       parent: 292
       type: Transform
 - proto: AtmosDeviceFanTiny

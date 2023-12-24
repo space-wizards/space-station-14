@@ -324,11 +324,15 @@
         orGroup: GiftPool
       - id: ClothingHeadHatCatEars
         orGroup: GiftPool
+      - id: ClothingHeadHatDogEars
+        orGroup: GiftPool
       - id: ToySword
         orGroup: GiftPool
       - id: RevolverCapGun
         orGroup: GiftPool
       - id: Ash
+        orGroup: GiftPool
+      - id: Coal1
         orGroup: GiftPool
       - id: MiningDrill
         orGroup: GiftPool
