@@ -123,7 +123,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum temperature difference before the gas temperatures are just set to be equal.
         /// </summary>
-        public const float MinimumTemperatureDeltaToConsider = 0.1f;
+        public const float MinimumTemperatureDeltaToConsider = 0.01f;
 
         /// <summary>
         ///     Minimum temperature for starting superconduction.
@@ -183,7 +183,7 @@ namespace Content.Shared.Atmos
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
-        public const float FirePlasmaEnergyReleased = 16e3f; // methane is 16 kJ/mol
+        public const float FirePlasmaEnergyReleased = 160e3f; // methane is 16 kJ/mol, plus plasma's spark of magic
         public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;
@@ -194,30 +194,6 @@ namespace Content.Shared.Atmos
         public const float PlasmaUpperTemperature = (1370f+T0C);
         public const float PlasmaOxygenFullburn = 10f;
         public const float PlasmaBurnRateDelta = 9f;
-
-        /// <summary>
-        ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
-        /// </summary>
-        public const float MinimumTritiumOxyburnEnergy = 143000f;
-
-        public const float TritiumBurnOxyFactor = 100f;
-        public const float TritiumBurnTritFactor = 10f;
-
-        public const float FrezonCoolLowerTemperature = 23.15f;
-
-        /// <summary>
-        ///     Frezon cools better at higher temperatures.
-        /// </summary>
-        public const float FrezonCoolMidTemperature = 373.15f;
-
-        public const float FrezonCoolMaximumEnergyModifier = 10f;
-
-        /// <summary>
-        ///     Remove X mol of nitrogen for each mol of frezon.
-        /// </summary>
-        public const float FrezonNitrogenCoolRatio = 5;
-        public const float FrezonCoolEnergyReleased = -600e3f;
-        public const float FrezonCoolRateModifier = 20f;
 
         public const float FrezonProductionMaxEfficiencyTemperature = 73.15f;
 
@@ -235,11 +211,6 @@ namespace Content.Shared.Atmos
         ///     1 / X of the tritium is converted into Frezon each tick
         /// </summary>
         public const float FrezonProductionConversionRate = 50f;
-
-        /// <summary>
-        ///     How many mol of frezon can be converted into miasma in one cycle.
-        /// </summary>
-        public const float MiasmicSubsumationMaxConversionRate = 5f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
@@ -324,7 +295,7 @@ namespace Content.Shared.Atmos
         Plasma = 3,
         Tritium = 4,
         WaterVapor = 5,
-        Miasma = 6,
+        Ammonia = 6,
         NitrousOxide = 7,
         Frezon = 8
     }

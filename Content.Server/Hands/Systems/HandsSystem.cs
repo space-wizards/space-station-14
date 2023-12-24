@@ -59,8 +59,6 @@ namespace Content.Server.Hands.Systems
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
-                .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
-                .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
                 .Register<HandsSystem>();
         }
 
@@ -217,85 +215,7 @@ namespace Content.Server.Hands.Systems
 
             return true;
         }
-        private void HandleSmartEquipBackpack(ICommonSession? session)
-        {
-            HandleSmartEquip(session, "back");
-        }
 
-        private void HandleSmartEquipBelt(ICommonSession? session)
-        {
-            HandleSmartEquip(session, "belt");
-        }
-
-        // why tf is this even in hands system.
-        // TODO: move to storage or inventory
-        private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
-        {
-            if (session is not { } playerSession)
-                return;
-
-            if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !Exists(plyEnt))
-                return;
-
-            if (!_actionBlockerSystem.CanInteract(plyEnt, null))
-                return;
-
-            if (!TryComp<HandsComponent>(plyEnt, out var hands) ||  hands.ActiveHand == null)
-                return;
-
-            if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
-                !TryComp(slotEntity, out StorageComponent? storageComponent))
-            {
-                if (_inventorySystem.HasSlot(plyEnt, equipmentSlot))
-                {
-                    if (hands.ActiveHand.HeldEntity == null && slotEntity != null)
-                    {
-                        _inventorySystem.TryUnequip(plyEnt, equipmentSlot);
-                        PickupOrDrop(plyEnt, slotEntity.Value);
-                        return;
-                    }
-                    if (hands.ActiveHand.HeldEntity == null)
-                        return;
-                    if (!_inventorySystem.CanEquip(plyEnt, hands.ActiveHand.HeldEntity.Value, equipmentSlot, out var reason))
-                    {
-                        _popupSystem.PopupEntity(Loc.GetString(reason), plyEnt, session);
-                        return;
-                    }
-                    if (slotEntity == null)
-                    {
-                        _inventorySystem.TryEquip(plyEnt, hands.ActiveHand.HeldEntity.Value, equipmentSlot);
-                        return;
-                    }
-                    _inventorySystem.TryUnequip(plyEnt, equipmentSlot);
-                    _inventorySystem.TryEquip(plyEnt, hands.ActiveHand.HeldEntity.Value, equipmentSlot);
-                    PickupOrDrop(plyEnt, slotEntity.Value);
-                    return;
-                }
-                _popupSystem.PopupEntity(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", equipmentSlot)), plyEnt, session);
-                return;
-            }
-
-            if (hands.ActiveHand.HeldEntity != null)
-            {
-                _storageSystem.PlayerInsertHeldEntity(slotEntity.Value, plyEnt, storageComponent);
-            }
-            else
-            {
-                if (!storageComponent.Container.ContainedEntities.Any())
-                {
-                    _popupSystem.PopupEntity(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", equipmentSlot)), plyEnt,  session);
-                }
-                else
-                {
-                    var lastStoredEntity = storageComponent.Container.ContainedEntities[^1];
-
-                    if (storageComponent.Container.Remove(lastStoredEntity))
-                    {
-                        PickupOrDrop(plyEnt, lastStoredEntity, animateUser: true, handsComp: hands);
-                    }
-                }
-            }
-        }
         #endregion
     }
 }
