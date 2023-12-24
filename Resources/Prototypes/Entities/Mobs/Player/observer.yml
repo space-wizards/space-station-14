@@ -97,6 +97,19 @@
     checkCanInteract: false
     event: !type:ToggleGhostsActionEvent
 
+
+- type: entity
+  id: ActionToggleIcon
+  name: Toggle Icons
+  description: Toggle the visibility of Job and syndie icon.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Eyes/Hud/sec.rsi, state: icon }
+    clientExclusive: true
+    checkCanInteract: false
+    event: !type:ToggleviewHUDActionEvent
+
 - type: entity
   id: ActionToggleGhostHearing
   name: Toggle Ghost Hearing

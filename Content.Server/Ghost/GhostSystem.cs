@@ -22,6 +22,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Shared.Overlays;
 
 namespace Content.Server.Ghost
 {
@@ -61,6 +62,7 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpsRequestEvent>(OnGhostWarpsRequest);
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
+            SubscribeNetworkEvent<GhostIconToggleRequest>(OnToggleIconVisibilityRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
@@ -191,6 +193,7 @@ namespace Content.Server.Ghost
             _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
             _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
             _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
+            _actions.AddAction(uid, ref component.ToggleIconActionEntity, component.ToggleIconAction);
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
@@ -287,6 +290,35 @@ namespace Content.Server.Ghost
             _transformSystem.AttachToGridOrMap(attached, xform);
             if (TryComp(attached, out PhysicsComponent? physics))
                 _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
+        }
+
+
+        private void OnToggleIconVisibilityRequest(GhostIconToggleRequest _, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession.AttachedEntity is not {Valid: true} entity
+                || !HasComp<GhostComponent>(entity))
+            {
+                Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostIconToggleRequest)} without being a ghost.");
+                return;
+            }
+            if (HasComp<ShowSecurityIconsComponent>(entity) && HasComp<ShowSyndicateIconsComponent>(entity))
+            {
+                RemComp<ShowSecurityIconsComponent>(entity);
+                RemComp<ShowSyndicateIconsComponent>(entity);
+            }
+            else
+            {
+                if (!HasComp<ShowSecurityIconsComponent>(entity))
+                {
+                    AddComp<ShowSecurityIconsComponent>(entity);
+                }
+
+                if (!HasComp<ShowSyndicateIconsComponent>(entity))
+                {
+                    AddComp<ShowSyndicateIconsComponent>(entity);
+                }
+            }
+            EntityManager.DirtyEntity(entity);
         }
 
         private IEnumerable<GhostWarp> GetLocationWarps()

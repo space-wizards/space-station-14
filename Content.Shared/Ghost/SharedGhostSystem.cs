@@ -134,6 +134,13 @@ namespace Content.Shared.Ghost
     }
 
     /// <summary>
+    /// A client to server request for toogle icon visibility
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class GhostIconToggleRequest : EntityEventArgs
+    {
+    }
+    /// <summary>
     /// A server to client update with the available ghost role count
     /// </summary>
     [Serializable, NetSerializable]
