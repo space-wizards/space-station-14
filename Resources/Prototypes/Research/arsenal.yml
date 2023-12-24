@@ -8,7 +8,7 @@
     state: icon
   discipline: Arsenal
   tier: 1
-  cost: 5000
+  cost: 3500
   recipeUnlocks:
   - WeaponProtoKineticAccelerator
   # These are roundstart but not replenishable for salvage
@@ -43,7 +43,7 @@
     state: payload-explosive-armed
   discipline: Arsenal
   tier: 1
-  cost: 7500
+  cost: 5550 #imperia edit
   recipeUnlocks:
   - Signaller
   - SignalTrigger
@@ -73,7 +73,7 @@
     state: beanbag
   discipline: Arsenal
   tier: 1
-  cost: 5000
+  cost: 3000 #imperia edit
   recipeUnlocks:
   - ShellShotgunBeanbag
   - CartridgePistolRubber
@@ -125,7 +125,7 @@
     state: icon
   discipline: Arsenal
   tier: 2
-  cost: 10000
+  cost: 7500 #imperia edit
   recipeUnlocks:
   - WeaponXrayCannon
 
@@ -137,7 +137,7 @@
     state: icon
   discipline: Arsenal
   tier: 2
-  cost: 8000
+  cost: 7000 #imperia edit
   recipeUnlocks:
   - Truncheon
   - TelescopicShield

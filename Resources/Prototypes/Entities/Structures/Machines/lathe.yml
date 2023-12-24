@@ -441,8 +441,9 @@
     - RightLegBorgService
     - HeadBorgService
     - TorsoBorgService
+    - ProximitySensor #Imperia edit
     dynamicRecipes:
-    - ProximitySensor
+    #- ProximitySensor
     - BorgModuleLightReplacer
     - BorgModuleCleaning
     - BorgModuleTrashCollection
