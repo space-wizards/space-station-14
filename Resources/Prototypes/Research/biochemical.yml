@@ -111,8 +111,8 @@
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
     state: scanner
   discipline: Biochemical
-  tier: 2
-  cost: 5000 #imperia edit
+  tier: 1 #imperia edit , tier 2 bcs of merge issues
+  cost: 2500 #imperia edit
   recipeUnlocks:
   - HandheldCrewMonitor
 
