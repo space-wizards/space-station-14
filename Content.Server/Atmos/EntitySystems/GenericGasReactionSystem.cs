@@ -113,7 +113,10 @@ public sealed class GenericGasReactionSystem : EntitySystem
         }
 
         float newHeatCapacity = _atmosphere.GetHeatCapacity(mix, true);
-        mix.Temperature = (initialE + reactionE)/newHeatCapacity;
+        if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
+        {
+            mix.Temperature = (initialE + reactionE)/newHeatCapacity;
+        }
         if (reactionE > 0)
         {
             var location = holder as TileAtmosphere;
