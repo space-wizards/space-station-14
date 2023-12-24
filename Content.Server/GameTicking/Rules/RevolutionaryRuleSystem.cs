@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Antag;
 using Content.Server.Chat.Managers;
+using Content.Server.Chemistry.ReagentEffects.Amnesia;
 using Content.Server.Flash;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
@@ -65,6 +66,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<HeadRevolutionaryComponent, AfterFlashedEvent>(OnPostFlash);
+        SubscribeLocalEvent<AmnesiaEventAfter>(OnForget);
     }
 
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -89,6 +91,15 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 GameTicker.EndGameRule(uid, gameRule);
             }
         }
+    }
+
+    /// <summary>
+    /// Removes the components related to revs.
+    /// </summary>
+    private void OnForget(AmnesiaEventAfter ev)
+    {
+        RemComp<RevolutionaryComponent>(ev.Target);
+        RemComp<HeadRevolutionaryComponent>(ev.Target);
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)

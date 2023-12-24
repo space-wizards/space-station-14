@@ -4,6 +4,7 @@ using System.Numerics;
 using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
+using Content.Server.Chemistry.ReagentEffects.Amnesia;
 using Content.Server.Communications;
 using Content.Server.RandomMetadata;
 using Content.Server.GameTicking.Rules.Components;
@@ -117,6 +118,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
         SubscribeLocalEvent<ShuttleConsoleFTLTravelStartEvent>(OnShuttleConsoleFTLStart);
         SubscribeLocalEvent<ConsoleFTLAttemptEvent>(OnShuttleFTLAttempt);
+        SubscribeLocalEvent<AmnesiaEventAfter>(OnAmnesiaEventAfter);
     }
 
     /// <summary>
@@ -247,6 +249,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             var name = MetaData(uid).EntityName;
             nukeops.OperativePlayers.Add(name, mind);
         }
+    }
+
+    private void OnAmnesiaEventAfter(AmnesiaEventAfter ev)
+    {
+        RemCompDeferred<NukeOperativeComponent>(ev.Target);
     }
 
     private void OnComponentRemove(EntityUid uid, NukeOperativeComponent component, ComponentRemove args)

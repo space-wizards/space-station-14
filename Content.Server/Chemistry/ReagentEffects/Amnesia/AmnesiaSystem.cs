@@ -127,6 +127,14 @@ public sealed class AmnesiaSystem : EntitySystem
     public void ForceGhostRoleAmnesia(EntityUid uid)
     {
         _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} is being turned into a ghost role due to amnesia");
+        var ev = new AmnesiaEventBefore(uid);
+        RaiseLocalEvent(uid, ev, true);
+        if (ev.Cancelled)
+        {
+            _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} was prevented from being turned into a ghost role due to amnesia");
+            return;
+        }
+
         // If the entity already has a ghost role, don't add another one.
         if (_entityManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole) && !ghostRole.Taken)
         {
@@ -158,5 +166,34 @@ public sealed class AmnesiaSystem : EntitySystem
         ghostRole.ReregisterOnGhost = false;
         _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid):player} has turned into a ghost due to amnesia");
         _chatManager.SendAdminAnnouncement($"{ToPrettyString(uid):player} has been turned into a ghost role to due amnesia!");
+
+        RaiseLocalEvent(uid, new AmnesiaEventAfter(uid), true);
     }
+}
+
+/// <summary>
+/// Event raised when an entity is about to be affected by the amnesia reagent effect.
+/// </summary>
+public sealed class AmnesiaEventBefore : CancellableEntityEventArgs
+{
+    public AmnesiaEventBefore(EntityUid target)
+    {
+        Target = target;
+    }
+
+    public EntityUid Target { get; }
+}
+
+/// <summary>
+/// Raised when an entity is affected by the amnesia reagent effect.
+/// This should be used to remove traces of (for example) brainwashing by revs.
+/// </summary>
+public sealed class AmnesiaEventAfter : EntityEventArgs
+{
+    public AmnesiaEventAfter(EntityUid target)
+    {
+        Target = target;
+    }
+
+    public EntityUid Target { get; }
 }
