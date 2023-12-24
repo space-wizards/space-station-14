@@ -95,6 +95,20 @@
 
 - type: entity
   parent: BaseGameRule
+  id: HoboSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    duration: 1
+    earliestStart: 20
+    reoccurrenceDelay: 20
+    minimumPlayers: 5
+  - type: RandomSpawnRule
+    prototype: MobHoboGhost
+
+- type: entity
+  parent: BaseGameRule
   id: RevenantSpawn
   noSpawn: true
   components:

@@ -1,0 +1,25 @@
+- type: entity
+  save: false
+  parent: BaseMobHoboPerson
+  name: Hobo
+  id: MobHoboPerson
+  components:
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
+  - type: Loadout
+    prototypes: [HoboGear]
+  - type: RandomHumanoidAppearance
+
+- type: entity
+  parent: MobHoboPerson
+  id: MobHoboGhost
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-hobo-name
+    description: ghost-role-information-hobo-description
+    rules: ghost-role-information-hobo-rules
+  - type: GhostTakeoverAvailable

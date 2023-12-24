@@ -1,0 +1,16 @@
+- type: entity
+  save: false
+  name: Hobo
+  parent: BaseMobHuman
+  id: BaseMobHoboPerson
+  abstract: true
+  components:
+  - type: GhostObserver
+  - type: DeadHearing
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobHoboPersonDummy
+  noSpawn: true
+  components:
+    - type: HumanoidAppearance

@@ -290,6 +290,19 @@
     shoes: ClothingShoesColorBlack
   innerClothingSkirt: ClothingUniformJumpskirtColorGrey
 
+- type: startingGear
+  id: HoboGear
+  equipment:
+    shoes: ClothingShoesBootsWinter
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    gloves: ClothingHandsGlovesFingerless
+    head: ClothingHeadHatFedoraBrown
+    neck: ClothingNeckScarfStripedBrown
+    belt: ClothingBeltStorageWaistbag
+    outerClothing: ClothingOuterCoatGentle
+    ears: ClothingHeadsetGrey
+  innerClothingSkirt: ClothingUniformJumpskirtColorGrey
+
 # DeathMatch Gear
 
 - type: startingGear
