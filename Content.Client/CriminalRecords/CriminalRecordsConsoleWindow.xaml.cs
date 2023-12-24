@@ -207,38 +207,12 @@ public sealed partial class CriminalRecordsConsoleWindow : DefaultWindow
         RecordContainer.DisposeAllChildren();
         RecordContainer.RemoveAllChildren();
 
-        // TODO: bruh share this code with general records
         var recordControls = new Control[]
         {
             new Label()
             {
                 Text = stationRecord.Name,
                 StyleClasses = { "LabelBig" }
-            },
-            new Label()
-            {
-                Text = Loc.GetString("criminal-records-console-record-age", ("age", stationRecord.Age.ToString()))
-
-            },
-            new Label()
-            {
-                Text = Loc.GetString("criminal-records-console-record-title", ("job", Loc.GetString(stationRecord.JobTitle)))
-            },
-            new Label()
-            {
-                Text = Loc.GetString("criminal-records-console-record-species", ("species", stationRecord.Species))
-            },
-            new Label()
-            {
-                Text = Loc.GetString("criminal-records-console-record-gender", ("gender", stationRecord.Gender.ToString()))
-            },
-            new Label()
-            {
-                Text = Loc.GetString("criminal-records-console-record-fingerprint", ("fingerprint", stationRecord.Fingerprint ?? Loc.GetString("generic-not-available-shorthand")))
-            },
-            new Label()
-            {
-                Text = Loc.GetString("criminal-records-console-record-dna", ("dna", stationRecord.DNA ?? Loc.GetString("generic-not-available-shorthand")))
             },
             new PanelContainer()
             {
