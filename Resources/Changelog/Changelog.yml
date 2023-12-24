@@ -1,13 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed not being able to run server commands without >.
-    type: Fix
-  - message: Fixed not being able to use the help command to see another command's
-      help text.
-    type: Fix
-  id: 5032
-  time: '2023-10-21T10:58:57.0000000+00:00'
 - author: 27alaing
   changes:
   - message: 'Common internet slang now gets replaced in IC chat. (example: brb -->
@@ -3973,4 +3964,14 @@ Entries:
     type: Fix
   id: 5455
   time: '2023-12-24T13:48:31.0000000+00:00'
+  url: null
+- author: Meower
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0432\u043E\u0437\
+      \u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u043D\u0430\u0434\u0435\u0432\
+      \u0430\u0442\u044C \u0448\u0430\u0440\u0444\u044B \u0438 \u0448\u0430\u043F\u043A\
+      \u0438 \u0418\u0430\u043D\u0443"
+    type: Add
+  id: 5456
+  time: '2023-12-24T13:53:59.0000000+00:00'
   url: null
