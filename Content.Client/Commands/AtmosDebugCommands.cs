@@ -77,7 +77,7 @@ internal sealed class AtvModeCommand : IConsoleCommand
             }
             if (!AtmosCommandUtils.TryParseGasID(args[1], out xSpecificGas))
             {
-                shell.WriteError(Loc.GetString("atmos-debug-command-mode-error-oor"));
+                shell.WriteError(Loc.GetString("atmos-debug-command-mode-error-out-of-range"));
                 return;
             }
         }
