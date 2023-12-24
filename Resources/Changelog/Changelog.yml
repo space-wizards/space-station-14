@@ -1,10 +1,4 @@
 Entries:
-- author: IntegerTempest
-  changes:
-  - message: Added lathe printing for rollerbed & wheelchairs.
-    type: Add
-  id: 5029
-  time: '2023-10-20T05:46:33.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Meats now cook based on internal temperature. Don't make steak in a plasma
@@ -3941,4 +3935,14 @@ Entries:
     type: Fix
   id: 5452
   time: '2023-12-23T17:23:14.0000000+00:00'
+  url: null
+- author: Ady4
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u044B \u0447\u0435\
+      \u043B\u044E\u0441\u0442\u0438 \u0436\u0438\u0437\u043D\u0438 \u0421\u0438\u043D\
+      \u0434\u0438\u043A\u0430\u0442\u0430; \u043E\u0434\u0435\u0436\u0434\u0430 \u0434\
+      \u043B\u044F \u043E\u0431\u0435\u0437\u044C\u044F\u043D."
+    type: Fix
+  id: 5453
+  time: '2023-12-24T13:36:37.0000000+00:00'
   url: null
