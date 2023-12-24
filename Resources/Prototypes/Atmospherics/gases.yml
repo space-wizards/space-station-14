@@ -84,6 +84,9 @@
   specificHeat: 40
   heatCapacityRatio: 1.3
   molarMass: 44
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  gasOverlayState: n2o
+  gasMolesVisible: 1
   color: 2887E8
   reagent: NitrousOxide
   pricePerMole: 2.5
