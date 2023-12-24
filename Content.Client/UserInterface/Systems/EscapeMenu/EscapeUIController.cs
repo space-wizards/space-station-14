@@ -105,11 +105,11 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
             _guidebook.ToggleGuidebook();
         };
 
-        //cyberfinn changes to show round end summary:
         //this is just the event that fires on click, we need to hide the button and make it available when needed (dont want them to see "revs" mid-round, etc)
         _escapeWindow.buttonShowRoundEnd.OnPressed += _ =>
         {
-            ClientGameTicker.DisplayRoundEndSummary(ClientGameTicker._roundEndContainer._message);
+            ClientGameTicker cgtTickingManager = new ClientGameTicker();
+            cgtTickingManager.DisplayRoundEndSummary(ClientGameTicker._roundEndContainer._message);
         };
 
 
