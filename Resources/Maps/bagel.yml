@@ -9399,8 +9399,10 @@ entities:
             0: 57344
           3,-2:
             0: 12288
+            2: 16384
           3,-1:
             0: 14199
+            2: 16384
           -4,0:
             0: 8750
           -4,1:
@@ -9432,6 +9434,21 @@ entities:
           moles:
           - 9.8897505
           - 37.204296
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
           - 0
           - 0
           - 0
@@ -129108,7 +129125,7 @@ entities:
   entities:
   - uid: 11343
     components:
-    - pos: -55.5,9.5
+    - pos: -54.5,10.5
       parent: 60
       type: Transform
   - uid: 11344
@@ -129126,9 +129143,9 @@ entities:
     - pos: -55.5,12.5
       parent: 60
       type: Transform
-  - uid: 24333
+  - uid: 24374
     components:
-    - pos: -55.5,13.5
+    - pos: -54.5,12.5
       parent: 60
       type: Transform
 - proto: SpawnPointSecurityCadet
