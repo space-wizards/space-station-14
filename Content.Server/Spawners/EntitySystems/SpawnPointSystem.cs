@@ -28,16 +28,19 @@ public sealed class SpawnPointSystem : EntitySystem
 
         var possiblePositions = new List<EntityCoordinates>();
 
-        TryComp<StationSpawningComponent>(args.Station, out var stationSpawning);
-        var jobSpawnsDict = stationSpawning?.JobSpawnPoints;
-        var lateJoinSpawnsList = stationSpawning?.LateJoinSpawnPoints;
-
+        Dictionary<ProtoId<JobPrototype>, List<EntityCoordinates>> jobSpawnsDict = new();
+        List<EntityCoordinates> lateJoinSpawnsList = new();
+        if (TryComp<StationSpawningComponent>(args.Station, out var stationSpawning))
+        {
+            jobSpawnsDict = stationSpawning.JobSpawnPoints;
+            lateJoinSpawnsList = stationSpawning.LateJoinSpawnPoints;
+        }
 
         if (_gameTicker.RunLevel == GameRunLevel.InRound && lateJoinSpawnsList is { Count: > 0 })
         {
             possiblePositions.AddRange(lateJoinSpawnsList);
         }
-        else if (jobSpawnsDict != null && args.Job?.Prototype != null)
+        else if (args.Job?.Prototype != null)
         {
             if (jobSpawnsDict.TryGetValue((ProtoId<JobPrototype>) args.Job.Prototype, out var coordinatesList))
                 possiblePositions.AddRange(coordinatesList);
@@ -45,8 +48,6 @@ public sealed class SpawnPointSystem : EntitySystem
         else
         {
             var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
-            jobSpawnsDict = new ();
-            lateJoinSpawnsList = new ();
 
             while (points.MoveNext(out var uid, out var spawnPoint, out var xform))
             {
@@ -59,7 +60,7 @@ public sealed class SpawnPointSystem : EntitySystem
                     if (jobSpawnsDict.TryGetValue(spawnPointJobProto, out var coordinatesList))
                         coordinatesList.Add(xform.Coordinates);
                     else
-                        jobSpawnsDict.Add(spawnPointJobProto, new List<EntityCoordinates> { xform.Coordinates });
+                        jobSpawnsDict.Add(spawnPointJobProto, new List<EntityCoordinates>() { xform.Coordinates });
                 }
 
                 if (spawnPoint.SpawnType == SpawnPointType.LateJoin)
@@ -96,15 +97,15 @@ public sealed class SpawnPointSystem : EntitySystem
 
         var spawnLoc = _random.Pick(possiblePositions);
 
-        if (args.Job?.Prototype != null
-            && jobSpawnsDict?.TryGetValue((ProtoId<JobPrototype>) args.Job.Prototype!, out var jobSpawns) == true)
-        {
-                jobSpawns.Remove(spawnLoc);
-        }
-        lateJoinSpawnsList?.Remove(spawnLoc);
-
         if (stationSpawning != null)
         {
+            if (args.Job?.Prototype != null
+                && jobSpawnsDict.TryGetValue((ProtoId<JobPrototype>) args.Job.Prototype, out var jobSpawns))
+            {
+                    jobSpawns.Remove(spawnLoc);
+            }
+            lateJoinSpawnsList.Remove(spawnLoc);
+
             stationSpawning.JobSpawnPoints = jobSpawnsDict;
             stationSpawning.LateJoinSpawnPoints = lateJoinSpawnsList;
         }

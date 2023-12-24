@@ -15,10 +15,10 @@ public sealed partial class StationSpawningComponent : Component
     /// <summary>
     /// List of possible spawnpoints for each job.
     /// </summary>
-    public Dictionary<ProtoId<JobPrototype>, List<EntityCoordinates>>? JobSpawnPoints;
+    public Dictionary<ProtoId<JobPrototype>, List<EntityCoordinates>> JobSpawnPoints = new();
 
     /// <summary>
     /// List of possible latejoin spawnpoints on the station.
     /// </summary>
-    public List<EntityCoordinates>? LateJoinSpawnPoints;
+    public List<EntityCoordinates> LateJoinSpawnPoints = new();
 }
