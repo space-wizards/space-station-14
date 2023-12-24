@@ -1,5 +1,7 @@
 station-event-ion-storm-start-announcement = Ion storm detected near the station. Please check all AI-controlled equipment for errors.
 
+ion-storm-law-scrambled-number = [font="Monospace"][scramble rate=250 length={$length} chars="@@###$$&%!01"/][/font]
+
 ion-storm-you = YOU
 ion-storm-the-station = THE STATION
 ion-storm-the-crew = THE CREW
