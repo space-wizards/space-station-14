@@ -98,7 +98,7 @@
 #   description: "A piece of green-circuit flooring."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: gcircuit }
 #   objectType: Item
-#
+# SS220 Add new tile recipes begin
 # - type: construction
 #   name: gold floor
 #   id: tileGold
@@ -109,6 +109,7 @@
 #   description: "A piece of gold flooring."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: gold }
 #   objectType: Item
+# SS220 Add new tile recipes end
 #
 # - type: construction
 #   name: reinforced tile

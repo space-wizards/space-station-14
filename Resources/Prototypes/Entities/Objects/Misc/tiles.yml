@@ -755,6 +755,9 @@
     state: gold
   - type: Item
     heldPrefix: gold
+  - type: Construction #SS220 New tile crafting begin
+    graph: TileGold
+    node: goldtile #SS220 New tile crafting end
   - type: FloorTile
     outputs:
       - Plating
@@ -771,6 +774,9 @@
     state: silver
   - type: Item
     heldPrefix: silver
+  - type: Construction #SS220 New tile crafting begin
+    graph: TileSilver
+    node: silvertile #SS220 New tile crafting end
   - type: FloorTile
     outputs:
       - Plating

@@ -1,0 +1,31 @@
+- type: constructionGraph
+  id: TileGold
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: goldtile
+          completed:
+            - !type:SetStackCount
+              amount: 2
+          steps:
+            - material: Gold
+              amount: 1
+    - node: goldtile
+      entity: FloorTileItemGold
+
+- type: constructionGraph
+  id: TileSilver
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: silvertile
+          completed:
+            - !type:SetStackCount
+              amount: 2
+          steps:
+            - material: Silver
+              amount: 1
+    - node: silvertile
+      entity: FloorTileItemSilver
