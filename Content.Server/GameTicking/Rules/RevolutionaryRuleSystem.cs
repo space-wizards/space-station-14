@@ -60,7 +60,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<HeadRevolutionaryComponent, AfterFlashedEvent>(OnPostFlash);
-        SubscribeLocalEvent<HeadRevolutionaryComponent, CloningEvent>(OnClone);
+        SubscribeLocalEvent<RevolutionaryComponent, CloningEvent>(OnClone);
     }
 
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -337,12 +337,21 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// On cloning of a Head Rev, It will give new new body the components and remove them off the old one.
     /// </summary>
-    private void OnClone(EntityUid rev, HeadRevolutionaryComponent comp, CloningEvent ev)
+    private void OnClone(EntityUid rev, RevolutionaryComponent comp, CloningEvent ev)
     {
-        RemComp<HeadRevolutionaryComponent>(ev.Source);
-        RemComp<RevolutionaryComponent>(ev.Source);
-        AddComp<RevolutionaryComponent>(ev.Target);
-        AddComp<HeadRevolutionaryComponent>(ev.Target);
+        if (HasComp<HeadRevolutionaryComponent>(ev.Source))
+        {
+            RemComp<HeadRevolutionaryComponent>(ev.Source);
+            RemComp<RevolutionaryComponent>(ev.Source);
+            AddComp<RevolutionaryComponent>(ev.Target);
+            AddComp<HeadRevolutionaryComponent>(ev.Target);
+        }
+        else
+        {
+            RemComp<RevolutionaryComponent>(ev.Source);
+            AddComp<RevolutionaryComponent>(ev.Target);
+        }
+        
     }
 
     private static readonly string[] Outcomes =
