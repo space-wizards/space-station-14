@@ -329,7 +329,7 @@
         key: Amnesia
         component: Amnesia
         type: Remove
-        time: 90
+        time: 180
         guidebookTextOverride: reagent-desc-effect-mindbreaker
   # TODO: PROPER hallucinations
 
