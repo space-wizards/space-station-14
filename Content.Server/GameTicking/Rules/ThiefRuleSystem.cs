@@ -125,10 +125,8 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         });
 
         //Add Pacified
-        if (!HasComp<PacifiedComponent>(mind.OwnedEntity.Value) && AddPacified)
-        {
-            AddComp<PacifiedComponent>(mind.OwnedEntity.Value);
-        }
+        if (AddPacified)
+            EnsureComp<PacifiedComponent>(mind.OwnedEntity.Value);
 
         // Notificate player about new role assignment
         if (_mindSystem.TryGetSession(mindId, out var session))
