@@ -163,16 +163,15 @@ namespace Content.Client.GameTicking.Managers
                 return;
 
             //Cyberfinn changes:
-            //back up the round info:
+            //back up the round info, to show it later when requested:
             _roundEndContainer._message = message;
-            //display the window
             DisplayRoundEndSummary(_roundEndContainer._message);
 
             //enable the button, so that users can review the summary after closing the window
             EnableRoundEndSummaryButton();
         }
         //Cyberfinn changes: moved this out to its own method
-        public static void DisplayRoundEndSummary(RoundEndMessageEvent? message)
+        public void DisplayRoundEndSummary(RoundEndMessageEvent? message)
         {
             if (message != null)
                 _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
@@ -187,7 +186,7 @@ namespace Content.Client.GameTicking.Managers
         }
         private void DisableRoundEndSummaryButton()
         {
-            //enable the button, so we can still click it once we've closed round-end window - until next round starts, where we'll disable it again
+            //disable the button, so they cant click it mid-game and see "Mode = revs/nukies/zombies"
             if (EscapeUIController._escapeWindow != null)
                 if (EscapeUIController._escapeWindow.buttonShowRoundEnd != null)
                     EscapeUIController._escapeWindow.buttonShowRoundEnd.Visible = false;
