@@ -21,7 +21,7 @@ public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
     {
         base.Initialize();
 
-        SubscribeLocalEvent<T, ComponentStartup>(OnStartup );
+        SubscribeLocalEvent<T, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<T, ComponentRemove>(OnRemove);
 
         SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnPlayerAttached);
