@@ -1,11 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - message: Added a s-social anxiety trait that m-makes you st-stutter your w-words
-      when you t-talk.
-    type: Add
-  id: 5034
-  time: '2023-10-21T20:09:54.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - message: Fixed shuttle thrusters and gyroscopes being disabled by default.
@@ -3983,4 +3976,13 @@ Entries:
     type: Fix
   id: 5457
   time: '2023-12-24T15:04:41.0000000+00:00'
+  url: null
+- author: VladIsLove-e
+  changes:
+  - message: "\u041D\u043E\u0432\u043E\u0433\u043E\u0434\u043D\u0435\u0435 \u043E\u0431\
+      \u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0434\u0435\u043B\u044C\u0442\
+      \u044B."
+    type: Tweak
+  id: 5458
+  time: '2023-12-24T15:06:11.0000000+00:00'
   url: null
