@@ -5,6 +5,7 @@
   children:
     - DNA
     - Defusal
+    - SpaceLaw
 
 - type: guideEntry
   id: DNA

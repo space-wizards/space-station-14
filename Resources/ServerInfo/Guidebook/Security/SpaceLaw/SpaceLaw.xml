@@ -1,0 +1,15 @@
+<Document>
+
+    # Space Law
+
+  <Box>
+    <GuideEntityEmbed Entity="BookSpaceLaw" Caption=""/>
+  </Box>
+
+  On Space Station 14, stations operate under abbreviated space law. All crew, passengers, and visitors aboard the station are expected to know and follow these laws (they are fairly common sense, only security and the captain need to know the times).
+
+  <Box HorizontalAlignment="Right">
+    Edition of October 10
+  </Box>
+
+</Document>

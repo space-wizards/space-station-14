@@ -1,0 +1,20 @@
+<Document>
+
+  # Treatment Of Prisoners
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingUniformJumpsuitPrisoner" Caption=""/>
+    <GuideEntityEmbed Entity="Handcuffs" Caption=""/>
+    <GuideEntityEmbed Entity="ClothingUniformJumpskirtPrisoner" Caption=""/>
+  </Box>
+
+  Prisoners still have certain rights that must be upheld by law enforcement:
+
+  - Prisoners must be granted adequate medical care. They should also be provided psychiatric and spiritual counselling if requested.
+  - Prisoners must be allowed access to communications equipment (Radios) so long as they are not abused.
+  - Prisoners must be granted clothing, food, water, shelter and safety. If the brig is no longer safe, confinement must be established in another location.
+  - Prisoners must be given access to legal counsel during an interrogation if requested and available.
+  - Prisoners must be given their shift mandated PDA after confinement has finished. Unless there is solid proof of PDA tampering, in which case the PDA is to be secured and replaced with a fresh one.
+  - Prisoners must be granted freedom of movement, and should not be restrained with handcuffs or other devices after incarceration unless there is an undue risk to life and limb. Similarly, any prisoners held for extended or permanent confinement should be held in the communal brig, and should not be confined to a solitary cell unless they pose a risk to life and limb.
+
+</Document>

@@ -1,0 +1,42 @@
+- type: guideEntry
+  id: SpaceLaw
+  name: guide-entry-space-law
+  text: "/ServerInfo/Guidebook/Security/SpaceLaw/SpaceLaw.xml"
+  children:
+    - TreatmentOfPrisoners
+    - SearchesAndWarrants
+    - Implantation
+    - Sentencing
+    - QuickCrimeGuide
+    - ExtendedCrimeListing
+
+- type: guideEntry
+  id: TreatmentOfPrisoners
+  name: guide-entry-treatment-of-prisoners
+  text: "/ServerInfo/Guidebook/Security/SpaceLaw/TreatmentOfPrisoners.xml"
+
+- type: guideEntry
+  id: SearchesAndWarrants
+  name: guide-entry-searches-and-warrants
+  text: "/ServerInfo/Guidebook/Security/SpaceLaw/SearchesAndWarrants.xml"
+
+- type: guideEntry
+  id: Implantation
+  name: guide-entry-implantation
+  text: "/ServerInfo/Guidebook/Security/SpaceLaw/Implantation.xml"
+
+- type: guideEntry
+  id: Sentencing
+  name: guide-entry-sentencing
+  text: "/ServerInfo/Guidebook/Security/SpaceLaw/Sentencing.xml"
+
+- type: guideEntry
+  id: QuickCrimeGuide
+  name: guide-entry-quick-crime-guide
+  text: "/ServerInfo/Guidebook/Security/SpaceLaw/QuickCrimeGuide.xml"
+
+- type: guideEntry
+  id: ExtendedCrimeListing
+  name: guide-entry-extended-crime-listing
+  text: "/ServerInfo/Guidebook/Security/SpaceLaw/ExtendedCrimeListing.xml"
+

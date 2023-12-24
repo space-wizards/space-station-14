@@ -1,0 +1,24 @@
+<Document>
+
+  # Searches and Warrants
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingBackpackClown" Caption=""/>
+    <GuideEntityEmbed Entity="ClothingBackpackSatchelMime" Caption=""/>
+  </Box>
+
+  A personnel search is a seizure of the objects in a person's backpack, hands, coat, belt and pockets.
+
+  If any contraband is found during a search the officer may choose to further the search into a detainment or simply confiscate the restricted items. After the search is conducted all legal items are to be returned to the person.
+
+  A crewmate may legally decline any search conducted without a warrant while the alert level is green. Should be noted that if the alert level is blue or above all personnel searches are legal and no longer require a warrant.
+
+  A departmental search is the sweep of an entire area/department for contraband. It is recommended the officers are extremely thorough, checking all lockers, crates and doors. These can only be done with a warrant signed by the according department head or highest standing command staff (the captain in most cases).
+
+  A warrant is a signed document stating security may search a specific person or place.
+
+  A warrant regarding a personnel requested by a normal officer may be approved by the captain, HoS or the department head of the person being search, however a warrant requested by the HoS can not be approved by themselves.
+
+  Warrants for department sweeps may be signed off by the department's head or the highest ranking command staff. The process of writing a document may be disregarded IF the appropriate command member accompanies the officers throughout their search.
+
+</Document>

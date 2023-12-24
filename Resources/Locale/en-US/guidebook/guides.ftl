@@ -49,6 +49,14 @@ guide-entry-security = Security
 guide-entry-dna = DNA
 guide-entry-defusal = Large Bomb Defusal
 
+guide-entry-space-law = Space Law
+guide-entry-treatment-of-prisoners = Treatment of Prisoners
+guide-entry-searches-and-warrants = Searches and Warrants
+guide-entry-implantation = Iimplantation
+guide-entry-sentencing = Sentencing
+guide-entry-quick-crime-guide = Quick Crime Guide
+guide-entry-extended-crime-listing = Extended Crime Listing
+
 guide-entry-antagonists = Antagonists
 guide-entry-nuclear-operatives = Nuclear Operatives
 guide-entry-traitors = Traitors
