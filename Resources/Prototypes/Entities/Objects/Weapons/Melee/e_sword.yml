@@ -227,14 +227,15 @@
         Stamina: 0.3
     activeBlockModifier:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.6
-        Heat: 0.6
-        Stamina: 0.6
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+        Stamina: 0.9
       flatReductions:
         Heat: 1
         Piercing: 1
+    activeBlockFraction: 0.75 #ss220-revorkblock
   - type: UseDelay
     delay: 1
   - type: ToggleableLightVisuals

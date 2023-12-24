@@ -3,6 +3,7 @@ using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Random; //ss220-revorkblock
 
 namespace Content.Shared.Blocking;
 
@@ -10,6 +11,8 @@ public sealed partial class BlockingSystem
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+
+    [Dependency] private readonly IRobustRandom _random = default!; //ss220-revorkblock
 
     private void InitializeUser()
     {
@@ -46,8 +49,15 @@ public sealed partial class BlockingSystem
         {
             if (args.Damage.GetTotal() <= 0)
                 return;
+            //ss220-revorkblock
+            var trueBlock = 0;
 
-            var blockFraction = blocking.IsBlocking ? blocking.ActiveBlockFraction : blocking.PassiveBlockFraction;
+            if (_random.Prob(blocking.ActiveBlockFraction))
+            {
+                trueBlock = 1;
+            }
+            var blockFraction = blocking.IsBlocking ? trueBlock : blocking.PassiveBlockFraction;
+            //ss220-revorkblock end
             blockFraction = Math.Clamp(blockFraction, 0, 1);
             _damageable.TryChangeDamage(component.BlockingItem, blockFraction * args.OriginalDamage);
 
