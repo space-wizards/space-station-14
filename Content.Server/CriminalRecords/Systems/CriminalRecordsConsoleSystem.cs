@@ -147,8 +147,7 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         var listing = new Dictionary<uint, string>();
         foreach (var pair in consoleRecords)
         {
-            if (console != null && console.Filter != null
-                                && IsSkippedRecord(console.Filter, pair.Item2))
+            if (console.Filter != null && IsSkippedRecord(console.Filter, pair.Item2))
             {
                 continue;
             }
