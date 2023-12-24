@@ -13,6 +13,7 @@ using Content.Server.Revolutionary.Components;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Shared.Chat;
+using Content.Shared.Cloning;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
@@ -25,6 +26,7 @@ using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles;
 using Content.Shared.Stunnable;
 using Content.Shared.Zombies;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
@@ -60,11 +62,13 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         base.Initialize();
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
+        SubscribeLocalEvent<CommandStaffComponent, ChangedGridEvent>(OnGridChanged);
         SubscribeLocalEvent<CommandStaffComponent, MobStateChangedEvent>(OnCommandMobStateChanged);
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<HeadRevolutionaryComponent, AfterFlashedEvent>(OnPostFlash);
+        SubscribeLocalEvent<HeadRevolutionaryComponent, CloningEvent>(OnClone);
     }
 
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -73,28 +77,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         component.CommandCheck = _timing.CurTime + component.TimerWait;
     }
 
-    /// <summary>
-    /// Checks if the round should end and also checks who has a mindshield.
-    /// </summary>
-    protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
-    {
-        base.ActiveTick(uid, component, gameRule, frameTime);
-        if (component.CommandCheck <= _timing.CurTime)
-        {
-            component.CommandCheck = _timing.CurTime + component.TimerWait;
-
-            if (CheckCommandLose())
-            {
-                _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime);
-                GameTicker.EndGameRule(uid, gameRule);
-            }
-        }
-    }
-
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        var revsLost = CheckRevsLose();
-        var commandLost = CheckCommandLose();
+        var revsLost = CheckRevsLose(true);
+        var commandLost = CheckCommandLose(true);
         var query = AllEntityQuery<RevolutionaryRuleComponent>();
         while (query.MoveNext(out var headrev))
         {
@@ -256,13 +242,18 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     private void OnCommandMobStateChanged(EntityUid uid, CommandStaffComponent comp, MobStateChangedEvent ev)
     {
         if (ev.NewMobState == MobState.Dead || ev.NewMobState == MobState.Invalid)
-            CheckCommandLose();
+            CheckCommandLose(false);
+    }
+
+    private void OnGridChanged(EntityUid uid, CommandStaffComponent comp, ChangedGridEvent ev)
+    {
+        CheckCommandLose(false);
     }
 
     /// <summary>
     /// Checks if all of command is dead and if so will remove all sec and command jobs if there were any left.
     /// </summary>
-    private bool CheckCommandLose()
+    private bool CheckCommandLose(bool roundEnd)
     {
         var commandList = new List<EntityUid>();
 
@@ -272,19 +263,27 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             commandList.Add(id);
         }
 
-        return _antagSelection.IsGroupDead(commandList, true);
+        if (roundEnd)
+            return (_antagSelection.IsGroupDead(commandList, false, true));
+
+        else if (_antagSelection.IsGroupDead(commandList, true, false))
+        {
+            RoundEnd();
+            return true;
+        }
+        else return false;
     }
 
     private void OnHeadRevMobStateChanged(EntityUid uid, HeadRevolutionaryComponent comp, MobStateChangedEvent ev)
     {
         if (ev.NewMobState == MobState.Dead || ev.NewMobState == MobState.Invalid)
-            CheckRevsLose();
+            CheckRevsLose(false);
     }
 
     /// <summary>
     /// Checks if all the Head Revs are dead and if so will deconvert all regular revs.
     /// </summary>
-    private bool CheckRevsLose()
+    private bool CheckRevsLose(bool roundEnd)
     {
         var stunTime = TimeSpan.FromSeconds(4);
         var headRevList = new List<EntityUid>();
@@ -295,8 +294,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             headRevList.Add(uid);
         }
 
+        if (roundEnd)
+            return (_antagSelection.IsGroupDead(headRevList, false, true));
+
         // If no Head Revs are alive all normal Revs will lose their Rev status and rejoin Nanotrasen
-        if (_antagSelection.IsGroupDead(headRevList, false))
+        else if (_antagSelection.IsGroupDead(headRevList, false, false))
         {
             var rev = AllEntityQuery<RevolutionaryComponent>();
             while (rev.MoveNext(out var uid, out _))
@@ -314,6 +316,27 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         return false;
+    }
+
+    private void RoundEnd()
+    {
+        if (!_roundEnd.IsRoundEndRequested())
+        {
+            var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
+            while (query.MoveNext(out var uid, out var revRule, out var gameRule))
+            {
+                _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, revRule.ShuttleCallTime);
+                GameTicker.EndGameRule(uid, gameRule);
+            }
+        }
+    }
+
+    private void OnClone(EntityUid rev, HeadRevolutionaryComponent comp, CloningEvent ev)
+    {
+        RemComp<HeadRevolutionaryComponent>(ev.Source);
+        RemComp<RevolutionaryComponent>(ev.Source);
+        AddComp<RevolutionaryComponent>(ev.Target);
+        AddComp<HeadRevolutionaryComponent>(ev.Target);
     }
 
     private static readonly string[] Outcomes =

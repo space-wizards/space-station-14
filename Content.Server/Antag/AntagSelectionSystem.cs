@@ -26,6 +26,7 @@ using Robust.Server.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Server.Shuttles.Components;
+using Content.Server.Station.Components;
 
 namespace Content.Server.Antag;
 
@@ -43,6 +44,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     [Dependency] private readonly StorageSystem _storageSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
 
     /// <summary>
     /// Attempts to start the game rule by checking if there are enough players in lobby and readied.
@@ -222,9 +224,12 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="list">The list of the entities</param>
     /// <param name="checkOffStation">Bool for if you want to check if someone is in space and consider them dead. (Won't check when emergency shuttle arrives just in case)</param>
     /// <returns></returns>
-    public bool IsGroupDead(List<EntityUid> list, bool checkOffStation)
+    public bool IsGroupDead(List<EntityUid> list, bool checkOffStation, bool endRound)
     {
         var dead = 0;
+        var stations = new List<EntityUid>();
+        stations = _stationSystem.GetStations();
+        var station = stations.FirstOrDefault();
         foreach (var entity in list)
         {
             if (TryComp<MobStateComponent>(entity, out var state))
@@ -232,10 +237,31 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 if (state.CurrentState == MobState.Dead || state.CurrentState == MobState.Invalid)
                 {
                     dead++;
+                    continue;
                 }
-                else if (checkOffStation && _stationSystem.GetOwningStation(entity) == null && !_emergencyShuttle.EmergencyShuttleArrived)
+                else if (checkOffStation && !_emergencyShuttle.EmergencyShuttleArrived || endRound)
                 {
-                    dead++;
+                    if (endRound && !_emergencyShuttle.IsTargetEscaping(entity))
+                    {
+                        dead++;
+                        continue;
+                    }
+
+                    if (checkOffStation && !endRound)
+                    {
+                        if (TryComp<TransformComponent>(entity, out var comp))
+                        {
+                            if (TryComp<StationDataComponent>(station, out var stationData) && _stationSystem.GetLargestGrid(stationData) != comp.GridUid)
+                            {
+                                dead++;
+                                continue;
+                            }
+                        }
+                        else
+                            dead++;
+                    }
+                    else
+                        dead++;
                 }
             }
             //If they don't have the MobStateComponent they might as well be dead.
