@@ -91,6 +91,10 @@
   id: BaseStealObjective
   components:
   - type: StealCondition
+    objectiveNoOwnerText: objective-condition-steal-title-no-owner
+    objectiveText: objective-condition-steal-title
+    descriptionText: objective-condition-steal-description
+    descriptionMultiplyText: objective-condition-thief-multiply-description
 
 # requires that the player not die, ignores being on emergency shuttle or cuffed
 - type: entity

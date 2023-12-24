@@ -129,6 +129,9 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
             foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
             {
+                //TO DO:
+                //check for the right group here. Getting the target issuer is easy: objectiveGroup.Key
+                //It should be compared to the type of the group's issuer.
                 result += "\n" + Loc.GetString($"objective-issuer-{objectiveGroup.Key}");
 
                 foreach (var objective in objectiveGroup)

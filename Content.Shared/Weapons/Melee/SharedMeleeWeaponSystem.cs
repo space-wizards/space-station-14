@@ -12,6 +12,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Components;
@@ -71,6 +72,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeLocalEvent<BonusMeleeDamageComponent, GetMeleeDamageEvent>(OnGetBonusMeleeDamage);
         SubscribeLocalEvent<BonusMeleeDamageComponent, GetHeavyDamageModifierEvent>(OnGetBonusHeavyDamageModifier);
         SubscribeLocalEvent<BonusMeleeAttackRateComponent, GetMeleeAttackRateEvent>(OnGetBonusMeleeAttackRate);
+
+        SubscribeLocalEvent<ItemToggleMeleeWeaponComponent, ItemToggleMeleeWeaponUpdateEvent>(OnItemToggle);
 
         SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<LightAttackEvent>(OnLightAttack);
@@ -849,4 +852,60 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     }
 
     public abstract void DoLunge(EntityUid user, EntityUid weapon, Angle angle, Vector2 localPos, string? animation, bool predicted = true);
+
+    /// <summary>
+    /// Used to update the MeleeWeapon component on item toggle.
+    /// </summary>
+    private void OnItemToggle(EntityUid uid, ItemToggleMeleeWeaponComponent itemToggleMelee, ItemToggleMeleeWeaponUpdateEvent args)
+    {
+        if (!TryComp(uid, out MeleeWeaponComponent? meleeWeapon))
+            return;
+
+        if (args.Activated)
+        {
+            if (itemToggleMelee.ActivatedDamage != null)
+            {
+                //Setting deactivated damage to the weapon's regular value before changing it.
+                itemToggleMelee.DeactivatedDamage ??= meleeWeapon.Damage;
+                meleeWeapon.Damage = itemToggleMelee.ActivatedDamage;
+            }
+
+            meleeWeapon.HitSound = itemToggleMelee.ActivatedSoundOnHit;
+
+            if (itemToggleMelee.ActivatedSoundOnHitNoDamage != null)
+            {
+                //Setting the deactivated sound on no damage hit to the weapon's regular value before changing it.
+                itemToggleMelee.DeactivatedSoundOnHitNoDamage ??= meleeWeapon.NoDamageSound;
+                meleeWeapon.NoDamageSound = itemToggleMelee.ActivatedSoundOnHitNoDamage;
+            }
+
+            if (itemToggleMelee.ActivatedSoundOnSwing != null)
+            {
+                //Setting the deactivated sound on no damage hit to the weapon's regular value before changing it.
+                itemToggleMelee.DeactivatedSoundOnSwing ??= meleeWeapon.SwingSound;
+                meleeWeapon.SwingSound = itemToggleMelee.ActivatedSoundOnSwing;
+            }
+
+            if (itemToggleMelee.DeactivatedSecret)
+                meleeWeapon.Hidden = false;
+        }
+        else
+        {
+            if (itemToggleMelee.DeactivatedDamage != null)
+                meleeWeapon.Damage = itemToggleMelee.DeactivatedDamage;
+
+            meleeWeapon.HitSound = itemToggleMelee.DeactivatedSoundOnHit;
+
+            if (itemToggleMelee.DeactivatedSoundOnHitNoDamage != null)
+                meleeWeapon.NoDamageSound = itemToggleMelee.DeactivatedSoundOnHitNoDamage;
+
+            if (itemToggleMelee.DeactivatedSoundOnSwing != null)
+                meleeWeapon.SwingSound = itemToggleMelee.DeactivatedSoundOnSwing;
+
+            if (itemToggleMelee.DeactivatedSecret)
+                meleeWeapon.Hidden = true;
+        }
+
+        Dirty(uid, meleeWeapon);
+    }
 }

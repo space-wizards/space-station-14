@@ -27,3 +27,11 @@
     objectives:
     - CarpRiftsObjective
     - DragonSurviveObjective
+
+# need for admin panel antag create (because the rule doesn't have a roundstart entity like TraitorRule)
+- type: entity
+  id: Thief
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: ThiefRule 
