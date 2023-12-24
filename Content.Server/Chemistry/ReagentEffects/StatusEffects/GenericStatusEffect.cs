@@ -68,7 +68,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
             if (GuidebookTextOverride != string.Empty)
-                return GuidebookTextOverride;
+                return Loc.GetString(GuidebookTextOverride);
 
 
             return Loc.GetString(
