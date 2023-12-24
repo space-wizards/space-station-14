@@ -391,3 +391,19 @@
   - type: GuideHelp
     guides:
     - DNA
+
+# TODO Make lubed items not slip in hands
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesJanitor
+  name: rubber gloves
+  description: High-quality rubber gloves, squeaky to do some cleaning!
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/janitor.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/janitor.rsi
+  - type: Fiber
+    fiberMaterial: fibers-rubber
+    fiberColor: fibers-yellow
+  - type: FingerprintMask

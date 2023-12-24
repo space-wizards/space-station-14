@@ -2,45 +2,39 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Events;
 using Content.Server.Stunnable.Components;
-using Content.Shared.Audio;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
-using Content.Shared.Toggleable;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Server.Stunnable.Systems
 {
     public sealed class StunbatonSystem : SharedStunbatonSystem
     {
         [Dependency] private readonly SharedItemSystem _item = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly RiggableSystem _riggableSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly BatterySystem _battery = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedItemToggleSystem _itemToggle = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
-            SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<BatteryComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
+            SubscribeLocalEvent<StunbatonComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
+            SubscribeLocalEvent<StunbatonComponent, ItemToggleDoneEvent>(ToggleDone);
         }
 
         private void OnStaminaHitAttempt(EntityUid uid, StunbatonComponent component, ref StaminaDamageOnHitAttemptEvent args)
         {
-            if (!component.Activated ||
-                !TryComp<BatteryComponent>(uid, out var battery) || !_battery.TryUseCharge(uid, component.EnergyPerUse, battery))
+            if (!_itemToggle.IsActivated(uid) ||
+            !TryComp<BatteryComponent>(uid, out var battery) || !_battery.TryUseCharge(uid, component.EnergyPerUse, battery))
             {
                 args.Cancelled = true;
                 return;
@@ -48,93 +42,56 @@ namespace Content.Server.Stunnable.Systems
 
             if (battery.CurrentCharge < component.EnergyPerUse)
             {
-                _audio.PlayPvs(component.SparksSound, uid, AudioHelpers.WithVariation(0.25f));
-                TurnOff(uid, component);
+                _itemToggle.Toggle(uid, predicted: false);
             }
         }
 
-        private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
+        private void OnExamined(EntityUid uid, BatteryComponent battery, ExaminedEvent args)
         {
-            if (comp.Activated)
-            {
-                TurnOff(uid, comp);
-            }
-            else
-            {
-                TurnOn(uid, comp, args.User);
-            }
+            var onMsg = _itemToggle.IsActivated(uid)
+            ? Loc.GetString("comp-stunbaton-examined-on")
+            : Loc.GetString("comp-stunbaton-examined-off");
+            args.PushMarkup(onMsg);
+
+            var chargeMessage = Loc.GetString("stunbaton-component-on-examine-charge",
+                ("charge", (int) (battery.CurrentCharge / battery.MaxCharge * 100)));
+            args.PushMarkup(chargeMessage);
         }
 
-        private void OnExamined(EntityUid uid, StunbatonComponent comp, ExaminedEvent args)
+        private void ToggleDone(EntityUid uid, StunbatonComponent comp, ref ItemToggleDoneEvent args)
         {
-            var msg = comp.Activated
-                ? Loc.GetString("comp-stunbaton-examined-on")
-                : Loc.GetString("comp-stunbaton-examined-off");
-            args.PushMarkup(msg);
-            if (TryComp<BatteryComponent>(uid, out var battery))
-            {
-                args.PushMarkup(Loc.GetString("stunbaton-component-on-examine-charge",
-                    ("charge", (int)((battery.CurrentCharge/battery.MaxCharge) * 100))));
-            }
-        }
-
-        private void TurnOff(EntityUid uid, StunbatonComponent comp)
-        {
-            if (!comp.Activated)
+            if (!TryComp<ItemComponent>(uid, out var item))
                 return;
-
-            if (TryComp<AppearanceComponent>(uid, out var appearance) &&
-                TryComp<ItemComponent>(uid, out var item))
-            {
-                _item.SetHeldPrefix(uid, "off", item);
-                _appearance.SetData(uid, ToggleVisuals.Toggled, false, appearance);
-            }
-
-            _audio.PlayPvs(comp.SparksSound, uid, AudioHelpers.WithVariation(0.25f));
-
-            comp.Activated = false;
-            Dirty(uid, comp);
+            _item.SetHeldPrefix(uid, args.Activated ? "on" : "off", item);
         }
 
-        private void TurnOn(EntityUid uid, StunbatonComponent comp, EntityUid user)
+        private void TryTurnOn(EntityUid uid, StunbatonComponent comp, ref ItemToggleActivateAttemptEvent args)
         {
-            if (comp.Activated)
-                return;
-
             if (!TryComp<BatteryComponent>(uid, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
-
-                _audio.PlayPvs(comp.TurnOnFailSound, uid, AudioHelpers.WithVariation(0.25f));
-                _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), user, user);
+                args.Cancelled = true;
+                if (args.User != null)
+                {
+                    _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), (EntityUid) args.User, (EntityUid) args.User);
+                }
                 return;
             }
 
             if (TryComp<RiggableComponent>(uid, out var rig) && rig.IsRigged)
             {
-                _riggableSystem.Explode(uid, battery, user);
+                _riggableSystem.Explode(uid, battery, args.User);
             }
-
-
-            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance) &&
-                EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
-            {
-                _item.SetHeldPrefix(uid, "on", item);
-                _appearance.SetData(uid, ToggleVisuals.Toggled, true, appearance);
-            }
-
-            _audio.PlayPvs(comp.SparksSound, uid, AudioHelpers.WithVariation(0.25f));
-            comp.Activated = true;
-            Dirty(uid, comp);
         }
 
         // https://github.com/space-wizards/space-station-14/pull/17288#discussion_r1241213341
         private void OnSolutionChange(EntityUid uid, StunbatonComponent component, SolutionChangedEvent args)
         {
             // Explode if baton is activated and rigged.
-            if (!TryComp<RiggableComponent>(uid, out var riggable) || !TryComp<BatteryComponent>(uid, out var battery))
+            if (!TryComp<RiggableComponent>(uid, out var riggable) ||
+                !TryComp<BatteryComponent>(uid, out var battery))
                 return;
 
-            if (component.Activated && riggable.IsRigged)
+            if (_itemToggle.IsActivated(uid) && riggable.IsRigged)
                 _riggableSystem.Explode(uid, battery);
         }
 
