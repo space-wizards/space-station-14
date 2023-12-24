@@ -7,5 +7,4 @@ ui-escape-guidebook = Guidebook
 ui-escape-wiki = Wiki
 ui-escape-disconnect = Disconnect
 ui-escape-quit = Quit
-ui-cyberfinn-test = Round-End Summary
-
+ui-show-roundend = Round-End Summary
