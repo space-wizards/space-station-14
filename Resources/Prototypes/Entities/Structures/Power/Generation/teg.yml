@@ -98,6 +98,8 @@
         path: /Audio/Ambience/Objects/vending_machine_hum.ogg
     - type: GuideHelp
       guides: [ TEG, Power ]
+    - type: StealTarget
+      stealGroup: Teg
 
 - type: entity
   id: TegCirculator
@@ -175,6 +177,8 @@
 
     - type: AtmosUnsafeUnanchor
     - type: TegCirculator
+    - type: StealTarget
+      stealGroup: Teg
 
 - # Spawned by the client-side circulator examine code to indicate the inlet/outlet direction.
   type: entity
