@@ -9,6 +9,12 @@ namespace Content.Shared.Actions;
 public sealed partial class ActionUpgradeComponent : Component
 {
     /// <summary>
+    ///     The current entity id that this Action is. Useful for tracking upgrades.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid CurrentEntity;
+
+    /// <summary>
     ///     Current Level of the action.
     /// </summary>
     public int Level = 1;

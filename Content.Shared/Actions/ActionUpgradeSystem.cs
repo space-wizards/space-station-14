@@ -16,7 +16,13 @@ public sealed class ActionUpgradeSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ActionUpgradeComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ActionUpgradeComponent, ActionUpgradeEvent>(OnActionUpgradeEvent);
+    }
+
+    private void OnInit(EntityUid uid, ActionUpgradeComponent component, MapInitEvent args)
+    {
+        component.CurrentEntity = uid;
     }
 
     private void OnActionUpgradeEvent(EntityUid uid, ActionUpgradeComponent component, ActionUpgradeEvent args)

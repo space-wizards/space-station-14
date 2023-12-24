@@ -59,7 +59,12 @@ public sealed partial class StoreComponent : Component
     [ViewVariables]
     public HashSet<ListingData> LastAvailableListings = new();
 
-    // TODO: store bought listings so refund button can take away
+    /// <summary>
+    ///     All current entities bought from this shop. Useful for keeping track of refunds and upgrades.
+    /// </summary>
+    [ViewVariables]
+    public List<EntityUid> BoughtEntities = new();
+
     // TODO: Refund button
     // TODO: Add ability to upgrade actions
 

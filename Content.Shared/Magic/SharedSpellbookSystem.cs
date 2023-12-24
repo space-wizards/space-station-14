@@ -62,7 +62,9 @@ public sealed class SharedSpellbookSystem : EntitySystem
             return;
         }
 
+        // TODO: Broken
         if (_mind.TryGetMind(args.Args.User, out var mindId, out _))
+            // _actionContainer.TransferAllActions(uid, mindId);
             _actionContainer.TransferAllActionsWithNewAttached(uid, mindId, args.Args.User);
         else
         {

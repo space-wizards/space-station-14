@@ -3,10 +3,14 @@
   name: spellbook-fireball-name
   description: spellbook-fireball-desc
   productAction: ActionFireball
+  productUpgradeID: SpellbookFireballUpgrade
   cost:
     WizCoin: 2
   categories:
     - SpellbookOffensive
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
 
 - type: listing
   id: SpellbookBlink
@@ -28,4 +32,20 @@
   categories:
     - SpellbookDefensive
 
-
+# Lists itself, but does nothing on purchase
+- type: listing
+  id: SpellbookFireballUpgrade
+  productUpgradeID: SpellbookFireballUpgrade
+  name: fireball upgrade
+  description: upgrades fireball
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: fireball
+  cost:
+    WizCoin: 2
+  categories:
+    - SpellbookOffensive
+  conditions:
+    - !type:BuyBeforeCondition
+      whitelist:
+        - SpellbookFireball

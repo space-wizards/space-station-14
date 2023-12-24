@@ -1,7 +1,9 @@
 using System.Linq;
 using Content.Shared.FixedPoint;
+using Content.Shared.Store.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
@@ -77,15 +79,18 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     [DataField("productAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ProductAction;
 
-    // ProductAction is bought
-    // This has a prebuy for that
-    // Next upgrade is displayed?
-    // Needs to track uids so it can upgrade
     /// <summary>
-    /// The upgrade for the action
+    ///     The listing ID of the related upgrade listing. Can be used to link a <see cref="ProductAction"/> to an
+    ///         upgrade or to use standalone as an upgrade
     /// </summary>
-    [DataField("productActionUpgrade")]
-    public ProtoId<EntityPrototype> ProductActionUpgrade;
+    [DataField("productUpgradeID")]
+    public ProtoId<ListingPrototype>? ProductUpgradeID;
+
+    /// <summary>
+    ///     Keeps track of the current action entity this is tied to, for action upgrades
+    /// </summary>
+    [NonSerialized]
+    public EntityUid? ProductActionEntity;
 
     /// <summary>
     /// The event that is broadcast when the listing is purchased.
@@ -155,6 +160,8 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             Priority = Priority,
             ProductEntity = ProductEntity,
             ProductAction = ProductAction,
+            ProductUpgradeID = ProductUpgradeID,
+            ProductActionEntity = ProductActionEntity,
             ProductEvent = ProductEvent,
             PurchaseAmount = PurchaseAmount,
             RestockTime = RestockTime,
