@@ -60,6 +60,8 @@
     state: syn_jaws_pry
   - type: Item
     size: Normal
+  - type: TilePrying
+    advanced: false
   - type: Tool
     qualities:
       - Prying
