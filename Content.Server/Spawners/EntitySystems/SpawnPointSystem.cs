@@ -84,7 +84,7 @@ public sealed class SpawnPointSystem : EntitySystem
             // TODO: Refactor gameticker spawning code so we don't have to do this!
             var points2 = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
 
-            if (points2.MoveNext(out var uid, out var spawnPoint, out var xform))
+            if (points2.MoveNext(out _, out _, out var xform))
             {
                 possiblePositions.Add(xform.Coordinates);
             }
@@ -104,7 +104,6 @@ public sealed class SpawnPointSystem : EntitySystem
             {
                     jobSpawns.Remove(spawnLoc);
             }
-            lateJoinSpawnsList.Remove(spawnLoc);
 
             stationSpawning.JobSpawnPoints = jobSpawnsDict;
             stationSpawning.LateJoinSpawnPoints = lateJoinSpawnsList;
