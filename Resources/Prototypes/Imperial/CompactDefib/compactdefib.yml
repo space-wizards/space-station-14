@@ -32,7 +32,7 @@
       types:
         Asphyxiation: -75
   - type: PowerCellDraw
-    useRate: 500
+    useRate: 300
   - type: ItemSlots
     slots:
       cell_slot:
@@ -54,7 +54,7 @@
         state: o2
         shader: unshaded
     - type: Battery
-      maxCharge: 1000
+      maxCharge: 900
       startingCharge: 1000
     - type: BatterySelfRecharger
       autoRecharge: true
