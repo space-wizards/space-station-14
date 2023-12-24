@@ -35,7 +35,6 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: LandMine
-  - type: TriggerOnStepTrigger
   - type: StepTrigger
     requiredTriggeredSpeed: 0
 
@@ -71,4 +70,4 @@
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
     canCreateVacuum: false
-  - type: DeleteOnTrigger
+    deleteAfterExplosion: true

@@ -12,29 +12,45 @@ public sealed class LandMineSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<LandMineComponent, StepOffTriggeredEvent>(HandleStepOffTriggered);
-        SubscribeLocalEvent<LandMineComponent, StepTriggerAttemptEvent>(HandleStepTriggerAttempt);
-    }
+        SubscribeLocalEvent<LandMineComponent, StepTriggeredEvent>(HandleStepTriggered);
 
-    private static void HandleStepTriggerAttempt(
-        EntityUid uid,
-        LandMineComponent component,
-        ref StepTriggerAttemptEvent args)
-    {
-        args.Continue = true;
+        SubscribeLocalEvent<LandMineComponent, StepTriggerAttemptEvent>(HandleStepTriggerAttempt);
     }
 
     private void HandleStepOffTriggered(EntityUid uid, LandMineComponent component, ref StepOffTriggeredEvent args)
     {
-        // This doesn't use TriggerOnStepTrigger since we don't want to display the popup if nothing happens
-        // and I didn't feel like making an `AfterTrigger` event
-        if (_trigger.Trigger(uid, args.Tripper))
+        if (component.ExplodeImmediately)
+        {
+            return;
+        }
+
+        TriggerLandmine(uid, args.Tripper);
+    }
+
+    private void HandleStepTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredEvent args)
+    {
+        if (!component.ExplodeImmediately)
+        {
+            return;
+        }
+
+        TriggerLandmine(uid, args.Tripper);
+    }
+
+    private void TriggerLandmine(EntityUid uid, EntityUid tripper)
+    {
+        if (_trigger.Trigger(uid, tripper))
         {
             _popupSystem.PopupCoordinates(
-                Loc.GetString("land-mine-triggered", ("mine", uid)),
-                Transform(uid).Coordinates,
-                args.Tripper,
-                PopupType.LargeCaution);
+            Loc.GetString("land-mine-triggered", ("mine", uid)),
+            Transform(uid).Coordinates,
+            tripper,
+            PopupType.LargeCaution);
         }
     }
-}
 
+    private static void HandleStepTriggerAttempt(EntityUid uid, LandMineComponent component, ref StepTriggerAttemptEvent args)
+    {
+        args.Continue = true;
+    }
+}
