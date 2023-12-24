@@ -1,5 +1,4 @@
-﻿using Robust.Shared.Audio;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
+﻿using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
@@ -19,6 +18,6 @@ public sealed partial class ActiveArtifactAnalyzerComponent : Component
     /// <summary>
     /// What is being scanned?
     /// </summary>
-    [ViewVariables]
+    [DataField]
     public EntityUid Artifact;
 }

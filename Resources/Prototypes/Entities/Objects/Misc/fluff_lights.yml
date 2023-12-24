@@ -49,6 +49,8 @@
   - type: Appearance
   - type: Physics
     canCollide: false
+  - type: StealTarget
+    stealGroup: LAMP
 
 - type: entity
   name: lamp

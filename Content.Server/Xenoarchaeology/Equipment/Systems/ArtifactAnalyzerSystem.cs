@@ -195,7 +195,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         var canScan = false;
         var canPrint = false;
         var points = 0;
-        if (component.AnalyzerEntity != null && TryComp<ArtifactAnalyzerComponent>(component.AnalyzerEntity, out var analyzer))
+        if (TryComp<ArtifactAnalyzerComponent>(component.AnalyzerEntity, out var analyzer))
         {
             artifact = analyzer.LastAnalyzedArtifact;
             msg = GetArtifactScanMessage(analyzer);
@@ -438,9 +438,14 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
     private void OnItemRemoved(EntityUid uid, ArtifactAnalyzerComponent component, ref ItemRemovedEvent args)
     {
+        // Scanners shouldn't give permanent remove vision to an artifact, and the scanned artifact doesn't have any
+        // component to track analyzers that have scanned it for removal if the artifact gets deleted.
+        // So we always clear this on removal.
+        component.LastAnalyzedArtifact = null;
+
         // cancel the scan if the artifact moves off the analyzer
         CancelScan(args.OtherEntity);
-        if (component.Console != null && Exists(component.Console))
+        if (Exists(component.Console))
             UpdateUserInterface(component.Console.Value);
     }
 
