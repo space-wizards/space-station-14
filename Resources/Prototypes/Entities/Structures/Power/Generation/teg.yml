@@ -51,6 +51,11 @@
         teg:
           !type:TegNodeGenerator
           nodeGroupID: Teg
+    - type: PowerMonitoringDevice
+      group: Generator
+      loadNode: output
+      sprite: Structures/Power/Generation/teg.rsi
+      state: static
     - type: Rotatable
 
     # Note that only the TEG center is an AtmosDevice.
