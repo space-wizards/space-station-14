@@ -41,4 +41,89 @@
     RandomTraitorAliveObjective: 1
     RandomTraitorProgressObjective: 1
 
+#Thief groups
+- type: weightedRandom
+  id: ThiefObjectiveGroups
+  weights:
+    ThiefObjectiveGroupCollection: 1
+    ThiefObjectiveGroupItem: 1
+
+- type: weightedRandom
+  id: ThiefBigObjectiveGroups
+  weights:
+    ThiefObjectiveGroupStructure: 1
+    ThiefObjectiveGroupAnimal: 2
+
+- type: weightedRandom
+  id: ThiefEscapeObjectiveGroups
+  weights:
+    ThiefObjectiveGroupEscape: 1
+
+
+
+- type: weightedRandom
+  id: ThiefObjectiveGroupCollection
+  weights:
+    HeadCloakStealCollectionObjective: 1           #command
+    HeadBedsheetStealCollectionObjective: 1
+    StampStealCollectionObjective: 1
+    DoorRemoteStealCollectionObjective: 1
+    TechnologyDiskStealCollectionObjective: 1        #rnd
+    FigurineStealCollectionObjective: 0.3          #service
+    IDCardsStealCollectionObjective: 1
+    EncryptionKeyStealCollectionObjective: 1
+    CannabisStealCollectionObjective: 1
+    LAMPStealCollectionObjective: 2 #only for moth
+
+- type: weightedRandom
+  id: ThiefObjectiveGroupItem
+  weights:
+    ForensicScannerStealObjective: 1                    #sec
+    AmmoTechFabCircuitboardStealObjective: 1
+    ClothingHeadHatWardenStealObjective: 1
+    ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
+    MedicalTechFabCircuitboardStealObjective: 1
+    ClothingHeadsetAltMedicalStealObjective: 1
+    FireAxeStealObjective: 1                            #eng
+    AmePartStealObjective: 1
+    ExpeditionsCircuitboardStealObjective: 1            #sup
+    CargoShuttleCircuitboardStealObjective: 1
+    SalvageShuttleCircuitboardStealObjective: 1
+    ClothingEyesHudBeerStealObjective: 1                #srv
+    BibleStealObjective: 1
+    ClothingNeckGoldmedalStealObjective: 1              #other
+    ClothingNeckClownmedalStealObjective: 0.5
+    
+- type: weightedRandom
+  id: ThiefObjectiveGroupStructure
+  weights:
+    NuclearBombStealObjective: 0.5
+    FaxMachineCaptainStealObjective: 1
+    VehicleSecwayStealObjective: 1
+    ChemDispenserStealObjective: 1
+    XenoArtifactStealObjective: 1
+    FreezerHeaterStealObjective: 1
+    TegStealObjective: 1
+    BoozeDispenserStealObjective: 1
+    AltarNanotrasenStealObjective: 1
+    PlantRDStealObjective: 1
+
+- type: weightedRandom
+  id: ThiefObjectiveGroupAnimal
+  weights:
+    IanStealObjective: 1
+    BingusStealObjective: 1
+    McGriffStealObjective: 1
+    WalterStealObjective: 1
+    MortyStealObjective: 1
+    RenaultStealObjective: 1
+    HamletStealObjective: 1
+    ShivaStealObjective: 1
+    SmileStealObjective: 1
+    PunPunStealObjective: 1
+    
+- type: weightedRandom
+  id: ThiefObjectiveGroupEscape
+  weights:
+    EscapeThiefShuttleObjective: 1
 #Changeling, crew, wizard, when you code it...

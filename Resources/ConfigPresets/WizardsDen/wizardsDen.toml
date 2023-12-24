@@ -28,3 +28,4 @@ limit = 10.0
 [admin]
 see_own_notes = true
 deadmin_on_join = true
+override_adminname_in_client_ahelp = "The Grinch"
