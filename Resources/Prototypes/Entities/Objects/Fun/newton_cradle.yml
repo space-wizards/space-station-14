@@ -9,3 +9,9 @@
     state: icon
   - type: Item
     sprite: Objects/Fun/newton_cradle.rsi
+  - type: AmbientSound
+    volume: -8
+    range: 3
+    enabled: true
+    sound:
+      path: /Audio/Items/newton_cradle.ogg
