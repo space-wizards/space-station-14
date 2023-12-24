@@ -178,6 +178,6 @@
   source: https://github.com/vgstation-coders/vgstation13/tree/c5edbfd7179288080f081e2b8ac2496b7e4455db/sound/effects
 
 - files: [Smoke-grenade.ogg]
-  copyright: 'Pond 5s "Grenade pin pull 4"'
-  license: Custom
-  source: https://www.pond5.com/sound-effects/item/32513571-grenade-pin-pull-04
+  copyright: 'Sound effects from https://quicksounds.com"'
+  license: CC0-1.0
+  source: https://quicksounds.com/library/sounds/grenade
