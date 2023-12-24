@@ -5,8 +5,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.Flash;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
-using Content.Server.NPC.Components;
-using Content.Server.NPC.Systems;
 using Content.Server.Objectives;
 using Content.Server.Popups;
 using Content.Server.Revolutionary.Components;
@@ -26,10 +24,7 @@ using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles;
 using Content.Shared.Stunnable;
 using Content.Shared.Zombies;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Robust.Server.Audio;
-using Robust.Server.GameObjects;
-using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -40,11 +35,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 {
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoleSystem _role = default!;
@@ -52,8 +45,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
 
-    [ValidatePrototypeId<NpcFactionPrototype>]
-    public const string RevolutionaryNpcFaction = "Revolutionary";
     [ValidatePrototypeId<AntagPrototype>]
     public const string RevolutionaryAntagRole = "Rev";
 
@@ -62,8 +53,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         base.Initialize();
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
-        SubscribeLocalEvent<CommandStaffComponent, ChangedGridEvent>(OnGridChanged);
+        SubscribeLocalEvent<CommandStaffComponent, ChangedGridEvent>(OnCommandGridChanged);
         SubscribeLocalEvent<CommandStaffComponent, MobStateChangedEvent>(OnCommandMobStateChanged);
+        SubscribeLocalEvent<HeadRevolutionaryComponent, ChangedGridEvent>(OnHeadRevGridChanged);
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
@@ -74,7 +66,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
-        component.CommandCheck = _timing.CurTime + component.TimerWait;
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -185,7 +176,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             return;
         }
 
-        _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
         EnsureComp<RevolutionaryComponent>(ev.Target);
         _stun.TryParalyze(ev.Target, comp.StunTime, true);
         if (ev.User != null)
@@ -245,7 +235,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             CheckCommandLose(false);
     }
 
-    private void OnGridChanged(EntityUid uid, CommandStaffComponent comp, ChangedGridEvent ev)
+    private void OnCommandGridChanged(EntityUid uid, CommandStaffComponent comp, ChangedGridEvent ev)
     {
         CheckCommandLose(false);
     }
@@ -280,6 +270,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             CheckRevsLose(false);
     }
 
+    private void OnHeadRevGridChanged(EntityUid uid, HeadRevolutionaryComponent comp, ChangedGridEvent ev)
+    {
+        CheckRevsLose(false);
+    }
+
     /// <summary>
     /// Checks if all the Head Revs are dead and if so will deconvert all regular revs.
     /// </summary>
@@ -298,26 +293,34 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             return (_antagSelection.IsGroupDead(headRevList, false, true));
 
         // If no Head Revs are alive all normal Revs will lose their Rev status and rejoin Nanotrasen
-        else if (_antagSelection.IsGroupDead(headRevList, false, false))
+        else if (_antagSelection.IsGroupDead(headRevList, true, false))
         {
             var rev = AllEntityQuery<RevolutionaryComponent>();
             while (rev.MoveNext(out var uid, out _))
             {
                 if (!HasComp<HeadRevolutionaryComponent>(uid))
                 {
-                    _npcFaction.RemoveFaction(uid, RevolutionaryNpcFaction);
                     _stun.TryParalyze(uid, stunTime, true);
                     RemCompDeferred<RevolutionaryComponent>(uid);
                     _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", Identity.Entity(uid, EntityManager))), uid);
                     _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to all Head Revolutionaries dying.");
+
+                    if (_mind.TryGetMind(uid, out var mindId, out var _))
+                    {
+                        _role.MindTryRemoveRole<RevolutionaryRoleComponent>(mindId);
+                    }
                 }
             }
+            RoundEnd();
             return true;
         }
 
         return false;
     }
 
+    /// <summary>
+    /// Called when all Command or all Head Revs die or are exiled to end the round
+    /// </summary>
     private void RoundEnd()
     {
         if (!_roundEnd.IsRoundEndRequested())
@@ -331,6 +334,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
     }
 
+    /// <summary>
+    /// On cloning of a Head Rev, It will give new new body the components and remove them off the old one.
+    /// </summary>
     private void OnClone(EntityUid rev, HeadRevolutionaryComponent comp, CloningEvent ev)
     {
         RemComp<HeadRevolutionaryComponent>(ev.Source);

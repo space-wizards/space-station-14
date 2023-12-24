@@ -44,7 +44,6 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     [Dependency] private readonly StorageSystem _storageSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
 
     /// <summary>
     /// Attempts to start the game rule by checking if there are enough players in lobby and readied.
@@ -227,8 +226,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     public bool IsGroupDead(List<EntityUid> list, bool checkOffStation, bool endRound)
     {
         var dead = 0;
-        var stations = new List<EntityUid>();
-        stations = _stationSystem.GetStations();
+        var stations = _stationSystem.GetStations();
         var station = stations.FirstOrDefault();
         foreach (var entity in list)
         {

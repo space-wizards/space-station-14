@@ -12,18 +12,6 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class RevolutionaryRuleComponent : Component
 {
     /// <summary>
-    /// When the round will if all the command are dead (Incase they are in space)
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan CommandCheck;
-
-    /// <summary>
-    /// The amount of time between each check for command check.
-    /// </summary>
-    [DataField]
-    public TimeSpan TimerWait = TimeSpan.FromSeconds(20);
-
-    /// <summary>
     /// Stores players minds
     /// </summary>
     [DataField]
@@ -36,7 +24,7 @@ public sealed partial class RevolutionaryRuleComponent : Component
     public ProtoId<AntagPrototype> RevPrototypeId = "Rev";
 
     /// <summary>
-    /// Sound that plays when you are chosen as Rev. (Placeholder until I find something cool I guess)
+    /// Sound that plays when you are chosen as Rev.
     /// </summary>
     [DataField]
     public SoundSpecifier HeadRevStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/headrev_start.ogg");
@@ -51,7 +39,7 @@ public sealed partial class RevolutionaryRuleComponent : Component
     /// Max Head Revs allowed during selection.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int MaxHeadRevs = 3;
+    public int MaxHeadRevs = 4;
 
     /// <summary>
     /// The amount of Head Revs that will spawn per this amount of players.
