@@ -120,7 +120,6 @@
     - type: Storage
       grid:
       - 0,0,2,2
-      maxItemSize: Small
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
