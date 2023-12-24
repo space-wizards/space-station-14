@@ -42,6 +42,8 @@
   - type: Prying
   - type: UseDelay
     delay: 1
+  - type: StealTarget
+    stealGroup: FireAxe
   - type: IgniteOnMeleeHit
     fireStacks: -4
 

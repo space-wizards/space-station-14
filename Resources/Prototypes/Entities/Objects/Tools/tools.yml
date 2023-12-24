@@ -545,3 +545,6 @@
   - type: PhysicalComposition
     materialComposition:
       Wood: 100
+  - type: Tag
+    tags:
+    - RollingPin
