@@ -633,6 +633,8 @@
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Item
     size: Huge
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
 
 - type: entity
   parent: ClothingBeltBase
