@@ -160,6 +160,9 @@ public sealed class StepTriggerSystem : EntitySystem
         if (!component.Colliding.Remove(otherUid))
             return;
 
+        var ev = new StepOffTriggeredEvent { Source = uid, Tripper = otherUid };
+        RaiseLocalEvent(uid, ref ev, true);
+
         component.CurrentlySteppedOn.Remove(otherUid);
         Dirty(uid, component);
 
@@ -232,6 +235,13 @@ public struct StepTriggerAttemptEvent
 
 [ByRefEvent]
 public struct StepTriggeredEvent
+{
+    public EntityUid Source;
+    public EntityUid Tripper;
+}
+
+[ByRefEvent]
+public struct StepOffTriggeredEvent
 {
     public EntityUid Source;
     public EntityUid Tripper;
