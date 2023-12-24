@@ -2,15 +2,15 @@
                xmlns:ui="clr-namespace:Content.Client.Medical.CrewMonitoring"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'crew-monitoring-user-interface-title'}"
-               SetSize="1200 700"
-               MinSize="1200 700">
+               SetSize="1210 700"
+               MinSize="1210 700">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
             <ui:CrewMonitoringNavMapControl Name="NavMap" HorizontalExpand="True" VerticalExpand="True" Margin="5 20"/>
-            <BoxContainer Orientation="Vertical">
+            <BoxContainer Orientation="Vertical" Margin="0 0 10 0">
                 <controls:StripeBack>
                     <PanelContainer>
-                        <Label Name="StationName" Text="Unknown station" Align="Center" />
+                        <Label Name="StationName" Text="Unknown station" Align="Center" Margin="0 5 0 3"/>
                     </PanelContainer>
                 </controls:StripeBack>
                 

@@ -25,6 +25,7 @@ using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Server.Shuttles.Components;
 
 namespace Content.Server.Antag;
 
@@ -147,6 +148,72 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.FromHex(greetingColor));
             }
         }
+    }
+
+    /// <summary>
+    /// The function walks through all players, checking their role and preferences to generate a list of players who can become antagonists.
+    /// </summary>
+    /// <param name="candidates">a list of players to check out</param>
+    /// <param name="antagPreferenceId">antagonist's code id</param>
+    /// <returns></returns>
+    public List<ICommonSession> FindPotentialAntags(in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, string antagPreferenceId)
+    {
+        var list = new List<ICommonSession>();
+        var pendingQuery = GetEntityQuery<PendingClockInComponent>();
+
+        foreach (var player in candidates.Keys)
+        {
+            // Role prevents antag.
+            if (!_jobs.CanBeAntag(player))
+                continue;
+
+            // Latejoin
+            if (player.AttachedEntity != null && pendingQuery.HasComponent(player.AttachedEntity.Value))
+                continue;
+
+            list.Add(player);
+        }
+
+        var prefList = new List<ICommonSession>();
+
+        foreach (var player in list)
+        {
+            //player preferences to play as this antag
+            var profile = candidates[player];
+            if (profile.AntagPreferences.Contains(antagPreferenceId))
+            {
+                prefList.Add(player);
+            }
+        }
+        if (prefList.Count == 0)
+        {
+            Log.Info($"Insufficient preferred antag:{antagPreferenceId}, picking at random.");
+            prefList = list;
+        }
+        return prefList;
+    }
+
+    /// <summary>
+    /// selects the specified number of players from the list
+    /// </summary>
+    /// <param name="antagCount">how many players to take</param>
+    /// <param name="prefList">a list of players from which to draw</param>
+    /// <returns></returns>
+    public List<ICommonSession> PickAntag(int antagCount, List<ICommonSession> prefList)
+    {
+        var results = new List<ICommonSession>(antagCount);
+        if (prefList.Count == 0)
+        {
+            Log.Info("Insufficient ready players to fill up with antags, stopping the selection.");
+            return results;
+        }
+
+        for (var i = 0; i < antagCount; i++)
+        {
+            results.Add(_random.PickAndTake(prefList));
+            Log.Info("Selected a preferred antag.");
+        }
+        return results;
     }
 
     /// <summary>
