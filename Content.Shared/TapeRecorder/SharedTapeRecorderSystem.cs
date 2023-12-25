@@ -393,7 +393,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         if (component.Mode != TapeRecorderMode.Recording || !component.Active)
             return false;
 
-        RemComp<RecordingTapeRecorderComponent>(tapeRecorder);
+        RemCompDeferred<RecordingTapeRecorderComponent>(tapeRecorder);
         component.Active = false;
 
         UpdateAppearance(tapeRecorder, component, TapeRecorderMode.Stopped);
@@ -446,7 +446,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         if (component.Mode != TapeRecorderMode.Playing || !component.Active)
             return false;
 
-        RemComp<PlayingTapeRecorderComponent>(tapeRecorder);
+        RemCompDeferred<PlayingTapeRecorderComponent>(tapeRecorder);
         component.Active = false;
 
         UpdateAppearance(tapeRecorder, component, TapeRecorderMode.Stopped);
@@ -499,7 +499,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         if (component.Mode != TapeRecorderMode.Rewinding || !component.Active)
             return false;
 
-        RemComp<RewindingTapeRecorderComponent>(tapeRecorder);
+        RemCompDeferred<RewindingTapeRecorderComponent>(tapeRecorder);
         component.Active = false;
 
         UpdateAppearance(tapeRecorder, component, TapeRecorderMode.Stopped);
