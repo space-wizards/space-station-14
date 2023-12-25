@@ -32,7 +32,8 @@ thief-backpack-category-chemistry-description =
     A set for those who love to improve their body.
     It includes a storage implanter,
     a DNA scrambler implanter,
-    and a set of chemicals for a rainy day.
+    a set of chemicals for a rainy day,
+    and omega soap.
 
 thief-backpack-category-syndie-name = syndie kit
 thief-backpack-category-syndie-description =
