@@ -116,8 +116,8 @@
   - type: BasicStationEventScheduler
 
 - type: entity
-  id: Survival
+  id: RampingStationEventScheduler
   parent: BaseGameRule
   noSpawn: true
   components:
-  - type: SurvivalRule
+  - type: RampingStationEventScheduler

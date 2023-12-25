@@ -6,7 +6,7 @@
   showInVote: false # secret
   description: survival-description
   rules:
-  - Survival
+    - RampingStationEventScheduler
 
 - type: gamePreset
   id: Extended

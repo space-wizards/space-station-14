@@ -33,8 +33,7 @@ public sealed class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleCompon
         if (grid is null)
             return;
 
-        // todo event scaling
-        var amountToSpawn = Math.Max(1, 1);
+        var amountToSpawn = Math.Max(1, (int) MathF.Round(GetSeverityModifier() / 2));
         for (var i = 0; i < amountToSpawn; i++)
         {
             _anomaly.SpawnOnRandomGridLocation(grid.Value, component.AnomalySpawnerPrototype);
