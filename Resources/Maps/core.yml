@@ -99332,7 +99332,7 @@ entities:
     - pos: 60.5,-2.5
       parent: 2
       type: Transform
-- proto: PotatoAIChip
+- proto: PersonaCore
   entities:
   - uid: 17525
     components:
