@@ -82,6 +82,7 @@
     concerningOrangeFore: "#A5762F"
     dangerousRedFore: "#BB3232"
     disabledFore: "#5A5A5A"
+    _itemstatus_offset: "#010000"
 - type: uiTheme
   id: SS14ErisTheme
   path: /Textures/Interface/Eris/
@@ -96,3 +97,4 @@
     concerningOrangeFore: "#A5762F"
     dangerousRedFore: "#BB3232"
     disabledFore: "#5A5A5A"
+    _itemstatus_offset: "#010000"
