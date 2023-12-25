@@ -16,6 +16,9 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         // Set of atmos devices that are off-grid but have JoinSystem set.
         private readonly HashSet<Entity<AtmosDeviceComponent>> _joinedDevices = new();
 
+        private static AtmosDeviceDisabledEvent _disabledEv = new();
+        private static AtmosDeviceEnabledEvent _enabledEv = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -45,7 +48,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             }
 
             component.LastProcess = _gameTiming.CurTime;
-            RaiseLocalEvent(ent, new AtmosDeviceEnabledEvent());
+            RaiseLocalEvent(ent, ref _enabledEv);
         }
 
         public void LeaveAtmosphere(Entity<AtmosDeviceComponent> ent)
@@ -66,7 +69,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             }
 
             component.LastProcess = TimeSpan.Zero;
-            RaiseLocalEvent(ent, new AtmosDeviceDisabledEvent());
+            RaiseLocalEvent(ent, ref _disabledEv);
         }
 
         public void RejoinAtmosphere(Entity<AtmosDeviceComponent> component)
@@ -116,9 +119,10 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             _timer -= _atmosphereSystem.AtmosTime;
 
             var time = _gameTiming.CurTime;
+            var ev = new AtmosDeviceUpdateEvent(_atmosphereSystem.AtmosTime);
             foreach (var device in _joinedDevices)
             {
-                RaiseLocalEvent(device, new AtmosDeviceUpdateEvent(_atmosphereSystem.AtmosTime));
+                RaiseLocalEvent(device, ref ev);
                 device.Comp.LastProcess = time;
             }
         }

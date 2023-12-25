@@ -45,7 +45,7 @@
    <GuideEntityEmbed Entity="MobRatServant" Caption="Rat Servant"/>
   </Box>
   - Raise an Army of [color=#a4885c]Rat Servants[/color].
-  - Conjure a cloud of miasma.
+  - Conjure a cloud of ammonia.
 
   # Space Dragon
 
@@ -59,6 +59,7 @@
   ## Abilities
 
   - Devour critical or dead victims.
+
   <Box>
     <GuideEntityEmbed Entity="MobCarp" Caption=""/>
     <GuideEntityEmbed Entity="CarpRift" Caption=""/>

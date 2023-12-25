@@ -70,4 +70,4 @@ public readonly record struct ItemMaskToggledEvent(EntityUid Wearer, bool IsTogg
 ///     Event raised on the entity wearing the mask when it is toggled.
 /// </summary>
 [ByRefEvent]
-public readonly record struct WearerMaskToggledEvent(bool Enabled);
+public readonly record struct WearerMaskToggledEvent(bool IsToggled);

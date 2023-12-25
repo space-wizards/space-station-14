@@ -101,7 +101,7 @@
       effects:
       - !type:GenericStatusEffect
         key: Drunk
-        time: 2.0
+        time: 6.0
         type: Remove
       - !type:HealthChange
         damage:
@@ -181,7 +181,7 @@
           conditions:
           - !type:Temperature
             # this is a little arbitrary but they gotta be pretty cold
-            max: 150.0
+            max: 213.0
           damage:
           # todo scale with temp like SS13
             groups:
@@ -204,7 +204,7 @@
         - !type:HealthChange
           conditions:
           - !type:Temperature
-            max: 150.0
+            max: 213.0
           damage:
             types:
              Cellular: -2
@@ -285,9 +285,9 @@
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
-          reagent: Lexorin
+          reagent: HeartbreakerToxin
           min: 1
-        reagent: Lexorin
+        reagent: HeartbreakerToxin
         amount: -3
       - !type:HealthChange
         conditions:
@@ -334,12 +334,12 @@
             Asphyxiation: 1
             Poison: 1
       - !type:AdjustReagent
-        reagent: Lexorin
+        reagent: HeartbreakerToxin
         amount: -2
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
-          reagent: Lexorin
+          reagent: 
           min: 1
         reagent: Epinephrine
         amount: -1
@@ -347,7 +347,7 @@
         probability: 0.1
         conditions:
         - !type:ReagentThreshold
-          reagent: Lexorin
+          reagent: HeartbreakerToxin
           min: 1
         reagent: Histamine
         amount: 4
@@ -491,6 +491,9 @@
         visualType: Medium
         messages: [ "leporazine-effect-temperature-adjusting" ]
         probability: 0.2
+      - !type:AdjustReagent
+        reagent: Fresium
+        amount: -5
 
 - type: reagent
   id: Barozine
@@ -1001,3 +1004,26 @@
         damage:
           types:
             Poison: 4
+
+- type: reagent
+  id: Holywater
+  name: reagent-name-holywater
+  group: Medicine
+  desc: reagent-desc-holywater
+  physicalDesc: reagent-physical-desc-holy
+  flavor: holy
+  color: "#91C3F7"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        condition:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
