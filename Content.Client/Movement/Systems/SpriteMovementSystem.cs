@@ -2,6 +2,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Robust.Client.GameObjects;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Movement.Systems;
 
@@ -10,6 +11,8 @@ namespace Content.Client.Movement.Systems;
 /// </summary>
 public sealed class SpriteMovementSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
+
     private EntityQuery<SpriteComponent> _spriteQuery;
 
     public override void Initialize()
@@ -21,6 +24,9 @@ public sealed class SpriteMovementSystem : EntitySystem
 
     private void OnSpriteMoveInput(EntityUid uid, SpriteMovementComponent component, ref MoveInputEvent args)
     {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
         var oldMoving = SharedMoverController.GetNormalizedMovement(args.OldMovement) != MoveButtons.None;
         var moving = SharedMoverController.GetNormalizedMovement(args.Component.HeldMoveButtons) != MoveButtons.None;
 
@@ -33,6 +39,8 @@ public sealed class SpriteMovementSystem : EntitySystem
             {
                 sprite.LayerSetState(layer, state);
             }
+
+            Log.Debug($"Set movement state");
         }
         else
         {
@@ -40,6 +48,8 @@ public sealed class SpriteMovementSystem : EntitySystem
             {
                 sprite.LayerSetState(layer, state);
             }
+
+            Log.Debug($"Unset movement state");
         }
     }
 }

@@ -33,6 +33,7 @@
   - type: Sprite
     layers:
     - state: miner
+      map: ["movement"]
     - state: miner_e_r
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
@@ -41,6 +42,11 @@
       shader: unshaded
       map: ["light"]
       visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement: miner_moving
+    noMovementLayers:
+      movement: miner
   - type: BorgChassis
     maxModules: 4
     moduleWhitelist:
@@ -119,6 +125,7 @@
   - type: Sprite
     layers:
     - state: janitor
+      map: ["movement"]
     - state: janitor_e_r
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
@@ -127,6 +134,11 @@
       shader: unshaded
       map: ["light"]
       visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement: janitor_moving
+    noMovementLayers:
+      movement: janitor
   - type: BorgChassis
     maxModules: 4
     moduleWhitelist:
