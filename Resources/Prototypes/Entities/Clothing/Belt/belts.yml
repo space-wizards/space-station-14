@@ -423,33 +423,6 @@
           - CaptainSabre
   - type: Appearance
 
-- type: entity
-  parent: ClothingBeltStorageBase
-  id: ClothingBeltSheathKatana
-  name: katana sheath
-  description: An ornate sheath designed to hold a katana.
-  components:
-  - type: Sprite
-    sprite: Clothing/Belt/sheath.rsi
-    state: sheath
-  - type: Clothing
-    sprite: Clothing/Belt/sheath.rsi
-  - type: Storage
-    grid:
-    - 0,0,3,3
-    whitelist:
-      tags:
-        - Katana
-  - type: ItemMapper
-    mapLayers:
-      sheath-sabre:
-        whitelist:
-          tags:
-          - Katana
-  - type: Appearance
-
-
-
 # Belts without visualizers
 
 - type: entity
