@@ -38,13 +38,13 @@ namespace Content.Client.Decals.Overlays
                 return;
             }
 
+            if (xform.MapID != args.MapId)
+                return;
+
             // Shouldn't need to clear cached textures unless the prototypes get reloaded.
             var handle = args.WorldHandle;
             var xformSystem = _entManager.System<TransformSystem>();
             var eyeAngle = args.Viewport.Eye?.Rotation ?? Angle.Zero;
-
-            if (xform.MapID != args.MapId)
-                return;
 
             var zIndexDictionary = decalGrid.DecalRenderIndex;
 
