@@ -115,6 +115,7 @@ public sealed partial class CriminalRecordsConsoleWindow : DefaultWindow
                 // prevent total spam wiping
                 History.ClearSelected();
                 _historyIndex = null;
+                DeleteHistoryButton.Disabled = true;
             }
         };
 
