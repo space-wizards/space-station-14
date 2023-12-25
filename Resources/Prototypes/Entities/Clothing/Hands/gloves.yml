@@ -453,7 +453,7 @@
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesKravMaga
-  name: kravmaga gloves
+  name: krav-maga gloves
   description: These gloves allow their wearers to hit the solar plexus, lung and throat with professional dignity.
   components:
   - type: Sprite

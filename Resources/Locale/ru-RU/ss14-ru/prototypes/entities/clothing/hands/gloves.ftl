@@ -51,5 +51,5 @@ ent-ClothingHandsGlovesFingerlessInsulated = беспалые изолирова
     .desc = Изолированные перчатки, защищают от шока. Ну или защищали... 
 ent-ClothingHandsGlovesHop = разрезостойкие перчатки
     .desc = Отличное подспорье для бумажной работы и бюрократии.
-ent-ClothingHandsGlovesKravMaga = крав мага
+ent-ClothingHandsGlovesKravMaga = крав-мага
     .desc = Эти перчатки позволяют их владельцам с профессиональным достоинством ударять по солнечному сплетению, легким и горлу.
