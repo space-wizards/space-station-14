@@ -9,4 +9,6 @@ public sealed partial class LandMineComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool ExplodeImmediately = false;
+
+    public float TriggerAudioRange = 10f;
 }
