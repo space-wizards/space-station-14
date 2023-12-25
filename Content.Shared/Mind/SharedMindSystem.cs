@@ -11,6 +11,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
+using Content.Shared.Ghost;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -25,6 +26,7 @@ public abstract class SharedMindSystem : EntitySystem
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly SharedPlayerSystem _player = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly SharedGhostSystem _ghosts = default!;
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
@@ -149,9 +151,12 @@ public abstract class SharedMindSystem : EntitySystem
         var dead = _mobState.IsDead(uid);
         var hasUserId = CompOrNull<MindComponent>(mindContainer.Mind)?.UserId;
         var hasSession = CompOrNull<MindComponent>(mindContainer.Mind)?.Session;
+        bool hasSeeAntag = HasComp<NoReviveComponent>(uid);
 
         if (dead && hasUserId == null)
             args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
+        else if (dead && hasSeeAntag)
+            args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-see-antag", ("ent", uid))}[/color]");
         else if (dead && hasSession == null)
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
         else if (dead)

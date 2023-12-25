@@ -3,10 +3,9 @@ using Content.Shared.Actions;
 using Content.Shared.Ghost;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
-using Content.Shared.Overlays;
+
 namespace Content.Client.Ghost
 {
     public sealed class GhostSystem : SharedGhostSystem

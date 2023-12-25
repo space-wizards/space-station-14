@@ -1,4 +1,4 @@
-using Content.Shared.Ghost;
+using Content.Shared.Overlays;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Client.Player;
@@ -24,7 +24,7 @@ public abstract class AntagStatusIconSystem<T> : SharedStatusIconSystem
     {
         var ent = _player.LocalPlayer?.ControlledEntity;
 
-        if (!HasComp<T>(ent) && !HasComp<GhostComponent>(ent))
+        if (!HasComp<T>(ent) && !HasComp<ShowAntagIconsComponent>(ent))
             return;
 
         args.StatusIcons.Add(_prototype.Index<StatusIconPrototype>(antagStatusIcon));

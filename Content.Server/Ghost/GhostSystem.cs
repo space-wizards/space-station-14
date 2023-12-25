@@ -16,11 +16,14 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Storage.Components;
+using Content.Shared.Database;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Content.Server.Administration.Logs;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Content.Shared.Overlays;
 
@@ -28,6 +31,7 @@ namespace Content.Server.Ghost
 {
     public sealed class GhostSystem : SharedGhostSystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly SharedEyeSystem _eye = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
@@ -41,6 +45,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly GhostSystem _ghost = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
 
         public override void Initialize()
@@ -301,25 +306,63 @@ namespace Content.Server.Ghost
                 Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostIconToggleRequest)} without being a ghost.");
                 return;
             }
-            if (HasComp<ShowSecurityIconsComponent>(entity) && HasComp<ShowSyndicateIconsComponent>(entity))
+
+            if (HasComp<ShowSecurityIconsComponent>(entity) && HasComp<ShowSyndicateIconsComponent>(entity) && HasComp<ShowAntagIconsComponent>(entity))
             {
                 RemComp<ShowSecurityIconsComponent>(entity);
                 RemComp<ShowSyndicateIconsComponent>(entity);
+                RemComp<ShowAntagIconsComponent>(entity);
             }
             else
             {
-                if (!HasComp<ShowSecurityIconsComponent>(entity))
-                {
-                    AddComp<ShowSecurityIconsComponent>(entity);
-                }
+                EnsureComp<ShowSecurityIconsComponent>(entity);
+                EnsureComp<ShowSyndicateIconsComponent>(entity);
+                EnsureComp<ShowAntagIconsComponent>(entity);
 
-                if (!HasComp<ShowSyndicateIconsComponent>(entity))
+                _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(entity)} requested the ability to see roles");
+                Blockrevive(entity);
+            }
+
+
+
+            EntityManager.DirtyEntity(entity);
+            
+
+
+
+        }
+
+
+
+
+
+        /// <summary>
+        /// Block a ghost entity to return to its original entity.
+        /// </summary>
+        private void Blockrevive(EntityUid entity, MindComponent? mind = null)
+        {
+
+            if (!TryComp<VisitingMindComponent>(entity, out var mindvisiting))
+                return;
+
+            if (mindvisiting.MindId is EntityUid mindId)
+            {
+                if (!Resolve(mindId, ref mind))
                 {
-                    AddComp<ShowSyndicateIconsComponent>(entity);
+                    return;
+                }
+                var BodyEntity = GetEntity(mind.OriginalOwnedEntity);
+                if (BodyEntity is EntityUid bodyentity)
+                {
+                    EnsureComp<NoReviveComponent>(bodyentity);
+                    DirtyEntity(bodyentity);
                 }
             }
-            EntityManager.DirtyEntity(entity);
+            _ghost.SetCanReturnToBody(entity, false);
+
         }
+
+
 
         private IEnumerable<GhostWarp> GetLocationWarps()
         {

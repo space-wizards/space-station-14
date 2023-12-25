@@ -101,7 +101,7 @@
 - type: entity
   id: ActionToggleIcon
   name: Toggle Icons
-  description: Toggle the visibility of Job and syndie icon.
+  description: Toggle the visibility of antag icon.
   noSpawn: true
   components:
   - type: InstantAction

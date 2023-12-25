@@ -19,6 +19,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
+using Content.Shared.Ghost;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -228,17 +229,25 @@ public sealed class DefibrillatorSystem : EntitySystem
             if (_mind.TryGetMind(target, out var mindId, out var mind) &&
                 mind.Session is { } playerSession)
             {
-                session = playerSession;
-                // notify them they're being revived.
-                if (mind.CurrentEntity != target)
+                if (!HasComp<NoReviveComponent>(target))
                 {
-                    _euiManager.OpenEui(new ReturnToBodyEui(mind, _mind), session);
+                    session = playerSession;
+                    // notify them they're being revived.
+                    if (mind.CurrentEntity != target)
+                    {
+                        _euiManager.OpenEui(new ReturnToBodyEui(mind, _mind), session);
+                    }
+                }
+                else
+                {
+                    _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-see-antag"),
+                    InGameICChatType.Speak, true);
                 }
             }
             else
             {
                 _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-no-mind"),
-                    InGameICChatType.Speak, true);
+                InGameICChatType.Speak, true);
             }
         }
 

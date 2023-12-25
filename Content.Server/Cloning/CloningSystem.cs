@@ -26,6 +26,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.Ghost;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -209,6 +210,17 @@ namespace Content.Server.Cloning
                 return false;
             }
 
+            if (HasComp<NoReviveComponent>(bodyToClone))
+            {
+                if (clonePod.ConnectedConsole != null)
+                {
+                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value,
+                        Loc.GetString("cloning-console-see-antag-error"),
+                        InGameICChatType.Speak, false);
+                }
+
+                return false;
+            }
             // biomass checks
             var biomassAmount = _material.GetMaterialAmount(uid, clonePod.RequiredMaterial);
 
