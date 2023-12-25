@@ -15,7 +15,7 @@
         volume: -2
         maxDistance: 5
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: Objects/Misc/stamps.rsi
     state: stamp-mime
   - type: Item
     size: Tiny
@@ -48,7 +48,6 @@
     stampedColor: "#3681bb"
     stampState: "paper_stamp-cap"
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-cap
 
 - type: entity
@@ -62,7 +61,6 @@
     stampedColor: "#006600"
     stampState: "paper_stamp-centcom"
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-centcom
 
 - type: entity
@@ -158,7 +156,6 @@
     stampState: "paper_stamp-mime"
     # TODO remove sound from mime's rubber stamp
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-mime
 
 - type: entity
