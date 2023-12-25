@@ -193,6 +193,17 @@
   flatReductions:
     Blunt: 5
 
+# hurt a lot by blunt, immune to a good amount of other stuff because they're a cookie
+- type: damageModifierSet
+  id: Gingerbread
+  coefficients:
+    Blunt: 1.5
+    Cold: 0.0
+    Radiation: 0.5
+    Asphyxiation: 0.0
+    Bloodloss: 0.0
+    Cellular: 0.0
+
 # Represents which damage types should be modified
 # in relation to how they cause bleed rate.
 - type: damageModifierSet
