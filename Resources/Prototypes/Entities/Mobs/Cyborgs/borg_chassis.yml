@@ -162,6 +162,7 @@
   - type: Sprite
     layers:
     - state: medical
+      map: ["movement"]
     - state: medical_e_r
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
@@ -170,6 +171,11 @@
       shader: unshaded
       map: ["light"]
       visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement: medical_moving
+    noMovementLayers:
+      movement: medical
   - type: BorgChassis
     maxModules: 4
     moduleWhitelist:
