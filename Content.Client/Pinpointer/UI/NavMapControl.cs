@@ -27,10 +27,12 @@ public partial class NavMapControl : MapGridControl
     [Dependency] private readonly IEntityManager _entManager = default!;
     private readonly SharedTransformSystem _transformSystem = default!;
 
+    public EntityUid? Owner;
     public EntityUid? MapUid;
 
     // Actions
     public event Action<NetEntity?>? TrackedEntitySelectedAction;
+    public event Action<DrawingHandleScreen>? PostWallDrawingAction;
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
@@ -358,6 +360,9 @@ public partial class NavMapControl : MapGridControl
             }
         }
 
+        if (PostWallDrawingAction != null)
+            PostWallDrawingAction.Invoke(handle);
+
         // Beacons
         if (_beacons.Pressed)
         {
@@ -455,7 +460,7 @@ public partial class NavMapControl : MapGridControl
         }
     }
 
-    private void UpdateNavMap()
+    protected virtual void UpdateNavMap()
     {
         if (_navMap == null || _grid == null)
             return;
