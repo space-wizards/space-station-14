@@ -88,7 +88,7 @@
   name: plasma monosword
   parent: Katana
   id: PlasmaMonosword
-  description: A katana infused with strong energy.
+  description: A plasma monosword. It looks like you can slot in a persona core.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_monosword.rsi
@@ -110,8 +110,8 @@
   - type: EnergySword
     litDamageBonus:
         types:
-            Caustic: 10
-            Heat: 20
+            Caustic: 15
+            Heat: 10
             Blunt: -4.5
   - type: PointLight
     enabled: false
@@ -129,6 +129,9 @@
       right:
       - state: inhand-right-blade
         shader: unshaded
+  - type: Construction
+    graph: InstallPersonaCoreMonosword
+    node: start
 
 - type: entity
   name: persona plasma monosword
@@ -139,7 +142,6 @@
   - type: GhostRole
     prob: 1
     name: ghost-role-information-Persona-Sword-name
-    allowMovement: false
     description: ghost-role-information-Persona-Sword-description
     rules: ghost-role-information-Persona-Sword-rules
   - type: GhostTakeoverAvailable
@@ -149,7 +151,7 @@
     angle: 45
     hidden: false
     damage:
-      groups:
+      types:
         Blunt: 4.5
 
 - type: entity

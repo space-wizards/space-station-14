@@ -189,3 +189,7 @@ ghost-role-information-Cak-rules = You are a living edible sweet cat. Your task 
 ghost-role-information-BreadDog-name = BreadDog
 ghost-role-information-BreadDog-description = You are the chef's favorite child. You're a living bread dog.
 ghost-role-information-BreadDog-rules = You're an edible dog made of bread. Your task is to find your place in this world where everything wants to eat you.
+
+ghost-role-information-Persona-Sword-name = Persona Monosword
+ghost-role-information-Persona-Sword-description = You are a monosword infused with a persona core. Obey your owner, analyse their combat effectiveness, suggest new strategies. Fight for them when released. 
+ghost-role-information-Persona-Sword-rules = You may not attack your owner. Ownership can only be transferred by your owner. 

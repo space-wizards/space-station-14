@@ -110,6 +110,8 @@
         - proto: WaterTankHighCapacity
         - proto: WeldingFuelTankHighCapacity
           cost: 3
+        - proto: PlasmaMonosword
+          cost: 5
 
 # Mob loot table
 

@@ -973,10 +973,10 @@
   id: SkeletonMotorcycleKeys
 
 - type: Tag
-  id: SmallAIChip
+  id: SmallMech
 
 - type: Tag
-  id: SmallMech
+  id: SmallPersonaCore
 
 - type: Tag
   id: Smokable

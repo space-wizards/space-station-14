@@ -1,0 +1,17 @@
+- type: entity
+  id: PersonaCore
+  name: supercompact persona core
+  parent: BaseItem
+  description: This high-tech persona core requires a voltage of exactly 1.1V to function correctly. 
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/potatoai_chip.rsi
+      state: icon
+    - type: Item
+      size: Tiny
+    - type: Tag
+      tags:
+        - SmallPersonaCore
+    - type: Construction
+      graph: PersonaCore
+      node: personacore

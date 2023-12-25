@@ -35,8 +35,8 @@
                 sprite: Objects/Power/power_cells.rsi
                 state: potato
               doAfter: 1
-            - tag: SmallAIChip
-              name: a super-compact AI chip
+            - tag: SmallPersonaCore
+              name: a super-compact persona core
               icon:
                 sprite: Objects/Misc/potatoai_chip.rsi
                 state: icon
@@ -44,12 +44,12 @@
       entity: PotatoAI
 
 - type: constructionGraph
-  id: PotatoAIChip
+  id: PersonaCore
   start: start
   graph:
     - node: start
       edges:
-        - to: potatoaichip
+        - to: personacore
           steps:
             - material: Steel
               amount: 1
@@ -70,5 +70,5 @@
               icon:
                 sprite: Objects/Misc/stock_parts.rsi
                 state: capacitor
-    - node: potatoaichip
-      entity: PotatoAIChip
+    - node: personacore
+      entity: PersonaCore

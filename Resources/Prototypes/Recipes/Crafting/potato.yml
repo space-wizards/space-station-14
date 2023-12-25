@@ -21,12 +21,12 @@
   objectType: Item
   
 - type: construction
-  name: supercompact AI chip
-  id: PotatoAIChip
-  graph: PotatoAIChip
+  name: supercompact persona core
+  id: PersonaCore
+  graph: PersonaCore
   startNode: start
-  targetNode: potatoaichip
+  targetNode: personacore
   category: construction-category-misc
-  description: A masterfully(?) crafted AI chip, requiring a similarly improvised power source.
+  description: A masterfully(?) crafted persona core, requiring a similarly improvised power source or a masterfully crafted blade.
   icon: { sprite: Objects/Misc/potatoai_chip.rsi, state: icon }
   objectType: Item

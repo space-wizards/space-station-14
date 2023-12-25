@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: InstallPersonaCoreMonosword
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: persona
+          steps:
+            - tag: SmallPersonaCore
+              doAfter: 2
+
+    - node: persona
+      entity: PersonaPlasmaMonosword
