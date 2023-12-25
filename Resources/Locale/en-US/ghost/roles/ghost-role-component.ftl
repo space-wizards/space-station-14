@@ -109,6 +109,9 @@ ghost-role-information-space-cobra-description = Space cobras really don't like 
 ghost-role-information-salvage-cobra-name = Space cobra on salvage wreck
 ghost-role-information-salvage-cobra-description = Space cobras really don't like guests, and will always snack on a visitor.
 
+ghost-role-information-tropico-name = Tropico
+ghost-role-information-tropico-description = The noble companion of Atmosia, and its most stalwart defender. Viva!
+
 ghost-role-information-guardian-name = Guardian
 ghost-role-information-guardian-description = Listen to your owner. Don't tank damage. Punch people hard.
 
@@ -183,9 +186,13 @@ ghost-role-information-Death-Squad-name = Death Squad Operative
 ghost-role-information-Death-Squad-description = One of Nanotrasen's top internal affairs agents. Await orders from CentComm or an official.
 
 ghost-role-information-Cak-name = Cak
-ghost-role-information-Cak-description = You are the chef's favorite child. You're a living cake cat.  
+ghost-role-information-Cak-description = You are the chef's favorite child. You're a living cake cat.
 ghost-role-information-Cak-rules = You are a living edible sweet cat. Your task is to find your place in this world where everything wants to eat you.
 
 ghost-role-information-BreadDog-name = BreadDog
 ghost-role-information-BreadDog-description = You are the chef's favorite child. You're a living bread dog.
 ghost-role-information-BreadDog-rules = You're an edible dog made of bread. Your task is to find your place in this world where everything wants to eat you.
+
+ghost-role-information-exterminator-name = Exterminator
+ghost-role-information-exterminator-description = You been been sent back in time to terminate a target with high importance to the future.
+ghost-role-information-exterminator-rules = You are an antagonist and may kill anyone that tries to stop you, but killing the target is always your top priority.

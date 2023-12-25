@@ -128,6 +128,19 @@
       - MobCatException
 
 - type: entity
+  name: Tropico Spawner
+  id: SpawnMobCrabAtmos
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCrabAtmos
+
+- type: entity
   name: Floppa Spawner
   id: SpawnMobCatFloppa
   parent: MarkerBase
@@ -165,7 +178,7 @@
   - type: ConditionalSpawner
     prototypes:
       - MobCatSpace
-    
+
 - type: entity
   name: Kitten Spawner
   id: SpawnMobCatKitten
