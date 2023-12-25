@@ -132,6 +132,16 @@
     Uranium: 150
 
 - type: latheRecipe
+  id: OreBagOfHolding
+  result: OreBagOfHolding
+  completetime: 5
+  materials:
+    Steel: 2000
+    Silver: 750
+    Plasma: 1500
+    Uranium: 150
+
+- type: latheRecipe
   id: WeaponCrusher
   result: WeaponCrusher
   completetime: 5
