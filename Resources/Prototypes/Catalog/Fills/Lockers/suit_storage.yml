@@ -302,3 +302,16 @@
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitWizard
         - id: ClothingMaskBreath
+
+#Wizard
+- type: entity
+  id: SuitStorageQM
+  parent: SuitStorageBase
+  suffix: Quartmaster
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitLuxuryAlter
+        - id: ClothingMaskBreath
