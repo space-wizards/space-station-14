@@ -105,6 +105,9 @@ public sealed partial class CriminalRecordsConsoleWindow : DefaultWindow
             {
                 OnAddHistoryPressed?.Invoke(e, HistoryLineEdit.Text);
                 HistoryLineEdit.Clear();
+                // adding deselects so prevent deleting yeah
+                _historyIndex = null;
+                DeleteHistoryButton.Disabled = true;
             }
         };
         DeleteHistoryButton.OnPressed += e =>
