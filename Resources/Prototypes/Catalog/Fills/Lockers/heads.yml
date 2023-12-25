@@ -198,6 +198,7 @@
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
       - id: CoreCMOModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: CompactDefibrillator # @keeyn Compact defibrillator
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -222,6 +223,7 @@
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
       - id: CoreCMOModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: CompactDefibrillator # @keeyn Compact defibrillator
 
 - type: entity
   id: LockerResearchDirectorFilledHardsuit

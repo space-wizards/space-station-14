@@ -1,0 +1,11 @@
+- type: technology # Imperial
+  id: CompactDefibrillators
+  name: research-technology-compact-defibrillators
+  icon:
+    sprite: Imperial/CompactDefib/compactdefib.rsi
+    state: icon
+  discipline: Biochemical
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - CompactDefibrillator

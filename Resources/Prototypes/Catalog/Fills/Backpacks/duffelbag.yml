@@ -323,7 +323,7 @@
   - type: StorageFill
     contents:
       - id: MedkitCombatFilled
-      - id: Defibrillator
+      - id: CompactDefibrillator # @keeyn Compact defibrillator
       - id: CombatMedipen
         amount: 3
       - id: ClothingHandsGlovesLatex

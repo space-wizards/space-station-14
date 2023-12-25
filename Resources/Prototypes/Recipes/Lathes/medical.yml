@@ -126,6 +126,7 @@
   materials:
     Steel: 300
 
+
 - type: latheRecipe
   id: Medkit
   result: Medkit
