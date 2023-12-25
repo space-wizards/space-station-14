@@ -116,30 +116,23 @@ namespace Content.Server.Medical
         /// <summary>
         /// Mark the entity as having its health analyzed, and link the analyzer to it
         /// </summary>
-        private void BeginAnalyzingEntity(EntityUid uid, EntityUid healthAnalyzerUid, HealthAnalyzerComponent? component = null, HealthBeingAnalyzedComponent? healthBeingAnalyzedComponent = null)
+        private void BeginAnalyzingEntity(EntityUid uid, EntityUid healthAnalyzerUid, HealthAnalyzerComponent healthAnalyzerComponent)
         {
-            if (!Resolve(healthAnalyzerUid, ref component))
-                return;
-
-            if (!Resolve(uid, ref healthBeingAnalyzedComponent, false))
-            {
-                //No other active analyzers, create the component and attach to the scanned entity
-                healthBeingAnalyzedComponent = new HealthBeingAnalyzedComponent();
-                AddComp(uid, healthBeingAnalyzedComponent);
-            }
+            var healthBeingAnalyzedComponent = EnsureComp<HealthBeingAnalyzedComponent>(uid);
 
             if (!healthBeingAnalyzedComponent.ActiveAnalyzers.Contains(healthAnalyzerUid))
                 healthBeingAnalyzedComponent.ActiveAnalyzers.Add(healthAnalyzerUid);
 
-            component.ScannedEntity = uid;
+            //Link the health analyzer to the scanned entity
+            healthAnalyzerComponent.ScannedEntity = uid;
         }
 
         /// <summary>
         /// Remove the analyzer from the active list, and remove the component if it has no active analyzers
         /// </summary>
-        private void StopAnalyzingEntity(EntityUid uid, EntityUid healthAnalyzerUid, HealthAnalyzerComponent? component = null, HealthBeingAnalyzedComponent? healthBeingAnalyzedComponent = null)
+        private void StopAnalyzingEntity(EntityUid uid, EntityUid healthAnalyzerUid, HealthAnalyzerComponent? healthAnalyzerComponent = null)
         {
-            if (!Resolve(uid, ref healthBeingAnalyzedComponent, false))
+            if (!TryComp<HealthBeingAnalyzedComponent>(uid, out var healthBeingAnalyzedComponent))
                 return;
 
             //If there is more than 1 analyzer currently monitoring this entity, just remove from the list
@@ -153,11 +146,10 @@ namespace Content.Server.Medical
                 RemComp<HealthBeingAnalyzedComponent>(uid);
             }
 
-            //If we can find the health analyzer, update it
-            if (Resolve(healthAnalyzerUid, ref component))
-            {
-                component.ScannedEntity = null;
-            }
+
+            //Unlink the analyzer if it still exists
+            if (Resolve<HealthAnalyzerComponent>(healthAnalyzerUid, ref healthAnalyzerComponent, false))
+                healthAnalyzerComponent.ScannedEntity = null;
         }
 
         private void OnDamageChanged(EntityUid damagedEntityUid, HealthBeingAnalyzedComponent component, DamageChangedEvent args)
