@@ -17,7 +17,7 @@ namespace Content.Server.Atmos.Reactions
 
         [DataField("molesPerUnit")] public float MolesPerUnit { get; private set; } = 1;
 
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
         {
             // If any of the prototypes is invalid, we do nothing.
             if (string.IsNullOrEmpty(Reagent))
@@ -34,9 +34,8 @@ namespace Content.Server.Atmos.Reactions
             // Remove the moles from the mixture...
             mixture.AdjustMoles(GasId, -MolesPerUnit);
 
-            var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex);
-            EntitySystem.Get<PuddleSystem>()
-                .TrySpillAt(tileRef, new Solution(Reagent, FixedPoint2.New(MolesPerUnit)), out _, sound: false);
+            var tileRef = atmosphereSystem.GetTileRef(tile);
+            atmosphereSystem.Puddle.TrySpillAt(tileRef, new Solution(Reagent, FixedPoint2.New(MolesPerUnit)), out _, sound: false);
 
             return ReactionResult.Reacting;
         }

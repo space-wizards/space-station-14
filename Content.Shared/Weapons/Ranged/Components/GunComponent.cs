@@ -1,7 +1,11 @@
+using Content.Shared.Damage;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -111,6 +115,18 @@ public partial class GunComponent : Component
     public bool ResetOnHandSelected = true;
 
     /// <summary>
+    /// Type of ammo the gun can work with
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("compatibleAmmo")]
+    public List<ProtoId<TagPrototype>>? CompatibleAmmo;
+
+    /// <summary>
+    /// Damage the gun deals when used with wrong ammo
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("damageOnWrongAmmo")]
+    public DamageSpecifier? DamageOnWrongAmmo = null;
+
+    /// <summary>
     /// How fast the projectile moves.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("projectileSpeed")]
@@ -149,7 +165,7 @@ public partial class GunComponent : Component
     /// Whether or not someone with the
     /// clumsy trait can shoot this
     /// </summary>
-    [DataField("clumsyProof")]
+    [DataField("clumsyProof"), ViewVariables(VVAccess.ReadWrite)]
     public bool ClumsyProof = false;
 }
 

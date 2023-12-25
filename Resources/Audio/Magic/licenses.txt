@@ -1,8 +1,0 @@
-https://github.com/Citadel-Station-13/Citadel-Station-13/blob/master/sound/magic/ForceWall.ogg
-https://github.com/Citadel-Station-13/Citadel-Station-13/blob/master/sound/magic/blink.ogg
-https://github.com/Citadel-Station-13/Citadel-Station-13/blob/master/sound/magic/Knock.ogg
-
-fireball.ogg taken from /tg/station at https://github.com/tgstation/tgstation/commit/906fb0682bab6a0975b45036001c54f021f58ae7
-disintegrate.ogg from /tg/station at https://github.com/tgstation/tgstation/commit/6fde7a49fcd56d6edb844cd31a04ce026065de8b
-
-copyright: CC BY-SA 3.0

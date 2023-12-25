@@ -31,6 +31,9 @@ namespace Content.Server.GameTicking
         [ValidatePrototypeId<EntityPrototype>]
         public const string ObserverPrototypeName = "MobObserver";
 
+        [ValidatePrototypeId<EntityPrototype>]
+        public const string AdminObserverPrototypeName = "AdminObserver";
+
         /// <summary>
         /// How many players have joined the round through normal methods.
         /// Useful for game rules to look at. Doesn't count observers, people in lobby, etc.
@@ -200,7 +203,7 @@ namespace Content.Server.GameTicking
             _mind.SetUserId(newMind, data.UserId);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
-            var job = new JobComponent { PrototypeId = jobId };
+            var job = new JobComponent { Prototype = jobId };
             _roles.MindAddRole(newMind, job, silent: silent);
             var jobName = _jobs.MindTryGetJobName(newMind);
 

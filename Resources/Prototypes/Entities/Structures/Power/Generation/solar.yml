@@ -36,6 +36,12 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: output
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: static
+    collectionName: SolarPanel   
   - type: Anchorable
   - type: Pullable
   - type: Electrified

@@ -18,6 +18,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -153,7 +154,7 @@ public sealed partial class ClimbSystem : VirtualController
     {
         if (component.NextTransition != null)
         {
-            StopClimb(uid, component);
+            FinishTransition(uid, component);
         }
     }
 
@@ -162,11 +163,16 @@ public sealed partial class ClimbSystem : VirtualController
          if (args.Handled)
              return;
 
+
          var canVault = args.User == args.Dragged
              ? CanVault(component, args.User, uid, out _)
              : CanVault(component, args.User, args.Dragged, uid, out _);
 
          args.CanDrop = canVault;
+
+         if (!HasComp<HandsComponent>(args.User))
+             args.CanDrop = false;
+
          args.Handled = true;
      }
 
@@ -188,9 +194,7 @@ public sealed partial class ClimbSystem : VirtualController
 
      private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, ref DragDropTargetEvent args)
      {
-         // definitely a better way to check if two entities are equal
-         // but don't have computer access and i have to do this without syntax
-         if (args.Handled || args.User != args.Dragged && !HasComp<HandsComponent>(args.User))
+         if (args.Handled)
              return;
 
          TryClimb(args.User, args.Dragged, uid, out _, component);
@@ -354,13 +358,14 @@ public sealed partial class ClimbSystem : VirtualController
              return;
          }
 
-         foreach (var fixture in args.OurFixture.Contacts.Keys)
+         foreach (var otherFixture in args.OurFixture.Contacts.Keys)
          {
-             if (fixture == args.OtherFixture)
+             // If it's the other fixture then ignore em
+             if (otherFixture == args.OtherFixture)
                  continue;
 
              // If still colliding with a climbable, do not stop climbing
-             if (HasComp<ClimbableComponent>(args.OtherEntity))
+             if (HasComp<ClimbableComponent>(otherFixture.Owner))
                  return;
          }
 

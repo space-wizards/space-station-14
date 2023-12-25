@@ -6,6 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -18,6 +19,7 @@ public sealed class InteractionPopupSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -41,15 +43,17 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (curTime < component.LastInteractTime + component.InteractDelay)
             return;
 
-        if (TryComp<MobStateComponent>(uid, out var state) // if it has a MobStateComponent,
-            && !_mobStateSystem.IsAlive(uid, state))                           // AND if that state is not Alive (e.g. dead/incapacitated/critical)
+        if (TryComp<MobStateComponent>(uid, out var state)
+            && !_mobStateSystem.IsAlive(uid, state))
+        {
             return;
+        }
 
         // TODO: Should be an attempt event
         // TODO: Need to handle pausing with an accumulator.
 
         string msg = ""; // Stores the text to be shown in the popup message
-        string? sfx = null; // Stores the filepath of the sound to be played
+        SoundSpecifier? sfx = null; // Stores the filepath of the sound to be played
 
         if (_random.Prob(component.SuccessChance))
         {
@@ -57,7 +61,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                 msg = Loc.GetString(component.InteractSuccessString, ("target", Identity.Entity(uid, EntityManager))); // Success message (localized).
 
             if (component.InteractSuccessSound != null)
-                sfx = component.InteractSuccessSound.GetSound();
+                sfx = component.InteractSuccessSound;
 
             if (component.InteractSuccessSpawn != null)
                 Spawn(component.InteractSuccessSpawn, Transform(uid).MapPosition);
@@ -68,7 +72,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                 msg = Loc.GetString(component.InteractFailureString, ("target", Identity.Entity(uid, EntityManager))); // Failure message (localized).
 
             if (component.InteractFailureSound != null)
-                sfx = component.InteractFailureSound.GetSound();
+                sfx = component.InteractFailureSound;
 
             if (component.InteractFailureSpawn != null)
                 Spawn(component.InteractFailureSpawn, Transform(uid).MapPosition);
@@ -76,7 +80,7 @@ public sealed class InteractionPopupSystem : EntitySystem
 
         if (component.MessagePerceivedByOthers != null)
         {
-            string msgOthers = Loc.GetString(component.MessagePerceivedByOthers,
+            var msgOthers = Loc.GetString(component.MessagePerceivedByOthers,
                 ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(uid, EntityManager)));
             _popupSystem.PopupEntity(msg, uid, args.User);
             _popupSystem.PopupEntity(msgOthers, uid, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
@@ -87,9 +91,9 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (sfx is not null) //not all cases will have sound.
         {
             if (component.SoundPerceivedByOthers)
-                SoundSystem.Play(sfx, Filter.Pvs(args.Target), args.Target); //play for everyone in range
+                _audio.PlayPvs(sfx, args.Target); //play for everyone in range
             else
-                SoundSystem.Play(sfx, Filter.Entities(args.User, args.Target), args.Target); //play only for the initiating entity and its target.
+                _audio.PlayEntity(sfx, Filter.Entities(args.User, args.Target), args.Target, true); //play only for the initiating entity and its target.
         }
 
         component.LastInteractTime = curTime;

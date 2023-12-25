@@ -195,6 +195,22 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatRD
+  name: research director lab coat
+  description: Woven with top of the line technology, this labcoat helps protect against radiation in similar way to the experimental hardsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/rd_coat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/rd_coat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+        Radiation: 0.9
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatPirate
   name: pirate garb
   description: Yarr.

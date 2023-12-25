@@ -25,17 +25,7 @@
 /Resources/Prototypes/Entities/Mobs/Species/ @DrSmugleaf
 /Content.*/Body/ @DrSmugleaf
 /Content.YAMLLinter @DrSmugleaf
-
-/Content.*/Verbs/ @ElectroJr
-/Content.Client/ContextMenu/ @ElectroJr
-/Content.Shared/Damage/ @ElectroJr @DrSmugleaf
-/Content.Shared/Containers/ItemSlot/ @ElectroJr
-/Content.*/PowerCell/ @ElectroJr
-/Content.*/Doors/ @ElectroJr
-/Content.*/Interaction/ @ElectroJr
-/Content.*/Hands/ @ElectroJr
-/Content.*/Actions/ @ElectroJr
-/Content.*/Explosion/ @ElectroJr
+/Content.Shared/Damage/ @DrSmugleaf
 
 /Content.*/Anomaly/ @EmoGarbage404
 /Content.*/Lathe/ @EmoGarbage404

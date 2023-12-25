@@ -6,6 +6,7 @@ using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.EntitySystems;
+using Content.Shared.GameTicking;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Robust.Server.GameObjects;
@@ -47,7 +48,8 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         _console.RegisterCommand("dungen", Loc.GetString("cmd-dungen-desc"), Loc.GetString("cmd-dungen-help"), GenerateDungeon, CompletionCallback);
         _console.RegisterCommand("dungen_preset_vis", Loc.GetString("cmd-dungen_preset_vis-desc"), Loc.GetString("cmd-dungen_preset_vis-help"), DungeonPresetVis, PresetCallback);
         _console.RegisterCommand("dungen_pack_vis", Loc.GetString("cmd-dungen_pack_vis-desc"), Loc.GetString("cmd-dungen_pack_vis-help"), DungeonPackVis, PackCallback);
-        _prototype.PrototypesReloaded += PrototypeReload;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(PrototypeReload);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
 
@@ -57,7 +59,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         _dungeonJobQueue.Process();
     }
 
-    private void OnRoundStart(RoundStartingEvent ev)
+    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
     {
         foreach (var token in _dungeonJobs.Values)
         {
@@ -65,6 +67,10 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         }
 
         _dungeonJobs.Clear();
+    }
+
+    private void OnRoundStart(RoundStartingEvent ev)
+    {
         var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
 
         while (query.MoveNext(out var uid, out _))
@@ -85,8 +91,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     public override void Shutdown()
     {
         base.Shutdown();
-        _prototype.PrototypesReloaded -= PrototypeReload;
-
         foreach (var token in _dungeonJobs.Values)
         {
             token.Cancel();
@@ -192,7 +196,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
 
         _dungeonJobs.Add(job, cancelToken);
         _dungeonJobQueue.EnqueueJob(job);
-        job.Run();
     }
 
     public async Task<Dungeon> GenerateDungeonAsync(

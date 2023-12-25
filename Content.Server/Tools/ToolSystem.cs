@@ -5,6 +5,8 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Tools;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
@@ -17,10 +19,10 @@ namespace Content.Server.Tools
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPointLightSystem _light = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         public override void Initialize()

@@ -52,10 +52,16 @@
     Food:
       effects:
       - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
         probability: 0.20
     Drink:
       effects:
       - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
         probability: 0.20
 
 - type: reagent
@@ -73,9 +79,12 @@
       - !type:SatiateThirst
         factor: 3
       - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
         probability: 0.10
-        thirstAmount: -10.0
-        hungerAmount: -10.0
+        thirstAmount: -5.0
+        hungerAmount: -5.0
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: .8
