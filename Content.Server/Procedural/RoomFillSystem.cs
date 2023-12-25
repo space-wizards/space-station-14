@@ -15,6 +15,10 @@ public sealed class RoomFillSystem : EntitySystem
 
     private void OnRoomFillMapInit(EntityUid uid, RoomFillComponent component, MapInitEvent args)
     {
+        // Just test things.
+        if (component.Size == Vector2i.Zero)
+            return;
+
         var xform = Transform(uid);
 
         if (xform.GridUid != null)
