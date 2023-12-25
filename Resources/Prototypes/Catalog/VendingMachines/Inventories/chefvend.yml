@@ -14,8 +14,8 @@
     ReagentContainerOliveoil: 2
     MonkeyCubeBox: 1
     FoodContainerEgg: 1
-    ReagentContainerMilk: 2
-    ReagentContainerMilkSoy: 1
+    DrinkMilkCarton: 2
+    DrinkSoyMilkCarton: 1
     FoodButter: 4
     FoodCheese: 1
     FoodMeat: 6
