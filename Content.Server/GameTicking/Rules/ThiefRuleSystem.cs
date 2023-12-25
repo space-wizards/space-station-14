@@ -88,7 +88,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         foreach(var thief in selectedThieves)
         {
-            MakeThief(thief, component.PacifistThiefs);
+            MakeThief(thief, component.PacifistThieves);
         }
     }
 
