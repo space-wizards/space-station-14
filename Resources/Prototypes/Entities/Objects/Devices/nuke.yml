@@ -9,7 +9,21 @@
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
     noRot: true
-    state: nuclearbomb_base
+    layers:
+    - state: nuclearbomb_base
+    - state: nukefestive
+      map: ["christmas"]
+      visible: false
+  - type: Appearance
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        christmas:
+          festive: { visible: true }
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -90,7 +104,21 @@
   - type: NukeLabel
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
-    state: nuclearbomb_base
+    layers:
+    - state: nuclearbomb_base
+    - state: nukefestive
+      map: ["christmas"]
+      visible: false
+  - type: Appearance
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        christmas:
+          festive: { visible: true }
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
