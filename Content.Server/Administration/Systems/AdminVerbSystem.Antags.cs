@@ -132,7 +132,7 @@ public sealed partial class AdminVerbSystem
                 if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
                     return;
 
-                _thief.MakeThief(session);
+                _thief.MakeThief(session, false); //Midround add pacific is bad
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-thief"),
