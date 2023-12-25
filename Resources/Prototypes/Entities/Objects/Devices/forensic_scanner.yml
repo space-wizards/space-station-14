@@ -26,6 +26,8 @@
   - type: GuideHelp
     guides:
     - DNA
+  - type: StealTarget
+    stealGroup: ForensicScanner
 
 - type: entity
   name: forensic scanner report

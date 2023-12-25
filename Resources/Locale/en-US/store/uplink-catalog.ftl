@@ -33,6 +33,9 @@ uplink-explosive-grenade-desc = A simplistic grenade with a three-and-a-half-sec
 uplink-flash-grenade-name = Flashbang
 uplink-flash-grenade-desc = A standard-issue flashbang, capable of blinding and slowing down anyone without proper protection. This, of course, includes you; make sure you're properly equipped before using it.
 
+uplink-smoke-grenade-name = Smoke Grenade
+uplink-smoke-grenade-desc = A grenade that releases a huge cloud of smoke, perfect for killing someone in the shadows or making a sneaky getaway.
+
 uplink-mini-bomb-name = Minibomb
 uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a five-second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
 
@@ -152,7 +155,6 @@ uplink-dna-scrambler-implanter-desc = A single use implant that can be activated
 uplink-emp-implanter-name = EMP Implanter
 uplink-emp-implanter-desc = Detonates a small EMP pulse on activation that drains nearby electronics of their power, can be used three times before the internal battery runs out.
 
-
 uplink-macro-bomb-implanter-name = Macro Bomb Implanter
 uplink-macro-bomb-implanter-desc = Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
 
@@ -171,6 +173,9 @@ uplink-micro-bomb-implanter-desc = Explode on death or manual activation with th
 # Bundles
 uplink-emp-kit-name = Electrical Disruptor Kit
 uplink-emp-kit-desc = The ultimate reversal on energy-based weaponry: Disables disablers, stuns stunbatons, discharges laser guns! Contains 3 EMP grenades and an EMP implanter. Note: Does not disrupt actual firearms.
+
+uplink-chemistry-kit-name = Chemical Synthesis Kit
+uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes toxin and vestine for all your criminal needs!
 
 uplink-meds-bundle-name = Medical Bundle
 uplink-meds-bundle-desc = All you need to get your comrades back in the fight: mainly a combat medkit, a defibrillator and three combat medipens.
@@ -299,14 +304,14 @@ uplink-soap-desc = An untrustworthy bar of soap. Smells of fear.
 uplink-ultrabright-lantern-name = Extra-Bright Lantern
 uplink-ultrabright-lantern-desc = It can be used to blind people like a flash.
 
-uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
-uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
-
 uplink-combat-medkit-name = Combat Medical Kit
 uplink-combat-medkit-desc = A medkit made for fixing combat injuries.
 
 uplink-combat-medipen-name = Combat Medipen
 uplink-combat-medipen-desc = A single-use medipen containing chemicals that regenerate most types of damage.
+
+uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
+uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
 
 uplink-stimpack-name = Stimpack
 uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 30 seconds.
@@ -368,3 +373,6 @@ uplink-syndicate-pai-desc = A Syndicate variant of the pAI with access to the Sy
 
 uplink-bribe-name = Lobbying Bundle
 uplink-bribe-desc = A heartfelt gift that can help you sway someone's opinion. Real or counterfeit? Yes.
+
+uplink-hypodart-name = Hypodart
+uplink-hypodart-desc = A seemingly unremarkable dart with an enlarged reservoir for chemicals. It can store up to 7u reagents in itself, and instantly inject when it hits the target. Starts empty.

@@ -10,6 +10,8 @@
     sprite: Objects/Devices/encryption_keys.rsi
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
+  - type: StealTarget
+    stealGroup: EncryptionKey
 
 - type: entity
   parent: EncryptionKey

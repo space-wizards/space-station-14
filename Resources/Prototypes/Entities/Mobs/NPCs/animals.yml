@@ -1290,6 +1290,7 @@
     needsHands: true
   - type: BadFood
   - type: NonSpreaderZombie
+  - type: PreventSpiller
 
 - type: entity
   parent: MobMouse
@@ -2029,6 +2030,25 @@
   - type: Tag
     tags:
     - VimPilot
+
+- type: entity
+  name: possum
+  parent: MobPossum
+  suffix: Old sprite
+  id: MobPossumOld
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/possum_old.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: possum_old
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: possum_old
+      Dead:
+        Base: possum_dead_old
 
 - type: entity
   name: raccoon

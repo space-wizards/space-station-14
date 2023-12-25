@@ -152,6 +152,8 @@
           prob: 0.20
         - id: DrinkSpaceLube
           prob: 0.20
+        - id: BarberScissors
+          prob: 0.05
         # Syndicate loot
         - id: null
           prob: 0.95
