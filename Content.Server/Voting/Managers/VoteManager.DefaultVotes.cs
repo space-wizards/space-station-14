@@ -78,19 +78,20 @@ namespace Content.Server.Voting.Managers
                 var votesNo = vote.VotesPerOption["no"];
                 var total = votesYes + votesNo;
 
-                if (_cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
-                {
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote attempted, but an admin was online. {votesYes}/{votesNo}");
-                    return;
-                }
-
                 var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio);
                 if (total > 0 && votesYes / (float) total >= ratioRequired)
                 {
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote succeeded: {votesYes}/{votesNo}");
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
-                    var roundEnd = _entityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
-                    roundEnd.EndRound();
+                    if (_cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
+                    {
+                        _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote attempted to pass, but an admin was online. {votesYes}/{votesNo}");
+                    }
+                    else
+                    {
+                        _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote succeeded: {votesYes}/{votesNo}");
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
+                        var roundEnd = _entityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
+                        roundEnd.EndRound();
+                    }
                 }
                 else
                 {
