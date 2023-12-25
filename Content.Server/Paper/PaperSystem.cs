@@ -9,8 +9,6 @@ using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.SharedPaperComponent;
 
@@ -134,9 +132,10 @@ namespace Content.Server.Paper
             }
         }
 
-        private StampDisplayInfo GetStampInfo(StampComponent stamp)
+        private static StampDisplayInfo GetStampInfo(StampComponent stamp)
         {
-            return new StampDisplayInfo {
+            return new StampDisplayInfo
+            {
                 StampedName = stamp.StampedName,
                 StampedColor = stamp.StampedColor
             };
@@ -144,21 +143,20 @@ namespace Content.Server.Paper
 
         private void OnInputTextMessage(EntityUid uid, PaperComponent paperComp, PaperInputTextMessage args)
         {
-            if (string.IsNullOrEmpty(args.Text))
-                return;
-
-            if (args.Text.Length + paperComp.Content.Length <= paperComp.ContentSize)
+            if (args.Text.Length <= paperComp.ContentSize)
+            {
                 paperComp.Content = args.Text;
 
-            if (TryComp<AppearanceComponent>(uid, out var appearance))
-                _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Written, appearance);
+                if (TryComp<AppearanceComponent>(uid, out var appearance))
+                    _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Written, appearance);
 
-            if (TryComp<MetaDataComponent>(uid, out var meta))
-                _metaSystem.SetEntityDescription(uid, "", meta);
+                if (TryComp<MetaDataComponent>(uid, out var meta))
+                    _metaSystem.SetEntityDescription(uid, "", meta);
 
-            if (args.Session.AttachedEntity != null)
-                _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
+                if (args.Session.AttachedEntity != null)
+                    _adminLogger.Add(LogType.Chat, LogImpact.Low,
+                        $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
+            }
 
             paperComp.Mode = PaperAction.Read;
             UpdateUserInterface(uid, paperComp);
