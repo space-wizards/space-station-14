@@ -29,14 +29,17 @@
   duffelbag: ClothingBackpackDuffelFilled
 
 - type: startingGear
-  id: JanitorMaidGear
+  id: JanitorMaidGear #NewMaidClothing mode
   equipment:
     jumpsuit: ClothingUniformJumpskirtJanimaid
-    back: ClothingBackpackFilled
-    id: JanitorPDA
+    back: ClothingBackpackBackbow
+    id: JanimaidPDA
     head: ClothingHeadHatCatEars
-    ears: ClothingHeadsetService
-    belt: ClothingBeltJanitorFilled
+    ears: ClothingHeadsetJanimaid
+    neck: ClothingNeckMaidChoker
+    shoes: ClothingShoesColorBlack
+    gloves: ClothingHandsGlovesColorWhite
+    belt: ClothingBeltJanimaidFilled
   innerClothingSkirt: ClothingUniformJumpskirtJanimaid
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  satchel: ClothingBackpackBackbow
+  duffelbag: ClothingBackpackBackbow

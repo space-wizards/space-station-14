@@ -1,0 +1,18 @@
+#This part appeared when it became clear to me that for a full-fledged
+#ID card it is necessary to create a separate profession. It's just a crutch.
+#All other work is parasitic on prototypes of the main code.
+
+#Base maid job
+- type: job
+  id: StationMaid
+  name: job-name-maid
+  description: job-description-maid
+  playTimeTracker: JobMaid
+  setPreference: false
+  startingGear: JanitorMaidGear #janitor.yml
+  icon: "JobIconMaid"
+  supervisors: job-supervisors-hop
+  canBeAntag: false
+  access:
+  - Janitor
+  - Maintenance
