@@ -88,9 +88,8 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
         var targEv = new VirtualItemDeletedEvent(item.Comp.BlockingEntity, user);
         RaiseLocalEvent(item.Comp.BlockingEntity, targEv);
 
-        if (_net.IsClient)
-            _transform.DetachParentToNull(item, Transform(item));
-        else
+        _transform.DetachParentToNull(item, Transform(item));
+        if (_net.IsServer)
             QueueDel(item);
     }
 }
