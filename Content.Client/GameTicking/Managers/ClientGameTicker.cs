@@ -140,7 +140,6 @@ namespace Content.Client.GameTicking.Managers
         {
             _stateManager.RequestStateChange<GameplayState>();
 
-
             //going to disable the button as soon as they join the game (this helps for late joiners to also have their "show round end summary" disabled) - should catch anyone joining the game
             DisableRoundEndSummaryButton();
         }
@@ -161,13 +160,12 @@ namespace Content.Client.GameTicking.Managers
             if (_window?.RoundId == message.RoundId)
                 return;
 
+            //enable the button, so that users can review the summary after closing the window
+            EnableRoundEndSummaryButton();
 
             //back up the round info, to show it later when requested:
             _roundEndContainer._message = message;
             DisplayRoundEndSummary(_roundEndContainer._message);
-
-            //enable the button, so that users can review the summary after closing the window
-            EnableRoundEndSummaryButton();
         }
         
         public void DisplayRoundEndSummary(RoundEndMessageEvent? message)

@@ -126,7 +126,7 @@ namespace Content.Client.RoundEnd
                 };
 
                 //cyberfinn: dying here for me, likely because it's running on localhost - so can't determine player network ID
-                //todo: uncomment below after debugging
+                //todo: uncomment below after debugging. for the round end summary to display during localhost debugging, comment this section out - or else it fails to display, because of the network ID issue I raised in comment above
                 try
                 {
                     var playerUid = _entityManager.GetEntity(playerInfo.PlayerNetEntity);
