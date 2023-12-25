@@ -381,6 +381,28 @@
         - !type:ReagentThreshold
           reagent: BZ
           min: 1
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: BZ
+          min: 0.2
+        - !type:OrganType
+          type: Slime
+          shouldHave: true
+        emote: Laugh
+        showInChat: true
+        probability: 0.1
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: BZ
+          min: 0.2
+        - !type:OrganType
+          type: Slime
+          shouldHave: true
+        emote: Scream
+        showInChat: true
+        probability: 0.01
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
@@ -393,15 +415,13 @@
         visualType: Medium
         messages: [ "effect-sleepy" ]
         probability: 0.1
-      - !type:GenericStatusEffect
+      - !type:MovespeedModifier
         conditions:
         - !type:ReagentThreshold
           reagent: BZ
-          min: 1.5
+          min: 1
         - !type:OrganType
           type: Slime
           shouldHave: true
-        key: ForcedSleep
-        component: ForcedSleeping
-        time: 5
-        type: Add
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
