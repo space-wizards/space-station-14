@@ -212,72 +212,72 @@
     reflectProb: .75
     spread: 75
 
-- type: entity
-  name: dual energy sword
-  parent: BaseItem
-  id: DualEnergySword
-  description:
-  components:
-  - type: DualEnergySword
-    litDamageBonus:
-      types:
-        Slash: 20
-        Heat: 20
-        Structural: 6
-        Blunt: -4.5
-    litDisarmMalus: 0.6
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/e_dual_sword.rsi
-    layers:
-      - state: e_sword
-      - state: e_sword_blade
-        color: "#FFFFFF"
-        visible: false
-        shader: unshaded
-        map: [ "blade" ]
-  - type: MeleeWeapon
-    attackRate: 1
-    soundHit:
-      path: /Audio/Weapons/eblade1.ogg
-    damage:
-      types:
-        Blunt: 4.5
-  - type: UseDelay
-    delay: 1.0
-  - type: PointLight
-    netsync: false
-    enabled: false
-    radius: 2
-    energy: 2
-    color: white
-  - type: Appearance
-  - type: ToggleableLightVisuals
-    spriteLayer: blade
-    inhandVisuals:
-      left:
-      - state: inhand-left-blade
-        shader: unshaded
-      right:
-      - state: inhand-right-blade
-        shader: unshaded
-  - type: DisarmMalus
-    malus: 0
-  - type: Wieldable
-    wieldTime: 0
-  - type: IncreaseDamageOnWield
-    damage:
-      types:
-        Slash: 0
-        Heat: 0
-        Structural: 0
-        Blunt: 0
-  - type: Reflect
-    enabled: false
-    reflectProb: 0.65
-    spread: 30
-  - type: Item
-    size: 10
-    sprite: Objects/Weapons/Melee/e_dual_sword.rsi
-  - type: Construction
-    graph: DualEnergySword
-    node: DualEnergySword
+#- type: entity
+#  name: dual energy sword
+#  parent: BaseItem
+#  id: DualEnergySword
+#  description:
+#  components:
+#  - type: DualEnergySword
+#    litDamageBonus:
+#      types:
+#        Slash: 20
+#        Heat: 20
+#        Structural: 6
+#        Blunt: -4.5
+#    litDisarmMalus: 0.6
+#  - type: Sprite
+#    sprite: Objects/Weapons/Melee/e_dual_sword.rsi
+#    layers:
+#      - state: e_sword
+#      - state: e_sword_blade
+#        color: "#FFFFFF"
+#        visible: false
+#        shader: unshaded
+#        map: [ "blade" ]
+#  - type: MeleeWeapon
+#    attackRate: 1
+#    soundHit:
+#      path: /Audio/Weapons/eblade1.ogg
+#    damage:
+#      types:
+#        Blunt: 4.5
+#  - type: UseDelay
+#    delay: 1.0
+#  - type: PointLight
+#    netsync: false
+#    enabled: false
+#    radius: 2
+#    energy: 2
+#    color: white
+#  - type: Appearance
+#  - type: ToggleableLightVisuals
+#    spriteLayer: blade
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left-blade
+#        shader: unshaded
+#      right:
+#      - state: inhand-right-blade
+#        shader: unshaded
+#  - type: DisarmMalus
+#    malus: 0
+#  - type: Wieldable
+#    wieldTime: 0
+#  - type: IncreaseDamageOnWield
+#    damage:
+#      types:
+#        Slash: 0
+#        Heat: 0
+#        Structural: 0
+#        Blunt: 0
+#  - type: Reflect
+#    enabled: false
+#    reflectProb: 0.65
+#    spread: 30
+#  - type: Item
+#    size: 10
+#    sprite: Objects/Weapons/Melee/e_dual_sword.rsi
+#  - type: Construction
+#    graph: DualEnergySword
+#    node: DualEnergySword
