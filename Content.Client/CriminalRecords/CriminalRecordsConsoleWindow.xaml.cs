@@ -25,9 +25,12 @@ public sealed partial class CriminalRecordsConsoleWindow : DefaultWindow
     public Action<GeneralStationRecordFilterType, string>? OnFiltersChanged;
     public Action<BaseButton.ButtonEventArgs, string, string>? OnArrestButtonPressed;
     public Action<OptionButton.ItemSelectedEventArgs, SecurityStatus, string, string>? OnStatusOptionButtonSelected;
+    public Action<BaseButton.ButtonEventArgs, string>? OnAddHistoryPressed;
+    public Action<BaseButton.ButtonEventArgs, uint>? OnDeleteHistoryPressed;
 
     private bool _isPopulating;
     private string _recordName = string.Empty;
+    private uint? _historyIndex;
 
     private GeneralStationRecordFilterType _currentFilterType;
 
@@ -96,6 +99,35 @@ public sealed partial class CriminalRecordsConsoleWindow : DefaultWindow
                 ReasonLineEdit.Text, _recordName);
         };
 
+        AddHistoryButton.OnPressed += e =>
+        {
+            if (!string.IsNullOrEmpty(HistoryLineEdit.Text))
+            {
+                OnAddHistoryPressed?.Invoke(e, HistoryLineEdit.Text);
+                HistoryLineEdit.Clear();
+            }
+        };
+        DeleteHistoryButton.OnPressed += e =>
+        {
+            if (_historyIndex is {} index)
+            {
+                OnDeleteHistoryPressed?.Invoke(e, index);
+                // prevent total spam wiping
+                History.ClearSelected();
+                _historyIndex = null;
+            }
+        };
+
+        History.OnItemSelected += args =>
+        {
+            _historyIndex = (uint) args.ItemIndex;
+            DeleteHistoryButton.Disabled = false;
+        };
+        History.OnItemDeselected += args =>
+        {
+            _historyIndex = null;
+            DeleteHistoryButton.Disabled = true;
+        };
     }
 
     public void UpdateState(CriminalRecordsConsoleState state)
@@ -117,22 +149,15 @@ public sealed partial class CriminalRecordsConsoleWindow : DefaultWindow
 
         if (state.RecordListing == null)
         {
-            ReasonLineEdit.Visible = false;
-            ArrestButton.Visible = false;
-            CriminalDivider.Visible = false;
-            StatusOptionButton.Visible = false;
-
-            RecordListingStatus.Visible = true;
-            RecordListing.Visible = false;
-            RecordListingStatus.Text = Loc.GetString("criminal-records-console-empty-state");
-            RecordContainer.Visible = false;
-            RecordContainerStatus.Visible = false;
+            PersonContainer.Visible = false;
+            HistoryContainer.Visible = false;
             return;
         }
 
-        RecordListingStatus.Visible = false;
-        RecordListing.Visible = true;
-        RecordContainer.Visible = true;
+        var selected = state.SelectedKey != null;
+
+        PersonContainer.Visible = true;
+        HistoryContainer.Visible = selected;
 
         PopulateRecordListing(state.RecordListing!, state.SelectedKey);
 
@@ -144,15 +169,15 @@ public sealed partial class CriminalRecordsConsoleWindow : DefaultWindow
 
         var access = _player.LocalPlayer?.ControlledEntity is not { } player
             || _accessReader.IsAllowed(player, Console);
-        var selected = state.SelectedKey != null;
-        // TODO: container instead of this sussy
+
+        // hide access-required editing parts when no access
         var editing = access && selected;
-        ReasonLineEdit.Visible = editing;
-        ArrestButton.Visible = editing;
-        CriminalDivider.Visible = editing;
-        StatusOptionButton.Visible = editing;
+        StatusEditing.Visible = editing;
+        HistoryEditing.Visible = editing;
 
         StatusOptionButton.Disabled = status == SecurityStatus.Detained;
+
+        History.Clear();
 
         if (state.CriminalRecord != null && state.StationRecord != null)
         {
@@ -175,8 +200,13 @@ public sealed partial class CriminalRecordsConsoleWindow : DefaultWindow
 
             RecordContainerStatus.Visible = !selected;
             RecordContainerStatus.Text = Loc.GetString("criminal-records-console-select-record-info");
-            _recordName = state.StationRecord?.Name!;
-            PopulateRecordContainer(state.StationRecord!, state.CriminalRecord!);
+            _recordName = state.StationRecord.Name!;
+            PopulateRecordContainer(state.StationRecord, state.CriminalRecord);
+
+            foreach (var line in state.CriminalRecord.History)
+            {
+                History.AddItem(line);
+            }
         }
         else
         {

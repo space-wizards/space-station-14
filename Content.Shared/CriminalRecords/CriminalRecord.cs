@@ -19,4 +19,10 @@ public sealed record CriminalRecord
     /// Reason of the current status.
     /// </summary>
     public string Reason = string.Empty;
+
+    /// <summary>
+    /// Criminal history of the person.
+    /// This should have charges and time served added after someone is detained.
+    /// </summary>
+    public List<string> History = new();
 }

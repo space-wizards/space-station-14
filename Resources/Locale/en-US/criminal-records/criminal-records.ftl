@@ -7,6 +7,9 @@ criminal-records-arrest-button = Arrest
 criminal-records-release-button = Release
 
 criminal-records-reason-placeholder = Reason
+criminal-records-history-placeholder = Crime history
+criminal-records-add-history = Add
+criminal-records-delete-history = Delete
 
 criminal-records-permission-denied = Permission denied
 

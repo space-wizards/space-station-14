@@ -46,7 +46,7 @@ public sealed class CriminalRecordsSystem : EntitySystem
     {
         updatedStatus = null;
 
-        if (!_stationRecords.TryGetRecord(key, out CriminalRecord? record)
+        if (!_stationRecords.TryGetRecord<CriminalRecord>(key, out var record)
             || status == record.Status)
             return false;
 
@@ -70,5 +70,34 @@ public sealed class CriminalRecordsSystem : EntitySystem
 
         return TryChangeStatus(key, SecurityStatus.Detained, out updatedStatus, reason)
                || TryChangeStatus(key, SecurityStatus.None, out updatedStatus, reason);
+    }
+
+    /// <summary>
+    /// Tries to add a line of history to a criminal record.
+    /// </summary>
+    /// <returns>True if adding succeeded, false if not</returns>
+    public bool TryAddHistory(StationRecordKey key, string line)
+    {
+        if (!_stationRecords.TryGetRecord<CriminalRecord>(key, out var record))
+            return false;
+
+        record.History.Add(line);
+        return true;
+    }
+
+    /// <summary>
+    /// Tries to delete a sepcific line of history from a criminal record, by index.
+    /// </summary>
+    /// <returns>True if the line was removed, false if not</returns>
+    public bool TryDeleteHistory(StationRecordKey key, uint index)
+    {
+        if (!_stationRecords.TryGetRecord<CriminalRecord>(key, out var record))
+            return false;
+
+        if (index >= record.History.Count)
+            return false;
+
+        record.History.RemoveAt((int) index);
+        return true;
     }
 }

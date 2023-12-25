@@ -25,6 +25,8 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
 
         _window.OnArrestButtonPressed += (_, reason, name) => SendMessage(new CriminalRecordArrestButtonPressed(reason, name));
         _window.OnStatusOptionButtonSelected += (_, status, reason, name) => SendMessage(new CriminalStatusOptionButtonSelected(status, reason, name));
+        _window.OnAddHistoryPressed += (_, line) => SendMessage(new CriminalRecordAddHistory(line));
+        _window.OnDeleteHistoryPressed += (_, index) => SendMessage(new CriminalRecordDeleteHistory(index));
     }
 
     private void OnKeySelected(uint? key)

@@ -1,17 +1,19 @@
-using System.Linq;
 using Content.Server.CriminalRecords.Components;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
-using Content.Shared.Radio;
-using Content.Shared.Security;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.CriminalRecords;
+using Content.Shared.Radio;
+using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -35,6 +37,8 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalRecordArrestButtonPressed>(OnButtonPressed);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalStatusOptionButtonSelected>(OnStatusSelected);
+        SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalRecordAddHistory>(OnAddHistory);
+        SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalRecordDeleteHistory>(OnDeleteHistory);
     }
 
     private void UpdateUserInterface<T>(EntityUid uid, CriminalRecordsConsoleComponent component, T ev)
@@ -43,11 +47,11 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    private void OnKeySelected(EntityUid uid, CriminalRecordsConsoleComponent component,
-        SelectCriminalRecords msg)
+    private void OnKeySelected(Entity<CriminalRecordsConsoleComponent> ent, ref SelectCriminalRecords msg)
     {
-        component.ActiveKey = msg.SelectedKey;
-        UpdateUserInterface(uid, component);
+        // no concern of sus client since record retrieval will fail if invalid id is given
+        ent.Comp.ActiveKey = msg.SelectedKey;
+        UpdateUserInterface(ent, ent.Comp);
     }
 
     private void SendRadioMessage(EntityUid sender, string message, string channel)
@@ -56,76 +60,74 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
             _proto.Index<RadioChannelPrototype>(channel), sender);
     }
 
-    private void OnButtonPressed(EntityUid uid, CriminalRecordsConsoleComponent component,
-        CriminalRecordArrestButtonPressed msg)
+    private void OnButtonPressed(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordArrestButtonPressed msg)
     {
-        if (msg.Session.AttachedEntity is not {Valid: true} mob)
+        if (!CheckSelected(ent, msg.Session, out var mob, out var key))
             return;
 
-        if (!_access.IsAllowed(mob, uid))
-        {
-            _popup.PopupEntity(Loc.GetString("criminal-records-permission-denied"), uid, msg.Session);
-            return;
-        }
-
-        // prevent sus client crashing the server
-        if (component.ActiveKey is not {} id)
-            return;
-
-        var station = _station.GetOwningStation(mob);
-        if (station == null)
-            return;
-
-        var key = new StationRecordKey(id, station.Value);
-        if (!_criminalRecords.TryArrest(key, out var status, msg.Reason))
+        if (!_criminalRecords.TryArrest(key.Value, out var status, msg.Reason))
             return;
 
         (string, object)[] args =
         {
             ("name", msg.Name), ("reason", msg.Reason),
-            ("officer", Name(mob)), ("hasReason", msg.Reason.Length)
+            ("officer", Name(mob.Value)), ("hasReason", msg.Reason.Length)
         };
 
         var message = status == SecurityStatus.Detained ? "detained" : "released";
-        SendRadioMessage(uid, Loc.GetString($"criminal-records-console-{message}", args), component.SecurityChannel);
+        SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{message}", args), ent.Comp.SecurityChannel);
 
-        UpdateUserInterface(uid, component);
+        UpdateUserInterface(ent, ent.Comp);
     }
 
-    private void OnStatusSelected(EntityUid uid, CriminalRecordsConsoleComponent component,
-        CriminalStatusOptionButtonSelected msg)
+    private void OnStatusSelected(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalStatusOptionButtonSelected msg)
     {
-        if (msg.Session.AttachedEntity is not {Valid: true} mob)
+        if (!CheckSelected(ent, msg.Session, out var mob, out var key))
             return;
 
-        if (!_access.IsAllowed(mob, uid))
-        {
-            _popup.PopupEntity(Loc.GetString("criminal-records-permission-denied"), uid, msg.Session);
-            return;
-        }
-
-        // prevent sus client crashing the server
-        if (component.ActiveKey is not {} id)
-            return;
-
-        var station = _station.GetOwningStation(mob);
-        if (station == null)
-            return;
-
-        var key = new StationRecordKey(id, station.Value);
-        if (!_criminalRecords.TryChangeStatus(key, msg.Status, out var status, msg.Reason))
+        if (!_criminalRecords.TryChangeStatus(key.Value, msg.Status, out var status, msg.Reason))
             return;
 
         (string, object)[] args =
         {
             ("name", msg.Name), ("reason", msg.Reason),
-            ("officer", Name(mob)), ("hasReason", msg.Reason.Length)
+            ("officer", Name(mob.Value)), ("hasReason", msg.Reason.Length)
         };
 
         var message = status == SecurityStatus.Wanted ? "wanted" : "not-wanted";
-        SendRadioMessage(uid, Loc.GetString($"criminal-records-console-{message}", args), component.SecurityChannel);
+        SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{message}", args), ent.Comp.SecurityChannel);
 
-        UpdateUserInterface(uid, component);
+        UpdateUserInterface(ent, ent.Comp);
+    }
+
+    private void OnAddHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordAddHistory msg)
+    {
+        if (!CheckSelected(ent, msg.Session, out var mob, out var key))
+            return;
+
+        var line = msg.Line.Trim();
+        if (string.IsNullorEmpty(line))
+            return;
+
+        if (!_criminalRecords.TryAddHistory(key.Value, line))
+            return;
+
+        // no radio message since its not crucial to officers patrolling
+
+        UpdateUserInterface(ent, ent.Comp);
+    }
+
+    private void OnDeleteHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordDeleteHistory msg)
+    {
+        if (!CheckSelected(ent, msg.Session, out var mob, out var key))
+            return;
+
+        if (!_criminalRecords.TryDeleteHistory(key.Value, msg.Index))
+            return;
+
+        // a bit sus but not crucial to officers patrolling
+
+        UpdateUserInterface(ent, ent.Comp);
     }
 
     private void UpdateUserInterface(EntityUid uid, CriminalRecordsConsoleComponent? console = null)
@@ -185,6 +187,36 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
     private void SetStateForInterface(EntityUid uid, CriminalRecordsConsoleState newState)
     {
         _ui.TrySetUiState(uid, CriminalRecordsConsoleKey.Key, newState);
+    }
+
+    /// <summary>
+    /// Boilerplate that most buttons use, if they require that a record be selected.
+    /// Obviously shouldn't be used for selecting records.
+    /// </summary>
+    private bool CheckSelected(Entity<CriminalRecordsConsoleComponent> ent, ICommonSession session,
+        [NotNullWhen(true)] out EntityUid? mob, [NotNullWhen(true)] out StationRecordKey? key)
+    {
+        key = null;
+        mob = null;
+        if (session.AttachedEntity is not {} user)
+            return false;
+
+        if (!_access.IsAllowed(user, ent))
+        {
+            _popup.PopupEntity(Loc.GetString("criminal-records-permission-denied"), ent, session);
+            return false;
+        }
+
+        if (ent.Comp.ActiveKey is not {} id)
+            return false;
+
+        // checking the console's station since the user might be off-grid using on-grid console
+        if (_station.GetOwningStation(ent) is not {} station)
+            return false;
+
+        key = new StationRecordKey(id, station);
+        mob = user;
+        return true;
     }
 
     #region Filters

@@ -99,6 +99,34 @@ public sealed class CriminalStatusOptionButtonSelected : BoundUserInterfaceMessa
     }
 }
 
+/// <summary>
+/// Used to add a single line to the record's crime history.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class CriminalRecordAddHistory : BoundUserInterfaceMessage
+{
+    public readonly string Line;
+
+    public CriminalRecordAddHistory(string line)
+    {
+        Line = line;
+    }
+}
+
+/// <summary>
+/// Used to delete a single line from the crime history, by index.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class CriminalRecordDeleteHistory : BoundUserInterfaceMessage
+{
+    public readonly uint Index;
+
+    public CriminalRecordDeleteHistory(uint index)
+    {
+        Index = index;
+    }
+}
+
 [Serializable, NetSerializable]
 public sealed class CriminalRecordConsoleDataUIMessage
 {
