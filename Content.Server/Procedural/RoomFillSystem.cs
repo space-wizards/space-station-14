@@ -19,7 +19,8 @@ public sealed class RoomFillSystem : EntitySystem
 
         if (xform.GridUid != null)
         {
-            var room = _dungeon.GetRoomPrototype(component.Size, component.RoomWhitelist);
+            var random = new Random();
+            var room = _dungeon.GetRoomPrototype(component.Size, random, component.RoomWhitelist);
 
             if (room != null)
             {
@@ -29,8 +30,8 @@ public sealed class RoomFillSystem : EntitySystem
                     mapGrid,
                     _maps.LocalToTile(xform.GridUid.Value, mapGrid, xform.Coordinates),
                     room,
-                    new Random(),
-                    clearExisting: true
+                    random,
+                    clearExisting: true,
                     rotation: component.Rotation);
             }
             else

@@ -11,12 +11,14 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem
 {
-    private List<DungeonRoomPrototype> _availableRooms = new();
+    // Temporary caches.
+    private readonly HashSet<EntityUid> _entitySet = new();
+    private readonly List<DungeonRoomPrototype> _availableRooms = new();
 
     /// <summary>
     /// Gets a random dungeon room matching the specified area and whitelist.
     /// </summary>
-    public DungeonRoomPrototype? GetRoomPrototype(Vector2i size, EntityWhitelist? whitelist = null)
+    public DungeonRoomPrototype? GetRoomPrototype(Vector2i size, Random random, EntityWhitelist? whitelist = null)
     {
         // Can never be true.
         if (whitelist is { Tags: null })
@@ -47,7 +49,7 @@ public sealed partial class DungeonSystem
             }
         }
 
-        var room = _availableRooms[_random.Next(_availableRooms.Count)];
+        var room = _availableRooms[random.Next(_availableRooms.Count)];
 
         return room;
     }
@@ -102,15 +104,23 @@ public sealed partial class DungeonSystem
         if (clearExisting)
         {
             var gridBounds = new Box2(transform.Transform(Vector2.Zero), transform.Transform(room.Size));
+            _entitySet.Clear();
+            // Polygon skin moment
+            gridBounds = gridBounds.Enlarged(-0.05f);
+            _lookup.GetLocalEntitiesIntersecting(gridUid, gridBounds, _entitySet, LookupFlags.Uncontained);
 
-            // TODO: This is using WorldAABB
-            /*
-            foreach (var templateEnt in
-                     _lookup.GetEntitiesIntersecting(gridUid, gridBounds, LookupFlags.Uncontained))
+            foreach (var templateEnt in _entitySet)
             {
                 Del(templateEnt);
             }
-            */
+
+            if (TryComp(gridUid, out DecalGridComponent? decalGrid))
+            {
+                foreach (var decal in _decals.GetDecalsIntersecting(gridUid, gridBounds, decalGrid))
+                {
+                    _decals.RemoveDecal(gridUid, decal.Index, decalGrid);
+                }
+            }
         }
 
         var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
