@@ -39,8 +39,6 @@
     itemCanStoreMobs: true
   - type: Weldable
   - type: ResistLocker
-  - type: PlaceableSurface
-    isPlaceable: false
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood

@@ -26466,8 +26466,6 @@ entities:
     - open: True
       removedMasks: 20
       type: EntityStorage
-    - isPlaceable: True
-      type: PlaceableSurface
   - uid: 11244
     components:
     - pos: -31.5,9.5

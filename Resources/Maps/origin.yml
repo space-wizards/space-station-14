@@ -80751,8 +80751,6 @@ entities:
       open: True
       removedMasks: 20
       type: EntityStorage
-    - isPlaceable: True
-      type: PlaceableSurface
 - proto: CrateEmptySpawner
   entities:
   - uid: 12816
