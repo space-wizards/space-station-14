@@ -20,9 +20,6 @@
   id: ArtifactFragment
 
 - type: Tag
-  id: ArtifactHandheld
-
-- type: Tag
   id: Arrow
 
 - type: Tag
