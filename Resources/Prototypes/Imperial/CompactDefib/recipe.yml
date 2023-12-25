@@ -1,0 +1,11 @@
+- type: latheRecipe # Imperial
+  id: CompactDefibrillator
+  result: CompactDefibrillator
+  completetime: 5
+  materials:
+    Glass: 1200
+    Steel: 1000
+    Plastic: 1400
+    Silver: 250
+    Plasma: 500
+    Uranium: 100
