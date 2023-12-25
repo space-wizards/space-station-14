@@ -18,6 +18,7 @@
     - type: Loadout
       prototypes: [ ERTCallLeaderGearEVA ]
     - type: RandomHumanoidAppearance
+      randomizeName: false
 
 #Medic
 - type: entity
@@ -38,6 +39,7 @@
     - type: Loadout
       prototypes: [ ERTCallMedicalGearEVA ]
     - type: RandomHumanoidAppearance
+      randomizeName: false
 
 #Security
 - type: entity
@@ -58,6 +60,7 @@
     - type: Loadout
       prototypes: [ ERTCallSecurityGearEVA ]
     - type: RandomHumanoidAppearance
+      randomizeName: false
 
 #Engineer
 - type: entity
@@ -78,6 +81,7 @@
     - type: Loadout
       prototypes: [ ERTCallEngineerGearEVA ]
     - type: RandomHumanoidAppearance
+      randomizeName: false
 
 #Junitor
 - type: entity
@@ -98,6 +102,7 @@
     - type: Loadout
       prototypes: [ ERTCallJanitorGearEVA ]
     - type: RandomHumanoidAppearance
+      randomizeName: false
 
 #ERT END
 
@@ -120,6 +125,7 @@
     - type: Loadout
       prototypes: [ ERTCallCBURNLeaderGearEVA ]
     - type: RandomHumanoidAppearance
+      randomizeName: false
 
 #Security
 - type: entity
@@ -139,6 +145,7 @@
     - type: Loadout
       prototypes: [ ERTCallCBURNSecurityGearEVA ]
     - type: RandomHumanoidAppearance
+      randomizeName: false
 
 #Medic
 - type: entity
@@ -158,6 +165,7 @@
     - type: Loadout
       prototypes: [ ERTCallCBURNMedicGearEVA ]
     - type: RandomHumanoidAppearance
+      randomizeName: false
 #CBURN END
 
 #DEAD SQUAD START

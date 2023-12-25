@@ -26,7 +26,7 @@ head-rev-break-mindshield = Имплант защиты разума был ун
 
 ## Rev
 
-oles-antag-rev-name = Революционер
+roles-antag-rev-name = Революционер
 roles-antag-rev-objective = Ваша цель — обеспечить безопасность и следовать приказам Глав Революции, а также убить весь командующий состав станции.
 
 rev-break-control = {$name} вспомнил о своей истинной преданности!

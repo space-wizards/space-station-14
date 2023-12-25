@@ -266,6 +266,7 @@
       - WelderExperimental
       - JawsOfLife
       - ClothingEyesGlassesChemical
+      - CompactDefibrillator # Imperial
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload

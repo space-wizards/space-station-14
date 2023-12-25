@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by KEEYNy (Github) and @ugog (discord) for Space Station 14. contacts: https://github.com/KEEYNy  discord: @keeyn, discord: @ugog ",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+    "name": "ready"
+    },
+    {
+      "name": "screen",
+      "delays": [
+        [
+            1.0,
+            0.15,
+            0.15,
+            0.15,
+            0.15,
+            0.15,
+            0.15,
+            0.15,
+            0.15
+        ]
+      ]
+    }
+  ]
+}
