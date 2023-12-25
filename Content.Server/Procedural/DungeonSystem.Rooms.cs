@@ -49,6 +49,9 @@ public sealed partial class DungeonSystem
             }
         }
 
+        if (_availableRooms.Count == 0)
+            return null;
+
         var room = _availableRooms[random.Next(_availableRooms.Count)];
 
         return room;
