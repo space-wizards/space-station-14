@@ -108,7 +108,7 @@
   copyright: "cmorris035"
   source: "https://freesound.org/people/cmorris035/sounds/319152/"
 
-- files: ["airlock_open.ogg", "airlock_close.ogg"]
+- files: ["airlock_open.ogg", "airlock_close.ogg", "airlock_deny.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "/tg/station"
   source: "https://github.com/tgstation/tgstation/tree/5f5002b21253354c20ea224be3f604d79299b37e/sound/machines"
