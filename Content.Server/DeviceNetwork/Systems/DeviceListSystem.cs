@@ -14,22 +14,32 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
 {
     private ISawmill _sawmill = default!;
 
-    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = null!;
+    [Dependency] private readonly NetworkConfiguratorSystem _configurator = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<DeviceListComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<DeviceListComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<DeviceListComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
         SubscribeLocalEvent<DeviceListComponent, BeforePacketSentEvent>(OnBeforePacketSent);
-        SubscribeLocalEvent<DeviceListComponent, DeviceShutDownEvent>(OnDeviceShutdown);
         SubscribeLocalEvent<BeforeSaveEvent>(OnMapSave);
         _sawmill = Logger.GetSawmill("devicelist");
     }
 
-    public void OnInit(EntityUid uid, DeviceListComponent component, ComponentInit args)
+    private void OnShutdown(EntityUid uid, DeviceListComponent component, ComponentShutdown args)
     {
-        Dirty(component);
+        foreach (var conf in component.Configurators)
+        {
+            _configurator.OnDeviceListShutdown(conf, (uid, component));
+        }
+
+        var query = GetEntityQuery<DeviceNetworkComponent>();
+        foreach (var device in component.Devices)
+        {
+            if (query.TryGetComponent(device, out var comp))
+                comp.DeviceLists.Remove(uid);
+        }
+        component.Devices.Clear();
     }
 
     /// <summary>
@@ -74,20 +84,6 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         return addresses.Contains(address);
     }
 
-    protected override void UpdateShutdownSubscription(EntityUid uid, List<EntityUid> newDevices, List<EntityUid> oldDevices)
-    {
-        foreach (var device in newDevices)
-        {
-            _deviceNetworkSystem.SubscribeToDeviceShutdown(uid, device);
-        }
-
-        var removedDevices = oldDevices.Except(newDevices);
-        foreach (var device in removedDevices)
-        {
-            _deviceNetworkSystem.UnsubscribeFromDeviceShutdown(uid, device);
-        }
-    }
-
     /// <summary>
     /// Filters the broadcasts recipient list against the device list as either an allow or deny list depending on the components IsAllowList field
     /// </summary>
@@ -119,10 +115,14 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
             args.Cancel();
     }
 
-    private void OnDeviceShutdown(EntityUid uid, DeviceListComponent component, ref DeviceShutDownEvent args)
+    public void OnDeviceShutdown(Entity<DeviceListComponent?> list, Entity<DeviceNetworkComponent> device)
     {
-        component.Devices.Remove(args.ShutDownEntityUid);
-        Dirty(component);
+        device.Comp.DeviceLists.Remove(list.Owner);
+        if (!Resolve(list.Owner, ref list.Comp))
+            return;
+
+        list.Comp.Devices.Remove(device);
+        Dirty(list);
     }
 
     private void OnMapSave(BeforeSaveEvent ev)
@@ -165,5 +165,58 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
             Dirty(device);
             toRemove.Clear();
         }
+    }
+
+    /// <summary>
+    ///     Updates the device list stored on this entity.
+    /// </summary>
+    /// <param name="uid">The entity to update.</param>
+    /// <param name="devices">The devices to store.</param>
+    /// <param name="merge">Whether to merge or replace the devices stored.</param>
+    /// <param name="deviceList">Device list component</param>
+    public DeviceListUpdateResult UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, DeviceListComponent? deviceList = null)
+    {
+        if (!Resolve(uid, ref deviceList))
+            return DeviceListUpdateResult.NoComponent;
+
+        var list = devices.ToList();
+        var newDevices = new HashSet<EntityUid>(list);
+
+        if (merge)
+            newDevices.UnionWith(deviceList.Devices);
+
+        if (newDevices.Count > deviceList.DeviceLimit)
+        {
+            return DeviceListUpdateResult.TooManyDevices;
+        }
+
+        var query = GetEntityQuery<DeviceNetworkComponent>();
+        var oldDevices = deviceList.Devices.ToList();
+        foreach (var device in oldDevices)
+        {
+            if (newDevices.Contains(device))
+                continue;
+
+            deviceList.Devices.Remove(device);
+            if (query.TryGetComponent(device, out var comp))
+                comp.DeviceLists.Remove(uid);
+        }
+
+        foreach (var device in newDevices)
+        {
+            if (!query.TryGetComponent(device, out var comp))
+                continue;
+
+            if (!deviceList.Devices.Add(device))
+                continue;
+
+            comp.DeviceLists.Add(uid);
+        }
+
+        RaiseLocalEvent(uid, new DeviceListUpdateEvent(oldDevices, list));
+
+        Dirty(uid, deviceList);
+
+        return DeviceListUpdateResult.UpdateOk;
     }
 }

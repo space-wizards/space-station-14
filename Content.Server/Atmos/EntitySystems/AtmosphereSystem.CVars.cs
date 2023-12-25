@@ -52,7 +52,7 @@ namespace Content.Server.Atmos.EntitySystems
             _cfg.OnValueChanged(CCVars.AtmosMaxProcessTime, value => AtmosMaxProcessTime = value, true);
             _cfg.OnValueChanged(CCVars.AtmosTickRate, value => AtmosTickRate = value, true);
             _cfg.OnValueChanged(CCVars.AtmosSpeedup, value => Speedup = value, true);
-            _cfg.OnValueChanged(CCVars.AtmosHeatScale, value => HeatScale = value, true);
+            _cfg.OnValueChanged(CCVars.AtmosHeatScale, value => { HeatScale = value; InitializeGases(); }, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroups, value => ExcitedGroups = value, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroupsSpaceIsAllConsuming, value => ExcitedGroupsSpaceIsAllConsuming = value, true);
         }

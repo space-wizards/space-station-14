@@ -261,6 +261,18 @@
     ErikaSurprise: 6
 
 - type: reaction
+  id: EthanolBreakdown
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Ethanol:
+      amount: 9
+  products:
+    Hydrogen: 6
+    Carbon: 2
+    Oxygen: 1
+
+- type: reaction
   id: FourteenLoko
   reactants:
     Coffee:
@@ -880,6 +892,17 @@
       amount: 1
   products:
     TheMartinez: 6
+
+- type: reaction
+  id: WaterBreakdown
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Water:
+      amount: 3
+  products:
+    Hydrogen: 2
+    Oxygen: 1
 
 - type: reaction
   id: WhiteGilgamesh

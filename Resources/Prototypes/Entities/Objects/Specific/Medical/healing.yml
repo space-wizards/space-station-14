@@ -770,3 +770,16 @@
         reagents:
         - ReagentId: Romerol
           Quantity: 15
+
+- type: entity
+  name: stimulants syringe
+  parent: BaseSyringe
+  id: SyringeStimulants
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Stimulants
+          Quantity: 15
