@@ -223,6 +223,17 @@
     prototype: ClothingShoesBootsMagAdv
     owner: job-name-ce
 
+- type: entity
+  noSpawn: true
+  parent: BaseTraitorStealObjective
+  id: BlueprientsStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ChiefEngineer
+  - type: StealCondition
+    prototype: StationBlueprints
+    owner: job-name-ce
+
 ## qm
 
 - type: entity

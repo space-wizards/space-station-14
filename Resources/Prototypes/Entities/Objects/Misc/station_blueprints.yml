@@ -1,0 +1,13 @@
+- type: entity
+  parent: BaseItem
+  id: StationBlueprints
+  name: station blueprints
+  description: Accurate drawings of the station contain information about all the premises of the station. You can see the note 'Confidential, keep forever'.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/bureaucracy.rsi
+      layers:
+        - state: blueprints
+    - type: Tag
+      tags:
+        - HighRiskItem

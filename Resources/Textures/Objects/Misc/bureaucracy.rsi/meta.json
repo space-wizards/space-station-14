@@ -8,6 +8,9 @@
   },
   "states": [
     {
+      "name": "blueprints"
+    },
+    {
       "name": "envelope_closed"
     },
     {
