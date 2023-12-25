@@ -454,7 +454,7 @@
   parent: ClothingHandsBase
   id: ClothingHandsGlovesKravMaga
   name: kravmaga gloves
-  description: These gloves allow their wearers to hit the floor, lung and throat with professional dignity.
+  description: These gloves allow their wearers to hit the solar plexus, lung and throat with professional dignity.
   components:
   - type: Sprite
     sprite: Ganimed/Clothing/Hands/Gloves/krav.rsi
