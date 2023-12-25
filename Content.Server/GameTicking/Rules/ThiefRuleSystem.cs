@@ -2,11 +2,9 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
-using Content.Server.Shuttles.Components;
 using Content.Server.Roles;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
-using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Player;
@@ -17,24 +15,26 @@ using Content.Shared.Humanoid;
 using Content.Server.Antag;
 using Robust.Server.Audio;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
-    [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
 
-    const string bigObjectiveGroup = "ThiefBigObjectiveGroups";
-    const string smallObjectiveGroup = "ThiefObjectiveGroups";
-    const string escapeObjectiveGroup = "ThiefEscapeObjectiveGroups";
+    [ValidatePrototypeId<WeightedRandomPrototype>]
+    const string BigObjectiveGroup = "ThiefBigObjectiveGroups";
+    [ValidatePrototypeId<WeightedRandomPrototype>]
+    const string SmallObjectiveGroup = "ThiefObjectiveGroups";
+    [ValidatePrototypeId<WeightedRandomPrototype>]
+    const string EscapeObjectiveGroup = "ThiefEscapeObjectiveGroups";
 
     private const float BigObjectiveChance = 0.7f;
     public override void Initialize()
@@ -53,23 +53,20 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         while (query.MoveNext(out var uid, out var thief, out var gameRule))
         {
             //Chance to not lauch gamerule
-            if (!_random.Prob(thief.RuleChance))
+            if (_random.Prob(thief.RuleChance))
             {
-                RemComp<ThiefRuleComponent>(uid);
-                continue;
-            }
-
-            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-                continue;
-
-            foreach (var player in ev.Players)
-            {
-                if (!ev.Profiles.ContainsKey(player.UserId))
+                if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                     continue;
 
-                thief.StartCandidates[player] = ev.Profiles[player.UserId];
+                foreach (var player in ev.Players)
+                {
+                    if (!ev.Profiles.ContainsKey(player.UserId))
+                        continue;
+
+                    thief.StartCandidates[player] = ev.Profiles[player.UserId];
+                }
+                DoThiefStart(thief);
             }
-            DoThiefStart(thief);
         }
     }
 
@@ -92,7 +89,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         }
     }
 
-    public bool MakeThief(ICommonSession thief, bool AddPacified)
+    public bool MakeThief(ICommonSession thief, bool addPacified)
     {
         var thiefRule = EntityQuery<ThiefRuleComponent>().FirstOrDefault();
         if (thiefRule == null)
@@ -125,8 +122,10 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         });
 
         //Add Pacified
-        if (AddPacified)
+        if (addPacified) //This check is important because some servers may want to disable the thief's pacifism. Do not remove.
+        {
             EnsureComp<PacifiedComponent>(mind.OwnedEntity.Value);
+        }
 
         // Notificate player about new role assignment
         if (_mindSystem.TryGetSession(mindId, out var session))
@@ -140,7 +139,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         if (_random.Prob(BigObjectiveChance)) // 70% chance to 1 big objective (structure or animal)
         {
-            var objective = _objectives.GetRandomObjective(mindId, mind, bigObjectiveGroup);
+            var objective = _objectives.GetRandomObjective(mindId, mind, BigObjectiveGroup);
             if (objective != null)
             {
                 _mindSystem.AddObjective(mindId, mind, objective.Value);
@@ -150,7 +149,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         for (var i = 0; i < thiefRule.MaxStealObjectives && thiefRule.MaxObjectiveDifficulty > difficulty; i++)  // Many small objectives
         {
-            var objective = _objectives.GetRandomObjective(mindId, mind, smallObjectiveGroup);
+            var objective = _objectives.GetRandomObjective(mindId, mind, SmallObjectiveGroup);
             if (objective == null)
                 continue;
 
@@ -159,14 +158,14 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         }
 
         //Escape target
-        var escapeObjective = _objectives.GetRandomObjective(mindId, mind, escapeObjectiveGroup);
+        var escapeObjective = _objectives.GetRandomObjective(mindId, mind, EscapeObjectiveGroup);
         if (escapeObjective != null)
             _mindSystem.AddObjective(mindId, mind, escapeObjective.Value);
 
         // Give starting items
         _antagSelection.GiveAntagBagGear(mind.OwnedEntity.Value, thiefRule.StarterItems);
 
-        thiefRule.ThiefMinds.Add(mindId);
+        thiefRule.ThievesMinds.Add(mindId);
         return true;
     }
 
@@ -193,7 +192,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
     private void OnObjectivesTextGetInfo(Entity<ThiefRuleComponent> thiefs, ref ObjectivesTextGetInfoEvent args)
     {
-        args.Minds = thiefs.Comp.ThiefMinds;
+        args.Minds = thiefs.Comp.ThievesMinds;
         args.AgentName = Loc.GetString("thief-round-end-agent-name");
     }
 }
