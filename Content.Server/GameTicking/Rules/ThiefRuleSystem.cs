@@ -16,6 +16,7 @@ using System.Linq;
 using Content.Shared.Humanoid;
 using Content.Server.Antag;
 using Robust.Server.Audio;
+using Content.Shared.CombatMode.Pacification;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -87,11 +88,11 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         foreach(var thief in selectedThieves)
         {
-            MakeThief(thief);
+            MakeThief(thief, component.PacifistThieves);
         }
     }
 
-    public bool MakeThief(ICommonSession thief)
+    public bool MakeThief(ICommonSession thief, bool AddPacified)
     {
         var thiefRule = EntityQuery<ThiefRuleComponent>().FirstOrDefault();
         if (thiefRule == null)
@@ -122,6 +123,10 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         {
             PrototypeId = thiefRule.ThiefPrototypeId
         });
+
+        //Add Pacified
+        if (AddPacified)
+            EnsureComp<PacifiedComponent>(mind.OwnedEntity.Value);
 
         // Notificate player about new role assignment
         if (_mindSystem.TryGetSession(mindId, out var session))
