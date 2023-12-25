@@ -197,6 +197,19 @@
     prototype: BookSecretDocuments
     owner: job-name-hos
 
+- type: entity
+  noSpawn: true
+  parent: BaseTraitorStealObjective
+  id: X01StealObjective
+  components:
+  - type: Objective
+    difficulty: 3
+  - type: NotJobRequirement
+    job: HeadOfSecurity
+  - type: StealCondition
+    prototype: WeaponMultiphaseEnergyPistol
+    owner: job-name-hos
+
 ## ce
 
 - type: entity
@@ -288,3 +301,18 @@
   - type: StealCondition
     prototype: NukeDisk
     owner: objective-condition-steal-station
+
+## warden
+
+- type: entity
+  noSpawn: true
+  parent: BaseTraitorStealObjective
+  id: KravmagaStealObjective
+  components:
+  - type: Objective
+    difficulty: 3
+  - type: NotJobRequirement
+    job: Warden
+  - type: StealCondition
+    prototype: ClothingHandsGlovesKravMaga
+    owner: job-name-warden

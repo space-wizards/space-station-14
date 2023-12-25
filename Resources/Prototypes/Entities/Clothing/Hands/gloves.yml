@@ -449,3 +449,34 @@
     - type: GloveHeatResistance
       heatResistance: 1400
     - type: Insulated
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesKravMaga
+  name: kravmaga gloves
+  description: These gloves allow their wearers to hit the floor, lung and throat with professional dignity.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Hands/Gloves/krav.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Hands/Gloves/krav.rsi
+  - type: MeleeWeapon
+    attackRate: 2
+    damage:
+      types:
+       Blunt: 6
+    soundHit:
+      collection: Punch
+    animation: WeaponArcFist
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-red
+  - type: FingerprintMask
+  - type: StaticPrice
+    price: 1200
+  - type: Insulated
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StaminaDamageOnHit
+    damage: 33
