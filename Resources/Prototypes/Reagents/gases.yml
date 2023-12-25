@@ -425,3 +425,15 @@
           shouldHave: true
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: BZ
+          min: 1
+        - !type:OrganType
+          type: Slime
+          shouldHave: true
+        key: ForcedSleep
+        component: ForcedSleeping
+        time: 10
+        type: Add
