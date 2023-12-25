@@ -3,6 +3,7 @@
   name: job-name-doctor
   description: job-description-doctor
   playTimeTracker: JobMedicalDoctor
+  psychosisGainResist: 0.70 # psychosis
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical

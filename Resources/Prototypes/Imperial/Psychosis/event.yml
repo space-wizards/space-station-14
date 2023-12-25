@@ -1,0 +1,16 @@
+- type: entity
+  id: MassPsychosis
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    reoccurrenceDelay: 20
+    weight: 20
+    minimumPlayers: 12
+    startAnnouncement: psychosis-event-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+  - type: MassPsychosisRule
+    from: 8
+    to: 12

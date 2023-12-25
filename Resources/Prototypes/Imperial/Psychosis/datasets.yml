@@ -1,0 +1,126 @@
+- type: dataset
+  id: PsychosisSoundTableStage1
+  values:
+  - /Audio/Imperial/ert_sniper/laser_sniper.ogg
+  - /Audio/Effects/explosion1.ogg
+  - /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - /Audio/Weapons/Guns/Gunshots/minigun.ogg
+  - /Audio/Items/brokenbikehorn.ogg
+  - /Audio/Items/Artifact/artifact1.ogg
+  - /Audio/Items/Artifact/artifact2.ogg
+  - /Audio/Items/jaws_pry.ogg
+  - /Audio/Items/welder2.ogg
+
+- type: dataset
+  id: PsychosisSoundTableStage2
+  values:
+  - /Audio/Imperial/ert_sniper/laser_sniper.ogg
+  - /Audio/Effects/explosion1.ogg
+  - /Audio/Effects/alert.ogg
+  - /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  - /Audio/Weapons/Guns/Gunshots/laser3.ogg
+  - /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - /Audio/Weapons/Guns/Gunshots/minigun.ogg
+  - /Audio/Items/brokenbikehorn.ogg
+  - /Audio/Items/Artifact/artifact1.ogg
+  - /Audio/Items/Artifact/artifact2.ogg
+  - /Audio/Items/jaws_pry.ogg
+  - /Audio/Items/welder2.ogg
+
+- type: dataset
+  id: PsychosisSoundTableStage3
+  values:
+  - /Audio/Imperial/ert_sniper/laser_sniper.ogg
+  - /Audio/Effects/guardian_inject.ogg
+  - /Audio/Effects/explosion1.ogg
+  - /Audio/Effects/alert.ogg
+  - /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  - /Audio/Weapons/Guns/Gunshots/laser3.ogg
+  - /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - /Audio/Weapons/Guns/Gunshots/minigun.ogg
+  - /Audio/Items/brokenbikehorn.ogg
+  - /Audio/Items/Artifact/artifact1.ogg
+  - /Audio/Items/Artifact/artifact2.ogg
+  - /Audio/Items/jaws_pry.ogg
+  - /Audio/Items/welder2.ogg
+  - /Audio/Mecha/sound_mecha_hydraulic.ogg
+  - /Audio/Ambience/Antag/pirate_start.ogg
+  - /Audio/Ambience/Antag/zombie_start.ogg
+
+- type: dataset
+  id: PsychosisRestricted
+  values:
+  - Wall
+  - Window
+  - Ore
+
+- type: dataset
+  id: PsychosisObjectTableStage1
+  values:
+  - ExGrenadeFake
+  - C4Fake
+  - WeaponRifleLecterFake
+  - ClothingUniformJumpskirtJanimaidminiFake
+  - ClothingBeltChiefEngineerFilledFake
+  - ClothingHandsGlovesColorYellowFake
+
+- type: dataset
+  id: PsychosisObjectTableStage2
+  values:
+  - ExGrenadeFake
+  - C4Fake
+  - WeaponRifleLecterFake
+  - ClothingUniformJumpskirtJanimaidminiFake
+  - ClothingBeltChiefEngineerFilledFake
+  - ClothingHandsGlovesColorYellowFake
+
+- type: dataset
+  id: PsychosisObjectTableStage3
+  values:
+  - WeaponAntiqueLaserFake
+  - ExGrenadeFake
+  - C4Fake
+  - PresentFake
+  - WeaponRifleLecterFake
+  - ClothingHeadHatCatEarsFake
+  - ClothingUniformJumpskirtJanimaidminiFake
+  - ClothingBeltChiefEngineerFilledFake
+  - NukeDiskFakeFake
+  - ClothingHandsGlovesColorYellowFake
+
+- type: dataset
+  id: PsychosisPhrases
+  values:
+  - psychosis-randomwords-first
+  - psychosis-randomwords-second
+  - psychosis-randomwords-third
+
+- type: dataset
+  id: PsychosisCreature
+  values:
+  - MobHumanSyndicateAgentFake
+  - MobHumanSpaceNinjaFake
+  - MobHumanSyndicateAgentNukeopsFake
+  - MobHumanLoneNuclearOperativeFake
+
+- type: dataset
+  id: PsychosisHealsFirst
+  values:
+  - Nicotine
+  - Etanol
+  - Coffee
+
+- type: dataset
+  id: PsychosisHealsSecond
+  values:
+  - THK
+  - Eth
+
+- type: dataset
+  id: PsychosisHealsThird
+  values:
+  - BetterPax
+  - Artif

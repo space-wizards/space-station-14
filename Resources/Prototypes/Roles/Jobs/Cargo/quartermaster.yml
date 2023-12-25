@@ -3,6 +3,7 @@
   name: job-name-qm
   description: job-description-qm
   playTimeTracker: JobQuartermaster
+  psychosisGainResist: 0.6 # psychosis
   requirements:
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist

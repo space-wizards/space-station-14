@@ -198,6 +198,7 @@
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
       - id: CoreCMOModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: PsychosisHealPaper #psychosis added paper
       - id: CompactDefibrillator # @keeyn Compact defibrillator
 
 - type: entity
@@ -223,6 +224,7 @@
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
       - id: CoreCMOModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: PsychosisHealPaper #psychosis added paper
       - id: CompactDefibrillator # @keeyn Compact defibrillator
 
 - type: entity

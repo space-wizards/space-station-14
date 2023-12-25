@@ -3,6 +3,7 @@
   name: job-name-senior-physician
   description: job-description-senior-physician
   playTimeTracker: JobSeniorPhysician
+  psychosisGainResist: 0.7 # psychosis
   requirements:
     - !type:RoleTimeRequirement
       role: JobChemist

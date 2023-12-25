@@ -54,6 +54,7 @@
       Unsexed: UnisexDwarf
   - type: ReplacementAccent
     accent: dwarf
+  - type: PsychosisGain # psychosis
   - type: Speech
     speechSounds: Bass
 

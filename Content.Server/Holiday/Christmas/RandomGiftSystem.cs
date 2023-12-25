@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration.Logs;
+using Content.Server.Fake;
 using Content.Server.Hands.Systems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -89,10 +90,11 @@ public sealed class RandomGiftSystem : EntitySystem
         var itemCompName = _componentFactory.GetComponentName(typeof(ItemComponent));
         var mapGridCompName = _componentFactory.GetComponentName(typeof(MapGridComponent));
         var physicsCompName = _componentFactory.GetComponentName(typeof(PhysicsComponent));
+        var fakeCompName = _componentFactory.GetComponentName(typeof(FakeComponent));
 
         foreach (var proto in _prototype.EnumeratePrototypes<EntityPrototype>())
         {
-            if (proto.Abstract || proto.NoSpawn || proto.Components.ContainsKey(mapGridCompName) || !proto.Components.ContainsKey(physicsCompName))
+            if (proto.Abstract || proto.NoSpawn || proto.Components.ContainsKey(mapGridCompName) || !proto.Components.ContainsKey(physicsCompName) || proto.Components.ContainsKey(fakeCompName)) // psychosis edited
                 continue;
 
             _possibleGiftsUnsafe.Add(proto.ID);

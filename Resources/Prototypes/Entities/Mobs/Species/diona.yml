@@ -20,6 +20,7 @@
   - type: Body
     prototype: Diona
     requiredLegs: 2
+  - type: PsychosisGain # psychosis
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Diona

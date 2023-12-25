@@ -3,6 +3,7 @@
   name: job-name-intern
   description: job-description-intern
   playTimeTracker: JobMedicalIntern
+  psychosisGainResist: 0.5 # psychosis
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical

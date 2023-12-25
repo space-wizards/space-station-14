@@ -3,6 +3,7 @@
   name: job-name-hos
   description: job-description-hos
   playTimeTracker: JobHeadOfSecurity
+  psychosisGainResist: 0.85 # psychosis
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden

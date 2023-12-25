@@ -168,6 +168,12 @@
   metabolisms:
     Narcotic:
       effects:
+      - !type:HealPsychosis # psychosis
+        reagent: THK
+        stage: 2
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 10 # psychosis
       - !type:GenericStatusEffect
         key: SeeingRainbows
         component: SeeingRainbows
@@ -188,6 +194,12 @@
   metabolisms:
     Narcotic:
       effects:
+      - !type:HealPsychosis # psychosis
+        reagent: THK
+        stage: 2
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 10 # psychosis
       - !type:GenericStatusEffect
         key: SeeingRainbows
         component: SeeingRainbows
@@ -204,6 +216,12 @@
   flavor: bitter
   color: "#C0C0C0"
   physicalDesc: reagent-physical-desc-strong-smelling
+  metabolisms: # psychosis
+    Narcotic: # psychosis
+      effects: # psychosis
+        - !type:HealPsychosis # psychosis
+          reagent: Nicotine # psychosis
+          stage: 1 # psychosis
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5

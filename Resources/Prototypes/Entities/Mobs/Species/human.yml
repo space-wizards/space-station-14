@@ -15,6 +15,7 @@
     state: full
   - type: Thirst
   - type: Perishable
+  - type: PsychosisGain # psychosis
   - type: Butcherable
     butcheringType: Spike
     spawned:

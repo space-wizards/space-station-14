@@ -27,4 +27,7 @@ public sealed class ICCVars
     /// </summary>
     public static readonly CVarDef<float>
         SpacingEscapeRatio = CVarDef.Create("atmos.spacingescaperatio", 1f, CVar.SERVERONLY);
+
+    public static readonly CVarDef<bool>
+        PsychosisEnabled = CVarDef.Create("psychosis.enabled", true, CVar.REPLICATED);
 }

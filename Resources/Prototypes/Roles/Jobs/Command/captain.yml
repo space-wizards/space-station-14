@@ -3,6 +3,7 @@
   name: job-name-captain
   description: job-description-captain
   playTimeTracker: JobCaptain
+  psychosisGainResist: 0.9 # psychosis
   requirements:
     - !type:RoleTimeRequirement
       role: JobHeadOfPersonnel
