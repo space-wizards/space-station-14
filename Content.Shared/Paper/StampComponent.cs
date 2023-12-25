@@ -49,5 +49,9 @@ public sealed partial class StampComponent : Component
     /// The sound when stamp stamped
     /// </summary>
     [DataField("sound")]
+    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Items/Stamp/thick_stamp_sub.ogg")
     public SoundSpecifier? Sound = null;
+    {
+        Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(5f)
+    };
 }
