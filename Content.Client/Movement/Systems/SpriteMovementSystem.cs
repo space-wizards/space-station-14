@@ -37,19 +37,15 @@ public sealed class SpriteMovementSystem : EntitySystem
         {
             foreach (var (layer, state) in component.MovementLayers)
             {
-                sprite.LayerSetState(layer, state);
+                sprite.LayerSetData(layer, state);
             }
-
-            Log.Debug($"Set movement state");
         }
         else
         {
             foreach (var (layer, state) in component.NoMovementLayers)
             {
-                sprite.LayerSetState(layer, state);
+                sprite.LayerSetData(layer, state);
             }
-
-            Log.Debug($"Unset movement state");
         }
     }
 }

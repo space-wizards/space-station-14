@@ -44,9 +44,11 @@
       visible: false
   - type: SpriteMovement
     movementLayers:
-      movement: miner_moving
+      movement:
+        state: miner_moving
     noMovementLayers:
-      movement: miner
+      movement:
+        state: miner
   - type: BorgChassis
     maxModules: 4
     moduleWhitelist:
@@ -136,9 +138,11 @@
       visible: false
   - type: SpriteMovement
     movementLayers:
-      movement: janitor_moving
+      movement:
+        state: janitor_moving
     noMovementLayers:
-      movement: janitor
+      movement:
+        state: janitor
   - type: BorgChassis
     maxModules: 4
     moduleWhitelist:
@@ -185,9 +189,11 @@
       visible: false
   - type: SpriteMovement
     movementLayers:
-      movement: medical_moving
+      movement:
+        state: medical_moving
     noMovementLayers:
-      movement: medical
+      movement:
+        state: medical
   - type: BorgChassis
     maxModules: 4
     moduleWhitelist:
