@@ -99,10 +99,12 @@ public sealed class SpawnPointSystem : EntitySystem
 
         if (stationSpawning != null)
         {
+            // Remove spawnpoint from pool unless it's the last one for this job.
             if (args.Job?.Prototype != null
-                && jobSpawnsDict.TryGetValue((ProtoId<JobPrototype>) args.Job.Prototype, out var jobSpawns))
+                && jobSpawnsDict.TryGetValue((ProtoId<JobPrototype>) args.Job.Prototype, out var currentJobSpawns)
+                && currentJobSpawns.Count > 1)
             {
-                    jobSpawns.Remove(spawnLoc);
+                currentJobSpawns.Remove(spawnLoc);
             }
 
             stationSpawning.JobSpawnPoints = jobSpawnsDict;
