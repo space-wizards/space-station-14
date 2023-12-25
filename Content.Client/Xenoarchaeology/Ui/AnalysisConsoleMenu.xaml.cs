@@ -65,7 +65,14 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
         if (state.Scanning)
         {
-            message.AddMarkup(Loc.GetString("analysis-console-info-scanner"));
+            if (state.Paused)
+            {
+                message.AddMarkup(Loc.GetString("analysis-console-info-scanner-paused"));
+            }
+            else
+            {
+                message.AddMarkup(Loc.GetString("analysis-console-info-scanner"));
+            }
             Information.SetMessage(message);
             UpdateArtifactIcon(null); //set it to blank
             return;

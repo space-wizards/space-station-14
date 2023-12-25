@@ -16,6 +16,19 @@ public sealed partial class ActiveArtifactAnalyzerComponent : Component
     public TimeSpan StartTime;
 
     /// <summary>
+    /// Is analysis paused?
+    /// It could be when the Artifact Analyzer has no power, for example.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool AnalysisPaused = false;
+
+    /// <summary>
+    /// Accumulated seconds the analysis has been going on for.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float ScanProgressSec = 0;
+
+    /// <summary>
     /// What is being scanned?
     /// </summary>
     [DataField]

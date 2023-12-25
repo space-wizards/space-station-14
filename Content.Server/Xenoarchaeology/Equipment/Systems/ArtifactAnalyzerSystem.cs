@@ -82,10 +82,11 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             if (scan.Console != null)
                 UpdateUserInterface(scan.Console.Value);
 
-            if (_timing.CurTime - active.StartTime < scan.AnalysisDuration * scan.AnalysisDurationMulitplier)
-                continue;
+            if (!active.AnalysisPaused)
+                active.ScanProgressSec += frameTime;
 
-            FinishScan(uid, scan, active);
+            if (active.ScanProgressSec >= (scan.AnalysisDuration * scan.AnalysisDurationMulitplier).TotalSeconds)
+                FinishScan(uid, scan, active);
         }
     }
 
@@ -212,10 +213,11 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         var serverConnected = TryComp<ResearchClientComponent>(uid, out var client) && client.ConnectedToServer;
 
         var scanning = TryComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity, out var active);
-        var remaining = active != null ? _timing.CurTime - active.StartTime : TimeSpan.Zero;
+        var remaining = active != null ? TimeSpan.FromSeconds(active.ScanProgressSec) : TimeSpan.Zero;
+        var paused = active != null ? active.AnalysisPaused : false;
 
         var state = new AnalysisConsoleScanUpdateState(GetNetEntity(artifact), analyzerConnected, serverConnected,
-            canScan, canPrint, msg, scanning, remaining, totalTime, points);
+            canScan, canPrint, msg, scanning, paused, remaining, totalTime, points);
 
         var bui = _ui.GetUi(uid, ArtifactAnalzyerUiKey.Key);
         _ui.SetUiState(bui, state);
@@ -251,8 +253,12 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             return;
 
         var activeComp = EnsureComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity.Value);
+        activeComp.ScanProgressSec = 0;
         activeComp.StartTime = _timing.CurTime;
         activeComp.Artifact = ent.Value;
+
+        if (TryComp<ApcPowerReceiverComponent>(component.AnalyzerEntity.Value, out var powa))
+            activeComp.AnalysisPaused = !powa.Powered;
 
         var activeArtifact = EnsureComp<ActiveScannedArtifactComponent>(ent.Value);
         activeArtifact.Scanner = component.AnalyzerEntity.Value;
@@ -467,8 +473,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
     private void OnPowerChanged(EntityUid uid, ActiveArtifactAnalyzerComponent component, ref PowerChangedEvent args)
     {
-        if (!args.Powered)
-            CancelScan(component.Artifact);
+        component.AnalysisPaused = !args.Powered;
     }
 }
 
