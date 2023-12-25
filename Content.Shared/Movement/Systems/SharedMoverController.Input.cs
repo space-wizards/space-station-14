@@ -90,15 +90,13 @@ namespace Content.Shared.Movement.Systems
 
         protected void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
         {
-            var normalised = GetNormalizedMovement(buttons);
-
-            if (component.HeldMoveButtons == normalised)
+            if (component.HeldMoveButtons == buttons)
                 return;
 
             // Relay the fact we had any movement event.
             // TODO: Ideally we'd do these in a tick instead of out of sim.
             var moveEvent = new MoveInputEvent(component.Owner, component, component.HeldMoveButtons);
-            component.HeldMoveButtons = normalised;
+            component.HeldMoveButtons = buttons;
             RaiseLocalEvent(component.Owner, ref moveEvent);
             Dirty(component.Owner, component);
         }
