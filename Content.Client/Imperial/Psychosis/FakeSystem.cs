@@ -1,4 +1,6 @@
+using Content.Shared.Imperial.ICCVar;
 using Robust.Client.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 namespace Content.Client.Fake;
@@ -7,37 +9,35 @@ public sealed class FakeSystem : EntitySystem
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-
     [Dependency] private readonly IGameTiming _timing = default!;
-
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    private static TimeSpan _next = TimeSpan.FromSeconds(1);
+    private static TimeSpan _update = TimeSpan.FromSeconds(1);
     public override void Initialize()
     {
         base.Initialize();
     }
     public override void Update(float frameTime)
     {
+        if (_cfg.GetCVar(ICCVars.PsychosisEnabled) != true)
+            return;
+        if (_timing.CurTime < _next)
+            return;
+        _next = _timing.CurTime + _update;
         var query = EntityQueryEnumerator<FakeComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.Delete == TimeSpan.FromSeconds(0))
                 comp.Delete = _timing.CurTime + comp.Life;
             if (comp.Delete < _timing.CurTime)
-                Delete(uid);
-            if (_timing.CurTime > comp.Next)
+                _entityManager.QueueDeleteEntity(uid);
+            var uidthing = _player.LocalPlayer?.ControlledEntity;
+            if (uidthing != null)
             {
-                var uidthing = _player.LocalPlayer?.ControlledEntity;
-                if (uidthing != null)
-                {
-                    Update(uidthing.Value, uid, comp);
-                }
-                comp.Next += comp.Difference;
+                Update(uidthing.Value, uid, comp);
             }
         }
-    }
-    private void Delete(EntityUid uid)
-    {
-        _entityManager.QueueDeleteEntity(uid);
     }
     private void Update(EntityUid uid, EntityUid comp, FakeComponent component)
     {

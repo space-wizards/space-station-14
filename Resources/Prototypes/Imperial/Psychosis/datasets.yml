@@ -94,9 +94,9 @@
 - type: dataset
   id: PsychosisPhrases
   values:
-  - psychosis-first
-  - psychosis-second
-  - psychosis-third
+  - psychosis-randomwords-first
+  - psychosis-randomwords-second
+  - psychosis-randomwords-third
 
 - type: dataset
   id: PsychosisCreature

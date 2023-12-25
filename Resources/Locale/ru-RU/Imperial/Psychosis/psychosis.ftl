@@ -1,6 +1,6 @@
-psychosis-first = Зачем?
-psychosis-second = Почему?
-psychosis-third = Где?
+psychosis-randomwords-first = Зачем?
+psychosis-randomwords-second = Почему?
+psychosis-randomwords-third = Где?
 ent-WeaponAntiqueLaserFake = {ent-WeaponAntiqueLaser}
     .desc = Вся отделка выполнена на никаком уровне. Он украшен кожей иана. Предмет устрашает своей бесполезностью.
     .suffix = Ненастоящий, не спавнить
@@ -48,54 +48,54 @@ ent-MobHumanLoneNuclearOperativeFake = молодого возраста пас�
     .desc = Ээээ..
     .suffix = Ненастоящий, не спавнить
 
-first-stage-heal-effect = Лечит первую стадию психоза, если подходит по листку
-second-stage-heal-effect = Лечит вторую или меньше стадию психоза, если подходит по листку
-third-stage-heal-effect = Лечит третью или меньше стадию, если подходит по листку
+psychosis-first-stage-heal-effect = Лечит первую стадию психоза, если подходит по листку
+psychosis-second-stage-heal-effect = Лечит вторую или меньше стадию психоза, если подходит по листку
+psychosis-third-stage-heal-effect = Лечит третью или меньше стадию, если подходит по листку
 reagent-name-betterpax = Майндресторер
 reagent-desc-betterpax = Восстанавливает психическое разумие пациента, при этом немного разрушая мозг (использовать только при критических стадиях!)
 
 
-heal-psychosis-1 = [head=1]╔═════════════════════════════════╗[/head]
-heal-psychosis-2 = [color=#19C8D5][head=6]        ░███░██░░░██░████░████░░░░░░░[/color][/head]
-heal-psychosis-3 = [color=#19C8D5][head=6]        ░██░░███░███░██░░░██░░██░░░░░[/color][/head]
-heal-psychosis-4 = [color=#19C8D5][head=6]        ░█░░░██░█░██░████░██░░██░░░█░[/color][/head]
-heal-psychosis-5 = [color=#19C8D5][head=6]        ░░░░░██░░░██░██░░░██░░██░░██░[/color][/head]
-heal-psychosis-6 = [color=#19C8D5][head=6]        ░░░░░██░░░██░████░████░░░███░[/color][/head]
-heal-psychosis-7 = [head=1]╚═════════════════════════════════╝[/head]
-heal-psychosis-8 = [head=2]╔══════════════════════════╗[/head]
-heal-psychosis-9 = [head=2]   ХАРАКТЕРИСТИКА ПСИХОЗА [/head]
-heal-psychosis-10 = [head=2]╚══════════════════════════╝[/head]
-heal-psychosis-11 = ╓———————————————————————————╖
-heal-psychosis-12 = • [head=5][color=#5F9EA0]Первая стадия:[/color][/head]
-heal-psychosis-13 = • Актуальный препарат для противодействия: {$first}
-heal-psychosis-14 = • Симптомы стадии:[color=#4B57D5] Звуковые галюцинации
-heal-psychosis-15 = [/color]
-heal-psychosis-16 = • [head=5][color=#5F9EA0]Вторая стадия:[/color][/head]
-heal-psychosis-17 = • Актуальный препарат для противодействия: {$second}
-heal-psychosis-18 = • Симптомы стадии:[color=#4B57D5] Звуковые, а так же материальные галюцинации, иногда невнятная речь.
-heal-psychosis-19 = [/color]
-heal-psychosis-20 = • [head=5][color=#5F9EA0]Третья стадия:[/color][/head]
-heal-psychosis-21 = • Актуальный препарат для противодействия: {$third}
-heal-psychosis-22 = • Симптомы стадии:[color=#4B57D5] Звуковые, а так же материальные галюцинации, иногда невнятная речь, а так же оторванность от реальности.
-heal-psychosis-23 = [/color]
-heal-psychosis-24 = ╙———————————————————————————╜
-heal-psychosis-25 = empty
-heal-psychosis-26 = [italic]ПРИМЕЧАНИЕ: При возникновении вышеперечисленных симптомов пациент должен [bold]немедленно[/bold] обратиться в медицинский блок станции.[/italic]
-heal-psychosis-27 = [bold]   ————————<Место для печатей>————————[/bold]
-heal-psychosis-28 = ▶                                                                                                            ◀
+psychosis-heal-psychosis-1 = [head=1]╔═════════════════════════════════╗[/head]
+psychosis-heal-psychosis-2 = [color=#19C8D5][head=6]        ░███░██░░░██░████░████░░░░░░░[/color][/head]
+psychosis-heal-psychosis-3 = [color=#19C8D5][head=6]        ░██░░███░███░██░░░██░░██░░░░░[/color][/head]
+psychosis-heal-psychosis-4 = [color=#19C8D5][head=6]        ░█░░░██░█░██░████░██░░██░░░█░[/color][/head]
+psychosis-heal-psychosis-5 = [color=#19C8D5][head=6]        ░░░░░██░░░██░██░░░██░░██░░██░[/color][/head]
+psychosis-heal-psychosis-6 = [color=#19C8D5][head=6]        ░░░░░██░░░██░████░████░░░███░[/color][/head]
+psychosis-heal-psychosis-7 = [head=1]╚═════════════════════════════════╝[/head]
+psychosis-heal-psychosis-8 = [head=2]╔══════════════════════════╗[/head]
+psychosis-heal-psychosis-9 = [head=2]   ХАРАКТЕРИСТИКА ПСИХОЗА [/head]
+psychosis-heal-psychosis-10 = [head=2]╚══════════════════════════╝[/head]
+psychosis-heal-psychosis-11 = ╓———————————————————————————╖
+psychosis-heal-psychosis-12 = • [head=5][color=#5F9EA0]Первая стадия:[/color][/head]
+psychosis-heal-psychosis-13 = • Актуальный препарат для противодействия: {$first}
+psychosis-heal-psychosis-14 = • Симптомы стадии:[color=#4B57D5] Звуковые галюцинации
+psychosis-heal-psychosis-15 = [/color]
+psychosis-heal-psychosis-16 = • [head=5][color=#5F9EA0]Вторая стадия:[/color][/head]
+psychosis-heal-psychosis-17 = • Актуальный препарат для противодействия: {$second}
+psychosis-heal-psychosis-18 = • Симптомы стадии:[color=#4B57D5] Звуковые, а так же материальные галюцинации, иногда невнятная речь.
+psychosis-heal-psychosis-19 = [/color]
+psychosis-heal-psychosis-20 = • [head=5][color=#5F9EA0]Третья стадия:[/color][/head]
+psychosis-heal-psychosis-21 = • Актуальный препарат для противодействия: {$third}
+psychosis-heal-psychosis-22 = • Симптомы стадии:[color=#4B57D5] Звуковые, а так же материальные галюцинации, иногда невнятная речь, а так же оторванность от реальности.
+psychosis-heal-psychosis-23 = [/color]
+psychosis-heal-psychosis-24 = ╙———————————————————————————╜
+psychosis-heal-psychosis-25 = empty
+psychosis-heal-psychosis-26 = [italic]ПРИМЕЧАНИЕ: При возникновении вышеперечисленных симптомов пациент должен [bold]немедленно[/bold] обратиться в медицинский блок станции.[/italic]
+psychosis-heal-psychosis-27 = [bold]   ————————<Место для печатей>————————[/bold]
+psychosis-heal-psychosis-28 = ▶                                                                                                            ◀
 
 
-Nicotine = Никотин
-Etanol = Этанол
-Coffee = Кофе
+psychosis-Nicotine = Никотин
+psychosis-Etanol = Этанол
+psychosis-Coffee = Кофе
 
 
-THK = ТГК
-Eth = Этилоксиэфедрин
+psychosis-THK = ТГК
+psychosis-Eth = Этилоксиэфедрин
 
 
-BetterPax = Майндресторер
-Artif = Артифексиум
+psychosis-BetterPax = Майндресторер
+psychosis-Artif = Артифексиум
 
 ent-PsychosisHealPaper = Текущие способы лечения психоза
     .desc = {ent-Paper.desc}

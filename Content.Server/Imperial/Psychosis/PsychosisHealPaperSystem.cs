@@ -49,19 +49,19 @@ namespace Content.Server.Psychosis
                     continue;
                 if (str == 13)
                 {
-                    psychosisMessage.AddMarkup(Loc.GetString("heal-psychosis-13", ("first", Loc.GetString(_entityManager.System<PsychosisSystem>().GetFirst()))));
+                    psychosisMessage.AddMarkup(Loc.GetString("psychosis-heal-psychosis-13", ("first", Loc.GetString("psychosis-" + _entityManager.System<PsychosisSystem>().GetFirst()))));
                     psychosisMessage.PushNewline();
                     continue;
                 }
                 if (str == 17)
                 {
-                    psychosisMessage.AddMarkup(Loc.GetString("heal-psychosis-17", ("second", Loc.GetString(_entityManager.System<PsychosisSystem>().GetSecond()))));
+                    psychosisMessage.AddMarkup(Loc.GetString("psychosis-heal-psychosis-17", ("second", Loc.GetString("psychosis-" + _entityManager.System<PsychosisSystem>().GetSecond()))));
                     psychosisMessage.PushNewline();
                     continue;
                 }
                 if (str == 21)
                 {
-                    psychosisMessage.AddMarkup(Loc.GetString("heal-psychosis-21", ("third", Loc.GetString(_entityManager.System<PsychosisSystem>().GetThird()))));
+                    psychosisMessage.AddMarkup(Loc.GetString("psychosis-heal-psychosis-21", ("third", Loc.GetString("psychosis-" + _entityManager.System<PsychosisSystem>().GetThird()))));
                     psychosisMessage.PushNewline();
                     continue;
                 }
@@ -70,7 +70,7 @@ namespace Content.Server.Psychosis
                     psychosisMessage.PushNewline();
                     continue;
                 }
-                psychosisMessage.AddMarkup(Loc.GetString("heal-psychosis-" + str.ToString()));
+                psychosisMessage.AddMarkup(Loc.GetString("psychosis-heal-psychosis-" + str.ToString()));
                 if (str != 28)
                     psychosisMessage.PushNewline();
             }

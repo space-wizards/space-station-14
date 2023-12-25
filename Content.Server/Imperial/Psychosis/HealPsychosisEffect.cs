@@ -49,11 +49,11 @@ public sealed partial class HealPsychosis : ReagentEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         if (Stage == 1)
-            return Loc.GetString("first-stage-heal-effect");
+            return Loc.GetString("psychosis-first-stage-heal-effect");
         if (Stage == 2)
-            return Loc.GetString("second-stage-heal-effect");
+            return Loc.GetString("psychosis-second-stage-heal-effect");
         if (Stage == 3)
-            return Loc.GetString("third-stage-heal-effect");
+            return Loc.GetString("psychosis-third-stage-heal-effect");
         throw new NotImplementedException();
     }
 }
