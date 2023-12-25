@@ -170,6 +170,15 @@
       - MagazineBoxMagnumIncendiary
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxRifleIncendiary
+      - ShellShotgunUranium
+      - CartridgePistolUranium
+      - CartridgeMagnumUranium
+      - CartridgeLightRifleUranium
+      - CartridgeRifleUranium
+      - MagazineBoxPistolUranium
+      - MagazineBoxMagnumUranium
+      - MagazineBoxLightRifleUranium
+      - MagazineBoxRifleUranium
 
 - type: entity
   id: Protolathe
@@ -210,8 +219,6 @@
       - AnomalyScanner
       - AnomalyLocator
       - AnomalyLocatorWide
-      - RCD
-      - RCDAmmo
       - HandheldCrewMonitor
       - Scalpel
       - Retractor
@@ -279,6 +286,7 @@
       - ClothingEyesGlassesChemical
       - FauxTileAstroGrass
       - FauxTileAstroIce
+      - OreBagOfHolding
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload
@@ -541,7 +549,6 @@
       - Zipties
       - Stunbaton
       - ForensicPad
-      - ClothingEyesGlassesSecurity
       - RiotShield
       - ShellShotgun
       - ShellShotgunFlare
@@ -559,15 +566,27 @@
       - TargetHuman
       - TargetSyndicate
       - TargetClown
+      - MagazineBoxLightRiflePractice
+      - MagazineBoxMagnumPractice
+      - MagazineBoxPistolPractice
+      - MagazineBoxRiflePractice
+      - ShellShotgunPractice
+      - WeaponLaserCarbinePractice
+      - WeaponDisablerPractice
     dynamicRecipes:
       - CartridgeLightRifleIncendiary
       - CartridgeMagnumIncendiary
       - CartridgePistolIncendiary
       - CartridgeRifleIncendiary
+      - CartridgeLightRifleUranium
+      - CartridgeMagnumUranium
+      - CartridgePistolUranium
+      - CartridgeRifleUranium
       - CartridgeLightRifleRubber
       - CartridgeMagnumRubber
       - CartridgePistolRubber
       - CartridgeRifleRubber
+      - ClothingEyesGlassesSecurity
       - ExplosivePayload
       - FlashPayload
       - HoloprojectorSecurity
@@ -575,17 +594,17 @@
       - MagazineBoxMagnumIncendiary
       - MagazineBoxPistolIncendiary
       - MagazineBoxRifleIncendiary
-      - MagazineBoxLightRiflePractice
-      - MagazineBoxMagnumPractice
-      - MagazineBoxPistolPractice
-      - MagazineBoxRiflePractice
+      - MagazineBoxLightRifleUranium
+      - MagazineBoxMagnumUranium
+      - MagazineBoxPistolUranium
+      - MagazineBoxRifleUranium
       - MagazineBoxLightRifleRubber
       - MagazineBoxMagnumRubber
       - MagazineBoxPistolRubber
       - MagazineBoxRifleRubber
       - ShellShotgunBeanbag
       - ShellShotgunIncendiary
-      - ShellShotgunPractice
+      - ShellShotgunUranium
       - Signaller
       - SignalTrigger
       - TelescopicShield
@@ -593,10 +612,8 @@
       - Truncheon
       - VoiceTrigger
       - WeaponAdvancedLaser
-      - WeaponDisablerPractice
       - WeaponLaserCannon
       - WeaponLaserCarbine
-      - WeaponLaserCarbinePractice
       - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:
@@ -741,6 +758,8 @@
       - ClothingUniformJumpskirtBartender
       - ClothingUniformJumpsuitCaptain
       - ClothingUniformJumpskirtCaptain
+      - ClothingUniformJumpsuitCapFormal
+      - ClothingUniformJumpskirtCapFormalDress
       - ClothingUniformJumpsuitCargo
       - ClothingUniformJumpskirtCargo
       - ClothingUniformJumpsuitSalvageSpecialist
@@ -765,8 +784,14 @@
       - ClothingUniformJumpskirtHoP
       - ClothingUniformJumpsuitHoS
       - ClothingUniformJumpskirtHoS
+      - ClothingUniformJumpsuitHosFormal
+      - ClothingUniformJumpskirtHosFormal
       - ClothingUniformJumpsuitHoSAlt
       - ClothingUniformJumpskirtHoSAlt
+      - ClothingUniformJumpsuitHoSBlue
+      - ClothingUniformJumpsuitHoSGrey
+      - ClothingUniformJumpsuitHoSParadeMale
+      - ClothingUniformJumpskirtHoSParadeMale
       - ClothingUniformJumpsuitHydroponics
       - ClothingUniformJumpskirtHydroponics
       - ClothingUniformJumpsuitJanitor
@@ -831,6 +856,23 @@
       - ClothingOuterWinterSci
       - ClothingOuterWinterRobo
       - ClothingOuterWinterSec
+  - type: EmagLatheRecipes
+    emagStaticRecipes:
+      - ClothingUniformJumpsuitCentcomAgent
+      - ClothingUniformJumpsuitCentcomFormal
+      - ClothingUniformJumpskirtCentcomFormalDress
+      - ClothingUniformJumpsuitCentcomOfficer
+      - ClothingUniformJumpsuitCentcomOfficial
+      - ClothingUniformJumpsuitOperative
+      - ClothingUniformJumpskirtOperative
+      - ClothingUniformJumpsuitSyndieFormal
+      - ClothingUniformJumpskirtSyndieFormalDress
+      - ClothingUniformJumpsuitPyjamaSyndicateBlack
+      - ClothingUniformJumpsuitPyjamaSyndicatePink
+      - ClothingUniformJumpsuitPyjamaSyndicateRed
+      - ClothingOuterWinterCentcom
+      - ClothingOuterWinterSyndie
+      - ClothingOuterWinterSyndieCap
   - type: MaterialStorage
     whitelist:
       tags:
