@@ -65,7 +65,7 @@
   - type: GuideHelp
     guides:
     - Xenoarchaeology
-  
+
 - type: entity
   parent: BaseXenoArtifactItem
   id: SimpleXenoArtifactItem
