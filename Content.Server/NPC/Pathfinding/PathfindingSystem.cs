@@ -13,7 +13,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
@@ -46,6 +46,7 @@ namespace Content.Server.NPC.Pathfinding
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private readonly Dictionary<ICommonSession, PathfindingDebugMode> _subscribedSessions = new();
 
@@ -75,6 +76,7 @@ namespace Content.Server.NPC.Pathfinding
             base.Shutdown();
             _subscribedSessions.Clear();
             _playerManager.PlayerStatusChanged -= OnPlayerChange;
+            _transform.OnGlobalMoveEvent -= OnMoveEvent;
         }
 
         public override void Update(float frameTime)
@@ -528,7 +530,7 @@ namespace Content.Server.NPC.Pathfinding
 
         private void OnBreadcrumbs(RequestPathfindingDebugMessage msg, EntitySessionEventArgs args)
         {
-            var pSession = (IPlayerSession) args.SenderSession;
+            var pSession = args.SenderSession;
 
             if (!_adminManager.HasAdminFlag(pSession, AdminFlags.Debug))
             {

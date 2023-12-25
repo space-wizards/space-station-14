@@ -41,6 +41,7 @@
         Slash: 7
   - type: Item
     sprite: Objects/Tools/Hydroponics/clippers.rsi
+    storedRotation: -90
 
 - type: entity
   name: scythe
@@ -59,7 +60,7 @@
       types:
         Slash: 10
   - type: Item
-    size: 20
+    size: Normal
   - type: Clothing
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     slots:
@@ -124,12 +125,15 @@
     sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
     state: icon
   - type: Item
+    storedRotation: -90
   - type: Clothing
     quickEquip: false
     slots:
     - belt
   - type: Storage
-    capacity: 200
+    grid:
+    - 0,0,7,4
+    maxItemSize: Small
     quickInsert: true
     areaInsert: true
     whitelist:

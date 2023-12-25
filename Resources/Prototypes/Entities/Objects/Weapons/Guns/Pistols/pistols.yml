@@ -12,7 +12,7 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 10
+    size: Small
   - type: Tag
     tags:
     - Sidearm

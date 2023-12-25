@@ -8,7 +8,7 @@
     sprite: Objects/Devices/forensic_scanner.rsi
     state: forensicnew
   - type: Item
-    size: 5
+    size: Small
   - type: Clothing
     sprite: Objects/Devices/forensic_scanner.rsi
     quickEquip: false
@@ -26,6 +26,8 @@
   - type: GuideHelp
     guides:
     - DNA
+  - type: StealTarget
+    stealGroup: ForensicScanner
 
 - type: entity
   name: forensic scanner report

@@ -31,6 +31,24 @@ public sealed class SolutionChangedEvent : EntityEventArgs
 }
 
 /// <summary>
+/// An event raised when more reagents are added to a (managed) solution than it can hold.
+/// </summary>
+[ByRefEvent]
+public record struct SolutionOverflowEvent(EntityUid SolutionEnt, Solution SolutionHolder, Solution Overflow)
+{
+    /// <summary>The entity which contains the solution that has overflowed.</summary>
+    public readonly EntityUid SolutionEnt = SolutionEnt;
+    /// <summary>The solution that has overflowed.</summary>
+    public readonly Solution SolutionHolder = SolutionHolder;
+    /// <summary>The reagents that have overflowed the solution.</summary>
+    public readonly Solution Overflow = Overflow;
+    /// <summary>The volume by which the solution has overflowed.</summary>
+    public readonly FixedPoint2 OverflowVol = Overflow.Volume;
+    /// <summary>Whether some subscriber has taken care of the effects of the overflow.</summary>
+    public bool Handled = false;
+}
+
+/// <summary>
 /// Part of Chemistry system deal with SolutionContainers
 /// </summary>
 [UsedImplicitly]
@@ -156,10 +174,19 @@ public sealed partial class SolutionContainerSystem : EntitySystem
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
             ("desc", primary.LocalizedPhysicalDescription)));
 
+
+        var reagentPrototypes = solution.GetReagentPrototypes(_prototypeManager);
+
+        // Sort the reagents by amount, descending then alphabetically
+        var sortedReagentPrototypes = reagentPrototypes
+            .OrderByDescending(pair => pair.Value.Value)
+            .ThenBy(pair => pair.Key.LocalizedName);
+
         // Add descriptions of immediately recognizable reagents, like water or beer
         var recognized = new List<ReagentPrototype>();
-        foreach (var proto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        foreach (var keyValuePair in sortedReagentPrototypes)
         {
+            var proto = keyValuePair.Key;
             if (!proto.Recognizable)
             {
                 continue;
@@ -265,6 +292,14 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             _chemistrySystem.FullyReactSolution(solutionHolder, uid, solutionHolder.MaxVolume, mixerComponent);
         }
 
+        var overflowVol = solutionHolder.Volume - solutionHolder.MaxVolume;
+        if (overflowVol > FixedPoint2.Zero)
+        {
+            var overflow = solutionHolder.SplitSolution(overflowVol);
+            var overflowEv = new SolutionOverflowEvent(uid, solutionHolder, overflow);
+            RaiseLocalEvent(uid, ref overflowEv);
+        }
+
         UpdateAppearance(uid, solutionHolder);
         RaiseLocalEvent(uid, new SolutionChangedEvent(solutionHolder, solutionHolder.Name));
     }
@@ -346,6 +381,22 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="targetSolution">Container to which we are adding reagent</param>
     /// <param name="prototype">The Id of the reagent to add.</param>
     /// <param name="quantity">The amount of reagent to add.</param>
+    /// <returns>If all the reagent could be added.</returns>
+    [PublicAPI]
+    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string prototype, FixedPoint2 quantity,
+        float? temperature = null, ReagentData? data = null)
+    {
+        var reagent = new ReagentQuantity(prototype, quantity, data);
+        return TryAddReagent(targetUid, targetSolution, reagent, out _, temperature);
+    }
+
+    /// <summary>
+    ///     Adds reagent of an Id to the container.
+    /// </summary>
+    /// <param name="targetUid"></param>
+    /// <param name="targetSolution">Container to which we are adding reagent</param>
+    /// <param name="prototype">The Id of the reagent to add.</param>
+    /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
     public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string prototype, FixedPoint2 quantity,
@@ -418,24 +469,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Adds a solution to the container, if it can fully fit.
-    /// </summary>
-    /// <param name="targetUid">entity holding targetSolution</param>
-    ///  <param name="targetSolution">entity holding targetSolution</param>
-    /// <param name="addedSolution">solution being added</param>
-    /// <returns>If the solution could be added.</returns>
-    public bool TryAddSolution(EntityUid targetUid, Solution? targetSolution, Solution addedSolution)
-    {
-        if (targetSolution == null
-            || !targetSolution.CanAddSolution(addedSolution) || addedSolution.Volume == 0)
-            return false;
-
-        targetSolution.AddSolution(addedSolution, _prototypeManager);
-        UpdateChemicals(targetUid, targetSolution, true);
-        return true;
-    }
-
-    /// <summary>
     ///     Moves some quantity of a solution from one solution to another.
     /// </summary>
     /// <param name="sourceUid">entity holding the source solution</param>
@@ -497,32 +530,86 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Adds a solution to the container, overflowing the rest.
-    ///     It will
-    ///     Unlike <see cref="TryAddSolution"/> it will ignore size limits.
+    ///     Adds a solution to the container, if it can fully fit.
     /// </summary>
     /// <param name="targetUid">entity holding targetSolution</param>
-    /// <param name="targetSolution">The container to which we try to add.</param>
-    /// <param name="addedSolution">solution being added</param>
-    /// <param name="overflowThreshold">After addition this much will be left in targetSolution. Should be less
-    /// than targetSolution.TotalVolume</param>
+    ///  <param name="targetSolution">entity holding targetSolution</param>
+    /// <param name="toAdd">solution being added</param>
+    /// <returns>If the solution could be added.</returns>
+    public bool TryAddSolution(EntityUid targetUid, Solution targetSolution, Solution toAdd)
+    {
+        if (toAdd.Volume == FixedPoint2.Zero)
+            return true;
+        if (toAdd.Volume > targetSolution.AvailableVolume)
+            return false;
+
+        ForceAddSolution(targetUid, targetSolution, toAdd);
+        return true;
+    }
+
+    /// <summary>
+    ///     Adds as much of a solution to a container as can fit.
+    /// </summary>
+    /// <param name="targetUid">The entity containing <paramref cref="targetSolution"/></param>
+    /// <param name="targetSolution">The solution being added to.</param>
+    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
+    /// <returns>The quantity of the solution actually added.</returns>
+    public FixedPoint2 AddSolution(EntityUid targetUid, Solution targetSolution, Solution toAdd)
+    {
+        if (toAdd.Volume == FixedPoint2.Zero)
+            return FixedPoint2.Zero;
+
+        var quantity = FixedPoint2.Max(FixedPoint2.Zero, FixedPoint2.Min(toAdd.Volume, targetSolution.AvailableVolume));
+        if (quantity < toAdd.Volume)
+            TryTransferSolution(targetUid, targetSolution, toAdd, quantity);
+        else
+            ForceAddSolution(targetUid, targetSolution, toAdd);
+
+        return quantity;
+    }
+
+    /// <summary>
+    ///     Adds a solution to a container and updates the container.
+    /// </summary>
+    /// <param name="targetUid">The entity containing <paramref cref="targetSolution"/></param>
+    /// <param name="targetSolution">The solution being added to.</param>
+    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
+    /// <returns>Whether any reagents were added to the solution.</returns>
+    public bool ForceAddSolution(EntityUid targetUid, Solution targetSolution, Solution toAdd)
+    {
+        if (toAdd.Volume == FixedPoint2.Zero)
+            return false;
+
+        targetSolution.AddSolution(toAdd, _prototypeManager);
+        UpdateChemicals(targetUid, targetSolution, needsReactionsProcessing: true);
+        return true;
+    }
+
+    /// <summary>
+    ///     Adds a solution to the container, removing the overflow.
+    ///     Unlike <see cref="TryAddSolution"/> it will ignore size limits.
+    /// </summary>
+    /// <param name="targetUid">The entity containing <paramref cref="targetSolution"/></param>
+    /// <param name="targetSolution">The solution being added to.</param>
+    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
+    /// <param name="overflowThreshold">The combined volume above which the overflow will be returned.
+    /// If the combined volume is below this an empty solution is returned.</param>
     /// <param name="overflowingSolution">Solution that exceeded overflowThreshold</param>
-    /// <returns></returns>
+    /// <returns>Whether any reagents were added to <paramref cref="targetSolution"/>.</returns>
     public bool TryMixAndOverflow(EntityUid targetUid, Solution targetSolution,
-        Solution addedSolution,
+        Solution toAdd,
         FixedPoint2 overflowThreshold,
         [NotNullWhen(true)] out Solution? overflowingSolution)
     {
-        if (addedSolution.Volume == 0 || overflowThreshold > targetSolution.MaxVolume)
+        if (toAdd.Volume == 0 || overflowThreshold > targetSolution.MaxVolume)
         {
             overflowingSolution = null;
             return false;
         }
 
-        targetSolution.AddSolution(addedSolution, _prototypeManager);
+        targetSolution.AddSolution(toAdd, _prototypeManager);
+        overflowingSolution = targetSolution.SplitSolution(FixedPoint2.Max(FixedPoint2.Zero, targetSolution.Volume - overflowThreshold));
         UpdateChemicals(targetUid, targetSolution, true);
-        overflowingSolution = targetSolution.SplitSolution(FixedPoint2.Max(FixedPoint2.Zero,
-            targetSolution.Volume - overflowThreshold));
         return true;
     }
 
@@ -778,4 +865,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     }
 
     #endregion Thermal Energy and Temperature
+
+    #region Event Handlers
+
+    #endregion Event Handlers
 }

@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing.Components;
+using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -25,6 +26,7 @@ namespace Content.Server.Fluids.EntitySystems;
 public sealed partial class PuddleSystem
 {
     [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     private void InitializeSpillable()
     {
@@ -34,8 +36,9 @@ public sealed partial class PuddleSystem
         SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
+        SubscribeLocalEvent<SpillableComponent, SolutionOverflowEvent>(OnOverflow);
         SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<SpillableComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
     }
 
     private void OnExamined(EntityUid uid, SpillableComponent component, ExaminedEvent args)
@@ -46,13 +49,12 @@ public sealed partial class PuddleSystem
             args.PushMarkup(Loc.GetString("spill-examine-spillable-weapon"));
     }
 
-    private void OnSpikeOverflow(EntityUid uid, SpillableComponent component, SolutionSpikeOverflowEvent args)
+    private void OnOverflow(EntityUid uid, SpillableComponent component, ref SolutionOverflowEvent args)
     {
-        if (!args.Handled)
-        {
-            TrySpillAt(Transform(uid).Coordinates, args.Overflow, out _);
-        }
+        if (args.Handled)
+            return;
 
+        TrySpillAt(Transform(uid).Coordinates, args.Overflow, out _);
         args.Handled = true;
     }
 
@@ -153,6 +155,22 @@ public sealed partial class PuddleSystem
         TrySplashSpillAt(uid, Transform(uid).Coordinates, drainedSolution, out _);
     }
 
+    /// <summary>
+    /// Prevent Pacified entities from throwing items that can spill liquids.
+    /// </summary>
+    private void OnAttemptPacifiedThrow(Entity<SpillableComponent> ent, ref AttemptPacifiedThrowEvent args)
+    {
+        // Don’t care about closed containers.
+        if (_openable.IsClosed(ent))
+            return;
+
+        // Don’t care about empty containers.
+        if (!_solutionContainerSystem.TryGetSolution(ent, ent.Comp.SolutionName, out var solution))
+            return;
+
+        args.Cancel("pacified-cannot-throw-spill");
+    }
+
     private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
@@ -166,6 +184,10 @@ public sealed partial class PuddleSystem
 
         if (solution.Volume == FixedPoint2.Zero)
             return;
+
+        if (_entityManager.HasComponent<PreventSpillerComponent>(args.User))
+            return;
+
 
         Verb verb = new()
         {

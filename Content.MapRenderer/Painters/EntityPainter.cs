@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
@@ -14,7 +15,7 @@ namespace Content.MapRenderer.Painters;
 
 public sealed class EntityPainter
 {
-    private readonly IResourceCache _cResourceCache;
+    private readonly IResourceManager _resManager;
 
     private readonly Dictionary<(string path, string state), Image> _images;
     private readonly Image _errorImage;
@@ -23,12 +24,12 @@ public sealed class EntityPainter
 
     public EntityPainter(ClientIntegrationInstance client, ServerIntegrationInstance server)
     {
-        _cResourceCache = client.ResolveDependency<IResourceCache>();
+        _resManager = client.ResolveDependency<IResourceManager>();
 
         _sEntityManager = server.ResolveDependency<IEntityManager>();
 
         _images = new Dictionary<(string path, string state), Image>();
-        _errorImage = Image.Load<Rgba32>(_cResourceCache.ContentFileRead("/Textures/error.rsi/error.png"));
+        _errorImage = Image.Load<Rgba32>(_resManager.ContentFileRead("/Textures/error.rsi/error.png"));
     }
 
     public void Run(Image canvas, List<EntityData> entities)
@@ -81,7 +82,7 @@ public sealed class EntityPainter
 
                 if (!_images.TryGetValue(key, out image!))
                 {
-                    var stream = _cResourceCache.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
+                    var stream = _resManager.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
                     image = Image.Load<Rgba32>(stream);
 
                     _images[key] = image;

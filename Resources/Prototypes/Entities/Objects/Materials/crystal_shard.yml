@@ -1,0 +1,138 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: ShardCrystalBase
+  name: crystal shard
+  description:  A small piece of crystal.
+  components:
+  - type: Sharp
+  - type: Sprite
+    layers:
+      - sprite: Objects/Materials/Shards/crystal.rsi
+        state: shard1
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          shard1: ""
+      - enum.DamageStateVisualLayers.Base:
+          shard2: ""
+      - enum.DamageStateVisualLayers.Base:
+          shard3: ""
+  - type: SpaceGarbage
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 3.5
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 50
+
+- type: entity
+  parent: ShardCrystalBase
+  id: ShardCrystalCyan
+  name: cyan crystal shard
+  description: A small piece of crystal.
+  components:
+  - type: Sprite
+    color: "#47f8ff"
+  - type: PointLight
+    radius: 2
+    energy: 2.5
+    color: "#47f8ff"
+  - type: Tag
+    tags:
+      - Trash
+      - CrystalCyan
+
+- type: entity
+  parent: ShardCrystalBase
+  name: blue crystal shard
+  id: ShardCrystalBlue
+  components:
+  - type: Sprite
+    color: "#39a1ff"
+  - type: PointLight
+    radius: 2
+    energy: 2.5
+    color: "#39a1ff"
+  - type: Tag
+    tags:
+      - Trash
+      - CrystalBlue
+
+- type: entity
+  parent: ShardCrystalBase
+  id: ShardCrystalOrange
+  name: orange crystal shard
+  components:
+  - type: Sprite
+    color: "#ff8227"
+  - type: PointLight
+    radius: 2
+    energy: 2.5
+    color: "#ff8227"
+  - type: Tag
+    tags:
+      - Trash
+      - CrystalOrange
+
+- type: entity
+  parent: ShardCrystalBase
+  id: ShardCrystalPink
+  name: pink crystal shard
+  components:
+  - type: Sprite
+    color: "#ff66cc"
+  - type: PointLight
+    radius: 2
+    energy: 2.5
+    color: "#ff66cc"
+  - type: Tag
+    tags:
+      - Trash
+      - CrystalPink
+
+- type: entity
+  parent: ShardCrystalBase
+  id: ShardCrystalGreen
+  name: green crystal shard
+  components:
+  - type: Sprite
+    color: "#52ff39"
+  - type: PointLight
+    radius: 2
+    energy: 2.5
+    color: "#52ff39"
+  - type: Tag
+    tags:
+      - Trash
+      - CrystalGreen
+
+- type: entity
+  parent: ShardCrystalBase
+  id: ShardCrystalRed
+  name: red crystal shard
+  components:
+  - type: Sprite
+    color: "#fb4747"
+  - type: PointLight
+    radius: 2
+    energy: 2.5
+    color: "#fb4747"
+  - type: Tag
+    tags:
+      - Trash
+      - CrystalRed

@@ -179,6 +179,61 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: shuttle wall
+  id: ShuttleWall
+  graph: Girder
+  startNode: start
+  targetNode: shuttleWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/shuttle.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: interior shuttle wall
+  id: InteriorShuttleWall
+  graph: Girder
+  startNode: start
+  targetNode: shuttleInteriorWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/shuttleinterior.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+
+- type: construction
+  name: diagonal shuttle wall
+  id: DiagonalShuttleWall
+  graph: Girder
+  startNode: start
+  targetNode: diagonalshuttleWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/shuttle_diagonal.rsi
+    state: state0
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: bananium wall
   id: ClownWall
   graph: Girder
@@ -233,6 +288,23 @@
   canRotate: false
 
 - type: construction
+  name: diagonal grille
+  id: GrilleDiagonal
+  graph: GrilleDiagonal
+  startNode: start
+  targetNode: grilleDiagonal
+  category: construction-category-structures
+  description: A flimsy framework of iron rods.
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+  icon:
+    sprite: Structures/Walls/grille.rsi
+    state: grille_diagonal
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
   name: window
   id: Window
   graph: Window
@@ -252,6 +324,24 @@
   canRotate: false
 
 - type: construction
+  name: diagonal window
+  id: WindowDiagonal
+  graph: WindowDiagonal
+  startNode: start
+  targetNode: windowDiagonal
+  category: construction-category-structures
+  description: Clear.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/window_diagonal.rsi
+    state: state1
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
   name: reinforced window
   id: ReinforcedWindow
   graph: Window
@@ -269,6 +359,24 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+
+- type: construction
+  name: diagonal reinforced window
+  id: ReinforcedWindowDiagonal
+  graph: WindowDiagonal
+  startNode: start
+  targetNode: reinforcedWindowDiagonal
+  category: construction-category-structures
+  description: Clear but tough.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/reinforced_window_diagonal.rsi
+    state: state1
+  objectType: Structure
+  placementMode: SnapgridCenter
 
 - type: construction
   name: tinted window
@@ -326,6 +434,61 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+
+- type: construction
+  name: shuttle window
+  id: ShuttleWindow
+  graph: Window
+  startNode: start
+  targetNode: shuttleWindow
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Extra sturdy to resist the pressure of FTL or sustain damage from munitions.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/shuttle_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction  
+  name: diagonal plasma window
+  id: PlasmaWindowDiagonal
+  graph: WindowDiagonal
+  startNode: start
+  targetNode: plasmaWindowDiagonal
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Clear and even tougher, with a purple tint.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/plasma_diagonal.rsi
+    state: state1
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: diagonal reinforced plasma window
+  id: ReinforcedPlasmaWindowDiagonal
+  graph: WindowDiagonal
+  startNode: start
+  targetNode: reinforcedPlasmaWindowDiagonal
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Fire resistant and even tougher, with a purple tint.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/reinforced_plasma_diagonal.rsi
+    state: state1
+  objectType: Structure
+  placementMode: SnapgridCenter
 
 - type: construction
   name: directional window
@@ -436,6 +599,42 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+
+- type: construction
+  name: diagonal uranium window
+  id: UraniumWindowDiagonal
+  graph: WindowDiagonal
+  startNode: start
+  targetNode: uraniumWindowDiagonal
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Clear and much tougher than regular glass, with added RadAbsorb to protect you from deadly radiation.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/uranium_window_diagonal.rsi
+    state: state1
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: diagonal reinforced uranium window
+  id: ReinforcedUraniumWindowDiagonal
+  graph: WindowDiagonal
+  startNode: start
+  targetNode: reinforcedUraniumWindowDiagonal
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Clear and much tougher than regular glass, with added RadAbsorb to protect you from deadly radiation.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/reinforced_uranium_diagonal.rsi
+    state: state1
+  objectType: Structure
+  placementMode: SnapgridCenter
 
 - type: construction
   name: firelock

@@ -32,6 +32,7 @@ using Content.Shared.Tools;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Server.Medical;
 
@@ -235,7 +236,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
 
     #region Atmos handler
 
-    private void OnCryoPodUpdateAtmosphere(EntityUid uid, CryoPodComponent cryoPod, AtmosDeviceUpdateEvent args)
+    private void OnCryoPodUpdateAtmosphere(EntityUid uid, CryoPodComponent cryoPod, ref AtmosDeviceUpdateEvent args)
     {
         if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
             return;

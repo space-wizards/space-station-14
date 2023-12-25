@@ -11,7 +11,7 @@ namespace Content.Shared.Chemistry.Reaction
     /// Prototype for chemical reaction definitions
     /// </summary>
     [Prototype("reaction")]
-    public sealed class ReactionPrototype : IPrototype, IComparable<ReactionPrototype>
+    public sealed partial class ReactionPrototype : IPrototype, IComparable<ReactionPrototype>
     {
         [ViewVariables]
         [IdDataField]
@@ -48,7 +48,7 @@ namespace Content.Shared.Chemistry.Reaction
         ///     The required mixing categories for an entity to mix the solution with for the reaction to occur
         /// </summary>
         [DataField("requiredMixerCategories")]
-        public List<string>? MixingCategories = null;
+        public List<ProtoId<MixingCategoryPrototype>>? MixingCategories;
 
         /// <summary>
         /// Reagents created when the reaction occurs.

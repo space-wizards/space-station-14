@@ -12,7 +12,7 @@
   description: trait-socialanxiety-desc
   components:
     - type: StutteringAccent
-      matchRandomProb: 0.2
+      matchRandomProb: 0.1
       fourRandomProb: 0
-      threeRandomProb: 0.3
+      threeRandomProb: 0
       cutRandomProb: 0

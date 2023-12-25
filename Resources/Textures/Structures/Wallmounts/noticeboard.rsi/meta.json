@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "copyright": "Taken from Paradise Station from commit https://github.com/ParadiseSS13/Paradise/commit/137338f4dd3cb33124ab3fbd55a4865dd2bdab81",
+  "license": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "noticeboard"
+    },
+    {
+      "name": "notice-0"
+    },
+    {
+      "name": "notice-1"
+    },
+    {
+      "name": "notice-2"
+    },
+    {
+      "name": "notice-3"
+    },
+    {
+      "name": "notice-4"
+    },
+    {
+      "name": "notice-5"
+    }
+  ]
+}

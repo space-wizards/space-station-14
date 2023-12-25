@@ -1,5 +1,7 @@
-﻿namespace Content.Client.Roles;
+﻿using Content.Shared.Roles;
 
-public sealed class RoleSystem : EntitySystem
+namespace Content.Client.Roles;
+
+public sealed class RoleSystem : SharedRoleSystem
 {
 }

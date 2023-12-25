@@ -9,6 +9,7 @@ namespace Content.Shared.Placeable;
 /// </summary>
 public sealed class ItemPlacerSystem : EntitySystem
 {
+    [Dependency] private readonly CollisionWakeSystem _wake = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
@@ -24,8 +25,8 @@ public sealed class ItemPlacerSystem : EntitySystem
         if (comp.Whitelist != null && !comp.Whitelist.IsValid(args.OtherEntity))
             return;
 
-        // Disallow sleeping so we can detect when entity is removed from the heater.
-        _physics.SetSleepingAllowed(args.OtherEntity, args.OtherBody, false);
+        if (TryComp<CollisionWakeComponent>(args.OtherEntity, out var wakeComp))
+            _wake.SetEnabled(args.OtherEntity, false, wakeComp);
 
         var count = comp.PlacedEntities.Count;
         if (comp.MaxEntities == 0 || count < comp.MaxEntities)
@@ -39,8 +40,8 @@ public sealed class ItemPlacerSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, ItemPlacerComponent comp, ref EndCollideEvent args)
     {
-        // Re-allow sleeping.
-        _physics.SetSleepingAllowed(args.OtherEntity, args.OtherBody, true);
+        if (TryComp<CollisionWakeComponent>(args.OtherEntity, out var wakeComp))
+            _wake.SetEnabled(args.OtherEntity, true, wakeComp);
 
         comp.PlacedEntities.Remove(args.OtherEntity);
 

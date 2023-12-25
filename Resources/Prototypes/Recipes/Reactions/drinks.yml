@@ -261,6 +261,18 @@
     ErikaSurprise: 6
 
 - type: reaction
+  id: EthanolBreakdown
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Ethanol:
+      amount: 9
+  products:
+    Hydrogen: 6
+    Carbon: 2
+    Oxygen: 1
+
+- type: reaction
   id: FourteenLoko
   reactants:
     Coffee:
@@ -353,6 +365,17 @@
       amount: 1
   products:
     Hooch: 3
+
+- type: reaction
+  id: HotCocoa
+  minTemp: 350
+  reactants:
+    Water:
+      amount: 1
+    CocoaPowder:
+      amount: 1
+  products:
+    HotCocoa: 2
 
 - type: reaction
   id: IceCream
@@ -869,6 +892,17 @@
       amount: 1
   products:
     TheMartinez: 6
+
+- type: reaction
+  id: WaterBreakdown
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Water:
+      amount: 3
+  products:
+    Hydrogen: 2
+    Oxygen: 1
 
 - type: reaction
   id: WhiteGilgamesh

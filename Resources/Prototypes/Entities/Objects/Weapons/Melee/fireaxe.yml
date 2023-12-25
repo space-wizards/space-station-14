@@ -12,24 +12,23 @@
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -90
+    wideAnimationRotation: -135
     swingLeft: true
     attackRate: 0.75
     damage:
       types:
         # axes are kinda like sharp hammers, you know?
         Blunt: 5
-        Slash: 13
-        Structural: 7
+        Slash: 10
+        Structural: 10
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 2.5
-        Slash: 10.5
-        Structural: 60
+        Slash: 10
+        Structural: 40
   - type: Item
-    size: 150
+    size: Ginormous
   - type: Clothing
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     quickEquip: false
@@ -41,6 +40,12 @@
   - type: TilePrying
     advanced: true
   - type: Prying
+  - type: UseDelay
+    delay: 1
+  - type: StealTarget
+    stealGroup: FireAxe
+  - type: IgniteOnMeleeHit
+    fireStacks: -4
 
 - type: entity
   id: FireAxeFlaming

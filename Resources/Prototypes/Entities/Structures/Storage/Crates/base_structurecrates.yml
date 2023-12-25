@@ -36,7 +36,7 @@
         - MachineLayer
   - type: EntityStorage
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -99,8 +99,8 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:

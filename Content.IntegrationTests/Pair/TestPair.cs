@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.Players;
-using Content.Shared.Mind;
 using Content.Shared.Players;
-using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
 
@@ -30,8 +28,8 @@ public sealed partial class TestPair
     public RobustIntegrationTest.ServerIntegrationInstance Server { get; private set; } = default!;
     public RobustIntegrationTest.ClientIntegrationInstance Client { get;  private set; } = default!;
 
-    public IPlayerSession? Player => (IPlayerSession?) Server.PlayerMan.Sessions.FirstOrDefault();
-    public PlayerData? PlayerData => Player?.Data.ContentData();
+    public ICommonSession? Player => Server.PlayerMan.Sessions.FirstOrDefault();
+    public ContentPlayerData? PlayerData => Player?.Data.ContentData();
 
     public PoolTestLogHandler ServerLogHandler { get;  private set; } = default!;
     public PoolTestLogHandler ClientLogHandler { get;  private set; } = default!;

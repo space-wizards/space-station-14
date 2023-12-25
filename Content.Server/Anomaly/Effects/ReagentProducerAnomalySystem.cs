@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Prototypes;
 using Content.Shared.Sprite;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -75,7 +76,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             if (anomaly.Severity >= 0.97) reagentProducingAmount *= component.SupercriticalReagentProducingModifier;
 
             newSol.AddReagent(component.ProducingReagent, reagentProducingAmount);
-            _solutionContainer.TryAddSolution(uid, producerSol, newSol); //TO DO - the container is not fully filled. 
+            _solutionContainer.TryAddSolution(uid, producerSol, newSol); //TO DO - the container is not fully filled.
 
             component.AccumulatedFrametime = 0;
 
