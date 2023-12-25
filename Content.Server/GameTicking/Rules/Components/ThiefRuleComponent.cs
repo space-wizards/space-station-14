@@ -13,11 +13,6 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class ThiefRuleComponent : Component
 {
     /// <summary>
-    /// Add a Pacified comp to thieves
-    /// </summary>
-    public bool PacifistThieves = true;
-
-    /// <summary>
     /// A chance for this mode to be added to the game.
     /// </summary>
     [DataField]
