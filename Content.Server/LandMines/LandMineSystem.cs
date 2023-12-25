@@ -42,10 +42,10 @@ public sealed class LandMineSystem : EntitySystem
         if (_trigger.Trigger(uid, tripper))
         {
             _popupSystem.PopupCoordinates(
-            Loc.GetString("land-mine-triggered", ("mine", uid)),
-            Transform(uid).Coordinates,
-            tripper,
-            PopupType.LargeCaution);
+                Loc.GetString("land-mine-triggered", ("mine", uid)),
+                Transform(uid).Coordinates,
+                tripper,
+                PopupType.LargeCaution);
         }
     }
 

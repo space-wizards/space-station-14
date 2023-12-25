@@ -90,6 +90,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
         if (!ourAabb.Intersects(otherAabb))
         {
+            // We shouldn't raise this event in OnEndCollide - game shits itself once in a while
             var evStepOff = new StepOffTriggeredEvent { Source = uid, Tripper = otherUid };
             RaiseLocalEvent(uid, ref evStepOff, true);
 
