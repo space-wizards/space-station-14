@@ -65,9 +65,7 @@
   - type: GuideHelp
     guides:
     - Xenoarchaeology
-  - type: Tag
-    tags:
-    - ArtifactHandheld
+  
 - type: entity
   parent: BaseXenoArtifactItem
   id: SimpleXenoArtifactItem
