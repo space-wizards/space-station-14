@@ -44,7 +44,7 @@ public sealed partial class ReplaySpectatorSystem
         if (_replayPlayback.Replay == null)
             return;
 
-        if (_player.LocalPlayer?.ControlledEntity is not { } player)
+        if (_player.LocalEntity is not { } player)
             return;
 
         if (Direction == DirectionFlag.None)
@@ -99,7 +99,7 @@ public sealed partial class ReplaySpectatorSystem
         var worldVec = parentRotation.RotateVec(localVec);
         var speed = CompOrNull<MovementSpeedModifierComponent>(player)?.BaseSprintSpeed ?? DefaultSpeed;
         var delta = worldVec * frameTime * speed;
-        _transform.SetWorldPositionRotation(xform, pos + delta, delta.ToWorldAngle());
+        _transform.SetWorldPositionRotation(player, pos + delta, delta.ToWorldAngle(), xform);
     }
 
     private sealed class MoverHandler : InputCmdHandler

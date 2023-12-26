@@ -1,0 +1,50 @@
+- type: reaction
+  id: BloodBreakdown
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Blood:
+      amount: 20
+  products:
+    Water: 11
+    Iron: 0.5
+    Sugar: 2
+    CarbonDioxide: 3
+    Protein: 4
+
+- type: reaction
+  id: SlimeBloodBreakdown
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Slime:
+      amount: 5
+  products:
+    Water: 4
+    Nitrogen: 1
+
+- type: reaction
+  id: CopperBloodBreakdown
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    CopperBlood:
+      amount: 20
+  products:
+    Water: 11
+    Copper: 0.5
+    Sugar: 2
+    CarbonDioxide: 3
+    Protein: 4
+
+- type: reaction
+  id: ZombieBloodBreakdown
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    ZombieBlood:
+      amount: 4
+  products:
+    Mold: 2
+    Protein: 1
+    Toxin: 1

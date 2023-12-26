@@ -16,7 +16,7 @@ food-system-remove-mask = You need to take off the {$entity} first.
 food-system-you-cannot-eat-any-more = You can't eat any more!
 food-system-you-cannot-eat-any-more-other = They can't eat any more!
 food-system-try-use-food-is-empty = {CAPITALIZE(THE($entity))} is empty!
-food-system-wrong-utensil = You can't eat {THE($food)} with {INDEFINITE($utensil)}.
+food-system-wrong-utensil = You can't eat {THE($food)} with {INDEFINITE($utensil)} {$utensil}.
 food-system-cant-digest = You can't digest {THE($entity)}!
 food-system-cant-digest-other = They can't digest {THE($entity)}!
 

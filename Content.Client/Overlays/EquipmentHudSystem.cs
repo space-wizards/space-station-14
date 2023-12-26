@@ -2,6 +2,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Client.Player;
+using Robust.Shared.Player;
 
 namespace Content.Client.Overlays;
 

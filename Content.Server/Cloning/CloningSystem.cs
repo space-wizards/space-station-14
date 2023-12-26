@@ -29,6 +29,8 @@ using Content.Shared.Roles.Jobs;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
@@ -337,8 +339,7 @@ namespace Content.Server.Cloning
             clonePod.CloningProgress = 0f;
             UpdateStatus(uid, CloningPodStatus.Idle, clonePod);
             var transform = Transform(uid);
-            var indices = _transformSystem.GetGridOrMapTilePosition(uid);
-
+            var indices = _transformSystem.GetGridTilePositionOrDefault((uid, transform));
             var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
 
             if (HasComp<EmaggedComponent>(uid))
@@ -352,7 +353,7 @@ namespace Content.Server.Cloning
             var i = 0;
             while (i < 1)
             {
-                tileMix?.AdjustMoles(Gas.Miasma, 6f);
+                tileMix?.AdjustMoles(Gas.Ammonia, 6f);
                 bloodSolution.AddReagent("Blood", 50);
                 if (_robustRandom.Prob(0.2f))
                     i++;

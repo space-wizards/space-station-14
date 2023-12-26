@@ -32,6 +32,8 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
