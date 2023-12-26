@@ -118,9 +118,22 @@ public sealed partial class GameTicker
 
         metadata["map"] = new ValueDataNode(_gameMapManager.GetSelectedMap()?.MapName);
         metadata["gamemode"] = new ValueDataNode(CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty);
-        string finalPlayers = SerializeToYaml(_replayRoundPlayerInfo);
-        metadata["roundEndPlayers"] = new ValueDataNode(finalPlayers);
-        metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
+
+        // These should be set to null to prepare them for the next round.
+        if (_replayRoundPlayerInfo != null)
+        {
+            string finalPlayers = SerializeToYaml(_replayRoundPlayerInfo);
+            metadata["roundEndPlayers"] = new ValueDataNode(finalPlayers);
+            metadata["roundEndText"] = new ValueDataNode(_replayRoundText!.Replace("\n", " "));
+            _replayRoundPlayerInfo = null;
+            _replayRoundText = null;
+        }
+        else
+        {
+            // If theres no players then there probably nothing interesting in round end text worth saving.
+            metadata["roundEndPlayers"] = new ValueDataNode(string.Empty);
+            metadata["roundEndText"] = new ValueDataNode(string.Empty);
+        }
     }
 
     private static string SerializeToYaml<T>(T data)

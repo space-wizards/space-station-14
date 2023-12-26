@@ -189,8 +189,6 @@ namespace Content.Server.GameTicking
             if (RoundId == 0)
                 IncrementRoundNumber();
 
-            _replayRoundPlayerInfo = null;
-            _replayRoundText = null;
             ReplayStartRound();
 
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
