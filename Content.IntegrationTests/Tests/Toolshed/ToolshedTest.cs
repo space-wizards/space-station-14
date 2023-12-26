@@ -96,7 +96,7 @@ public abstract class ToolshedTest : IInvocationContext
     }
 
     protected ICommonSession? InvocationSession { get; set; }
-    public NetUserId? User => Session?.UserId
+    public NetUserId? User => Session?.UserId;
 
     public ICommonSession? Session
     {
