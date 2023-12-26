@@ -125,7 +125,7 @@ namespace Content.Client.RoundEnd
                     VerticalExpand = true,
                 };
 
-                //cyberfinn: dying here for me, likely because it's running on localhost - so can't determine player network ID
+                //cyberfinn: this section below is causing some of the checks to fail, because it's running without a user account - so can't determine player network ID. This same issue happens when you run as disconnected on localhost. It cant determine network ID
                 //todo: uncomment below after debugging. for the round end summary to display during localhost debugging, comment this section out - or else it fails to display, because of the network ID issue I raised in comment above
                 try
                 {
