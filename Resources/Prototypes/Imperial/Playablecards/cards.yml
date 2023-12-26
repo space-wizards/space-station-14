@@ -1069,15 +1069,19 @@
   description: What secrets lie at the bottom of its endless stack?
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
+    sprite: Imperial/Playablecards/cardbin.rsi
     layers:
     - state: closed
     - state: open
       map: ["openLayer"]
       visible: false
-    - state: cig1
-      map: ["cig1"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+    - state: card1
+      map: ["card1"]
+      sprite: Imperial/Playablecards/cardbin.rsi
+      visible: false
+    - state: card2
+      map: ["card2"]
+      sprite: Imperial/Playablecards/cardbin.rsi
       visible: false
   - type: Storage
     capacity: 38
@@ -1085,12 +1089,15 @@
       tags:
         - PlayableCard
   - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
+    sprite: Imperial/Playablecards/cardbin.rsi
     size: 10
   - type: ItemCounter
     count:
       tags: [PlayableCard]
-    BaseLayer: cig1
+    composite: true
+    layerStates:
+    - card1
+    - card2
   - type: Appearance
 
 
