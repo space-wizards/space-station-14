@@ -403,6 +403,8 @@
   name: beer  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
+  - type: Item
+    size: Small
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -419,6 +421,8 @@
   name: Magm-Ale
   description: A true dorf's drink of choice.
   components:
+  - type: Item
+    size: Small
   - type: SolutionContainerManager
     solutions:
       drink:
