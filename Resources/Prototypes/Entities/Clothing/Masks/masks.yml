@@ -58,7 +58,6 @@
         Heat: 0.95
 
 - type: entity
-  parent: ClothingMaskGas
   id: ClothingMaskGasSyndicateOps
   parent: ClothingMaskGasSyndicate
   suffix: Voice Mask
