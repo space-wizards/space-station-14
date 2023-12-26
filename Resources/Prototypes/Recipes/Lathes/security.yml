@@ -463,3 +463,12 @@
     Steel: 500
     Glass: 100
     Plastic: 200
+
+- type: latheRecipe
+  id: WeaponDisablerSMG
+  result: WeaponDisablerSMG
+  completetime: 6
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plastic: 500
