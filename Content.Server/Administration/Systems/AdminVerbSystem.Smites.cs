@@ -851,7 +851,7 @@ public sealed partial class AdminVerbSystem
 
         Verb obliviateInsant = new()
         {
-            Text = "Insantly Obliviate",
+            Text = "Instantly Obliviate",
             Category = VerbCategory.Smite,
             Icon = new SpriteSpecifier.Rsi(new("Mobs/Species/Human/organs.rsi"), "brain"),
             Act = () =>
