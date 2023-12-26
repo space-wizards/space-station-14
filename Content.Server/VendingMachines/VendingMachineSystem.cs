@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Cargo.Systems;
+using Content.Server.Chat.Systems;
 using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -35,6 +36,7 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -383,6 +385,10 @@ namespace Content.Server.VendingMachines
                 var direction = new Vector2(_random.NextFloat(-range, range), _random.NextFloat(-range, range));
                 _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
             }
+
+            if (!TryComp<MetaDataComponent>(uid, out var meta)) { return; }
+            // Send message after dispensing
+                _chat.TrySendInGameICMessage(uid, Loc.GetString("vending-machine-thanks", ("name", meta.EntityName)), InGameICChatType.Speak, true);
 
             vendComponent.NextItemToEject = null;
             vendComponent.ThrowNextItem = false;
