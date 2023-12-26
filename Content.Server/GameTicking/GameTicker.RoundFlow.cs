@@ -383,6 +383,7 @@ namespace Content.Server.GameTicking
                     Role = antag
                         ? roles.First(role => role.Antagonist).Name
                         : roles.FirstOrDefault().Name ?? Loc.GetString("game-ticker-unknown-role"),
+                    JobRole = roles.FirstOrDefault(role => !role.Antagonist).Name ?? Loc.GetString("game-ticker-unknown-role"),
                     Antag = antag,
                     Observer = observer,
                     Connected = connected

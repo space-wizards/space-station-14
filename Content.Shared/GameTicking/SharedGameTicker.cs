@@ -144,6 +144,7 @@ namespace Content.Shared.GameTicking
             public string? PlayerICName;
             public string PlayerGuid;
             public string Role;
+            public string JobRole;
             public NetEntity? PlayerNetEntity;
             public bool Antag;
             public bool Observer;
