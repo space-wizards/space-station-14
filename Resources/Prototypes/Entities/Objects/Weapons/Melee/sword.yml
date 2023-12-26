@@ -181,7 +181,6 @@
           Heat: 20
           Piercing: 20
           Radiation: 10
-
       soundHit:
         path: /Audio/Effects/explosion_small1.ogg
     - type: Reflect
@@ -190,5 +189,5 @@
       spread: 90
     - type: Item
       size: Ginormous
-      sprite: Objects/Weapons/Melee/Throngler2.rsi
+      sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
     - type: DisarmMalus
