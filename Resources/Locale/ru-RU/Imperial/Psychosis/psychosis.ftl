@@ -79,7 +79,7 @@ psychosis-heal-psychosis-21 = • Актуальный препарат для �
 psychosis-heal-psychosis-22 = • Симптомы стадии:[color=#4B57D5] Звуковые, а так же материальные галюцинации, иногда невнятная речь, а так же оторванность от реальности.
 psychosis-heal-psychosis-23 = [/color]
 psychosis-heal-psychosis-24 = ╙———————————————————————————╜
-psychosis-heal-psychosis-25 = empty
+psychosis-heal-psychosis-25 = [empty]
 psychosis-heal-psychosis-26 = [italic]ПРИМЕЧАНИЕ: При возникновении вышеперечисленных симптомов пациент должен [bold]немедленно[/bold] обратиться в медицинский блок станции.[/italic]
 psychosis-heal-psychosis-27 = [bold]   ————————<Место для печатей>————————[/bold]
 psychosis-heal-psychosis-28 = ▶                                                                                                            ◀
