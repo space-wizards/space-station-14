@@ -79,14 +79,13 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         var query = EntityQueryEnumerator<ActiveArtifactAnalyzerComponent, ArtifactAnalyzerComponent>();
         while (query.MoveNext(out var uid, out var active, out var scan))
         {
-            if (scan.Console != null)
-                UpdateUserInterface(scan.Console.Value);
+            if (active.AnalysisPaused)
+                continue;
 
-            if (!active.AnalysisPaused)
-                active.ScanProgressSec += frameTime;
+            if (_timing.CurTime - active.StartTime < scan.AnalysisDuration * scan.AnalysisDurationMulitplier)
+                continue;
 
-            if (active.ScanProgressSec >= (scan.AnalysisDuration * scan.AnalysisDurationMulitplier).TotalSeconds)
-                FinishScan(uid, scan, active);
+            FinishScan(uid, scan, active);
         }
     }
 
@@ -192,7 +191,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         EntityUid? artifact = null;
         FormattedMessage? msg = null;
-        var totalTime = TimeSpan.Zero;
+        TimeSpan? totalTime = null;
         var canScan = false;
         var canPrint = false;
         var points = 0;
@@ -213,11 +212,11 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         var serverConnected = TryComp<ResearchClientComponent>(uid, out var client) && client.ConnectedToServer;
 
         var scanning = TryComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity, out var active);
-        var remaining = active != null ? TimeSpan.FromSeconds(active.ScanProgressSec) : TimeSpan.Zero;
         var paused = active != null ? active.AnalysisPaused : false;
 
+
         var state = new AnalysisConsoleScanUpdateState(GetNetEntity(artifact), analyzerConnected, serverConnected,
-            canScan, canPrint, msg, scanning, paused, remaining, totalTime, points);
+            canScan, canPrint, msg, scanning, paused, active?.StartTime, totalTime, points);
 
         var bui = _ui.GetUi(uid, ArtifactAnalzyerUiKey.Key);
         _ui.SetUiState(bui, state);
@@ -262,6 +261,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         var activeArtifact = EnsureComp<ActiveScannedArtifactComponent>(ent.Value);
         activeArtifact.Scanner = component.AnalyzerEntity.Value;
+        UpdateUserInterface(uid, component);
     }
 
     private void OnPrintButton(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsolePrintButtonPressedMessage args)

@@ -48,14 +48,14 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
     public bool Paused;
 
-    public TimeSpan TimeRemaining;
+    public TimeSpan? StartTime;
 
-    public TimeSpan TotalTime;
+    public TimeSpan? TotalTime;
 
     public int PointAmount;
 
     public AnalysisConsoleScanUpdateState(NetEntity? artifact, bool analyzerConnected, bool serverConnected, bool canScan, bool canPrint,
-        FormattedMessage? scanReport, bool scanning, bool paused, TimeSpan timeRemaining, TimeSpan totalTime, int pointAmount)
+        FormattedMessage? scanReport, bool scanning, bool paused, TimeSpan? startTime, TimeSpan? totalTime, int pointAmount)
     {
         Artifact = artifact;
         AnalyzerConnected = analyzerConnected;
@@ -67,7 +67,7 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
         Scanning = scanning;
         Paused = paused;
-        TimeRemaining = timeRemaining;
+        StartTime = startTime;
         TotalTime = totalTime;
 
         PointAmount = pointAmount;
