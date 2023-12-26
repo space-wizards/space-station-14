@@ -435,6 +435,7 @@
 - type: reaction
   minTemp: 310
   id: Hydroxide
+  priority: -1 #needs to be here due to how sulfuric acid reaction words
   reactants:
     Oxygen:
       amount: 1
