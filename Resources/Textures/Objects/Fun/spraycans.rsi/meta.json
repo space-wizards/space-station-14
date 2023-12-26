@@ -32,6 +32,9 @@
       "name": "clown_cap"
     },
     {
+      "name": "cap_clown"
+    },
+    {
       "name": "mime"
     },
     {
@@ -69,6 +72,14 @@
     },
     {
       "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "clown-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "clown-inhand-left",
       "directions": 4
     }
   ]

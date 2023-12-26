@@ -82,7 +82,7 @@ namespace Content.Server.Storage.EntitySystems
 
             if (component.Sound != null)
             {
-                _audio.PlayPvs(component.Sound, uid);
+                _audio.PlayPvs(component.Sound, args.User); // sound wasn't working until i changed it to args.User (brainfood).
             }
 
             component.Uses--;

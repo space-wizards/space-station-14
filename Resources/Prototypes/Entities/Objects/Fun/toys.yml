@@ -1094,6 +1094,66 @@
     solution: drink
 
 - type: entity
+  name: funny paint
+  parent: BaseItem
+  id: FunnyPaintClosed
+  description: A tin of funny paint, manufactured by Honk! Co.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: clown_cap
+  - type: Item
+    heldPrefix: clown
+    size: Tiny
+  - type: SpawnItemsOnUse
+    items:
+      - id: FunnyPaintCap
+      - id: FunnyPaint
+    sound:
+      path: /Audio/Effects/pop_high.ogg
+
+- type: entity
+  name: funny paint cap
+  parent: BaseItem
+  id: FunnyPaintCap
+  description: The cap from a tin of funny paint.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: cap_clown
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+      - Trash
+
+- type: entity
+  parent: BaseItem
+  id: FunnyPaint
+  name: funny paint
+  suffix: Open
+  description:  A tin of funny paint, manufactured by Honk! Co.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: clown
+  - type: Appearance
+  - type: Paint
+    consumptionUnit: 10
+  - type: Item
+    sprite: Objects/Fun/spraycans.rsi
+    heldPrefix: clown
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: SpaceGlue
+          Quantity: 50
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
   parent: BasePlushie
   id: PlushieMoth
   name: moth plushie
