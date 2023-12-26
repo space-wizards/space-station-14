@@ -20,6 +20,7 @@ public sealed class MagicMirrorSystem : EntitySystem
     [Dependency] private readonly MarkingManager _markings = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
 
 
     public override void Initialize()
@@ -42,13 +43,18 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void OnMagicMirrorInteract(Entity<MagicMirrorComponent> mirror, ref AfterInteractEvent args)
     {
-        if (!TryComp<ActorComponent>(args.User, out var actor)) return;
-        if (TryComp<HumanoidAppearanceComponent>(args.Target, out var humanoid))
-        {
-            mirror.Comp.Target = new Entity<HumanoidAppearanceComponent>(args.Target.Value, humanoid);
-            UpdateInterface(mirror.Owner, mirror.Comp.Target.Value.Owner, actor.PlayerSession);
-            Log.Debug($"Target {mirror.Comp.Target}!");
-        };
+        if (!args.CanReach)
+            return;
+
+        if (!TryComp<ActorComponent>(args.User, out var actor))
+            return;
+
+        if (!TryComp<HumanoidAppearanceComponent>(args.Target, out var humanoid))
+            return;
+
+        mirror.Comp.Target = new Entity<HumanoidAppearanceComponent>(args.Target.Value, humanoid);
+        UpdateInterface(mirror.Owner, mirror.Comp.Target.Value.Owner, actor.PlayerSession);
+        Log.Debug($"Target {mirror.Comp.Target}!");
     }
 
     private void OnOpenUIAttempt(EntityUid uid, MagicMirrorComponent mirror, ActivatableUIOpenAttemptEvent args)
@@ -59,12 +65,16 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void OnMagicMirrorSelect(EntityUid uid, MagicMirrorComponent component, MagicMirrorSelectMessage message)
     {
-        if (component.Target == null) return;
-        if (message.Session.AttachedEntity == null) return;
+        if (component.Target is not {} target || message.Session.AttachedEntity is not {} user)
+            return;
+
+        if (!_interaction.InRangeUnobstructed(user, target))
+            return;
 
         var doAfter = new SelectDoAfterEvent(message);
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.SelectSlotTime, doAfter, uid, target: component.Target.Value.Owner, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.SelectSlotTime, doAfter, uid, target: target, used: uid)
         {
+            DistanceThreshold = SharedInteractionSystem.InteractionRange,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
             BreakOnHandChange = false,
@@ -77,9 +87,14 @@ public sealed class MagicMirrorSystem : EntitySystem
     }
     private void OnSelectSlotDoAfter(EntityUid uid, MagicMirrorComponent component, SelectDoAfterEvent args)
     {
-        if (args.Handled || args.Args.Target == null || args.Cancelled)
+        if (args.Handled || args.Target == null || args.Cancelled)
             return;
-        if (component.Target == null) return;
+
+        if (component.Target?.Owner != args.Target)
+            return;
+
+        if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
+            return;
 
         var category = MarkingCategories.Hair;
         switch (args.Message.Category)
@@ -101,12 +116,16 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void OnTryMagicMirrorChangeColor(EntityUid uid, MagicMirrorComponent component, MagicMirrorChangeColorMessage message)
     {
-        if (component.Target == null) return;
-        if (message.Session.AttachedEntity == null) return;
+        if (component.Target is not {} target || message.Session.AttachedEntity is not {} user)
+            return;
+
+        if (!_interaction.InRangeUnobstructed(user, target))
+            return;
 
         var doAfter = new ChangeColorDoAfterEvent(message);
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.ChangeSlotTime, doAfter, uid, target: component.Target.Value.Owner, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.ChangeSlotTime, doAfter, uid, target: target, used: uid)
         {
+            DistanceThreshold = SharedInteractionSystem.InteractionRange,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
             BreakOnHandChange = false,
@@ -117,9 +136,14 @@ public sealed class MagicMirrorSystem : EntitySystem
     }
     private void OnChangeColorDoAfter(EntityUid uid, MagicMirrorComponent component, ChangeColorDoAfterEvent args)
     {
-        if (args.Handled || args.Args.Target == null || args.Cancelled)
+        if (args.Handled || args.Target == null || args.Cancelled)
             return;
-        if (component.Target == null) return;
+
+        if (component.Target?.Owner != args.Target)
+            return;
+
+        if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
+            return;
 
         var category = MarkingCategories.Hair;
         switch (args.Message.Category)
@@ -142,12 +166,16 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void OnTryMagicMirrorRemoveSlot(EntityUid uid, MagicMirrorComponent component, MagicMirrorRemoveSlotMessage message)
     {
-        if (component.Target == null) return;
-        if (message.Session.AttachedEntity == null) return;
+        if (component.Target is not {} target || message.Session.AttachedEntity is not {} user)
+            return;
+
+        if (!_interaction.InRangeUnobstructed(user, target))
+            return;
 
         var doAfter = new RemoveSlotDoAfterEvent(message);
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.RemoveSlotTime, doAfter, uid, target: component.Target.Value.Owner, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.RemoveSlotTime, doAfter, uid, target: target, used: uid)
         {
+            DistanceThreshold = SharedInteractionSystem.InteractionRange,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
             BreakOnHandChange = false,
@@ -160,10 +188,14 @@ public sealed class MagicMirrorSystem : EntitySystem
     }
     private void OnRemoveSlotDoAfter(EntityUid uid, MagicMirrorComponent component, RemoveSlotDoAfterEvent args)
     {
-        if (args.Handled || args.Args.Target == null || args.Cancelled)
+        if (args.Handled || args.Target == null || args.Cancelled)
             return;
 
-        if (component.Target == null) return;
+        if (component.Target?.Owner != args.Target)
+            return;
+
+        if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
+            return;
 
         var category = MarkingCategories.Hair;
         switch (args.Message.Category)
@@ -185,12 +217,16 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void OnTryMagicMirrorAddSlot(EntityUid uid, MagicMirrorComponent component, MagicMirrorAddSlotMessage message)
     {
-        if (component.Target == null) return;
-        if (message.Session.AttachedEntity == null) return;
+        if (component.Target is not {} target || message.Session.AttachedEntity is not {} user)
+            return;
+
+        if (!_interaction.InRangeUnobstructed(user, target))
+            return;
 
         var doAfter = new AddSlotDoAfterEvent(message);
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.AddSlotTime, doAfter, uid, target: component.Target.Value.Owner, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.AddSlotTime, doAfter, uid, target: target, used: uid)
         {
+            DistanceThreshold = SharedInteractionSystem.InteractionRange,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
             BreakOnHandChange = false,
@@ -202,10 +238,14 @@ public sealed class MagicMirrorSystem : EntitySystem
     }
     private void OnAddSlotDoAfter(EntityUid uid, MagicMirrorComponent component, AddSlotDoAfterEvent args)
     {
-        if (args.Handled || args.Args.Target == null || args.Cancelled)
+        if (args.Handled || args.Target == null || args.Cancelled)
             return;
 
-        if (component.Target == null) return;
+        if (component.Target?.Owner != args.Target)
+            return;
+
+        if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
+            return;
 
         var category = MarkingCategories.Hair;
         switch (args.Message.Category)
@@ -233,8 +273,11 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void UpdateInterface(EntityUid uid, EntityUid playerUid, ICommonSession session)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(playerUid, out var humanoid)) return;
-        if (session is not { } player) return;
+        if (!TryComp<HumanoidAppearanceComponent>(playerUid, out var humanoid))
+            return;
+
+        if (session is not { } player)
+            return;
 
         var hair = humanoid.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var hairMarkings)
             ? new List<Marking>(hairMarkings)
@@ -256,7 +299,9 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void AfterUIOpen(EntityUid uid, MagicMirrorComponent component, AfterActivatableUIOpenEvent args)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(args.User, out var humanoid)) return;
+        if (!TryComp<HumanoidAppearanceComponent>(args.User, out var humanoid))
+            return;
+
         component.Target = new Entity<HumanoidAppearanceComponent>(args.User, humanoid);
 
         UpdateInterface(uid, args.User, args.Session);
