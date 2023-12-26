@@ -62,24 +62,12 @@
   id: ClothingMaskGasSyndicateOps
   suffix: Voice Mask
   name: syndicate gas mask
-  description: A close-fitting tactical mask that can be connected to an air supply.
+  parent: ClothingMaskGasSyndicate
+  description: A close-fitting tactical mask that can be connected to an air supply and change the wearer's voice.
   components:
-  - type: Sprite
-    sprite: Clothing/Mask/gassyndicate.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/gassyndicate.rsi
-  - type: FlashImmunity
-  - type: EyeProtection
   - type: VoiceMasker
     default: ClothingMaskGas
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Heat: 0.95
-        
+
 - type: entity
   parent: ClothingMaskGas
   id: ClothingMaskGasAtmos
