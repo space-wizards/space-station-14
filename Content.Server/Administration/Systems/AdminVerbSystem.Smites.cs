@@ -875,6 +875,6 @@ public sealed partial class AdminVerbSystem
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-obliviate-description")
         };
-        args.Verbs.Add(obliviateInsant);
+        args.Verbs.Add(obliviate);
     }
 }
