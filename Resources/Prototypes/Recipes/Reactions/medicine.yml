@@ -499,21 +499,3 @@
       amount: 1
   products:
     Razorium: 1
-
-- type: reaction
-  id: Oblivizine
-  impact: High # Round removal juice
-  minTemp: 442
-  reactants:
-    Cognizine:
-      amount: 5
-    Omnizine:
-      amount: 2
-    MindbreakerToxin:
-      amount: 3
-    # Ichor can be obtained from grinding dragons meat. You get 4 ichor per dragon as one dragon drops 2 meat and each meat gives 2 ichor.
-    # One dragon should be enough to make 15u of Oblivizine.
-    Ichor:
-      amount: 1
-  products:
-    Oblivizine: 3.75
