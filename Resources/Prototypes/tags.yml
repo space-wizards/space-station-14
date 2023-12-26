@@ -768,9 +768,6 @@
   id: Ore
 
 - type: Tag
-  id: PAISlot
-
-- type: Tag
   id: Payload # for grenade/bomb crafting
 
 - type: Tag

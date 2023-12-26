@@ -41,7 +41,7 @@ namespace Content.Client.PDA
             FlashLightToggleButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/light.png"));
             EjectPenButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/pencil.png"));
             EjectIdButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/eject.png"));
-            EjectPAIButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/PAI.png"));
+            EjectPaiButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/PAI.png"));
             ProgramCloseButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/Nano/cross.svg.png"));
 
 
@@ -138,7 +138,7 @@ namespace Content.Client.PDA
 
             EjectIdButton.IsActive = state.PdaOwnerInfo.IdOwner != null || state.PdaOwnerInfo.JobTitle != null;
             EjectPenButton.IsActive = state.HasPen;
-            EjectPAIButton.IsActive = state.HasPAI;
+            EjectPaiButton.IsActive = state.HasPai;
             ActivateMusicButton.Visible = state.CanPlayMusic;
             ShowUplinkButton.Visible = state.HasUplink;
             LockUplinkButton.Visible = state.HasUplink;

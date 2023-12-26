@@ -26,8 +26,8 @@
     pAISlot:
       priority: -2
       whitelist:
-        tags:
-        - PAISlot
+        components:
+        - PAI
     penSlot:
       startingItem: Pen
       priority: -1
