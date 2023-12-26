@@ -84,7 +84,10 @@ namespace Content.Client.Preferences.UI
         private BoxContainer _jobList => CJobList;
         private BoxContainer _antagList => CAntagList;
         private BoxContainer _traitsList => CTraitsList;
-        private ProgressBar _loadoutPoints => LoadoutPoints;
+        private Label _loadoutPointsLabelB => LoadoutPointsLabelB; // "B"efore
+        private Label _loadoutPointsLabelI => LoadoutPointsLabelI; // "I"nside
+        private Label _loadoutPointsLabelA => LoadoutPointsLabelA; // "A"fter
+        private ProgressBar _loadoutPointsBar => LoadoutPointsBar; // The above labels' names are referencing their position relative to this element
         private BoxContainer _loadoutsTab => CLoadoutsTab;
         private TabContainer _loadoutsTabs => CLoadoutsTabs;
         private readonly List<JobPrioritySelector> _jobPriorities;
@@ -471,8 +474,11 @@ namespace Content.Client.Preferences.UI
             });
 
             var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
-            _loadoutPoints.MaxValue = points;
-            _loadoutPoints.Value = points;
+            _loadoutPointsLabelB.Text = "0";
+            _loadoutPointsLabelI.Text = points.ToString();
+            _loadoutPointsLabelA.Text = points.ToString();
+            _loadoutPointsBar.MaxValue = points;
+            _loadoutPointsBar.Value = points;
 
             if (loadouts.Count >= 0)
             {
@@ -544,15 +550,21 @@ namespace Content.Client.Preferences.UI
                         // Make sure they have enough loadout points
                         if (preference)
                         {
-                            var temp = _loadoutPoints.Value - loadout.Cost;
+                            var temp = _loadoutPointsBar.Value - loadout.Cost;
 
                             if (temp < 0)
                                 preference = false;
                             else
-                                _loadoutPoints.Value = temp;
+                            {
+                                _loadoutPointsBar.Value = temp;
+                                _loadoutPointsLabelI.Text = temp.ToString();
+                            }
                         }
                         else
-                            _loadoutPoints.Value += loadout.Cost;
+                        {
+                            _loadoutPointsBar.Value += loadout.Cost;
+                            _loadoutPointsLabelI.Text = _loadoutPointsBar.Value.ToString();
+                        }
 
                         // Update Preference
                         Profile = Profile?.WithLoadoutPreference(loadout.ID, preference);
@@ -1430,7 +1442,8 @@ namespace Content.Client.Preferences.UI
         private void UpdateLoadoutPreferences()
         {
             var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
-            _loadoutPoints.Value = points;
+            _loadoutPointsBar.Value = points;
+            _loadoutPointsLabelI.Text = points.ToString();
 
             if (_loadoutPreferences == null)
                 return;
@@ -1445,7 +1458,8 @@ namespace Content.Client.Preferences.UI
                 if (preference)
                 {
                     points -= preferenceSelector.Loadout.Cost;
-                    _loadoutPoints.Value = points;
+                    _loadoutPointsBar.Value = points;
+                    _loadoutPointsLabelI.Text = points.ToString();
                 }
             }
         }
