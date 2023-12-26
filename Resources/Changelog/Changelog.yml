@@ -1,10 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed the expeditions console not showing any expeditions.
-    type: Fix
-  id: 5036
-  time: '2023-10-21T21:34:00.0000000+00:00'
 - author: nikthechampiongr
   changes:
   - message: Players can no longer telekinetically  pry open doors while they are
@@ -3988,4 +3982,11 @@ Entries:
     type: Fix
   id: 5459
   time: '2023-12-26T11:31:44.0000000+00:00'
+  url: null
+- author: Werzet
+  changes:
+  - message: "\u0437\u0432\u0443\u043A \u0430\u0445\u0435\u043B\u043F\u0430"
+    type: Fix
+  id: 5460
+  time: '2023-12-26T13:40:57.0000000+00:00'
   url: null
