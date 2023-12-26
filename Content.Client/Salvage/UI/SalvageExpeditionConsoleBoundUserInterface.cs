@@ -53,6 +53,7 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
         _window.Cooldown = TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.SalvageExpeditionCooldown));
         _window.NextOffer = current.NextOffer;
         _window.Claimed = current.Claimed;
+        _window.ClearOptions();
 
         for (var i = 0; i < current.Missions.Count; i++)
         {
@@ -66,21 +67,16 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             // TODO: Selectable difficulty soon.
             var mission = _salvage.GetMission(difficultyProto, missionParams.Seed);
 
-            var lBox = new BoxContainer()
-            {
-                Orientation = BoxContainer.LayoutOrientation.Vertical
-            };
-
             // Difficulty
             // Details
-            lBox.AddChild(new Label()
+            offering.AddContent(new Label()
             {
                 Text = Loc.GetString("salvage-expedition-window-difficulty")
             });
 
             var difficultyColor = difficultyProto.Color;
 
-            lBox.AddChild(new Label
+            offering.AddContent(new Label
             {
                 Text = Loc.GetString("salvage-expedition-difficulty-Moderate"),
                 FontColorOverride = difficultyColor,
@@ -88,13 +84,13 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
                 Margin = new Thickness(0f, 0f, 0f, 5f),
             });
 
-            lBox.AddChild(new Label
+            offering.AddContent(new Label
             {
                 Text = Loc.GetString("salvage-expedition-difficulty-players"),
                 HorizontalAlignment = Control.HAlignment.Left,
             });
 
-            lBox.AddChild(new Label
+            offering.AddContent(new Label
             {
                 Text = difficultyProto.RecommendedPlayers.ToString(),
                 FontColorOverride = StyleNano.NanoGold,
@@ -103,14 +99,14 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             });
 
             // Details
-            lBox.AddChild(new Label
+            offering.AddContent(new Label
             {
                 Text = Loc.GetString("salvage-expedition-window-hostiles")
             });
 
             var faction = mission.Faction;
 
-            lBox.AddChild(new Label
+            offering.AddContent(new Label
             {
                 Text = faction,
                 FontColorOverride = StyleNano.NanoGold,
@@ -119,12 +115,12 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             });
 
             // Duration
-            lBox.AddChild(new Label
+            offering.AddContent(new Label
             {
                 Text = Loc.GetString("salvage-expedition-window-duration")
             });
 
-            lBox.AddChild(new Label
+            offering.AddContent(new Label
             {
                 Text = mission.Duration.ToString(),
                 FontColorOverride = StyleNano.NanoGold,
@@ -133,14 +129,14 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             });
 
             // Biome
-            lBox.AddChild(new Label
+            offering.AddContent(new Label
             {
                 Text = Loc.GetString("salvage-expedition-window-biome")
             });
 
             var biome = mission.Biome;
 
-            lBox.AddChild(new Label
+            offering.AddContent(new Label
             {
                 Text = Loc.GetString(_prototype.Index<SalvageBiomeModPrototype>(biome).ID),
                 FontColorOverride = StyleNano.NanoGold,
@@ -149,14 +145,14 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             });
 
             // Modifiers
-            lBox.AddChild(new Label
+            offering.AddContent(new Label
             {
                 Text = Loc.GetString("salvage-expedition-window-modifiers")
             });
 
             var mods = mission.Modifiers;
 
-            lBox.AddChild(new Label
+            offering.AddContent(new Label
             {
                 Text = string.Join("\n", mods.Select(o => "- " + o)).TrimEnd(),
                 FontColorOverride = StyleNano.NanoGold,
@@ -176,7 +172,7 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
 
             claimButton.Label.Margin = new Thickness(0f, 5f);
 
-            claimButton.OnPressed += args =>
+            offering.ClaimPressed += args =>
             {
                 ClaimOption?.Invoke(missionParams.Index);
             };
@@ -190,34 +186,8 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             {
                 claimButton.Text = Loc.GetString("salvage-expedition-window-claim");
             }
-
-            var box = new PanelContainer
-            {
-                PanelOverride = new StyleBoxFlat(new Color(30, 30, 34)),
-                HorizontalExpand = true,
-                Margin = new Thickness(5f, 0f),
-                Children =
-                {
-                    new BoxContainer
-                    {
-                        Orientation = BoxContainer.LayoutOrientation.Vertical,
-                        Children =
-                        {
-                            missionStripe,
-                            lBox,
-                            new Control() {VerticalExpand = true},
-                            claimButton,
-                        },
-                        Margin = new Thickness(5f, 5f)
-                    }
-                }
-            };
-
-            LayoutContainer.SetAnchorPreset(box, LayoutContainer.LayoutPreset.Wide);
-
-            Container.AddChild(box);
+            
+            _window.AddOption(offering);
         }
-
-        _window?.UpdateState(current);
     }
 }

@@ -14,6 +14,11 @@
         <BoxContainer Orientation="Vertical" Name="ContentBox"/>
         <!-- Buffer so all claim buttons are in the same position -->
         <Control VerticalExpand="True"/>
-        <Button Name="ClaimButton"/>
+        <Button Name="ClaimButton"
+                HorizontalExpand="True"
+                VerticalAlignment="Bottom"
+                ToggleMode="True"
+                Disabled="True"
+                Text="{Loc 'offering-window-claim'}"/>
     </BoxContainer>
 </PanelContainer>

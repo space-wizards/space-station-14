@@ -45,4 +45,9 @@ public sealed partial class OfferingWindowOption : PanelContainer
 
         ClaimButton.OnPressed += ClaimPressed;
     }
+
+    public void AddContent(Control control)
+    {
+        ContentBox.AddChild(control);
+    }
 }
