@@ -82,7 +82,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             if (active.AnalysisPaused)
                 continue;
 
-            if (_timing.CurTime - active.StartTime < scan.AnalysisDuration * scan.AnalysisDurationMulitplier)
+            if (_timing.CurTime - active.StartTime < scan.AnalysisDuration * scan.AnalysisDurationMulitplier - active.AccumulatedRunTime)
                 continue;
 
             FinishScan(uid, scan, active);
@@ -216,7 +216,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
 
         var state = new AnalysisConsoleScanUpdateState(GetNetEntity(artifact), analyzerConnected, serverConnected,
-            canScan, canPrint, msg, scanning, paused, active?.StartTime, totalTime, points);
+            canScan, canPrint, msg, scanning, paused, active?.StartTime, active?.AccumulatedRunTime, totalTime, points);
 
         var bui = _ui.GetUi(uid, ArtifactAnalzyerUiKey.Key);
         _ui.SetUiState(bui, state);
@@ -252,8 +252,8 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             return;
 
         var activeComp = EnsureComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity.Value);
-        activeComp.ScanProgressSec = 0;
         activeComp.StartTime = _timing.CurTime;
+        activeComp.AccumulatedRunTime = TimeSpan.Zero;
         activeComp.Artifact = ent.Value;
 
         if (TryComp<ApcPowerReceiverComponent>(component.AnalyzerEntity.Value, out var powa))
@@ -424,6 +424,33 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             UpdateUserInterface(component.Console.Value);
     }
 
+    [PublicAPI]
+    public void PauseScan(EntityUid uid, ArtifactAnalyzerComponent? component = null, ActiveArtifactAnalyzerComponent? active = null)
+    {
+        if (!Resolve(uid, ref component, ref active) || active.AnalysisPaused)
+            return;
+
+        active.AnalysisPaused = true;
+        // As we pause, we store what was already completed.
+        active.AccumulatedRunTime = (_timing.CurTime - active.StartTime) + active.AccumulatedRunTime;
+
+        if (Exists(component.Console))
+            UpdateUserInterface(component.Console.Value);
+    }
+
+    [PublicAPI]
+    public void ResumeScan(EntityUid uid, ArtifactAnalyzerComponent? component = null, ActiveArtifactAnalyzerComponent? active = null)
+    {
+        if (!Resolve(uid, ref component, ref active) || !active.AnalysisPaused)
+            return;
+
+        active.StartTime = _timing.CurTime;
+        active.AnalysisPaused = false;
+
+        if (Exists(component.Console))
+            UpdateUserInterface(component.Console.Value);
+    }
+
     private void OnRefreshParts(EntityUid uid, ArtifactAnalyzerComponent component, RefreshPartsEvent args)
     {
         var analysisRating = args.PartRatings[component.MachinePartAnalysisDuration];
@@ -471,9 +498,16 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         _ambientSound.SetAmbience(uid, false);
     }
 
-    private void OnPowerChanged(EntityUid uid, ActiveArtifactAnalyzerComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(EntityUid uid, ActiveArtifactAnalyzerComponent active, ref PowerChangedEvent args)
     {
-        component.AnalysisPaused = !args.Powered;
+        if (!args.Powered)
+        {
+            PauseScan(uid, null, active);
+        }
+        else
+        {
+            ResumeScan(uid, null, active);
+        }
     }
 }
 

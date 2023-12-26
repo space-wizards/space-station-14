@@ -10,10 +10,16 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 public sealed partial class ActiveArtifactAnalyzerComponent : Component
 {
     /// <summary>
-    /// When did the scanning start?
+    /// When did the scanning start or last resume?
     /// </summary>
     [DataField("startTime", customTypeSerializer: typeof(TimespanSerializer))]
     public TimeSpan StartTime;
+
+    /// <summary>
+    /// When pausing, this will store the duration the scan has already been running for.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan AccumulatedRunTime;
 
     /// <summary>
     /// Is analysis paused?
@@ -21,12 +27,6 @@ public sealed partial class ActiveArtifactAnalyzerComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public bool AnalysisPaused = false;
-
-    /// <summary>
-    /// Accumulated seconds the analysis has been going on for.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float ScanProgressSec = 0;
 
     /// <summary>
     /// What is being scanned?
