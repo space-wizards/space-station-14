@@ -5,6 +5,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Chemistry.ReagentEffects.Amnesia;
 using Content.Server.Electrocution;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.GhostKick;
@@ -80,6 +81,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SuperBonkSystem _superBonkSystem = default!;
+    [Dependency] private readonly AmnesiaSystem _amnesiaSystem = default!;
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -846,5 +848,33 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-smite-terminate-description")
         };
         args.Verbs.Add(terminate);
+
+        Verb obliviateInsant = new()
+        {
+            Text = "Insantly Obliviate",
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new("Mobs/Species/Human/organs.rsi"), "brain"),
+            Act = () =>
+            {
+                _amnesiaSystem.ForceGhostRoleAmnesia(args.Target);
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-obliviate-instant-description")
+        };
+        args.Verbs.Add(obliviateInsant);
+
+        Verb obliviate = new()
+        {
+            Text = "Obliviate",
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new("Mobs/Species/Slime/organs.rsi"), "brain-slime"),
+            Act = () =>
+            {
+                EnsureComp<AmnesiaComponent>(args.Target);
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-obliviate-description")
+        };
+        args.Verbs.Add(obliviateInsant);
     }
 }
