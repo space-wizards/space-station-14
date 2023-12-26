@@ -90,3 +90,5 @@
         sprite: Structures/Doors/Airlocks/Standard/security.rsi
         state: closed
     - type: LogProbeCartridge
+      guides:
+        - Forensics

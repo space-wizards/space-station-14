@@ -1,12 +1,15 @@
 ﻿<Document>
   # Forensics
 
-  A huge part of this job is gathering and examining evidence, to do so you have a lot of forensic tools at your disposal, like:
+  There are a lot of tools to help you gather and examine the evidence at your disposal
 
   # Log probe
 
-  This little add-on to your PDA is incredibly useful, just install the cartridge and your PDA will acquire the ability to scan anything with access (like airlocks and lockers) and see who has used them recently.
-  You can normally find it inside the detective locker. After installing go to the programs tab in your PDA and the log probe application should be there, to use the application you just have to interact with anything that needs access with your PDA and the log probe application will be updated with information.
+  This little add-on to your PDA is incredibly useful, just install the cartridge and your PDA will acquire the ability to scan anything with access (like airlocks) and see who has used them recently.
+
+  You can normally find it inside the detective locker. After inserting it on your PDA, go to the programs tab and the log probe application should be there, to use the application you just have to interact with anything that requires access with your PDA while the application is open and the information will be instantly displayed in it.
+
+  It should be noted that the name shown in the application is not to be trusted 100% of the time since it gets the name from the identification card of whoever used the thing we are scanning, so if for example someone opened an airlock with no card the application would display "Unknown" as the name.
 
   <Box>
     <GuideEntityEmbed Entity="LockerDetective"/>

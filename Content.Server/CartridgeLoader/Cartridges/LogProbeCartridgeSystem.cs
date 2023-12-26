@@ -10,8 +10,8 @@ namespace Content.Server.CartridgeLoader.Cartridges;
 
 public sealed class LogProbeCartridgeSystem : EntitySystem
 {
-    [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
@@ -28,21 +28,19 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
     /// <br/>
     /// Updates the program's list of logs with those from the device.
     /// </summary>
-    private void AfterInteract(EntityUid uid, LogProbeCartridgeComponent component, CartridgeAfterInteractEvent args)
+    private void AfterInteract(Entity<LogProbeCartridgeComponent> ent, ref CartridgeAfterInteractEvent args)
     {
         if (args.InteractEvent.Handled || !args.InteractEvent.CanReach || args.InteractEvent.Target is not { } target)
             return;
 
-        AccessReaderComponent? accessReaderComponent = default;
-
-        if (!TryComp(target, out accessReaderComponent))
+        if (!TryComp(target, out AccessReaderComponent? accessReaderComponent))
             return;
 
         //Play scanning sound with slightly randomized pitch
-        _audioSystem.PlayEntity(component.SoundScan, args.InteractEvent.User, target, AudioHelpers.WithVariation(0.25f, _random));
+        _audioSystem.PlayEntity(ent.Comp.SoundScan, args.InteractEvent.User, target, AudioHelpers.WithVariation(0.25f, _random));
         _popupSystem.PopupCursor(Loc.GetString("log-probe-scan", ("device", target)), args.InteractEvent.User);
 
-        component.PulledAccessLogs.Clear();
+        ent.Comp.PulledAccessLogs.Clear();
 
         foreach (var accessRecord in accessReaderComponent.AccessLog)
         {
@@ -51,26 +49,23 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
                 accessRecord.Accessor
             );
 
-            component.PulledAccessLogs.Add(log);
+            ent.Comp.PulledAccessLogs.Add(log);
         }
 
-        UpdateUiState(uid, args.Loader, component);
+        UpdateUiState(ent, args.Loader);
     }
 
     /// <summary>
     /// This gets called when the ui fragment needs to be updated for the first time after activating
     /// </summary>
-    private void OnUiReady(EntityUid uid, LogProbeCartridgeComponent component, CartridgeUiReadyEvent args)
+    private void OnUiReady(Entity<LogProbeCartridgeComponent> ent, ref CartridgeUiReadyEvent args)
     {
-        UpdateUiState(uid, args.Loader, component);
+        UpdateUiState(ent, args.Loader);
     }
 
-    private void UpdateUiState(EntityUid uid, EntityUid loaderUid, LogProbeCartridgeComponent? component)
+    private void UpdateUiState(Entity<LogProbeCartridgeComponent> ent, EntityUid loaderUid)
     {
-        if (!Resolve(uid, ref component))
-            return;
-
-        var state = new LogProbeUiState(component.PulledAccessLogs);
+        var state = new LogProbeUiState(ent.Comp.PulledAccessLogs);
         _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
     }
 }
