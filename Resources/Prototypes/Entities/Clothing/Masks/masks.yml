@@ -60,9 +60,9 @@
 - type: entity
   parent: ClothingMaskGas
   id: ClothingMaskGasSyndicateOps
+  parent: ClothingMaskGasSyndicate
   suffix: Voice Mask
   name: syndicate gas mask
-  parent: ClothingMaskGasSyndicate
   description: A close-fitting tactical mask that can be connected to an air supply and change the wearer's voice.
   components:
   - type: VoiceMasker
