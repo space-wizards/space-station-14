@@ -12,6 +12,12 @@
     },
     {
       "name": "card1"
+    },
+    {
+      "name": "card2"
+    },
+    {
+      "name": "open"
     }
   ]
 }
