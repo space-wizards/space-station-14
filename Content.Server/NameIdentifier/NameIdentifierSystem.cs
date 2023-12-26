@@ -28,9 +28,9 @@ public sealed class NameIdentifierSystem : EntitySystem
         SubscribeLocalEvent<NameIdentifierComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NameIdentifierComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(CleanupIds);
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnReloadPrototypes);
 
         InitialSetupPrototypes();
-        _prototypeManager.PrototypesReloaded += OnReloadPrototypes;
     }
 
     private void OnComponentShutdown(EntityUid uid, NameIdentifierComponent component, ComponentShutdown args)
@@ -44,13 +44,6 @@ public sealed class NameIdentifierSystem : EntitySystem
             ids[randomIndex] = component.Identifier;
             ids.Add(random);
         }
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _prototypeManager.PrototypesReloaded -= OnReloadPrototypes;
     }
 
     /// <summary>

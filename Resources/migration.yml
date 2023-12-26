@@ -105,3 +105,6 @@ VendingMachineSmartFridge: SmartFridge
 ReagentContainerMilk: DrinkMilkCarton
 ReagentContainerMilkSoy: DrinkSoyMilkCarton
 ReagentContainerMilkOat: DrinkOatMilkCarton
+
+# 2023-12-20
+MiasmaCanister: AmmoniaCanister

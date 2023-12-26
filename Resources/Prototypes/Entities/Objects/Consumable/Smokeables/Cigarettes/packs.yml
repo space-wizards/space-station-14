@@ -52,7 +52,7 @@
   - type: StorageFill
     contents:
     - id: Cigarette
-      amount: 5
+      amount: 10
   - type: ItemCounter
     count:
       tags: [Cigarette]

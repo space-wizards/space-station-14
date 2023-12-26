@@ -97,9 +97,6 @@
       - id: ClothingHandsGlovesLeather
       - id: ClothingOuterApronBotanist
       - id: ClothingHeadBandBotany
-      - id: HydroponicsToolClippers
-      - id: HydroponicsToolSpade
-      - id: HydroponicsToolMiniHoe
       - id: RobustHarvestChemistryBottle
         prob: 0.3
       - id: ClothingBeltPlant
