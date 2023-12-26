@@ -118,8 +118,9 @@ public sealed partial class GameTicker
 
         metadata["map"] = new ValueDataNode(_gameMapManager.GetSelectedMap()?.MapName);
         metadata["gamemode"] = new ValueDataNode(CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty);
-        string final = SerializeToYaml(_replayRoundPlayerInfo);
-        metadata["roundEndMetadata"] = new ValueDataNode(final);
+        string finalPlayers = SerializeToYaml(_replayRoundPlayerInfo);
+        metadata["roundEndPlayers"] = new ValueDataNode(finalPlayers);
+        metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
     }
 
     private static string SerializeToYaml<T>(T data)

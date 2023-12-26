@@ -50,6 +50,7 @@ namespace Content.Server.GameTicking
         private GameRunLevel _runLevel;
 
         private Array? _replayRoundPlayerInfo;
+        private string? _replayRoundText;
 
         [ViewVariables]
         public GameRunLevel RunLevel
@@ -188,6 +189,8 @@ namespace Content.Server.GameTicking
             if (RoundId == 0)
                 IncrementRoundNumber();
 
+            _replayRoundPlayerInfo = null;
+            _replayRoundText = null;
             ReplayStartRound();
 
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
@@ -397,6 +400,7 @@ namespace Content.Server.GameTicking
                 new SoundCollectionSpecifier("RoundEnd").GetSound()));
 
             _replayRoundPlayerInfo = listOfPlayerInfoFinal;
+            _replayRoundText = roundEndText;
         }
 
         private async void SendRoundEndDiscordMessage()
