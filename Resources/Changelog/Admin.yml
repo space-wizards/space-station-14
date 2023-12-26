@@ -81,3 +81,8 @@ Entries:
   - {message: 'Fixed not being able to right click in AHelps and the players and objects tabs.', type: Fix}
   id: 13
   time: '2023-12-21T06:34:00.0000000+00:00'
+- author: Simyon
+  changes:
+    - {message: 'The Obliviate smite is now available. Targets will get turned into a ghost role instantly, or with a delay. This removes any antag status that the target has.', type: Add}
+  id: 14
+  time: '2023-12-26T21:42:00.0000000+00:00'
