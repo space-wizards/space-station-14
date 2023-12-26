@@ -2,7 +2,10 @@
 using Robust.Shared;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Replays;
+using Robust.Shared.Serialization.Markdown.Mapping;
+using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Utility;
+using YamlDotNet.Serialization;
 
 namespace Content.Server.GameTicking;
 
@@ -16,6 +19,7 @@ public sealed partial class GameTicker
     private void InitializeReplays()
     {
         _replays.RecordingFinished += ReplaysOnRecordingFinished;
+        _replays.RecordingStopped += ReplaysOnRecordingStopped;
     }
 
     /// <summary>
@@ -106,6 +110,22 @@ public sealed partial class GameTicker
         }
 
         data.Directory.Rename(data.Path, state.MoveToPath.Value);
+    }
+
+    private void ReplaysOnRecordingStopped(MappingDataNode metadata)
+    {
+        // Write round info like map and round end summery into the replay_final.yml file. Useful for external parsers.
+
+        metadata["map"] = new ValueDataNode(_gameMapManager.GetSelectedMap()?.MapName);
+        metadata["gamemode"] = new ValueDataNode(CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty);
+        string final = SerializeToYaml(_replayRoundPlayerInfo);
+        metadata["roundEndMetadata"] = new ValueDataNode(final);
+    }
+
+    private static string SerializeToYaml<T>(T data)
+    {
+        var serializer = new SerializerBuilder().Build();
+        return serializer.Serialize(data!);
     }
 
     private ResPath GetAutoReplayPath()

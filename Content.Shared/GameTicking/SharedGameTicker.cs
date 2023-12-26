@@ -142,6 +142,7 @@ namespace Content.Shared.GameTicking
         {
             public string PlayerOOCName;
             public string? PlayerICName;
+            public string PlayerGuid;
             public string Role;
             public NetEntity? PlayerNetEntity;
             public bool Antag;
