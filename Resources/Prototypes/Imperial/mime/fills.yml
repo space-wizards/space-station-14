@@ -1,0 +1,44 @@
+- type: entity
+  name: Mime box
+  parent: BoxMime
+  id: BoxSurvivalMime
+  suffix: Filled
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskBreath
+      - id: EmergencyOxygenTankFilled
+      - id: SpaceMedipen
+      - id: EmergencyMedipen
+      - id: Flare
+      - id: FoodTinMRE
+
+- type: entity
+  name: Mime box
+  parent: BoxMime
+  id: BoxMimeMute
+  suffix: Syndicate, Filled
+  description:
+  components:
+  - type: StorageFill
+    contents:
+    - id: ShellShotgunMute
+      amount: 8
+
+- type: entity
+  name: syndie mime briefcase
+  parent: BriefcaseSyndieMime
+  id: BriefcaseSyndieMimeFilled
+  description: A handy briefcase.
+  suffix: Syndicate, Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponShotgunMimeCane
+      - id: BoxMimeMute
+      - id: ClothingUniformJumpsuitMime
+      - id: ClothingHandsGlovesColorRed
+      - id: ClothingNeckShawlRed
+      - id: ClothingMaskSexyMime
+      - id: ClothingHeadHatBeretBonBon

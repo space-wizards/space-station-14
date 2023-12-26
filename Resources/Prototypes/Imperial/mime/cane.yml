@@ -1,0 +1,59 @@
+- type: entity
+  name: MimeCane
+  parent: BaseWeaponShotgun
+  id: WeaponShotgunMimeCane
+  description: A shitty, hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
+  components:
+  - type: Sprite
+    sprite: Imperial/mime/mime_cane.rsi
+    state: icon
+  - type: Item
+    size: 15
+    sprite: Imperial/mime/mime_cane.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: StaminaDamageOnHit
+    damage: 5
+  - type: Wieldable
+    wieldTime: 0
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 3
+  - type: MeleeRequiresWield
+  - type: Gun
+    fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+      params:
+        volume: -14
+  - type: BallisticAmmoProvider
+    capacity: 1
+    proto: null
+
+- type: entity
+  name: MimeCane
+  parent: BaseItem
+  id: MimeCane
+  description: A shitty, hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
+  components:
+  - type: Sprite
+    sprite: Imperial/mime/mime_cane.rsi
+    state: icon
+  - type: Item
+    size: 15
+    sprite: Imperial/mime/mime_cane.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: StaminaDamageOnHit
+    damage: 5
+  - type: Wieldable
+    wieldTime: 0
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 3

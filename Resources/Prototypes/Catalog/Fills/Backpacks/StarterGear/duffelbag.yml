@@ -180,7 +180,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalMime # @keeyn Imperial
       - id: RubberStampMime
 
 - type: entity

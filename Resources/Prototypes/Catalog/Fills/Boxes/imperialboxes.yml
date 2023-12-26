@@ -18,3 +18,14 @@
       whitelist:
         components:
           - Headset
+
+- type: entity
+  name: Mime shotgun cane box
+  parent: BoxCardboard
+  id: BoxMime
+  description:
+  components:
+    - type: Sprite
+      state: box_mime
+    - type: Storage
+      capacity: 30

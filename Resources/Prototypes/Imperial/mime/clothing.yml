@@ -1,0 +1,30 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckShawlRed
+  name: red shawl
+  description: A stylish striped red shawl.
+  components:
+  - type: Sprite
+    sprite: Imperial/mime/Clothing/shawl_red.rsi
+  - type: Clothing
+    sprite: Imperial/mime/Clothing/shawl_red.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretBonBon
+  name: BonBon's beret
+  description: 
+  components:
+  - type: Sprite
+    sprite: Imperial/mime/Clothing/beret.rsi
+  - type: Clothing
+    sprite: Imperial/mime/Clothing/beret.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+

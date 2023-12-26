@@ -41,7 +41,7 @@
       - id: BoxSurvivalSecurity
       - id: Flash
       - id: MagazinePistol
-      
+
 - type: entity
   noSpawn: true
   parent: ClothingBackpackSatchelSecurity
@@ -274,5 +274,5 @@
   components:
     - type: StorageFill
       contents:
-        - id: BoxSurvival
+        - id: BoxSurvivalMime # @keeyn Imperial
         - id: RubberStampMime
