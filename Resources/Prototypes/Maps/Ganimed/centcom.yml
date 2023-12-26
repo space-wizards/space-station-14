@@ -1,7 +1,7 @@
 - type: gameMap
-  id: CentComm-Ganimed
-  mapName: 'Central Command'
-  mapPath: /Maps/centcomm-ganimed.yml
+  id: CentcomGanimed
+  mapName: 'АСН Центральное Командование "Ремитайд"'
+  mapPath: /Maps/Ganimed/centcom.yml
   minPlayers: 10
   stations:
     centcomm-ganimed:

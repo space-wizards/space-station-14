@@ -1,51 +1,56 @@
-- type: gameMap
-  id: CorvaxIshimura
-  mapName: 'USG Ishimura'
-  mapPath: /Maps/corvax_ishimura.yml
-  minPlayers: 25
+﻿- type: gameMap
+  id: CorvaxDelta
+  mapName: 'Delta Station'
+  mapPath: /Maps/Corvax/delta.yml
+  minPlayers: 40
   stations:
-    Ishimura:
+    Delta:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Ишимура {1}'
+          mapNameTemplate: '{0} Дельта {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'СН СМ'
+            prefixCreator: 'СН'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_corvaxdelta.yml
         - type: StationJobs
           overflowJobs:
             - Passenger
           availableJobs:
-            CargoTechnician: [ 3, 3 ]
+            CargoTechnician: [ 4, 4 ]
             Passenger: [ -1, -1 ]
             Bartender: [ 1, 1 ]
-            Botanist: [ 3, 3 ]
-            Chef: [ 2, 2 ]
+            Botanist: [ 3, 4 ]
+            Chef: [ 1, 2 ]
             Clown: [ 1, 1 ]
-            Janitor: [ 1, 1 ]
+            Janitor: [ 1, 2 ]
             Mime: [ 1, 1 ]
             Captain: [ 1, 1 ]
+            IAA: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             ChiefEngineer: [ 1, 1 ]
-            StationEngineer: [ 4, 4 ]
+            StationEngineer: [ 5, 5 ]
             ChiefMedicalOfficer: [ 1, 1 ]
-            MedicalDoctor: [ 3, 3 ]
+            MedicalDoctor: [ 5, 5 ]
             Chemist: [ 2, 2 ]
             ResearchDirector: [ 1, 1 ]
-            Scientist: [ 4, 4 ]
+            Scientist: [ 6, 6 ]
             HeadOfSecurity: [ 1, 1 ]
-            SecurityOfficer: [ 4, 4 ]
+            SecurityOfficer: [ 6, 6 ]
             Chaplain: [ 1, 1 ]
             Warden: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
-            Musician: [ 1, 1 ]
-            AtmosphericTechnician: [ 3, 3 ]
-            TechnicalAssistant: [ 2, 2 ]
-            MedicalIntern: [ 2, 2 ]
-            ServiceWorker: [ 2, 2 ]
-            SecurityCadet: [ 2, 2 ]
+            Musician: [ 2, 2 ]
+            AtmosphericTechnician: [ 2, 3 ]
+            TechnicalAssistant: [ 3, 3 ]
+            ResearchAssistant: [ 3, 3 ]
+            Reporter: [ 2, 2 ]
+            MedicalIntern: [ 3, 3 ]
+            ServiceWorker: [ 3, 3 ]
+            SecurityCadet: [ 3, 3 ]
             Psychologist: [ 1, 1 ]
             Detective: [ 1, 1 ]
             Paramedic: [ 1, 1 ]

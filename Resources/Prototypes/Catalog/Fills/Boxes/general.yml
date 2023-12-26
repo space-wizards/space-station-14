@@ -453,7 +453,7 @@
   id: BoxCandleSmall
   components:
   - type: Item
-    size: 30
+    size: Normal
   - type: Sprite
     layers:
       - state: box

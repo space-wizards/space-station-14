@@ -125,6 +125,9 @@
   id: JobResearchDirector
 
 - type: playTimeTracker
+  id: JobRoboticist
+
+- type: playTimeTracker
   id: JobSalvageSpecialist
 
 - type: playTimeTracker

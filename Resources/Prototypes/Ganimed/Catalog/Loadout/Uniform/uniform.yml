@@ -1153,7 +1153,7 @@
     - Warden
     - SeniorOfficer
     - IAA
-    - Purpleshield
+    - BlueShield
   prototype: ClothingUniformJumpsuitLawyerPurple
 
 - type: loadout
@@ -1168,7 +1168,7 @@
     - Warden
     - SeniorOfficer
     - IAA
-    - Purpleshield
+    - BlueShield
   prototype: ClothingUniformJumpskirtLawyerPurple
 
 - type: loadout

@@ -1,0 +1,75 @@
+- type: gameMap
+  id: ClusterGanimed
+  mapName: 'Cluster'
+  mapPath: /Maps/Ganimed/cluster.yml
+  minPlayers: 5
+  maxPlayers: 30
+  stations:
+    ClusterGanimed:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_transit.yml
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Кластер {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'СН'
+        - type: StationJobs
+          overflowJobs:
+            - Passenger
+          availableJobs:
+            #service
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            Bartender: [ 1, 1 ]
+            Botanist: [ 2, 2 ]
+            Chef: [ 1, 1 ]
+            Janitor: [ 1, 1 ]
+            Chaplain: [ 1, 1 ]
+            Librarian: [ 1, 1 ]
+            Lawyer: [ 1, 1 ]
+            ServiceWorker: [ 1, 1 ]
+            #engineering
+            ChiefEngineer: [ 1, 1 ]
+            AtmosphericTechnician: [ 2, 2 ]
+            StationEngineer: [ 3, 3 ]
+            TechnicalAssistant: [ 2, 2 ]
+            #medical
+            ChiefMedicalOfficer: [ 1, 1 ]
+            Chemist: [ 1, 1 ]
+            MedicalDoctor: [ 2, 2 ]
+            MedicalIntern: [ 2, 2 ]
+            #science
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 3, 3 ]
+            ResearchAssistant: [ 2, 2 ]
+            Borg: [ 1, 1 ]
+            #security
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            Detective: [ 1, 1 ]
+            SecurityOfficer: [ 3, 3 ]
+            SecurityCadet: [ 2, 2 ]
+            #supply
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 2, 2 ]
+            CargoTechnician: [ 1, 1 ]
+            #civillian
+            Passenger: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            #enterprise-rework
+            SeniorPhysician: [ 1, 1 ]
+            SeniorEngineer: [ 1, 1 ]
+            SeniorResearcher: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
+            BlueShield: [ 1, 1 ]
+            Roboticist: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
+            Prisoner: [ 3, 0 ]
+            IAA: [ 1, 1 ]
+            Coroner: [ 1, 1 ]
+            Boxer: [ 1, 1 ]
+

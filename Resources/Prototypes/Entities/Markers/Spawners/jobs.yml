@@ -491,6 +491,8 @@
   parent: SpawnPointJobBase
   name: brigmedic
   components:
+  - type: SpawnPoint
+    job_id: Brigmedic
   - type: Sprite
     layers:
       - state: green
@@ -626,7 +628,7 @@
   name: IAA
   components:
   - type: SpawnPoint
-    job_id: Roboticist
+    job_id: IAA
   - type: Sprite
     layers:
       - state: green
@@ -647,7 +649,7 @@
 - type: entity
   id: SpawnPointBlueShield
   parent: SpawnPointJobBase
-  name: coroner
+  name: blue shield
   components:
   - type: SpawnPoint
     job_id: BlueShield

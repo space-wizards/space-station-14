@@ -140,4 +140,4 @@
     sprite: Ganimed/Structures/book_printer.rsi
     state: cartridge
   - type: Item
-    size: 20
+    size: Normal
