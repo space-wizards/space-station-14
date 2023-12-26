@@ -503,12 +503,26 @@ namespace Content.Shared.Preferences
                 .ToList();
 
             var traits = TraitPreferences
-                         .Where(prototypeManager.HasIndex<TraitPrototype>)
-                         .ToList();
+                .Where(prototypeManager.HasIndex<TraitPrototype>)
+                .ToList();
 
             var loadouts = LoadoutPreferences
                 .Where(prototypeManager.HasIndex<LoadoutPrototype>)
                 .ToList();
+
+            var maxLoadouts = configManager.GetCVar(CCVars.GameLoadoutsPoints);
+            var currentLoadouts = 0;
+
+            foreach (var loadout in loadouts.ToList())
+            {
+                var proto = prototypeManager.Index<LoadoutPrototype>(loadout);
+
+                if (currentLoadouts + proto.Cost > maxLoadouts)
+                    loadouts.Remove(loadout);
+                else
+                    currentLoadouts += proto.Cost;
+            }
+
 
             Name = name;
             FlavorText = flavortext;
