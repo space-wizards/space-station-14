@@ -1,5 +1,7 @@
-﻿using Content.Shared.Atmos;
+﻿using System.Globalization;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Localizations;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -46,7 +48,8 @@ namespace Content.Client.Atmos.UI
 
         private void OnPumpOutputPressurePressed(string value)
         {
-            float pressure = float.TryParse(value, out var parsed) ? parsed : 0f;
+            var loc = IoCManager.Resolve<ILocalizationManager>();
+            var pressure = UserInputParser.TryFloat(value, loc, out var parsed) ? parsed : 0f;
             if (pressure > MaxPressure) pressure = MaxPressure;
 
             SendMessage(new GasPressurePumpChangeOutputPressureMessage(pressure));
