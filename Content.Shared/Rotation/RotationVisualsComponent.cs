@@ -6,8 +6,11 @@ namespace Content.Shared.Rotation;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RotationVisualsComponent : Component
 {
+    /// <summary>
+    /// Default value of <see cref="HorizontalRotation"/>
+    /// </summary>
     [DataField]
-    public Angle DefaultHorizontalRotation = Angle.FromDegrees(90);
+    public Angle DefaultRotation = Angle.FromDegrees(90);
 
     [DataField]
     public Angle VerticalRotation = 0;

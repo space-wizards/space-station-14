@@ -24,6 +24,6 @@ public abstract class SharedRotationVisualsSystem : EntitySystem
     public void ResetHorizontalAngle(Entity<RotationVisualsComponent?> ent)
     {
         if (Resolve(ent, ref ent.Comp, false))
-            SetHorizontalAngle(ent, ent.Comp.DefaultHorizontalRotation);
+            SetHorizontalAngle(ent, ent.Comp.DefaultRotation);
     }
 }
