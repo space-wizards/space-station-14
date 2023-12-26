@@ -42423,11 +42423,6 @@ entities:
     - pos: 13.5,17.5
       parent: 30
       type: Transform
-  - uid: 7577
-    components:
-    - pos: 14.5,18.5
-      parent: 30
-      type: Transform
 - proto: SpawnPointServiceWorker
   entities:
   - uid: 4061
