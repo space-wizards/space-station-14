@@ -104,7 +104,7 @@
   id: Stamp
   name: stamps (any)
   sprite:
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: Objects/Misc/stamps.rsi
     state: stamp-cap
     
 - type: stealTargetGroup
