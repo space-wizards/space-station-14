@@ -353,6 +353,7 @@ public sealed class AccessReaderSystem : EntitySystem
             ent.Comp.AccessLog.Dequeue();
 
         string? name = null;
+        // TODO pass the ID card on IsAllowed() instead of using this expensive method
         // Set name if the accessor has a card and that card has a name and allows itself to be recorded
         if (_idCardSystem.TryFindIdCard(accessor, out var idCard)
             && idCard.Comp is { BypassLogging: false, FullName: not null })

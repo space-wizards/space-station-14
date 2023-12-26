@@ -1,27 +1,21 @@
-﻿<cartridges:LogProbeUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
-                                 xmlns="https://spacestation14.io"
-                                 xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                                 Margin="1 0 2 0"
-                                 Orientation="Vertical"
-                                 HorizontalExpand="True"
-                                 VerticalExpand="True">
-    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-        <BoxContainer Orientation="Vertical" MinHeight="32" MaxHeight="32" VerticalAlignment="Top" Margin="3 0">
-            <PanelContainer Name="HeaderPanel">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#000000FF"
-                                      BorderColor="#5a5a5a"
-                                      BorderThickness="0 0 0 1"/>
-                </PanelContainer.PanelOverride>
-                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8">
-                    <Label HorizontalExpand="False" SetWidth="75" Text="{Loc 'log-probe-label-time'}"/>
-                    <Label HorizontalExpand="True" Text="{Loc 'log-probe-label-accessor'}"/>
-                </BoxContainer>
-            </PanelContainer>
+﻿ <cartridges:LogProbeUiFragment xmlns="https://spacestation14.io"
+                                xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                                Orientation="Vertical"
+                                VerticalExpand="True">
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#000000FF"
+                              BorderColor="#5a5a5a"
+                              BorderThickness="0 0 0 1"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Horizontal" Align="Center" Margin="8">
+            <Label HorizontalExpand="True" Text="{Loc 'log-probe-label-number'}"/>
+            <Label HorizontalExpand="True" Text="{Loc 'log-probe-label-time'}"/>
+            <Label HorizontalExpand="True" Text="{Loc 'log-probe-label-accessor'}"/>
         </BoxContainer>
-        <ScrollContainer Name="ScrollContainer" HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
-            <BoxContainer Orientation="Vertical" Name="ProbedDeviceContainer" HorizontalExpand="True" VerticalExpand="True" VerticalAlignment="Top" Margin="3 0"/>
-        </ScrollContainer>
-    </BoxContainer>
+    </PanelContainer>
+    <ScrollContainer VerticalExpand="True" HScrollEnabled="True">
+        <BoxContainer Orientation="Vertical" Name="ProbedDeviceContainer"/>
+    </ScrollContainer>
 </cartridges:LogProbeUiFragment>

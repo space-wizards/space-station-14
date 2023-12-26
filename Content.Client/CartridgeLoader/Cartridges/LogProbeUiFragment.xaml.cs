@@ -20,17 +20,19 @@ public sealed partial class LogProbeUiFragment : BoxContainer
         //Reverse the list so the oldest entries appear at the bottom
         logs.Reverse();
 
+        var count =  1;
         foreach (var log in logs)
         {
-            AddAccessLog(log);
+            AddAccessLog(log, count);
+            count++;
         }
     }
 
-    private void AddAccessLog(PulledAccessLog log)
+    private void AddAccessLog(PulledAccessLog log, int numberLabelText)
     {
         var timeLabelText = TimeSpan.FromSeconds(Math.Truncate(log.Time.TotalSeconds)).ToString();
         var accessorLabelText = log.Accessor;
-        var entry = new LogProbeUiEntry(timeLabelText, accessorLabelText);
+        var entry = new LogProbeUiEntry(numberLabelText, timeLabelText, accessorLabelText);
 
         ProbedDeviceContainer.AddChild(entry);
     }

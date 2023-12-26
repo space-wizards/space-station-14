@@ -31,7 +31,6 @@ public sealed partial class AccessComponent : Component
     [DataField(readOnly: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessGroupPrototype>))]
     [AutoNetworkedField]
     public HashSet<string> Groups = new();
-
 }
 
 /// <summary>
