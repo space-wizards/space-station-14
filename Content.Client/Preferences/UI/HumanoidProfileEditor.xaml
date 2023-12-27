@@ -143,15 +143,15 @@
                 </BoxContainer>
                 <BoxContainer Name="CLoadoutsTab" Orientation="Vertical" Margin="10">
                     <!-- Loadouts -->
-                    <BoxContainer Orientation="Horizontal" Margin="0 0 0 5">
-                        <Label Name="LoadoutPointsLabelB" Margin="0 0 5 0" />
-                        <!-- PanelContainer for overlapping elements, since BoxContainer doesn't seem to support doing that -->
-                        <PanelContainer HorizontalAlignment="Stretch" HorizontalExpand="True">
-                            <ProgressBar Name="LoadoutPointsBar" MaxValue="1" Value="1" />
-                            <Label Name="LoadoutPointsLabelI" HorizontalAlignment="Center" />
-                        </PanelContainer>
-                        <Label Name="LoadoutPointsLabelA" Margin="5 0 0 0" />
-                    </BoxContainer>
+                    <!-- PanelContainer for putting the labels over the ProgressBar, since BoxContainer doesn't seem to support doing that -->
+                    <PanelContainer HorizontalAlignment="Stretch" HorizontalExpand="True" Margin="0 0 0 5">
+                        <ProgressBar Name="LoadoutPointsBar" MaxValue="1" Value="1" />
+                        <BoxContainer Orientation="Horizontal">
+                            <Label Name="LoadoutPointsLabelB" Margin="5 0 0 0" />
+                            <Label Name="LoadoutPointsLabelI" HorizontalAlignment="Stretch" Align="Center" HorizontalExpand="True" />
+                            <Label Name="LoadoutPointsLabelA" Margin="0 0 5 0" />
+                        </BoxContainer>
+                    </PanelContainer>
 
                     <ScrollContainer VerticalExpand="True">
                         <TabContainer Name="CLoadoutsTabs" VerticalExpand="True" />

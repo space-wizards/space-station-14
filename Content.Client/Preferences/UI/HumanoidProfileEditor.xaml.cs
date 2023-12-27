@@ -85,7 +85,7 @@ namespace Content.Client.Preferences.UI
         private BoxContainer _antagList => CAntagList;
         private BoxContainer _traitsList => CTraitsList;
         private Label _loadoutPointsLabelB => LoadoutPointsLabelB; // "B"efore
-        private Label _loadoutPointsLabelI => LoadoutPointsLabelI; // "I"nside
+        private Label _loadoutPointsLabelI => LoadoutPointsLabelI; // "I"nner
         private Label _loadoutPointsLabelA => LoadoutPointsLabelA; // "A"fter
         private ProgressBar _loadoutPointsBar => LoadoutPointsBar; // The above labels' names are referencing their position relative to this element
         private BoxContainer _loadoutsTab => CLoadoutsTab;
