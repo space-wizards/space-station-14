@@ -336,6 +336,9 @@
       "name": "generic_icon_locker"
     },
     {
+      "name": "generic_icon_wooden"
+    },
+    {
       "name": "green_door"
     },
     {
@@ -528,12 +531,6 @@
     },
     {
       "name": "welded"
-    },
-    {
-      "name": "wooden_icon"
-    },
-    {
-      "name": "wooden_icon_locker"
     },
     {
       "name": "white_door"

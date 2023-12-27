@@ -86,3 +86,6 @@
   parent: [ BaseWallCloset , BaseClosetLocked ]
   name: wall locker
   description: A standard-issue Nanotrasen storage unit with secure ability, now on walls.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/wall_locker.rsi

@@ -2,7 +2,6 @@
 - type: entity
   parent: BaseStructureDynamic
   id: BaseCloset
-  abstract: true
   components:
   - type: ResistLocker
   - type: Transform
@@ -60,13 +59,12 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_door_open
     stateDoorClosed: generic_door
 
 # Use as second parent for locker versions
 - type: entity
   id: BaseClosetLocked
-  abstract: true
   components:
   - type: AccessReader
   - type: Lock
@@ -135,7 +133,30 @@
     node: done
     containers:
     - entity_storage
-  - type: Weldable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
 
 # wooden closet
 - type: entity
@@ -245,11 +266,6 @@
     - state: locked
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
-  - type: Construction
-    graph: SuitStorage
-    node: done
-    containers:
-    - entity_storage
   - type: Fixtures
     fixtures:
       fix1:

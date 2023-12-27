@@ -173,7 +173,7 @@
 # Cursed
 - type: entity
   id: ClosetCursed
-  parent: BaseClosetSteel
+  parent: ClosetSteelBase
   name: closet
   suffix: cursed
   description: A standard-issue Nanotrasen storage unit.
@@ -188,7 +188,7 @@
 # Base
 - type: entity
   id: WardrobeBase
-  parent: BaseClosetSteel
+  parent: ClosetSteelBase
   abstract: true
   description: It's a storage unit for standard-issue Nanotrasen attire.
 
