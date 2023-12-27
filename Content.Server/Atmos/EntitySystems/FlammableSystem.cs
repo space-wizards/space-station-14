@@ -85,7 +85,6 @@ namespace Content.Server.Atmos.EntitySystems
             EnsureComp<IgnitionSourceComponent>(ent);
         }
 
-
         private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
         {
             foreach (var entity in args.HitEntities)
