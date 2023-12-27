@@ -11,8 +11,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckLGBTPin
-  name: LGBT pin
-  description: be gay do crime
+  name: SS pin
+  description: are you sure you want to wear this?
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -27,8 +27,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckAromanticPin
-  name: aromantic pin
-  description: be aro do crime
+  name: superstraight pin
+  description: be straight do crime
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -43,8 +43,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckAsexualPin
-  name: asexual pin
-  description: be ace do crime
+  name: superstraight pin
+  description: be straight do crime
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -59,8 +59,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckBisexualPin
-  name: bisexual pin
-  description: be bi do crime
+  name: superstraight pin
+  description: be straight do crime
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -75,8 +75,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckIntersexPin
-  name: intersex pin
-  description: be intersex do crime
+  name: superstraight pin
+  description: be straight do crime
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -91,8 +91,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckLesbianPin
-  name: lesbian pin
-  description: be lesbian do crime
+  name: superstraight pin
+  description: be straight do crime
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -107,8 +107,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckNonBinaryPin
-  name: non-binary pin
-  description: "01100010 01100101 00100000 01100101 01101110 01100010 01111001 00100000 01100100 01101111 00100000 01100011 01110010 01101001 01101101 01100101"
+  name: superstraight pin
+  description: be straight do crime
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -123,8 +123,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckPansexualPin
-  name: pansexual pin
-  description: be pan do crime
+  name: superstraight pin
+  description: be straight do crime
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -139,8 +139,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckTransPin
-  name: transgender pin
-  description: be trans do crime
+  name: superstraight pin
+  description: be straight do crime
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
