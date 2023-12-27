@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board
@@ -61,6 +61,8 @@
       requirements:
         MatterBin: 1
         Manipulator: 1
+    - type: StealTarget
+      stealGroup: AmmoTechFabCircuitboard
 
 - type: entity
   id: MedicalTechFabCircuitboard
@@ -80,6 +82,8 @@
           Amount: 2
           DefaultPrototype: Beaker
           ExamineName: Glass Beaker
+    - type: StealTarget
+      stealGroup: MedicalTechFabCircuitboard
 
 - type: entity
   id: CircuitImprinterMachineCircuitboard
@@ -280,7 +284,8 @@
         Manipulator: 2
         Capacitor: 5
       materialRequirements:
-        PlasmaGlass: 25
+        PlasmaGlass: 5
+        Cable: 5
 
 - type: entity
   parent: BaseMachineCircuitboard

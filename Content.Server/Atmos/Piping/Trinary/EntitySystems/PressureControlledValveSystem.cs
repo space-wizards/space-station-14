@@ -31,7 +31,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             UpdateAppearance(uid, comp);
         }
 
-        private void OnUpdate(EntityUid uid, PressureControlledValveComponent comp, AtmosDeviceUpdateEvent args)
+        private void OnUpdate(EntityUid uid, PressureControlledValveComponent comp, ref AtmosDeviceUpdateEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
                 || !EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
@@ -79,7 +79,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             _atmosphereSystem.Merge(outletNode.Air, removed);
         }
 
-        private void OnFilterLeaveAtmosphere(EntityUid uid, PressureControlledValveComponent comp, AtmosDeviceDisabledEvent args)
+        private void OnFilterLeaveAtmosphere(EntityUid uid, PressureControlledValveComponent comp, ref AtmosDeviceDisabledEvent args)
         {
             comp.Enabled = false;
             UpdateAppearance(uid, comp);

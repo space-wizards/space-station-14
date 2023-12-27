@@ -11,3 +11,9 @@ net-probe-label-name = Name
 net-probe-label-address = Address
 net-probe-label-frequency = Frequency
 net-probe-label-network = Network
+
+log-probe-program-name = LogProbe
+log-probe-scan = Downloaded logs from {$device}!
+log-probe-label-time = Time
+log-probe-label-accessor = Accessed by
+log-probe-label-number = Number

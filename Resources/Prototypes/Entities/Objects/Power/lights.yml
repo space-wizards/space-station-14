@@ -137,6 +137,19 @@
     bulb: Bulb
 
 - type: entity
+  parent: BaseLightbulb
+  name: service light bulb
+  id: ServiceLightBulb
+  description: A low-brightness green lightbulb used in janitorial service lights.
+  components:
+  - type: LightBulb
+    bulb: Bulb
+    color: "#CCFF60"
+    lightEnergy: 1.0
+    lightRadius: 2
+    lightSoftness: 3
+
+- type: entity
   parent: BaseLightTube
   name: fluorescent light tube
   id: LightTube

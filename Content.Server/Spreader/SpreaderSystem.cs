@@ -30,6 +30,7 @@ public sealed class SpreaderSystem : EntitySystem
     /// <summary>
     /// Remaining number of updates per grid & prototype.
     /// </summary>
+    // TODO PERFORMANCE Assign each prototype to an index and convert dictionary to array
     private Dictionary<EntityUid, Dictionary<string, int>> _gridUpdates = new();
 
     public const float SpreadCooldownSeconds = 1;
@@ -42,24 +43,16 @@ public sealed class SpreaderSystem : EntitySystem
     {
         SubscribeLocalEvent<AirtightChanged>(OnAirtightChanged);
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
 
         SubscribeLocalEvent<EdgeSpreaderComponent, EntityTerminatingEvent>(OnTerminating);
         SetupPrototypes();
-        _prototype.PrototypesReloaded += OnPrototypeReload;
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _prototype.PrototypesReloaded -= OnPrototypeReload;
     }
 
     private void OnPrototypeReload(PrototypesReloadedEventArgs obj)
     {
-        if (!obj.ByType.ContainsKey(typeof(EdgeSpreaderPrototype)))
-            return;
-
-        SetupPrototypes();
+        if (obj.WasModified<EdgeSpreaderPrototype>())
+            SetupPrototypes();
     }
 
     private void SetupPrototypes()
@@ -73,7 +66,7 @@ public sealed class SpreaderSystem : EntitySystem
 
     private void OnAirtightChanged(ref AirtightChanged ev)
     {
-        ActivateGetSpreadableNeighbors(ev.Entity, ev.Airtight, ev.Position);
+        ActivateSpreadableNeighbors(ev.Entity, ev.Airtight, ev.Position);
     }
 
     private void OnGridInit(GridInitializeEvent ev)
@@ -83,7 +76,7 @@ public sealed class SpreaderSystem : EntitySystem
 
     private void OnTerminating(EntityUid uid, EdgeSpreaderComponent component, ref EntityTerminatingEvent args)
     {
-        ActivateGetSpreadableNeighbors(uid);
+        ActivateSpreadableNeighbors(uid);
     }
 
     /// <inheritdoc/>
@@ -296,7 +289,7 @@ public sealed class SpreaderSystem : EntitySystem
     /// <summary>
     /// Given an entity, this returns a list of all adjacent entities with a <see cref="EdgeSpreaderComponent"/>.
     /// </summary>
-    public void ActivateGetSpreadableNeighbors(EntityUid uid, AirtightComponent? comp = null,
+    public void ActivateSpreadableNeighbors(EntityUid uid, AirtightComponent? comp = null,
         (EntityUid Grid, Vector2i Tile)? position = null)
     {
         Resolve(uid, ref comp, false);
@@ -307,8 +300,9 @@ public sealed class SpreaderSystem : EntitySystem
         if (position == null)
         {
             var transform = Transform(uid);
-            if (!_mapManager.TryGetGrid(transform.GridUid, out grid))
+            if (!_mapManager.TryGetGrid(transform.GridUid, out grid) || TerminatingOrDeleted(transform.GridUid.Value))
                 return;
+
             tile = grid.TileIndicesFor(transform.Coordinates);
         }
         else

@@ -5,6 +5,7 @@ using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos
 {
@@ -61,8 +62,9 @@ namespace Content.Server.Atmos
             get => _temperature;
             set
             {
+                DebugTools.Assert(!float.IsNaN(_temperature));
                 if (Immutable) return;
-                _temperature = MathF.Max(value, Atmospherics.TCMB);
+                _temperature = MathF.Min(MathF.Max(value, Atmospherics.TCMB), Atmospherics.Tmax);
             }
         }
 
@@ -131,17 +133,16 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AdjustMoles(int gasId, float quantity)
         {
-            if (!Immutable)
-            {
-                if (!float.IsFinite(quantity))
-                    throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
-                ;
-                ref var moles = ref Moles[gasId];
-                moles += quantity;
+            if (Immutable)
+                return;
 
-                if (!float.IsFinite(moles) || float.IsNegative(moles))
-                    throw new Exception($"Invalid mole quantity \"{moles}\" in gas Id {gasId} after adjusting moles with \"{quantity}\"!");
-            }
+            if (!float.IsFinite(quantity))
+                throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
+
+            // Clamping is needed because x - x can be negative with floating point numbers. If we don't
+            // clamp here, the caller always has to call GetMoles(), clamp, then SetMoles().
+            ref var moles = ref Moles[gasId];
+            moles += MathF.Max(moles + quantity, 0);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
