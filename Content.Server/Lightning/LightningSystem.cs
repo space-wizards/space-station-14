@@ -55,7 +55,7 @@ public sealed class LightningSystem : SharedLightningSystem
         _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
 
         var ev = new HitByLightningEvent(user, target);
-        RaiseLocalEvent(target, ref ev, true);
+        RaiseLocalEvent(target, ref ev);
     }
 
     /// <summary>

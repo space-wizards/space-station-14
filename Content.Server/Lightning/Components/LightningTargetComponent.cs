@@ -1,3 +1,4 @@
+using Content.Server.Tesla.EntitySystems;
 using Content.Shared.Explosion;
 using Robust.Shared.Prototypes;
 
@@ -7,7 +8,7 @@ namespace Content.Server.Lightning.Components;
 /// This component allows the lightning system to select a given entity as the target of a lightning strike.
 /// It also determines the priority of selecting this target, and the behavior of the explosion. Used for tesla.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(LightningSystem), typeof(LightningTargetSystem))]
 public sealed partial class LightningTargetComponent : Component
 {
     /// <summary>
