@@ -24,6 +24,19 @@
   maxGroupSize: 20
   radius: 4
 
+- type: biomeMarkerLayer
+  id: OreCoal
+  entityMask:
+    WallRock: WallRockCoal
+    WallRockBasalt: WallRockBasaltCoal
+    WallRockChromite: WallRockChromiteCoal
+    WallRockSand: WallRockSandCoal
+    WallRockSnow: WallRockSnowCoal
+  maxCount: 30
+  minGroupSize: 10
+  maxGroupSize: 20
+  radius: 4
+
 # Medium value
 # Gold
 - type: biomeMarkerLayer

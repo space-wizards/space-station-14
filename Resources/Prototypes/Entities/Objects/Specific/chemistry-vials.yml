@@ -26,6 +26,7 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: vial-1-
+  - type: Drink
   - type: SolutionContainerManager
     solutions:
       drink:

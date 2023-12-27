@@ -698,3 +698,20 @@
     sprite: Clothing/Head/Hardsuits/clown.rsi
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Effects/Emotes/parp1.ogg
+
+#Santas Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitSanta
+  name: Santa's hardsuit helmet
+  description: A festive-looking hardsuit helmet that provides the jolly gift-giver protection from low-pressure environments.
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/santahelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/santahelm.rsi
+  - type: PointLight
+    color: "#f4ffad"
+    radius: 5
+    energy: 2  

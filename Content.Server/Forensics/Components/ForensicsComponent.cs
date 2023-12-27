@@ -16,12 +16,6 @@ namespace Content.Server.Forensics
         public HashSet<string> Residues = new();
 
         /// <summary>
-        /// How long it takes to wipe the prints/blood/etc. off of this entity
-        /// </summary>
-        [DataField("cleanDelay")]
-        public float CleanDelay = 12.0f;
-
-        /// <summary>
         /// How close you must be to wipe the prints/blood/etc. off of this entity
         /// </summary>
         [DataField("cleanDistance")]
@@ -29,7 +23,7 @@ namespace Content.Server.Forensics
 
         /// <summary>
         /// Can the DNA be cleaned off of this entity?
-        /// e.g. you can clean the DNA off of a knife, but not a puddle
+        /// e.g. you can wipe the DNA off of a knife, but not a cigarette
         /// </summary>
         [DataField("canDnaBeCleaned")]
         public bool CanDnaBeCleaned = true;

@@ -181,7 +181,7 @@
           conditions:
           - !type:Temperature
             # this is a little arbitrary but they gotta be pretty cold
-            max: 150.0
+            max: 213.0
           damage:
           # todo scale with temp like SS13
             groups:
@@ -204,7 +204,7 @@
         - !type:HealthChange
           conditions:
           - !type:Temperature
-            max: 150.0
+            max: 213.0
           damage:
             types:
              Cellular: -2
@@ -491,6 +491,9 @@
         visualType: Medium
         messages: [ "leporazine-effect-temperature-adjusting" ]
         probability: 0.2
+      - !type:AdjustReagent
+        reagent: Fresium
+        amount: -5
 
 - type: reagent
   id: Barozine
