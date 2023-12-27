@@ -8,13 +8,13 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Armor;
 
 /// <summary>
-/// This handles logic relating to <see cref="ArmorComponent"/>
+///     This handles logic relating to <see cref="ArmorComponent" />
 /// </summary>
 public abstract class SharedArmorSystem : EntitySystem
 {
     [Dependency] private readonly ExamineSystemShared _examine = default!;
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override void Initialize()
     {
         base.Initialize();
@@ -29,7 +29,8 @@ public abstract class SharedArmorSystem : EntitySystem
         args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
     }
 
-    private void OnBorgDamageModify(EntityUid uid, ArmorComponent component, ref BorgModuleRelayedEvent<DamageModifyEvent> args)
+    private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,
+        ref BorgModuleRelayedEvent<DamageModifyEvent> args)
     {
         args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
     }
@@ -58,19 +59,23 @@ public abstract class SharedArmorSystem : EntitySystem
         foreach (var coefficientArmor in armorModifiers.Coefficients)
         {
             msg.PushNewline();
+
+            var armorType = Loc.GetString("armor-damage-type-" + coefficientArmor.Key.ToLower());
             msg.AddMarkup(Loc.GetString("armor-coefficient-value",
-                ("type", coefficientArmor.Key),
-                ("value", MathF.Round((1f - coefficientArmor.Value) * 100,1))
-                ));
+                ("type", armorType),
+                ("value", MathF.Round((1f - coefficientArmor.Value) * 100, 1))
+            ));
         }
 
         foreach (var flatArmor in armorModifiers.FlatReduction)
         {
             msg.PushNewline();
+
+            var armorType = Loc.GetString("armor-damage-type-" + flatArmor.Key.ToLower());
             msg.AddMarkup(Loc.GetString("armor-reduction-value",
-                ("type", flatArmor.Key),
+                ("type", armorType),
                 ("value", flatArmor.Value)
-                ));
+            ));
         }
 
         return msg;

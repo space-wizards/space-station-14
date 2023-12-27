@@ -7,6 +7,22 @@
     Glass: 50
 
 - type: latheRecipe
+  id: SodiumLightTube
+  result: SodiumLightTube
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
+  id: ExteriorLightTube
+  result: ExteriorLightTube
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
   id: LightBulb
   result: LightBulb
   completetime: 2
@@ -100,4 +116,18 @@
   completetime: 12
   materials:
     Steel: 750
+    Plastic: 100
+
+- type: latheRecipe
+  id: FauxTileAstroGrass
+  result: FloorTileItemAstroGrass
+  completetime: 1
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: FauxTileAstroIce
+  result: FloorTileItemAstroIce
+  completetime: 1
+  materials:
     Plastic: 100
