@@ -88,15 +88,6 @@ namespace Content.Server.Hands.Systems
             args.Handled = true; // no shove/stun.
         }
 
-        protected override void HandleEntityRemoved(EntityUid uid, HandsComponent hands,
-            EntRemovedFromContainerMessage args)
-        {
-            base.HandleEntityRemoved(uid, hands, args);
-
-            if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
-                _virtualSystem.Delete((args.Entity, @virtual), uid);
-        }
-
         private void HandleBodyPartAdded(EntityUid uid, HandsComponent component, ref BodyPartAddedEvent args)
         {
             if (args.Part.PartType != BodyPartType.Hand)
