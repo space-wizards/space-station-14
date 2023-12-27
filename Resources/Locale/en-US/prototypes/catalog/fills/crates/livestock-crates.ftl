@@ -47,7 +47,7 @@ ent-CrateNPCPenguin = Penguin crate
     .desc = A crate containing two penguins.
 
 ent-CrateNPCMothroach = Crate of mothroaches
-    .desc = A crate containing six mothroaches.
+    .desc = A crate containing four mothroaches.
 
 ent-CrateNPCPig = Pig crate
     .desc = A crate containing a single pig.

@@ -341,7 +341,8 @@ public sealed class TemperatureSystem : EntitySystem
     {
         RecalculateAndApplyParentThresholds(root, temperatureQuery, transformQuery, tempThresholdsQuery);
 
-        foreach (var child in Transform(root).ChildEntities)
+        var enumerator = Transform(root).ChildEnumerator;
+        while (enumerator.MoveNext(out var child))
         {
             RecursiveThresholdUpdate(child, temperatureQuery, transformQuery, tempThresholdsQuery);
         }

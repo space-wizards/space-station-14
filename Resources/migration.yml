@@ -100,3 +100,11 @@ ClothingOuterHardsuitMedic: ClothingOuterHardsuitSyndieMedic
 
 # 2023-12-13
 VendingMachineSmartFridge: SmartFridge
+
+# 2023-12-18
+ReagentContainerMilk: DrinkMilkCarton
+ReagentContainerMilkSoy: DrinkSoyMilkCarton
+ReagentContainerMilkOat: DrinkOatMilkCarton
+
+# 2023-12-20
+MiasmaCanister: AmmoniaCanister

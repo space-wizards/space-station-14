@@ -10,8 +10,10 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.GameTicking;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Access.Systems;
 
@@ -19,7 +21,10 @@ public sealed class AccessReaderSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedGameTicker _gameTicker = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedStationRecordsSystem _records = default!;
 
@@ -37,7 +42,7 @@ public sealed class AccessReaderSystem : EntitySystem
     private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
     {
         args.State = new AccessReaderComponentState(component.Enabled, component.DenyTags, component.AccessLists,
-            _records.Convert(component.AccessKeys));
+            _records.Convert(component.AccessKeys), component.AccessLog, component.AccessLogLimit);
     }
 
     private void OnHandleState(EntityUid uid, AccessReaderComponent component, ref ComponentHandleState args)
@@ -57,6 +62,8 @@ public sealed class AccessReaderSystem : EntitySystem
 
         component.AccessLists = new(state.AccessLists);
         component.DenyTags = new(state.DenyTags);
+        component.AccessLog = new(state.AccessLog);
+        component.AccessLogLimit = state.AccessLogLimit;
     }
 
     private void OnLinkAttempt(EntityUid uid, AccessReaderComponent component, LinkAttemptEvent args)
@@ -71,6 +78,7 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         args.Handled = true;
         reader.Enabled = false;
+        reader.AccessLog.Clear();
         Dirty(uid, reader);
     }
 
@@ -93,7 +101,13 @@ public sealed class AccessReaderSystem : EntitySystem
         var access = FindAccessTags(user, accessSources);
         FindStationRecordKeys(user, out var stationKeys, accessSources);
 
-        return IsAllowed(access, stationKeys, target, reader);
+        if (IsAllowed(access, stationKeys, target, reader))
+        {
+            LogAccess((target, reader), user);
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -325,5 +339,28 @@ public sealed class AccessReaderSystem : EntitySystem
 
         key = null;
         return false;
+    }
+
+    /// <summary>
+    /// Logs an access
+    /// </summary>
+    /// <param name="ent">The reader to log the access on</param>
+    /// <param name="accessor">The accessor to log</param>
+    private void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor)
+    {
+        if (ent.Comp.AccessLog.Count >= ent.Comp.AccessLogLimit)
+            ent.Comp.AccessLog.Dequeue();
+
+        string? name = null;
+        // TODO pass the ID card on IsAllowed() instead of using this expensive method
+        // Set name if the accessor has a card and that card has a name and allows itself to be recorded
+        if (_idCardSystem.TryFindIdCard(accessor, out var idCard)
+            && idCard.Comp is { BypassLogging: false, FullName: not null })
+            name = idCard.Comp.FullName;
+
+        name ??= Loc.GetString("access-reader-unknown-id");
+
+        var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
+        ent.Comp.AccessLog.Enqueue(new AccessRecord(stationTime, name));
     }
 }

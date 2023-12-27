@@ -20,6 +20,7 @@ public abstract partial class SharedHandsSystem
     [Dependency] private readonly SharedItemSystem _items = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
+    [Dependency] private readonly SharedHandVirtualItemSystem _virtualSystem = default!;
 
     protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
 

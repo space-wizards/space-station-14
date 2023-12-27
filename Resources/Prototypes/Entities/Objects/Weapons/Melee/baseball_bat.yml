@@ -12,11 +12,13 @@
     damage:
       types:
         Blunt: 10
+        Structural: 5
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 8
+        Blunt: 5
+        Structural: 10
   - type: Item
     size: Normal
   - type: Tool

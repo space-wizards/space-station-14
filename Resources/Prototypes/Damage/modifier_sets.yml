@@ -10,6 +10,28 @@
     Heat: 5
 
 - type: damageModifierSet
+  id: StructuralMetallicStrong
+  coefficients:
+    Shock: 1.2
+  flatReductions:
+    Blunt: 25
+    Slash: 25
+    Piercing: 25
+    Heat: 25
+    Structural: 40
+
+- type: damageModifierSet
+  id: StructuralMetallic
+  coefficients:
+    Shock: 1.2
+  flatReductions:
+    Blunt: 10
+    Slash: 10
+    Piercing: 10
+    Heat: 10
+    Structural: 20
+
+- type: damageModifierSet
   id: PerforatedMetallic
   coefficients:
     Blunt: 2
@@ -64,22 +86,25 @@
     Heat: 0.8
     Shock: 0 #glass is an insulator!
   flatReductions:
-    Blunt: 5
     Slash: 5
+    Piercing: 5
+    Heat: 5
+    Structural: 10
 
 - type: damageModifierSet
   id: RGlass
   coefficients:
-    Blunt: 1.0
+    Blunt: 0.5
     Slash: 0.3
     Piercing: 0.6
     Heat: 0.5
     Shock: 0
   flatReductions:
     Blunt: 5
-    Slash: 7
+    Slash: 5
     Piercing: 5
     Heat: 5
+    Structural: 12.5
 
 - type: damageModifierSet
   id: Wood
@@ -168,6 +193,17 @@
   flatReductions:
     Blunt: 5
 
+# hurt a lot by blunt, immune to a good amount of other stuff because they're a cookie
+- type: damageModifierSet
+  id: Gingerbread
+  coefficients:
+    Blunt: 1.5
+    Cold: 0.0
+    Radiation: 0.5
+    Asphyxiation: 0.0
+    Bloodloss: 0.0
+    Cellular: 0.0
+
 # Represents which damage types should be modified
 # in relation to how they cause bleed rate.
 - type: damageModifierSet
@@ -224,3 +260,41 @@
     Cellular: 0.0
     Heat: 2.5
     Caustic: 0.0
+
+# terminator's flesh damage set
+- type: damageModifierSet
+  id: CyberneticFlesh
+  coefficients:
+    Blunt: 0.2
+    Slash: 0.2
+    Piercing: 0.1
+    # fire and lasers burn it good
+    Heat: 1.0
+    # zap
+    Shock: 1.5
+    Cold: 0.25
+    Caustic: 0.25
+    # doesnt have organs to poison
+    Poison: 0.0
+    Cellular: 0.0
+
+# terminator's endoskeleton damage set
+- type: damageModifierSet
+  id: Cybernetic
+  coefficients:
+    # bonk
+    Blunt: 1.0
+    # alloy too hard to cut or shoot
+    Slash: 0.0
+    Piercing: 0.0
+    # no burning anymore
+    Heat: 0.0
+    # zap zap
+    Shock: 2.5
+    Cold: 0.0
+    Caustic: 0.0
+    Poison: 0.0
+    Cellular: 0.0
+  flatReductions:
+    # can't punch the endoskeleton to death
+    Blunt: 5

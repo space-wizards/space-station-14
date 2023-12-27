@@ -138,6 +138,7 @@
     - board
   - type: StaticPrice
     price: 100
+  - type: PryUnpowered
 
 - type: entity
   id: BaseSecureWindoor
