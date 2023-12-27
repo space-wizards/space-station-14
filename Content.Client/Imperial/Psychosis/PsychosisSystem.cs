@@ -24,7 +24,6 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -173,9 +172,9 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
                 }
         }
     }
-    private void Increase(EntityUid uid, PsychosisComponent psychosis)
+    public void Increase(EntityUid uid, PsychosisComponent psychosis, float increas)
     {
-        psychosis.Current += psychosis.Increase;
+        psychosis.Current += increas;
         psychosis.NextIncrease = _timing.CurTime + psychosis.IncreaseTime;
         if (psychosis.Current >= 100)
         {
@@ -184,17 +183,6 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
                 psychosis.Stage += 1;
                 StageChanged(uid, psychosis);
             }
-        }
-    }
-    private void Phrase(EntityUid uid, PsychosisComponent psychosis)
-    {
-        if (psychosis.Stage >= 3)
-        {
-            var timeInterval = _random.NextFloat(psychosis.MinTimeBetweenPhrases, psychosis.MaxTimeBetweenPhrases);
-            psychosis.NextPhraseTime = _timing.CurTime + TimeSpan.FromSeconds(timeInterval);
-            var phrases = _prototypeManager.Index<DatasetPrototype>("PsychosisPhrases").Values;
-            var choosen = _random.Pick(phrases);
-            _chat.SendMessage(Loc.GetString(choosen), Shared.Chat.ChatSelectChannel.Local);
         }
     }
     private void Checks(EntityUid uid)
@@ -207,10 +195,8 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
             PlaySounds(uid, psychosis);
         if (_timing.CurTime > psychosis.NextItemTime)
             SpawnItem(uid, psychosis);
-        if (_timing.CurTime > psychosis.NextPhraseTime)
-            Phrase(uid, psychosis);
         if (_timing.CurTime > psychosis.NextIncrease)
-            Increase(uid, psychosis);
+            Increase(uid, psychosis, psychosis.Increase);
     }
 
 }

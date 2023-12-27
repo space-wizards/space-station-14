@@ -21,7 +21,7 @@ public sealed class PsychosisGainSystem : SharedPsychosisGainSystem
     [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -53,8 +53,6 @@ public sealed class PsychosisGainSystem : SharedPsychosisGainSystem
         if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == false)
             return;
         if (!TryComp<PsychosisGainComponent>(uid, out var component))
-            return;
-        if (TryComp<PsychosisComponent>(uid, out var psychosis))
             return;
         if (component.NextUpdate > _timing.CurTime)
             return;
@@ -98,9 +96,17 @@ public sealed class PsychosisGainSystem : SharedPsychosisGainSystem
                 found = true;
             }
         }
+        if (TryComp<PsychosisComponent>(uid, out var psychosis))
+        {
+            if (found)
+            {
+                _entityManager.EntitySysManager.GetEntitySystem<PsychosisSystem>().Increase(uid, psychosis, component.IncreasePsychosis);
+            }
+            return;
+        }
         if (found)
         {
-            component.Status += (_random.Next(2, 7) * (1f - component.Resist));
+            component.Status += (_random.Next(2, 5) * (1f - component.Resist));
             if (component.Status >= 100)
             {
                 component.Status = 0f;

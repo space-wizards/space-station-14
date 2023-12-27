@@ -33,13 +33,6 @@ public sealed partial class PsychosisComponent : Component
 
     public float MinTimeBetweenItems = 30f;
 
-    [DataField("maxTimeBetweenPhrases", required: true), ViewVariables(VVAccess.ReadWrite)]
-
-    public float MaxTimeBetweenPhrases = 30f;
-
-    [DataField("minTimeBetweenPhrases", required: true), ViewVariables(VVAccess.ReadWrite)]
-
-    public float MinTimeBetweenPhrases = 20f;
     [DataField("maxSoundDistance", required: true), ViewVariables(VVAccess.ReadWrite)]
     public float MaxDistance = 10f;
 
@@ -53,7 +46,7 @@ public sealed partial class PsychosisComponent : Component
     public TimeSpan IncreaseTime = TimeSpan.FromSeconds(15);
     [DataField("increase"), ViewVariables(VVAccess.ReadWrite)]
 
-    public float Increase = 10f;
+    public float Increase = 5f;
     [DataField("current"), ViewVariables(VVAccess.ReadWrite)]
 
     public float Current = 0f;
@@ -79,9 +72,6 @@ public sealed partial class PsychosisComponent : Component
     [DataField("NextSoundTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
 
     public TimeSpan NextSoundTime = TimeSpan.Zero;
-    [DataField("NextPhraseTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-
-    public TimeSpan NextPhraseTime = TimeSpan.Zero;
 
     [DataField("stage"), ViewVariables(VVAccess.ReadWrite)]
 
