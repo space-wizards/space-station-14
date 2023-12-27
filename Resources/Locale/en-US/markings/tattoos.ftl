@@ -27,5 +27,3 @@ marking-TattooEyeRight = Right Eye
 
 marking-TattooEyeLeft-tattoo_eye_l = Left Eye
 marking-TattooEyeLeft = Left Eye
-
-
