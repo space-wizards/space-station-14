@@ -14,11 +14,35 @@
     - type: SimpleFloorPlanPopulator
       entries:
         FloorAsteroidSand:
-          - id: AsteroidRock
+          - id: WallRock
             prob: 0.5
             orGroup: rock
-          - id: AsteroidRockMining
-            prob: 0.5
+          - id: WallRockCoal
+            prob: 0.15
+            orGroup: rock
+          - id: WallRockTin
+            prob: 0.15
+            orGroup: rock
+          - id: WallRockQuartz
+            prob: 0.15
+            orGroup: rock
+          - id: WallRockGold
+            prob: 0.05
+            orGroup: rock
+          - id: WallRockSilver
+            prob: 0.05
+            orGroup: rock
+          - id: WallRockPlasma
+            prob: 0.05
+            orGroup: rock
+          - id: WallRockUranium
+            prob: 0.02
+            orGroup: rock
+          - id: WallRockBananium
+            prob: 0.02
+            orGroup: rock
+          - id: WallRockArtifactFragment
+            prob: 0.01
             orGroup: rock
     - type: IFF
       flags: HideLabel
