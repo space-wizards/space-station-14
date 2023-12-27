@@ -37,7 +37,7 @@
       damageContainer: Box
     - type: Sprite
       noRot: true
-      sprite: Structures/Storage/closet.rsi
+      sprite: Structures/Storage/Closets/closet.rsi
       layers:
       - state: cardboard
         map: ["enum.StorageVisualLayers.Base"]
@@ -119,7 +119,7 @@
     - type: Transform
       noRot: true
     - type: Sprite
-      sprite: Structures/Storage/closet.rsi
+      sprite: Structures/Storage/Closets/closet.rsi
       drawdepth: Effects
       noRot: true
       layers:

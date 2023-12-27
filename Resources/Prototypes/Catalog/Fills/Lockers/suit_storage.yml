@@ -2,7 +2,7 @@
 #Basic EVA
 - type: entity
   id: SuitStorageEVA
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: EVA
   components:
   - type: StorageFill
@@ -16,7 +16,7 @@
 #Basic EVA (Big Ass Helmet)
 - type: entity
   id: SuitStorageEVAAlternate
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: EVA, Large Helmet
   components:
   - type: StorageFill
@@ -30,7 +30,7 @@
 #Emergency EVA
 - type: entity
   id: SuitStorageEVAEmergency
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Emergency EVA
   components:
   - type: StorageFill
@@ -43,7 +43,7 @@
 #Prisoner EVA
 - type: entity
   id: SuitStorageEVAPrisoner
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Prisoner EVA
   components:
   - type: StorageFill
@@ -57,7 +57,7 @@
 #Syndicate EVA
 - type: entity
   id: SuitStorageEVASyndicate
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Syndicate EVA
   components:
   - type: StorageFill
@@ -71,7 +71,7 @@
 #Pirate EVA
 - type: entity
   id: SuitStorageEVAPirate
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Pirate EVA
   components:
   - type: StorageFill
@@ -84,7 +84,7 @@
 #NTSRA Voidsuit
 - type: entity
   id: SuitStorageNTSRA
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Ancient EVA
   components:
   - type: StorageFill
@@ -98,7 +98,7 @@
 #Basic hardsuit
 - type: entity
   id: SuitStorageBasic
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Basic Hardsuit
   components:
   - type: StorageFill
@@ -111,7 +111,7 @@
 #Engineering hardsuit
 - type: entity
   id: SuitStorageEngi
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Station Engineer
   components:
   - type: StorageFill
@@ -127,7 +127,7 @@
 #Atmospherics hardsuit
 - type: entity
   id: SuitStorageAtmos
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Atmospheric Technician
   components:
   - type: StorageFill
@@ -142,7 +142,7 @@
 #Security hardsuit
 - type: entity
   id: SuitStorageSec
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Security
   components:
   - type: StorageFill
@@ -157,7 +157,7 @@
 #CE's hardsuit
 - type: entity
   id: SuitStorageCE
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Chief Engineer
   components:
   - type: StorageFill
@@ -174,7 +174,7 @@
 #CMO's hardsuit
 - type: entity
   id: SuitStorageCMO
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Chief Medical Officer
   components:
   - type: StorageFill
@@ -189,7 +189,7 @@
 #RD's hardsuit
 - type: entity
   id: SuitStorageRD
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Research Director
   components:
   - type: StorageFill
@@ -204,7 +204,7 @@
 #HOS's hardsuit
 - type: entity
   id: SuitStorageHOS
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Head of Security
   components:
   - type: StorageFill
@@ -220,7 +220,7 @@
 #Warden's hardsuit
 - type: entity
   id: SuitStorageWarden
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Warden
   components:
   - type: StorageFill
@@ -235,7 +235,7 @@
 #Captain's hardsuit
 - type: entity
   id: SuitStorageCaptain
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Captain
   components:
   - type: StorageFill
@@ -250,7 +250,7 @@
 #Salvage hardsuit
 - type: entity
   id: SuitStorageSalv
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Salvage
   components:
   - type: StorageFill
@@ -266,7 +266,7 @@
 #Blood-red hardsuit
 - type: entity
   id: SuitStorageSyndie
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Syndicate Hardsuit
   components:
   - type: StorageFill
@@ -280,7 +280,7 @@
 #Pirate Captain's hardsuit
 - type: entity
   id: SuitStoragePirateCap
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Pirate Captain
   components:
   - type: StorageFill
@@ -293,7 +293,7 @@
 #Wizard
 - type: entity
   id: SuitStorageWizard
-  parent: SuitStorageBase
+  parent: BaseSuitStorage
   suffix: Wizard
   components:
   - type: StorageFill

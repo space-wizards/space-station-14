@@ -62,7 +62,7 @@
 - type: entity
   id: ClosetJanitorBomb
   name: janitorial bomb suit closet
-  parent: ClosetBase
+  parent: BaseClosetSteel
   description: It's a storage unit for janitorial explosion-protective suits.
   suffix: DO NOT MAP
   components:
@@ -173,7 +173,7 @@
 # Cursed
 - type: entity
   id: ClosetCursed
-  parent: ClosetSteelBase
+  parent: BaseClosetSteel
   name: closet
   suffix: cursed
   description: A standard-issue Nanotrasen storage unit.
@@ -188,7 +188,7 @@
 # Base
 - type: entity
   id: WardrobeBase
-  parent: ClosetSteelBase
+  parent: BaseClosetSteel
   abstract: true
   description: It's a storage unit for standard-issue Nanotrasen attire.
 
