@@ -125,7 +125,7 @@
         maxVol: 4 #uses less fuel than a welder, so this isnt as bad as it looks
 
 - type: entity
-  name: zippo lighter
+  name: flippo lighter
   parent: BaseItem
   id: ZippoLighter
   description: "A rugged metal lighter, lasts quite a while."
@@ -201,7 +201,7 @@
     color: orange
 
 - type: entity
-  name: zippo engraved lighter
+  name: flippo engraved lighter
   parent: ZippoLighter
   id: ZippoEngravedLighter
   description: "A rugged golden lighter, lasts quite a while. Engravings serve no tactical advantage whatsoever."
