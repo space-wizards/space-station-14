@@ -1,4 +1,6 @@
-﻿using Content.Client.Gameplay;
+using Content.Client.Gameplay;
+using Content.Client.GameTicking.Managers;
+using Content.Client.RoundEnd;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.Info;
@@ -26,7 +28,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     [Dependency] private readonly OptionsUIController _options = default!;
     [Dependency] private readonly GuidebookUIController _guidebook = default!;
 
-    private Options.UI.EscapeMenu? _escapeWindow;
+    public static Options.UI.EscapeMenu? _escapeWindow = default!;
 
     private MenuButton? EscapeButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EscapeButton;
 
@@ -102,6 +104,14 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         {
             _guidebook.ToggleGuidebook();
         };
+
+        //this is just the event that fires on click, we need to hide the button and make it available when needed (dont want them to see "revs" mid-round, etc)
+        _escapeWindow.buttonShowRoundEnd.OnPressed += _ =>
+        {
+            ClientGameTicker cgtTickingManager = new ClientGameTicker();
+            cgtTickingManager.DisplayRoundEndSummary(ClientGameTicker._roundEndContainer._message);
+        };
+
 
         // Hide wiki button if we don't have a link for it.
         _escapeWindow.WikiButton.Visible = _cfg.GetCVar(CCVars.InfoLinksWiki) != "";
