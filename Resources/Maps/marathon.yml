@@ -12350,6 +12350,8 @@ entities:
       type: Transform
   - uid: 1539
     components:
+    - name: Main Hall Central West APC
+      type: MetaData
     - pos: -37.5,16.5
       parent: 30
       type: Transform
