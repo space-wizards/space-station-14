@@ -1,22 +1,11 @@
 - type: entity
   id: LockerBooze
-  parent: LockerBase
+  parent: LockerWoodenSecure
   name: booze storage
   description: This is where the bartender keeps the booze.
   components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: cabinet
-    stateDoorOpen: cabinet_open
-    stateDoorClosed: cabinet_door
-
   - type: AccessReader
     access: [["Bar"]]
-  - type: EntityStorage
-    closeSound:
-      path: /Audio/Effects/woodenclosetclose.ogg
-    openSound:
-      path: /Audio/Effects/woodenclosetopen.ogg
 
 # Cargo
 - type: entity
@@ -34,7 +23,7 @@
 
 - type: entity
   id: LockerSalvageSpecialist
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: salvage specialist's equipment
   description: Nevermind the pickaxe.
   components:
@@ -90,7 +79,7 @@
 # Electrical supplies
 - type: entity
   id: LockerElectricalSupplies
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: electrical supplies locker
   components:
   - type: Appearance
@@ -104,7 +93,7 @@
 # Welding supplies
 - type: entity
   id: LockerWeldingSupplies
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: welding supplies locker
   components:
   - type: Appearance
@@ -118,7 +107,7 @@
 # Atmos tech
 - type: entity
   id: LockerAtmospherics
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: atmospheric technician's locker
   components:
   - type: Appearance
@@ -132,7 +121,7 @@
 # Engineer
 - type: entity
   id: LockerEngineer
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: engineer's locker
   components:
   - type: Appearance
@@ -146,7 +135,7 @@
 # Freezer
 - type: entity
   id: LockerFreezerBase
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: freezer
   suffix: No Access
   components:
@@ -171,7 +160,7 @@
 # Botanist
 - type: entity
   id: LockerBotanist
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: botanist's locker
   components:
   - type: Appearance
@@ -185,7 +174,7 @@
 # Medicine
 - type: entity
   id: LockerMedicine
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: medicine locker
   description: Filled to the brim with medical junk.
   components:
@@ -200,7 +189,7 @@
 # Medical doctor
 - type: entity
   id: LockerMedical
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: medical doctor's locker
   components:
   - type: Appearance
@@ -214,7 +203,7 @@
 # Paramedic
 - type: entity
   id: LockerParamedic
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: paramedic's locker
   components:
   - type: Appearance
@@ -229,7 +218,7 @@
 # Chemical
 - type: entity
   id: LockerChemistry
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: chemical locker
   components:
   - type: Appearance
@@ -257,7 +246,7 @@
 # Science
 - type: entity
   id: LockerResearchDirector
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: research director's locker
   components:
   - type: Appearance
@@ -270,7 +259,7 @@
 
 - type: entity
   id: LockerScientist
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: scientist's locker
   components:
   - type: Appearance
@@ -353,7 +342,7 @@
 # Detective
 - type: entity
   id: LockerDetective
-  parent: LockerBooze
+  parent: LockerWoodenSecure
   name: detective's cabinet
   description: Usually cold and empty... like your heart.
   components:
@@ -372,7 +361,7 @@
 # Syndicate
 - type: entity
   id: LockerSyndicatePersonal
-  name: armory closet
+  name: armory locker
   parent: LockerBaseSecure
   description: It's a personal storage unit for operative gear.
   components:

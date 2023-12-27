@@ -321,10 +321,19 @@
       "name": "generic_door"
     },
     {
+      "name": "generic_door_locker"
+    },
+    {
       "name": "generic_open"
     },
     {
       "name": "generic_icon"
+    },
+    {
+      "name": "generic_icon_locker"
+    },
+    {
+      "name": "generic_icon_wooden"
     },
     {
       "name": "green_door"

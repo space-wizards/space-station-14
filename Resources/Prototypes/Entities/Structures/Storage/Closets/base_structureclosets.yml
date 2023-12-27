@@ -51,7 +51,6 @@
     containers:
       entity_storage: !type:Container
       paper_label: !type:ContainerSlot
-  - type: Weldable
   - type: PlaceableSurface
     placeCentered: true
     isPlaceable: false
@@ -98,6 +97,7 @@
     node: done
     containers:
     - entity_storage
+  - type: Weldable
 
 #Wall Closet
 - type: entity
