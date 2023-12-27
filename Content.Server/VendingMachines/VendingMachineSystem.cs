@@ -386,12 +386,8 @@ namespace Content.Server.VendingMachines
                 _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
             }
 
-            if (!TryComp<MetaDataComponent>(uid, out var meta))
-            {
-                return;
-            }
             // Send message after dispensing
-                _chat.TrySendInGameICMessage(uid, Loc.GetString("vending-machine-thanks", ("name", meta.EntityName)), InGameICChatType.Speak, true);
+                _chat.TrySendInGameICMessage(uid, Loc.GetString("vending-machine-thanks", ("name", Name(uid))), InGameICChatType.Speak, true);
 
             vendComponent.NextItemToEject = null;
             vendComponent.ThrowNextItem = false;
