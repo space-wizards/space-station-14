@@ -108,6 +108,9 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/woodblock.rsi
     state: icon
+  - type: Tag
+    tags:
+    - PercussionInstrument
 
 - type: entity
   parent: BaseHandheldInstrument

@@ -16,6 +16,7 @@ public sealed partial class ChasingWalkComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextImpulseTime;
+
     /// <summary>
     /// Push-to-target frequency.
     /// </summary>
@@ -27,11 +28,13 @@ public sealed partial class ChasingWalkComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MinSpeed = 1.5f;
+
     /// <summary>
     /// The maximum speed at which this entity will move.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MaxSpeed = 3f;
+
     /// <summary>
     /// The current speed.
     /// </summary>
@@ -43,11 +46,13 @@ public sealed partial class ChasingWalkComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float ChangeVectorMinInterval = 5f;
+
     /// <summary>
     /// The maximum time interval in which an object can change its motion target.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float ChangeVectorMaxInterval = 25f;
+
     /// <summary>
     /// The next change of direction time.
     /// </summary>
@@ -59,11 +64,13 @@ public sealed partial class ChasingWalkComponent : Component
     /// </summary>
     [DataField(required: true)]
     public ComponentRegistry ChasingComponent = default!;
+
     /// <summary>
     /// The maximum radius in which the entity chooses the target component to follow
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MaxChaseRadius = 25;
+
     /// <summary>
     /// The entity uid, chasing by the component owner
     /// </summary>

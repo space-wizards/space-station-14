@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -23,11 +24,27 @@ public sealed class ChasingWalkSystem : VirtualController
 
     private EntityQuery<TransformComponent> _xformQuery;
 
+    private readonly HashSet<Entity<IComponent>> _potentialChaseTargets = new();
+
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ChasingWalkComponent, MapInitEvent>(OnChasingMapInit);
+        SubscribeLocalEvent<ChasingWalkComponent, EntityUnpausedEvent>(OnChasingUnpaused);
         _xformQuery = GetEntityQuery<TransformComponent>();
+    }
+
+    private void OnChasingMapInit(EntityUid uid, ChasingWalkComponent component, MapInitEvent args)
+    {
+        component.NextImpulseTime = _gameTiming.CurTime;
+        component.NextChangeVectorTime = _gameTiming.CurTime;
+    }
+
+    private void OnChasingUnpaused(EntityUid uid, ChasingWalkComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextImpulseTime += args.PausedTime;
+        component.NextChangeVectorTime += args.PausedTime;
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -41,7 +58,7 @@ public sealed class ChasingWalkSystem : VirtualController
             if (chasing.NextImpulseTime <= _gameTiming.CurTime)
             {
                 ForceImpulse(uid, chasing);
-                chasing.NextImpulseTime = _gameTiming.CurTime + TimeSpan.FromSeconds(chasing.ImpulseInterval);
+                chasing.NextImpulseTime += TimeSpan.FromSeconds(chasing.ImpulseInterval);
             }
             //Change Target
             if (chasing.NextChangeVectorTime <= _gameTiming.CurTime)
@@ -49,7 +66,7 @@ public sealed class ChasingWalkSystem : VirtualController
                 ChangeTarget(uid, chasing);
 
                 var delay = TimeSpan.FromSeconds(_random.NextFloat(chasing.ChangeVectorMinInterval, chasing.ChangeVectorMaxInterval));
-                chasing.NextChangeVectorTime = _gameTiming.CurTime + delay;
+                chasing.NextChangeVectorTime += delay;
             }
         }
     }
@@ -60,13 +77,15 @@ public sealed class ChasingWalkSystem : VirtualController
         var xform = Transform(uid);
         var range = component.MaxChaseRadius;
         var compType = _random.Pick(component.ChasingComponent.Values).Component.GetType();
-        var allEnts = _lookup.GetEntitiesInRange(compType, _transform.GetMapCoordinates(xform), range);
+        _potentialChaseTargets.Clear();
+        _lookup.GetEntitiesInRange(compType, _transform.GetMapCoordinates(xform), range, _potentialChaseTargets, LookupFlags.Uncontained);
 
         //If there are no required components in the radius, don't moving.
-        if (allEnts.Count <= 0) return;
+        if (_potentialChaseTargets.Count <= 0)
+            return;
 
         //In the case of finding required components, we choose a random one of them and remember its uid.
-        component.ChasingEntity = _random.Pick(allEnts).Owner;
+        component.ChasingEntity = _random.Pick(_potentialChaseTargets).Owner;
         component.Speed = _random.NextFloat(component.MinSpeed, component.MaxSpeed);
     }
 
@@ -84,12 +103,14 @@ public sealed class ChasingWalkSystem : VirtualController
 
         //Calculating direction to the target.
         var xform = Transform(component.ChasingEntity.Value);
-        var delta = _transform.GetMapCoordinates(xform).Position - _transform.GetMapCoordinates(_xformQuery.Get(uid)).Position;
 
-        //Changing the direction of the entity.
-        var speed = delta.Normalized() * component.Speed;
-        _physics.SetLinearVelocity(uid, speed);
+        if (xform.Coordinates.TryDelta(EntityManager, _transform, _xformQuery.Get(uid).Comp.Coordinates, out var delta))
+        {
+            //Changing the direction of the entity.
+            var speed = delta.Length() > 0 ? delta.Normalized() * component.Speed : Vector2.Zero;
+            _physics.SetLinearVelocity(uid, speed);
 
-        _physics.SetBodyStatus(physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
+            _physics.SetBodyStatus(physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
+        }
     }
 }

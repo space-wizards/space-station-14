@@ -65,6 +65,13 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: Apc
+  - type: PowerMonitoringDevice
+    group: APC
+    sourceNode: input
+    loadNode: output
+    collectionName: apc
+    sprite: Structures/Power/apc.rsi
+    state: static
   - type: BatteryCharger
     voltage: Medium
   - type: PowerProvider

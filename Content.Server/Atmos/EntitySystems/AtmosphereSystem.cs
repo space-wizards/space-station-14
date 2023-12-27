@@ -1,13 +1,12 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Maps;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -33,6 +32,8 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] public readonly PuddleSystem Puddle = default!;
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
@@ -80,7 +81,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
             return;
 
         var query = EntityQueryEnumerator<AtmosExposedComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var exposed, out var transform))
+        while (query.MoveNext(out var uid, out _, out var transform))
         {
             var air = GetContainingMixture(uid, transform:transform);
 

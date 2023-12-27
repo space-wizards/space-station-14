@@ -18,10 +18,12 @@ namespace Content.Server.Lightning;
 //and the number of these branches is explicitly controlled in the new function.
 public sealed class LightningSystem : SharedLightningSystem
 {
-    [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+
+    private List<Entity<LightningTargetComponent>> _lookupTargetsList = new();
+    private HashSet<Entity<LightningTargetComponent>> _lookupTargets = new();
 
     public override void Initialize()
     {
@@ -48,9 +50,6 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
     public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype = "Lightning")
     {
-        if (Deleted(user) || Deleted(target))
-            return;
-
         var spriteState = LightningRandomizer();
         _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
 
@@ -70,29 +69,38 @@ public sealed class LightningSystem : SharedLightningSystem
     {
         //To Do: add support to different priority target tablem for different lightning types
         //To Do: Remove Hardcode LightningTargetComponent (this should be a parameter of the SharedLightningComponent)
-        var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).MapPosition, range).ToList(); //To Do: remove hardcode component
-        _random.Shuffle(targets);
-        targets.Sort((x, y) => y.Priority.CompareTo(x.Priority));
+        _lookupTargets.Clear();
+        _lookup.GetEntitiesInRange(Transform(user).Coordinates, range, _lookupTargets); //To Do: remove hardcode component
+        // TODO: This is still pretty bad for perf but better than before and at least it doesn't re-allocate
+        // several hashsets every time
+        _lookupTargetsList.AddRange(_lookupTargets);
 
-        var realCount = Math.Min(targets.Count, boltCount);
+        _random.Shuffle(_lookupTargetsList);
+        _lookupTargetsList.Sort(
+            (x, y) => y.Comp.Priority.CompareTo(x.Comp.Priority));
+
+        var realCount = Math.Min(_lookupTargetsList.Count, boltCount);
 
         if (realCount <= 0)
             return;
 
         for (int i = 0; i < realCount; i++)
         {
-            ShootLightning(user, targets[i].Owner, lightningPrototype); //idk how to evade .Owner pls help
+            if (Deleted(user) || Deleted(_lookupTargetsList[i].Owner))
+                continue;
+
+            ShootLightning(user, _lookupTargetsList[i].Owner, lightningPrototype);
 
             if (arcDepth > 0)
             {
-                ShootRandomLightnings(targets[i].Owner, range, 1, lightningPrototype, arcDepth - targets[i].LightningResistance);
+                ShootRandomLightnings(_lookupTargetsList[i].Owner, range, 1, lightningPrototype, arcDepth - _lookupTargetsList[i].Comp.LightningResistance);
             }
         }
     }
 }
 
 /// <summary>
-/// Invoked when an entity becomes the target of a lightning strike (not when touched)
+/// Raised directed on the target when an entity becomes the target of a lightning strike (not when touched)
 /// </summary>
 /// <param name="Source">The entity that created the lightning</param>
 /// <param name="Target">The entity that was struck by lightning.</param>

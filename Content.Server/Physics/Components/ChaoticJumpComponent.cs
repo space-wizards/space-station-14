@@ -39,11 +39,13 @@ public sealed partial class ChaoticJumpComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float RangeMin = 5f;
+
     /// <summary>
     /// Maximum jump range
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float RangeMax = 10f;
+
     /// <summary>
     /// Spawn before jump
     /// </summary>

@@ -96,6 +96,24 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/syndicate.rsi
 
+- type: entity
+  parent: Airlock
+  id: AirlockMining
+  suffix: Mining(Salvage)
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockCentralCommand
+  suffix: Central Command
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/centcomm.rsi
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
+
 # Glass
 
 - type: entity
@@ -255,7 +273,17 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockMiningGlass
-  suffix: Mining
+  suffix: Mining(Salvage)
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/mining.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockCentralCommandGlass
+  suffix: Central Command
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/centcomm.rsi
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
