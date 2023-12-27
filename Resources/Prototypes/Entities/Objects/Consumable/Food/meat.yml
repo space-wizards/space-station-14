@@ -608,11 +608,12 @@
     - Raw
     - Meat
   - type: Sprite
+    sprite: Objects/Consumable/Food/salami.rsi
     state: salami
   - type: SliceableFood
     slice: FoodMeatSalamiSlice
   - type: MeleeWeapon
-    wideAnimationRotation: -135
+    wideAnimationRotation: 100
     damage:
       types:
         Blunt: 6
