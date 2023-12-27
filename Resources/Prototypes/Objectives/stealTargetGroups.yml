@@ -157,6 +157,13 @@
   sprite:
     sprite: Objects/Devices/forensic_scanner.rsi
     state: forensicnew
+
+- type: stealTargetGroup
+  id: FlippoEngravedLighter
+  name: detective's Flippo engraved lighter
+  sprite:
+    sprite: Objects/Tools/lighters.rsi
+    state: zippo_engraved_icon_base
     
 - type: stealTargetGroup
   id: AmmoTechFabCircuitboard

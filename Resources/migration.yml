@@ -123,3 +123,6 @@ ReagentContainerMilkOat: DrinkOatMilkCarton
 BoxShellTranquilizer: null
 # 2023-12-20
 MiasmaCanister: AmmoniaCanister
+
+# 2023-12-28 - SS220 Zippos
+ExpensiveLighter: FlippoLighter
