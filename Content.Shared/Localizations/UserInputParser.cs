@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Linq;
 
 namespace Content.Shared.Localizations;
 
@@ -13,40 +12,23 @@ namespace Content.Shared.Localizations;
 /// </remarks>
 public static class UserInputParser
 {
-    private static readonly IEqualityComparer<CultureInfo> NumberDecimalSeparatorEqualityComparer =
-        EqualityComparer<CultureInfo>.Create((a, b) =>
-            string.Equals(a?.NumberFormat.NumberDecimalSeparator, b?.NumberFormat.NumberDecimalSeparator,
-                StringComparison.Ordinal), (c) => c.NumberFormat.NumberDecimalSeparator.GetHashCode());
-
-    private static readonly CultureInfo InvariantCultureWithDecimalDot = new CultureInfo("")
+    private static readonly NumberFormatInfo[] StandardDecimalNumberFormats = new[]
     {
-        NumberFormat =
+        new NumberFormatInfo()
         {
             NumberDecimalSeparator = "."
-        }
-    };
-
-    private static readonly CultureInfo InvariantCultureWithDecimalComma = new CultureInfo("")
-    {
-        NumberFormat =
+        },
+        new NumberFormatInfo()
         {
             NumberDecimalSeparator = ","
         }
     };
 
-    private static IEnumerable<CultureInfo> GetCulturesForDecimalNumberParsing(ILocalizationManager loc)
+    public static bool TryFloat(ReadOnlySpan<char> text, out float result)
     {
-        var culturesToTry = new[] { loc.DefaultCulture }.Concat(loc.FallbackCultures)
-            .Concat(new[] { InvariantCultureWithDecimalDot, InvariantCultureWithDecimalComma });
-
-        return culturesToTry.OfType<CultureInfo>().Distinct(NumberDecimalSeparatorEqualityComparer);
-    }
-
-    public static bool TryFloat(ReadOnlySpan<char> text, ILocalizationManager loc, out float result)
-    {
-        foreach (var culture in GetCulturesForDecimalNumberParsing(loc))
+        foreach (var format in StandardDecimalNumberFormats)
         {
-            if (float.TryParse(text, NumberStyles.Float, culture, out result))
+            if (float.TryParse(text, NumberStyles.Integer | NumberStyles.AllowDecimalPoint, format, out result))
             {
                 return true;
             }
@@ -56,11 +38,11 @@ public static class UserInputParser
         return false;
     }
 
-    public static bool TryDouble(ReadOnlySpan<char> text, ILocalizationManager loc, out double result)
+    public static bool TryDouble(ReadOnlySpan<char> text, out double result)
     {
-        foreach (var culture in GetCulturesForDecimalNumberParsing(loc))
+        foreach (var format in StandardDecimalNumberFormats)
         {
-            if (double.TryParse(text, NumberStyles.Float, culture, out result))
+            if (double.TryParse(text, NumberStyles.Integer | NumberStyles.AllowDecimalPoint, format, out result))
             {
                 return true;
             }

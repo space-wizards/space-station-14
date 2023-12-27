@@ -50,8 +50,7 @@ namespace Content.Client.Atmos.UI
 
         private void OnFilterTransferRatePressed(string value)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-            var rate = UserInputParser.TryFloat(value, loc, out var parsed) ? parsed : 0f;
+            var rate = UserInputParser.TryFloat(value, out var parsed) ? parsed : 0f;
 
             SendMessage(new GasFilterChangeRateMessage(rate));
         }
