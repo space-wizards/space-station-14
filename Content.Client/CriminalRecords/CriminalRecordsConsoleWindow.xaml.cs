@@ -1,4 +1,5 @@
 using Content.Client.Message;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Access.Systems;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Security;
@@ -13,7 +14,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.CriminalRecords;
 
 [GenerateTypedNameReferences]
-public sealed partial class CriminalRecordsConsoleWindow : DefaultWindow
+public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
