@@ -1,7 +1,7 @@
 using Content.Server.Shuttles.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Shuttle.Components;
+namespace Content.Server.Shuttles;
 
 // Primo shitcode
 /// <summary>
