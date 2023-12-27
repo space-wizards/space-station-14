@@ -33,13 +33,15 @@ public sealed partial class RandomWalkComponent : Component
     /// <summary>
     /// The vector by which the random walk direction is biased.
     /// </summary>
-    [DataField("BiasVector")]
+    [DataField("biasVector")]
     [ViewVariables(VVAccess.ReadWrite)]
     public Vector2 BiasVector = new Vector2(0f, 0f);
-    
+
     /// <summary>
     /// Whether to set BiasVector to (0, 0) every random walk update.
     /// </summary>
+    [DataField("resetBiasOnWalk")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public bool ResetBiasOnWalk = true;
 
     /// <summary>

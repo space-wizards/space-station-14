@@ -20,10 +20,7 @@ namespace Content.Server.Singularity.EntitySystems;
 public sealed class SingularityAttractorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IViewVariablesManager _vvManager = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     /// <summary>
     /// The minimum range at which the attraction will act.
@@ -34,7 +31,7 @@ public sealed class SingularityAttractorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SingularityAttractorComponent, ComponentStartup>(OnAttractorStartup);
+        SubscribeLocalEvent<SingularityAttractorComponent, MapInitEvent>(OnMapInit);
     }
 
     /// <summary>
@@ -50,7 +47,7 @@ public sealed class SingularityAttractorSystem : EntitySystem
         foreach(var (attractor, xform) in EntityManager.EntityQuery<SingularityAttractorComponent, TransformComponent>())
         {
             var curTime = _timing.CurTime;
-            if (attractor.NextPulseTime <= curTime)
+            if (attractor.LastPulseTime + attractor.TargetPulsePeriod <= curTime)
                 Update(attractor.Owner, attractor, xform);
         }
     }
@@ -67,7 +64,6 @@ public sealed class SingularityAttractorSystem : EntitySystem
             return;
 
         attractor.LastPulseTime = _timing.CurTime;
-        attractor.NextPulseTime = attractor.LastPulseTime + attractor.TargetPulsePeriod;
         if (!Resolve(uid, ref xform))
             return;
 
@@ -98,9 +94,8 @@ public sealed class SingularityAttractorSystem : EntitySystem
     /// <param name="uid">The uid of the attractor to start up.</param>
     /// <param name="comp">The state of the attractor to start up.</param>
     /// <param name="args">The startup prompt arguments.</param>
-    private void OnAttractorStartup(EntityUid uid, SingularityAttractorComponent comp, ComponentStartup args)
+    private void OnMapInit(EntityUid uid, SingularityAttractorComponent comp, MapInitEvent args)
     {
         comp.LastPulseTime = _timing.CurTime;
-        comp.NextPulseTime = comp.LastPulseTime + comp.TargetPulsePeriod;
     }
 }
