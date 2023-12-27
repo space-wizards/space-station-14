@@ -1,6 +1,3 @@
-psychosis-randomwords-first = Зачем?
-psychosis-randomwords-second = Почему?
-psychosis-randomwords-third = Где?
 ent-WeaponAntiqueLaserFake = {ent-WeaponAntiqueLaser}
     .desc = Вся отделка выполнена на никаком уровне. Он украшен кожей иана. Предмет устрашает своей бесполезностью.
     .suffix = Ненастоящий, не спавнить
