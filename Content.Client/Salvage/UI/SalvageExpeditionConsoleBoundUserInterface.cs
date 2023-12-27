@@ -31,13 +31,6 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
     {
         base.Open();
         _window = new OfferingWindow();
-        _window.ClaimOption += index =>
-        {
-            SendMessage(new ClaimSalvageMessage()
-            {
-                Index = index,
-            });
-        };
         _window.OnClose += Close;
         _window?.OpenCenteredLeft();
     }
@@ -167,17 +160,15 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
                 Margin = new Thickness(0f, 0f, 0f, 5f),
             });
 
-            // Claim
-            var claimButton = new Button()
+            offering.ClaimPressed += args =>
             {
-                HorizontalExpand = true,
-                VerticalAlignment = Control.VAlignment.Bottom,
-                Pressed = current.ActiveMission == missionParams.Index,
-                ToggleMode = true,
-                Disabled = current.Claimed || current.Cooldown,
+                SendMessage(new ClaimSalvageMessage()
+                {
+                    Index = missionParams.Index,
+                });
             };
 
-            offering.Pressed = current.ActiveMission == missionParams.Index;
+            offering.Claimed = current.ActiveMission == missionParams.Index;
             offering.Disabled = current.Claimed || current.Cooldown;
 
             _window.AddOption(offering);

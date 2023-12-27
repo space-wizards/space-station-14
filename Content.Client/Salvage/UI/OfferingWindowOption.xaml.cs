@@ -45,18 +45,15 @@ public sealed partial class OfferingWindowOption : PanelContainer
         LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
         BigPanel.PanelOverride = new StyleBoxFlat(new Color(30, 30, 34));
 
-        ClaimButton.OnPressed += ClaimPressed;
+        ClaimButton.OnPressed += args =>
+        {
+            ClaimPressed?.Invoke(args);
+        };
     }
 
     public void AddContent(Control control)
     {
         ContentBox.AddChild(control);
-    }
-
-    public bool Pressed
-    {
-        get => ClaimButton.Pressed;
-        set => ClaimButton.Pressed = value;
     }
 
     public bool Disabled

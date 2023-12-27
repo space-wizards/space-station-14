@@ -16,13 +16,9 @@ public sealed partial class OfferingWindow : FancyWindow,
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    public event Action<ushort>? ClaimOption;
-
     public bool Claimed;
     public TimeSpan NextOffer;
     public TimeSpan Cooldown;
-
-    private ushort _index;
 
     public OfferingWindow()
     {
@@ -33,25 +29,11 @@ public sealed partial class OfferingWindow : FancyWindow,
     public void AddOption(OfferingWindowOption option)
     {
         Container.AddChild(option);
-        var indexCopy = _index;
-
-        option.ClaimPressed += args =>
-        {
-            ClaimOption?.Invoke(indexCopy);
-        };
-
-        _index++;
     }
 
     public void ClearOptions()
     {
-        _index = 0;
         Container.DisposeAllChildren();
-    }
-
-    public void SetPressed(ushort index)
-    {
-        Container.Children[0].
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -60,7 +42,7 @@ public sealed partial class OfferingWindow : FancyWindow,
 
         if (Claimed)
         {
-            NextOfferBar.Value = 0f;
+            NextOfferBar.Value = 1f;
             NextOfferText.Text = "00:00";
             return;
         }
