@@ -56,6 +56,10 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly StationSystem _station = default!;
 
+    private EntityQuery<PendingClockInComponent> _pendingQuery;
+    private EntityQuery<ArrivalsBlacklistComponent> _blacklistQuery;
+    private EntityQuery<MobStateComponent> _mobQuery;
+
     /// <summary>
     /// If enabled then spawns players on an alternate map so they can take a shuttle to the station.
     /// </summary>
@@ -87,6 +91,10 @@ public sealed class ArrivalsSystem : EntitySystem
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLStartedEvent>(OnArrivalsFTL);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLCompletedEvent>(OnArrivalsDocked);
+
+        _pendingQuery = GetEntityQuery<PendingClockInComponent>();
+        _blacklistQuery = GetEntityQuery<ArrivalsBlacklistComponent>();
+        _mobQuery = GetEntityQuery<MobStateComponent>();
 
         // Don't invoke immediately as it will get set in the natural course of things.
         Enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
@@ -228,13 +236,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
         // Any mob then yeet them off the shuttle.
         if (!_cfgManager.GetCVar(CCVars.ArrivalsReturns) && args.FromMapUid != null)
-        {
-            var pendingEntQuery = GetEntityQuery<PendingClockInComponent>();
-            var arrivalsBlacklistQuery = GetEntityQuery<ArrivalsBlacklistComponent>();
-            var mobQuery = GetEntityQuery<MobStateComponent>();
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            DumpChildren(shuttleUid, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
-        }
+            DumpChildren(shuttleUid, ref args);
 
         var pendingQuery = AllEntityQuery<PendingClockInComponent, TransformComponent>();
 
@@ -279,30 +281,35 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
-    private void DumpChildren(EntityUid uid,
-        ref FTLStartedEvent args,
-        EntityQuery<PendingClockInComponent> pendingEntQuery,
-        EntityQuery<ArrivalsBlacklistComponent> arrivalsBlacklistQuery,
-        EntityQuery<MobStateComponent> mobQuery,
-        EntityQuery<TransformComponent> xformQuery)
+    private void DumpChildren(EntityUid uid, ref FTLStartedEvent args)
     {
-        if (pendingEntQuery.HasComponent(uid))
-            return;
-
-        var xform = xformQuery.GetComponent(uid);
-
-        if (mobQuery.HasComponent(uid) || arrivalsBlacklistQuery.HasComponent(uid))
+        var toDump = new List<Entity<TransformComponent>>();
+        DumpChildren(uid, ref args, toDump);
+        foreach (var (ent, xform) in toDump)
         {
             var rotation = xform.LocalRotation;
-            _transform.SetCoordinates(uid, new EntityCoordinates(args.FromMapUid!.Value, args.FTLFrom.Transform(xform.LocalPosition)));
-            _transform.SetWorldRotation(uid, args.FromRotation + rotation);
+            _transform.SetCoordinates(ent, new EntityCoordinates(args.FromMapUid!.Value, args.FTLFrom.Transform(xform.LocalPosition)));
+            _transform.SetWorldRotation(ent, args.FromRotation + rotation);
+        }
+    }
+
+    private void DumpChildren(EntityUid uid, ref FTLStartedEvent args, List<Entity<TransformComponent>> toDump)
+    {
+        if (_pendingQuery.HasComponent(uid))
+            return;
+
+        var xform = Transform(uid);
+
+        if (_mobQuery.HasComponent(uid) || _blacklistQuery.HasComponent(uid))
+        {
+            toDump.Add((uid, xform));
             return;
         }
 
         var children = xform.ChildEnumerator;
         while (children.MoveNext(out var child))
         {
-            DumpChildren(child, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
+            DumpChildren(child, ref args, toDump);
         }
     }
 
