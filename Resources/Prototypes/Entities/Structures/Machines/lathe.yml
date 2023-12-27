@@ -590,10 +590,10 @@
       - TelescopicShield
       - TimerTrigger
       - Truncheon
-      - WeaponDisablerSMG
       - VoiceTrigger
       - WeaponAdvancedLaser
       - WeaponDisablerPractice
+      - WeaponDisablerSMG
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponLaserCarbinePractice
