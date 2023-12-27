@@ -1,4 +1,4 @@
-﻿<ui1:EscapeMenu xmlns="https://spacestation14.io"
+<ui1:EscapeMenu xmlns="https://spacestation14.io"
             xmlns:changelog="clr-namespace:Content.Client.Changelog"
             xmlns:ui="clr-namespace:Content.Client.Voting.UI"
             xmlns:ui1="clr-namespace:Content.Client.Options.UI"
@@ -14,5 +14,6 @@
         <Button Access="Public" Name="WikiButton" Text="{Loc 'ui-escape-wiki'}" />
         <Button Access="Public" Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" />
         <Button Access="Public" Name="QuitButton" Text="{Loc 'ui-escape-quit'}" />
+        <Button Access="Public" Name="buttonShowRoundEnd" Text="{Loc 'ui-show-roundend'}" />
     </BoxContainer>
 </ui1:EscapeMenu>
