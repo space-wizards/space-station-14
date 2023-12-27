@@ -29,6 +29,7 @@ using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
@@ -260,6 +261,11 @@ namespace Content.Server.Zombies
             {
                 _hands.RemoveHands(target);
                 RemComp(target, handsComp);
+            }
+
+            if (TryComp<SharedPullerComponent>(target, out var pullerComp))
+            {
+                RemComp(target, pullerComp);
             }
 
             // No longer waiting to become a zombie:
