@@ -611,8 +611,8 @@
       - TimerTrigger
       - Truncheon
       - VoiceTrigger
-      - WeaponAdvancedLaser
       - WeaponDisablerPractice
+      - WeaponAdvancedLaser
       - WeaponDisablerSMG
       - WeaponLaserCannon
       - WeaponLaserCarbine
