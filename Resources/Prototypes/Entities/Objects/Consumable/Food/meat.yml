@@ -615,7 +615,7 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 2
+        Blunt: 6
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
