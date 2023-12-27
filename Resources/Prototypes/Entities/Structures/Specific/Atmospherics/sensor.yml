@@ -52,7 +52,7 @@
         Oxygen: stationOxygen
         Nitrogen: ignore
         CarbonDioxide: stationCO2
-        Plasma: danger # everything below is usually bad
+        Plasma: stationPlasma # everything below is usually bad
         Tritium: danger
         WaterVapor: stationWaterVapor
         Ammonia: stationAmmonia

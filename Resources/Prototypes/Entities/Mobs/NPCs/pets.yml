@@ -34,6 +34,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalIan
 
 - type: entity
   name: Old Ian
@@ -238,6 +240,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalBingus
 
 - type: entity
   name: McGriff
@@ -301,6 +305,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalMcGriff
 
 - type: entity
   name: Paperwork
@@ -398,6 +404,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalWalter
 
 - type: entity
   name: Morty
@@ -420,6 +428,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalMorty
 
 - type: entity
   name: Morty
@@ -534,6 +544,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalRenault
 
 - type: entity
   name: Hamlet
@@ -574,6 +586,8 @@
     - CannotSuicide
     - Hamster
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalHamlet
 
 - type: entity
   name: Shiva
@@ -649,6 +663,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalShiva
 
 - type: entity
   name: Willow
@@ -747,6 +763,8 @@
     attributes:
       proper: true
       gender: female
+  - type: StealTarget
+    stealGroup: AnimalSmile
 
 - type: entity
   name: Pun Pun
@@ -781,3 +799,30 @@
     attributes:
       proper: true
       gender: male
+  - type: StealTarget
+    stealGroup: AnimalPunPun
+
+- type: entity
+  name: Tropico
+  parent: MobCrab
+  id: MobCrabAtmos
+  description: The noble and stalwart defender of Atmosia. Viva!
+  components:
+#  - type: GhostRole
+#    prob: 1
+#    makeSentient: true
+#    allowSpeech: true
+#    allowMovement: true
+#    name: ghost-role-information-tropico-name
+#    description: ghost-role-information-tropico-description
+#  - type: GhostTakeoverAvailable
+#  - type: Flashable
+  - type: Tag
+    tags:
+    - VimPilot
+    - CannotSuicide
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+#  - type: AlwaysRevolutionaryConvertible
