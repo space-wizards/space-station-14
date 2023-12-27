@@ -10,38 +10,38 @@
             <Button Name="StationRecordsFiltersReset" Text="{Loc 'criminal-records-console-reset-filters'}"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
-        	<BoxContainer VerticalExpand="True">
-	            <!-- Record listing -->
-	            <BoxContainer Orientation="Vertical" Margin="5" MinWidth="250" MaxWidth="250">
-	                <Label Name="RecordListingStatus" Visible="False" />
-	                <ScrollContainer VerticalExpand="True">
-	                    <ItemList Name="RecordListing" />
-	                </ScrollContainer>
-	            </BoxContainer>
-	            <BoxContainer Name="PersonContainer" Orientation="Vertical" Margin="5">
-	                <Label Name="RecordContainerStatus" Visible="False" Text="{Loc 'criminal-records-console-select-record-info'}"/>
-	                <BoxContainer Name="RecordContainer" Orientation="Vertical" />
-	                <PanelContainer Name="CriminalDivider" StyleClasses="LowDivider" Visible="False" Margin="0 5 0 5" />
-	                <BoxContainer Name="StatusEditing" Orientation="Vertical" Margin="5 5 5 5">
-	                    <LineEdit Name="ReasonLineEdit" HorizontalExpand="True" PlaceHolder="{Loc 'criminal-records-reason-placeholder'}"/>
-	                    <BoxContainer Orientation="Horizontal" Margin="5 5 5 5" >
-	                        <Button Name="ArrestButton" HorizontalExpand="True" />
-	                        <OptionButton Name="StatusOptionButton" HorizontalExpand="True" />
-	                    </BoxContainer>
-	                </BoxContainer>
-	            </BoxContainer>
+            <BoxContainer VerticalExpand="True">
+                <!-- Record listing -->
+                <BoxContainer Orientation="Vertical" Margin="5" MinWidth="250" MaxWidth="250">
+                    <Label Name="RecordListingStatus" Visible="False" />
+                    <ScrollContainer VerticalExpand="True">
+                        <ItemList Name="RecordListing" />
+                    </ScrollContainer>
+                </BoxContainer>
+                <BoxContainer Name="PersonContainer" Orientation="Vertical" Margin="5">
+                    <Label Name="RecordContainerStatus" Visible="False" Text="{Loc 'criminal-records-console-select-record-info'}"/>
+                    <BoxContainer Name="RecordContainer" Orientation="Vertical" />
+                    <PanelContainer Name="CriminalDivider" StyleClasses="LowDivider" Visible="False" Margin="0 5 0 5" />
+                    <BoxContainer Name="StatusEditing" Orientation="Vertical" Margin="5 5 5 5">
+                        <LineEdit Name="ReasonLineEdit" HorizontalExpand="True" PlaceHolder="{Loc 'criminal-records-reason-placeholder'}"/>
+                        <BoxContainer Orientation="Horizontal" Margin="5 5 5 5" >
+                            <Button Name="ArrestButton" HorizontalExpand="True" />
+                            <OptionButton Name="StatusOptionButton" HorizontalExpand="True" />
+                        </BoxContainer>
+                    </BoxContainer>
+                </BoxContainer>
             </BoxContainer>
-	        <!-- Crime history -->
-	        <BoxContainer Name="HistoryContainer" Orientation="Vertical" HorizontalExpand="True" Margin="5">
-				<BoxContainer Name="HistoryEditing" Orientation="Horizontal" HorizontalExpand="True" Margin="5">
-		            <LineEdit Name="HistoryLineEdit" HorizontalExpand="True" PlaceHolder="{Loc 'criminal-records-history-placeholder'}"/>
-	                <Button Name="AddHistoryButton" Text="{Loc 'criminal-records-add-history'}"/>
-	                <Button Name="DeleteHistoryButton" Text="{Loc 'criminal-records-delete-history'}" Disabled="True"/>
-				</BoxContainer>
-	            <ScrollContainer VerticalExpand="True">
-	                <ItemList Name="History"/>
-	            </ScrollContainer>
-	        </BoxContainer>
+            <!-- Crime history -->
+            <BoxContainer Name="HistoryContainer" Orientation="Vertical" HorizontalExpand="True" Margin="5">
+                <BoxContainer Name="HistoryEditing" Orientation="Horizontal" HorizontalExpand="True" Margin="5">
+                    <LineEdit Name="HistoryLineEdit" HorizontalExpand="True" PlaceHolder="{Loc 'criminal-records-history-placeholder'}"/>
+                    <Button Name="AddHistoryButton" Text="{Loc 'criminal-records-add-history'}"/>
+                    <Button Name="DeleteHistoryButton" Text="{Loc 'criminal-records-delete-history'}" Disabled="True"/>
+                </BoxContainer>
+                <ScrollContainer VerticalExpand="True">
+                    <ItemList Name="History"/>
+                </ScrollContainer>
+            </BoxContainer>
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
