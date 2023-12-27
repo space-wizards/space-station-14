@@ -8,6 +8,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Physics.Events;
 using Content.Server.Lightning.Components;
 using Robust.Server.Audio;
+using Content.Server.Singularity.Events;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -16,54 +17,27 @@ namespace Content.Server.Tesla.EntitySystems;
 /// </summary>
 public sealed class TeslaEnergyBallSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TeslaEnergyBallComponent, StartCollideEvent>(OnStartCollide);
+        SubscribeLocalEvent<TeslaEnergyBallComponent, EntityConsumedByEventHorizonEvent>(OnConsumed);
     }
 
-    public override void Update(float frameTime)
+    private void OnConsumed(Entity<TeslaEnergyBallComponent> tesla, ref EntityConsumedByEventHorizonEvent args)
     {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<TeslaEnergyBallComponent>();
-        while (query.MoveNext(out var uid, out var teslaEnergyBall))
+        Spawn(tesla.Comp.ConsumeEffectProto, Transform(args.Entity).Coordinates);
+        if (TryComp<SinguloFoodComponent>(args.Entity, out var singuloFood))
         {
-            teslaEnergyBall.AccumulatedFrametime += frameTime;
-
-            if (teslaEnergyBall.AccumulatedFrametime < teslaEnergyBall.UpdateInterval)
-                continue;
-
-            AdjustEnergy(uid, teslaEnergyBall, -teslaEnergyBall.EnergyLoss * teslaEnergyBall.AccumulatedFrametime);
-            teslaEnergyBall.AccumulatedFrametime = 0f;
-        }
-    }
-
-    private void OnStartCollide(Entity<TeslaEnergyBallComponent> tesla, ref StartCollideEvent args)
-    {
-        if (HasComp<ContainmentFieldComponent>(args.OtherEntity))
-            return;
-        if (TryComp<SinguloFoodComponent>(args.OtherEntity, out var singuloFood))
             AdjustEnergy(tesla, tesla.Comp, singuloFood.Energy);
-
-        var morsel = args.OtherEntity;
-        if (!EntityManager.IsQueuedForDeletion(morsel) // I saw it log twice a few times for some reason? (singulo code copy)
-            && (HasComp<MindContainerComponent>(morsel)
-            || _tagSystem.HasTag(morsel, "HighRiskItem")
-            || HasComp<ContainmentFieldGeneratorComponent>(morsel)))
+        } else
         {
-            _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} collided with {ToPrettyString(tesla)} and was turned to dust");
+            AdjustEnergy(tesla, tesla.Comp, tesla.Comp.ConsumeStuffEnergy);
         }
-
-        Spawn(tesla.Comp.ConsumeEffectProto, Transform(args.OtherEntity).Coordinates);
-        QueueDel(args.OtherEntity);
-        AdjustEnergy(tesla, tesla.Comp, tesla.Comp.ConsumeStuffEnergy);
     }
+
     public void AdjustEnergy(EntityUid uid, TeslaEnergyBallComponent component, float delta)
     {
         component.Energy += delta;
@@ -72,11 +46,6 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
         {
             component.Energy -= component.NeedEnergyToSpawn;
             Spawn(component.SpawnProto, Transform(uid).Coordinates);
-        }
-        if (component.Energy < component.EnergyToDespawn)
-        {
-            _audio.PlayPvs(component.SoundCollapse, uid);
-            QueueDel(uid);
         }
     }
 }

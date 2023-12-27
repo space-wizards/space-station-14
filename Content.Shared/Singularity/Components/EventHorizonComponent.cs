@@ -21,6 +21,12 @@ public sealed partial class EventHorizonComponent : Component
     [DataField("radius")]
     public float Radius;
 
+    [DataField]
+    public bool ConsumeTiles = true;
+
+    [DataField]
+    public bool ConsumeEntities = true;
+
     /// <summary>
     /// Whether the event horizon can consume/destroy the devices built to contain it.
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetCanBreachContainment"/>.
