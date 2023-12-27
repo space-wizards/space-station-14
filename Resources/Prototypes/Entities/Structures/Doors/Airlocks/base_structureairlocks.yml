@@ -108,7 +108,7 @@
   - type: Occluder
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:
