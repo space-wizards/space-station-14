@@ -106,7 +106,7 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
             return;
 
         var line = msg.Line.Trim();
-        if (string.IsNullorEmpty(line))
+        if (string.IsNullOrEmpty(line))
             return;
 
         if (!_criminalRecords.TryAddHistory(key.Value, line))
