@@ -17,6 +17,7 @@ public sealed partial class PsychosisGainComponent : Component
 
     [DataField("status"), ViewVariables(VVAccess.ReadWrite)]
     public float Status = 0f;
+    public float IncreasePsychosis = 2f;
     public TimeSpan Cooldown = TimeSpan.FromSeconds(1);
     public TimeSpan NextUpdate = TimeSpan.FromSeconds(0);
 }

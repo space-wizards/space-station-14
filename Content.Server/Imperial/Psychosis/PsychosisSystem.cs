@@ -7,6 +7,7 @@ using Content.Server.GameTicking;
 using Content.Shared.Dataset;
 using Robust.Shared.Configuration;
 using Content.Shared.Imperial.ICCVar;
+using FastAccessors;
 
 namespace Content.Server.Traits.Assorted;
 
@@ -24,12 +25,6 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
     private static string _thirdHeal = "";
     private static readonly IReadOnlyDictionary<string, string> SpecialWords = new Dictionary<string, string>()
     {
-        { " и ", " " },
-        { " в ", " " },
-        { " а ", " " },
-        { " но ", " " },
-        { " я ", " " },
-        { " ну ", " " },
         { "а", "" },
         { "я", "" },
         { "о", "" },
@@ -43,7 +38,7 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
         SubscribeLocalEvent<PsychosisComponent, ComponentStartup>(OnStart);
         SubscribeLocalEvent<RoundStartAttemptEvent>(Generate);
     }
-    public string Accentuate(string message)
+    public string Accentuate(string message, PsychosisComponent component)
     {
         foreach (var (word, repl) in SpecialWords)
         {
@@ -87,12 +82,23 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
     {
         if (_cfg.GetCVar(ICCVars.PsychosisEnabled) == true)
         {
-        if (component.Stage > 1)
+            if (component.Stage > 1)
             {
+                if (component.Stage > 2)
+                {
+                    var messages = args.Message.Split(" ");
+                    foreach (var messagething in messages)
+                    {
+                        if (_random.Prob(0.5f))
+                        {
+                            args.Message = args.Message.Replace(messagething, "");
+                        }
+                    }
+                }
                 var chance = 0.30f * (component.Stage - 1);
                 if (_random.Prob(chance))
                 {
-                    args.Message = Accentuate(args.Message);
+                    args.Message = Accentuate(args.Message, component);
                 }
             }
         }
