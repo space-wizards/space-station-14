@@ -108,6 +108,9 @@
     - id: WeaponRifleAk
       prob: 0.001
       orGroup: Weapons
+    - id: Throngler
+      prob: 0.001
+      orGroup: Weapons
     - id: WeaponLauncherPirateCannon
       prob: 0.001
       orGroup: Weapons
@@ -132,15 +135,27 @@
     - id: WeaponLaserGun
       prob: 0.01
       orGroup: Weapons
+    - id: WeaponShotgunHandmade
+      prob: 0.01
+      orGroup: Weapons
+    - id: WeaponFlareGun
+      prob: 0.01
+      orGroup: Weapons
+    - id: Bola
+      prob: 0.01
+      orGroup: Weapons
     #clothing
     - id: ClothingUniformJumpsuitFamilyGuy
       prob: 0.05
       orGroup: Clothes
     - id: ClothingOuterHardsuitCBURN
-      prob: 0.01
+      prob: 0.001
+      orGroup: Clothes
+    - id: ClothingOuterHardsuitBasic
+      prob: 0.001
       orGroup: Clothes
     - id: ClothingBackpackERTClown
-      prob: 0.01
+      prob: 0.001
       orGroup: Clothes
     - id: ClothingNeckCloakAdmin
       prob: 0.01
@@ -157,10 +172,34 @@
     - id: ClothingHeadHatCatEars
       prob: 0.01
       orGroup: Clothes
+    - id: ClothingHeadHatDogEars
+      prob: 0.01
+      orGroup: Clothes
     - id: ClothingOuterArmorReflective
       prob: 0.01
       orGroup: Clothes
     - id: ClothingUniformJumpskirtSyndieFormalDress
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingNeckCloakNanotrasen
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingUniformJumpsuitNanotrasen
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingShoesSnakeskinBoots
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingOuterCoatSpaceAsshole
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingUniformJumpsuitHawaiYellow
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingHeadSafari
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingMaskGasMerc
       prob: 0.01
       orGroup: Clothes
     #swag
@@ -191,6 +230,12 @@
     - id: ClothingEyesGlassesGar
       prob: 0.01
       orGroup: Swag
+    - id: ClothingEyesGlassesGarGiga
+      prob: 0.01
+      orGroup: Swag   
+    - id: ClothingEyesGlassesGarOrange
+      prob: 0.01
+      orGroup: Swag      
     - id: ClothingHeadHatChameleon
       prob: 0.01
       orGroup: Swag
@@ -285,5 +330,14 @@
       prob: 0.01
       orGroup: NotUseful
     - id: EncryptionKeyCommon
+      prob: 0.01
+      orGroup: NotUseful
+    - id: CableHVStack1
+      prob: 0.01
+      orGroup: NotUseful
+    - id: DrinkMugBlue
+      prob: 0.01
+      orGroup: NotUseful
+    - id: CablecuffsBroken
       prob: 0.01
       orGroup: NotUseful

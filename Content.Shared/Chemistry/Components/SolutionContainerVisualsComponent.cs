@@ -1,7 +1,6 @@
-using Content.Shared.Chemistry;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Chemistry.Visualizers
+namespace Content.Shared.Chemistry.Components
 {
     [RegisterComponent]
     public sealed partial class SolutionContainerVisualsComponent : Component
