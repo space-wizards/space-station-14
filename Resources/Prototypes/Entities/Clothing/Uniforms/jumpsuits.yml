@@ -1448,3 +1448,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBoilersuitNTNavy
+  description: A dark navy boiler suit, emblazoned with a black N.T on the back.
+  name: boiler suit
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/boilersuit.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/boilersuit.rsi
