@@ -180,6 +180,19 @@ namespace Content.Shared.CCVar
             GameMap = CVarDef.Create("game.map", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Controls whether to use world persistence or not.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            UsePersistence = CVarDef.Create("game.usepersistence", false, CVar.ARCHIVE);
+
+        /// <summary>
+        ///     If world persistence is used, what map prototype should be initially loaded.
+        ///     If the save file exists, it replaces MapPath but everything else stays the same (station name and such).
+        /// </summary>
+        public static readonly CVarDef<string>
+            PersistenceMap = CVarDef.Create("game.persistencemap", "Empty", CVar.ARCHIVE);
+
+        /// <summary>
         ///     Prototype to use for map pool.
         /// </summary>
         public static readonly CVarDef<string>
@@ -763,6 +776,11 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AdminDeadminOnJoin =
             CVarDef.Create("admin.deadmin_on_join", false, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Overrides the name the client sees in ahelps. Set empty to disable.
+        /// </summary>
+        public static readonly CVarDef<string> AdminAhelpOverrideClientName =
+            CVarDef.Create("admin.override_adminname_in_client_ahelp", string.Empty, CVar.SERVERONLY);
         /*
          * Explosions
          */
@@ -1205,7 +1223,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("vote.restart_required_ratio", 0.85f, CVar.SERVERONLY);
 
         /// <summary>
-        /// Whether or not to restrict the restart vote when there's online admins.
+        /// Whether or not to prevent the restart vote from having any effect when there is an online admin
         /// </summary>
         public static readonly CVarDef<bool> VoteRestartNotAllowedWhenAdminOnline =
             CVarDef.Create("vote.restart_not_allowed_when_admin_online", true, CVar.SERVERONLY);

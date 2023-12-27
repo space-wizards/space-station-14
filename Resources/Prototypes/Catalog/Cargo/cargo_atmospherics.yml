@@ -91,9 +91,7 @@
 #  group: market
 
 - type: cargoProduct
-  name: "plasma canister"
   id: AtmosphericsPlasma
-  description: "Plasma canister"
   icon:
     sprite: Structures/Storage/canister.rsi
     state: orange
