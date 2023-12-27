@@ -12,7 +12,7 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
 {
     [Dependency] private readonly ArtifactSystem _artifact = default!;
 
-    private List<EntityUid> _toActivate = new();
+    private readonly List<EntityUid> _toActivate = new();
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -59,7 +59,6 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
     {
         var magXform = Transform(ev.Magnet);
 
-        var toActivate = new List<EntityUid>();
         var query = EntityQueryEnumerator<ArtifactMagnetTriggerComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var artifact, out var xform))
         {
@@ -69,10 +68,10 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
             if (distance > artifact.Range)
                 continue;
 
-            toActivate.Add(uid);
+            _toActivate.Add(uid);
         }
 
-        foreach (var a in toActivate)
+        foreach (var a in _toActivate)
         {
             _artifact.TryActivateArtifact(a);
         }

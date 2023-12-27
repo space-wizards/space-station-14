@@ -1,3 +1,5 @@
+using Content.Shared.Procedural;
+
 namespace Content.Shared.Salvage.Magnet;
 
 /// <summary>
@@ -5,5 +7,5 @@ namespace Content.Shared.Salvage.Magnet;
 /// </summary>
 public record struct AsteroidOffering : ISalvageMagnetOffering
 {
-
+    public DungeonConfigPrototype DungeonConfig;
 }

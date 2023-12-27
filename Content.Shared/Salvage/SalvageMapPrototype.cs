@@ -1,9 +1,9 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Salvage;
+namespace Content.Shared.Salvage;
 
-[Prototype("salvageMap")]
+[Prototype]
 public sealed class SalvageMapPrototype : IPrototype
 {
     [ViewVariables] [IdDataField] public string ID { get; } = default!;
@@ -11,10 +11,10 @@ public sealed class SalvageMapPrototype : IPrototype
     /// <summary>
     /// Relative directory path to the given map, i.e. `Maps/Salvage/template.yml`
     /// </summary>
-    [DataField("mapPath", required: true)] public ResPath MapPath;
+    [DataField(required: true)] public ResPath MapPath;
 
     /// <summary>
     /// Name for admin use
     /// </summary>
-    [DataField("name")] public string Name = string.Empty;
+    [DataField] public string Name = string.Empty;
 }

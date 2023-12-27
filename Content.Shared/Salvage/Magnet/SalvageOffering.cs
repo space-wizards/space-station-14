@@ -5,5 +5,5 @@ namespace Content.Shared.Salvage.Magnet;
 /// </summary>
 public record struct SalvageOffering : ISalvageMagnetOffering
 {
-
+    public SalvageMapPrototype SalvageMap;
 }

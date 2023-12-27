@@ -1,0 +1,31 @@
+- type: dungeonConfig
+  id: Asteroid
+  # Floor generation
+  generator: !type:NoiseDunGen
+    radius: 16
+    layers:
+      - tile: FloorAsteroidSand
+  # Everything else
+  # postGeneration:
+    # Generate ore veins
+
+# YIELD TYPES:
+# Low yield 1 ore
+
+# High yield 1
+
+# Low yield 2 ore
+
+# ALSO GAS
+
+# Ore types
+
+# Blob
+
+# Snakey windy
+
+# Donut
+
+# scrunguly
+
+# Noise should be overloid on top

@@ -86,6 +86,9 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
         switch (_gen.Generator)
         {
+            case NoiseDunGen noise:
+                dungeon = await GenerateNoiseDungeon(noise, _gridUid, _grid, _seed);
+                break;
             case PrefabDunGen prefab:
                 dungeon = await GeneratePrefabDungeon(prefab, _gridUid, _grid, _seed);
                 break;
