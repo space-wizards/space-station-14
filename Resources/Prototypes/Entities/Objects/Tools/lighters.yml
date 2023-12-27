@@ -127,7 +127,7 @@
 - type: entity
   name: flippo lighter
   parent: BaseItem
-  id: ZippoLighter
+  id: FlippoLighter
   description: "A rugged metal lighter, lasts quite a while."
   components:
   - type: Sprite
@@ -202,8 +202,8 @@
 
 - type: entity
   name: flippo engraved lighter
-  parent: ZippoLighter
-  id: ZippoEngravedLighter
+  parent: FlippoLighter
+  id: FlippoEngravedLighter
   description: "A rugged golden lighter, lasts quite a while. Engravings serve no tactical advantage whatsoever."
   components:
   - type: Sprite
@@ -220,3 +220,5 @@
       map: ["flame"]
       visible: false
       shader: unshaded
+  - type: StealTarget
+    stealGroup: FlippoEngravedLighter

@@ -79,6 +79,7 @@
   id: ThiefObjectiveGroupItem
   weights:
     ForensicScannerStealObjective: 1                    #sec
+    FlippoEngravedLighterStealObjective: 0.5
     AmmoTechFabCircuitboardStealObjective: 1
     ClothingHeadHatWardenStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med

@@ -199,6 +199,18 @@
   - type: Objective
     difficulty: 1
 
+- type: entity                                      
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: FlippoEngravedLighterStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Detective
+  - type: StealCondition
+    stealGroup: FlippoEngravedLighter
+  - type: Objective
+    difficulty: 0.8
+
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
