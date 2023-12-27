@@ -12,6 +12,7 @@
     size: Normal
   - type: Food
     requiresSpecialDigestion: true
+  - type: MeleeWeapon
   - type: SolutionContainerManager
     solutions:
       food:
