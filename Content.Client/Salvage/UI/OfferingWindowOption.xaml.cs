@@ -27,6 +27,8 @@ namespace Content.Client.Salvage.UI;
 [GenerateTypedNameReferences]
 public sealed partial class OfferingWindowOption : PanelContainer
 {
+    private bool _claimed;
+
     public string? Title
     {
         get => TitleStripe.Text;
@@ -49,5 +51,40 @@ public sealed partial class OfferingWindowOption : PanelContainer
     public void AddContent(Control control)
     {
         ContentBox.AddChild(control);
+    }
+
+    public bool Pressed
+    {
+        get => ClaimButton.Pressed;
+        set => ClaimButton.Pressed = value;
+    }
+
+    public bool Disabled
+    {
+        get => ClaimButton.Disabled;
+        set => ClaimButton.Disabled = value;
+    }
+
+    public bool Claimed
+    {
+        get => _claimed;
+        set
+        {
+            if (_claimed == value)
+                return;
+
+            _claimed = value;
+
+            if (_claimed)
+            {
+                ClaimButton.AddStyleClass(StyleBase.ButtonCaution);
+                ClaimButton.Text = Loc.GetString("offering-window-claimed");
+            }
+            else
+            {
+                ClaimButton.RemoveStyleClass(StyleBase.ButtonCaution);
+                ClaimButton.Text = Loc.GetString("offering-window-claim");
+            }
+        }
     }
 }

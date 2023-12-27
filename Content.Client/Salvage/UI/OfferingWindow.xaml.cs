@@ -22,6 +22,8 @@ public sealed partial class OfferingWindow : FancyWindow,
     public TimeSpan NextOffer;
     public TimeSpan Cooldown;
 
+    private ushort _index;
+
     public OfferingWindow()
     {
         RobustXamlLoader.Load(this);
@@ -31,12 +33,25 @@ public sealed partial class OfferingWindow : FancyWindow,
     public void AddOption(OfferingWindowOption option)
     {
         Container.AddChild(option);
-        option.
+        var indexCopy = _index;
+
+        option.ClaimPressed += args =>
+        {
+            ClaimOption?.Invoke(indexCopy);
+        };
+
+        _index++;
     }
 
     public void ClearOptions()
     {
+        _index = 0;
         Container.DisposeAllChildren();
+    }
+
+    public void SetPressed(ushort index)
+    {
+        Container.Children[0].
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

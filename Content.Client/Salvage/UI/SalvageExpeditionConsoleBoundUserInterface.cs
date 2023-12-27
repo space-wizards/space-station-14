@@ -1,13 +1,14 @@
+using System.Linq;
 using Content.Client.Stylesheets;
-using Content.Client.UserInterface.Controls;
 using Content.Shared.CCVar;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
 using JetBrains.Annotations;
-using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Salvage.UI;
 
@@ -17,8 +18,13 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
     [ViewVariables]
     private OfferingWindow? _window;
 
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+
     public SalvageExpeditionConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
+        IoCManager.InjectDependencies(this);
     }
 
     protected override void Open()
@@ -54,6 +60,7 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
         _window.NextOffer = current.NextOffer;
         _window.Claimed = current.Claimed;
         _window.ClearOptions();
+        var salvage = _entManager.System<SalvageSystem>();
 
         for (var i = 0; i < current.Missions.Count; i++)
         {
@@ -63,9 +70,9 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             offering.Title = Loc.GetString($"salvage-expedition-type");
 
             var difficultyId = "Moderate";
-            var difficultyProto = _prototype.Index<SalvageDifficultyPrototype>(difficultyId);
+            var difficultyProto = _protoManager.Index<SalvageDifficultyPrototype>(difficultyId);
             // TODO: Selectable difficulty soon.
-            var mission = _salvage.GetMission(difficultyProto, missionParams.Seed);
+            var mission = salvage.GetMission(difficultyProto, missionParams.Seed);
 
             // Difficulty
             // Details
@@ -138,7 +145,7 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
 
             offering.AddContent(new Label
             {
-                Text = Loc.GetString(_prototype.Index<SalvageBiomeModPrototype>(biome).ID),
+                Text = Loc.GetString(_protoManager.Index<SalvageBiomeModPrototype>(biome).ID),
                 FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
@@ -170,23 +177,9 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
                 Disabled = current.Claimed || current.Cooldown,
             };
 
-            claimButton.Label.Margin = new Thickness(0f, 5f);
+            offering.Pressed = current.ActiveMission == missionParams.Index;
+            offering.Disabled = current.Claimed || current.Cooldown;
 
-            offering.ClaimPressed += args =>
-            {
-                ClaimOption?.Invoke(missionParams.Index);
-            };
-
-            if (current.ActiveMission == missionParams.Index)
-            {
-                claimButton.Text = Loc.GetString("salvage-expedition-window-claimed");
-                claimButton.AddStyleClass(StyleBase.ButtonCaution);
-            }
-            else
-            {
-                claimButton.Text = Loc.GetString("salvage-expedition-window-claim");
-            }
-            
             _window.AddOption(offering);
         }
     }
