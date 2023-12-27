@@ -52,7 +52,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         var query = EntityQueryEnumerator<ThiefRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var thief, out var gameRule))
         {
-            //Chance to not lauch gamerule
+            //Chance to not lauch gamerule  
             if (_random.Prob(thief.RuleChance))
             {
                 if (!GameTicker.IsGameRuleAdded(uid, gameRule))
@@ -60,10 +60,10 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
                 foreach (var player in ev.Players)
                 {
-                    if (!ev.Profiles.ContainsKey(player.UserId))
+                    if (!ev.Profiles.TryGetValue(player.UserId, out var profile))
                         continue;
 
-                    thief.StartCandidates[player] = ev.Profiles[player.UserId];
+                    thief.StartCandidates[player] = profile;
                 }
                 DoThiefStart(thief);
             }
@@ -85,19 +85,12 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         foreach(var thief in selectedThieves)
         {
-            MakeThief(thief, component.PacifistThieves);
+            MakeThief(component, thief, component.PacifistThieves);
         }
     }
 
-    public bool MakeThief(ICommonSession thief, bool addPacified)
+    public bool MakeThief(ThiefRuleComponent thiefRule, ICommonSession thief, bool addPacified)
     {
-        var thiefRule = EntityQuery<ThiefRuleComponent>().FirstOrDefault();
-        if (thiefRule == null)
-        {
-            GameTicker.StartGameRule("Thief", out var ruleEntity);
-            thiefRule = Comp<ThiefRuleComponent>(ruleEntity);
-        }
-
         //checks
         if (!_mindSystem.TryGetMind(thief, out var mindId, out var mind))
         {
@@ -121,7 +114,8 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             PrototypeId = thiefRule.ThiefPrototypeId
         });
 
-        //Add Pacified
+        //Add Pacified  
+        //To Do: Long-term this should just be using the antag code to add components.
         if (addPacified) //This check is important because some servers may want to disable the thief's pacifism. Do not remove.
         {
             EnsureComp<PacifiedComponent>(mind.OwnedEntity.Value);
@@ -167,6 +161,18 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         thiefRule.ThievesMinds.Add(mindId);
         return true;
+    }
+
+    public void AdminMakeThief(ICommonSession thief, bool addPacified)
+    {
+        var thiefRule = EntityQuery<ThiefRuleComponent>().FirstOrDefault();
+        if (thiefRule == null)
+        {
+            GameTicker.StartGameRule("Thief", out var ruleEntity);
+            thiefRule = Comp<ThiefRuleComponent>(ruleEntity);
+        }
+
+        MakeThief(thiefRule, thief, addPacified);
     }
 
     //Add mind briefing

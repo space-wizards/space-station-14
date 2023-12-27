@@ -44,7 +44,8 @@ public sealed partial class ThiefRuleComponent : Component
     /// <summary>
     /// All Thieves created by this rule
     /// </summary>
-    public readonly List<EntityUid> ThievesMinds = new();
+    [DataField]
+    public List<EntityUid> ThievesMinds = new();
 
     /// <summary>
     /// Max Thiefs created by rule on roundstart
