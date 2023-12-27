@@ -153,6 +153,8 @@
                         </BoxContainer>
                     </PanelContainer>
 
+                    <Button Name="CHideShowUnusableButton" Text="{Loc 'humanoid-profile-editor-loadouts-show-unusable-button'}" ToolTip="{Loc 'humanoid-profile-editor-loadouts-show-unusable-button-tooltip'}" ToggleMode="True" />
+
                     <ScrollContainer VerticalExpand="True">
                         <TabContainer Name="CLoadoutsTabs" VerticalExpand="True" />
                     </ScrollContainer>

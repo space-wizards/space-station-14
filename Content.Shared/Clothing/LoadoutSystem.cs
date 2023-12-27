@@ -55,12 +55,8 @@ public sealed class LoadoutSystem : EntitySystem
                 continue;
 
             // Check whitelists and blacklists for this loadout
-            if (loadoutProto.EntityWhitelist != null && !loadoutProto.EntityWhitelist.IsValid(uid) ||
-                loadoutProto.EntityBlacklist != null && loadoutProto.EntityBlacklist.IsValid(uid) ||
-                loadoutProto.JobWhitelist != null && !loadoutProto.JobWhitelist.Contains(job.ID) ||
-                loadoutProto.JobBlacklist != null && loadoutProto.JobBlacklist.Contains(job.ID) ||
-                loadoutProto.SpeciesWhitelist != null && !loadoutProto.SpeciesWhitelist.Contains(profile.Species) ||
-                loadoutProto.SpeciesBlacklist != null && loadoutProto.SpeciesBlacklist.Contains(profile.Species))
+            if (!CheckWhitelistValid(loadoutProto, uid, job, profile) ||
+                !CheckBlacklistValid(loadoutProto, uid, job, profile))
                 continue;
 
             // Spawn the loadout items
@@ -225,5 +221,58 @@ public sealed class LoadoutSystem : EntitySystem
 
 
         return string.Join("\n ", blacklist);
+    }
+
+
+    /// <summary>
+    ///     Checks if a given entity is valid for a given loadout prototype's whitelist
+    /// </summary>
+    /// <param name="loadout">Where to get whitelists from</param>
+    /// <param name="uid">The entity to check components and tags on</param>
+    /// <param name="job">The job to check for</param>
+    /// <param name="profile">The character profile of the entity to check species</param>
+    /// <returns>true if all whitelists pass, false if any whitelist fails</returns>
+    public bool CheckWhitelistValid(LoadoutPrototype loadout, EntityUid uid, JobPrototype job,
+        HumanoidCharacterProfile profile)
+    {
+        if (loadout.EntityWhitelist != null && !loadout.EntityWhitelist.IsValid(uid) ||
+            loadout.JobWhitelist != null && !loadout.JobWhitelist.Contains(job.ID) ||
+            loadout.SpeciesWhitelist != null && !loadout.SpeciesWhitelist.Contains(profile.Species))
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Checks if a given entity is valid for a given loadout prototype's blacklist
+    /// </summary>
+    /// <param name="loadout">Where to get whitelists from</param>
+    /// <param name="uid">The entity to check components and tags on</param>
+    /// <param name="job">The job to check for</param>
+    /// <param name="profile">The character profile of the entity to check species</param>
+    /// <returns>true if all whitelists fail, false if any whitelist is valid</returns>
+    public bool CheckBlacklistValid(LoadoutPrototype loadout, EntityUid uid, JobPrototype job,
+        HumanoidCharacterProfile profile)
+    {
+        if (loadout.EntityBlacklist != null && loadout.EntityBlacklist.IsValid(uid) ||
+            loadout.JobBlacklist != null && loadout.JobBlacklist.Contains(job.ID) ||
+            loadout.SpeciesBlacklist != null && loadout.SpeciesBlacklist.Contains(profile.Species))
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Checks if a given entity is valid for a given loadout prototype's whitelist and blacklist
+    /// </summary>
+    /// <param name="loadout">Where to get whitelists from</param>
+    /// <param name="uid">The entity to check components and tags on</param>
+    /// <param name="job">The job to check for</param>
+    /// <param name="profile">The character profile of the entity to check species</param>
+    /// <returns>true if all whitelists pass and all blacklists fail, false if any whitelist fails or any blacklist succeeds</returns>
+    public bool CheckWhitelistBlacklistValid(LoadoutPrototype loadout, EntityUid uid, JobPrototype job,
+        HumanoidCharacterProfile profile)
+    {
+        return CheckWhitelistValid(loadout, uid, job, profile) && CheckBlacklistValid(loadout, uid, job, profile);
     }
 }

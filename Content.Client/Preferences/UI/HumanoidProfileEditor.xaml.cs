@@ -88,6 +88,7 @@ namespace Content.Client.Preferences.UI
         private Label _loadoutPointsLabelI => LoadoutPointsLabelI; // "I"nner
         private Label _loadoutPointsLabelA => LoadoutPointsLabelA; // "A"fter
         private ProgressBar _loadoutPointsBar => LoadoutPointsBar; // The above labels' names are referencing their position relative to this element
+        private Button _loadoutsShowUnusableButton => CHideShowUnusableButton;
         private BoxContainer _loadoutsTab => CLoadoutsTab;
         private TabContainer _loadoutsTabs => CLoadoutsTabs;
         private readonly List<JobPrioritySelector> _jobPriorities;
@@ -462,7 +463,6 @@ namespace Content.Client.Preferences.UI
 
             _tabContainer.SetTabTitle(4, Loc.GetString("humanoid-profile-editor-loadouts-tab"));
             _loadoutPreferences = new List<LoadoutPreferenceSelector>();
-            var loadouts = prototypeManager.EnumeratePrototypes<LoadoutPrototype>().ToList();
 
             var loadoutsEnabled = _configurationManager.GetCVar(CCVars.GameLoadoutsEnabled);
             _tabContainer.SetTabVisible(4, loadoutsEnabled);
@@ -480,8 +480,36 @@ namespace Content.Client.Preferences.UI
             _loadoutPointsBar.MaxValue = points;
             _loadoutPointsBar.Value = points;
 
-            if (loadouts.Count >= 0)
+
+            _loadoutsShowUnusableButton.OnToggled += args => UpdateLoadouts(args.Pressed);
+            // UpdateLoadouts(false); // Initial UpdateLoadouts call has to be after the dummy is made, so it's there instead
+
+            // TODO Make this not local if needed
+            void UpdateLoadouts(bool showUnusable)
             {
+                _loadoutsTabs.DisposeAllChildren();
+
+                var highJob = _jobPriorities.FirstOrDefault(j => j.Priority == JobPriority.High);
+
+                // Get all loadout prototypes
+                // If showUnusable is false filter out loadouts that are unusable
+                // TODO Make unusable loadouts red or something
+                var loadouts = prototypeManager.EnumeratePrototypes<LoadoutPrototype>().Where(l =>
+                    showUnusable ||
+                    _loadoutSystem.CheckWhitelistBlacklistValid(
+                        l,
+                        _previewDummy ?? EntityUid.Invalid,
+                        highJob == null ? new JobPrototype() : highJob.Proto,
+                        Profile ?? HumanoidCharacterProfile.DefaultWithSpecies()
+                    )
+                ).ToList();
+
+                if (!loadouts.Any())
+                {
+                    _loadoutsTab.AddChild(new Label { Text = Loc.GetString("humanoid-profile-editor-loadouts-no-loadouts") });
+                    return;
+                }
+
                 // Make Uncategorized category
                 var uncategorized = new BoxContainer
                 {
@@ -577,8 +605,6 @@ namespace Content.Client.Preferences.UI
                 if (!uncategorized.Children.Any())
                     _loadoutsTabs.SetTabVisible(0, false);
             }
-            else
-                _loadoutsTab.AddChild(new Label { Text = Loc.GetString("humanoid-profile-editor-loadouts-no-loadouts") });
 
             #endregion
 
@@ -633,6 +659,8 @@ namespace Content.Client.Preferences.UI
 
             _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
             _previewSpriteView.SetEntity(_previewDummy);
+
+            UpdateLoadouts(false); // Initial UpdateLoadouts call has to have a dummy to get information from, so it's here
             #endregion Dummy
 
             #endregion Left
@@ -837,6 +865,13 @@ namespace Content.Client.Preferences.UI
 
             _requirements.Updated -= UpdateRoleRequirements;
             _preferencesManager.OnServerDataLoaded -= LoadServerData;
+
+            // I think this works, nothing else does it this way though so I'm not sure - reviewer please review :)
+            _configurationManager.UnsubValueChanged(CCVars.GameLoadoutsEnabled, enabled =>
+            {
+                _tabContainer.SetTabVisible(4, enabled);
+                ShowLoadouts.Visible = enabled;
+            });
         }
 
         private void RebuildSpriteView()

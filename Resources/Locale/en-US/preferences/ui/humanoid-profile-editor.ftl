@@ -45,6 +45,11 @@ humanoid-profile-editor-naming-rules-warning = Warning: Offensive or LRP IC name
 humanoid-profile-editor-loadouts-tab = Loadout
 humanoid-profile-editor-loadouts-uncategorized-tab = Uncategorized
 humanoid-profile-editor-loadouts-no-loadouts = No loadouts found
+humanoid-profile-editor-loadouts-show-unusable-button = Show Unusable
+humanoid-profile-editor-loadouts-show-unusable-button-tooltip =
+    When enabled, loadouts that your current character setup cannot use will be shown.
+    You will still not be able to use the invalid loadouts unless your character setup changes to fit the whitelists.
+    This may be useful if you like switching between multiple jobs and don't want to have to reselect your loadout every time.
 humanoid-profile-editor-loadouts-whitelist = Whitelist:
 humanoid-profile-editor-loadouts-blacklist = Blacklist:
 humanoid-profile-editor-loadouts-component = - {$component} (Component)
