@@ -216,8 +216,7 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
         if (plural) feeling = feelingPlural;
 
         // message logic!!!
-        return RobustRandom.Next(0, 36
-        ) switch
+        return RobustRandom.Next(0, 36) switch
         {
             0  => Loc.GetString("ion-storm-law-on-station", ("joined", joined), ("subjects", triple)),
             1  => Loc.GetString("ion-storm-law-no-shuttle", ("joined", joined), ("subjects", triple)),
