@@ -142,8 +142,8 @@ uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever y
 uplink-radio-jammer-name = Radio Jammer
 uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication when activated.
 
-uplink-singulo-bait-name = Singularity Attractor Toolbox
-uplink-singulo-bait-desc = A toolbox that attracts singularities. Effect weaker with distance. Causes singularities to grow when consumed. No storage.
+uplink-singularity-beacon-name = Singularity Beacon
+uplink-singularity-beacon-desc = A device that attracts singularities. Has to be anchored and powered. Causes singularities to grow when consumed.
 
 # Implants
 uplink-storage-implanter-name = Storage Implanter

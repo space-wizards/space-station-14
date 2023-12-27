@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Physics.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -61,6 +62,9 @@ public sealed class SingularityAttractorSystem : EntitySystem
     private void Update(EntityUid uid, SingularityAttractorComponent? attractor = null, TransformComponent? xform = null)
     {
         if(!Resolve(uid, ref attractor))
+            return;
+
+        if(!this.IsPowered(uid, EntityManager))
             return;
 
         attractor.LastPulseTime = _timing.CurTime;

@@ -1102,10 +1102,10 @@
     - Chef
 
 - type: listing
-  id: UplinkSinguloBait
-  name: uplink-singulo-bait-name
-  description: uplink-singulo-bait-desc
-  productEntity: ToolboxSinguloBait
+  id: UplinkSingarityBeacon
+  name: uplink-singularity-beacon-name
+  description: uplink-singularity-beacon-desc
+  productEntity: SingularityBeacon
   cost:
     Telecrystal: 12
   categories:
