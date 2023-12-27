@@ -1,22 +1,9 @@
 - type: entity
-  id: ClosetWall
-  parent: BaseWallCloset
-  name: maintenance wall closet
-  description: It's a storage unit.
-  components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: generic
-    stateDoorOpen: generic_open
-    stateDoorClosed: generic_door
-
-- type: entity
   id: ClosetWallEmergency
   name: emergency wall closet
   parent: BaseWallCloset
   description: It's a storage unit for emergency breath masks and O2 tanks.
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: emergency
     stateDoorOpen: emergency_open
@@ -28,7 +15,6 @@
   parent: BaseWallCloset
   description: It's a storage unit for fire-fighting supplies.
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: fire
     stateDoorOpen: fire_open
@@ -38,9 +24,8 @@
   id: ClosetWallBlue
   parent: BaseWallCloset
   name: blue wall closet
-  description: "A wardrobe packed with stylish blue clothing."
+  description: A wardrobe packed with stylish blue clothing.
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -50,9 +35,8 @@
   id: ClosetWallPink
   parent: BaseWallCloset
   name: pink wall closet
-  description: "A wardrobe packed with fabulous pink clothing."
+  description: A wardrobe packed with fabulous pink clothing.
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -62,9 +46,8 @@
   id: ClosetWallBlack
   parent: BaseWallCloset
   name: black wall closet
-  description: "A wardrobe packed with stylish black clothing."
+  description: A wardrobe packed with stylish black clothing.
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -74,9 +57,8 @@
   id: ClosetWallGreen
   parent: BaseWallCloset
   name: green wall closet
-  description: "A wardrobe packed with stylish green clothing."
+  description: A wardrobe packed with stylish green clothing.
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -87,7 +69,6 @@
   parent: BaseWallCloset
   name: prison wall closet
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -97,9 +78,8 @@
   id: ClosetWallYellow
   parent: BaseWallCloset
   name: yellow wall closet
-  description: "A wardrobe packed with stylish yellow clothing."
+  description: A wardrobe packed with stylish yellow clothing.
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -109,9 +89,8 @@
   id: ClosetWallWhite
   parent: BaseWallCloset
   name: white wall closet
-  description: "A wardrobe packed with stylish white clothing."
+  description: A wardrobe packed with stylish white clothing.
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -121,9 +100,8 @@
   id: ClosetWallGrey
   parent: BaseWallCloset
   name: grey wall closet
-  description: "A wardrobe packed with a tide of grey clothing."
+  description: A wardrobe packed with a tide of grey clothing.
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -133,9 +111,8 @@
   id: ClosetWallMixed
   parent: BaseWallCloset
   name: mixed wall closet
-  description: "A wardrobe packed with a mix of colorful clothing."
+  description: A wardrobe packed with a mix of colorful clothing.
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -146,7 +123,6 @@
   parent: BaseWallCloset
   name: atmospherics wall closet
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -157,7 +133,6 @@
   parent: BaseWallLocker
   name: medical wall locker
   components:
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: med
     stateDoorOpen: med_open

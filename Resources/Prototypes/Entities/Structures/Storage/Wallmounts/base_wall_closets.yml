@@ -1,0 +1,91 @@
+#Wall Closet
+- type: entity
+  id: BaseWallCloset
+  placement:
+    mode: SnapgridCenter
+  name: wall closet
+  description: A standard-issue Nanotrasen storage unit, now on walls.
+  components:
+  - type: Appearance
+  - type: InteractionOutline
+  - type: Clickable
+  - type: ResistLocker
+  - type: Weldable
+  - type: WallMount
+    arc: 180
+  - type: StaticPrice
+    price: 50
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    drawdepth: WallMountedItems
+    noRot: false
+    sprite: Structures/Storage/Wallmount/wall_closet.rsi
+    layers:
+    - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: generic_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: EntityStorage
+    isCollidableWhenOpen: true
+    enteringOffset: 0, -0.75
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+        ents: []
+      paper_label: !type:ContainerSlot
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: Attach Label
+      ejectVerbText: Remove Label
+      whitelist:
+        components:
+        - Paper
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: generic_door
+
+#Wall locker
+- type: entity
+  id: BaseWallLocker
+  parent: [ BaseWallCloset , BaseClosetLocked ]
+  name: wall locker
+  description: A standard-issue Nanotrasen storage unit with secure ability, now on walls.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/wall_locker.rsi

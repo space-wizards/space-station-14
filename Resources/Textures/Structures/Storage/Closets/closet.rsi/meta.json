@@ -122,6 +122,9 @@
       "name": "cabinet_door"
     },
     {
+      "name": "cabinet_door_locker"
+    },
+    {
       "name": "cabinet_open"
     },
     {

@@ -1,15 +1,14 @@
+# THE MOST BASED CLOSET DESU
 - type: entity
-  id: ClosetBase
   parent: BaseStructureDynamic
-  name: closet
-  description: A standard-issue Nanotrasen storage unit.
+  id: BaseCloset
   components:
   - type: ResistLocker
   - type: Transform
     noRot: true
   - type: Sprite
+    sprite: Structures/Storage/Closets/closet.rsi
     noRot: true
-    sprite: Structures/Storage/closet.rsi
     layers:
     - state: generic
       map: ["enum.StorageVisualLayers.Base"]
@@ -57,128 +56,19 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_door_open
     stateDoorClosed: generic_door
 
-# steel closet base (that can be constructed/deconstructed)
+# Use as second parent for locker versions
 - type: entity
-  id: ClosetSteelBase
-  parent: ClosetBase
-  components:
-  - type: Construction
-    graph: ClosetSteel
-    node: done
-    containers:
-    - entity_storage
-  - type: Weldable
-
-#Wall Closet
-- type: entity
-  id: BaseWallCloset
-  placement:
-    mode: SnapgridCenter
-  abstract: true
-  name: wall closet
-  description: A standard-issue Nanotrasen storage unit, now on walls.
-  components:
-  - type: InteractionOutline
-  - type: Clickable
-  - type: ResistLocker
-  - type: Weldable
-  - type: WallMount
-    arc: 180
-  - type: StaticPrice
-    price: 50
-  - type: Transform
-    noRot: false
-  - type: Sprite
-    drawdepth: WallMountedItems
-    noRot: false
-    sprite: Structures/Storage/wall_locker.rsi
-    layers:
-    - state: generic
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: generic_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-  - type: EntityStorage
-    isCollidableWhenOpen: true
-    enteringOffset: 0, -0.75
-    closeSound:
-      path: /Audio/Items/deconstruct.ogg
-    openSound:
-      path: /Audio/Items/deconstruct.ogg
-  - type: ContainerContainer
-    containers:
-      entity_storage: !type:Container
-        ents: []
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-
-#Wall locker
-- type: entity
-  id: BaseWallLocker
-  parent: BaseWallCloset
-  abstract: true
+  id: BaseClosetLocked
   components:
   - type: AccessReader
   - type: Lock
   - type: Sprite
-    sprite: Structures/Storage/wall_locker.rsi
     layers:
     - state: generic
       map: ["enum.StorageVisualLayers.Base"]
@@ -191,26 +81,181 @@
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
 
+# steel closet
+- type: entity
+  parent: BaseCloset
+  id: BaseClosetSteel
+  name: closet
+  description: A standard-issue Nanotrasen storage unit.
+  components:
+  - type: Weldable
+  - type: Construction
+    graph: ClosetSteel
+    node: done
+    containers:
+    - entity_storage
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+
+# steel locker
+- type: entity
+  parent: [ BaseClosetSteel, BaseClosetLocked ]
+  id: BaseLockerSteel
+  name: locker
+  description: A standard-issue Nanotrasen storage unit with secure ability.
+  components:
+  - type: EntityStorageVisuals
+    stateDoorClosed: generic_door_locker
+  - type: Construction
+    graph: LockerSteel
+    node: done
+    containers:
+    - entity_storage
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+
+# wooden closet
+- type: entity
+  id: BaseClosetWood
+  parent: BaseCloset
+  name: wooden closet
+  description: A standard-issue Nanotrasen wooden storage unit.
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: cabinet
+    stateDoorOpen: cabinet_open
+    stateDoorClosed: cabinet_door
+  - type: EntityStorage
+    closeSound:
+      path: /Audio/Effects/woodenclosetclose.ogg
+    openSound:
+      path: /Audio/Effects/woodenclosetopen.ogg
+  - type: Construction
+    graph: ClosetWood
+    node: done
+    containers:
+    - entity_storage
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 2
+
+# wooden locker
+- type: entity
+  parent: [ BaseClosetWood, BaseClosetLocked ]
+  id: BaseLockerWood
+  name: wooden locker
+  description: A standard-issue Nanotrasen wooden storage unit with secure ability.
+  components:
+  - type: EntityStorageVisuals
+    stateDoorClosed: cabinet_door_locker
+  - type: Construction
+    graph: LockerWood
+    node: done
+    containers:
+    - entity_storage
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 2
+
+
 #Base suit storage unit
 #I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.
 - type: entity
-  id: SuitStorageBase
-  parent: BaseStructure
+  parent: [ BaseCloset, BaseClosetLocked ]
+  id: BaseSuitStorage
   name: suit storage unit
   description: A fancy hi-tech storage unit made for storing space suits.
   components:
-  - type: AccessReader
-  - type: Lock
-  - type: Anchorable
-    delay: 2
   - type: StaticPrice
     price: 80
-  - type: ResistLocker
-  - type: Transform
-    noRot: true
   - type: Sprite
-    noRot: true
-    sprite: Structures/Storage/suit_storage.rsi
+    sprite: Structures/Storage/Closets/suit_storage.rsi
     layers:
     - state: base
     - state: door
@@ -221,15 +266,6 @@
     - state: locked
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
-  - type: MovedByPressure
-  - type: DamageOnHighSpeedImpact
-    damage:
-      types:
-        Blunt: 5
-    soundHit:
-      path: /Audio/Effects/bang.ogg
-  - type: InteractionOutline
-  - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
@@ -241,17 +277,7 @@
         - MachineMask
         layer:
         - MachineLayer
-  - type: EntityStorage
-  - type: ContainerContainer
-    containers:
-      entity_storage: !type:Container
   - type: Weldable
-  - type: PlaceableSurface
-    placeCentered: true
-    isPlaceable: false
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -276,7 +302,6 @@
           SheetSteel1:
             min: 1
             max: 1
-  - type: Appearance
   - type: EntityStorageVisuals
     stateBase: base
     stateLocked: locked
