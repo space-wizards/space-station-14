@@ -12,6 +12,7 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
@@ -64,7 +65,6 @@ namespace Content.Server.Atmos.EntitySystems
         {
             UpdatesAfter.Add(typeof(AtmosphereSystem));
 
-            SubscribeLocalEvent<FlammableComponent, ComponentInit>(OnFlammableInit);
             SubscribeLocalEvent<FlammableComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<FlammableComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<FlammableComponent, StartCollideEvent>(OnCollide);
@@ -78,11 +78,6 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<IgniteOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
 
             SubscribeLocalEvent<ExtinguishOnInteractComponent, ActivateInWorldEvent>(OnExtinguishActivateInWorld);
-        }
-
-        private void OnFlammableInit(Entity<FlammableComponent> ent, ref ComponentInit args)
-        {
-            EnsureComp<IgnitionSourceComponent>(ent);
         }
 
         private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
@@ -412,6 +407,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 }
 
+                EnsureComp<IgnitionSourceComponent>(uid);
                 _ignitionSourceSystem.SetIgnited(uid);
             }
         }
