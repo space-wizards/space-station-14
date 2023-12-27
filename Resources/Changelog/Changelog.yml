@@ -1,10 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - message: Rock anomalies have been detected by nanotrasen scientists.
-    type: Add
-  id: 4956
-  time: '2023-10-05T19:53:54.0000000+00:00'
 - author: notquitehadouken
   changes:
   - message: Slimes no longer rot again
@@ -3509,3 +3503,19 @@ Entries:
   id: 5456
   time: '2023-12-27T12:31:03.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23048
+- author: TheShuEd
+  changes:
+  - message: The thief will temporarily not steal structures for the time being, as
+      this task seems too difficult.
+    type: Tweak
+  - message: Added Emag into thief's syndie kit
+    type: Add
+  - message: Added 3 smoke grenades into thief's smuggler kit
+    type: Add
+  - message: Replaced radio jammer to cyber pen into thief's communicator kit
+    type: Tweak
+  - message: Replaced omnizine bottle to omega soap into thief's chemistry kit
+    type: Tweak
+  id: 5457
+  time: '2023-12-27T20:42:16.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22976
