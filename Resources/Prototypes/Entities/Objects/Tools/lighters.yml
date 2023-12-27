@@ -147,9 +147,9 @@
   - type: ItemToggle
     predictable: false
     soundActivate:
-      collection: lighterOnSounds
+      path: /Audio/Items/Lighters/zippo_open.ogg
     soundDeactivate:
-      collection: lighterOffSounds
+      path: /Audio/Items/Lighters/zippo_close.ogg
   - type: ItemToggleMeleeWeapon
     activatedDamage:
         types:
