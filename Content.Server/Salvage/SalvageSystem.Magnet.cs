@@ -7,11 +7,25 @@ public sealed partial class SalvageSystem
     private void InitializeMagnet()
     {
         SubscribeLocalEvent<SalvageMagnetDataComponent, MapInitEvent>(OnMagnetDataMapInit);
+
+        SubscribeLocalEvent<SalvageMagnetTargetComponent, GridSplitEvent>(OnMagnetTargetSplit);
     }
 
     private void OnMagnetDataMapInit(EntityUid uid, SalvageMagnetDataComponent component, ref MapInitEvent args)
     {
-        CreateOffers(component);
+        CreateMagnetOffers((uid, component));
+    }
+
+    private void OnMagnetTargetSplit(EntityUid uid, SalvageMagnetTargetComponent component, ref GridSplitEvent args)
+    {
+        // Don't think I'm not onto you people splitting to make new grids.
+        if (TryComp(component.DataTarget, out SalvageMagnetDataComponent? dataComp))
+        {
+            foreach (var gridUid in args.NewGrids)
+            {
+                dataComp.ActiveEntities?.Add(gridUid);
+            }
+        }
     }
 
     private void UpdateMagnet()
@@ -26,27 +40,81 @@ public sealed partial class SalvageSystem
             {
                 if (magnetData.EndTime.Value < curTime)
                 {
-                    // TODO: Handle ending
+                    EndMagnet((uid, magnetData));
                 }
             }
 
             if (magnetData.NextOffer < curTime)
             {
-                CreateOffers(magnetData);
+                CreateMagnetOffers((uid, magnetData));
             }
         }
     }
 
-    private void CreateOffers(SalvageMagnetDataComponent data)
+    private void EndMagnet(Entity<SalvageMagnetDataComponent> data)
     {
-        data.Offered.Clear();
-
-        for (var i = 0; i < data.Offers; i++)
+        if (data.Comp.ActiveEntities != null)
         {
-            var seed = _random.Next();
-            data.Offered.Add(seed);
+            foreach (var ent in data.Comp.ActiveEntities)
+            {
+                QueueDel(ent);
+            }
+
+            data.Comp.ActiveEntities = null;
         }
 
-        // TODO: Update UIs
+        data.Comp.EndTime = null;
     }
+
+    private void CreateMagnetOffers(Entity<SalvageMagnetDataComponent> data)
+    {
+        data.Comp.Offered.Clear();
+
+        for (var i = 0; i < data.Comp.Offers; i++)
+        {
+            var seed = _random.Next();
+
+            // Fuck with the seed to mix wrecks and asteroids.
+            seed = (int) (seed / 10f) * 10;
+
+            if (i > data.Comp.Offers / 2)
+            {
+                seed++;
+            }
+
+            data.Comp.Offered.Add(seed);
+        }
+
+        UpdateMagnetUIs(data);
+    }
+
+    private void UpdateMagnetUIs(Entity<SalvageMagnetDataComponent> data)
+    {
+
+    }
+
+    public void TakeMagnetOffer(Entity<SalvageMagnetDataComponent> data, int index, EntityUid magnet)
+    {
+        var seed = data.Comp.Offered[index];
+
+        var offering = GetSalvageOffering(seed);
+
+        // TODO: Old code
+
+
+        data.Comp.EndTime = _timing.CurTime + data.Comp.ActiveTime;
+        data.Comp.NextOffer = data.Comp.EndTime.Value + data.Comp.OfferCooldown;
+        var active = new SalvageMagnetActivatedEvent()
+        {
+            Magnet = magnet,
+        };
+
+        RaiseLocalEvent(ref active);
+    }
+}
+
+[ByRefEvent]
+public record struct SalvageMagnetActivatedEvent
+{
+    public EntityUid Magnet;
 }
