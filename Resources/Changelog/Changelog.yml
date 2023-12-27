@@ -1,10 +1,4 @@
 Entries:
-- author: notquitehadouken
-  changes:
-  - message: Slimes no longer rot again
-    type: Fix
-  id: 4957
-  time: '2023-10-05T19:56:40.0000000+00:00'
 - author: dahnte
   changes:
   - message: Onion rings!
@@ -3519,3 +3513,10 @@ Entries:
   id: 5457
   time: '2023-12-27T20:42:16.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22976
+- author: Alekshhh
+  changes:
+  - message: Changed brown fedora and inspector's coat palette and minor adjustments
+    type: Tweak
+  id: 5458
+  time: '2023-12-27T22:53:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23065
