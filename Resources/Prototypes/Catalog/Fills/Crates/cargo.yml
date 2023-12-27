@@ -338,6 +338,6 @@
     - id: DrinkMugBlue
       prob: 0.01
       orGroup: NotUseful
-    - id: CableCuffsBroken
+    - id: CablecuffsBroken
       prob: 0.01
       orGroup: NotUseful
