@@ -14,7 +14,7 @@ head-rev-briefing =
     Use flashes to convert people to your cause.
     Kill all heads to take over the station.
 
-head-rev-break-mindshield = The Mindshield was destroyed!
+head-rev-break-mindshield = The Mindshield was destroyed! Their brain hemorrhages, Gross!.
 
 ## Rev
 

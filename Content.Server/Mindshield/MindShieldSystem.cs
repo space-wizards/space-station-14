@@ -1,13 +1,19 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Server.Roles;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Mindshield;
 
@@ -21,6 +27,9 @@ public sealed class MindShieldSystem : EntitySystem
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly IPrototypeManager _Prototypes = default!;
 
     [ValidatePrototypeId<TagPrototype>]
     public const string MindShieldTag = "MindShield";
@@ -52,6 +61,17 @@ public sealed class MindShieldSystem : EntitySystem
         {
             _popupSystem.PopupEntity(Loc.GetString("head-rev-break-mindshield"), implanted);
             QueueDel(implant);
+            if (TryComp<BloodstreamComponent>(implanted, out var bloodstream))
+            {
+                _bloodstreamSystem.SpillAllSolutions(implanted, bloodstream);
+            }
+
+            if (HasComp<DamageableComponent>(implanted))
+            {
+                var damage = new DamageSpecifier(_Prototypes.Index<DamageGroupPrototype>("Genetic"), 300);
+
+                _damageableSystem.TryChangeDamage(implanted, damage);
+            }
             return;
         }
 
