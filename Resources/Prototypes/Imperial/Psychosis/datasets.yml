@@ -92,13 +92,6 @@
   - ClothingHandsGlovesColorYellowFake
 
 - type: dataset
-  id: PsychosisPhrases
-  values:
-  - psychosis-randomwords-first
-  - psychosis-randomwords-second
-  - psychosis-randomwords-third
-
-- type: dataset
   id: PsychosisCreature
   values:
   - MobHumanSyndicateAgentFake
