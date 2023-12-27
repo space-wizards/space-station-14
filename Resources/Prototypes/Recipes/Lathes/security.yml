@@ -464,7 +464,7 @@
     Glass: 100
     Plastic: 200
 
-- type: latheRecipe    
+- type: latheRecipe
   id: ShellShotgunUranium
   result: ShellShotgunUranium
   completetime: 2
