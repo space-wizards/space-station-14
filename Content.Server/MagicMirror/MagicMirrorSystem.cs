@@ -299,7 +299,6 @@ public sealed class MagicMirrorSystem : EntitySystem
     private void AfterUIOpen(EntityUid uid, MagicMirrorComponent component, AfterActivatableUIOpenEvent args)
     {
         var humanoid = Comp<HumanoidAppearanceComponent>(args.User);
-        if (humanoid == null) return;
 
         component.Target = new Entity<HumanoidAppearanceComponent>(args.User, humanoid);
 
