@@ -13,6 +13,7 @@
     state: icon
   - type: Item
     sprite: Objects/Devices/firmware_key.rsi
+  - type: Deemag
 
 - type: entity
   parent: BaseFirmwareKey
@@ -35,3 +36,5 @@
   - type: Item
     sprite: Objects/Devices/firmware_key.rsi
     state: advanced
+  - type: Deemag
+    consumable: false
