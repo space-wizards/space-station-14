@@ -1,12 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - message: Reptilians have received a minor rework. Notable features include a diet
-      restriction to only meat, fruit and pills, and the ability to pull objects using
-      their tail.
-    type: Tweak
-  id: 4963
-  time: '2023-10-06T21:19:01.0000000+00:00'
 - author: chromiumboy
   changes:
   - message: Fixed wire panels on bombs and vending machines not opening correctly.
@@ -3532,3 +3524,10 @@ Entries:
   id: 5463
   time: '2023-12-28T03:11:13.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23012
+- author: Ubaser
+  changes:
+  - message: You can now purchase kobolds from cargo as an alternative to monkeys!
+    type: Add
+  id: 5464
+  time: '2023-12-28T05:32:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22108
