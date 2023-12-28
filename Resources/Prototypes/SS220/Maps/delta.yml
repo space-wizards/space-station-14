@@ -15,7 +15,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '-SS220'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_delta.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency_delta220.yml
         - type: StationJobs
           overflowJobs:
             - Passenger
