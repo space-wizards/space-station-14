@@ -325,8 +325,10 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (!Resolve(uid, ref xform, ref eventHorizon))
             return;
 
-        ConsumeEntitiesInRange(uid, range, xform, eventHorizon);
-        ConsumeTilesInRange(uid, range, xform, eventHorizon);
+        if (eventHorizon.ConsumeEntities)
+            ConsumeEntitiesInRange(uid, range, xform, eventHorizon);
+        if (eventHorizon.ConsumeTiles)
+            ConsumeTilesInRange(uid, range, xform, eventHorizon);
     }
 
     #endregion Consume
