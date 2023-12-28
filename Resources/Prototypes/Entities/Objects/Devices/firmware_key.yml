@@ -1,0 +1,37 @@
+- type: entity
+  parent: BaseItem
+  id: BaseFirmwareKey
+  name: firmware key
+  description: Key for quick recovery of microcircuit firmware. Loses functionality after use.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/firmware_key.rsi
+    state: icon
+  - type: Icon
+    sprite: Objects/Devices/firmware_key.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Devices/firmware_key.rsi
+
+- type: entity
+  parent: BaseFirmwareKey
+  id: FirmwareKey
+  name: firmware key
+  description: Key for quick recovery of microcircuit firmware. Loses functionality after use.
+
+- type: entity
+  parent: BaseFirmwareKey
+  id: FirmwareKeyAdvanced
+  name: firmware key advanced
+  description: Key for quick recovery of microcircuit firmware. An improved model stores more information, which is why it does not lose functionality after use.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/firmware_key.rsi
+    state: advanced
+  - type: Icon
+    sprite: Objects/Devices/firmware_key.rsi
+    state: advanced
+  - type: Item
+    sprite: Objects/Devices/firmware_key.rsi
+    state: advanced
