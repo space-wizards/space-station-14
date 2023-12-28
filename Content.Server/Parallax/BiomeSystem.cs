@@ -470,7 +470,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     out var spawnSet, out var existing);
 
                 // Forcing markers to spawn so delete any that were found to be in the way.
-                if (forced)
+                if (forced && existing.Count > 0)
                 {
                     // Lock something so we can delete these safely.
                     lock (component.PendingMarkers)
@@ -501,7 +501,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     layerMarkers.Add(node);
                 }
 
-                lock (component.PendingMarkers)
+                lock (loadedMarkers)
                 {
                     if (!loadedMarkers.TryGetValue(layer, out var lockMobChunks))
                     {
@@ -555,6 +555,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         count = Math.Min(count, layerProto.MaxCount);
 
         spawnSet = _tilePool.Get();
+        var visited = _tilePool.Get();
         existingEnts = new HashSet<EntityUid>();
 
         // Pick a random tile then BFS outwards from it
@@ -563,10 +564,11 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         {
             var groupSize = rand.Next(layerProto.MinGroupSize, layerProto.MaxGroupSize + 1);
             var startNodeX = rand.Next(bounds.Left, bounds.Right);
-            var startNodeY = rand.Next(bounds.Left, bounds.Right);
+            var startNodeY = rand.Next(bounds.Bottom, bounds.Top);
             var startNode = new Vector2i(startNodeX, startNodeY);
             frontier.Clear();
             frontier.Add(startNode);
+            visited.Add(startNode);
 
             while (groupSize >= 0 && frontier.Count > 0)
             {
@@ -588,7 +590,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                         if (!bounds.Contains(neighbor))
                             continue;
 
-                        if (!spawnSet.Add(neighbor))
+                        if (!visited.Add(neighbor))
                             continue;
 
                         frontier.Add(neighbor);
@@ -623,12 +625,16 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 groupSize--;
                 spawnSet.Add(node);
 
+
+
                 if (existing != null)
                 {
                     existingEnts.Add(existing.Value);
                 }
             }
         }
+
+        _tilePool.Return(visited);
     }
 
     /// <summary>
