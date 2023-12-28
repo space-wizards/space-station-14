@@ -65,6 +65,7 @@
     colliderFixtureId: EventHorizonCollider
     consumerFixtureId: EventHorizonConsumer
     consumeTiles: false 
+    consumeEntities: false 
   - type: TeslaEnergyBall
     spawnProto: TeslaMiniEnergyBall 
   - type: LightningArcShooter
