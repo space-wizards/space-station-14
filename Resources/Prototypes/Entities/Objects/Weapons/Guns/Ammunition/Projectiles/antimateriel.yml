@@ -10,4 +10,4 @@
         Piercing: 50
         Structural: 80
   - type: StaminaDamageOnCollide
-    damage: 100
+    damage: 65
