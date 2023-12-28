@@ -142,7 +142,7 @@ namespace Content.Server.Atmos
             // Clamping is needed because x - x can be negative with floating point numbers. If we don't
             // clamp here, the caller always has to call GetMoles(), clamp, then SetMoles().
             ref var moles = ref Moles[gasId];
-            moles += MathF.Max(moles + quantity, 0);
+            moles = MathF.Max(moles + quantity, 0);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
