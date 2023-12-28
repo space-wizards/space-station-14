@@ -263,10 +263,7 @@ namespace Content.Server.Zombies
                 RemComp(target, handsComp);
             }
 
-            if (TryComp<SharedPullerComponent>(target, out var pullerComp))
-            {
-                RemComp(target, pullerComp);
-            }
+            RemComp<SharedPullerComponent>(target);
 
             // No longer waiting to become a zombie:
             // Requires deferral because this is (probably) the event which called ZombifyEntity in the first place.
