@@ -188,8 +188,8 @@
     stunAmount: 0
     knockdownAmount: 0
     slowdownAmount: 4
-    walkSpeedMultiplier: 0.5
-    runSpeedMultiplier: 0.5
+    walkSpeedMultiplier: 0.2
+    runSpeedMultiplier: 0.2
 
 - type: entity
   name : disabler bolt
