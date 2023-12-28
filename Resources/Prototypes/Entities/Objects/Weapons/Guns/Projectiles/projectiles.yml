@@ -184,22 +184,12 @@
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     soundForce: true
-  - type: StaminaDamageOnCollide
-    damage: 80
-  - type: SolutionContainerManager
-    solutions:
-        ammo:
-          maxVol: 5
-          reagents:
-            - ReagentId: Licoxide
-              Quantity: 5
-  - type: InjectableSolution
-    solution: ammo
-  - type: SolutionTransfer
-    maxTransferAmount: 5
-  - type: SolutionInjectOnCollide
-    transferAmount: 5
-    blockSlots: NONE
+  - type: StunOnCollide
+    stunAmount: 0
+    knockdownAmount: 0
+    slowdownAmount: 4
+    walkSpeedMultiplier: 0.2
+    runSpeedMultiplier: 0.2
 
 - type: entity
   name : disabler bolt
