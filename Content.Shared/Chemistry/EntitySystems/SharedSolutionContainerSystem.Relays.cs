@@ -5,10 +5,13 @@ using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
+#region Events
+
 /// <summary>
 /// This event alerts system that the solution was changed
 /// </summary>
-public sealed class SolutionContainerChangedEvent : EntityEventArgs
+[ByRefEvent]
+public record struct SolutionContainerChangedEvent
 {
     public readonly Solution Solution;
     public readonly string SolutionId;
@@ -68,6 +71,8 @@ public record struct SolutionContainerRelayEvent<TEvent>(TEvent Event, Entity<So
     public TEvent Event = Event;
 }
 
+#endregion Events
+
 public abstract partial class SharedSolutionContainerSystem
 {
     protected void InitializeRelays()
@@ -77,30 +82,33 @@ public abstract partial class SharedSolutionContainerSystem
         SubscribeLocalEvent<ContainedSolutionComponent, ReactionAttemptEvent>(RelaySolutionRefEvent);
     }
 
+    #region Event Handlers
 
-    protected virtual void OnSolutionChanged(EntityUid uid, ContainedSolutionComponent comp, ref SolutionChangedEvent args)
+    protected virtual void OnSolutionChanged(Entity<ContainedSolutionComponent> entity, ref SolutionChangedEvent args)
     {
         var (solutionId, solutionComp) = args.Solution;
         var solution = solutionComp.Solution;
 
-        UpdateAppearance(comp.Container, (solutionId, solutionComp, comp));
-        RaiseLocalEvent(comp.Container, new SolutionContainerChangedEvent(solution, comp.Name));
+        UpdateAppearance(entity.Comp.Container, (solutionId, solutionComp, entity.Comp));
+
+        var relayEvent = new SolutionContainerChangedEvent(solution, entity.Comp.Name);
+        RaiseLocalEvent(entity.Comp.Container, ref relayEvent);
     }
 
-    protected virtual void OnSolutionOverflow(EntityUid uid, ContainedSolutionComponent comp, ref SolutionOverflowEvent args)
+    protected virtual void OnSolutionOverflow(Entity<ContainedSolutionComponent> entity, ref SolutionOverflowEvent args)
     {
         var solution = args.Solution.Comp.Solution;
         var overflow = solution.SplitSolution(args.Overflow);
-        var relayEv = new SolutionContainerOverflowEvent(uid, solution, overflow)
+        var relayEv = new SolutionContainerOverflowEvent(entity.Owner, solution, overflow)
         {
             Handled = args.Handled,
         };
 
-        RaiseLocalEvent(comp.Container, ref relayEv);
+        RaiseLocalEvent(entity.Comp.Container, ref relayEv);
         args.Handled = relayEv.Handled;
     }
 
-
+    #region Relay Event Handlers
 
     private void RelaySolutionValEvent<TEvent>(EntityUid uid, ContainedSolutionComponent comp, TEvent @event)
     {
@@ -108,10 +116,10 @@ public abstract partial class SharedSolutionContainerSystem
         RaiseLocalEvent(comp.Container, ref relayEvent);
     }
 
-    private void RelaySolutionRefEvent<TEvent>(EntityUid uid, ContainedSolutionComponent comp, ref TEvent @event)
+    private void RelaySolutionRefEvent<TEvent>(Entity<ContainedSolutionComponent> entity, ref TEvent @event)
     {
-        var relayEvent = new SolutionRelayEvent<TEvent>(@event, uid, comp.Name);
-        RaiseLocalEvent(comp.Container, ref relayEvent);
+        var relayEvent = new SolutionRelayEvent<TEvent>(@event, entity.Owner, entity.Comp.Name);
+        RaiseLocalEvent(entity.Comp.Container, ref relayEvent);
         @event = relayEvent.Event;
     }
 
@@ -124,13 +132,17 @@ public abstract partial class SharedSolutionContainerSystem
         }
     }
 
-    private void RelaySolutionContainerEvent<TEvent>(EntityUid uid, SolutionContainerManagerComponent comp, ref TEvent @event)
+    private void RelaySolutionContainerEvent<TEvent>(Entity<SolutionContainerManagerComponent> entity, ref TEvent @event)
     {
-        foreach (var (name, soln) in EnumerateSolutions((uid, comp)))
+        foreach (var (name, soln) in EnumerateSolutions((entity.Owner, entity.Comp)))
         {
             var relayEvent = new SolutionContainerRelayEvent<TEvent>(@event, soln, name!);
             RaiseLocalEvent(soln, ref relayEvent);
             @event = relayEvent.Event;
         }
     }
+
+    #endregion Relay Event Handlers
+
+    #endregion Event Handlers
 }

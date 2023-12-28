@@ -84,7 +84,7 @@ namespace Content.Server.Stunnable.Systems
         }
 
         // https://github.com/space-wizards/space-station-14/pull/17288#discussion_r1241213341
-        private void OnSolutionChange(EntityUid uid, StunbatonComponent component, SolutionContainerChangedEvent args)
+        private void OnSolutionChange(EntityUid uid, StunbatonComponent component, ref SolutionContainerChangedEvent args)
         {
             // Explode if baton is activated and rigged.
             if (!TryComp<RiggableComponent>(uid, out var riggable) ||

@@ -43,7 +43,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         UpdateAbsorbent(uid, component);
     }
 
-    private void OnAbsorbentSolutionChange(EntityUid uid, AbsorbentComponent component, SolutionContainerChangedEvent args)
+    private void OnAbsorbentSolutionChange(EntityUid uid, AbsorbentComponent component, ref SolutionContainerChangedEvent args)
     {
         UpdateAbsorbent(uid, component);
     }
