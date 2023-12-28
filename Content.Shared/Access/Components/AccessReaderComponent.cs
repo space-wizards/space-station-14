@@ -65,8 +65,21 @@ public sealed partial class AccessReaderComponent : Component
     public int AccessLogLimit = 20;
 }
 
-[Serializable, NetSerializable]
-public record struct AccessRecord(TimeSpan AccessTime, string Accessor);
+[DataDefinition, Serializable, NetSerializable]
+public sealed partial class AccessRecord
+{
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan AccessTime;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public string Accessor;
+
+    public AccessRecord(TimeSpan accessTime, string accessor)
+    {
+        AccessTime = accessTime;
+        Accessor = accessor;
+    }
+}
 
 [Serializable, NetSerializable]
 public sealed class AccessReaderComponentState : ComponentState
