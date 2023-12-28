@@ -28,7 +28,6 @@ namespace Content.Server.Stunnable.Systems
             SubscribeLocalEvent<BatteryComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<StunbatonComponent, GetHeavyDamageModifierEvent>(MeleeAttackRateEvent);
-            SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
             SubscribeLocalEvent<StunbatonComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
             SubscribeLocalEvent<StunbatonComponent, ItemToggleDoneEvent>(ToggleDone);
         }

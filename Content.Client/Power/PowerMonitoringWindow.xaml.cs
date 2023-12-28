@@ -9,6 +9,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
+using System.Numerics;
 
 namespace Content.Client.Power;
 
