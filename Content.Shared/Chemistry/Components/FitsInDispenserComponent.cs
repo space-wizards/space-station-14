@@ -16,7 +16,6 @@ public sealed partial class FitsInDispenserComponent : Component
     /// <summary>
     /// Solution name that will interact with ReagentDispenserComponent.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("solution")]
-    public string Solution { get; set; } = "default";
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public string Solution = "default";
 }
