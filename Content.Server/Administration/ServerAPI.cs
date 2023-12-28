@@ -74,7 +74,7 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
 
     private void UpdateToken(string token)
     {
-        this._token = token;
+        _token = token;
     }
 
     private void UpdateMotd(string motd)
@@ -589,7 +589,7 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
             }
         }
 
-        // The Serialize into JsonNode into Parse into JsonNode into Parse into string is a bit of a hack
+        // The Serialize into Parse is a bit of a hack
         // TODO: Find a better way to do this
 
         jObject["players"] = JsonNode.Parse(JsonSerializer.Serialize(players));
