@@ -27,5 +27,5 @@ public sealed partial class ContainedSolutionComponent : Component
     /// The name/key of the container the solution is located in.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public string Name = default!;
+    public string ContainerName = default!;
 }

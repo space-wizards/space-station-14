@@ -78,7 +78,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         else
         {
             solutionComp = Comp<SolutionComponent>(solutionId);
-            DebugTools.Assert(TryComp(solutionId, out ContainedSolutionComponent? relation) && relation.Container == uid && relation.Name == name);
+            DebugTools.Assert(TryComp(solutionId, out ContainedSolutionComponent? relation) && relation.Container == uid && relation.ContainerName == name);
             DebugTools.Assert(solutionComp.Solution.Name == name);
 
             var solution = solutionComp.Solution;
@@ -134,7 +134,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         var solution = new SolutionComponent() { Solution = prototype };
         AddComp(uid, solution);
 
-        var relation = new ContainedSolutionComponent() { Container = container.Owner, Name = name };
+        var relation = new ContainedSolutionComponent() { Container = container.Owner, ContainerName = name };
         AddComp(uid, relation);
 
         ContainerSystem.Insert(uid, container, force: true);
@@ -172,11 +172,11 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
     {
         if (TryComp(comp.Container, out SolutionContainerManagerComponent? container))
         {
-            container.Containers.Remove(comp.Name);
+            container.Containers.Remove(comp.ContainerName);
             Dirty(comp.Container, container);
         }
 
-        if (ContainerSystem.TryGetContainer(uid, $"solution@{comp.Name}", out var solutionContainer))
+        if (ContainerSystem.TryGetContainer(uid, $"solution@{comp.ContainerName}", out var solutionContainer))
             solutionContainer.Shutdown(EntityManager, _netManager);
     }
 

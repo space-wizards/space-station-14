@@ -91,7 +91,7 @@ public abstract partial class SharedSolutionContainerSystem
 
         UpdateAppearance(entity.Comp.Container, (solutionId, solutionComp, entity.Comp));
 
-        var relayEvent = new SolutionContainerChangedEvent(solution, entity.Comp.Name);
+        var relayEvent = new SolutionContainerChangedEvent(solution, entity.Comp.ContainerName);
         RaiseLocalEvent(entity.Comp.Container, ref relayEvent);
     }
 
@@ -112,13 +112,13 @@ public abstract partial class SharedSolutionContainerSystem
 
     private void RelaySolutionValEvent<TEvent>(EntityUid uid, ContainedSolutionComponent comp, TEvent @event)
     {
-        var relayEvent = new SolutionRelayEvent<TEvent>(@event, uid, comp.Name);
+        var relayEvent = new SolutionRelayEvent<TEvent>(@event, uid, comp.ContainerName);
         RaiseLocalEvent(comp.Container, ref relayEvent);
     }
 
     private void RelaySolutionRefEvent<TEvent>(Entity<ContainedSolutionComponent> entity, ref TEvent @event)
     {
-        var relayEvent = new SolutionRelayEvent<TEvent>(@event, entity.Owner, entity.Comp.Name);
+        var relayEvent = new SolutionRelayEvent<TEvent>(@event, entity.Owner, entity.Comp.ContainerName);
         RaiseLocalEvent(entity.Comp.Container, ref relayEvent);
         @event = relayEvent.Event;
     }
