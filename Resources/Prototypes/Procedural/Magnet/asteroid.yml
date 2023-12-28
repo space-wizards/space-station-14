@@ -1,4 +1,4 @@
-# TODO: Cluster of smol
+# TODO: Cluster of smols
 
 - type: dungeonConfig
   id: BlobAsteroid
@@ -16,21 +16,21 @@
           octaves: 2
           lacunarity: 2
           cellularDistanceFunction: Euclidean
-    # Everything else
-    postGeneration:
-      # Generate vents
-      # TODO: Completely random poisson or whatever the fuck
-      # Generate biome
-      - !type:BiomePostGen
-        template: Caves
+  # Everything else
+  postGeneration:
+    # Generate vents
+    # TODO: Completely random poisson or whatever the fuck
+    # Generate biome
+    - !type:BiomePostGen
+      biomeTemplate: Lava
 
-      # Generate ore veins
-      - !type:MarkerLayerPostGen
-        markerTemplate: OreTin
+    # Generate ore veins
+    #- !type:MarkerLayerPostGen
+    #  markerTemplate: OreTin
 
-      # TODO: Remove biome
+    # TODO: Remove biome
 
-      # Generate flora / fauna if we want
+    # Generate flora / fauna if we want
 
 - type: dungeonConfig
   id: SpindlyAsteroid

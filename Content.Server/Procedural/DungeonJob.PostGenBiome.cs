@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Content.Server.Parallax;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
+using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
