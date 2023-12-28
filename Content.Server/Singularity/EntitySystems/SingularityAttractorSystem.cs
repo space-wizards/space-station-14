@@ -1,17 +1,15 @@
-using System.Numerics;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Physics.Components;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Singularity.Components;
+using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
-
-using Content.Shared.Singularity.Components;
-using Content.Shared.Singularity.EntitySystems;
-
-using Content.Server.Singularity.Components;
+using System.Numerics;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -20,8 +18,8 @@ namespace Content.Server.Singularity.EntitySystems;
 /// </summary>
 public sealed class SingularityAttractorSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <summary>
     /// The minimum range at which the attraction will act.
@@ -32,6 +30,7 @@ public sealed class SingularityAttractorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<SingularityAttractorComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -42,14 +41,15 @@ public sealed class SingularityAttractorSystem : EntitySystem
     /// <param name="frameTime">The time elapsed since the last set of updates.</param>
     public override void Update(float frameTime)
     {
-        if(!_timing.IsFirstTimePredicted)
+        if (!_timing.IsFirstTimePredicted)
             return;
 
-        foreach(var (attractor, xform) in EntityManager.EntityQuery<SingularityAttractorComponent, TransformComponent>())
+        var query = EntityQueryEnumerator<SingularityAttractorComponent, TransformComponent>();
+        var now = _timing.CurTime;
+        while (query.MoveNext(out var uid, out var attractor, out var xform))
         {
-            var curTime = _timing.CurTime;
-            if (attractor.LastPulseTime + attractor.TargetPulsePeriod <= curTime)
-                Update(attractor.Owner, attractor, xform);
+            if (attractor.LastPulseTime + attractor.TargetPulsePeriod <= now)
+                Update(uid, attractor, xform);
         }
     }
 
@@ -61,22 +61,21 @@ public sealed class SingularityAttractorSystem : EntitySystem
     /// <param name="xform">The transform of the attractor to make pulse.</param>
     private void Update(EntityUid uid, SingularityAttractorComponent? attractor = null, TransformComponent? xform = null)
     {
-        if(!Resolve(uid, ref attractor))
+        if (!Resolve(uid, ref attractor, ref xform))
             return;
 
-        if(!this.IsPowered(uid, EntityManager))
+        if (!this.IsPowered(uid, EntityManager))
             return;
 
         attractor.LastPulseTime = _timing.CurTime;
-        if (!Resolve(uid, ref xform))
-            return;
 
         var mapPos = xform.Coordinates.ToMap(EntityManager);
 
         if (mapPos == MapCoordinates.Nullspace)
             return;
 
-        foreach(var (singulo, walk, singuloXform) in EntityManager.EntityQuery<SingularityComponent, RandomWalkComponent, TransformComponent>())
+        var query = EntityQuery<SingularityComponent, RandomWalkComponent, TransformComponent>();
+        foreach (var (singulo, walk, singuloXform) in query)
         {
             var singuloMapPos = singuloXform.Coordinates.ToMap(EntityManager);
 
@@ -84,9 +83,11 @@ public sealed class SingularityAttractorSystem : EntitySystem
                 continue;
 
             var biasBy = mapPos.Position - singuloMapPos.Position;
-            if (biasBy.Length() <= MinAttractRange)
+            var length = biasBy.Length();
+            if (length <= MinAttractRange)
                 return;
-            biasBy = Vector2.Normalize(biasBy) * (attractor.BaseRange / biasBy.Length());
+
+            biasBy = Vector2.Normalize(biasBy) * (attractor.BaseRange / length);
 
             walk.BiasVector += biasBy;
         }
@@ -98,8 +99,8 @@ public sealed class SingularityAttractorSystem : EntitySystem
     /// <param name="uid">The uid of the attractor to start up.</param>
     /// <param name="comp">The state of the attractor to start up.</param>
     /// <param name="args">The startup prompt arguments.</param>
-    private void OnMapInit(EntityUid uid, SingularityAttractorComponent comp, MapInitEvent args)
+    private void OnMapInit(Entity<SingularityAttractorComponent> ent, ref MapInitEvent args)
     {
-        comp.LastPulseTime = _timing.CurTime;
+        ent.Comp.LastPulseTime = _timing.CurTime;
     }
 }
