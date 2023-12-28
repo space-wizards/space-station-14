@@ -39,6 +39,7 @@
   - type: Construction
     graph: StationBeaconPart
     node: complete
+  - type: CollideOnAnchor
   - type: Physics
     canCollide: false
     bodyType: static
