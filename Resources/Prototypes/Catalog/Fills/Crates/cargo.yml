@@ -164,10 +164,13 @@
       prob: 0.05
       orGroup: Clothes
     - id: ClothingOuterHardsuitCBURN
-      prob: 0.01
+      prob: 0.001
+      orGroup: Clothes
+    - id: ClothingOuterHardsuitBasic
+      prob: 0.001
       orGroup: Clothes
     - id: ClothingBackpackERTClown
-      prob: 0.01
+      prob: 0.001
       orGroup: Clothes
     - id: ClothingNeckCloakAdmin
       prob: 0.01
@@ -182,6 +185,9 @@
       prob: 0.01
       orGroup: Clothes
     - id: ClothingHeadHatCatEars
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingHeadHatDogEars
       prob: 0.01
       orGroup: Clothes
     - id: ClothingOuterArmorReflective
@@ -248,6 +254,12 @@
     - id: ClothingEyesGlassesGar
       prob: 0.01
       orGroup: Swag
+    - id: ClothingEyesGlassesGarGiga
+      prob: 0.01
+      orGroup: Swag   
+    - id: ClothingEyesGlassesGarOrange
+      prob: 0.01
+      orGroup: Swag      
     - id: ClothingHeadHatChameleon
       prob: 0.01
       orGroup: Swag

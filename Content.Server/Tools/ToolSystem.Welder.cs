@@ -1,4 +1,5 @@
 using Content.Server.Chemistry.Components;
+using Content.Server.IgnitionSource;
 using Content.Server.Tools.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Database;
@@ -17,6 +18,7 @@ namespace Content.Server.Tools
     public sealed partial class ToolSystem
     {
         [Dependency] private readonly SharedItemToggleSystem _itemToggle = default!;
+        [Dependency] private readonly IgnitionSourceSystem _ignitionSource = default!;
         private readonly HashSet<EntityUid> _activeWelders = new();
 
         private const float WelderUpdateTimer = 1f;

@@ -159,7 +159,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (inputContainer.ContainedEntities.Count >= entity.Comp.StorageMaxEntities)
                 return;
 
-            if (!inputContainer.Insert(heldEnt, EntityManager))
+            if (!_containerSystem.Insert(heldEnt, inputContainer))
                 return;
 
             args.Handled = true;
@@ -244,7 +244,7 @@ namespace Content.Server.Kitchen.EntitySystems
             var inputContainer = _containerSystem.EnsureContainer<Container>(entity.Owner, SharedReagentGrinder.InputContainerId);
             var ent = GetEntity(message.EntityId);
 
-            if (inputContainer.Remove(ent))
+            if (_containerSystem.Remove(ent, inputContainer))
             {
                 _randomHelper.RandomOffset(ent, 0.4f);
                 ClickSound(entity);

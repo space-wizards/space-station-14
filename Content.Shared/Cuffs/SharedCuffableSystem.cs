@@ -384,7 +384,7 @@ namespace Content.Shared.Cuffs
                 var container = cuffable.Container;
                 var entity = container.ContainedEntities[^1];
 
-                container.Remove(entity);
+                _container.Remove(entity, container);
                 _transform.SetWorldPosition(entity, _transform.GetWorldPosition(owner));
             }
 
@@ -448,7 +448,7 @@ namespace Content.Shared.Cuffs
             // Success!
             _hands.TryDrop(user, handcuff);
 
-            component.Container.Insert(handcuff);
+            _container.Insert(handcuff, component.Container);
             UpdateHeldItems(target, handcuff, component);
             return true;
         }
@@ -635,7 +635,7 @@ namespace Content.Shared.Cuffs
             cuff.Removing = true;
             _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
 
-            cuffable.Container.Remove(cuffsToRemove);
+            _container.Remove(cuffsToRemove, cuffable.Container);
 
             if (_net.IsServer)
             {
