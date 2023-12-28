@@ -27,7 +27,6 @@ public sealed class AccessReaderSystem : EntitySystem
     [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedStationRecordsSystem _recordsSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
 
     public override void Initialize()
     {
@@ -349,7 +348,7 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="accessor">The accessor to log</param>
     public void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor)
     {
-        if (_metaDataSystem.EntityPaused(ent))
+        if (IsPaused(ent))
             return;
 
         if (ent.Comp.AccessLog.Count >= ent.Comp.AccessLogLimit)
