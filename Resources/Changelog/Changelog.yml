@@ -1,10 +1,4 @@
 Entries:
-- author: TheShuEd
-  changes:
-  - message: The trees and rocks are now rotating to follow the camera.
-    type: Tweak
-  id: 4960
-  time: '2023-10-06T01:50:25.0000000+00:00'
 - author: gusxyz
   changes:
   - message: Syndicate bombs collide again.
@@ -3522,3 +3516,11 @@ Entries:
   id: 5460
   time: '2023-12-28T03:03:00.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23045
+- author: Alekshhh
+  changes:
+  - message: Changed wall lockers visually to match regular lockers and sit on walls
+      better
+    type: Tweak
+  id: 5461
+  time: '2023-12-28T03:05:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23060
