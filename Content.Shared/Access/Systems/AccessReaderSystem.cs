@@ -346,7 +346,7 @@ public sealed class AccessReaderSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The reader to log the access on</param>
     /// <param name="accessor">The accessor to log</param>
-    public void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor)
+    private void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor)
     {
         if (IsPaused(ent))
             return;
