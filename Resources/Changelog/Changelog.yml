@@ -1,11 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - message: Emitters now destroy rocks in 1 hit like crushers and PKAs, you can use
-      them for laser mining.
-    type: Tweak
-  id: 5038
-  time: '2023-10-22T05:51:01.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix tile placement mispredicting and flickering.
@@ -3992,4 +3985,18 @@ Entries:
     type: Tweak
   id: 5461
   time: '2023-12-28T12:47:13.0000000+00:00'
+  url: null
+- author: ZoNeSRuS
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0434\u043E\u0441\
+      \u0442\u0430\u0432\u043A\u0430 \u043E\u0440\u0443\u0436\u0438\u044F \u043F\u0440\
+      \u0438 \u0433\u0430\u043C\u043C\u0430 \u043A\u043E\u0434\u0435."
+    type: Add
+  - message: "\u041A\u0430\u0440\u0433\u043E: \u0432 \u044F\u0449\u0438\u043A\u0438\
+      \ \u0434\u0440\u043E\u0431\u043E\u0432\u0438\u043A\u043E\u0432 \u0434\u043E\u0431\
+      \u0430\u0432\u043B\u0435\u043D\u044B \u0431\u0430\u043D\u0434\u043E\u043B\u044C\
+      \u0435\u0440\u044B \u04452."
+    type: Tweak
+  id: 5462
+  time: '2023-12-28T12:49:36.0000000+00:00'
   url: null
