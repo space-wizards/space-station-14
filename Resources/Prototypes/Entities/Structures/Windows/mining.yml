@@ -54,7 +54,6 @@
 - type: entity
   parent: ShuttleWindow
   id: MiningWindowDiagonal
-  name: diagonal mining window
   suffix: diagonal
   placement:
     mode: SnapgridCenter

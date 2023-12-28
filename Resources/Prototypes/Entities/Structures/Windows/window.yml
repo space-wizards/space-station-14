@@ -196,7 +196,6 @@
 - type: entity
   parent: Window
   id: WindowDiagonal
-  name: diagonal window
   suffix: diagonal
   placement:
     mode: SnapgridCenter

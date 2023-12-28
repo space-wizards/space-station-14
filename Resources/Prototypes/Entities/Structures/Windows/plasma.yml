@@ -98,7 +98,6 @@
 - type: entity
   parent: PlasmaWindow
   id: PlasmaWindowDiagonal
-  name: diagonal plasma window
   suffix: diagonal
   placement:
     mode: SnapgridCenter

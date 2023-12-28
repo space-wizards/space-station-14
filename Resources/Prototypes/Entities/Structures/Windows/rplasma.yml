@@ -110,7 +110,6 @@
 - type: entity
   parent: ReinforcedPlasmaWindow
   id: ReinforcedPlasmaWindowDiagonal
-  name: diagonal reinforced plasma window
   suffix: diagonal
   placement:
     mode: SnapgridCenter

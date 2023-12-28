@@ -56,7 +56,6 @@
 - type: entity
   parent: ReinforcedUraniumWindow
   id: ReinforcedUraniumWindowDiagonal
-  name: diagonal reinforced uranium window
   suffix: diagonal
   placement:
     mode: SnapgridCenter

@@ -54,7 +54,6 @@
 - type: entity
   parent: UraniumWindow
   id: UraniumWindowDiagonal
-  name: diagonal uranium window
   suffix: diagonal
   placement:
     mode: SnapgridCenter

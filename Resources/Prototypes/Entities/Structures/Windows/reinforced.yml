@@ -118,7 +118,6 @@
 - type: entity
   parent: ReinforcedWindow
   id: ReinforcedWindowDiagonal
-  name: reinforced window diagonal
   suffix: diagonal
   placement:
     mode: SnapgridCenter
