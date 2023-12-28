@@ -69,31 +69,21 @@ public sealed class LightningSystem : SharedLightningSystem
     {
         //To Do: add support to different priority target tablem for different lightning types
         //To Do: Remove Hardcode LightningTargetComponent (this should be a parameter of the SharedLightningComponent)
-        _lookupTargets.Clear();
-        _lookup.GetEntitiesInRange(Transform(user).Coordinates, range, _lookupTargets); //To Do: remove hardcode component
-        // TODO: This is still pretty bad for perf but better than before and at least it doesn't re-allocate
+        //To Do: This is still pretty bad for perf but better than before and at least it doesn't re-allocate
         // several hashsets every time
-        _lookupTargetsList.AddRange(_lookupTargets);
 
-        _random.Shuffle(_lookupTargetsList);
-        _lookupTargetsList.Sort(
-            (x, y) => y.Comp.Priority.CompareTo(x.Comp.Priority));
-
-        var realCount = Math.Min(_lookupTargetsList.Count, boltCount);
-
+        var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).MapPosition, range).ToList();
+        _random.Shuffle(targets);
+        targets.Sort((x, y) => y.Priority.CompareTo(x.Priority));
+        var realCount = Math.Min(targets.Count, boltCount);
         if (realCount <= 0)
             return;
-
         for (int i = 0; i < realCount; i++)
         {
-            if (Deleted(user) || Deleted(_lookupTargetsList[i].Owner))
-                continue;
-
-            ShootLightning(user, _lookupTargetsList[i].Owner, lightningPrototype);
-
+            ShootLightning(user, targets[i].Owner, lightningPrototype);
             if (arcDepth > 0)
             {
-                ShootRandomLightnings(_lookupTargetsList[i].Owner, range, 1, lightningPrototype, arcDepth - _lookupTargetsList[i].Comp.LightningResistance);
+                ShootRandomLightnings(targets[i].Owner, range, 1, lightningPrototype, arcDepth - targets[i].LightningResistance);
             }
         }
     }

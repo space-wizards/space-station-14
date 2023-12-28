@@ -28,7 +28,6 @@ public sealed class ChasingWalkSystem : VirtualController
 
         SubscribeLocalEvent<ChasingWalkComponent, MapInitEvent>(OnChasingMapInit);
         SubscribeLocalEvent<ChasingWalkComponent, EntityUnpausedEvent>(OnChasingUnpaused);
-        _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
     private void OnChasingMapInit(EntityUid uid, ChasingWalkComponent component, MapInitEvent args)
