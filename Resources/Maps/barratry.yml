@@ -32940,11 +32940,6 @@ entities:
       pos: 17.5,3.5
       parent: 1
       type: Transform
-  - uid: 3406
-    components:
-    - pos: -41.5,36.5
-      parent: 1
-      type: Transform
   - uid: 5916
     components:
     - pos: -7.5,44.5
@@ -32993,11 +32988,6 @@ entities:
   - uid: 5925
     components:
     - pos: -5.5,40.5
-      parent: 1
-      type: Transform
-  - uid: 8038
-    components:
-    - pos: -41.5,37.5
       parent: 1
       type: Transform
   - uid: 8933
@@ -33052,26 +33042,6 @@ entities:
     components:
     - rot: 1.5707963267948966 rad
       pos: -61.5,65.5
-      parent: 1
-      type: Transform
-  - uid: 9066
-    components:
-    - pos: -42.5,36.5
-      parent: 1
-      type: Transform
-  - uid: 9073
-    components:
-    - pos: -42.5,37.5
-      parent: 1
-      type: Transform
-  - uid: 9077
-    components:
-    - pos: -43.5,36.5
-      parent: 1
-      type: Transform
-  - uid: 9086
-    components:
-    - pos: -43.5,37.5
       parent: 1
       type: Transform
   - uid: 12611
@@ -48979,13 +48949,6 @@ entities:
   - uid: 7526
     components:
     - pos: -13.010754,43.235687
-      parent: 1
-      type: Transform
-- proto: FloraTreeChristmas02
-  entities:
-  - uid: 3399
-    components:
-    - pos: -42.480637,37.01056
       parent: 1
       type: Transform
 - proto: FloraTreeStump
@@ -85252,6 +85215,13 @@ entities:
   - uid: 7575
     components:
     - pos: -22.5,38.5
+      parent: 1
+      type: Transform
+- proto: SpawnMobCrabAtmos
+  entities:
+  - uid: 3399
+    components:
+    - pos: -81.5,37.5
       parent: 1
       type: Transform
 - proto: SpawnMobFoxRenault
