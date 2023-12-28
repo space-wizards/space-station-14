@@ -37,7 +37,8 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
 
     [Dependency] private readonly IComponentFactory _componentFactory = default!; // Needed to circumvent the "IoC has no context on this thread" error until I figure out how to do it properly
     [Dependency] private readonly ITaskManager _taskManager = default!; // game explodes when calling stuff from the non-game thread
-    private string token = default!;
+
+    private string _token = default!;
     private ISawmill _sawmill = default!;
     private string _motd = default!;
 
@@ -73,7 +74,7 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
 
     private void UpdateToken(string token)
     {
-        this.token = token;
+        this._token = token;
     }
 
     private void UpdateMotd(string motd)
@@ -525,7 +526,7 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
     /// </summary>
     private async Task<bool> InfoHandler(IStatusHandlerContext context)
     {
-        if (context.RequestMethod != HttpMethod.Get || context.Url!.AbsolutePath != "/admin/info" || token == string.Empty)
+        if (context.RequestMethod != HttpMethod.Get || context.Url!.AbsolutePath != "/admin/info" || _token == string.Empty)
         {
             return false;
             // 404
@@ -569,6 +570,9 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
             }
         }
 
+        // The Serialize into JsonNode into Parse into JsonNode into Parse into string is a bit of a hack
+        // TODO: Find a better way to do this
+
         jObject["players"] = JsonNode.Parse(JsonSerializer.Serialize(players));
         jObject["admins"] = JsonNode.Parse(JsonSerializer.Serialize(onlineAdmins));
         jObject["deadmined"] = JsonNode.Parse(JsonSerializer.Serialize(onlineAdminsDeadmined));
@@ -608,11 +612,11 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
             return false;
         } // No auth header, no access
 
-        if (authToken == token)
+        if (authToken == _token)
             return true;
 
         // Invalid auth header, no access
-        _sawmill.Info(@"Unauthorized access attempt to admin API. ""{0}"" vs ""{1}""", authToken, token);
+        _sawmill.Info(@"Unauthorized access attempt to admin API. ""{0}"" vs ""{1}""", authToken, _token);
         return false;
     }
 }
