@@ -1,11 +1,4 @@
 Entries:
-- author: nikthechampiongr
-  changes:
-  - message: Players can no longer telekinetically  pry open doors while they are
-      not under the effects of gravity.
-    type: Fix
-  id: 5037
-  time: '2023-10-22T05:49:56.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Emitters now destroy rocks in 1 hit like crushers and PKAs, you can use
@@ -3989,4 +3982,14 @@ Entries:
     type: Fix
   id: 5460
   time: '2023-12-26T13:40:57.0000000+00:00'
+  url: null
+- author: ZoNeSRuS
+  changes:
+  - message: "\u0448\u043B\u0435\u043C \u044D\u043B\u0438\u0442\u043D\u043E\u0433\u043E\
+      \ \u0441\u043A\u0430\u0444\u0430\u043D\u0434\u0440\u0430 \u0421\u0438\u043D\u0434\
+      \u0438\u043A\u0430\u0442\u0430 \u0437\u0430\u0449\u0438\u0442\u0430 \u043E\u0442\
+      \ \u043B\u0430\u0437\u0435\u0440\u043E\u0432 80>20"
+    type: Tweak
+  id: 5461
+  time: '2023-12-28T12:47:13.0000000+00:00'
   url: null
