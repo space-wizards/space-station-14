@@ -70,6 +70,18 @@
   recipeUnlocks:
   - ClothingShoesBootsMag
 
+- type: technology
+  id: AnomalyCoreHarnessing
+  name: research-technology-anomaly-harnessing
+  icon:
+    sprite: Objects/Weapons/Melee/gorilla.rsi
+    state: icon
+  discipline: Experimental
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - WeaponGauntletGorilla
+
 # Tier 2
 
 - type: technology

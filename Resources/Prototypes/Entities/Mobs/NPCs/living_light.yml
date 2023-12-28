@@ -199,7 +199,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
     soundEmpty:
-      path: /Audio/Items/lighter_off.ogg
+      path: /Audio/Items/Lighters/lighter_off.ogg
   - type: Destructible
     thresholds:
     - trigger:

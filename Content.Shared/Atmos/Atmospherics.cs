@@ -46,6 +46,15 @@ namespace Content.Shared.Atmos
         public const float T20C = 293.15f;
 
         /// <summary>
+        ///     Do not allow any gas mixture temperatures to exceed this number. It is occasionally possible
+        ///     to have very small heat capacity (e.g. room that was just unspaced) and for large amounts of
+        ///     energy to be transferred to it, even for a brief moment. However, this messes up subsequent
+        ///     calculations and so cap it here. The physical interpretation is that at this temperature, any
+        ///     gas that you would have transforms into plasma.
+        /// </summary>
+        public const float Tmax = 200e3f;
+
+        /// <summary>
         ///     Liters in a cell.
         /// </summary>
         public const float CellVolume = 2500f;
@@ -183,7 +192,7 @@ namespace Content.Shared.Atmos
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
-        public const float FirePlasmaEnergyReleased = 16e3f; // methane is 16 kJ/mol
+        public const float FirePlasmaEnergyReleased = 160e3f; // methane is 16 kJ/mol, plus plasma's spark of magic
         public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;

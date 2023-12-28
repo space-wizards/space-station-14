@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Cargo.Components;
@@ -6,7 +7,6 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
@@ -14,6 +14,12 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class CargoTest
 {
+    public static HashSet<ProtoId<CargoProductPrototype>> Ignored = new ()
+    {
+        // This is ignored because it is explicitly intended to be able to sell for more than it costs.
+        new("FunCrateGambling")
+    };
+
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
@@ -23,27 +29,25 @@ public sealed class CargoTest
         var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var pricing = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
 
         await server.WaitAssertion(() =>
         {
-            var mapId = testMap.MapId;
-
             Assert.Multiple(() =>
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
-                    var ent = entManager.SpawnEntity(proto.Product, new MapCoordinates(Vector2.Zero, mapId));
+                    if (Ignored.Contains(proto.ID))
+                        continue;
+
+                    var ent = entManager.SpawnEntity(proto.Product, testMap.MapCoords);
                     var price = pricing.GetPrice(ent);
 
                     Assert.That(price, Is.AtMost(proto.PointCost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.PointCost} but sell is {price}!");
                     entManager.DeleteEntity(ent);
                 }
             });
-
-            mapManager.DeleteMap(mapId);
         });
 
         await pair.CleanReturnAsync();

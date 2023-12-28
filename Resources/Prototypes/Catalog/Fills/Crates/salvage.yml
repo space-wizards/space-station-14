@@ -79,6 +79,8 @@
         prob: 0.001
       - id: ClothingHeadHatCatEars
         prob: 0.01
+      - id: ClothingHeadHatDogEars
+        prob: 0.01
         # TRAITOR EQUIPMENT (0.01%)
       - id: Telecrystal10
         prob: 0.0001

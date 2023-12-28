@@ -50,6 +50,16 @@
         - LowImpassable
 
 - type: entity
+  parent: MonkeyCube
+  id: KoboldCube
+  name: kobold cube
+  description: Just add water!
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobKobold
+
+- type: entity
   parent: PlushieCarp
   id: DehydratedSpaceCarp
   name: dehydrated space carp
