@@ -93,9 +93,20 @@ public sealed partial class DungeonJob
         await SuspendIfOutOfTime();
         ValidateResume();
 
-        foreach (var node in spawnSet)
+        foreach (var (node, mask) in spawnSet)
         {
-            var ent = _entManager.SpawnAtPosition(markerTemplate.Prototype, new EntityCoordinates(gridUid, node + grid.TileSizeHalfVector));
+            string? proto;
+
+            if (mask != null && markerTemplate.EntityMask.TryGetValue(mask, out var maskedProto))
+            {
+                proto = maskedProto;
+            }
+            else
+            {
+                proto = markerTemplate.Prototype;
+            }
+
+            var ent = _entManager.SpawnAtPosition(proto, new EntityCoordinates(gridUid, node + grid.TileSizeHalfVector));
             var xform = xformQuery.Get(ent);
 
             if (!xform.Comp.Anchored)

@@ -484,7 +484,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     }
                 }
 
-                foreach (var node in spawnSet)
+                foreach (var node in spawnSet.Keys)
                 {
                     var chunkOrigin = SharedMapSystem.GetChunkIndices(node, ChunkSize) * ChunkSize;
 
@@ -526,8 +526,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                             lockMarkers[lockLayer] = nodes;
                         }
                     }
-
-                    _tilePool.Return(spawnSet);
                 }
             });
         }
@@ -547,7 +545,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         bool forced,
         Box2i bounds,
         Random rand,
-        out HashSet<Vector2i> spawnSet,
+        out Dictionary<Vector2i, string?> spawnSet,
         out HashSet<EntityUid> existingEnts,
         bool emptyTiles = true)
     {
@@ -558,7 +556,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         var count = (int) (bounds.Area / (layerProto.Radius * layerProto.Radius));
         count = Math.Min(count, layerProto.MaxCount);
 
-        spawnSet = _tilePool.Get();
+        spawnSet = new Dictionary<Vector2i, string?>();
         var visited = _tilePool.Get();
         existingEnts = new HashSet<EntityUid>();
 
@@ -631,7 +629,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 DebugTools.Assert(layerProto.EntityMask.Count == 0 || !string.IsNullOrEmpty(proto));
                 groupSize--;
-                spawnSet.Add(node);
+                spawnSet.Add(node, proto);
 
                 if (existing != null)
                 {
