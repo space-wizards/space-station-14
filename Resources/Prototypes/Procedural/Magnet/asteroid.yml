@@ -1,3 +1,5 @@
+# TODO: Cluster of smol
+
 - type: dungeonConfig
   id: BlobAsteroid
   # Floor generation
@@ -17,12 +19,16 @@
     # Everything else
     postGeneration:
       # Generate vents
+      # TODO: Completely random poisson or whatever the fuck
+      # Generate biome
+      - !type:BiomePostGen
+        template: Caves
 
       # Generate ore veins
       - !type:MarkerLayerPostGen
-        markerProto: OreTin
-        maskNoise:
-      # Generate rest of the rocks
+        markerTemplate: OreTin
+
+      # TODO: Remove biome
 
       # Generate flora / fauna if we want
 

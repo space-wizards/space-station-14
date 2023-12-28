@@ -21,14 +21,11 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Noise;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Threading;
 using Robust.Shared.Utility;
 
@@ -325,7 +322,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         {
             if (_xformQuery.TryGetComponent(pSession.AttachedEntity, out var xform) &&
                 _handledEntities.Add(pSession.AttachedEntity.Value) &&
-                 _biomeQuery.TryGetComponent(xform.MapUid, out var biome))
+                 _biomeQuery.TryGetComponent(xform.MapUid, out var biome) &&
+                biome.Enabled)
             {
                 var worldPos = _transform.GetWorldPosition(xform);
                 AddChunksInRange(biome, worldPos);
@@ -341,7 +339,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             {
                 if (!_handledEntities.Add(viewer) ||
                     !_xformQuery.TryGetComponent(viewer, out xform) ||
-                    !_biomeQuery.TryGetComponent(xform.MapUid, out biome))
+                    !_biomeQuery.TryGetComponent(xform.MapUid, out biome) ||
+                    !biome.Enabled)
                 {
                     continue;
                 }
@@ -361,6 +360,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         while (loadBiomes.MoveNext(out var gridUid, out var biome, out var grid))
         {
+            if (!biome.Enabled)
+                continue;
+
             // Load new chunks
             LoadChunks(biome, gridUid, grid, biome.Seed);
             // Unload old chunks
@@ -536,6 +538,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     /// <summary>
     /// Gets the marker nodes for the specified area.
     /// </summary>
+    /// <param name="emptyTiles">Should we include empty tiles when determine markers (e.g. if they are yet to be loaded)</param>
     public void GetMarkerNodes(
         EntityUid gridUid,
         BiomeComponent biome,
@@ -545,7 +548,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         Box2i bounds,
         Random rand,
         out HashSet<Vector2i> spawnSet,
-        out HashSet<EntityUid> existingEnts)
+        out HashSet<EntityUid> existingEnts,
+        bool emptyTiles = true)
     {
         var frontier = new ValueList<Vector2i>(32);
         // TODO: Need poisson but crashes whenever I use moony's due to inputs or smth idk
@@ -597,6 +601,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     }
                 }
 
+                // Empty tile, skip if relevant.
+                if (!emptyTiles && (!_mapSystem.TryGetTile(grid, node, out var tile) || tile.IsEmpty))
+                    continue;
+
                 // Check if it's a valid spawn, if so then use it.
                 var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, node);
                 enumerator.MoveNext(out var existing);
@@ -624,8 +632,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 DebugTools.Assert(layerProto.EntityMask.Count == 0 || !string.IsNullOrEmpty(proto));
                 groupSize--;
                 spawnSet.Add(node);
-
-
 
                 if (existing != null)
                 {
