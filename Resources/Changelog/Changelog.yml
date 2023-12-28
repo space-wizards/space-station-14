@@ -1,53 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix tile placement mispredicting and flickering.
-    type: Fix
-  id: 5039
-  time: '2023-10-22T05:53:39.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - message: Fixed a bug that caused items to get stuck to vehicles when unequipping
-      clothing.
-    type: Fix
-  id: 5040
-  time: '2023-10-22T05:54:30.0000000+00:00'
-- author: Endecc
-  changes:
-  - message: Added the Requisition Digi-board, a wireless cargo computer (and high-capacity
-      clipboard) for the Quartermaster's Locker.
-    type: Add
-  - message: Added a new Steal objective for traitors, as this new fancy clipboard
-      has access to most of Nanotrasen's accounting details!
-    type: Add
-  id: 5041
-  time: '2023-10-22T07:34:06.0000000+00:00'
-- author: stopbreaking
-  changes:
-  - message: Replaced wielding do_after with an interaction cooldown.
-    type: Tweak
-  id: 5042
-  time: '2023-10-22T13:53:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Tile-prying do_after is now predicted.
-    type: Tweak
-  id: 5043
-  time: '2023-10-23T13:20:33.0000000+00:00'
-- author: Tryded
-  changes:
-  - message: Changed the damage of the double bladed energy sword to 17 heat + 17
-      Slash (The Double Bladed energy sword use to deal as much damage as an energy
-      dagger.)
-    type: Tweak
-  id: 5044
-  time: '2023-10-23T14:35:33.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Fixed activating artifacts with magboots.
-    type: Fix
-  id: 5045
-  time: '2023-10-24T06:18:46.0000000+00:00'
 - author: Stray-Pyramid
   changes:
   - message: Ore bags now pickup artifact fragments as well as ores
@@ -3874,6 +3825,13 @@ Entries:
   id: 5452
   time: '2023-12-23T17:23:14.0000000+00:00'
   url: null
+- author: Admiral-Obvious-001
+  changes:
+  - message: Reduced per pellet damage of shotguns slightly.
+    type: Tweak
+  id: 5452
+  time: '2023-12-27T09:26:42.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23042
 - author: Ady4
   changes:
   - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u044B \u0447\u0435\
@@ -3884,6 +3842,18 @@ Entries:
   id: 5453
   time: '2023-12-24T13:36:37.0000000+00:00'
   url: null
+- author: mirrorcult
+  changes:
+  - message: Pacifists can now attack in general, but are still forbidden from hurting
+      living creatures or dangerous things.
+    type: Tweak
+  - message: Pacifists can now disarm people. They are pacifist, after all.
+    type: Tweak
+  - message: Pacifists can now use flashes (and zero-damaging melee weapons, in general)
+    type: Tweak
+  id: 5453
+  time: '2023-12-27T09:55:48.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23037
 - author: Ady4
   changes:
   - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0432\u043E\u0437\
@@ -3894,6 +3864,13 @@ Entries:
   id: 5454
   time: '2023-12-24T13:38:40.0000000+00:00'
   url: null
+- author: snebl
+  changes:
+  - message: Fixed emergency and extended nitrogen tanks having the same volume.
+    type: Fix
+  id: 5454
+  time: '2023-12-27T09:56:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23040
 - author: AlexandrSTG
   changes:
   - message: "\u0438\u0437\u043C\u0435\u043D\u0435\u043D\u044B \u043E\u043F\u0438\u0441\
@@ -3925,6 +3902,13 @@ Entries:
   id: 5455
   time: '2023-12-24T13:48:31.0000000+00:00'
   url: null
+- author: Blazeror
+  changes:
+  - message: You can now pry open windoors by hand when they are unpowered.
+    type: Fix
+  id: 5455
+  time: '2023-12-27T12:28:29.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23047
 - author: Meower
   changes:
   - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0432\u043E\u0437\
@@ -3935,6 +3919,13 @@ Entries:
   id: 5456
   time: '2023-12-24T13:53:59.0000000+00:00'
   url: null
+- author: Emisse
+  changes:
+  - message: The Grand Lottery now has much more prizes in store!
+    type: Tweak
+  id: 5456
+  time: '2023-12-27T12:31:03.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23048
 - author: ZoNeSRuS
   changes:
   - message: "\u0414\u0430\u0431\u043B\u0430 \u0432 \u0441\u0442\u043E\u0439\u043A\
@@ -3951,55 +3942,6 @@ Entries:
   id: 5457
   time: '2023-12-24T15:04:41.0000000+00:00'
   url: null
-- author: VladIsLove-e
-  changes:
-  - message: "\u041D\u043E\u0432\u043E\u0433\u043E\u0434\u043D\u0435\u0435 \u043E\u0431\
-      \u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0434\u0435\u043B\u044C\u0442\
-      \u044B."
-    type: Tweak
-  id: 5458
-  time: '2023-12-24T15:06:11.0000000+00:00'
-  url: null
-- author: Admiral-Obvious-001
-  changes:
-  - message: Reduced per pellet damage of shotguns slightly.
-    type: Tweak
-  id: 5452
-  time: '2023-12-27T09:26:42.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23042
-- author: mirrorcult
-  changes:
-  - message: Pacifists can now attack in general, but are still forbidden from hurting
-      living creatures or dangerous things.
-    type: Tweak
-  - message: Pacifists can now disarm people. They are pacifist, after all.
-    type: Tweak
-  - message: Pacifists can now use flashes (and zero-damaging melee weapons, in general)
-    type: Tweak
-  id: 5453
-  time: '2023-12-27T09:55:48.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23037
-- author: snebl
-  changes:
-  - message: Fixed emergency and extended nitrogen tanks having the same volume.
-    type: Fix
-  id: 5454
-  time: '2023-12-27T09:56:00.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23040
-- author: Blazeror
-  changes:
-  - message: You can now pry open windoors by hand when they are unpowered.
-    type: Fix
-  id: 5455
-  time: '2023-12-27T12:28:29.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23047
-- author: Emisse
-  changes:
-  - message: The Grand Lottery now has much more prizes in store!
-    type: Tweak
-  id: 5456
-  time: '2023-12-27T12:31:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23048
 - author: TheShuEd
   changes:
   - message: The thief will temporarily not steal structures for the time being, as
@@ -4016,6 +3958,15 @@ Entries:
   id: 5457
   time: '2023-12-27T20:42:16.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22976
+- author: VladIsLove-e
+  changes:
+  - message: "\u041D\u043E\u0432\u043E\u0433\u043E\u0434\u043D\u0435\u0435 \u043E\u0431\
+      \u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0434\u0435\u043B\u044C\u0442\
+      \u044B."
+    type: Tweak
+  id: 5458
+  time: '2023-12-24T15:06:11.0000000+00:00'
+  url: null
 - author: TheArturZh
   changes:
   - message: "\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D \u043A\u0430\u0441\
@@ -4055,4 +4006,14 @@ Entries:
     type: Tweak
   id: 5462
   time: '2023-12-28T12:49:36.0000000+00:00'
+  url: null
+- author: Ady4
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u043F\u0438\u0442\u043E\
+      \u043C\u0435\u0446 \u0434\u043B\u044F \u0410\u0433\u0435\u043D\u0442\u0430 \u0412\
+      \u043D\u0443\u0442\u0440\u0435\u043D\u043D\u0438\u0445 \u0414\u0435\u043B -\
+      \ \u0420\u0430\u043A\u0435\u0442\u0430."
+    type: Add
+  id: 5463
+  time: '2023-12-28T13:35:47.0000000+00:00'
   url: null
