@@ -1,6 +1,4 @@
 using System.Linq;
-using System.Numerics;
-
 using Content.Server.DoAfter;
 using Content.Server.Humanoid;
 using Content.Server.UserInterface;
