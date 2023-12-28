@@ -1,10 +1,4 @@
 Entries:
-- author: dahnte
-  changes:
-  - message: Onion rings!
-    type: Add
-  id: 4958
-  time: '2023-10-05T21:31:40.0000000+00:00'
 - author: gusxyz
   changes:
   - message: Monkey's now are able to equip gas masks.
@@ -3520,3 +3514,10 @@ Entries:
   id: 5458
   time: '2023-12-27T22:53:10.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23065
+- author: Velcroboy
+  changes:
+  - message: Added melee dmg to salami logs!
+    type: Add
+  id: 5459
+  time: '2023-12-28T02:59:14.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23041
