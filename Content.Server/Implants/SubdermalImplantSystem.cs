@@ -35,9 +35,13 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
 
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
         SubscribeLocalEvent<SubdermalImplantComponent, UseFreedomImplantEvent>(OnFreedomImplant);
         SubscribeLocalEvent<StoreComponent, ImplantRelayEvent<AfterInteractUsingEvent>>(OnStoreRelay);
@@ -109,11 +113,10 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
                 continue;
 
             // the implant user probably does not want to be in your walls
-            var physQuery = GetEntityQuery<PhysicsComponent>();
             var valid = true;
             foreach (var entity in grid.GetAnchoredEntities(targetCoords))
             {
-                if (!physQuery.TryGetComponent(entity, out var body))
+                if (!_physicsQuery.TryGetComponent(entity, out var body))
                     continue;
 
                 if (body.BodyType != BodyType.Static ||
