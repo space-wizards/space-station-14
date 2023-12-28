@@ -9,10 +9,11 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -79,6 +80,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="entity">A reference to a solution entity to load the associated solution entity into. Will be unchanged if not null.</param>
     /// <param name="solution">Returns the solution state of the solution entity.</param>
     /// <returns>Whether the solution was successfully resolved.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool ResolveSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] ref Entity<SolutionComponent>? entity, [NotNullWhen(true)] out Solution? solution)
     {
         if (!ResolveSolution(container, name, ref entity))
@@ -92,10 +94,15 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <inheritdoc cref="ResolveSolution"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool ResolveSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] ref Entity<SolutionComponent>? entity)
     {
         if (entity is not null)
+        {
+            DebugTools.Assert(TryGetSolution(container, name, out var debugEnt)
+                              && debugEnt.Value.Owner == entity.Value.Owner);
             return true;
+        }
 
         return TryGetSolution(container, name, out entity);
     }
