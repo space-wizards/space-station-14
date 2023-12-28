@@ -4255,6 +4255,16 @@ entities:
     - pos: -5.5,-24.5
       parent: 1668
       type: Transform
+- proto: BaseGasCondenser
+  entities:
+  - uid: 640
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 19.5,-32.5
+      parent: 1668
+      type: Transform
+    - joinedGrid: 1668
+      type: AtmosDevice
 - proto: Bed
   entities:
   - uid: 2718
@@ -16698,7 +16708,7 @@ entities:
     - pos: -0.5,0.5
       parent: 1668
       type: Transform
-  - uid: 1426
+  - uid: 1428
     components:
     - pos: -1.5,0.5
       parent: 1668
@@ -25024,6 +25034,14 @@ entities:
       type: AtmosPipeColor
 - proto: GasPort
   entities:
+  - uid: 208
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 20.5,-32.5
+      parent: 1668
+      type: Transform
+    - joinedGrid: 1668
+      type: AtmosDevice
   - uid: 3577
     components:
     - rot: 3.141592653589793 rad
@@ -26250,11 +26268,6 @@ entities:
     - pos: 33.5,5.5
       parent: 1668
       type: Transform
-  - uid: 644
-    components:
-    - pos: 6.5,-8.5
-      parent: 1668
-      type: Transform
   - uid: 672
     components:
     - rot: 1.5707963267948966 rad
@@ -26428,9 +26441,9 @@ entities:
     - pos: -10.5,32.5
       parent: 1668
       type: Transform
-  - uid: 1429
+  - uid: 1425
     components:
-    - pos: 7.5,-8.5
+    - pos: 6.5,-8.5
       parent: 1668
       type: Transform
   - uid: 1467
@@ -27287,6 +27300,11 @@ entities:
     - pos: 1.5,-44.5
       parent: 1668
       type: Transform
+  - uid: 6505
+    components:
+    - pos: 7.5,-8.5
+      parent: 1668
+      type: Transform
   - uid: 6575
     components:
     - pos: -5.5,-30.5
@@ -27766,14 +27784,14 @@ entities:
       type: Transform
 - proto: MachineCentrifuge
   entities:
-  - uid: 738
+  - uid: 1426
     components:
     - pos: 5.5,-9.5
       parent: 1668
       type: Transform
 - proto: MachineElectrolysisUnit
   entities:
-  - uid: 3122
+  - uid: 6506
     components:
     - pos: 6.5,-9.5
       parent: 1668
@@ -32221,14 +32239,9 @@ entities:
     - pos: 3.5,10.5
       parent: 1668
       type: Transform
-  - uid: 1427
+  - uid: 1429
     components:
     - pos: 6.5,-8.5
-      parent: 1668
-      type: Transform
-  - uid: 1428
-    components:
-    - pos: 7.5,-8.5
       parent: 1668
       type: Transform
   - uid: 1466
@@ -32514,6 +32527,11 @@ entities:
   - uid: 2906
     components:
     - pos: 10.5,-15.5
+      parent: 1668
+      type: Transform
+  - uid: 3122
+    components:
+    - pos: 7.5,-8.5
       parent: 1668
       type: Transform
   - uid: 3126
@@ -34936,11 +34954,6 @@ entities:
     - pos: 9.5,-4.5
       parent: 1668
       type: Transform
-  - uid: 640
-    components:
-    - pos: 5.5,-9.5
-      parent: 1668
-      type: Transform
   - uid: 641
     components:
     - pos: -1.5,0.5
@@ -34974,6 +34987,11 @@ entities:
   - uid: 648
     components:
     - pos: -3.5,-2.5
+      parent: 1668
+      type: Transform
+  - uid: 738
+    components:
+    - pos: 5.5,-9.5
       parent: 1668
       type: Transform
   - uid: 770
@@ -35021,7 +35039,7 @@ entities:
     - pos: 13.5,-12.5
       parent: 1668
       type: Transform
-  - uid: 1425
+  - uid: 1427
     components:
     - pos: 6.5,-9.5
       parent: 1668
@@ -36397,7 +36415,7 @@ entities:
       type: Transform
 - proto: VendingMachineChemicals
   entities:
-  - uid: 208
+  - uid: 644
     components:
     - pos: 7.5,-9.5
       parent: 1668
