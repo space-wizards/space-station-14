@@ -1,8 +1,12 @@
+using System.Linq;
+using System.Numerics;
 using Content.Client.Gameplay;
 using Content.Client.Hands.Systems;
 using Content.Client.Inventory;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
+using Content.Client.UserInterface.Systems.Inventory.Widgets;
 using Content.Client.UserInterface.Systems.Inventory.Windows;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
@@ -16,7 +20,6 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using static Content.Client.Inventory.ClientInventorySystem;
-using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Inventory;
 
@@ -35,9 +38,26 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private StrippingWindow? _strippingWindow;
     private ItemSlotButtonContainer? _inventoryHotbar;
-    private MenuButton? InventoryButton => UIManager.ActiveScreen?.GetWidget<MenuBar.Widgets.GameTopMenuBar>()?.InventoryButton;
+    private SlotButton? _inventoryButton;
 
-    private SlotControl? _lastHovered = null;
+    private SlotControl? _lastHovered;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
+        gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+    }
+
+    private void OnScreenLoad()
+    {
+        if (UIManager.ActiveScreen == null)
+            return;
+
+        var inventoryGui = UIManager.GetActiveUIWidget<InventoryGui>();
+        RegisterInventoryButton(inventoryGui.InventoryButton);
+    }
 
     public void OnStateEntered(GameplayState state)
     {
@@ -67,26 +87,6 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         CommandBinds.Unregister<ClientInventorySystem>();
     }
 
-    public void UnloadButton()
-    {
-        if (InventoryButton == null)
-        {
-            return;
-        }
-
-        InventoryButton.OnPressed -= InventoryButtonPressed;
-    }
-
-    public void LoadButton()
-    {
-        if (InventoryButton == null)
-        {
-            return;
-        }
-
-        InventoryButton.OnPressed += InventoryButtonPressed;
-    }
-
     private SlotButton CreateSlotButton(SlotData data)
     {
         var button = new SlotButton(data);
@@ -102,8 +102,25 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         _inventoryHotbar = inventoryHotbar;
     }
 
-    private void InventoryButtonPressed(ButtonEventArgs args)
+    public void RegisterInventoryButton(SlotButton? button)
     {
+        if (_inventoryButton != null)
+        {
+            _inventoryButton.Pressed -= InventoryButtonPressed;
+        }
+
+        if (button != null)
+        {
+            _inventoryButton = button;
+            _inventoryButton.Pressed += InventoryButtonPressed;
+        }
+    }
+
+    private void InventoryButtonPressed(GUIBoundKeyEventArgs args, SlotControl control)
+    {
+        if (args.Function != EngineKeyFunctions.UIClick)
+            return;
+
         ToggleInventoryBar();
     }
 
@@ -129,6 +146,52 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
             var showStorage = _entities.HasComponent<StorageComponent>(data.HeldEntity);
             var update = new SlotSpriteUpdate(data.HeldEntity, data.SlotGroup, data.SlotName, showStorage);
             SpriteUpdated(update);
+        }
+
+        if (_inventoryHotbar == null)
+            return;
+
+        var clothing = clientInv.SlotData.Where(p => !p.Value.HasSlotGroup).ToList();
+
+        if (_inventoryButton != null)
+            _inventoryButton.Visible = clothing.Count != 0;
+        if (clothing.Count == 0)
+            return;
+
+        foreach (var child in new List<Control>(_inventoryHotbar.Children))
+        {
+            if (child is not SlotControl)
+                _inventoryHotbar.RemoveChild(child);
+        }
+
+        var maxWidth = clothing.Max(p => p.Value.ButtonOffset.X) + 1;
+        var maxIndex = clothing.Select(p => GetIndex(p.Value.ButtonOffset)).Max();
+
+        _inventoryHotbar.MaxColumns = maxWidth;
+        _inventoryHotbar.Columns = maxWidth;
+
+        for (var i = 0; i <= maxIndex; i++)
+        {
+            var index = i;
+            if (clothing.FirstOrNull(p => GetIndex(p.Value.ButtonOffset) == index) is { } pair)
+            {
+                if (_inventoryHotbar.TryGetButton(pair.Key, out var slot))
+                    slot.SetPositionLast();
+            }
+            else
+            {
+                _inventoryHotbar.AddChild(new Control
+                {
+                    MinSize = new Vector2(64, 64)
+                });
+            }
+        }
+
+        return;
+
+        int GetIndex(Vector2i position)
+        {
+            return position.Y * maxWidth + position.X;
         }
     }
 
@@ -178,18 +241,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         }
 
         UpdateInventoryHotbar(_playerInventory);
-        if (_inventoryHotbar.Visible)
-        {
-            _inventoryHotbar.Visible = false;
-            if (InventoryButton != null)
-                InventoryButton.Pressed = false;
-        }
-        else
-        {
-            _inventoryHotbar.Visible = true;
-            if (InventoryButton != null)
-                InventoryButton.Pressed = true;
-        }
+        _inventoryHotbar.Visible = !_inventoryHotbar.Visible;
     }
 
     // Neuron Activation

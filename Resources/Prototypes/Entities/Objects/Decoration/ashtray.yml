@@ -1,0 +1,30 @@
+- type: entity
+  id: Ashtray
+  parent: BaseItem
+  name: ashtray
+  description: Proven by scientists to improve the smoking experience by 37%!
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/ashtray.rsi
+    layers:
+      - state: icon-0
+        map: ["enum.StorageFillLayers.Fill"]
+  - type: Item
+    size: Small
+  - type: StaticPrice
+    price: 1
+  - type: Storage
+    whitelist:
+      tags:
+      - Burnt
+    maxItemSize: Tiny
+    grid:
+    - 0,0,9,0
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: StorageFillVisualizer
+    fillBaseName: icon
+    maxFillLevels: 10
+  - type: Appearance
+  - type: Dumpable
