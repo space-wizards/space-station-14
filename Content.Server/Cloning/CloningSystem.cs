@@ -255,7 +255,7 @@ namespace Content.Server.Cloning
             var cloneMindReturn = EntityManager.AddComponent<BeingClonedComponent>(mob);
             cloneMindReturn.Mind = mind;
             cloneMindReturn.Parent = uid;
-            clonePod.BodyContainer.Insert(mob);
+            _containerSystem.Insert(mob, clonePod.BodyContainer);
             ClonesWaitingForMind.Add(mind, mob);
             UpdateStatus(uid, CloningPodStatus.NoMind, clonePod);
             _euiManager.OpenEui(new AcceptCloningEui(mindEnt, mind, this), client);
@@ -326,7 +326,7 @@ namespace Content.Server.Cloning
                 return;
 
             EntityManager.RemoveComponent<BeingClonedComponent>(entity);
-            clonePod.BodyContainer.Remove(entity);
+            _containerSystem.Remove(entity, clonePod.BodyContainer);
             clonePod.CloningProgress = 0f;
             clonePod.UsedBiomass = 0;
             UpdateStatus(uid, CloningPodStatus.Idle, clonePod);

@@ -719,6 +719,9 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: Arachnid
+    speechSounds: Arachnid
   - type: DamageStateVisuals
     states:
       Alive:
@@ -734,6 +737,10 @@
     interactSuccessString: petting-success-crab
     interactFailureString: petting-failure-crab
     interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: ReplacementAccent
+    accent: crab
   - type: Bloodstream
     bloodMaxVolume: 50
     bloodReagent: CopperBlood
@@ -1148,6 +1155,77 @@
       path: /Audio/Animals/monkey_scream.ogg
   - type: IdExaminable
   - type: AlwaysRevolutionaryConvertible
+
+- type: entity
+  name: kobold
+  id: MobKobold
+  parent: MobMonkey
+  description: Cousins to the sentient race of lizard people, kobolds blend in with industrial tiling and are as nasty as monkeys; ready to pull out your hair and stab you to death.
+  components:
+  - type: LizardAccent
+  - type: Speech # I don't know how to get it to work and i want someone to make them speak like a lizard with normal accents (or optionally another language altogether)
+    speechSounds: Lizard
+    speechVerb: Reptilian
+  - type: Vocal
+    sounds:
+      Male: UnisexReptilian
+      Female: UnisexReptilian
+      Unsexed: UnisexReptilian
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      40: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 5
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Piercing: 9
+  - type: Temperature
+    heatDamageThreshold: 400
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 42
+    coldDamage:
+      types:
+        Cold : 0.1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 0.1 #per second, scales with temperature & other constants
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: kobold
+      sprite: Mobs/Animals/kobold.rsi
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "ears" ]
+    - map: [ "id" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 2
+  - type: GhostRole
+    prob: 0.1
+    makeSentient: true
+    name: ghost-role-information-kobold-name
+    description: ghost-role-information-kobold-description
 
 - type: entity
   name: guidebook monkey

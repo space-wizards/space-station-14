@@ -173,7 +173,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                         if (metaData.EntityPrototype.ID == recipeSolid.Key)
                         {
-                            component.Storage.Remove(item);
+                            _sharedContainer.Remove(item, component.Storage);
                             EntityManager.DeleteEntity(item);
                             break;
                         }
@@ -208,7 +208,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 foreach (var part in headSlots)
                 {
-                    component.Storage.Insert(part.Id);
+                    _container.Insert(part.Id, component.Storage);
                     headCount++;
                 }
             }
@@ -371,7 +371,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 if (_tag.HasTag(item, "MicrowaveSelfUnsafe") || _tag.HasTag(item, "Plastic"))
                 {
                     var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
-                    component.Storage.Insert(junk);
+                    _container.Insert(junk, component.Storage);
                     QueueDel(item);
                 }
 
@@ -504,7 +504,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid))
                 return;
 
-            component.Storage.Remove(EntityManager.GetEntity(args.EntityID));
+            _sharedContainer.Remove(EntityManager.GetEntity(args.EntityID), component.Storage);
             UpdateUserInterfaceState(uid, component);
         }
 
