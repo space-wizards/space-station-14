@@ -181,7 +181,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     protected void UpdateAppearance(Entity<AppearanceComponent?> container, Entity<SolutionComponent, ContainedSolutionComponent> soln)
     {
         var (uid, appearanceComponent) = container;
-        if (!Resolve(uid, ref appearanceComponent, logMissing: false))
+        if (!HasComp<SolutionContainerVisualsComponent>(uid) || !Resolve(uid, ref appearanceComponent, logMissing: false))
             return;
 
         var (_, comp, relation) = soln;
