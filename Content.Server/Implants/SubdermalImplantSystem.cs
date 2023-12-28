@@ -101,7 +101,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         var targetCoords = new MapCoordinates();
         for (var i = 0; i < implant.TeleportAttempts; i++)
         {
-            var distance = implant.TeleportRadius * _random.NextFloat(MathF.Sqrt(1f)); // to get an uniform distribution
+            var distance = implant.TeleportRadius * Math.Sqrt(_random.NextFloat()); // to get an uniform distribution
             targetCoords = entityCoords.Offset(_random.NextAngle().ToVec() * distance);
 
             // prefer teleporting to grids
@@ -109,7 +109,6 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
                 continue;
 
             // the implant user probably does not want to be in your walls
-            var physQuery = GetEntityQuery<PhysicsComponent>();
             var valid = true;
             foreach (var entity in grid.GetAnchoredEntities(targetCoords))
             {
@@ -124,9 +123,8 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
                 valid = false;
                 break;
             }
-            if (!valid)
-                continue;
-            break;
+            if (valid)
+                break;
         }
         _xform.SetWorldPosition(ent, targetCoords.Position);
         _audio.PlayPvs(implant.TeleportSound, ent);
