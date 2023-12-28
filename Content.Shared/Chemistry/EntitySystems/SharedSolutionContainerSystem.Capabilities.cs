@@ -10,6 +10,8 @@ namespace Content.Shared.Chemistry.EntitySystems;
 
 public abstract partial class SharedSolutionContainerSystem
 {
+    #region Solution Accessors
+
     public bool TryGetRefillableSolution(Entity<RefillableSolutionComponent?, SolutionContainerManagerComponent?> entity, [NotNullWhen(true)] out Entity<SolutionComponent>? soln, [NotNullWhen(true)] out Solution? solution)
     {
         if (!Resolve(entity, ref entity.Comp1, logMissing: false))
@@ -103,6 +105,9 @@ public abstract partial class SharedSolutionContainerSystem
         return false;
     }
 
+    #endregion Solution Accessors
+
+    #region Solution Modifiers
 
     public void Refill(Entity<RefillableSolutionComponent?> entity, Entity<SolutionComponent> soln, Solution refill)
     {
@@ -136,6 +141,7 @@ public abstract partial class SharedSolutionContainerSystem
         return SplitSolution(soln, quantity);
     }
 
+    #endregion Solution Modifiers
 
     public float PercentFull(EntityUid uid)
     {
@@ -145,6 +151,7 @@ public abstract partial class SharedSolutionContainerSystem
         return solution.FillFraction * 100;
     }
 
+    #region Static Methods
 
     public static string ToPrettyString(Solution solution)
     {
@@ -171,4 +178,6 @@ public abstract partial class SharedSolutionContainerSystem
         sb.Append(']');
         return sb.ToString();
     }
+
+    #endregion Static Methods
 }
