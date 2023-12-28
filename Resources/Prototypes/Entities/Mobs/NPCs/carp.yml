@@ -156,7 +156,7 @@
       allowSpeech: true
       description: ghost-role-information-salvage-carp-description
     - type: GhostTakeoverAvailable
-    - type: SalvageMobRestrictions
+    # - type: SalvageMobRestrictions
 
 - type: entity
   name: space carp
@@ -256,4 +256,4 @@
       allowSpeech: true
       description: ghost-role-information-salvage-shark-description
     - type: GhostTakeoverAvailable
-    - type: SalvageMobRestrictions
+    # - type: SalvageMobRestrictions

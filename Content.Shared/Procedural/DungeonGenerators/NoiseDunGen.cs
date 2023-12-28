@@ -17,8 +17,23 @@ public sealed partial class NoiseDunGen : IDunGen
     // At some point we may want layers masking each other like a simpler version of biome code but for now
     // we'll just make it circular.
 
+    /// <summary>
+    /// How many areas of noise to fill out. Useful if we just want 1 blob area to fill out.
+    /// </summary>
     [DataField]
-    public int Iterations = 1;
+    public int Iterations = int.MaxValue;
+
+    /// <summary>
+    /// Cap on how many tiles to include.
+    /// </summary>
+    [DataField]
+    public int TileCap = 128;
+
+    /// <summary>
+    /// Standard deviation of tilecap.
+    /// </summary>
+    [DataField]
+    public float CapStd = 8f;
 
     [DataField(required: true)]
     public List<NoiseDunGenLayer> Layers = new();

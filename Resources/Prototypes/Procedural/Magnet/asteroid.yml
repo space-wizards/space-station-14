@@ -1,0 +1,77 @@
+- type: dungeonConfig
+  id: BlobAsteroid
+  # Floor generation
+  generator: !type:NoiseDunGen
+    tileCap: 1500
+    capStd: 32
+    layers:
+      - tile: FloorAsteroidSand
+        threshold: 0.20
+        noise:
+          frequency: 0.030
+          noiseType: OpenSimplex2
+          fractalType: FBm
+          octaves: 2
+          lacunarity: 2
+          cellularDistanceFunction: Euclidean
+    # Everything else
+    # postGeneration:
+    # Generate ore veins
+
+- type: dungeonConfig
+  id: SpindlyAsteroid
+  # Floor generation
+  generator: !type:NoiseDunGen
+    tileCap: 1500
+    capStd: 32
+    layers:
+      - tile: FloorAsteroidSand
+        threshold: -0.50
+        noise:
+          frequency: 0.055
+          noiseType: Cellular
+          fractalType: FBm
+          octaves: 3
+          lacunarity: 2
+          cellularDistanceFunction: Euclidean
+  # Everything else
+  # postGeneration:
+    # Generate ore veins
+
+- type: dungeonConfig
+  id: SwissCheeseAsteroid
+  # Floor generation
+  generator: !type:NoiseDunGen
+    tileCap: 1500
+    capStd: 32
+    layers:
+      - tile: FloorAsteroidSand
+        threshold: -0.10
+        noise:
+          frequency: 0.100
+          noiseType: OpenSimplex2
+          fractalType: FBm
+          octaves: 3
+          lacunarity: 2
+          cellularDistanceFunction: Euclidean
+
+# YIELD TYPES:
+# Low yield 1 ore
+
+# High yield 1
+
+# Low yield 2 ore
+
+# ALSO GAS
+
+# Ore types
+
+# Blob
+
+# Snakey windy
+
+# Donut
+
+# scrunguly
+
+# Noise should be overloid on top

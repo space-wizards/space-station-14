@@ -27,8 +27,11 @@ public sealed partial class DungeonJob
         var area = new Box2i();
         var frontier = new Queue<Vector2i>();
         var rooms = new List<DungeonRoom>();
+        var tileCount = 0;
+        var tileCap = rand.NextGaussian(dungen.TileCap, dungen.CapStd);
+        var visited = new HashSet<Vector2i>();
 
-        while (iterations > 0)
+        while (iterations > 0 && tileCount < tileCap)
         {
             var roomTiles = new HashSet<Vector2i>();
             iterations--;
@@ -56,12 +59,14 @@ public sealed partial class DungeonJob
             }
 
             var noiseFill = false;
+            visited.Clear();
             frontier.Clear();
+            visited.Add(seedTile);
             frontier.Enqueue(seedTile);
             Box2i roomArea = new Box2i(seedTile, seedTile + Vector2i.One);
 
             // Time to floodfill again
-            while (frontier.TryDequeue(out var node))
+            while (frontier.TryDequeue(out var node) && tileCount < tileCap)
             {
                 var foundNoise = false;
 
@@ -80,6 +85,7 @@ public sealed partial class DungeonJob
 
                     tiles.Add((node, new Tile(tileDef.TileId, variant: variant)));
                     roomTiles.Add(node);
+                    tileCount++;
                     break;
                 }
 
@@ -92,7 +98,14 @@ public sealed partial class DungeonJob
                 {
                     for (var y = -1; y <= 1; y++)
                     {
+                        // Cardinals only
+                        if (x != 0 && y != 0)
+                            continue;
+
                         var neighbor = new Vector2i(node.X + x, node.Y + y);
+
+                        if (!visited.Add(neighbor))
+                            continue;
 
                         frontier.Enqueue(neighbor);
                     }
@@ -119,6 +132,12 @@ public sealed partial class DungeonJob
         grid.SetTiles(tiles);
 
         var dungeon = new Dungeon(rooms);
+
+        foreach (var tile in tiles)
+        {
+            dungeon.RoomTiles.Add(tile.Item1);
+        }
+
         return dungeon;
     }
 }

@@ -91,13 +91,13 @@ public sealed partial class DungeonJob : Job<Dungeon>
                 break;
             case PrefabDunGen prefab:
                 dungeon = await GeneratePrefabDungeon(prefab, _gridUid, _grid, _seed);
+                DebugTools.Assert(dungeon.RoomExteriorTiles.Count > 0);
                 break;
             default:
                 throw new NotImplementedException();
         }
 
         DebugTools.Assert(dungeon.RoomTiles.Count > 0);
-        DebugTools.Assert(dungeon.RoomExteriorTiles.Count > 0);
 
         // To make it slightly more deterministic treat this RNG as separate ig.
         var random = new Random(_seed);
