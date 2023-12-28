@@ -50,7 +50,7 @@
   targetNode: basebigbox
   category: construction-category-storage
   description: A big box for storing things or hiding in.
-  icon: { sprite: Structures/Storage/closet.rsi, state: cardboard }
+  icon: { sprite: Structures/Storage/Closets/closet.rsi, state: cardboard }
   objectType: Structure
 
 - type: construction
