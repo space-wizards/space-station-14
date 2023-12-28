@@ -11,12 +11,36 @@
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Stunbaton
     energyPerUse: 50
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundDeactivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.250
+#SS220-Stunbatom-rework begin
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+        path: /Audio/Weapons/egloves.ogg
+        params:
+          variation: 0.250
+    activatedDamage:
+      types:
+        Blunt: 0
+        Stamina: 55
+#SS220-Stunbatom-rework end
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
       types:
         Blunt: 7
-        Stamina: 55
     bluntStaminaDamageFactor: 2.0
     angle: 60
     animation: WeaponArcSlash

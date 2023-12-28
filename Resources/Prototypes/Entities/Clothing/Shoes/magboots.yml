@@ -53,6 +53,8 @@
     - HighRiskItem
   - type: StaticPrice
     price: 750
+  - type: StealTarget
+    stealGroup: ClothingShoesBootsMagAdv
 
 - type: entity
   parent: ClothingShoesBootsMag

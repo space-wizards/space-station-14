@@ -239,6 +239,7 @@
   - type: Computer
     board: PowerComputerCircuitboard
   - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
   - type: NodeContainer
     examinable: true
     nodes:
@@ -246,6 +247,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: ActivatableUI
+    singleUser: true
     key: enum.PowerMonitoringConsoleUiKey.Key
   - type: UserInterface
     interfaces:
@@ -307,7 +309,7 @@
     key: enum.CriminalRecordsUiKey.Key
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics
   #SS220 Criminal-Records end
   - type: Computer
     board: CriminalRecordsComputerCircuitboard
@@ -343,7 +345,7 @@
     board: StationRecordsComputerCircuitboard
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics
 
 - type: entity
   parent: BaseComputer

@@ -3960,6 +3960,62 @@ Entries:
   id: 5458
   time: '2023-12-24T15:06:11.0000000+00:00'
   url: null
+- author: Admiral-Obvious-001
+  changes:
+  - message: Reduced per pellet damage of shotguns slightly.
+    type: Tweak
+  id: 5452
+  time: '2023-12-27T09:26:42.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23042
+- author: mirrorcult
+  changes:
+  - message: Pacifists can now attack in general, but are still forbidden from hurting
+      living creatures or dangerous things.
+    type: Tweak
+  - message: Pacifists can now disarm people. They are pacifist, after all.
+    type: Tweak
+  - message: Pacifists can now use flashes (and zero-damaging melee weapons, in general)
+    type: Tweak
+  id: 5453
+  time: '2023-12-27T09:55:48.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23037
+- author: snebl
+  changes:
+  - message: Fixed emergency and extended nitrogen tanks having the same volume.
+    type: Fix
+  id: 5454
+  time: '2023-12-27T09:56:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23040
+- author: Blazeror
+  changes:
+  - message: You can now pry open windoors by hand when they are unpowered.
+    type: Fix
+  id: 5455
+  time: '2023-12-27T12:28:29.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23047
+- author: Emisse
+  changes:
+  - message: The Grand Lottery now has much more prizes in store!
+    type: Tweak
+  id: 5456
+  time: '2023-12-27T12:31:03.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23048
+- author: TheShuEd
+  changes:
+  - message: The thief will temporarily not steal structures for the time being, as
+      this task seems too difficult.
+    type: Tweak
+  - message: Added Emag into thief's syndie kit
+    type: Add
+  - message: Added 3 smoke grenades into thief's smuggler kit
+    type: Add
+  - message: Replaced radio jammer to cyber pen into thief's communicator kit
+    type: Tweak
+  - message: Replaced omnizine bottle to omega soap into thief's chemistry kit
+    type: Tweak
+  id: 5457
+  time: '2023-12-27T20:42:16.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22976
 - author: TheArturZh
   changes:
   - message: "\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D \u043A\u0430\u0441\

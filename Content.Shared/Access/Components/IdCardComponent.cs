@@ -52,4 +52,10 @@ public sealed partial class IdCardComponent : Component
     [AutoNetworkedField]
     public bool? RadioBold;
     // SS220 Bold-radio end
+
+    /// <summary>
+    /// Determines if accesses from this card should be logged by <see cref="AccessReaderComponent"/>
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool BypassLogging;
 }

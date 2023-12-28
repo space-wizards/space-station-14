@@ -22,6 +22,8 @@
     tags:
     - DoorBumpOpener
     - WhitelistChameleon
+  - type: StealTarget
+    stealGroup: IDCard
 
 #IDs with layers
 
@@ -127,6 +129,8 @@
     - DoorBumpOpener
     - WhitelistChameleon
     - HighRiskItem
+  - type: StealTarget
+    stealGroup: CaptainIDCard
 
 - type: entity
   parent: IDCardStandard
@@ -482,6 +486,8 @@
   - type: Access
     groups:
     - AllAccess
+    tags:
+    - CentralCommand
 
 - type: entity
   parent: CentcomIDCard
