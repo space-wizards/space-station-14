@@ -463,10 +463,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(layer);
                 var markerSeed = seed + chunk.X * ChunkSize + chunk.Y + localIdx;
                 var rand = new Random(markerSeed);
-                var buffer = layerProto.Radius / 2f;
-                var lower = (int) Math.Floor(buffer);
-                var upper = (int) Math.Ceiling(layerProto.Size - buffer);
-                var bounds = new Box2i(chunk * ChunkSize + lower, chunk * ChunkSize + ChunkSize - upper);
+                var buffer = (int) (layerProto.Radius / 2f);
+                var bounds = new Box2i(chunk + buffer, chunk + layerProto.Size - buffer);
 
                 GetMarkerNodes(gridUid, component, grid, layerProto, forced, bounds, rand,
                     out var spawnSet, out var existing);
@@ -474,9 +472,13 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // Forcing markers to spawn so delete any that were found to be in the way.
                 if (forced)
                 {
-                    foreach (var ent in existing)
+                    // Lock something so we can delete these safely.
+                    lock (component.PendingMarkers)
                     {
-                        Del(ent);
+                        foreach (var ent in existing)
+                        {
+                            Del(ent);
+                        }
                     }
                 }
 
