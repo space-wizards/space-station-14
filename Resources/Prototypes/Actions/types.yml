@@ -130,7 +130,7 @@
   noSpawn: true
   components:
   - type: InstantAction
-    charges: 200
+    charges: 3
     useDelay: 5
     itemIconStyle: BigAction
     priority: -20
