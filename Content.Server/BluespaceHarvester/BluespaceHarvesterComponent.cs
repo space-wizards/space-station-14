@@ -136,7 +136,7 @@ public sealed partial class BluespaceHarvesterComponent : Component
     };
 
     /// <summary>
-    /// The radius within which cretes and rifts can appear.
+    /// The radius within which crates and rifts can appear.
     /// </summary>
     [DataField]
     public float SpawnRadius = 5f;

@@ -1,33 +1,33 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.BluespaceHarvester;
+using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Emag.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.Random;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Random;
 
 namespace Content.Server.BluespaceHarvester;
 
 public sealed class BluespaceHarvesterSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     // TODO: Move to component.
     private readonly List<BluespaceHarvesterTap> _taps = new()
