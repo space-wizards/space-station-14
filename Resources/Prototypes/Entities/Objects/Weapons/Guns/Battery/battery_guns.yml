@@ -73,6 +73,9 @@
   components:
   - type: Item
     size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
   - type: Tag
     tags:
     - Sidearm
@@ -568,10 +571,6 @@
     zeroVisible: false
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
-  - type: Item
-    shape:
-    - 0,0,1,0
-    - 0,1,0,1
   - type: Gun
     fireRate: 1.5
     soundGunshot:
