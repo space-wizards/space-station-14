@@ -15,6 +15,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<PinpointerComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<PinpointerComponent, GotDeemaggedEvent>(OnDeemagged);
         SubscribeLocalEvent<PinpointerComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<PinpointerComponent, ExaminedEvent>(OnExamined);
     }
@@ -139,5 +140,11 @@ public abstract class SharedPinpointerSystem : EntitySystem
     {
         args.Handled = true;
         component.CanRetarget = true;
+    }
+
+
+    private void OnDeemagged(Entity<PinpointerComponent> ent, ref GotDeemaggedEvent args)
+    {
+        ent.Comp.CanRetarget = false;
     }
 }
