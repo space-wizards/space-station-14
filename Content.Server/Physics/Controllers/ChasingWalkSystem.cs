@@ -5,8 +5,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Map;
-using Robust.Shared.Toolshed.TypeParsers;
 using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers;
@@ -21,8 +19,6 @@ public sealed class ChasingWalkSystem : VirtualController
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-
-    private EntityQuery<TransformComponent> _xformQuery;
 
     private readonly HashSet<Entity<IComponent>> _potentialChaseTargets = new();
 
@@ -102,15 +98,13 @@ public sealed class ChasingWalkSystem : VirtualController
             return;
 
         //Calculating direction to the target.
-        var xform = Transform(component.ChasingEntity.Value);
+        var pos1 = _transform.GetWorldPosition(uid);
+        var pos2 = _transform.GetWorldPosition(component.ChasingEntity.Value);
 
-        if (xform.Coordinates.TryDelta(EntityManager, _transform, _xformQuery.Get(uid).Comp.Coordinates, out var delta))
-        {
-            //Changing the direction of the entity.
-            var speed = delta.Length() > 0 ? delta.Normalized() * component.Speed : Vector2.Zero;
-            _physics.SetLinearVelocity(uid, speed);
+        var delta = pos2 - pos1;
+        var speed = delta.Length() > 0 ? delta.Normalized() * component.Speed : Vector2.Zero;
 
-            _physics.SetBodyStatus(physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
-        }
+        _physics.SetLinearVelocity(uid, speed);
+        _physics.SetBodyStatus(physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
     }
 }

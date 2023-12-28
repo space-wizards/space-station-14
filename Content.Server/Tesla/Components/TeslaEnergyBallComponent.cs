@@ -10,15 +10,10 @@ namespace Content.Server.Tesla.Components;
 [RegisterComponent, Access(typeof(TeslaEnergyBallSystem))]
 public sealed partial class TeslaEnergyBallComponent : Component
 {
-    public float AccumulatedFrametime = 0.0f;
-
-    [DataField]
-    public float UpdateInterval = 3.0f;
-
     /// <summary>
     /// how much energy will Tesla get by eating various things. Walls, people, anything.
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float ConsumeStuffEnergy = 2f;
 
     /// <summary>
