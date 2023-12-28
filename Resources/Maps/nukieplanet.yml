@@ -12089,33 +12089,6 @@ entities:
     - pos: 13.550529,12.489372
       parent: 104
       type: Transform
-- proto: FloraTreeChristmas01
-  entities:
-  - uid: 1473
-    components:
-    - pos: -4.1215005,3.4208694
-      parent: 104
-      type: Transform
-  - uid: 1533
-    components:
-    - pos: 6.8247085,6.284115
-      parent: 104
-      type: Transform
-  - uid: 1535
-    components:
-    - pos: 13.572808,8.250701
-      parent: 104
-      type: Transform
-  - uid: 1554
-    components:
-    - pos: -1.6674995,17.727627
-      parent: 104
-      type: Transform
-  - uid: 1674
-    components:
-    - pos: -7.4741755,7.8987026
-      parent: 104
-      type: Transform
 - proto: FloraTreeConifer01
   entities:
   - uid: 261
