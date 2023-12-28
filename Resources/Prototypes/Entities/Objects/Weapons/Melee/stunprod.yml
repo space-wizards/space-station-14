@@ -37,13 +37,17 @@
     animation: WeaponArcThrust
   - type: StaminaDamageOnHit
     damage: 20
+    sound: /Audio/Weapons/egloves.ogg
+  - type: StaminaDamageOnCollide
+    damage: 20
+    sound: /Audio/Weapons/egloves.ogg
   - type: Battery
     maxCharge: 360
     startingCharge: 360
   - type: ItemCooldown
   - type: Item
     heldPrefix: off
-    size: Huge
+    size: Normal
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunprod.rsi
     quickEquip: false
