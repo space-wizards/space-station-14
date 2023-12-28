@@ -91,7 +91,7 @@ public sealed class PartExchangerSystem : EntitySystem
         }
         foreach (var part in updatedParts)
         {
-            _container.Insert(part.part, machine.PartContainer);
+            machine.PartContainer.Insert(part.part, EntityManager);
             machineParts.Remove(part);
         }
 
@@ -140,7 +140,7 @@ public sealed class PartExchangerSystem : EntitySystem
             if (!machine.Requirements.ContainsKey(part.PartType))
                 continue;
 
-            _container.Insert(partEnt, machine.PartContainer);
+            machine.PartContainer.Insert(partEnt, EntityManager);
             machine.Progress[part.PartType]++;
             machineParts.Remove(pair);
         }

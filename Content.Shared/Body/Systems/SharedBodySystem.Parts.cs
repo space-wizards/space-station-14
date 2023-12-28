@@ -29,27 +29,30 @@ public partial class SharedBodySystem
         var entity = args.Entity;
         var slotId = args.Container.ID;
 
-        if (component.Body == null)
-            return;
-
-        if (TryComp(entity, out BodyPartComponent? childPart))
+        if (component.Body != null)
         {
-            AddPart(component.Body.Value, entity, slotId, childPart);
-            RecursiveBodyUpdate(entity, component.Body.Value, childPart);
-        }
+            if (TryComp(entity, out BodyPartComponent? childPart))
+            {
+                AddPart(component.Body.Value, entity, slotId, childPart);
+                RecursiveBodyUpdate(entity, component.Body.Value, childPart);
+            }
 
-        if (TryComp(entity, out OrganComponent? organ))
-            AddOrgan(entity, component.Body.Value, uid, organ);
+            if (TryComp(entity, out OrganComponent? organ))
+            {
+                AddOrgan(entity, component.Body.Value, uid, organ);
+            }
+        }
     }
 
     private void OnBodyPartRemoved(EntityUid uid, BodyPartComponent component, EntRemovedFromContainerMessage args)
     {
+        // TODO: lifestage shenanigans
+        if (TerminatingOrDeleted(uid))
+            return;
+
         // Body part removed from another body part.
         var entity = args.Entity;
         var slotId = args.Container.ID;
-
-        DebugTools.Assert(!TryComp(entity, out BodyPartComponent? b) || b.Body == component.Body);
-        DebugTools.Assert(!TryComp(entity, out OrganComponent? o) || o.Body == component.Body);
 
         if (TryComp(entity, out BodyPartComponent? childPart) && childPart.Body != null)
         {
@@ -58,44 +61,49 @@ public partial class SharedBodySystem
         }
 
         if (TryComp(entity, out OrganComponent? organ))
+        {
             RemoveOrgan(entity, uid, organ);
+        }
     }
 
     private void RecursiveBodyUpdate(EntityUid uid, EntityUid? bodyUid, BodyPartComponent component)
     {
-        component.Body = bodyUid;
-        Dirty(uid, component);
-
-        foreach (var slotId in component.Organs.Keys)
+        foreach (var children in GetBodyPartChildren(uid, component))
         {
-            if (!Containers.TryGetContainer(uid, GetOrganContainerId(slotId), out var container))
-                continue;
-
-            foreach (var organ in container.ContainedEntities)
+            if (children.Component.Body != bodyUid)
             {
-                if (!TryComp(organ, out OrganComponent? organComp))
-                    continue;
+                children.Component.Body = bodyUid;
+                Dirty(children.Id, children.Component);
 
-                Dirty(organ, organComp);
+                foreach (var slotId in children.Component.Organs.Keys)
+                {
+                    var organContainerId = GetOrganContainerId(slotId);
 
-                if (organComp.Body != null)
-                    RaiseLocalEvent(organ, new RemovedFromPartInBodyEvent(organComp.Body.Value, uid));
+                    if (!Containers.TryGetContainer(children.Id, organContainerId, out var container))
+                        continue;
 
-                organComp.Body = bodyUid;
-                if (bodyUid != null)
-                    RaiseLocalEvent(organ, new AddedToPartInBodyEvent(bodyUid.Value, uid));
-            }
-        }
+                    foreach (var organ in container.ContainedEntities)
+                    {
+                        if (TryComp(organ, out OrganComponent? organComp))
+                        {
+                            var oldBody = organComp.Body;
+                            organComp.Body = bodyUid;
 
-        foreach (var slotId in component.Children.Keys)
-        {
-            if (!Containers.TryGetContainer(uid, GetPartSlotContainerId(slotId), out var container))
-                continue;
+                            if (bodyUid != null)
+                            {
+                                var ev = new AddedToPartInBodyEvent(bodyUid.Value, children.Id);
+                                RaiseLocalEvent(organ, ev);
+                            }
+                            else if (oldBody != null)
+                            {
+                                var ev = new RemovedFromPartInBodyEvent(oldBody.Value, children.Id);
+                                RaiseLocalEvent(organ, ev);
+                            }
 
-            foreach (var containedEnt in container.ContainedEntities)
-            {
-                if (TryComp(containedEnt, out BodyPartComponent? childPart))
-                    RecursiveBodyUpdate(containedEnt, bodyUid, childPart);
+                            Dirty(organ, organComp);
+                        }
+                    }
+                }
             }
         }
     }
@@ -396,7 +404,7 @@ public partial class SharedBodySystem
             return false;
         }
 
-        return Containers.Insert(partId, body.RootContainer);
+        return body.RootContainer.Insert(partId);
     }
 
     #endregion
@@ -446,7 +454,7 @@ public partial class SharedBodySystem
             return false;
         }
 
-        return Containers.Insert(partId, container);
+        return container.Insert(partId);
     }
 
     #endregion

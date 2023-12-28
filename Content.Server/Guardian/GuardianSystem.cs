@@ -67,7 +67,7 @@ namespace Content.Server.Guardian
             if (!TryComp(host, out GuardianHostComponent? hostComponent))
                 return;
 
-            _container.Remove(uid, hostComponent.GuardianContainer);
+            hostComponent.GuardianContainer.Remove(uid);
             hostComponent.HostedGuardian = null;
             Dirty(host.Value, hostComponent);
             QueueDel(hostComponent.ActionEntity);
@@ -213,7 +213,7 @@ namespace Content.Server.Guardian
             // Use map position so it's not inadvertantly parented to the host + if it's in a container it spawns outside I guess.
             var guardian = Spawn(component.GuardianProto, hostXform.MapPosition);
 
-            _container.Insert(guardian, host.GuardianContainer);
+            host.GuardianContainer.Insert(guardian);
             host.HostedGuardian = guardian;
 
             if (TryComp<GuardianComponent>(guardian, out var guardianComp))
@@ -337,7 +337,7 @@ namespace Content.Server.Guardian
             }
 
             DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardian));
-            _container.Remove(guardian, hostComponent.GuardianContainer);
+            hostComponent.GuardianContainer.Remove(guardian);
             DebugTools.Assert(!hostComponent.GuardianContainer.Contains(guardian));
 
             guardianComponent.GuardianLoose = true;
@@ -351,7 +351,7 @@ namespace Content.Server.Guardian
                 return;
             }
 
-            _container.Insert(guardian, hostComponent.GuardianContainer);
+            hostComponent.GuardianContainer.Insert(guardian);
             DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardian));
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-recall"), host);
             guardianComponent.GuardianLoose = false;

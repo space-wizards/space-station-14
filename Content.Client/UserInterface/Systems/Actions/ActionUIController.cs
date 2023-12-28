@@ -773,10 +773,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_actionsSystem == null)
             return;
 
-        _actions.Clear();
-        foreach (var assign in assignments)
+        for (var i = 0; i < assignments.Count; i++)
         {
-            _actions.Add(assign.ActionId);
+            _actions[i] = assignments[i].ActionId;
         }
 
         _container?.SetActionData(_actionsSystem, _actions.ToArray());

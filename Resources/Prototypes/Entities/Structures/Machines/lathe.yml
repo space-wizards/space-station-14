@@ -277,7 +277,6 @@
       - PowerCellMicroreactor
       - PowerCellHigh
       - WeaponPistolCHIMP
-      - WeaponGauntletGorilla
       - SynthesizerInstrument
       - RPED
       - ClothingShoesBootsMagSci
@@ -645,9 +644,7 @@
       - TimerTrigger
       - Truncheon
       - VoiceTrigger
-      - WeaponDisablerPractice
       - WeaponAdvancedLaser
-      - WeaponDisablerSMG
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon

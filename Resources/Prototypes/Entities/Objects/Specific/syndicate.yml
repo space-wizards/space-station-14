@@ -109,7 +109,7 @@
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadioDebug
-  suffix: DEBUG
+  suffix: Debug
   components:
   - type: Store
     preset: StorePresetUplink

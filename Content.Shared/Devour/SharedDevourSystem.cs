@@ -17,7 +17,7 @@ public abstract class SharedDevourSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -31,7 +31,7 @@ public abstract class SharedDevourSystem : EntitySystem
     {
         //Devourer doesn't actually chew, since he sends targets right into his stomach.
         //I did it mom, I added ERP content into upstream. Legally!
-        component.Stomach = ContainerSystem.EnsureContainer<Container>(uid, "stomach");
+        component.Stomach = _containerSystem.EnsureContainer<Container>(uid, "stomach");
 
         _actionsSystem.AddAction(uid, ref component.DevourActionEntity, component.DevourAction);
     }

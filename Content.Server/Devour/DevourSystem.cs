@@ -31,7 +31,7 @@ public sealed class DevourSystem : SharedDevourSystem
 
             if (component.ShouldStoreDevoured && args.Args.Target is not null)
             {
-                ContainerSystem.Insert(args.Args.Target.Value, component.Stomach);
+                component.Stomach.Insert(args.Args.Target.Value);
             }
             _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);
         }

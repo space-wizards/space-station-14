@@ -36,5 +36,7 @@ public sealed class MobStateActionsSystem : EntitySystem
             if (_actions.AddAction(uid, ref act, id, uid, action))
                 component.GrantedActions.Add(act.Value);
         }
+
+        Dirty(uid, component);
     }
 }

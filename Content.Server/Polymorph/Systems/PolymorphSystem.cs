@@ -181,7 +181,7 @@ namespace Content.Server.Polymorph.Systems
             childXform.LocalRotation = targetTransformComp.LocalRotation;
 
             if (_container.TryGetContainingContainer(uid, out var cont))
-                _container.Insert(child, cont);
+                cont.Insert(child);
 
             //Transfers all damage from the original to the new one
             if (proto.TransferDamage &&

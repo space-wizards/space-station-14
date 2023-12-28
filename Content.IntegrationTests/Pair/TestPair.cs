@@ -28,14 +28,6 @@ public sealed partial class TestPair
     public RobustIntegrationTest.ServerIntegrationInstance Server { get; private set; } = default!;
     public RobustIntegrationTest.ClientIntegrationInstance Client { get;  private set; } = default!;
 
-    public void Deconstruct(
-        out RobustIntegrationTest.ServerIntegrationInstance server,
-        out RobustIntegrationTest.ClientIntegrationInstance client)
-    {
-        server = Server;
-        client = Client;
-    }
-
     public ICommonSession? Player => Server.PlayerMan.Sessions.FirstOrDefault();
     public ContentPlayerData? PlayerData => Player?.Data.ContentData();
 
@@ -86,8 +78,6 @@ public sealed partial class TestPair
     public void Kill()
     {
         State = PairState.Dead;
-        ServerLogHandler.ShuttingDown = true;
-        ClientLogHandler.ShuttingDown = true;
         Server.Dispose();
         Client.Dispose();
     }

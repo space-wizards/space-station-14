@@ -38,7 +38,7 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
         if (args.Handled || !TryComp<EnsnaringComponent>(args.Args.Used, out var ensnaring))
             return;
 
-        if (args.Cancelled || !_container.Remove(args.Args.Used.Value, component.Container))
+        if (args.Cancelled || !component.Container.Remove(args.Args.Used.Value))
         {
             _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-fail", ("ensnare", args.Args.Used)), uid, uid, PopupType.MediumCaution);
             return;

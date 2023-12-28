@@ -233,7 +233,7 @@ namespace Content.Server.Medical
             if (!HasComp<BodyComponent>(to_insert))
                 return;
 
-            _containerSystem.Insert(to_insert, scannerComponent.BodyContainer);
+            scannerComponent.BodyContainer.Insert(to_insert);
             UpdateAppearance(uid, scannerComponent);
         }
 
@@ -245,7 +245,7 @@ namespace Content.Server.Medical
             if (scannerComponent.BodyContainer.ContainedEntity is not { Valid: true } contained)
                 return;
 
-            _containerSystem.Remove(contained, scannerComponent.BodyContainer);
+            scannerComponent.BodyContainer.Remove(contained);
             _climbSystem.ForciblySetClimbing(contained, uid);
             UpdateAppearance(uid, scannerComponent);
         }

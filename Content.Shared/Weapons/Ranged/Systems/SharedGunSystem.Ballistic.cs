@@ -48,7 +48,7 @@ public abstract partial class SharedGunSystem
             return;
 
         component.Entities.Add(args.Used);
-        Containers.Insert(args.Used, component.Container);
+        component.Container.Insert(args.Used);
         // Not predicted so
         Audio.PlayPredicted(component.SoundInsert, uid, args.User);
         args.Handled = true;
@@ -241,7 +241,7 @@ public abstract partial class SharedGunSystem
 
                 args.Ammo.Add((entity, EnsureShootable(entity)));
                 component.Entities.RemoveAt(component.Entities.Count - 1);
-                Containers.Remove(entity, component.Container);
+                component.Container.Remove(entity);
             }
             else if (component.UnspawnedCount > 0)
             {

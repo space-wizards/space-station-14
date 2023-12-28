@@ -76,7 +76,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
             return false;
 
         var xform = Transform(target);
-        _containerSystem.Insert((target, xform), cryoPodComponent.BodyContainer);
+        cryoPodComponent.BodyContainer.Insert(target, transform: xform);
 
         EnsureComp<InsideCryoPodComponent>(target);
         _standingStateSystem.Stand(target, force: true); // Force-stand the mob so that the cryo pod sprite overlays it fully
@@ -117,7 +117,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         if (cryoPodComponent.BodyContainer.ContainedEntity is not {Valid: true} contained)
             return null;
 
-        _containerSystem.Remove(contained, cryoPodComponent.BodyContainer);
+        cryoPodComponent.BodyContainer.Remove(contained);
         // InsideCryoPodComponent is removed automatically in its EntGotRemovedFromContainerMessage listener
         // RemComp<InsideCryoPodComponent>(contained);
 

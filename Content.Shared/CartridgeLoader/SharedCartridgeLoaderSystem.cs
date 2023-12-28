@@ -36,7 +36,7 @@ public abstract class SharedCartridgeLoaderSystem : EntitySystem
     {
         _itemSlotsSystem.RemoveItemSlot(uid, loader.CartridgeSlot);
         if (_container.TryGetContainer(uid, InstalledContainerId, out var cont))
-            _container.ShutdownContainer(cont);
+            cont.Shutdown(EntityManager, _netMan);
     }
 
     protected virtual void OnItemInserted(EntityUid uid, CartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)

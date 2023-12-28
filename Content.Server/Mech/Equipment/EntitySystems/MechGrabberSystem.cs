@@ -78,7 +78,7 @@ public sealed class MechGrabberSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        _container.Remove(toRemove, component.ItemContainer);
+        component.ItemContainer.Remove(toRemove);
         var mechxform = Transform(mech);
         var xform = Transform(toRemove);
         _transform.AttachToGridOrMap(toRemove, xform);
@@ -175,7 +175,7 @@ public sealed class MechGrabberSystem : EntitySystem
         if (!_mech.TryChangeEnergy(equipmentComponent.EquipmentOwner.Value, component.GrabEnergyDelta))
             return;
 
-        _container.Insert(args.Args.Target.Value, component.ItemContainer);
+        component.ItemContainer.Insert(args.Args.Target.Value);
         _mech.UpdateUserInterface(equipmentComponent.EquipmentOwner.Value);
 
         args.Handled = true;

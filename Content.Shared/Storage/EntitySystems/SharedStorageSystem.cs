@@ -1,4 +1,3 @@
-using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -52,12 +51,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [ValidatePrototypeId<ItemSizePrototype>]
     public const string DefaultStorageMaxItemSize = "Normal";
 
-    private ItemSizePrototype _defaultStorageMaxItemSize = default!;
-
     public bool CheckingCanInsert;
-
-    private readonly List<ItemSizePrototype> _sortedSizes = new();
-    private FrozenDictionary<string, ItemSizePrototype> _nextSmallest = FrozenDictionary<string, ItemSizePrototype>.Empty;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -67,7 +61,6 @@ public abstract class SharedStorageSystem : EntitySystem
         _itemQuery = GetEntityQuery<ItemComponent>();
         _stackQuery = GetEntityQuery<StackComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
-        _prototype.PrototypesReloaded += OnPrototypesReloaded;
 
         SubscribeLocalEvent<StorageComponent, ComponentInit>(OnComponentInit, before: new[] { typeof(SharedContainerSystem) });
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
@@ -89,39 +82,6 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeAllEvent<StorageSetItemLocationEvent>(OnSetItemLocation);
         SubscribeAllEvent<StorageInsertItemIntoLocationEvent>(OnInsertItemIntoLocation);
         SubscribeAllEvent<StorageRemoveItemEvent>(OnRemoveItem);
-        UpdatePrototypeCache();
-    }
-
-    public override void Shutdown()
-    {
-        _prototype.PrototypesReloaded -= OnPrototypesReloaded;
-    }
-
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
-    {
-        if (args.ByType.ContainsKey(typeof(ItemSizePrototype))
-            || (args.Removed?.ContainsKey(typeof(ItemSizePrototype)) ?? false))
-        {
-            UpdatePrototypeCache();
-        }
-    }
-
-    private void UpdatePrototypeCache()
-    {
-        _defaultStorageMaxItemSize = _prototype.Index<ItemSizePrototype>(DefaultStorageMaxItemSize);
-        _sortedSizes.Clear();
-        _sortedSizes.AddRange(_prototype.EnumeratePrototypes<ItemSizePrototype>());
-        _sortedSizes.Sort();
-
-        var nextSmallest = new KeyValuePair<string, ItemSizePrototype>[_sortedSizes.Count];
-        for (var i = 0; i < _sortedSizes.Count; i++)
-        {
-            var k = _sortedSizes[i].ID;
-            var v = _sortedSizes[Math.Max(i - 1, 0)];
-            nextSmallest[i] = new(k, v);
-        }
-
-        _nextSmallest = nextSmallest.ToFrozenDictionary();
     }
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
@@ -641,7 +601,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return true;
         }
 
-        var maxSize = GetMaxItemSize((uid, storageComp));
+        var maxSize = ItemSystem.GetSizePrototype(GetMaxItemSize((uid, storageComp)));
         if (ItemSystem.GetSizePrototype(item.Size) > maxSize)
         {
             reason = "comp-storage-too-big";
@@ -649,7 +609,7 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         if (TryComp<StorageComponent>(insertEnt, out var insertStorage)
-            && GetMaxItemSize((insertEnt, insertStorage)) >= maxSize)
+            && ItemSystem.GetSizePrototype(GetMaxItemSize((insertEnt, insertStorage))) >= maxSize)
         {
             reason = "comp-storage-too-big";
             return false;
@@ -1049,21 +1009,25 @@ public abstract class SharedStorageSystem : EntitySystem
         return sum;
     }
 
-    public ItemSizePrototype GetMaxItemSize(Entity<StorageComponent?> uid)
+    public ProtoId<ItemSizePrototype> GetMaxItemSize(Entity<StorageComponent?> uid)
     {
         if (!Resolve(uid, ref uid.Comp))
-            return _defaultStorageMaxItemSize;
+            return DefaultStorageMaxItemSize;
 
         // If we specify a max item size, use that
         if (uid.Comp.MaxItemSize != null)
-            return _prototype.Index(uid.Comp.MaxItemSize.Value);
+            return uid.Comp.MaxItemSize.Value;
 
         if (!_itemQuery.TryGetComponent(uid, out var item))
-            return _defaultStorageMaxItemSize;
+            return DefaultStorageMaxItemSize;
+        var size = ItemSystem.GetSizePrototype(item.Size);
 
         // if there is no max item size specified, the value used
-        // is one below the item size of the storage entity.
-        return _nextSmallest[item.Size];
+        // is one below the item size of the storage entity, clamped at ItemSize.Tiny
+        var sizes = _prototype.EnumeratePrototypes<ItemSizePrototype>().ToList();
+        sizes.Sort();
+        var currentSizeIndex = sizes.IndexOf(size);
+        return sizes[Math.Max(currentSizeIndex - 1, 0)].ID;
     }
 
     private void OnStackCountChanged(EntityUid uid, MetaDataComponent component, StackCountChangedEvent args)

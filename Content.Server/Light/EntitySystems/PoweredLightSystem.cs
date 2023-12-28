@@ -87,7 +87,7 @@ namespace Content.Server.Light.EntitySystems
             if (light.HasLampOnSpawn != null)
             {
                 var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
-                _containerSystem.Insert(entity, light.LightBulbContainer);
+                light.LightBulbContainer.Insert(entity);
             }
             // need this to update visualizers
             UpdateLight(uid, light);
@@ -182,7 +182,7 @@ namespace Content.Server.Light.EntitySystems
                 return false;
 
             // try to insert bulb in container
-            if (!_containerSystem.Insert(bulbUid, light.LightBulbContainer))
+            if (!light.LightBulbContainer.Insert(bulbUid))
                 return false;
 
             UpdateLight(uid, light);
@@ -203,7 +203,7 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             // try to remove bulb from container
-            if (!_containerSystem.Remove(bulb, light.LightBulbContainer))
+            if (!light.LightBulbContainer.Remove(bulb))
                 return null;
 
             // try to place bulb in hands

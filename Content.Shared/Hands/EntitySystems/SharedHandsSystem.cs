@@ -73,8 +73,7 @@ public abstract partial class SharedHandsSystem
 
         handsComp.SortedHands.Remove(hand.Name);
         TryDrop(uid, hand, null, false, true, handsComp);
-        if (hand.Container != null)
-            ContainerSystem.ShutdownContainer(hand.Container);
+        hand.Container?.Shutdown();
 
         if (handsComp.ActiveHand == hand)
             TrySetActiveHand(uid, handsComp.SortedHands.FirstOrDefault(), handsComp);

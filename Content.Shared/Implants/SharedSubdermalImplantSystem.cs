@@ -48,7 +48,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
             {
                 if (_tag.HasTag(implant, "MicroBomb"))
                 {
-                    _container.Remove(implant, implantContainer);
+                    implantContainer.Remove(implant);
                     QueueDel(implant);
                 }
             }
@@ -124,7 +124,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         var implantContainer = implantedComp.ImplantContainer;
 
         component.ImplantedEntity = target;
-        _container.Insert(implant, implantContainer);
+        implantContainer.Insert(implant);
     }
 
     /// <summary>
@@ -140,7 +140,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
         var implantContainer = implanted.ImplantContainer;
 
-        _container.Remove(implant, implantContainer);
+        implantContainer.Remove(implant);
         QueueDel(implant);
     }
 

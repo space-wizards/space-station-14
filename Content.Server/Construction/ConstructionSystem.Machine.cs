@@ -125,7 +125,7 @@ public sealed partial class ConstructionSystem
 
         var board = EntityManager.SpawnEntity(component.BoardPrototype, Transform(uid).Coordinates);
 
-        if (!_container.Insert(board, component.BoardContainer))
+        if (!component.BoardContainer.Insert(board))
         {
             throw new Exception($"Couldn't insert board with prototype {component.BoardPrototype} to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}!");
         }
@@ -143,7 +143,7 @@ public sealed partial class ConstructionSystem
             {
                 var p = EntityManager.SpawnEntity(partProto.StockPartPrototype, xform.Coordinates);
 
-                if (!_container.Insert(p, partContainer))
+                if (!partContainer.Insert(p))
                     throw new Exception($"Couldn't insert machine part of type {part} to machine with prototype {partProto.StockPartPrototype ?? "N/A"}!");
             }
         }
@@ -152,7 +152,7 @@ public sealed partial class ConstructionSystem
         {
             var stack = _stackSystem.Spawn(amount, stackType, Transform(uid).Coordinates);
 
-            if (!_container.Insert(stack, partContainer))
+            if (!partContainer.Insert(stack))
                 throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}");
         }
 
@@ -162,7 +162,7 @@ public sealed partial class ConstructionSystem
             {
                 var c = EntityManager.SpawnEntity(info.DefaultPrototype, Transform(uid).Coordinates);
 
-                if(!_container.Insert(c, partContainer))
+                if(!partContainer.Insert(c))
                     throw new Exception($"Couldn't insert machine component part with default prototype '{compName}' to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}");
             }
         }
@@ -173,7 +173,7 @@ public sealed partial class ConstructionSystem
             {
                 var c = EntityManager.SpawnEntity(info.DefaultPrototype, Transform(uid).Coordinates);
 
-                if(!_container.Insert(c, partContainer))
+                if(!partContainer.Insert(c))
                     throw new Exception($"Couldn't insert machine component part with default prototype '{tagName}' to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}");
             }
         }

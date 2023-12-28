@@ -38,9 +38,9 @@ public sealed class DirtyCommand : IConsoleCommand
 
     private static void DirtyAll(IEntityManager manager, EntityUid entityUid)
     {
-        foreach (var component in manager.GetNetComponents(entityUid))
+        foreach (var component in manager.GetComponents(entityUid))
         {
-            manager.Dirty(entityUid, component.component);
+            manager.Dirty((Component)component);
         }
     }
 }

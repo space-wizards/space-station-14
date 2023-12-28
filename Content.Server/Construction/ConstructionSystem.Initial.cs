@@ -133,14 +133,14 @@ namespace Content.Server.Construction
             {
                 foreach (var entity in container.ContainedEntities.ToArray())
                 {
-                    _container.Remove(entity, container);
+                    container.Remove(entity);
                 }
 
                 foreach (var cont in containers.Values)
                 {
                     foreach (var entity in cont.ContainedEntities.ToArray())
                     {
-                        _container.Remove(entity, cont);
+                        cont.Remove(entity);
                     }
                 }
 
@@ -150,10 +150,10 @@ namespace Content.Server.Construction
 
             void ShutdownContainers()
             {
-                _container.ShutdownContainer(container);
+                container.Shutdown();
                 foreach (var c in containers.Values.ToArray())
                 {
-                    _container.ShutdownContainer(c);
+                    c.Shutdown();
                 }
             }
 
@@ -188,10 +188,10 @@ namespace Content.Server.Construction
 
                             if (string.IsNullOrEmpty(materialStep.Store))
                             {
-                                if (!_container.Insert(splitStack.Value, container))
+                                if (!container.Insert(splitStack.Value))
                                     continue;
                             }
-                            else if (!_container.Insert(splitStack.Value, GetContainer(materialStep.Store)))
+                            else if (!GetContainer(materialStep.Store).Insert(splitStack.Value))
                                 continue;
 
                             handled = true;
@@ -217,10 +217,10 @@ namespace Content.Server.Construction
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
-                                if (!_container.Insert(entity, container))
+                                if (!container.Insert(entity))
                                     continue;
                             }
-                            else if (!_container.Insert(entity, GetContainer(arbitraryStep.Store)))
+                            else if (!GetContainer(arbitraryStep.Store).Insert(entity))
                                 continue;
 
                             handled = true;
@@ -284,8 +284,8 @@ namespace Content.Server.Construction
 
                 foreach (var entity in cont.ContainedEntities.ToArray())
                 {
-                    _container.Remove(entity, cont, reparent: false, force: true);
-                    _container.Insert(entity, newCont);
+                    cont.ForceRemove(entity);
+                    newCont.Insert(entity);
                 }
             }
 

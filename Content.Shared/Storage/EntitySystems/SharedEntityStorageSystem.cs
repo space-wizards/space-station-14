@@ -263,7 +263,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         }
 
         _joints.RecursiveClearJoints(toInsert);
-        if (!_container.Insert(toInsert, component.Contents))
+        if (!component.Contents.Insert(toInsert, EntityManager))
             return false;
 
         var inside = EnsureComp<InsideEntityStorageComponent>(toInsert);
@@ -280,7 +280,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return false;
 
         RemComp<InsideEntityStorageComponent>(toRemove);
-        _container.Remove(toRemove, component.Contents);
+        component.Contents.Remove(toRemove, EntityManager);
         var pos = TransformSystem.GetWorldPosition(xform) + TransformSystem.GetWorldRotation(xform).RotateVec(component.EnteringOffset);
         TransformSystem.SetWorldPosition(toRemove, pos);
         return true;

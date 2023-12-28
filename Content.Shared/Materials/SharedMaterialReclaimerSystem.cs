@@ -26,7 +26,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly SharedAmbientSoundSystem AmbientSound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] protected readonly SharedContainerSystem Container = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
 
@@ -79,7 +79,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
     private void OnActiveStartup(EntityUid uid, ActiveMaterialReclaimerComponent component, ComponentStartup args)
     {
-        component.ReclaimingContainer = Container.EnsureContainer<Container>(uid, ActiveReclaimerContainerId);
+        component.ReclaimingContainer = _container.EnsureContainer<Container>(uid, ActiveReclaimerContainerId);
     }
 
     private void OnActiveUnpaused(EntityUid uid, ActiveMaterialReclaimerComponent component, ref EntityUnpausedEvent args)
@@ -107,7 +107,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (component.Blacklist is {} blacklist && blacklist.IsValid(item))
             return false;
 
-        if (Container.TryGetContainingContainer(item, out _) && !Container.TryRemoveFromContainer(item))
+        if (_container.TryGetContainingContainer(item, out _) && !_container.TryRemoveFromContainer(item))
             return false;
 
         if (user != null)
@@ -133,7 +133,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         var active = EnsureComp<ActiveMaterialReclaimerComponent>(uid);
         active.Duration = duration;
         active.EndTime = Timing.CurTime + duration;
-        Container.Insert(item, active.ReclaimingContainer);
+        active.ReclaimingContainer.Insert(item);
         return true;
     }
 

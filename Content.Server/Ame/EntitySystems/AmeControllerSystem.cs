@@ -177,7 +177,7 @@ public sealed class AmeControllerSystem : EntitySystem
         if (!Exists(jar))
             return;
 
-        _containerSystem.Remove(jar!.Value, controller.JarSlot);
+        controller.JarSlot.Remove(jar!.Value);
         UpdateUi(uid, controller);
         if (Exists(user))
             _handsSystem.PickupOrDrop(user, jar!.Value);
@@ -303,7 +303,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
         }
 
-        _containerSystem.Insert(args.Used, comp.JarSlot);
+        comp.JarSlot.Insert(args.Used);
         _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-success"), uid, args.User, PopupType.Medium);
 
         UpdateUi(uid, comp);

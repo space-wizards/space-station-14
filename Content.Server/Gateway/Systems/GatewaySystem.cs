@@ -291,6 +291,7 @@ public sealed class GatewaySystem : EntitySystem
             return;
 
         gatewayComp.Name = gatewayName;
+        Dirty(gatewayUid, gatewayComp);
     }
 }
 

@@ -138,7 +138,7 @@ public sealed class BinSystem : EntitySystem
         if (component.Whitelist != null && !component.Whitelist.IsValid(toInsert))
             return false;
 
-        _container.Insert(toInsert, component.ItemContainer);
+        component.ItemContainer.Insert(toInsert);
         component.Items.Add(toInsert);
         Dirty(component);
         return true;
@@ -162,7 +162,7 @@ public sealed class BinSystem : EntitySystem
         if (toRemove == null || toRemove != component.Items.LastOrDefault())
             return false;
 
-        if (!_container.Remove(toRemove.Value, component.ItemContainer))
+        if (!component.ItemContainer.Remove(toRemove.Value))
             return false;
 
         component.Items.Remove(toRemove.Value);

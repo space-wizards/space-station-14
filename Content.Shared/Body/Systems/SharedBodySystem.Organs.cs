@@ -98,7 +98,7 @@ public partial class SharedBodySystem
         if (!Containers.TryGetContainer(partId, containerId, out var container))
             return false;
 
-        return Containers.Insert(organId, container);
+        return container.Insert(organId);
     }
 
     /// <summary>
@@ -114,7 +114,7 @@ public partial class SharedBodySystem
         if (!HasComp<BodyPartComponent>(parent))
             return false;
 
-        return Containers.Remove(organId, container);
+        return container.Remove(organId);
     }
 
     /// <summary>

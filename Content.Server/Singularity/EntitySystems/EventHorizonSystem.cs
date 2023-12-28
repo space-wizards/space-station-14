@@ -215,7 +215,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             var target_container = outerContainer;
             while (target_container != null)
             {
-                if (_containerSystem.Insert(entity, target_container))
+                if (target_container.Insert(entity))
                     break;
 
                 _containerSystem.TryGetContainingContainer(target_container.Owner, out target_container);

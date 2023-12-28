@@ -41,7 +41,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         if (!TryComp<EntityStorageComponent>(ent, out var entityStorageComp) || entityStorageComp.Contents.ContainedEntities.Count == 0)
             return;
 
-        if (!this.IsPowered(ent, EntityManager))
+        if (entityStorageComp.Contents.Contains(args.User) || !this.IsPowered(ent, EntityManager))
             return;
 
         var verb = new AlternativeVerb

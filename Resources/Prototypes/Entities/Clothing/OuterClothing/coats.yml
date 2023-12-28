@@ -22,7 +22,6 @@
   - type: StorageFill
     contents:
     - id: SmokingPipeFilledTobacco
-    - id: FlippoEngravedLighter
   - type: Armor #same as regular sec armor
     modifiers:
       coefficients:

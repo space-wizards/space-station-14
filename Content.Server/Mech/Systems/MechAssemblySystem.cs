@@ -47,7 +47,7 @@ public sealed class MechAssemblySystem : EntitySystem
             if (!val && tagComp.Tags.Contains(tag))
             {
                 component.RequiredParts[tag] = true;
-                _container.Insert(args.Used, component.PartsContainer);
+                component.PartsContainer.Insert(args.Used);
                 break;
             }
         }

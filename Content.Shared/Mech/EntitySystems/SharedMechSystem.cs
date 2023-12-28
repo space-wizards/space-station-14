@@ -220,7 +220,7 @@ public abstract class SharedMechSystem : EntitySystem
             return;
 
         equipmentComponent.EquipmentOwner = uid;
-        _container.Insert(toInsert, component.EquipmentContainer);
+        component.EquipmentContainer.Insert(toInsert, EntityManager);
         var ev = new MechEquipmentInsertedEvent(uid);
         RaiseLocalEvent(toInsert, ref ev);
         UpdateUserInterface(uid, component);
@@ -258,7 +258,7 @@ public abstract class SharedMechSystem : EntitySystem
             CycleEquipment(uid, component);
 
         equipmentComponent.EquipmentOwner = null;
-        _container.Remove(toRemove, component.EquipmentContainer);
+        component.EquipmentContainer.Remove(toRemove, EntityManager);
         UpdateUserInterface(uid, component);
     }
 
@@ -364,7 +364,7 @@ public abstract class SharedMechSystem : EntitySystem
             return false;
 
         SetupUser(uid, toInsert.Value);
-        _container.Insert(toInsert.Value, component.PilotSlot);
+        component.PilotSlot.Insert(toInsert.Value, EntityManager);
         UpdateAppearance(uid, component);
         return true;
     }

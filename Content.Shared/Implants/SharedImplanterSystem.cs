@@ -63,11 +63,10 @@ public abstract class SharedImplanterSystem : EntitySystem
         var implantedComp = EnsureComp<ImplantedComponent>(target);
         var implantContainer = implantedComp.ImplantContainer;
 
-        if (component.ImplanterSlot.ContainerSlot != null)
-            _container.Remove(implant.Value, component.ImplanterSlot.ContainerSlot);
+        component.ImplanterSlot.ContainerSlot?.Remove(implant.Value);
         implantComp.ImplantedEntity = target;
         implantContainer.OccludesLight = false;
-        _container.Insert(implant.Value, implantContainer);
+        implantContainer.Insert(implant.Value);
 
         if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
             DrawMode(implanter, component);
@@ -141,9 +140,9 @@ public abstract class SharedImplanterSystem : EntitySystem
                     continue;
                 }
 
-                _container.Remove(implant, implantContainer);
+                implantContainer.Remove(implant);
                 implantComp.ImplantedEntity = null;
-                _container.Insert(implant, implanterContainer);
+                implanterContainer.Insert(implant);
                 permanentFound = implantComp.Permanent;
 
                 var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };

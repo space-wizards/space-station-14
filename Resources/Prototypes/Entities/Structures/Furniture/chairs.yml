@@ -82,7 +82,6 @@
   description: Apply butt.
   components:
   - type: Anchorable
-  - type: Rotatable
   - type: Sprite
     state: stool
   - type: Construction
@@ -112,7 +111,6 @@
   id: ChairOfficeLight
   parent: SeatBase
   components:
-  - type: Anchorable
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Sprite
@@ -206,9 +204,11 @@
 - type: entity
   name: ritual chair
   id: ChairRitual
-  parent: ChairWood
+  parent: SeatBase
   description: Looks uncomfortable.
   components:
+  - type: Anchorable
+  - type: Rotatable
   - type: Sprite
     state: ritual
   - type: Construction
@@ -221,6 +221,7 @@
   name: meat chair
   description: Uncomfortably sweaty.
   components:
+  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: meat
@@ -231,9 +232,11 @@
 - type: entity
   name: cursed chair
   id: ChairCursed
-  parent: ChairWood
+  parent: SeatBase
   description: It's staring back.
   components:
+  - type: Anchorable
+  - type: Rotatable
   - type: Sprite
     state: cursed
   - type: Strap
@@ -250,11 +253,6 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Voice/Human/womanlaugh.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialWoodPlank:
-            min: 1
-            max: 1
     graph: RitualSeat
     node: chairCursed
 
@@ -268,6 +266,7 @@
     anchored: true
   - type: Physics
     bodyType: Static
+  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     sprite: Structures/Web/chair.rsi

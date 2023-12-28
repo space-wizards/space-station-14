@@ -199,7 +199,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
             return false;
 
         var installedProgram = Spawn(prototype, new EntityCoordinates(loaderUid, 0, 0));
-        _containerSystem.Insert(installedProgram, container);
+        container.Insert(installedProgram);
 
         UpdateCartridgeInstallationStatus(installedProgram, deinstallable ? InstallationStatus.Installed : InstallationStatus.Readonly);
 

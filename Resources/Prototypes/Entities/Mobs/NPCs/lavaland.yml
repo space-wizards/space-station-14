@@ -130,7 +130,7 @@
   id: MobWatcherPride
   parent: MobWatcherBase
   name: pride watcher
-  suffix: Admeme
+  suffix: ADMEME
   description: This rare subspecies only appears in June.
   components:
   - type: Sprite

@@ -54,7 +54,7 @@ public sealed partial class BuildMech : IGraphAction
             return;
         }
 
-        containerSystem.Remove(cell, container);
+        container.Remove(cell);
 
         var transform = entityManager.GetComponent<TransformComponent>(uid);
         var mech = entityManager.SpawnEntity(MechPrototype, transform.Coordinates);
@@ -62,7 +62,7 @@ public sealed partial class BuildMech : IGraphAction
         if (entityManager.TryGetComponent<MechComponent>(mech, out var mechComp) && mechComp.BatterySlot.ContainedEntity == null)
         {
             mechSys.InsertBattery(mech, cell, mechComp, batteryComponent);
-            containerSystem.Insert(cell, mechComp.BatterySlot);
+            mechComp.BatterySlot.Insert(cell);
         }
 
         var entChangeEv = new ConstructionChangeEntityEvent(mech, uid);

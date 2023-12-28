@@ -175,7 +175,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                         if (metaData.EntityPrototype.ID == recipeSolid.Key)
                         {
-                            _sharedContainer.Remove(item, component.Storage);
+                            component.Storage.Remove(item);
                             EntityManager.DeleteEntity(item);
                             break;
                         }
@@ -373,7 +373,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 if (_tag.HasTag(item, "MicrowaveSelfUnsafe") || _tag.HasTag(item, "Plastic"))
                 {
                     var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
-                    _container.Insert(junk, component.Storage);
+                    component.Storage.Insert(junk);
                     QueueDel(item);
                 }
 

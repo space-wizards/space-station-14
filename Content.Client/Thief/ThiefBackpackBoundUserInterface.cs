@@ -26,10 +26,8 @@ public sealed class ThiefBackpackBoundUserInterface : BoundUserInterface
         if (!disposing)
             return;
 
-        if (_window != null)
-            _window.OnClose -= Close;
-
         _window?.Dispose();
+        _window = null;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
