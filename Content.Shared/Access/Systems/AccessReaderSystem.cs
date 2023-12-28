@@ -33,6 +33,7 @@ public sealed class AccessReaderSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<AccessReaderComponent, GotDeemaggedEvent>(OnDeemagged);
         SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
 
         SubscribeLocalEvent<AccessReaderComponent, ComponentGetState>(OnGetState);
@@ -80,6 +81,12 @@ public sealed class AccessReaderSystem : EntitySystem
         reader.Enabled = false;
         reader.AccessLog.Clear();
         Dirty(uid, reader);
+    }
+
+    private void OnDeemagged(Entity<AccessReaderComponent> reader, ref GotDeemaggedEvent args)
+    {
+        reader.Comp.Enabled = true;
+        Dirty(reader);
     }
 
     /// <summary>
