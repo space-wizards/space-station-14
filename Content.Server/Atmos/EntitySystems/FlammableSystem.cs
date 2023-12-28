@@ -391,6 +391,12 @@ namespace Content.Server.Atmos.EntitySystems
                     _damageableSystem.TryChangeDamage(uid, flammable.Damage * damageScale);
 
                     AdjustFireStacks(uid, flammable.FirestackFade * (flammable.Resisting ? 10f : 1f), flammable);
+
+                    if (!flammable.OnFire)
+                    {
+                        _alertsSystem.ClearAlert(uid, AlertType.Fire);
+                        continue;
+                    }
                 }
                 else
                 {
