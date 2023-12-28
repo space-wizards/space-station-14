@@ -62,6 +62,9 @@ public sealed partial class DungeonJob
         if (!_entManager.TryGetComponent(gridUid, out BiomeComponent? biomeComp))
             return;
 
+        // TODO: We should take the uhh spawned ents and just use that to guarantee better spawns between the asteroid types
+
+        throw new NotImplementedException();
         var biomeSystem = _entManager.System<BiomeSystem>();
         var markerTemplate = _prototype.Index(postGen.MarkerTemplate);
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();

@@ -23,7 +23,7 @@
       biomeTemplate: Caves
 
     # Generate ore veins
-    - !type:MarkerLayerPostGen
+    - !type:VeinPostGen
       markerTemplate: OreTin
 
     # TODO: Remove biome
