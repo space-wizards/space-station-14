@@ -80,9 +80,9 @@ namespace Content.Client.Eye.Blinding
                 _blindableComponent.GraceFrame = false;
             }
 
-            if (_entityManager.TryGetComponent<ContentEyeComponent>(playerEntity, out var content))
+            if (_entityManager.TryGetComponent<EyeComponent>(playerEntity, out var content))
             {
-                _circleMaskShader?.SetParameter("ZOOM", content.TargetZoom.X);
+                _circleMaskShader?.SetParameter("ZOOM", content.Zoom.X);
             }
             _greyscaleShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
