@@ -194,3 +194,168 @@
     damage:
       types:
         Blunt: 10
+
+- type: entity
+  parent: [ SimpleSpaceMobBase, MobCombat ]
+  id: BaseMobFleshSalvage #This one is immune to space!
+  name: aberrant flesh
+  suffix: "Salvage Ruleset"
+  description: A shambling mass of flesh, animated through anomalous energy.
+  abstract: true
+  components:
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Flesh
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/flesh.rsi
+  - type: MovementAlwaysTouching
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1
+    baseSprintSpeed: 1.5
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      75: Dead
+  - type: Stamina
+    critThreshold: 50
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: Bloodstream
+    bloodMaxVolume: 100
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 6
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: GhostRole
+    prob: 0.25
+    name: ghost-role-information-salvage-flesh-name
+    description: ghost-role-information-salvage-flesh-description
+  - type: SalvageMobRestrictions
+
+- type: entity
+  parent: BaseMobFleshSalvage
+  id: MobFleshJaredSalvage
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: jared
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: jared
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 8
+
+- type: entity
+  parent: BaseMobFleshSalvage
+  id: MobFleshGolemSalvage
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: golem
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: golem
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 8
+
+- type: entity
+  parent: BaseMobFleshSalvage
+  id: MobFleshClampSalvage
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: clamp
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: clamp
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      30: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2.5
+
+- type: entity
+  parent: BaseMobFleshSalvage
+  id: MobFleshLoverSalvage
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: lover
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: lover
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      30: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2.5

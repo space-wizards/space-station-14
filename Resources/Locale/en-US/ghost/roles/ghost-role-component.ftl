@@ -109,6 +109,9 @@ ghost-role-information-space-cobra-description = Space cobras really don't like 
 ghost-role-information-salvage-cobra-name = Space cobra on salvage wreck
 ghost-role-information-salvage-cobra-description = Space cobras really don't like guests, and will always snack on a visitor.
 
+ghost-role-information-salvage-flesh-name = Aberrant flesh on salvage wreck
+ghost-role-information-salvage-flesh-description = Defend the loot inside the salvage wreck!
+
 ghost-role-information-guardian-name = Guardian
 ghost-role-information-guardian-description = Listen to your owner. Don't tank damage. Punch people hard.
 
