@@ -68,7 +68,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-science.rsi
   - type: Magboots
-    toggleAction: ActionToggleMagbootsScience
+    toggleAction: ActionToggleMagbootsSci
   - type: StaticPrice
     price: 400
 
@@ -162,7 +162,7 @@
     iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
 
 - type: entity
-  id: ActionToggleMagbootsScience
+  id: ActionToggleMagbootsSci
   parent: ActionBaseToggleMagboots
   noSpawn: true
   components:
