@@ -56,6 +56,8 @@
       types:
         Blunt: 1
         Heat: 7
+  - type: IgnitionSource
+    ignited: true
 
 - type: entity
   id: PelletShotgunPractice
@@ -142,6 +144,7 @@
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot-flare
   - type: IgnitionSource
+    ignited: true
     temperature: 1000
   - type: TimedDespawn
     lifetime: 240

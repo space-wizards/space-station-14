@@ -608,9 +608,20 @@
     - Raw
     - Meat
   - type: Sprite
+    sprite: Objects/Consumable/Food/salami.rsi
     state: salami
   - type: SliceableFood
     slice: FoodMeatSalamiSlice
+  - type: MeleeWeapon
+    wideAnimationRotation: 100
+    damage:
+      types:
+        Blunt: 6
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 2
 
 - type: entity
   name: meat clown
