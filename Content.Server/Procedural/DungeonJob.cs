@@ -165,6 +165,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
                 break;
         }
 
+        // Defer splitting so they don't get spammed and so we don't have to worry about tracking the grid along the way.
         _grid.CanSplit = true;
         _entManager.System<GridFixtureSystem>().CheckSplits(_gridUid);
         return dungeon;

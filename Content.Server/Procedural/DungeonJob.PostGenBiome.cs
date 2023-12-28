@@ -43,7 +43,7 @@ public sealed partial class DungeonJob
 
             if (biomeSystem.TryGetEntity(node, biomeComp, grid, out var entityProto))
             {
-                var ent = _entManager.SpawnAtPosition(entityProto, new EntityCoordinates(gridUid, node));
+                var ent = _entManager.SpawnAtPosition(entityProto, new EntityCoordinates(gridUid, node + grid.TileSizeHalfVector));
                 var xform = xformQuery.Get(ent);
 
                 if (!xform.Comp.Anchored)
@@ -95,7 +95,7 @@ public sealed partial class DungeonJob
 
         foreach (var node in spawnSet)
         {
-            var ent = _entManager.SpawnAtPosition(markerTemplate.Prototype, new EntityCoordinates(gridUid, node));
+            var ent = _entManager.SpawnAtPosition(markerTemplate.Prototype, new EntityCoordinates(gridUid, node + grid.TileSizeHalfVector));
             var xform = xformQuery.Get(ent);
 
             if (!xform.Comp.Anchored)

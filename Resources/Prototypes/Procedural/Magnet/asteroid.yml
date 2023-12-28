@@ -1,5 +1,4 @@
-# TODO: Cluster of smols
-
+# Large asteroids, typically 1
 - type: dungeonConfig
   id: BlobAsteroid
   # Floor generation
@@ -15,7 +14,6 @@
           fractalType: FBm
           octaves: 2
           lacunarity: 2
-          cellularDistanceFunction: Euclidean
   # Everything else
   postGeneration:
     # Generate vents
@@ -32,6 +30,39 @@
 
     # Generate flora / fauna if we want
 
+# Multiple smaller asteroids
+- type: dungeonConfig
+  id: ClusterAsteroid
+  # Floor generation
+  generator: !type:NoiseDunGen
+    tileCap: 1500
+    capStd: 32
+    layers:
+      - tile: FloorAsteroidSand
+        threshold: 0.30
+        noise:
+          frequency: 0.050
+          noiseType: OpenSimplex2
+          fractalType: FBm
+          octaves: 3
+          lacunarity: 2
+  # Everything else
+  postGeneration:
+    # Generate vents
+    # TODO: Completely random poisson or whatever the fuck
+    # Generate biome
+    - !type:BiomePostGen
+      biomeTemplate: Lava
+
+    # Generate ore veins
+    #- !type:MarkerLayerPostGen
+    #  markerTemplate: OreTin
+
+    # TODO: Remove biome
+
+    # Generate flora / fauna if we want
+
+# Long and spindly, less smooth than blob
 - type: dungeonConfig
   id: SpindlyAsteroid
   # Floor generation
@@ -52,6 +83,7 @@
   # postGeneration:
     # Generate ore veins
 
+# Lots of holes in it
 - type: dungeonConfig
   id: SwissCheeseAsteroid
   # Floor generation

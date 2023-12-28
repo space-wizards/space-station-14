@@ -5,6 +5,7 @@ using Content.Shared.Procedural.DungeonGenerators;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
@@ -43,26 +44,27 @@ public sealed partial class DungeonJob
             switch (edge)
             {
                 case 0:
-                    seedTile = new Vector2i(rand.Next(area.Left, area.Right), area.Bottom - 1);
+                    seedTile = new Vector2i(rand.Next(area.Left - 2, area.Right + 1), area.Bottom - 2);
                     break;
                 case 1:
-                    seedTile = new Vector2i(area.Right, rand.Next(area.Bottom - 1, area.Top));
+                    seedTile = new Vector2i(area.Right + 1, rand.Next(area.Bottom - 2, area.Top + 1));
                     break;
                 case 2:
-                    seedTile = new Vector2i(rand.Next(area.Left, area.Right), area.Top);
+                    seedTile = new Vector2i(rand.Next(area.Left - 2, area.Right + 1), area.Top + 1);
                     break;
                 case 3:
-                    seedTile = new Vector2i(area.Left - 1, rand.Next(area.Bottom - 1, area.Top));
+                    seedTile = new Vector2i(area.Left - 2, rand.Next(area.Bottom - 2, area.Top + 1));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
+            DebugTools.Assert(!visited.Contains(seedTile));
             var noiseFill = false;
-            visited.Clear();
             frontier.Clear();
             visited.Add(seedTile);
             frontier.Enqueue(seedTile);
+            area = area.Union(seedTile);
             Box2i roomArea = new Box2i(seedTile, seedTile + Vector2i.One);
 
             // Time to floodfill again
@@ -107,6 +109,7 @@ public sealed partial class DungeonJob
                         if (!visited.Add(neighbor))
                             continue;
 
+                        area = area.Union(neighbor);
                         frontier.Enqueue(neighbor);
                     }
                 }
@@ -115,7 +118,6 @@ public sealed partial class DungeonJob
                 ValidateResume();
             }
 
-            area = area.Union(roomArea);
             var center = Vector2.Zero;
 
             foreach (var tile in roomTiles)
