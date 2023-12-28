@@ -59,7 +59,7 @@ public sealed class InjectionAnomalySystem : EntitySystem
                 _solutionContainer.TryTransferSolution(injectable.Value, sol, maxInject);
                 //Spawn Effect
                 var uidXform = Transform(ent);
-                Spawn(component.VisualEffectPrototype, uidXform.Coordinates);
+                Spawn(entity.Comp.VisualEffectPrototype, uidXform.Coordinates);
             }
         }
     }

@@ -43,7 +43,7 @@ public sealed class GlueSystem : SharedGlueSystem
         if (TryGlue(entity, target, args.User))
         {
             args.Handled = true;
-            _audio.PlayPvs(component.Squeeze, entity);
+            _audio.PlayPvs(entity.Comp.Squeeze, entity);
             _popup.PopupEntity(Loc.GetString("glue-success", ("target", target)), args.User, args.User, PopupType.Medium);
         }
         else
