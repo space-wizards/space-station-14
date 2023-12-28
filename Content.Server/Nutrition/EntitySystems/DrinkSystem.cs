@@ -112,7 +112,7 @@ public sealed class DrinkSystem : EntitySystem
             if (reagent.Metabolisms == null)
                 continue;
 
-            foreach ((var _, var entry) in reagent.Metabolisms)
+            foreach (var entry in reagent.Metabolisms.Values)
             {
                 foreach (var effect in entry.Effects)
                 {

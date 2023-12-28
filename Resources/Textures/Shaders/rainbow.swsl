@@ -5,12 +5,12 @@ const highp float TimeScale = 0.15;
 const highp float DistortionScale = 0.02; // how strongly to warp the screen
 const highp float NoiseScale = 4.0; // scale of the random noise
 const highp float MaxColorMix = 0.05; // rainbow effect strength. at 1.0, you wont be able to see the screen anymore
-const highp float BaseColorMult = 8; // multiplier of the underlying screen texture for the rainbow effect
+const highp float BaseColorMult = 8.0; // multiplier of the underlying screen texture for the rainbow effect
 const highp float BaseColorPow = 0.8; // exponent for the rainbow effect's 
-const highp float CenterRadius = 200; // radius of the gradient used to tone down the distortion effect
+const highp float CenterRadius = 200.0; // radius of the gradient used to tone down the distortion effect
 const highp float CenterMinDist = 0.4; // minimum distance from the center of the screen for the distortion to appear at all
-const highp float CenterPow = 3; // the exponent used for the distortion center
-const highp float CenterColorRadius = 250; // radius of the gradient used to tone down the color effect
+const highp float CenterPow = 3.0; // the exponent used for the distortion center
+const highp float CenterColorRadius = 250.0; // radius of the gradient used to tone down the color effect
 const highp float CenterColorMinDist = 0.2; // minimum distance from the center of the screen for the color to appear at all
 const highp float CenterColorPow = 1.25; // the exponent used for the color's center
 

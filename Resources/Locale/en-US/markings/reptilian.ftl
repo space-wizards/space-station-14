@@ -40,7 +40,7 @@ marking-LizardSnoutRound = Lizard Snout (Round)
 marking-LizardSnoutSharp-snout_sharp = Lizard Snout (Sharp)
 marking-LizardSnoutSharp = Lizard Snout (Sharp)
 
-marking-LizardChestTiger-chest_tiger = Lizard Chest (Tiger)
+marking-LizardChestTiger-body_tiger = Lizard Chest (Tiger)
 marking-LizardChestTiger = Lizard Chest (Tiger)
 
 marking-LizardHeadTiger-head_tiger = Lizard Head (Tiger)
@@ -70,7 +70,8 @@ marking-LizardHornsDouble = Lizard Horns (Double)
 marking-LizardFrillsAxolotl-frills_axolotl = Lizard Frills (Axolotl)
 marking-LizardFrillsAxolotl = Lizard Frills (Axolotl)
 
-marking-LizardFrillsHood-frills_hood = Lizard Frills (Hood)
+marking-LizardFrillsHood-frills_hood_primary = Outer Hood
+marking-LizardFrillsHood-frills_hood_secondary = Inner Hood
 marking-LizardFrillsHood = Lizard Frills (Hood)
 
 marking-LizardHornsArgali-horns_argali = Lizard Horns (Argali)
