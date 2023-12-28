@@ -1,10 +1,4 @@
 Entries:
-- author: Ubaser
-  changes:
-  - message: The Clothesmate now dispenses berets.
-    type: Tweak
-  id: 4962
-  time: '2023-10-06T18:49:08.0000000+00:00'
 - author: Lank
   changes:
   - message: Reptilians have received a minor rework. Notable features include a diet
@@ -3526,3 +3520,15 @@ Entries:
   id: 5462
   time: '2023-12-28T03:09:05.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23091
+- author: EmoGarbage404
+  changes:
+  - message: Added the GORILLA gauntlet. When powered with an anomaly core, a single
+      blow from this is able to send anomalies flying through the air. Just try not
+      to let it out on the clown.
+    type: Add
+  - message: Added Anomaly Core Harnessing technology to the Experimental discipline,
+      which contains the GORILLA gauntlet.
+    type: Add
+  id: 5463
+  time: '2023-12-28T03:11:13.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23012
