@@ -89,6 +89,7 @@
     - state: icon
       map: ["base"]
   - type: Physics
+    canCollide: true
     bodyType: dynamic
   - type: Transform
     anchored: false
