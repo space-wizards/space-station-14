@@ -12,15 +12,15 @@ public sealed partial class ScramImplantComponent : Component
     /// <summary>
     /// Up to how far to teleport the user
     /// </summary>
-    [DataField("teleportRadius"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float TeleportRadius = 100f;
 
     /// <summary>
     /// How many times to check for a valid tile to teleport to
     /// </summary>
-    [DataField("teleportAttempts"), ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public int TeleportAttempts = 20;
 
-    [DataField("teleportSound"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier TeleportSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
 }
