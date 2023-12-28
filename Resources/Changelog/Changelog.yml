@@ -1,10 +1,4 @@
 Entries:
-- author: Stray-Pyramid
-  changes:
-  - message: Ore bags now pickup artifact fragments as well as ores
-    type: Fix
-  id: 5046
-  time: '2023-10-24T06:20:46.0000000+00:00'
 - author: Morb0
   changes:
   - message: Syndicate have issued a new challenge objective for traitors with shuttle
@@ -4016,4 +4010,14 @@ Entries:
     type: Add
   id: 5463
   time: '2023-12-28T13:35:47.0000000+00:00'
+  url: null
+- author: Kit0vras
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u0438\u0434\u0435\
+      \u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0440\u044B \u0434\u043B\
+      \u044F \u0421\u041C\u042D\u0421, \u041F\u043E\u0434\u0441\u0442\u0430\u043D\u0446\
+      \u0438\u0439 \u0438 \u041B\u041A\u041F."
+    type: Add
+  id: 5464
+  time: '2023-12-28T15:20:47.0000000+00:00'
   url: null
