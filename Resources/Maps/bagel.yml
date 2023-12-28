@@ -13575,17 +13575,15 @@ entities:
     - pos: -6.5,-16.5
       parent: 60
       type: Transform
-- proto: AirlockServiceGlassLocked
+- proto: AirlockServiceLocked
   entities:
   - uid: 1393
     components:
-    - name: Reporter's Room
+    - name: Reporters News Room
       type: MetaData
     - pos: 38.5,14.5
       parent: 60
       type: Transform
-- proto: AirlockServiceLocked
-  entities:
   - uid: 14179
     components:
     - name: Librarian's Room
@@ -14180,24 +14178,32 @@ entities:
   entities:
   - uid: 283
     components:
+    - name: HoP APC
+      type: MetaData
     - rot: 3.141592653589793 rad
       pos: 4.5,-33.5
       parent: 60
       type: Transform
   - uid: 322
     components:
+    - name: Morgue APC
+      type: MetaData
     - rot: 1.5707963267948966 rad
       pos: 35.5,-7.5
       parent: 60
       type: Transform
   - uid: 548
     components:
+    - name: Medical Cryo APC
+      type: MetaData
     - rot: -1.5707963267948966 rad
       pos: 52.5,-22.5
       parent: 60
       type: Transform
   - uid: 834
     components:
+    - name: Janitor Closet APC
+      type: MetaData
     - pos: -6.5,-29.5
       parent: 60
       type: Transform
@@ -14205,17 +14211,23 @@ entities:
       type: Battery
   - uid: 2576
     components:
+    - name: Bar APC
+      type: MetaData
     - pos: 11.5,-29.5
       parent: 60
       type: Transform
   - uid: 3130
     components:
+    - name: Medical Examination APC
+      type: MetaData
     - rot: -1.5707963267948966 rad
       pos: 36.5,-19.5
       parent: 60
       type: Transform
   - uid: 3339
     components:
+    - name: Solars South APC
+      type: MetaData
     - pos: 30.5,-51.5
       parent: 60
       type: Transform
@@ -14227,28 +14239,38 @@ entities:
       type: PowerNetworkBattery
   - uid: 3390
     components:
+    - name: Solar West APC
+      type: MetaData
     - pos: -60.5,-16.5
       parent: 60
       type: Transform
   - uid: 3826
     components:
+    - name: Arrivals South APC
+      type: MetaData
     - pos: -1.5,-74.5
       parent: 60
       type: Transform
   - uid: 3907
     components:
+    - name: Disposals APC
+      type: MetaData
     - rot: -1.5707963267948966 rad
       pos: -1.5,-42.5
       parent: 60
       type: Transform
   - uid: 4086
     components:
+    - name: Maints South East APC
+      type: MetaData
     - rot: 1.5707963267948966 rad
       pos: 39.5,-44.5
       parent: 60
       type: Transform
   - uid: 4182
     components:
+    - name: Court Room APC
+      type: MetaData
     - pos: -46.5,-14.5
       parent: 60
       type: Transform
@@ -14261,11 +14283,15 @@ entities:
       type: PowerNetworkBattery
   - uid: 5093
     components:
+    - name: Arrivals West APC
+      type: MetaData
     - pos: -15.5,-52.5
       parent: 60
       type: Transform
   - uid: 5589
     components:
+    - name: RD Office APC
+      type: MetaData
     - pos: -41.5,6.5
       parent: 60
       type: Transform
@@ -14278,16 +14304,22 @@ entities:
       type: PowerNetworkBattery
   - uid: 5669
     components:
+    - name: Science APC
+      type: MetaData
     - pos: -52.5,5.5
       parent: 60
       type: Transform
   - uid: 5807
     components:
+    - name: Maint South West APC
+      type: MetaData
     - pos: -47.5,-22.5
       parent: 60
       type: Transform
   - uid: 6263
     components:
+    - name: Tool Room APC
+      type: MetaData
     - pos: 13.5,16.5
       parent: 60
       type: Transform
@@ -14299,21 +14331,29 @@ entities:
       type: PowerNetworkBattery
   - uid: 6975
     components:
+    - name: Arrivals East APC
+      type: MetaData
     - pos: 10.5,-52.5
       parent: 60
       type: Transform
   - uid: 7124
     components:
+    - name: Arrivals APC
+      type: MetaData
     - pos: -1.5,-59.5
       parent: 60
       type: Transform
   - uid: 7128
     components:
+    - name: Arrivals North APC
+      type: MetaData
     - pos: -2.5,-52.5
       parent: 60
       type: Transform
   - uid: 7281
     components:
+    - name: Maint Dock APC
+      type: MetaData
     - rot: -1.5707963267948966 rad
       pos: -42.5,-29.5
       parent: 60
@@ -14335,140 +14375,209 @@ entities:
       type: Transform
   - uid: 8244
     components:
+    - name: Security Locker Room APC
+      type: MetaData
     - pos: -32.5,-14.5
       parent: 60
       type: Transform
   - uid: 8684
     components:
+    - name: Security Entrance APC
+      type: MetaData
     - pos: -24.5,-17.5
       parent: 60
       type: Transform
   - uid: 8695
     components:
+    - name: Security North APC
+      type: MetaData
     - pos: -29.5,-1.5
       parent: 60
       type: Transform
   - uid: 9448
     components:
+    - name: Xenoarch APC
+      type: MetaData
     - pos: -44.5,15.5
       parent: 60
       type: Transform
   - uid: 9571
     components:
+    - name: RND APC
+      type: MetaData
     - rot: 3.141592653589793 rad
       pos: -42.5,-11.5
       parent: 60
       type: Transform
   - uid: 9694
     components:
+    - name: Robotics APC
+      type: MetaData
     - pos: -31.5,16.5
       parent: 60
       type: Transform
   - uid: 9999
     components:
+    - name: Main Hall South Security APC
+      type: MetaData
     - pos: -28.5,-25.5
       parent: 60
       type: Transform
   - uid: 10314
     components:
+    - name: Technical Storage APC
+      type: MetaData
     - rot: -1.5707963267948966 rad
       pos: 18.5,20.5
       parent: 60
       type: Transform
   - uid: 10840
     components:
+    - name: Telecomms APC
+      type: MetaData
     - pos: 21.5,5.5
       parent: 60
       type: Transform
   - uid: 11158
     components:
+    - name: Salvage Bay APC
+      type: MetaData
     - pos: 46.5,4.5
       parent: 60
       type: Transform
   - uid: 11255
     components:
+    - name: Hydroponics APC
+      type: MetaData
     - rot: 3.141592653589793 rad
       pos: 33.5,-38.5
       parent: 60
       type: Transform
   - uid: 11566
     components:
+    - name: TEG APC
+      type: MetaData
     - pos: -23.5,47.5
       parent: 60
       type: Transform
   - uid: 12002
     components:
+    - name: Main Hall North Departures APC
+      type: MetaData
     - pos: 27.5,22.5
       parent: 60
       type: Transform
   - uid: 12070
     components:
+    - name: Theater APC
+      type: MetaData
     - pos: 23.5,-14.5
       parent: 60
       type: Transform
   - uid: 12279
     components:
+    - name: Medical North APC
+      type: MetaData
     - pos: 43.5,-7.5
       parent: 60
       type: Transform
   - uid: 12443
     components:
+    - name: Medical Chemistry APC
+      type: MetaData
     - pos: 39.5,-33.5
       parent: 60
       type: Transform
   - uid: 12467
     components:
+    - name: Medical Virology APC
+      type: MetaData
     - pos: 52.5,-24.5
       parent: 60
       type: Transform
   - uid: 13493
     components:
+    - name: Cargo Bay APC
+      type: MetaData
     - pos: 51.5,15.5
       parent: 60
       type: Transform
   - uid: 14328
     components:
+    - name: Library APC
+      type: MetaData
     - pos: -13.5,14.5
+      parent: 60
+      type: Transform
+  - uid: 14389
+    components:
+    - name: Engineering North APC
+      type: MetaData
+    - pos: -9.5,30.5
       parent: 60
       type: Transform
   - uid: 14552
     components:
+    - name: Chapel APC
+      type: MetaData
     - pos: -23.5,22.5
       parent: 60
       type: Transform
   - uid: 15692
     components:
+    - name: Atmos Lobby APC
+      type: MetaData
     - pos: -18.5,31.5
       parent: 60
       type: Transform
   - uid: 16503
     components:
+    - name: Singulo APC
+      type: MetaData
     - pos: 5.5,37.5
       parent: 60
       type: Transform
   - uid: 16701
     components:
+    - name: Engineering APC
+      type: MetaData
     - pos: 2.5,22.5
+      parent: 60
+      type: Transform
+  - uid: 16741
+    components:
+    - name: Captain's Office APC
+      type: MetaData
+    - rot: -1.5707963267948966 rad
+      pos: -1.5,-4.5
       parent: 60
       type: Transform
   - uid: 17971
     components:
+    - name: Bridge APC
+      type: MetaData
     - rot: 3.141592653589793 rad
       pos: -2.5,-1.5
       parent: 60
       type: Transform
   - uid: 19332
     components:
+    - name: Cargo Entrance APC
+      type: MetaData
     - pos: 37.5,12.5
       parent: 60
       type: Transform
   - uid: 19553
     components:
+    - name: Departures APC
+      type: MetaData
     - pos: 42.5,26.5
       parent: 60
       type: Transform
   - uid: 20087
     components:
+    - name: Solar South East APC
+      type: MetaData
     - pos: 62.5,-36.5
       parent: 60
       type: Transform
@@ -14485,24 +14594,47 @@ entities:
       type: Transform
   - uid: 23725
     components:
+    - name: Grav Gen APC
+      type: MetaData
     - pos: -7.5,6.5
       parent: 60
       type: Transform
   - uid: 23758
     components:
+    - name: Medical Storage APC
+      type: MetaData
     - rot: -1.5707963267948966 rad
       pos: 50.5,-11.5
       parent: 60
       type: Transform
   - uid: 23770
     components:
+    - name: Bridge South APC
+      type: MetaData
     - rot: 1.5707963267948966 rad
       pos: -1.5,-11.5
       parent: 60
       type: Transform
   - uid: 23788
     components:
+    - name: Kitchen APC
+      type: MetaData
     - pos: 27.5,-34.5
+      parent: 60
+      type: Transform
+  - uid: 24378
+    components:
+    - name: Dorms APC
+      type: MetaData
+    - pos: -36.5,27.5
+      parent: 60
+      type: Transform
+  - uid: 24395
+    components:
+    - name: Atmospherics APC
+      type: MetaData
+    - rot: 3.141592653589793 rad
+      pos: -31.5,37.5
       parent: 60
       type: Transform
 - proto: APCElectronics
@@ -14528,34 +14660,46 @@ entities:
   entities:
   - uid: 22431
     components:
+    - name: AI Sat Airlock APC
+      type: MetaData
     - rot: 3.141592653589793 rad
       pos: -94.5,15.5
       parent: 60
       type: Transform
   - uid: 22486
     components:
+    - name: AI Sat Maints APC
+      type: MetaData
     - rot: 3.141592653589793 rad
       pos: -120.5,14.5
       parent: 60
       type: Transform
   - uid: 22487
     components:
+    - name: AI Sat Upload APC
+      type: MetaData
     - rot: 3.141592653589793 rad
       pos: -113.5,7.5
       parent: 60
       type: Transform
   - uid: 22488
     components:
+    - name: AI Sat Core APC
+      type: MetaData
     - pos: -110.5,24.5
       parent: 60
       type: Transform
   - uid: 22489
     components:
+    - name: AI Sat Foyer APC
+      type: MetaData
     - pos: -110.5,20.5
       parent: 60
       type: Transform
   - uid: 22490
     components:
+    - name: AI Sat Entrance APC
+      type: MetaData
     - rot: 3.141592653589793 rad
       pos: -104.5,14.5
       parent: 60
@@ -14567,6 +14711,8 @@ entities:
       type: Transform
   - uid: 24134
     components:
+    - name: Perma Brig APC
+      type: MetaData
     - pos: -5.5,-16.5
       parent: 60
       type: Transform
@@ -16030,7 +16176,8 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 16543
+      - 15673
+      - 21335
       type: DeviceLinkSink
   - uid: 16542
     components:
@@ -16038,7 +16185,8 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 16543
+      - 15673
+      - 21335
       type: DeviceLinkSink
   - uid: 16973
     components:
@@ -19238,6 +19386,16 @@ entities:
     - pos: 40.5,-8.5
       parent: 60
       type: Transform
+  - uid: 9350
+    components:
+    - pos: -11.5,26.5
+      parent: 60
+      type: Transform
+  - uid: 9373
+    components:
+    - pos: -11.5,25.5
+      parent: 60
+      type: Transform
   - uid: 9438
     components:
     - pos: -46.5,14.5
@@ -19251,6 +19409,11 @@ entities:
   - uid: 9459
     components:
     - pos: -46.5,16.5
+      parent: 60
+      type: Transform
+  - uid: 9664
+    components:
+    - pos: -36.5,27.5
       parent: 60
       type: Transform
   - uid: 9866
@@ -25980,12 +26143,7 @@ entities:
       type: Transform
   - uid: 14388
     components:
-    - pos: -14.5,24.5
-      parent: 60
-      type: Transform
-  - uid: 14389
-    components:
-    - pos: -13.5,24.5
+    - pos: -36.5,26.5
       parent: 60
       type: Transform
   - uid: 14390
@@ -26790,12 +26948,7 @@ entities:
       type: Transform
   - uid: 15672
     components:
-    - pos: -24.5,24.5
-      parent: 60
-      type: Transform
-  - uid: 15673
-    components:
-    - pos: -25.5,24.5
+    - pos: -31.5,37.5
       parent: 60
       type: Transform
   - uid: 15674
@@ -27131,16 +27284,6 @@ entities:
   - uid: 16740
     components:
     - pos: 6.5,31.5
-      parent: 60
-      type: Transform
-  - uid: 16741
-    components:
-    - pos: -3.5,25.5
-      parent: 60
-      type: Transform
-  - uid: 16742
-    components:
-    - pos: -3.5,26.5
       parent: 60
       type: Transform
   - uid: 16743
@@ -27598,11 +27741,6 @@ entities:
     - pos: -30.5,31.5
       parent: 60
       type: Transform
-  - uid: 16834
-    components:
-    - pos: -31.5,31.5
-      parent: 60
-      type: Transform
   - uid: 16835
     components:
     - pos: -32.5,31.5
@@ -27958,11 +28096,6 @@ entities:
     - pos: -28.5,42.5
       parent: 60
       type: Transform
-  - uid: 16906
-    components:
-    - pos: -27.5,42.5
-      parent: 60
-      type: Transform
   - uid: 16907
     components:
     - pos: -27.5,43.5
@@ -28226,11 +28359,6 @@ entities:
   - uid: 17008
     components:
     - pos: -25.5,42.5
-      parent: 60
-      type: Transform
-  - uid: 17009
-    components:
-    - pos: -26.5,42.5
       parent: 60
       type: Transform
   - uid: 17010
@@ -28718,14 +28846,9 @@ entities:
     - pos: -2.5,-1.5
       parent: 60
       type: Transform
-  - uid: 18295
-    components:
-    - pos: -2.5,-2.5
-      parent: 60
-      type: Transform
   - uid: 18296
     components:
-    - pos: -2.5,-3.5
+    - pos: -1.5,-4.5
       parent: 60
       type: Transform
   - uid: 18297
@@ -32261,6 +32384,36 @@ entities:
   - uid: 23949
     components:
     - pos: 12.5,-70.5
+      parent: 60
+      type: Transform
+  - uid: 24376
+    components:
+    - pos: -2.5,-4.5
+      parent: 60
+      type: Transform
+  - uid: 24396
+    components:
+    - pos: -31.5,38.5
+      parent: 60
+      type: Transform
+  - uid: 24397
+    components:
+    - pos: -31.5,39.5
+      parent: 60
+      type: Transform
+  - uid: 24398
+    components:
+    - pos: -32.5,39.5
+      parent: 60
+      type: Transform
+  - uid: 24399
+    components:
+    - pos: -33.5,39.5
+      parent: 60
+      type: Transform
+  - uid: 24423
+    components:
+    - pos: -11.5,27.5
       parent: 60
       type: Transform
 - proto: CableApcStack
@@ -45218,6 +45371,11 @@ entities:
     - pos: -24.5,46.5
       parent: 60
       type: Transform
+  - uid: 14804
+    components:
+    - pos: -9.5,29.5
+      parent: 60
+      type: Transform
   - uid: 14809
     components:
     - pos: -25.5,48.5
@@ -45686,6 +45844,11 @@ entities:
   - uid: 16529
     components:
     - pos: -1.5,35.5
+      parent: 60
+      type: Transform
+  - uid: 16543
+    components:
+    - pos: -9.5,30.5
       parent: 60
       type: Transform
   - uid: 16686
@@ -47371,6 +47534,206 @@ entities:
   - uid: 24346
     components:
     - pos: 14.5,-23.5
+      parent: 60
+      type: Transform
+  - uid: 24377
+    components:
+    - pos: -1.5,-4.5
+      parent: 60
+      type: Transform
+  - uid: 24379
+    components:
+    - pos: -24.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24380
+    components:
+    - pos: -25.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24381
+    components:
+    - pos: -26.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24382
+    components:
+    - pos: -27.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24383
+    components:
+    - pos: -28.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24384
+    components:
+    - pos: -29.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24385
+    components:
+    - pos: -30.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24386
+    components:
+    - pos: -31.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24387
+    components:
+    - pos: -32.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24388
+    components:
+    - pos: -33.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24389
+    components:
+    - pos: -34.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24390
+    components:
+    - pos: -35.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24391
+    components:
+    - pos: -36.5,24.5
+      parent: 60
+      type: Transform
+  - uid: 24392
+    components:
+    - pos: -36.5,25.5
+      parent: 60
+      type: Transform
+  - uid: 24393
+    components:
+    - pos: -36.5,26.5
+      parent: 60
+      type: Transform
+  - uid: 24394
+    components:
+    - pos: -36.5,27.5
+      parent: 60
+      type: Transform
+  - uid: 24400
+    components:
+    - pos: -19.5,29.5
+      parent: 60
+      type: Transform
+  - uid: 24401
+    components:
+    - pos: -20.5,29.5
+      parent: 60
+      type: Transform
+  - uid: 24402
+    components:
+    - pos: -21.5,29.5
+      parent: 60
+      type: Transform
+  - uid: 24403
+    components:
+    - pos: -21.5,30.5
+      parent: 60
+      type: Transform
+  - uid: 24404
+    components:
+    - pos: -21.5,31.5
+      parent: 60
+      type: Transform
+  - uid: 24405
+    components:
+    - pos: -21.5,32.5
+      parent: 60
+      type: Transform
+  - uid: 24406
+    components:
+    - pos: -21.5,33.5
+      parent: 60
+      type: Transform
+  - uid: 24407
+    components:
+    - pos: -21.5,34.5
+      parent: 60
+      type: Transform
+  - uid: 24408
+    components:
+    - pos: -22.5,34.5
+      parent: 60
+      type: Transform
+  - uid: 24409
+    components:
+    - pos: -23.5,34.5
+      parent: 60
+      type: Transform
+  - uid: 24410
+    components:
+    - pos: -24.5,34.5
+      parent: 60
+      type: Transform
+  - uid: 24411
+    components:
+    - pos: -25.5,34.5
+      parent: 60
+      type: Transform
+  - uid: 24412
+    components:
+    - pos: -26.5,34.5
+      parent: 60
+      type: Transform
+  - uid: 24413
+    components:
+    - pos: -27.5,34.5
+      parent: 60
+      type: Transform
+  - uid: 24414
+    components:
+    - pos: -28.5,34.5
+      parent: 60
+      type: Transform
+  - uid: 24415
+    components:
+    - pos: -29.5,34.5
+      parent: 60
+      type: Transform
+  - uid: 24416
+    components:
+    - pos: -29.5,35.5
+      parent: 60
+      type: Transform
+  - uid: 24417
+    components:
+    - pos: -29.5,36.5
+      parent: 60
+      type: Transform
+  - uid: 24418
+    components:
+    - pos: -29.5,37.5
+      parent: 60
+      type: Transform
+  - uid: 24419
+    components:
+    - pos: -29.5,38.5
+      parent: 60
+      type: Transform
+  - uid: 24420
+    components:
+    - pos: -30.5,38.5
+      parent: 60
+      type: Transform
+  - uid: 24421
+    components:
+    - pos: -31.5,38.5
+      parent: 60
+      type: Transform
+  - uid: 24422
+    components:
+    - pos: -31.5,37.5
       parent: 60
       type: Transform
 - proto: CableMVStack
@@ -72981,25 +73344,10 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-  - uid: 9373
-    components:
-    - rot: 3.141592653589793 rad
-      pos: -55.5,-4.5
-      parent: 60
-      type: Transform
-    - color: '#FF1212FF'
-      type: AtmosPipeColor
   - uid: 9638
     components:
     - rot: 1.5707963267948966 rad
       pos: -54.5,12.5
-      parent: 60
-      type: Transform
-    - color: '#FF1212FF'
-      type: AtmosPipeColor
-  - uid: 9664
-    components:
-    - pos: -54.5,-4.5
       parent: 60
       type: Transform
     - color: '#FF1212FF'
@@ -73475,9 +73823,24 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
+  - uid: 16834
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -55.5,-3.5
+      parent: 60
+      type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
   - uid: 16969
     components:
     - pos: -11.5,45.5
+      parent: 60
+      type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
+  - uid: 17009
+    components:
+    - pos: -54.5,-3.5
       parent: 60
       type: Transform
     - color: '#FF1212FF'
@@ -82882,14 +83245,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-  - uid: 9350
-    components:
-    - rot: 3.141592653589793 rad
-      pos: -55.5,-3.5
-      parent: 60
-      type: Transform
-    - color: '#FF1212FF'
-      type: AtmosPipeColor
   - uid: 9358
     components:
     - pos: -49.5,15.5
@@ -83127,6 +83482,8 @@ entities:
     - pos: -55.5,-1.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
   - uid: 12627
     components:
     - pos: 38.5,-28.5
@@ -86995,6 +87352,13 @@ entities:
       parent: 60
       type: Transform
     - color: '#0335FCFF'
+      type: AtmosPipeColor
+  - uid: 16906
+    components:
+    - pos: -54.5,-4.5
+      parent: 60
+      type: Transform
+    - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 16968
     components:
@@ -95177,8 +95541,6 @@ entities:
       pos: -2.5,-3.5
       parent: 60
       type: Transform
-    - joinedGrid: 60
-      type: AtmosDevice
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 4953
@@ -97779,8 +98141,6 @@ entities:
       pos: -3.5,25.5
       parent: 60
       type: Transform
-    - joinedGrid: 60
-      type: AtmosDevice
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 16634
@@ -106510,16 +106870,14 @@ entities:
     - pos: -42.483322,14.749073
       parent: 60
       type: Transform
+  - uid: 18295
+    components:
+    - pos: 47.477646,-11.308374
+      parent: 60
+      type: Transform
   - uid: 19190
     components:
     - pos: 24.45261,20.352545
-      parent: 60
-      type: Transform
-- proto: HandheldHealthAnalyzerUnpowered
-  entities:
-  - uid: 21335
-    components:
-    - pos: 47.51603,-11.423215
       parent: 60
       type: Transform
 - proto: HandLabeler
@@ -112140,9 +112498,9 @@ entities:
     - pos: 36.5,19.5
       parent: 60
       type: Transform
-  - uid: 21500
+  - uid: 16742
     components:
-    - pos: -1.5,-4.5
+    - pos: -1.5,-2.5
       parent: 60
       type: Transform
   - uid: 21787
@@ -124069,17 +124427,6 @@ entities:
         16973:
         - Pressed: Toggle
       type: DeviceLinkSource
-  - uid: 16543
-    components:
-    - pos: -4.5,30.5
-      parent: 60
-      type: Transform
-    - linkedPorts:
-        16541:
-        - Pressed: Toggle
-        16542:
-        - Pressed: Toggle
-      type: DeviceLinkSource
   - uid: 17876
     components:
     - pos: 58.5,13.5
@@ -124418,6 +124765,18 @@ entities:
         21766:
         - Pressed: Toggle
       type: DeviceLinkSource
+  - uid: 15673
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -4.5,30.5
+      parent: 60
+      type: Transform
+    - linkedPorts:
+        16542:
+        - Pressed: Toggle
+        16541:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 16426
     components:
     - rot: 3.141592653589793 rad
@@ -124506,6 +124865,17 @@ entities:
     - linkedPorts:
         17461:
         - Pressed: DoorBolt
+      type: DeviceLinkSource
+  - uid: 21335
+    components:
+    - pos: -4.5,30.5
+      parent: 60
+      type: Transform
+    - linkedPorts:
+        16541:
+        - Pressed: Toggle
+        16542:
+        - Pressed: Toggle
       type: DeviceLinkSource
   - uid: 21611
     components:
@@ -128625,9 +128995,9 @@ entities:
     - pos: 6.5,-29.5
       parent: 60
       type: Transform
-- proto: SpawnMobCrab
+- proto: SpawnMobCrabAtmos
   entities:
-  - uid: 14804
+  - uid: 21500
     components:
     - pos: -36.5,33.5
       parent: 60
