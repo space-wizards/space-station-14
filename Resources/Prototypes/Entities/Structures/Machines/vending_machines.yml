@@ -1903,6 +1903,8 @@
     radius: 1.5
     energy: 1.6
     color: "#48CF48"
+  - type: AccessReader
+    access: [["CentralCommand"]]
 
 - type: entity
   parent: VendingMachine

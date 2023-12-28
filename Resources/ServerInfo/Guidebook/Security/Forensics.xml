@@ -1,0 +1,48 @@
+﻿<Document>
+  # Forensics
+
+  There are a lot of tools to help you gather and examine the evidence at your disposal
+
+  # Log probe
+
+  This little add-on to your PDA is incredibly useful, just install the cartridge and your PDA will acquire the ability to scan anything with access (like airlocks) and see who has used them recently.
+
+  You can normally find it inside the detective locker. After inserting it on your PDA, go to the programs tab and the log probe application should be there, to use the application you just have to interact with anything that requires access with your PDA while the application is open and the information will be instantly displayed in it.
+
+  It should be noted that the name shown in the application is not to be trusted 100% of the time since it gets the name from the identification card of whoever used the thing we are scanning, so if for example someone opened an airlock with no card the application would display "Unknown" as the name.
+
+  <Box>
+    <GuideEntityEmbed Entity="LockerDetective"/>
+    <GuideEntityEmbed Entity="LogProbeCartridge"/>
+  </Box>
+
+  # DNA and Fingerprints
+
+  ## Как узнать чью-либо ДНК?
+
+  С помощью [color=#a4885c]криминалистического сканера[/color] можно сканировать лужи крови и рвоты, стаканы, бутылки, банки и другие ёмкости с жидкостями, чтобы узнать ДНК члена экипажа, который с ними взаимодействовал.
+  <Box>
+    <GuideEntityEmbed Entity="ForensicScanner"/>
+  </Box>
+  So be careful before fighting with someone.
+
+  Same scanner can also get fingerprint information about who touched pretty much any object. If the possible perpetrator was using gloves, then your scanner will print out which fibers were left on the crimescene.
+
+  ## Я нашёл ДНК. Как мне узнать, чья она?
+
+  Вы можете распечатать заключение криминалистической экспертизы об объекте, который вы просканировали, чтобы ничего не упустить. Теперь, имея отчёт с ДНК, воспользуйтесь [color=#a4885c]консолью станционного учёта[/color], введите ДНК в поле поиска, и вы увидите обладателя данной ДНК. Для опознания отпечатков процесс аналогичен.
+
+  ## Снятие отпечатков
+  Также можно снять чьи-то отпечатки пальцев на месте происшествия, если заставить их снять перчатки и приложить к пальцам пластинку для криминалистики. Не нужно бежать возвращаться к [color=#a4885c]консоли станционного учёта[/color], чтобы проверить, сделал ли это дворецкий!
+
+  <GuideEntityEmbed Entity="ForensicPad"/>
+
+  ## Волокна
+  Когда люди в перчатках касаются чего-либо на станции, они обязательно оставляют после себя волокна. Это усложняет дело, но для настоящего детектива нет ничего нерешаемого.
+
+  Существует до [color=red]16[/color] различных типов волокон. Сможет ли это помешать вам раскрыть дело?
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerStationRecords"/>
+  </Box>
+</Document>

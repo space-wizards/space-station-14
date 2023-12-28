@@ -49,6 +49,8 @@
   - type: Appearance
   - type: Physics
     canCollide: false
+  - type: StealTarget
+    stealGroup: LAMP
 
 - type: entity
   name: lamp
@@ -60,6 +62,7 @@
     sprite: Objects/Misc/Lights/lamp.rsi
     layers:
       - state: lamp
+        map: [ "base" ]
       - state: lamp-on
         shader: unshaded
         visible: false
@@ -67,6 +70,17 @@
   - type: Item
     sprite: Objects/Misc/Lights/lamp.rsi
   - type: Rotatable
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        base:
+          festive: { state: christmaslamp }
+        light:
+          festive: { state: christmaslamp-on }
 
 - type: entity
   name: banana lamp
@@ -93,6 +107,7 @@
     sprite: Objects/Misc/Lights/lampgreen.rsi
     layers:
       - state: lampgreen
+        map: [ "base" ]
       - state: lampgreen-on
         shader: unshaded
         visible: false
@@ -100,6 +115,21 @@
   - type: Item
     sprite: Objects/Misc/Lights/lampgreen.rsi
   - type: Rotatable
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        base:
+          festive:
+            sprite: Objects/Misc/Lights/lamp.rsi
+            state: christmaslamp
+        light:
+          festive:
+            sprite: Objects/Misc/Lights/lamp.rsi
+            state: christmaslamp-on
 
 - type: entity
   name: interrogator lamp

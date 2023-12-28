@@ -11,6 +11,8 @@
   radioBold: true
   accessGroups:
   - AllAccess
+  access:
+  - CentralCommand
 
 - type: startingGear
   id: CentcomGear

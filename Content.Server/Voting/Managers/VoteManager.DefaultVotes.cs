@@ -81,10 +81,18 @@ namespace Content.Server.Voting.Managers
                 var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio);
                 if (total > 0 && votesYes / (float) total >= ratioRequired)
                 {
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote succeeded: {votesYes}/{votesNo}");
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
-                    var roundEnd = _entityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
-                    roundEnd.EndRound();
+                    // Check if an admin is online, and ignore the passed vote if the cvar is enabled
+                    if (_cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
+                    {
+                        _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote attempted to pass, but an admin was online. {votesYes}/{votesNo}");
+                    } 
+                    else // If the cvar is disabled or there's no admins on, proceed as normal
+                    {
+                        _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote succeeded: {votesYes}/{votesNo}");
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
+                        var roundEnd = _entityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
+                        roundEnd.EndRound();
+                    }
                 }
                 else
                 {

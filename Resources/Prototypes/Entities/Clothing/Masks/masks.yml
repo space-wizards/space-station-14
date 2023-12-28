@@ -260,6 +260,8 @@
   - type: Clothing
     sprite: Clothing/Mask/sterile.rsi
   - type: IngestionBlocker
+  - type: Item
+    storedRotation: -90
 
 - type: entity
   parent: ClothingMaskBase
@@ -526,6 +528,8 @@
     sprite: Clothing/Mask/italian_moustache.rsi
   - type: Clothing
     sprite: Clothing/Mask/italian_moustache.rsi
+  - type: Item
+    storedRotation: -90
   - type: AddAccentClothing
     accent: ReplacementAccent
     replacement: italian
@@ -540,6 +544,8 @@
     sprite: Clothing/Mask/ninja.rsi
   - type: Clothing
     sprite: Clothing/Mask/ninja.rsi
+  - type: Item
+    storedRotation: -90
   - type: EyeProtection
   - type: BreathMask
   - type: IdentityBlocker

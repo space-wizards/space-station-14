@@ -3,13 +3,13 @@
   name: guide-entry-security
   text: "/ServerInfo/Guidebook/Security/Security.xml"
   children:
-    - DNA
+    - Forensics
     - Defusal
 
 - type: guideEntry
-  id: DNA
-  name: guide-entry-dna
-  text: "/ServerInfo/Guidebook/Security/DNA.xml"
+  id: Forensics
+  name: guide-entry-forensics
+  text: "/ServerInfo/Guidebook/Security/Forensics.xml"
 
 - type: guideEntry
   id: Defusal

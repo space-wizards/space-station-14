@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
 using Content.Server.Tools.Components;
+using Content.Shared.Item;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
@@ -11,7 +12,7 @@ namespace Content.Server.Damage.Systems
     public sealed class DamageOnToolInteractSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -25,16 +26,19 @@ namespace Content.Server.Damage.Systems
             if (args.Handled)
                 return;
 
+            if (!TryComp<ItemToggleComponent>(uid, out var itemToggle))
+                return;
+
             if (component.WeldingDamage is {} weldingDamage
-                && EntityManager.TryGetComponent(args.Used, out WelderComponent? welder)
-                && welder.Lit
-                && !welder.TankSafe)
+            && EntityManager.TryGetComponent(args.Used, out WelderComponent? welder)
+            && itemToggle.Activated
+            && !welder.TankSafe)
             {
                 var dmg = _damageableSystem.TryChangeDamage(args.Target, weldingDamage, origin: args.User);
 
                 if (dmg != null)
                     _adminLogger.Add(LogType.Damaged,
-                        $"{ToPrettyString(args.User):user} used {ToPrettyString(args.Used):used} as a welder to deal {dmg.Total:damage} damage to {ToPrettyString(args.Target):target}");
+                        $"{ToPrettyString(args.User):user} used {ToPrettyString(args.Used):used} as a welder to deal {dmg.GetTotal():damage} damage to {ToPrettyString(args.Target):target}");
 
                 args.Handled = true;
             }
@@ -46,7 +50,7 @@ namespace Content.Server.Damage.Systems
 
                 if (dmg != null)
                     _adminLogger.Add(LogType.Damaged,
-                        $"{ToPrettyString(args.User):user} used {ToPrettyString(args.Used):used} as a tool to deal {dmg.Total:damage} damage to {ToPrettyString(args.Target):target}");
+                        $"{ToPrettyString(args.User):user} used {ToPrettyString(args.Used):used} as a tool to deal {dmg.GetTotal():damage} damage to {ToPrettyString(args.Target):target}");
 
                 args.Handled = true;
             }

@@ -2,7 +2,6 @@ using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.SS220.Cart.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -27,9 +26,6 @@ namespace Content.Shared.Pulling
             base.Initialize();
 
             SubscribeLocalEvent<SharedPullableComponent, ComponentShutdown>(OnShutdown);
-            SubscribeLocalEvent<SharedPullableComponent, ComponentGetState>(OnGetState);
-            SubscribeLocalEvent<SharedPullableComponent, ComponentHandleState>(OnHandleState);
-
             SubscribeLocalEvent<SharedPullerComponent, ComponentStartup>(OnPullerStartup); //SS220-Cart-system
         }
 
@@ -47,41 +43,6 @@ namespace Content.Shared.Pulling
             component.NeedsHands = false;
         }
         //SS220-Cart-system end
-
-        private void OnGetState(EntityUid uid, SharedPullableComponent component, ref ComponentGetState args)
-        {
-            args.State = new PullableComponentState(GetNetEntity(component.Puller));
-        }
-
-        private void OnHandleState(EntityUid uid, SharedPullableComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not PullableComponentState state)
-                return;
-
-            var puller = EnsureEntity<SharedPullableComponent>(state.Puller, uid);
-
-            if (!puller.HasValue)
-            {
-                ForceDisconnectPullable(component);
-                return;
-            }
-
-            if (component.Puller == puller)
-            {
-                // don't disconnect and reconnect a puller for no reason
-                return;
-            }
-
-            if (!TryComp<SharedPullerComponent>(puller, out var comp))
-            {
-                Log.Error($"Pullable state for entity {ToPrettyString(uid)} had invalid puller entity {ToPrettyString(puller.Value)}");
-                // ensure it disconnects from any different puller, still
-                ForceDisconnectPullable(component);
-                return;
-            }
-
-            ForceRelationship(comp, component);
-        }
 
         private void OnShutdown(EntityUid uid, SharedPullableComponent component, ComponentShutdown args)
         {
@@ -129,6 +90,9 @@ namespace Content.Shared.Pulling
 
         public void ForceRelationship(SharedPullerComponent? puller, SharedPullableComponent? pullable)
         {
+            if (_timing.ApplyingState)
+                return;
+            ;
             if (pullable != null && puller != null && (puller.Pulling == pullable.Owner))
             {
                 // Already done
@@ -205,6 +169,9 @@ namespace Content.Shared.Pulling
 
         public void ForceSetMovingTo(SharedPullableComponent pullable, EntityCoordinates? movingTo)
         {
+            if (_timing.ApplyingState)
+                return;
+
             if (pullable.MovingTo == movingTo)
             {
                 return;
@@ -218,6 +185,7 @@ namespace Content.Shared.Pulling
             }
 
             pullable.MovingTo = movingTo;
+            Dirty(pullable);
 
             if (movingTo == null)
             {
