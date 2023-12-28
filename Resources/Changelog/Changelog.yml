@@ -1,10 +1,4 @@
 Entries:
-- author: gusxyz
-  changes:
-  - message: Monkey's now are able to equip gas masks.
-    type: Add
-  id: 4959
-  time: '2023-10-05T21:34:37.0000000+00:00'
 - author: TheShuEd
   changes:
   - message: The trees and rocks are now rotating to follow the camera.
@@ -3521,3 +3515,10 @@ Entries:
   id: 5459
   time: '2023-12-28T02:59:14.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23041
+- author: Emisse
+  changes:
+  - message: Ion Storm is silent now
+    type: Tweak
+  id: 5460
+  time: '2023-12-28T03:03:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23045
