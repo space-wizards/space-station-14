@@ -109,7 +109,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         if (!TryComp<EyeComponent>(uid, out var eyeComp))
             return;
 
-        component.TargetZoom = eyeComp.Zoom;
+        _eye.SetZoom(uid, component.TargetZoom, eyeComp);
         Dirty(uid, component);
     }
 

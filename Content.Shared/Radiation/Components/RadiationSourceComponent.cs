@@ -25,5 +25,5 @@ public sealed partial class RadiationSourceComponent : Component
     public float Slope = 0.5f;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Enabled;
+    public bool Enabled = true;
 }

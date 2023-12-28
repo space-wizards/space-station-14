@@ -1,3 +1,8 @@
+# Types
+mixing-verb-centrifuge = centrifugation
+mixing-verb-electrolysis = electrolyze
+mixing-verb-holy = bless
+
 ## Entity
 
 default-mixing-success = You mix the {$mixed} with the {$mixer}

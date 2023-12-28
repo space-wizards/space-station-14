@@ -9,6 +9,23 @@
     layers:
     - state: stunprod_off
       map: [ "enum.ToggleVisuals.Layer" ]
+  - type: ItemToggle
+    soundActivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundDeactivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.250
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Blunt: 0
   - type: Stunbaton
     energyPerUse: 70
   - type: MeleeWeapon
@@ -37,7 +54,7 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-     enum.ToggleVisuals.Toggled:
+      enum.ToggleVisuals.Toggled:
         enum.ToggleVisuals.Layer:
           True: {state: stunprod_on}
           False: {state: stunprod_off}

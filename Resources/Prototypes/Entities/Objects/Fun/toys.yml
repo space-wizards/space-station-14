@@ -78,6 +78,8 @@
   suffix: DO NOT MAP
   description: So soft it almost makes you want to take a nap...
   components:
+    - type: Item
+      size: Normal
     - type: Sprite
       sprite: Mobs/Ghosts/revenant.rsi
       state: icon
@@ -96,6 +98,7 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
   - type: Item
+    size: Normal
     sprite: Objects/Fun/toys.rsi
     heldPrefix: bee
   - type: Extractable
@@ -199,6 +202,15 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/weh.ogg
+
+- type: entity
+  parent: PlushieLizard
+  id: PlushieLizardMirrored
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    state: plushie_lizard_mirrored
 
 - type: entity
   parent: BasePlushie
@@ -335,6 +347,8 @@
   name: ratvar plushie
   description: A small stuffed doll of the elder god Ratvar.
   components:
+  - type: Item
+    size: Normal
   - type: Sprite
     state: plushie_ratvar
 
@@ -344,6 +358,8 @@
   name: nar'sie plushie
   description: A small stuffed doll of the elder goddess Nar'Sie.
   components:
+  - type: Item
+    size: Normal
   - type: Sprite
     state: narplush
 
@@ -426,6 +442,8 @@
   name: rubber ducky
   description: Not carried here by ocean currents.
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Fun/ducky.rsi
     state: icon
@@ -472,6 +490,8 @@
   name: xeno plushie
   description: An adorable stuffed toy that resembles a scary xenomorf. You're lucky it's just a toy.
   components:
+  - type: Item
+    size: Normal
   - type: Sprite
     state: plushie_xeno
   - type: EmitSoundOnUse
@@ -546,6 +566,8 @@
   name: ian toy
   description: Unable to eat, but just as fluffy as the real guy!
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     state: ian
   - type: EmitSoundOnUse
@@ -770,7 +792,7 @@
     sprite: Objects/Fun/toys.rsi
     state: corgib
   - type: Item
-    size: Normal
+    size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: corgib
   - type: Damageable
@@ -795,7 +817,7 @@
     intensity: 2000
     falloffPower: 2.6
   - type: Item
-    size: Small
+    size: Normal
     sprite: Objects/Fun/toys.rsi
     heldPrefix: singularitytoy
 
@@ -820,6 +842,7 @@
     modifier: 0.001
 
 - type: entity
+  parent: BaseItem
   id: ToySword
   name: toy sword
   description: New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
@@ -829,7 +852,7 @@
       colorOptions:
         - DodgerBlue
     - type: Sprite
-      sprite: Objects/Weapons/Melee/e_sword.rsi
+      sprite: Objects/Fun/toy_sword.rsi
       layers:
         - state: e_sword
         - state: e_sword_blade
@@ -839,7 +862,7 @@
           map: [ "blade" ]
     - type: Item
       size: Small
-      sprite: Objects/Weapons/Melee/e_sword.rsi
+      sprite: Objects/Fun/toy_sword.rsi
     - type: UseDelay
       delay: 1.0
     - type: PointLight

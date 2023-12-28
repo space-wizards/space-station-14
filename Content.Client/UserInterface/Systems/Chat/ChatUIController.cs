@@ -706,21 +706,28 @@ public sealed class ChatUIController : UIController
 
     private void OnDamageForceSay(DamageForceSayEvent ev, EntitySessionEventArgs _)
     {
-        if (UIManager.ActiveScreen?.GetWidget<ChatBox>() is not { } chatBox)
-            return;
-
-        // Don't send on OOC/LOOC obviously!
-        if (chatBox.SelectedChannel is not
-            (ChatSelectChannel.Local or
-            ChatSelectChannel.Radio or
-            ChatSelectChannel.Whisper))
-            return;
-
-        if (_player.LocalPlayer?.ControlledEntity is not { } ent
-            || !EntityManager.TryGetComponent<DamageForceSayComponent>(ent, out var forceSay))
+        var chatBox = UIManager.ActiveScreen?.GetWidget<ChatBox>() ?? UIManager.ActiveScreen?.GetWidget<ResizableChatBox>();
+        if (chatBox == null)
             return;
 
         var msg = chatBox.ChatInput.Input.Text.TrimEnd();
+        // Don't send on OOC/LOOC obviously!
+
+        // we need to handle selected channel
+        // and prefix-channel separately..
+        var allowedChannels = ChatSelectChannel.Local | ChatSelectChannel.Whisper;
+        if ((chatBox.SelectedChannel & allowedChannels) == ChatSelectChannel.None)
+            return;
+
+        // none can be returned from this if theres no prefix,
+        // so we allow it in that case (assuming the previous check will have exited already if its an invalid channel)
+        var prefixChannel = SplitInputContents(msg).chatChannel;
+        if (prefixChannel != ChatSelectChannel.None && (prefixChannel & allowedChannels) == ChatSelectChannel.None)
+            return;
+
+        if (_player.LocalSession?.AttachedEntity is not { } ent
+            || !EntityManager.TryGetComponent<DamageForceSayComponent>(ent, out var forceSay))
+            return;
 
         if (string.IsNullOrWhiteSpace(msg))
             return;

@@ -120,7 +120,6 @@
     - type: Storage
       grid:
       - 0,0,2,2
-      maxItemSize: Small
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
@@ -274,6 +273,8 @@
   - type: TriggerImplantAction
   - type: GibOnTrigger
     deleteItems: true
+  - type: SpawnOnTrigger
+    proto: Acidifier
   - type: Tag
     tags:
     - SubdermalImplant

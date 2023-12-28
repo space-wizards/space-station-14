@@ -115,6 +115,21 @@
     sprite: Objects/Fun/Darts/dart_yellow.rsi
 
 - type: entity
+  parent: Dart
+  id: HypoDart
+  suffix: HypoDart
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 7
+  - type: SolutionInjectOnCollide
+    transferAmount: 7
+    blockSlots: NONE
+  - type: SolutionTransfer
+    maxTransferAmount: 7
+
+- type: entity
   name: dartboard
   id: TargetDarts
   parent: BaseStructureDynamic
@@ -174,3 +189,19 @@
           path: /Audio/Effects/tree_fell.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseItem
+  id: HypoDartBox
+  name: hypodart box
+  suffix: HypoDart
+  description: A small box containing an hypodart. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Darts/dartbox.rsi
+    state: icon
+  - type: SpawnItemsOnUse
+    items:
+    - id: HypoDart
+    sound:
+      path: /Audio/Effects/unwrap.ogg

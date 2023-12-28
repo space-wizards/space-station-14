@@ -107,7 +107,7 @@
       shardglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 11 #Half of the value of regular glass. TECHNICALLY, welding a single shard of glass gives you the full thing back with just 1 sheet, but that is stupid so I am making it half.
+          Quantity: 5 #Half of the value of regular glass. TECHNICALLY, welding a single shard of glass gives you the full thing back with just 1 sheet, but that is stupid so I am making it half.
 
 - type: entity
   parent: ShardBase
@@ -136,7 +136,7 @@
       shardrglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 11 #I don't care enough to divide all of the reinforced glass materials by 2 because reinforced glass shards are due for removal anyways.
+          Quantity: 5 #I don't care enough to divide all of the reinforced glass materials by 2 because reinforced glass shards are due for removal anyways.
 
 - type: entity
   parent: ShardBase
@@ -165,7 +165,7 @@
       shardpglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 11
+          Quantity: 5
         - ReagentId: Plasma
           Quantity: 5
 
@@ -197,6 +197,6 @@
       sharduglass:
         reagents:
         - ReagentId: Silicon
-          Quantity: 11
+          Quantity: 5
         - ReagentId: Uranium
           Quantity: 5
