@@ -5,13 +5,39 @@
   description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
   - type: EnergySword
-    litDamageBonus:
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+  - type: ItemToggleSharp
+  - type: ItemToggleHot
+  - type: ItemToggleDisarmMalus
+    activatedDisarmMalus: 0.6
+  - type: ItemToggleSize
+    activatedSize: Huge
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+        volume: -10
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        variation: 0.125
+    activatedDamage:
         types:
             Slash: 15
             Heat: 15
             Structural: 20
-            Blunt: -4.5
-    litDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:
@@ -24,14 +50,12 @@
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1
-    soundHit:
-      path: /Audio/Weapons/eblade1.ogg
     damage:
       types:
         Blunt: 4.5
   - type: Item
     size: Small
-    sprite: Objects/Weapons/Melee/e_sword.rsi
+    sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: UseDelay
     delay: 1.0
   - type: PointLight
@@ -63,21 +87,33 @@
   description: 'A dark ink pen.'
   components:
   - type: EnergySword
-    secret: true
-    litDamageBonus:
-        types:
-            Slash: 10
-            Heat: 10
-            Blunt: -1
-    litDisarmMalus: 0.4
-    activateSound: !type:SoundPathSpecifier
+  - type: ItemToggle
+    soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
       params:
         volume: -6
-    deActivateSound: !type:SoundPathSpecifier
+    soundDeactivate:
       path: /Audio/Weapons/ebladeoff.ogg
       params:
         volume: -6
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        volume: -6
+        variation: 0.250
+    activatedDamage:
+        types:
+            Slash: 10
+            Heat: 10
+    deactivatedSecret: true
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: -6
+  - type: ItemToggleDisarmMalus
+    activatedDisarmMalus: 0.4
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -146,13 +182,14 @@
   description: An exotic energy weapon.
   components:
   - type: EnergySword
-    secret: true
-    litDamageBonus:
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
         types:
             Slash: 10
             Heat: 12
-            Blunt: -1
-    litDisarmMalus: 0.6
+    deactivatedSecret: true
+  - type: ItemToggleDisarmMalus
+    activatedDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
     layers:
@@ -165,6 +202,15 @@
   - type: Item
     size: Small
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded
 
 - type: entity
   name: Double Bladed Energy Sword
@@ -172,21 +218,39 @@
   id: EnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
   components:
-  - type: Wieldable
   - type: EnergySword
-    litDamageBonus:
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+      params:
+        volume: 3
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+      params:
+        volume: 3
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        volume: 3
+        variation: 0.250
+    activatedDamage:
         types:
             Slash: 12
             Heat: 12
             Structural: 15
-            Blunt: -4.5
-    litDisarmMalus: 0.7
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: 3
+  - type: ItemToggleDisarmMalus
+    activatedDisarmMalus: 0.7
+  - type: Wieldable
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1.5
     angle: 100
-    soundHit:
-      path: /Audio/Weapons/eblade1.ogg
     damage:
       types:
         Blunt: 4.5
@@ -201,10 +265,18 @@
         map: [ "blade" ]
   - type: Item
     size: Small
-    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+    sprite: Objects/Weapons/Melee/e_sword_double-inhands.rsi
   - type: Reflect
-    enabled: true
     reflectProb: .75
     spread: 75
   - type: UseDelay
     delay: 1
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded

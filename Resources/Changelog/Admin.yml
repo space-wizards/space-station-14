@@ -69,8 +69,15 @@ Entries:
 - author: nikthechampiongr
   changes:
     - {message: 'The respawn verb now respawns the targeted player instead of the admin', type: Fix}
+  id: 11
   time: '2023-11-22T16:39:00.0000000+00:00'
 - author: nikthechampiongr
   changes:
   - {message: 'The Super Bonk smite is now available. Targets will bonk their head on every single table.', type: Add}
+  id: 12
   time: '2023-12-12T11:54:00.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: 'Fixed not being able to right click in AHelps and the players and objects tabs.', type: Fix}
+  id: 13
+  time: '2023-12-21T06:34:00.0000000+00:00'

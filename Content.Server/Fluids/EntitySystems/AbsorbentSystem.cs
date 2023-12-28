@@ -101,7 +101,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         args.Handled = true;
     }
 
-    private void Mop(EntityUid user, EntityUid target, EntityUid used, AbsorbentComponent component)
+    public void Mop(EntityUid user, EntityUid target, EntityUid used, AbsorbentComponent component)
     {
         if (!_solutionContainerSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorberSoln))
             return;
@@ -112,18 +112,16 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         // If it's a puddle try to grab from
         if (!TryPuddleInteract(user, used, target, component, absorberSoln.Value))
         {
-            // Do a transfer, try to get water onto us and transfer anything else to them.
-
-            // If it's anything else transfer to
-            if (!TryTransferAbsorber(user, used, target, component, absorberSoln.Value))
+            // If it's refillable try to transfer
+            if (!TryRefillableInteract(user, used, target, component, absorberSoln.Value))
                 return;
         }
     }
 
     /// <summary>
-    ///     Attempt to fill an absorber from some refillable solution.
+    ///     Logic for an absorbing entity interacting with a refillable.
     /// </summary>
-    private bool TryTransferAbsorber(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent component, Entity<SolutionComponent> absorberSoln)
+    private bool TryRefillableInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent component, Entity<SolutionComponent> absorbentSoln)
     {
         if (!TryComp(target, out RefillableSolutionComponent? refillable))
             return false;
@@ -133,77 +131,134 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
         if (refillableSolution.Volume <= 0)
         {
-            var msg = Loc.GetString("mopping-system-target-container-empty", ("target", target));
-            _popups.PopupEntity(msg, user, user);
-            return false;
-        }
-
-        // Remove the non-water reagents.
-        // Remove water on target
-        // Then do the transfer.
-        var nonWater = _solutionContainerSystem.SplitSolutionWithout(absorberSoln, component.PickupAmount, PuddleSystem.EvaporationReagents);
-        var absorberSolution = absorberSoln.Comp.Solution;
-
-        if (nonWater.Volume == FixedPoint2.Zero && absorberSolution.AvailableVolume == FixedPoint2.Zero)
-        {
-            _popups.PopupEntity(Loc.GetString("mopping-system-puddle-space", ("used", used)), user, user);
-            return false;
-        }
-
-        var transferAmount = component.PickupAmount < absorberSolution.AvailableVolume ?
-            component.PickupAmount :
-            absorberSolution.AvailableVolume;
-
-        var water = refillableSolution.SplitSolutionWithOnly(transferAmount, PuddleSystem.EvaporationReagents);
-        _solutionContainerSystem.UpdateChemicals(refillableSoln.Value);
-
-        if (water.Volume == FixedPoint2.Zero && nonWater.Volume == FixedPoint2.Zero)
-        {
-            _popups.PopupEntity(Loc.GetString("mopping-system-target-container-empty-water", ("target", target)), user, user);
-            return false;
-        }
-
-        if (water.Volume > 0 && !_solutionContainerSystem.TryAddSolution(absorberSoln, water))
-        {
-            _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", used)), used, user);
-        }
-
-        // Attempt to transfer the full nonWater solution to the bucket.
-        if (nonWater.Volume > 0)
-        {
-            bool fullTransferSuccess = _solutionContainerSystem.TryAddSolution(refillableSoln.Value, nonWater);
-
-            // If full transfer was unsuccessful, try a partial transfer.
-            if (!fullTransferSuccess)
-            {
-                var partiallyTransferSolution = nonWater.SplitSolution(refillableSolution.AvailableVolume);
-
-                // Try to transfer the split solution to the bucket.
-                if (_solutionContainerSystem.TryAddSolution(refillableSoln.Value, partiallyTransferSolution))
-                {
-                    // The transfer was successful. nonWater now contains the amount that wasn't transferred.
-                    // If there's any leftover nonWater solution, add it back to the mop.
-                    if (nonWater.Volume > 0)
-                    {
-                        _solutionContainerSystem.AddSolution(absorberSoln, nonWater);
-                    }
-                }
-                else
-                {
-                    // If the transfer was unsuccessful, combine both solutions and return them to the mop.
-                    nonWater.AddSolution(partiallyTransferSolution, _prototype);
-                    _solutionContainerSystem.AddSolution(absorberSoln, nonWater);
-                }
-            }
+            // Target empty - only transfer absorbent contents into refillable
+            if (!TryTransferFromAbsorbentToRefillable(user, used, target, component, absorbentSoln, refillableSoln.Value))
+                return false;
         }
         else
         {
-            _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", target)), user, user);
+            // Target non-empty - do a two-way transfer
+            if (!TryTwoWayAbsorbentRefillableTransfer(user, used, target, component, absorbentSoln, refillableSoln.Value))
+                return false;
         }
 
         _audio.PlayPvs(component.TransferSound, target);
         _useDelay.BeginDelay(used);
         return true;
+    }
+
+    /// <summary>
+    ///     Logic for an transferring solution from absorber to an empty refillable.
+    /// </summary>
+    private bool TryTransferFromAbsorbentToRefillable(
+        EntityUid user,
+        EntityUid used,
+        EntityUid target,
+        AbsorbentComponent component,
+        Entity<SolutionComponent> absorbentSoln,
+        Entity<SolutionComponent> refillableSoln)
+    {
+        var absorbentSolution = absorbentSoln.Comp.Solution;
+        if (absorbentSolution.Volume <= 0)
+        {
+            _popups.PopupEntity(Loc.GetString("mopping-system-target-container-empty", ("target", target)), user, user);
+            return false;
+        }
+
+        var refillableSolution = refillableSoln.Comp.Solution;
+        var transferAmount = component.PickupAmount < refillableSolution.AvailableVolume ?
+            component.PickupAmount :
+            refillableSolution.AvailableVolume;
+
+        if (transferAmount <= 0)
+        {
+            _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", used)), used, user);
+            return false;
+        }
+
+        // Prioritize transferring non-evaporatives if absorbent has any
+        var contaminants = _solutionContainerSystem.SplitSolutionWithout(absorbentSoln, transferAmount, PuddleSystem.EvaporationReagents);
+        if (contaminants.Volume > 0)
+        {
+            _solutionContainerSystem.TryAddSolution(refillableSoln, contaminants);
+        }
+        else
+        {
+            var evaporatives = _solutionContainerSystem.SplitSolution(absorbentSoln, transferAmount);
+            _solutionContainerSystem.TryAddSolution(refillableSoln, evaporatives);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Logic for an transferring contaminants to a non-empty refillable & reabsorbing water if any available.
+    /// </summary>
+    private bool TryTwoWayAbsorbentRefillableTransfer(
+        EntityUid user,
+        EntityUid used,
+        EntityUid target,
+        AbsorbentComponent component,
+        Entity<SolutionComponent> absorbentSoln,
+        Entity<SolutionComponent> refillableSoln)
+    {
+        var contaminantsFromAbsorbent = _solutionContainerSystem.SplitSolutionWithout(absorbentSoln, component.PickupAmount, PuddleSystem.EvaporationReagents);
+
+        var absorbentSolution = absorbentSoln.Comp.Solution;
+        if (contaminantsFromAbsorbent.Volume == FixedPoint2.Zero && absorbentSolution.AvailableVolume == FixedPoint2.Zero)
+        {
+            // Nothing to transfer to refillable and no room to absorb anything extra
+            _popups.PopupEntity(Loc.GetString("mopping-system-puddle-space", ("used", used)), user, user);
+
+            // We can return cleanly because nothing was split from absorbent solution
+            return false;
+        }
+
+        var waterPulled = component.PickupAmount < absorbentSolution.AvailableVolume ?
+            component.PickupAmount :
+            absorbentSolution.AvailableVolume;
+
+        var refillableSolution = refillableSoln.Comp.Solution;
+        var waterFromRefillable = refillableSolution.SplitSolutionWithOnly(waterPulled, PuddleSystem.EvaporationReagents);
+        _solutionContainerSystem.UpdateChemicals(refillableSoln);
+
+        if (waterFromRefillable.Volume == FixedPoint2.Zero && contaminantsFromAbsorbent.Volume == FixedPoint2.Zero)
+        {
+            // Nothing to transfer in either direction
+            _popups.PopupEntity(Loc.GetString("mopping-system-target-container-empty-water", ("target", target)), user, user);
+
+            // We can return cleanly because nothing was split from refillable solution
+            return false;
+        }
+
+        var anyTransferOccurred = false;
+
+        if (waterFromRefillable.Volume > FixedPoint2.Zero)
+        {
+            // transfer water to absorbent
+            _solutionContainerSystem.TryAddSolution(absorbentSoln, waterFromRefillable);
+            anyTransferOccurred = true;
+        }
+
+        if (contaminantsFromAbsorbent.Volume > 0)
+        {
+            if (refillableSolution.AvailableVolume <= 0)
+            {
+                _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", target)), user, user);
+            }
+            else
+            {
+                // transfer as much contaminants to refillable as will fit
+                var contaminantsForRefillable = contaminantsFromAbsorbent.SplitSolution(refillableSolution.AvailableVolume);
+                _solutionContainerSystem.TryAddSolution(refillableSoln, contaminantsForRefillable);
+                anyTransferOccurred = true;
+            }
+
+            // absorb everything that did not fit in the refillable back by the absorbent
+            _solutionContainerSystem.TryAddSolution(absorbentSoln, contaminantsFromAbsorbent);
+        }
+
+        return anyTransferOccurred;
     }
 
     /// <summary>

@@ -279,9 +279,8 @@
   result: AnomalySynchronizerCircuitboard
   completetime: 4
   materials:
-     Steel: 500
+     Steel: 100
      Glass: 700
-     Gold: 200
      Silver: 100
 
 - type: latheRecipe
