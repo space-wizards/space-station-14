@@ -828,3 +828,30 @@
       proper: true
       gender: male
 #  - type: AlwaysRevolutionaryConvertible
+
+# SS220 AVD pet begin
+- type: entity
+  name: Rocket
+  parent: MobCatSpace
+  id: MobSpaceCatPet
+  description: Feline pet, prepared for the worst.
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 40
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Grammar
+    attributes:
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+# SS220 AVD pet end

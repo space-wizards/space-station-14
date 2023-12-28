@@ -195,3 +195,19 @@
   - type: ConditionalSpawner
     prototypes:
     - MobSlimesPetGhostRole
+
+# SS220 AVD pet begin
+- type: entity
+  name: Rocket Spawner
+  id: SpawnMobSpaceCatPetGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSpaceCatPetGhostRole
+# SS220 AVD pet end

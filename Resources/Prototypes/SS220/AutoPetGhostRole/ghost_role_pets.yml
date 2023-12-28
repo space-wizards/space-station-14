@@ -182,3 +182,18 @@
     name: ghost-role-information-pet-slime-name
     description: ghost-role-information-pet-slime-description
   - type: GhostTakeoverAvailable
+
+# SS220 AVD pet begin
+- type: entity
+  parent: MobSpaceCatPet
+  id: MobSpaceCatPetGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-pet-spacecat-name
+    description: ghost-role-information-pet-spacecat-description
+  - type: GhostTakeoverAvailable
+# SS220 AVD pet end
