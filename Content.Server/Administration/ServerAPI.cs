@@ -22,29 +22,30 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Administration;
 
-public sealed class ServerApi : EntitySystem // should probably not be an entity system
+public sealed class ServerApi : IPostInjectInit
 {
     [Dependency] private readonly IStatusHost _statusHost = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!; // Players
     [Dependency] private readonly ISharedAdminManager _adminManager = default!; // Admins
-    [Dependency] private readonly GameTicker _gameTicker = default!; // Round ID and stuff
+    //[Dependency] private readonly GameTicker _gameTicker = default!; // Round ID and stuff
     [Dependency] private readonly IGameMapManager _gameMapManager = default!; // Map name
-    [Dependency] private readonly AdminSystem _adminSystem = default!; // Panic bunker
-    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!; // Round API
+    //[Dependency] private readonly AdminSystem _adminSystem = default!; // Panic bunker
+    //[Dependency] private readonly RoundEndSystem _roundEndSystem = default!; // Round API
     [Dependency] private readonly IServerNetManager _netManager = default!; // Kick
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Game rules
-
     [Dependency] private readonly IComponentFactory _componentFactory = default!; // Needed to circumvent the "IoC has no context on this thread" error until I figure out how to do it properly
     [Dependency] private readonly ITaskManager _taskManager = default!; // game explodes when calling stuff from the non-game thread
+    [Dependency] private readonly EntityManager _entityManager = default!;
+
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     private string _token = default!;
     private ISawmill _sawmill = default!;
     private string _motd = default!;
 
-    protected override void PostInject()
+    public void PostInject()
     {
-        base.PostInject();
         // Get
         _statusHost.AddHandler(InfoHandler);
         _statusHost.AddHandler(GetGameRules);
@@ -65,9 +66,8 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
         _sawmill = Logger.GetSawmill("serverApi");
     }
 
-    public override void Shutdown()
+    public void Shutdown()
     {
-        base.Shutdown();
         _config.UnsubValueChanged(CCVars.AdminApiToken, UpdateToken);
         _config.UnsubValueChanged(CCVars.MOTD, UpdateMotd);
     }
@@ -90,6 +90,7 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
     /// </summary>
     private async Task<bool> ActionPanicPunker(IStatusHandlerContext context)
     {
+
         if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/admin/actions/panic_bunker")
         {
             return false;
@@ -251,7 +252,9 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
             return true;
         }
 
-        if (_gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
+        var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
+
+        if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
         {
             await context.RespondAsync("This can only be executed while the game is in the pre-round lobby.", HttpStatusCode.BadRequest);
             return true;
@@ -264,13 +267,17 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
             return true;
         }
 
-        if (!_gameTicker.TryFindGamePreset(preset.ToString(), out var type))
+        var result = await RunOnMainThread(() => ticker.FindGamePreset(preset.ToString()));
+        if (result == null)
         {
             await context.RespondAsync($"No preset exists with name {preset}.", HttpStatusCode.NotFound);
             return true;
         }
 
-        _gameTicker.SetGamePreset(type);
+        _taskManager.RunOnMainThread(() =>
+        {
+            ticker.SetGamePreset(result);
+        });
         _sawmill.Info($"Forced the game to start with preset {preset}.");
         await context.RespondAsync("Success", HttpStatusCode.OK);
         return true;
@@ -298,10 +305,10 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
             await context.RespondErrorAsync(HttpStatusCode.BadRequest);
             return true;
         }
-
-        var gameRuleEntity = _gameTicker
+        var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
+        var gameRuleEntity = await RunOnMainThread(() => ticker
             .GetActiveGameRules()
-            .FirstOrNull(rule => MetaData(rule).EntityPrototype?.ID == gameRule.ToString());
+            .FirstOrNull(rule => _entityManager.MetaQuery.GetComponent(rule).EntityPrototype?.ID == gameRule.ToString()));
 
         if (gameRuleEntity == null) // Game rule not found
         {
@@ -309,7 +316,7 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
             return true;
         }
 
-        _gameTicker.EndGameRule((EntityUid) gameRuleEntity);
+        ticker.EndGameRule((EntityUid) gameRuleEntity);
         await context.RespondAsync($"Ended game rule {gameRuleEntity}", HttpStatusCode.OK);
         return true;
     }
@@ -337,11 +344,20 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
             return true;
         }
 
-        var ruleEntity = _gameTicker.AddGameRule(gameRule.ToString());
-        if (_gameTicker.RunLevel == GameRunLevel.InRound)
+        var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
+
+        var tsc = new TaskCompletionSource<EntityUid>();
+        _taskManager.RunOnMainThread(() =>
         {
-            _gameTicker.StartGameRule(ruleEntity);
-        }
+            var ruleEntity = ticker.AddGameRule(gameRule.ToString());
+            if (ticker.RunLevel == GameRunLevel.InRound)
+            {
+                ticker.StartGameRule(ruleEntity);
+            }
+            tsc.TrySetResult(ruleEntity);
+        });
+
+        var ruleEntity = await tsc.Task;
 
         await context.RespondAsync($"Added game rule {ruleEntity}", HttpStatusCode.OK);
         return true;
@@ -370,8 +386,13 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
             return true;
         }
 
-        var found = _playerManager.TryGetSessionByUsername(username.ToString(), out var session);
-        if (!found)
+        var session = await RunOnMainThread(() =>
+        {
+            _playerManager.TryGetSessionByUsername(username.ToString(), out var session);
+            return session;
+        });
+
+        if (session == null)
         {
             await context.RespondAsync("Player not found", HttpStatusCode.NotFound);
             return true;
@@ -385,12 +406,10 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
 
         reason += " (kicked by admin)";
 
-        if (session == null)
+        _taskManager.RunOnMainThread(() =>
         {
-            await context.RespondAsync("Player not found", HttpStatusCode.NotFound);
-            return true;
-        }
-        _netManager.DisconnectChannel(session.Channel, reason.ToString());
+            _netManager.DisconnectChannel(session.Channel, reason.ToString());
+        });
         await context.RespondAsync("Success", HttpStatusCode.OK);
         _sawmill.Info("Kicked player {0} ({1})", username, reason);
         return true;
@@ -419,10 +438,13 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
             await context.RespondErrorAsync(HttpStatusCode.BadRequest);
             return true;
         }
+
+        var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
+        var roundEndSystem = _entitySystemManager.GetEntitySystem<RoundEndSystem>();
         switch (action)
         {
             case "start":
-                if (_gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
+                if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
                 {
                     await context.RespondAsync("Round already started", HttpStatusCode.BadRequest);
                     _sawmill.Info("Forced round start failed: round already started");
@@ -430,12 +452,12 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                 }
                 _taskManager.RunOnMainThread(() =>
                 {
-                    _gameTicker.StartRound();
+                    ticker.StartRound();
                 });
                 _sawmill.Info("Forced round start");
                 break;
             case "end":
-                if (_gameTicker.RunLevel != GameRunLevel.InRound)
+                if (ticker.RunLevel != GameRunLevel.InRound)
                 {
                     await context.RespondAsync("Round already ended", HttpStatusCode.BadRequest);
                     _sawmill.Info("Forced round end failed: round is not in progress");
@@ -443,12 +465,12 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                 }
                 _taskManager.RunOnMainThread(() =>
                 {
-                    _roundEndSystem.EndRound();
+                    roundEndSystem.EndRound();
                 });
                 _sawmill.Info("Forced round end");
                 break;
             case "restart":
-                if (_gameTicker.RunLevel != GameRunLevel.InRound)
+                if (ticker.RunLevel != GameRunLevel.InRound)
                 {
                     await context.RespondAsync("Round already ended", HttpStatusCode.BadRequest);
                     _sawmill.Info("Forced round restart failed: round is not in progress");
@@ -456,14 +478,14 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                 }
                 _taskManager.RunOnMainThread(() =>
                 {
-                    _roundEndSystem.EndRound();
+                    roundEndSystem.EndRound();
                 });
                 _sawmill.Info("Forced round restart");
                 break;
             case "restartnow": // You should restart yourself NOW!!!
                 _taskManager.RunOnMainThread(() =>
                 {
-                    _gameTicker.RestartRound();
+                    ticker.RestartRound();
                 });
                 _sawmill.Info("Forced instant round restart");
                 break;
@@ -568,53 +590,66 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
             Panic bunker status
          */
 
+        var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
+        var adminSystem = _entitySystemManager.GetEntitySystem<AdminSystem>();
+
         var jObject = new JsonObject();
 
-        jObject["round_id"] = _gameTicker.RoundId;
+        jObject["round_id"] = await RunOnMainThread(() => ticker.RoundId);
 
-        var players = new List<string>();
-        var onlineAdmins = new List<string>();
-        var onlineAdminsDeadmined = new List<string>();
+        var players = new List<Player>();
+        var onlineAdmins = new List<Player>();
+        var onlineAdminsDeadmined = new List<Player>();
 
         foreach (var player in _playerManager.Sessions)
         {
-            players.Add(player.UserId.UserId.ToString());
-            if (_adminManager.IsAdmin(player))
+            players.Add(new Player
             {
-                onlineAdmins.Add(player.UserId.UserId.ToString());
+                Guid = player.UserId.UserId.ToString(),
+                Name = player.Name
+            });
+            if (await RunOnMainThread(() => _adminManager.IsAdmin(player)))
+            {
+                onlineAdmins.Add(new Player
+                {
+                    Guid = player.UserId.UserId.ToString(),
+                    Name = player.Name
+                });
             }
-            else if (_adminManager.IsAdmin(player, true))
+            else if (await RunOnMainThread(() => _adminManager.IsAdmin(player, true)))
             {
-                onlineAdminsDeadmined.Add(player.UserId.UserId.ToString());
+                onlineAdminsDeadmined.Add(new Player
+                {
+                    Guid = player.UserId.UserId.ToString(),
+                    Name = player.Name
+                });
             }
         }
 
-        // The Serialize into Parse is a bit of a hack
-        // TODO: Find a better way to do this
-
+        // The JsonSerializer.Serialize into JsonNode.Parse is a bit of a hack
         jObject["players"] = JsonNode.Parse(JsonSerializer.Serialize(players));
         jObject["admins"] = JsonNode.Parse(JsonSerializer.Serialize(onlineAdmins));
         jObject["deadmined"] = JsonNode.Parse(JsonSerializer.Serialize(onlineAdminsDeadmined));
 
         var gameRules = new List<string>();
-        foreach (var addedGameRule in _gameTicker.GetActiveGameRules())
+        foreach (var addedGameRule in await RunOnMainThread(() => ticker.GetActiveGameRules()))
         {
-            var meta = MetaData(addedGameRule);
+            var meta = _entityManager.MetaQuery.GetComponent(addedGameRule);
             gameRules.Add(meta.EntityPrototype?.ID ?? meta.EntityPrototype?.Name ?? "Unknown");
         }
 
         jObject["game_rules"] = JsonNode.Parse(JsonSerializer.Serialize(gameRules));
-        jObject["game_preset"] = _gameTicker.CurrentPreset?.ID;
-        jObject["map"] = _gameMapManager.GetSelectedMap()?.MapName;
+        jObject["game_preset"] = ticker.CurrentPreset?.ID;
+        jObject["map"] = await RunOnMainThread(() => _gameMapManager.GetSelectedMap()?.MapName ?? "Unknown");
         jObject["motd"] = _motd;
         jObject["panic_bunker"] = new JsonObject();
-        jObject["panic_bunker"]!["enabled"] = _adminSystem.PanicBunker.Enabled;
-        jObject["panic_bunker"]!["disable_with_admins"] = _adminSystem.PanicBunker.DisableWithAdmins;
-        jObject["panic_bunker"]!["enable_without_admins"] = _adminSystem.PanicBunker.EnableWithoutAdmins;
-        jObject["panic_bunker"]!["count_deadminned_admins"] = _adminSystem.PanicBunker.CountDeadminnedAdmins;
-        jObject["panic_bunker"]!["show_reason"] = _adminSystem.PanicBunker.ShowReason;
-        jObject["panic_bunker"]!["min_account_age_hours"] = _adminSystem.PanicBunker.MinAccountAgeHours;
-        jObject["panic_bunker"]!["min_overall_hours"] = _adminSystem.PanicBunker.MinOverallHours;
+        jObject["panic_bunker"]!["enabled"] = adminSystem.PanicBunker.Enabled;
+        jObject["panic_bunker"]!["disable_with_admins"] = adminSystem.PanicBunker.DisableWithAdmins;
+        jObject["panic_bunker"]!["enable_without_admins"] = adminSystem.PanicBunker.EnableWithoutAdmins;
+        jObject["panic_bunker"]!["count_deadminned_admins"] = adminSystem.PanicBunker.CountDeadminnedAdmins;
+        jObject["panic_bunker"]!["show_reason"] = adminSystem.PanicBunker.ShowReason;
+        jObject["panic_bunker"]!["min_account_age_hours"] = adminSystem.PanicBunker.MinAccountAgeHours;
+        jObject["panic_bunker"]!["min_overall_hours"] = adminSystem.PanicBunker.MinOverallHours;
 
         await context.RespondAsync(jObject.ToString(), HttpStatusCode.OK);
         return true;
@@ -637,5 +672,26 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
         // Invalid auth header, no access
         _sawmill.Info(@"Unauthorized access attempt to admin API. ""{0}"" vs ""{1}""", authToken, _token);
         return false;
+    }
+
+    /// <summary>
+    /// Async helper function which runs a task on the main thread and returns the result.
+    /// </summary>
+    private async Task<T> RunOnMainThread<T>(Func<T> func)
+    {
+        var taskCompletionSource = new TaskCompletionSource<T>();
+        _taskManager.RunOnMainThread(() =>
+        {
+            taskCompletionSource.TrySetResult(func());
+        });
+
+        var result = await taskCompletionSource.Task;
+        return result;
+    }
+
+    private sealed class Player
+    {
+        public string Guid { get; set; } = default!;
+        public string Name { get; set; } = default!;
     }
 }
