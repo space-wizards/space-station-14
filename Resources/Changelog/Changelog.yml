@@ -1,11 +1,4 @@
 Entries:
-- author: TheShuEd
-  changes:
-  - message: Beer anomaly added! And no, it's an anomaly of ominisine. Hmm. No. It
-      seems to be capable of producing ANY substance.
-    type: Add
-  id: 4965
-  time: '2023-10-07T00:26:35.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - message: Fixed not being able to throw items into disposals from close up.
@@ -3534,3 +3527,10 @@ Entries:
   id: 5465
   time: '2023-12-28T13:11:50.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/21124
+- author: TheShuEd
+  changes:
+  - message: thieves can now appear in rounds with nuclear operatives
+    type: Add
+  id: 5466
+  time: '2023-12-28T23:50:25.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23102
