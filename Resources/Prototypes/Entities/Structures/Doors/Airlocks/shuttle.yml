@@ -45,6 +45,7 @@
   - type: Wires
     layoutId: Docking
   - type: Door
+    bumpOpen: false
     closeTimeTwo: 0.4
     openTimeTwo: 0.4
     crushDamage:
