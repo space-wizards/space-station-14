@@ -1,10 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - message: Fixed wire panels on bombs and vending machines not opening correctly.
-    type: Fix
-  id: 4964
-  time: '2023-10-06T21:26:02.0000000+00:00'
 - author: TheShuEd
   changes:
   - message: Beer anomaly added! And no, it's an anomaly of ominisine. Hmm. No. It
@@ -3531,3 +3525,12 @@ Entries:
   id: 5464
   time: '2023-12-28T05:32:55.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22108
+- author: TheShuEd
+  changes:
+  - message: Tesla has been added to the game! Engineers can build a tesla power generator
+      using a tesla generator, tesla coils, and grounding wands that can be purchased
+      from the cargo.
+    type: Add
+  id: 5465
+  time: '2023-12-28T13:11:50.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/21124
