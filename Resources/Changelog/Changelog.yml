@@ -1,16 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed shuttle thrusters and gyroscopes being disabled by default.
-    type: Fix
-  id: 5035
-  time: '2023-10-21T21:33:49.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - message: Fixed the expeditions console not showing any expeditions.
-    type: Fix
-  id: 5036
-  time: '2023-10-21T21:34:00.0000000+00:00'
 - author: nikthechampiongr
   changes:
   - message: Players can no longer telekinetically  pry open doors while they are
@@ -4042,3 +4030,19 @@ Entries:
   id: 5457
   time: '2023-12-27T20:42:16.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22976
+- author: TheArturZh
+  changes:
+  - message: "\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D \u043A\u0430\u0441\
+      \u0442\u043E\u043C\u043D\u044B\u0439 \u0437\u0432\u0443\u043A \u0430\u0445\u0435\
+      \u043B\u043F\u0430"
+    type: Fix
+  id: 5459
+  time: '2023-12-26T11:31:44.0000000+00:00'
+  url: null
+- author: Werzet
+  changes:
+  - message: "\u0437\u0432\u0443\u043A \u0430\u0445\u0435\u043B\u043F\u0430"
+    type: Fix
+  id: 5460
+  time: '2023-12-26T13:40:57.0000000+00:00'
+  url: null

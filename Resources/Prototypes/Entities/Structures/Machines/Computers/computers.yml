@@ -309,7 +309,7 @@
     key: enum.CriminalRecordsUiKey.Key
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics
   #SS220 Criminal-Records end
   - type: Computer
     board: CriminalRecordsComputerCircuitboard
