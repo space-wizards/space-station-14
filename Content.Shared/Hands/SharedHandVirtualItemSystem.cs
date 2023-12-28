@@ -11,6 +11,7 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -82,14 +83,16 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
     /// </summary>
     public void Delete(Entity<HandVirtualItemComponent> item, EntityUid user)
     {
-        if (_net.IsClient)
-            return;
-
         var userEv = new VirtualItemDeletedEvent(item.Comp.BlockingEntity, user);
         RaiseLocalEvent(user, userEv);
         var targEv = new VirtualItemDeletedEvent(item.Comp.BlockingEntity, user);
         RaiseLocalEvent(item.Comp.BlockingEntity, targEv);
 
-        QueueDel(item);
+        if (TerminatingOrDeleted(item))
+            return;
+
+        _transform.DetachParentToNull(item, Transform(item));
+        if (_net.IsServer)
+            QueueDel(item);
     }
 }

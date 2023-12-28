@@ -18,3 +18,5 @@
   - type: Tag
     tags:
       - DroneUsable
+  - type: StealTarget
+    stealGroup: AmePart
