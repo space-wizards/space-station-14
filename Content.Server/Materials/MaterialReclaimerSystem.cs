@@ -141,7 +141,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (active.ReclaimingContainer.ContainedEntities.FirstOrNull() is not { } item)
             return false;
 
-        active.ReclaimingContainer.Remove(item);
+        Container.Remove(item, active.ReclaimingContainer);
         Dirty(component);
 
         // scales the output if the process was interrupted.

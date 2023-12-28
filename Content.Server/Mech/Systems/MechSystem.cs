@@ -358,7 +358,7 @@ public sealed partial class MechSystem : SharedMechSystem
         if (!Resolve(toInsert, ref battery, false))
             return;
 
-        component.BatterySlot.Insert(toInsert);
+        _container.Insert(toInsert, component.BatterySlot);
         component.Energy = battery.CurrentCharge;
         component.MaxEnergy = battery.MaxCharge;
 

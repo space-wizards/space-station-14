@@ -175,7 +175,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                         if (metaData.EntityPrototype.ID == recipeSolid.Key)
                         {
-                            component.Storage.Remove(item);
+                            _sharedContainer.Remove(item, component.Storage);
                             EntityManager.DeleteEntity(item);
                             break;
                         }
@@ -210,7 +210,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 foreach (var part in headSlots)
                 {
-                    ent.Comp.Storage.Insert(part.Id);
+                    _container.Insert(part.Id, ent.Comp.Storage);
                     headCount++;
                 }
             }
@@ -373,7 +373,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 if (_tag.HasTag(item, "MicrowaveSelfUnsafe") || _tag.HasTag(item, "Plastic"))
                 {
                     var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
-                    component.Storage.Insert(junk);
+                    _container.Insert(junk, component.Storage);
                     QueueDel(item);
                 }
 
@@ -507,8 +507,8 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!HasContents(ent.Comp) || HasComp<ActiveMicrowaveComponent>(ent))
                 return;
 
-            ent.Comp.Storage.Remove(EntityManager.GetEntity(args.EntityID));
-            UpdateUserInterfaceState(ent, ent.Comp);
+            _sharedContainer.Remove(EntityManager.GetEntity(args.EntityID), ent.Comp.Storage);
+            UpdateUserInterfaceState(uid, component);
         }
 
         private void OnSelectTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
