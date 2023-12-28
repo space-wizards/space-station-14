@@ -6,7 +6,7 @@
   targetNode: done
   category: construction-category-storage
   description: A tall steel box that cannot be locked.
-  icon: { sprite: Structures/Storage/closet.rsi, state: generic_icon }
+  icon: { sprite: Structures/Storage/Closets/closet.rsi, state: generic_icon }
   objectType: Structure
 
 - type: construction
@@ -17,16 +17,38 @@
   targetNode: done
   category: construction-category-storage
   description: A tall steel box that can be locked. Requires no special access, can be configured with an Access Configurator.
-  icon: { sprite: Structures/Storage/closet.rsi, state: generic_icon_locker }
+  icon: { sprite: Structures/Storage/Closets/closet.rsi, state: generic_icon_locker }
   objectType: Structure
 
 - type: construction
-  id: LockerWoodenSecure
+  id: ClosetWood
+  name: wooden closet
+  graph: ClosetWood
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  description: A tall wooden box that cannot be locked.
+  icon: { sprite: Structures/Storage/Closets/closet.rsi, state: wooden_icon }
+  objectType: Structure
+
+- type: construction
+  id: LockerWood
   name: wooden locker
-  graph: LockerWoodenSecure
+  graph: LockerWood
   startNode: start
   targetNode: done
   category: construction-category-storage
   description: A tall wooden box that can be locked. Requires no special access, can be configured with an Access Configurator.
-  icon: { sprite: Structures/Storage/closet.rsi, state: generic_icon_wooden }
+  icon: { sprite: Structures/Storage/Closets/closet.rsi, state: wooden_icon_locker }
+  objectType: Structure
+
+- type: construction
+  id: SuitStorage
+  name: suit storage
+  graph: SuitStorage
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  description: A fancy hi-tech storage unit made for storing space suits. Requires no special access, can be configured with an Access Configurator.
+  icon: { sprite: Structures/Storage/Closets/suit_storage.rsi, state: icon}
   objectType: Structure
