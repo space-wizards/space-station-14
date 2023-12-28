@@ -41,6 +41,7 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<ReagentDispenserComponent, EntRemovedFromContainerMessage>(SubscribeUpdateUiState);
             SubscribeLocalEvent<ReagentDispenserComponent, BoundUIOpenedEvent>(SubscribeUpdateUiState);
             SubscribeLocalEvent<ReagentDispenserComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<ReagentDispenserComponent, GotDeemaggedEvent>(OnDeemagged);
 
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserSetDispenseAmountMessage>(OnSetDispenseAmountMessage);
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserDispenseReagentMessage>(OnDispenseReagentMessage);
@@ -106,6 +107,11 @@ namespace Content.Server.Chemistry.EntitySystems
             EntityManager.AddComponent<EmaggedComponent>(reagentDispenser);
             UpdateUiState(reagentDispenser);
             args.Handled = true;
+        }
+
+        private void OnDeemagged(Entity<ReagentDispenserComponent> reagentDispenser, ref GotDeemaggedEvent args)
+        {
+            UpdateUiState(reagentDispenser);
         }
 
         private void OnSetDispenseAmountMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserSetDispenseAmountMessage message)

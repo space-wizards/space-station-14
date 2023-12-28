@@ -33,8 +33,7 @@ public abstract class SharedSiliconLawSystem : EntitySystem
         args.Handled = true;
     }
 
-
-    private void OnGotDeemagged(Entity<EmagSiliconLawComponent> ent, ref GotDeemaggedEvent args)
+    protected virtual void OnGotDeemagged(Entity<EmagSiliconLawComponent> ent, ref GotDeemaggedEvent args)
     {
         ent.Comp.OwnerName = null;
     }

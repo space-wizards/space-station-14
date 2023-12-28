@@ -107,6 +107,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         args.Handled = true;
     }
 
+    protected void OnDeemagged(EntityUid uid, SharedDisposalUnitComponent component, ref GotDeemaggedEvent args)
+    {
+        component.DisablePressure = false;
+    }
+
     public virtual bool CanInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid entity)
     {
         if (!Transform(uid).Anchored)

@@ -165,6 +165,12 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         args.Handled = true;
     }
 
+    protected void OnDeemagged(Entity<CryoPodComponent> cryoPod, ref GotDeemaggedEvent args)
+    {
+        cryoPod.Comp.PermaLocked = false;
+        cryoPod.Comp.Locked = false;
+    }
+
     protected void OnCryoPodPryFinished(EntityUid uid, CryoPodComponent cryoPodComponent, CryoPodPryFinished args)
     {
         if (args.Cancelled)

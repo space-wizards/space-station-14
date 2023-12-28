@@ -195,6 +195,17 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         _roles.MindPlaySound(mindId, component.EmaggedSound);
     }
 
+    protected override void OnGotDeemagged(Entity<EmagSiliconLawComponent> ent, ref GotDeemaggedEvent args)
+    {
+        base.OnGotDeemagged(ent, ref args);
+        NotifyLawsChanged(ent);
+
+        // TODO: Remove role
+        // EnsureEmaggedRole(uid, component);
+
+        _stunSystem.TryParalyze(ent, ent.Comp.StunTime, true);
+    }
+
     private void OnEmagMindAdded(EntityUid uid, EmagSiliconLawComponent component, MindAddedMessage args)
     {
         if (HasComp<EmaggedComponent>(uid))

@@ -28,6 +28,7 @@ public sealed class DeemagSystem : EntitySystem
         if (!args.CanReach || args.Target is not { } target || !HasComp<EmaggedComponent>(args.Target))
             return;
 
+        args.Handled = true;
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, deemag.Comp.Duration, new DeemagDoAfterEvent(), deemag, target: args.Target, used: deemag)
         {
             BreakOnDamage = true,
