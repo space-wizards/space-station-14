@@ -1,15 +1,14 @@
+using Content.Server.Body.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Medical.Components;
 using Content.Server.PowerCell;
+using Content.Server.Temperature.Components;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
 using Robust.Server.GameObjects;
-using Content.Server.Temperature.Components;
-using Content.Server.Body.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
@@ -75,17 +74,25 @@ namespace Content.Server.Medical
             if (!HasComp<DamageableComponent>(target))
                 return;
 
-            TryComp<TemperatureComponent>(target, out var temp);
-            TryComp<BloodstreamComponent>(target, out var bloodstream);
+            float bodyTemperature;
+            if (TryComp<TemperatureComponent>(target, out var temp))
+                bodyTemperature = temp.CurrentTemperature;
+            else
+                bodyTemperature = float.NaN;
+
+            float bloodAmount;
+            if (TryComp<BloodstreamComponent>(target, out var bloodstream) &&
+                _solutionContainerSystem.ResolveSolution(target.Value, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
+                bloodAmount = bloodSolution.FillFraction;
+            else
+                bloodAmount = float.NaN;
 
             OpenUserInterface(user, uid);
 
             _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(
                 GetNetEntity(target),
-                temp != null ? temp.CurrentTemperature : float.NaN,
-                (bloodstream != null && _solutionContainerSystem.ResolveSolution(target.Value, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
-                    ? bloodSolution.FillFraction
-                    : float.NaN
+                bodyTemperature,
+                bloodAmount
             ));
         }
     }

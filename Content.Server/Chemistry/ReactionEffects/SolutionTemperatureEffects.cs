@@ -119,5 +119,3 @@ namespace Content.Server.Chemistry.ReactionEffects
     }
 
 }
-
-
