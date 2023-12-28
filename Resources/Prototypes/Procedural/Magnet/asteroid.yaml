@@ -2,7 +2,6 @@
   id: Asteroid
   # Floor generation
   generator: !type:NoiseDunGen
-    radius: 16
     layers:
       - tile: FloorAsteroidSand
   # Everything else

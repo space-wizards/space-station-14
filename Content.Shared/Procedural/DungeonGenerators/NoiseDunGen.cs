@@ -9,14 +9,16 @@ namespace Content.Shared.Procedural.DungeonGenerators;
 /// </summary>
 public sealed partial class NoiseDunGen : IDunGen
 {
+    /*
+     * Floodfills out from 0 until it finds a valid tile.
+     * From here it then floodfills until it can no longer fill in an area and generates a dungeon from that.
+     */
+
     // At some point we may want layers masking each other like a simpler version of biome code but for now
     // we'll just make it circular.
 
-    /// <summary>
-    /// Radius to spawn the tiles out.
-    /// </summary>
-    [DataField(required: true)]
-    public int Radius;
+    [DataField]
+    public int Iterations = 1;
 
     [DataField(required: true)]
     public List<NoiseDunGenLayer> Layers = new();
