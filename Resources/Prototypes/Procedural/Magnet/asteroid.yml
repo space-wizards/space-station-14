@@ -20,7 +20,7 @@
     # TODO: Completely random poisson or whatever the fuck
     # Generate biome
     - !type:BiomePostGen
-      biomeTemplate: Lava
+      biomeTemplate: Caves
 
     # Generate ore veins
     #- !type:MarkerLayerPostGen
@@ -31,20 +31,21 @@
     # Generate flora / fauna if we want
 
 # Multiple smaller asteroids
+# This is a pain so we generate fewer tiles
 - type: dungeonConfig
   id: ClusterAsteroid
   # Floor generation
   generator: !type:NoiseDunGen
-    tileCap: 1500
+    tileCap: 1000
     capStd: 32
     layers:
       - tile: FloorAsteroidSand
-        threshold: 0.30
+        threshold: 0.10
         noise:
-          frequency: 0.050
+          frequency: 0.130
           noiseType: OpenSimplex2
           fractalType: FBm
-          octaves: 3
+          octaves: 2
           lacunarity: 2
   # Everything else
   postGeneration:
@@ -52,7 +53,7 @@
     # TODO: Completely random poisson or whatever the fuck
     # Generate biome
     - !type:BiomePostGen
-      biomeTemplate: Lava
+      biomeTemplate: Caves
 
     # Generate ore veins
     #- !type:MarkerLayerPostGen
@@ -79,9 +80,12 @@
           octaves: 3
           lacunarity: 2
           cellularDistanceFunction: Euclidean
-  # Everything else
-  # postGeneration:
-    # Generate ore veins
+  postGeneration:
+    # Generate vents
+    # TODO: Completely random poisson or whatever the fuck
+    # Generate biome
+    - !type:BiomePostGen
+      biomeTemplate: Caves
 
 # Lots of holes in it
 - type: dungeonConfig
@@ -94,12 +98,18 @@
       - tile: FloorAsteroidSand
         threshold: -0.10
         noise:
-          frequency: 0.100
+          frequency: 0.155
           noiseType: OpenSimplex2
           fractalType: FBm
-          octaves: 3
+          octaves: 2
           lacunarity: 2
-          cellularDistanceFunction: Euclidean
+  # Everything else
+  postGeneration:
+    # Generate vents
+    # TODO: Completely random poisson or whatever the fuck
+    # Generate biome
+    - !type:BiomePostGen
+      biomeTemplate: Caves
 
 # YIELD TYPES:
 # Low yield 1 ore
