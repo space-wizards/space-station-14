@@ -124,7 +124,10 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                     return true;
                 }
 
-                _config.SetCVar(CCVars.PanicBunkerEnabled, enabled);
+                _taskManager.RunOnMainThread(() =>
+                {
+                    _config.SetCVar(CCVars.PanicBunkerEnabled, enabled);
+                });
                 break;
             case "disable_with_admins":
                 if (!bool.TryParse(value.ToString(), out var disableWithAdmins))
@@ -133,9 +136,11 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                     return true;
                 }
 
-                _config.SetCVar(CCVars.PanicBunkerDisableWithAdmins, disableWithAdmins);
+                _taskManager.RunOnMainThread(() =>
+                {
+                    _config.SetCVar(CCVars.PanicBunkerDisableWithAdmins, disableWithAdmins);
+                });
                 break;
-
             case "enable_without_admins":
                 if (!bool.TryParse(value.ToString(), out var enableWithoutAdmins))
                 {
@@ -143,7 +148,10 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                     return true;
                 }
 
-                _config.SetCVar(CCVars.PanicBunkerEnableWithoutAdmins, enableWithoutAdmins);
+                _taskManager.RunOnMainThread(() =>
+                {
+                    _config.SetCVar(CCVars.PanicBunkerEnableWithoutAdmins, enableWithoutAdmins);
+                });
                 break;
             case "count_deadminned_admins":
                 if (!bool.TryParse(value.ToString(), out var countDeadminnedAdmins))
@@ -152,7 +160,10 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                     return true;
                 }
 
-                _config.SetCVar(CCVars.PanicBunkerCountDeadminnedAdmins, countDeadminnedAdmins);
+                _taskManager.RunOnMainThread(() =>
+                {
+                    _config.SetCVar(CCVars.PanicBunkerCountDeadminnedAdmins, countDeadminnedAdmins);
+                });
                 break;
             case "show_reason":
                 if (!bool.TryParse(value.ToString(), out var showReason))
@@ -161,9 +172,11 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                     return true;
                 }
 
-                _config.SetCVar(CCVars.PanicBunkerShowReason, showReason);
+                _taskManager.RunOnMainThread(() =>
+                {
+                    _config.SetCVar(CCVars.PanicBunkerShowReason, showReason);
+                });
                 break;
-
             case "min_account_age_hours":
                 if (!int.TryParse(value.ToString(), out var minAccountAgeHours))
                 {
@@ -171,7 +184,10 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                     return true;
                 }
 
-                _config.SetCVar(CCVars.PanicBunkerMinAccountAge, minAccountAgeHours * 60);
+                _taskManager.RunOnMainThread(() =>
+                {
+                    _config.SetCVar(CCVars.PanicBunkerMinAccountAge, minAccountAgeHours * 60);
+                });
                 break;
             case "min_overall_hours":
                 if (!int.TryParse(value.ToString(), out var minOverallHours))
@@ -180,7 +196,10 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                     return true;
                 }
 
-                _config.SetCVar(CCVars.PanicBunkerMinOverallHours, minOverallHours * 60);
+                _taskManager.RunOnMainThread(() =>
+                {
+                    _config.SetCVar(CCVars.PanicBunkerMinOverallHours, minOverallHours * 60);
+                });
                 break;
         }
 
