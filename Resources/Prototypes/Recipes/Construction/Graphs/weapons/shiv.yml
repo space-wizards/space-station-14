@@ -18,7 +18,7 @@
   start: start
   graph:
   - node: start
-    entity: ReinforcedGlassShard
+    entity: ShardGlassReinforced
     edges:
     - to: icon
       steps:
@@ -33,7 +33,7 @@
   start: start
   graph:
   - node: start
-    entity: PlasmaGlassShard
+    entity: ShardGlassPlasma
     edges:
     - to: icon
       steps:
@@ -48,7 +48,7 @@
   start: start
   graph:
   - node: start
-    entity: UraniumGlassShard
+    entity: ShardGlassUranium
     edges:
     - to: icon
       steps:
