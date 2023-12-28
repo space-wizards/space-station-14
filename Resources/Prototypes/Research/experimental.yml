@@ -127,6 +127,18 @@
   recipeUnlocks:
   - RPED
 
+- type: technology
+  id: FastFirmware
+  name: research-technology-fast-firmware
+  icon:
+    sprite: Objects/Devices/firmware_key.rsi
+    state: advanced
+  discipline: Experimental
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+  - FirmwareKey
+
 # Tier 3
 
 - type: technology
