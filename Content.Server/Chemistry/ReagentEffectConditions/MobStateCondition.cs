@@ -9,14 +9,14 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     {
 
 
-        [DataField("mobstate")]
-        public MobState mobstate = MobState.Alive;
+        [DataField]
+        public MobState Mobstate = MobState.Alive;
 
         public override bool Condition(ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out MobStateComponent? mobState))
             {
-                if (mobState.CurrentState == mobstate)
+                if (mobState.CurrentState == Mobstate)
                     return true;
             }
 

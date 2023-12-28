@@ -12,10 +12,10 @@ namespace Content.Server.Chemistry.ReagentEffects
     public sealed partial class ChemVomit : ReagentEffect
     {
         /// How many units of thirst to add each time we vomit
-        [DataField("thirstAmount")]
+        [DataField]
         public float ThirstAmount = -8f;
         /// How many units of hunger to add each time we vomit
-        [DataField("hungerAmount")]
+        [DataField]
         public float HungerAmount = -8f;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

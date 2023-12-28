@@ -14,16 +14,16 @@ namespace Content.Server.Chemistry.TileReactions;
 [DataDefinition]
 public sealed partial class CreateEntityTileReaction : ITileReaction
 {
-    [DataField("entity", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Entity = default!;
 
-    [DataField("usage")]
+    [DataField]
     public FixedPoint2 Usage = FixedPoint2.New(1);
 
     /// <summary>
     ///     How many of the whitelisted entity can fit on one tile?
     /// </summary>
-    [DataField("maxOnTile")]
+    [DataField]
     public int MaxOnTile = 1;
 
     /// <summary>
@@ -32,7 +32,7 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
     [DataField("maxOnTileWhitelist")]
     public EntityWhitelist? Whitelist;
 
-    [DataField("randomOffsetMax")]
+    [DataField]
     public float RandomOffsetMax = 0.0f;
 
     public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)

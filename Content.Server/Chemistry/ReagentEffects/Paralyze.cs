@@ -6,12 +6,12 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class Paralyze : ReagentEffect
 {
-    [DataField("paralyzeTime")] public double ParalyzeTime = 2;
+    [DataField] public double ParalyzeTime = 2;
 
     /// <remarks>
     ///     true - refresh paralyze time,  false - accumulate paralyze time
     /// </remarks>
-    [DataField("refresh")] public bool Refresh = true;
+    [DataField] public bool Refresh = true;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-paralyze",

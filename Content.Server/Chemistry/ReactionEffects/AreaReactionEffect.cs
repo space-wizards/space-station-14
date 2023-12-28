@@ -29,7 +29,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// <summary>
         /// How many units of reaction for 1 smoke entity.
         /// </summary>
-        [DataField("overflowThreshold")] public FixedPoint2 OverflowThreshold = FixedPoint2.New(2.5);
+        [DataField] public FixedPoint2 OverflowThreshold = FixedPoint2.New(2.5);
 
         /// <summary>
         /// The entity prototype that will be spawned as the effect.

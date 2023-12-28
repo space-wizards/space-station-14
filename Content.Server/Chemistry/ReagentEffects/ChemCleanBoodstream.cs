@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     [UsedImplicitly]
     public sealed partial class ChemCleanBloodstream : ReagentEffect
     {
-        [DataField("cleanseRate")]
+        [DataField]
         public float CleanseRate = 3.0f;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

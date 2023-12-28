@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class CureZombieInfection : ReagentEffect
 {
-    [DataField("innoculate")]
+    [DataField]
     public bool Innoculate;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

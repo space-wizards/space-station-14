@@ -13,7 +13,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// <summary>
         ///     The reagent ID to remove. Only one of this and <see cref="Group"/> should be active.
         /// </summary>
-        [DataField("reagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
         public string? Reagent = null;
         // TODO use ReagentId
 
@@ -21,10 +21,10 @@ namespace Content.Server.Chemistry.ReagentEffects
         ///     The metabolism group to remove, if the reagent satisfies any.
         ///     Only one of this and <see cref="Reagent"/> should be active.
         /// </summary>
-        [DataField("group", customTypeSerializer: typeof(PrototypeIdSerializer<MetabolismGroupPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<MetabolismGroupPrototype>))]
         public string? Group = null;
 
-        [DataField("amount", required: true)]
+        [DataField(required: true)]
         public FixedPoint2 Amount = default!;
 
         public override void Effect(ReagentEffectArgs args)
