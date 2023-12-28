@@ -52,25 +52,3 @@
   description: A fancy hi-tech storage unit made for storing space suits. Requires no special access, can be configured with an Access Configurator.
   icon: { sprite: Structures/Storage/Closets/suit_storage.rsi, state: icon}
   objectType: Structure
-
-- type: construction
-  id: LockerSteel
-  name: locker
-  graph: LockerSteel
-  startNode: start
-  targetNode: done
-  category: construction-category-storage
-  description: A tall steel box that can be locked. Requires no special access, can be configured with an Access Configurator.
-  icon: { sprite: Structures/Storage/closet.rsi, state: generic_icon_locker }
-  objectType: Structure
-
-- type: construction
-  id: LockerWoodenSecure
-  name: wooden locker
-  graph: LockerWoodenSecure
-  startNode: start
-  targetNode: done
-  category: construction-category-storage
-  description: A tall wooden box that can be locked. Requires no special access, can be configured with an Access Configurator.
-  icon: { sprite: Structures/Storage/closet.rsi, state: generic_icon_wooden }
-  objectType: Structure

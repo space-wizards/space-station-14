@@ -26,6 +26,7 @@
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
+
 - type: constructionGraph
   id: LockerSteel
   start: start
@@ -40,7 +41,7 @@
         amount: 2
         doAfter: 5
   - node: done
-    entity: LockerBaseSecure
+    entity: BaseLockerSteel
     edges:
     - to: start
       steps:
@@ -59,8 +60,38 @@
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
+
 - type: constructionGraph
-  id: LockerWoodenSecure
+  id: ClosetWood
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: WoodPlank
+        amount: 5
+        doAfter: 5
+  - node: done
+    entity: BaseClosetWood
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+        amount: 5
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+
+
+- type: constructionGraph
+  id: LockerWood
   start: start
   graph:
   - node: start
@@ -73,7 +104,7 @@
         amount: 2
         doAfter: 5
   - node: done
-    entity: LockerWoodenSecure
+    entity: BaseLockerWood
     edges:
     - to: start
       steps:
@@ -89,5 +120,38 @@
       - !type:SpawnPrototype
         prototype: CableApcStack1
         amount: 2
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+
+- type: constructionGraph
+  id: SuitStorage
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 8
+      - material: Cable
+        amount: 3
+        doAfter: 5
+  - node: done
+    entity: BaseSuitStorage
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:Locked
+        locked: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 8
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 3
       - !type:EmptyAllContainers
       - !type:DeleteEntity
