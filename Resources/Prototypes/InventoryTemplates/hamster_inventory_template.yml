@@ -15,7 +15,7 @@
     slotTexture: neck
     slotFlags: NECK
     uiWindowPos: 0,1
-    strippingWindowPos: 0,1
+    strippingWindowPos: 1,0
     displayName: Neck
     whitelist:
       tags:
@@ -24,7 +24,7 @@
     slotTexture: glasses
     slotFlags: EYES
     stripTime: 3
-    uiWindowPos: 0,0
+    uiWindowPos: 0,1
     strippingWindowPos: 0,0
     displayName: Eyes
     whitelist:
@@ -44,7 +44,7 @@
   - name: head
     slotTexture: head
     slotFlags: HEAD
-    uiWindowPos: 1,0
+    uiWindowPos: 1,2
     strippingWindowPos: 1,0
     displayName: Head
     whitelist:

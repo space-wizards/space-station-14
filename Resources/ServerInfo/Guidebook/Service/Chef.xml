@@ -58,7 +58,7 @@ Alt-Click on a Cow with a container in your hand. (Beakers, Buckets, Milk Jugs, 
 <Box>
 <GuideEntityEmbed Entity="Bucket"/>
 <GuideEntityEmbed Entity="MobCow"/>
-<GuideEntityEmbed Entity="ReagentContainerMilk"/>
+<GuideEntityEmbed Entity="DrinkMilkCarton"/>
 </Box>
 ## How to Butcher:
 In most cases, you should be able to use a knife directly on a creature that's dead. It's best to do this in the freezer, as the results are... messy.

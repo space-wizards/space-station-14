@@ -787,7 +787,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         if (!_sharedHandsSystem.CanDrop(player, toInsert.Value, hands))
         {
-            _popupSystem.PopupClient(Loc.GetString("comp-storage-cant-drop"), uid, player);
+            _popupSystem.PopupClient(Loc.GetString("comp-storage-cant-drop", ("entity", toInsert.Value)), uid, player);
             return false;
         }
 

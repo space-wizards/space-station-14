@@ -43,7 +43,7 @@ public sealed class HeatExchangerSystem : EntitySystem
         tileLoss = val;
     }
 
-    private void OnAtmosUpdate(EntityUid uid, HeatExchangerComponent comp, AtmosDeviceUpdateEvent args)
+    private void OnAtmosUpdate(EntityUid uid, HeatExchangerComponent comp, ref AtmosDeviceUpdateEvent args)
     {
         if (!TryComp(uid, out NodeContainerComponent? nodeContainer)
                 || !TryComp(uid, out AtmosDeviceComponent? device)

@@ -12,19 +12,19 @@
     fuelCost: 15
     doAfterDelay: 3
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1000
+        damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 100
       behaviors:
       - !type:PlaySoundBehavior
         sound:
