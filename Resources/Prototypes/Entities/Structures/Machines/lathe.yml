@@ -294,6 +294,7 @@
       - WeaponAdvancedLaser
       - WeaponLaserCannon
       - WeaponXrayCannon
+      - WeaponTaser
 
 - type: entity
   id: CircuitImprinter
@@ -614,6 +615,7 @@
       - WeaponAdvancedLaser
       - WeaponLaserCannon
       - WeaponLaserCarbine
+      - WeaponTaser
       - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:
