@@ -426,8 +426,9 @@
   id: FestiveSeason
   name: holiday-name-festive-season
   beginDay: 1
-  endDay: 31
+  endDay: 4
   beginMonth: December
+  endMonth: January
   greet:
     !type:Custom
     text: holiday-custom-festive-season
