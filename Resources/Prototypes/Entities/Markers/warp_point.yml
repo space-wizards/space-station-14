@@ -34,99 +34,72 @@
 # Departments
 - type: entity
   id: WarpPointBeaconBar
-  parent: WarpPointBeacon
+  parent: WarpPoint
   name: warp point (bar)
   components:
-  - type: NavMapBeacon
-    text: bar
-    color: "#791500"
   - type: WarpPoint
     location: bar
 
 - type: entity
   id: WarpPointBeaconCargo
-  parent: WarpPointBeacon
+  parent: WarpPoint
   name: warp point (cargo)
   components:
-  - type: NavMapBeacon
-    text: cargo
-    color: "#A46106"
   - type: WarpPoint
     location: cargo
 
 - type: entity
   id: WarpPointBeaconCommand
-  parent: WarpPointBeacon
+  parent: WarpPoint
   name: warp point (command)
   components:
-  - type: NavMapBeacon
-    text: command
-    color: "#334E6D"
   - type: WarpPoint
     location: command
 
 - type: entity
   id: WarpPointBeaconEngineering
-  parent: WarpPointBeacon
+  parent: WarpPoint
   name: warp point (engineering)
   components:
-  - type: NavMapBeacon
-    text: engineering
-    color: "#EFB341"
   - type: WarpPoint
     location: engineering
 
 - type: entity
   id: WarpPointBeaconMedical
-  parent: WarpPointBeacon
+  parent: WarpPoint
   name: warp point (medical)
   components:
-  - type: NavMapBeacon
-    text: medical
-    color: "#52B4E9"
   - type: WarpPoint
     location: medical
 
 - type: entity
   id: WarpPointBeaconNeutral
-  parent: WarpPointBeacon
+  parent: WarpPoint
   name: warp point (neutral)
   components:
-  - type: NavMapBeacon
-    text: neutral
-    color: "#D4D4D4"
   - type: WarpPoint
     location: neutral
 
 - type: entity
   id: WarpPointBeaconScience
-  parent: WarpPointBeacon
+  parent: WarpPoint
   name: warp point (science)
   components:
-  - type: NavMapBeacon
-    text: science
-    color: "#D381C9"
   - type: WarpPoint
     location: science
 
 - type: entity
   id: WarpPointBeaconSecurity
-  parent: WarpPointBeacon
+  parent: WarpPoint
   name: warp point (security)
   components:
-  - type: NavMapBeacon
-    text: security
-    color: "#DE3A3A"
   - type: WarpPoint
     location: security
 
 - type: entity
   id: WarpPointBeaconService
-  parent: WarpPointBeacon
+  parent: WarpPoint
   name: warp point (service)
   components:
-  - type: NavMapBeacon
-    text: service
-    color: "#9FED58"
   - type: WarpPoint
     location: service
