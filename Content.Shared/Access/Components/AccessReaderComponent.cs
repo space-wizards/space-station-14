@@ -55,7 +55,7 @@ public sealed partial class AccessReaderComponent : Component
     /// <summary>
     /// A list of past authentications
     /// </summary>
-    [ViewVariables]
+    [DataField]
     public Queue<AccessRecord> AccessLog = new();
 
     /// <summary>
