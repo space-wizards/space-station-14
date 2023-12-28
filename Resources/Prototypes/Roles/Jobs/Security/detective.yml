@@ -7,12 +7,14 @@
   - !type:DepartmentTimeRequirement
     department: Security
     time: 54000 # 15 hours
+  - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 18000 # 5 hours
   startingGear: DetectiveGear
   icon: "JobIconDetective"
-  supervisors: job-supervisors-hos
+  supervisors: job-supervisors-security-hire
   canBeAntag: false
   access:
-  - Security
   - Brig
   - Maintenance
   - Service
