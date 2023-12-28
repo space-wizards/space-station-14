@@ -5533,20 +5533,6 @@ entities:
       type: Transform
     - startingCharge: 11999.066
       type: Battery
-  - uid: 2486
-    components:
-    - pos: 24.5,14.5
-      parent: 31
-      type: Transform
-    - startingCharge: 11999.733
-      type: Battery
-  - uid: 2487
-    components:
-    - pos: 28.5,14.5
-      parent: 31
-      type: Transform
-    - startingCharge: 11999.483
-      type: Battery
   - uid: 2489
     components:
     - name: Engi Lockers APC
@@ -5627,6 +5613,13 @@ entities:
       type: MetaData
     - rot: -1.5707963267948966 rad
       pos: 13.5,-23.5
+      parent: 31
+      type: Transform
+  - uid: 3625
+    components:
+    - name: Salvage APC
+      type: MetaData
+    - pos: 24.5,18.5
       parent: 31
       type: Transform
   - uid: 3797
@@ -5769,6 +5762,13 @@ entities:
     - name: East Maints APC
       type: MetaData
     - pos: 20.5,-23.5
+      parent: 31
+      type: Transform
+  - uid: 11351
+    components:
+    - name: QM's Office APC
+      type: MetaData
+    - pos: 26.5,11.5
       parent: 31
       type: Transform
 - proto: APCElectronics
@@ -7017,7 +7017,7 @@ entities:
       type: Transform
   - uid: 131
     components:
-    - pos: 24.5,15.5
+    - pos: 29.5,12.5
       parent: 31
       type: Transform
   - uid: 164
@@ -8038,6 +8038,11 @@ entities:
   - uid: 2483
     components:
     - pos: 12.5,25.5
+      parent: 31
+      type: Transform
+  - uid: 2486
+    components:
+    - pos: 26.5,11.5
       parent: 31
       type: Transform
   - uid: 2488
@@ -10470,11 +10475,6 @@ entities:
     - pos: 27.5,7.5
       parent: 31
       type: Transform
-  - uid: 3148
-    components:
-    - pos: 24.5,14.5
-      parent: 31
-      type: Transform
   - uid: 3149
     components:
     - pos: 24.5,13.5
@@ -11025,6 +11025,16 @@ entities:
     - pos: 12.5,19.5
       parent: 31
       type: Transform
+  - uid: 3599
+    components:
+    - pos: 24.5,18.5
+      parent: 31
+      type: Transform
+  - uid: 3601
+    components:
+    - pos: 24.5,17.5
+      parent: 31
+      type: Transform
   - uid: 3617
     components:
     - pos: -26.5,-4.5
@@ -11035,11 +11045,6 @@ entities:
     - pos: -4.5,25.5
       parent: 31
       type: Transform
-  - uid: 3625
-    components:
-    - pos: 28.5,11.5
-      parent: 31
-      type: Transform
   - uid: 3626
     components:
     - pos: 10.5,25.5
@@ -11048,11 +11053,6 @@ entities:
   - uid: 3638
     components:
     - pos: 25.5,9.5
-      parent: 31
-      type: Transform
-  - uid: 3680
-    components:
-    - pos: 26.5,12.5
       parent: 31
       type: Transform
   - uid: 3703
@@ -12633,11 +12633,6 @@ entities:
   - uid: 7066
     components:
     - pos: 35.5,-9.5
-      parent: 31
-      type: Transform
-  - uid: 7106
-    components:
-    - pos: 24.5,9.5
       parent: 31
       type: Transform
   - uid: 7144
@@ -15293,6 +15288,11 @@ entities:
   - uid: 11332
     components:
     - pos: 20.5,-23.5
+      parent: 31
+      type: Transform
+  - uid: 11350
+    components:
+    - pos: 30.5,12.5
       parent: 31
       type: Transform
 - proto: CableApcStack
@@ -19261,6 +19261,11 @@ entities:
     - pos: 15.5,-26.5
       parent: 31
       type: Transform
+  - uid: 2487
+    components:
+    - pos: 26.5,12.5
+      parent: 31
+      type: Transform
   - uid: 2645
     components:
     - pos: -32.5,-7.5
@@ -19376,6 +19381,11 @@ entities:
     - pos: 19.5,-13.5
       parent: 31
       type: Transform
+  - uid: 3148
+    components:
+    - pos: 26.5,11.5
+      parent: 31
+      type: Transform
   - uid: 3174
     components:
     - pos: 18.5,-11.5
@@ -19471,29 +19481,14 @@ entities:
     - pos: 28.5,13.5
       parent: 31
       type: Transform
-  - uid: 3599
-    components:
-    - pos: 28.5,14.5
-      parent: 31
-      type: Transform
   - uid: 3600
     components:
     - pos: 26.5,13.5
       parent: 31
       type: Transform
-  - uid: 3601
-    components:
-    - pos: 25.5,13.5
-      parent: 31
-      type: Transform
-  - uid: 3602
-    components:
-    - pos: 24.5,13.5
-      parent: 31
-      type: Transform
   - uid: 3603
     components:
-    - pos: 24.5,14.5
+    - pos: 25.5,12.5
       parent: 31
       type: Transform
   - uid: 3604
@@ -19794,6 +19789,11 @@ entities:
   - uid: 3674
     components:
     - pos: 43.5,5.5
+      parent: 31
+      type: Transform
+  - uid: 3680
+    components:
+    - pos: 24.5,18.5
       parent: 31
       type: Transform
   - uid: 3681
@@ -20841,6 +20841,11 @@ entities:
     - pos: 8.5,14.5
       parent: 31
       type: Transform
+  - uid: 7106
+    components:
+    - pos: 24.5,17.5
+      parent: 31
+      type: Transform
   - uid: 7128
     components:
     - pos: 7.5,14.5
@@ -21649,6 +21654,31 @@ entities:
   - uid: 11343
     components:
     - pos: 16.5,-25.5
+      parent: 31
+      type: Transform
+  - uid: 11345
+    components:
+    - pos: 24.5,16.5
+      parent: 31
+      type: Transform
+  - uid: 11346
+    components:
+    - pos: 25.5,16.5
+      parent: 31
+      type: Transform
+  - uid: 11347
+    components:
+    - pos: 26.5,16.5
+      parent: 31
+      type: Transform
+  - uid: 11348
+    components:
+    - pos: 26.5,15.5
+      parent: 31
+      type: Transform
+  - uid: 11349
+    components:
+    - pos: 26.5,14.5
       parent: 31
       type: Transform
 - proto: CableMVStack
@@ -27753,6 +27783,12 @@ entities:
       type: Transform
 - proto: ComputerCargoOrders
   entities:
+  - uid: 3602
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 26.5,8.5
+      parent: 31
+      type: Transform
   - uid: 4309
     components:
     - rot: -1.5707963267948966 rad
@@ -32497,7 +32533,7 @@ entities:
     - pos: 38.5,-5.5
       parent: 31
       type: Transform
-    - secondsUntilStateChange: -3309.0667
+    - secondsUntilStateChange: -3421.156
       state: Closing
       type: Door
   - uid: 4019
@@ -43089,8 +43125,6 @@ entities:
       pos: 23.5,15.5
       parent: 31
       type: Transform
-    - joinedGrid: 31
-      type: AtmosDevice
     - color: '#0055CCFF'
       type: AtmosPipeColor
   - uid: 4267
