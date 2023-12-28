@@ -34,7 +34,7 @@
       baseMaxCharge: 8000000
     - type: UpgradePowerSupplyRamping
       scaling: Linear
-      supplyRampingMultiplier: 1     
+      supplyRampingMultiplier: 1
     - type: Appearance
     - type: Battery
       startingCharge: 0
@@ -97,6 +97,8 @@
       sendBroadcastAttemptEvent: true
       examinableAddress: true
     - type: WiredNetworkConnection
+    - type: NameIdentifier #SS220 PowerId
+      group: PowerId
 
 # SMES' in use
 

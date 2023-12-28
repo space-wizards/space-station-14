@@ -116,6 +116,8 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: output
+  - type: NameIdentifier #SS220 PowerId
+    group: PowerId
 
 # Compact Wall Substation Base
 - type: entity
@@ -221,6 +223,8 @@
     totalIntensity: 100
   - type: StationInfiniteBatteryTarget
   - type: WallMount
+  - type: NameIdentifier #SS220 PowerId
+    group: PowerId
 
 # Substations in use
 

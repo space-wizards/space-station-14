@@ -1,0 +1,6 @@
+﻿#Идентификатор имён для энергообъектов
+- type: nameIdentifierGroup
+  id: PowerId
+  prefix: PU
+  minValue: 100000
+  maxValue: 999999

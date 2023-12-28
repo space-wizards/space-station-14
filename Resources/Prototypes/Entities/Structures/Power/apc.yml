@@ -133,6 +133,8 @@
     lowVoltageNode: output
   - type: StaticPrice
     price: 500
+  - type: NameIdentifier #SS220 PowerId
+    group: PowerId
 
 # APC under construction
 - type: entity
