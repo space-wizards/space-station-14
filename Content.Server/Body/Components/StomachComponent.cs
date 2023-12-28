@@ -14,7 +14,7 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     How fast should this component update, in seconds?
         /// </summary>
-        [DataField("updateInterval")]
+        [DataField]
         public float UpdateInterval = 1.0f;
 
         /// <summary>
@@ -26,20 +26,20 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     What solution should this stomach push reagents into, on the body?
         /// </summary>
-        [DataField("bodySolutionName")]
+        [DataField]
         public string BodySolutionName = BloodstreamComponent.DefaultChemicalsSolutionName;
 
         /// <summary>
         ///     Time in seconds between reagents being ingested and them being
         ///     transferred to <see cref="BloodstreamComponent"/>
         /// </summary>
-        [DataField("digestionDelay")]
+        [DataField]
         public float DigestionDelay = 20;
 
         /// <summary>
         ///     A whitelist for what special-digestible-required foods this stomach is capable of eating.
         /// </summary>
-        [DataField("specialDigestible")]
+        [DataField]
         public EntityWhitelist? SpecialDigestible = null;
 
         /// <summary>

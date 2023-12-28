@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Content.Shared.Chemistry.Reaction;
+﻿using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
@@ -8,6 +7,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using System.Numerics;
 
 namespace Content.Server.Chemistry.TileReactions;
 

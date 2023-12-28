@@ -1,6 +1,5 @@
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Materials;
-using Content.Shared.Temperature;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Chemistry.Components;

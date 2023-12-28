@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Text.Json.Serialization;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -7,6 +5,8 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Localizations;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {

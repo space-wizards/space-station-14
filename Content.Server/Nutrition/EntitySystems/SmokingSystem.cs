@@ -2,21 +2,21 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Nutrition.Components;
+using Content.Server.Forensics;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using System.Linq;
-using Content.Shared.Inventory.Events;
-using Content.Server.Forensics;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -79,21 +79,21 @@ namespace Content.Server.Nutrition.EntitySystems
                 _active.Remove(uid);
         }
 
-        private void OnSmokableIsHotEvent(EntityUid uid, SmokableComponent component, IsHotEvent args)
+        private void OnSmokableIsHotEvent(Entity<SmokableComponent> entity, ref IsHotEvent args)
         {
-            args.IsHot = component.State == SmokableState.Lit;
+            args.IsHot = entity.Comp.State == SmokableState.Lit;
         }
 
-        private void OnSmokableShutdownEvent(EntityUid uid, SmokableComponent component, ComponentShutdown args)
+        private void OnSmokableShutdownEvent(Entity<SmokableComponent> entity, ref ComponentShutdown args)
         {
-            _active.Remove(uid);
+            _active.Remove(entity);
         }
 
-        private void OnSmokeableEquipEvent(EntityUid uid, SmokableComponent component, GotEquippedEvent args)
+        private void OnSmokeableEquipEvent(Entity<SmokableComponent> entity, ref GotEquippedEvent args)
         {
             if (args.Slot == "mask")
             {
-                _forensics.TransferDna(uid, args.Equipee, false);
+                _forensics.TransferDna(entity.Owner, args.Equipee, false);
             }
         }
 
@@ -123,7 +123,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     var transform = Transform(uid);
 
-                    if (transform.GridUid is {} gridUid)
+                    if (transform.GridUid is { } gridUid)
                     {
                         var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
                         _atmos.HotspotExpose(gridUid, position, smokable.ExposeTemperature, smokable.ExposeVolume, uid, true);

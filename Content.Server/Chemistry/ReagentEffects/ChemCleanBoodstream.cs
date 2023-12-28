@@ -1,6 +1,6 @@
+using Content.Server.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
-using Content.Server.Body.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReactionEffects

@@ -41,24 +41,24 @@ public sealed partial class PuddleSystem
         SubscribeLocalEvent<SpillableComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
     }
 
-    private void OnExamined(EntityUid uid, SpillableComponent component, ExaminedEvent args)
+    private void OnExamined(Entity<SpillableComponent> entity, ref ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("spill-examine-is-spillable"));
 
-        if (HasComp<MeleeWeaponComponent>(uid))
+        if (HasComp<MeleeWeaponComponent>(entity))
             args.PushMarkup(Loc.GetString("spill-examine-spillable-weapon"));
     }
 
-    private void OnOverflow(EntityUid uid, SpillableComponent component, ref SolutionContainerOverflowEvent args)
+    private void OnOverflow(Entity<SpillableComponent> entity, ref SolutionContainerOverflowEvent args)
     {
         if (args.Handled)
             return;
 
-        TrySpillAt(Transform(uid).Coordinates, args.Overflow, out _);
+        TrySpillAt(Transform(entity).Coordinates, args.Overflow, out _);
         args.Handled = true;
     }
 
-    private void SplashOnMeleeHit(EntityUid uid, SpillableComponent component, MeleeHitEvent args)
+    private void SplashOnMeleeHit(Entity<SpillableComponent> entity, ref MeleeHitEvent args)
     {
         if (args.Handled)
             return;
@@ -68,20 +68,20 @@ public sealed partial class PuddleSystem
         // If this also has solution transfer, then assume the transfer amount is how much we want to spill.
         // Otherwise let's say they want to spill a quarter of its max volume.
 
-        if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var soln, out var solution))
+        if (!_solutionContainerSystem.TryGetDrainableSolution(entity.Owner, out var soln, out var solution))
             return;
 
         var hitCount = args.HitEntities.Count;
 
         var totalSplit = FixedPoint2.Min(solution.MaxVolume * 0.25, solution.Volume);
-        if (TryComp<SolutionTransferComponent>(uid, out var transfer))
+        if (TryComp<SolutionTransferComponent>(entity, out var transfer))
         {
             totalSplit = FixedPoint2.Min(transfer.TransferAmount, solution.Volume);
         }
 
         // a little lame, but reagent quantity is not very balanced and we don't want people
         // spilling like 100u of reagent on someone at once!
-        totalSplit = FixedPoint2.Min(totalSplit, component.MaxMeleeSpillAmount);
+        totalSplit = FixedPoint2.Min(totalSplit, entity.Comp.MaxMeleeSpillAmount);
 
         if (totalSplit == 0)
             return;
@@ -97,27 +97,27 @@ public sealed partial class PuddleSystem
 
             var splitSolution = _solutionContainerSystem.SplitSolution(soln.Value, totalSplit / hitCount);
 
-            _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SolutionContainerSystem.ToPrettyString(splitSolution):solution} from {ToPrettyString(uid):entity} onto {ToPrettyString(hit):target}");
+            _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SolutionContainerSystem.ToPrettyString(splitSolution):solution} from {ToPrettyString(entity.Owner):entity} onto {ToPrettyString(hit):target}");
             _reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
 
             _popups.PopupEntity(
-                Loc.GetString("spill-melee-hit-attacker", ("amount", totalSplit / hitCount), ("spillable", uid),
+                Loc.GetString("spill-melee-hit-attacker", ("amount", totalSplit / hitCount), ("spillable", entity.Owner),
                     ("target", Identity.Entity(hit, EntityManager))),
                 hit, args.User);
 
             _popups.PopupEntity(
-                Loc.GetString("spill-melee-hit-others", ("attacker", args.User), ("spillable", uid),
+                Loc.GetString("spill-melee-hit-others", ("attacker", args.User), ("spillable", entity.Owner),
                     ("target", Identity.Entity(hit, EntityManager))),
                 hit, Filter.PvsExcept(args.User), true, PopupType.SmallCaution);
         }
     }
 
-    private void OnGotEquipped(EntityUid uid, SpillableComponent component, GotEquippedEvent args)
+    private void OnGotEquipped(Entity<SpillableComponent> entity, ref GotEquippedEvent args)
     {
-        if (!component.SpillWorn)
+        if (!entity.Comp.SpillWorn)
             return;
 
-        if (!TryComp(uid, out ClothingComponent? clothing))
+        if (!TryComp(entity, out ClothingComponent? clothing))
             return;
 
         // check if entity was actually used as clothing
@@ -126,33 +126,33 @@ public sealed partial class PuddleSystem
         if (!isCorrectSlot)
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var soln, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var soln, out var solution))
             return;
 
         if (solution.Volume == 0)
             return;
 
         // spill all solution on the player
-        var drainedSolution = _solutionContainerSystem.Drain(uid, soln.Value, solution.Volume);
-        TrySplashSpillAt(uid, Transform(args.Equipee).Coordinates, drainedSolution, out _);
+        var drainedSolution = _solutionContainerSystem.Drain(entity.Owner, soln.Value, solution.Volume);
+        TrySplashSpillAt(entity.Owner, Transform(args.Equipee).Coordinates, drainedSolution, out _);
     }
 
-    private void SpillOnLand(EntityUid uid, SpillableComponent component, ref LandEvent args)
+    private void SpillOnLand(Entity<SpillableComponent> entity, ref LandEvent args)
     {
-        if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var soln, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var soln, out var solution))
             return;
 
-        if (_openable.IsClosed(uid))
+        if (_openable.IsClosed(entity.Owner))
             return;
 
         if (args.User != null)
         {
             _adminLogger.Add(LogType.Landed,
-                $"{ToPrettyString(uid):entity} spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
+                $"{ToPrettyString(entity.Owner):entity} spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
 
-        var drainedSolution = _solutionContainerSystem.Drain(uid, soln.Value, solution.Volume);
-        TrySplashSpillAt(uid, Transform(uid).Coordinates, drainedSolution, out _);
+        var drainedSolution = _solutionContainerSystem.Drain(entity.Owner, soln.Value, solution.Volume);
+        TrySplashSpillAt(entity.Owner, Transform(entity).Coordinates, drainedSolution, out _);
     }
 
     /// <summary>
@@ -171,12 +171,12 @@ public sealed partial class PuddleSystem
         args.Cancel("pacified-cannot-throw-spill");
     }
 
-    private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetVerbsEvent<Verb> args)
+    private void AddSpillVerb(Entity<SpillableComponent> entity, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(args.Target, component.SolutionName, out var soln, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(args.Target, entity.Comp.SolutionName, out var soln, out var solution))
             return;
 
         if (_openable.IsClosed(args.Target))
@@ -195,19 +195,21 @@ public sealed partial class PuddleSystem
         };
 
         // TODO VERB ICONS spill icon? pouring out a glass/beaker?
-        if (component.SpillDelay == null)
+        if (entity.Comp.SpillDelay == null)
         {
+            var target = args.Target;
             verb.Act = () =>
             {
                 var puddleSolution = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume);
-                TrySpillAt(Transform(args.Target).Coordinates, puddleSolution, out _);
+                TrySpillAt(Transform(target).Coordinates, puddleSolution, out _);
             };
         }
         else
         {
+            var user = args.User;
             verb.Act = () =>
             {
-                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.SpillDelay ?? 0, new SpillDoAfterEvent(), uid, target: uid)
+                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, entity.Comp.SpillDelay ?? 0, new SpillDoAfterEvent(), entity.Owner, target: entity.Owner)
                 {
                     BreakOnTargetMove = true,
                     BreakOnUserMove = true,
@@ -221,17 +223,17 @@ public sealed partial class PuddleSystem
         args.Verbs.Add(verb);
     }
 
-    private void OnDoAfter(EntityUid uid, SpillableComponent component, DoAfterEvent args)
+    private void OnDoAfter(Entity<SpillableComponent> entity, ref SpillDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null)
             return;
 
         //solution gone by other means before doafter completes
-        if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var soln, out var solution) || solution.Volume == 0)
+        if (!_solutionContainerSystem.TryGetDrainableSolution(entity.Owner, out var soln, out var solution) || solution.Volume == 0)
             return;
 
         var puddleSolution = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume);
-        TrySpillAt(Transform(uid).Coordinates, puddleSolution, out _);
+        TrySpillAt(Transform(entity).Coordinates, puddleSolution, out _);
         args.Handled = true;
     }
 }

@@ -44,9 +44,9 @@ public sealed class LungSystem : EntitySystem
         }
     }
 
-    private void OnComponentInit(EntityUid uid, LungComponent component, ComponentInit args)
+    private void OnComponentInit(Entity<LungComponent> entity, ref ComponentInit args)
     {
-        var solution = _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
+        var solution = _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName);
         solution.MaxVolume = 100.0f;
         solution.CanReact = false; // No dexalin lungs
     }

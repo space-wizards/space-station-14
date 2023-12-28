@@ -72,24 +72,24 @@ public sealed class FoodSystem : EntitySystem
     /// <summary>
     /// Eat item
     /// </summary>
-    private void OnUseFoodInHand(EntityUid uid, FoodComponent foodComponent, UseInHandEvent ev)
+    private void OnUseFoodInHand(Entity<FoodComponent> entity, ref UseInHandEvent ev)
     {
         if (ev.Handled)
             return;
 
-        var result = TryFeed(ev.User, ev.User, uid, foodComponent);
+        var result = TryFeed(ev.User, ev.User, entity, entity.Comp);
         ev.Handled = result.Handled;
     }
 
     /// <summary>
     /// Feed someone else
     /// </summary>
-    private void OnFeedFood(EntityUid uid, FoodComponent foodComponent, AfterInteractEvent args)
+    private void OnFeedFood(Entity<FoodComponent> entity, ref AfterInteractEvent args)
     {
         if (args.Handled || args.Target == null || !args.CanReach)
             return;
 
-        var result = TryFeed(args.User, args.Target.Value, uid, foodComponent);
+        var result = TryFeed(args.User, args.Target.Value, entity, entity.Comp);
         args.Handled = result.Handled;
     }
 
@@ -193,9 +193,9 @@ public sealed class FoodSystem : EntitySystem
         return (true, true);
     }
 
-    private void OnDoAfter(EntityUid uid, FoodComponent component, ConsumeDoAfterEvent args)
+    private void OnDoAfter(Entity<FoodComponent> entity, ref ConsumeDoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled || component.Deleted || args.Target == null)
+        if (args.Cancelled || args.Handled || entity.Comp.Deleted || args.Target == null)
             return;
 
         if (!TryComp<BodyComponent>(args.Target.Value, out var body))
@@ -207,7 +207,7 @@ public sealed class FoodSystem : EntitySystem
         if (args.Used is null || !_solutionContainer.TryGetSolution(args.Used.Value, args.Solution, out var soln, out var solution))
             return;
 
-        if (!TryGetRequiredUtensils(args.User, component, out var utensils))
+        if (!TryGetRequiredUtensils(args.User, entity.Comp, out var utensils))
             return;
 
         // TODO this should really be checked every tick.
@@ -221,7 +221,7 @@ public sealed class FoodSystem : EntitySystem
         var forceFeed = args.User != args.Target;
 
         args.Handled = true;
-        var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, solution.Volume) : solution.Volume;
+        var transferAmount = entity.Comp.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) entity.Comp.TransferAmount, solution.Volume) : solution.Volume;
 
         var split = _solutionContainer.SplitSolution(soln.Value, transferAmount);
 
@@ -262,23 +262,22 @@ public sealed class FoodSystem : EntitySystem
         {
             var targetName = Identity.Entity(args.Target.Value, EntityManager);
             var userName = Identity.Entity(args.User, EntityManager);
-            _popup.PopupEntity(Loc.GetString("food-system-force-feed-success", ("user", userName), ("flavors", flavors)),
-                uid, uid);
+            _popup.PopupEntity(Loc.GetString("food-system-force-feed-success", ("user", userName), ("flavors", flavors)), entity.Owner, entity.Owner);
 
             _popup.PopupEntity(Loc.GetString("food-system-force-feed-success-user", ("target", targetName)), args.User, args.User);
 
             // log successful force feed
-            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(uid):food}");
+            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity.Owner):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(entity.Owner):food}");
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString(component.EatMessage, ("food", uid), ("flavors", flavors)), args.User, args.User);
+            _popup.PopupEntity(Loc.GetString(entity.Comp.EatMessage, ("food", entity.Owner), ("flavors", flavors)), args.User, args.User);
 
             // log successful voluntary eating
-            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(uid):food}");
+            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(entity.Owner):food}");
         }
 
-        _audio.PlayPvs(component.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-1f));
+        _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-1f));
 
         // Try to break all used utensils
         foreach (var utensil in utensils)
@@ -288,24 +287,24 @@ public sealed class FoodSystem : EntitySystem
 
         args.Repeat = !forceFeed;
 
-        if (TryComp<StackComponent>(uid, out var stack))
+        if (TryComp<StackComponent>(entity, out var stack))
         {
             //Not deleting whole stack piece will make troubles with grinding object
             if (stack.Count > 1)
             {
-                _stack.SetCount(uid, stack.Count - 1);
+                _stack.SetCount(entity.Owner, stack.Count - 1);
                 _solutionContainer.TryAddSolution(soln.Value, split);
                 return;
             }
         }
-        else if (GetUsesRemaining(uid, component) > 0)
+        else if (GetUsesRemaining(entity.Owner, entity.Comp) > 0)
         {
             return;
         }
 
         // don't try to repeat if its being deleted
         args.Repeat = false;
-        DeleteAndSpawnTrash(component, uid, args.User);
+        DeleteAndSpawnTrash(entity.Comp, entity.Owner, args.User);
     }
 
     public void DeleteAndSpawnTrash(FoodComponent component, EntityUid food, EntityUid user)
@@ -341,9 +340,9 @@ public sealed class FoodSystem : EntitySystem
         QueueDel(food);
     }
 
-    private void AddEatVerb(EntityUid uid, FoodComponent component, GetVerbsEvent<AlternativeVerb> ev)
+    private void AddEatVerb(Entity<FoodComponent> entity, ref GetVerbsEvent<AlternativeVerb> ev)
     {
-        if (uid == ev.User ||
+        if (entity.Owner == ev.User ||
             !ev.CanInteract ||
             !ev.CanAccess ||
             !TryComp<BodyComponent>(ev.User, out var body) ||
@@ -351,20 +350,21 @@ public sealed class FoodSystem : EntitySystem
             return;
 
         // have to kill mouse before eating it
-        if (_mobState.IsAlive(uid) && component.RequireDead)
+        if (_mobState.IsAlive(entity) && entity.Comp.RequireDead)
             return;
 
         // only give moths eat verb for clothes since it would just fail otherwise
-        if (!IsDigestibleBy(uid, component, stomachs))
+        if (!IsDigestibleBy(entity, entity.Comp, stomachs))
             return;
 
+        var user = ev.User;
         AlternativeVerb verb = new()
         {
             Act = () =>
             {
-                TryFeed(ev.User, ev.User, uid, component);
+                TryFeed(user, user, entity, entity.Comp);
             },
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
             Text = Loc.GetString("food-system-verb-eat"),
             Priority = -1
         };
@@ -412,7 +412,7 @@ public sealed class FoodSystem : EntitySystem
         }
 
         if (component.RequiresSpecialDigestion)
-                return false;
+            return false;
 
         return digestible;
     }
@@ -458,14 +458,14 @@ public sealed class FoodSystem : EntitySystem
     /// <summary>
     ///     Block ingestion attempts based on the equipped mask or head-wear
     /// </summary>
-    private void OnInventoryIngestAttempt(EntityUid uid, InventoryComponent component, IngestionAttemptEvent args)
+    private void OnInventoryIngestAttempt(Entity<InventoryComponent> entity, ref IngestionAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
         IngestionBlockerComponent? blocker;
 
-        if (_inventory.TryGetSlotEntity(uid, "mask", out var maskUid) &&
+        if (_inventory.TryGetSlotEntity(entity.Owner, "mask", out var maskUid) &&
             TryComp(maskUid, out blocker) &&
             blocker.Enabled)
         {
@@ -474,7 +474,7 @@ public sealed class FoodSystem : EntitySystem
             return;
         }
 
-        if (_inventory.TryGetSlotEntity(uid, "head", out var headUid) &&
+        if (_inventory.TryGetSlotEntity(entity.Owner, "head", out var headUid) &&
             TryComp(headUid, out blocker) &&
             blocker.Enabled)
         {

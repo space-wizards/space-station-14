@@ -1,4 +1,3 @@
-
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry;
@@ -41,11 +40,11 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<VaporComponent, StartCollideEvent>(HandleCollide);
         }
 
-        private void HandleCollide(EntityUid uid, VaporComponent component, ref StartCollideEvent args)
+        private void HandleCollide(Entity<VaporComponent> entity, ref StartCollideEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? contents)) return;
+            if (!EntityManager.TryGetComponent(entity.Owner, out SolutionContainerManagerComponent? contents)) return;
 
-            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, contents)))
+            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((entity.Owner, contents)))
             {
                 var solution = soln.Comp.Solution;
                 _reactive.DoEntityReaction(args.OtherEntity, solution, ReactionMethod.Touch);
@@ -54,7 +53,7 @@ namespace Content.Server.Chemistry.EntitySystems
             // Check for collision with a impassable object (e.g. wall) and stop
             if ((args.OtherFixture.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && args.OtherFixture.Hard)
             {
-                EntityManager.QueueDeleteEntity(uid);
+                EntityManager.QueueDeleteEntity(entity);
             }
         }
 

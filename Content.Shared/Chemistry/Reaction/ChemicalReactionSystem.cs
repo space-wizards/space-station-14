@@ -1,14 +1,13 @@
-using System.Collections.Frozen;
-using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Collections.Frozen;
+using System.Linq;
 
 namespace Content.Shared.Chemistry.Reaction
 {
@@ -49,7 +48,7 @@ namespace Content.Shared.Chemistry.Reaction
         {
             // Construct single-reaction dictionary.
             var dict = new Dictionary<string, List<ReactionPrototype>>();
-            foreach(var reaction in _prototypeManager.EnumeratePrototypes<ReactionPrototype>())
+            foreach (var reaction in _prototypeManager.EnumeratePrototypes<ReactionPrototype>())
             {
                 // For this dictionary we only need to cache based on the first reagent.
                 var reagent = reaction.Reactants.Keys.First();
@@ -59,7 +58,7 @@ namespace Content.Shared.Chemistry.Reaction
             _reactionsSingle = dict.ToFrozenDictionary();
 
             dict.Clear();
-            foreach(var reaction in _prototypeManager.EnumeratePrototypes<ReactionPrototype>())
+            foreach (var reaction in _prototypeManager.EnumeratePrototypes<ReactionPrototype>())
             {
                 foreach (var reagent in reaction.Reactants.Keys)
                 {
@@ -103,7 +102,7 @@ namespace Content.Shared.Chemistry.Reaction
                 return false;
             }
 
-            if((mixerComponent == null && reaction.MixingCategories != null) ||
+            if ((mixerComponent == null && reaction.MixingCategories != null) ||
                 mixerComponent != null && reaction.MixingCategories != null && reaction.MixingCategories.Except(mixerComponent.ReactionTypes).Any())
             {
                 lowestUnitReactions = FixedPoint2.Zero;

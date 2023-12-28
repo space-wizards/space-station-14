@@ -21,12 +21,12 @@ public abstract class SharedPuddleSystem : EntitySystem
         SubscribeLocalEvent<RefillableSolutionComponent, CanDropDraggedEvent>(OnRefillableCanDropDragged);
     }
 
-    private void OnRefillableCanDrag(EntityUid uid, RefillableSolutionComponent component, ref CanDragEvent args)
+    private void OnRefillableCanDrag(Entity<RefillableSolutionComponent> entity, ref CanDragEvent args)
     {
         args.Handled = true;
     }
 
-    private void OnDumpCanDropTarget(EntityUid uid, DumpableSolutionComponent component, ref CanDropTargetEvent args)
+    private void OnDumpCanDropTarget(Entity<DumpableSolutionComponent> entity, ref CanDropTargetEvent args)
     {
         if (HasComp<DrainableSolutionComponent>(args.Dragged))
         {
@@ -35,7 +35,7 @@ public abstract class SharedPuddleSystem : EntitySystem
         }
     }
 
-    private void OnDrainCanDropTarget(EntityUid uid, DrainableSolutionComponent component, ref CanDropTargetEvent args)
+    private void OnDrainCanDropTarget(Entity<DrainableSolutionComponent> entity, ref CanDropTargetEvent args)
     {
         if (HasComp<RefillableSolutionComponent>(args.Dragged))
         {
@@ -44,7 +44,7 @@ public abstract class SharedPuddleSystem : EntitySystem
         }
     }
 
-    private void OnRefillableCanDropDragged(EntityUid uid, RefillableSolutionComponent component, ref CanDropDraggedEvent args)
+    private void OnRefillableCanDropDragged(Entity<RefillableSolutionComponent> entity, ref CanDropDraggedEvent args)
     {
         if (!HasComp<DrainableSolutionComponent>(args.Target) && !HasComp<DumpableSolutionComponent>(args.Target))
             return;

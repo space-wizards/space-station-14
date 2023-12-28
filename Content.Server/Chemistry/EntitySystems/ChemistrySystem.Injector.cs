@@ -6,17 +6,17 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
+using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Robust.Shared.GameStates;
-using Content.Shared.DoAfter;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Verbs;
 using Content.Shared.Stacks;
+using Content.Shared.Verbs;
+using Robust.Shared.GameStates;
 using Robust.Shared.Player;
-using Content.Shared.Forensics;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -38,7 +38,7 @@ public sealed partial class ChemistrySystem
         SubscribeLocalEvent<InjectorComponent, ComponentGetState>(OnInjectorGetState);
     }
 
-    private void AddSetTransferVerbs(EntityUid uid, InjectorComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void AddSetTransferVerbs(Entity<InjectorComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
@@ -46,8 +46,11 @@ public sealed partial class ChemistrySystem
         if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             return;
 
+        var (uid, component) = entity;
+
         // Add specific transfer verbs according to the container's size
         var priority = 0;
+        var user = args.User;
         foreach (var amount in TransferAmounts)
         {
             if (amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
@@ -59,7 +62,7 @@ public sealed partial class ChemistrySystem
             verb.Act = () =>
             {
                 component.TransferAmount = FixedPoint2.New(amount);
-                _popup.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), args.User, args.User);
+                _popup.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), user, user);
             };
 
             // we want to sort by size, not alphabetically by the verb text.
@@ -116,89 +119,89 @@ public sealed partial class ChemistrySystem
         }
     }
 
-    private void OnSolutionChange(EntityUid uid, InjectorComponent component, SolutionContainerChangedEvent args)
+    private void OnSolutionChange(Entity<InjectorComponent> entity, ref SolutionContainerChangedEvent args)
     {
-        Dirty(uid, component);
+        Dirty(entity);
     }
 
-    private void OnInjectorGetState(EntityUid uid, InjectorComponent component, ref ComponentGetState args)
+    private void OnInjectorGetState(Entity<InjectorComponent> entity, ref ComponentGetState args)
     {
-        _solutionContainers.TryGetSolution(uid, InjectorComponent.SolutionName, out _, out var solution);
+        _solutionContainers.TryGetSolution(entity.Owner, InjectorComponent.SolutionName, out _, out var solution);
 
         var currentVolume = solution?.Volume ?? FixedPoint2.Zero;
         var maxVolume = solution?.MaxVolume ?? FixedPoint2.Zero;
 
-        args.State = new SharedInjectorComponent.InjectorComponentState(currentVolume, maxVolume, component.ToggleState);
+        args.State = new SharedInjectorComponent.InjectorComponentState(currentVolume, maxVolume, entity.Comp.ToggleState);
     }
 
-    private void OnInjectDoAfter(EntityUid uid, InjectorComponent component, DoAfterEvent args)
+    private void OnInjectDoAfter(Entity<InjectorComponent> entity, ref InjectorDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
-        UseInjector((uid, component), args.Args.Target.Value, args.Args.User);
+        UseInjector(entity, args.Args.Target.Value, args.Args.User);
         args.Handled = true;
     }
 
-    private void OnInjectorAfterInteract(EntityUid uid, InjectorComponent component, AfterInteractEvent args)
+    private void OnInjectorAfterInteract(Entity<InjectorComponent> entity, ref AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach)
             return;
 
         //Make sure we have the attacking entity
-        if (args.Target is not { Valid: true } target || !HasComp<SolutionContainerManagerComponent>(uid))
+        if (args.Target is not { Valid: true } target || !HasComp<SolutionContainerManagerComponent>(entity))
             return;
 
         // Is the target a mob? If yes, use a do-after to give them time to respond.
         if (HasComp<MobStateComponent>(target) || HasComp<BloodstreamComponent>(target))
         {
             // Are use using an injector capible of targeting a mob?
-            if (component.IgnoreMobs)
+            if (entity.Comp.IgnoreMobs)
                 return;
 
-            InjectDoAfter((uid, component), target, args.User);
+            InjectDoAfter(entity, target, args.User);
             args.Handled = true;
             return;
         }
 
-        UseInjector((uid, component), target, args.User);
+        UseInjector(entity, target, args.User);
         args.Handled = true;
     }
 
-    private void OnInjectorStartup(EntityUid uid, InjectorComponent component, ComponentStartup args)
+    private void OnInjectorStartup(Entity<InjectorComponent> entity, ref ComponentStartup args)
     {
         // ???? why ?????
-        Dirty(uid, component);
+        Dirty(entity);
     }
 
-    private void OnInjectorUse(EntityUid uid, InjectorComponent component, UseInHandEvent args)
+    private void OnInjectorUse(Entity<InjectorComponent> entity, ref UseInHandEvent args)
     {
         if (args.Handled)
             return;
 
-        Toggle(component, args.User, uid);
+        Toggle(entity, args.User);
         args.Handled = true;
     }
 
     /// <summary>
     /// Toggle between draw/inject state if applicable
     /// </summary>
-    private void Toggle(InjectorComponent component, EntityUid user, EntityUid injector)
+    private void Toggle(Entity<InjectorComponent> injector, EntityUid user)
     {
-        if (component.InjectOnly)
+        if (injector.Comp.InjectOnly)
         {
             return;
         }
 
         string msg;
-        switch (component.ToggleState)
+        switch (injector.Comp.ToggleState)
         {
             case SharedInjectorComponent.InjectorToggleMode.Inject:
-                component.ToggleState = SharedInjectorComponent.InjectorToggleMode.Draw;
+                injector.Comp.ToggleState = SharedInjectorComponent.InjectorToggleMode.Draw;
                 msg = "injector-component-drawing-text";
                 break;
             case SharedInjectorComponent.InjectorToggleMode.Draw:
-                component.ToggleState = SharedInjectorComponent.InjectorToggleMode.Inject;
+                injector.Comp.ToggleState = SharedInjectorComponent.InjectorToggleMode.Inject;
                 msg = "injector-component-injecting-text";
                 break;
             default:
@@ -428,5 +431,4 @@ public sealed partial class ChemistrySystem
         Dirty(injector);
         AfterDraw(injector, target);
     }
-
 }

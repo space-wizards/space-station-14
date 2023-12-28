@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -25,7 +24,7 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <summary>
         ///     Default transfer amounts for the set-transfer verb.
         /// </summary>
-        public static readonly List<int> DefaultTransferAmounts = new() { 1, 5, 10, 25, 50, 100, 250, 500, 1000};
+        public static readonly List<int> DefaultTransferAmounts = new() { 1, 5, 10, 25, 50, 100, 250, 500, 1000 };
 
         public override void Initialize()
         {
@@ -36,17 +35,19 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<SolutionTransferComponent, TransferAmountSetValueMessage>(OnTransferAmountSetValueMessage);
         }
 
-        private void OnTransferAmountSetValueMessage(EntityUid uid, SolutionTransferComponent solutionTransfer, TransferAmountSetValueMessage message)
+        private void OnTransferAmountSetValueMessage(Entity<SolutionTransferComponent> entity, ref TransferAmountSetValueMessage message)
         {
-            var newTransferAmount = FixedPoint2.Clamp(message.Value, solutionTransfer.MinimumTransferAmount, solutionTransfer.MaximumTransferAmount);
-            solutionTransfer.TransferAmount = newTransferAmount;
+            var newTransferAmount = FixedPoint2.Clamp(message.Value, entity.Comp.MinimumTransferAmount, entity.Comp.MaximumTransferAmount);
+            entity.Comp.TransferAmount = newTransferAmount;
 
-            if (message.Session.AttachedEntity is {Valid: true} user)
-                _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), uid, user);
+            if (message.Session.AttachedEntity is { Valid: true } user)
+                _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), entity.Owner, user);
         }
 
-        private void AddSetTransferVerbs(EntityUid uid, SolutionTransferComponent component, GetVerbsEvent<AlternativeVerb> args)
+        private void AddSetTransferVerbs(Entity<SolutionTransferComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
         {
+            var (uid, component) = entity;
+
             if (!args.CanAccess || !args.CanInteract || !component.CanChangeTransferAmount || args.Hands == null)
                 return;
 
@@ -57,15 +58,16 @@ namespace Content.Server.Chemistry.EntitySystems
             AlternativeVerb custom = new();
             custom.Text = Loc.GetString("comp-solution-transfer-verb-custom-amount");
             custom.Category = VerbCategory.SetTransferAmount;
-            custom.Act = () => _userInterfaceSystem.TryOpen(args.Target, TransferAmountUiKey.Key, actor.PlayerSession);
+            custom.Act = () => _userInterfaceSystem.TryOpen(uid, TransferAmountUiKey.Key, actor.PlayerSession);
             custom.Priority = 1;
             args.Verbs.Add(custom);
 
             // Add specific transfer verbs according to the container's size
             var priority = 0;
+            var user = args.User;
             foreach (var amount in DefaultTransferAmounts)
             {
-                if ( amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
+                if (amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
                     continue;
 
                 AlternativeVerb verb = new();
@@ -74,7 +76,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 verb.Act = () =>
                 {
                     component.TransferAmount = FixedPoint2.New(amount);
-                    _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), uid, args.User);
+                    _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), uid, user);
                 };
 
                 // we want to sort by size, not alphabetically by the verb text.
@@ -85,18 +87,19 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
-        private void OnAfterInteract(EntityUid uid, SolutionTransferComponent component, AfterInteractEvent args)
+        private void OnAfterInteract(Entity<SolutionTransferComponent> entity, ref AfterInteractEvent args)
         {
             if (!args.CanReach || args.Target == null)
                 return;
 
             var target = args.Target!.Value;
+            var (uid, component) = entity;
 
             //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
-            if (component.CanReceive  && !EntityManager.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
-                                      && _solutionContainerSystem.TryGetDrainableSolution(target, out var targetSoln, out _) // target must be drainable
-                                      && EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refillComp)
-                                      && _solutionContainerSystem.TryGetRefillableSolution((uid, refillComp, null), out var ownerSoln, out var ownerRefill))
+            if (component.CanReceive && !EntityManager.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
+                                     && _solutionContainerSystem.TryGetDrainableSolution(target, out var targetSoln, out _) // target must be drainable
+                                     && EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refillComp)
+                                     && _solutionContainerSystem.TryGetRefillableSolution((uid, refillComp, null), out var ownerSoln, out var ownerRefill))
 
             {
 

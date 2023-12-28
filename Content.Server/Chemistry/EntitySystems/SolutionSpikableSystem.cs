@@ -28,9 +28,9 @@ public sealed class SolutionSpikableSystem : EntitySystem
         SubscribeLocalEvent<RefillableSolutionComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
-    private void OnInteractUsing(EntityUid uid, RefillableSolutionComponent target, InteractUsingEvent args)
+    private void OnInteractUsing(Entity<RefillableSolutionComponent> entity, ref InteractUsingEvent args)
     {
-        TrySpike(args.Used, args.Target, args.User, target);
+        TrySpike(args.Used, args.Target, args.User, entity.Comp);
     }
 
     /// <summary>

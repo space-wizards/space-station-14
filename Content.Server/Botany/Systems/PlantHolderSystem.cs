@@ -70,10 +70,12 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
-    private void OnExamine(EntityUid uid, PlantHolderComponent component, ExaminedEvent args)
+    private void OnExamine(Entity<PlantHolderComponent> entity, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
+
+        var (_, component) = entity;
 
         if (component.Seed == null)
         {
@@ -131,8 +133,10 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
-    private void OnInteractUsing(EntityUid uid, PlantHolderComponent component, InteractUsingEvent args)
+    private void OnInteractUsing(Entity<PlantHolderComponent> entity, ref InteractUsingEvent args)
     {
+        var (uid, component) = entity;
+
         if (TryComp(args.Used, out SeedComponent? seeds))
         {
             if (component.Seed == null)
@@ -313,9 +317,9 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
-    private void OnInteractHand(EntityUid uid, PlantHolderComponent component, InteractHandEvent args)
+    private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
     {
-        DoHarvest(uid, args.User, component);
+        DoHarvest(entity, args.User, entity.Comp);
     }
 
     public void WeedInvasion()

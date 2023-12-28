@@ -43,7 +43,7 @@ public sealed class DrainSystem : SharedDrainSystem
         SubscribeLocalEvent<DrainComponent, DrainDoAfterEvent>(OnDoAfter);
     }
 
-    private void AddEmptyVerb(EntityUid uid, DrainComponent component, GetVerbsEvent<Verb> args)
+    private void AddEmptyVerb(Entity<DrainComponent> entity, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Using == null)
             return;
@@ -52,12 +52,14 @@ public sealed class DrainSystem : SharedDrainSystem
             !TryComp(args.Target, out DrainComponent? drain))
             return;
 
+        var used = args.Using.Value;
+        var target = args.Target;
         Verb verb = new()
         {
-            Text = Loc.GetString("drain-component-empty-verb-inhand", ("object", Name(args.Using.Value))),
+            Text = Loc.GetString("drain-component-empty-verb-inhand", ("object", Name(used))),
             Act = () =>
             {
-                Empty(args.Using.Value, spillable, args.Target, drain);
+                Empty(used, spillable, target, drain);
             },
             Impact = LogImpact.Low,
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png"))
@@ -202,11 +204,11 @@ public sealed class DrainSystem : SharedDrainSystem
         }
     }
 
-    private void OnExamined(EntityUid uid, DrainComponent component, ExaminedEvent args)
+    private void OnExamined(Entity<DrainComponent> entity, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange ||
-            !HasComp<SolutionContainerManagerComponent>(uid) ||
-            !_solutionContainerSystem.ResolveSolution(uid, DrainComponent.SolutionName, ref component.Solution, out var drainSolution))
+            !HasComp<SolutionContainerManagerComponent>(entity) ||
+            !_solutionContainerSystem.ResolveSolution(entity.Owner, DrainComponent.SolutionName, ref entity.Comp.Solution, out var drainSolution))
         {
             return;
         }
@@ -217,11 +219,11 @@ public sealed class DrainSystem : SharedDrainSystem
         args.Message.AddMarkup($"\n\n{text}");
     }
 
-    private void OnInteract(EntityUid uid, DrainComponent component, InteractEvent args)
+    private void OnInteract(Entity<DrainComponent> entity, ref AfterInteractUsingEvent args)
     {
         if (!args.CanReach || args.Target == null ||
             !_tagSystem.HasTag(args.Used, DrainComponent.PlungerTag) ||
-            !_solutionContainerSystem.ResolveSolution(args.Target.Value, DrainComponent.SolutionName, ref component.Solution, out var drainSolution))
+            !_solutionContainerSystem.ResolveSolution(args.Target.Value, DrainComponent.SolutionName, ref entity.Comp.Solution, out var drainSolution))
         {
             return;
         }
@@ -232,10 +234,10 @@ public sealed class DrainSystem : SharedDrainSystem
             return;
         }
 
-        _audioSystem.PlayPvs(component.PlungerSound, uid);
+        _audioSystem.PlayPvs(entity.Comp.PlungerSound, entity);
 
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.UnclogDuration, new DrainDoAfterEvent(),uid, args.Target, args.Used)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, entity.Comp.UnclogDuration, new DrainDoAfterEvent(), entity, args.Target, args.Used)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -246,26 +248,26 @@ public sealed class DrainSystem : SharedDrainSystem
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
     }
 
-    private void OnDoAfter(EntityUid uid, DrainComponent component, DoAfterEvent args)
+    private void OnDoAfter(Entity<DrainComponent> entity, ref DrainDoAfterEvent args)
     {
         if (args.Target == null)
             return;
 
-        if (!_random.Prob(component.UnclogProbability))
+        if (!_random.Prob(entity.Comp.UnclogProbability))
         {
             _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-fail", ("object", args.Target.Value)), args.Target.Value);
             return;
         }
 
 
-        if (!_solutionContainerSystem.ResolveSolution(args.Target.Value, DrainComponent.SolutionName, ref component.Solution))
+        if (!_solutionContainerSystem.ResolveSolution(args.Target.Value, DrainComponent.SolutionName, ref entity.Comp.Solution))
         {
             return;
         }
 
 
-        _solutionContainerSystem.RemoveAllSolution(component.Solution.Value);
-        _audioSystem.PlayPvs(component.UnclogSound, args.Target.Value);
+        _solutionContainerSystem.RemoveAllSolution(entity.Comp.Solution.Value);
+        _audioSystem.PlayPvs(entity.Comp.UnclogSound, args.Target.Value);
         _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-success", ("object", args.Target.Value)), args.Target.Value);
     }
 }

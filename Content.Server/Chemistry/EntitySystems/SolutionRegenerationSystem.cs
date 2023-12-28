@@ -53,8 +53,8 @@ public sealed class SolutionRegenerationSystem : EntitySystem
         }
     }
 
-    private void OnUnpaused(EntityUid uid, SolutionRegenerationComponent comp, ref EntityUnpausedEvent args)
+    private void OnUnpaused(Entity<SolutionRegenerationComponent> entity, ref EntityUnpausedEvent args)
     {
-        comp.NextRegenTime += args.PausedTime;
+        entity.Comp.NextRegenTime += args.PausedTime;
     }
 }

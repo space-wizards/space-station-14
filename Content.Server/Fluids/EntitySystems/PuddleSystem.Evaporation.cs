@@ -1,6 +1,6 @@
 using Content.Server.Fluids.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 
@@ -18,9 +18,9 @@ public sealed partial class PuddleSystem
 
     public static string[] EvaporationReagents = new[] { Water, SoapyWater };
 
-    private void OnEvaporationMapInit(EntityUid uid, EvaporationComponent component, MapInitEvent args)
+    private void OnEvaporationMapInit(Entity<EvaporationComponent> entity, ref MapInitEvent args)
     {
-        component.NextTick = _timing.CurTime + EvaporationCooldown;
+        entity.Comp.NextTick = _timing.CurTime + EvaporationCooldown;
     }
 
     private void UpdateEvaporation(EntityUid uid, Solution solution)

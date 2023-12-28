@@ -1,8 +1,8 @@
-using System.Linq;
 using Content.Server.Anomaly.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using System.Linq;
 
 namespace Content.Server.Anomaly.Effects;
 /// <summary>
@@ -27,23 +27,24 @@ public sealed class InjectionAnomalySystem : EntitySystem
         _injectableQuery = GetEntityQuery<InjectableSolutionComponent>();
     }
 
-    private void OnPulse(EntityUid uid, InjectionAnomalyComponent component, ref AnomalyPulseEvent args)
+    private void OnPulse(Entity<InjectionAnomalyComponent> entity, ref AnomalyPulseEvent args)
     {
-        PulseScalableEffect(uid, component, component.InjectRadius, component.MaxSolutionInjection * args.Severity);
+        PulseScalableEffect(entity, entity.Comp.InjectRadius, entity.Comp.MaxSolutionInjection * args.Severity);
     }
 
-    private void OnSupercritical(EntityUid uid, InjectionAnomalyComponent component, ref AnomalySupercriticalEvent args)
+    private void OnSupercritical(Entity<InjectionAnomalyComponent> entity, ref AnomalySupercriticalEvent args)
     {
-        PulseScalableEffect(uid, component, component.SuperCriticalInjectRadius, component.SuperCriticalSolutionInjection);
+        PulseScalableEffect(entity, entity.Comp.SuperCriticalInjectRadius, entity.Comp.SuperCriticalSolutionInjection);
     }
 
-    private void PulseScalableEffect(EntityUid uid, InjectionAnomalyComponent component, float injectRadius, float maxInject)
+    private void PulseScalableEffect(Entity<InjectionAnomalyComponent> entity, float injectRadius, float maxInject)
     {
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out _, out var sol))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var sol))
             return;
+
         //We get all the entity in the radius into which the reagent will be injected.
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var xform = xformQuery.GetComponent(uid);
+        var xform = xformQuery.GetComponent(entity);
         var allEnts = _lookup.GetEntitiesInRange<InjectableSolutionComponent>(xform.MapPosition, injectRadius)
             .Select(x => x.Owner).ToList();
 
@@ -62,5 +63,4 @@ public sealed class InjectionAnomalySystem : EntitySystem
             }
         }
     }
-
 }

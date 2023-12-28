@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
@@ -11,8 +9,10 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -677,37 +677,37 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     #region Event Handlers
 
-    private void OnComponentInit(EntityUid uid, SolutionComponent comp, ComponentInit args)
+    private void OnComponentInit(Entity<SolutionComponent> entity, ref ComponentInit args)
     {
-        comp.Solution.ValidateSolution();
+        entity.Comp.Solution.ValidateSolution();
     }
 
-    private void OnComponentStartup(EntityUid uid, SolutionComponent comp, ComponentStartup args)
+    private void OnComponentStartup(Entity<SolutionComponent> entity, ref ComponentStartup args)
     {
-        UpdateChemicals((uid, comp));
+        UpdateChemicals(entity);
     }
 
-    private void OnComponentShutdown(EntityUid uid, SolutionComponent comp, ComponentShutdown args)
+    private void OnComponentShutdown(Entity<SolutionComponent> entity, ref ComponentShutdown args)
     {
-        RemoveAllSolution((uid, comp));
+        RemoveAllSolution(entity);
     }
 
-    private void OnComponentInit(EntityUid uid, SolutionContainerManagerComponent comp, ComponentInit args)
+    private void OnComponentInit(Entity<SolutionContainerManagerComponent> entity, ref ComponentInit args)
     {
-        if (comp.Containers is not { Count: > 0 } containers)
+        if (entity.Comp.Containers is not { Count: > 0 } containers)
             return;
 
-        var containerManager = EnsureComp<ContainerManagerComponent>(uid);
+        var containerManager = EnsureComp<ContainerManagerComponent>(entity);
         foreach (var name in containers)
         {
             // The actual solution entity should be directly held within the corresponding slot.
-            ContainerSystem.EnsureContainer<ContainerSlot>(uid, $"solution@{name}", containerManager);
+            ContainerSystem.EnsureContainer<ContainerSlot>(entity.Owner, $"solution@{name}", containerManager);
         }
     }
 
-    private void OnExamineSolution(EntityUid uid, ExaminableSolutionComponent examinableComponent, ExaminedEvent args)
+    private void OnExamineSolution(Entity<ExaminableSolutionComponent> entity, ref ExaminedEvent args)
     {
-        if (!TryGetSolution(uid, examinableComponent.Solution, out _, out var solution))
+        if (!TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
         {
             return;
         }
@@ -787,7 +787,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals", ("recognizedString", msg.ToString())));
     }
 
-    private void OnSolutionExaminableVerb(EntityUid uid, ExaminableSolutionComponent component, GetVerbsEvent<ExamineVerb> args)
+    private void OnSolutionExaminableVerb(Entity<ExaminableSolutionComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
             return;
@@ -799,17 +799,19 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        if (!TryGetSolution(args.Target, component.Solution, out _, out var solutionHolder))
+        if (!TryGetSolution(args.Target, entity.Comp.Solution, out _, out var solutionHolder))
         {
             return;
         }
 
+        var target = args.Target;
+        var user = args.User;
         var verb = new ExamineVerb()
         {
             Act = () =>
             {
                 var markup = GetSolutionExamine(solutionHolder);
-                ExamineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
+                ExamineSystem.SendExamineTooltip(user, target, markup, false, false);
             },
             Text = Loc.GetString("scannable-solution-verb-text"),
             Message = Loc.GetString("scannable-solution-verb-message"),

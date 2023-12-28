@@ -22,6 +22,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Linq;
+
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -82,33 +83,33 @@ public sealed class SmokeSystem : EntitySystem
         }
     }
 
-    private void OnStartCollide(EntityUid uid, SmokeComponent component, ref StartCollideEvent args)
+    private void OnStartCollide(Entity<SmokeComponent> entity, ref StartCollideEvent args)
     {
         if (_smokeAffectedQuery.HasComponent(args.OtherEntity))
             return;
 
         var smokeAffected = AddComp<SmokeAffectedComponent>(args.OtherEntity);
-        smokeAffected.SmokeEntity = uid;
+        smokeAffected.SmokeEntity = entity;
         smokeAffected.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
     }
 
-    private void OnEndCollide(EntityUid uid, SmokeComponent component, ref EndCollideEvent args)
+    private void OnEndCollide(Entity<SmokeComponent> entity, ref EndCollideEvent args)
     {
         // if we are already in smoke, make sure the thing we are exiting is the current smoke we are in.
         if (_smokeAffectedQuery.TryGetComponent(args.OtherEntity, out var smokeAffectedComponent))
         {
-            if (smokeAffectedComponent.SmokeEntity != uid)
+            if (smokeAffectedComponent.SmokeEntity != entity.Owner)
                 return;
         }
 
-        var exists = Exists(uid);
+        var exists = Exists(entity);
 
         if (!TryComp<PhysicsComponent>(args.OtherEntity, out var body))
             return;
 
         foreach (var ent in _physics.GetContactingEntities(args.OtherEntity, body))
         {
-            if (exists && ent == uid)
+            if (exists && ent == entity.Owner)
                 continue;
 
             if (!_smokeQuery.HasComponent(ent))
@@ -123,51 +124,51 @@ public sealed class SmokeSystem : EntitySystem
             RemComp(args.OtherEntity, smokeAffectedComponent);
     }
 
-    private void OnAffectedUnpaused(EntityUid uid, SmokeAffectedComponent component, ref EntityUnpausedEvent args)
+    private void OnAffectedUnpaused(Entity<SmokeAffectedComponent> entity, ref EntityUnpausedEvent args)
     {
-        component.NextSecond += args.PausedTime;
+        entity.Comp.NextSecond += args.PausedTime;
     }
 
-    private void OnSmokeSpread(EntityUid uid, SmokeComponent component, ref SpreadNeighborsEvent args)
+    private void OnSmokeSpread(Entity<SmokeComponent> entity, ref SpreadNeighborsEvent args)
     {
-        if (component.SpreadAmount == 0 || !_solutionContainerSystem.ResolveSolution(uid, SmokeComponent.SolutionName, ref component.Solution, out var solution))
+        if (entity.Comp.SpreadAmount == 0 || !_solutionContainerSystem.ResolveSolution(entity.Owner, SmokeComponent.SolutionName, ref entity.Comp.Solution, out var solution))
         {
-            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
             return;
         }
 
-        if (Prototype(uid) is not { } prototype)
+        if (Prototype(entity) is not { } prototype)
         {
-            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
             return;
         }
 
         if (!args.NeighborFreeTiles.Any())
             return;
 
-        TryComp<TimedDespawnComponent>(uid, out var timer);
+        TryComp<TimedDespawnComponent>(entity, out var timer);
 
         // wtf is the logic behind any of this.
-        var smokePerSpread = component.SpreadAmount / Math.Max(1, args.NeighborFreeTiles.Count);
+        var smokePerSpread = entity.Comp.SpreadAmount / Math.Max(1, args.NeighborFreeTiles.Count);
         foreach (var neighbor in args.NeighborFreeTiles)
         {
             var coords = neighbor.Grid.GridTileToLocal(neighbor.Tile);
             var ent = Spawn(prototype.ID, coords);
             var spreadAmount = Math.Max(0, smokePerSpread);
-            component.SpreadAmount -= args.NeighborFreeTiles.Count();
+            entity.Comp.SpreadAmount -= args.NeighborFreeTiles.Count();
 
-            StartSmoke(ent, solution.Clone(), timer?.Lifetime ?? component.Duration, spreadAmount);
+            StartSmoke(ent, solution.Clone(), timer?.Lifetime ?? entity.Comp.Duration, spreadAmount);
 
-            if (component.SpreadAmount == 0)
+            if (entity.Comp.SpreadAmount == 0)
             {
-                RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
+                RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
                 break;
             }
         }
 
         args.Updates--;
 
-        if (args.NeighborFreeTiles.Count > 0 || args.Neighbors.Count == 0 || component.SpreadAmount < 1)
+        if (args.NeighborFreeTiles.Count > 0 || args.Neighbors.Count == 0 || entity.Comp.SpreadAmount < 1)
             return;
 
         // We have no more neighbours to spread to. So instead we will randomly distribute our volume to neighbouring smoke tiles.
@@ -181,19 +182,19 @@ public sealed class SmokeSystem : EntitySystem
                 continue;
 
             smoke.SpreadAmount++;
-            component.SpreadAmount--;
+            entity.Comp.SpreadAmount--;
             EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
 
-            if (component.SpreadAmount == 0)
+            if (entity.Comp.SpreadAmount == 0)
             {
-                RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
+                RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
                 break;
             }
         }
 
     }
 
-    private void OnReactionAttempt(EntityUid uid, SmokeComponent component, ref ReactionAttemptEvent args)
+    private void OnReactionAttempt(Entity<SmokeComponent> entity, ref ReactionAttemptEvent args)
     {
         if (args.Cancelled)
             return;
@@ -209,10 +210,10 @@ public sealed class SmokeSystem : EntitySystem
         }
     }
 
-    private void OnReactionAttempt(EntityUid uid, SmokeComponent component, ref SolutionRelayEvent<ReactionAttemptEvent> args)
+    private void OnReactionAttempt(Entity<SmokeComponent> entity, ref SolutionRelayEvent<ReactionAttemptEvent> args)
     {
         if (args.Name == SmokeComponent.SolutionName)
-            OnReactionAttempt(uid, component, ref args.Event);
+            OnReactionAttempt(entity, ref args.Event);
     }
 
     /// <summary>

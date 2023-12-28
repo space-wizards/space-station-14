@@ -28,12 +28,12 @@ public sealed class GasCondenserSystem : EntitySystem
         SubscribeLocalEvent<GasCondenserComponent, AtmosDeviceUpdateEvent>(OnCondenserUpdated);
     }
 
-    private void OnCondenserUpdated(EntityUid uid, GasCondenserComponent component, ref AtmosDeviceUpdateEvent args)
+    private void OnCondenserUpdated(Entity<GasCondenserComponent> entity, ref AtmosDeviceUpdateEvent args)
     {
-        if (!(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
-            || !TryComp<NodeContainerComponent>(uid, out var nodeContainer)
-            || !_nodeContainer.TryGetNode(nodeContainer, component.Inlet, out PipeNode? inlet)
-            || !_solution.ResolveSolution(uid, component.SolutionId, ref component.Solution, out var solution))
+        if (!(_power.IsPowered(entity) && TryComp<ApcPowerReceiverComponent>(entity, out var receiver))
+            || !TryComp<NodeContainerComponent>(entity, out var nodeContainer)
+            || !_nodeContainer.TryGetNode(nodeContainer, entity.Comp.Inlet, out PipeNode? inlet)
+            || !_solution.ResolveSolution(entity.Owner, entity.Comp.SolutionId, ref entity.Comp.Solution, out var solution))
         {
             return;
         }
@@ -52,7 +52,7 @@ public sealed class GasCondenserSystem : EntitySystem
             if (_atmosphereSystem.GetGas(i).Reagent is not { } gasReagent)
                 continue;
 
-            var moleToReagentMultiplier = component.MolesToReagentMultiplier;
+            var moleToReagentMultiplier = entity.Comp.MolesToReagentMultiplier;
             var amount = FixedPoint2.Min(FixedPoint2.New(moles * moleToReagentMultiplier), solution.AvailableVolume);
             if (amount <= 0)
                 continue;
@@ -63,7 +63,7 @@ public sealed class GasCondenserSystem : EntitySystem
             inlet.Air.AdjustMoles(i, moles - (amount.Float() / moleToReagentMultiplier));
         }
 
-        _solution.UpdateChemicals(component.Solution.Value);
+        _solution.UpdateChemicals(entity.Comp.Solution.Value);
     }
 
     public float NumberOfMolesToConvert(ApcPowerReceiverComponent comp, GasMixture mix, float dt)

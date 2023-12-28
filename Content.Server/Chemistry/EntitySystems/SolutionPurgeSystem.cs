@@ -34,8 +34,8 @@ public sealed class SolutionPurgeSystem : EntitySystem
         }
     }
 
-    private void OnUnpaused(EntityUid uid, SolutionPurgeComponent comp, ref EntityUnpausedEvent args)
+    private void OnUnpaused(Entity<SolutionPurgeComponent> entity, ref EntityUnpausedEvent args)
     {
-        comp.NextPurgeTime += args.PausedTime;
+        entity.Comp.NextPurgeTime += args.PausedTime;
     }
 }

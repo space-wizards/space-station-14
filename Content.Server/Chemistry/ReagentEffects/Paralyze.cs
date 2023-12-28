@@ -1,5 +1,5 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Server.Stunnable;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;

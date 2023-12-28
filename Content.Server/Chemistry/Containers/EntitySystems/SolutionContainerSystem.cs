@@ -145,39 +145,40 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
 
     #region Event Handlers
 
-    private void OnMapInit(EntityUid uid, SolutionContainerManagerComponent comp, MapInitEvent args)
+    private void OnMapInit(Entity<SolutionContainerManagerComponent> entity, ref MapInitEvent args)
     {
-        if (comp.Solutions is not { } prototypes)
+        if (entity.Comp.Solutions is not { } prototypes)
             return;
 
         foreach (var (name, prototype) in prototypes)
         {
-            EnsureSolutionEntity(uid, name, prototype.MaxVolume, prototype, out _);
+            EnsureSolutionEntity((entity.Owner, entity.Comp), name, prototype.MaxVolume, prototype, out _);
         }
-        comp.Solutions = null;
-        Dirty(uid, comp);
+
+        entity.Comp.Solutions = null;
+        Dirty(entity);
     }
 
-    private void OnComponentShutdown(EntityUid uid, SolutionContainerManagerComponent comp, ComponentShutdown args)
+    private void OnComponentShutdown(Entity<SolutionContainerManagerComponent> entity, ref ComponentShutdown args)
     {
-        foreach (var name in comp.Containers)
+        foreach (var name in entity.Comp.Containers)
         {
-            if (ContainerSystem.TryGetContainer(uid, $"solution@{name}", out var solutionContainer))
-                solutionContainer.Shutdown(EntityManager, _netManager);
+            if (ContainerSystem.TryGetContainer(entity, $"solution@{name}", out var solutionContainer))
+                ContainerSystem.ShutdownContainer(solutionContainer);
         }
-        comp.Containers.Clear();
+        entity.Comp.Containers.Clear();
     }
 
-    private void OnComponentShutdown(EntityUid uid, ContainedSolutionComponent comp, ComponentShutdown args)
+    private void OnComponentShutdown(Entity<ContainedSolutionComponent> entity, ref ComponentShutdown args)
     {
-        if (TryComp(comp.Container, out SolutionContainerManagerComponent? container))
+        if (TryComp(entity.Comp.Container, out SolutionContainerManagerComponent? container))
         {
-            container.Containers.Remove(comp.ContainerName);
-            Dirty(comp.Container, container);
+            container.Containers.Remove(entity.Comp.ContainerName);
+            Dirty(entity.Comp.Container, container);
         }
 
-        if (ContainerSystem.TryGetContainer(uid, $"solution@{comp.ContainerName}", out var solutionContainer))
-            solutionContainer.Shutdown(EntityManager, _netManager);
+        if (ContainerSystem.TryGetContainer(entity, $"solution@{entity.Comp.ContainerName}", out var solutionContainer))
+            ContainerSystem.ShutdownContainer(solutionContainer);
     }
 
     #endregion Event Handlers

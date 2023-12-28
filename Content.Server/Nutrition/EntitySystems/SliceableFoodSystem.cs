@@ -27,12 +27,12 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<SliceableFoodComponent, ComponentStartup>(OnComponentStartup);
         }
 
-        private void OnInteractUsing(EntityUid uid, SliceableFoodComponent component, InteractUsingEvent args)
+        private void OnInteractUsing(Entity<SliceableFoodComponent> entity, ref InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (TrySliceFood(uid, args.User, args.Used, component))
+            if (TrySliceFood(entity, args.User, args.Used, entity.Comp))
                 args.Handled = true;
         }
 
@@ -143,17 +143,17 @@ namespace Content.Server.Nutrition.EntitySystems
             }
         }
 
-        private void OnComponentStartup(EntityUid uid, SliceableFoodComponent component, ComponentStartup args)
+        private void OnComponentStartup(Entity<SliceableFoodComponent> entity, ref ComponentStartup args)
         {
-            component.Count = component.TotalCount;
+            entity.Comp.Count = entity.Comp.TotalCount;
 
-            var foodComp = EnsureComp<FoodComponent>(uid);
-            _solutionContainerSystem.EnsureSolution(uid, foodComp.Solution);
+            var foodComp = EnsureComp<FoodComponent>(entity);
+            _solutionContainerSystem.EnsureSolution(entity.Owner, foodComp.Solution);
         }
 
-        private void OnExamined(EntityUid uid, SliceableFoodComponent component, ExaminedEvent args)
+        private void OnExamined(Entity<SliceableFoodComponent> entity, ref ExaminedEvent args)
         {
-            args.PushMarkup(Loc.GetString("sliceable-food-component-on-examine-remaining-slices-text", ("remainingCount", component.Count)));
+            args.PushMarkup(Loc.GetString("sliceable-food-component-on-examine-remaining-slices-text", ("remainingCount", entity.Comp.Count)));
         }
     }
 }

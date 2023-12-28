@@ -118,9 +118,9 @@ namespace Content.Server.Kitchen.EntitySystems
             }
         }
 
-        private void OnEntRemoveAttempt(EntityUid uid, ReagentGrinderComponent reagentGrinder, ContainerIsRemovingAttemptEvent args)
+        private void OnEntRemoveAttempt(Entity<ReagentGrinderComponent> entity, ref ContainerIsRemovingAttemptEvent args)
         {
-            if (HasComp<ActiveReagentGrinderComponent>(uid))
+            if (HasComp<ActiveReagentGrinderComponent>(entity))
                 args.Cancel();
         }
 
@@ -132,17 +132,17 @@ namespace Content.Server.Kitchen.EntitySystems
             _appearanceSystem.SetData(uid, ReagentGrinderVisualState.BeakerAttached, outputContainer.HasValue);
         }
 
-        private void OnInteractUsing(EntityUid uid, ReagentGrinderComponent reagentGrinder, InteractUsingEvent args)
+        private void OnInteractUsing(Entity<ReagentGrinderComponent> entity, ref InteractUsingEvent args)
         {
             var heldEnt = args.Used;
-            var inputContainer = _containerSystem.EnsureContainer<Container>(uid, SharedReagentGrinder.InputContainerId);
+            var inputContainer = _containerSystem.EnsureContainer<Container>(entity.Owner, SharedReagentGrinder.InputContainerId);
 
             if (!HasComp<ExtractableComponent>(heldEnt))
             {
                 if (!HasComp<FitsInDispenserComponent>(heldEnt))
                 {
                     // This is ugly but we can't use whitelistFailPopup because there are 2 containers with different whitelists.
-                    _popupSystem.PopupEntity(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), uid, args.User);
+                    _popupSystem.PopupEntity(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), entity.Owner, args.User);
                 }
 
                 // Entity did NOT pass the whitelist for grind/juice.
@@ -156,7 +156,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             // Cap the chamber. Don't want someone putting in 500 entities and ejecting them all at once.
             // Maybe I should have done that for the microwave too?
-            if (inputContainer.ContainedEntities.Count >= reagentGrinder.StorageMaxEntities)
+            if (inputContainer.ContainedEntities.Count >= entity.Comp.StorageMaxEntities)
                 return;
 
             if (!inputContainer.Insert(heldEnt, EntityManager))
@@ -168,19 +168,19 @@ namespace Content.Server.Kitchen.EntitySystems
         /// <remarks>
         /// Gotta be efficient, you know? you're saving a whole extra second here and everything.
         /// </remarks>
-        private void OnRefreshParts(EntityUid uid, ReagentGrinderComponent component, RefreshPartsEvent args)
+        private void OnRefreshParts(Entity<ReagentGrinderComponent> entity, ref RefreshPartsEvent args)
         {
-            var ratingWorkTime = args.PartRatings[component.MachinePartWorkTime];
-            var ratingStorage = args.PartRatings[component.MachinePartStorageMax];
+            var ratingWorkTime = args.PartRatings[entity.Comp.MachinePartWorkTime];
+            var ratingStorage = args.PartRatings[entity.Comp.MachinePartStorageMax];
 
-            component.WorkTimeMultiplier = MathF.Pow(component.PartRatingWorkTimerMulitplier, ratingWorkTime - 1);
-            component.StorageMaxEntities = component.BaseStorageMaxEntities + (int) (component.StoragePerPartRating * (ratingStorage - 1));
+            entity.Comp.WorkTimeMultiplier = MathF.Pow(entity.Comp.PartRatingWorkTimerMulitplier, ratingWorkTime - 1);
+            entity.Comp.StorageMaxEntities = entity.Comp.BaseStorageMaxEntities + (int) (entity.Comp.StoragePerPartRating * (ratingStorage - 1));
         }
 
-        private void OnUpgradeExamine(EntityUid uid, ReagentGrinderComponent component, UpgradeExamineEvent args)
+        private void OnUpgradeExamine(Entity<ReagentGrinderComponent> entity, ref UpgradeExamineEvent args)
         {
-            args.AddPercentageUpgrade("reagent-grinder-component-upgrade-work-time", component.WorkTimeMultiplier);
-            args.AddNumberUpgrade("reagent-grinder-component-upgrade-storage", component.StorageMaxEntities - component.BaseStorageMaxEntities);
+            args.AddPercentageUpgrade("reagent-grinder-component-upgrade-work-time", entity.Comp.WorkTimeMultiplier);
+            args.AddNumberUpgrade("reagent-grinder-component-upgrade-storage", entity.Comp.StorageMaxEntities - entity.Comp.BaseStorageMaxEntities);
         }
 
         private void UpdateUiState(EntityUid uid)
@@ -212,43 +212,43 @@ namespace Content.Server.Kitchen.EntitySystems
             _userInterfaceSystem.TrySetUiState(uid, ReagentGrinderUiKey.Key, state);
         }
 
-        private void OnStartMessage(EntityUid uid, ReagentGrinderComponent reagentGrinder, ReagentGrinderStartMessage message)
+        private void OnStartMessage(Entity<ReagentGrinderComponent> entity, ref ReagentGrinderStartMessage message)
         {
-            if (!this.IsPowered(uid, EntityManager) || HasComp<ActiveReagentGrinderComponent>(uid))
+            if (!this.IsPowered(entity.Owner, EntityManager) || HasComp<ActiveReagentGrinderComponent>(entity))
                 return;
 
-            DoWork(uid, reagentGrinder, message.Program);
+            DoWork(entity.Owner, entity.Comp, message.Program);
         }
 
-        private void OnEjectChamberAllMessage(EntityUid uid, ReagentGrinderComponent reagentGrinder, ReagentGrinderEjectChamberAllMessage message)
+        private void OnEjectChamberAllMessage(Entity<ReagentGrinderComponent> entity, ref ReagentGrinderEjectChamberAllMessage message)
         {
-            var inputContainer = _containerSystem.EnsureContainer<Container>(uid, SharedReagentGrinder.InputContainerId);
+            var inputContainer = _containerSystem.EnsureContainer<Container>(entity.Owner, SharedReagentGrinder.InputContainerId);
 
-            if (HasComp<ActiveReagentGrinderComponent>(uid) || inputContainer.ContainedEntities.Count <= 0)
+            if (HasComp<ActiveReagentGrinderComponent>(entity) || inputContainer.ContainedEntities.Count <= 0)
                 return;
 
-            ClickSound(uid, reagentGrinder);
-            foreach (var entity in inputContainer.ContainedEntities.ToList())
+            ClickSound(entity);
+            foreach (var toEject in inputContainer.ContainedEntities.ToList())
             {
-                inputContainer.Remove(entity);
-                _randomHelper.RandomOffset(entity, 0.4f);
+                inputContainer.Remove(toEject);
+                _randomHelper.RandomOffset(toEject, 0.4f);
             }
-            UpdateUiState(uid);
+            UpdateUiState(entity);
         }
 
-        private void OnEjectChamberContentMessage(EntityUid uid, ReagentGrinderComponent reagentGrinder, ReagentGrinderEjectChamberContentMessage message)
+        private void OnEjectChamberContentMessage(Entity<ReagentGrinderComponent> entity, ref ReagentGrinderEjectChamberContentMessage message)
         {
-            if (HasComp<ActiveReagentGrinderComponent>(uid))
+            if (HasComp<ActiveReagentGrinderComponent>(entity))
                 return;
 
-            var inputContainer = _containerSystem.EnsureContainer<Container>(uid, SharedReagentGrinder.InputContainerId);
+            var inputContainer = _containerSystem.EnsureContainer<Container>(entity.Owner, SharedReagentGrinder.InputContainerId);
             var ent = GetEntity(message.EntityId);
 
             if (inputContainer.Remove(ent))
             {
                 _randomHelper.RandomOffset(ent, 0.4f);
-                ClickSound(uid, reagentGrinder);
-                UpdateUiState(uid);
+                ClickSound(entity);
+                UpdateUiState(entity);
             }
         }
 
@@ -290,9 +290,9 @@ namespace Content.Server.Kitchen.EntitySystems
                 new ReagentGrinderWorkStartedMessage(program));
         }
 
-        private void ClickSound(EntityUid uid, ReagentGrinderComponent reagentGrinder)
+        private void ClickSound(Entity<ReagentGrinderComponent> reagentGrinder)
         {
-            _audioSystem.PlayPvs(reagentGrinder.ClickSound, uid, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(reagentGrinder.Comp.ClickSound, reagentGrinder.Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private Solution? GetGrindSolution(EntityUid uid)

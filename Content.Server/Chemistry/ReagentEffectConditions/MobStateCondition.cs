@@ -7,8 +7,6 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 {
     public sealed partial class MobStateCondition : ReagentEffectCondition
     {
-
-
         [DataField]
         public MobState Mobstate = MobState.Alive;
 
@@ -25,7 +23,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 
         public override string GuidebookExplanation(IPrototypeManager prototype)
         {
-            return Loc.GetString("reagent-effect-condition-guidebook-mob-state-condition", ("state", mobstate));
+            return Loc.GetString("reagent-effect-condition-guidebook-mob-state-condition", ("state", Mobstate));
         }
     }
 }

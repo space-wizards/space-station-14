@@ -85,12 +85,12 @@ internal sealed class UdderSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doargs);
     }
 
-    private void OnDoAfter(EntityUid uid, UdderComponent component, MilkingDoAfterEvent args)
+    private void OnDoAfter(Entity<UdderComponent> entity, ref MilkingDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Args.Used == null)
             return;
 
-        if (!_solutionContainerSystem.ResolveSolution(uid, component.SolutionName, ref component.Solution, out var solution))
+        if (!_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution))
             return;
 
         if (!_solutionContainerSystem.TryGetRefillableSolution(args.Args.Used.Value, out var targetSoln, out var targetSolution))
@@ -100,32 +100,35 @@ internal sealed class UdderSystem : EntitySystem
         var quantity = solution.Volume;
         if (quantity == 0)
         {
-            _popupSystem.PopupEntity(Loc.GetString("udder-system-dry"), uid, args.Args.User);
+            _popupSystem.PopupEntity(Loc.GetString("udder-system-dry"), entity.Owner, args.Args.User);
             return;
         }
 
         if (quantity > targetSolution.AvailableVolume)
             quantity = targetSolution.AvailableVolume;
 
-        var split = _solutionContainerSystem.SplitSolution(component.Solution.Value, quantity);
+        var split = _solutionContainerSystem.SplitSolution(entity.Comp.Solution.Value, quantity);
         _solutionContainerSystem.TryAddSolution(targetSoln.Value, split);
 
-        _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(args.Args.Used.Value, EntityManager))), uid,
+        _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(args.Args.Used.Value, EntityManager))), entity.Owner,
             args.Args.User, PopupType.Medium);
     }
 
-    private void AddMilkVerb(EntityUid uid, UdderComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void AddMilkVerb(Entity<UdderComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (args.Using == null ||
              !args.CanInteract ||
              !EntityManager.HasComponent<RefillableSolutionComponent>(args.Using.Value))
             return;
 
+        var uid = entity.Owner;
+        var user = args.User;
+        var used = args.Using.Value;
         AlternativeVerb verb = new()
         {
             Act = () =>
             {
-                AttemptMilk(uid, args.User, args.Using.Value);
+                AttemptMilk(uid, user, used);
             },
             Text = Loc.GetString("udder-system-verb-milk"),
             Priority = 2

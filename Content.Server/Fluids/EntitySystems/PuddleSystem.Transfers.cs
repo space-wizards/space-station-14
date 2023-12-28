@@ -12,11 +12,11 @@ public sealed partial class PuddleSystem
         SubscribeLocalEvent<RefillableSolutionComponent, DragDropDraggedEvent>(OnRefillableDragged);
     }
 
-    private void OnRefillableDragged(EntityUid uid, RefillableSolutionComponent component, ref DragDropDraggedEvent args)
+    private void OnRefillableDragged(Entity<RefillableSolutionComponent> entity, ref DragDropDraggedEvent args)
     {
-        if (!_solutionContainerSystem.TryGetSolution(uid, component.Solution, out var soln, out var solution) || solution.Volume == FixedPoint2.Zero)
+        if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.Solution, out var soln, out var solution) || solution.Volume == FixedPoint2.Zero)
         {
-            _popups.PopupEntity(Loc.GetString("mopping-system-empty", ("used", uid)), uid, args.User);
+            _popups.PopupEntity(Loc.GetString("mopping-system-empty", ("used", entity.Owner)), entity, args.User);
             return;
         }
 
@@ -60,11 +60,11 @@ public sealed partial class PuddleSystem
 
             if (_solutionContainerSystem.TryAddSolution(soln.Value, split))
             {
-                _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, uid);
+                _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, entity);
             }
             else
             {
-                _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", uid)), uid, args.User);
+                _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", entity.Owner)), entity, args.User);
             }
         }
     }

@@ -37,15 +37,15 @@ namespace Content.Server.Body.Systems
             SubscribeLocalEvent<MetabolizerComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
-        private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
+        private void OnMetabolizerInit(Entity<MetabolizerComponent> entity, ref ComponentInit args)
         {
-            if (!component.SolutionOnBody)
+            if (!entity.Comp.SolutionOnBody)
             {
-                _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
+                _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName);
             }
-            else if (_organQuery.CompOrNull(uid)?.Body is { } body)
+            else if (_organQuery.CompOrNull(entity)?.Body is { } body)
             {
-                _solutionContainerSystem.EnsureSolution(body, component.SolutionName);
+                _solutionContainerSystem.EnsureSolution(body, entity.Comp.SolutionName);
             }
         }
 

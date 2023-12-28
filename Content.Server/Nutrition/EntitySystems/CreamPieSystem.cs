@@ -55,9 +55,9 @@ namespace Content.Server.Nutrition.EntitySystems
             EntityManager.QueueDeleteEntity(uid);
         }
 
-        private void OnInteractUsing(EntityUid uid, CreamPieComponent component, InteractUsingEvent args)
+        private void OnInteractUsing(Entity<CreamPieComponent> entity, ref InteractUsingEvent args)
         {
-            ActivatePayload(uid);
+            ActivatePayload(entity);
         }
 
         private void ActivatePayload(EntityUid uid)
@@ -88,12 +88,12 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 otherPlayers.RemovePlayer(actor.PlayerSession);
             }
-            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", uid),("thrower", args.Thrown)), uid, otherPlayers, false);
+            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", uid), ("thrower", args.Thrown)), uid, otherPlayers, false);
         }
 
-        private void OnRejuvenate(EntityUid uid, CreamPiedComponent component, RejuvenateEvent args)
+        private void OnRejuvenate(Entity<CreamPiedComponent> entity, ref RejuvenateEvent args)
         {
-            SetCreamPied(uid, component, false);
+            SetCreamPied(entity, entity.Comp, false);
         }
     }
 }

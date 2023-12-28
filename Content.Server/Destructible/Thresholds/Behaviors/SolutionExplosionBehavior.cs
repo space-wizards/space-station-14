@@ -10,7 +10,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     [DataDefinition]
     public sealed partial class SolutionExplosionBehavior : IThresholdBehavior
     {
-        [DataField("solution", required: true)]
+        [DataField(required: true)]
         public string Solution = default!;
 
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)

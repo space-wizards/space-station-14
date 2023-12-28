@@ -17,7 +17,7 @@ public sealed class PayloadSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
@@ -33,7 +33,7 @@ public sealed class PayloadSystem : EntitySystem
         SubscribeLocalEvent<ChemicalPayloadComponent, TriggerEvent>(HandleChemicalPayloadTrigger);
     }
 
-    public IEnumerable<EntityUid> GetAllPayloads(EntityUid uid, ContainerManagerComponent? contMan=null)
+    public IEnumerable<EntityUid> GetAllPayloads(EntityUid uid, ContainerManagerComponent? contMan = null)
     {
         if (!Resolve(uid, ref contMan, false))
             yield break;
@@ -98,7 +98,7 @@ public sealed class PayloadSystem : EntitySystem
 
             var temp = (object) component;
             _serializationManager.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(uid, (Component)temp!);
+            EntityManager.AddComponent(uid, (Component) temp!);
 
             trigger.GrantedComponents.Add(registration.Type);
         }
@@ -137,10 +137,10 @@ public sealed class PayloadSystem : EntitySystem
         }
     }
 
-    private void HandleChemicalPayloadTrigger(EntityUid uid, ChemicalPayloadComponent component, TriggerEvent args)
+    private void HandleChemicalPayloadTrigger(Entity<ChemicalPayloadComponent> entity, ref TriggerEvent args)
     {
-        if (component.BeakerSlotA.Item is not EntityUid beakerA
-            || component.BeakerSlotB.Item is not EntityUid beakerB
+        if (entity.Comp.BeakerSlotA.Item is not EntityUid beakerA
+            || entity.Comp.BeakerSlotB.Item is not EntityUid beakerB
             || !TryComp(beakerA, out FitsInDispenserComponent? compA)
             || !TryComp(beakerB, out FitsInDispenserComponent? compB)
             || !_solutionContainerSystem.TryGetSolution(beakerA, compA.Solution, out var solnA, out var solutionA)
@@ -155,7 +155,7 @@ public sealed class PayloadSystem : EntitySystem
         var solStringB = SolutionContainerSystem.ToPrettyString(solutionB);
 
         _adminLogger.Add(LogType.ChemicalReaction,
-            $"Chemical bomb payload {ToPrettyString(uid):payload} at {Transform(uid).MapPosition:location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");
+            $"Chemical bomb payload {ToPrettyString(entity.Owner):payload} at {Transform(entity.Owner).MapPosition:location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");
 
         solutionA.MaxVolume += solutionB.MaxVolume;
         _solutionContainerSystem.TryAddSolution(solnA.Value, solutionB);

@@ -5,14 +5,12 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class SolutionInjectOnCollideSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainersSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;

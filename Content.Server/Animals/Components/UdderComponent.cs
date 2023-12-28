@@ -5,7 +5,6 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-
 namespace Content.Server.Animals.Components
 
 /// <summary>

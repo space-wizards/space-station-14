@@ -1,5 +1,5 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Server.Medical;
+using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 

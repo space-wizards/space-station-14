@@ -5,7 +5,8 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Chemistry.Components.SolutionManager;
 
 /// <summary>
-/// A map of the solution entities contained within this entity.
+/// <para>A map of the solution entities contained within this entity.</para>
+/// <para>Every solution entity this maps should have a <see cref="SolutionComponent"/> to track its state and a <see cref="ContainedSolutionComponent"/> to track its container.</para>
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedSolutionContainerSystem))]

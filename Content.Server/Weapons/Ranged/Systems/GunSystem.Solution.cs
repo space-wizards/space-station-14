@@ -22,15 +22,15 @@ public sealed partial class GunSystem
         SubscribeLocalEvent<SolutionAmmoProviderComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
     }
 
-    private void OnSolutionMapInit(EntityUid uid, SolutionAmmoProviderComponent component, MapInitEvent args)
+    private void OnSolutionMapInit(Entity<SolutionAmmoProviderComponent> entity, ref MapInitEvent args)
     {
-        UpdateSolutionShots(uid, component);
+        UpdateSolutionShots(entity.Owner, entity.Comp);
     }
 
-    private void OnSolutionChanged(EntityUid uid, SolutionAmmoProviderComponent component, SolutionContainerChangedEvent args)
+    private void OnSolutionChanged(Entity<SolutionAmmoProviderComponent> entity, ref SolutionContainerChangedEvent args)
     {
-        if (args.Solution.Name == component.SolutionId)
-            UpdateSolutionShots(uid, component, args.Solution);
+        if (args.Solution.Name == entity.Comp.SolutionId)
+            UpdateSolutionShots(entity.Owner, entity.Comp, args.Solution);
     }
 
     protected override void UpdateSolutionShots(EntityUid uid, SolutionAmmoProviderComponent component, Solution? solution = null)
@@ -41,7 +41,7 @@ public sealed partial class GunSystem
         {
             component.Shots = shots;
             component.MaxShots = maxShots;
-            Dirty(component);
+            Dirty(uid, component);
             return;
         }
 
@@ -50,7 +50,7 @@ public sealed partial class GunSystem
 
         component.Shots = shots;
         component.MaxShots = maxShots;
-        Dirty(component);
+        Dirty(uid, component);
 
         UpdateSolutionAppearance(uid, component);
     }

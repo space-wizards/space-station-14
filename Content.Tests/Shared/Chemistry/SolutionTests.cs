@@ -1,8 +1,8 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
+using NUnit.Framework;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using NUnit.Framework;
 
 namespace Content.Tests.Shared.Chemistry;
 

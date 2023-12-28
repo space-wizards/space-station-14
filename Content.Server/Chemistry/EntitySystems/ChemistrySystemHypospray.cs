@@ -11,8 +11,8 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Timing;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -32,28 +32,28 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<HyposprayComponent, ComponentGetState>(OnHypoGetState);
         }
 
-        private void OnHypoGetState(EntityUid uid, HyposprayComponent component, ref ComponentGetState args)
+        private void OnHypoGetState(Entity<HyposprayComponent> entity, ref ComponentGetState args)
         {
-            args.State = _solutionContainers.TryGetSolution(uid, component.SolutionName, out _, out var solution)
+            args.State = _solutionContainers.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out _, out var solution)
                 ? new HyposprayComponentState(solution.Volume, solution.MaxVolume)
                 : new HyposprayComponentState(FixedPoint2.Zero, FixedPoint2.Zero);
         }
 
-        private void OnUseInHand(EntityUid uid, HyposprayComponent component, UseInHandEvent args)
+        private void OnUseInHand(Entity<HyposprayComponent> entity, ref UseInHandEvent args)
         {
             if (args.Handled)
                 return;
 
-            TryDoInject(uid, args.User, args.User);
+            TryDoInject(entity, args.User, args.User);
             args.Handled = true;
         }
 
-        private void OnSolutionChange(EntityUid uid, HyposprayComponent component, SolutionContainerChangedEvent args)
+        private void OnSolutionChange(Entity<HyposprayComponent> entity, ref SolutionContainerChangedEvent args)
         {
-            Dirty(uid, component);
+            Dirty(entity);
         }
 
-        public void OnAfterInteract(EntityUid uid, HyposprayComponent component, AfterInteractEvent args)
+        public void OnAfterInteract(Entity<HyposprayComponent> entity, ref AfterInteractEvent args)
         {
             if (!args.CanReach)
                 return;
@@ -61,21 +61,20 @@ namespace Content.Server.Chemistry.EntitySystems
             var target = args.Target;
             var user = args.User;
 
-            TryDoInject(uid, target, user);
+            TryDoInject(entity, target, user);
         }
 
-        public void OnAttack(EntityUid uid, HyposprayComponent component, MeleeHitEvent args)
+        public void OnAttack(Entity<HyposprayComponent> entity, ref MeleeHitEvent args)
         {
             if (!args.HitEntities.Any())
                 return;
 
-            TryDoInject(uid, args.HitEntities.First(), args.User);
+            TryDoInject(entity, args.HitEntities.First(), args.User);
         }
 
-        public bool TryDoInject(EntityUid uid, EntityUid? target, EntityUid user, HyposprayComponent? component = null)
+        public bool TryDoInject(Entity<HyposprayComponent> hypo, EntityUid? target, EntityUid user)
         {
-            if (!Resolve(uid, ref component))
-                return false;
+            var (uid, component) = hypo;
 
             if (!EligibleEntity(target, _entMan, component))
                 return false;

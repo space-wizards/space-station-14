@@ -47,8 +47,8 @@ public sealed partial class VapeDoAfterEvent : DoAfterEvent
 
     public VapeDoAfterEvent(Solution solution, bool forced)
     {
-            Solution = solution;
-            Forced = forced;
+        Solution = solution;
+        Forced = forced;
     }
 
     public override DoAfterEvent Clone() => this;

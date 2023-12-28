@@ -15,9 +15,9 @@ namespace Content.Server.Weapons.Ranged.Systems
             SubscribeLocalEvent<ChemicalAmmoComponent, AmmoShotEvent>(OnFire);
         }
 
-        private void OnFire(EntityUid uid, ChemicalAmmoComponent component, AmmoShotEvent args)
+        private void OnFire(Entity<ChemicalAmmoComponent> entity, ref AmmoShotEvent args)
         {
-            if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var ammoSoln, out var ammoSolution))
+            if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var ammoSoln, out var ammoSolution))
                 return;
 
             var projectiles = args.FiredProjectiles;
@@ -26,9 +26,9 @@ namespace Content.Server.Weapons.Ranged.Systems
             foreach (var projectile in projectiles)
             {
                 if (_solutionContainerSystem
-                    .TryGetSolution(projectile, component.SolutionName, out var projectileSoln, out _))
+                    .TryGetSolution(projectile, entity.Comp.SolutionName, out var projectileSoln, out _))
                 {
-                    projectileSolutionContainers.Add((uid, projectileSoln.Value));
+                    projectileSolutionContainers.Add((projectile, projectileSoln.Value));
                 }
             }
 
