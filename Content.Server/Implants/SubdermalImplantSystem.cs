@@ -101,7 +101,8 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         var targetCoords = new MapCoordinates();
         for (var i = 0; i < implant.TeleportAttempts; i++)
         {
-            targetCoords = entityCoords.Offset(_random.NextAngle().ToVec() * _random.NextFloat(implant.TeleportRadius));
+            var distance = implant.TeleportRadius * _random.NextFloat(MathF.Sqrt(1f)); // to get an uniform distribution
+            targetCoords = entityCoords.Offset(_random.NextAngle().ToVec() * distance);
 
             // prefer teleporting to grids
             if (!_mapManager.TryFindGridAt(targetCoords, out var gridUid, out var grid))
@@ -128,7 +129,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             break;
         }
         _xform.SetWorldPosition(ent, targetCoords.Position);
-        _audio.PlayPvs(component.TeleportSound, ent);
+        _audio.PlayPvs(implant.TeleportSound, ent);
 
         args.Handled = true;
     }
