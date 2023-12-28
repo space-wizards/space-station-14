@@ -13,6 +13,7 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Prototypes;
 using Robust.Server.ServerStatus;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -35,7 +36,7 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Game rules
 
     [Dependency] private readonly IComponentFactory _componentFactory = default!; // Needed to circumvent the "IoC has no context on this thread" error until I figure out how to do it properly
-
+    [Dependency] private readonly ITaskManager _taskManager = default!; // game explodes when calling stuff from the non-game thread
     private string token = default!;
     private ISawmill _sawmill = default!;
     private string _motd = default!;
@@ -380,7 +381,6 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
     /// </summary>
     private async Task<bool> ActionRoundStatus(IStatusHandlerContext context)
     {
-        // TODO: Any of those actions break the game ticker, fix that.
         if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/admin/actions/round")
         {
             return false;
@@ -408,7 +408,10 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                     _sawmill.Info("Forced round start failed: round already started");
                     return true;
                 }
-                _gameTicker.StartRound();
+                _taskManager.RunOnMainThread(() =>
+                {
+                    _gameTicker.StartRound();
+                });
                 _sawmill.Info("Forced round start");
                 break;
             case "end":
@@ -418,7 +421,10 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                     _sawmill.Info("Forced round end failed: round is not in progress");
                     return true;
                 }
-                _gameTicker.EndRound();
+                _taskManager.RunOnMainThread(() =>
+                {
+                    _roundEndSystem.EndRound();
+                });
                 _sawmill.Info("Forced round end");
                 break;
             case "restart":
@@ -428,11 +434,17 @@ public sealed class ServerApi : EntitySystem // should probably not be an entity
                     _sawmill.Info("Forced round restart failed: round is not in progress");
                     return true;
                 }
-                _roundEndSystem.EndRound();
+                _taskManager.RunOnMainThread(() =>
+                {
+                    _roundEndSystem.EndRound();
+                });
                 _sawmill.Info("Forced round restart");
                 break;
             case "restartnow": // You should restart yourself NOW!!!
-                _gameTicker.RestartRound();
+                _taskManager.RunOnMainThread(() =>
+                {
+                    _gameTicker.RestartRound();
+                });
                 _sawmill.Info("Forced instant round restart");
                 break;
             default:
