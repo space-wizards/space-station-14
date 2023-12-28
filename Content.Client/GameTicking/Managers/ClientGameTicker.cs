@@ -35,6 +35,7 @@ namespace Content.Client.GameTicking.Managers
         /// The current round-end window. Could be used to support re-opening the window after closing it.
         /// </summary>
         private static RoundEndSummaryWindow? _window;
+        private EscapeUIController _escapeController = new();
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
@@ -177,16 +178,14 @@ namespace Content.Client.GameTicking.Managers
         private void EnableRoundEndSummaryButton()
         {
             //enable the button, so we can still click it once we've closed round-end window - until next round starts, where we'll disable it again
-            if (EscapeUIController._escapeWindow != null)
-                if (EscapeUIController._escapeWindow.buttonShowRoundEnd != null)
-                    EscapeUIController._escapeWindow.buttonShowRoundEnd.Visible = true;
+            this.
+                _escapeController.
+                enableButtonSummary();
         }
         private void DisableRoundEndSummaryButton()
         {
             //disable the button, so they cant click it mid-game and see "Mode = revs/nukies/zombies"
-            if (EscapeUIController._escapeWindow != null)
-                if (EscapeUIController._escapeWindow.buttonShowRoundEnd != null)
-                    EscapeUIController._escapeWindow.buttonShowRoundEnd.Visible = false;
+            this._escapeController.disableButtonSummary();
         }
 
         private void RoundRestartCleanup(RoundRestartCleanupEvent ev)

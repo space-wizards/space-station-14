@@ -28,7 +28,19 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     [Dependency] private readonly OptionsUIController _options = default!;
     [Dependency] private readonly GuidebookUIController _guidebook = default!;
 
-    public static Options.UI.EscapeMenu? _escapeWindow = default!;
+    public Options.UI.EscapeMenu? _escapeWindow = default!;
+
+    public void enableButtonSummary()
+    {
+        if(_escapeWindow != null)
+            _escapeWindow.buttonShowRoundEnd.Visible = true;
+    }
+    public void disableButtonSummary()
+    {
+        if (_escapeWindow != null)
+            _escapeWindow.buttonShowRoundEnd.Visible = false;
+    }
+
 
     private MenuButton? EscapeButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EscapeButton;
 
