@@ -508,7 +508,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
 
             _sharedContainer.Remove(EntityManager.GetEntity(args.EntityID), ent.Comp.Storage);
-            UpdateUserInterfaceState(uid, component);
+            UpdateUserInterfaceState(ent, ent.Comp);
         }
 
         private void OnSelectTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
