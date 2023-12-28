@@ -141,6 +141,9 @@ public sealed partial class DungeonJob : Job<Dungeon>
                 case InternalWindowPostGen internalWindow:
                     await PostGen(internalWindow, dungeon, _gridUid, _grid, random);
                     break;
+                case BiomeLayerPostGen markerPost:
+                    await PostGen(markerPost, dungeon, _gridUid, _grid, random);
+                    break;
                 case RoomEntrancePostGen rEntrance:
                     await PostGen(rEntrance, dungeon, _gridUid, _grid, random);
                     break;

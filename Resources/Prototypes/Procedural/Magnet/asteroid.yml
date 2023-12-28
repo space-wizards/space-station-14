@@ -15,8 +15,16 @@
           lacunarity: 2
           cellularDistanceFunction: Euclidean
     # Everything else
-    # postGeneration:
-    # Generate ore veins
+    postGeneration:
+      # Generate vents
+
+      # Generate ore veins
+      - !type:MarkerLayerPostGen
+        markerProto: OreTin
+        maskNoise:
+      # Generate rest of the rocks
+
+      # Generate flora / fauna if we want
 
 - type: dungeonConfig
   id: SpindlyAsteroid

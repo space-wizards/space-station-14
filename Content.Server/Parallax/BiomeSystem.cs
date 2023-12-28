@@ -362,7 +362,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         while (loadBiomes.MoveNext(out var gridUid, out var biome, out var grid))
         {
             // Load new chunks
-            LoadChunks(biome, gridUid, grid, biome.Seed, _xformQuery);
+            LoadChunks(biome, gridUid, grid, biome.Seed);
             // Unload old chunks
             UnloadChunks(biome, gridUid, grid, biome.Seed);
         }
@@ -412,8 +412,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         BiomeComponent component,
         EntityUid gridUid,
         MapGridComponent grid,
-        int seed,
-        EntityQuery<TransformComponent> xformQuery)
+        int seed)
     {
         var markers = _markerChunks[component];
         var loadedMarkers = component.LoadedMarkers;
