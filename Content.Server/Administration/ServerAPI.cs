@@ -421,7 +421,7 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
-        var playerSupplied = context.RequestHeaders.TryGetValue("Username", out var username);
+        var playerSupplied = context.RequestHeaders.TryGetValue("Guid", out var guid);
         if (!playerSupplied)
         {
             _sawmill.Info($"Attempted to kick player without supplying a username by {actor!.Name}({actor!.Guid}).");
@@ -431,13 +431,20 @@ public sealed class ServerApi : IPostInjectInit
 
         var session = await RunOnMainThread(() =>
         {
-            _playerManager.TryGetSessionByUsername(username.ToString(), out var session);
-            return session;
+            // There is no function to get a session by GUID, so we have to iterate over all sessions and check their GUIDs.
+            foreach (var player in _playerManager.Sessions)
+            {
+                if (player.UserId.UserId.ToString() == guid.ToString())
+                {
+                    return player;
+                }
+            }
+            return null;
         });
 
         if (session == null)
         {
-            _sawmill.Info($"Attempted to kick player {username} by {actor!.Name}({actor!.Guid}), but they were not found.");
+            _sawmill.Info($"Attempted to kick player {guid} by {actor!.Name}({actor!.Guid}), but they were not found.");
             await context.RespondAsync("Player not found", HttpStatusCode.NotFound);
             return true;
         }
@@ -455,7 +462,7 @@ public sealed class ServerApi : IPostInjectInit
             _netManager.DisconnectChannel(session.Channel, reason.ToString());
         });
         await context.RespondAsync("Success", HttpStatusCode.OK);
-        _sawmill.Info("Kicked player {0} ({1}) by {2}({3})", username, reason, actor!.Name, actor!.Guid);
+        _sawmill.Info("Kicked player {0} ({1}) for {2} by {3}({4})", session.Name, session.UserId.UserId.ToString(), reason, actor!.Name, actor!.Guid);
         return true;
     }
 
