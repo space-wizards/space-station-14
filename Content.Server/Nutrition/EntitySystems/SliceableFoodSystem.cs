@@ -1,6 +1,7 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
@@ -8,6 +9,7 @@ using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -27,12 +29,12 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<SliceableFoodComponent, ComponentStartup>(OnComponentStartup);
         }
 
-        private void OnInteractUsing(Entity<SliceableFoodComponent> entity, ref InteractUsingEvent args)
+        private void OnInteractUsing(EntityUid uid, SliceableFoodComponent component, InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (TrySliceFood(entity, args.User, args.Used, entity.Comp))
+            if (TrySliceFood(uid, args.User, args.Used, component))
                 args.Handled = true;
         }
 
@@ -45,7 +47,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, food.Solution, out var soln, out var solution))
+            if (!_solutionContainerSystem.TryGetSolution(uid, food.Solution, out var solution))
             {
                 return false;
             }
@@ -57,7 +59,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var sliceUid = Slice(uid, user, component, transform);
 
-            var lostSolution = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume / FixedPoint2.New(component.Count));
+            var lostSolution = _solutionContainerSystem.SplitSolution(uid, solution,
+                solution.Volume / FixedPoint2.New(component.Count));
 
             // Fill new slice
             FillSlice(sliceUid, lostSolution);
@@ -134,26 +137,27 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             // Replace all reagents on prototype not just copying poisons (example: slices of eaten pizza should have less nutrition)
             if (TryComp<FoodComponent>(sliceUid, out var sliceFoodComp) &&
-                _solutionContainerSystem.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSoln, out var itsSolution))
+                _solutionContainerSystem.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSolution))
             {
-                _solutionContainerSystem.RemoveAllSolution(itsSoln.Value);
+                _solutionContainerSystem.RemoveAllSolution(sliceUid, itsSolution);
 
                 var lostSolutionPart = solution.SplitSolution(itsSolution.AvailableVolume);
-                _solutionContainerSystem.TryAddSolution(itsSoln.Value, lostSolutionPart);
+                _solutionContainerSystem.TryAddSolution(sliceUid, itsSolution, lostSolutionPart);
             }
         }
 
-        private void OnComponentStartup(Entity<SliceableFoodComponent> entity, ref ComponentStartup args)
+        private void OnComponentStartup(EntityUid uid, SliceableFoodComponent component, ComponentStartup args)
         {
-            entity.Comp.Count = entity.Comp.TotalCount;
+            component.Count = component.TotalCount;
+            var foodComp = EnsureComp<FoodComponent>(uid);
 
-            var foodComp = EnsureComp<FoodComponent>(entity);
-            _solutionContainerSystem.EnsureSolution(entity.Owner, foodComp.Solution);
+            EnsureComp<SolutionContainerManagerComponent>(uid);
+            _solutionContainerSystem.EnsureSolution(uid, foodComp.Solution);
         }
 
-        private void OnExamined(Entity<SliceableFoodComponent> entity, ref ExaminedEvent args)
+        private void OnExamined(EntityUid uid, SliceableFoodComponent component, ExaminedEvent args)
         {
-            args.PushMarkup(Loc.GetString("sliceable-food-component-on-examine-remaining-slices-text", ("remainingCount", entity.Comp.Count)));
+            args.PushMarkup(Loc.GetString("sliceable-food-component-on-examine-remaining-slices-text", ("remainingCount", component.Count)));
         }
     }
 }

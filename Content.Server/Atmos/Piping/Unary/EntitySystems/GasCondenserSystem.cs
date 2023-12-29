@@ -5,11 +5,10 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
@@ -19,7 +18,7 @@ public sealed class GasCondenserSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly PowerReceiverSystem _power = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private readonly SolutionContainerSystem _solution = default!;
 
     public override void Initialize()
     {
@@ -28,12 +27,12 @@ public sealed class GasCondenserSystem : EntitySystem
         SubscribeLocalEvent<GasCondenserComponent, AtmosDeviceUpdateEvent>(OnCondenserUpdated);
     }
 
-    private void OnCondenserUpdated(Entity<GasCondenserComponent> entity, ref AtmosDeviceUpdateEvent args)
+    private void OnCondenserUpdated(EntityUid uid, GasCondenserComponent component, ref AtmosDeviceUpdateEvent args)
     {
-        if (!(_power.IsPowered(entity) && TryComp<ApcPowerReceiverComponent>(entity, out var receiver))
-            || !TryComp<NodeContainerComponent>(entity, out var nodeContainer)
-            || !_nodeContainer.TryGetNode(nodeContainer, entity.Comp.Inlet, out PipeNode? inlet)
-            || !_solution.ResolveSolution(entity.Owner, entity.Comp.SolutionId, ref entity.Comp.Solution, out var solution))
+        if (!(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
+            || !TryComp<NodeContainerComponent>(uid, out var nodeContainer)
+            || !_nodeContainer.TryGetNode(nodeContainer, component.Inlet, out PipeNode? inlet)
+            || !_solution.TryGetSolution(uid, component.SolutionId, out var solution))
         {
             return;
         }
@@ -49,21 +48,18 @@ public sealed class GasCondenserSystem : EntitySystem
             if (moles <= 0)
                 continue;
 
-            if (_atmosphereSystem.GetGas(i).Reagent is not { } gasReagent)
+            if (_atmosphereSystem.GetGas(i).Reagent is not {} gasReagent)
                 continue;
 
-            var moleToReagentMultiplier = entity.Comp.MolesToReagentMultiplier;
-            var amount = FixedPoint2.Min(FixedPoint2.New(moles * moleToReagentMultiplier), solution.AvailableVolume);
-            if (amount <= 0)
-                continue;
+            var moleToReagentMultiplier = component.MolesToReagentMultiplier;
+            var amount = moles * moleToReagentMultiplier;
 
-            solution.AddReagent(gasReagent, amount);
+            if (_solution.TryAddReagent(uid, solution, gasReagent, amount, out var remaining))
+                continue;
 
             // if we have leftover reagent, then convert it back to moles and put it back in the mixture.
-            inlet.Air.AdjustMoles(i, moles - (amount.Float() / moleToReagentMultiplier));
+            inlet.Air.AdjustMoles(i, remaining.Float() / moleToReagentMultiplier);
         }
-
-        _solution.UpdateChemicals(entity.Comp.Solution.Value);
     }
 
     public float NumberOfMolesToConvert(ApcPowerReceiverComponent comp, GasMixture mix, float dt)

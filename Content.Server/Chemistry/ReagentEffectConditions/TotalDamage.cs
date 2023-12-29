@@ -7,10 +7,10 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 {
     public sealed partial class TotalDamage : ReagentEffectCondition
     {
-        [DataField]
+        [DataField("max")]
         public FixedPoint2 Max = FixedPoint2.MaxValue;
 
-        [DataField]
+        [DataField("min")]
         public FixedPoint2 Min = FixedPoint2.Zero;
 
         public override bool Condition(ReagentEffectArgs args)

@@ -10,13 +10,13 @@ public sealed partial class AdjustAlert : ReagentEffect
     [DataField("alertType", required: true)]
     public AlertType Type;
 
-    [DataField]
+    [DataField("clear")]
     public bool Clear;
 
-    [DataField]
+    [DataField("cooldown")]
     public bool Cooldown;
 
-    [DataField]
+    [DataField("time")]
     public float Time;
 
     //JUSTIFICATION: This just changes some visuals, doesn't need to be documented.

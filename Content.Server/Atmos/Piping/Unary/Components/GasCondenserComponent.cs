@@ -1,5 +1,4 @@
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
-using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Atmos.Piping.Unary.Components;
 
@@ -21,12 +20,6 @@ public sealed partial class GasCondenserComponent : Component
     /// </summary>
     [DataField]
     public string SolutionId = "tank";
-
-    /// <summary>
-    /// The solution that gases are condensed into.
-    /// </summary>
-    [DataField]
-    public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>
     /// For a condenser, how many U of reagents are given per each mole of gas.

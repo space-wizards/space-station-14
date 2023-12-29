@@ -1,6 +1,6 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReagentEffects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
@@ -61,7 +61,7 @@ public sealed class DrinkSystem : EntitySystem
         base.Initialize();
 
         // TODO add InteractNoHandEvent for entities like mice.
-        SubscribeLocalEvent<DrinkComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<DrinkComponent, SolutionChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<DrinkComponent, ComponentInit>(OnDrinkInit);
         // run before inventory so for bucket it always tries to drink before equipping (when empty)
         // run after openable so its always open -> drink
@@ -80,7 +80,7 @@ public sealed class DrinkSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return FixedPoint2.Zero;
 
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out _, out var sol))
+        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var sol))
             return FixedPoint2.Zero;
 
         return sol.Volume;
@@ -102,7 +102,7 @@ public sealed class DrinkSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return 0f;
 
-        if (!_solutionContainer.TryGetSolution(uid, comp.Solution, out _, out var solution))
+        if (!_solutionContainer.TryGetSolution(uid, comp.Solution, out var solution))
             return 0f;
 
         var total = 0f;
@@ -128,31 +128,31 @@ public sealed class DrinkSystem : EntitySystem
         return total;
     }
 
-    private void OnExamined(Entity<DrinkComponent> entity, ref ExaminedEvent args)
+    private void OnExamined(EntityUid uid, DrinkComponent component, ExaminedEvent args)
     {
-        var hasOpenable = TryComp<OpenableComponent>(entity, out var openable);
-        if (_openable.IsClosed(entity.Owner, null, openable) || !args.IsInDetailsRange || !entity.Comp.Examinable)
+        var hasOpenable = TryComp<OpenableComponent>(uid, out var openable);
+        if (_openable.IsClosed(uid, null, openable) || !args.IsInDetailsRange || !component.Examinable)
             return;
 
         // put Empty / Xu after Opened, or start a new line
         args.Message.AddMarkup(hasOpenable ? " - " : "\n");
 
-        var empty = IsEmpty(entity, entity.Comp);
+        var empty = IsEmpty(uid, component);
         if (empty)
         {
             args.Message.AddMarkup(Loc.GetString("drink-component-on-examine-is-empty"));
             return;
         }
 
-        if (TryComp<ExaminableSolutionComponent>(entity, out var comp))
+        if (TryComp<ExaminableSolutionComponent>(uid, out var comp))
         {
             //provide exact measurement for beakers
-            args.Message.AddMarkup(Loc.GetString("drink-component-on-examine-exact-volume", ("amount", DrinkVolume(entity, entity.Comp))));
+            args.Message.AddMarkup(Loc.GetString("drink-component-on-examine-exact-volume", ("amount", DrinkVolume(uid, component))));
         }
         else
         {
             //general approximation
-            var remainingString = (int) _solutionContainer.PercentFull(entity) switch
+            var remainingString = (int) _solutionContainer.PercentFull(uid) switch
             {
                 100 => "drink-component-on-examine-is-full",
                 > 66 => "drink-component-on-examine-is-mostly-full",
@@ -163,65 +163,65 @@ public sealed class DrinkSystem : EntitySystem
         }
     }
 
-    private void AfterInteract(Entity<DrinkComponent> entity, ref AfterInteractEvent args)
+    private void AfterInteract(EntityUid uid, DrinkComponent component, AfterInteractEvent args)
     {
         if (args.Handled || args.Target == null || !args.CanReach)
             return;
 
-        args.Handled = TryDrink(args.User, args.Target.Value, entity.Comp, entity);
+        args.Handled = TryDrink(args.User, args.Target.Value, component, uid);
     }
 
-    private void OnUse(Entity<DrinkComponent> entity, ref UseInHandEvent args)
+    private void OnUse(EntityUid uid, DrinkComponent component, UseInHandEvent args)
     {
         if (args.Handled)
             return;
 
-        args.Handled = TryDrink(args.User, args.User, entity.Comp, entity);
+        args.Handled = TryDrink(args.User, args.User, component, uid);
     }
 
-    private void OnPressurizedDrinkLand(Entity<PressurizedDrinkComponent> entity, ref LandEvent args)
+    private void OnPressurizedDrinkLand(EntityUid uid, PressurizedDrinkComponent comp, ref LandEvent args)
     {
-        if (!TryComp<DrinkComponent>(entity, out var drink) || !TryComp<OpenableComponent>(entity, out var openable))
+        if (!TryComp<DrinkComponent>(uid, out var drink) || !TryComp<OpenableComponent>(uid, out var openable))
             return;
 
         if (!openable.Opened &&
-            _random.Prob(entity.Comp.BurstChance) &&
-            _solutionContainer.TryGetSolution(entity.Owner, drink.Solution, out var soln, out var interactions))
+            _random.Prob(comp.BurstChance) &&
+            _solutionContainer.TryGetSolution(uid, drink.Solution, out var interactions))
         {
             // using SetOpen instead of TryOpen to not play 2 sounds
-            _openable.SetOpen(entity, true, openable);
+            _openable.SetOpen(uid, true, openable);
 
-            var solution = _solutionContainer.SplitSolution(soln.Value, interactions.Volume);
-            _puddle.TrySpillAt(entity, solution, out _);
+            var solution = _solutionContainer.SplitSolution(uid, interactions, interactions.Volume);
+            _puddle.TrySpillAt(uid, solution, out _);
 
-            _audio.PlayPvs(entity.Comp.BurstSound, entity);
+            _audio.PlayPvs(comp.BurstSound, uid);
         }
     }
 
-    private void OnDrinkInit(Entity<DrinkComponent> entity, ref ComponentInit args)
+    private void OnDrinkInit(EntityUid uid, DrinkComponent component, ComponentInit args)
     {
-        if (TryComp<DrainableSolutionComponent>(entity, out var existingDrainable))
+        if (TryComp<DrainableSolutionComponent>(uid, out var existingDrainable))
         {
             // Beakers have Drink component but they should use the existing Drainable
-            entity.Comp.Solution = existingDrainable.Solution;
+            component.Solution = existingDrainable.Solution;
         }
         else
         {
-            _solutionContainer.EnsureSolution(entity.Owner, entity.Comp.Solution);
+            _solutionContainer.EnsureSolution(uid, component.Solution);
         }
 
-        UpdateAppearance(entity, entity.Comp);
+        UpdateAppearance(uid, component);
 
-        if (TryComp(entity, out RefillableSolutionComponent? refillComp))
-            refillComp.Solution = entity.Comp.Solution;
+        if (TryComp(uid, out RefillableSolutionComponent? refillComp))
+            refillComp.Solution = component.Solution;
 
-        if (TryComp(entity, out DrainableSolutionComponent? drainComp))
-            drainComp.Solution = entity.Comp.Solution;
+        if (TryComp(uid, out DrainableSolutionComponent? drainComp))
+            drainComp.Solution = component.Solution;
     }
 
-    private void OnSolutionChange(Entity<DrinkComponent> entity, ref SolutionContainerChangedEvent args)
+    private void OnSolutionChange(EntityUid uid, DrinkComponent component, SolutionChangedEvent args)
     {
-        UpdateAppearance(entity, entity.Comp);
+        UpdateAppearance(uid, component);
     }
 
     public void UpdateAppearance(EntityUid uid, DrinkComponent component)
@@ -244,7 +244,8 @@ public sealed class DrinkSystem : EntitySystem
         if (_openable.IsClosed(item, user))
             return true;
 
-        if (!_solutionContainer.TryGetSolution(item, drink.Solution, out _, out var drinkSolution) || drinkSolution.Volume <= 0)
+        if (!_solutionContainer.TryGetSolution(item, drink.Solution, out var drinkSolution) ||
+            drinkSolution.Volume <= 0)
         {
             if (drink.IgnoreEmpty)
                 return false;
@@ -252,6 +253,9 @@ public sealed class DrinkSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", item)), item, user);
             return true;
         }
+
+        if (drinkSolution.Name == null)
+            return false;
 
         if (_food.IsMouthBlocked(target, user))
             return true;
@@ -281,7 +285,7 @@ public sealed class DrinkSystem : EntitySystem
         var doAfterEventArgs = new DoAfterArgs(EntityManager,
             user,
             forceDrink ? drink.ForceFeedDelay : drink.Delay,
-            new ConsumeDoAfterEvent(drink.Solution, flavors),
+            new ConsumeDoAfterEvent(drinkSolution.Name, flavors),
             eventTarget: item,
             target: target,
             used: item)
@@ -303,15 +307,15 @@ public sealed class DrinkSystem : EntitySystem
     /// <summary>
     ///     Raised directed at a victim when someone has force fed them a drink.
     /// </summary>
-    private void OnDoAfter(Entity<DrinkComponent> entity, ref ConsumeDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, DrinkComponent component, ConsumeDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || entity.Comp.Deleted)
+        if (args.Handled || args.Cancelled || component.Deleted)
             return;
 
         if (!TryComp<BodyComponent>(args.Target, out var body))
             return;
 
-        if (args.Used is null || !_solutionContainer.TryGetSolution(args.Used.Value, args.Solution, out var soln, out var solution))
+        if (!_solutionContainer.TryGetSolution(args.Used, args.Solution, out var solution))
             return;
 
         // TODO this should really be checked every tick.
@@ -322,8 +326,8 @@ public sealed class DrinkSystem : EntitySystem
         if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
             return;
 
-        var transferAmount = FixedPoint2.Min(entity.Comp.TransferAmount, solution.Volume);
-        var drained = _solutionContainer.SplitSolution(soln.Value, transferAmount);
+        var transferAmount = FixedPoint2.Min(component.TransferAmount, solution.Volume);
+        var drained = _solutionContainer.SplitSolution(uid, solution, transferAmount);
         var forceDrink = args.User != args.Target;
 
         args.Handled = true;
@@ -340,11 +344,11 @@ public sealed class DrinkSystem : EntitySystem
                 return;
             }
 
-            _solutionContainer.Refill(args.Target.Value, soln.Value, drained);
+            _solutionContainer.Refill(args.Target.Value, solution, drained);
             return;
         }
 
-        var firstStomach = stomachs.FirstOrNull(stomach => _stomach.CanTransferSolution(stomach.Comp.Owner, drained, stomach.Comp));
+        var firstStomach = stomachs.FirstOrNull(stomach => _stomach.CanTransferSolution(stomach.Comp.Owner, drained));
 
         //All stomachs are full or can't handle whatever solution we have.
         if (firstStomach == null)
@@ -357,7 +361,7 @@ public sealed class DrinkSystem : EntitySystem
                 _puddle.TrySpillAt(args.Target.Value, drained, out _);
             }
             else
-                _solutionContainer.TryAddSolution(soln.Value, drained);
+                _solutionContainer.TryAddSolution(uid, solution, drained);
 
             return;
         }
@@ -376,7 +380,7 @@ public sealed class DrinkSystem : EntitySystem
                 args.User, args.User);
 
             // log successful forced drinking
-            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity.Owner):user} forced {ToPrettyString(args.User):target} to drink {ToPrettyString(entity.Owner):drink}");
+            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.User):target} to drink {ToPrettyString(uid):drink}");
         }
         else
         {
@@ -387,24 +391,24 @@ public sealed class DrinkSystem : EntitySystem
                 Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.PvsExcept(args.User), true);
 
             // log successful voluntary drinking
-            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} drank {ToPrettyString(entity.Owner):drink}");
+            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} drank {ToPrettyString(uid):drink}");
         }
 
-        _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-2f));
+        _audio.PlayPvs(component.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-2f));
 
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
         //TODO: Grab the stomach UIDs somehow without using Owner
         _stomach.TryTransferSolution(firstStomach.Value.Comp.Owner, drained, firstStomach.Value.Comp);
 
-        _forensics.TransferDna(entity, args.Target.Value);
+        _forensics.TransferDna(uid, args.Target.Value);
 
         if (!forceDrink && solution.Volume > 0)
             args.Repeat = true;
     }
 
-    private void AddDrinkVerb(Entity<DrinkComponent> entity, ref GetVerbsEvent<AlternativeVerb> ev)
+    private void AddDrinkVerb(EntityUid uid, DrinkComponent component, GetVerbsEvent<AlternativeVerb> ev)
     {
-        if (entity.Owner == ev.User ||
+        if (uid == ev.User ||
             !ev.CanInteract ||
             !ev.CanAccess ||
             !TryComp<BodyComponent>(ev.User, out var body) ||
@@ -412,17 +416,16 @@ public sealed class DrinkSystem : EntitySystem
             return;
 
         // no drinking from living drinks, have to kill them first.
-        if (_mobState.IsAlive(entity))
+        if (_mobState.IsAlive(uid))
             return;
 
-        var user = ev.User;
         AlternativeVerb verb = new()
         {
             Act = () =>
             {
-                TryDrink(user, user, entity.Comp, entity);
+                TryDrink(ev.User, ev.User, component, uid);
             },
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/drink.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/drink.svg.192dpi.png")),
             Text = Loc.GetString("drink-system-verb-drink"),
             Priority = 2
         };

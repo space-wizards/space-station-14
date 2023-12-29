@@ -7,7 +7,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 {
     public sealed partial class AdjustTemperature : ReagentEffect
     {
-        [DataField]
+        [DataField("amount")]
         public float Amount;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

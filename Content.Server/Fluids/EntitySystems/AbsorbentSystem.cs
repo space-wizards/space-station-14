@@ -1,4 +1,3 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -25,7 +24,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
     [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
@@ -34,7 +33,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         SubscribeLocalEvent<AbsorbentComponent, ComponentInit>(OnAbsorbentInit);
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<AbsorbentComponent, InteractNoHandEvent>(OnInteractNoHand);
-        SubscribeLocalEvent<AbsorbentComponent, SolutionContainerChangedEvent>(OnAbsorbentSolutionChange);
+        SubscribeLocalEvent<AbsorbentComponent, SolutionChangedEvent>(OnAbsorbentSolutionChange);
     }
 
     private void OnAbsorbentInit(EntityUid uid, AbsorbentComponent component, ComponentInit args)
@@ -43,14 +42,14 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         UpdateAbsorbent(uid, component);
     }
 
-    private void OnAbsorbentSolutionChange(EntityUid uid, AbsorbentComponent component, ref SolutionContainerChangedEvent args)
+    private void OnAbsorbentSolutionChange(EntityUid uid, AbsorbentComponent component, SolutionChangedEvent args)
     {
         UpdateAbsorbent(uid, component);
     }
 
     private void UpdateAbsorbent(EntityUid uid, AbsorbentComponent component)
     {
-        if (!_solutionContainerSystem.TryGetSolution(uid, AbsorbentComponent.SolutionName, out _, out var solution))
+        if (!_solutionSystem.TryGetSolution(uid, AbsorbentComponent.SolutionName, out var solution))
             return;
 
         var oldProgress = component.Progress.ShallowClone();
@@ -103,17 +102,17 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
     public void Mop(EntityUid user, EntityUid target, EntityUid used, AbsorbentComponent component)
     {
-        if (!_solutionContainerSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorberSoln))
+        if (!_solutionSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorbentSolution))
             return;
 
         if (_useDelay.ActiveDelay(used))
             return;
 
         // If it's a puddle try to grab from
-        if (!TryPuddleInteract(user, used, target, component, absorberSoln.Value))
+        if (!TryPuddleInteract(user, used, target, component, absorbentSolution))
         {
             // If it's refillable try to transfer
-            if (!TryRefillableInteract(user, used, target, component, absorberSoln.Value))
+            if (!TryRefillableInteract(user, used, target, component, absorbentSolution))
                 return;
         }
     }
@@ -121,24 +120,24 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     /// <summary>
     ///     Logic for an absorbing entity interacting with a refillable.
     /// </summary>
-    private bool TryRefillableInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent component, Entity<SolutionComponent> absorbentSoln)
+    private bool TryRefillableInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent component, Solution absorbentSolution)
     {
         if (!TryComp(target, out RefillableSolutionComponent? refillable))
             return false;
 
-        if (!_solutionContainerSystem.TryGetRefillableSolution((target, refillable, null), out var refillableSoln, out var refillableSolution))
+        if (!_solutionSystem.TryGetRefillableSolution(target, out var refillableSolution, refillable: refillable))
             return false;
 
         if (refillableSolution.Volume <= 0)
         {
             // Target empty - only transfer absorbent contents into refillable
-            if (!TryTransferFromAbsorbentToRefillable(user, used, target, component, absorbentSoln, refillableSoln.Value))
+            if (!TryTransferFromAbsorbentToRefillable(user, used, target, component, absorbentSolution, refillableSolution))
                 return false;
         }
         else
         {
             // Target non-empty - do a two-way transfer
-            if (!TryTwoWayAbsorbentRefillableTransfer(user, used, target, component, absorbentSoln, refillableSoln.Value))
+            if (!TryTwoWayAbsorbentRefillableTransfer(user, used, target, component, absorbentSolution, refillableSolution))
                 return false;
         }
 
@@ -155,17 +154,15 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         EntityUid used,
         EntityUid target,
         AbsorbentComponent component,
-        Entity<SolutionComponent> absorbentSoln,
-        Entity<SolutionComponent> refillableSoln)
+        Solution absorbentSolution,
+        Solution refillableSolution)
     {
-        var absorbentSolution = absorbentSoln.Comp.Solution;
         if (absorbentSolution.Volume <= 0)
         {
             _popups.PopupEntity(Loc.GetString("mopping-system-target-container-empty", ("target", target)), user, user);
             return false;
         }
 
-        var refillableSolution = refillableSoln.Comp.Solution;
         var transferAmount = component.PickupAmount < refillableSolution.AvailableVolume ?
             component.PickupAmount :
             refillableSolution.AvailableVolume;
@@ -177,15 +174,17 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         }
 
         // Prioritize transferring non-evaporatives if absorbent has any
-        var contaminants = _solutionContainerSystem.SplitSolutionWithout(absorbentSoln, transferAmount, PuddleSystem.EvaporationReagents);
+        var contaminants = absorbentSolution.SplitSolutionWithout(transferAmount, PuddleSystem.EvaporationReagents);
         if (contaminants.Volume > 0)
         {
-            _solutionContainerSystem.TryAddSolution(refillableSoln, contaminants);
+            _solutionSystem.UpdateChemicals(used, absorbentSolution, true);
+            _solutionSystem.TryAddSolution(target, refillableSolution, contaminants);
         }
         else
         {
-            var evaporatives = _solutionContainerSystem.SplitSolution(absorbentSoln, transferAmount);
-            _solutionContainerSystem.TryAddSolution(refillableSoln, evaporatives);
+            var evaporatives = absorbentSolution.SplitSolution(transferAmount);
+            _solutionSystem.UpdateChemicals(used, absorbentSolution, true);
+            _solutionSystem.TryAddSolution(target, refillableSolution, evaporatives);
         }
 
         return true;
@@ -199,12 +198,12 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         EntityUid used,
         EntityUid target,
         AbsorbentComponent component,
-        Entity<SolutionComponent> absorbentSoln,
-        Entity<SolutionComponent> refillableSoln)
+        Solution absorbentSolution,
+        Solution refillableSolution)
     {
-        var contaminantsFromAbsorbent = _solutionContainerSystem.SplitSolutionWithout(absorbentSoln, component.PickupAmount, PuddleSystem.EvaporationReagents);
+        var contaminantsFromAbsorbent = absorbentSolution.SplitSolutionWithout(component.PickupAmount, PuddleSystem.EvaporationReagents);
+        _solutionSystem.UpdateChemicals(used, absorbentSolution, true);
 
-        var absorbentSolution = absorbentSoln.Comp.Solution;
         if (contaminantsFromAbsorbent.Volume == FixedPoint2.Zero && absorbentSolution.AvailableVolume == FixedPoint2.Zero)
         {
             // Nothing to transfer to refillable and no room to absorb anything extra
@@ -218,9 +217,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             component.PickupAmount :
             absorbentSolution.AvailableVolume;
 
-        var refillableSolution = refillableSoln.Comp.Solution;
         var waterFromRefillable = refillableSolution.SplitSolutionWithOnly(waterPulled, PuddleSystem.EvaporationReagents);
-        _solutionContainerSystem.UpdateChemicals(refillableSoln);
+        _solutionSystem.UpdateChemicals(target, refillableSolution);
 
         if (waterFromRefillable.Volume == FixedPoint2.Zero && contaminantsFromAbsorbent.Volume == FixedPoint2.Zero)
         {
@@ -236,7 +234,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         if (waterFromRefillable.Volume > FixedPoint2.Zero)
         {
             // transfer water to absorbent
-            _solutionContainerSystem.TryAddSolution(absorbentSoln, waterFromRefillable);
+            _solutionSystem.TryAddSolution(used, absorbentSolution, waterFromRefillable);
             anyTransferOccurred = true;
         }
 
@@ -250,12 +248,12 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             {
                 // transfer as much contaminants to refillable as will fit
                 var contaminantsForRefillable = contaminantsFromAbsorbent.SplitSolution(refillableSolution.AvailableVolume);
-                _solutionContainerSystem.TryAddSolution(refillableSoln, contaminantsForRefillable);
+                _solutionSystem.TryAddSolution(target, refillableSolution, contaminantsForRefillable);
                 anyTransferOccurred = true;
             }
 
             // absorb everything that did not fit in the refillable back by the absorbent
-            _solutionContainerSystem.TryAddSolution(absorbentSoln, contaminantsFromAbsorbent);
+            _solutionSystem.TryAddSolution(used, absorbentSolution, contaminantsFromAbsorbent);
         }
 
         return anyTransferOccurred;
@@ -264,24 +262,23 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     /// <summary>
     ///     Logic for an absorbing entity interacting with a puddle.
     /// </summary>
-    private bool TryPuddleInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent absorber, Entity<SolutionComponent> absorberSoln)
+    private bool TryPuddleInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent absorber, Solution absorberSoln)
     {
         if (!TryComp(target, out PuddleComponent? puddle))
             return false;
 
-        if (!_solutionContainerSystem.ResolveSolution(target, puddle.SolutionName, ref puddle.Solution, out var puddleSolution) || puddleSolution.Volume <= 0)
+        if (!_solutionSystem.TryGetSolution(target, puddle.SolutionName, out var puddleSoln) || puddleSoln.Volume <= 0)
             return false;
 
         // Check if the puddle has any non-evaporative reagents
-        if (_puddleSystem.CanFullyEvaporate(puddleSolution))
+        if (_puddleSystem.CanFullyEvaporate(puddleSoln))
         {
             _popups.PopupEntity(Loc.GetString("mopping-system-puddle-evaporate", ("target", target)), user, user);
             return true;
         }
 
         // Check if we have any evaporative reagents on our absorber to transfer
-        var absorberSolution = absorberSoln.Comp.Solution;
-        var available = absorberSolution.GetTotalPrototypeQuantity(PuddleSystem.EvaporationReagents);
+        var available = absorberSoln.GetTotalPrototypeQuantity(PuddleSystem.EvaporationReagents);
 
         // No material
         if (available == FixedPoint2.Zero)
@@ -293,8 +290,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         var transferMax = absorber.PickupAmount;
         var transferAmount = available > transferMax ? transferMax : available;
 
-        var puddleSplit = puddleSolution.SplitSolutionWithout(transferAmount, PuddleSystem.EvaporationReagents);
-        var absorberSplit = absorberSolution.SplitSolutionWithOnly(puddleSplit.Volume, PuddleSystem.EvaporationReagents);
+        var puddleSplit = puddleSoln.SplitSolutionWithout(transferAmount, PuddleSystem.EvaporationReagents);
+        var absorberSplit = absorberSoln.SplitSolutionWithOnly(puddleSplit.Volume, PuddleSystem.EvaporationReagents);
 
         // Do tile reactions first
         var coordinates = Transform(target).Coordinates;
@@ -303,9 +300,11 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             _puddleSystem.DoTileReactions(mapGrid.GetTileRef(coordinates), absorberSplit);
         }
 
-        _solutionContainerSystem.AddSolution(puddle.Solution.Value, absorberSplit);
-        _solutionContainerSystem.AddSolution(absorberSoln, puddleSplit);
+        puddleSoln.AddSolution(absorberSplit, _prototype);
+        absorberSoln.AddSolution(puddleSplit, _prototype);
 
+        _solutionSystem.UpdateChemicals(used, absorberSoln);
+        _solutionSystem.UpdateChemicals(target, puddleSoln);
         _audio.PlayPvs(absorber.PickupSound, target);
         _useDelay.BeginDelay(used);
 

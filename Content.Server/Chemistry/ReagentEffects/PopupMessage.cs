@@ -8,13 +8,13 @@ namespace Content.Server.Chemistry.ReagentEffects
 {
     public sealed partial class PopupMessage : ReagentEffect
     {
-        [DataField(required: true)]
+        [DataField("messages", required: true)]
         public string[] Messages = default!;
 
-        [DataField]
+        [DataField("type")]
         public PopupRecipients Type = PopupRecipients.Local;
 
-        [DataField]
+        [DataField("visualType")]
         public PopupType VisualType = PopupType.Small;
 
         // JUSTIFICATION: This is purely cosmetic.

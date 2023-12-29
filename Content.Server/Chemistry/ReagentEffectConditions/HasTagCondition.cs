@@ -9,10 +9,10 @@ namespace Content.Server.Chemistry.ReagentEffectConditions;
 [UsedImplicitly]
 public sealed partial class HasTag : ReagentEffectCondition
 {
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
+    [DataField("tag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
     public string Tag = default!;
 
-    [DataField]
+    [DataField("invert")]
     public bool Invert = false;
 
     public override bool Condition(ReagentEffectArgs args)

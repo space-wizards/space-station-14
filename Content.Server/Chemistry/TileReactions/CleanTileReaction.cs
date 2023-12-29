@@ -1,12 +1,12 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
+using System.Linq;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using System.Linq;
 
 namespace Content.Server.Chemistry.TileReactions;
 
@@ -28,7 +28,7 @@ public sealed partial class CleanTileReaction : ITileReaction
     /// <summary>
     /// What reagent to replace the tile conents with.
     /// </summary>
-    [DataField("reagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+    [DataField("reagent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
     public string ReplacementReagent = "Water";
 
     FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
@@ -43,16 +43,17 @@ public sealed partial class CleanTileReaction : ITileReaction
         foreach (var entity in entities)
         {
             if (!puddleQuery.TryGetComponent(entity, out var puddle) ||
-                !solutionContainerSystem.TryGetSolution(entity, puddle.SolutionName, out var puddleSolution, out _))
+                !solutionContainerSystem.TryGetSolution(entity, puddle.SolutionName, out var puddleSolution))
             {
                 continue;
             }
 
-            var purgeable = solutionContainerSystem.SplitSolutionWithout(puddleSolution.Value, purgeAmount, ReplacementReagent, reagent.ID);
+            var purgeable =
+                solutionContainerSystem.SplitSolutionWithout(entity, puddleSolution, purgeAmount, ReplacementReagent, reagent.ID);
 
             purgeAmount -= purgeable.Volume;
 
-            solutionContainerSystem.TryAddSolution(puddleSolution.Value, new Solution(ReplacementReagent, purgeable.Volume));
+            solutionContainerSystem.TryAddSolution(entity, puddleSolution, new Solution(ReplacementReagent, purgeable.Volume));
 
             if (purgeable.Volume <= FixedPoint2.Zero)
                 break;

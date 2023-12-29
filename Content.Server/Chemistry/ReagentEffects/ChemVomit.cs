@@ -1,5 +1,5 @@
-using Content.Server.Medical;
 using Content.Shared.Chemistry.Reagent;
+using Content.Server.Medical;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
@@ -12,10 +12,10 @@ namespace Content.Server.Chemistry.ReagentEffects
     public sealed partial class ChemVomit : ReagentEffect
     {
         /// How many units of thirst to add each time we vomit
-        [DataField]
+        [DataField("thirstAmount")]
         public float ThirstAmount = -8f;
         /// How many units of hunger to add each time we vomit
-        [DataField]
+        [DataField("hungerAmount")]
         public float HungerAmount = -8f;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
