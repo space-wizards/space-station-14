@@ -43,6 +43,8 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/beergoggles.rsi
   - type: ShowThirstIcons
+  - type: StealTarget
+    stealGroup: ClothingEyesHudBeer
   - type: SolutionScanner
 
 - type: entity

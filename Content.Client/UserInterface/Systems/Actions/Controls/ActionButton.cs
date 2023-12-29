@@ -191,6 +191,12 @@ public sealed class ActionButton : Control, IEntityControl
         var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityName));
         var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityDescription));
 
+        if (_action is { Charges: not null })
+        {
+            var charges = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {_action.Charges.Value.ToString()}/{_action.MaxCharges.ToString()}"));
+            return new ActionAlertTooltip(name, decr, charges: charges);
+        }
+
         return new ActionAlertTooltip(name, decr);
     }
 

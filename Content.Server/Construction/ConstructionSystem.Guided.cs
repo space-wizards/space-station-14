@@ -69,9 +69,16 @@ namespace Content.Server.Construction
         {
             if (GetTargetNode(uid, component) is {} target)
             {
-                args.PushMarkup(Loc.GetString(
-                    "construction-component-to-create-header",
-                    ("targetName", target.Name)) + "\n");
+                if (target.Name == component.DeconstructionNode)
+                {
+                    args.PushMarkup(Loc.GetString("deconstruction-header-text") + "\n");
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString(
+                        "construction-component-to-create-header",
+                        ("targetName", target.Name)) + "\n");
+                }
             }
 
             if (component.EdgeIndex == null && GetTargetEdge(uid, component) is {} targetEdge)

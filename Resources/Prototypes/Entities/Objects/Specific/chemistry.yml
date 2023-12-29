@@ -62,6 +62,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpillBehavior
         solution: beaker
       - !type:SpawnEntitiesBehavior

@@ -228,8 +228,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     public void UpdateAppearance(EntityUid uid, Solution solution,
         AppearanceComponent? appearanceComponent = null)
     {
-        if (!EntityManager.EntityExists(uid)
-            || !Resolve(uid, ref appearanceComponent, false))
+        if (!HasComp<SolutionContainerVisualsComponent>(uid) || !Resolve(uid, ref appearanceComponent, false))
             return;
 
         _appearance.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
@@ -372,6 +371,22 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         UpdateChemicals(targetUid, targetSolution, true);
         return acceptedQuantity == reagentQuantity.Quantity;
+    }
+
+    /// <summary>
+    ///     Adds reagent of an Id to the container.
+    /// </summary>
+    /// <param name="targetUid"></param>
+    /// <param name="targetSolution">Container to which we are adding reagent</param>
+    /// <param name="prototype">The Id of the reagent to add.</param>
+    /// <param name="quantity">The amount of reagent to add.</param>
+    /// <returns>If all the reagent could be added.</returns>
+    [PublicAPI]
+    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string prototype, FixedPoint2 quantity,
+        float? temperature = null, ReagentData? data = null)
+    {
+        var reagent = new ReagentQuantity(prototype, quantity, data);
+        return TryAddReagent(targetUid, targetSolution, reagent, out _, temperature);
     }
 
     /// <summary>
