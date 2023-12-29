@@ -14,6 +14,14 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
         IoCManager.InjectDependencies(this);
     }
 
+    protected override void Open()
+    {
+        base.Open();
+        _window = new OfferingWindow();
+        _window.OnClose += Close;
+        _window.OpenCentered();
+    }
+
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);

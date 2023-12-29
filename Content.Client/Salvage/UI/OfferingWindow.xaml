@@ -4,7 +4,7 @@
                       MinSize="800 360">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal" Name="ProgressionBox">
-            <Label Name="NextOfferLabel"
+            <Label Name="ProgressionLabel"
                    Text="{Loc 'salvage-expedition-window-progression'}"
                    Margin="5"/>
             <ProgressBar Name="ProgressionBar"

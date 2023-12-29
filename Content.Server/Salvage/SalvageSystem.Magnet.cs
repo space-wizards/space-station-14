@@ -12,6 +12,8 @@ public sealed partial class SalvageSystem
         SubscribeLocalEvent<SalvageMagnetTargetComponent, GridSplitEvent>(OnMagnetTargetSplit);
 
         SubscribeLocalEvent<SalvageMagnetComponent, MagnetClaimOfferEvent>(OnMagnetClaim);
+        SubscribeLocalEvent<SalvageMagnetComponent, ComponentStartup>(OnMagnetStartup);
+        SubscribeLocalEvent<SalvageMagnetComponent, AnchorStateChangedEvent>(OnMagnetAnchored);
     }
 
     private void OnMagnetClaim(EntityUid uid, SalvageMagnetComponent component, ref MagnetClaimOfferEvent args)
@@ -30,6 +32,19 @@ public sealed partial class SalvageSystem
         }
 
         TakeMagnetOffer((station.Value, dataComp), args.Index, uid);
+    }
+
+    private void OnMagnetStartup(EntityUid uid, SalvageMagnetComponent component, ComponentStartup args)
+    {
+        UpdateMagnetUI((uid, component), Transform(uid));
+    }
+
+    private void OnMagnetAnchored(EntityUid uid, SalvageMagnetComponent component, ref AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
+            return;
+
+        UpdateMagnetUI((uid, component), args.Transform);
     }
 
     private void OnMagnetDataMapInit(EntityUid uid, SalvageMagnetDataComponent component, ref MapInitEvent args)
@@ -110,13 +125,30 @@ public sealed partial class SalvageSystem
         UpdateMagnetUIs(data);
     }
 
+    private void UpdateMagnetUI(Entity<SalvageMagnetComponent> entity, TransformComponent xform)
+    {
+        var station = _station.GetOwningStation(entity);
+
+        if (!TryComp(station, out SalvageMagnetDataComponent? dataComp))
+            return;
+
+        _ui.TrySetUiState(entity, SalvageMagnetUiKey.Key,
+            new SalvageMagnetBoundUserInterfaceState(dataComp.Offered)
+            {
+                Cooldown = dataComp.OfferCooldown,
+                Duration = dataComp.ActiveTime,
+                EndTime = dataComp.EndTime,
+                NextOffer = dataComp.NextOffer
+            });
+    }
+
     private void UpdateMagnetUIs(Entity<SalvageMagnetDataComponent> data)
     {
         var query = AllEntityQuery<SalvageMagnetComponent, TransformComponent>();
 
         while (query.MoveNext(out var magnetUid, out var magnet, out var xform))
         {
-            var station = _station.GetOwningStation(magnetUid);
+            var station = _station.GetOwningStation(magnetUid, xform);
 
             if (station != data.Owner)
                 continue;
