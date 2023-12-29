@@ -172,6 +172,7 @@
       tags:
         - CigPack
         - Taser
+        - SecBeltEquip
       components:
         - Stunbaton
         - FlashOnTrigger

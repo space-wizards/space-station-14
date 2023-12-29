@@ -231,6 +231,9 @@
   name: Tourniquet
   description: Stops bleeding! Hopefully.
   components:
+    - type: Tag
+      tags:
+      - SecBeltEquip
     - type: Sprite
       state: Tourniquet
     - type: Healing
@@ -239,6 +242,8 @@
       damage:
         groups:
           Brute: 5 # Tourniquets HURT!
+        types:
+          Asphyxiation: 5 # Essentially Stopping all blood reaching a part of your body
       bloodlossModifier: -30 # Tourniquets stop bleeding
       delay: 0.5
       healingBeginSound:
