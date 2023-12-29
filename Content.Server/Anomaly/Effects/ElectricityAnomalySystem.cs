@@ -12,6 +12,7 @@ namespace Content.Server.Anomaly.Effects;
 public sealed class ElectricityAnomalySystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly LightningSystem _lightning = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
@@ -25,19 +26,19 @@ public sealed class ElectricityAnomalySystem : EntitySystem
         SubscribeLocalEvent<ElectricityAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
     }
 
-    private void OnPulse(EntityUid uid, ElectricityAnomalyComponent component, ref AnomalyPulseEvent args)
+    private void OnPulse(Entity<ElectricityAnomalyComponent> anomaly, ref AnomalyPulseEvent args)
     {
-        var range = component.MaxElectrocuteRange * args.Stability;
+        var range = anomaly.Comp.MaxElectrocuteRange * args.Stability;
 
-        _lightning.ShootRandomLightnings(uid, range, (int) (args.Severity * component.MaxBoltCount));
+        _lightning.ShootRandomLightnings(anomaly, range, (int) (args.Severity * anomaly.Comp.MaxBoltCount));
     }
 
-    private void OnSupercritical(EntityUid uid, ElectricityAnomalyComponent component, ref AnomalySupercriticalEvent args)
+    private void OnSupercritical(Entity<ElectricityAnomalyComponent> anomaly, ref AnomalySupercriticalEvent args)
     {
-        var range = component.MaxElectrocuteRange * 3;
+        var range = anomaly.Comp.MaxElectrocuteRange * 3;
 
-        _emp.EmpPulse(Transform(uid).MapPosition, range, component.EmpEnergyConsumption, component.EmpDisabledDuration);
-        _lightning.ShootRandomLightnings(uid, range, component.MaxBoltCount * 3, arcDepth: 3);
+        _emp.EmpPulse(_transform.GetMapCoordinates(anomaly), range, anomaly.Comp.EmpEnergyConsumption, anomaly.Comp.EmpDisabledDuration);
+        _lightning.ShootRandomLightnings(anomaly, range, anomaly.Comp.MaxBoltCount * 3, arcDepth: 3);
     }
 
     public override void Update(float frameTime)
