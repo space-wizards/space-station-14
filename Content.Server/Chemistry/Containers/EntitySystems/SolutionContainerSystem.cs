@@ -36,7 +36,8 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
     public Solution EnsureSolution(Entity<MetaDataComponent?> entity, string name, FixedPoint2 minVol, Solution? prototype, out bool existed)
     {
         var (uid, meta) = entity;
-        DebugTools.Assert(Resolve(uid, ref meta), $"Attempted to ensure solution on invalid entity {ToPrettyString(entity.Owner)}");
+        if (!Resolve(uid, ref meta))
+            throw new InvalidOperationException("Attempted to ensure solution on invalid entity.");
 
         var manager = EnsureComp<SolutionContainerManagerComponent>(uid);
         if (meta.EntityLifeStage >= EntityLifeStage.MapInitialized)
