@@ -1,11 +1,11 @@
-using System.Linq;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.IntegrationTests.Tests.Chemistry
 {
@@ -34,8 +34,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
-            var solutionSystem = server.ResolveDependency<IEntitySystemManager>()
-                .GetEntitySystem<SolutionContainerSystem>();
+            var solutionContainerSystem = entityManager.System<SolutionContainerSystem>();
 
             foreach (var reactionPrototype in prototypeManager.EnumeratePrototypes<ReactionPrototype>())
             {
@@ -43,30 +42,31 @@ namespace Content.IntegrationTests.Tests.Chemistry
                 Console.WriteLine($"Testing {reactionPrototype.ID}");
 
                 EntityUid beaker = default;
-                Solution component = null;
+                Entity<SolutionComponent>? solutionEnt = default!;
+                Solution solution = null;
 
                 await server.WaitAssertion(() =>
                 {
                     beaker = entityManager.SpawnEntity("TestSolutionContainer", coordinates);
-                    Assert.That(solutionSystem
-                        .TryGetSolution(beaker, "beaker", out component));
+                    Assert.That(solutionContainerSystem
+                        .TryGetSolution(beaker, "beaker", out solutionEnt, out solution));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
 #pragma warning disable NUnit2045
-                        Assert.That(solutionSystem
-                            .TryAddReagent(beaker, component, id, reactant.Amount, out var quantity));
+                        Assert.That(solutionContainerSystem
+                            .TryAddReagent(solutionEnt.Value, id, reactant.Amount, out var quantity));
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
 #pragma warning restore NUnit2045
                     }
 
-                    solutionSystem.SetTemperature(beaker, component, reactionPrototype.MinimumTemperature);
+                    solutionContainerSystem.SetTemperature(solutionEnt.Value, reactionPrototype.MinimumTemperature);
 
                     if (reactionPrototype.MixingCategories != null)
                     {
                         var dummyEntity = entityManager.SpawnEntity(null, MapCoordinates.Nullspace);
                         var mixerComponent = entityManager.AddComponent<ReactionMixerComponent>(dummyEntity);
                         mixerComponent.ReactionTypes = reactionPrototype.MixingCategories;
-                        solutionSystem.UpdateChemicals(beaker, component, true, mixerComponent);
+                        solutionContainerSystem.UpdateChemicals(solutionEnt.Value, true, mixerComponent);
                     }
                 });
 
@@ -79,7 +79,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     var foundProductsMap = reactionPrototype.Products
                         .Concat(reactionPrototype.Reactants.Where(x => x.Value.Catalyst).ToDictionary(x => x.Key, x => x.Value.Amount))
                         .ToDictionary(x => x, _ => false);
-                    foreach (var (reagent, quantity) in component.Contents)
+                    foreach (var (reagent, quantity) in solution.Contents)
                     {
                         Assert.That(foundProductsMap.TryFirstOrNull(x => x.Key.Key == reagent.Prototype && x.Key.Value == quantity, out var foundProduct));
                         foundProductsMap[foundProduct.Value.Key] = true;
