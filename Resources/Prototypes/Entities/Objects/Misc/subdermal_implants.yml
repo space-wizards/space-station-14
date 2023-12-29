@@ -313,3 +313,4 @@
    - type: Tag
      tags:
        - MindShield
+   - type: MindShieldDamage

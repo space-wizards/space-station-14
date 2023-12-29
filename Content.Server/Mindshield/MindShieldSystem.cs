@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Mind;
+using Content.Server.MindShield;
 using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Shared.Damage;
@@ -28,7 +29,7 @@ public sealed class MindShieldSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly IPrototypeManager _Prototypes = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     [ValidatePrototypeId<TagPrototype>]
     public const string MindShieldTag = "MindShield";
@@ -59,25 +60,28 @@ public sealed class MindShieldSystem : EntitySystem
         if (HasComp<HeadRevolutionaryComponent>(implanted))
         {
             _popupSystem.PopupEntity(Loc.GetString("head-rev-break-mindshield"), implanted);
-            QueueDel(implant);
-            if (TryComp<BloodstreamComponent>(implanted, out var bloodstream))
-            {
-                _bloodstreamSystem.SpillAllSolutions(implanted, bloodstream);
-            }
 
-            if (HasComp<DamageableComponent>(implanted))
+            if (TryComp<MindShieldDamageComponent>(implant, out var mindshield))
             {
-                var damage = new DamageSpecifier(_Prototypes.Index<DamageGroupPrototype>("Genetic"), 300);
-
+                var damage = new DamageSpecifier(_prototype.Index(mindshield.MindShieldDamageGroup),
+                    mindshield.MindShieldDamageAmount);
                 _damageableSystem.TryChangeDamage(implanted, damage);
+                if (TryComp<BloodstreamComponent>(implanted, out var bloodstream))
+                {
+                    _bloodstreamSystem.SpillAllSolutions(implanted, bloodstream);
+                }
             }
+
+            QueueDel(implant);
+
             return;
         }
 
         if (_mindSystem.TryGetMind(implanted, out var mindId, out _) &&
             _roleSystem.MindTryRemoveRole<RevolutionaryRoleComponent>(mindId))
         {
-            _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(implanted)} was deconverted due to being implanted with a Mindshield.");
+            _adminLogManager.Add(LogType.Mind, LogImpact.Medium,
+                $"{ToPrettyString(implanted)} was deconverted due to being implanted with a Mindshield.");
         }
     }
 }
