@@ -9,7 +9,7 @@ public sealed partial class ElectricityAnomalyComponent : Component
     /// the number of lightning strikes, at the maximum severity of the anomaly
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int MaxBoltCount = 3;
+    public int MaxBoltCount = 5;
 
     /// <summary>
     /// The maximum radius of the passive electrocution effect
