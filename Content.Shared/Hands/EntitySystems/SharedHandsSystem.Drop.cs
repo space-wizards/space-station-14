@@ -120,7 +120,7 @@ public abstract partial class SharedHandsSystem
 
             if (!isInContainer
                 || !ContainerSystem.TryGetContainingContainer(userXform.ParentUid, uid, out var container, skipExistCheck: true)
-                || !container.Insert(entity, EntityManager, itemXform))
+                || !ContainerSystem.Insert((entity, itemXform), container))
                 TransformSystem.AttachToGridOrMap(entity, itemXform);
             return true;
         }
@@ -148,7 +148,7 @@ public abstract partial class SharedHandsSystem
             return false;
 
         DoDrop(uid, hand, false, handsComp);
-        targetContainer.Insert(entity);
+        ContainerSystem.Insert(entity, targetContainer);
         return true;
     }
 
@@ -189,7 +189,7 @@ public abstract partial class SharedHandsSystem
         if (TerminatingOrDeleted(uid) || TerminatingOrDeleted(entity))
             return;
 
-        if (!hand.Container.Remove(entity, EntityManager))
+        if (!ContainerSystem.Remove(entity, hand.Container))
         {
             Log.Error($"Failed to remove {ToPrettyString(entity)} from users hand container when dropping. User: {ToPrettyString(uid)}. Hand: {hand.Name}.");
             return;
