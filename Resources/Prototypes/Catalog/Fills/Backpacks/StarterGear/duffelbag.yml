@@ -60,6 +60,16 @@
 
 - type: entity
   noSpawn: true
+  parent: ClothingBackpackDuffelMedical
+  id: ClothingBackpackDuffelParamedicFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalMedical
+      - id: EmergencyRollerBedSpawnFolded
+
+- type: entity
+  noSpawn: true
   parent: ClothingBackpackDuffelCaptain
   id: ClothingBackpackDuffelCaptainFilled
   components:

@@ -6,6 +6,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/cap.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -15,6 +17,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hos.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -24,6 +28,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ce.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -33,6 +39,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/cmo.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -42,6 +50,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/rd.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -51,6 +61,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/qm.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -60,6 +72,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hop.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -87,6 +101,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -96,6 +112,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/admin.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase

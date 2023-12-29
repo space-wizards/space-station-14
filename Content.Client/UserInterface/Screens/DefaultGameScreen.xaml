@@ -8,6 +8,7 @@
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Ghost.Widgets"
     xmlns:hotbar="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Widgets"
     Name="DefaultHud"
     VerticalExpand="False"
     VerticalAlignment="Bottom"
@@ -25,6 +26,7 @@
         <actions:ActionsBar Name="Actions" Access="Protected" />
     </BoxContainer>
     <widgets:GhostGui Name="Ghost" Access="Protected" />
+    <inventory:InventoryGui Name="Inventory" Access="Protected" />
     <hotbar:HotbarGui Name="Hotbar" Access="Protected" />
     <chat:ResizableChatBox Name="Chat" Access="Protected" />
     <alerts:AlertsUI Name="Alerts" Access="Protected" />

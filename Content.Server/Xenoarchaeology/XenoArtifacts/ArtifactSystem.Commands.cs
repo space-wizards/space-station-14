@@ -23,7 +23,10 @@ public partial class ArtifactSystem
     private void ForceArtifactNode(IConsoleShell shell, string argstr, string[] args)
     {
         if (args.Length != 2)
+        {
             shell.WriteError("Argument length must be 2");
+            return;
+        }
 
         if (!NetEntity.TryParse(args[0], out var uidNet) || !TryGetEntity(uidNet, out var uid) || !int.TryParse(args[1], out var id))
             return;

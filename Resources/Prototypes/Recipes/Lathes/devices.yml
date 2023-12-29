@@ -102,6 +102,17 @@
     Glass: 400
 
 - type: latheRecipe
+  id: WeaponGauntletGorilla
+  result: WeaponGauntletGorilla
+  completetime: 5
+  materials:
+    Steel: 1500
+    Plastic: 300
+    Glass: 500
+    Plasma: 500
+    Silver: 250
+
+- type: latheRecipe
   id: ClothingBackpackHolding
   result: ClothingBackpackHolding
   completetime: 5
@@ -124,6 +135,16 @@
 - type: latheRecipe
   id: ClothingBackpackDuffelHolding
   result: ClothingBackpackDuffelHolding
+  completetime: 5
+  materials:
+    Steel: 2000
+    Silver: 750
+    Plasma: 1500
+    Uranium: 150
+
+- type: latheRecipe
+  id: OreBagOfHolding
+  result: OreBagOfHolding
   completetime: 5
   materials:
     Steel: 2000

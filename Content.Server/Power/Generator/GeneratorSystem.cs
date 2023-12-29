@@ -1,10 +1,10 @@
 ﻿using Content.Server.Audio;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
@@ -65,23 +65,23 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         _materialStorage.EjectAllMaterial(uid);
     }
 
-    private void ChemicalEmpty(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, GeneratorEmpty args)
+    private void ChemicalEmpty(Entity<ChemicalFuelGeneratorAdapterComponent> entity, ref GeneratorEmpty args)
     {
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+        if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution))
             return;
 
-        var spillSolution = _solutionContainer.SplitSolution(uid, solution, solution.Volume);
-        _puddle.TrySpillAt(uid, spillSolution, out _);
+        var spillSolution = _solutionContainer.SplitSolution(entity.Comp.Solution.Value, solution.Volume);
+        _puddle.TrySpillAt(entity.Owner, spillSolution, out _);
     }
 
-    private void ChemicalGetClogged(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, ref GeneratorGetCloggedEvent args)
+    private void ChemicalGetClogged(Entity<ChemicalFuelGeneratorAdapterComponent> entity, ref GeneratorGetCloggedEvent args)
     {
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+        if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution))
             return;
 
         foreach (var reagentQuantity in solution)
         {
-            if (reagentQuantity.Reagent.Prototype != component.Reagent)
+            if (reagentQuantity.Reagent.Prototype != entity.Comp.Reagent)
             {
                 args.Clogged = true;
                 return;
@@ -89,32 +89,29 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         }
     }
 
-    private void ChemicalUseFuel(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, GeneratorUseFuel args)
+    private void ChemicalUseFuel(Entity<ChemicalFuelGeneratorAdapterComponent> entity, ref GeneratorUseFuel args)
     {
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+        if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution))
             return;
 
-        var availableReagent = solution.GetTotalPrototypeQuantity(component.Reagent).Value;
+        var availableReagent = solution.GetTotalPrototypeQuantity(entity.Comp.Reagent).Value;
         var toRemove = RemoveFractionalFuel(
-            ref component.FractionalReagent,
+            ref entity.Comp.FractionalReagent,
             args.FuelUsed,
-            component.Multiplier * FixedPoint2.Epsilon.Float(),
+            entity.Comp.Multiplier * FixedPoint2.Epsilon.Float(),
             availableReagent);
 
-        solution.RemoveReagent(component.Reagent, FixedPoint2.FromCents(toRemove));
+        _solutionContainer.RemoveReagent(entity.Comp.Solution.Value, entity.Comp.Reagent, FixedPoint2.FromCents(toRemove));
     }
 
-    private void ChemicalGetFuel(
-        EntityUid uid,
-        ChemicalFuelGeneratorAdapterComponent component,
-        ref GeneratorGetFuelEvent args)
+    private void ChemicalGetFuel(Entity<ChemicalFuelGeneratorAdapterComponent> entity, ref GeneratorGetFuelEvent args)
     {
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+        if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution))
             return;
 
-        var availableReagent = solution.GetTotalPrototypeQuantity(component.Reagent).Float();
-        var reagent = component.FractionalReagent * FixedPoint2.Epsilon.Float() + availableReagent;
-        args.Fuel = reagent * component.Multiplier;
+        var availableReagent = solution.GetTotalPrototypeQuantity(entity.Comp.Reagent).Float();
+        var reagent = entity.Comp.FractionalReagent * FixedPoint2.Epsilon.Float() + availableReagent;
+        args.Fuel = reagent * entity.Comp.Multiplier;
     }
 
     private void SolidUseFuel(EntityUid uid, SolidFuelGeneratorAdapterComponent component, GeneratorUseFuel args)
