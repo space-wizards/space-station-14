@@ -101,8 +101,6 @@ public sealed partial class AnomalySystem
         var targetCoords = xform.Coordinates;
         var gridBounds = gridComp.LocalAABB.Scale(_configuration.GetCVar(CCVars.AnomalyGenerationGridBoundsScale));
 
-        var antiAnomalyZonesQueue = AllEntityQuery<AntiAnomalyZoneComponent>();
-
         for (var i = 0; i < 25; i++)
         {
             var randomX = Random.Next((int) gridBounds.Left, (int) gridBounds.Right);
@@ -135,28 +133,25 @@ public sealed partial class AnomalySystem
             if (!valid)
                 continue;
 
-            targetCoords = gridComp.GridTileToLocal(tile);
-
             // don't spawn in AntiAnomalyZones
+            var antiAnomalyZonesQueue = AllEntityQuery<AntiAnomalyZoneComponent>();
             while (antiAnomalyZonesQueue.MoveNext(out var uid, out var zone))
             {
-                targetCoords.TryDelta(EntityManager, _transform, Transform(uid).Coordinates, out var delta);
+                var zoneTile = _transform.GetGridTilePositionOrDefault(uid, gridComp);
 
-                if (delta.Length() < zone.ZoneRadius)
+                var delta = (zoneTile - tile);
+                //targetCoords.TryDelta(EntityManager, _transform, Transform(uid).Coordinates, out var delta);
+
+                if (delta.Length < zone.ZoneRadius)
                 {
                     valid = false;
                     break;
                 }
-                //EntityCoordinates coord = new EntityCoordinates(grid, new Vector2(randomX, randomY));
-                //MapCoordinates randomCoord = new MapCoordinates(new Vector2(randomX, randomY), Transform(grid).MapID);
-                //if (randomCoord.InRange(_transform.GetMapCoordinates(uid), zone.ZoneRadius)){
-                //    valid = false;
-                //    break;
-                //};
             }
             if (!valid)
                 continue;
 
+            targetCoords = gridComp.GridTileToLocal(tile);
             break;
         }
 
