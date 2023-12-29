@@ -147,3 +147,8 @@
   license: "CC0-1.0"
   copyright: "Samuel Gremaud on freesound.org"
   source: "https://freesound.org/people/SamuelGremaud/sounds/455375/"
+
+- files: ["id_insert.ogg"]
+  license: "CC0-1.0"
+  copyright: "dakamakat on freesound.org"
+  source: "https://freesound.org/people/Dakamakat/sounds/717370/"
