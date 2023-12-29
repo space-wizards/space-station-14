@@ -49,6 +49,16 @@
   group: market
 
 - type: cargoProduct
+  id: StationBeaconBundle
+  icon:
+    sprite: Objects/Devices/station_beacon.rsi
+    state: icon
+  product: CrateEngineeringStationBeaconBundle
+  cost: 500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
   id: EngineeringJetpack
   icon:
     sprite: Objects/Tanks/Jetpacks/blue.rsi

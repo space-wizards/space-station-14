@@ -1023,9 +1023,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         _roles.MindAddRole(mindId, new NukeopsRoleComponent { PrototypeId = NukeopsId }, mind);
         if (mind.CurrentEntity != null)
         {
-            foreach (var (nukeops, gameRule) in EntityQuery<NukeopsRuleComponent, GameRuleComponent>())
+            foreach (var (nukeops, _) in EntityQuery<NukeopsRuleComponent, GameRuleComponent>())
             {
-                nukeops.OperativePlayers.Add(mind.CharacterName!, mind.CurrentEntity.GetValueOrDefault());
+                nukeops.OperativePlayers.Add(mind.CharacterName!, mindId);
             }
         }
 

@@ -1,27 +1,34 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Beam;
 using Content.Server.Beam.Components;
 using Content.Server.Lightning.Components;
 using Content.Shared.Lightning;
 using Robust.Server.GameObjects;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
 
 namespace Content.Server.Lightning;
 
+// TheShuEd:
+//I've redesigned the lightning system to be more optimized.
+//Previously, each lightning element, when it touched something, would try to branch into nearby entities.
+//So if a lightning bolt was 20 entities long, each one would check its surroundings and have a chance to create additional lightning...
+//which could lead to recursive creation of more and more lightning bolts and checks.
+
+//I redesigned so that lightning branches can only be created from the point where the lightning struck, no more collide checks
+//and the number of these branches is explicitly controlled in the new function.
 public sealed class LightningSystem : SharedLightningSystem
 {
-    [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+
+    private List<Entity<LightningTargetComponent>> _lookupTargetsList = new();
+    private HashSet<Entity<LightningTargetComponent>> _lookupTargets = new();
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LightningComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<LightningComponent, ComponentRemove>(OnRemove);
     }
 
@@ -35,32 +42,6 @@ public sealed class LightningSystem : SharedLightningSystem
         beamController.CreatedBeams.Remove(uid);
     }
 
-    private void OnCollide(EntityUid uid, LightningComponent component, ref StartCollideEvent args)
-    {
-        if (!TryComp<BeamComponent>(uid, out var lightningBeam)
-            || !TryComp<BeamComponent>(lightningBeam.VirtualBeamController, out var beamController))
-            return;
-
-        if (!component.CanArc || beamController.CreatedBeams.Count >= component.MaxTotalArcs)
-            return;
-
-        Arc(component, args.OtherEntity, lightningBeam.VirtualBeamController.Value);
-
-        if (component.ArcTarget == null)
-            return;
-
-        var spriteState = LightningRandomizer();
-        component.ArcTargets.Add(args.OtherEntity);
-        component.ArcTargets.Add(component.ArcTarget.Value);
-
-        _beam.TryCreateBeam(
-            args.OtherEntity,
-            component.ArcTarget.Value,
-            component.LightningPrototype,
-            spriteState,
-            controller: lightningBeam.VirtualBeamController.Value);
-    }
-
     /// <summary>
     /// Fires lightning from user to target
     /// </summary>
@@ -71,68 +52,47 @@ public sealed class LightningSystem : SharedLightningSystem
     {
         var spriteState = LightningRandomizer();
         _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
+
+        var ev = new HitByLightningEvent(user, target);
+        RaiseLocalEvent(target, ref ev);
     }
 
     /// <summary>
-    /// Looks for a target to arc to in all 8 directions, adds the closest to a local dictionary and picks at random
+    /// Looks for objects with a LightningTarget component in the radius, prioritizes them, and hits the highest priority targets with lightning.
     /// </summary>
-    /// <param name="component"></param>
-    /// <param name="target"></param>
-    /// <param name="controllerEntity"></param>
-    private void Arc(LightningComponent component, EntityUid target, EntityUid controllerEntity)
+    /// <param name="user">Where the lightning fires from</param>
+    /// <param name="range">Targets selection radius</param>
+    /// <param name="boltCount">Number of lightning bolts</param>
+    /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
+    /// <param name="arcDepth">how many times to recursively fire lightning bolts from the target points of the first shot.</param>
+    public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0)
     {
-        if (!TryComp<BeamComponent>(controllerEntity, out var controller))
+        //To Do: add support to different priority target tablem for different lightning types
+        //To Do: Remove Hardcode LightningTargetComponent (this should be a parameter of the SharedLightningComponent)
+        //To Do: This is still pretty bad for perf but better than before and at least it doesn't re-allocate
+        // several hashsets every time
+
+        var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).MapPosition, range).ToList();
+        _random.Shuffle(targets);
+        targets.Sort((x, y) => y.Priority.CompareTo(x.Priority));
+        var realCount = Math.Min(targets.Count, boltCount);
+        if (realCount <= 0)
             return;
-
-        var targetXForm = Transform(target);
-        var directions = Enum.GetValues<Direction>().Length;
-
-        var lightningQuery = GetEntityQuery<LightningComponent>();
-        var beamQuery = GetEntityQuery<BeamComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
-
-        Dictionary<Direction, EntityUid> arcDirections =  new();
-
-        //TODO: Add scoring system for the Tesla PR which will have grounding rods
-        for (int i = 0; i < directions; i++)
+        for (int i = 0; i < realCount; i++)
         {
-            var direction = (Direction) i;
-            var (targetPos, targetRot) = targetXForm.GetWorldPositionRotation(xformQuery);
-            var dirRad = direction.ToAngle() + targetRot;
-            var ray = new CollisionRay(targetPos, dirRad.ToVec(), component.CollisionMask);
-            var rayCastResults = _physics.IntersectRay(targetXForm.MapID, ray, component.MaxLength, target, false).ToList();
-
-            RayCastResults? closestResult = null;
-
-            foreach (var result in rayCastResults)
+            ShootLightning(user, targets[i].Owner, lightningPrototype);
+            if (arcDepth > 0)
             {
-                if (lightningQuery.HasComponent(result.HitEntity)
-                    || beamQuery.HasComponent(result.HitEntity)
-                    || component.ArcTargets.Contains(result.HitEntity)
-                    || controller.HitTargets.Contains(result.HitEntity)
-                    || controller.BeamShooter == result.HitEntity)
-                {
-                    continue;
-                }
-
-                closestResult = result;
-                break;
+                ShootRandomLightnings(targets[i].Owner, range, 1, lightningPrototype, arcDepth - targets[i].LightningResistance);
             }
-
-            if (closestResult == null)
-            {
-                continue;
-            }
-
-            arcDirections.Add(direction, closestResult.Value.HitEntity);
-        }
-
-        var randomDirection = (Direction) _random.Next(0, 7);
-
-        if (arcDirections.ContainsKey(randomDirection))
-        {
-            component.ArcTarget = arcDirections.GetValueOrDefault(randomDirection);
-            arcDirections.Clear();
         }
     }
 }
+
+/// <summary>
+/// Raised directed on the target when an entity becomes the target of a lightning strike (not when touched)
+/// </summary>
+/// <param name="Source">The entity that created the lightning</param>
+/// <param name="Target">The entity that was struck by lightning.</param>
+[ByRefEvent]
+public readonly record struct HitByLightningEvent(EntityUid Source, EntityUid Target);

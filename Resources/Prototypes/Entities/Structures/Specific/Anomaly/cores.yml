@@ -23,7 +23,7 @@
   - type: ItemCooldown
   - type: EmitSoundOnUse #placeholder for future unical mechanic
     sound:
-      collection: RadiationPulse 
+      collection: RadiationPulse
   - type: UseDelay
     delay: 2
   - type: AnomalyCore
@@ -143,8 +143,15 @@
   id: BaseAnomalyInertCore
   abstract: true
   components:
+  - type: Sprite
+    layers:
+    - state: core
+    - state: pulse
+      visible: false
+      map: ["decay"]
   - type: AnomalyCore
-    timeToDecay: 1 #decay very fast
+    timeToDecay: 0
+    isDecayed: true
 
 - type: entity
   parent: BaseAnomalyInertCore
