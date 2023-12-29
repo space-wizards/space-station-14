@@ -31,62 +31,99 @@ public class PvsBenchmark
     private IEntityManager _entMan = default!;
     private MapId _mapId = new(10);
     private ICommonSession[] _players = default!;
-    private EntityCoordinates[] _warps = default!;
+    private EntityCoordinates[] _spawns = default!;
 
     [GlobalSetup]
     public void Setup()
     {
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (_pair == null)
-        {
 #if !DEBUG
         ProgramShared.PathOffset = "../../../../";
 #endif
-            PoolManager.Startup(null);
+        PoolManager.Startup(null);
 
-            _pair = PoolManager.GetServerClient().GetAwaiter().GetResult();
-            _entMan = _pair.Server.ResolveDependency<IEntityManager>();
-            _pair.Server.CfgMan.SetCVar(CVars.NetPVS, true);
-            _pair.Server.CfgMan.SetCVar(CVars.ThreadParallelCount, 0);
+        _pair = PoolManager.GetServerClient().GetAwaiter().GetResult();
+        _entMan = _pair.Server.ResolveDependency<IEntityManager>();
+        _pair.Server.CfgMan.SetCVar(CVars.NetPVS, true);
+        _pair.Server.CfgMan.SetCVar(CVars.ThreadParallelCount, 0);
 
-            // Spawn the map
-            _pair.Server.ResolveDependency<IRobustRandom>().SetSeed(42);
-            _pair.Server.WaitPost(() =>
-            {
-                var success = _entMan.System<MapLoaderSystem>().TryLoad(_mapId, Map, out _);
-                if (!success)
-                    throw new Exception("Map load failed");
-                _pair.Server.MapMan.DoMapInitialize(_mapId);
-            }).Wait();
+        // Spawn the map
+        _pair.Server.ResolveDependency<IRobustRandom>().SetSeed(42);
+        _pair.Server.WaitPost(() =>
+        {
+            var success = _entMan.System<MapLoaderSystem>().TryLoad(_mapId, Map, out _);
+            if (!success)
+                throw new Exception("Map load failed");
+            _pair.Server.MapMan.DoMapInitialize(_mapId);
+        }).Wait();
 
-            // Get list of ghost warp positions
-            _warps = _entMan.AllComponentsList<WarpPointComponent>()
-                .OrderBy(x => x.Component.Location)
-                .Select(x => _entMan.GetComponent<TransformComponent>(x.Uid).Coordinates)
-                .ToArray();
-        }
+        // Get list of ghost warp positions
+        _spawns = _entMan.AllComponentsList<WarpPointComponent>()
+            .OrderBy(x => x.Component.Location)
+            .Select(x => _entMan.GetComponent<TransformComponent>(x.Uid).Coordinates)
+            .ToArray();
 
-        if (PlayerCount < (_players?.Length ?? 0))
-            throw new Exception($"Player counts have to be increasing");
+        if (_players != null)
+            throw new Exception("AAAAA");
 
-        var start = _players == null ? 0 : (_players.Length - 1);
         Array.Resize(ref _players, PlayerCount);
 
         // Spawn "Players".
         _pair.Server.WaitPost(() =>
         {
-            for (var i = start; i < PlayerCount; i++)
+            for (var i = 0; i < PlayerCount; i++)
             {
-                var pos = _warps[i % _warps.Length];
+                var pos = _spawns[i % _spawns.Length];
                 var uid =_entMan.SpawnEntity("MobHuman", pos);
-                var nuid = _entMan.GetNetEntity(uid);
-                _pair.Server.ConsoleHost.ExecuteCommand($"setoutfit {nuid} CaptainGear");
-                _players![i] = new DummySession{AttachedEntity = uid};
+                _pair.Server.ConsoleHost.ExecuteCommand($"setoutfit {_entMan.GetNetEntity(uid)} CaptainGear");
+                _players[i] = new DummySession{AttachedEntity = uid};
             }
         }).Wait();
 
         PvsTick();
+
+        // Repeatedly move players around so that they "explore" the map and see lots of entities.
+        // This will populate their PVS data with out-of-view entities.
+        var rng = new Random(42);
+        ShufflePlayers(rng, 100);
+
         PvsTick();
+        PvsTick();
+    }
+
+    private void ShufflePlayers(Random rng, int count)
+    {
+        while (count > 0)
+        {
+            ShufflePlayers(rng);
+            count--;
+        }
+    }
+
+    private void ShufflePlayers(Random rng)
+    {
+        PvsTick();
+
+        var ents = _players.Select(x => x.AttachedEntity!.Value).ToArray();
+        var locations = ents.Select(x => _entMan.GetComponent<TransformComponent>(x).Coordinates).ToArray();
+
+        // Shuffle locations
+        var n = locations.Length;
+        while (n > 1)
+        {
+            n -= 1;
+            var k = rng.Next(n + 1);
+            (locations[k], locations[n]) = (locations[n], locations[k]);
+        }
+
+        var sys = _entMan.System<SharedTransformSystem>();
+        _pair.Server.WaitPost(() =>
+        {
+            for (var i = 0; i < PlayerCount; i++)
+            {
+                sys.SetCoordinates(ents[i], locations[i]);
+            }
+        }).Wait();
+
         PvsTick();
     }
 
@@ -109,7 +146,7 @@ public class PvsBenchmark
         public SessionStatus Status => SessionStatus.InGame;
         public EntityUid? AttachedEntity {get; set; }
         public NetUserId UserId => default;
-        public string Name { get; } = string.Empty;
+        public string Name => string.Empty;
         public short Ping => default;
         public INetChannel Channel { get; set; } = default!;
         public LoginType AuthType => default;
