@@ -11,6 +11,8 @@ using Content.Shared.Physics;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Map;
+using System.Numerics;
 
 namespace Content.Server.Anomaly;
 
@@ -21,6 +23,9 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
+
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
     private void InitializeGenerator()
     {
         SubscribeLocalEvent<AnomalyGeneratorComponent, BoundUIOpenedEvent>(OnGeneratorBUIOpened);
@@ -96,6 +101,8 @@ public sealed partial class AnomalySystem
         var targetCoords = xform.Coordinates;
         var gridBounds = gridComp.LocalAABB.Scale(_configuration.GetCVar(CCVars.AnomalyGenerationGridBoundsScale));
 
+        var antiAnomalyZonesQueue = AllEntityQuery<AntiAnomalyZoneComponent>();
+
         for (var i = 0; i < 25; i++)
         {
             var randomX = Random.Next((int) gridBounds.Left, (int) gridBounds.Right);
@@ -129,6 +136,27 @@ public sealed partial class AnomalySystem
                 continue;
 
             targetCoords = gridComp.GridTileToLocal(tile);
+
+            // don't spawn in AntiAnomalyZones
+            while (antiAnomalyZonesQueue.MoveNext(out var uid, out var zone))
+            {
+                targetCoords.TryDelta(EntityManager, _transform, Transform(uid).Coordinates, out var delta);
+
+                if (delta.Length() < zone.ZoneRadius)
+                {
+                    valid = false;
+                    break;
+                }
+                //EntityCoordinates coord = new EntityCoordinates(grid, new Vector2(randomX, randomY));
+                //MapCoordinates randomCoord = new MapCoordinates(new Vector2(randomX, randomY), Transform(grid).MapID);
+                //if (randomCoord.InRange(_transform.GetMapCoordinates(uid), zone.ZoneRadius)){
+                //    valid = false;
+                //    break;
+                //};
+            }
+            if (!valid)
+                continue;
+
             break;
         }
 
