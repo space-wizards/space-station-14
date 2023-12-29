@@ -10,7 +10,7 @@
     - ShellShotgun
   - type: CartridgeAmmo
     count: 6
-    spread: 15
+    spread: 22
     soundEject:
       collection: ShellEject
   - type: Sprite
@@ -47,7 +47,7 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunSlug
-    count: 4
+    count: 4 # why
     spread: 5
   - type: SpentAmmoVisuals
     state: "slug"
