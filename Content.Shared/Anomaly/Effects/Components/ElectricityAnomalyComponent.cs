@@ -6,6 +6,12 @@ namespace Content.Shared.Anomaly.Effects.Components;
 public sealed partial class ElectricityAnomalyComponent : Component
 {
     /// <summary>
+    /// the minimum number of lightning strikes
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int MinBoltCount = 2;
+
+    /// <summary>
     /// the number of lightning strikes, at the maximum severity of the anomaly
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
