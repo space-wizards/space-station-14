@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Certain mobs will now fight back when provoked. Try not to get robusted.
-    type: Add
-  id: 4968
-  time: '2023-10-07T00:56:18.0000000+00:00'
 - author: HerCoyote23
   changes:
   - message: Tarantulas now inject real toxins into victims and they can pass through
@@ -3537,3 +3531,10 @@ Entries:
   id: 5468
   time: '2023-12-29T00:45:10.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22988
+- author: themias
+  changes:
+  - message: Toy swords can be turned on.
+    type: Fix
+  id: 5469
+  time: '2023-12-29T00:59:23.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23137
