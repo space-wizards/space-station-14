@@ -19,9 +19,17 @@ public sealed partial class OfferingWindow : FancyWindow,
 
     public bool Claimed;
     public TimeSpan NextOffer;
+    private TimeSpan? _progression;
+
+    /// <summary>
+    /// Time between NextOffers
+    /// </summary>
     public TimeSpan Cooldown;
 
-    private TimeSpan? _progression;
+    /// <summary>
+    /// Time between Progressions
+    /// </summary>
+    public TimeSpan ProgressionCooldown;
 
     /// <summary>
     /// Secondary timer used for tracking active progress.
@@ -77,7 +85,7 @@ public sealed partial class OfferingWindow : FancyWindow,
             }
             else
             {
-                ProgressionBar.Value = 1f - (float) (remaining / Cooldown);
+                ProgressionBar.Value = 1f - (float) (remaining / ProgressionCooldown);
                 ProgressionText.Text = $"{remaining.Minutes:00}:{remaining.Seconds:00}";
             }
         }

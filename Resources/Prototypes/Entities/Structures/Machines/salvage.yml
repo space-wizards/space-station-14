@@ -23,10 +23,15 @@
     - state: salvage-magnet-o4
       map: ["chargeState"]
       shader: unshaded
+  - type: ActivatableUI
+    key: enum.SalvageMagnetUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.SalvageMagnetUiKey.Key
+      type: SalvageMagnetBoundUserInterface
   - type: Appearance
   - type: Rotatable
-  - type: Transform
-    noRot: false
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
