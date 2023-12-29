@@ -382,6 +382,18 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (flammable.FireStacks > 0)
                 {
+                    var air = _atmosphereSystem.GetContainingMixture(uid);
+
+                    // If we're in an oxygenless environment, put the fire out.
+                    if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
+                    {
+                        Extinguish(uid, flammable);
+                        continue;
+                    }
+
+                    EnsureComp<IgnitionSourceComponent>(uid);
+                    _ignitionSourceSystem.SetIgnited(uid);
+
                     // TODO FLAMMABLE: further balancing
                     var damageScale = Math.Min((int)flammable.FireStacks, 5);
 
@@ -395,20 +407,7 @@ namespace Content.Server.Atmos.EntitySystems
                 else
                 {
                     Extinguish(uid, flammable);
-                    continue;
                 }
-
-                var air = _atmosphereSystem.GetContainingMixture(uid);
-
-                // If we're in an oxygenless environment, put the fire out.
-                if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
-                {
-                    Extinguish(uid, flammable);
-                    continue;
-                }
-
-                EnsureComp<IgnitionSourceComponent>(uid);
-                _ignitionSourceSystem.SetIgnited(uid);
             }
         }
     }

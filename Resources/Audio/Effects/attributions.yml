@@ -68,6 +68,21 @@
   copyright: '"Pop, High, A (H1).wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org. Mixed from stereo to mono.'
   source: "https://freesound.org/people/InspectorJ/sounds/411642/"
 
+- files: ["tesla.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Taken from bzakirasantjago via freesound.org and mixed from stereo to mono."
+  source: "https://freesound.org/people/bzakirasantjago/sounds/404462/"
+
+- files: ["tesla_collapse.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Taken from DragishaRambo21 via freesound.org and mixed from stereo to mono."
+  source: "https://freesound.org/people/DragishaRambo21/sounds/345920/"
+  
+- files: ["tesla_consume.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from egomassive via freesound.org and mixed from stereo to mono."
+  source: "https://freesound.org/people/egomassive/sounds/536741/"
+  
 - files: ["sizzle.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Recorded by deltanedas for SS14"

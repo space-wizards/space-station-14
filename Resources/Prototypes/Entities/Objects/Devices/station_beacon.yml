@@ -1,0 +1,610 @@
+- type: entity
+  parent: BaseItem
+  id: DefaultStationBeacon
+  name: station beacon
+  description: A small device that transmits information to station maps. Can be configured.
+  placement:
+    mode: SnapgridCenter
+  suffix: General
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/station_beacon.rsi
+    drawdepth: BelowFloor
+    layers:
+    - state: blink
+      map: ["base"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.NavMapBeaconVisuals.Enabled:
+        base:
+          True: {state: blink}
+          False: {state: icon}
+  - type: ConfigurableNavMapBeacon
+  - type: NavMapBeacon
+    text: general
+    color: "#D4D4D496"
+  - type: WarpPoint
+  - type: ActivatableUI
+    key: enum.NavMapBeaconUiKey.Key
+    singleUser: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.NavMapBeaconUiKey.Key
+      type: NavMapBeaconBoundUserInterface
+  - type: Item
+    size: Small
+  - type: SubFloorHide
+  - type: Anchorable
+  - type: Construction
+    graph: StationBeaconPart
+    node: complete
+  - type: CollideOnAnchor
+  - type: Physics
+    canCollide: false
+    bodyType: static
+  - type: Transform
+    anchored: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger: # for nukes
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
+            params:
+              volume: -8
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1:
+              min: 1
+              max: 1
+          offset: 0
+        - !type:DoActsBehavior
+          acts: ["Breakage"]
+  - type: StaticPrice
+    price: 25
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconUnanchored
+  suffix: General, Unanchored
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/station_beacon.rsi
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Physics
+    canCollide: true
+    bodyType: dynamic
+  - type: Transform
+    anchored: false
+
+- type: entity
+  parent: BaseItem
+  id: StationBeaconPart
+  name: station beacon assembly
+  description: A flatpack used for constructing a station beacon.
+  components:
+  - type: Item
+    size: Small
+    sprite: Objects/Devices/station_beacon.rsi
+  - type: Sprite
+    sprite: Objects/Devices/station_beacon.rsi
+    state: assembly
+  - type: Construction
+    graph: StationBeaconPart
+    node: start
+    defaultTarget: complete
+
+# Prototypes for various default beacon configurations.
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconCommand
+  suffix: Command
+  components:
+  - type: NavMapBeacon
+    text: command
+    color: "#334E6D"
+
+- type: entity
+  parent: DefaultStationBeaconCommand
+  id: DefaultStationBeaconBridge
+  suffix: Bridge
+  components:
+  - type: NavMapBeacon
+    text: bridge
+
+- type: entity
+  parent: DefaultStationBeaconCommand
+  id: DefaultStationBeaconVault
+  suffix: Vault
+  components:
+  - type: NavMapBeacon
+    text: vault
+
+- type: entity
+  parent: DefaultStationBeaconCommand
+  id: DefaultStationBeaconCaptainsQuarters
+  suffix: Captain's Quarters
+  components:
+  - type: NavMapBeacon
+    text: captain's quarters
+
+- type: entity
+  parent: DefaultStationBeaconCommand
+  id: DefaultStationBeaconHOPOffice
+  suffix: HOP's Office
+  components:
+  - type: NavMapBeacon
+    text: head of personnel’s office
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconSecurity
+  suffix: Security
+  components:
+  - type: NavMapBeacon
+    text: security
+    color: "#DE3A3A"
+
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconBrig
+  suffix: Brig
+  components:
+  - type: NavMapBeacon
+    text: brig
+
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconWardensOffice
+  suffix: Warden's Office
+  components:
+  - type: NavMapBeacon
+    text: warden's office
+
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconHOSRoom
+  suffix: HOS’s Room
+  components:
+  - type: NavMapBeacon
+    text: head of security’s room
+
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconArmory
+  suffix: Armory
+  components:
+  - type: NavMapBeacon
+    text: armory
+
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconPermaBrig
+  suffix: Perma Brig
+  components:
+  - type: NavMapBeacon
+    text: perma brig
+
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconDetectiveRoom
+  suffix: Detective's Room
+  components:
+  - type: NavMapBeacon
+    text: detective's room
+
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconCourtroom
+  suffix: Courtroom
+  components:
+  - type: NavMapBeacon
+    text: courtroom
+
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconLawOffice
+  suffix: Law Office
+  components:
+    - type: NavMapBeacon
+      text: law office
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconMedical
+  suffix: Medical
+  components:
+  - type: NavMapBeacon
+    text: medical
+    color: "#52B4E9"
+
+- type: entity
+  parent: DefaultStationBeaconMedical
+  id: DefaultStationBeaconMedbay
+  suffix: Medbay
+  components:
+  - type: NavMapBeacon
+    text: medbay
+
+- type: entity
+  parent: DefaultStationBeaconMedical
+  id: DefaultStationBeaconChemistry
+  suffix: Chemistry
+  components:
+  - type: NavMapBeacon
+    text: chemistry
+
+- type: entity
+  parent: DefaultStationBeaconMedical
+  id: DefaultStationBeaconCryonics
+  suffix: Cryonics
+  components:
+  - type: NavMapBeacon
+    text: cryonics
+
+- type: entity
+  parent: DefaultStationBeaconMedical
+  id: DefaultStationBeaconCMORoom
+  suffix: CMO's room
+  components:
+  - type: NavMapBeacon
+    text: chief medical officer’s room
+
+- type: entity
+  parent: DefaultStationBeaconMedical
+  id: DefaultStationBeaconMorgue
+  suffix: Morgue
+  components:
+  - type: NavMapBeacon
+    text: morgue
+
+- type: entity
+  parent: DefaultStationBeaconMedical
+  id: DefaultStationBeaconSurgery
+  suffix: Surgery
+  components:
+  - type: NavMapBeacon
+    text: surgery
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconScience
+  suffix: Science
+  components:
+  - type: NavMapBeacon
+    text: science
+    color: "#D381C9"
+
+- type: entity
+  parent: DefaultStationBeaconScience
+  id: DefaultStationBeaconRND
+  suffix: RND
+  components:
+  - type: NavMapBeacon
+    text: research & development
+
+- type: entity
+  parent: DefaultStationBeaconScience
+  id: DefaultStationBeaconServerRoom
+  suffix: Server Room
+  components:
+  - type: NavMapBeacon
+    text: server room
+
+- type: entity
+  parent: DefaultStationBeaconScience
+  id: DefaultStationBeaconRDRoom
+  suffix: RD's Room
+  components:
+  - type: NavMapBeacon
+    text: research director's room
+
+- type: entity
+  parent: DefaultStationBeaconScience
+  id: DefaultStationBeaconRobotics
+  suffix: Robotics
+  components:
+  - type: NavMapBeacon
+    text: robotics
+
+- type: entity
+  parent: DefaultStationBeaconScience
+  id: DefaultStationBeaconArtifactLab
+  suffix: Artifact Lab
+  components:
+  - type: NavMapBeacon
+    text: artifact lab
+
+- type: entity
+  parent: DefaultStationBeaconScience
+  id: DefaultStationBeaconAnomalyGenerator
+  suffix: Anomaly Generator
+  components:
+  - type: NavMapBeacon
+    text: anomaly generator
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconSupply
+  suffix: Supply
+  components:
+  - type: NavMapBeacon
+    text: supply
+    color: "#A46106"
+
+- type: entity
+  parent: DefaultStationBeaconSupply
+  id: DefaultStationBeaconCargoReception
+  suffix: Cargo Reception
+  components:
+  - type: NavMapBeacon
+    text: cargo reception
+
+- type: entity
+  parent: DefaultStationBeaconSupply
+  id: DefaultStationBeaconCargoBay
+  suffix: Cargo Bay
+  components:
+  - type: NavMapBeacon
+    text: cargo bay
+
+- type: entity
+  parent: DefaultStationBeaconSupply
+  id: DefaultStationBeaconQMRoom
+  suffix: QM's Room
+  components:
+  - type: NavMapBeacon
+    text: quartermaster's room
+
+- type: entity
+  parent: DefaultStationBeaconSupply
+  id: DefaultStationBeaconSalvage
+  suffix: Salvage
+  components:
+  - type: NavMapBeacon
+    text: salvage
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEngineering
+  suffix: Engineering
+  components:
+  - type: NavMapBeacon
+    text: engineering
+    color: "#EFB341"
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconCERoom
+  suffix: CE's Room
+  components:
+  - type: NavMapBeacon
+    text: chief engineer's room
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconAME
+  suffix: AME
+  components:
+  - type: NavMapBeacon
+    text: AME
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolars
+  suffix: Solars
+  components:
+  - type: NavMapBeacon
+    text: solars
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconGravGen
+  suffix: Grav Gen
+  components:
+  - type: NavMapBeacon
+    text: gravity generator
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSingularity
+  suffix: Singularity
+  components:
+  - type: NavMapBeacon
+    text: singularity engine
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconPowerBank
+  suffix: Power Bank
+  components:
+  - type: NavMapBeacon
+    text: SMES power bank
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconTelecoms
+  suffix: Telecoms
+  components:
+  - type: NavMapBeacon
+    text: telecoms
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconAtmospherics
+  suffix: Atmospherics
+  components:
+  - type: NavMapBeacon
+    text: atmospherics
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconTEG
+  suffix: TEG
+  components:
+  - type: NavMapBeacon
+    text: TEG
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconTeslaEngine
+  suffix: Tesla Engine
+  components:
+  - type: NavMapBeacon
+    text: tesla engine
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconTechVault
+  suffix: Tech Vault
+  components:
+  - type: NavMapBeacon
+    text: tech vault
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconService
+  suffix: Service
+  components:
+  - type: NavMapBeacon
+    text: service
+    color: "#9FED58"
+
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconKitchen
+  suffix: Kitchen
+  components:
+  - type: NavMapBeacon
+    text: kitchen
+
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconBar
+  suffix: Bar
+  components:
+  - type: NavMapBeacon
+    text: bar
+
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconBotany
+  suffix: Botany
+  components:
+  - type: NavMapBeacon
+    text: botany
+
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconJanitorsCloset
+  suffix: Janitor's Closet
+  components:
+  - type: NavMapBeacon
+    text: janitor's closet
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconAI
+  suffix: AI
+  components:
+  - type: NavMapBeacon
+    text: AI
+    color: "#2ed2fd"
+
+- type: entity
+  parent: DefaultStationBeaconAI
+  id: DefaultStationBeaconAISatellite
+  suffix: AI Satellite
+  components:
+    - type: NavMapBeacon
+      text: AI satellite
+
+- type: entity
+  parent: DefaultStationBeaconAI
+  id: DefaultStationBeaconAICore
+  suffix: AI Core
+  components:
+    - type: NavMapBeacon
+      text: AI core
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconArrivals
+  suffix: Arrivals
+  components:
+  - type: NavMapBeacon
+    text: arrivals
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEVAStorage
+  suffix: EVA Storage
+  components:
+  - type: NavMapBeacon
+    text: EVA storage
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconChapel
+  suffix: Chapel
+  components:
+  - type: NavMapBeacon
+    text: chapel
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconLibrary
+  suffix: Library
+  components:
+  - type: NavMapBeacon
+    text: library
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconTheater
+  suffix: Theater
+  components:
+  - type: NavMapBeacon
+    text: theater
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconDorms
+  suffix: Dorms
+  components:
+  - type: NavMapBeacon
+    text: dorms
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconToolRoom
+  suffix: Tool Room
+  components:
+  - type: NavMapBeacon
+    text: tool room
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconDisposals
+  suffix: Disposals
+  components:
+  - type: NavMapBeacon
+    text: disposals
+

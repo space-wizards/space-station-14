@@ -3,11 +3,13 @@ using System.Numerics;
 using Content.Client.Gameplay;
 using Content.Client.Hands.Systems;
 using Content.Client.Inventory;
+using Content.Client.Storage.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Widgets;
 using Content.Client.UserInterface.Systems.Inventory.Windows;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Storage;
@@ -335,6 +337,25 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         var hoverSprite = _entities.GetComponent<SpriteComponent>(hoverEntity);
         var fits = _inventorySystem.CanEquip(player.Value, held, control.SlotName, out _, slotDef) &&
                    _container.CanInsert(held, container);
+
+        if (!fits && _entities.TryGetComponent<StorageComponent>(container.ContainedEntity, out var storage))
+        {
+            fits = _entities.System<StorageSystem>().CanInsert(container.ContainedEntity.Value, held, out _, storage);
+        }
+        else if (!fits && _entities.TryGetComponent<ItemSlotsComponent>(container.ContainedEntity, out var itemSlots))
+        {
+            var itemSlotsSys = _entities.System<ItemSlotsSystem>();
+            foreach (var slot in itemSlots.Slots.Values)
+            {
+                if (!slot.InsertOnInteract)
+                    continue;
+
+                if (!itemSlotsSys.CanInsert(container.ContainedEntity.Value, held, null, slot))
+                    continue;
+                fits = true;
+                break;
+            }
+        }
 
         hoverSprite.CopyFrom(sprite);
         hoverSprite.Color = fits ? new Color(0, 255, 0, 127) : new Color(255, 0, 0, 127);
