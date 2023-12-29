@@ -240,7 +240,7 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
-        _sawmill.Info($"MOTD changed to {motd} by {actor!.Name}({actor!.Guid}).");
+        _sawmill.Info($"MOTD changed to \"{motd}\" by {actor!.Name}({actor!.Guid}).");
 
         _taskManager.RunOnMainThread(() => _config.SetCVar(CCVars.MOTD, motd.ToString()));
         // A hook in the MOTD system sends the changes to each client
