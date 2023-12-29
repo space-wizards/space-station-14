@@ -10,8 +10,8 @@
 
 - type: gamePreset
   id: Allatonce
-  name: all-at-once-title
-  description: all-at-once-description
+  name: allatonce-title
+  description: allatonce-description
   showInVote: false
   rules:
     - Nukeops
