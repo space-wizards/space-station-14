@@ -115732,7 +115732,6 @@ entities:
         9404:
         - Pressed: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 8610
     components:
     - rot: -1.5707963267948966 rad

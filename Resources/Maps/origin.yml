@@ -77366,7 +77366,6 @@ entities:
     - pos: -46.5,62.5
       parent: 2
       type: Transform
-    - type: ItemCooldown
 - proto: ClothingBackpackMedical
   entities:
   - uid: 12352
@@ -158331,7 +158330,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24199
     components:
     - rot: -1.5707963267948966 rad
@@ -158363,7 +158361,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24200
     components:
     - name: shutters switch
@@ -158396,7 +158393,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24201
     components:
     - name: blast door switch
@@ -158410,7 +158406,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24202
     components:
     - rot: -1.5707963267948966 rad
@@ -158439,7 +158434,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24203
     components:
     - rot: 1.5707963267948966 rad
@@ -158454,7 +158448,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24204
     components:
     - rot: 3.141592653589793 rad
@@ -158506,7 +158499,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24208
     components:
     - rot: 3.141592653589793 rad
@@ -158553,7 +158545,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24211
     components:
     - pos: -52.5,-11.5
@@ -158610,7 +158601,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24214
     components:
     - pos: -49.5,24.5
@@ -158675,7 +158665,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24218
     components:
     - pos: 58.5,48.5
@@ -158898,7 +158887,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24232
     components:
     - pos: 54.5,51.5
@@ -158915,7 +158903,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24233
     components:
     - pos: 5.5,49.5
@@ -159111,7 +159098,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24242
     components:
     - rot: 3.141592653589793 rad
@@ -159155,7 +159141,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24243
     components:
     - name: shutters switch
@@ -159176,7 +159161,6 @@ entities:
         - Off: Close
         - Status: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24244
     components:
     - pos: -51.5,36.5
@@ -159187,7 +159171,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24245
     components:
     - name: shutters switch
@@ -159224,7 +159207,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24246
     components:
     - name: visitation switch
@@ -159245,7 +159227,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24247
     components:
     - name: shutters switch
@@ -159284,7 +159265,6 @@ entities:
         - On: Open
         - Off: Close
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24249
     components:
     - name: shutters switch
@@ -159403,7 +159383,6 @@ entities:
         - Off: Close
         - Status: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 24252
     components:
     - pos: -74.5,-43.5
@@ -169819,7 +169798,6 @@ entities:
         - Right: Reverse
         - Middle: Off
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 25929
     components:
     - pos: -41.5,17.5
@@ -170122,7 +170100,6 @@ entities:
         - Right: Reverse
         - Middle: Off
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 25937
     components:
     - pos: 47.5,39.5
@@ -170322,7 +170299,6 @@ entities:
         - Right: Forward
         - Middle: Off
       type: DeviceLinkSource
-    - type: ItemCooldown
 - proto: UnfinishedMachineFrame
   entities:
   - uid: 25942

@@ -20,7 +20,7 @@
       - enum.DamageStateVisualLayers.Base:
           shard3: ""
   - type: SpaceGarbage
-  - type: ItemCooldown
+  - type: UseDelay
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
