@@ -32,3 +32,15 @@
     sprite: _CD/Clothing/Uniforms/Jumpsuit/pajama_red.rsi
   - type: Clothing
     sprite: _CD/Clothing/Uniforms/Jumpsuit/pajama_red.rsi
+
+#Boiler suits
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBoilersuitNTNavy
+  description: A dark navy boiler suit, emblazoned with a black N.T on the back.
+  name: boiler suit
+  components:
+  - type: Sprite
+    sprite: _CD/Clothing/Uniforms/Jumpsuit/boilersuit.rsi
+  - type: Clothing
+    sprite: _CD/Clothing/Uniforms/Jumpsuit/boilersuit.rsi
