@@ -1,4 +1,5 @@
 using Content.Server.Salvage.Magnet;
+using Content.Shared.Salvage.Magnet;
 
 namespace Content.Server.Salvage;
 
@@ -9,6 +10,26 @@ public sealed partial class SalvageSystem
         SubscribeLocalEvent<SalvageMagnetDataComponent, MapInitEvent>(OnMagnetDataMapInit);
 
         SubscribeLocalEvent<SalvageMagnetTargetComponent, GridSplitEvent>(OnMagnetTargetSplit);
+
+        SubscribeLocalEvent<SalvageMagnetComponent, MagnetClaimOfferEvent>(OnMagnetClaim);
+    }
+
+    private void OnMagnetClaim(EntityUid uid, SalvageMagnetComponent component, ref MagnetClaimOfferEvent args)
+    {
+        var player = args.Session.AttachedEntity;
+
+        if (player is null)
+            return;
+
+        var station = _station.GetOwningStation(uid);
+
+        if (!TryComp(station, out SalvageMagnetDataComponent? dataComp) ||
+            dataComp.NextOffer > _timing.CurTime)
+        {
+            return;
+        }
+
+        TakeMagnetOffer((station.Value, dataComp), args.Index, uid);
     }
 
     private void OnMagnetDataMapInit(EntityUid uid, SalvageMagnetDataComponent component, ref MapInitEvent args)
