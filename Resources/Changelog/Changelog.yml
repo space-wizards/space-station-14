@@ -1,10 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - message: Now the Secret Doors can be welded shut.
-    type: Add
-  id: 4967
-  time: '2023-10-07T00:45:12.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Certain mobs will now fight back when provoked. Try not to get robusted.
@@ -3536,3 +3530,10 @@ Entries:
   id: 5467
   time: '2023-12-29T00:02:21.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23136
+- author: lzk228
+  changes:
+  - message: Directional barricade is constructable now!
+    type: Tweak
+  id: 5468
+  time: '2023-12-29T00:45:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22988
