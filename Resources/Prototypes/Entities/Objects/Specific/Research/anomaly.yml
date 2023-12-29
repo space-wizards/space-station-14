@@ -44,13 +44,15 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: ProximityBeeper
   - type: ProximityDetector
-    targetRequirements:
+    enabled: false
+    range: 20
+    criteria:
       components:
       - Anomaly
-  - type: ProximityBeeper
-    drawsPower: false
-    maximumDistance: 20
+  - type: Beeper
+    enabled: false
     minBeepInterval: 0.15
     maxBeepInterval: 1.00
     beepSound:
@@ -67,8 +69,6 @@
   - type: PowerCellDraw
     drawRate: 1
     useRate: 0
-  - type: ProximityBeeper
-    drawsPower: true
 
 - type: entity
   id: AnomalyLocatorEmpty
@@ -89,11 +89,11 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalylocatorwide.rsi
-  - type: ProximityBeeper
-    maximumDistance: 40
+  - type: Beeper
     minBeepInterval: 0.5
     maxBeepInterval: 0.5
-
+  - type: ProximityDetector
+    range: 40
 - type: entity
   id: AnomalyLocatorWide
   parent: [ AnomalyLocatorWideUnpowered, PowerCellSlotSmallItem ]
