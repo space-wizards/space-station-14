@@ -98,6 +98,12 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
+        if (!CheckActor(context, out var actor))
+        {
+            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
+            return true;
+        }
+
         var actionSupplied = context.RequestHeaders.TryGetValue("Action", out var action);
         if (!actionSupplied)
         {
@@ -200,6 +206,7 @@ public sealed class ServerApi : IPostInjectInit
                 break;
         }
 
+        _sawmill.Info($"Panic bunker setting {action} changed to {value} by {actor!.Name}({actor!.Guid}).");
         await context.RespondAsync("Success", HttpStatusCode.OK);
         return true;
     }
@@ -220,12 +227,20 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
+        if (!CheckActor(context, out var actor))
+        {
+            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
+            return true;
+        }
+
         var motdSupplied = context.RequestHeaders.TryGetValue("MOTD", out var motd);
         if (!motdSupplied)
         {
             await context.RespondErrorAsync(HttpStatusCode.BadRequest);
             return true;
         }
+
+        _sawmill.Info($"MOTD changed to {motd} by {actor!.Name}({actor!.Guid}).");
 
         _taskManager.RunOnMainThread(() => _config.SetCVar(CCVars.MOTD, motd.ToString()));
         // A hook in the MOTD system sends the changes to each client
@@ -249,10 +264,17 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
+        if (!CheckActor(context, out var actor))
+        {
+            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
+            return true;
+        }
+
         var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
 
         if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
         {
+            _sawmill.Info($"Attempted to force preset {actor!.Name}({actor!.Guid}) while the game was not in the pre-round lobby.");
             await context.RespondAsync("This can only be executed while the game is in the pre-round lobby.", HttpStatusCode.BadRequest);
             return true;
         }
@@ -275,7 +297,7 @@ public sealed class ServerApi : IPostInjectInit
         {
             ticker.SetGamePreset(result);
         });
-        _sawmill.Info($"Forced the game to start with preset {preset}.");
+        _sawmill.Info($"Forced the game to start with preset {preset} by {actor!.Name}({actor!.Guid}).");
         await context.RespondAsync("Success", HttpStatusCode.OK);
         return true;
     }
@@ -296,9 +318,16 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
+        if (!CheckActor(context, out var actor))
+        {
+            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
+            return true;
+        }
+
         var gameRuleSupplied = context.RequestHeaders.TryGetValue("GameRuleId", out var gameRule);
         if (!gameRuleSupplied)
         {
+            _sawmill.Info($"Attempted to end game rule without supplying a game rule name by {actor!.Name}({actor!.Guid}).");
             await context.RespondErrorAsync(HttpStatusCode.BadRequest);
             return true;
         }
@@ -309,12 +338,14 @@ public sealed class ServerApi : IPostInjectInit
 
         if (gameRuleEntity == null) // Game rule not found
         {
+            _sawmill.Info($"Attempted to end game rule {gameRule} by {actor!.Name}({actor!.Guid}), but it was not found.");
             await context.RespondAsync("Gamerule not found or not active",HttpStatusCode.NotFound);
             return true;
         }
 
+        _sawmill.Info($"Ended game rule {gameRule} by {actor!.Name}({actor!.Guid}).");
         _taskManager.RunOnMainThread(() => ticker.EndGameRule((EntityUid) gameRuleEntity));
-        await context.RespondAsync($"Ended game rule {gameRuleEntity}", HttpStatusCode.OK);
+        await context.RespondAsync($"Ended game rule {gameRule}({gameRuleEntity})", HttpStatusCode.OK);
         return true;
     }
 
@@ -334,9 +365,16 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
+        if (!CheckActor(context, out var actor))
+        {
+            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
+            return true;
+        }
+
         var gameRuleSupplied = context.RequestHeaders.TryGetValue("GameRuleId", out var gameRule);
         if (!gameRuleSupplied)
         {
+            _sawmill.Info($"Attempted to add game rule without supplying a game rule name by {actor!.Name}({actor!.Guid}).");
             await context.RespondErrorAsync(HttpStatusCode.BadRequest);
             return true;
         }
@@ -347,15 +385,16 @@ public sealed class ServerApi : IPostInjectInit
         _taskManager.RunOnMainThread(() =>
         {
             var ruleEntity = ticker.AddGameRule(gameRule.ToString());
+            _sawmill.Info($"Added game rule {gameRule} by {actor!.Name}({actor!.Guid}).");
             if (ticker.RunLevel == GameRunLevel.InRound)
             {
                 ticker.StartGameRule(ruleEntity);
+                _sawmill.Info($"Started game rule {gameRule} by {actor!.Name}({actor!.Guid}).");
             }
             tsc.TrySetResult(ruleEntity);
         });
 
         var ruleEntity = await tsc.Task;
-
         await context.RespondAsync($"Added game rule {ruleEntity}", HttpStatusCode.OK);
         return true;
     }
@@ -376,9 +415,16 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
+        if (!CheckActor(context, out var actor))
+        {
+            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
+            return true;
+        }
+
         var playerSupplied = context.RequestHeaders.TryGetValue("Username", out var username);
         if (!playerSupplied)
         {
+            _sawmill.Info($"Attempted to kick player without supplying a username by {actor!.Name}({actor!.Guid}).");
             await context.RespondErrorAsync(HttpStatusCode.BadRequest);
             return true;
         }
@@ -391,6 +437,7 @@ public sealed class ServerApi : IPostInjectInit
 
         if (session == null)
         {
+            _sawmill.Info($"Attempted to kick player {username} by {actor!.Name}({actor!.Guid}), but they were not found.");
             await context.RespondAsync("Player not found", HttpStatusCode.NotFound);
             return true;
         }
@@ -408,7 +455,7 @@ public sealed class ServerApi : IPostInjectInit
             _netManager.DisconnectChannel(session.Channel, reason.ToString());
         });
         await context.RespondAsync("Success", HttpStatusCode.OK);
-        _sawmill.Info("Kicked player {0} ({1})", username, reason);
+        _sawmill.Info("Kicked player {0} ({1}) by {2}({3})", username, reason, actor!.Name, actor!.Guid);
         return true;
     }
 
@@ -428,10 +475,17 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
+        if (!CheckActor(context, out var actor))
+        {
+            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
+            return true;
+        }
+
         // Not using body, because that's a stream and I don't want to deal with that
         var actionSupplied = context.RequestHeaders.TryGetValue("Action", out var action);
         if (!actionSupplied)
         {
+            _sawmill.Info($"Attempted to {action} round without supplying an action by {actor!.Name}({actor!.Guid}).");
             await context.RespondErrorAsync(HttpStatusCode.BadRequest);
             return true;
         }
@@ -491,6 +545,7 @@ public sealed class ServerApi : IPostInjectInit
                 return true;
         }
 
+        _sawmill.Info($"Round {action} by {actor!.Name}({actor!.Guid}).");
         await context.RespondAsync("Success", HttpStatusCode.OK);
         return true;
     }
@@ -576,6 +631,12 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
+        if (!CheckActor(context, out var actor))
+        {
+            await context.RespondAsync("An actor is required to perform this action.", HttpStatusCode.BadRequest);
+            return true;
+        }
+
         /*  Information to display
             Round number
             Connected players
@@ -648,6 +709,7 @@ public sealed class ServerApi : IPostInjectInit
         jObject["panic_bunker"]!["min_account_age_hours"] = adminSystem.PanicBunker.MinAccountAgeHours;
         jObject["panic_bunker"]!["min_overall_hours"] = adminSystem.PanicBunker.MinOverallHours;
 
+        _sawmill.Info($"Info requested by {actor!.Name}({actor!.Guid}).");
         await context.RespondAsync(jObject.ToString(), HttpStatusCode.OK);
         return true;
     }
@@ -667,7 +729,7 @@ public sealed class ServerApi : IPostInjectInit
             return true;
 
         // Invalid auth header, no access
-        _sawmill.Info(@"Unauthorized access attempt to admin API. ""{0}"" vs ""{1}""", authToken, _token);
+        _sawmill.Info(@"Unauthorized access attempt to admin API. ""{0}""", authToken);
         return false;
     }
 
@@ -684,6 +746,27 @@ public sealed class ServerApi : IPostInjectInit
 
         var result = await taskCompletionSource.Task;
         return result;
+    }
+
+    private bool CheckActor(IStatusHandlerContext context, out Player? actor)
+    {
+        // We are trusting the header to be correct.
+        // This is fine because the header is set by the SS14.Admin backend.
+        var actorSupplied = context.RequestHeaders.TryGetValue("Actor", out var actorHeader);
+        if (!actorSupplied)
+        {
+            actor = null;
+            return false;
+        }
+
+        var stringRep = actorHeader.ToString();
+        actor = new Player()
+        {
+            // GUID_NAME format
+            Guid = stringRep[..stringRep.IndexOf('_')],
+            Name = stringRep[(stringRep.IndexOf('_') + 1)..]
+        };
+        return true;
     }
 
     private sealed class Player
