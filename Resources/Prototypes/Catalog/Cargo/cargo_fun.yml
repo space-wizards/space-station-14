@@ -200,10 +200,11 @@
 
 - type: cargoProduct
   id: FunCrateGambling
-  icon:
-    sprite: Objects/Economy/cash.rsi
-    state: cash_1000000
+  icon: #SS220 fix_cargo begin
+    sprite: Structures/Storage/Crates/privatecrate_secure.rsi
+    state: icon
+  #SS220 fix_cargo end
   product: CrateCargoGambling
-  cost: 10000
+  cost: 20000 #SS220 fix_cargo
   category: Fun
   group: market

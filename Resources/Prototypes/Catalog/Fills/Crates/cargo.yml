@@ -109,7 +109,7 @@
       prob: 0.001
       orGroup: Weapons
     - id: Throngler
-      prob: 0.001
+      prob: 0.0001 #SS220 fix_cargo
       orGroup: Weapons
     - id: WeaponLauncherPirateCannon
       prob: 0.001
@@ -232,10 +232,10 @@
       orGroup: Swag
     - id: ClothingEyesGlassesGarGiga
       prob: 0.01
-      orGroup: Swag   
+      orGroup: Swag
     - id: ClothingEyesGlassesGarOrange
       prob: 0.01
-      orGroup: Swag      
+      orGroup: Swag
     - id: ClothingHeadHatChameleon
       prob: 0.01
       orGroup: Swag
