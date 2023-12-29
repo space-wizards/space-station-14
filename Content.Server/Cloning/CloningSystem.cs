@@ -210,17 +210,6 @@ namespace Content.Server.Cloning
                 return false;
             }
 
-            if (HasComp<NoReviveComponent>(bodyToClone))
-            {
-                if (clonePod.ConnectedConsole != null)
-                {
-                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value,
-                        Loc.GetString("cloning-console-see-antag-error"),
-                        InGameICChatType.Speak, false);
-                }
-
-                return false;
-            }
             // biomass checks
             var biomassAmount = _material.GetMaterialAmount(uid, clonePod.RequiredMaterial);
 

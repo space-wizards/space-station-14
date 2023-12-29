@@ -229,19 +229,12 @@ public sealed class DefibrillatorSystem : EntitySystem
             if (_mind.TryGetMind(target, out var mindId, out var mind) &&
                 mind.Session is { } playerSession)
             {
-                if (!HasComp<NoReviveComponent>(target))
+
+                session = playerSession;
+                // notify them they're being revived.
+                if (mind.CurrentEntity != target)
                 {
-                    session = playerSession;
-                    // notify them they're being revived.
-                    if (mind.CurrentEntity != target)
-                    {
-                        _euiManager.OpenEui(new ReturnToBodyEui(mind, _mind), session);
-                    }
-                }
-                else
-                {
-                    _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-see-antag"),
-                    InGameICChatType.Speak, true);
+                    _euiManager.OpenEui(new ReturnToBodyEui(mind, _mind), session);
                 }
             }
             else

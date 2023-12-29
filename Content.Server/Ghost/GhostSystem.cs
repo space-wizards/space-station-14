@@ -52,7 +52,6 @@ namespace Content.Server.Ghost
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly SharedGameTicker _gameticker = default!;
 
-        private TimeSpan _startTimeSpan;
 
         public override void Initialize()
         {
@@ -80,7 +79,6 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
-            _startTimeSpan = _gameTiming.CurTime;
         }
 
         private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
@@ -108,9 +106,9 @@ namespace Content.Server.Ghost
 
         public bool Cantoogle(out string timeleft)
         {
-            TimeSpan stationTime = _gameTiming.CurTime.Subtract(_startTimeSpan);
+            TimeSpan stationTime = _gameTiming.CurTime.Subtract(_gameticker.RoundStartTimeSpan);
 
-            TimeSpan waittime = TimeSpan.FromMinutes(1);
+            TimeSpan waittime = TimeSpan.FromMinutes(30);
             if (waittime > stationTime)
             {
                 var timeLeft = stationTime - waittime;
@@ -160,7 +158,6 @@ namespace Content.Server.Ghost
                 EnsureComp<ShowAntagIconsComponent>(entity);
 
                 _adminLogManager.Add(LogType.MetaGaming, LogImpact.Medium, $"User {actor.PlayerSession.Name} requested the ability to see icon as ghost entity {ToPrettyString(entity)}");
-                //Blockrevive(entity);
             }
 
             Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-icon-visibility-popup"), entity);
@@ -385,31 +382,6 @@ namespace Content.Server.Ghost
         }
 
 
-        /// <summary>
-        /// Block a ghost entity to return to its original entity.
-        /// </summary>
-        private void Blockrevive(EntityUid entity, MindComponent? mind = null)
-        {
-
-            if (!TryComp<VisitingMindComponent>(entity, out var mindvisiting))
-                return;
-
-            if (mindvisiting.MindId is EntityUid mindId)
-            {
-                if (!Resolve(mindId, ref mind))
-                {
-                    return;
-                }
-                var BodyEntity = GetEntity(mind.OriginalOwnedEntity);
-                if (BodyEntity is EntityUid bodyentity)
-                {
-                    EnsureComp<NoReviveComponent>(bodyentity);
-                    DirtyEntity(bodyentity);
-                }
-            }
-            _ghost.SetCanReturnToBody(entity, false);
-
-        }
 
 
 

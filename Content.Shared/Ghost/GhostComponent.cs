@@ -99,12 +99,6 @@ public sealed partial class GhostComponent : Component
     private bool _canReturnToBody;
 }
 
-
-
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedGhostSystem))]
-public sealed partial class NoReviveComponent : Component
-{}
-
 public sealed partial class ToggleFoVActionEvent : InstantActionEvent { }
 
 public sealed partial class ToggleGhostsActionEvent : InstantActionEvent { }
