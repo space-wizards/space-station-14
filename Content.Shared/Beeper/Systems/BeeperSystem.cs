@@ -41,6 +41,7 @@ public sealed class BeeperSystem : EntitySystem
 
     public void SetIntervalScaling(EntityUid owner, BeeperComponent beeper, FixedPoint2 newScaling)
     {
+        newScaling = FixedPoint2.Clamp(newScaling, 0, 1);
         beeper.IntervalScaling = newScaling;
         RunUpdate_Internal(owner, beeper);
         Dirty(owner, beeper);
