@@ -46,6 +46,17 @@ public sealed class BeeperSystem : EntitySystem
         Dirty(owner, beeper);
     }
 
+    public void SetInterval(EntityUid owner, BeeperComponent beeper, TimeSpan newInterval)
+    {
+        if (newInterval < beeper.MinBeepInterval)
+            newInterval = beeper.MinBeepInterval;
+        if (newInterval > beeper.MaxBeepInterval)
+            newInterval = beeper.MaxBeepInterval;
+        beeper.Interval = newInterval;
+        RunUpdate_Internal(owner, beeper);
+        Dirty(owner, beeper);
+    }
+
     public void SetIntervalScaling(EntityUid owner, FixedPoint2 newScaling, BeeperComponent? beeper = null)
     {
         if (!Resolve(owner, ref beeper))
