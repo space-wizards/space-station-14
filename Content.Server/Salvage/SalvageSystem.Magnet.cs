@@ -114,7 +114,7 @@ public sealed partial class SalvageSystem
             // Fuck with the seed to mix wrecks and asteroids.
             seed = (int) (seed / 10f) * 10;
 
-            if (i > data.Comp.OfferCount / 2)
+            if (i >= data.Comp.OfferCount / 2)
             {
                 seed++;
             }
@@ -122,6 +122,7 @@ public sealed partial class SalvageSystem
             data.Comp.Offered.Add(seed);
         }
 
+        data.Comp.NextOffer = _timing.CurTime + data.Comp.OfferCooldown;
         UpdateMagnetUIs(data);
     }
 

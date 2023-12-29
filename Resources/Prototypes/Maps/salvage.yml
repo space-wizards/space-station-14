@@ -95,7 +95,7 @@
   mapPath: /Maps/Salvage/medium-ruined-emergency-shuttle.yml
 
 - type: salvageMap
-  id: mediumPetHospital
+  id: MediumPetHospital
   name: "Medium / Pet and Bear Hospital"
   mapPath: /Maps/Salvage/medium-pet-hospital.yml
 
