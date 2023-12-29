@@ -142,8 +142,15 @@
   id: BaseAnomalyInertCore
   abstract: true
   components:
+  - type: Sprite
+    layers:
+    - state: core
+    - state: pulse
+      visible: false
+      map: ["decay"]
   - type: AnomalyCore
-    timeToDecay: 1 #decay very fast
+    timeToDecay: 0
+    isDecayed: true
 
 - type: entity
   parent: BaseAnomalyInertCore

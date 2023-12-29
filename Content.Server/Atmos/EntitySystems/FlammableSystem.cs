@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.IgnitionSource;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
@@ -33,6 +34,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
+        [Dependency] private readonly IgnitionSourceSystem _ignitionSourceSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
@@ -283,6 +285,8 @@ namespace Content.Server.Atmos.EntitySystems
             flammable.OnFire = false;
             flammable.FireStacks = 0;
 
+            _ignitionSourceSystem.SetIgnited(uid, false);
+
             UpdateAppearance(uid, flammable);
         }
 
@@ -376,6 +380,18 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (flammable.FireStacks > 0)
                 {
+                    var air = _atmosphereSystem.GetContainingMixture(uid);
+
+                    // If we're in an oxygenless environment, put the fire out.
+                    if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
+                    {
+                        Extinguish(uid, flammable);
+                        continue;
+                    }
+
+                    EnsureComp<IgnitionSourceComponent>(uid);
+                    _ignitionSourceSystem.SetIgnited(uid);
+
                     // TODO FLAMMABLE: further balancing
                     var damageScale = Math.Min( (int) flammable.FireStacks, 5);
 
@@ -389,24 +405,6 @@ namespace Content.Server.Atmos.EntitySystems
                 else
                 {
                     Extinguish(uid, flammable);
-                    continue;
-                }
-
-                var air = _atmosphereSystem.GetContainingMixture(uid);
-
-                // If we're in an oxygenless environment, put the fire out.
-                if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
-                {
-                    Extinguish(uid, flammable);
-                    continue;
-                }
-
-                if (transform.GridUid != null)
-                {
-                    _atmosphereSystem.HotspotExpose(transform.GridUid.Value,
-                        _transformSystem.GetGridOrMapTilePosition(uid, transform),
-                        700f, 50f, uid, true);
-
                 }
             }
         }

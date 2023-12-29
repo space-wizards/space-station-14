@@ -1,4 +1,5 @@
 using Content.Server.Anomaly.Effects;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -85,10 +86,17 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<ReagentPrototype> ProducingReagent = "Water";
+
     /// <summary>
     /// Solution name where the substance is generated
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("solution")]
-    public string Solution = "default";
+    public string SolutionName = "default";
+
+    /// <summary>
+    /// Solution where the substance is generated
+    /// </summary>
+    [DataField("solutionRef")]
+    public Entity<SolutionComponent>? Solution = null;
 }

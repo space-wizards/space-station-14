@@ -1,86 +1,4 @@
 Entries:
-- author: dahnte
-  changes:
-  - message: Onion rings!
-    type: Add
-  id: 4958
-  time: '2023-10-05T21:31:40.0000000+00:00'
-- author: gusxyz
-  changes:
-  - message: Monkey's now are able to equip gas masks.
-    type: Add
-  id: 4959
-  time: '2023-10-05T21:34:37.0000000+00:00'
-- author: TheShuEd
-  changes:
-  - message: The trees and rocks are now rotating to follow the camera.
-    type: Tweak
-  id: 4960
-  time: '2023-10-06T01:50:25.0000000+00:00'
-- author: gusxyz
-  changes:
-  - message: Syndicate bombs collide again.
-    type: Tweak
-  id: 4961
-  time: '2023-10-06T06:29:58.0000000+00:00'
-- author: Ubaser
-  changes:
-  - message: The Clothesmate now dispenses berets.
-    type: Tweak
-  id: 4962
-  time: '2023-10-06T18:49:08.0000000+00:00'
-- author: Lank
-  changes:
-  - message: Reptilians have received a minor rework. Notable features include a diet
-      restriction to only meat, fruit and pills, and the ability to pull objects using
-      their tail.
-    type: Tweak
-  id: 4963
-  time: '2023-10-06T21:19:01.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - message: Fixed wire panels on bombs and vending machines not opening correctly.
-    type: Fix
-  id: 4964
-  time: '2023-10-06T21:26:02.0000000+00:00'
-- author: TheShuEd
-  changes:
-  - message: Beer anomaly added! And no, it's an anomaly of ominisine. Hmm. No. It
-      seems to be capable of producing ANY substance.
-    type: Add
-  id: 4965
-  time: '2023-10-07T00:26:35.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - message: Fixed not being able to throw items into disposals from close up.
-    type: Fix
-  id: 4966
-  time: '2023-10-07T00:43:54.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - message: Now the Secret Doors can be welded shut.
-    type: Add
-  id: 4967
-  time: '2023-10-07T00:45:12.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Certain mobs will now fight back when provoked. Try not to get robusted.
-    type: Add
-  id: 4968
-  time: '2023-10-07T00:56:18.0000000+00:00'
-- author: HerCoyote23
-  changes:
-  - message: Tarantulas now inject real toxins into victims and they can pass through
-      armour.
-    type: Tweak
-  id: 4969
-  time: '2023-10-07T13:05:40.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - message: Fixed not being able to sleep on a bed.
-    type: Fix
-  id: 4970
-  time: '2023-10-07T19:11:03.0000000+00:00'
 - author: JoeHammad
   changes:
   - message: traitor gamemode is rarer, nukies and revs are more common
@@ -3520,3 +3438,104 @@ Entries:
   id: 5458
   time: '2023-12-27T22:53:10.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23065
+- author: Velcroboy
+  changes:
+  - message: Added melee dmg to salami logs!
+    type: Add
+  id: 5459
+  time: '2023-12-28T02:59:14.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23041
+- author: Emisse
+  changes:
+  - message: Ion Storm is silent now
+    type: Tweak
+  id: 5460
+  time: '2023-12-28T03:03:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23045
+- author: Alekshhh
+  changes:
+  - message: Changed wall lockers visually to match regular lockers and sit on walls
+      better
+    type: Tweak
+  id: 5461
+  time: '2023-12-28T03:05:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23060
+- author: EmoGarbage404
+  changes:
+  - message: Added the clerical error station event, which causes a small amount of
+      station records to be destroyed.
+    type: Add
+  id: 5462
+  time: '2023-12-28T03:09:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23091
+- author: EmoGarbage404
+  changes:
+  - message: Added the GORILLA gauntlet. When powered with an anomaly core, a single
+      blow from this is able to send anomalies flying through the air. Just try not
+      to let it out on the clown.
+    type: Add
+  - message: Added Anomaly Core Harnessing technology to the Experimental discipline,
+      which contains the GORILLA gauntlet.
+    type: Add
+  id: 5463
+  time: '2023-12-28T03:11:13.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23012
+- author: Ubaser
+  changes:
+  - message: You can now purchase kobolds from cargo as an alternative to monkeys!
+    type: Add
+  id: 5464
+  time: '2023-12-28T05:32:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22108
+- author: TheShuEd
+  changes:
+  - message: Tesla has been added to the game! Engineers can build a tesla power generator
+      using a tesla generator, tesla coils, and grounding wands that can be purchased
+      from the cargo.
+    type: Add
+  id: 5465
+  time: '2023-12-28T13:11:50.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/21124
+- author: TheShuEd
+  changes:
+  - message: thieves can now appear in rounds with nuclear operatives
+    type: Add
+  id: 5466
+  time: '2023-12-28T23:50:25.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23102
+- author: EmoGarbage404
+  changes:
+  - message: Added station beacons. These devices create custom labels on the station
+      map. Order them from cargo today.
+    type: Add
+  id: 5467
+  time: '2023-12-29T00:02:21.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23136
+- author: lzk228
+  changes:
+  - message: Directional barricade is constructable now!
+    type: Tweak
+  id: 5468
+  time: '2023-12-29T00:45:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22988
+- author: themias
+  changes:
+  - message: Toy swords can be turned on.
+    type: Fix
+  id: 5469
+  time: '2023-12-29T00:59:23.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23137
+- author: Ubaser
+  changes:
+  - message: Magboots produced by science now have new sprites.
+    type: Add
+  id: 5470
+  time: '2023-12-29T03:08:08.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23107
+- author: metalgearsloth
+  changes:
+  - message: Added sounds to UI clicking and hovering.
+    type: Add
+  id: 5471
+  time: '2023-12-29T04:43:37.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22410
