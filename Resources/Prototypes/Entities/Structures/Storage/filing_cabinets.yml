@@ -65,6 +65,8 @@
   - type: Construction
     graph: FilingCabinet
     node: filingCabinet
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   name: tall cabinet
@@ -152,6 +154,8 @@
   - type: Construction
     graph: FilingCabinet
     node: chestDrawer
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   abstract: true
