@@ -867,7 +867,7 @@
     Water:
       amount: 2
   products:
-    HotRamen: 5
+    HotRamen: 6
 
 - type: reaction
   id: Pilk
