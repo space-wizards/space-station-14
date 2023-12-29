@@ -20,6 +20,8 @@
   - type: Tag
     tags:
     - HighRiskItem
+  - type: StealTarget
+    stealGroup: NukeDisk
 
 - type: entity
   name: nuclear authentication disk
