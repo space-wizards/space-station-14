@@ -141541,6 +141541,103 @@ entities:
     - pos: 52.096134,-22.664438
       parent: 8364
       type: Transform
+- proto: Screen
+  entities:
+  - uid: 27738
+    components:
+    - pos: -7.5,0.5
+      parent: 8364
+      type: Transform
+  - uid: 27739
+    components:
+    - pos: 11.5,0.5
+      parent: 8364
+      type: Transform
+  - uid: 27740
+    components:
+    - pos: 18.5,-11.5
+      parent: 8364
+      type: Transform
+  - uid: 27741
+    components:
+    - pos: 55.5,-11.5
+      parent: 8364
+      type: Transform
+  - uid: 27742
+    components:
+    - pos: 73.5,-11.5
+      parent: 8364
+      type: Transform
+  - uid: 27743
+    components:
+    - pos: 75.5,-15.5
+      parent: 8364
+      type: Transform
+  - uid: 27745
+    components:
+    - pos: 13.5,-12.5
+      parent: 8364
+      type: Transform
+  - uid: 27775
+    components:
+    - pos: -36.5,0.5
+      parent: 8364
+      type: Transform
+  - uid: 27776
+    components:
+    - pos: -52.5,0.5
+      parent: 8364
+      type: Transform
+  - uid: 27777
+    components:
+    - pos: -64.5,-16.5
+      parent: 8364
+      type: Transform
+  - uid: 27778
+    components:
+    - pos: -69.5,11.5
+      parent: 8364
+      type: Transform
+  - uid: 27779
+    components:
+    - pos: -2.5,13.5
+      parent: 8364
+      type: Transform
+  - uid: 27780
+    components:
+    - pos: 5.5,18.5
+      parent: 8364
+      type: Transform
+  - uid: 27781
+    components:
+    - pos: 19.5,8.5
+      parent: 8364
+      type: Transform
+  - uid: 27782
+    components:
+    - pos: 8.5,-32.5
+      parent: 8364
+      type: Transform
+  - uid: 27783
+    components:
+    - pos: -4.5,-52.5
+      parent: 8364
+      type: Transform
+  - uid: 27784
+    components:
+    - pos: -2.5,-40.5
+      parent: 8364
+      type: Transform
+  - uid: 27785
+    components:
+    - pos: -16.5,-32.5
+      parent: 8364
+      type: Transform
+  - uid: 27786
+    components:
+    - pos: -14.5,-11.5
+      parent: 8364
+      type: Transform
 - proto: Screwdriver
   entities:
   - uid: 12258
