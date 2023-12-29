@@ -1,10 +1,16 @@
-﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Anomaly.Effects.Components;
 
 [RegisterComponent]
 public sealed partial class ElectricityAnomalyComponent : Component
 {
+    /// <summary>
+    /// the number of lightning strikes, at the maximum severity of the anomaly
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int MaxBoltCount = 3;
+
     /// <summary>
     /// The maximum radius of the passive electrocution effect
     /// scales with stability

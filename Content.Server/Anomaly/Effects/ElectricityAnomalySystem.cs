@@ -1,4 +1,4 @@
-﻿using Content.Server.Electrocution;
+using Content.Server.Electrocution;
 using Content.Server.Emp;
 using Content.Server.Lightning;
 using Content.Server.Power.Components;
@@ -30,35 +30,16 @@ public sealed class ElectricityAnomalySystem : EntitySystem
     private void OnPulse(EntityUid uid, ElectricityAnomalyComponent component, ref AnomalyPulseEvent args)
     {
         var range = component.MaxElectrocuteRange * args.Stability;
-        var xform = Transform(uid);
-        foreach (var (ent, comp) in _lookup.GetEntitiesInRange<MobStateComponent>(xform.MapPosition, range))
-        {
-            _lightning.ShootLightning(uid, ent);
-        }
+
+        _lightning.ShootRandomLightnings(uid, range, (int) (args.Severity * component.MaxBoltCount));
     }
 
     private void OnSupercritical(EntityUid uid, ElectricityAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
-        var poweredQuery = GetEntityQuery<ApcPowerReceiverComponent>();
-        var mobQuery = GetEntityQuery<MobThresholdsComponent>();
-        var validEnts = new HashSet<EntityUid>();
-        foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MaxElectrocuteRange * 2))
-        {
-            if (mobQuery.HasComponent(ent))
-                validEnts.Add(ent);
+        var range = component.MaxElectrocuteRange * 3;
 
-            if (_random.Prob(0.01f) && poweredQuery.HasComponent(ent))
-                validEnts.Add(ent);
-        }
-
-        // goodbye, sweet perf
-        foreach (var ent in validEnts)
-        {
-            _lightning.ShootLightning(uid, ent);
-        }
-
-        var empRange = component.MaxElectrocuteRange * 3;
-        _emp.EmpPulse(Transform(uid).MapPosition, empRange, component.EmpEnergyConsumption, component.EmpDisabledDuration);
+        _emp.EmpPulse(Transform(uid).MapPosition, range, component.EmpEnergyConsumption, component.EmpDisabledDuration);
+        _lightning.ShootRandomLightnings(uid, range, component.MaxBoltCount * 3, arcDepth: 3);
     }
 
     public override void Update(float frameTime)
