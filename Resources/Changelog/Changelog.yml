@@ -1,10 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed not being able to throw items into disposals from close up.
-    type: Fix
-  id: 4966
-  time: '2023-10-07T00:43:54.0000000+00:00'
 - author: Nimfar11
   changes:
   - message: Now the Secret Doors can be welded shut.
@@ -3534,3 +3528,11 @@ Entries:
   id: 5466
   time: '2023-12-28T23:50:25.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23102
+- author: EmoGarbage404
+  changes:
+  - message: Added station beacons. These devices create custom labels on the station
+      map. Order them from cargo today.
+    type: Add
+  id: 5467
+  time: '2023-12-29T00:02:21.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23136
