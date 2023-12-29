@@ -1,3 +1,4 @@
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -15,37 +16,37 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<TrashOnSolutionEmptyComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<TrashOnSolutionEmptyComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<TrashOnSolutionEmptyComponent, SolutionContainerChangedEvent>(OnSolutionChange);
         }
 
-        public void OnStartup(EntityUid uid, TrashOnSolutionEmptyComponent component, ComponentStartup args)
+        public void OnStartup(Entity<TrashOnSolutionEmptyComponent> entity, ref ComponentStartup args)
         {
-            CheckSolutions(component);
+            CheckSolutions(entity);
         }
 
-        public void OnSolutionChange(EntityUid uid, TrashOnSolutionEmptyComponent component, SolutionChangedEvent args)
+        public void OnSolutionChange(Entity<TrashOnSolutionEmptyComponent> entity, ref SolutionContainerChangedEvent args)
         {
-            CheckSolutions(component);
+            CheckSolutions(entity);
         }
 
-        public void CheckSolutions(TrashOnSolutionEmptyComponent component)
+        public void CheckSolutions(Entity<TrashOnSolutionEmptyComponent> entity)
         {
-            if (!EntityManager.HasComponent<SolutionContainerManagerComponent>((component).Owner))
+            if (!EntityManager.HasComponent<SolutionContainerManagerComponent>(entity))
                 return;
 
-            if (_solutionContainerSystem.TryGetSolution(component.Owner, component.Solution, out var solution))
-                UpdateTags(component, solution);
+            if (_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
+                UpdateTags(entity, solution);
         }
 
-        public void UpdateTags(TrashOnSolutionEmptyComponent component, Solution solution)
+        public void UpdateTags(Entity<TrashOnSolutionEmptyComponent> entity, Solution solution)
         {
             if (solution.Volume <= 0)
             {
-                _tagSystem.AddTag(component.Owner, "Trash");
+                _tagSystem.AddTag(entity.Owner, "Trash");
                 return;
             }
-            if (_tagSystem.HasTag(component.Owner, "Trash"))
-                _tagSystem.RemoveTag(component.Owner, "Trash");
+            if (_tagSystem.HasTag(entity.Owner, "Trash"))
+                _tagSystem.RemoveTag(entity.Owner, "Trash");
         }
     }
 }
