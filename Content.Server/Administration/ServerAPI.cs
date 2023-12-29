@@ -28,10 +28,7 @@ public sealed class ServerApi : IPostInjectInit
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!; // Players
     [Dependency] private readonly ISharedAdminManager _adminManager = default!; // Admins
-    //[Dependency] private readonly GameTicker _gameTicker = default!; // Round ID and stuff
     [Dependency] private readonly IGameMapManager _gameMapManager = default!; // Map name
-    //[Dependency] private readonly AdminSystem _adminSystem = default!; // Panic bunker
-    //[Dependency] private readonly RoundEndSystem _roundEndSystem = default!; // Round API
     [Dependency] private readonly IServerNetManager _netManager = default!; // Kick
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Game rules
     [Dependency] private readonly IComponentFactory _componentFactory = default!; // Needed to circumvent the "IoC has no context on this thread" error until I figure out how to do it properly
@@ -90,7 +87,6 @@ public sealed class ServerApi : IPostInjectInit
     /// </summary>
     private async Task<bool> ActionPanicPunker(IStatusHandlerContext context)
     {
-
         if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/admin/actions/panic_bunker")
         {
             return false;
@@ -231,7 +227,8 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
-        _config.SetCVar(CCVars.MOTD, motd.ToString()); // A hook in the MOTD system sends the changes to each client
+        _taskManager.RunOnMainThread(() => _config.SetCVar(CCVars.MOTD, motd.ToString()));
+        // A hook in the MOTD system sends the changes to each client
         await context.RespondAsync("Success", HttpStatusCode.OK);
         return true;
     }
@@ -316,7 +313,7 @@ public sealed class ServerApi : IPostInjectInit
             return true;
         }
 
-        ticker.EndGameRule((EntityUid) gameRuleEntity);
+        _taskManager.RunOnMainThread(() => ticker.EndGameRule((EntityUid) gameRuleEntity));
         await context.RespondAsync($"Ended game rule {gameRuleEntity}", HttpStatusCode.OK);
         return true;
     }
