@@ -1,4 +1,4 @@
-﻿# Tier 1
+# Tier 1
 
 - type: technology
   id: BasicRobotics
@@ -62,13 +62,13 @@
   id: MagnetsTech
   name: research-technology-magnets-tech
   icon:
-    sprite: Clothing/Shoes/Boots/magboots.rsi
+    sprite: Clothing/Shoes/Boots/magboots-science.rsi
     state: icon
   discipline: Experimental
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - ClothingShoesBootsMag
+  - ClothingShoesBootsMagSci
 
 - type: technology
   id: AnomalyCoreHarnessing
