@@ -5,30 +5,26 @@
   generator: !type:NoiseDunGen
     tileCap: 1500
     capStd: 32
+    iterations: 1
     layers:
       - tile: FloorAsteroidSand
-        threshold: 0.20
+        threshold: 0.30
         noise:
-          frequency: 0.030
+          frequency: 0.020
           noiseType: OpenSimplex2
           fractalType: FBm
           octaves: 2
           lacunarity: 2
   # Everything else
   postGeneration:
-    # Generate vents
-    # TODO: Completely random poisson or whatever the fuck
     # Generate biome
     - !type:BiomePostGen
-      biomeTemplate: Caves
+      biomeTemplate: Asteroid
 
     # Generate ore veins
-    - !type:VeinPostGen
+    - !type:MarkerLayerPostGen
+      count: 2
       markerTemplate: OreTin
-
-    # TODO: Remove biome
-
-    # Generate flora / fauna if we want
 
 # Multiple smaller asteroids
 # This is a pain so we generate fewer tiles
@@ -53,7 +49,7 @@
     # TODO: Completely random poisson or whatever the fuck
     # Generate biome
     - !type:BiomePostGen
-      biomeTemplate: Caves
+      biomeTemplate: Asteroid
 
     # Generate ore veins
     #- !type:MarkerLayerPostGen
@@ -85,7 +81,7 @@
     # TODO: Completely random poisson or whatever the fuck
     # Generate biome
     - !type:BiomePostGen
-      biomeTemplate: Caves
+      biomeTemplate: Asteroid
 
 # Lots of holes in it
 - type: dungeonConfig
@@ -109,7 +105,7 @@
     # TODO: Completely random poisson or whatever the fuck
     # Generate biome
     - !type:BiomePostGen
-      biomeTemplate: Caves
+      biomeTemplate: Asteroid
 
 # YIELD TYPES:
 # Low yield 1 ore

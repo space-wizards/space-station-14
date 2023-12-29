@@ -467,8 +467,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 var rand = new Random(markerSeed);
                 var buffer = (int) (layerProto.Radius / 2f);
                 var bounds = new Box2i(chunk + buffer, chunk + layerProto.Size - buffer);
+                var count = (int) (bounds.Area / (layerProto.Radius * layerProto.Radius));
+                count = Math.Min(count, layerProto.MaxCount);
 
-                GetMarkerNodes(gridUid, component, grid, layerProto, forced, bounds, rand,
+                GetMarkerNodes(gridUid, component, grid, layerProto, forced, bounds, count, rand,
                     out var spawnSet, out var existing);
 
                 // Forcing markers to spawn so delete any that were found to be in the way.
@@ -544,6 +546,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         BiomeMarkerLayerPrototype layerProto,
         bool forced,
         Box2i bounds,
+        int count,
         Random rand,
         out Dictionary<Vector2i, string?> spawnSet,
         out HashSet<EntityUid> existingEnts,
@@ -553,8 +556,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         // TODO: Need poisson but crashes whenever I use moony's due to inputs or smth idk
         // Get the total amount of groups to spawn across the entire chunk.
         // We treat a null entity mask as requiring nothing else on the tile
-        var count = (int) (bounds.Area / (layerProto.Radius * layerProto.Radius));
-        count = Math.Min(count, layerProto.MaxCount);
 
         spawnSet = new Dictionary<Vector2i, string?>();
         var visited = _tilePool.Get();

@@ -256,7 +256,7 @@
     prob: 0.25
     name: ghost-role-information-salvage-flesh-name
     description: ghost-role-information-salvage-flesh-description
-  - type: SalvageMobRestrictions
+  # - type: SalvageMobRestrictions
 
 - type: entity
   parent: BaseMobFleshSalvage

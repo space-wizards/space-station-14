@@ -64,7 +64,7 @@ public sealed partial class DungeonJob
             frontier.Clear();
             visited.Add(seedTile);
             frontier.Enqueue(seedTile);
-            area = area.Union(seedTile);
+            area = area.UnionTile(seedTile);
             Box2i roomArea = new Box2i(seedTile, seedTile + Vector2i.One);
 
             // Time to floodfill again
@@ -79,7 +79,7 @@ public sealed partial class DungeonJob
                     if (value < layer.Threshold)
                         continue;
 
-                    roomArea = roomArea.Union(node);
+                    roomArea = roomArea.UnionTile(node);
                     foundNoise = true;
                     noiseFill = true;
                     var tileDef = _tileDefManager[layer.Tile.Id];
@@ -109,7 +109,7 @@ public sealed partial class DungeonJob
                         if (!visited.Add(neighbor))
                             continue;
 
-                        area = area.Union(neighbor);
+                        area = area.UnionTile(neighbor);
                         frontier.Enqueue(neighbor);
                     }
                 }
