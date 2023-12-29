@@ -873,3 +873,6 @@
     lightningPrototype: Lightning
   - type: Electrified
     requirePower: false
+  - type: Tag
+    tags:
+      - HideContextMenu
