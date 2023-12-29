@@ -33,7 +33,21 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
         foreach (var seed in current.Offers)
         {
             var offer = salvageSystem.GetSalvageOffering(seed);
-            // TODO:
+            var option = new OfferingWindowOption();
+
+            switch (offer)
+            {
+                case AsteroidOffering asteroid:
+                    option.Title = asteroid.DungeonConfig.ID;
+                    break;
+                case SalvageOffering salvage:
+                    option.Title = salvage.SalvageMap.ID;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            _window.AddOption(option);
         }
     }
 }

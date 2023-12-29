@@ -13,7 +13,9 @@ public abstract partial class SharedSalvageSystem
 
         if (seed % 2 == 0)
         {
-            var config = _proto.Index<DungeonConfigPrototype>("Asteroid");
+            var config = _proto.Index<DungeonConfigPrototype>("ClusterAsteroid");
+            // TODO: Loot, need runtime layers.
+
             return new AsteroidOffering
             {
                 DungeonConfig = config,
