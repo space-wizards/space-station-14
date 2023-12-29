@@ -11,7 +11,6 @@
             - material: WoodPlank
               amount: 4
               doAfter: 3
-              
     - node: barricadefull
       entity: Barricade
       edges:
@@ -28,3 +27,29 @@
             - tool: Prying
               doAfter: 5
 
+- type: constructionGraph
+  id: BarricadeDirectional
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: barricadefull
+          steps:
+            - material: WoodPlank
+              amount: 4
+              doAfter: 3
+    - node: barricadefull
+      entity: BarricadeDirectional
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 3 #returns 1 less as one breaks
+            - !type:DeleteEntity {}
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Prying
+              doAfter: 5
