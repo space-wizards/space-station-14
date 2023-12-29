@@ -9,6 +9,19 @@
     - RampingStationEventScheduler
 
 - type: gamePreset
+  id: Allatonce
+  name: all-at-once-title
+  description: all-at-once-description
+  showInVote: false
+  rules:
+    - Nukeops
+    - Traitor
+    - Revolutionary
+    - Zombie
+    - Pirates
+    - RampingStationEventScheduler
+
+- type: gamePreset
   id: Extended
   alias:
   - extended
