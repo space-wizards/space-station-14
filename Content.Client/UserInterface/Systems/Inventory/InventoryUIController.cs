@@ -243,7 +243,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         UpdateInventoryHotbar(_playerInventory);
         var shouldBeVisible = !_inventoryHotbar.Visible;
         _inventoryHotbar.Visible = shouldBeVisible;
-        _inventoryButton?.SetClickPressed(shouldBeVisible);
+
     }
 
     // Neuron Activation
