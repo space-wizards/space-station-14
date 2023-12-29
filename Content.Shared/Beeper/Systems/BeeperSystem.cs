@@ -86,6 +86,8 @@ public sealed class BeeperSystem : EntitySystem
         UpdateBeepInterval(owner, beeper);
         if (beeper.NextBeep >= _timing.CurTime)
             return;
+        var beepEvent = new BeepPlayedEvent(beeper.IsMuted);
+        RaiseLocalEvent(owner, ref beepEvent);
         if (!beeper.IsMuted && _net.IsServer)
         {
             _audio.PlayPvs(beeper.BeepSound, owner);

@@ -1,4 +1,4 @@
 ﻿namespace Content.Shared.Beeper;
 [ByRefEvent]
-public record struct OnBeepPlayedEvent(bool Muted);
+public record struct BeepPlayedEvent(bool Muted);
 
