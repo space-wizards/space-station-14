@@ -12,7 +12,7 @@
                          MinValue="0"
                          MaxValue="1"
                          SetHeight="25"/>
-            <Label Name="ProgressionText" Text="0.00"
+            <Label Name="ProgressionText" Text="00:00"
                    Margin="5"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">

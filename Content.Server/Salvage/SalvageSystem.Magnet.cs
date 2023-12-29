@@ -127,7 +127,7 @@ public sealed partial class SalvageSystem
 
     private void UpdateMagnetUI(Entity<SalvageMagnetComponent> entity, TransformComponent xform)
     {
-        var station = _station.GetOwningStation(entity);
+        var station = _station.GetOwningStation(entity, xform);
 
         if (!TryComp(station, out SalvageMagnetDataComponent? dataComp))
             return;
