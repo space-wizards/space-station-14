@@ -858,10 +858,6 @@
   - type: EmbeddableProjectile
   - type: Projectile
     deleteOnCollide: false
-    impactEffect: BulletImpactEffect
-    damage:
-      types:
-        Heat: 5
     soundHit:
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
   - type: LightningArcShooter
