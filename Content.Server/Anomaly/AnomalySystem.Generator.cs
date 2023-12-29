@@ -140,8 +140,6 @@ public sealed partial class AnomalySystem
                 var zoneTile = _transform.GetGridTilePositionOrDefault(uid, gridComp);
 
                 var delta = (zoneTile - tile);
-                //targetCoords.TryDelta(EntityManager, _transform, Transform(uid).Coordinates, out var delta);
-
                 if (delta.Length < zone.ZoneRadius)
                 {
                     valid = false;
