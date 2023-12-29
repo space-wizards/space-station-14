@@ -1,7 +1,7 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_bottles.yml
 - type: entity
   parent: DrinkBase
-  id: DrinkBottleBaseFull
+  id: DrinkBottlePlasticBaseFull
   abstract: true
   components:
   - type: Openable
@@ -15,6 +15,30 @@
     state: icon
   - type: Item
     size: Normal
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:SpillBehavior { }
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 100
+
+- type: entity
+  parent: DrinkBottlePlasticBaseFull
+  id: DrinkBottleGlassBaseFull
+  abstract: true
+  components:
+  - type: Sprite
+    state: icon
   - type: DamageOnLand
     damage:
       types:
@@ -46,11 +70,12 @@
     qualities:
     - Rolling
     speed: 0.75 # not as good as a rolling pin but does the job
-  - type: TrashOnSolutionEmpty
-    solution: drink
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 100
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkAbsintheBottleFull
   name: Jailbreaker Verte
   description: One sip of this and you just know you're gonna have a good time.
@@ -65,7 +90,7 @@
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkBlueCuracaoBottleFull
   name: Miss Blue Curacao
   description: A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic.
@@ -80,7 +105,7 @@
     sprite: Objects/Consumable/Drinks/alco-blue.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkBottleOfNothingFull
   name: bottle of nothing
   description: A bottle filled with nothing.
@@ -95,7 +120,7 @@
     sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkChampagneBottleFull
   name: champagne bottle
   description: Only people devoid of imagination can't find an excuse for champagne.
@@ -110,7 +135,7 @@
     sprite: Objects/Consumable/Drinks/champagnebottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkCognacBottleFull
   name: cognac bottle
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
@@ -125,7 +150,7 @@
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottlePlasticBaseFull
   id: DrinkColaBottleFull
   name: space cola bottle
   description: Cola. In space.
@@ -141,7 +166,7 @@
 
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkGrenadineBottleFull
   name: briar rose grenadine syrup bottle
   description: Sweet and tangy, a bar syrup used to add color or flavor to drinks.
@@ -159,7 +184,7 @@
     sprite: Objects/Consumable/Drinks/grenadinebottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkGinBottleFull
   name: Griffeater Gin
   description: A bottle of high quality gin, produced in the New London Space Station.
@@ -174,7 +199,7 @@
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkGoldschlagerBottleFull
   name: goldschlager bottle
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
@@ -189,7 +214,7 @@
     sprite: Objects/Consumable/Drinks/goldschlagerbottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkCoffeeLiqueurBottleFull
   name: coffee liqueur bottle
   description: The great taste of coffee with none of the benifits.
@@ -204,7 +229,7 @@
     sprite: Objects/Consumable/Drinks/coffeeliqueurbottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkMelonLiquorBottleFull
   name: emeraldine melon liquor
   description: A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light.
@@ -219,7 +244,7 @@
     sprite: Objects/Consumable/Drinks/alco-green.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkPatronBottleFull
   name: wrapp artiste patron bottle
   description: Silver laced tequilla, served in space night clubs across the galaxy.
@@ -234,7 +259,7 @@
     sprite: Objects/Consumable/Drinks/patronbottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkPoisonWinebottleFull
   name: warlock's velvet bottle
   description: What a delightful packaging for a surely high quality wine! The vintage must be amazing!
@@ -249,7 +274,7 @@
     sprite: Objects/Consumable/Drinks/pwinebottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkRumBottleFull
   name: captain pete's Cuban spiced rum
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
@@ -264,7 +289,7 @@
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottlePlasticBaseFull
   id: DrinkSpaceMountainWindBottleFull
   name: space mountain wind bottle
   description: Blows right through you like a space wind.
@@ -280,7 +305,7 @@
     sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottlePlasticBaseFull
   id: DrinkSpaceUpBottleFull
   name: space-up bottle
   description: Tastes like a hull breach in your mouth.
@@ -296,7 +321,7 @@
     sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkTequilaBottleFull
   name: caccavo guaranteed quality tequila bottle
   description: Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!
@@ -311,7 +336,7 @@
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkVermouthBottleFull
   name: goldeneye vermouth bottle
   description: Sweet, sweet dryness!
@@ -326,7 +351,7 @@
     sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkVodkaBottleFull
   name: vodka bottle
   description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
@@ -341,7 +366,7 @@
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkWhiskeyBottleFull
   name: uncle git's special reserve
   description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.
@@ -356,7 +381,7 @@
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkWineBottleFull
   name: doublebearded bearded special wine bottle
   description: A faint aura of unease and asspainery surrounds the bottle.
@@ -373,11 +398,13 @@
 # Small Bottles
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkBeerBottleFull
   name: beer  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
+  - type: Item
+    size: Small
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -389,11 +416,13 @@
     sprite: Objects/Consumable/Drinks/beer.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottleGlassBaseFull
   id: DrinkAleBottleFull
   name: Magm-Ale
   description: A true dorf's drink of choice.
   components:
+  - type: Item
+    size: Small
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -405,7 +434,7 @@
     sprite: Objects/Consumable/Drinks/alebottle.rsi
 
 - type: entity
-  parent: DrinkBottleBaseFull
+  parent: DrinkBottlePlasticBaseFull
   id: DrinkWaterBottleFull
   name: water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.

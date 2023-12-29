@@ -14,6 +14,15 @@
             "stopAtEntry": false
         },
         {
+            "name": "Client (Compatibility renderer)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "args": "--cvar display.compat=true",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
             "name": "Server",
             "type": "coreclr",
             "request": "launch",

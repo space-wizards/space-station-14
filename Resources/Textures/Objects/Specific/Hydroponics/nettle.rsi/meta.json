@@ -17,11 +17,11 @@
       "name": "produce"
     },
     {
-      "name": "inhand-left",
+      "name": "produce-inhand-left",
       "directions": 4
     },
     {
-      "name": "inhand-right",
+      "name": "produce-inhand-right",
       "directions": 4
     },
     {
