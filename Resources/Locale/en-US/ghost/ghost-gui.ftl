@@ -3,6 +3,7 @@ ghost-gui-ghost-warp-button = Ghost Warp
 ghost-gui-ghost-roles-button = Ghost Roles ({$count})
 ghost-gui-toggle-ghost-visibility-popup = Toggled visibility of ghosts.
 ghost-gui-toggle-icon-visibility-popup = Toggled visibility of antagonist icon.
+ghost-gui-toggle-icon-visibility-timer-popup = You need to wait ({$time}s)
 ghost-gui-toggle-lighting-manager-popup = Toggled all lighting.
 ghost-gui-toggle-fov-popup = Toggled field-of-view.
 

@@ -101,14 +101,14 @@
 - type: entity
   id: ActionToggleIcon
   name: Toggle Icons
-  description: Toggle the visibility of antag icon.
+  description: Toggle the visibility of Nuclear ops, non-heads revolutionary and zombie icon.
   noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Clothing/Eyes/Hud/sec.rsi, state: icon }
-    clientExclusive: true
     checkCanInteract: false
-    event: !type:ToggleviewHUDActionEvent
+    event: !type:ToggleIconEvent
+    useDelay: 1
 
 - type: entity
   id: ActionToggleGhostHearing

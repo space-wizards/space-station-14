@@ -67,7 +67,6 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<EyeComponent, ToggleLightingActionEvent>(OnToggleLighting);
             SubscribeLocalEvent<EyeComponent, ToggleFoVActionEvent>(OnToggleFoV);
             SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
-            SubscribeLocalEvent<GhostComponent, ToggleviewHUDActionEvent>(OnToggleIcon);
         }
 
         private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
@@ -110,18 +109,6 @@ namespace Content.Client.Ghost
         }
 
 
-        private void OnToggleIcon(EntityUid uid, GhostComponent component, ToggleviewHUDActionEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-icon-visibility-popup"), args.Performer);
-
-            if (uid == _playerManager.LocalEntity)
-                ToggleIconVisibility();
-
-            args.Handled = true;
-        }
 
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
@@ -129,7 +116,6 @@ namespace Content.Client.Ghost
             _actions.RemoveAction(uid, component.ToggleFoVActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostHearingActionEntity);
-            _actions.RemoveAction(uid, component.ToggleIconActionEntity);
 
             if (uid != _playerManager.LocalEntity)
                 return;
@@ -196,11 +182,6 @@ namespace Content.Client.Ghost
         public void ToggleGhostVisibility()
         {
             GhostVisibility = !GhostVisibility;
-        }
-        public void ToggleIconVisibility()
-        {
-            var msg = new GhostIconToggleRequest();
-            RaiseNetworkEvent(msg);
         }
     }
 }

@@ -33,7 +33,6 @@ public sealed partial class GhostComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? ToggleIconActionEntity;
 
-
     [DataField]
     public EntProtoId ToggleGhostHearingAction = "ActionToggleGhostHearing";
 
@@ -110,10 +109,10 @@ public sealed partial class ToggleFoVActionEvent : InstantActionEvent { }
 
 public sealed partial class ToggleGhostsActionEvent : InstantActionEvent { }
 
-public sealed partial class ToggleviewHUDActionEvent : InstantActionEvent { }
-
 public sealed partial class ToggleLightingActionEvent : InstantActionEvent { }
 
 public sealed partial class ToggleGhostHearingActionEvent : InstantActionEvent { }
 
 public sealed partial class BooActionEvent : InstantActionEvent { }
+
+public sealed partial class ToggleIconEvent : InstantActionEvent { }

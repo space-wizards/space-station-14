@@ -26,6 +26,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Content.Shared.Overlays;
+using Content.Shared.GameTicking;
+using FastAccessors;
 
 namespace Content.Server.Ghost
 {
@@ -47,6 +49,9 @@ namespace Content.Server.Ghost
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly GhostSystem _ghost = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private readonly SharedGameTicker _gameticker = default!;
+
+        private TimeSpan _startTimeSpan;
 
         public override void Initialize()
         {
@@ -67,13 +72,14 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpsRequestEvent>(OnGhostWarpsRequest);
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
-            SubscribeNetworkEvent<GhostIconToggleRequest>(OnToggleIconVisibilityRequest);
 
+            SubscribeLocalEvent<GhostComponent, ToggleIconEvent>(OnToggleIconVisibility);
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
+            _startTimeSpan = _gameTiming.CurTime;
         }
 
         private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
@@ -98,6 +104,72 @@ namespace Content.Server.Ghost
             Popup.PopupEntity(str, uid, uid);
             Dirty(uid, component);
         }
+
+        public bool Cantoogle(out string timeleft)
+        {
+            TimeSpan stationTime = _gameTiming.CurTime.Subtract(_startTimeSpan);
+
+            TimeSpan waittime = TimeSpan.FromMinutes(1);
+            if (waittime > stationTime)
+            {
+                var timeLeft = stationTime - waittime;
+                timeleft = timeLeft.Duration().ToString(@"mm\:ss");
+                return false;
+            }
+            timeleft = "00:00";
+            return true;
+        }
+
+
+        private void OnToggleIconVisibility(EntityUid uid, GhostComponent component, ToggleIconEvent args)
+        {
+            if (args.Handled)
+                return;
+
+
+            if (args.Performer is not {Valid: true} entity
+                || !HasComp<GhostComponent>(entity))
+            {
+                Log.Warning($"User {args.Performer} sent a {nameof(ToggleIconEvent)} without being a ghost.");
+                return;
+            }
+
+            if (!TryComp<ActorComponent>(entity, out var actor))
+            {
+                Log.Error($"User {args.Performer} sent a {nameof(ToggleIconEvent)} without ActorComponent");
+                return;
+            }
+
+            if (!Cantoogle(out string timeleft))
+            {
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-icon-visibility-timer-popup", ("time", timeleft)), entity);
+                return;
+            }
+            //Check if have all component and remove all or add all to the ghost entity
+            if (HasComp<ShowSecurityIconsComponent>(entity) && HasComp<ShowSyndicateIconsComponent>(entity) && HasComp<ShowAntagIconsComponent>(entity))
+            {
+                RemComp<ShowSecurityIconsComponent>(entity);
+                RemComp<ShowSyndicateIconsComponent>(entity);
+                RemComp<ShowAntagIconsComponent>(entity);
+            }
+            else
+            {
+                EnsureComp<ShowSecurityIconsComponent>(entity);
+                EnsureComp<ShowSyndicateIconsComponent>(entity);
+                EnsureComp<ShowAntagIconsComponent>(entity);
+
+                _adminLogManager.Add(LogType.MetaGaming, LogImpact.Medium, $"User {actor.PlayerSession.Name} requested the ability to see icon as ghost entity {ToPrettyString(entity)}");
+                //Blockrevive(entity);
+            }
+
+            Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-icon-visibility-popup"), entity);
+
+            EntityManager.DirtyEntity(entity);
+
+            args.Handled = true;
+        }
+
+
 
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
@@ -171,6 +243,7 @@ namespace Content.Server.Ghost
             // Entity can't see ghosts anymore.
             SetCanSeeGhosts(uid, false);
             _actions.RemoveAction(uid, component.BooActionEntity);
+            _actions.RemoveAction(uid, component.ToggleIconActionEntity);
         }
 
         private void SetCanSeeGhosts(EntityUid uid, bool canSee, EyeComponent? eyeComponent = null)
@@ -198,7 +271,13 @@ namespace Content.Server.Ghost
             _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
             _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
             _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
-            _actions.AddAction(uid, ref component.ToggleIconActionEntity, component.ToggleIconAction);
+            if (_actions.AddAction(uid, ref component.ToggleIconActionEntity, out var iconact, component.ToggleIconAction)
+                && iconact.UseDelay != null)
+            {
+                var start = _gameTiming.CurTime;
+                var end = start + iconact.UseDelay.Value;
+                _actions.SetCooldown(component.ToggleIconActionEntity.Value, start, end);
+            }
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
@@ -296,44 +375,6 @@ namespace Content.Server.Ghost
             if (TryComp(attached, out PhysicsComponent? physics))
                 _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
         }
-
-
-        private void OnToggleIconVisibilityRequest(GhostIconToggleRequest _, EntitySessionEventArgs args)
-        {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} entity
-                || !HasComp<GhostComponent>(entity))
-            {
-                Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostIconToggleRequest)} without being a ghost.");
-                return;
-            }
-
-            if (HasComp<ShowSecurityIconsComponent>(entity) && HasComp<ShowSyndicateIconsComponent>(entity) && HasComp<ShowAntagIconsComponent>(entity))
-            {
-                RemComp<ShowSecurityIconsComponent>(entity);
-                RemComp<ShowSyndicateIconsComponent>(entity);
-                RemComp<ShowAntagIconsComponent>(entity);
-            }
-            else
-            {
-                EnsureComp<ShowSecurityIconsComponent>(entity);
-                EnsureComp<ShowSyndicateIconsComponent>(entity);
-                EnsureComp<ShowAntagIconsComponent>(entity);
-
-                _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(entity)} requested the ability to see roles");
-                Blockrevive(entity);
-            }
-
-
-
-            EntityManager.DirtyEntity(entity);
-            
-
-
-
-        }
-
-
-
 
 
         /// <summary>
