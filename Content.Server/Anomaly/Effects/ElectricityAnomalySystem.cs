@@ -1,10 +1,8 @@
 using Content.Server.Electrocution;
 using Content.Server.Emp;
 using Content.Server.Lightning;
-using Content.Server.Power.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
-using Content.Shared.Mobs.Components;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
