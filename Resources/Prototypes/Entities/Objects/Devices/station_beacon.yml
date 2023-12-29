@@ -276,6 +276,14 @@
     text: morgue
 
 - type: entity
+  parent: DefaultStationBeaconMedical
+  id: DefaultStationBeaconSurgery
+  suffix: Surgery
+  components:
+  - type: NavMapBeacon
+    text: surgery
+
+- type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconScience
   suffix: Science
@@ -408,6 +416,14 @@
 
 - type: entity
   parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconGravGen
+  suffix: Grav Gen
+  components:
+  - type: NavMapBeacon
+    text: gravity generator
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
   id: DefaultStationBeaconSingularity
   suffix: Singularity
   components:
@@ -505,6 +521,31 @@
 
 - type: entity
   parent: DefaultStationBeacon
+  id: DefaultStationBeaconAI
+  suffix: AI
+  components:
+  - type: NavMapBeacon
+    text: AI
+    color: "#2ed2fd"
+
+- type: entity
+  parent: DefaultStationBeaconAI
+  id: DefaultStationBeaconAISatellite
+  suffix: AI Satellite
+  components:
+    - type: NavMapBeacon
+      text: AI satellite
+
+- type: entity
+  parent: DefaultStationBeaconAI
+  id: DefaultStationBeaconAICore
+  suffix: AI Core
+  components:
+    - type: NavMapBeacon
+      text: AI core
+
+- type: entity
+  parent: DefaultStationBeacon
   id: DefaultStationBeaconArrivals
   suffix: Arrivals
   components:
@@ -532,8 +573,24 @@
   id: DefaultStationBeaconLibrary
   suffix: Library
   components:
-    - type: NavMapBeacon
-      text: library
+  - type: NavMapBeacon
+    text: library
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconTheater
+  suffix: Theater
+  components:
+  - type: NavMapBeacon
+    text: theater
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconDorms
+  suffix: Dorms
+  components:
+  - type: NavMapBeacon
+    text: dorms
 
 - type: entity
   parent: DefaultStationBeacon
