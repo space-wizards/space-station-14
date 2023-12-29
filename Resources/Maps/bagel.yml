@@ -123980,6 +123980,93 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
+- proto: Screen
+  entities:
+  - uid: 5582
+    components:
+    - pos: -39.5,9.5
+      parent: 60
+      type: Transform
+  - uid: 24432
+    components:
+    - pos: 2.5,-4.5
+      parent: 60
+      type: Transform
+  - uid: 24433
+    components:
+    - pos: -11.5,-21.5
+      parent: 60
+      type: Transform
+  - uid: 24434
+    components:
+    - pos: -26.5,-21.5
+      parent: 60
+      type: Transform
+  - uid: 24436
+    components:
+    - pos: -39.5,-11.5
+      parent: 60
+      type: Transform
+  - uid: 24437
+    components:
+    - pos: -11.5,10.5
+      parent: 60
+      type: Transform
+  - uid: 24438
+    components:
+    - pos: 13.5,10.5
+      parent: 60
+      type: Transform
+  - uid: 24439
+    components:
+    - pos: 21.5,22.5
+      parent: 60
+      type: Transform
+  - uid: 24440
+    components:
+    - pos: 46.5,19.5
+      parent: 60
+      type: Transform
+  - uid: 24441
+    components:
+    - pos: 52.5,19.5
+      parent: 60
+      type: Transform
+  - uid: 24442
+    components:
+    - pos: 30.5,10.5
+      parent: 60
+      type: Transform
+  - uid: 24443
+    components:
+    - pos: 18.5,-0.5
+      parent: 60
+      type: Transform
+  - uid: 24444
+    components:
+    - pos: 29.5,-21.5
+      parent: 60
+      type: Transform
+  - uid: 24445
+    components:
+    - pos: 10.5,-25.5
+      parent: 60
+      type: Transform
+  - uid: 24446
+    components:
+    - pos: 2.5,-39.5
+      parent: 60
+      type: Transform
+  - uid: 24447
+    components:
+    - pos: 4.5,-52.5
+      parent: 60
+      type: Transform
+  - uid: 24448
+    components:
+    - pos: 18.5,-39.5
+      parent: 60
+      type: Transform
 - proto: Screwdriver
   entities:
   - uid: 9372
@@ -142971,13 +143058,6 @@ entities:
     - pos: -42.5,1.5
       parent: 60
       type: Transform
-  - uid: 5582
-    components:
-    - flags: PvsPriority
-      type: MetaData
-    - pos: -39.5,-10.5
-      parent: 60
-      type: Transform
   - uid: 5599
     components:
     - flags: PvsPriority
@@ -151257,6 +151337,13 @@ entities:
     - flags: PvsPriority
       type: MetaData
     - pos: -5.5,-16.5
+      parent: 60
+      type: Transform
+  - uid: 24435
+    components:
+    - flags: PvsPriority
+      type: MetaData
+    - pos: -39.5,-10.5
       parent: 60
       type: Transform
 - proto: WallShuttle
