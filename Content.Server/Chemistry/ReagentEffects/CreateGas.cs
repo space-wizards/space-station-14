@@ -8,13 +8,13 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class CreateGas : ReagentEffect
 {
-    [DataField(required: true)]
+    [DataField("gas", required: true)]
     public Gas Gas = default!;
 
     /// <summary>
     ///     For each unit consumed, how many moles of gas should be created?
     /// </summary>
-    [DataField]
+    [DataField("multiplier")]
     public float Multiplier = 3f;
 
     public override bool ShouldLog => true;

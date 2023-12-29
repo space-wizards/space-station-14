@@ -11,13 +11,13 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [DataDefinition]
     public sealed partial class RobustHarvest : ReagentEffect
     {
-        [DataField]
+        [DataField("potencyLimit")]
         public int PotencyLimit = 50;
 
-        [DataField]
+        [DataField("potencyIncrease")]
         public int PotencyIncrease = 3;
 
-        [DataField]
+        [DataField("potencySeedlessThreshold")]
         public int PotencySeedlessThreshold = 30;
 
         public override void Effect(ReagentEffectArgs args)

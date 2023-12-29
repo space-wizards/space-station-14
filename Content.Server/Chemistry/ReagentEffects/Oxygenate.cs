@@ -7,7 +7,7 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class Oxygenate : ReagentEffect
 {
-    [DataField]
+    [DataField("factor")]
     public float Factor = 1f;
 
     // JUSTIFICATION: This is internal magic that players never directly interact with.

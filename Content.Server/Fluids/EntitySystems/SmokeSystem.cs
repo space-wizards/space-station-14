@@ -1,7 +1,7 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry;
@@ -21,8 +21,6 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using System.Linq;
-
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -44,7 +42,7 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
 
     private EntityQuery<SmokeComponent> _smokeQuery;
@@ -61,7 +59,6 @@ public sealed class SmokeSystem : EntitySystem
         SubscribeLocalEvent<SmokeComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<SmokeComponent, EndCollideEvent>(OnEndCollide);
         SubscribeLocalEvent<SmokeComponent, ReactionAttemptEvent>(OnReactionAttempt);
-        SubscribeLocalEvent<SmokeComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<SmokeComponent, SpreadNeighborsEvent>(OnSmokeSpread);
         SubscribeLocalEvent<SmokeAffectedComponent, EntityUnpausedEvent>(OnAffectedUnpaused);
     }
@@ -83,33 +80,33 @@ public sealed class SmokeSystem : EntitySystem
         }
     }
 
-    private void OnStartCollide(Entity<SmokeComponent> entity, ref StartCollideEvent args)
+    private void OnStartCollide(EntityUid uid, SmokeComponent component, ref StartCollideEvent args)
     {
         if (_smokeAffectedQuery.HasComponent(args.OtherEntity))
             return;
 
         var smokeAffected = AddComp<SmokeAffectedComponent>(args.OtherEntity);
-        smokeAffected.SmokeEntity = entity;
+        smokeAffected.SmokeEntity = uid;
         smokeAffected.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
     }
 
-    private void OnEndCollide(Entity<SmokeComponent> entity, ref EndCollideEvent args)
+    private void OnEndCollide(EntityUid uid, SmokeComponent component, ref EndCollideEvent args)
     {
         // if we are already in smoke, make sure the thing we are exiting is the current smoke we are in.
         if (_smokeAffectedQuery.TryGetComponent(args.OtherEntity, out var smokeAffectedComponent))
         {
-            if (smokeAffectedComponent.SmokeEntity != entity.Owner)
+            if (smokeAffectedComponent.SmokeEntity != uid)
                 return;
         }
 
-        var exists = Exists(entity);
+        var exists = Exists(uid);
 
         if (!TryComp<PhysicsComponent>(args.OtherEntity, out var body))
             return;
 
         foreach (var ent in _physics.GetContactingEntities(args.OtherEntity, body))
         {
-            if (exists && ent == entity.Owner)
+            if (exists && ent == uid)
                 continue;
 
             if (!_smokeQuery.HasComponent(ent))
@@ -124,51 +121,51 @@ public sealed class SmokeSystem : EntitySystem
             RemComp(args.OtherEntity, smokeAffectedComponent);
     }
 
-    private void OnAffectedUnpaused(Entity<SmokeAffectedComponent> entity, ref EntityUnpausedEvent args)
+    private void OnAffectedUnpaused(EntityUid uid, SmokeAffectedComponent component, ref EntityUnpausedEvent args)
     {
-        entity.Comp.NextSecond += args.PausedTime;
+        component.NextSecond += args.PausedTime;
     }
 
-    private void OnSmokeSpread(Entity<SmokeComponent> entity, ref SpreadNeighborsEvent args)
+    private void OnSmokeSpread(EntityUid uid, SmokeComponent component, ref SpreadNeighborsEvent args)
     {
-        if (entity.Comp.SpreadAmount == 0 || !_solutionContainerSystem.ResolveSolution(entity.Owner, SmokeComponent.SolutionName, ref entity.Comp.Solution, out var solution))
+        if (component.SpreadAmount == 0 || !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
         {
-            RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
             return;
         }
 
-        if (Prototype(entity) is not { } prototype)
+        if (Prototype(uid) is not { } prototype)
         {
-            RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
             return;
         }
 
         if (!args.NeighborFreeTiles.Any())
             return;
 
-        TryComp<TimedDespawnComponent>(entity, out var timer);
+        TryComp<TimedDespawnComponent>(uid, out var timer);
 
         // wtf is the logic behind any of this.
-        var smokePerSpread = entity.Comp.SpreadAmount / Math.Max(1, args.NeighborFreeTiles.Count);
+        var smokePerSpread = component.SpreadAmount / Math.Max(1, args.NeighborFreeTiles.Count);
         foreach (var neighbor in args.NeighborFreeTiles)
         {
             var coords = neighbor.Grid.GridTileToLocal(neighbor.Tile);
             var ent = Spawn(prototype.ID, coords);
             var spreadAmount = Math.Max(0, smokePerSpread);
-            entity.Comp.SpreadAmount -= args.NeighborFreeTiles.Count();
+            component.SpreadAmount -= args.NeighborFreeTiles.Count();
 
-            StartSmoke(ent, solution.Clone(), timer?.Lifetime ?? entity.Comp.Duration, spreadAmount);
+            StartSmoke(ent, solution.Clone(), timer?.Lifetime ?? component.Duration, spreadAmount);
 
-            if (entity.Comp.SpreadAmount == 0)
+            if (component.SpreadAmount == 0)
             {
-                RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
+                RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
                 break;
             }
         }
 
         args.Updates--;
 
-        if (args.NeighborFreeTiles.Count > 0 || args.Neighbors.Count == 0 || entity.Comp.SpreadAmount < 1)
+        if (args.NeighborFreeTiles.Count > 0 || args.Neighbors.Count == 0 || component.SpreadAmount < 1)
             return;
 
         // We have no more neighbours to spread to. So instead we will randomly distribute our volume to neighbouring smoke tiles.
@@ -182,21 +179,21 @@ public sealed class SmokeSystem : EntitySystem
                 continue;
 
             smoke.SpreadAmount++;
-            entity.Comp.SpreadAmount--;
+            component.SpreadAmount--;
             EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
 
-            if (entity.Comp.SpreadAmount == 0)
+            if (component.SpreadAmount == 0)
             {
-                RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
+                RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
                 break;
             }
         }
 
     }
 
-    private void OnReactionAttempt(Entity<SmokeComponent> entity, ref ReactionAttemptEvent args)
+    private void OnReactionAttempt(EntityUid uid, SmokeComponent component, ReactionAttemptEvent args)
     {
-        if (args.Cancelled)
+        if (args.Solution.Name != SmokeComponent.SolutionName)
             return;
 
         // Prevent smoke/foam fork bombs (smoke creating more smoke).
@@ -204,16 +201,10 @@ public sealed class SmokeSystem : EntitySystem
         {
             if (effect is AreaReactionEffect)
             {
-                args.Cancelled = true;
+                args.Cancel();
                 return;
             }
         }
-    }
-
-    private void OnReactionAttempt(Entity<SmokeComponent> entity, ref SolutionRelayEvent<ReactionAttemptEvent> args)
-    {
-        if (args.Name == SmokeComponent.SolutionName)
-            OnReactionAttempt(entity, ref args.Event);
     }
 
     /// <summary>
@@ -254,14 +245,14 @@ public sealed class SmokeSystem : EntitySystem
         if (!Resolve(smokeUid, ref component))
             return;
 
-        if (!_solutionContainerSystem.ResolveSolution(smokeUid, SmokeComponent.SolutionName, ref component.Solution, out var solution) ||
+        if (!_solutionSystem.TryGetSolution(smokeUid, SmokeComponent.SolutionName, out var solution) ||
             solution.Contents.Count == 0)
         {
             return;
         }
 
         ReactWithEntity(entity, smokeUid, solution, component);
-        UpdateVisuals((smokeUid, component));
+        UpdateVisuals(smokeUid);
     }
 
     private void ReactWithEntity(EntityUid entity, EntityUid smokeUid, Solution solution, SmokeComponent? component = null)
@@ -272,14 +263,11 @@ public sealed class SmokeSystem : EntitySystem
         if (!TryComp<BloodstreamComponent>(entity, out var bloodstream))
             return;
 
-        if (!_solutionContainerSystem.ResolveSolution(entity, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution, out var chemSolution) || chemSolution.AvailableVolume <= 0)
-            return;
-
-        var blockIngestion = _internals.AreInternalsWorking(entity);
+        var blockIngestion =  _internals.AreInternalsWorking(entity);
 
         var cloneSolution = solution.Clone();
         var availableTransfer = FixedPoint2.Min(cloneSolution.Volume, component.TransferRate);
-        var transferAmount = FixedPoint2.Min(availableTransfer, chemSolution.AvailableVolume);
+        var transferAmount = FixedPoint2.Min(availableTransfer, bloodstream.ChemicalSolution.AvailableVolume);
         var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
         foreach (var reagentQuantity in transferSolution.Contents.ToArray())
@@ -308,7 +296,7 @@ public sealed class SmokeSystem : EntitySystem
         if (!Resolve(uid, ref component, ref xform))
             return;
 
-        if (!_solutionContainerSystem.ResolveSolution(uid, SmokeComponent.SolutionName, ref component.Solution, out var solution) || !solution.Any())
+        if (!_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution) || !solution.Any())
             return;
 
         if (!_mapManager.TryGetGrid(xform.GridUid, out var mapGrid))
@@ -329,30 +317,29 @@ public sealed class SmokeSystem : EntitySystem
     /// <summary>
     /// Adds the specified solution to the relevant smoke solution.
     /// </summary>
-    private void TryAddSolution(Entity<SmokeComponent?> smoke, Solution solution)
+    private void TryAddSolution(EntityUid uid, Solution solution)
     {
         if (solution.Volume == FixedPoint2.Zero)
             return;
 
-        if (!Resolve(smoke, ref smoke.Comp))
+        if (!_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solutionArea))
             return;
 
-        if (!_solutionContainerSystem.ResolveSolution(smoke.Owner, SmokeComponent.SolutionName, ref smoke.Comp.Solution, out var solutionArea))
-            return;
+        var addSolution =
+            solution.SplitSolution(FixedPoint2.Min(solution.Volume, solutionArea.AvailableVolume));
 
-        var addSolution = solution.SplitSolution(FixedPoint2.Min(solution.Volume, solutionArea.AvailableVolume));
-        _solutionContainerSystem.TryAddSolution(smoke.Comp.Solution.Value, addSolution);
+        _solutionSystem.TryAddSolution(uid, solutionArea, addSolution);
 
-        UpdateVisuals(smoke);
+        UpdateVisuals(uid);
     }
 
-    private void UpdateVisuals(Entity<SmokeComponent?, AppearanceComponent?> smoke)
+    private void UpdateVisuals(EntityUid uid)
     {
-        if (!Resolve(smoke, ref smoke.Comp1, ref smoke.Comp2) ||
-            !_solutionContainerSystem.ResolveSolution(smoke.Owner, SmokeComponent.SolutionName, ref smoke.Comp1.Solution, out var solution))
+        if (!TryComp(uid, out AppearanceComponent? appearance) ||
+            !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
             return;
 
         var color = solution.GetColor(_prototype);
-        _appearance.SetData(smoke.Owner, SmokeVisuals.Color, color, smoke.Comp2);
+        _appearance.SetData(uid, SmokeVisuals.Color, color, appearance);
     }
 }

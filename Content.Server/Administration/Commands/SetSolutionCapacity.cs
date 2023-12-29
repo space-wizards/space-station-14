@@ -1,9 +1,8 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
-using System.Linq;
 
 namespace Content.Server.Administration.Commands
 {
@@ -36,13 +35,13 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var solutionContainerSystem = _entManager.System<SolutionContainerSystem>();
-            if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solution))
+            if (!man.Solutions.ContainsKey(args[1]))
             {
-                var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
+                var validSolutions = string.Join(", ", man.Solutions.Keys);
                 shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions are:\n{validSolutions}");
                 return;
             }
+            var solution = man.Solutions[args[1]];
 
             if (!float.TryParse(args[2], out var quantityFloat))
             {
@@ -50,14 +49,14 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (quantityFloat < 0.0f)
+            if(quantityFloat < 0.0f)
             {
                 shell.WriteLine($"Cannot set the maximum volume of a solution to a negative number.");
                 return;
             }
 
             var quantity = FixedPoint2.New(quantityFloat);
-            solutionContainerSystem.SetCapacity(solution.Value, quantity);
+            _entManager.System<SolutionContainerSystem>().SetCapacity(uid.Value, solution, quantity);
         }
     }
 }

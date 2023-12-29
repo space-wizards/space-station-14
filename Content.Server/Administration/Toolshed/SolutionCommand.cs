@@ -1,12 +1,12 @@
-﻿using Content.Server.Chemistry.Containers.EntitySystems;
+﻿using System.Linq;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
-using System.Linq;
 
 namespace Content.Server.Administration.Toolshed;
 
@@ -24,8 +24,10 @@ public sealed class SolutionCommand : ToolshedCommand
     {
         _solutionContainer ??= GetSys<SolutionContainerSystem>();
 
-        if (_solutionContainer.TryGetSolution(input, name.Evaluate(ctx)!, out var solution))
-            return new SolutionRef(solution.Value);
+        _solutionContainer.TryGetSolution(input, name.Evaluate(ctx)!, out var solution);
+
+        if (solution is not null)
+            return new SolutionRef(input, solution);
 
         return null;
     }
@@ -53,11 +55,11 @@ public sealed class SolutionCommand : ToolshedCommand
         var amount = amountRef.Evaluate(ctx);
         if (amount > 0)
         {
-            _solutionContainer.TryAddReagent(input.Solution, name.Value.ID, amount, out _);
+            _solutionContainer.TryAddReagent(input.Owner, input.Solution, name.Value.ID, amount, out _);
         }
         else if (amount < 0)
         {
-            _solutionContainer.RemoveReagent(input.Solution, name.Value.ID, -amount);
+            _solutionContainer.RemoveReagent(input.Owner, input.Solution, name.Value.ID, -amount);
         }
 
         return input;
@@ -73,10 +75,10 @@ public sealed class SolutionCommand : ToolshedCommand
         => input.Select(x => AdjReagent(ctx, x, name, amountRef));
 }
 
-public readonly record struct SolutionRef(Entity<SolutionComponent> Solution)
+public readonly record struct SolutionRef(EntityUid Owner, Solution Solution)
 {
     public override string ToString()
     {
-        return $"{Solution.Owner} {Solution.Comp.Solution}";
+        return $"{Owner} {Solution}";
     }
 }

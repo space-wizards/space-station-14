@@ -9,10 +9,10 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     /// </summary>
     public sealed partial class SolutionTemperature : ReagentEffectCondition
     {
-        [DataField]
+        [DataField("min")]
         public float Min = 0.0f;
 
-        [DataField]
+        [DataField("max")]
         public float Max = float.PositiveInfinity;
         public override bool Condition(ReagentEffectArgs args)
         {

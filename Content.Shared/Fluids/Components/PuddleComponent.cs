@@ -1,4 +1,3 @@
-using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -18,8 +17,5 @@ namespace Content.Shared.Fluids.Components
         public FixedPoint2 OverflowVolume = FixedPoint2.New(20);
 
         [DataField("solution")] public string SolutionName = "puddle";
-
-        [DataField("solutionRef")]
-        public Entity<SolutionComponent>? Solution;
     }
 }

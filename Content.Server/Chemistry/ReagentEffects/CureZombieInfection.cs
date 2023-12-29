@@ -1,13 +1,14 @@
-using Content.Server.Zombies;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Configuration;
+using Content.Server.Zombies;
+
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class CureZombieInfection : ReagentEffect
 {
-    [DataField]
+    [DataField("innoculate")]
     public bool Innoculate;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

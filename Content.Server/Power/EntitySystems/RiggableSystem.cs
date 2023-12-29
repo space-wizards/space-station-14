@@ -13,6 +13,7 @@ namespace Content.Server.Power.EntitySystems;
 /// </summary>
 public sealed class RiggableSystem : EntitySystem
 {
+    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
@@ -21,17 +22,17 @@ public sealed class RiggableSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<RiggableComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<RiggableComponent, BeingMicrowavedEvent>(OnMicrowaved);
-        SubscribeLocalEvent<RiggableComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
+        SubscribeLocalEvent<RiggableComponent, SolutionChangedEvent>(OnSolutionChanged);
     }
 
-    private void OnRejuvenate(Entity<RiggableComponent> entity, ref RejuvenateEvent args)
+    private void OnRejuvenate(EntityUid uid, RiggableComponent component, RejuvenateEvent args)
     {
-        entity.Comp.IsRigged = false;
+        component.IsRigged = false;
     }
 
-    private void OnMicrowaved(Entity<RiggableComponent> entity, ref BeingMicrowavedEvent args)
+    private void OnMicrowaved(EntityUid uid, RiggableComponent component, BeingMicrowavedEvent args)
     {
-        if (TryComp<BatteryComponent>(entity, out var batteryComponent))
+        if (TryComp<BatteryComponent>(uid, out var batteryComponent))
         {
             if (batteryComponent.CurrentCharge == 0)
                 return;
@@ -40,21 +41,21 @@ public sealed class RiggableSystem : EntitySystem
         args.Handled = true;
 
         // What the fuck are you doing???
-        Explode(entity.Owner, batteryComponent, args.User);
+        Explode(uid, batteryComponent, args.User);
     }
 
-    private void OnSolutionChanged(Entity<RiggableComponent> entity, ref SolutionContainerChangedEvent args)
+    private void OnSolutionChanged(EntityUid uid, RiggableComponent component, SolutionChangedEvent args)
     {
-        if (args.SolutionId != entity.Comp.Solution)
+        if (args.SolutionId != component.Solution)
             return;
 
-        var wasRigged = entity.Comp.IsRigged;
-        var quantity = args.Solution.GetReagentQuantity(entity.Comp.RequiredQuantity.Reagent);
-        entity.Comp.IsRigged = quantity >= entity.Comp.RequiredQuantity.Quantity;
+        var wasRigged = component.IsRigged;
+        var quantity = args.Solution.GetReagentQuantity(component.RequiredQuantity.Reagent);
+        component.IsRigged = quantity >= component.RequiredQuantity.Quantity;
 
-        if (entity.Comp.IsRigged && !wasRigged)
+        if (component.IsRigged && !wasRigged)
         {
-            _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(entity.Owner)} has been rigged up to explode when used.");
+            _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(uid)} has been rigged up to explode when used.");
         }
     }
 

@@ -7,14 +7,16 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 {
     public sealed partial class MobStateCondition : ReagentEffectCondition
     {
-        [DataField]
-        public MobState Mobstate = MobState.Alive;
+
+
+        [DataField("mobstate")]
+        public MobState mobstate = MobState.Alive;
 
         public override bool Condition(ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out MobStateComponent? mobState))
             {
-                if (mobState.CurrentState == Mobstate)
+                if (mobState.CurrentState == mobstate)
                     return true;
             }
 
@@ -23,7 +25,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 
         public override string GuidebookExplanation(IPrototypeManager prototype)
         {
-            return Loc.GetString("reagent-effect-condition-guidebook-mob-state-condition", ("state", Mobstate));
+            return Loc.GetString("reagent-effect-condition-guidebook-mob-state-condition", ("state", mobstate));
         }
     }
 }
