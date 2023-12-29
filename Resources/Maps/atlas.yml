@@ -4628,6 +4628,7 @@ entities:
           canMix: True
           canReact: True
           maxVol: 50
+          name: null
           reagents:
           - data: null
             ReagentId: Leporazine
@@ -19171,6 +19172,342 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
+- proto: DefaultStationBeacon
+  entities:
+  - uid: 6039
+    components:
+    - pos: 18.5,-20.5
+      parent: 30
+      type: Transform
+    - text: evac
+      type: NavMapBeacon
+- proto: DefaultStationBeaconAME
+  entities:
+  - uid: 7039
+    components:
+    - pos: -37.5,2.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconAnomalyGenerator
+  entities:
+  - uid: 1071
+    components:
+    - pos: -17.5,-19.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconArmory
+  entities:
+  - uid: 4301
+    components:
+    - pos: 8.5,16.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconArrivals
+  entities:
+  - uid: 5954
+    components:
+    - pos: 19.5,27.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconArtifactLab
+  entities:
+  - uid: 962
+    components:
+    - pos: -25.5,-19.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconAtmospherics
+  entities:
+  - uid: 6915
+    components:
+    - pos: -41.5,2.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconBar
+  entities:
+  - uid: 2360
+    components:
+    - pos: -22.5,2.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconBotany
+  entities:
+  - uid: 2210
+    components:
+    - pos: -8.5,2.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconBridge
+  entities:
+  - uid: 7515
+    components:
+    - pos: 32.5,2.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconBrig
+  entities:
+  - uid: 4303
+    components:
+    - pos: 9.5,8.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconCaptainsQuarters
+  entities:
+  - uid: 600
+    components:
+    - pos: 32.5,8.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconCargoBay
+  entities:
+  - uid: 930
+    components:
+    - pos: -20.5,17.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconCargoReception
+  entities:
+  - uid: 928
+    components:
+    - pos: -26.5,15.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconCERoom
+  entities:
+  - uid: 946
+    components:
+    - pos: -38.5,9.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconChemistry
+  entities:
+  - uid: 6359
+    components:
+    - pos: -2.5,-6.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconCMORoom
+  entities:
+  - uid: 6320
+    components:
+    - pos: -0.5,-14.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconCourtroom
+  entities:
+  - uid: 2493
+    components:
+    - pos: -1.5,11.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconCryonics
+  entities:
+  - uid: 6235
+    components:
+    - pos: 11.5,-6.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconDisposals
+  entities:
+  - uid: 6176
+    components:
+    - pos: 26.5,-13.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconDorms
+  entities:
+  - uid: 657
+    components:
+    - pos: -38.5,-13.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconEngineering
+  entities:
+  - uid: 6855
+    components:
+    - pos: -32.5,2.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconEVAStorage
+  entities:
+  - uid: 7600
+    components:
+    - pos: 22.5,7.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconGravGen
+  entities:
+  - uid: 6916
+    components:
+    - pos: -42.5,10.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconHOPOffice
+  entities:
+  - uid: 7576
+    components:
+    - pos: 27.5,-3.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconHOSRoom
+  entities:
+  - uid: 3003
+    components:
+    - pos: 3.5,16.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconJanitorsCloset
+  entities:
+  - uid: 6181
+    components:
+    - pos: 22.5,-1.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconKitchen
+  entities:
+  - uid: 2189
+    components:
+    - pos: -15.5,0.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconLawOffice
+  entities:
+  - uid: 2492
+    components:
+    - pos: 2.5,6.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconLibrary
+  entities:
+  - uid: 2367
+    components:
+    - pos: -8.5,-9.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconMedbay
+  entities:
+  - uid: 6531
+    components:
+    - pos: 3.5,-6.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconMedical
+  entities:
+  - uid: 6650
+    components:
+    - pos: 1.5,-1.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconMorgue
+  entities:
+  - uid: 6318
+    components:
+    - pos: 3.5,-14.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconPowerBank
+  entities:
+  - uid: 938
+    components:
+    - pos: -34.5,-3.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconQMRoom
+  entities:
+  - uid: 7719
+    components:
+    - pos: -27.5,20.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconRDRoom
+  entities:
+  - uid: 1840
+    components:
+    - pos: -21.5,-9.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconRND
+  entities:
+  - uid: 1472
+    components:
+    - pos: -15.5,-12.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconRobotics
+  entities:
+  - uid: 1072
+    components:
+    - pos: -28.5,-10.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconSalvage
+  entities:
+  - uid: 910
+    components:
+    - pos: -41.5,17.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconScience
+  entities:
+  - uid: 1078
+    components:
+    - pos: -22.5,-13.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconSecurity
+  entities:
+  - uid: 5115
+    components:
+    - pos: 14.5,6.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconSolars
+  entities:
+  - uid: 646
+    components:
+    - pos: -13.5,-19.5
+      parent: 30
+      type: Transform
+  - uid: 713
+    components:
+    - pos: -13.5,24.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconTelecoms
+  entities:
+  - uid: 6858
+    components:
+    - pos: -45.5,9.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconTheater
+  entities:
+  - uid: 7718
+    components:
+    - pos: -6.5,14.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconToolRoom
+  entities:
+  - uid: 7717
+    components:
+    - pos: -10.5,14.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconVault
+  entities:
+  - uid: 7577
+    components:
+    - pos: 27.5,7.5
+      parent: 30
+      type: Transform
+- proto: DefaultStationBeaconWardensOffice
+  entities:
+  - uid: 2785
+    components:
+    - pos: 11.5,12.5
+      parent: 30
+      type: Transform
 - proto: DefibrillatorCabinetFilled
   entities:
   - uid: 1284
@@ -21506,6 +21843,7 @@ entities:
           canMix: False
           canReact: True
           maxVol: 30
+          name: null
           reagents:
           - data: null
             ReagentId: Whiskey
@@ -31360,6 +31698,8 @@ entities:
     - pos: 29.5,4.5
       parent: 30
       type: Transform
+    - joinedGrid: 30
+      type: AtmosDevice
     - color: '#0055CCFF'
       type: AtmosPipeColor
   - uid: 482
@@ -51641,405 +51981,78 @@ entities:
     - pos: -44.5,2.5
       parent: 30
       type: Transform
-- proto: WarpPointBeaconBar
+- proto: WarpPointBombing
   entities:
-  - uid: 657
+  - uid: 7579
+    components:
+    - pos: 32.5,2.5
+      parent: 30
+      type: Transform
+    - location: bridge
+      type: WarpPoint
+  - uid: 7580
+    components:
+    - pos: 22.5,7.5
+      parent: 30
+      type: Transform
+    - location: eva room
+      type: WarpPoint
+  - uid: 7582
+    components:
+    - pos: 27.5,7.5
+      parent: 30
+      type: Transform
+    - location: vault
+      type: WarpPoint
+  - uid: 7695
+    components:
+    - pos: 3.5,-6.5
+      parent: 30
+      type: Transform
+    - location: medbay
+      type: WarpPoint
+  - uid: 7696
+    components:
+    - pos: -21.5,-13.5
+      parent: 30
+      type: Transform
+    - location: science
+      type: WarpPoint
+  - uid: 7714
+    components:
+    - pos: -36.5,2.5
+      parent: 30
+      type: Transform
+    - location: engineering
+      type: WarpPoint
+  - uid: 7715
     components:
     - pos: -21.5,2.5
       parent: 30
       type: Transform
-    - type: BombingTarget
-- proto: WarpPointBeaconCargo
-  entities:
-  - uid: 2367
-    components:
-    - pos: -20.5,17.5
-      parent: 30
-      type: Transform
-    - type: BombingTarget
-  - uid: 6650
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -41.5,17.5
-      parent: 30
-      type: Transform
-    - text: salvage
-      type: NavMapBeacon
-    - location: salvage
+    - location: bar
       type: WarpPoint
-    - type: BombingTarget
-- proto: WarpPointBeaconCommand
-  entities:
-  - uid: 600
+  - uid: 7716
     components:
-    - rot: 1.5707963267948966 rad
-      pos: 27.5,-3.5
+    - pos: -20.5,18.5
       parent: 30
       type: Transform
-    - text: hop's office
-      type: NavMapBeacon
-    - location: hop's office
+    - location: cargo
       type: WarpPoint
-    - type: BombingTarget
-  - uid: 910
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 32.5,2.5
-      parent: 30
-      type: Transform
-    - text: bridge
-      type: NavMapBeacon
-    - location: bridge
-      type: WarpPoint
-    - type: BombingTarget
-  - uid: 1071
-    components:
-    - pos: 22.5,6.5
-      parent: 30
-      type: Transform
-    - text: eva
-      type: NavMapBeacon
-    - location: eva
-      type: WarpPoint
-  - uid: 1072
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 32.5,8.5
-      parent: 30
-      type: Transform
-    - text: cap's office
-      type: NavMapBeacon
-    - location: cap's office
-      type: WarpPoint
-  - uid: 6320
-    components:
-    - pos: -46.5,11.5
-      parent: 30
-      type: Transform
-    - text: telecomms
-      type: NavMapBeacon
-    - location: telecomms
-      type: WarpPoint
-    - type: BombingTarget
-  - uid: 6531
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 27.5,6.5
-      parent: 30
-      type: Transform
-    - text: vault
-      type: NavMapBeacon
-    - location: vault
-      type: WarpPoint
-    - type: BombingTarget
-  - uid: 7600
-    components:
-    - rot: 3.141592653589793 rad
-      pos: -42.5,10.5
-      parent: 30
-      type: Transform
-    - text: gravity generator
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-- proto: WarpPointBeaconEngineering
-  entities:
-  - uid: 646
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -39.5,9.5
-      parent: 30
-      type: Transform
-    - text: ce's office
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 2492
-    components:
-    - pos: -32.5,2.5
-      parent: 30
-      type: Transform
-    - type: BombingTarget
-  - uid: 6318
-    components:
-    - pos: -34.5,9.5
-      parent: 30
-      type: Transform
-    - text: locker room
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 6359
-    components:
-    - pos: -40.5,2.5
-      parent: 30
-      type: Transform
-    - text: atmospherics
-      type: NavMapBeacon
-    - location: atmospherics
-      type: WarpPoint
-    - type: BombingTarget
-- proto: WarpPointBeaconMedical
-  entities:
-  - uid: 2493
-    components:
-    - pos: 6.5,-1.5
-      parent: 30
-      type: Transform
-    - type: BombingTarget
-  - uid: 4301
-    components:
-    - pos: 11.5,-7.5
-      parent: 30
-      type: Transform
-    - text: cryogenics
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 5954
-    components:
-    - pos: 1.5,-19.5
-      parent: 30
-      type: Transform
-    - text: virology
-      type: NavMapBeacon
-    - location: virology
-      type: WarpPoint
-  - uid: 6855
-    components:
-    - pos: -2.5,-5.5
-      parent: 30
-      type: Transform
-    - text: chemistry
-      type: NavMapBeacon
-    - location: chemistry
-      type: WarpPoint
-  - uid: 6915
-    components:
-    - pos: 0.5,-12.5
-      parent: 30
-      type: Transform
-    - text: cmo's office
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 6916
-    components:
-    - pos: 10.5,-12.5
-      parent: 30
-      type: Transform
-    - text: locker room
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-- proto: WarpPointBeaconNeutral
-  entities:
-  - uid: 1078
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 26.5,-13.5
-      parent: 30
-      type: Transform
-    - text: disposals
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 1840
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 7.5,25.5
-      parent: 30
-      type: Transform
-    - text: escape pod
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 5115
-    components:
-    - pos: 18.5,-20.5
-      parent: 30
-      type: Transform
-    - text: evac
-      type: NavMapBeacon
-    - location: evac
-      type: WarpPoint
-  - uid: 6176
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 19.5,27.5
-      parent: 30
-      type: Transform
-    - text: arrivals
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 6235
-    components:
-    - pos: -40.5,-13.5
-      parent: 30
-      type: Transform
-    - text: dorms
-      type: NavMapBeacon
-    - location: dorms
-      type: WarpPoint
-  - uid: 7515
-    components:
-    - pos: -11.5,14.5
-      parent: 30
-      type: Transform
-    - text: tool storage
-      type: NavMapBeacon
-    - location: tool storage
-      type: WarpPoint
-- proto: WarpPointBeaconScience
-  entities:
-  - uid: 713
-    components:
-    - pos: -28.5,-10.5
-      parent: 30
-      type: Transform
-    - text: robotics
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 938
-    components:
-    - pos: -15.5,-12.5
-      parent: 30
-      type: Transform
-  - uid: 946
-    components:
-    - pos: -22.5,-20.5
-      parent: 30
-      type: Transform
-    - text: xenoarch
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 2210
-    components:
-    - pos: -22.5,-9.5
-      parent: 30
-      type: Transform
-    - text: rd's office
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 2360
-    components:
-    - pos: -24.5,-13.5
-      parent: 30
-      type: Transform
-    - text: locker room
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-- proto: WarpPointBeaconSecurity
-  entities:
-  - uid: 928
+  - uid: 7720
     components:
     - pos: 8.5,16.5
       parent: 30
       type: Transform
-    - text: armory
-      type: NavMapBeacon
     - location: armory
       type: WarpPoint
-    - type: BombingTarget
-  - uid: 930
+  - uid: 7721
     components:
-    - pos: 9.5,10.5
+    - pos: 12.5,8.5
       parent: 30
       type: Transform
-    - type: BombingTarget
-  - uid: 962
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 1.5,11.5
-      parent: 30
-      type: Transform
-    - text: courtroom
-      type: NavMapBeacon
-    - location: courtroom
+    - location: security
       type: WarpPoint
-  - uid: 1472
-    components:
-    - pos: 14.5,17.5
-      parent: 30
-      type: Transform
-    - text: locker room
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 2189
-    components:
-    - pos: 4.5,15.5
-      parent: 30
-      type: Transform
-    - text: hos's office
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-- proto: WarpPointBeaconService
-  entities:
-  - uid: 2785
-    components:
-    - pos: -10.5,2.5
-      parent: 30
-      type: Transform
-    - text: botany
-      type: NavMapBeacon
-    - location: botany
-      type: WarpPoint
-  - uid: 3003
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 21.5,-2.5
-      parent: 30
-      type: Transform
-    - text: janitor's closet
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 4303
-    components:
-    - pos: -15.5,-0.5
-      parent: 30
-      type: Transform
-    - text: kitchen
-      type: NavMapBeacon
-    - location: kitchen
-      type: WarpPoint
-  - uid: 6039
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -8.5,-9.5
-      parent: 30
-      type: Transform
-    - text: library
-      type: NavMapBeacon
-    - location: library
-      type: WarpPoint
-  - uid: 6181
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -6.5,14.5
-      parent: 30
-      type: Transform
-    - text: theatre
-      type: NavMapBeacon
-    missingComponents:
-    - WarpPoint
-  - uid: 6858
-    components:
-    - pos: 24.5,14.5
-      parent: 30
-      type: Transform
-    - location: chapel
-      type: WarpPoint
-    - type: BombingTarget
-    missingComponents:
-    - NavMapBeacon
 - proto: WaterCooler
   entities:
   - uid: 583

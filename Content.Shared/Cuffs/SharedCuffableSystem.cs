@@ -621,7 +621,7 @@ namespace Content.Shared.Cuffs
             if (!Resolve(target, ref cuffable) || !Resolve(cuffsToRemove, ref cuff))
                 return;
 
-            if (TerminatingOrDeleted(cuffsToRemove) || TerminatingOrDeleted(target))
+            if (cuff.Removing || TerminatingOrDeleted(cuffsToRemove) || TerminatingOrDeleted(target))
                 return;
 
             if (user != null)
@@ -632,6 +632,7 @@ namespace Content.Shared.Cuffs
                     return;
             }
 
+            cuff.Removing = true;
             _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
 
             _container.Remove(cuffsToRemove, cuffable.Container);
@@ -688,6 +689,7 @@ namespace Content.Shared.Cuffs
                     }
                 }
             }
+            cuff.Removing = false;
         }
 
         #region ActionBlocker

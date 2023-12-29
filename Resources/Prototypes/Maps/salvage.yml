@@ -104,6 +104,11 @@
   name: "Crashed Shuttle"
   mapPath: /Maps/Salvage/medium-crashed-shuttle.yml
 
+- type: salvageMap
+  id: Meatball
+  name: "Meatball"
+  mapPath: /Maps/Salvage/meatball.yml
+
 # """Large""" maps
 
 - type: salvageMap
