@@ -12,6 +12,12 @@ public sealed partial class FTLDestinationComponent : Component
     public EntityWhitelist? Whitelist;
 
     /// <summary>
+    /// Should this destination be visible to only specific consoles?
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("whitelistSpecific")]
+    public List<EntityUid>? WhitelistSpecific;
+
+    /// <summary>
     /// Is this destination visible but available to be warped to?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("enabled")]

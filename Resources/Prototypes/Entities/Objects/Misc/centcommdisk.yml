@@ -1,0 +1,17 @@
+- type: entity
+  name: centcomm coordinates disk
+  parent: BaseItem
+  id: CentCommDisk
+  description: A disk containing the coordinates to Central Command. Necessary for any FTL-traversing vessel to reach NanoTrassen's safehaven.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/nukedisk.rsi
+    state: icon
+  - type: StaticPrice
+    price: 2000
+  - type: CargoSellBlacklist
+  - type: ArrivalsBlacklist
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: ShuttleDestinationCoordinates

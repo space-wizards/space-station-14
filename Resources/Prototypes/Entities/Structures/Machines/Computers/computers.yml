@@ -63,6 +63,16 @@
     color: "#43ccb5"
   - type: Rotatable
     rotateWhileAnchored: true
+  - type: ShuttleDestinationSlot
+    diskSlot:
+      name: Disk
+      insertSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      ejectSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      whitelist:
+        components:
+        - ShuttleDestinationCoordinates
 
 - type: entity
   parent: BaseComputerShuttle

@@ -310,6 +310,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                     continue;
                 }
 
+                // If destination has a specific whitelist, limit to only those entities
+                if (comp.WhitelistSpecific != null && !comp.WhitelistSpecific.Contains(entity.Value) && !(shuttleGridUid != null && comp.WhitelistSpecific.Contains(shuttleGridUid.Value)))
+                {
+                    continue;
+                }
+
                 var meta = metaQuery.GetComponent(destUid);
                 var name = meta.EntityName;
 
