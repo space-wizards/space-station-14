@@ -79,7 +79,7 @@
 
 - type: entity
   parent: PaperBin
-  id: PaperBin25
+  id: PaperBin20
   suffix: 20
   components:
   - type: Bin
