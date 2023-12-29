@@ -10,7 +10,6 @@ job-supervisors-service = chefs, botanists, the bartender, and the head of perso
 job-supervisors-engineering = station engineers, atmospheric technicians, and the chief engineer
 job-supervisors-medicine = medical doctors, chemists, and the chief medical officer
 job-supervisors-security = security officers, the warden, and the head of security
-job-supervisors-security-hire = the head of security and whoever hires you
 job-supervisors-science = scientists, and the research director
 job-supervisors-hire = whoever hires you
 job-supervisors-everyone = absolutely everyone
