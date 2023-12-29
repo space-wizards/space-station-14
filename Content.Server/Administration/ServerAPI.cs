@@ -736,7 +736,7 @@ public sealed class ServerApi : IPostInjectInit
             return true;
 
         // Invalid auth header, no access
-        _sawmill.Info(@"Unauthorized access attempt to admin API. ""{0}""", authToken);
+        _sawmill.Info(@"Unauthorized access attempt to admin API. ""{0}""", authToken.ToString());
         return false;
     }
 
