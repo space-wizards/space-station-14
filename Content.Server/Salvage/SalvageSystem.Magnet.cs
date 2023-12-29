@@ -85,20 +85,21 @@ public sealed partial class SalvageSystem
         }
 
         data.Comp.EndTime = null;
+        UpdateMagnetUIs(data);
     }
 
     private void CreateMagnetOffers(Entity<SalvageMagnetDataComponent> data)
     {
         data.Comp.Offered.Clear();
 
-        for (var i = 0; i < data.Comp.Offers; i++)
+        for (var i = 0; i < data.Comp.OfferCount; i++)
         {
             var seed = _random.Next();
 
             // Fuck with the seed to mix wrecks and asteroids.
             seed = (int) (seed / 10f) * 10;
 
-            if (i > data.Comp.Offers / 2)
+            if (i > data.Comp.OfferCount / 2)
             {
                 seed++;
             }
@@ -111,7 +112,24 @@ public sealed partial class SalvageSystem
 
     private void UpdateMagnetUIs(Entity<SalvageMagnetDataComponent> data)
     {
+        var query = AllEntityQuery<SalvageMagnetComponent, TransformComponent>();
 
+        while (query.MoveNext(out var magnetUid, out var magnet, out var xform))
+        {
+            var station = _station.GetOwningStation(magnetUid);
+
+            if (station != data.Owner)
+                continue;
+
+            _ui.TrySetUiState(magnetUid, SalvageMagnetUiKey.Key,
+                new SalvageMagnetBoundUserInterfaceState(data.Comp.Offered)
+                {
+                    Cooldown = data.Comp.OfferCooldown,
+                    Duration = data.Comp.ActiveTime,
+                    EndTime = data.Comp.EndTime,
+                    NextOffer = data.Comp.NextOffer
+                });
+        }
     }
 
     public void TakeMagnetOffer(Entity<SalvageMagnetDataComponent> data, int index, EntityUid magnet)
@@ -122,7 +140,6 @@ public sealed partial class SalvageSystem
 
         // TODO: Old code
 
-
         data.Comp.EndTime = _timing.CurTime + data.Comp.ActiveTime;
         data.Comp.NextOffer = data.Comp.EndTime.Value + data.Comp.OfferCooldown;
         var active = new SalvageMagnetActivatedEvent()
@@ -131,6 +148,7 @@ public sealed partial class SalvageSystem
         };
 
         RaiseLocalEvent(ref active);
+        UpdateMagnetUIs(data);
     }
 }
 

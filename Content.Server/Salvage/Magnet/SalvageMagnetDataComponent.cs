@@ -44,5 +44,5 @@ public sealed partial class SalvageMagnetDataComponent : Component
     public List<int> Offered = new();
 
     [DataField]
-    public int Offers = 6;
+    public int OfferCount = 6;
 }
