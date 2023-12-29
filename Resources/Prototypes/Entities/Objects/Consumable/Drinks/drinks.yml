@@ -2166,7 +2166,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 40
+        maxVol: 40 #big cup
         reagents:
         - ReagentId: DryRamen
           Quantity: 25
