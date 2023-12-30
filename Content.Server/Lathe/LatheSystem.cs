@@ -37,6 +37,11 @@ namespace Content.Server.Lathe
         [Dependency] private readonly StackSystem _stack = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
 
+        /// <summary>
+        /// Per-tick cache
+        /// </summary>
+        private readonly List<GasMixture> _environments = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -112,20 +117,23 @@ namespace Content.Server.Lathe
                 heatComp.NextSecond += TimeSpan.FromSeconds(1);
 
                 var position = _transform.GetGridTilePositionOrDefault((uid,xform));
-                var environments = new List<GasMixture>();
+                _environments.Clear();
 
                 if (_atmosphere.GetTileMixture(xform.GridUid, xform.MapUid, position, true) is { } tileMix)
-                    environments.Add(tileMix);
+                    _environments.Add(tileMix);
 
                 if (xform.GridUid != null)
                 {
-                    environments.AddRange(_atmosphere.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true));
+                    _environments.AddRange(_atmosphere.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true));
                 }
 
-                var heatPerTile = heatComp.EnergyPerSecond / environments.Count;
-                foreach (var env in environments)
+                if (_environments.Count > 0)
                 {
-                    _atmosphere.AddHeat(env, heatPerTile);
+                    var heatPerTile = heatComp.EnergyPerSecond / _environments.Count;
+                    foreach (var env in _environments)
+                    {
+                        _atmosphere.AddHeat(env, heatPerTile);
+                    }
                 }
             }
         }
