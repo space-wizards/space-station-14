@@ -939,13 +939,13 @@
     - type: MaterialStorage
       dropOnDeconstruct: false #should drop ores instead of ingots/sheets
       ignoreColor: true
+      canEjectStoredMaterials: false
       whitelist:
         tags:
           - Ore
     - type: Lathe
       idleState: icon
       runningState: building
-      canEjectStoredMaterials: false
       staticRecipes:
         - SheetSteel30
         - SheetGlass30
@@ -991,6 +991,7 @@
   - type: MaterialStorage
     dropOnDeconstruct: false #should drop ores instead of ingots/sheets
     ignoreColor: true
+    canEjectStoredMaterials: false
     whitelist:
       tags:
       - Raw
@@ -998,7 +999,6 @@
   - type: Lathe
     idleState: base_machine
     runningState: base_machine_processing
-    canEjectStoredMaterials: false
     staticRecipes:
     - MaterialSheetMeat
     - SheetPaper
