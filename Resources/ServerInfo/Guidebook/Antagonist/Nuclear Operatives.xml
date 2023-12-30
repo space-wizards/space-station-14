@@ -22,10 +22,8 @@
   <Box>
     <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieCommander" Caption="Commander Hardsuit"/>
   </Box>
-
-
-  - The [color=#a4885c]Nukie Agent[/color] wears the white elite hardsuit, and can act as a combat medic for the mission.
-
+  
+  - The [color=#a4885c]Nukie Agent[/color] wears the blood-red medic hardsuit, and can act as a combat medic for the mission.
   <Box>
     <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieMedic" Caption="White Elite Hardsuit"/>
   </Box>
