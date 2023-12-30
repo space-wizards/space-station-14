@@ -1,13 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - message: Lizards can eat organs again!
-    type: Fix
-  - message: Organs now contain uncooked proteins instead of edible nutriment. Animals
-      will be able to consume this.
-    type: Tweak
-  id: 4984
-  time: '2023-10-10T18:02:47.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix shuttles sometimes clipping planet marker entities such as ore.
@@ -3557,3 +3548,11 @@ Entries:
   id: 5484
   time: '2023-12-30T21:24:24.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23243
+- author: Blackern5000
+  changes:
+  - message: Chang's instant ramen cups have been slightly enlarged to accommodate
+      10ml of boiling water, as per the instructions.
+    type: Tweak
+  id: 5485
+  time: '2023-12-30T22:27:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23189
