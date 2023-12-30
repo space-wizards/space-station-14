@@ -1,0 +1,53 @@
+- type: gameMap
+  id: Stition
+  mapName: 'Stition'
+  mapPath: /Maps/stition.yml
+  minPlayers: 1
+  maxPlayers: 10
+  stations:
+    Stition:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Stition {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml
+        - type: StationJobs
+          overflowJobs:
+            - Passenger
+          availableJobs:
+            #service
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            Bartender: [ 1, 1 ]
+            Botanist: [ 1, 1 ]
+            Chef: [ 1, 1 ]
+            Chaplain: [ 1, 1 ]
+            #engineering
+            ChiefEngineer: [ 1, 1 ]
+            AtmosphericTechnician: [ 1, 1 ]
+            StationEngineer: [ 1, 1 ]
+            TechnicalAssistant: [ 1, 1 ]
+            #medical
+            ChiefMedicalOfficer: [ 1, 1 ]
+            Chemist: [ 1, 1 ]
+            #science
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 1, 1 ]
+            ResearchAssistant: [ 1, 1 ]
+            #security
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            #supply
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 1, 1 ]
+            CargoTechnician: [ 1, 1 ]
+            #civilian
+            Passenger: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+
