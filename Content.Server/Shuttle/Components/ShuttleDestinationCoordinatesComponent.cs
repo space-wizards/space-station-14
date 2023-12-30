@@ -19,7 +19,6 @@ public sealed partial class ShuttleDestinationCoordinatesComponent : Component
     [DataField("whitelist")]
     public string Destination = "Central Command";
 
-
     [Dependency] private readonly EntityManager _entManager = default!;
 
     public EntityUid? GetDestinationEntityUid()

@@ -13,7 +13,7 @@ using Content.Server.Shuttles.Systems;
 
 namespace Content.Server.Shuttle;
 
-public sealed class ShuttleDestinationSlotSystem: EntitySystem
+public sealed class ShuttleDestinationSlotSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
@@ -47,10 +47,9 @@ public sealed class ShuttleDestinationSlotSystem: EntitySystem
         if (args.Container.ID != component.DiskSlot.ID)
             return;
 
-        Console.WriteLine("UpdateCoordinates");
         if (component.DiskSlot.HasItem)
         {
-            Console.WriteLine("ItemHATH");
+            Console.WriteLine("Item HATH");
             if (component.DiskSlot.Item is { Valid: true } disk)
             {
                 EntityUid? diskCoords = GetDiskDestination(disk);
@@ -65,23 +64,20 @@ public sealed class ShuttleDestinationSlotSystem: EntitySystem
                     }
 
                     EnableDestination(uid, destination);
-
                     _console.RefreshShuttleConsoles();
                 }
             }
         } else
         {
-            Console.WriteLine("ItemHATHNT");
+            Console.WriteLine("Item HATHNT");
             if (args.Entity is { Valid: true } disk)
             {
                 EntityUid? diskCoords = GetDiskDestination(disk);
 
                 if (diskCoords != null)
                 {
-                    var destination = EnsureComp<FTLDestinationComponent>(diskCoords.Value);
-
+                    FTLDestinationComponent destination = EnsureComp<FTLDestinationComponent>(diskCoords.Value);
                     DisableDestination(uid, destination);
-
                     _console.RefreshShuttleConsoles();
                 }
             }
@@ -106,6 +102,18 @@ public sealed class ShuttleDestinationSlotSystem: EntitySystem
             destination.WhitelistSpecific = new List<EntityUid>();
         }
 
+        if (TryComp(uid, out DroneConsoleComponent? consoleId))
+        {
+            _console.RefreshDroneConsoles();
+
+            if (consoleId != null && consoleId.Entity != null)
+            {
+                Console.WriteLine("WEH! ADDED DRONE!");
+                destination.WhitelistSpecific.Add(consoleId.Entity.Value);
+                return;
+            }
+        }
+
         Console.WriteLine("WEH! ADDED!");
         destination.WhitelistSpecific.Add(uid);
 
@@ -115,8 +123,21 @@ public sealed class ShuttleDestinationSlotSystem: EntitySystem
     {
         if (destination.WhitelistSpecific != null)
         {
+            if (TryComp(uid, out DroneConsoleComponent? consoleId))
+            {
+                _console.RefreshDroneConsoles();
+
+                if (consoleId != null && consoleId.Entity != null)
+                {
+                    Console.WriteLine("WEH! REMOVED DRONE!");
+                    destination.WhitelistSpecific.Remove(consoleId.Entity.Value);
+                    return;
+                }
+            }
+
             Console.WriteLine("WEH! REMOVED!");
             destination.WhitelistSpecific.Remove(uid);
+
         }
     }
 }
