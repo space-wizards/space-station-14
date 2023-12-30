@@ -1,14 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - message: Vaulting tables is now predicted.
-    type: Fix
-  - message: Fix buckle sound not playing.
-    type: Fix
-  - message: Buckling is now predicted.
-    type: Fix
-  id: 4987
-  time: '2023-10-10T23:41:12.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Ninja uncloak after attacking with melee weapons.
@@ -3558,3 +3548,10 @@ Entries:
   id: 5487
   time: '2023-12-30T23:13:27.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23239
+- author: lzk228
+  changes:
+  - message: Mime's stamp is silent now!
+    type: Tweak
+  id: 5488
+  time: '2023-12-30T23:15:02.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23221
