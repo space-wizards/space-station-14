@@ -55,7 +55,7 @@
   - type: BatteryDischarger
     activeSupplyRate: 15000
   - type: TeslaCoil
-    chargeFromLightning: 1000000
+    chargeFromLightning: 500000
   - type: LightningTarget
     priority: 4
     hitProbability: 0.5
@@ -75,7 +75,7 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 5
+          damage: 130
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
@@ -143,4 +143,22 @@
   - type: Pullable
   - type: Clickable
   - type: InteractionOutline
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 75
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 2
+                max: 4
   #- type: GuideHelp #   To Do - add Tesla Guide
