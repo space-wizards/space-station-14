@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - message: Fixed kudzu, foam, smoke, and puddles spreading at extremely high rates.
-    type: Fix
-  id: 4980
-  time: '2023-10-10T03:32:34.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - message: Reenabled Kudzu (again) (for real this time)
     type: Add
   id: 4981
@@ -3559,3 +3553,10 @@ Entries:
   id: 5480
   time: '2023-12-30T17:08:52.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23134
+- author: Alekshhh
+  changes:
+  - message: Changed disposal units visually
+    type: Tweak
+  id: 5481
+  time: '2023-12-30T17:14:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23067
