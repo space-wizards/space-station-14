@@ -33004,6 +33004,7 @@ entities:
           canMix: False
           canReact: True
           maxVol: 30
+          name: null
           reagents:
           - data: null
             ReagentId: LongIslandIcedTea
@@ -36865,6 +36866,8 @@ entities:
     - pos: 44.5,-5.5
       parent: 1
       type: Transform
+    - maxExternalPressure: 4000
+      type: GasMiner
     - joinedGrid: 1
       type: AtmosDevice
 - proto: GasMinerOxygenStation
@@ -36874,6 +36877,8 @@ entities:
     - pos: 44.5,-7.5
       parent: 1
       type: Transform
+    - maxExternalPressure: 4000
+      type: GasMiner
     - joinedGrid: 1
       type: AtmosDevice
 - proto: GasMinerWaterVapor
