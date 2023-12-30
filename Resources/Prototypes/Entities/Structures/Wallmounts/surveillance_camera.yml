@@ -33,6 +33,7 @@
     layers:
       - map: [ "enum.SurveillanceCameraVisualsKey.Layer" ]
         state: camera
+        cycle: true
   - type: Appearance
   - type: SurveillanceCameraVisuals
     sprites:
