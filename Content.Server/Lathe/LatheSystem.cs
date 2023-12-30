@@ -59,42 +59,6 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
             SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
             SubscribeLocalEvent<LatheHeatProducingComponent, LatheStartPrintingEvent>(OnHeatStartPrinting);
-
-            SubscribeLocalEvent<LatheComponent, LatheEjectMaterialMessage>(OnLatheEjectMessage);
-        }
-
-        private void OnLatheEjectMessage(EntityUid uid, LatheComponent lathe, LatheEjectMaterialMessage message)
-        {
-            if (!lathe.CanEjectStoredMaterials)
-                return;
-
-            if (!_proto.TryIndex<MaterialPrototype>(message.Material, out var material))
-                return;
-
-            var volume = 0;
-
-            if (material.StackEntity != null)
-            {
-                var entProto = _proto.Index<EntityPrototype>(material.StackEntity);
-                if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
-                    return;
-
-                var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == message.Material).Value;
-                var sheetsToExtract = Math.Min(message.SheetsToExtract, _stack.GetMaxCount(material.StackEntity));
-
-                volume = sheetsToExtract * volumePerSheet;
-            }
-
-            if (volume > 0 && _materialStorage.TryChangeMaterialAmount(uid, message.Material, -volume))
-            {
-                var mats = _materialStorage.SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out _);
-                foreach (var mat in mats)
-                {
-                    if (TerminatingOrDeleted(mat))
-                        continue;
-                    _stack.TryMergeToContacts(mat);
-                }
-            }
         }
 
         public override void Update(float frameTime)
@@ -116,7 +80,7 @@ namespace Content.Server.Lathe
                     continue;
                 heatComp.NextSecond += TimeSpan.FromSeconds(1);
 
-                var position = _transform.GetGridTilePositionOrDefault((uid,xform));
+                var position = _transform.GetGridTilePositionOrDefault((uid, xform));
                 _environments.Clear();
 
                 if (_atmosphere.GetTileMixture(xform.GridUid, xform.MapUid, position, true) is { } tileMix)
