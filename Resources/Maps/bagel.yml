@@ -72857,7 +72857,7 @@ entities:
       pos: -44.5,32.5
       parent: 60
       type: Transform
-    - maxExternalPressure: 4500
+    - maxExternalPressure: 4000
       type: GasMiner
     - joinedGrid: 60
       type: AtmosDevice
@@ -72869,7 +72869,7 @@ entities:
       pos: -44.5,34.5
       parent: 60
       type: Transform
-    - maxExternalPressure: 4500
+    - maxExternalPressure: 4000
       type: GasMiner
     - joinedGrid: 60
       type: AtmosDevice
