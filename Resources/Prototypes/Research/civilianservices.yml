@@ -126,8 +126,6 @@
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
-  technologyPrerequisites:
-  - JanitorialEquipment
 
 - type: technology
   id: MeatManipulation
