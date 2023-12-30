@@ -22,19 +22,19 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ShuttleDestinationSlotComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<ShuttleDestinationSlotComponent, ComponentRemove>(OnRemove);
+        SubscribeLocalEvent<ShuttleDestinationSlotComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<ShuttleDestinationSlotComponent, ComponentShutdown>(OnRemove);
         SubscribeLocalEvent<ShuttleDestinationSlotComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<ShuttleDestinationSlotComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
     }
 
-    private void OnInit(EntityUid uid, ShuttleDestinationSlotComponent component, ComponentInit args)
+    private void OnInit(EntityUid uid, ShuttleDestinationSlotComponent component, MapInitEvent args)
     {
         _itemSlots.AddItemSlot(uid, ShuttleDestinationSlotComponent.DiskSlotId, component.DiskSlot);
     }
 
 
-    private void OnRemove(EntityUid uid, ShuttleDestinationSlotComponent component, ComponentRemove args)
+    private void OnRemove(EntityUid uid, ShuttleDestinationSlotComponent component, ComponentShutdown args)
     {
         _itemSlots.RemoveItemSlot(uid, component.DiskSlot);
     }
