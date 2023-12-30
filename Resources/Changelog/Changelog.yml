@@ -1,10 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - message: traitor gamemode is rarer, nukies and revs are more common
-    type: Tweak
-  id: 4971
-  time: '2023-10-07T19:15:57.0000000+00:00'
 - author: Lank
   changes:
   - message: Humanoid species now passively regenerate small bruises and burns.
@@ -3539,3 +3533,12 @@ Entries:
   id: 5471
   time: '2023-12-29T04:43:37.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22410
+- author: FairlySadPanda
+  changes:
+  - message: Talking, whispering and emoting will now strip out any markup tags in
+      the input text. This also means intercoms tuned to the science channel will
+      no longer squawk out "[bold]", and so on, when reporting on research unlocks.
+    type: Fix
+  id: 5472
+  time: '2023-12-30T00:38:11.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23055
