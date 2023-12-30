@@ -14,15 +14,15 @@
 
   ## Essence
 
-  - Your [color=#a4885c]essence[/color] is your very own life force and a way to use abilities for a cost, don't let it drop to zero.
+  - Your [color=#a4885c]essence[/color] is your very own life force, and a way to use abilities for a cost; don't let it drop to zero.
   - To gain [color=#a4885c]essence[/color], you first inspect various souls for their worth. More worthy souls grant more essence.
-  - However, merely checking their worth isn't enough for collecting [color=#a4885c]essence[/color]. You must siphon it either when the victim is critical, dead, or sleeping.
-  - A good start is to go to medical or dorms; but be weary, you are vulnerable to attacks when you siphon a soul. Taking damage reduces your [color=#a4885c]essence[/color]! So plan your attacks wisely.
+  - However, merely checking their worth isn't enough to collect [color=#a4885c]essence[/color]. You must siphon it either when the victim is critical, dead, or sleeping.
+  - A good start is to go to Medical or Dorms; but be weary, you are vulnerable to attacks when you siphon a soul. Taking damage reduces your [color=#a4885c]essence[/color]! So plan your attacks wisely.
 
   ## Shop And Powers
 
-  - Using [color=#a4885c]stolen essence[/color] gotten from siphoning souls, you can gain skills for mischief such as environmental destruction, electrical disruption, and electrocution through the shop.
-  - Using powers leave you vulnerable to attacks for some time, plan ahead and prepare before attacking.
+  - Using [color=#a4885c]stolen essence[/color] gotten from siphoning souls, you can gain skills for mischief, such as environmental destruction, power grid disruption and electrocution through the shop.
+  - Using powers leave you vulnerable to attacks for some time, so plan ahead and prepare before attacking.
 
   # Rat King
 
@@ -39,13 +39,14 @@
   ## Abilities
 
   Abilities come at a cost to the Rat King's hunger. Simply eating replenishes it.
-
+  The three most important of your abilities include:
   <Box>
    <GuideEntityEmbed Entity="MobMouse" Caption="Normal Mouse"/>
    <GuideEntityEmbed Entity="MobRatServant" Caption="Rat Servant"/>
   </Box>
   - Raise an Army of [color=#a4885c]Rat Servants[/color].
-  - Conjure a cloud of miasma.
+  - Command your servants to your will; you can make them follow you, attack others, or just roam freely.
+  - Conjure a cloud of miasma, which heals you and your servants.
 
   # Space Dragon
 
@@ -54,7 +55,7 @@
   </Box>
 
   A Space Dragon is a giant dragon that creates space carp rifts and eats the crew.
-  They can either be generated through a random event, brought onto the station from an expedition or a salvage wreck, or can be called in by a [textlink="Space Ninja" link="SpaceNinja"].
+  They can either be generated through a random event, brought onto the station from an expedition or a salvage wreck, or can be called in by a [color=#a4885c]Space Ninja[/color].
 
   ## Abilities
 

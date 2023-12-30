@@ -1,6 +1,6 @@
 <Document>
   # Cyborgs
-  Cyborgs are man-machine hybrids, purpose-built by the [textlink="robotics"  link="Robotics"] division of science for various duties across the station. Bound by strictly-followed [color=cyan]silicon laws[/color], they serve the crew unconditionally. [italic](Most of the time.)[italic]
+  Cyborgs are man-machine hybrids, purpose-built by the [color=#d381c9]Robotics[/color] division of science for various duties across the station. Bound by strictly-followed [color=cyan]silicon laws[/color], they serve the crew unconditionally. [italic](Most of the time.)[italic]
 
   ## Basic Components
   <Box>
@@ -19,7 +19,7 @@
   Both brains can be fabricated without requiring any additional research.
 
   ## Chassis
-  While all cyborgs share the same endoskeleton, not all share the same chassis. The chassis determines what modules the cyborg can have, along with the [color=#a4885c]departmental radio channel[/color] they (should) correspond to. By default, they will always have access to [color=#D381C9]Science[/color] and [color=green]station-wide[/color] frequencies, along with having [color=#a4885c]all-access[/color].
+  While all cyborgs share the same endoskeleton, not all share the same chassis. The chassis determines what modules the cyborg can have, along with the [color=#a4885c]departmental radio channel[/color] they (should) correspond to. By default, they will always have access to [color=#d381c9]Science[/color] and [color=green]station-wide[/color] frequencies, along with having [color=#a4885c]all-access[/color].
   <Box>
     <GuideEntityEmbed Entity="BorgChassisGeneric" Caption="Generic"/>
     <GuideEntityEmbed Entity="BorgChassisEngineer" Caption="Engineering"/>
@@ -61,6 +61,6 @@
   <Box>
     [italic]Examples of specialized modules. Note the housing and circuit board colors.
   </Box>
-  Additional modules with advanced or novel capabilities can be acquired through new [textlink="technologies"  link="Technologies"] researched by scientists.
+  Additional modules with advanced or novel capabilities can be acquired through new [color=#d381c9]Technologies[/color] researched by scientists.
 </Document>
 

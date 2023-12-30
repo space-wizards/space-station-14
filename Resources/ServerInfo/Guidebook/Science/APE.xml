@@ -1,20 +1,27 @@
 <Document>
-# A.P.E.
+  # A.P.E.
 
-The Anomalous Particle Emitter is a machine used to interface with anomalies. It is the primary way of manipulating the stats of an anomaly.
+  The Anomalous Particle Emitter is a machine used to interface with anomalies. It is the primary way of manipulating the stats of an anomaly.
+  It can either be controlled by hand, or it can be hooked up with a [color=#a4885c]Network Configurator[/color] to a signal source, like a [color=#a4885c]Remote Signaling Device[/color] or an [color=#d381c9]Anomaly Synchronizer[/color].
 
-<Box>
-<GuideEntityEmbed Entity="MachineAPE"/>
-</Box>
+  <Box>
+    <GuideEntityEmbed Entity="MachineAPE"/>
+  </Box>
 
-The A.P.E. can shoot three different kinds of anomalous particles: Delta, Epsilon, and Zeta. Each particle types has certain effects:
+  The C.H.I.M.P is basically just an A.P.E condensed into a handgun. It can be researched through the [color#d381c9]Advanced Anomaly Research[/color] technology.
+  You can switch particles by using [color=#a4885c][keybind="AltActivateItemInHand"/][/color], and you can use an energy gun recharger to recharge it.
 
-- [color=#a4885c]Danger:[/color] Increases the severity of an anomaly.
-- [color=#a4885c]Unstable:[/color] Increases the instability of an anomaly.
-- [color=#a4885c]Containment:[/color] Increases the stability at the cost of health.
+  <Box>
+    <GuideEntityEmbed Entity="WeaponPistolCHIMP"/>
+  </Box>
 
-Which particle type corresponds to each effect is unique and can be learned by scanning the anomaly.
+  A.P.E.s and C.H.I.M.P.s can shoot three different kinds of anomalous particles: Delta, Epsilon, and Zeta. Each particle types has certain effects:
 
-The A.P.E. can also be locked by anyone with science access, which prevents it from being deconstructed, turned on or off, or having the particle type switched.
+  - [color=#a4885c]Danger:[/color] Increases the severity of an anomaly.
+  - [color=#a4885c]Unstable:[/color] Increases the instability of an anomaly.
+  - [color=#a4885c]Containment:[/color] Increases the stability of an anomaly, at the cost of health.
 
+  Which particle type corresponds to each effect is unique to each anomaly, and can be learned by scanning the anomaly.
+
+  The A.P.E. can also be locked by anyone with [color=#d381c9]Science[/color] access, which prevents it from being deconstructed, turned on or off, or having the particle type switched.
 </Document>

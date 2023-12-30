@@ -1,6 +1,6 @@
 <Document>
   # Cargo
-  The supply department, more commonly known simply as Cargo, is in charge of keeping the station stocked up on necessary resources, such as fuel and raw materials. Although, they are not restricted to simple goods, and can order a wide variety of different items from off-station. The point is, it's Cargo's job to get the rest of the station what they need.
+  The supply department, more commonly known as Cargo, is in charge of keeping the station stocked up on necessary resources, such as fuel and raw materials. Although, they are not restricted to just simple goods and can order a wide variety of different items from off-station. The point is, it's Cargo's job to get the rest of the station what they need.
 
   ## Ordering
   <Box>
@@ -21,14 +21,17 @@
   After clicking the computer, you should see a radar view of the shuttle. Here are the steps for piloting the shuttle back and forth:
 
   - First, disconnect any airlocks that are connected to the dock. This is not required if you wish to directly FTL to a destination.
-  - Then, you actually get to pilot the shuttle. The controls are fairly simple; use [keybind="ShuttleStrafeUp"/] and [keybind="ShuttleStrafeDown"/] to move forward and backward, [keybind="ShuttleStrafeLeft"/] and [keybind="ShuttleStrafeRight"/] to strafe left and right, [keybind="ShuttleRotateLeft"/] and [keybind="ShuttleRotateRight"/] to turn left and right, and [keybind="ShuttleBrake"/] to brake.
+  - Then, you can simply pilot the shuttle. The controls are fairly simple; use [keybind="ShuttleStrafeUp"/] and [keybind="ShuttleStrafeDown"/] to move forward and backward, [keybind="ShuttleStrafeLeft"/] and [keybind="ShuttleStrafeRight"/] to strafe left and right, [keybind="ShuttleRotateLeft"/] and [keybind="ShuttleRotateRight"/] to turn left and right, and [keybind="ShuttleBrake"/] to brake.
+
+  Alternatively, if you are piloting to a trading post to buy and sell items:
+  
   - Find the button that designates the trading post. Hit this button, and the shuttle will start traveling to it.
   - After a short delay, the option to FTL back to the station will reappear. After this, just pilot the shuttle back to the cargo dock and retrieve the items you ordered.
 
-  Do note that sold items only get sold when the shuttle arrives at the trading post, and that bought items only arrive when the shuttle leaves the trading post
+  Do note that sold items only get sold when the shuttle arrives at the trading post, and that bought items only arrive when the shuttle leaves the trading post.
 
   ## Selling
-  So, you want to order something, but don't have the money for it? You just need to sell something! Almost everything on the station has economic value, which an [color=#a4885c]appraisal tool[/color] can read out to you.
+  So, you want to order something, but don't have the money for it? All you need to do is just sell something! Almost everything on the station has economic value, which an [color=#a4885c]appraisal tool[/color] can read out to you.
   <Box>
     <GuideEntityEmbed Entity="AppraisalTool"/>
     <GuideEntityEmbed Entity="CargoPallet"/>

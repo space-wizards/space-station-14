@@ -1,9 +1,9 @@
-﻿<Document>
+<Document>
   # Security
   Ensuring the safety of both station and crew is number one for Security. Be it Syndicate Agents, Nuclear Operatives, Infestations or just unruly staff. Security are on hand to maintain order and control crowds.
 
   ## Gear
-  First we have non-lethals a step above simply telling someone to cooperate with instructions. Both the stunbaton and disabler are capable of limiting the movement of an assailant, whereas handcuffs can be applied to deny a criminal free movement and access to their hands.
+  First, we have non-lethals; a step above simply telling someone to cooperate with instructions. Both the stunbaton and disabler are capable of limiting the movement of an assailant, whereas handcuffs or zipties can be applied to deny a criminal access to their hands and free movement (when they're being dragged) .
   <Box>
     <GuideEntityEmbed Entity="Stunbaton"/>
     <GuideEntityEmbed Entity="Handcuffs"/>
@@ -12,8 +12,8 @@
 
   ## Flashes
   Flashes are an effective tool for dispersing crowds and apprehending particularly evasive targets, with a large area of effect blinding all those without protection.
-  It is worth noting that flashes can be both used in a large area 	([color=yellow]Z[/color] hotkey) and if you attack somebody with it while [color=red]harm mode[/color] is active. Important to note that localized flashes last [color=yellow]2.5[/color] times as long as large area ones.
-  Security and [color=#a4885c]some[/color] other members of staff have eye protection from flashbangs and flashes.
+  It is worth noting that flashes can be both used in a large area 	([color=yellow][keybind="ActivateItemInHand"][/color] hotkey) and on a single person if you attack somebody with it while [color=red]harm mode[/color] is active. It is important to note that localized flashes last [color=yellow]2.5[/color] times longer than wide-area flashes.
+  Security and [color=#a4885c]some[/color] other members of staff are given eye protection from flashbangs and flashes.
   <Box>
     <GuideEntityEmbed Entity="Flash"/>
     <GuideEntityEmbed Entity="ClothingEyesGlassesSecurity"/>
@@ -22,6 +22,8 @@
   </Box>
   ## Lethals
   Should the situation dictate, Security have access to laser rifles, shotguns, handguns and automatic rifles able to put down substancial fire against any who would stand against the station.
+  Energy weapons need to be recharged at weapon rechargers (available in desk and wall formats), while bullet-type guns need to be reloaded with the correct caliber (either through manual loading, mostly seen in shotguns, or through a cartridge).
+  Just remember to [color=blue]cock the bolts[/color] of bullet guns before firing, as most guns start with their bolts pulled back (as per Nanotrasen gun safety protocols)!
   <Box>
   <GuideEntityEmbed Entity="WeaponLaserCarbine"/>
   <GuideEntityEmbed Entity="WeaponShotgunKammerer"/>

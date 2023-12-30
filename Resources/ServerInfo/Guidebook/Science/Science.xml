@@ -1,48 +1,53 @@
 <Document>
-# Science
+  # Science
 
-Science, often called Research and Development, is a job made up of both generating research points to unlock new technologies as well as using said technologies to produce new items at lathes to help out the station.
+  Science, often called Research and Development, is a job made up of both generating research points to unlock new technologies as well as using said technologies to produce new items at lathes to help out the station.
 
-## Technologies
-<Box>
-<GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/>
-<GuideEntityEmbed Entity="ResearchAndDevelopmentServer"/>
-</Box>
-The most important thing inside your department is the R&D server, which stores unlocked technologies, and the R&D console, which allows you to unlock technologies.
+  ## Technologies
+  <Box>
+    <GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/>
+    <GuideEntityEmbed Entity="ResearchAndDevelopmentServer"/>
+  </Box>
+  The most important thing inside your department is the R&D server, which stores unlocked technologies, and the R&D console, which allows you to unlock technologies.
 
-Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes at lathes.
+  Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes at lathes.
 
-Information about the different technologies can be viewed [textlink="on the technology guidebook page" link="Technologies"].
+  Information about the different technologies can be viewed on the [color=#d381c9]Technologies[/color] guidebook page.
 
-## Disciplines
-Technologies are spread over 5 different Disciplines:
-<Box>
-<GuideEntityEmbed Entity="Wrench" Caption="Industrial"/>
-<GuideEntityEmbed Entity="Syringe" Caption="Biochemical"/>
-<GuideEntityEmbed Entity="WeaponTetherGun" Caption="Experimental"/>
-<GuideEntityEmbed Entity="ComputerTelevision" Caption="Civilian Services"/>
-<GuideEntityEmbed Entity="WeaponXrayCannon" Caption="Arsenal"/>
-</Box>
+  ## Disciplines
+  Technologies are spread over 5 different Disciplines:
+  <Box>
+    <GuideEntityEmbed Entity="Wrench" Caption="Industrial"/>
+    <GuideEntityEmbed Entity="Syringe" Caption="Biochemical"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="WeaponXrayCannon" Caption="Arsenal"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="WeaponTetherGun" Caption="Experimental"/>
+    <GuideEntityEmbed Entity="ComputerTelevision" Caption="Civilian Services"/>
+  </Box>
 
-<GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/> Use your nearest R&D console to take note of which kind of research is locked behind each Discipline tree.
+  <GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/>
+  Use your nearest R&D console to take note of which kind of research is locked behind each Discipline tree.
 
-## Tiers
-Each Discipline tree has up to 3 tiers of technologies. At the start the only tier that is open and available for you is Tier 1.
+  ## Tiers
+  Each Discipline tree has up to 3 tiers of technologies. At the start the only tier that is open and available for you is Tier 1.
 
-In order to progress further, you have to research up to [color=brown]75%[/color] of the current tier to move to the next one. So in order to unlock T2 researches, you need to research 75% of T1.
+  In order to progress further, you have to research up to [color=brown]75%[/color] of the current tier to move to the next one. So, in order to unlock T2 researches, you need to research 75% of T1. You will also need to have researched T1 varients of T2 researches in order to obtain them. 
 
-Now [color=green]Tier 3[/color] is where it gets interesting. If you research a T3 tech, you [color=brown]lock out[/color] T3 techs from other Discipline trees. That is, unless... you find some [color=purple]Alternative Methods[/color] around it; you probably should ask your [color=purple]Research Director[/color] about that.
+  Now [color=green]Tier 3[/color] is where it gets interesting. If you research a T3 tech, you [color=brown]lock out[/color] T3 techs from other Discipline trees. That is, unless you find some... [color=#d381c9]Alternative Methods[/color] around it; you probably should ask your [color=purple]Research Director[/color] about that.
 
-## Lathes
-<Box>
-<GuideEntityEmbed Entity="Protolathe"/>
-<GuideEntityEmbed Entity="CircuitImprinter"/>
-</Box>
-<Box>
-<GuideEntityEmbed Entity="ExosuitFabricator"/>
-<GuideEntityEmbed Entity="MedicalTechFab"/>
-<GuideEntityEmbed Entity="SecurityTechFab"/>
-</Box>
-At a lathe, you can choose a server to allow it print whatever recipes you have unlocked. Recipes require various materials (steel, glass, plastic, gold, plasma) which can be acquired at Cargo or Salvage.
+  ## Lathes
+  <Box>
+    <GuideEntityEmbed Entity="Protolathe"/>
+    <GuideEntityEmbed Entity="CircuitImprinter"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ExosuitFabricator"/>
+    <GuideEntityEmbed Entity="MedicalTechFab"/>
+    <GuideEntityEmbed Entity="SecurityTechFab"/>
+  </Box>
+  At a lathe, you can choose a server to allow it print whatever recipes you have unlocked. Recipes require various materials (steel, glass, plastic, gold, plasma) which can be acquired at Cargo or Salvage. You will be provided some of the basic materials at shift-start on nearby tables.
 
 </Document>

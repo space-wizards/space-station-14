@@ -3,12 +3,16 @@
 
   <Box>
     Your PDA beeps to life, and begins playing a message:
-    [color:#ff0000]Whiskey, Echo, Whiskey... Lima, Alpha, Delta...[/color]
+  </Box>
+  <Box>
+    [color=#ff0000]Whiskey, Echo, Whiskey... Lima, Alpha, Delta...[/color]
+  </Box>
+  <Box>
     As your PDA returns to silence, you feel determined.
   </Box>
 
   - A Traitor is an antagonist employed by the Syndicate. They have access to various Syndicate tools and weapons through their [color=#a4885c]Uplink[/color].
-  - Traitors can use codewords to identify themselves to one another in order to cooperate.
+  - Traitors can use codewords to identify themselves to one another in order to cooperate. These are present in your character menu, which can be opened by pressing [color=#a4885c][keybind="OpenCharacterMenu"/][/color].
   - In a Traitor round, any player can be a Traitor aside from department heads, the captain, or any security officers. Do note, however; you can still be promoted to these positions after the round begins.
   - Traitors should focus primarily on completing their objectives successfully by the end of the round, and they should try not to help the station if they can do so without being revealed.
 
@@ -20,9 +24,9 @@
   <Box>
     <GuideEntityEmbed Entity="Telecrystal" Caption="Telecrystals"/>
   </Box>
-  - 20 [color=#a4885c]Telecrystals[/color] are given at roundstart to give traitors an edge on the station. Other traitors can trade their [color=#a4885c]telecrystals[/color] with (or steal them from) others, exceeding the normal given amount.
+  - 20 [color=#a4885c]Telecrystals[/color] are given at roundstart to give traitors an edge on the station. Other traitors can trade their [color=#a4885c]telecrystals[/color] with (or steal them from) yourself, and vice versa, which can exceed the normal given amount.
   - You can also obtain 5 extra telecrystals by [color=#ff0000]butchering[/color] (not gibbing!) the captain's pet fox, [color=orange]Renault[/color].
-  - Using your [color=#a4885c]PDA[/color] and setting the ringtone as your uplink code gives you a variety of options to use at your disposal against the station and its crew.
+  - To open your uplink, check your [color=#a4885c]PDA[/color] and set the ringtone as your uplink code. 
   <Box>
   <GuideEntityEmbed Entity="PassengerPDA" Caption="PDA"/>
   </Box>
@@ -38,7 +42,7 @@
 
   ## Objectives
 
-  - When becoming a Traitor, you will have a list of objectives; anything from escaping alive and uncuffed, to stealing something, or even killing someone. Using the [color=#a4885c]Uplink[/color]'s can help you with most of these tasks, but you are free to be creative with whatever else you have on hand as well!
+  - When becoming a Traitor, you will have a list of objectives; anything from escaping alive and uncuffed, to stealing something, or even killing someone. Using the [color=#a4885c]Uplink[/color]'s tools can help you with most of these tasks, but you are also free to be creative with whatever else you have on hand!
 
   ## List of Possible Tasks
 
@@ -90,7 +94,7 @@
   <Box>
     <GuideEntityEmbed Entity="NukeDisk" Caption="Nuke Disk"/>
   </Box>
-  - Steal a slice of fine-cut [color=#a4885c]Corgi Meat[/color], from [bold]only[/bold] the Head of Personnel's pet corgi. (Butcher them for their meat!)
+  - Steal a slice of fine-cut [color=#a4885c]Corgi Meat[/color] from [bold]only[/bold] the Head of Personnel's pet corgi. (Butcher them for their meat!)
   <Box>
   <GuideEntityEmbed Entity="MobCorgiIan" Caption="Corgi"/>
   <GuideEntityEmbed Entity="FoodMeatCorgi" Caption="Corgi Meat"/>

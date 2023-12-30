@@ -1,34 +1,42 @@
-﻿<Document>
-# Survival
+<Document>
+  # Survival
 
-It is generally wise to avoid situations that will cause you harm, because medical can only heal you so much when there's nuclear operatives on your doorstep.
+  It is generally wise to avoid situations that will cause you harm, because medical can only heal you so much when there's nuclear operatives on your doorstep.
 
-## Identifying your situation
-Your PDA contains both a vessel name and list of crew currently active in your vessel, a reminder for your name if needed, and your assigned job for the shift, allowing you to quickly assess the situation.
+  ## Identifying your situation
+  Your PDA contains both the station's name and a list of crew currently onboard the station, a reminder for your name if needed, the current alert level, and your assigned job for the shift, allowing you to quickly assess the situation.
 
-## Emergency Treatment
-In the event of a serious emergency, there're a few things you can do to help ensure your long-term survival, including:
+  ## Emergency Treatment
+  In the event of a serious emergency, there're a few things you can do to help ensure your long-term survival, as follows:
 
-- If entering critical condition, use the emergency medipen from your emergency box, it'll make sure you don't end up unable to do anything. Emergency medipens can also be used to revive people currently in crit on the floor, and to prolong the amount of time you have to deal with poisons/etc.
-<Box>
-<GuideEntityEmbed Entity="EmergencyMedipen"/>
-<GuideEntityEmbed Entity="SpaceMedipen"/>
-</Box>
-- Your emergency box contains a breath mask and oxygen tank, which can help you survive longer in a spacing situation. If you're one of the slimepeople, be aware that you breathe nitrogen instead of oxygen, and that your emergency box starts with a nitrogen tank instead.
-<Box>
-<GuideEntityEmbed Entity="ClothingMaskBreath"/>
-<GuideEntityEmbed Entity="EmergencyOxygenTankFilled"/>
-</Box>
-- If actively bleeding out, or simply wishing to prepare, it's possible to slice up cloth items with a knife or other sharp object and use the resulting cloth to create gauze to stem bleeding with.
-<Box>
-<GuideEntityEmbed Entity="Gauze"/>
-<GuideEntityEmbed Entity="MaterialCloth"/>
-</Box>
-- In lieu of an actual health analyzer, simply examining yourself and using the detailed examine is a good way to figure out what wounds you have.
-- If going blind, carrots are another way to treat the issue (as they contain Oculine, the chemistry drug used to treat blindness) should they be available.
-- Well-made meals (cooked food not from a vending machine) is generally much better for your overall health and can help heal smaller wounds more quickly.
-- Simple bed rest cures the majority of diseases and also allows wounds to close up on their own. Medical beds are best for this, providing a sterile surface and support for all damaged body parts, but any bed works. Even sitting down helps, if only a little.
-- Actually sleeping on a bed boosts your healing rate even farther.
-- Meals that contain beans, red meat, or otherwise are just full of protein - will tremendously help your body's condition after severe bloodloss. It's still advised to visit a doctor and get treated though.
+  - If you are about to enter critical condition, use the emergency medipen from your emergency box; it'll try to make sure you don't end up unable to do anything. Emergency medipens (filled with epinephrine) heal suffocation damage and a bit of brute damage, should you be in critical condition. They can also be used to revive people currently in crit on the floor, and to prolong the amount of time you have to deal with other damage types.
+  - In the event that you are in a spaced room and cannot leave very quickly, use your space medipen; while normalizing your body temperature, they provide immunity to pressure damage for some time, during which you should try to find a suit or a pressurized room again.
+  <Box>
+    <GuideEntityEmbed Entity="EmergencyMedipen"/>
+    <GuideEntityEmbed Entity="SpaceMedipen"/>
+  </Box>
+  - Your emergency box contains a breath mask and an air tank, which can help you survive longer in a spacing situation. If you're one of the slimepeople, be aware that you breathe nitrogen instead of oxygen, so don't be surprised when you start suffocating on an emergency oxygen tank.
+  <Box>
+    <GuideEntityEmbed Entity="ClothingMaskBreath"/>
+    <GuideEntityEmbed Entity="EmergencyOxygenTankFilled"/>
+    <GuideEntityEmbed Entity="EmergencyNitrogenTankFilled"/>
+  </Box>
+  - If you're actively bleeding out, or you're simply wishing to prepare, it's possible to slice up cloth items with a knife (or other sharp object, like a glass shard) and use the resulting cloth to create gauze to stem bleeding with.
+  - You can also attempt to cauterize yourself by hitting yourself with something that does burn damage, like a lit welding tool, a lighter, or even some nettles! 
+  <Box>
+    <GuideEntityEmbed Entity="Gauze"/>
+    <GuideEntityEmbed Entity="MaterialCloth"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="Welder"/>
+    <GuideEntityEmbed Entity="Lighter"/>
+    <GuideEntityEmbed Entity="Nettle"/>
+  </Box>
+  - In lieu of an actual health analyzer, simply examining yourself and using the detailed health examine is a good way to figure out what wounds you have.
+  - If you're going blind, carrots are another way to treat the issue (as they contain Oculine, the chemistry drug used to treat blindness), should they be available.
+  - Well-made meals (cooked food not from a vending machine) is generally much better for your overall health and can help heal smaller wounds more quickly.
+  - Simple bed rest cures the majority of diseases (when re-implemented) and also allows wounds to close up on their own. Medical beds are best for this, providing a sterile surface and support for all damaged body parts, but any bed works. Even sitting down helps, if only a little.
+  - Actually sleeping on a bed boosts your healing rate even farther.
+  - Meals that contain beans, red meat, or otherwise are just full of protein will tremendously help your body's condition after severe bloodloss. It's still advised to visit a doctor and get treated though.
 
 </Document>

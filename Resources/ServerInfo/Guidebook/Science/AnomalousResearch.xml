@@ -1,41 +1,41 @@
 <Document>
-# Anomalous Research
+  # Anomalous Research
 
-Anomalous Research is a subdepartment of Science focused around the containment and manipulation of various unique anomalies.
+  Anomalous Research is a subdepartment of Science focused around the containment and manipulation of various unique anomalies.
 
-## Equipment
-<Box>
-<GuideEntityEmbed Entity="AnomalyScanner"/>
-<GuideEntityEmbed Entity="MachineAnomalyVessel"/>
-<GuideEntityEmbed Entity="MachineAPE"/>
-</Box>
+  ## Equipment
+  <Box>
+  <GuideEntityEmbed Entity="AnomalyScanner"/>
+  <GuideEntityEmbed Entity="MachineAnomalyVessel"/>
+  <GuideEntityEmbed Entity="MachineAPE"/>
+  </Box>
 
-Scanners, Vessels, A.P.E.s, C.H.I.M.P.s and Anomaly Synchronizers are all used in the containment and observation of anomalies.
+  Scanners, Vessels, A.P.E.s, C.H.I.M.P.s and Anomaly Synchronizers are all used in the containment and observation of anomalies.
 
-<Box>
-<GuideEntityEmbed Entity="MachineAnomalyGenerator"/>
-</Box>
+  <Box>
+  <GuideEntityEmbed Entity="MachineAnomalyGenerator"/>
+  </Box>
 
-The Anomaly Generator can produce a random anomaly somewhere on the station at the cost of 15 plasma. All stations start with a full stack of plasma on a desk (usually) in the same room as the Anomaly Generator.
+  The Anomaly Generator can produce a random anomaly somewhere on the station at the cost of 15 plasma. All stations start with a full stack of plasma on a desk (usually) in the same room as the Anomaly Generator.
 
-## Anomalies
-Anomalies are static objects that appear on the station. They cannot be moved, and must be worked around, no matter their location.
+  ## Anomalies
+  Anomalies are static objects that appear on the station. They cannot be moved, and must be worked around, no matter their location.
 
-<Box>
-<GuideEntityEmbed Entity="AnomalyPyroclastic"/>
-</Box>
+  <Box>
+  <GuideEntityEmbed Entity="AnomalyPyroclastic"/>
+  </Box>
 
-Each anomaly has three main stats, two of which can be seen in anomaly scans:
+  Each anomaly has three main stats, two of which can be seen in anomaly scans:
 
-- [color=#a4885c]Severity:[/color] This is a numerical value corresponding to the danger of an anomaly.
-- [color=#a4885c]Stability:[/color] Shown as either decaying, stable, or growing; this is how frequently and widespread the effects will be.
-- [color=#a4885c]Health:[/color] Health is a hidden stat. It decreases when you use [color=#a4885c]containment particles[/color] on an anomaly. If you use too many, the anomaly will disappear.
+  - [color=#a4885c]Severity:[/color] This is a numerical value corresponding to the danger of an anomaly. The higher this number, the more severe the Pulse effects will be.
+  - [color=#a4885c]Stability:[/color] Shown as either decaying, stable, or growing; this shows if the anomaly's Severity will increase the next Pulse.
+  - [color=#a4885c]Health:[/color] Health is a hidden stat. It decreases when you use [color=#a4885c]containment particles[/color] on an anomaly. If you use too many, the anomaly will disappear.
 
-## Pulses and Supercritical Events
-The most dangerous effects of anomalies are seen during [color=#a4885c]pulses[/color] and [color=#a4885c]supercritical events[/color].
+  ## Pulses and Supercritical Events
+  The most dangerous effects of anomalies are seen during [color=#a4885c]pulses[/color] and [color=#a4885c]supercritical events[/color].
 
-Pulses are semi-regular bursts of anomalous effects. They're moderately dangerous, scaling with both the severity and stability of an anomaly.
+  Pulses are semi-regular bursts of anomalous effects. They're moderately dangerous, scaling with both the severity and stability of an anomaly.
 
-Supercritical events are only seen if an anomaly reaches 100% severity. If this happens, the anomaly will swell before disappearing into a catastrophic event. These should be avoided at all costs!
+  Supercritical events are only seen if an anomaly reaches 100% severity. If this happens, the anomaly will swell before disappearing into a catastrophic event. These should be avoided at all costs!
 
 </Document>

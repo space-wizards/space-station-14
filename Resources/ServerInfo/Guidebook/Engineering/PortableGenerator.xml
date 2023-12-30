@@ -1,7 +1,7 @@
-﻿<Document>
+<Document>
   # Portable Generators
 
-  Need power? No engine running? The "P.A.C.M.A.N." line of portable generators has you covered.
+  Need power? No engines running? The "P.A.C.M.A.N." line of portable generators has you covered.
 
   <Box>
     <GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="J.R.P.A.C.M.A.N." />
@@ -39,4 +39,5 @@
 
   They connect directly to [color=yellow]MV[/color] or [color=orange]HV[/color] power cables, and are able to switch between them for flexibility.
 
+  The S.U.P.E.R.P.A.C.M.A.N and P.A.C.M.A.N require Plasma sheets and Uranium sheets as fuel, respectively.
 </Document>
