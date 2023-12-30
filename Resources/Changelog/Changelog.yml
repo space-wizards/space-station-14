@@ -1,16 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Kudzu has been reenabled.
-    type: Add
-  id: 4973
-  time: '2023-10-07T19:59:39.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Diona now move at the same speed as other species.
-    type: Tweak
-  id: 4974
-  time: '2023-10-08T21:02:46.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - message: Updated the PDA ringtone UI to have a small delay between sets.
@@ -3544,3 +3532,17 @@ Entries:
   id: 5473
   time: '2023-12-30T05:34:27.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23163
+- author: metalgearsloth
+  changes:
+  - message: Fix decals such as grass drawing over shuttles on planet maps.
+    type: Fix
+  id: 5474
+  time: '2023-12-30T16:12:39.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22953
+- author: metalgearsloth
+  changes:
+  - message: Fix mobs not gibbing upon shuttle FTL.
+    type: Fix
+  id: 5475
+  time: '2023-12-30T16:12:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22952
