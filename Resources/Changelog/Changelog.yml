@@ -1,10 +1,4 @@
 Entries:
-- author: GoodWheatley
-  changes:
-  - message: Dionas are actually the same speed as other species now.
-    type: Fix
-  id: 4982
-  time: '2023-10-10T14:03:20.0000000+00:00'
 - author: Potato1234_x
   changes:
   - message: Added the CuraDrobe.
@@ -3561,3 +3555,10 @@ Entries:
   id: 5482
   time: '2023-12-30T17:49:25.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22974
+- author: Blazeror
+  changes:
+  - message: Pinpointers now use the correct sprites.
+    type: Fix
+  id: 5483
+  time: '2023-12-30T19:12:13.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23236
