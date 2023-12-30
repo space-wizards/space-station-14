@@ -30,9 +30,9 @@ public sealed class ElectricityAnomalySystem : EntitySystem
     {
         var range = anomaly.Comp.MaxElectrocuteRange * args.Stability;
 
-        var boltCount = (int) (args.Severity * anomaly.Comp.MaxBoltCount);
+        int boltCount = (int)MathF.Floor(MathHelper.Lerp((float)anomaly.Comp.MinBoltCount, (float)anomaly.Comp.MaxBoltCount, args.Severity));
 
-        _lightning.ShootRandomLightnings(anomaly, range, Math.Max(anomaly.Comp.MinBoltCount, boltCount));
+        _lightning.ShootRandomLightnings(anomaly, range, boltCount);
     }
 
     private void OnSupercritical(Entity<ElectricityAnomalyComponent> anomaly, ref AnomalySupercriticalEvent args)
