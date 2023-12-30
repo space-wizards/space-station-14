@@ -14271,7 +14271,7 @@ entities:
     - pos: -16.5,19.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -13326.29
+    - secondsUntilStateChange: -13533.839
       state: Opening
       type: Door
   - uid: 4196
@@ -62761,6 +62761,7 @@ entities:
           canMix: False
           canReact: True
           maxVol: 50
+          name: null
           reagents:
           - data: null
             ReagentId: PoisonWine
@@ -69551,6 +69552,8 @@ entities:
       pos: 18.5,-3.5
       parent: 2
       type: Transform
+    - maxExternalPressure: 4000
+      type: GasMiner
     - joinedGrid: 2
       type: AtmosDevice
 - proto: GasMinerOxygenStation
@@ -69561,6 +69564,8 @@ entities:
       pos: 16.5,-3.5
       parent: 2
       type: Transform
+    - maxExternalPressure: 4000
+      type: GasMiner
     - joinedGrid: 2
       type: AtmosDevice
 - proto: GasMinerWaterVapor
