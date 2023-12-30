@@ -1,7 +1,7 @@
 - type: entity
-  name: generic rubber stamp
   parent: BaseItem
-  id: RubberStampBase
+  id: RubberStampBaseNoSound # FOR MIME
+  name: generic rubber stamp
   description: A rubber stamp for stamping important documents.
   abstract: true
   components:
@@ -9,18 +9,23 @@
     stampedName: stamp-component-stamped-name-default
     stampState: "paper_stamp-generic"
     stampedColor: "#a23e3e"
-    sound:
-      path: /Audio/Items/Stamp/thick_stamp_sub.ogg
-      params:
-        volume: -2
-        maxDistance: 5
   - type: Sprite
     sprite: Objects/Misc/stamps.rsi
     state: stamp-mime
   - type: Item
     size: Tiny
-  - type: StealTarget
-    stealGroup: Stamp
+
+- type: entity
+  parent: RubberStampBaseNoSound
+  id: RubberStampBase
+  abstract: true
+  components:
+  - type: Stamp
+    sound:
+      path: /Audio/Items/Stamp/thick_stamp_sub.ogg
+      params:
+        volume: -2
+        maxDistance: 5
 
 - type: entity
   name: alternate rubber stamp
@@ -146,7 +151,7 @@
 
 - type: entity
   name: mime's rubber stamp
-  parent: RubberStampBase
+  parent: RubberStampBaseNoSound
   id: RubberStampMime
   suffix: DO NOT MAP
   components:
@@ -154,7 +159,6 @@
     stampedName: stamp-component-stamped-name-mime
     stampedColor: "#777777"
     stampState: "paper_stamp-mime"
-    # TODO remove sound from mime's rubber stamp
   - type: Sprite
     state: stamp-mime
 
