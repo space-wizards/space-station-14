@@ -1,0 +1,21 @@
+- type: entity
+  id: ClothingUniformOuterSnowmaiden
+  parent: ClothingOuterBase
+  name: snow maiden suit
+  description: 3... 2... 1... Cristmas tree, light up!
+  components:
+  - type: Sprite
+    sprite: Imperial/Snowmaiden/snowmaiden_suit.rsi
+  - type: Clothing
+    sprite: Imperial/Snowmaiden/snowmaiden_suit.rsi
+
+- type: entity
+  id: ClothingHeadHatSnowmaiden
+  parent: ClothingHeadBase
+  name: snow maiden hat
+  description: A scorchingly beautiful kokoshnik.
+  components:
+  - type: Sprite
+    sprite: Imperial/Snowmaiden/snowmaiden_hat.rsi
+  - type: Clothing
+    sprite: Imperial/Snowmaiden/snowmaiden_hat.rsi
