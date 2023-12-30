@@ -101,7 +101,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         _cfg.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
         _cfg.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);
         _cfg.OnValueChanged(CCVars.AmbientRange, SetAmbientRange, true);
-        _cfg.OnValueChanged(CCVars.AmbienceVolume, SetAmbienceVolume, true);
+        _cfg.OnValueChanged(CCVars.AmbienceVolume, SetAmbienceGain, true);
         SubscribeLocalEvent<AmbientSoundComponent, ComponentShutdown>(OnShutdown);
     }
 
@@ -116,9 +116,9 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             _playingCount.Remove(sound.Path);
     }
 
-    private void SetAmbienceVolume(float value)
+    private void SetAmbienceGain(float value)
     {
-        _ambienceVolume = value;
+        _ambienceVolume = SharedAudioSystem.GainToVolume(value);
 
         foreach (var (comp, values) in _playingSounds)
         {
@@ -141,7 +141,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         _cfg.UnsubValueChanged(CCVars.AmbientCooldown, SetCooldown);
         _cfg.UnsubValueChanged(CCVars.MaxAmbientSources, SetAmbientCount);
         _cfg.UnsubValueChanged(CCVars.AmbientRange, SetAmbientRange);
-        _cfg.UnsubValueChanged(CCVars.AmbienceVolume, SetAmbienceVolume);
+        _cfg.UnsubValueChanged(CCVars.AmbienceVolume, SetAmbienceGain);
     }
 
     private int PlayingCount(string countSound)

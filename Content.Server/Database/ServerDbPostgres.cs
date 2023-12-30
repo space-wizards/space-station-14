@@ -3,6 +3,7 @@ using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
@@ -20,7 +21,13 @@ namespace Content.Server.Database
         private readonly SemaphoreSlim _prefsSemaphore;
         private readonly Task _dbReadyTask;
 
-        public ServerDbPostgres(DbContextOptions<PostgresServerDbContext> options, IConfigurationManager cfg)
+        private int _msLag;
+
+        public ServerDbPostgres(
+            DbContextOptions<PostgresServerDbContext> options,
+            IConfigurationManager cfg,
+            ISawmill opsLog)
+            : base(opsLog)
         {
             var concurrency = cfg.GetCVar(CCVars.DatabasePgConcurrency);
 
@@ -39,6 +46,8 @@ namespace Content.Server.Database
                     await ctx.DisposeAsync();
                 }
             });
+
+            cfg.OnValueChanged(CCVars.DatabasePgFakeLag, v => _msLag = v, true);
         }
 
         #region Ban
@@ -522,17 +531,22 @@ WHERE to_tsvector('english'::regconfig, a.message) @@ websearch_to_tsquery('engl
             return db.AdminLog;
         }
 
-        private async Task<DbGuardImpl> GetDbImpl()
+        private async Task<DbGuardImpl> GetDbImpl([CallerMemberName] string? name = null)
         {
+            LogDbOp(name);
+
             await _dbReadyTask;
             await _prefsSemaphore.WaitAsync();
+
+            if (_msLag > 0)
+                await Task.Delay(_msLag);
 
             return new DbGuardImpl(this, new PostgresServerDbContext(_options));
         }
 
-        protected override async Task<DbGuard> GetDb()
+        protected override async Task<DbGuard> GetDb([CallerMemberName] string? name = null)
         {
-            return await GetDbImpl();
+            return await GetDbImpl(name);
         }
 
         private sealed class DbGuardImpl : DbGuard
