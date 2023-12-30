@@ -11,7 +11,7 @@ namespace Content.Shared.PDA
     {
         public const string PdaIdSlotId = "PDA-id";
         public const string PdaPenSlotId = "PDA-pen";
-        public const string PdaPAISlotId = "PDA-pai";
+        public const string PdaPaiSlotId = "PDA-pai";
 
         /// <summary>
         /// The base PDA sprite state, eg. "pda", "pda-clown"
