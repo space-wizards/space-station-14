@@ -3,6 +3,7 @@ using Content.Shared.Actions;
 using Content.Shared.Ghost;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
 
@@ -107,8 +108,6 @@ namespace Content.Client.Ghost
 
             args.Handled = true;
         }
-
-
 
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {

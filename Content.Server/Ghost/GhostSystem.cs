@@ -28,7 +28,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Content.Shared.Overlays;
 using Content.Shared.GameTicking;
-using FastAccessors;
 
 namespace Content.Server.Ghost
 {
@@ -104,7 +103,7 @@ namespace Content.Server.Ghost
             Dirty(uid, component);
         }
 
-        public bool Cantoogle(out string timeleft)
+        private bool Cantoogle(out string timeleft)
         {
             TimeSpan stationTime = _gameTiming.CurTime.Subtract(_gameticker.RoundStartTimeSpan);
 
@@ -380,10 +379,6 @@ namespace Content.Server.Ghost
             if (TryComp(attached, out PhysicsComponent? physics))
                 _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
         }
-
-
-
-
 
         private IEnumerable<GhostWarp> GetLocationWarps()
         {
