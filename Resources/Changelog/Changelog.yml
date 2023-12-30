@@ -1,12 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - message: Fix expedition faction sometimes not aligning with the mission faction.
-    type: Fix
-  id: 4986
-  time: '2023-10-10T21:33:18.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - message: Vaulting tables is now predicted.
     type: Fix
   - message: Fix buckle sound not playing.
@@ -3557,3 +3551,10 @@ Entries:
   id: 5486
   time: '2023-12-30T22:42:19.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23183
+- author: Carve
+  changes:
+  - message: Voice change has a new icon.
+    type: Tweak
+  id: 5487
+  time: '2023-12-30T23:13:27.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23239
