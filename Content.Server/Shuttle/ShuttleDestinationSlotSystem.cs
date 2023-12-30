@@ -56,9 +56,18 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
 
                 if (diskCoords != null)
                 {
-                    FTLDestinationComponent destination;
 
-                    if (!EnsureComp(diskCoords.Value, out destination))
+                    // Emergency Pod Disk Consoles
+
+                    if (EntityManager.TryGetComponent(uid, out TransformComponent? xform) && EntityManager.TryGetComponent(xform.GridUid, out EscapePodComponent? escapePodComponent))
+                    {
+                        escapePodComponent.Destination = diskCoords.Value;
+                        return;
+                    }
+
+                    // Shuttle Consoles
+
+                    if (!EnsureComp(diskCoords.Value, out FTLDestinationComponent destination))
                     {
                         destination.Enabled = false;
                     }
@@ -72,11 +81,23 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
             Console.WriteLine("Item HATHNT");
             if (args.Entity is { Valid: true } disk)
             {
+
                 EntityUid? diskCoords = GetDiskDestination(disk);
 
                 if (diskCoords != null)
                 {
-                    FTLDestinationComponent destination = EnsureComp<FTLDestinationComponent>(diskCoords.Value);
+
+                    // Emergency Pod Disk Consoles
+
+                    if (EntityManager.TryGetComponent(uid, out TransformComponent? xform) && EntityManager.TryGetComponent(xform.GridUid, out EscapePodComponent? escapePodComponent))
+                    {
+                        escapePodComponent.Destination = null;
+                        return;
+                    }
+
+                    // Shuttle Consoles
+
+                    EnsureComp(diskCoords.Value, out FTLDestinationComponent destination);
                     DisableDestination(uid, destination);
                     _console.RefreshShuttleConsoles();
                 }
@@ -97,30 +118,32 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
 
     private void EnableDestination(EntityUid uid, FTLDestinationComponent destination)
     {
+
         if (destination.WhitelistSpecific == null)
         {
             destination.WhitelistSpecific = new List<EntityUid>();
         }
 
+        // Drone consoles adds the shuttle's uid
+        
         if (TryComp(uid, out DroneConsoleComponent? consoleId))
         {
             _console.RefreshDroneConsoles();
 
             if (consoleId != null && consoleId.Entity != null)
             {
-                Console.WriteLine("WEH! ADDED DRONE!");
                 destination.WhitelistSpecific.Add(consoleId.Entity.Value);
                 return;
             }
         }
 
-        Console.WriteLine("WEH! ADDED!");
         destination.WhitelistSpecific.Add(uid);
 
     }
 
     private void DisableDestination(EntityUid uid, FTLDestinationComponent destination)
     {
+
         if (destination.WhitelistSpecific != null)
         {
             if (TryComp(uid, out DroneConsoleComponent? consoleId))
@@ -129,13 +152,11 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
 
                 if (consoleId != null && consoleId.Entity != null)
                 {
-                    Console.WriteLine("WEH! REMOVED DRONE!");
                     destination.WhitelistSpecific.Remove(consoleId.Entity.Value);
                     return;
                 }
             }
 
-            Console.WriteLine("WEH! REMOVED!");
             destination.WhitelistSpecific.Remove(uid);
 
         }

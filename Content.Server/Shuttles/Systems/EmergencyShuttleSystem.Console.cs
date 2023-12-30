@@ -208,7 +208,10 @@ public sealed partial class EmergencyShuttleSystem
             }
 
             // Don't dock them. If you do end up doing this then stagger launch.
-            _shuttle.FTLTravel(uid, shuttle, centcomm.Entity.Value, hyperspaceTime: TransitTime);
+            if (pod.Destination != null)
+            {
+                _shuttle.FTLTravel(uid, shuttle, pod.Destination.Value, hyperspaceTime: TransitTime);
+            }
             RemCompDeferred<EscapePodComponent>(uid);
         }
 
