@@ -24,7 +24,7 @@ namespace Content.Shared.PDA
 
         [DataField("penSlot")]
         public ItemSlot PenSlot = new();
-        [DataField("pAISlot")]
+        [DataField("paiSlot")]
         public ItemSlot PaiSlot = new();
 
         // Really this should just be using ItemSlot.StartingItem. However, seeing as we have so many different starting
