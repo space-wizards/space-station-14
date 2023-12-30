@@ -237,7 +237,6 @@ public sealed partial class EmergencyShuttleSystem
 
                 var destination = EnsureComp<FTLDestinationComponent>(comp.Entity.Value);
                 destination.Enabled = true;
-                //_shuttle.AddFTLDestination(comp.Entity.Value, true); //TEMP, removes CentComm from default
             }
         }
     }

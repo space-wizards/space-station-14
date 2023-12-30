@@ -49,7 +49,6 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
 
         if (component.DiskSlot.HasItem)
         {
-            Console.WriteLine("Item HATH");
             if (component.DiskSlot.Item is { Valid: true } disk)
             {
                 EntityUid? diskCoords = GetDiskDestination(disk);
@@ -78,7 +77,6 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
             }
         } else
         {
-            Console.WriteLine("Item HATHNT");
             if (args.Entity is { Valid: true } disk)
             {
 
@@ -124,8 +122,8 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
             destination.WhitelistSpecific = new List<EntityUid>();
         }
 
-        // Drone consoles adds the shuttle's uid
-        
+        // Drone consoles adds the shuttle's console uid, to allow control from both consoles
+
         if (TryComp(uid, out DroneConsoleComponent? consoleId))
         {
             _console.RefreshDroneConsoles();
@@ -158,7 +156,6 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
             }
 
             destination.WhitelistSpecific.Remove(uid);
-
         }
     }
 }
