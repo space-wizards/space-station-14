@@ -1,10 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Updated the PDA ringtone UI to have a small delay between sets.
-    type: Tweak
-  id: 4975
-  time: '2023-10-08T21:25:08.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Brains now function properly when inserted into an MMI.
@@ -3546,3 +3540,10 @@ Entries:
   id: 5475
   time: '2023-12-30T16:12:52.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22952
+- author: metalgearsloth
+  changes:
+  - message: Surveillance cameras now cycle their animation forwards and backwards.
+    type: Add
+  id: 5476
+  time: '2023-12-30T16:14:14.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22950
