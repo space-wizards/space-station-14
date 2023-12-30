@@ -1,16 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - message: Added the CuraDrobe.
-    type: Add
-  - message: Added the sensible suit and skirt.
-    type: Add
-  - message: Fixed the librarian not having their own jumpskirt.
-    type: Fix
-  - message: Resprited the librarian jumpsuit.
-    type: Tweak
-  id: 4983
-  time: '2023-10-10T16:55:31.0000000+00:00'
 - author: Whisper
   changes:
   - message: Lizards can eat organs again!
@@ -3562,3 +3550,10 @@ Entries:
   id: 5483
   time: '2023-12-30T19:12:13.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23236
+- author: Emisse
+  changes:
+  - message: The Grand Lottery has even more surprises in store!
+    type: Tweak
+  id: 5484
+  time: '2023-12-30T21:24:24.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23243
