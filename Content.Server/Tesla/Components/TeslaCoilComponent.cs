@@ -1,4 +1,5 @@
 using Content.Server.Tesla.EntitySystems;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -16,4 +17,10 @@ public sealed partial class TeslaCoilComponent : Component
     // To Do: Different lightning bolts have different powers and generate different amounts of energy
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float ChargeFromLightning = 50000f;
+
+    /// <summary>
+    /// how much damage the coil takes from a lightning strike
+    /// </summary>
+    [DataField]
+    public FixedPoint2 DamageFromLightning = 1;
 }

@@ -4,6 +4,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Tesla.Components;
 using Content.Server.Lightning;
 using Robust.Shared.Timing;
+using Content.Shared.Damage;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -13,6 +14,7 @@ namespace Content.Server.Tesla.EntitySystems;
 public sealed class TeslaCoilSystem : EntitySystem
 {
     [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -24,9 +26,16 @@ public sealed class TeslaCoilSystem : EntitySystem
     //When struck by lightning, charge the internal battery
     private void OnHitByLightning(Entity<TeslaCoilComponent> coil, ref HitByLightningEvent args)
     {
-        if (!TryComp<BatteryComponent>(coil, out var batteryComponent))
-            return;
+        if (TryComp<BatteryComponent>(coil, out var batteryComponent))
+        {
+            _battery.SetCharge(coil, batteryComponent.CurrentCharge + coil.Comp.ChargeFromLightning);
+        }
 
-        _battery.SetCharge(coil, batteryComponent.CurrentCharge + coil.Comp.ChargeFromLightning);
+        if (TryComp<DamageableComponent>(coil, out var damageableComponent))
+        {
+            DamageSpecifier damage = new();
+            damage.DamageDict.Add("Structural", coil.Comp.DamageFromLightning);
+            _damageable.TryChangeDamage(coil, damage);
+        }
     }
 }

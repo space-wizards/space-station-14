@@ -12,6 +12,12 @@ namespace Content.Server.Lightning.Components;
 public sealed partial class LightningTargetComponent : Component
 {
     /// <summary>
+    /// The probability that this target will not be ignored by a lightning strike. This is necessary for Tesla's balance.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float HitProbability = 1f;
+
+    /// <summary>
     /// Priority level for selecting a lightning target. 
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]

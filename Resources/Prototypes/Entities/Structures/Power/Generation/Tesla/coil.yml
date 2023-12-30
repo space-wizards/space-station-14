@@ -58,6 +58,8 @@
     chargeFromLightning: 1000000
   - type: LightningTarget
     priority: 4
+    hitProbability: 0.5
+    lightningResistance: 10
     lightningExplode: false
   - type: PowerNetworkBattery
     maxSupply: 1000000
@@ -67,6 +69,24 @@
   - type: Pullable
   - type: Clickable
   - type: InteractionOutline
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 5
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 2
+                max: 4
   #- type: GuideHelp #   To Do - add Tesla Guide
   
 - type: entity
@@ -114,6 +134,7 @@
           False: { state: grounding_rod_open }
   - type: LightningSparking
   - type: LightningTarget
+    hitProbability: 0.95
     priority: 3
     lightningResistance: 10
     lightningExplode: false
