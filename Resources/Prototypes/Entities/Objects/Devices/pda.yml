@@ -23,7 +23,7 @@
     state: pda
   - type: Pda
     state: pda
-    pAISlot:
+    paiSlot:
       priority: -2
       whitelist:
         components:
