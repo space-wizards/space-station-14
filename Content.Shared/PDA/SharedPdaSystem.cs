@@ -28,7 +28,7 @@ namespace Content.Shared.PDA
 
             ItemSlotsSystem.AddItemSlot(uid, PdaComponent.PdaIdSlotId, pda.IdSlot);
             ItemSlotsSystem.AddItemSlot(uid, PdaComponent.PdaPenSlotId, pda.PenSlot);
-            ItemSlotsSystem.AddItemSlot(uid, PdaComponent.PdaPAISlotId, pda.PAISlot);
+            ItemSlotsSystem.AddItemSlot(uid, PdaComponent.PdaPaiSlotId, pda.PaiSlot);
 
             UpdatePdaAppearance(uid, pda);
         }
