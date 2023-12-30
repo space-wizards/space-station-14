@@ -1,18 +1,4 @@
 Entries:
-- author: gusxyz
-  changes:
-  - message: Using capital letter for your department specific radio channels will
-      work now!
-    type: Tweak
-  id: 4977
-  time: '2023-10-09T05:07:54.0000000+00:00'
-- author: nmajask
-  changes:
-  - message: Added flannel jackets, find them at your local winterdrobe or dark maint
-      corridor.
-    type: Add
-  id: 4978
-  time: '2023-10-09T15:22:57.0000000+00:00'
 - author: Vasilis
   changes:
   - message: Contributors are automatically updated now once a week in the credits
@@ -3558,3 +3544,17 @@ Entries:
   id: 5477
   time: '2023-12-30T16:18:58.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23202
+- author: Ubaser
+  changes:
+  - message: The uncloneable trait has been removed.
+    type: Remove
+  id: 5478
+  time: '2023-12-30T16:45:43.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23229
+- author: Ubaser
+  changes:
+  - message: Syndicate implanters have received a new sprite.
+    type: Add
+  id: 5479
+  time: '2023-12-30T16:46:13.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23227
