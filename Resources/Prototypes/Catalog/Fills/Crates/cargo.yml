@@ -217,7 +217,7 @@
     - id: ClothingMaskGasMerc
       prob: 0.01
       orGroup: Clothes
-    - id: ClothingHeadHatCardBorg
+    - id: ClothingHeadHatCardborg
       prob: 0.01
       orGroup: Clothes
     - id: ClothingUnderSocksCoder
