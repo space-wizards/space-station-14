@@ -32760,6 +32760,16 @@ entities:
     - pos: -11.5,27.5
       parent: 60
       type: Transform
+  - uid: 24451
+    components:
+    - pos: -9.5,29.5
+      parent: 60
+      type: Transform
+  - uid: 24452
+    components:
+    - pos: -9.5,30.5
+      parent: 60
+      type: Transform
 - proto: CableApcStack
   entities:
   - uid: 6603
