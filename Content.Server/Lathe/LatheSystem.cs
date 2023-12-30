@@ -122,10 +122,10 @@ namespace Content.Server.Lathe
                     environments.AddRange(_atmosphere.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true));
                 }
 
-                var heatPerTile = heatComp.HeatPerSecond / environments.Count;
+                var heatPerTile = heatComp.EnergyPerSecond / environments.Count;
                 foreach (var env in environments)
                 {
-                    env.Temperature += heatPerTile;
+                    _atmosphere.AddHeat(env, heatPerTile);
                 }
             }
         }

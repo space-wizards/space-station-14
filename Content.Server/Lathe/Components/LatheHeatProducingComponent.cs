@@ -11,10 +11,10 @@ namespace Content.Server.Lathe.Components;
 public sealed partial class LatheHeatProducingComponent : Component
 {
     /// <summary>
-    /// The amount of heat produced each second when producing an item.
+    /// The amount of energy produced each second when producing an item.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float HeatPerSecond = 150;
+    public float EnergyPerSecond = 40000;
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextSecond;
