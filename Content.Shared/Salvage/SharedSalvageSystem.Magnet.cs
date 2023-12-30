@@ -1,5 +1,6 @@
 using Content.Shared.Procedural;
 using Content.Shared.Salvage.Magnet;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Salvage;
 
@@ -7,18 +8,26 @@ public abstract partial class SharedSalvageSystem
 {
     private readonly List<SalvageMapPrototype> _salvageMaps = new();
 
+    private readonly List<ProtoId<DungeonConfigPrototype>> _asteroidConfigs = new()
+    {
+        "BlobAsteroid",
+        "ClusterAsteroid",
+        "SpindlyAsteroid",
+        "SwissCheeseAsteroid"
+    };
+
     public ISalvageMagnetOffering GetSalvageOffering(int seed)
     {
         var rand = new System.Random(seed);
 
         if (seed % 2 == 0)
         {
-            var config = _proto.Index<DungeonConfigPrototype>("ClusterAsteroid");
+            var config = _asteroidConfigs[rand.Next(_asteroidConfigs.Count)];
             // TODO: Loot, need runtime layers.
 
             return new AsteroidOffering
             {
-                DungeonConfig = config,
+                DungeonConfig = _proto.Index<DungeonConfigPrototype>(config.Id),
             };
         }
         else
