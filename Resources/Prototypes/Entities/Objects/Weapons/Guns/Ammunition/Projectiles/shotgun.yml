@@ -54,7 +54,7 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 1
+        Blunt: 3
         Heat: 7
   - type: IgnitionSource
     ignited: true
@@ -176,5 +176,5 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 3
+        Radiation: 5
         Piercing: 5

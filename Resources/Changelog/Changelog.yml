@@ -1,10 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - message: Humanoid species now passively regenerate small bruises and burns.
-    type: Tweak
-  id: 4972
-  time: '2023-10-07T19:34:32.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Kudzu has been reenabled.
@@ -3542,3 +3536,11 @@ Entries:
   id: 5472
   time: '2023-12-30T00:38:11.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23055
+- author: Admiral-Obvious-001
+  changes:
+  - message: Normalized researched secfab shotgun ammo damages to align with the rest
+      of the ammo sizes.
+    type: Tweak
+  id: 5473
+  time: '2023-12-30T05:34:27.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23163
