@@ -6,4 +6,4 @@ ui-lobby-observe-button = Observe
 ui-lobby-ready-up-button = Ready Up
 ui-lobby-online-players-block = Online Players
 ui-lobby-server-info-block = Server Info
-ui-lobby-showsummary-button = Show Previous Round Summary
+ui-lobby-showsummary-button = Round-End Summary

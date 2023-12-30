@@ -30,17 +30,9 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
     public Options.UI.EscapeMenu? _escapeWindow = default!;
 
-    public void enableButtonSummary()
-    {
-        if(_escapeWindow != null)
-            _escapeWindow.buttonShowRoundEnd.Visible = true;
-    }
-    public void disableButtonSummary()
-    {
-        if (_escapeWindow != null)
-            _escapeWindow.buttonShowRoundEnd.Visible = false;
-    }
-
+    //this object is used when the player clicks on the "Show round end summary" button
+        //init out here, so that we arent creating a new instance of the object on every click - we're reusing the same object
+    private ClientGameTicker cgtTickingManager = new ClientGameTicker();
 
     private MenuButton? EscapeButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EscapeButton;
 
@@ -117,11 +109,10 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
             _guidebook.ToggleGuidebook();
         };
 
-        //this is just the event that fires on click, we need to hide the button and make it available when needed (dont want them to see "revs" mid-round, etc)
-        _escapeWindow.buttonShowRoundEnd.OnPressed += _ =>
+        //wire up the anonymous class for our Show Round End button:
+        _escapeWindow.ShowRoundSummaryButton.OnPressed += _ =>
         {
-            ClientGameTicker cgtTickingManager = new ClientGameTicker();
-            cgtTickingManager.DisplayRoundEndSummary(ClientGameTicker._roundEndContainer._message);
+            cgtTickingManager.DisplayRoundEndSummary();
         };
 
 

@@ -13,7 +13,7 @@
         <Button Access="Public" Name="GuidebookButton" Text="{Loc 'ui-escape-guidebook'}" />
         <Button Access="Public" Name="WikiButton" Text="{Loc 'ui-escape-wiki'}" />
         <Button Access="Public" Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" />
+        <Button Access="Public" Name="ShowRoundSummaryButton" Text="{Loc 'ui-show-roundend'}" />
         <Button Access="Public" Name="QuitButton" Text="{Loc 'ui-escape-quit'}" />
-        <Button Access="Public" Name="buttonShowRoundEnd" Text="{Loc 'ui-show-roundend'}" />
     </BoxContainer>
 </ui1:EscapeMenu>

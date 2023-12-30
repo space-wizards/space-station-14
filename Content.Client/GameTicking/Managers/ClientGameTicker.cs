@@ -21,7 +21,7 @@ namespace Content.Client.GameTicking.Managers
     public sealed class ClientGameTicker : SharedGameTicker
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private static readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -29,14 +29,14 @@ namespace Content.Client.GameTicking.Managers
         private Dictionary<NetEntity, Dictionary<string, uint?>> _jobsAvailable = new();
         private Dictionary<NetEntity, string> _stationNames = new();
 
-        public static ClientGameTicker_RoundEndData_Container _roundEndContainer = new();
+        //this needs to be static, for us to review the round-end summary. Calling a non-static version of this will not show you round-end data
+            //this object is just stored/held here for data persistence
+        private static RoundEndMessageEvent _backedUpRoundEndMessage = default!;
 
         /// <summary>
         /// The current round-end window. Could be used to support re-opening the window after closing it.
         /// </summary>
-        private static RoundEndSummaryWindow? _window;
-        private EscapeUIController _escapeController = new();
-
+        private RoundEndSummaryWindow? _window;
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
         [ViewVariables] public string? LobbySong { get; private set; }
@@ -141,8 +141,11 @@ namespace Content.Client.GameTicking.Managers
         {
             _stateManager.RequestStateChange<GameplayState>();
 
-            //going to disable the button as soon as they join the game (this helps for late joiners to also have their "show round end summary" disabled) - should catch anyone joining the game
-            DisableRoundEndSummaryButton();
+            //todo: figure out some clever way of hiding the button - without using static objects to access the same instance of an object
+                //when they join the game, we want to hide the button for user experience
+
+            //set the round end message to basically null - so it doesnt show the summary of the last round, in the current round
+            _backedUpRoundEndMessage = default!;
         }
 
         private void LobbyCountdown(TickerLobbyCountdownEvent message)
@@ -161,31 +164,19 @@ namespace Content.Client.GameTicking.Managers
             if (_window?.RoundId == message.RoundId)
                 return;
 
-            //enable the button, so that users can review the summary after closing the window
-            EnableRoundEndSummaryButton();
+            //todo: figure out some clever way of showing the button  - without using static objects to access the same instance of an object
+                //when the round ends, we want to enable the button again for user experience
 
             //back up the round info, to show it later when requested:
-            _roundEndContainer._message = message;
-            DisplayRoundEndSummary(_roundEndContainer._message);
-        }
-        
-        public void DisplayRoundEndSummary(RoundEndMessageEvent? message)
-        {
-            if (message != null)
-                _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
+            _backedUpRoundEndMessage = message;
+
+            DisplayRoundEndSummary();
         }
 
-        private void EnableRoundEndSummaryButton()
+        public void DisplayRoundEndSummary()
         {
-            //enable the button, so we can still click it once we've closed round-end window - until next round starts, where we'll disable it again
-            this.
-                _escapeController.
-                enableButtonSummary();
-        }
-        private void DisableRoundEndSummaryButton()
-        {
-            //disable the button, so they cant click it mid-game and see "Mode = revs/nukies/zombies"
-            this._escapeController.disableButtonSummary();
+            if (_backedUpRoundEndMessage != null)
+                _window = new RoundEndSummaryWindow(_backedUpRoundEndMessage.GamemodeTitle, _backedUpRoundEndMessage.RoundEndText, _backedUpRoundEndMessage.RoundDuration, _backedUpRoundEndMessage.RoundId, _backedUpRoundEndMessage.AllPlayersEndInfo, _entityManager);
         }
 
         private void RoundRestartCleanup(RoundRestartCleanupEvent ev)

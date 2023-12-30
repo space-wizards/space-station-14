@@ -72,8 +72,7 @@ namespace Content.Client.Lobby
             //wire up the anonymous class for our Show Round End button:
             _lobby.ShowRoundSummaryButton.OnPressed += _ =>
             {
-                ClientGameTicker cgtTickingManager = new ClientGameTicker();
-                cgtTickingManager.DisplayRoundEndSummary(ClientGameTicker._roundEndContainer._message);
+                _gameTicker.DisplayRoundEndSummary();
             };
 
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
