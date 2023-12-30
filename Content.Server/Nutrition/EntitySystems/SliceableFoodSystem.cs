@@ -89,6 +89,10 @@ namespace Content.Server.Nutrition.EntitySystems
             // Fill last slice with the rest of the solution
             FillSlice(sliceUid, solution);
 
+            // If the food has a trash, we should return it now
+            // Good for things like pies which always use pie tins
+            Spawn(food.Trash, transform.Coordinates);
+
             DeleteFood(uid, user);
             return true;
         }
