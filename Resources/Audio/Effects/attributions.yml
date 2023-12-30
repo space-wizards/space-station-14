@@ -200,4 +200,4 @@
 - files: ["eye_open.ogg", "eye_close.ogg"]
   copyright: Bhijn and Myr (github username deathride58)
   license: CC0-1.0
-  source: [REPLACE WITH PR LINK WHEN PR IS MADE]
+  source: https://github.com/space-wizards/space-station-14/pull/23212
