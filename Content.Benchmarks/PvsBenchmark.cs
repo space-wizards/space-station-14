@@ -19,6 +19,13 @@ using Robust.Shared.Random;
 
 namespace Content.Benchmarks;
 
+// This benchmark probably benefits from some accidental cache locality. I,e. the order in which entities in a pvs
+// chunk are sent to players matches the order in which the entities were spawned.
+//
+// in a real mid-late game round, this is probably no longer the case.
+// One way to somewhat offset this is to update the NetEntity assignment to assign random (but still unique) NetEntity uids to entities.
+// This makes the benchmark run noticeably slower.
+
 [Virtual]
 public class PvsBenchmark
 {
@@ -61,9 +68,6 @@ public class PvsBenchmark
             .OrderBy(x => x.Component.Location)
             .Select(x => _entMan.GetComponent<TransformComponent>(x.Uid).Coordinates)
             .ToArray();
-
-        if (_players != null)
-            throw new Exception("AAAAA");
 
         Array.Resize(ref _players, PlayerCount);
 
