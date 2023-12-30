@@ -1,7 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Construction;
+using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Lathe.Components;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
@@ -16,7 +17,6 @@ using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -29,12 +29,13 @@ namespace Content.Server.Lathe
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
         [Dependency] private readonly StackSystem _stack = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly TransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -42,8 +43,6 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, GetMaterialWhitelistEvent>(OnGetWhitelist);
             SubscribeLocalEvent<LatheComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<LatheComponent, RefreshPartsEvent>(OnPartsRefresh);
-            SubscribeLocalEvent<LatheComponent, UpgradeExamineEvent>(OnUpgradeExamine);
             SubscribeLocalEvent<LatheComponent, TechnologyDatabaseModifiedEvent>(OnDatabaseModified);
             SubscribeLocalEvent<LatheComponent, ResearchRegistrationChangedEvent>(OnResearchRegistrationChanged);
 
@@ -54,6 +53,7 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
             SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
+            SubscribeLocalEvent<LatheHeatProducingComponent, LatheStartPrintingEvent>(OnHeatStartPrinting);
 
             SubscribeLocalEvent<LatheComponent, LatheEjectMaterialMessage>(OnLatheEjectMessage);
         }
@@ -63,14 +63,14 @@ namespace Content.Server.Lathe
             if (!lathe.CanEjectStoredMaterials)
                 return;
 
-            if (!_prototypeManager.TryIndex<MaterialPrototype>(message.Material, out var material))
+            if (!_proto.TryIndex<MaterialPrototype>(message.Material, out var material))
                 return;
 
             var volume = 0;
 
             if (material.StackEntity != null)
             {
-                var entProto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
+                var entProto = _proto.Index<EntityPrototype>(material.StackEntity);
                 if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
                     return;
 
@@ -102,6 +102,31 @@ namespace Content.Server.Lathe
 
                 if (_timing.CurTime - comp.StartTime >= comp.ProductionLength)
                     FinishProducing(uid, lathe);
+            }
+
+            var heatQuery = EntityQueryEnumerator<LatheHeatProducingComponent, LatheProducingComponent, TransformComponent>();
+            while (heatQuery.MoveNext(out var uid, out var heatComp, out _, out var xform))
+            {
+                if (_timing.CurTime < heatComp.NextSecond)
+                    continue;
+                heatComp.NextSecond += TimeSpan.FromSeconds(1);
+
+                var position = _transform.GetGridTilePositionOrDefault((uid,xform));
+                var environments = new List<GasMixture>();
+
+                if (_atmosphere.GetTileMixture(xform.GridUid, xform.MapUid, position, true) is { } tileMix)
+                    environments.Add(tileMix);
+
+                if (xform.GridUid != null)
+                {
+                    environments.AddRange(_atmosphere.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true));
+                }
+
+                var heatPerTile = heatComp.HeatPerSecond / environments.Count;
+                foreach (var env in environments)
+                {
+                    env.Temperature += heatPerTile;
+                }
             }
         }
 
@@ -189,6 +214,9 @@ namespace Content.Server.Lathe
             lathe.ProductionLength = recipe.CompleteTime * component.TimeMultiplier;
             component.CurrentRecipe = recipe;
 
+            var ev = new LatheStartPrintingEvent(recipe);
+            RaiseLocalEvent(uid, ref ev);
+
             _audio.PlayPvs(component.ProducingSound, uid);
             UpdateRunningAppearance(uid, true);
             UpdateUserInterfaceState(uid, component);
@@ -260,6 +288,11 @@ namespace Content.Server.Lathe
             }
         }
 
+        private void OnHeatStartPrinting(EntityUid uid, LatheHeatProducingComponent component, LatheStartPrintingEvent args)
+        {
+            component.NextSecond = _timing.CurTime;
+        }
+
         private void OnMaterialAmountChanged(EntityUid uid, LatheComponent component, ref MaterialAmountChangedEvent args)
         {
             UpdateUserInterfaceState(uid, component);
@@ -298,22 +331,6 @@ namespace Content.Server.Lathe
                 EnsureComp<LatheProducingComponent>(uid);
                 TryStartProducing(uid, component);
             }
-        }
-
-        private void OnPartsRefresh(EntityUid uid, LatheComponent component, RefreshPartsEvent args)
-        {
-            var printTimeRating = args.PartRatings[component.MachinePartPrintSpeed];
-            var materialUseRating = args.PartRatings[component.MachinePartMaterialUse];
-
-            component.TimeMultiplier = MathF.Pow(component.PartRatingPrintTimeMultiplier, printTimeRating - 1);
-            component.MaterialUseMultiplier = MathF.Pow(component.PartRatingMaterialUseMultiplier, materialUseRating - 1);
-            Dirty(component);
-        }
-
-        private void OnUpgradeExamine(EntityUid uid, LatheComponent component, UpgradeExamineEvent args)
-        {
-            args.AddPercentageUpgrade("lathe-component-upgrade-speed", 1 / component.TimeMultiplier);
-            args.AddPercentageUpgrade("lathe-component-upgrade-material-use", component.MaterialUseMultiplier);
         }
 
         private void OnDatabaseModified(EntityUid uid, LatheComponent component, ref TechnologyDatabaseModifiedEvent args)
