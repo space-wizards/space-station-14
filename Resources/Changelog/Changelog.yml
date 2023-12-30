@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Brains now function properly when inserted into an MMI.
-    type: Fix
-  id: 4976
-  time: '2023-10-09T04:49:20.0000000+00:00'
 - author: gusxyz
   changes:
   - message: Using capital letter for your department specific radio channels will
@@ -3547,3 +3541,20 @@ Entries:
   id: 5476
   time: '2023-12-30T16:14:14.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22950
+- author: EmoGarbage404
+  changes:
+  - message: Added the Hyper convection protolathe and autolathe to Industrial Engineering
+      tech. These lathes have a discounted printing price at the cost of venting hot
+      air into the surroundings.
+    type: Add
+  - message: Added the industrial ore processor, an improved version with discounted
+      printing prices, to salvage equipment technology.
+    type: Add
+  - message: Moved autolathe, protolathe, circuit imprinter, ore processor, and material
+      reclaimer boards to be available by default in the circuit imprinter.
+    type: Tweak
+  - message: Removed machine part upgrades from all lathes.
+    type: Remove
+  id: 5477
+  time: '2023-12-30T16:18:58.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23202
