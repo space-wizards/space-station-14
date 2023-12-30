@@ -7519,6 +7519,7 @@ entities:
             0: 17
           -16,0:
             0: 32768
+            3: 2048
           -16,-3:
             0: 52416
           -15,-3:
@@ -66691,6 +66692,8 @@ entities:
     - pos: 26.5,-22.5
       parent: 30
       type: Transform
+    - maxExternalPressure: 4000
+      type: GasMiner
     - joinedGrid: 30
       type: AtmosDevice
 - proto: GasMinerOxygen
@@ -66700,6 +66703,8 @@ entities:
     - pos: 26.5,-24.5
       parent: 30
       type: Transform
+    - maxExternalPressure: 4000
+      type: GasMiner
     - joinedGrid: 30
       type: AtmosDevice
 - proto: GasMinerWaterVapor
