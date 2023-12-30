@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - message: Ninja uncloak after attacking with melee weapons.
-    type: Tweak
-  id: 4988
-  time: '2023-10-11T02:55:54.0000000+00:00'
 - author: gusxyz
   changes:
   - message: Crabs will seek out food to eat now.
@@ -3555,3 +3549,10 @@ Entries:
   id: 5488
   time: '2023-12-30T23:15:02.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23221
+- author: EmoGarbage404
+  changes:
+  - message: Damage from heat sources has been increased.
+    type: Tweak
+  id: 5489
+  time: '2023-12-30T23:28:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23238
