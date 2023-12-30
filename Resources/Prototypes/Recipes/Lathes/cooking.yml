@@ -36,6 +36,20 @@
     Glass: 50
 
 - type: latheRecipe
+  id: DrinkShotGlass
+  result: DrinkShotGlass
+  completetime: 0.4
+  materials:
+    Glass: 25
+
+- type: latheRecipe
+  id: DrinkGlassCoupeShaped
+  result: DrinkGlassCoupeShaped
+  completetime: 0.8
+  materials:
+    Glass: 50
+
+- type: latheRecipe
   id: FoodPlate
   result: FoodPlate
   completetime: 0.8
@@ -62,3 +76,24 @@
   completetime: 0.4
   materials:
     Plastic: 50
+
+- type: latheRecipe
+  id: FoodBowlBig
+  result: FoodBowlBig
+  completetime: 0.8
+  materials:
+    Glass: 100
+
+- type: latheRecipe
+  id: FoodPlateTin
+  result: FoodPlateTin
+  completetime: 0.4
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  id: FoodKebabSkewer
+  result: FoodKebabSkewer
+  completetime: 0.4
+  materials:
+    Steel: 50
