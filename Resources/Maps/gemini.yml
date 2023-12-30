@@ -14330,7 +14330,7 @@ entities:
     - pos: 0.5,-22.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -5461.3755
+    - secondsUntilStateChange: -5515.6523
       state: Opening
       type: Door
   - uid: 426
@@ -14717,7 +14717,7 @@ entities:
       pos: -1.5,10.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28421.684
+    - secondsUntilStateChange: -28475.96
       state: Opening
       type: Door
 - proto: AirlockResearchDirectorLocked
@@ -14730,7 +14730,7 @@ entities:
       pos: -2.5,11.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28421.318
+    - secondsUntilStateChange: -28475.596
       state: Opening
       type: Door
 - proto: AirlockSalvageGlassLocked
@@ -14772,7 +14772,7 @@ entities:
       pos: 24.5,72.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -26975.453
+    - secondsUntilStateChange: -27029.73
       state: Opening
       type: Door
   - uid: 505
@@ -14807,7 +14807,7 @@ entities:
       pos: 18.5,68.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -42848.87
+    - secondsUntilStateChange: -42903.15
       state: Opening
       type: Door
   - uid: 512
@@ -14826,7 +14826,7 @@ entities:
       pos: 23.5,72.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -26975.885
+    - secondsUntilStateChange: -27030.162
       state: Opening
       type: Door
   - uid: 13063
@@ -14860,7 +14860,7 @@ entities:
     - pos: 10.5,6.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28424.25
+    - secondsUntilStateChange: -28478.527
       state: Opening
       type: Door
   - uid: 496
@@ -14868,7 +14868,7 @@ entities:
     - pos: -0.5,15.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28417.951
+    - secondsUntilStateChange: -28472.229
       state: Opening
       type: Door
   - uid: 497
@@ -14878,7 +14878,7 @@ entities:
     - pos: 2.5,7.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -27878.918
+    - secondsUntilStateChange: -27933.195
       state: Opening
       type: Door
   - uid: 498
@@ -14887,7 +14887,7 @@ entities:
       pos: 11.5,3.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -65639.3
+    - secondsUntilStateChange: -65693.57
       state: Opening
       type: Door
   - uid: 499
@@ -14895,7 +14895,7 @@ entities:
     - pos: 5.5,19.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28434.05
+    - secondsUntilStateChange: -28488.328
       state: Opening
       type: Door
   - uid: 500
@@ -14903,7 +14903,7 @@ entities:
     - pos: -0.5,16.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28418.184
+    - secondsUntilStateChange: -28472.46
       state: Opening
       type: Door
   - uid: 501
@@ -14911,7 +14911,7 @@ entities:
     - pos: 13.5,13.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28432.484
+    - secondsUntilStateChange: -28486.762
       state: Opening
       type: Door
   - uid: 502
@@ -14919,7 +14919,7 @@ entities:
     - pos: 14.5,13.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28432.785
+    - secondsUntilStateChange: -28487.062
       state: Opening
       type: Door
 - proto: AirlockScienceLocked
@@ -14931,7 +14931,7 @@ entities:
     - pos: 27.5,13.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28394.285
+    - secondsUntilStateChange: -28448.562
       state: Opening
       type: Door
   - uid: 504
@@ -14941,7 +14941,7 @@ entities:
     - pos: 30.5,13.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28392.717
+    - secondsUntilStateChange: -28446.994
       state: Opening
       type: Door
   - uid: 513
@@ -14952,7 +14952,7 @@ entities:
       pos: 17.5,15.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28431.451
+    - secondsUntilStateChange: -28485.729
       state: Opening
       type: Door
   - uid: 514
@@ -14962,7 +14962,7 @@ entities:
     - pos: 30.5,12.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28392.984
+    - secondsUntilStateChange: -28447.262
       state: Opening
       type: Door
   - uid: 515
@@ -14972,7 +14972,7 @@ entities:
     - pos: 27.5,12.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28394.584
+    - secondsUntilStateChange: -28448.861
       state: Opening
       type: Door
   - uid: 516
@@ -14982,7 +14982,7 @@ entities:
     - pos: 15.5,19.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -69725.15
+    - secondsUntilStateChange: -69779.42
       state: Opening
       type: Door
   - uid: 517
@@ -14992,7 +14992,7 @@ entities:
     - pos: 11.5,19.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28435.852
+    - secondsUntilStateChange: -28490.129
       state: Opening
       type: Door
   - uid: 518
@@ -15003,7 +15003,7 @@ entities:
       pos: 17.5,14.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28431.717
+    - secondsUntilStateChange: -28485.994
       state: Opening
       type: Door
   - uid: 520
@@ -15014,7 +15014,7 @@ entities:
       pos: 22.5,15.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28429.984
+    - secondsUntilStateChange: -28484.262
       state: Opening
       type: Door
   - uid: 521
@@ -15025,7 +15025,7 @@ entities:
       pos: 22.5,14.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -28429.717
+    - secondsUntilStateChange: -28483.994
       state: Opening
       type: Door
 - proto: AirlockSecurity
@@ -83778,7 +83778,7 @@ entities:
     - pos: 19.5,62.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -66220.52
+    - secondsUntilStateChange: -66274.8
       state: Closing
       type: Door
   - uid: 12058
@@ -85263,6 +85263,8 @@ entities:
       pos: -2.5,83.5
       parent: 2
       type: Transform
+    - maxExternalPressure: 4000
+      type: GasMiner
     - joinedGrid: 2
       type: AtmosDevice
 - proto: GasMinerOxygenStationLarge
@@ -85273,6 +85275,8 @@ entities:
       pos: -4.5,83.5
       parent: 2
       type: Transform
+    - maxExternalPressure: 4000
+      type: GasMiner
     - joinedGrid: 2
       type: AtmosDevice
 - proto: GasMinerWaterVapor
@@ -121284,7 +121288,7 @@ entities:
     - pos: 29.5,63.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -41991.168
+    - secondsUntilStateChange: -42045.445
       state: Opening
       type: Door
 - proto: HospitalCurtainsOpen
