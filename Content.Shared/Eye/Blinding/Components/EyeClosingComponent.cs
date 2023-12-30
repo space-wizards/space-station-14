@@ -44,4 +44,7 @@ public sealed partial class EyeClosingComponent : Component
 
     [ViewVariables(VVAccess.ReadOnly), DataField]
     public bool PreviousEyelidPosition;
+
+    [ViewVariables(VVAccess.ReadOnly), DataField]
+    public bool NaturallyCreated;
 }
