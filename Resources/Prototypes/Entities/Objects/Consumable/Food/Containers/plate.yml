@@ -151,5 +151,5 @@
     - Trash
   - type: PhysicalComposition
     materialComposition:
-      Steel: 100
+      Steel: 60
   - type: SpaceGarbage
