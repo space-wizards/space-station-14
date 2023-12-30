@@ -1,19 +1,17 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class SolutionInjectOnCollideSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainersSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
@@ -30,7 +28,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (!args.OtherBody.Hard ||
                 !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) ||
-                !_solutionsSystem.TryGetInjectableSolution(ent, out var solution))
+                !_solutionContainersSystem.TryGetInjectableSolution(ent.Owner, out var solution, out _))
             {
                 return;
             }
@@ -44,7 +42,7 @@ namespace Content.Server.Chemistry.EntitySystems
                     return;
             }
 
-            var solRemoved = solution.SplitSolution(component.TransferAmount);
+            var solRemoved = _solutionContainersSystem.SplitSolution(solution.Value, component.TransferAmount);
             var solRemovedVol = solRemoved.Volume;
 
             var solToInject = solRemoved.SplitSolution(solRemovedVol * component.TransferEfficiency);
