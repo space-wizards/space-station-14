@@ -8400,8 +8400,8 @@ entities:
           id: docking46345
           localAnchorB: -0.5,-1
           localAnchorA: -66.5,22
-          damping: 42.40095
-          stiffness: 380.59006
+          damping: 42.400932
+          stiffness: 380.5899
       type: Joint
     - type: OccluderTree
     - type: Shuttle
@@ -8455,8 +8455,8 @@ entities:
           id: docking46345
           localAnchorB: -0.5,-1
           localAnchorA: -66.5,22
-          damping: 42.40095
-          stiffness: 380.59006
+          damping: 42.400932
+          stiffness: 380.5899
       type: Joint
     - type: OccluderTree
     - type: Shuttle
@@ -86457,7 +86457,7 @@ entities:
     - pos: 13.5,-65.5
       parent: 8364
       type: Transform
-    - maxExternalPressure: 4500
+    - maxExternalPressure: 4000
       type: GasMiner
     - joinedGrid: 8364
       type: AtmosDevice
@@ -86468,7 +86468,7 @@ entities:
     - pos: 17.5,-65.5
       parent: 8364
       type: Transform
-    - maxExternalPressure: 4500
+    - maxExternalPressure: 4000
       type: GasMiner
     - joinedGrid: 8364
       type: AtmosDevice
