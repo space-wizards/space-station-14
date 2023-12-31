@@ -11,6 +11,8 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems
@@ -28,6 +30,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -78,6 +81,7 @@ namespace Content.Server.Body.Systems
                     {
                         respirator.LastGaspPopupTime = _gameTiming.CurTime;
                         _popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid);
+                        _audioSystem.PlayPvs(respirator.GaspSound, uid);
                     }
 
                     TakeSuffocationDamage(uid, respirator);

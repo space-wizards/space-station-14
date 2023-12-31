@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Damage;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Body.Components
 {
@@ -37,6 +38,13 @@ namespace Content.Server.Body.Components
 
         [DataField("gaspPopupCooldown")]
         public TimeSpan GaspPopupCooldown { get; private set; } = TimeSpan.FromSeconds(8);
+
+        /// <summary>
+        /// Sound to play when person is gasping
+        /// </summary>
+        [DataField("gaspSound")]
+        public SoundSpecifier GaspSound = new SoundPathSpecifier("/Audio/Effects/Gasp/gasp.ogg");
+
 
         [ViewVariables]
         public TimeSpan LastGaspPopupTime;
