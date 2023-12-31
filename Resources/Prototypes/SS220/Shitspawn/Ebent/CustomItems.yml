@@ -130,6 +130,15 @@
     color: white
     netsync: false
   - type: Appearance
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+      params:
+        volume: 3
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+      params:
+        volume: 3
   - type: ToggleableLightVisuals
     spriteLayer: blade
     inhandVisuals:

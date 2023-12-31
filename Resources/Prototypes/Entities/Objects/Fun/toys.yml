@@ -890,6 +890,17 @@
       damage:
         types:
           Blunt: 0
+#ss220 Eswords_fix start
+    - type: ItemToggle
+      soundActivate:
+        path: /Audio/Weapons/ebladeon.ogg
+        params:
+          volume: 3
+      soundDeactivate:
+        path: /Audio/Weapons/ebladeoff.ogg
+        params:
+          volume: 3
+#ss220 Eswords_fix end
 
 - type: entity
   parent: BasePlushie
