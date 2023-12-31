@@ -1,11 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - message: Rehargers can be examined to show the charge of the battery or weapon
-      inside.
-    type: Tweak
-  id: 4992
-  time: '2023-10-11T09:22:09.0000000+00:00'
 - author: Skarletto
   changes:
   - message: Changed unary devices such as scrubbers and vents to not be able to stack
@@ -3554,3 +3547,12 @@ Entries:
   id: 5492
   time: '2023-12-31T07:27:55.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23272
+- author: EmoGarbage404
+  changes:
+  - message: The chemistry guidebook now includes sources for various chemicals! These
+      are alternative methods of collection, including grinding, juicing, condensation,
+      and various others.
+    type: Add
+  id: 5493
+  time: '2023-12-31T07:35:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22627
