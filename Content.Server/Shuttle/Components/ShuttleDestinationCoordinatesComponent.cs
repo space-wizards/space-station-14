@@ -1,8 +1,3 @@
-using Content.Server.Shuttles.Components;
-using Robust.Shared.Prototypes;
-using Robust.Shared.GameObjects;
-using Content.Server.Station.Systems;
-using Content.Shared.Containers.ItemSlots;
 
 namespace Content.Server.Shuttle.Components;
 
@@ -17,17 +12,4 @@ public sealed partial class ShuttleDestinationCoordinatesComponent : Component
 
     [DataField]
     public string Destination = "Central Command";
-
-    [Dependency] private readonly EntityManager _entManager = default!;
-
-    public EntityUid? GetDestinationEntityUid()
-    {
-        //For other destinations, this needs to be reworked, as it defaults to the first CentComm option available.
-        var query = _entManager.AllEntityQueryEnumerator<StationCentcommComponent>();
-        while (query.MoveNext(out var comp))
-        {
-            return comp.Entity;
-        }
-        return null;
-    }
 }

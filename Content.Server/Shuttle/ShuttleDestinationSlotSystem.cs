@@ -17,6 +17,7 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
+    [Dependency] private readonly ShuttleDestinationCoordinatesSystem _coordinates = default!;
 
     public override void Initialize()
     {
@@ -30,7 +31,7 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
 
     private void OnInit(EntityUid uid, ShuttleDestinationSlotComponent component, MapInitEvent args)
     {
-        _itemSlots.AddItemSlot(uid, ShuttleDestinationSlotComponent.DiskSlotId, component.DiskSlot);
+        _itemSlots.AddItemSlot(uid, component.DiskSlotId, component.DiskSlot);
     }
 
 
@@ -58,7 +59,7 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
 
                     // Emergency Pod Disk Consoles
 
-                    if (EntityManager.TryGetComponent(uid, out TransformComponent? xform) && EntityManager.TryGetComponent(xform.GridUid, out EscapePodComponent? escapePodComponent))
+                    if (TryComp(uid, out TransformComponent? xform) && TryComp(xform.GridUid, out EscapePodComponent? escapePodComponent))
                     {
                         escapePodComponent.Destination = diskCoords.Value;
                         return;
@@ -87,7 +88,7 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
 
                     // Emergency Pod Disk Consoles
 
-                    if (EntityManager.TryGetComponent(uid, out TransformComponent? xform) && EntityManager.TryGetComponent(xform.GridUid, out EscapePodComponent? escapePodComponent))
+                    if (TryComp(uid, out TransformComponent? xform) && TryComp(xform.GridUid, out EscapePodComponent? escapePodComponent))
                     {
                         escapePodComponent.Destination = null;
                         return;
@@ -112,7 +113,7 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
             return null;
         }
 
-        return diskCoordinates.GetDestinationEntityUid();
+        return _coordinates.GetDestinationEntityUid(diskCoordinates.Destination);
     }
 
     private void EnableDestination(EntityUid uid, FTLDestinationComponent destination)
