@@ -1,21 +1,23 @@
 using Robust.Shared.GameStates;
+using Content.Shared.Decals;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Paint;
 
-[RegisterComponent, NetworkedComponent]
-[Access(typeof(PaintSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PaintedComponent : Component
 {
     /// <summary>
     /// The color that is applied to the entity.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public Color Color = Color.Yellow;
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public Color Color = Color.FromHex("#e9be1a");
 
     /// <summary>
     /// The shader that is applied to the entity.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string ShaderName = "Greyscale";
 }
 

@@ -1,0 +1,480 @@
+# Base Paints
+- type: entity
+  parent: BaseItem
+  id: PaintBase
+  name: spray paint
+  description: A tin of spray paint.
+  noSpawn: true
+  suffix: Open
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: clown
+  - type: Appearance
+  - type: Paint
+    consumptionUnit: 10
+  - type: Item
+    sprite: Objects/Fun/spraycans.rsi
+    heldPrefix: clown
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: SpaceGlue
+          Quantity: 50
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
+  name: spray paint
+  noSpawn: true
+  parent: BaseItem
+  description: A tin of spray paint.
+  id: PaintClosedBase
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: clown_cap
+  - type: Item
+    heldPrefix: clown
+    size: Tiny
+  - type: SpawnItemsOnUse
+    items:
+      - id: FunnyPaintCap
+      - id: FunnyPaint
+    sound:
+      path: /Audio/Effects/pop_high.ogg
+
+- type: entity
+  name: paint cap
+  parent: BaseItem
+  noSpawn: true
+  id: PaintCapBase
+  description: The cap from a tin of paint.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: cap_clown
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+      - Trash
+
+# Paints
+
+# funnypaint
+- type: entity
+  name: funny paint
+  parent: PaintClosedBase
+  id: FunnyPaintClosed
+  description: A tin of funny paint, manufactured by Honk! Co.
+  components:
+  - type: Sprite
+    state: clown_cap
+  - type: Item
+    heldPrefix: clown
+  - type: SpawnItemsOnUse
+    items:
+      - id: FunnyPaintCap
+      - id: FunnyPaint
+
+- type: entity
+  parent: PaintCapBase
+  id: FunnyPaintCap
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: cap_clown
+
+- type: entity
+  parent: PaintBase
+  id: FunnyPaint
+  name: funny paint
+  description:  A tin of funny paint, manufactured by Honk! Co.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: clown
+  - type: Paint
+    color: "#fa74df"
+  - type: Item
+    sprite: Objects/Fun/spraycans.rsi
+    heldPrefix: clown
+
+- type: entity
+  name: funny paint
+  parent: PaintClosedBase
+  id: FunnyPaintYellowClosed
+  description: A tin of funny paint, manufactured by Honk! Co.
+  components:
+  - type: Sprite
+    state: clown2_cap
+  - type: Item
+    heldPrefix: clown
+  - type: SpawnItemsOnUse
+    items:
+      - id: FunnyPaintCap
+      - id: FunnyPaintYellow
+
+- type: entity
+  parent: PaintBase
+  id: FunnyPaintYellow
+  name: funny paint
+  description:  A tin of funny paint, manufactured by Honk! Co.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: clown2
+  - type: Paint
+    color: "#d5e028"
+  - type: Item
+    sprite: Objects/Fun/spraycans.rsi
+    heldPrefix: clown
+
+#death paint
+- type: entity
+  parent: PaintClosedBase
+  id: DeathPaintClosed
+  components:
+  - type: Sprite
+    state: death_cap
+  - type: Item
+    heldPrefix: clown
+  - type: SpawnItemsOnUse
+    items:
+      - id: DeathPaintCap
+      - id: DeathPaint
+
+- type: entity
+  parent: PaintCapBase
+  id: DeathPaintCap
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: cap_death
+
+- type: entity
+  parent: PaintBase
+  id: DeathPaint
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: death
+  - type: Paint
+    color: "#ff20c8"
+  - type: Item
+    sprite: Objects/Fun/spraycans.rsi
+    heldPrefix: spray
+
+- type: entity
+  parent: PaintClosedBase
+  id: DeathPaintTwoClosed
+  components:
+  - type: Sprite
+    state: death2_cap
+  - type: Item
+    heldPrefix: clown
+  - type: SpawnItemsOnUse
+    items:
+      - id: DeathPaintCap
+      - id: DeathPaintTwo
+
+- type: entity
+  parent: PaintBase
+  id: DeathPaintTwo
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: death2
+  - type: Paint
+    color: "#ff2020"
+  - type: Item
+    sprite: Objects/Fun/spraycans.rsi
+    heldPrefix: spray
+
+#Sprays
+
+#Blue
+- type: entity
+  parent: PaintClosedBase
+  id: SprayPaintBlueClosed
+  suffix: Blue
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: spray_cap
+    layers:
+    - state: spray_cap
+    - state: spray_cap_colors
+      color: "#5890f7"
+  - type: Item
+    heldPrefix: spray
+  - type: SpawnItemsOnUse
+    items:
+      - id: SprayPaintCapBlue
+      - id: SprayPaintBlue
+
+- type: entity
+  parent: PaintBase
+  id: SprayPaintBlue
+  suffix: Blue Open
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: spray
+    layers:
+    - state: spray
+    - state: spray_colors
+      color: "#5890f7"
+  - type: Paint
+    color: "#5890f7"
+  - type: Item
+    sprite: Objects/Fun/spraycans.rsi
+    heldPrefix: spray
+
+- type: entity
+  parent: PaintCapBase
+  id: SprayPaintCapBlue
+  suffix: Blue
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: cap_spray
+    color: "#5890f7"
+#Red
+- type: entity
+  parent: PaintClosedBase
+  id: SprayPaintRedClosed
+  suffix: Red
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: spray_cap
+    layers:
+    - state: spray_cap
+    - state: spray_cap_colors
+      color: "#ff3b3b"
+  - type: Item
+    heldPrefix: spray
+  - type: SpawnItemsOnUse
+    items:
+      - id: SprayPaintCapRed
+      - id: SprayPaintRed
+
+- type: entity
+  parent: PaintBase
+  id: SprayPaintRed
+  suffix: Red Open
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: spray
+    layers:
+    - state: spray
+    - state: spray_colors
+      color: "#ff3b3b"
+  - type: Paint
+    color: "#ff3b3b"
+  - type: Item
+    sprite: Objects/Fun/spraycans.rsi
+    heldPrefix: spray
+
+- type: entity
+  parent: PaintCapBase
+  id: SprayPaintCapRed
+  suffix: Red
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: cap_spray
+    color: "#ff3b3b"
+#Green
+- type: entity
+  parent: PaintClosedBase
+  id: SprayPaintGreenClosed
+  suffix: Green
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: spray_cap
+    layers:
+    - state: spray_cap
+    - state: spray_cap_colors
+      color: "#73f170"
+  - type: Item
+    heldPrefix: spray
+  - type: SpawnItemsOnUse
+    items:
+      - id: SprayPaintCapGreen
+      - id: SprayPaintGreen
+
+- type: entity
+  parent: PaintBase
+  id: SprayPaintGreen
+  suffix: Green Open
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: spray
+    layers:
+    - state: spray
+    - state: spray_colors
+      color: "#73f170"
+  - type: Paint
+    color: "#73f170"
+  - type: Item
+    sprite: Objects/Fun/spraycans.rsi
+    heldPrefix: spray
+
+- type: entity
+  parent: PaintCapBase
+  id: SprayPaintCapGreen
+  suffix: Green
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: cap_spray
+    color: "#73f170"
+#Black
+- type: entity
+  parent: PaintClosedBase
+  id: SprayPaintBlackClosed
+  suffix: Black
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: spray_cap
+    layers:
+    - state: spray_cap
+    - state: spray_cap_colors
+      color: "#3a3a3a"
+  - type: Item
+    heldPrefix: spray
+  - type: SpawnItemsOnUse
+    items:
+      - id: SprayPaintCapBlack
+      - id: SprayPaintBlack
+
+- type: entity
+  parent: PaintBase
+  id: SprayPaintBlack
+  suffix: Black Open
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: spray
+    layers:
+    - state: spray
+    - state: spray_colors
+      color: "#3a3a3a"
+  - type: Paint
+    color: "#3a3a3a"
+  - type: Item
+    sprite: Objects/Fun/spraycans.rsi
+    heldPrefix: spray
+
+- type: entity
+  parent: PaintCapBase
+  id: SprayPaintCapBlack
+  suffix: Black
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: cap_spray
+    color: "#3a3a3a"
+#Orange
+- type: entity
+  parent: PaintClosedBase
+  id: SprayPaintOrangeClosed
+  suffix: Orange
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: spray_cap
+    layers:
+    - state: spray_cap
+    - state: spray_cap_colors
+      color: "#f6a44b"
+  - type: Item
+    heldPrefix: spray
+  - type: SpawnItemsOnUse
+    items:
+      - id: SprayPaintCapOrange
+      - id: SprayPaintOrange
+
+- type: entity
+  parent: PaintBase
+  id: SprayPaintOrange
+  suffix: Orange Open
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: spray
+    layers:
+    - state: spray
+    - state: spray_colors
+      color: "#f6a44b"
+  - type: Paint
+    color: "#f6a44b"
+  - type: Item
+    sprite: Objects/Fun/spraycans.rsi
+    heldPrefix: spray
+
+- type: entity
+  parent: PaintCapBase
+  id: SprayPaintCapOrange
+  suffix: Orange
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: cap_spray
+    color: "#f6a44b"
+#Purple
+- type: entity
+  parent: PaintClosedBase
+  id: SprayPaintPurpleClosed
+  suffix: Purple
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: spray_cap
+    layers:
+    - state: spray_cap
+    - state: spray_cap_colors
+      color: "#c063f5"
+  - type: Item
+    heldPrefix: spray
+  - type: SpawnItemsOnUse
+    items:
+      - id: SprayPaintCapPurple
+      - id: SprayPaintPurple
+
+- type: entity
+  parent: PaintBase
+  id: SprayPaintPurple
+  suffix: Purple Open
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: spray
+    layers:
+    - state: spray
+    - state: spray_colors
+      color: "#c063f5"
+  - type: Paint
+    color: "#c063f5"
+  - type: Item
+    sprite: Objects/Fun/spraycans.rsi
+    heldPrefix: spray
+
+- type: entity
+  parent: PaintCapBase
+  id: SprayPaintCapPurple
+  suffix: Purple
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/spraycans.rsi
+    state: cap_spray
+    color: "#c063f5"

@@ -35,6 +35,12 @@
       "name": "cap_clown"
     },
     {
+      "name": "cap_death"
+    },
+    {
+      "name": "cap_spray"
+    },
+    {
       "name": "mime"
     },
     {
@@ -80,6 +86,14 @@
     },
     {
       "name": "clown-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "spray-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "spray-inhand-left",
       "directions": 4
     }
   ]

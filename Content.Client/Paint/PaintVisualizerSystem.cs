@@ -8,7 +8,7 @@ using Content.Shared.Humanoid;
 
 namespace Content.Client.Paint
 {
-    public sealed class PaintVisualizerSystem : VisualizerSystem<PaintedComponent>
+    public sealed class PaintedVisualizerSystem : VisualizerSystem<PaintedComponent>
     {
         /// <summary>
         /// Visualizer for Paint which applies a shader and colors the entity.
@@ -18,25 +18,19 @@ namespace Content.Client.Paint
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PaintedComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<PaintedComponent, HeldVisualsUpdatedEvent>(OnHeldVisualsUpdated);
             SubscribeLocalEvent<PaintedComponent, EquipmentVisualsUpdatedEvent>(OnEquipmentVisualsUpdated);
         }
 
-        // On component startup sets the shading and color for the icon sprite.
-        private void OnStartup(EntityUid uid, PaintedComponent component, ComponentStartup args)
+        protected override void OnAppearanceChange(EntityUid uid, PaintedComponent component, ref AppearanceChangeEvent args)
         {
-            if (HasComp<HumanoidAppearanceComponent>(uid))
+            if (args.Sprite == null)
                 return;
 
-            if (!TryComp<SpriteComponent>(uid, out var sprite))
-                return;
-
-
-            for (var layer = 0; layer < sprite.AllLayers.Count(); layer++)
+            for (var layer = 0; layer < args.Sprite.AllLayers.Count(); ++layer)
             {
-                sprite.LayerSetShader(layer, component.ShaderName);
-                sprite.LayerSetColor(layer, component.Color);
+                args.Sprite.LayerSetShader(layer, component.ShaderName);
+                args.Sprite.LayerSetColor(layer, component.Color);
             }
         }
 
@@ -44,6 +38,11 @@ namespace Content.Client.Paint
         private void OnHeldVisualsUpdated(EntityUid uid, PaintedComponent component, HeldVisualsUpdatedEvent args)
         {
             if (args.RevealedLayers.Count == 0)
+            {
+                return;
+            }
+
+            if (HasComp<HumanoidAppearanceComponent>(uid))
             {
                 return;
             }
