@@ -20,12 +20,12 @@
   name: research-technology-advanced-powercells
   icon:
     sprite: Objects/Power/power_cells.rsi
-    state: medium
+    state: high
   discipline: Industrial
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - PowerCellMedium
+  - PowerCellHigh
 
 - type: technology
   id: CompactPower
@@ -149,20 +149,6 @@
   recipeUnlocks:
   - HolofanProjector
   - PortableScrubberMachineCircuitBoard
-
-- type: technology
-  id: SuperPowercells
-  name: research-technology-super-powercells
-  icon:
-    sprite: Objects/Power/power_cells.rsi
-    state: high
-  discipline: Industrial
-  tier: 2
-  cost: 7500
-  recipeUnlocks:
-  - PowerCellHigh
-  technologyPrerequisites:
-  - AdvancedPowercells
 
 - type: technology
   id: AdvancedToolsTechnology
