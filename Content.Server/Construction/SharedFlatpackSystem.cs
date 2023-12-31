@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Ame.Components;
 using Content.Server.Construction.Components;
@@ -46,7 +47,7 @@ public sealed class SharedFlatpackSystem : EntitySystem
 
         args.Handled = true;
 
-        if (comp.Entity is not { } entProtoId)
+        if (comp.Entity is not { })
         {
             Log.Error($"No entity prototype present for flatpack {ToPrettyString(ent)}.");
             QueueDel(ent);
@@ -54,31 +55,15 @@ public sealed class SharedFlatpackSystem : EntitySystem
         }
 
         var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
-        var entProto = _prototypeManager.Index(entProtoId);
-        var gridXform = Transform(grid);
-        var localPos = _map.GridTileToLocal(grid, gridComp, buildPos);
+        var intersecting = _entityLookup.GetEntitiesIntersecting(buildPos.ToEntityCoordinates(grid, _mapManager).Offset(new Vector2(0.5f, 0.5f)),
+            LookupFlags.Dynamic | LookupFlags.Static);
 
-        if (entProto.TryGetComponent<FixturesComponent>(out var fixtures))
+        // todo make this logic smarter.
+        // This should eventually allow for shit like building microwaves on tables and such.
+        if (intersecting.Count > 0)
         {
-            var collisions = new HashSet<Entity<PhysicsComponent>>();
-            foreach (var fixture in fixtures.Fixtures.Values)
-            {
-                if (!fixture.Hard)
-                    continue;
-
-                collisions.Clear();
-
-                //todo fix this shit
-                var transform = new Transform(localPos.ToMapPos(EntityManager, _transform)., _transform.GetWorldRotation(gridXform));
-                var aabb = fixture.Shape.ComputeAABB(transform, 0);
-                _entityLookup.GetEntitiesIntersecting(xform.MapID, aabb, collisions, LookupFlags.Dynamic | LookupFlags.Static);
-
-                if (collisions.Count > 0)
-                {
-                    _popup.PopupEntity(Loc.GetString("flatpack-unpack-no-room"), uid, args.User);
-                    return;
-                }
-            }
+            _popup.PopupEntity(Loc.GetString("flatpack-unpack-no-room"), uid, args.User);
+            return;
         }
 
         var spawn = Spawn(comp.Entity, _map.GridTileToLocal(grid, gridComp, buildPos));
