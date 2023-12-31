@@ -77,6 +77,8 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public const float FTLDestinationMass = 500f;
 
+    private HashSet<EntityUid> _lookupEnts = new();
+
     private EntityQuery<BodyComponent> _bodyQuery;
     private EntityQuery<BuckleComponent> _buckleQuery;
     private EntityQuery<GhostComponent> _ghostQuery;
@@ -501,10 +503,10 @@ public sealed partial class ShuttleSystem
         var childEnumerator = xform.ChildEnumerator;
         while (childEnumerator.MoveNext(out var child))
         {
-            if (!_buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
+            if (!_buckleQuery.TryGetComponent(child, out var buckle) || buckle.Buckled)
                 continue;
 
-            toKnock.Add(child.Value);
+            toKnock.Add(child);
         }
     }
 
@@ -716,8 +718,10 @@ public sealed partial class ShuttleSystem
             // Handle clearing biome stuff as relevant.
             tileSet.Clear();
             _biomes.ReserveTiles(xform.MapUid.Value, aabb, tileSet);
+            _lookupEnts.Clear();
+            _lookup.GetEntitiesIntersecting(xform.MapUid.Value, aabb, _lookupEnts, LookupFlags.Uncontained);
 
-            foreach (var ent in _lookup.GetEntitiesIntersecting(xform.MapUid.Value, aabb, LookupFlags.Uncontained))
+            foreach (var ent in _lookupEnts)
             {
                 if (ent == uid || immune.Contains(ent))
                 {

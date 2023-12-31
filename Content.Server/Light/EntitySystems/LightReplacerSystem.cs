@@ -137,7 +137,7 @@ public sealed class LightReplacerSystem : EntitySystem
         if (bulb.Valid) // FirstOrDefault can return default/invalid uid.
         {
             // try to remove it
-            var hasRemoved = replacer.InsertedBulbs.Remove(bulb);
+            var hasRemoved = _container.Remove(bulb, replacer.InsertedBulbs);
             if (!hasRemoved)
                 return false;
         }
@@ -187,7 +187,7 @@ public sealed class LightReplacerSystem : EntitySystem
         }
 
         // try insert light and show message
-        var hasInsert = replacer.InsertedBulbs.Insert(bulbUid);
+        var hasInsert = _container.Insert(bulbUid, replacer.InsertedBulbs);
         if (hasInsert && showTooltip && userUid != null)
         {
             var msg = Loc.GetString("comp-light-replacer-insert-light",

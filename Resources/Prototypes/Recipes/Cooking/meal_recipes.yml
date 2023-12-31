@@ -1283,6 +1283,18 @@
     OrganAnimalHeart: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBreadDog
+  name: bread dog recipe
+  result: MobBreadDog
+  time: 15
+  reagents:
+    Cognizine: 5
+  solids:
+    FoodBreadSausage: 1
+    OrganAnimalHeart: 1
+    FoodSpaceshroomCooked: 1
+
+- type: microwaveMealRecipe
   id: RecipeGrapeTart
   name: grape tart recipe
   result: FoodTartGrape

@@ -1,6 +1,6 @@
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
@@ -9,7 +9,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     [DataDefinition]
     public sealed partial class SpillBehavior : IThresholdBehavior
     {
-        [DataField("solution")]
+        [DataField]
         public string? Solution;
 
         /// <summary>
@@ -28,13 +28,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
             var coordinates = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
 
             if (system.EntityManager.TryGetComponent(owner, out SpillableComponent? spillableComponent) &&
-                solutionContainerSystem.TryGetSolution(owner, spillableComponent.SolutionName,
-                    out var compSolution))
+                solutionContainerSystem.TryGetSolution(owner, spillableComponent.SolutionName, out _, out var compSolution))
             {
                 spillableSystem.TrySplashSpillAt(owner, coordinates, compSolution, out _, false, user: cause);
             }
             else if (Solution != null &&
-                     solutionContainerSystem.TryGetSolution(owner, Solution, out var behaviorSolution))
+                     solutionContainerSystem.TryGetSolution(owner, Solution, out _, out var behaviorSolution))
             {
                 spillableSystem.TrySplashSpillAt(owner, coordinates, behaviorSolution, out _, user: cause);
             }

@@ -12,7 +12,8 @@
   recipeUnlocks:
   - MiningDrill
   - BorgModuleMining
-  - OreProcessorMachineCircuitboard
+  - OreProcessorIndustrialMachineCircuitboard
+  - OreBagOfHolding
 
 - type: technology
   id: AdvancedPowercells
@@ -44,16 +45,14 @@
   id: IndustrialEngineering
   name: research-technology-industrial-engineering
   icon:
-    sprite: Structures/Machines/protolathe.rsi
-    state: icon
+    sprite: Structures/Machines/protolathe_hypercon.rsi
+    state: building
   discipline: Industrial
   tier: 1
-  cost: 7500
+  cost: 10000
   recipeUnlocks:
-  - ProtolatheMachineCircuitboard
-  - AutolatheMachineCircuitboard
-  - CircuitImprinterMachineCircuitboard
-  - MaterialReclaimerMachineCircuitboard
+  - AutolatheHyperConvectionMachineCircuitboard
+  - ProtolatheHyperConvectionMachineCircuitboard
   - SheetifierMachineCircuitboard
 
 - type: technology
@@ -123,20 +122,6 @@
   - BorgModuleGrapplingGun
 
 - type: technology
-  id: RapidConstruction
-  name: research-technology-rapid-construction
-  icon:
-    sprite: Objects/Tools/rcd.rsi
-    state: icon
-  discipline: Industrial
-  tier: 2
-  cost: 10000
-  recipeUnlocks:
-  - RCD
-  - RCDAmmo
-  - BorgModuleRCD
-
-- type: technology
   id: Shuttlecraft
   name: research-technology-shuttlecraft
   icon:
@@ -193,6 +178,7 @@
     - PowerDrill
     - JawsOfLife
     - BorgModuleAdvancedTool
+    - BorgModuleRCD
 
 # Tier 3
 
