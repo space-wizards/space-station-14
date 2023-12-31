@@ -1,5 +1,6 @@
 using Content.Server.Tesla.EntitySystems;
 using Content.Shared.Explosion;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Lightning.Components;
@@ -62,4 +63,10 @@ public sealed partial class LightningTargetComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MaxTileIntensity = 5f;
+
+    /// <summary>
+    /// how much structural damage the object takes from a lightning strike
+    /// </summary>
+    [DataField]
+    public FixedPoint2 DamageFromLightning = 1;
 }
