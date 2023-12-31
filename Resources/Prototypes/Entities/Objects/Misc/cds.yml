@@ -1,0 +1,34 @@
+- type: entity
+  name: coordinates disk
+  parent: BaseItem
+  id: CoordinatesDisk
+  description: A disk containing the coordinates to a location in space. Necessary for any FTL-traversing vessel to reach their destination. Fits inside shuttle/pod consoles.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/cd.rsi
+    state: icon
+  - type: StaticPrice
+    price: 2000
+  - type: CargoSellBlacklist
+  - type: ArrivalsBlacklist
+  - type: Tag
+    tags:
+    - HighRiskItem
+    - Disk
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 1
+  - type: ShuttleDestinationCoordinates
+
+
+- type: entity
+  name: coordinates disk (CentCom)
+  parent: CoordinatesDisk
+  id: CentComDisk
+  components:
+  - type: ShuttleDestinationCoordinates
+    destination: Central Command
+  - type: Label
+    originalName: coordinates disk
+    currentLabel: CentCom

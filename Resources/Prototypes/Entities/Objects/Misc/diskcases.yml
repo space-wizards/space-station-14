@@ -1,0 +1,36 @@
+- type: entity
+  name: diskcase
+  parent: BaseStorageItem
+  id: DiskCase
+  description: Case for storing a coordinate disk.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/diskcases.rsi
+    state: icon_base
+  - type: Storage
+    grid:
+    - 0,0,0,1
+    maxItemSize: Normal
+    whitelist:
+      tags:
+        - Document
+        - Disk
+    storageOpenSound: /Audio/Machines/screwdriveropen.ogg
+    storageCloseSound: /Audio/Machines/screwdriverclose.ogg
+    storageInsertSound: /Audio/Items/crowbar.ogg
+    storageRemoveSound: /Audio/Items/crowbar.ogg
+  - type: CargoSellBlacklist
+  - type: ArrivalsBlacklist
+
+- type: entity
+  name: CentCom diskcase
+  parent: DiskCase
+  id: CentComDiskCase
+  description: Case for the CentCom coordinates disk. Allows one to use alternate means of escaping off the station, should the need arise.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/diskcases.rsi
+    state: icon_cc
+  - type: StorageFill
+    contents:
+    - id: CentComDisk

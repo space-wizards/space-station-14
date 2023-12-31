@@ -104,7 +104,7 @@
       - id: BoxPDA
       - id: BoxID
       - id: BoxHeadset
-      - id: CentCommDisk
+      - id: CentComDiskCase
       - id: IDComputerCircuitboard
       - id: WeaponDisabler
       - id: ClothingOuterWinterHoP
