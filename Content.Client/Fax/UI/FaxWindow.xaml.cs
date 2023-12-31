@@ -122,7 +122,6 @@ public sealed partial class FaxWindow : DefaultWindow
         //Read the file contents and raise event.
         StreamReader reader = new StreamReader(file);
         var content = reader.ReadToEnd();
-
         _owner.PrintFile(content, "printed paper", OfficePaper);
     }
 }
