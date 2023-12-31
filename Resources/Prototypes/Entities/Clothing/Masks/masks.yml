@@ -322,6 +322,7 @@
     sprite: Clothing/Mask/swat.rsi
   - type: Clothing
     sprite: Clothing/Mask/swat.rsi
+  - type: FlashImmunity
 
 - type: entity
   parent: ClothingMaskGasExplorer
@@ -548,3 +549,15 @@
   - type: EyeProtection
   - type: BreathMask
   - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingMaskGasExplorer
+  id: ClothingMaskGasWarden
+  name: warden gas mask
+  description: Special mask for warden. Has minor protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/warden.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/warden.rsi
+  - type: FlashImmunity
