@@ -46,15 +46,6 @@
     HeadTop: # the cat ear joke
       points: 0
       required: false
-    Chest:
-      points: 1
-      required: false
-    Legs:
-      points: 2
-      required: false
-    Arms:
-      points: 2
-      required: false
 
 - type: humanoidBaseSprite
   id: MobHumanoidEyes

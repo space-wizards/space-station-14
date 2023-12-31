@@ -35,12 +35,6 @@
     FacialHair:
       points: 1
       required: false
-    Legs:
-      points: 2
-      required: false
-    Arms:
-      points: 4
-      required: false
 
 - type: humanoidBaseSprite
   id: MobSlimeMarkingFollowSkin
