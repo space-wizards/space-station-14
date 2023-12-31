@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Maps
 {
     [Prototype("tile")]
-    public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
+    public sealed partial class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
         public const string SpaceID = "Space";
 

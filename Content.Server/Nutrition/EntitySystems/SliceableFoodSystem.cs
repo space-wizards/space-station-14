@@ -1,22 +1,22 @@
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    internal sealed class SliceableFoodSystem : EntitySystem
+    public sealed class SliceableFoodSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -27,12 +27,12 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<SliceableFoodComponent, ComponentStartup>(OnComponentStartup);
         }
 
-        private void OnInteractUsing(EntityUid uid, SliceableFoodComponent component, InteractUsingEvent args)
+        private void OnInteractUsing(Entity<SliceableFoodComponent> entity, ref InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (TrySliceFood(uid, args.User, args.Used, component))
+            if (TrySliceFood(entity, args.User, args.Used, entity.Comp))
                 args.Handled = true;
         }
 
@@ -45,7 +45,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, food.Solution, out var solution))
+            if (!_solutionContainerSystem.TryGetSolution(uid, food.Solution, out var soln, out var solution))
             {
                 return false;
             }
@@ -55,28 +55,14 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
             }
 
-            var sliceUid = Spawn(component.Slice, transform.Coordinates);
+            var sliceUid = Slice(uid, user, component, transform);
 
-            var lostSolution = _solutionContainerSystem.SplitSolution(uid, solution,
-                solution.Volume / FixedPoint2.New(component.Count));
+            var lostSolution = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume / FixedPoint2.New(component.Count));
 
             // Fill new slice
             FillSlice(sliceUid, lostSolution);
 
-            var inCont = _containerSystem.IsEntityInContainer(component.Owner);
-            if (inCont)
-            {
-                _handsSystem.PickupOrDrop(user, sliceUid);
-            }
-            else
-            {
-                var xform = Transform(sliceUid);
-                _containerSystem.AttachParentToContainerOrGrid((sliceUid, xform));
-                xform.LocalRotation = 0;
-            }
-
-            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid),
-                transform.Coordinates, AudioParams.Default.WithVolume(-2));
+            _audio.PlayPvs(component.Sound, transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
             // Decrease size of item based on count - Could implement in the future
             // Bug with this currently is the size in a container is not updated
@@ -98,11 +84,26 @@ namespace Content.Server.Nutrition.EntitySystems
             if (component.Count > 1)
                 return true;
 
-            sliceUid = Spawn(component.Slice, transform.Coordinates);
+            sliceUid = Slice(uid, user, component, transform);
 
             // Fill last slice with the rest of the solution
             FillSlice(sliceUid, solution);
 
+            DeleteFood(uid, user);
+            return true;
+        }
+
+        /// <summary>
+        /// Create a new slice in the world and returns its entity.
+        /// The solutions must be set afterwards.
+        /// </summary>
+        public EntityUid Slice(EntityUid uid, EntityUid user, SliceableFoodComponent? comp = null, TransformComponent? transform = null)
+        {
+            if (!Resolve(uid, ref comp, ref transform))
+                return EntityUid.Invalid;
+
+            var sliceUid = Spawn(comp.Slice, transform.Coordinates);
+            var inCont = _containerSystem.IsEntityInContainer(uid);
             if (inCont)
             {
                 _handsSystem.PickupOrDrop(user, sliceUid);
@@ -114,8 +115,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 xform.LocalRotation = 0;
             }
 
-            DeleteFood(uid, user);
-            return true;
+            return sliceUid;
         }
 
         private void DeleteFood(EntityUid uid, EntityUid user)
@@ -134,27 +134,26 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             // Replace all reagents on prototype not just copying poisons (example: slices of eaten pizza should have less nutrition)
             if (TryComp<FoodComponent>(sliceUid, out var sliceFoodComp) &&
-                _solutionContainerSystem.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSolution))
+                _solutionContainerSystem.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSoln, out var itsSolution))
             {
-                _solutionContainerSystem.RemoveAllSolution(sliceUid, itsSolution);
+                _solutionContainerSystem.RemoveAllSolution(itsSoln.Value);
 
                 var lostSolutionPart = solution.SplitSolution(itsSolution.AvailableVolume);
-                _solutionContainerSystem.TryAddSolution(sliceUid, itsSolution, lostSolutionPart);
+                _solutionContainerSystem.TryAddSolution(itsSoln.Value, lostSolutionPart);
             }
         }
 
-        private void OnComponentStartup(EntityUid uid, SliceableFoodComponent component, ComponentStartup args)
+        private void OnComponentStartup(Entity<SliceableFoodComponent> entity, ref ComponentStartup args)
         {
-            component.Count = component.TotalCount;
-            var foodComp = EnsureComp<FoodComponent>(uid);
+            entity.Comp.Count = entity.Comp.TotalCount;
 
-            EnsureComp<SolutionContainerManagerComponent>(uid);
-            _solutionContainerSystem.EnsureSolution(uid, foodComp.Solution);
+            var foodComp = EnsureComp<FoodComponent>(entity);
+            _solutionContainerSystem.EnsureSolution(entity.Owner, foodComp.Solution);
         }
 
-        private void OnExamined(EntityUid uid, SliceableFoodComponent component, ExaminedEvent args)
+        private void OnExamined(Entity<SliceableFoodComponent> entity, ref ExaminedEvent args)
         {
-            args.PushMarkup(Loc.GetString("sliceable-food-component-on-examine-remaining-slices-text", ("remainingCount", component.Count)));
+            args.PushMarkup(Loc.GetString("sliceable-food-component-on-examine-remaining-slices-text", ("remainingCount", entity.Comp.Count)));
         }
     }
 }

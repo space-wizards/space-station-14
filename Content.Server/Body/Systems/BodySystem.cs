@@ -15,6 +15,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Numerics;
+using Content.Shared.Movement.Systems;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Body.Systems;
 
@@ -40,6 +42,13 @@ public sealed class BodySystem : SharedBodySystem
 
     private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
     {
+        // If they haven't actually moved then ignore it.
+        if ((args.Component.HeldMoveButtons &
+             (MoveButtons.Down | MoveButtons.Left | MoveButtons.Up | MoveButtons.Right)) == 0x0)
+        {
+            return;
+        }
+
         if (_mobState.IsDead(uid) && _mindSystem.TryGetMind(uid, out var mindId, out var mind))
         {
             mind.TimeOfDeath ??= _gameTiming.RealTime;
@@ -129,7 +138,7 @@ public sealed class BodySystem : SharedBodySystem
         var filter = Filter.Pvs(bodyId, entityManager: EntityManager);
         var audio = AudioParams.Default.WithVariation(0.025f);
 
-        _audio.Play(body.GibSound, filter, coordinates, true, audio);
+        _audio.PlayStatic(body.GibSound, filter, coordinates, true, audio);
 
         foreach (var entity in gibs)
         {

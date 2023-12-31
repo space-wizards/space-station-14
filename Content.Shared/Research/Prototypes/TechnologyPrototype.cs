@@ -7,7 +7,7 @@ namespace Content.Shared.Research.Prototypes;
 /// This is a prototype for a technology that can be unlocked.
 /// </summary>
 [Prototype("technology")]
-public sealed class TechnologyPrototype : IPrototype
+public sealed partial class TechnologyPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]

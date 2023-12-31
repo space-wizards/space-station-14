@@ -72,7 +72,8 @@ namespace Content.Server.Construction.Commands
             var underplating = _tileDefManager[TilePrototypeId];
             var underplatingTile = new Tile(underplating.TileId);
             var changed = 0;
-            foreach (var child in _entManager.GetComponent<TransformComponent>(gridId.Value).ChildEntities)
+            var enumerator = _entManager.GetComponent<TransformComponent>(gridId.Value).ChildEnumerator;
+            while (enumerator.MoveNext(out var child))
             {
                 if (!_entManager.EntityExists(child))
                 {

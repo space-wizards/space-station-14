@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: ArcadeBase
   description: An arcade cabinet.
@@ -85,6 +85,7 @@
     - BeachBall
     - PlushieMoth
     - PlushieHampter
+    - PlushiePenguin
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade

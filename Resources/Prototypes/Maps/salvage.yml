@@ -104,6 +104,11 @@
   name: "Crashed Shuttle"
   mapPath: /Maps/Salvage/medium-crashed-shuttle.yml
 
+- type: salvageMap
+  id: Meatball
+  name: "Meatball"
+  mapPath: /Maps/Salvage/meatball.yml
+
 # """Large""" maps
 
 - type: salvageMap
@@ -121,3 +126,12 @@
   name: "Ruined Cargo Storage"
   mapPath: /Maps/Salvage/ruin-cargo-salvage.yml
 
+- type: salvageMap
+  id: SecurityChunk
+  name: "Security Department Chunk"
+  mapPath: /Maps/Salvage/security-chunk.yml
+
+- type: salvageMap
+  id: EngineeringChunk
+  name: "Engineering Department Chunk"
+  mapPath: /Maps/Salvage/engineering-chunk.yml

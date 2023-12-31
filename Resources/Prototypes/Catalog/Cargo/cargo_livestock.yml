@@ -69,6 +69,16 @@
   group: market
 
 - type: cargoProduct
+  id: LivestockPupCorgi
+  icon:
+    sprite: Mobs/Pets/corgi.rsi
+    state: puppy
+  product: CrateNPCPuppyCorgi
+  cost: 1200
+  category: Livestock
+  group: market
+
+- type: cargoProduct
   id: LivestockCow
   icon:
     sprite: Mobs/Animals/cow.rsi
@@ -114,6 +124,16 @@
     sprite: Mobs/Animals/monkey.rsi
     state: monkey
   product: CrateNPCMonkeyCube
+  cost: 2000
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockKoboldCube
+  icon:
+    sprite: Mobs/Animals/kobold.rsi
+    state: kobold
+  product: CrateNPCKoboldCube
   cost: 2000
   category: Livestock
   group: market
@@ -195,5 +215,15 @@
     state: kangaroo
   product: CrateNPCKangaroo
   cost: 2800
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockMothroach
+  icon:
+    sprite: Mobs/Animals/mothroach.rsi
+    state: mothroach
+  product: CrateNPCMothroach
+  cost: 5000
   category: Livestock
   group: market

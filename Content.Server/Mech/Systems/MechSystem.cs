@@ -47,8 +47,6 @@ public sealed partial class MechSystem : SharedMechSystem
 
         _sawmill = Logger.GetSawmill("mech");
 
-        InitializeFiltering();
-
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
@@ -68,6 +66,8 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
         SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
+
+        SubscribeLocalEvent<MechAirComponent, GetFilterAirEvent>(OnGetFilterAir);
 
         #region Equipment UI message relays
         SubscribeLocalEvent<MechComponent, MechGrabberEjectMessage>(ReceiveEquipmentUiMesssages);
@@ -358,7 +358,7 @@ public sealed partial class MechSystem : SharedMechSystem
         if (!Resolve(toInsert, ref battery, false))
             return;
 
-        component.BatterySlot.Insert(toInsert);
+        _container.Insert(toInsert, component.BatterySlot);
         component.Energy = battery.CurrentCharge;
         component.MaxEnergy = battery.MaxCharge;
 
@@ -422,6 +422,18 @@ public sealed partial class MechSystem : SharedMechSystem
         args.Gas = mech.Airtight ? mechAir.Air : _atmosphere.GetContainingMixture(component.Mech);
 
         args.Handled = true;
+    }
+
+    private void OnGetFilterAir(EntityUid uid, MechAirComponent comp, ref GetFilterAirEvent args)
+    {
+        if (args.Air != null)
+            return;
+
+        // only airtight mechs get internal air
+        if (!TryComp<MechComponent>(uid, out var mech) || !mech.Airtight)
+            return;
+
+        args.Air = comp.Air;
     }
     #endregion
 }

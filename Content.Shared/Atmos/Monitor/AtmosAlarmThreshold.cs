@@ -5,7 +5,7 @@ namespace Content.Shared.Atmos.Monitor;
 
 
 [Prototype("alarmThreshold")]
-public sealed class AtmosAlarmThresholdPrototype : IPrototype
+public sealed partial class AtmosAlarmThresholdPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

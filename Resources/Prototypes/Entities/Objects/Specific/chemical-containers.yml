@@ -392,3 +392,18 @@
           reagents:
             - ReagentId: PlantBGone
               Quantity: 200
+
+- type: entity
+  parent: Jug
+  name: jug (welding fuel)
+  id: JugWeldingFuel
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: welding fuel
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: WeldingFuel
+              Quantity: 200

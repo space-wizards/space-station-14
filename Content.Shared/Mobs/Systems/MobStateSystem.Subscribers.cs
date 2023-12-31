@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Bed.Sleep;
+using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
@@ -39,6 +40,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
         SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
+        SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
     }
 
     private void OnStateExitSubscribers(EntityUid target, MobStateComponent component, MobState state)
@@ -70,6 +72,11 @@ public partial class MobStateSystem
 
     private void OnStateEnteredSubscribers(EntityUid target, MobStateComponent component, MobState state)
     {
+        // All of the state changes here should already be networked, so we do nothing if we are currently applying a
+        // server state.
+        if (_timing.ApplyingState)
+            return;
+
         _blocker.UpdateCanMove(target); //update movement anytime a state changes
         switch (state)
         {
@@ -159,6 +166,11 @@ public partial class MobStateSystem
         // for non-dead mobs
         if (!IsDead(uid, component))
             args.Cancelled = true;
+    }
+
+    private void OnAttemptPacifiedAttack(Entity<MobStateComponent> ent, ref AttemptPacifiedAttackEvent args)
+    {
+        args.Cancelled = true;
     }
 
     #endregion
