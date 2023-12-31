@@ -322,7 +322,7 @@ public sealed class SubstationSystem : EntitySystem
             }
             _lightSystem.SetColor(uid, new Color(0x3d, 0xb8, 0x3b), light);
         }
-        else if(subs.State == SubstationIntegrityState.Unhealthy)
+        else if(state == SubstationIntegrityState.Unhealthy)
         {
             if(subs.State == SubstationIntegrityState.Bad)
             {

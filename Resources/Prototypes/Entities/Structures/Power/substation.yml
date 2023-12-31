@@ -29,7 +29,7 @@
     slots:
       conduit_slot:
         ejectOnInteract: true
-        name: HV Conduit
+        name: power conduit
         startingItem: GasConduitFilled
         whitelist:
           tags:
@@ -168,8 +168,8 @@
     slots:
       conduit_slot:
         ejectOnInteract: true
-        name: HV Conduit
-        startingItem: GasCOnduitFilled
+        name: power conduit
+        startingItem: GasConduitFilled
         whitelist:
           tags:
           - Conduit
