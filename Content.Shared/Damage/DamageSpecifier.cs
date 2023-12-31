@@ -156,7 +156,7 @@ namespace Content.Shared.Damage
                 if (modifierSet.Coefficients.TryGetValue(key, out var coefficient))
                     newValue *= coefficient;
 
-                if (newValue > 0)
+                if (newValue != 0)
                     newDamage.DamageDict[key] = FixedPoint2.New(newValue);
             }
 
