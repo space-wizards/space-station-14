@@ -217,14 +217,14 @@
 
 - type: entity
   parent: GasTankRoundBase
-  id: GasFuse
-  name: HV fuse
-  description: High power fuse filled with protective gas.
+  id: GasConduit
+  name: power conduit
+  description: A bulky ceramic conduit filled with gas. Used in high power machines such as substations.   
   components:
   - type: Sprite
-    sprite: Objects/Tanks/plasma.rsi
+    sprite: Objects/Tanks/gasconduit.rsi
   - type: Item
-    sprite: Objects/Tanks/plasma.rsi
+    sprite: Objects/Tanks/gasconduit.rsi
   - type: GasTank
     outputPressure: 101.3
     air:
@@ -232,4 +232,4 @@
       temperature: 293.15
   - type: Tag
     tags:
-    - Fuse
+    - Conduit

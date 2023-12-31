@@ -1,4 +1,4 @@
-using Content.Shared.Power.Substation;
+using Content.Shared.Power;
 
 namespace Content.Server.Power.Components;
 
@@ -17,7 +17,13 @@ public sealed partial class SubstationComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public SubstationIntegrityState State = SubstationIntegrityState.Healthy;
 
-    //9.231205828 is the amount of moles in a 5L container (the default fuse) at 1000Kpa 20C°
-    public float InitialFuseMoles = 2.051379050f;
+    //9.231205828 is the amount of moles in a 5L container (the default conduit) at 1000Kpa 20C°
+    public float InitialConduitMoles = 2.051379050f;
+
+    [DataField("conduitSlotId", required: true)]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public string ConduitSlotId = string.Empty;
+
+    public bool AllowInsert = true;
 
 }

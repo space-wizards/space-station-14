@@ -1,7 +1,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Content.Shared.Power.Substation;
+using Content.Shared.Power;
 
 namespace Content.Client.Power.Substation;
 

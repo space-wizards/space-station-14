@@ -21,20 +21,19 @@
       map: ["substationBattery"]
       shader: unshaded
   - type: Substation
-  - type: SubstationFuseSlot
-    fuseSlotId: fuse_slot
+    conduitSlotId: conduit_slot
   - type: ContainerContainer
     containers:
-      fuse_slot: !type:ContainerSlot {}
+      conduit_slot: !type:ContainerSlot {}
   - type: ItemSlots
     slots:
-      fuse_slot:
+      conduit_slot:
         ejectOnInteract: true
-        name: HV Fuse
-        startingItem: GasFuseFilled
+        name: HV Conduit
+        startingItem: GasConduitFilled
         whitelist:
           tags:
-          - Fuse
+          - Conduit
   - type: SubstationVisuals
     screenLayer: "substationScreen"
     integrityStates:
@@ -164,18 +163,16 @@
   - type: ContainerContainer
     containers:
       board: !type:Container
-      fuse_slot: !type:ContainerSlot
-  - type: SubstationFuseSlot
-    fuseSlotId: fuse_slot
+      conduit_slot: !type:ContainerSlot
   - type: ItemSlots
     slots:
-      fuse_slot:
+      conduit_slot:
         ejectOnInteract: true
-        name: HV Fuse
-        startingItem: GasFuseFilled
+        name: HV Conduit
+        startingItem: GasCOnduitFilled
         whitelist:
           tags:
-          - Fuse
+          - Conduit
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-substation
@@ -197,6 +194,7 @@
       map: ["substationScreen"]
       shader: unshaded
   - type: Substation
+    conduitSlotId: conduit_slot
   - type: SubstationVisuals
     screenLayer: "substationScreen"
     integrityStates:
@@ -278,9 +276,9 @@
     startingCharge: 0
   - type: ItemSlots
     slots:
-      fuse_slot:
+      conduit_slot:
         ejectOnInteract: true
-        name: HV Fuse
+        name: HV Conduit
         startingItem:
   - type: Substation
     state: Bad
@@ -304,9 +302,9 @@
     startingCharge: 0
   - type: ItemSlots
     slots:
-      fuse_slot:
+      conduit_slot:
         ejectOnInteract: true
-        name: HV Fuse
+        name: HV Conduit
         startingItem:
   - type: Substation
     state: Bad

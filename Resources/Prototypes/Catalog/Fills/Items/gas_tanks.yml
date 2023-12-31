@@ -161,9 +161,9 @@
       temperature: 293.15
 
 - type: entity
-  id: GasFuseFilled
-  parent: GasFuse
-  name: HV Fuse
+  id: GasConduitFilled
+  parent: GasConduit
+  name: power conduit
   suffix: Filled
   components:
   - type: GasTank

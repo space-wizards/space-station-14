@@ -97,7 +97,7 @@
       - TRayScanner
       - GasAnalyzer
       - UtilityBelt
-      - GasFuse
+      - GasConduit
       - Fulton
       - FultonBeacon
       - Pickaxe

@@ -18,7 +18,7 @@ upgrade-power-draw = power draw
 upgrade-max-charge = max charge
 upgrade-power-supply = power supply
 upgrade-power-supply-ramping = power ramp rate
-upgrade-fuse-lifetime = fuse lifetime
+upgrade-conduit-lifetime = conduit lifetime
 
 two-way-lever-left = push left
 two-way-lever-right = push right

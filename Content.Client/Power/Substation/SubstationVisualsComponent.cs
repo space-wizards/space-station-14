@@ -1,4 +1,4 @@
-using Content.Shared.Power.Substation;
+using Content.Shared.Power;
 
 namespace Content.Client.Power.Substation;
 

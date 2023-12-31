@@ -94,8 +94,8 @@
     Plastic: 100
 
 - type: latheRecipe
-  id: GasFuse
-  result: GasFuse
+  id: GasConduit
+  result: GasConduit
   completetime: 2
   materials:
     Steel: 100

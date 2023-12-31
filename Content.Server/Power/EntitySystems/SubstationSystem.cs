@@ -1,16 +1,16 @@
 using System.Diagnostics.CodeAnalysis;
-using Robust.Server.GameObjects;
-using Robust.Shared.Timing;
-using Robust.Shared.Containers;
 using Content.Server.Power.Components;
 using Content.Server.Construction;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos;
-using Content.Shared.Power.Substation;
-using Content.Shared.Access.Systems;
+using Content.Shared.Power;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Wires;
+using Content.Shared.Tag;
 using Content.Shared.Examine;
 using Content.Shared.Atmos;
+using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -20,6 +20,7 @@ public sealed class SubstationSystem : EntitySystem
     [Dependency] private readonly PointLightSystem _lightSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _sharedLightSystem = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     private bool _substationDecayEnabled = true;
     private const int _defaultSubstationDecayTimeout = 300; //5 minute
@@ -37,12 +38,15 @@ public sealed class SubstationSystem : EntitySystem
         UpdatesAfter.Add(typeof(PowerNetSystem));
 
         SubscribeLocalEvent<SubstationComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<SubstationComponent, UpgradeExamineEvent>(OnFuseLifetimeUpgradeExamine);
+        SubscribeLocalEvent<SubstationComponent, UpgradeExamineEvent>(OnConduitLifetimeUpgradeExamine);
         SubscribeLocalEvent<SubstationComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SubstationComponent, RejuvenateEvent>(OnRejuvenate);
-        SubscribeLocalEvent<SubstationFuseSlotComponent, GasAnalyzerScanEvent>(OnAnalyzed);
-        SubscribeLocalEvent<SubstationComponent, SubstationFuseChangedEvent>(OnFuseChanged);
+        SubscribeLocalEvent<SubstationComponent, GasAnalyzerScanEvent>(OnAnalyzed);
 
+        SubscribeLocalEvent<SubstationComponent, EntInsertedIntoContainerMessage>(OnConduitInserted);
+        SubscribeLocalEvent<SubstationComponent, EntRemovedFromContainerMessage>(OnConduitRemoved);
+        SubscribeLocalEvent<SubstationComponent, ContainerIsInsertingAttemptEvent>(OnConduitInsertAttempt);
+        SubscribeLocalEvent<SubstationComponent, ContainerIsRemovingAttemptEvent>(OnConduitRemoveAttempt);
     }
 
     private void OnComponentInit(EntityUid uid, SubstationComponent component, ComponentInit args) 
@@ -73,15 +77,15 @@ public sealed class SubstationSystem : EntitySystem
     {
         if(args.IsInDetailsRange)
         {
-            if(!GetFuseMixture(uid, out var mix))
+            if(!GetConduitMixture(uid, out var mix))
             {
                 args.PushMarkup(
-                    Loc.GetString("substation-component-examine-no-fuse"));
+                    Loc.GetString("substation-component-examine-no-conduit"));
                 return;
             }
             else
             {
-                var integrity = CheckFuseIntegrity(component, mix);
+                var integrity = CheckConduitIntegrity(component, mix);
                 if(integrity > 0.0f)
                 {
                     var integrityPercentRounded = (int)integrity;
@@ -101,16 +105,16 @@ public sealed class SubstationSystem : EntitySystem
         }
     }
 
-    private void OnFuseLifetimeUpgradeExamine(EntityUid uid, SubstationComponent component, UpgradeExamineEvent args)
+    private void OnConduitLifetimeUpgradeExamine(EntityUid uid, SubstationComponent component, UpgradeExamineEvent args)
     {
         TryComp<UpgradePowerSupplyRampingComponent>(uid, out var upgrade);
         if(upgrade == null)
             return;
         
         if(upgrade.ActualScalar < 3)
-            args.AddPercentageUpgrade("upgrade-fuse-lifetime", upgrade.ActualScalar);
+            args.AddPercentageUpgrade("upgrade-conduit-lifetime", upgrade.ActualScalar);
         else
-            args.AddMaxUpgrade("upgrade-fuse-lifetime");
+            args.AddMaxUpgrade("upgrade-conduit-lifetime");
     }
 
     public override void Update(float deltaTime)
@@ -155,44 +159,44 @@ public sealed class SubstationSystem : EntitySystem
         while(query.MoveNext(out var uid, out var subs, out var battery, out var upgrade))
         {
             
-            if(!GetFuseMixture(uid, out var fuse))
+            if(!GetConduitMixture(uid, out var conduit))
                 continue;
 
             if(subs.DecayEnabled && subs.LastIntegrity >= 0.0f && upgrade.ActualScalar < 3f)
             {
-                ConsumeFuseGas(deltaTime, upgrade.ActualScalar, subs, battery, fuse);
-                var fuseIntegrity = CheckFuseIntegrity(subs, fuse);
+                ConsumeConduitGas(deltaTime, upgrade.ActualScalar, subs, battery, conduit);
+                var conduitIntegrity = CheckConduitIntegrity(subs, conduit);
 
-                if(fuseIntegrity <= 0.0f)
+                if(conduitIntegrity <= 0.0f)
                 {
                     ShutdownSubstation(uid, subs);
                     _substationDecayTimer = _defaultSubstationDecayTimeout;
                     _substationDecayEnabled = false;
 
-                    subs.LastIntegrity = fuseIntegrity;
+                    subs.LastIntegrity = conduitIntegrity;
                     continue;
                 }
 
-                if(fuseIntegrity < 30f && subs.LastIntegrity >= 30f)
+                if(conduitIntegrity < 30f && subs.LastIntegrity >= 30f)
                 {
                     ChangeState(uid, SubstationIntegrityState.Bad, subs);
                 }
-                else if(fuseIntegrity < 70f && subs.LastIntegrity >= 70f)
+                else if(conduitIntegrity < 70f && subs.LastIntegrity >= 70f)
                 {
                     ChangeState(uid, SubstationIntegrityState.Unhealthy, subs);
                 }
 
-                subs.LastIntegrity = fuseIntegrity;
+                subs.LastIntegrity = conduitIntegrity;
             }
         }
     }
 
-    private void ConsumeFuseGas(float deltaTime, float scalar, SubstationComponent subs, PowerNetworkBatteryComponent battery, GasMixture mixture)
+    private void ConsumeConduitGas(float deltaTime, float scalar, SubstationComponent subs, PowerNetworkBatteryComponent battery, GasMixture mixture)
     {
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
         var initialPlasma = mixture.GetMoles(Gas.Plasma);
 
-        var molesConsumed = (subs.InitialFuseMoles * battery.CurrentSupply * deltaTime) / (_substationDecayCoeficient * scalar);
+        var molesConsumed = (subs.InitialConduitMoles * battery.CurrentSupply * deltaTime) / (_substationDecayCoeficient * scalar);
         
         var minimumReaction = Math.Min(initialN2, initialPlasma) * molesConsumed / 2;
 
@@ -201,10 +205,10 @@ public sealed class SubstationSystem : EntitySystem
         mixture.AdjustMoles(Gas.NitrousOxide, minimumReaction*2);
     }
 
-    private float CheckFuseIntegrity(SubstationComponent subs, GasMixture mixture)
+    private float CheckConduitIntegrity(SubstationComponent subs, GasMixture mixture)
     {
 
-        if(subs.InitialFuseMoles <= 0f)
+        if(subs.InitialConduitMoles <= 0f)
             return 0f;
 
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
@@ -212,39 +216,39 @@ public sealed class SubstationSystem : EntitySystem
 
         var usableMoles = Math.Min(initialN2, initialPlasma);
         //return in percentage points;
-        return 100 * usableMoles / (subs.InitialFuseMoles / 2);
+        return 100 * usableMoles / (subs.InitialConduitMoles / 2);
     }
 
-    private void OnFuseChanged(EntityUid uid, SubstationComponent subs, SubstationFuseChangedEvent args)
+    private void ConduitChanged(EntityUid uid, SubstationComponent subs)
     {
-        if(!GetFuseMixture(uid, out var mix))
+        if(!GetConduitMixture(uid, out var mix))
         {
             ShutdownSubstation(uid, subs);
             subs.LastIntegrity = 0f;
             return;
         }
         
-        var initialFuseMoles = 0f;
+        var initialConduitMoles = 0f;
         for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
-            initialFuseMoles += mix.GetMoles(i);
+            initialConduitMoles += mix.GetMoles(i);
         }
 
-        subs.InitialFuseMoles = initialFuseMoles;
+        subs.InitialConduitMoles = initialConduitMoles;
 
-        var fuseIntegrity = CheckFuseIntegrity(subs, mix);
+        var conduitIntegrity = CheckConduitIntegrity(subs, mix);
 
-        if(fuseIntegrity <= 0.0f)
+        if(conduitIntegrity <= 0.0f)
         {
             ShutdownSubstation(uid, subs);
-            subs.LastIntegrity = fuseIntegrity;
+            subs.LastIntegrity = conduitIntegrity;
             return;
         }
-        if(fuseIntegrity < 30f)
+        if(conduitIntegrity < 30f)
         {
             ChangeState(uid, SubstationIntegrityState.Bad, subs);
         }
-        else if(fuseIntegrity < 70f)
+        else if(conduitIntegrity < 70f)
         {
             ChangeState(uid, SubstationIntegrityState.Unhealthy, subs);
         }
@@ -252,7 +256,7 @@ public sealed class SubstationSystem : EntitySystem
         {
             ChangeState(uid, SubstationIntegrityState.Healthy, subs);
         }
-        subs.LastIntegrity = fuseIntegrity;
+        subs.LastIntegrity = conduitIntegrity;
     }
 
     private void ShutdownSubstation(EntityUid uid, SubstationComponent subs)
@@ -278,7 +282,7 @@ public sealed class SubstationSystem : EntitySystem
 
         ChangeState(uid, SubstationIntegrityState.Healthy, subs);
 
-        if(GetFuseMixture(uid, out var mix))
+        if(GetConduitMixture(uid, out var mix))
         {
             mix.SetMoles(Gas.Nitrogen, 1.025689525f);
             mix.SetMoles(Gas.Plasma, 1.025689525f);
@@ -342,12 +346,12 @@ public sealed class SubstationSystem : EntitySystem
         _appearanceSystem.SetData(uid, SubstationVisuals.Screen, subsState, appearance);
     }
 
-    private void OnAnalyzed(EntityUid uid, SubstationFuseSlotComponent slot, GasAnalyzerScanEvent args)
+    private void OnAnalyzed(EntityUid uid, SubstationComponent slot, GasAnalyzerScanEvent args)
     {
         if(!TryComp<ContainerManagerComponent>(uid, out var containers))
             return;
 
-        if(!containers.TryGetContainer(slot.FuseSlotId, out var container))
+        if(!containers.TryGetContainer(slot.ConduitSlotId, out var container))
             return;
 
         if(container.ContainedEntities.Count > 0)
@@ -356,14 +360,14 @@ public sealed class SubstationSystem : EntitySystem
         }
     }
 
-    private bool GetFuseMixture(EntityUid uid, [NotNullWhen(true)] out GasMixture? mix)
+    private bool GetConduitMixture(EntityUid uid, [NotNullWhen(true)] out GasMixture? mix)
     {
         mix = null;
 
-        if(!TryComp<SubstationFuseSlotComponent>(uid, out var slot) || !TryComp<ContainerManagerComponent>(uid, out var containers))
+        if(!TryComp<SubstationComponent>(uid, out var subs) || !TryComp<ContainerManagerComponent>(uid, out var containers))
             return false;
 
-        if(!containers.TryGetContainer(slot.FuseSlotId, out var container))
+        if(!containers.TryGetContainer(subs.ConduitSlotId, out var container))
             return false;
         
         if(container.ContainedEntities.Count > 0)
@@ -374,6 +378,71 @@ public sealed class SubstationSystem : EntitySystem
         }
         
         return false;
+    }
+
+    private void OnConduitInsertAttempt(EntityUid uid, SubstationComponent component, ContainerIsInsertingAttemptEvent args)
+    {
+        if(!component.Initialized)
+            return;
+
+        if(args.Container.ID != component.ConduitSlotId)
+            return;
+
+        if(!TryComp<WiresPanelComponent>(uid, out var panel))
+        {
+            args.Cancel();
+            return;
+        }
+        
+        //for when the substation is initialized.
+        if(component.AllowInsert)
+        {
+            component.AllowInsert = false;
+            return;
+        }
+
+        if(!panel.Open)
+        {
+            args.Cancel();
+        }
+        
+    }
+
+    private void OnConduitRemoveAttempt(EntityUid uid, SubstationComponent component, ContainerIsRemovingAttemptEvent args)
+    {
+        if(!component.Initialized)
+            return;
+
+        if(args.Container.ID != component.ConduitSlotId)
+            return;
+
+        if(!TryComp<WiresPanelComponent>(uid, out var panel))
+            return;
+        
+        if(!panel.Open)
+        {
+            args.Cancel();
+        }
+        
+    }
+
+    private void OnConduitInserted(EntityUid uid, SubstationComponent component, EntInsertedIntoContainerMessage args)
+    {
+        if(!component.Initialized)
+            return;
+
+        if(args.Container.ID != component.ConduitSlotId)
+            return;
+        
+        ConduitChanged(uid, component);
+    }
+
+    private void OnConduitRemoved(EntityUid uid, SubstationComponent component, EntRemovedFromContainerMessage args)
+    {
+        if(args.Container.ID != component.ConduitSlotId)
+            return;
+        
+        ConduitChanged(uid, component);
     }
 
 }
