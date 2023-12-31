@@ -172,12 +172,16 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
             if (paint.Department is not {} department)
                 continue;
 
+            // ignore doors from departments with no taggers
+            if (!rule.Minds.ContainsKey(department))
+                continue;
+
             // airlock must be on the station, not a shittle
             if (_station.GetOwningStation(uid, xform) != rule.Station)
                 continue;
 
             if (counts.TryGetValue(department, out var count))
-                count++;
+                counts[department] = count + 1;
             else
                 counts[department] = 1;
         }
