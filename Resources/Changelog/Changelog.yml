@@ -1,11 +1,4 @@
 Entries:
-- author: Skarletto
-  changes:
-  - message: Changed unary devices such as scrubbers and vents to not be able to stack
-      with each other
-    type: Tweak
-  id: 4993
-  time: '2023-10-11T15:20:21.0000000+00:00'
 - author: ElectroJr
   changes:
   - message: Fixed explosion resistance from clothing/equipment not being applied.
@@ -3556,3 +3549,10 @@ Entries:
   id: 5493
   time: '2023-12-31T07:35:00.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22627
+- author: noctyrnal
+  changes:
+  - message: RD's suit got a new paint job.
+    type: Tweak
+  id: 5494
+  time: '2023-12-31T07:36:47.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23131
