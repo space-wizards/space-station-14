@@ -11,7 +11,7 @@ namespace Content.Shared.Paint;
 /// <summary>
 /// Colors target and consumes reagent on each color success.
 /// </summary>
-public abstract class SharedPaintSystem : EntitySystem
+public sealed class SharedPaintSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -67,13 +67,13 @@ public abstract class SharedPaintSystem : EntitySystem
     {
         if (HasComp<PaintedComponent>(target))
         {
-
+            _popup.PopupClient(Loc.GetString("paint-failure-painted", ("target", target)), actor, actor, PopupType.Medium);
             return false;
         }
 
         if (HasComp<HumanoidAppearanceComponent>(target))
         {
-
+            _popup.PopupClient(Loc.GetString("paint-failure", ("target", target)), actor, actor, PopupType.Medium);
             return false;
         }
 
@@ -82,7 +82,7 @@ public abstract class SharedPaintSystem : EntitySystem
             var quantity = solution.RemoveReagent(component.Reagent, component.ConsumptionUnit);
             if (quantity > 0)// checks quantity of solution is more than 0.
             {
-
+                _popup.PopupClient(Loc.GetString("paint-success", ("target", target)), actor, actor, PopupType.Medium);
                 return true;
             }
         }
