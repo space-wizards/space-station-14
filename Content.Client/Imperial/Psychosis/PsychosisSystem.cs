@@ -12,6 +12,7 @@ using Content.Shared.Tag;
 using System.Linq;
 using Content.Shared.Imperial.ICCVar;
 using Robust.Shared.Configuration;
+using Content.Shared.Popups;
 namespace Content.Client.Psychosis;
 
 public sealed class PsychosisSystem : SharedPsychosisSystem
@@ -29,6 +30,7 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
         base.Initialize();
         SubscribeLocalEvent<PsychosisComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<PsychosisComponent, PlayerDetachedEvent>(OnPlayerDetach);
+        SubscribeNetworkEvent<PopUpTransfer>(PopupChanged);
     }
 
     public override void Update(float frameTime)
@@ -45,6 +47,13 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
                 return;
             Checks(localPlayer);
         }
+    }
+
+    private void PopupChanged(PopUpTransfer psychosis, EntitySessionEventArgs args)
+    {
+        if (!TryComp<PsychosisComponent>(GetEntity(psychosis.Psychosis), out var psych))
+            return;
+        psych.PopUp = psychosis.Popup;
     }
 
     private void OnComponentStartup(EntityUid uid, PsychosisComponent component, ComponentStartup args)
@@ -67,6 +76,8 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
             component.CreatureTable.Add(thing);
         }
         component.NextSoundTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.MinTimeBetweenSounds, component.MaxTimeBetweenSounds));
+        var msg = new GetPopup(GetNetEntity(uid));
+        RaiseNetworkEvent(msg);
     }
 
     private void OnPlayerDetach(EntityUid uid, PsychosisComponent component, PlayerDetachedEvent args)
@@ -174,8 +185,12 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
     }
     public void Increase(EntityUid uid, PsychosisComponent psychosis, float increas)
     {
+        var uid2 = _player.LocalPlayer?.ControlledEntity;
+        if (uid2 == null)
+            return;
         psychosis.Current += increas;
         psychosis.NextIncrease = _timing.CurTime + psychosis.IncreaseTime;
+        EntityManager.EntitySysManager.GetEntitySystem<SharedPopupSystem>().PopupClient(Loc.GetString(psychosis.PopUp), uid, uid2.Value);
         if (psychosis.Current >= 100)
         {
             if (!(psychosis.Stage >= psychosis.Maxstage))

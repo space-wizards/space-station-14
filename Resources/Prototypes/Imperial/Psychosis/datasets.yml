@@ -13,6 +13,15 @@
   - /Audio/Items/welder2.ogg
 
 - type: dataset
+  id: PsychosisPopupsTable
+  values:
+  - psychosis-popup-headache
+  - psychosis-popup-alert
+  - psychosis-popup-eyes
+  - psychosis-popup-headrotate
+  - psychosis-popup-skinfeel
+
+- type: dataset
   id: PsychosisSoundTableStage2
   values:
   - /Audio/Imperial/ert_sniper/laser_sniper.ogg
@@ -105,15 +114,24 @@
   - Nicotine
   - Etanol
   - Coffee
+  - Tea
+  - Teobromin
 
 - type: dataset
   id: PsychosisHealsSecond
   values:
   - THK
   - Eth
+  - Banana
+  - Etil
+  - Chlor
 
 - type: dataset
   id: PsychosisHealsThird
   values:
   - BetterPax
   - Artif
+  - Antibio
+  - Difel
+  - Siderlak
+

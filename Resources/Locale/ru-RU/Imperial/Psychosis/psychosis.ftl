@@ -48,40 +48,10 @@ ent-MobHumanLoneNuclearOperativeFake = молодого возраста пас�
 psychosis-first-stage-heal-effect = Лечит первую стадию психоза, если подходит по листку
 psychosis-second-stage-heal-effect = Лечит вторую или меньше стадию психоза, если подходит по листку
 psychosis-third-stage-heal-effect = Лечит третью или меньше стадию, если подходит по листку
+reagent-name-antibiotics = Антибиотики
+reagent-desc-antibiotics = Восстанавливает психическое разумие пациента, при этом разрушая бактерии организма
 reagent-name-betterpax = Майндресторер
 reagent-desc-betterpax = Восстанавливает психическое разумие пациента, при этом немного разрушая мозг (использовать только при критических стадиях!)
-
-
-psychosis-heal-psychosis-1 = [head=1]╔═════════════════════════════════╗[/head]
-psychosis-heal-psychosis-2 = [color=#19C8D5][head=6]        ░███░██░░░██░████░████░░░░░░░[/color][/head]
-psychosis-heal-psychosis-3 = [color=#19C8D5][head=6]        ░██░░███░███░██░░░██░░██░░░░░[/color][/head]
-psychosis-heal-psychosis-4 = [color=#19C8D5][head=6]        ░█░░░██░█░██░████░██░░██░░░█░[/color][/head]
-psychosis-heal-psychosis-5 = [color=#19C8D5][head=6]        ░░░░░██░░░██░██░░░██░░██░░██░[/color][/head]
-psychosis-heal-psychosis-6 = [color=#19C8D5][head=6]        ░░░░░██░░░██░████░████░░░███░[/color][/head]
-psychosis-heal-psychosis-7 = [head=1]╚═════════════════════════════════╝[/head]
-psychosis-heal-psychosis-8 = [head=2]╔══════════════════════════╗[/head]
-psychosis-heal-psychosis-9 = [head=2]   ХАРАКТЕРИСТИКА ПСИХОЗА [/head]
-psychosis-heal-psychosis-10 = [head=2]╚══════════════════════════╝[/head]
-psychosis-heal-psychosis-11 = ╓———————————————————————————╖
-psychosis-heal-psychosis-12 = • [head=5][color=#5F9EA0]Первая стадия:[/color][/head]
-psychosis-heal-psychosis-13 = • Актуальный препарат для противодействия: {$first}
-psychosis-heal-psychosis-14 = • Симптомы стадии:[color=#4B57D5] Звуковые галюцинации
-psychosis-heal-psychosis-15 = [/color]
-psychosis-heal-psychosis-16 = • [head=5][color=#5F9EA0]Вторая стадия:[/color][/head]
-psychosis-heal-psychosis-17 = • Актуальный препарат для противодействия: {$second}
-psychosis-heal-psychosis-18 = • Симптомы стадии:[color=#4B57D5] Звуковые, а так же материальные галюцинации, иногда невнятная речь.
-psychosis-heal-psychosis-19 = [/color]
-psychosis-heal-psychosis-20 = • [head=5][color=#5F9EA0]Третья стадия:[/color][/head]
-psychosis-heal-psychosis-21 = • Актуальный препарат для противодействия: {$third}
-psychosis-heal-psychosis-22 = • Симптомы стадии:[color=#4B57D5] Звуковые, а так же материальные галюцинации, иногда невнятная речь, а так же оторванность от реальности.
-psychosis-heal-psychosis-23 = [/color]
-psychosis-heal-psychosis-24 = ╙———————————————————————————╜
-psychosis-heal-psychosis-25 = [empty]
-psychosis-heal-psychosis-26 = [italic]ПРИМЕЧАНИЕ: При возникновении вышеперечисленных симптомов пациент должен [bold]немедленно[/bold] обратиться в медицинский блок станции.[/italic]
-psychosis-heal-psychosis-27 = [bold]   ————————<Место для печатей>————————[/bold]
-psychosis-heal-psychosis-28 = ▶                                                                                                            ◀
-
-
 psychosis-Nicotine = Никотин
 psychosis-Etanol = Этанол
 psychosis-Coffee = Кофе
@@ -90,6 +60,14 @@ psychosis-Coffee = Кофе
 psychosis-THK = ТГК
 psychosis-Eth = Этилоксиэфедрин
 
+psychosis-Tea = Чай
+psychosis-Teobromin = Теобромин
+psychosis-Banana = Толчёная банановая кожура
+psychosis-Etil = Этилредоксразин
+psychosis-Chlor = Хлоральгидрат
+psychosis-Siderlak = Сидерлак
+psychosis-Antibio = Антибиотики
+psychosis-Difel = Дифенилметиламин
 
 psychosis-BetterPax = Майндресторер
 psychosis-Artif = Артифексиум
@@ -98,3 +76,62 @@ ent-PsychosisHealPaper = Текущие способы лечения психо
     .desc = {ent-Paper.desc}
 
 psychosis-event-announcement = Обнаружена психическая аномалия, персоналу с галюцинациями срочно обратиться в медицинский блок станции.
+
+psychosis-popup-headache = Вы чувствуете ужасную головную боль
+psychosis-popup-alert = Вы чувствуете нарастающую тревогу
+psychosis-popup-eyes = Вы чувствуете на себе посторонние взгляды
+psychosis-popup-headrotate = Вы чувствуете лёгкую тошноту и головокружение
+psychosis-popup-skinfeel = Вы чувствуете как что-то ползёт по вашей коже
+psychosis-heal-psychosis =
+    ╔═════════════════════════════════╗
+       ░███░██░░░██░████░████░░░░░░░
+       ░██░░███░███░██░░░██░░██░░░░░
+       ░█░░░██░█░██░████░██░░██░░░█░
+       ░░░░░██░░░██░██░░░██░░██░░██░
+       ░░░░░██░░░██░████░████░░░███░
+    ╚═════════════════════════════════╝
+    ╔══════════════════════════╗
+       ХАРАКТЕРИСТИКА ПСИХОЗА
+    ╚══════════════════════════╝
+    ╓———————————————————————————╖
+    • Первая стадия:
+    • Симптомы стадии: Звуковые галюцинации
+    • ПодСимптом: Головная боль
+    • Актуальный препарат для противодействия: {$heal1psychosis-popup-headache}
+    • ПодСимптом: Тревога
+    • Актуальный препарат для противодействия: {$heal1psychosis-popup-alert}
+    • ПодСимптом: Ощущение взглядов
+    • Актуальный препарат для противодействия: {$heal1psychosis-popup-eyes}
+    • ПодСимптом: Тошнота и головокружение
+    • Актуальный препарат для противодействия: {$heal1psychosis-popup-headrotate}
+    • ПодСимптом: Мурашки
+    • Актуальный препарат для противодействия: {$heal1psychosis-popup-skinfeel}
+
+    • Вторая стадия:
+    • Симптомы стадии: Звуковые, а так же материальные галюцинации, иногда невнятная речь.
+    • ПодСимптом: Головная боль
+    • Актуальный препарат для противодействия: {$heal2psychosis-popup-headache}
+    • ПодСимптом: Тревога
+    • Актуальный препарат для противодействия: {$heal2psychosis-popup-alert}
+    • ПодСимптом: Ощущение взглядов
+    • Актуальный препарат для противодействия: {$heal2psychosis-popup-eyes}
+    • ПодСимптом: Тошнота и головокружение
+    • Актуальный препарат для противодействия: {$heal2psychosis-popup-headrotate}
+    • ПодСимптом: Мурашки
+    • Актуальный препарат для противодействия: {$heal2psychosis-popup-skinfeel}
+
+    • Третья стадия:
+    • Симптомы стадии: Звуковые, а так же материальные галюцинации, иногда невнятная речь, а так же оторванность от реальности.
+    • ПодСимптом: Головная боль
+    • Актуальный препарат для противодействия: {$heal3psychosis-popup-headache}
+    • ПодСимптом: Тревога
+    • Актуальный препарат для противодействия: {$heal3psychosis-popup-alert}
+    • ПодСимптом: Ощущение взглядов
+    • Актуальный препарат для противодействия: {$heal3psychosis-popup-eyes}
+    • ПодСимптом: Тошнота и головокружение
+    • Актуальный препарат для противодействия: {$heal3psychosis-popup-headrotate}
+    • ПодСимптом: Мурашки
+    • Актуальный препарат для противодействия: {$heal3psychosis-popup-skinfeel}
+    ╙———————————————————————————╜
+    ПРИМЕЧАНИЕ: При возникновении вышеперечисленных симптомов пациент должен немедленно обратиться в медицинский блок станции.
+    ————————<Место для печатей>————————

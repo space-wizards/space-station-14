@@ -18,7 +18,7 @@
         stage: 3
         conditions:
         - !type:ReagentThreshold
-          min: 10
+          min: 9
       - !type:GenericStatusEffect
         key: Pacified
         component: Pacified
@@ -34,3 +34,35 @@
       amount: 5
   products:
     BetterPax: 2
+
+- type: reagent
+  id: Antibiotics
+  pricePerUnit: 2.75
+  name: reagent-name-antibiotics
+  group: Narcotics
+  desc: reagent-desc-antibiotics
+  physicalDesc: reagent-physical-desc-soothing
+  color: "#AAAAAA"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+            types:
+              Cellular: 1
+      - !type:HealPsychosis
+        reagent: Antibio
+        stage: 3
+        conditions:
+        - !type:ReagentThreshold
+          min: 9
+
+- type: reaction
+  id: AntibioticsReaction
+  reactants:
+    HeartbreakerToxin:
+      amount: 1
+    Bleach:
+      amount: 1
+  products:
+    Antibiotics: 2

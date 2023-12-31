@@ -110,6 +110,12 @@
         key: Drunk
         time: 2.0
         type: Remove
+      - !type:HealPsychosis # psychosis
+        reagent: Etil # psychosis
+        stage: 2 # psychosis
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 9 # psychosis
       - !type:HealthChange
         damage:
           types:
@@ -645,6 +651,12 @@
       effects:
       - !type:ModifyBleedAmount
         amount: -0.5
+      - !type:HealPsychosis # psychosis
+        reagent: Banana # psychosis
+        stage: 2 # psychosis
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 9 # psychosis
 
 - type: reagent
   id: Saline
@@ -675,6 +687,12 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:HealPsychosis # psychosis
+        reagent: Siderlak # psychosis
+        stage: 3 # psychosis
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 9 # psychosis
       - !type:HealthChange
         damage:
           types:
@@ -928,11 +946,11 @@
         key: Stutter
         component: StutteringAccent
       - !type:HealPsychosis # psychosis
-        reagent: Eth
-        stage: 2
+        reagent: Eth # psychosis
+        stage: 2 # psychosis
         conditions: # psychosis
         - !type:ReagentThreshold # psychosis
-          min: 10 # psychosis
+          min: 9 # psychosis
       - !type:ResetNarcolepsy
         conditions:
         - !type:ReagentThreshold
@@ -955,6 +973,12 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:HealPsychosis # psychosis
+        reagent: Difel # psychosis
+        stage: 3 # psychosis
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 9 # psychosis
       - !type:ResetNarcolepsy
         conditions:
         - !type:ReagentThreshold

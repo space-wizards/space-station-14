@@ -11,8 +11,8 @@
     Drink:
       effects:
       - !type:HealPsychosis # psychosis
-        reagent: Coffee
-        stage: 1
+        reagent: Coffee # psychosis
+        stage: 1 # psychosis
         conditions: # psychosis
         - !type:ReagentThreshold # psychosis
           min: 1 # psychosis
@@ -59,6 +59,15 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/glass_green.rsi
     state: icon
+  metabolisms: # psychosis
+    Drink: # psychosis
+      effects: # psychosis
+      - !type:HealPsychosis # psychosis
+        reagent: Tea # psychosis
+        stage: 1 # psychosis
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 1 # psychosis
 
 - type: reagent
   id: Grenadine

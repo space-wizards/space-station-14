@@ -32,6 +32,7 @@
     id: SeniorPhysicianPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
+    pocket1: PsychosisHealPaper # psychosis
   innerClothingSkirt: ClothingUniformJumpskirtSeniorPhysician
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled

@@ -17,12 +17,14 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    private static List<string> _firstStageHeals = new List<string>();
+    private static List<string> _secondStageHeals = new List<string>();
+    private static List<string> _thirdStageHeals = new List<string>();
+    private static Dictionary<string, string> _popUpHealsfirst = new Dictionary<string, string>();
 
-    private static string _firstHeal = "";
+    private static Dictionary<string, string> _popUpHealssecond = new Dictionary<string, string>();
 
-    private static string _secondHeal = "";
-
-    private static string _thirdHeal = "";
+    private static Dictionary<string, string> _popUpHealsthird = new Dictionary<string, string>();
     private static readonly IReadOnlyDictionary<string, string> SpecialWords = new Dictionary<string, string>()
     {
         { "а", "" },
@@ -35,6 +37,7 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
         base.Initialize();
         SubscribeLocalEvent<PsychosisComponent, AccentGetEvent>(OnAccent);
         SubscribeNetworkEvent<StageChange>(StageChanged);
+        SubscribeNetworkEvent<GetPopup>(Get);
         SubscribeLocalEvent<PsychosisComponent, ComponentStartup>(OnStart);
         SubscribeLocalEvent<RoundStartAttemptEvent>(Generate);
     }
@@ -48,28 +51,75 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
     }
     private void Generate(RoundStartAttemptEvent args)
     {
-        _firstHeal = _random.Pick(_prototypeManager.Index<DatasetPrototype>("PsychosisHealsFirst").Values);
-        _secondHeal = _random.Pick(_prototypeManager.Index<DatasetPrototype>("PsychosisHealsSecond").Values);
-        _thirdHeal = _random.Pick(_prototypeManager.Index<DatasetPrototype>("PsychosisHealsThird").Values);
+        _popUpHealsfirst.Clear();
+        _popUpHealssecond.Clear();
+        _popUpHealsthird.Clear();
+        _firstStageHeals.Clear();
+        _secondStageHeals.Clear();
+        _thirdStageHeals.Clear();
+        foreach (var thing in _prototypeManager.Index<DatasetPrototype>("PsychosisHealsFirst").Values)
+        {
+            _firstStageHeals.Add(thing);
+        }
+        foreach (var thing in _prototypeManager.Index<DatasetPrototype>("PsychosisHealsSecond").Values)
+        {
+            _secondStageHeals.Add(thing);
+        }
+        foreach (var thing in _prototypeManager.Index<DatasetPrototype>("PsychosisHealsThird").Values)
+        {
+            _thirdStageHeals.Add(thing);
+        }
+        foreach (var popup in _prototypeManager.Index<DatasetPrototype>("PsychosisPopupsTable").Values)
+        {
+            _popUpHealsfirst.Add(popup, _random.PickAndTake(_firstStageHeals));
+            _popUpHealssecond.Add(popup, _random.PickAndTake(_secondStageHeals));
+            _popUpHealsthird.Add(popup, _random.PickAndTake(_thirdStageHeals));
+        }
     }
-    public string GetFirst()
+    public string GetHeal(string popup, int stage)
     {
-        return _firstHeal;
-    }
-    public string GetSecond()
-    {
-        return _secondHeal;
-    }
-    public string GetThird()
-    {
-        return _thirdHeal;
+        if (stage == 1)
+        {
+            if (!_popUpHealsfirst.TryGetValue(popup, out var first))
+                return "";
+            return first;
+        }
+        if (stage == 2)
+        {
+            if (!_popUpHealssecond.TryGetValue(popup, out var second))
+                return "";
+            return second;
+        }
+        if (stage == 3)
+        {
+            if (!_popUpHealsthird.TryGetValue(popup, out var third))
+                return "";
+            return third;
+        }
+        return "";
     }
 
     private void OnStart(EntityUid uid, PsychosisComponent component, ComponentStartup args)
     {
-        component.HealFirst = _firstHeal;
-        component.HealSecond = _secondHeal;
-        component.HealThird = _thirdHeal;
+        var dataset = _prototypeManager.Index<DatasetPrototype>("PsychosisPopupsTable").Values;
+        component.PopUp = _random.Pick(dataset);
+        if (!_popUpHealsfirst.TryGetValue(component.PopUp, out var first))
+            return;
+        if (!_popUpHealssecond.TryGetValue(component.PopUp, out var second))
+            return;
+        if (!_popUpHealsthird.TryGetValue(component.PopUp, out var third))
+            return;
+        component.HealFirst = first;
+        component.HealSecond = second;
+        component.HealThird = third;
+    }
+
+    private void Get(GetPopup psychosis, EntitySessionEventArgs args)
+    {
+        if (!TryComp<PsychosisComponent>(GetEntity(psychosis.Psychosis), out var psych))
+            return;
+        var msg = new PopUpTransfer(psych.PopUp, GetNetEntity(psych.Owner));
+        RaiseNetworkEvent(msg);
     }
 
     private void StageChanged(StageChange psychosis, EntitySessionEventArgs args)
@@ -89,13 +139,13 @@ public sealed class PsychosisSystem : SharedPsychosisSystem
                     var messages = args.Message.Split(" ");
                     foreach (var messagething in messages)
                     {
-                        if (_random.Prob(0.5f))
+                        if (_random.Prob(0.3f))
                         {
                             args.Message = args.Message.Replace(messagething, "");
                         }
                     }
                 }
-                var chance = 0.30f * (component.Stage - 1);
+                var chance = 0.20f * (component.Stage - 1);
                 if (_random.Prob(chance))
                 {
                     args.Message = Accentuate(args.Message, component);

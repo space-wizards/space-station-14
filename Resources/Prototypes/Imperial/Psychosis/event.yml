@@ -7,10 +7,10 @@
     earliestStart: 20
     reoccurrenceDelay: 20
     weight: 20
-    minimumPlayers: 12
+    minimumPlayers: 10
     startAnnouncement: psychosis-event-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
   - type: MassPsychosisRule
-    from: 8
-    to: 12
+    from: 2
+    to: 4
