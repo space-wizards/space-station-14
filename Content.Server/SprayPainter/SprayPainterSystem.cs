@@ -23,13 +23,13 @@ namespace Content.Server.SprayPainter;
 [UsedImplicitly]
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
 {
+    [Dependency] private readonly AtmosPipeColorSystem _pipeColor = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly AtmosPipeColorSystem _pipeColorSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
@@ -40,7 +40,8 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         SubscribeLocalEvent<SprayPainterComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<SprayPainterComponent, SprayPainterSpritePickedMessage>(OnSpritePicked);
         SubscribeLocalEvent<SprayPainterComponent, SprayPainterColorPickedMessage>(OnColorPicked);
-        SubscribeLocalEvent<SprayPainterComponent, SprayPainterDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<SprayPainterComponent, SprayPainterDoorDoAfterEvent>(OnDoorDoAfter);
+        SubscribeLocalEvent<SprayPainterComponent, SprayPainterPipeDoAfterEvent>(OnPipeDoAfter);
     }
 
     private void OnInit(EntityUid uid, SprayPainterComponent component, ComponentInit args)
@@ -51,41 +52,56 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         SetColor(uid, component, component.ColorPalette.First().Key);
     }
 
-    private void OnDoAfter(EntityUid uid, SprayPainterComponent component, SprayPainterDoAfterEvent args)
+    private void OnDoorDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterDoorDoAfterEvent args)
     {
-        component.IsSpraying = false;
+        ent.Comp.IsSpraying = false;
 
         if (args.Handled || args.Cancelled)
             return;
 
-        if (args.Args.Target == null)
+        if (args.Args.Target is not {} target)
             return;
 
-        EntityUid target = (EntityUid) args.Args.Target;
+        _audio.PlayPvs(ent.Comp.SpraySound, ent);
 
-        _audio.PlayPvs(component.SpraySound, uid);
+        if (!TryComp<PaintableAirlockComponent>(ent, out var airlock))
+            return;
 
-        if (TryComp<AtmosPipeColorComponent>(target, out var atmosPipeColorComp))
-        {
-            _pipeColorSystem.SetColor(target, atmosPipeColorComp, args.Color ?? Color.White);
-        } else { // Target is an airlock
-            if (args.Sprite != null)
-            {
-                _appearance.SetData(target, DoorVisuals.BaseRSI, args.Sprite);
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Args.User):user} painted {ToPrettyString(args.Args.Target.Value):target}");
-            }
-        }
+        airlock.Department = args.Department;
+        _appearance.SetData(target, DoorVisuals.BaseRSI, args.Sprite);
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Args.User):user} painted {ToPrettyString(args.Args.Target.Value):target}");
+
+        args.Handled = true;
+    }
+
+    private void OnPipeDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterPipeDoAfterEvent args)
+    {
+        ent.Comp.IsSpraying = false;
+
+        if (args.Handled || args.Cancelled)
+            return;
+
+        if (args.Args.Target is not {} target)
+            return;
+
+        _audio.PlayPvs(ent.Comp.SpraySound, ent);
+
+        if (!TryComp<AtmosPipeColorComponent>(target, out var atmosPipeColor))
+            return;
+
+        _pipeColor.SetColor(target, atmosPipeColor, args.Color);
 
         args.Handled = true;
     }
 
     private void OnActivate(EntityUid uid, SprayPainterComponent component, ActivateInWorldEvent args)
     {
-        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+        if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
+
         DirtyUI(uid, component);
 
-        _userInterfaceSystem.TryOpen(uid, SprayPainterUiKey.Key, actor.PlayerSession);
+        _ui.TryOpen(uid, SprayPainterUiKey.Key, actor.PlayerSession);
         args.Handled = true;
     }
 
@@ -94,7 +110,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (component.IsSpraying || args.Target is not { Valid: true } target || !args.CanReach)
             return;
 
-        if (EntityManager.TryGetComponent<PaintableAirlockComponent>(target, out var airlock))
+        if (TryComp<PaintableAirlockComponent>(target, out var airlock))
         {
             if (!_prototypeManager.TryIndex<AirlockGroupPrototype>(airlock.Group, out var grp))
             {
@@ -102,37 +118,37 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
                 return;
             }
 
-            string style = Styles[component.Index];
-            if (!grp.StylePaths.TryGetValue(style, out var sprite))
+            var style = Styles[component.Index];
+            if (!grp.StylePaths.TryGetValue(style.Name, out var sprite))
             {
                 string msg = Loc.GetString("spray-painter-style-not-available");
-                _popupSystem.PopupEntity(msg, args.User, args.User);
+                _popup.PopupEntity(msg, args.User, args.User);
                 return;
             }
             component.IsSpraying = true;
 
-            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.AirlockSprayTime, new SprayPainterDoAfterEvent(sprite, null), uid, target: target, used: uid)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.AirlockSprayTime, new SprayPainterDoorDoAfterEvent(sprite, style.Department), uid, target: target, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
                 NeedHand = true,
             };
-            _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
+            _doAfter.TryStartDoAfter(doAfterEventArgs);
 
             // Log attempt
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} is painting {ToPrettyString(uid):target} to '{style}' at {Transform(uid).Coordinates:targetlocation}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} is painting {ToPrettyString(uid):target} to '{style.Name}' at {Transform(uid).Coordinates:targetlocation}");
         } else { // Painting pipes
-            if(component.PickedColor is null)
+            if (component.PickedColor is null)
                 return;
 
-            if (!EntityManager.HasComponent<AtmosPipeColorComponent>(target))
+            if (!HasComp<AtmosPipeColorComponent>(target))
                 return;
 
-            if(!component.ColorPalette.TryGetValue(component.PickedColor, out var color))
+            if (!component.ColorPalette.TryGetValue(component.PickedColor, out var color))
                 return;
 
-            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.PipeSprayTime, new SprayPainterDoAfterEvent(null, color), uid, target, uid)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.PipeSprayTime, new SprayPainterPipeDoAfterEvent(color), uid, target, uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -142,7 +158,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
                 NeedHand = true,
             };
 
-            _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
+            _doAfter.TryStartDoAfter(doAfterEventArgs);
         }
     }
 
@@ -174,7 +190,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (!Resolve(uid, ref component))
             return;
 
-        _userInterfaceSystem.TrySetUiState(
+        _ui.TrySetUiState(
             uid,
             SprayPainterUiKey.Key,
             new SprayPainterBoundUserInterfaceState(
