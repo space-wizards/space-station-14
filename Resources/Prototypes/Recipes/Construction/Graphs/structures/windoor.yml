@@ -205,7 +205,7 @@
   - node: windoorSecure
     entity: WindoorSecure
     edges:
-    - to: wired
+    - to: wiredSecure
       conditions:
       - !type:EntityAnchored {}
       - !type:DoorBolted
