@@ -1,11 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - message: Potentially fix (or hopefully at least reduce) electrical anomaly lagging
-      everyone on supercrit.
-    type: Fix
-  id: 4990
-  time: '2023-10-11T03:11:46.0000000+00:00'
 - author: ShadowCommander
   changes:
   - message: Added toggleselfghost command, which toggles being able to see your own
@@ -3557,3 +3550,10 @@ Entries:
   id: 5490
   time: '2023-12-30T23:35:46.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23210
+- author: Alekshhh
+  changes:
+  - message: Changed ammo boxes visually
+    type: Tweak
+  id: 5491
+  time: '2023-12-31T02:13:07.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23180
