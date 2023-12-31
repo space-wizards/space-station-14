@@ -4,24 +4,33 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Construction;
 
-public sealed class SharedFlatpackSystem : EntitySystem
+public abstract class SharedFlatpackSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly MachinePartSystem _machinePart = default!;
+    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
 
@@ -30,12 +39,14 @@ public sealed class SharedFlatpackSystem : EntitySystem
     {
         SubscribeLocalEvent<FlatpackComponent, InteractUsingEvent>(OnFlatpackInteractUsing);
         SubscribeLocalEvent<FlatpackComponent, ExaminedEvent>(OnFlatpackExamined);
+
+        SubscribeLocalEvent<FlatpackCreatorComponent, InteractUsingEvent>(OnCreatorInteractUsing);
     }
 
     private void OnFlatpackInteractUsing(Entity<FlatpackComponent> ent, ref InteractUsingEvent args)
     {
         var (uid, comp) = ent;
-        if (!_tool.HasQuality(args.Used, comp.QualityNeeded))
+        if (!_tool.HasQuality(args.Used, comp.QualityNeeded) || _container.IsEntityInContainer(ent))
             return;
 
         var xform = Transform(ent);
@@ -68,7 +79,9 @@ public sealed class SharedFlatpackSystem : EntitySystem
             if (!intersectBody.Hard || !intersectBody.CanCollide)
                 continue;
 
-            _popup.PopupClient(Loc.GetString("flatpack-unpack-no-room"), uid, args.User);
+            // this popup is on the server because the mispredicts on the intersection is crazy
+            if (_net.IsServer)
+                _popup.PopupEntity(Loc.GetString("flatpack-unpack-no-room"), uid, args.User);
             return;
         }
 
@@ -88,5 +101,56 @@ public sealed class SharedFlatpackSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
         args.PushMarkup(Loc.GetString("flatpack-examine"));
+    }
+
+    //todo this will eventually be a UI and a slot
+    private void OnCreatorInteractUsing(Entity<FlatpackCreatorComponent> ent, ref InteractUsingEvent args)
+    {
+        var (_, comp) = ent;
+        if (!TryComp<MachineBoardComponent>(args.Used, out var machineBoard))
+            return;
+
+        var materialCost = GetFlatpackCreationCost(ent, (args.Used, machineBoard));
+        if (!_materialStorage.TryChangeMaterialAmount((ent, null), materialCost))
+            return;
+
+        if (_net.IsServer)
+        {
+            var flatpack = Spawn(comp.BaseFlatpackPrototype, Transform(ent).Coordinates);
+            SetFlatpackMachine(flatpack, (args.Used, machineBoard));
+        }
+    }
+
+    public void SetFlatpackMachine(Entity<FlatpackComponent?> ent, Entity<MachineBoardComponent?> machineBoard)
+    {
+        if (!Resolve(ent, ref ent.Comp) || !Resolve(machineBoard, ref machineBoard.Comp))
+            return;
+
+        if (machineBoard.Comp.Prototype is not { } machinePrototypeId)
+            return;
+
+        var comp = ent.Comp!;
+        var machinePrototype = PrototypeManager.Index(machinePrototypeId);
+
+        var meta = MetaData(ent);
+        _metaData.SetEntityName(ent, Loc.GetString("flatpack-entity-name", ("name", machinePrototype.Name)), meta);
+        _metaData.SetEntityDescription(ent, Loc.GetString("flatpack-entity-description", ("name", machinePrototype.Name)), meta);
+
+        comp.Entity = machinePrototypeId;
+        Dirty(ent, comp);
+
+        _appearance.SetData(ent, FlatpackVisuals.Machine, MetaData(machineBoard).EntityPrototype?.ID ?? string.Empty);
+    }
+
+    public Dictionary<string, int> GetFlatpackCreationCost(Entity<FlatpackCreatorComponent> entity, Entity<MachineBoardComponent> machineBoard)
+    {
+        var cost = _machinePart.GetMachineBoardMaterialCost(machineBoard, -1);
+        foreach (var (mat, amount) in entity.Comp.BaseMaterialCost)
+        {
+            cost.TryAdd(mat, 0);
+            cost[mat] -= amount;
+        }
+
+        return cost;
     }
 }
