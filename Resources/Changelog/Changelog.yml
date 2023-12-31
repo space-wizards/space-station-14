@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix climbing in the same position (e.g. exiting from medical scanners)
-      sending you to the farplanes.
-    type: Fix
-  id: 5049
-  time: '2023-10-24T10:44:09.0000000+00:00'
 - author: liltenhead
   changes:
   - message: Fixed the "examine" trigger for artifacts not having a hint.
@@ -4034,4 +4027,25 @@ Entries:
     type: Fix
   id: 5466
   time: '2023-12-29T15:05:11.0000000+00:00'
+  url: null
+- author: SkaldetSkaeg
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u044B \u043D\u0435\
+      \ \u0440\u0430\u0431\u043E\u0442\u0430\u044E\u0449\u0438\u0435 \u044D\u043D\u0435\
+      \u0440\u0433\u043E\u043C\u0435\u0447\u0438."
+    type: Fix
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5467
+  time: '2023-12-31T01:07:29.0000000+00:00'
   url: null
