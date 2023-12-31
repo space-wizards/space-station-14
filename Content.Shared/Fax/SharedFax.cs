@@ -35,6 +35,20 @@ public sealed class FaxUiState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
+public sealed class FaxFileMessage : BoundUserInterfaceMessage
+{
+    public string Content;
+    public string Name;
+    public bool OfficePaper;
+
+    public FaxFileMessage(string content, string name, bool officePaper)
+    {
+        Content = content;
+        Name = name;
+        OfficePaper = officePaper;
+    }
+}
+[Serializable, NetSerializable]
 public sealed class FaxCopyMessage : BoundUserInterfaceMessage
 {
 }

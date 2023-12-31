@@ -8,6 +8,9 @@ fax-machine-dialog-rename = Rename
 fax-machine-dialog-field-name = Name
 
 fax-machine-ui-window = Fax Machine
+fax-machine-ui-file-button = Print File
+fax-machine-ui-paper-button-normal = Normal Paper
+fax-machine-ui-paper-button-office = Office Paper
 fax-machine-ui-copy-button = Copy
 fax-machine-ui-send-button = Send
 fax-machine-ui-refresh-button = Refresh
