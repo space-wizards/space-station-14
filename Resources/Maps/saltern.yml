@@ -1024,17 +1024,20 @@ entities:
             0: 65535
           13,2:
             0: 62463
+            6: 3072
           13,3:
             0: 32755
-            6: 32768
+            6: 32780
           14,0:
             0: 65535
           14,2:
             0: 62719
+            6: 2816
           14,1:
             0: 65535
           14,3:
             0: 30581
+            6: 138
           -8,-5:
             0: 65535
           -5,-8:
@@ -1069,6 +1072,7 @@ entities:
             0: 62451
           15,2:
             0: 62003
+            6: 256
           8,-4:
             0: 61166
           9,-4:
@@ -1333,6 +1337,7 @@ entities:
             0: 65535
           15,3:
             0: 15
+            6: 16
           20,3:
             0: 3
           16,-3:
@@ -6331,6 +6336,7 @@ entities:
           canMix: True
           canReact: True
           maxVol: 50
+          name: null
           reagents:
           - data: null
             ReagentId: Leporazine
@@ -33130,7 +33136,7 @@ entities:
     - pos: 38.5,-5.5
       parent: 31
       type: Transform
-    - secondsUntilStateChange: -5334.276
+    - secondsUntilStateChange: -5409.4326
       state: Closing
       type: Door
   - uid: 4019
@@ -34417,6 +34423,8 @@ entities:
     - pos: 34.5,22.5
       parent: 31
       type: Transform
+    - maxExternalPressure: 4000
+      type: GasMiner
     - joinedGrid: 31
       type: AtmosDevice
 - proto: GasMinerOxygen
@@ -34426,6 +34434,8 @@ entities:
     - pos: 36.5,22.5
       parent: 31
       type: Transform
+    - maxExternalPressure: 4000
+      type: GasMiner
     - joinedGrid: 31
       type: AtmosDevice
 - proto: GasMinerWaterVapor
