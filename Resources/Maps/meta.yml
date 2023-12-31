@@ -6617,6 +6617,7 @@ entities:
             0: 65471
           15,3:
             0: 65471
+            7: 64
           16,0:
             0: 65407
           16,1:
@@ -6827,6 +6828,7 @@ entities:
             0: 65535
           15,6:
             0: 49151
+            7: 16384
           15,7:
             0: 65535
           10,9:
@@ -7666,6 +7668,7 @@ entities:
             0: 58466
           16,3:
             0: 65455
+            7: 16
           19,2:
             0: 32655
           19,3:
@@ -7677,6 +7680,7 @@ entities:
             0: 4383
           16,6:
             0: 45055
+            7: 4096
           17,4:
             0: 4383
           17,5:
@@ -145904,22 +145908,22 @@ entities:
   entities:
   - uid: 26656
     components:
-    - pos: 61.5,26.5
+    - pos: 67.5,28.5
       parent: 5350
       type: Transform
   - uid: 26657
     components:
-    - pos: 61.5,27.5
+    - pos: 66.5,28.5
       parent: 5350
       type: Transform
   - uid: 26658
     components:
-    - pos: 61.5,14.5
+    - pos: 68.5,28.5
       parent: 5350
       type: Transform
   - uid: 26659
     components:
-    - pos: 61.5,13.5
+    - pos: 69.5,28.5
       parent: 5350
       type: Transform
 - proto: TintedWindow

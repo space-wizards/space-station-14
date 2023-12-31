@@ -26,6 +26,7 @@
   id: SoakedCigarette
   parent: BaseCigar
   name: cigarette
+  suffix: Soaked
   description: A roll of tobacco and nicotine soaked in some chemical.
   components:
   - type: Sprite
