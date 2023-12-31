@@ -1,34 +1,6 @@
 # Tier 1
 
 - type: technology
-  id: JanitorialEquipment
-  name: research-technology-janitorial-equipment
-  icon:
-    sprite: Objects/Specific/Janitorial/mop.rsi
-    state: mop
-  discipline: CivilianServices
-  tier: 1
-  cost: 5000
-  recipeUnlocks:
-  - MopItem
-  - Holoprojector
-  - Mousetrap
-  - LightReplacer
-  - TrashBag
-
-- type: technology
-  id: LaundryTech
-  name: research-technology-laundry-tech
-  icon:
-    sprite: Structures/Machines/uniform_printer.rsi
-    state: icon
-  discipline: CivilianServices
-  tier: 1
-  cost: 5000
-  recipeUnlocks:
-  - UniformPrinterMachineCircuitboard
-
-- type: technology
   id: Hydroponics
   name: research-technology-basic-hydroponics
   icon:
@@ -114,6 +86,31 @@
     - DawInstrumentMachineCircuitboard
     - MassMediaCircuitboard
 
+- type: technology
+  id: RoboticCleanliness
+  name: research-technology-robotic-cleanliness
+  icon:
+    sprite: Mobs/Silicon/chassis.rsi
+    state: janitor
+  discipline: CivilianServices
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - BorgModuleLightReplacer
+  - BorgModuleAdvancedCleaning
+
+- type: technology
+  id: MeatManipulation
+  name: research-technology-meat-manipulation
+  icon:
+    sprite: Structures/Machines/fat_sucker.rsi
+    state: display
+  discipline: CivilianServices
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - FatExtractorMachineCircuitboard
+
 # Tier 2
 
 - type: technology
@@ -130,19 +127,6 @@
   - FauxTileAstroIce
 
 - type: technology
-  id: RoboticCleanliness
-  name: research-technology-robotic-cleanliness
-  icon:
-    sprite: Mobs/Silicon/chassis.rsi
-    state: janitor
-  discipline: CivilianServices
-  tier: 2
-  cost: 5000
-  recipeUnlocks:
-  - BorgModuleLightReplacer
-  - BorgModuleAdvancedCleaning
-
-- type: technology
   id: AdvancedCleaning
   name: research-technology-advanced-cleaning
   icon:
@@ -154,20 +138,6 @@
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
-  technologyPrerequisites:
-  - JanitorialEquipment
-
-- type: technology
-  id: MeatManipulation
-  name: research-technology-meat-manipulation
-  icon:
-    sprite: Structures/Machines/fat_sucker.rsi
-    state: display
-  discipline: CivilianServices
-  tier: 2
-  cost: 5000
-  recipeUnlocks:
-  - FatExtractorMachineCircuitboard
 
 - type: technology
   id: HONKMech
