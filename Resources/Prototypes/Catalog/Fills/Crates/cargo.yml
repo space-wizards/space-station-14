@@ -72,59 +72,59 @@
       orGroup: Junk
     #canisters
     - id: AirCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: AmmoniaCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: CarbonDioxideCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: FrezonCanister
       prob: 0.001
       orGroup: Canister
     - id: NitrogenCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: NitrousOxideCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: OxygenCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: PlasmaCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: TritiumCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     - id: WaterVaporCanister
-      prob: 0.01
+      prob: 0.001
       orGroup: Canister
     #weapons
     - id: WeaponPulseCarbine
-      prob: 0.001
+      prob: 0.0001
       orGroup: Weapons
     - id: WeaponRifleAk
-      prob: 0.001
+      prob: 0.0001
       orGroup: Weapons
     - id: Throngler
-      prob: 0.001
+      prob: 0.0001
       orGroup: Weapons
     - id: WeaponLauncherPirateCannon
       prob: 0.001
       orGroup: Weapons
     - id: WeaponPistolCHIMP
-      prob: 0.01
+      prob: 0.001
       orGroup: Weapons
     - id: WeaponSniperMosin
       prob: 0.01
       orGroup: Weapons
     - id: WeaponMakeshiftLaser
-      prob: 0.01
+      prob: 0.001
       orGroup: Weapons
     - id: Sledgehammer
-      prob: 0.01
+      prob: 0.001
       orGroup: Weapons
     - id: WeaponMeleeToolboxRobust
       prob: 0.01
@@ -133,7 +133,7 @@
       prob: 0.01
       orGroup: Weapons
     - id: WeaponLaserGun
-      prob: 0.01
+      prob: 0.001
       orGroup: Weapons
     - id: WeaponShotgunHandmade
       prob: 0.01
@@ -142,6 +142,21 @@
       prob: 0.01
       orGroup: Weapons
     - id: Bola
+      prob: 0.01
+      orGroup: Weapons
+    - id: ToySword
+      prob: 0.01
+      orGroup: Weapons
+    - id: Shovel
+      prob: 0.01
+      orGroup: Weapons  
+    - id: WeaponWaterPistol
+      prob: 0.01
+      orGroup: Weapons
+    - id: WeaponWaterBlaster
+      prob: 0.01
+      orGroup: Weapons
+    - id: WeaponTurretXeno
       prob: 0.01
       orGroup: Weapons
     #clothing
@@ -202,6 +217,15 @@
     - id: ClothingMaskGasMerc
       prob: 0.01
       orGroup: Clothes
+    - id: ClothingHeadHatCardborg
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingUnderSocksCoder
+      prob: 0.01
+      orGroup: Clothes
+    - id: ClothingUniformJumpskirtOfLife
+      prob: 0.01
+      orGroup: Clothes
     #swag
     - id: ClothingNeckBling
       prob: 0.01
@@ -213,19 +237,19 @@
       prob: 0.01
       orGroup: Swag
     - id: IngotGold
-      prob: 0.01
+      prob: 0.001
       orGroup: Swag
     - id: GoldOre1
       prob: 0.01
       orGroup: Swag
     - id: GoldOre
-      prob: 0.01
+      prob: 0.001
       orGroup: Swag
     - id: DrinkGoldenCup
       prob: 0.01
       orGroup: Swag
     - id: ToolboxGoldFilled
-      prob: 0.01
+      prob: 0.001
       orGroup: Swag
     - id: ClothingEyesGlassesGar
       prob: 0.01
@@ -237,6 +261,9 @@
       prob: 0.01
       orGroup: Swag      
     - id: ClothingHeadHatChameleon
+      prob: 0.01
+      orGroup: Swag
+    - id: ClothingBeltChampion
       prob: 0.01
       orGroup: Swag
     #plushies
@@ -275,10 +302,10 @@
       prob: 0.01
       orGroup: Useful
     - id: Omnitool
-      prob: 0.01
+      prob: 0.001
       orGroup: Useful
     - id: SoapOmega
-      prob: 0.01
+      prob: 0.001
       orGroup: Useful
     - id: ClothingEyesGlassesMeson
       prob: 0.01
@@ -287,7 +314,7 @@
       prob: 0.01
       orGroup: Useful
     - id: Chainsaw
-      prob: 0.01
+      prob: 0.001
       orGroup: Useful
     - id: Crowbar
       prob: 0.01
@@ -301,6 +328,10 @@
     - id: ToyAmongPequeno
       prob: 0.01
       orGroup: Useful
+    - id: Lamp
+      prob: 0.01
+      orGroup: Useful
+    - id: FloraTreeLarge05
     #notuseful
     - id: LidSalami
       prob: 0.01
@@ -341,3 +372,9 @@
     - id: CablecuffsBroken
       prob: 0.01
       orGroup: NotUseful
+    - id: FoodPlateTin
+      prob: 0.01
+      orGroup: NotUseful
+    - id: WeakKudzu
+      prob: 0.01
+      orGroup: NotUseful   

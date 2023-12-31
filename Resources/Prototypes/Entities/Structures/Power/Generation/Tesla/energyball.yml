@@ -96,6 +96,11 @@
       path: /Audio/Effects/tesla_collapse.ogg
       params:
         variation: 0.3
+  - type: InteractionPopup # for the brave
+    successChance: 0.2
+    interactSuccessString: petting-success-tesla
+    interactFailureString: petting-failure-tesla
+    interactSuccessSpawn: EffectHearts
 
 - type: entity 
   id: TeslaMiniEnergyBall
