@@ -4,7 +4,7 @@ namespace Content.Server.GameTicking.Rules;
 
 /*
 [Prototype("gameRule")]
-public sealed class GameRulePrototype : IPrototype
+public sealed partial class GameRulePrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

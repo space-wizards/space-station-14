@@ -1,9 +1,9 @@
+using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access;
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.CrewManifest;
-using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.IdCardConsoleComponent;
 

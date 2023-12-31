@@ -2,7 +2,6 @@ using Content.Server.Administration;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 
@@ -20,7 +19,7 @@ namespace Content.Server.Atmos.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             EntityUid? gridId;
             Gas? gas = null;
 

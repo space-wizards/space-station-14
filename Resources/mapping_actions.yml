@@ -692,6 +692,7 @@
       entity: RailingRound
     name: RailingRound
     keywords: []
+    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -700,8 +701,7 @@
       entityType: RailingRound
   assignments:
   - 5: 9
-- action: !type:InstantAction
-    checkCanInteract: False
+- action: !type:InstantActionComponent
     icon:
       entity: AirlockMaintLocked
     keywords: []

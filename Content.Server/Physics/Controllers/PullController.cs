@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Gravity;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
@@ -37,6 +38,7 @@ namespace Content.Server.Physics.Controllers
         // How much you must move for the puller movement check to actually hit.
         private const float MinimumMovementDistance = 0.005f;
 
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedPullingSystem _pullableSystem = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -191,9 +193,10 @@ namespace Content.Server.Physics.Controllers
                 var impulse = accel * physics.Mass * frameTime;
                 PhysicsSystem.ApplyLinearImpulse(pullableEnt, impulse, body: physics);
 
-                // if the puller is weightless, then we apply the inverse impulse.
+                // if the puller is weightless or can't move, then we apply the inverse impulse (Newton's third law).
                 // doing it under gravity produces an unsatisfying wiggling when pulling.
-                if (_gravity.IsWeightless(puller) && pullerXform.GridUid == null)
+                // If player can't move, assume they are on a chair and we need to prevent pull-moving.
+                if ((_gravity.IsWeightless(puller) && pullerXform.GridUid == null) || !_actionBlockerSystem.CanMove(puller))
                 {
                     PhysicsSystem.WakeBody(puller);
                     PhysicsSystem.ApplyLinearImpulse(puller, -impulse);

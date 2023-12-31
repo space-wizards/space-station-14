@@ -9,14 +9,16 @@
     sprite: Objects/Weapons/Melee/armblade.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: 90
     attackRate: 0.75
     damage:
       types:
         Slash: 25
         Piercing: 15
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Weapons/Melee/armblade.rsi
   - type: Tool
     qualities:
       - Prying
+  - type: Prying

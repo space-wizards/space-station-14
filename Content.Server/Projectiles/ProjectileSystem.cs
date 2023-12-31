@@ -4,11 +4,11 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
+using Content.Shared.Mobs.Components;
+using Robust.Shared.Player;
 
 namespace Content.Server.Projectiles;
 
@@ -39,7 +39,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         RaiseLocalEvent(target, ref attemptEv);
         if (attemptEv.Cancelled)
         {
-            SetShooter(component, target);
+            SetShooter(uid, component, target);
             return;
         }
 
@@ -53,7 +53,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
         {
-            if (modifiedDamage.Total > FixedPoint2.Zero && !deleted)
+            if (modifiedDamage.Any() && !deleted)
             {
                 _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
@@ -71,7 +71,18 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         component.DamagedEntity = true;
 
-        if (component.DeleteOnCollide)
+        if (component.DeleteOnCollide )
+        {
+            QueueDel(uid);
+        }
+        if (component.CanPenetrate)
+        {
+            component.DamagedEntity = false;
+
+            if (!TryComp<MobStateComponent>(target, out var mobState))
+                QueueDel(uid);
+        }
+        else if (component.DeleteOnCollide && !component.CanPenetrate)
         {
             QueueDel(uid);
         }

@@ -34,3 +34,6 @@ trait-wheelchair-bound-desc = You cannot move without your wheelchair. Wheelchai
 
 trait-frontal-lisp-name = Frontal Lisp
 trait-frontal-lisp-desc = You thpeak with a lithp
+
+trait-socialanxiety-name = Social Anxiety
+trait-socialanxiety-desc = You are anxious when you speak and stutter.

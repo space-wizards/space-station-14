@@ -33,6 +33,14 @@
           False: { visible: false }
   - type: ActivatableUI
     key: enum.MicrowaveUiKey.Key
+  - type: DeviceLinkSink
+    ports:
+    - On
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
   - type: UserInterface
     interfaces:
     - key: enum.MicrowaveUiKey.Key
@@ -83,6 +91,9 @@
       microwave_entity_container: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - microwave_entity_container
   - type: GuideHelp
     guides:
     - Chef

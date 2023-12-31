@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -34,6 +35,20 @@ public sealed partial class SubdermalImplantComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("permanent"), AutoNetworkedField]
     public bool Permanent = false;
+
+    /// <summary>
+    /// Target whitelist for this implant specifically.
+    /// Only checked if the implanter allows implanting on the target to begin with.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Target blacklist for this implant specifically.
+    /// Only checked if the implanter allows implanting on the target to begin with.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
 }
 
 /// <summary>

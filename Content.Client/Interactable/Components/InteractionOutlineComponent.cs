@@ -22,11 +22,11 @@ namespace Content.Client.Interactable.Components
         private ShaderInstance? _shader;
         private int _lastRenderScale;
 
-        public void OnMouseEnter(bool inInteractionRange, int renderScale)
+        public void OnMouseEnter(EntityUid uid, bool inInteractionRange, int renderScale)
         {
             _lastRenderScale = renderScale;
             _inRange = inInteractionRange;
-            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite) && sprite.PostShader == null)
+            if (_entMan.TryGetComponent(uid, out SpriteComponent? sprite) && sprite.PostShader == null)
             {
                 // TODO why is this creating a new instance of the outline shader every time the mouse enters???
                 _shader = MakeNewShader(inInteractionRange, renderScale);
@@ -34,9 +34,9 @@ namespace Content.Client.Interactable.Components
             }
         }
 
-        public void OnMouseLeave()
+        public void OnMouseLeave(EntityUid uid)
         {
-            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite))
+            if (_entMan.TryGetComponent(uid, out SpriteComponent? sprite))
             {
                 if (sprite.PostShader == _shader)
                     sprite.PostShader = null;
@@ -47,9 +47,9 @@ namespace Content.Client.Interactable.Components
             _shader = null;
         }
 
-        public void UpdateInRange(bool inInteractionRange, int renderScale)
+        public void UpdateInRange(EntityUid uid, bool inInteractionRange, int renderScale)
         {
-            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite)
+            if (_entMan.TryGetComponent(uid, out SpriteComponent? sprite)
                 && sprite.PostShader == _shader
                 && (inInteractionRange != _inRange || _lastRenderScale != renderScale))
             {

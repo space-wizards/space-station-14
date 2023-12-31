@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: ArcadeBase
   description: An arcade cabinet.
@@ -85,10 +85,11 @@
     - BeachBall
     - PlushieMoth
     - PlushieHampter
+    - PlushiePenguin
   - type: WiresPanel
   - type: Wires
-    LayoutId: Arcade
-    BoardName: wires-board-name-arcade
+    layoutId: Arcade
+    boardName: wires-board-name-arcade
   - type: ActivatableUI
     key: enum.SpaceVillainArcadeUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -129,8 +130,8 @@
   - type: ActivatableUIRequiresPower
   - type: WiresPanel
   - type: Wires
-    LayoutId: Arcade
-    BoardName: wires-board-name-arcade
+    layoutId: Arcade
+    boardName: wires-board-name-arcade
   - type: UserInterface
     interfaces:
       - key: enum.BlockGameUiKey.Key

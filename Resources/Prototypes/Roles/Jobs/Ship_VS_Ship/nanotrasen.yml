@@ -13,7 +13,7 @@
     gloves: ClothingHandsGlovesColorBlack
     id: PassengerPDA
     ears: ClothingHeadsetGrey
-  innerclothingskirt: ClothingUniformJumpsuitRecruitNT #Wearing a jumpskirt into combat is a little unfitting and silly, so there is no jumpskirt counterpart for any of the Ship VS. Ship suits.
+  innerClothingSkirt: ClothingUniformJumpsuitRecruitNT #Wearing a jumpskirt into combat is a little unfitting and silly, so there is no jumpskirt counterpart for any of the Ship VS. Ship suits.
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
@@ -30,7 +30,7 @@
     eyes: ClothingEyesGlassesMeson
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetAltCommand #Should use the "alt" engineering headset sprite.
-  innerclothingskirt: ClothingUniformJumpsuitRepairmanNT
+  innerClothingSkirt: ClothingUniformJumpsuitRepairmanNT
   satchel: ClothingBackpackSatchelEngineeringFilled
   duffelbag: ClothingBackpackDuffelEngineeringFilled
 
@@ -46,7 +46,7 @@
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesLatex
     belt: ClothingBeltMedicalFilled
-  innerclothingskirt: ClothingUniformJumpskirtMedicalDoctor
+  innerClothingSkirt: ClothingUniformJumpskirtMedicalDoctor
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
@@ -58,12 +58,12 @@
     head: ClothingHeadHatHardhatArmored
     jumpsuit: ClothingUniformJumpsuitChiefEngineerNT
     back: ClothingBackpackFilled #Again, the regular sprite here looks way worse than the regular backpack.
-    shoes: ClothingShoesBootsJack 
+    shoes: ClothingShoesBootsJack
     gloves: ClothingHandsGlovesCombat
     id: CEPDA
     eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetAltCommand #Same as repairman - make this use the alt headset sprite.
     belt: ClothingBeltUtilityEngineering
-  innerclothingskirt: ClothingUniformJumpsuitChiefEngineerNT
+  innerClothingSkirt: ClothingUniformJumpsuitChiefEngineerNT
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

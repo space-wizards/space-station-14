@@ -1,14 +1,15 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.DragDrop;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using MapInitEvent = Robust.Shared.GameObjects.MapInitEvent;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Body.Systems;
 
@@ -21,6 +22,8 @@ public partial class SharedBodySystem
      * - Each "connection" is a body part (e.g. arm, hand, etc.) and each part can also contain organs.
      */
 
+    [Dependency] private readonly InventorySystem _inventory = default!;
+
     private void InitializeBody()
     {
         // Body here to handle root body parts.
@@ -30,8 +33,6 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
         SubscribeLocalEvent<BodyComponent, MapInitEvent>(OnBodyMapInit);
         SubscribeLocalEvent<BodyComponent, CanDragEvent>(OnBodyCanDrag);
-        SubscribeLocalEvent<BodyComponent, ComponentGetState>(OnBodyGetState);
-        SubscribeLocalEvent<BodyComponent, ComponentHandleState>(OnBodyHandleState);
     }
 
     private void OnBodyInserted(EntityUid uid, BodyComponent component, EntInsertedIntoContainerMessage args)
@@ -58,10 +59,6 @@ public partial class SharedBodySystem
 
     private void OnBodyRemoved(EntityUid uid, BodyComponent component, EntRemovedFromContainerMessage args)
     {
-        // TODO: lifestage shenanigans
-        if (LifeStage(uid) >= EntityLifeStage.Terminating)
-            return;
-
         // Root body part?
         var slotId = args.Container.ID;
 
@@ -69,6 +66,8 @@ public partial class SharedBodySystem
             return;
 
         var entity = args.Entity;
+        DebugTools.Assert(!TryComp(entity, out BodyPartComponent? b) || b.Body == uid);
+        DebugTools.Assert(!TryComp(entity, out OrganComponent? o) || o.Body == uid);
 
         if (TryComp(entity, out BodyPartComponent? childPart))
         {
@@ -77,31 +76,7 @@ public partial class SharedBodySystem
         }
 
         if (TryComp(entity, out OrganComponent? organ))
-        {
-            RemoveOrgan(entity, uid, uid, organ);
-        }
-    }
-
-    private void OnBodyHandleState(EntityUid uid, BodyComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not BodyComponentState state)
-            return;
-
-        component.Prototype = state.Prototype != null ? state.Prototype : null!;
-        component.GibSound = state.GibSound;
-        component.RequiredLegs = state.RequiredLegs;
-        component.LegEntities = EntityManager.EnsureEntitySet<BodyComponent>(state.LegNetEntities, uid);
-    }
-
-    private void OnBodyGetState(EntityUid uid, BodyComponent component, ref ComponentGetState args)
-    {
-        args.State = new BodyComponentState(
-            component.Prototype,
-            component.RootPartSlot,
-            component.GibSound,
-            component.RequiredLegs,
-            EntityManager.GetNetEntitySet(component.LegEntities)
-        );
+            RemoveOrgan(entity, uid, organ);
     }
 
     private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)
@@ -156,6 +131,7 @@ public partial class SharedBodySystem
 
         // Child -> Parent connection.
         var cameFrom = new Dictionary<string, string>();
+        cameFrom[rootSlot] = rootSlot;
         // Maps slot to its relevant entity.
         var cameFromEntities = new Dictionary<string, EntityUid>();
         cameFromEntities[rootSlot] = rootPartId;
@@ -185,7 +161,7 @@ public partial class SharedBodySystem
                 var partSlot = CreatePartSlot(parentEntity, connection, childPartComponent.PartType, parentPartComponent);
                 var cont = Containers.GetContainer(parentEntity, GetPartSlotContainerId(connection));
 
-                if (partSlot == null || !cont.Insert(childPart))
+                if (partSlot == null || !Containers.Insert(childPart, cont))
                 {
                     Log.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
                     QueueDel(childPart);
@@ -288,7 +264,7 @@ public partial class SharedBodySystem
     }
 
     public virtual HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false,
-        BodyComponent? body = null, bool deleteItems = false)
+        BodyComponent? body = null, bool deleteItems = false, bool deleteBrain = false)
     {
         var gibs = new HashSet<EntityUid>();
 
@@ -312,7 +288,14 @@ public partial class SharedBodySystem
                 gibs.Add(organ.Id);
             }
         }
-
+        if(TryComp<InventoryComponent>(bodyId, out var inventory))
+        {
+            foreach (var item in _inventory.GetHandOrInventoryEntities(bodyId))
+            {
+                SharedTransform.AttachToGridOrMap(item);
+                gibs.Add(item);
+            }
+        }
         return gibs;
     }
 }

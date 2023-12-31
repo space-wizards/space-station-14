@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Logs;
+using Content.Server.Construction;
+using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
@@ -15,8 +17,12 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Server.Wires;
 
@@ -33,6 +39,7 @@ public sealed class WiresSystem : SharedWiresSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ConstructionSystem _construction = default!;
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
@@ -58,6 +65,7 @@ public sealed class WiresSystem : SharedWiresSystem
         SubscribeLocalEvent<WiresComponent, WireDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenActivatableUI);
         SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, PanelChangedEvent>(OnActivatableUIPanelChanged);
+        SubscribeLocalEvent<WiresPanelSecurityComponent, WiresPanelSecurityEvent>(SetWiresPanelSecurity);
     }
     private void SetOrCreateWireLayout(EntityUid uid, WiresComponent? wires = null)
     {
@@ -459,11 +467,13 @@ public sealed class WiresSystem : SharedWiresSystem
             return;
 
         if (panel.Open &&
-            _protoMan.TryIndex<WiresPanelSecurityLevelPrototype>(panel.CurrentSecurityLevelID, out var securityLevelPrototype) &&
-            securityLevelPrototype.WiresAccessible &&
             (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
+            if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+                !wiresPanelSecurity.WiresAccessible)
+                return;
+
             if (TryComp(args.User, out ActorComponent? actor))
             {
                 _uiSystem.TryOpen(uid, WiresUiKey.Key, actor.PlayerSession);
@@ -525,6 +535,14 @@ public sealed class WiresSystem : SharedWiresSystem
 
         if (component.WireSeed == 0)
             component.WireSeed = _random.Next(1, int.MaxValue);
+
+        // Update the construction graph to make sure that it starts on the node specified by WiresPanelSecurityComponent
+        if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+            !string.IsNullOrEmpty(wiresPanelSecurity.SecurityLevel) &&
+            TryComp<ConstructionComponent>(uid, out var construction))
+        {
+            _construction.ChangeNode(uid, null, wiresPanelSecurity.SecurityLevel, true, construction);
+        }
 
         UpdateUserInterface(uid);
     }
@@ -601,7 +619,7 @@ public sealed class WiresSystem : SharedWiresSystem
             wires.WireSeed), ui: ui);
     }
 
-    public void OpenUserInterface(EntityUid uid, IPlayerSession player)
+    public void OpenUserInterface(EntityUid uid, ICommonSession player)
     {
         if (_uiSystem.TryGetUi(uid, WiresUiKey.Key, out var ui))
             _uiSystem.OpenUi(ui, player);
@@ -656,13 +674,14 @@ public sealed class WiresSystem : SharedWiresSystem
         RaiseLocalEvent(uid, ref ev);
     }
 
-    public void SetWiresPanelSecurityData(EntityUid uid, WiresPanelComponent component, string wiresPanelSecurityLevelID)
+    public void SetWiresPanelSecurity(EntityUid uid, WiresPanelSecurityComponent component, WiresPanelSecurityEvent args)
     {
-        component.CurrentSecurityLevelID = wiresPanelSecurityLevelID;
+        component.Examine = args.Examine;
+        component.WiresAccessible = args.WiresAccessible;
+
         Dirty(uid, component);
 
-        if (_protoMan.TryIndex<WiresPanelSecurityLevelPrototype>(component.CurrentSecurityLevelID, out var securityLevelPrototype) &&
-            securityLevelPrototype.WiresAccessible)
+        if (!args.WiresAccessible)
         {
             _uiSystem.TryCloseAll(uid, WiresUiKey.Key);
         }

@@ -278,7 +278,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
     }
 
-    private void Add(LogType type, LogImpact impact, string message, JsonDocument json, HashSet<Guid> players, List<AdminLogEntity> entities)
+    private void Add(LogType type, LogImpact impact, string message, JsonDocument json, HashSet<Guid> players)
     {
         var preRound = _runLevel == GameRunLevel.PreRoundLobby;
         var count = preRound ? _preRoundLogQueue.Count : _logQueue.Count;
@@ -297,8 +297,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             Date = DateTime.UtcNow,
             Message = message,
             Json = json,
-            Players = new List<AdminLogPlayer>(players.Count),
-            Entities = entities
+            Players = new List<AdminLogPlayer>(players.Count)
         };
 
         foreach (var id in players)
@@ -331,10 +330,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             return;
         }
 
-        var (json, players, entities) = ToJson(handler.Values);
+        var (json, players) = ToJson(handler.Values);
         var message = handler.ToStringAndClear();
 
-        Add(type, impact, message, json, players, entities);
+        Add(type, impact, message, json, players);
     }
 
     public override void Add(LogType type, ref LogStringHandler handler)

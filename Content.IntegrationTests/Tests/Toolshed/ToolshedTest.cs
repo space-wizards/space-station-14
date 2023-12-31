@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Content.IntegrationTests.Pair;
 using Content.Server.Administration.Managers;
-using Robust.Server.Player;
-using Robust.Shared.Players;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
 using Robust.Shared.Toolshed.Syntax;
@@ -60,7 +60,7 @@ public abstract class ToolshedTest : IInvocationContext
         AdminManager = Server.ResolveDependency<IAdminManager>();
     }
 
-    protected bool InvokeCommand(string command, out object? result, IPlayerSession? session = null)
+    protected bool InvokeCommand(string command, out object? result, ICommonSession? session = null)
     {
         return Toolshed.InvokeCommand(this, command, null, out result);
     }
@@ -95,7 +95,8 @@ public abstract class ToolshedTest : IInvocationContext
         return true;
     }
 
-    protected IPlayerSession? InvocationSession { get; set; }
+    protected ICommonSession? InvocationSession { get; set; }
+    public NetUserId? User => Session?.UserId;
 
     public ICommonSession? Session
     {

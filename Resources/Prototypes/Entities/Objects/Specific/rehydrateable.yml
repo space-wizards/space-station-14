@@ -4,6 +4,8 @@
   name: monkey cube
   description: Just add water!
   components:
+  - type: Item
+    size: Tiny
   - type: SolutionContainerManager
     solutions:
       cube:
@@ -46,6 +48,16 @@
         hard: false
         layer:
         - LowImpassable
+
+- type: entity
+  parent: MonkeyCube
+  id: KoboldCube
+  name: kobold cube
+  description: Just add water!
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobKobold
 
 - type: entity
   parent: PlushieCarp
@@ -109,6 +121,8 @@
   suffix: Syndicate
   description: Just add water!
   components:
+  - type: Item
+    size: Tiny
   - type: SolutionContainerManager
     solutions:
       cube:

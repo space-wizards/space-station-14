@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
@@ -16,6 +15,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
+using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -173,16 +173,15 @@ namespace Content.Server.Polymorph.Systems
             MakeSentientCommand.MakeSentient(child, EntityManager);
 
             var comp = _compFact.GetComponent<PolymorphedEntityComponent>();
-            comp.Owner = child;
             comp.Parent = uid;
             comp.Prototype = proto.ID;
-            EntityManager.AddComponent(child, comp);
+            AddComp(child, comp);
 
             var childXform = Transform(child);
             childXform.LocalRotation = targetTransformComp.LocalRotation;
 
             if (_container.TryGetContainingContainer(uid, out var cont))
-                cont.Insert(child);
+                _container.Insert(child, cont);
 
             //Transfers all damage from the original to the new one
             if (proto.TransferDamage &&

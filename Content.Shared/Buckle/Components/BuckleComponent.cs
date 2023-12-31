@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Buckle.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedBuckleSystem))]
 public sealed partial class BuckleComponent : Component
 {
@@ -13,7 +13,7 @@ public sealed partial class BuckleComponent : Component
     /// Separated from normal interaction range to fix the "someone buckled to a strap
     /// across a table two tiles away" problem.
     /// </summary>
-    [DataField("range")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float Range = SharedInteractionSystem.InteractionRange / 1.4f;
 
@@ -21,32 +21,34 @@ public sealed partial class BuckleComponent : Component
     /// True if the entity is buckled, false otherwise.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public bool Buckled;
 
     [ViewVariables]
+    [AutoNetworkedField]
     public EntityUid? LastEntityBuckledTo;
 
     /// <summary>
     /// Whether or not collisions should be possible with the entity we are strapped to
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("dontCollide")]
+    [DataField, AutoNetworkedField]
     public bool DontCollide;
 
     /// <summary>
     /// Whether or not we should be allowed to pull the entity we are strapped to
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("pullStrap")]
+    [DataField]
     public bool PullStrap;
 
     /// <summary>
     /// The amount of time that must pass for this entity to
     /// be able to unbuckle after recently buckling.
     /// </summary>
-    [DataField("delay")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan UnbuckleDelay = TimeSpan.FromSeconds(0.25f);
+    public TimeSpan Delay = TimeSpan.FromSeconds(0.25f);
 
     /// <summary>
     /// The time that this entity buckled at.
@@ -58,39 +60,21 @@ public sealed partial class BuckleComponent : Component
     /// The strap that this component is buckled to.
     /// </summary>
     [ViewVariables]
+    [AutoNetworkedField]
     public EntityUid? BuckledTo;
 
     /// <summary>
     /// The amount of space that this entity occupies in a
     /// <see cref="StrapComponent"/>.
     /// </summary>
-    [DataField("size")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public int Size = 100;
 
     /// <summary>
     /// Used for client rendering
     /// </summary>
-    [ViewVariables]
-    public int? OriginalDrawDepth;
-}
-
-[Serializable, NetSerializable]
-public sealed class BuckleComponentState : ComponentState
-{
-    public BuckleComponentState(bool buckled, NetEntity? buckledTo, NetEntity? lastEntityBuckledTo,
-        bool dontCollide)
-    {
-        Buckled = buckled;
-        BuckledTo = buckledTo;
-        LastEntityBuckledTo = lastEntityBuckledTo;
-        DontCollide = dontCollide;
-    }
-
-    public readonly bool Buckled;
-    public readonly NetEntity? BuckledTo;
-    public readonly NetEntity? LastEntityBuckledTo;
-    public readonly bool DontCollide;
+    [ViewVariables] public int? OriginalDrawDepth;
 }
 
 [ByRefEvent]

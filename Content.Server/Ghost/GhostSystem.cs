@@ -6,7 +6,6 @@ using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
 using Content.Shared.Actions;
-using Content.Shared.Administration;
 using Content.Shared.Examine;
 using Content.Shared.Eye;
 using Content.Shared.Follower;
@@ -16,12 +15,13 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Console;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
@@ -64,9 +64,33 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
+            SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
+        }
+
+        private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
+        {
+            args.Handled = true;
+
+            if (HasComp<GhostHearingComponent>(uid))
+            {
+                RemComp<GhostHearingComponent>(uid);
+                _actions.SetToggled(component.ToggleGhostHearingActionEntity, true);
+            }
+            else
+            {
+                AddComp<GhostHearingComponent>(uid);
+                _actions.SetToggled(component.ToggleGhostHearingActionEntity, false);
+            }
+
+            var str = HasComp<GhostHearingComponent>(uid)
+                ? Loc.GetString("ghost-gui-toggle-hearing-popup-on")
+                : Loc.GetString("ghost-gui-toggle-hearing-popup-off");
+
+            Popup.PopupEntity(str, uid, uid);
+            Dirty(uid, component);
         }
 
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
@@ -93,6 +117,13 @@ namespace Content.Server.Ghost
 
         private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, ref MoveInputEvent args)
         {
+            // If they haven't actually moved then ignore it.
+            if ((args.Component.HeldMoveButtons &
+                 (MoveButtons.Down | MoveButtons.Left | MoveButtons.Up | MoveButtons.Right)) == 0x0)
+            {
+                return;
+            }
+
             // Let's not ghost if our mind is visiting...
             if (HasComp<VisitingMindComponent>(uid))
                 return;
@@ -164,6 +195,7 @@ namespace Content.Server.Ghost
                 _actions.SetCooldown(component.BooActionEntity.Value, start, end);
             }
 
+            _actions.AddAction(uid, ref component.ToggleGhostHearingActionEntity, component.ToggleGhostHearingAction);
             _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
             _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
             _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
@@ -271,8 +303,7 @@ namespace Content.Server.Ghost
 
             while (allQuery.MoveNext(out var uid, out var warp))
             {
-                if (warp.Location != null)
-                    yield return new GhostWarp(GetNetEntity(uid), warp.Location, true);
+                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true);
             }
         }
 
@@ -330,30 +361,6 @@ namespace Content.Server.Ghost
             RaiseLocalEvent(target, ghostBoo, true);
 
             return ghostBoo.Handled;
-        }
-    }
-
-    [AnyCommand]
-    public sealed class ToggleGhostVisibility : IConsoleCommand
-    {
-        public string Command => "toggleghosts";
-        public string Description => "Toggles ghost visibility";
-        public string Help => $"{Command}";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
-        {
-            if (shell.Player == null)
-                shell.WriteLine("You can only toggle ghost visibility on a client.");
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            var uid = shell.Player?.AttachedEntity;
-            if (uid == null
-                || !entityManager.HasComponent<GhostComponent>(uid)
-                || !entityManager.TryGetComponent<EyeComponent>(uid, out var eyeComponent))
-                return;
-
-            entityManager.System<EyeSystem>().SetVisibilityMask(uid.Value, eyeComponent.VisibilityMask ^ (int) VisibilityFlags.Ghost, eyeComponent);
         }
     }
 }

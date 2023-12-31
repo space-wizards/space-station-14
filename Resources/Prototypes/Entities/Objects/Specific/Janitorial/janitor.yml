@@ -1,4 +1,3 @@
-# TODO: Add description (1)
 - type: entity
   parent: BaseItem
   name: mop
@@ -20,7 +19,7 @@
       types:
         Blunt: 5
   - type: Item
-    size: 15
+    size: Large
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Absorbent
   - type: SolutionContainerManager
@@ -59,7 +58,7 @@
         types:
           Blunt: 5
     - type: Item
-      size: 15
+      size: Large
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
       pickupAmount: 100
@@ -140,7 +139,7 @@
   - type: ItemSlots
     slots:
       shark_slot:
-        name: Shark
+        name: mop-bucket-slot-component-slot-name-shark
         whitelist:
           tags:
             - PlushieSharkBlue
@@ -196,33 +195,30 @@
 - type: entity
   name: wet floor sign
   id: WetFloorSign
-  parent: BaseItem
+  parent: ClothingOuterBase
   description: Caution! Wet Floor!
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    state: caution
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    size: 15
+    size: Normal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
   - type: Tag
     tags:
       - WetFloorSign
+      - WhitelistChameleon
 
 
 - type: entity
-  name: wet floor sign
   suffix: Explosive
-  description: Caution! Wet Floor!
-  parent: BaseItem
+  parent: WetFloorSign
   id: WetFloorSignMineExplosive
   components:
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    state: caution
-  - type: Item
-    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    size: 15
   - type: StepTrigger
     intersectRatio: 0.2
     requiredTriggeredSpeed: 0
@@ -249,11 +245,21 @@
   - type: LandMine
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
-    maxIntensity: 5 # about a ~67.5 total damage
-    totalIntensity: 60 # about a ~3 tile radius
+    explosionType: HardBomb  # normally Default and max 5 total 60
+    maxIntensity: 10 # about a ~67.5 total damage
+    totalIntensity: 30 # about a ~3 tile radius
     canCreateVacuum: false
   - type: DeleteOnTrigger
+  - type: OnUseTimerTrigger
+    useVerbInstead: true
+    beepInterval: .25
+    beepSound: /Audio/Items/Janitor/floor_sign_beep.ogg
+    params:
+      volume: 1
+    examinable: false
+  - type: Tag
+    tags: # ignore "WhitelistChameleon" tag
+      - WetFloorSign
 
 - type: entity
   name: janitorial trolley
@@ -283,21 +289,64 @@
     - type: ItemSlots
       slots:
         mop_slot:
-          name: Mop
+          name: janitorial-trolley-slot-component-slot-name-mop
           whitelist:
             tags:
               - Mop
           insertOnInteract: false # or it conflicts with bucket logic
+          priority: 9 # Higher than bucket slot
+        plunger_slot:
+          name: janitorial-trolley-slot-component-slot-name-plunger
+          whitelist:
+            tags:
+              - Plunger
+          priority: 8
+        wetfloorsign_slot4:
+          name: janitorial-trolley-slot-component-slot-name-sign
+          whitelist:
+            tags:
+              - WetFloorSign
+          priority: 7
+        wetfloorsign_slot3:
+          name: janitorial-trolley-slot-component-slot-name-sign
+          whitelist:
+            tags:
+              - WetFloorSign
+          priority: 7
+        wetfloorsign_slot2:
+          name: janitorial-trolley-slot-component-slot-name-sign
+          whitelist:
+            tags:
+              - WetFloorSign
+          priority: 7
+        wetfloorsign_slot1:
+          name: janitorial-trolley-slot-component-slot-name-sign
+          whitelist:
+            tags:
+              - WetFloorSign
+          priority: 7
+        lightreplacer_slot:
+          name: janitorial-trolley-slot-component-slot-name-lightreplacer
+          whitelist:
+            tags:
+              - LightReplacer
+          priority: 6
+        spraybottle_slot:
+          name: janitorial-trolley-slot-component-slot-name-spray
+          whitelist:
+            tags:
+              - Spray
+          insertOnInteract: false # or it conflicts with bucket logic
           priority: 5 # Higher than bucket slot
         bucket_slot:
-          name: Bucket
+          name: janitorial-trolley-slot-component-slot-name-bucket
           whitelist:
             tags:
               - Bucket
           insertOnInteract: false # or it also conflicts with bucket logic
           priority: 4 # Higher than trash bag slot
         trashbag_slot:
-          name: Bag
+          name: janitorial-trolley-slot-component-slot-name-trashbag
           whitelist:
             tags:
               - TrashBag
@@ -421,6 +470,13 @@
         mop_slot: !type:ContainerSlot {}
         trashbag_slot: !type:ContainerSlot {}
         bucket_slot: !type:ContainerSlot {}
+        plunger_slot: !type:ContainerSlot {}
+        wetfloorsign_slot4: !type:ContainerSlot {}
+        wetfloorsign_slot3: !type:ContainerSlot {}
+        wetfloorsign_slot2: !type:ContainerSlot {}
+        wetfloorsign_slot1: !type:ContainerSlot {}
+        lightreplacer_slot: !type:ContainerSlot {}
+        spraybottle_slot:  !type:ContainerSlot {}
     - type: GuideHelp
       guides:
       - Janitorial
@@ -537,7 +593,7 @@
         types:
           Blunt: 0
     - type: Item
-      size: 10
+      size: Small
       sprite: Objects/Specific/Janitorial/rag.rsi
     - type: Absorbent
       pickupAmount: 15
@@ -554,3 +610,6 @@
       tags:
         - DroneUsable
         - Mop
+    - type: CleansForensics
+    - type: Fiber
+      fiberColor: fibers-white

@@ -9,7 +9,21 @@
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
     noRot: true
-    state: nuclearbomb_base
+    layers:
+    - state: nuclearbomb_base
+    - state: nukefestive
+      map: ["christmas"]
+      visible: false
+  - type: Appearance
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        christmas:
+          festive: { visible: true }
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -31,6 +45,10 @@
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight
     speed: 120
+  - type: NavMapBeacon
+    color: "#ff0000"
+    text: nuclear fission explosive
+    enabled: false
   - type: NukeLabel
   - type: Nuke
     explosionType: Default
@@ -63,6 +81,8 @@
   - type: ContainerContainer
     containers:
       Nuke: !type:ContainerSlot
+  - type: StealTarget
+    stealGroup: NuclearBomb
 
 - type: entity
   parent: NuclearBomb
@@ -84,7 +104,21 @@
   - type: NukeLabel
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
-    state: nuclearbomb_base
+    layers:
+    - state: nuclearbomb_base
+    - state: nukefestive
+      map: ["christmas"]
+      visible: false
+  - type: Appearance
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        christmas:
+          festive: { visible: true }
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures

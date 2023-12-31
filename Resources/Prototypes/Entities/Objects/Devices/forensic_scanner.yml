@@ -8,7 +8,7 @@
     sprite: Objects/Devices/forensic_scanner.rsi
     state: forensicnew
   - type: Item
-    size: 5
+    size: Small
   - type: Clothing
     sprite: Objects/Devices/forensic_scanner.rsi
     quickEquip: false
@@ -25,7 +25,9 @@
   - type: ForensicScanner
   - type: GuideHelp
     guides:
-    - DNA
+      - Forensics
+  - type: StealTarget
+    stealGroup: ForensicScanner
 
 - type: entity
   name: forensic scanner report
@@ -53,4 +55,4 @@
     maxWritableArea: 368.0, 256.0
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics

@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Damage.ForceSay;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Speech;
 using Robust.Shared.Network;
@@ -54,6 +55,13 @@ namespace Content.Server.Bed.Sleep
 
         private void OnSpeakAttempt(EntityUid uid, SleepingComponent component, SpeakAttemptEvent args)
         {
+            // TODO reduce duplication of this behavior with MobStateSystem somehow
+            if (HasComp<AllowNextCritSpeechComponent>(uid))
+            {
+                RemCompDeferred<AllowNextCritSpeechComponent>(uid);
+                return;
+            }
+
             args.Cancel();
         }
 

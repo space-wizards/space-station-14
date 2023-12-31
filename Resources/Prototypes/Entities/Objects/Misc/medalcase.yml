@@ -9,9 +9,10 @@
     state: icon
   - type: Item
     sprite: Objects/Storage/medalcase.rsi
-    size: 80
+    size: Normal
   - type: Storage
-    capacity: 80
+    grid:
+    - 0,0,7,1
   - type: StorageFill
     contents:
     - id: ClothingNeckGoldmedal

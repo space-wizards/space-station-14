@@ -1,12 +1,16 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.GameStates;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -22,6 +26,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
     private ISawmill _sawmill = default!;
@@ -30,55 +35,16 @@ public abstract class SharedAnomalySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AnomalyComponent, ComponentGetState>(OnAnomalyGetState);
-        SubscribeLocalEvent<AnomalyComponent, ComponentHandleState>(OnAnomalyHandleState);
-        SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentGetState>(OnSupercriticalGetState);
-        SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentHandleState>(OnSupercriticalHandleState);
         SubscribeLocalEvent<AnomalyComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<AnomalyComponent, AttackedEvent>(OnAttacked);
+        SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitStartEvent>(OnAnomalyThrowStart);
+        SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitEndEvent>(OnAnomalyThrowEnd);
 
         SubscribeLocalEvent<AnomalyComponent, EntityUnpausedEvent>(OnAnomalyUnpause);
         SubscribeLocalEvent<AnomalyPulsingComponent, EntityUnpausedEvent>(OnPulsingUnpause);
         SubscribeLocalEvent<AnomalySupercriticalComponent, EntityUnpausedEvent>(OnSupercriticalUnpause);
 
         _sawmill = Logger.GetSawmill("anomaly");
-    }
-
-    private void OnAnomalyGetState(EntityUid uid, AnomalyComponent component, ref ComponentGetState args)
-    {
-        args.State = new AnomalyComponentState(
-            component.Severity,
-            component.Stability,
-            component.Health,
-            component.NextPulseTime);
-    }
-
-    private void OnAnomalyHandleState(EntityUid uid, AnomalyComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not AnomalyComponentState state)
-            return;
-        component.Severity = state.Severity;
-        component.Stability = state.Stability;
-        component.Health = state.Health;
-        component.NextPulseTime = state.NextPulseTime;
-    }
-
-    private void OnSupercriticalGetState(EntityUid uid, AnomalySupercriticalComponent component, ref ComponentGetState args)
-    {
-        args.State = new AnomalySupercriticalComponentState
-        {
-            EndTime = component.EndTime,
-            Duration = component.SupercriticalDuration
-        };
-    }
-
-    private void OnSupercriticalHandleState(EntityUid uid, AnomalySupercriticalComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not AnomalySupercriticalComponentState state)
-            return;
-
-        component.EndTime = state.EndTime;
-        component.SupercriticalDuration = state.Duration;
     }
 
     private void OnInteractHand(EntityUid uid, AnomalyComponent component, InteractHandEvent args)
@@ -89,7 +55,23 @@ public abstract class SharedAnomalySystem : EntitySystem
 
     private void OnAttacked(EntityUid uid, AnomalyComponent component, AttackedEvent args)
     {
+        if (HasComp<CorePoweredThrowerComponent>(args.Used))
+            return;
+
         DoAnomalyBurnDamage(uid, args.User, component);
+    }
+
+    private void OnAnomalyThrowStart(Entity<AnomalyComponent> ent, ref MeleeThrowOnHitStartEvent args)
+    {
+        if (!TryComp<CorePoweredThrowerComponent>(args.Used, out var corePowered) || !TryComp<PhysicsComponent>(ent, out var body))
+            return;
+        _physics.SetBodyType(ent, BodyType.Dynamic, body: body);
+        ChangeAnomalyStability(ent, Random.NextFloat(corePowered.StabilityPerThrow.X, corePowered.StabilityPerThrow.Y), ent.Comp);
+    }
+
+    private void OnAnomalyThrowEnd(Entity<AnomalyComponent> ent, ref MeleeThrowOnHitEndEvent args)
+    {
+        _physics.SetBodyType(ent, BodyType.Static);
     }
 
     public void DoAnomalyBurnDamage(EntityUid source, EntityUid target, AnomalyComponent component)
@@ -152,8 +134,8 @@ public abstract class SharedAnomalySystem : EntitySystem
         pulse.EndTime  = Timing.CurTime + pulse.PulseDuration;
         Appearance.SetData(uid, AnomalyVisuals.IsPulsing, true);
 
-        var ev = new AnomalyPulseEvent(component.Stability, component.Severity);
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new AnomalyPulseEvent(uid, component.Stability, component.Severity);
+        RaiseLocalEvent(uid, ref ev, true);
     }
 
     /// <summary>
@@ -196,8 +178,8 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (_net.IsServer)
             _sawmill.Info($"Raising supercritical event. Entity: {ToPrettyString(uid)}");
 
-        var ev = new AnomalySupercriticalEvent();
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new AnomalySupercriticalEvent(uid);
+        RaiseLocalEvent(uid, ref ev, true);
 
         EndAnomaly(uid, component, true);
     }
@@ -223,6 +205,9 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         if (Terminating(uid) || _net.IsClient)
             return;
+
+        Spawn(supercritical ? component.CorePrototype : component.CoreInertPrototype, Transform(uid).Coordinates);
+
         QueueDel(uid);
     }
 

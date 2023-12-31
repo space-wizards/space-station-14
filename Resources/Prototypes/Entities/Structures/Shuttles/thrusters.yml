@@ -68,6 +68,7 @@
 - type: entity
   id: ThrusterUnanchored
   parent: Thruster
+  suffix: Unanchored
   components:
     - type: Transform
       anchored: false
@@ -147,6 +148,7 @@
 - type: entity
   id: GyroscopeUnanchored
   parent: Gyroscope
+  suffix: Unanchored
   components:
     - type: Transform
       anchored: false

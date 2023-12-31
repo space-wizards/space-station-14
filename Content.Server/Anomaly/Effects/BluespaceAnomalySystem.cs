@@ -4,6 +4,8 @@ using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Teleportation.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
@@ -28,9 +30,9 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(uid);
         var range = component.MaxShuffleRadius * args.Severity;
-        var allEnts = _lookup.GetComponentsInRange<MobStateComponent>(xform.Coordinates, range)
-            .Select(x => x.Owner).ToList();
-        allEnts.Add(uid);
+        var mobs = new HashSet<Entity<MobStateComponent>>();
+        _lookup.GetEntitiesInRange(xform.Coordinates, range, mobs);
+        var allEnts = new List<EntityUid>(mobs.Select(m => m.Owner)) { uid };
         var coords = new List<Vector2>();
         foreach (var ent in allEnts)
         {
@@ -51,7 +53,9 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         var mapPos = _xform.GetWorldPosition(xform);
         var radius = component.SupercriticalTeleportRadius;
         var gridBounds = new Box2(mapPos - new Vector2(radius, radius), mapPos + new Vector2(radius, radius));
-        foreach (var comp in _lookup.GetComponentsInRange<MobStateComponent>(xform.Coordinates, component.MaxShuffleRadius))
+        var mobs = new HashSet<Entity<MobStateComponent>>();
+        _lookup.GetEntitiesInRange(xform.Coordinates, component.MaxShuffleRadius, mobs);
+        foreach (var comp in mobs)
         {
             var ent = comp.Owner;
             var randomX = _random.NextFloat(gridBounds.Left, gridBounds.Right);
