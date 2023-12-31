@@ -12,6 +12,6 @@ public sealed partial class EscapePodComponent : Component
     [DataField("launchTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan? LaunchTime;
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? Destination;
 }

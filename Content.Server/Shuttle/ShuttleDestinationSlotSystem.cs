@@ -102,6 +102,7 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
             }
         }
     }
+    
     private EntityUid? GetDiskDestination(EntityUid disk)
     {
         ShuttleDestinationCoordinatesComponent? diskCoordinates = null;
@@ -116,7 +117,6 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
 
     private void EnableDestination(EntityUid uid, FTLDestinationComponent destination)
     {
-
         if (destination.WhitelistSpecific == null)
         {
             destination.WhitelistSpecific = new List<EntityUid>();
@@ -136,12 +136,10 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
         }
 
         destination.WhitelistSpecific.Add(uid);
-
     }
 
     private void DisableDestination(EntityUid uid, FTLDestinationComponent destination)
     {
-
         if (destination.WhitelistSpecific != null)
         {
             if (TryComp(uid, out DroneConsoleComponent? consoleId))

@@ -10,8 +10,9 @@ namespace Content.Server.Shuttle.Components;
 [RegisterComponent]
 public sealed partial class ShuttleDestinationSlotComponent : Component
 {
-    [DataField("diskSlot")]
+    [DataField]
     public ItemSlot DiskSlot = new();
 
-    public const string DiskSlotId = "Coordinate Disk";
+    [DataField]
+    public string DiskSlotId = "Coordinate Disk";
 }
