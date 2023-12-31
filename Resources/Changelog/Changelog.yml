@@ -1,14 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - message: Added toggleselfghost command, which toggles being able to see your own
-      ghost.
-    type: Add
-  - message: Added replay_toggle_screenshot_mode command, which toggles the HUD in
-      replay mode to look similar to ingame.
-    type: Add
-  id: 4991
-  time: '2023-10-11T03:43:48.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Rehargers can be examined to show the charge of the battery or weapon
@@ -3557,3 +3547,10 @@ Entries:
   id: 5491
   time: '2023-12-31T02:13:07.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23180
+- author: leonardo-dabepis
+  changes:
+  - message: Soap no longer smells like condoms.
+    type: Tweak
+  id: 5492
+  time: '2023-12-31T07:27:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23272
