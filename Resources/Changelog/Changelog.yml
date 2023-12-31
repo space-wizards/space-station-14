@@ -1,10 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - message: The nukie ship now has syndicate access airlocks
-    type: Add
-  id: 4995
-  time: '2023-10-11T16:47:25.0000000+00:00'
 - author: notafet
   changes:
   - message: Carbon dioxide poisoning is now more deadly. Victims of carbon dioxide
@@ -3557,3 +3551,10 @@ Entries:
   id: 5495
   time: '2023-12-31T17:36:21.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23291
+- author: IlyaElDunaev
+  changes:
+  - message: The stun prod can now be thrown at enemies
+    type: Add
+  id: 5496
+  time: '2023-12-31T23:52:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23133
