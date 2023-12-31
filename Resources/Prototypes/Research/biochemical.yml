@@ -8,7 +8,7 @@
     state: beakerlarge
   discipline: Biochemical
   tier: 1
-  cost: 1500 #imperia edit
+  cost: 5000
   recipeUnlocks:
   - LargeBeaker
   - Dropper
@@ -42,7 +42,7 @@
     state: icon
   discipline: Biochemical
   tier: 1
-  cost: 5000 #imperia edit
+  cost: 7500
   recipeUnlocks:
   - CryostasisBeaker
   - StasisBedMachineCircuitboard
@@ -69,7 +69,7 @@
     state: icon
   discipline: Biochemical
   tier: 1
-  cost: 1500 ##imperia edit , useless
+  cost: 5000
   recipeUnlocks:
   - VaccinatorMachineCircuitboard
   - DiagnoserMachineCircuitboard
@@ -84,7 +84,7 @@
     state: pod-on
   discipline: Biochemical
   tier: 2
-  cost: 5000 #imperia edit
+  cost: 7500
   recipeUnlocks:
   - CryoPodMachineCircuitboard
 
@@ -96,7 +96,7 @@
     state: industrial-working
   discipline: Biochemical
   tier: 2
-  cost: 5000 #imperia edit
+  cost: 10000
   recipeUnlocks:
   - ChemMasterMachineCircuitboard
   - ChemDispenserMachineCircuitboard
@@ -112,7 +112,7 @@
     state: scanner
   discipline: Biochemical
   tier: 2
-  cost: 5000 #imperia edit
+  cost: 10000
   recipeUnlocks:
   - HandheldCrewMonitor
 
