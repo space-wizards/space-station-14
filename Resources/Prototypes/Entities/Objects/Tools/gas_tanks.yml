@@ -256,3 +256,7 @@
   - type: Tag
     tags:
     - Conduit
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200
+      Glass: 200
