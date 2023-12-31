@@ -211,7 +211,7 @@
 - type: entity
   id: GasConduitFilled
   parent: GasConduit
-  name: power conduit
+  name: gas conduit
   suffix: Filled
   components:
   - type: GasTank

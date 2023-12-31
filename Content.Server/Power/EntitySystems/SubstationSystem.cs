@@ -37,7 +37,6 @@ public sealed class SubstationSystem : EntitySystem
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
 
-        SubscribeLocalEvent<SubstationComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SubstationComponent, UpgradeExamineEvent>(OnConduitLifetimeUpgradeExamine);
         SubscribeLocalEvent<SubstationComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SubstationComponent, RejuvenateEvent>(OnRejuvenate);
@@ -47,10 +46,6 @@ public sealed class SubstationSystem : EntitySystem
         SubscribeLocalEvent<SubstationComponent, EntRemovedFromContainerMessage>(OnConduitRemoved);
         SubscribeLocalEvent<SubstationComponent, ContainerIsInsertingAttemptEvent>(OnConduitInsertAttempt);
         SubscribeLocalEvent<SubstationComponent, ContainerIsRemovingAttemptEvent>(OnConduitRemoveAttempt);
-    }
-
-    private void OnComponentInit(EntityUid uid, SubstationComponent component, ComponentInit args) 
-    {
     }
 
     private void OnExamine(EntityUid uid, SubstationComponent component, ExaminedEvent args) 

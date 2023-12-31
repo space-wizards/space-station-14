@@ -241,7 +241,7 @@
 - type: entity
   parent: GasTankRoundBase
   id: GasConduit
-  name: power conduit
+  name: gas conduit
   description: A bulky ceramic conduit filled with gas. Used in high power machines such as substations.   
   components:
   - type: Sprite
