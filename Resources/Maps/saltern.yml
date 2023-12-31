@@ -1024,17 +1024,20 @@ entities:
             0: 65535
           13,2:
             0: 62463
+            6: 3072
           13,3:
             0: 32755
-            6: 32768
+            6: 32780
           14,0:
             0: 65535
           14,2:
             0: 62719
+            6: 2816
           14,1:
             0: 65535
           14,3:
             0: 30581
+            6: 138
           -8,-5:
             0: 65535
           -5,-8:
@@ -1069,6 +1072,7 @@ entities:
             0: 62451
           15,2:
             0: 62003
+            6: 256
           8,-4:
             0: 61166
           9,-4:
@@ -1333,6 +1337,7 @@ entities:
             0: 65535
           15,3:
             0: 15
+            6: 16
           20,3:
             0: 3
           16,-3:
@@ -6331,6 +6336,7 @@ entities:
           canMix: True
           canReact: True
           maxVol: 50
+          name: null
           reagents:
           - data: null
             ReagentId: Leporazine
@@ -10815,27 +10821,27 @@ entities:
       type: Transform
   - uid: 3177
     components:
-    - pos: 12.5,10.5
+    - pos: 13.5,11.5
       parent: 31
       type: Transform
   - uid: 3178
     components:
-    - pos: 13.5,10.5
+    - pos: 14.5,9.5
       parent: 31
       type: Transform
   - uid: 3179
     components:
-    - pos: 14.5,10.5
+    - pos: 16.5,11.5
       parent: 31
       type: Transform
   - uid: 3180
     components:
-    - pos: 15.5,10.5
+    - pos: 14.5,10.5
       parent: 31
       type: Transform
   - uid: 3181
     components:
-    - pos: 16.5,10.5
+    - pos: 14.5,12.5
       parent: 31
       type: Transform
   - uid: 3182
@@ -10845,7 +10851,7 @@ entities:
       type: Transform
   - uid: 3183
     components:
-    - pos: 13.5,9.5
+    - pos: 14.5,11.5
       parent: 31
       type: Transform
   - uid: 3185
@@ -15521,6 +15527,11 @@ entities:
   - uid: 11350
     components:
     - pos: 30.5,12.5
+      parent: 31
+      type: Transform
+  - uid: 11381
+    components:
+    - pos: 17.5,11.5
       parent: 31
       type: Transform
 - proto: CableApcStack
@@ -33130,7 +33141,7 @@ entities:
     - pos: 38.5,-5.5
       parent: 31
       type: Transform
-    - secondsUntilStateChange: -5334.276
+    - secondsUntilStateChange: -5373.1543
       state: Closing
       type: Door
   - uid: 4019
@@ -43800,8 +43811,6 @@ entities:
     - pos: 14.5,11.5
       parent: 31
       type: Transform
-    - joinedGrid: 31
-      type: AtmosDevice
     - color: '#0055CCFF'
       type: AtmosPipeColor
   - uid: 5495
@@ -44536,8 +44545,6 @@ entities:
       pos: 16.5,10.5
       parent: 31
       type: Transform
-    - joinedGrid: 31
-      type: AtmosDevice
     - color: '#990000FF'
       type: AtmosPipeColor
   - uid: 5496
