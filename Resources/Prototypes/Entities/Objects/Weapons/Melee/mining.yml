@@ -54,6 +54,7 @@
       types:
         Blunt: 2.5
         Slash: 2.5
+        Structural: 10
   - type: GunRequiresWield
   - type: Item
     size: Ginormous

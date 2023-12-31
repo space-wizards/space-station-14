@@ -852,8 +852,16 @@
       isSharp: false
       colorOptions:
         - DodgerBlue
+    - type: ItemToggle
+      soundActivate:
+        path: /Audio/Weapons/ebladeon.ogg
+      soundDeactivate:
+        path: /Audio/Weapons/ebladeoff.ogg
+    - type: ItemToggleActiveSound
+      activeSound:
+        path: /Audio/Weapons/ebladehum.ogg
     - type: Sprite
-      sprite: Objects/Weapons/Melee/e_sword.rsi
+      sprite: Objects/Fun/toy_sword.rsi
       layers:
         - state: e_sword
         - state: e_sword_blade
@@ -863,7 +871,7 @@
           map: [ "blade" ]
     - type: Item
       size: Small
-      sprite: Objects/Weapons/Melee/e_sword.rsi
+      sprite: Objects/Fun/toy_sword.rsi
     - type: UseDelay
       delay: 1.0
     - type: PointLight
@@ -890,6 +898,19 @@
       damage:
         types:
           Blunt: 0
+    - type: ItemToggleMeleeWeapon
+      activatedSoundOnHit:
+        path: /Audio/Weapons/eblade1.ogg
+        params:
+          variation: 0.250
+      activatedSoundOnHitNoDamage:
+        path: /Audio/Weapons/eblade1.ogg
+        params:
+          variation: 0.250
+      activatedSoundOnSwing:
+        path: /Audio/Weapons/eblademiss.ogg
+        params:
+          variation: 0.125
 
 - type: entity
   parent: BasePlushie

@@ -77,3 +77,9 @@ fence-rattle-success = *rattle*
 hugging-success-generic = You hug {THE($target)}.
 hugging-success-generic-others = { CAPITALIZE(THE($user)) } hugs {THE($target)}.
 hugging-success-generic-target = { CAPITALIZE(THE($user)) } hugs you.
+
+## Other
+
+petting-success-tesla = You pet {THE($target)}, violating the laws of nature and physics.
+
+petting-failure-tesla = You reach out towards {THE($target)}, but it zaps your hand away.

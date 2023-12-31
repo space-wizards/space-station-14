@@ -50,8 +50,8 @@
   abstract: true
   components:
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:

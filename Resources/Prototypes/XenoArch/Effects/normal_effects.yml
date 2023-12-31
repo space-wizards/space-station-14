@@ -346,7 +346,7 @@
     - CarbonDioxide
     - Plasma
     - Tritium
-    - Miasma
+    - Ammonia
     - NitrousOxide
     - Frezon
 
@@ -570,7 +570,7 @@
     maxRange: 3
     baseRadialAcceleration: 1
     baseTangentialAcceleration: 3
-  
+
 - type: artifactEffect
   id: EffectAntiMagnet
   targetDepth: 1
@@ -580,7 +580,7 @@
     maxRange: 3
     baseRadialAcceleration: -1
     baseTangentialAcceleration: -3
-  
+
 - type: artifactEffect
   id: EffectSingulo
   targetDepth: 10
