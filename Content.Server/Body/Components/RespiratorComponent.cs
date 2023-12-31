@@ -43,7 +43,10 @@ namespace Content.Server.Body.Components
         /// Sound to play when person is gasping
         /// </summary>
         [DataField("gaspSound")]
-        public SoundSpecifier GaspSound = new SoundPathSpecifier("/Audio/Effects/Gasp/gasp.ogg");
+        public SoundSpecifier GaspSound = new SoundPathSpecifier("/Audio/Effects/Gasp/gasp.ogg")
+        {
+            Params = AudioParams.Default.WithVolume(0f).WithMaxDistance(10f)
+        };
 
 
         [ViewVariables]
