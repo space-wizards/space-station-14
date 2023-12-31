@@ -1131,6 +1131,6 @@
   description: ert-uplink-utilities-cratemineshield-desc
   productEntity: ERTCallCrateMineShieldImplant ##ID введенного мной ящика Artur Ur
   cost:
-    BlueSpaceCube: 3
+    BlueSpaceCube: 1
   categories:
   - ERTUplinkUtilities
