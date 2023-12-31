@@ -6,7 +6,6 @@
   - type: StorageFill
     contents:
       - id: BoxFolderQmClipboard
-      - id: ClothingHeadsetCargo
       - id: CargoRequestComputerCircuitboard
       - id: CargoShuttleComputerCircuitboard
       - id: CargoShuttleConsoleCircuitboard
@@ -44,7 +43,6 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
-      - id: ClothingHeadHatCapcap
 
 - type: entity
   id: LockerCaptainFilled
@@ -105,10 +103,9 @@
     contents:
       - id: ClothingOuterHardsuitEngineeringWhite
       - id: ClothingMaskBreath
-      - id: ClothingUniformJumpsuitChiefEngineerTurtle
-      - id: ClothingUniformJumpskirtChiefEngineerTurtle
       - id: OxygenTankFilled
       - id: NitrogenTankFilled
+      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltChiefEngineerFilled
       - id: ClothingShoesBootsMagAdv
       - id: ClothingHandsGlovesColorYellow
@@ -130,10 +127,9 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltChiefEngineerFilled
       - id: ClothingHandsGlovesColorYellow
-      - id: ClothingUniformJumpsuitChiefEngineerTurtle
-      - id: ClothingUniformJumpskirtChiefEngineerTurtle
       - id: CigarCase
         prob: 0.15
       - id: DoorRemoteEngineering
@@ -174,8 +170,7 @@
       #- name: ClothingEyesHudMedical #Removed until working properly
       - id: ClothingHeadsetAltMedical
       - id: ClothingBackpackDuffelSurgeryFilled
-      - id: DiagnoserMachineCircuitboard
-      - id: VaccinatorMachineCircuitboard
+      - id: ClothingMaskSterile
       - id: Hypospray
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
@@ -230,6 +225,7 @@
   - type: StorageFill
     contents:
       - id: WeaponDisabler
+      - id: ClothingOuterCoatHoSTrench
       - id: ClothingOuterHardsuitSecurityRed
       - id: ClothingBeltSecurityFilled
       - id: ClothingHeadsetAltSecurity
@@ -251,6 +247,7 @@
   - type: StorageFill
     contents:
       - id: WeaponDisabler
+      - id: ClothingOuterCoatHoSTrench
       - id: ClothingBeltSecurityFilled
       - id: ClothingHeadsetAltSecurity
       - id: CigarGoldCase

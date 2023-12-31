@@ -115,6 +115,11 @@
       - FoodPlatePlastic
       - FoodPlateSmallPlastic
       - SprayBottle
+      - MopItem
+      - Holoprojector
+      - Mousetrap
+      - LightReplacer
+      - TrashBag
       - PowerCellSmall
       - VehicleWheelchairFolded
       - RollerBedSpawnFolded
@@ -181,6 +186,21 @@
       - MagazineBoxRifleUranium
 
 - type: entity
+  id: AutolatheHyperConvection
+  parent: Autolathe
+  name: hyper convection autolathe
+  description: A highly-experimental autolathe that harnesses the power of extreme heat to slowly create objects more cost-effectively.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/autolathe_hypercon.rsi
+  - type: Lathe
+    materialUseMultiplier: 0.70
+    timeMultiplier: 1.5
+  - type: LatheHeatProducing
+  - type: Machine
+    board: AutolatheHyperConvectionMachineCircuitboard
+
+- type: entity
   id: Protolathe
   parent: BaseLathe
   name: protolathe
@@ -242,11 +262,6 @@
       - SuperCapacitorStockPart
       - SuperMatterBinStockPart
       - PicoManipulatorStockPart
-      - MopItem
-      - Holoprojector
-      - Mousetrap
-      - LightReplacer
-      - TrashBag
       - AdvMopItem
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
@@ -262,9 +277,10 @@
       - PowerCellMicroreactor
       - PowerCellHigh
       - WeaponPistolCHIMP
+      - WeaponGauntletGorilla
       - SynthesizerInstrument
       - RPED
-      - ClothingShoesBootsMag
+      - ClothingShoesBootsMagSci
       - ClothingShoesBootsSpeed
       - NodeScanner
       - HolofanProjector
@@ -296,6 +312,21 @@
       - WeaponXrayCannon
 
 - type: entity
+  id: ProtolatheHyperConvection
+  parent: Protolathe
+  name: hyper convection protolathe
+  description: A highly-experimental protolathe that harnesses the power of extreme heat to slowly create objects more cost-effectively.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/protolathe_hypercon.rsi
+  - type: Lathe
+    materialUseMultiplier: 0.70
+    timeMultiplier: 1.5
+  - type: LatheHeatProducing
+  - type: Machine
+    board: ProtolatheHyperConvectionMachineCircuitboard
+
+- type: entity
   id: CircuitImprinter
   parent: BaseLathe
   name: circuit imprinter
@@ -319,9 +350,15 @@
     idleState: icon
     runningState: building
     staticRecipes:
+    - ProtolatheMachineCircuitboard
+    - AutolatheMachineCircuitboard
+    - CircuitImprinterMachineCircuitboard
+    - OreProcessorMachineCircuitboard
+    - MaterialReclaimerMachineCircuitboard
     - ElectrolysisUnitMachineCircuitboard
     - CentrifugeMachineCircuitboard
     - CondenserMachineCircuitBoard
+    - UniformPrinterMachineCircuitboard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
@@ -344,24 +381,21 @@
       - SolarControlComputerCircuitboard
       - SolarTrackerElectronics
       - PowerComputerCircuitboard
-      - AutolatheMachineCircuitboard
-      - ProtolatheMachineCircuitboard
+      - AutolatheHyperConvectionMachineCircuitboard
+      - ProtolatheHyperConvectionMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
       - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - ElectricGrillMachineCircuitboard
       - FatExtractorMachineCircuitboard
       - SheetifierMachineCircuitboard
-      - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
-      - CircuitImprinterMachineCircuitboard
       - TechDiskComputerCircuitboard
       - DawInstrumentMachineCircuitboard
       - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
-      - MaterialReclaimerMachineCircuitboard
-      - OreProcessorMachineCircuitboard
+      - OreProcessorIndustrialMachineCircuitboard
       - CargoTelepadMachineCircuitboard
       - RipleyCentralElectronics
       - RipleyPeripheralsElectronics
@@ -611,7 +645,9 @@
       - TimerTrigger
       - Truncheon
       - VoiceTrigger
+      - WeaponDisablerPractice
       - WeaponAdvancedLaser
+      - WeaponDisablerSMG
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
@@ -903,13 +939,13 @@
     - type: MaterialStorage
       dropOnDeconstruct: false #should drop ores instead of ingots/sheets
       ignoreColor: true
+      canEjectStoredMaterials: false
       whitelist:
         tags:
           - Ore
     - type: Lathe
       idleState: icon
       runningState: building
-      canEjectStoredMaterials: false
       staticRecipes:
         - SheetSteel30
         - SheetGlass30
@@ -921,6 +957,20 @@
         - IngotGold30
         - IngotSilver30
         - MaterialBananium10
+
+- type: entity
+  parent: OreProcessor
+  id: OreProcessorIndustrial
+  name: industrial ore processor
+  description: An ore processor specifically designed for mass-producing metals in industrial applications.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/ore_processor_industrial.rsi
+  - type: Machine
+    board: OreProcessorIndustrialMachineCircuitboard
+  - type: Lathe
+    materialUseMultiplier: 0.75
+    timeMultiplier: 0.5
 
 - type: entity
   parent: BaseLathe
@@ -941,6 +991,7 @@
   - type: MaterialStorage
     dropOnDeconstruct: false #should drop ores instead of ingots/sheets
     ignoreColor: true
+    canEjectStoredMaterials: false
     whitelist:
       tags:
       - Raw
@@ -948,7 +999,6 @@
   - type: Lathe
     idleState: base_machine
     runningState: base_machine_processing
-    canEjectStoredMaterials: false
     staticRecipes:
     - MaterialSheetMeat
     - SheetPaper

@@ -40,7 +40,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 12
+        Piercing: 10
 
 - type: entity
   id: PelletShotgunIncendiary
@@ -54,8 +54,10 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 1
+        Blunt: 3
         Heat: 7
+  - type: IgnitionSource
+    ignited: true
 
 - type: entity
   id: PelletShotgunPractice
@@ -142,6 +144,7 @@
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot-flare
   - type: IgnitionSource
+    ignited: true
     temperature: 1000
   - type: TimedDespawn
     lifetime: 240
@@ -173,5 +176,5 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 3
+        Radiation: 5
         Piercing: 5
