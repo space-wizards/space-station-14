@@ -1,5 +1,8 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Station.Systems;
 using Content.Server.Warps;
+using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Pinpointer;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
@@ -14,6 +17,8 @@ namespace Content.Server.Pinpointer;
 /// </summary>
 public sealed class NavMapSystem : SharedNavMapSystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly TagSystem _tags = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -35,6 +40,10 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         SubscribeLocalEvent<NavMapBeaconComponent, ComponentStartup>(OnNavMapBeaconStartup);
         SubscribeLocalEvent<NavMapBeaconComponent, AnchorStateChangedEvent>(OnNavMapBeaconAnchor);
+
+        SubscribeLocalEvent<ConfigurableNavMapBeaconComponent, NavMapBeaconConfigureBuiMessage>(OnConfigureMessage);
+        SubscribeLocalEvent<ConfigurableNavMapBeaconComponent, MapInitEvent>(OnConfigurableMapInit);
+        SubscribeLocalEvent<ConfigurableNavMapBeaconComponent, ExaminedEvent>(OnConfigurableExamined);
     }
 
     private void OnStationInit(StationGridAddedEvent ev)
@@ -50,7 +59,67 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
     private void OnNavMapBeaconAnchor(EntityUid uid, NavMapBeaconComponent component, ref AnchorStateChangedEvent args)
     {
+        UpdateBeaconEnabledVisuals((uid, component));
         RefreshNavGrid(uid);
+    }
+
+    private void OnConfigureMessage(Entity<ConfigurableNavMapBeaconComponent> ent, ref NavMapBeaconConfigureBuiMessage args)
+    {
+        if (args.Session.AttachedEntity is not { } user)
+            return;
+
+        if (!TryComp<NavMapBeaconComponent>(ent, out var navMap))
+            return;
+
+        if (navMap.Text == args.Text &&
+            navMap.Color == args.Color &&
+            navMap.Enabled == args.Enabled)
+            return;
+
+        _adminLog.Add(LogType.Action, LogImpact.Medium,
+            $"{ToPrettyString(user):player} configured NavMapBeacon \'{ToPrettyString(ent):entity}\' with text \'{args.Text}\', color {args.Color.ToHexNoAlpha()}, and {(args.Enabled ? "enabled" : "disabled")} it.");
+
+        if (TryComp<WarpPointComponent>(ent, out var warpPoint))
+        {
+            warpPoint.Location = args.Text;
+        }
+
+        navMap.Text = args.Text;
+        navMap.Color = args.Color;
+        navMap.Enabled = args.Enabled;
+        UpdateBeaconEnabledVisuals((ent, navMap));
+        Dirty(ent, navMap);
+        RefreshNavGrid(ent);
+    }
+
+    private void OnConfigurableMapInit(Entity<ConfigurableNavMapBeaconComponent> ent, ref MapInitEvent args)
+    {
+        if (!TryComp<NavMapBeaconComponent>(ent, out var navMap))
+            return;
+
+        // We set this on mapinit just in case the text was edited via VV or something.
+        if (TryComp<WarpPointComponent>(ent, out var warpPoint))
+        {
+            warpPoint.Location = navMap.Text;
+        }
+
+        UpdateBeaconEnabledVisuals((ent, navMap));
+    }
+
+    private void OnConfigurableExamined(Entity<ConfigurableNavMapBeaconComponent> ent, ref ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange || !TryComp<NavMapBeaconComponent>(ent, out var navMap))
+            return;
+
+        args.PushMarkup(Loc.GetString("nav-beacon-examine-text",
+            ("enabled", navMap.Enabled),
+            ("color", navMap.Color.ToHexNoAlpha()),
+            ("label", navMap.Text ?? string.Empty)));
+    }
+
+    private void UpdateBeaconEnabledVisuals(Entity<NavMapBeaconComponent> ent)
+    {
+        _appearance.SetData(ent, NavMapBeaconVisuals.Enabled, ent.Comp.Enabled && Transform(ent).Anchored);
     }
 
     /// <summary>
@@ -61,7 +130,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
     {
         var xform = Transform(uid);
 
-        if (!CanBeacon(uid, xform) || !TryComp<NavMapComponent>(xform.GridUid, out var navMap))
+        if (!TryComp<NavMapComponent>(xform.GridUid, out var navMap))
             return;
 
         Dirty(xform.GridUid.Value, navMap);
@@ -244,6 +313,8 @@ public sealed class NavMapSystem : SharedNavMapSystem
             return;
 
         comp.Enabled = enabled;
+        UpdateBeaconEnabledVisuals((uid, comp));
+        Dirty(uid, comp);
 
         RefreshNavGrid(uid);
     }

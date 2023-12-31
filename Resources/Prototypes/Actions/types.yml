@@ -181,7 +181,7 @@
   noSpawn: true
   components:
   - type: InstantAction
-    icon: Interface/Actions/scream.png # somebody else can figure out a better icon for this
+    icon: { sprite: Interface/Actions/voice-mask.rsi, state: icon }
     event: !type:VoiceMaskSetNameEvent
 
 - type: entity
