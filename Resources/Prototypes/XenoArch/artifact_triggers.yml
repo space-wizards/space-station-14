@@ -137,6 +137,20 @@
     minPressureThreshold: 50
 
 - type: artifactTrigger
+  id: TriggerBlood
+  targetDepth: 2
+  triggerHint: artifact-trigger-hint-water
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Blood, CopperBlood ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
   id: TriggerHighDamage
   targetDepth: 3
   triggerHint: artifact-trigger-hint-physical

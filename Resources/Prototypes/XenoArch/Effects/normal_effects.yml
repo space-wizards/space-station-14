@@ -134,6 +134,16 @@
     - Potassium
 
 - type: artifactEffect
+  id: EffectFloraSpawn
+  targetDepth: 1
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 3
+    spawns:
+    - id: RandomFloraTree
+
+- type: artifactEffect
   id: EffectThrow
   targetDepth: 0
   effectHint: artifact-effect-hint-environment
