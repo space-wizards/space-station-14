@@ -52,21 +52,18 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         var query = EntityQueryEnumerator<ThiefRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var thief, out var gameRule))
         {
-            //Chance to not lauch gamerule  
-            if (_random.Prob(thief.RuleChance))
+            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+                continue;
+
+            foreach (var player in ev.Players)
             {
-                if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+                if (!ev.Profiles.TryGetValue(player.UserId, out var profile))
                     continue;
 
-                foreach (var player in ev.Players)
-                {
-                    if (!ev.Profiles.TryGetValue(player.UserId, out var profile))
-                        continue;
-
-                    thief.StartCandidates[player] = profile;
-                }
-                DoThiefStart(thief);
+                thief.StartCandidates[player] = profile;
             }
+
+            DoThiefStart(thief);
         }
     }
 
