@@ -194,4 +194,4 @@
   recipeUnlocks:
   - PowerCellMicroreactor
   technologyPrerequisites:
-  - SuperPowercells
+  - AdvancedPowercells
