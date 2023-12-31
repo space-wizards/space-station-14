@@ -1,40 +1,38 @@
 using System.Numerics;
-using Content.Server.Administration.Logs;
-using Content.Server.Ame.Components;
-using Content.Server.Construction.Components;
+using Content.Shared.Construction.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Prototypes;
 
-namespace Content.Server.Construction;
+namespace Content.Shared.Construction;
 
 public sealed class SharedFlatpackSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<FlatpackComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<FlatpackComponent, InteractUsingEvent>(OnFlatpackInteractUsing);
+        SubscribeLocalEvent<FlatpackComponent, ExaminedEvent>(OnFlatpackExamined);
     }
 
-    private void OnInteractUsing(Entity<FlatpackComponent> ent, ref InteractUsingEvent args)
+    private void OnFlatpackInteractUsing(Entity<FlatpackComponent> ent, ref InteractUsingEvent args)
     {
         var (uid, comp) = ent;
         if (!_tool.HasQuality(args.Used, comp.QualityNeeded))
@@ -47,10 +45,12 @@ public sealed class SharedFlatpackSystem : EntitySystem
 
         args.Handled = true;
 
-        if (comp.Entity is not { })
+        if (comp.Entity == null)
         {
             Log.Error($"No entity prototype present for flatpack {ToPrettyString(ent)}.");
-            QueueDel(ent);
+
+            if (_net.IsServer)
+                QueueDel(ent);
             return;
         }
 
@@ -60,17 +60,33 @@ public sealed class SharedFlatpackSystem : EntitySystem
 
         // todo make this logic smarter.
         // This should eventually allow for shit like building microwaves on tables and such.
-        if (intersecting.Count > 0)
+        foreach (var intersect in intersecting)
         {
-            _popup.PopupEntity(Loc.GetString("flatpack-unpack-no-room"), uid, args.User);
+            if (!TryComp<PhysicsComponent>(intersect, out var intersectBody))
+                continue;
+
+            if (!intersectBody.Hard || !intersectBody.CanCollide)
+                continue;
+
+            _popup.PopupClient(Loc.GetString("flatpack-unpack-no-room"), uid, args.User);
             return;
         }
 
-        var spawn = Spawn(comp.Entity, _map.GridTileToLocal(grid, gridComp, buildPos));
-        _adminLogger.Add(LogType.Construction, LogImpact.Low,
-            $"{ToPrettyString(args.User):player} unpacked {ToPrettyString(spawn):entity} at {xform.Coordinates} from {ToPrettyString(uid):entity}");
-        _audio.PlayPredicted(comp.UnpackSound, spawn, args.User);
+        if (_net.IsServer)
+        {
+            var spawn = Spawn(comp.Entity, _map.GridTileToLocal(grid, gridComp, buildPos));
+            _adminLogger.Add(LogType.Construction, LogImpact.Low,
+                $"{ToPrettyString(args.User):player} unpacked {ToPrettyString(spawn):entity} at {xform.Coordinates} from {ToPrettyString(uid):entity}");
+            QueueDel(uid);
+        }
 
-        QueueDel(uid);
+        _audio.PlayPredicted(comp.UnpackSound, args.Used, args.User);
+    }
+
+    private void OnFlatpackExamined(Entity<FlatpackComponent> ent, ref ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange)
+            return;
+        args.PushMarkup(Loc.GetString("flatpack-examine"));
     }
 }

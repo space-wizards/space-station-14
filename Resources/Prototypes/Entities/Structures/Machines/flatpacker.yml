@@ -15,7 +15,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - state: packing
-      visible: true
+      visible: false
     - state: inserting
       visible: false
       map: ["enum.MaterialStorageVisualLayers.Inserting"]
