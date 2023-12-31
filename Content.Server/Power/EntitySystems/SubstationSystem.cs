@@ -51,26 +51,6 @@ public sealed class SubstationSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, SubstationComponent component, ComponentInit args) 
     {
-        if(component.State == SubstationIntegrityState.Bad)
-        {
-            TryComp<PowerNetworkBatteryComponent>(uid, out var battery);
-            if(battery == null)
-                return;
-    
-            component.LastIntegrity = 0.0f;
-            battery.Enabled = false;
-            battery.CanCharge = false;
-            battery.CanDischarge = false;
-            if(HasComp<ExaminableBatteryComponent>(uid))
-                RemComp<ExaminableBatteryComponent>(uid);
-
-            _lightSystem.TryGetLight(uid, out var light);
-            if(light == null)
-                return;
-            
-            _lightSystem.SetColor(uid, Color.Red, light);
-            UpdateAppearance(uid, component.State);
-        }
     }
 
     private void OnExamine(EntityUid uid, SubstationComponent component, ExaminedEvent args) 
