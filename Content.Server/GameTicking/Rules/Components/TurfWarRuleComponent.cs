@@ -1,6 +1,5 @@
 using Content.Server.GameTicking.Rules;
 using Content.Shared.Roles;
-using Content.Shared.SprayPainter.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -24,12 +23,6 @@ public sealed partial class TurfWarRuleComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? Station;
-
-    /// <summary>
-    /// Mapping between airlock sprite and department to use.
-    /// </summary>
-    [DataField]
-    public ProtoId<AirlockDepartmentsPrototype> Departments = "Standard";
 
     /// <summary>
     /// Antagonist prototype to use.
