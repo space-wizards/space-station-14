@@ -47,21 +47,40 @@ public sealed class SprayPainterBoundUserInterfaceState : BoundUserInterfaceStat
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterDoAfterEvent : DoAfterEvent
+public sealed partial class SprayPainterDoorDoAfterEvent : DoAfterEvent
 {
-    [DataField("sprite")]
-    public string? Sprite = null;
+    /// <summary>
+    /// Base RSI path to set for the door sprite.
+    /// </summary>
+    [DataField]
+    public string Sprite;
 
-    [DataField("color")]
-    public Color? Color = null;
+    /// <summary>
+    /// Department id to set for the door, if the style has one.
+    /// </summary>
+    [DataField]
+    public string? Department;
 
-    private SprayPainterDoAfterEvent()
-    {
-    }
-
-    public SprayPainterDoAfterEvent(string? sprite, Color? color)
+    public SprayPainterDoorDoAfterEvent(string sprite, string? department)
     {
         Sprite = sprite;
+        Department = department;
+    }
+
+    public override DoAfterEvent Clone() => this;
+}
+
+[Serializable, NetSerializable]
+public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
+{
+    /// <summary>
+    /// Color of the pipe to set.
+    /// </summary>
+    [DataField]
+    public Color Color;
+
+    public SprayPainterPipeDoAfterEvent(Color color)
+    {
         Color = color;
     }
 
