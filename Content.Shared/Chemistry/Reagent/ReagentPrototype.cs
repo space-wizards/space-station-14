@@ -102,6 +102,12 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public float Viscosity;
 
+         /// <summary>
+        /// Should this reagent work on the dead?
+        /// </summary>
+        [DataField("worksOnTheDead")]
+        public bool WorksOnTheDead = false;
+
         [DataField(serverOnly: true)]
         public FrozenDictionary<ProtoId<MetabolismGroupPrototype>, ReagentEffectsEntry>? Metabolisms;
 
