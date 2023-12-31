@@ -1,165 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - message: traitor gamemode is rarer, nukies and revs are more common
-    type: Tweak
-  id: 4971
-  time: '2023-10-07T19:15:57.0000000+00:00'
-- author: Lank
-  changes:
-  - message: Humanoid species now passively regenerate small bruises and burns.
-    type: Tweak
-  id: 4972
-  time: '2023-10-07T19:34:32.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Kudzu has been reenabled.
-    type: Add
-  id: 4973
-  time: '2023-10-07T19:59:39.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Diona now move at the same speed as other species.
-    type: Tweak
-  id: 4974
-  time: '2023-10-08T21:02:46.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - message: Updated the PDA ringtone UI to have a small delay between sets.
-    type: Tweak
-  id: 4975
-  time: '2023-10-08T21:25:08.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Brains now function properly when inserted into an MMI.
-    type: Fix
-  id: 4976
-  time: '2023-10-09T04:49:20.0000000+00:00'
-- author: gusxyz
-  changes:
-  - message: Using capital letter for your department specific radio channels will
-      work now!
-    type: Tweak
-  id: 4977
-  time: '2023-10-09T05:07:54.0000000+00:00'
-- author: nmajask
-  changes:
-  - message: Added flannel jackets, find them at your local winterdrobe or dark maint
-      corridor.
-    type: Add
-  id: 4978
-  time: '2023-10-09T15:22:57.0000000+00:00'
-- author: Vasilis
-  changes:
-  - message: Contributors are automatically updated now once a week in the credits
-      section.
-    type: Add
-  id: 4979
-  time: '2023-10-09T23:42:53.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Fixed kudzu, foam, smoke, and puddles spreading at extremely high rates.
-    type: Fix
-  id: 4980
-  time: '2023-10-10T03:32:34.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Reenabled Kudzu (again) (for real this time)
-    type: Add
-  id: 4981
-  time: '2023-10-10T03:34:41.0000000+00:00'
-- author: GoodWheatley
-  changes:
-  - message: Dionas are actually the same speed as other species now.
-    type: Fix
-  id: 4982
-  time: '2023-10-10T14:03:20.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - message: Added the CuraDrobe.
-    type: Add
-  - message: Added the sensible suit and skirt.
-    type: Add
-  - message: Fixed the librarian not having their own jumpskirt.
-    type: Fix
-  - message: Resprited the librarian jumpsuit.
-    type: Tweak
-  id: 4983
-  time: '2023-10-10T16:55:31.0000000+00:00'
-- author: Whisper
-  changes:
-  - message: Lizards can eat organs again!
-    type: Fix
-  - message: Organs now contain uncooked proteins instead of edible nutriment. Animals
-      will be able to consume this.
-    type: Tweak
-  id: 4984
-  time: '2023-10-10T18:02:47.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix shuttles sometimes clipping planet marker entities such as ore.
-    type: Fix
-  id: 4985
-  time: '2023-10-10T21:33:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix expedition faction sometimes not aligning with the mission faction.
-    type: Fix
-  id: 4986
-  time: '2023-10-10T21:33:18.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Vaulting tables is now predicted.
-    type: Fix
-  - message: Fix buckle sound not playing.
-    type: Fix
-  - message: Buckling is now predicted.
-    type: Fix
-  id: 4987
-  time: '2023-10-10T23:41:12.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Ninja uncloak after attacking with melee weapons.
-    type: Tweak
-  id: 4988
-  time: '2023-10-11T02:55:54.0000000+00:00'
-- author: gusxyz
-  changes:
-  - message: Crabs will seek out food to eat now.
-    type: Add
-  id: 4989
-  time: '2023-10-11T03:09:26.0000000+00:00'
-- author: Vasilis
-  changes:
-  - message: Potentially fix (or hopefully at least reduce) electrical anomaly lagging
-      everyone on supercrit.
-    type: Fix
-  id: 4990
-  time: '2023-10-11T03:11:46.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - message: Added toggleselfghost command, which toggles being able to see your own
-      ghost.
-    type: Add
-  - message: Added replay_toggle_screenshot_mode command, which toggles the HUD in
-      replay mode to look similar to ingame.
-    type: Add
-  id: 4991
-  time: '2023-10-11T03:43:48.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Rehargers can be examined to show the charge of the battery or weapon
-      inside.
-    type: Tweak
-  id: 4992
-  time: '2023-10-11T09:22:09.0000000+00:00'
-- author: Skarletto
-  changes:
-  - message: Changed unary devices such as scrubbers and vents to not be able to stack
-      with each other
-    type: Tweak
-  id: 4993
-  time: '2023-10-11T15:20:21.0000000+00:00'
 - author: ElectroJr
   changes:
   - message: Fixed explosion resistance from clothing/equipment not being applied.
@@ -3539,3 +3378,181 @@ Entries:
   id: 5471
   time: '2023-12-29T04:43:37.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22410
+- author: FairlySadPanda
+  changes:
+  - message: Talking, whispering and emoting will now strip out any markup tags in
+      the input text. This also means intercoms tuned to the science channel will
+      no longer squawk out "[bold]", and so on, when reporting on research unlocks.
+    type: Fix
+  id: 5472
+  time: '2023-12-30T00:38:11.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23055
+- author: Admiral-Obvious-001
+  changes:
+  - message: Normalized researched secfab shotgun ammo damages to align with the rest
+      of the ammo sizes.
+    type: Tweak
+  id: 5473
+  time: '2023-12-30T05:34:27.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23163
+- author: metalgearsloth
+  changes:
+  - message: Fix decals such as grass drawing over shuttles on planet maps.
+    type: Fix
+  id: 5474
+  time: '2023-12-30T16:12:39.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22953
+- author: metalgearsloth
+  changes:
+  - message: Fix mobs not gibbing upon shuttle FTL.
+    type: Fix
+  id: 5475
+  time: '2023-12-30T16:12:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22952
+- author: metalgearsloth
+  changes:
+  - message: Surveillance cameras now cycle their animation forwards and backwards.
+    type: Add
+  id: 5476
+  time: '2023-12-30T16:14:14.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22950
+- author: EmoGarbage404
+  changes:
+  - message: Added the Hyper convection protolathe and autolathe to Industrial Engineering
+      tech. These lathes have a discounted printing price at the cost of venting hot
+      air into the surroundings.
+    type: Add
+  - message: Added the industrial ore processor, an improved version with discounted
+      printing prices, to salvage equipment technology.
+    type: Add
+  - message: Moved autolathe, protolathe, circuit imprinter, ore processor, and material
+      reclaimer boards to be available by default in the circuit imprinter.
+    type: Tweak
+  - message: Removed machine part upgrades from all lathes.
+    type: Remove
+  id: 5477
+  time: '2023-12-30T16:18:58.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23202
+- author: Ubaser
+  changes:
+  - message: The uncloneable trait has been removed.
+    type: Remove
+  id: 5478
+  time: '2023-12-30T16:45:43.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23229
+- author: Ubaser
+  changes:
+  - message: Syndicate implanters have received a new sprite.
+    type: Add
+  id: 5479
+  time: '2023-12-30T16:46:13.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23227
+- author: lzk228
+  changes:
+  - message: Shivs crafting now based on construct. Click with cloth on shard to create
+      shiv.
+    type: Tweak
+  id: 5480
+  time: '2023-12-30T17:08:52.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23134
+- author: Alekshhh
+  changes:
+  - message: Changed disposal units visually
+    type: Tweak
+  id: 5481
+  time: '2023-12-30T17:14:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23067
+- author: quatre
+  changes:
+  - message: Artifact Analyzer now pauses on power-loss.
+    type: Tweak
+  id: 5482
+  time: '2023-12-30T17:49:25.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22974
+- author: Blazeror
+  changes:
+  - message: Pinpointers now use the correct sprites.
+    type: Fix
+  id: 5483
+  time: '2023-12-30T19:12:13.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23236
+- author: Emisse
+  changes:
+  - message: The Grand Lottery has even more surprises in store!
+    type: Tweak
+  id: 5484
+  time: '2023-12-30T21:24:24.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23243
+- author: Blackern5000
+  changes:
+  - message: Chang's instant ramen cups have been slightly enlarged to accommodate
+      10ml of boiling water, as per the instructions.
+    type: Tweak
+  id: 5485
+  time: '2023-12-30T22:27:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23189
+- author: Velcroboy
+  changes:
+  - message: Moved head clothing items out of their lockers and into their dressers.
+    type: Tweak
+  id: 5486
+  time: '2023-12-30T22:42:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23183
+- author: Carve
+  changes:
+  - message: Voice change has a new icon.
+    type: Tweak
+  id: 5487
+  time: '2023-12-30T23:13:27.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23239
+- author: lzk228
+  changes:
+  - message: Mime's stamp is silent now!
+    type: Tweak
+  id: 5488
+  time: '2023-12-30T23:15:02.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23221
+- author: EmoGarbage404
+  changes:
+  - message: Damage from heat sources has been increased.
+    type: Tweak
+  id: 5489
+  time: '2023-12-30T23:28:01.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23238
+- author: Alekshhh
+  changes:
+  - message: Changed seed bag visuals
+    type: Tweak
+  id: 5490
+  time: '2023-12-30T23:35:46.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23210
+- author: Alekshhh
+  changes:
+  - message: Changed ammo boxes visually
+    type: Tweak
+  id: 5491
+  time: '2023-12-31T02:13:07.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23180
+- author: leonardo-dabepis
+  changes:
+  - message: Soap no longer smells like condoms.
+    type: Tweak
+  id: 5492
+  time: '2023-12-31T07:27:55.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23272
+- author: EmoGarbage404
+  changes:
+  - message: The chemistry guidebook now includes sources for various chemicals! These
+      are alternative methods of collection, including grinding, juicing, condensation,
+      and various others.
+    type: Add
+  id: 5493
+  time: '2023-12-31T07:35:00.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22627
+- author: noctyrnal
+  changes:
+  - message: RD's suit got a new paint job.
+    type: Tweak
+  id: 5494
+  time: '2023-12-31T07:36:47.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23131
