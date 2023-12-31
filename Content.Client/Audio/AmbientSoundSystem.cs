@@ -118,6 +118,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
 
     private void SetAmbienceGain(float value)
     {
+        value = Math.Clamp(value, 0f, ContentAudioSystem.AmbienceMultiplier);
         _ambienceVolume = SharedAudioSystem.GainToVolume(value);
 
         foreach (var (comp, values) in _playingSounds)
