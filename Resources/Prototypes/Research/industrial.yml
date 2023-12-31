@@ -8,7 +8,7 @@
     state: handdrill
   discipline: Industrial
   tier: 1
-  cost: 5000 #Imperia edit
+  cost: 7500
   recipeUnlocks:
   - MiningDrill
   - BorgModuleMining
@@ -34,7 +34,7 @@
     state: panel
   discipline: Industrial
   tier: 1
-  cost: 4500 #imperia edit
+  cost: 5000 #imperia edit
   recipeUnlocks:
   - WallmountSubstationElectronics
   - WallmountGeneratorElectronics
