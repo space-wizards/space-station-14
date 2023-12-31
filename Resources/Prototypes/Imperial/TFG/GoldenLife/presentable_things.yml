@@ -1,0 +1,66 @@
+- type: entity
+  id: BriefcasePresentable
+  parent: BriefcaseBase
+  name: presentable briefcase
+  description: Its very appearance makes it clear that fifteen minutes of your time is worth more than this station.
+  components:
+  - type: Sprite
+    sprite: Imperial/TFG/GoldenLife/presentableCase.rsi
+    state: icon
+  - type: Item
+    sprite: Imperial/TFG/GoldenLife/presentableCase.rsi
+    size: 9999
+
+- type: entity
+  id: BriefcasePresentableFilled
+  suffix: Filled, Centcom
+  parent: BriefcasePresentable
+  components:
+  - type: StorageFill
+    contents:
+      - id: SpaceCash1000
+        amount: 5
+      - id: CyberPen
+      - id: BoxFolderPresentable
+      - id: RubberStampCentcom
+
+- type: entity
+  id: BoxFolderPresentable
+  parent: BoxFolderBase
+  name: NanoTrasen folder
+  description: What is hidden here?
+  components:
+  - type: Sprite
+    sprite: Imperial/TFG/GoldenLife/presentableFolder.rsi
+    layers:
+    - state: folder-special
+  - type: Item
+    sprite: Imperial/TFG/GoldenLife/presentableFolder.rsi
+  - type: StorageFill
+    contents:
+      - id: Paper
+        amount: 3
+
+- type: entity
+  id: PresentableCane
+  parent: WhiteCane
+  name: presentable cane
+  description: A chic cane with weighted parts. A formidable melee weapon.
+  components:
+  - type: Sprite
+    sprite: Imperial/TFG/GoldenLife/presentableCane.rsi
+    state: icon
+  - type: Item
+    sprite: Imperial/TFG/GoldenLife/presentableCane.rsi
+    size: 20
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: StaminaDamageOnHit
+    damage: 10
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 10

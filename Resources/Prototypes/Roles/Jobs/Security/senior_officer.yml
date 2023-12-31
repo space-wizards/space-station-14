@@ -3,6 +3,7 @@
   name: job-name-senior-officer
   description: job-description-senior-officer
   playTimeTracker: JobSeniorOfficer
+  psychosisGainResist: 0.75 # psychosis
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden

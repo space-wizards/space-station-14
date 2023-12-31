@@ -1,0 +1,36 @@
+- type: reagent
+  id: BetterPax
+  pricePerUnit: 2.75
+  name: reagent-name-betterpax
+  group: Narcotics
+  desc: reagent-desc-betterpax
+  physicalDesc: reagent-physical-desc-soothing
+  color: "#AAAAAA"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+            types:
+              Cellular: 1
+      - !type:HealPsychosis
+        reagent: BetterPax
+        stage: 3
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        refresh: false
+        type: Add
+
+- type: reaction
+  id: BetterPaxReaction
+  reactants:
+    MindbreakerToxin:
+      amount: 5
+    Pax:
+      amount: 5
+  products:
+    BetterPax: 2

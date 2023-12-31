@@ -3,6 +3,7 @@
   name: job-name-hop
   description: job-description-hop
   playTimeTracker: JobHeadOfPersonnel
+  psychosisGainResist: 0.6 # psychosis
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering

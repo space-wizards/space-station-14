@@ -68,10 +68,16 @@
   metabolisms:
     Poison:
       effects:
+      - !type:HealPsychosis # psychosis
+        reagent: Artif #psychosis
+        stage: 3 # psychosis
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 10 # psychosis
       - !type:HealthChange
         damage:
           types:
-            Caustic: 2
+            Cellular: 1 # psychosis
   reactiveEffects:
     Acidic:
       methods: [ Touch ]

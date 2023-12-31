@@ -3,6 +3,7 @@
   name: job-name-security
   description: job-description-security
   playTimeTracker: JobSecurityOfficer
+  psychosisGainResist: 0.75 # psychosis
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security

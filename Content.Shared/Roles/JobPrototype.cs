@@ -101,5 +101,8 @@ namespace Content.Shared.Roles
 
         [DataField("sponsorsOnly")]
         public bool SponsorsOnly { get; } = false; //sponsors
+
+        [DataField("psychosisGainResist")] // psychosis resists
+        public float PsychosisGainResist = 0f; // psychosis resists
     }
 }

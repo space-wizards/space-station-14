@@ -11,10 +11,12 @@ machine-upgrade-not-upgraded = Параметр [color=yellow]{CAPITALIZE($upgra
 machine-part-name-capacitor = Конденсатор
 machine-part-name-manipulator = Манипулятор
 machine-part-name-matter-bin = Ёмкость материи
+machine-part-name-power-cell = Батарея
 
 upgrade-power-draw = Потребление энергии
 upgrade-max-charge = Максимальный запас энергии
 upgrade-power-supply = Производство энергии
+upgrade-power-supply-ramping = скорость изменения мощности
 
 two-way-lever-left = Вы сдвигаете рычаг влево
 two-way-lever-right = Вы сдвигаете рычаг вправо

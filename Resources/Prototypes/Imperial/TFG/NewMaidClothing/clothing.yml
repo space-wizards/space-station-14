@@ -1,0 +1,134 @@
+- type: entity
+  id: ClothingBeltJanimaid
+  parent: ClothingBeltStorageBase
+  name: janimaid belt
+  description: A special belt for the most obedient cat-janimaid.
+  components:
+  - type: Sprite
+    sprite: Imperial/TFG/NewMaidClothing/maidBelt.rsi
+  - type: Clothing
+    sprite: Imperial/TFG/NewMaidClothing/maidBelt.rsi
+  - type: Item
+    size: 9999
+  - type: Storage
+    capacity: 50
+    sprite: Clothing/Belt/belt_overlay.rsi
+  - type: Appearance
+
+- type: entity
+  id: ClothingBeltJanimaidFilled
+  parent: ClothingBeltJanimaid
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: RagItem
+      - id: SprayBottleSpaceCleaner
+#      - id: Pipidastr
+  - type: ItemMapper
+    mapLayers:
+      bottle:
+        whitelist:
+          tags:
+          - Bottle
+      bottle_spray:
+        whitelist:
+          tags:
+          - Spray
+    sprite: Clothing/Belt/belt_overlay.rsi
+  - type: Appearance
+
+- type: entity
+  id: ClothingHeadsetJanimaid
+  parent: ClothingHeadset
+  name: janimaid headset
+  description: A headset used by a maid.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyService
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Imperial/TFG/NewMaidClothing/maidHeadset.rsi
+  - type: Clothing
+    sprite: Imperial/TFG/NewMaidClothing/maidHeadset.rsi
+
+- type: entity
+  id: ClothingNeckMaidChoker
+  parent: ClothingNeckBase
+  name: maid choker
+  description: A special choker for maid.
+  components:
+  - type: Sprite
+    sprite: Imperial/TFG/NewMaidClothing/maidChoker.rsi
+  - type: Clothing
+    sprite: Imperial/TFG/NewMaidClothing/maidChoker.rsi
+
+- type: entity
+  id: ClothingBackpackBackbow
+  parent: BaseItem
+  name: maid's back bow
+  description: Cool bow for a cool maid.
+  components:
+  - type: Sprite
+    sprite: Imperial/TFG/NewMaidClothing/maidBackbow.rsi
+    state: icon
+  - type: Clothing
+    sprite: Imperial/TFG/NewMaidClothing/maidBackbow.rsi
+    quickEquip: false
+    slots:
+    - back
+  - type: Item
+    size: 5
+  - type: Appearance
+#///
+
+#PDA and ID card:
+#Maid ID
+- type: entity
+  id: MaidIDCard
+  parent: JanitorIDCard
+  name: maid ID card
+  components:
+    - type: Sprite
+      sprite: Imperial/TFG/NewMaidClothing/maidID.rsi
+      layers:
+        - state: blackcard
+        - state: maidID
+    - type: Clothing
+      slots:
+        - idcard
+      sprite: Imperial/TFG/NewMaidClothing/maidID.rsi
+    - type: PresetIdCard
+      job: StationMaid
+
+#Maid PDA
+- type: entity
+  id: JanimaidPDA
+  parent: BasePDA
+  name: janimaid PDA
+  description: PDA of a highly qualified worker.
+  components:
+  - type: Sprite
+    sprite: Imperial/TFG/NewMaidClothing/maidPDA.rsi
+    layers:
+    - map: [ "enum.PdaVisualLayers.Base" ]
+    - state: "light_overlay"
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
+      shader: "unshaded"
+      visible: false
+    - state: "id_overlay"
+      map: [ "enum.PdaVisualLayers.IdLight" ]
+      shader: "unshaded"
+      visible: false
+  - type: Icon
+    sprite: Imperial/TFG/NewMaidClothing/maidPDA.rsi
+    state: pda-made
+  - type: Pda
+    id: MaidIDCard
+    state: pda-made
+  - type: PdaBorderColor
+    borderColor: "#242424"
+    accentHColor: "#447987"
+#PDA and ID card END.

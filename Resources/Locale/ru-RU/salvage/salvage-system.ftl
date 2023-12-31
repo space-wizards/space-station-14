@@ -24,3 +24,4 @@ salvage-system-magnet-examined-cooling-down = Магнит остывает. О�
         [few] {$timeLeft} секунды.
        *[other] {$timeLeft} секунд.
     }.
+salvage-system-magnet-delay-upgrade = перезарядки

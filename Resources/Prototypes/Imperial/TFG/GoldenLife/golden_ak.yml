@@ -1,0 +1,34 @@
+- type: entity
+  id: WeaponRifleGoldenAk
+  parent: WeaponRifleAk
+  name: golden AK
+  description: One of the many pathetic copies of the legend worshiped by the NanoTrasen board of directors.
+  components:
+  - type: Sprite
+    sprite: Imperial/TFG/GoldenLife/goldenAK.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Imperial/TFG/GoldenLife/goldenAK.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+
+- type: entity
+  id: WeaponRifleGoldenAkLegend
+  parent: WeaponRifleGoldenAk
+  suffix: Shiny
+  description: A legend rumored to be worshiped by the NanoTrasen board of directors. Polished to a shine by the company's best maids.
+  components:
+  - type: Sprite
+    sprite: Imperial/TFG/GoldenLife/goldenAK.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+      - state: anim

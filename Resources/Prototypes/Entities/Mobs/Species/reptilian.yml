@@ -21,6 +21,7 @@
   - type: Body
     prototype: Reptilian
     requiredLegs: 2
+  - type: PsychosisGain # psychosis
   - type: Perishable
   - type: Butcherable
     butcheringType: Spike

@@ -3,6 +3,7 @@
   name: job-name-coroner
   description: job-description-coroner
   playTimeTracker: JobCoroner
+  psychosisGainResist: 1 # psychosis
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical

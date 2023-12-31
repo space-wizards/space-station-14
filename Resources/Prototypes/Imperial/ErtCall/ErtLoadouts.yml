@@ -8,7 +8,7 @@
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetHelmet
     eyes: ClothingEyesGlassesSecurity
-    gloves: ClothingHandsGlovesColorBlack
+    gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
@@ -23,7 +23,7 @@
     shoes: ClothingShoesBootsJack
     mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
-    gloves: ClothingHandsGlovesColorBlack
+    gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTLeader
     suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
@@ -40,7 +40,7 @@
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetHelmet
     eyes: ClothingEyesHudMedical
-    gloves: ClothingHandsGlovesColorBlack
+    gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterVestKevlar
     id: ERTCallLeaderPDA
     ears: ClothingHeadsetAltCentCom
@@ -55,7 +55,7 @@
     shoes: ClothingShoesBootsJack
     mask: ClothingMaskGasERT
     eyes: ClothingEyesHudMedical
-    gloves: ClothingHandsGlovesColorBlack
+    gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTMedical
     suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
@@ -72,7 +72,7 @@
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetHelmet
     eyes: ClothingEyesGlassesSecurity
-    gloves: ClothingHandsGlovesColorBlack
+    gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
@@ -87,7 +87,7 @@
     shoes: ClothingShoesBootsJack
     mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
-    gloves: ClothingHandsGlovesColorBlack
+    gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTSecurity
     suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
@@ -104,7 +104,7 @@
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetHelmet
     eyes: ClothingEyesGlassesMeson
-    gloves: ClothingHandsGlovesColorYellow
+    gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
@@ -119,7 +119,7 @@
     shoes: ClothingShoesBootsJack
     mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesMeson
-    gloves: ClothingHandsGlovesColorYellow
+    gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTEngineer
     suitstorage: OxygenTankFilled
     id: ERTLeaderPDA

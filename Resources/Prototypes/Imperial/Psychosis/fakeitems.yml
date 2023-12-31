@@ -1,0 +1,125 @@
+- type: startingGear
+  id: SpaceNinjaGearFake
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitNinja
+    back: ClothingBackpackSatchelTools
+    mask: ClothingMaskNinja
+    head: ClothingHeadHelmetSpaceNinja
+    eyes: ClothingEyesVisorNinja
+    gloves: ClothingHandsGlovesSpaceNinja
+    outerClothing: ClothingOuterSuitSpaceNinja
+    shoes: ClothingShoesSpaceNinja
+    id: AgentIDCard
+    ears: ClothingHeadsetGrey
+    pocket1: SpiderCharge
+    pocket2: PinpointerStation
+    belt: EnergyKatana
+    suitstorage: YellowOxygenTankFilled
+
+- type: entity
+  parent: WeaponAntiqueLaser
+  id: WeaponAntiqueLaserFake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: ClothingHeadHatCatEars
+  id: ClothingHeadHatCatEarsFake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: ClothingUniformJumpskirtJanimaidmini
+  id: ClothingUniformJumpskirtJanimaidminiFake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: ClothingHandsGlovesColorYellow
+  id: ClothingHandsGlovesColorYellowFake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: ClothingBeltChiefEngineerFilled
+  id: ClothingBeltChiefEngineerFilledFake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: NukeDisk
+  id: NukeDiskFakeFake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: Stimpack
+  id: StimpackFake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: ExGrenade
+  id: ExGrenadeFake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: C4
+  id: C4Fake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: PresentRandomInsane
+  id: PresentFake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: MobHumanSyndicateAgent
+  id: MobHumanSyndicateAgentFake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: MobHumanSpaceNinja
+  id: MobHumanSpaceNinjaFake
+  suffix: Fake
+  components:
+  - type: Fake
+  - type: Loadout
+    prototypes: [SpaceNinjaGearFake]
+
+
+- type: entity
+  parent: MobHumanSyndicateAgentNukeops
+  id: MobHumanSyndicateAgentNukeopsFake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: MobHumanLoneNuclearOperative
+  id: MobHumanLoneNuclearOperativeFake
+  suffix: Fake
+  components:
+  - type: Fake
+
+- type: entity
+  parent: WeaponRifleLecter
+  id: WeaponRifleLecterFake
+  suffix: Fake
+  components:
+  - type: Fake

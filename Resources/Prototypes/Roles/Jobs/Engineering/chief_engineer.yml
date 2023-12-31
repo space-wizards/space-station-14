@@ -3,6 +3,7 @@
   name: job-name-ce
   description: job-description-ce
   playTimeTracker: JobChiefEngineer
+  psychosisGainResist: 0.6 # psychosis
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering

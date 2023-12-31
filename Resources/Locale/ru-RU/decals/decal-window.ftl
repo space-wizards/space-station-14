@@ -2,6 +2,7 @@
 decal-placer-window-use-color = Свой цвет
 decal-placer-window-rotation = Поворот
 decal-placer-window-zindex = С глубиной
+decal-placer-window-enable-auto = Использовать автоматические настройки
 decal-placer-window-enable-snap = Привязка к тайлу
 decal-placer-window-enable-cleanable = Стираемый
 decal-placer-window-palette = Палитра
