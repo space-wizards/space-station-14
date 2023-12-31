@@ -146,6 +146,7 @@
     priority: 3
     lightningResistance: 10
     lightningExplode: false
+    damageFromLightning: 0
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
