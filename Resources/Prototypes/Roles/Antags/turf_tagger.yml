@@ -1,0 +1,6 @@
+- type: antag
+  id: TurfTagger
+  name: roles-antag-turf-tagger-name
+  antagonist: false # not allowed to go killing
+  setPreference: true
+  objective: roles-antag-turf-tagger-objective
