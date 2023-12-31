@@ -30,6 +30,8 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     {
         base.Initialize();
         SubscribeLocalEvent<MaterialStorageComponent, MachineDeconstructedEvent>(OnDeconstructed);
+
+        SubscribeLocalEvent<MaterialStorageComponent, EjectMaterialMessage>(OnEjectMessage);
     }
 
     private void OnDeconstructed(EntityUid uid, MaterialStorageComponent component, MachineDeconstructedEvent args)
@@ -40,6 +42,34 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         foreach (var (material, amount) in component.Storage)
         {
             SpawnMultipleFromMaterial(amount, material, Transform(uid).Coordinates);
+        }
+    }
+
+    private void OnEjectMessage(EntityUid uid, MaterialStorageComponent component, EjectMaterialMessage message)
+    {
+        if (!component.CanEjectStoredMaterials || !_prototypeManager.TryIndex<MaterialPrototype>(message.Material, out var material))
+            return;
+
+        var volume = 0;
+
+        if (material.StackEntity != null)
+        {
+            if (!_prototypeManager.Index<EntityPrototype>(material.StackEntity).TryGetComponent<PhysicalCompositionComponent>(out var composition))
+                return;
+
+            var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == message.Material).Value;
+            var sheetsToExtract = Math.Min(message.SheetsToExtract, _stackSystem.GetMaxCount(material.StackEntity));
+
+            volume = sheetsToExtract * volumePerSheet;
+        }
+
+        if (volume <= 0 || !TryChangeMaterialAmount(uid, message.Material, -volume))
+            return;
+
+        var mats = SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out _);
+        foreach (var mat in mats.Where(mat => !TerminatingOrDeleted(mat)))
+        {
+            _stackSystem.TryMergeToContacts(mat);
         }
     }
 
