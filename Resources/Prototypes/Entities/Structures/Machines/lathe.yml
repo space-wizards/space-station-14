@@ -936,6 +936,8 @@
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
       board: OreProcessorMachineCircuitboard
+    - type: ApcPowerReceiver
+      powerLoad: 0
     - type: MaterialStorage
       dropOnDeconstruct: false #should drop ores instead of ingots/sheets
       ignoreColor: true
