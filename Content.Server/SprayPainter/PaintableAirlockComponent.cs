@@ -14,9 +14,10 @@ public sealed partial class PaintableAirlockComponent : Component
     public ProtoId<AirlockGroupPrototype> Group = string.Empty;
 
     /// <summary>
-    /// Department this airlock is painted as.
+    /// Department this airlock is painted as, or none.
     /// Must be specified in prototypes for turf war to work.
+    /// To better catch any mistakes, you need to explicitly state a non-styled airlock has a null department.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<DepartmentPrototype> Department = string.Empty;
+    public ProtoId<DepartmentPrototype>? Department;
 }
