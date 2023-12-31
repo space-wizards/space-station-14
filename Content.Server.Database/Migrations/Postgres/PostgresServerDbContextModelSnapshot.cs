@@ -528,6 +528,12 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("bytea")
                         .HasColumnName("hwid");
 
+                    b.Property<int>("ServerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0)
+                        .HasColumnName("server_id");
+
                     b.Property<DateTime>("Time")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("time");
@@ -543,6 +549,9 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasKey("Id")
                         .HasName("PK_connection_log");
+
+                    b.HasIndex("ServerId")
+                        .HasDatabaseName("IX_connection_log_server_id");
 
                     b.HasIndex("UserId");
 
@@ -1466,6 +1475,18 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
+                {
+                    b.HasOne("Content.Server.Database.Server", "Server")
+                        .WithMany("ConnectionLogs")
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired()
+                        .HasConstraintName("FK_connection_log_server_server_id");
+
+                    b.Navigation("Server");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Job", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
@@ -1712,6 +1733,8 @@ namespace Content.Server.Database.Migrations.Postgres
 
             modelBuilder.Entity("Content.Server.Database.Server", b =>
                 {
+                    b.Navigation("ConnectionLogs");
+
                     b.Navigation("Rounds");
                 });
 

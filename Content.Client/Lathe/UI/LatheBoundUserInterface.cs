@@ -1,4 +1,5 @@
 using Content.Shared.Lathe;
+using Content.Shared.Materials;
 using Content.Shared.Research.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -34,7 +35,7 @@ namespace Content.Client.Lathe.UI
 
             _menu.OnEjectPressed += (material, sheetsToExtract) =>
             {
-                SendMessage(new LatheEjectMaterialMessage(material, sheetsToExtract));
+                SendMessage(new EjectMaterialMessage(material, sheetsToExtract));
             };
 
             _menu.OpenCentered();

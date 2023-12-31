@@ -66,8 +66,20 @@ public abstract partial class BaseActionComponent : Component
     /// <summary>
     ///     Convenience tool for actions with limited number of charges. Automatically decremented on use, and the
     ///     action is disabled when it reaches zero. Does NOT automatically remove the action from the action bar.
+    ///     However, charges will regenerate if <see cref="RenewCharges"/> is enabled and the action will not disable
+    ///     when charges reach zero.
     /// </summary>
     [DataField("charges")] public int? Charges;
+
+    /// <summary>
+    ///     The max charges this action has, set automatically from <see cref="Charges"/>
+    /// </summary>
+    public int MaxCharges;
+
+    /// <summary>
+    ///     If enabled, charges will regenerate after a <see cref="Cooldown"/> is complete
+    /// </summary>
+    [DataField("renewCharges")]public bool RenewCharges;
 
     /// <summary>
     /// The entity that contains this action. If the action is innate, this may be the user themselves.
@@ -121,6 +133,12 @@ public abstract partial class BaseActionComponent : Component
     [ViewVariables] public EntityUid? AttachedEntity;
 
     /// <summary>
+    ///     If true, this will cause the the action event to always be raised directed at the action performer/user instead of the action's container/provider.
+    /// </summary>
+    [DataField]
+    public bool RaiseOnUser;
+
+    /// <summary>
     ///     Whether or not to automatically add this action to the action bar when it becomes available.
     /// </summary>
     [DataField("autoPopulate")] public bool AutoPopulate = true;
@@ -153,12 +171,15 @@ public abstract class BaseActionComponentState : ComponentState
     public (TimeSpan Start, TimeSpan End)? Cooldown;
     public TimeSpan? UseDelay;
     public int? Charges;
+    public int MaxCharges;
+    public bool RenewCharges;
     public NetEntity? Container;
     public NetEntity? EntityIcon;
     public bool CheckCanInteract;
     public bool ClientExclusive;
     public int Priority;
     public NetEntity? AttachedEntity;
+    public bool RaiseOnUser;
     public bool AutoPopulate;
     public bool Temporary;
     public ItemActionIconStyle ItemIconStyle;
@@ -169,6 +190,7 @@ public abstract class BaseActionComponentState : ComponentState
         Container = entManager.GetNetEntity(component.Container);
         EntityIcon = entManager.GetNetEntity(component.EntIcon);
         AttachedEntity = entManager.GetNetEntity(component.AttachedEntity);
+        RaiseOnUser = component.RaiseOnUser;
         Icon = component.Icon;
         IconOn = component.IconOn;
         IconColor = component.IconColor;
@@ -178,6 +200,8 @@ public abstract class BaseActionComponentState : ComponentState
         Cooldown = component.Cooldown;
         UseDelay = component.UseDelay;
         Charges = component.Charges;
+        MaxCharges = component.MaxCharges;
+        RenewCharges = component.RenewCharges;
         CheckCanInteract = component.CheckCanInteract;
         ClientExclusive = component.ClientExclusive;
         Priority = component.Priority;

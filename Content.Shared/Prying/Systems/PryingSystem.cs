@@ -8,6 +8,8 @@ using Content.Shared.Doors.Components;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using PryUnpoweredComponent = Content.Shared.Prying.Components.PryUnpoweredComponent;
 
 namespace Content.Shared.Prying.Systems;

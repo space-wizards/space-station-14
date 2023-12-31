@@ -69,6 +69,16 @@
   group: market
 
 - type: cargoProduct
+  id: PaperMaterial
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: paper_3
+  product: CrateMaterialPaper
+  cost: 1000
+  category: Materials
+  group: market
+
+- type: cargoProduct
   id: MaterialFuelTank
   icon:
     sprite: Structures/Storage/tanks.rsi

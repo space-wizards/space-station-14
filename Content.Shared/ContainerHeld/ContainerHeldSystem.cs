@@ -29,7 +29,7 @@ public sealed class ContainerHeldSystem : EntitySystem
         {
             return;
         }
-        if (_storage.GetCumulativeItemSizes(uid, storage) >= comp.Threshold)
+        if (_storage.GetCumulativeItemAreas(uid) >= comp.Threshold)
         {
             _item.SetHeldPrefix(uid, "full", item);
             _appearance.SetData(uid, ToggleVisuals.Toggled, true, appearance);
