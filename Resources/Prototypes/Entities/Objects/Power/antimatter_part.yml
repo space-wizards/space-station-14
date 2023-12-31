@@ -10,7 +10,8 @@
   - type: Sprite
     sprite: Objects/Power/AME/ame_part.rsi
     state: box
-  - type: AmePart
+  - type: Flatpack
+    entity: AmeShielding
   - type: StaticPrice
     price: 500
   - type: GuideHelp

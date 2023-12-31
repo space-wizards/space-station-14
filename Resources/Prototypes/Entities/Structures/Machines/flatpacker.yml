@@ -1,0 +1,43 @@
+﻿- type: entity
+  id: MachineFlatpacker
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: flatpacker
+  description: An industrial machine used for expediting machine construction across the station.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/flatpacker.rsi
+    snapCardinals: true
+    layers:
+    - state: base
+    - state: screen
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: packing
+      visible: true
+    - state: inserting
+      visible: false
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Machine
+    board: FatExtractorMachineCircuitboard
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Wires
+    boardName: wires-board-name-flatpacker
+    layoutId: Flatpacker
+  - type: Appearance
+  - type: StaticPrice
+    price: 2000
