@@ -46,3 +46,14 @@
     objectives:
     - TerminateObjective
     - ShutDownObjective
+
+- type: entity
+  noSpawn: true
+  parent: BaseGameRule
+  id: TurfWar
+  components:
+  - type: TurfWarRule
+    # 10-30 people
+    playersPerTagger: 5
+    min: 2
+    max: 6

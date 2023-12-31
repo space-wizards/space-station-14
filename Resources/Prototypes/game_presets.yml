@@ -114,3 +114,16 @@
   rules:
     - Pirates
     - BasicStationEventScheduler
+
+# standalone preset for testing
+- type: gamePreset
+  id: TurfWar
+  alias:
+  - turf
+  - turftagging
+  name: turf-war-title
+  description: turf-war-description
+  showInVote: false
+  rules:
+  - TurfWar
+  - BasicStationEventScheduler
