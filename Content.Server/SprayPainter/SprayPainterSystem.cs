@@ -62,10 +62,10 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (args.Args.Target is not {} target)
             return;
 
-        _audio.PlayPvs(ent.Comp.SpraySound, ent);
-
-        if (!TryComp<PaintableAirlockComponent>(ent, out var airlock))
+        if (!TryComp<PaintableAirlockComponent>(target, out var airlock))
             return;
+
+        _audio.PlayPvs(ent.Comp.SpraySound, ent);
 
         airlock.Department = args.Department;
         _appearance.SetData(target, DoorVisuals.BaseRSI, args.Sprite);
@@ -84,10 +84,10 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (args.Args.Target is not {} target)
             return;
 
-        _audio.PlayPvs(ent.Comp.SpraySound, ent);
-
         if (!TryComp<AtmosPipeColorComponent>(target, out var atmosPipeColor))
             return;
+
+        _audio.PlayPvs(ent.Comp.SpraySound, ent);
 
         _pipeColor.SetColor(target, atmosPipeColor, args.Color);
 
