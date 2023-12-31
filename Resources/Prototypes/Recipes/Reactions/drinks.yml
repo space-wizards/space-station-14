@@ -863,11 +863,11 @@
   minTemp: 323.15
   reactants:
     DryRamen:
-      amount: 3
+      amount: 5
     Water:
-      amount: 1
+      amount: 2
   products:
-    HotRamen: 3
+    HotRamen: 6
 
 - type: reaction
   id: Pilk
