@@ -13,6 +13,7 @@ using Content.Shared.PowerCell;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using System.Linq;
 
@@ -127,7 +128,7 @@ namespace Content.Server.Medical
             if (!TryComp<HealthBeingAnalyzedComponent>(uid, out var healthBeingAnalyzedComponent))
                 return;
 
-            //If there is more than 1 analyzer currently monitoring this entity, just remove from the list
+            //Remove analyzer from the list
             healthBeingAnalyzedComponent.ActiveAnalyzers.Remove(healthAnalyzer);
 
             //If we were the last, remove the component
@@ -145,12 +146,12 @@ namespace Content.Server.Medical
         {
             base.Update(frameTime);
 
-            var query = EntityQueryEnumerator<HealthBeingAnalyzedComponent>();
-            while (query.MoveNext(out var playerUid, out var healthBeingAnalyzedComponent))
+            var query = EntityQueryEnumerator<HealthBeingAnalyzedComponent, TransformComponent>();
+            while (query.MoveNext(out var entityUid, out var healthBeingAnalyzedComponent, out var entityTransform))
             {
                 //If the component is somehow orphaned, remove it
                 if (healthBeingAnalyzedComponent.ActiveAnalyzers.Count == 0)
-                    RemCompDeferred<HealthBeingAnalyzedComponent>(playerUid);
+                    RemCompDeferred<HealthBeingAnalyzedComponent>(entityUid);
 
                 //Has it been 1 second since the last update?
                 var updateTimerElapsed = healthBeingAnalyzedComponent.TimeSinceLastUpdate > 1f;
@@ -166,23 +167,21 @@ namespace Content.Server.Medical
                     //Remove if this analyzer is being deleted - or is not an analyzer
                     if (LifeStage(healthAnalyzer.Owner) >= EntityLifeStage.Terminating)
                     {
-                        StopAnalyzingEntity(playerUid, healthAnalyzer);
+                        StopAnalyzingEntity(entityUid, healthAnalyzer);
                         continue;
                     }
 
                     //Get distance between health analyzer and the scanned entity
-                    var scannedEntityPosition = _transformSystem.GetMapCoordinates(playerUid);
-                    var healthAnalyserPosition = _transformSystem.GetMapCoordinates(healthAnalyzer.Owner);
-                    var distance = (scannedEntityPosition.Position - healthAnalyserPosition.Position).Length();
+                    var healthAnalyserPosition = Transform(healthAnalyzer.Owner).Coordinates;
 
-                    if (scannedEntityPosition.MapId != healthAnalyserPosition.MapId || distance > healthAnalyzer.Comp.MaxScanRange)
+                    if (!healthAnalyserPosition.InRange(EntityManager, _transformSystem, entityTransform.Coordinates, healthAnalyzer.Comp.MaxScanRange))
                     {
                         //Range too far, disable updates
-                        StopAnalyzingEntity(playerUid, healthAnalyzer);
+                        StopAnalyzingEntity(entityUid, healthAnalyzer);
                         continue;
                     }
 
-                    UpdateScannedUser(healthAnalyzer, playerUid, true);
+                    UpdateScannedUser(healthAnalyzer, entityUid, true);
                 }
 
                 //Reset timer
