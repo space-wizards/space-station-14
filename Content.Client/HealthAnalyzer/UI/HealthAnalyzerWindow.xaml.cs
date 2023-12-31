@@ -60,6 +60,17 @@ namespace Content.Client.HealthAnalyzer.UI
                 entityName = Identity.Name(target.Value, _entityManager);
             }
 
+            if (msg.ScanMode.HasValue)
+            {
+                ScanModePanel.Visible = true;
+                ScanModeText.Text = Loc.GetString(msg.ScanMode.Value ? "health-analyzer-window-scan-mode-active" : "health-analyzer-window-scan-mode-inactive");
+                ScanModeText.FontColorOverride = msg.ScanMode.Value ? Color.Green : Color.Red;
+            }
+            else
+            {
+                ScanModePanel.Visible = false;
+            }
+
             PatientName.Text = Loc.GetString(
                 "health-analyzer-window-entity-health-text",
                 ("entityName", entityName)

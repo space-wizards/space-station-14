@@ -13,5 +13,8 @@ public sealed partial class HealthBeingAnalyzedComponent : Component
     /// Set of health analyzers currently monitoring this component's parent entity
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public HashSet<EntityUid> ActiveAnalyzers = new HashSet<EntityUid>();
+    public HashSet<Entity<HealthAnalyzerComponent>> ActiveAnalyzers = new HashSet<Entity<HealthAnalyzerComponent>>();
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float TimeSinceLastUpdate = 0f;
 }

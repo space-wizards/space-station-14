@@ -12,6 +12,16 @@
                 Name="PatientDataContainer"
                 Orientation="Vertical"
                 Margin="0 0 5 10">
+                <BoxContainer Name="ScanModePanel" HorizontalExpand="True" Visible="False" Margin="0 5 0 0">
+                    <Label
+                    Name="ScanMode"
+                    Align="Left"
+                    Text="{Loc health-analyzer-window-scan-mode-text}"/>
+                    <Label
+                    Name="ScanModeText"
+                    Align="Right"
+                    HorizontalExpand="True"/>
+                </BoxContainer>
                 <Label
                     Name="PatientName"/>
                 <Label
