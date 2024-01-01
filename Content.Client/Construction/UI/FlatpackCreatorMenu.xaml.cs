@@ -108,6 +108,7 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
             msg.AddMarkup($"{mat}: {-amount / 100}");
             msg.PushNewline();
         }
+        msg.Pop();
 
         return msg.ToMarkup();
     }

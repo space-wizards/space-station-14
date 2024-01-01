@@ -32,7 +32,7 @@ public sealed partial class FlatpackCreatorComponent : Component
     /// How long packing lasts.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan PackDuration = TimeSpan.FromSeconds(5);
+    public TimeSpan PackDuration = TimeSpan.FromSeconds(3);
 
     /// <summary>
     /// The prototype used when spawning a flatpack.
