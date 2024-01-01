@@ -121,6 +121,7 @@
       - LightReplacer
       - TrashBag
       - PowerCellSmall
+      - PowerCellMedium
       - VehicleWheelchairFolded
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
@@ -273,7 +274,6 @@
       - SignalTrigger
       - VoiceTrigger
       - Igniter
-      - PowerCellMedium
       - PowerCellMicroreactor
       - PowerCellHigh
       - WeaponPistolCHIMP
