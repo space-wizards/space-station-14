@@ -1,10 +1,4 @@
 Entries:
-- author: TheShuEd
-  changes:
-  - message: Animals now give cute hearts when you pet them.
-    type: Add
-  id: 4999
-  time: '2023-10-13T17:34:18.0000000+00:00'
 - author: chromiumboy
   changes:
   - message: The radiation collector has been updated to provide better visual feedback
@@ -3561,3 +3555,10 @@ Entries:
   id: 5499
   time: '2024-01-01T02:25:28.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23270
+- author: icekot8
+  changes:
+  - message: 2 new effects for artifact
+    type: Add
+  id: 5500
+  time: '2024-01-01T06:40:49.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23295
