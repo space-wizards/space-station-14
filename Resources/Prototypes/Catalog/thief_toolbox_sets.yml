@@ -109,3 +109,16 @@
   - SmokeGrenade
   - SmokeGrenade
   - SmokeGrenade
+
+- type: thiefBackpackSet
+  id: RobbersSet
+  name: thief-backpack-category-robbers-name
+  description: thief-backpack-category-robbers-description
+  sprite: 
+    sprite: Objects/Devices/pinpointer.rsi
+    state: pinpointer_thief
+  content:
+  - PinpointerAntag
+  - StorageImplanter
+  - StorageImplanter
+  - ToyFigurineThief

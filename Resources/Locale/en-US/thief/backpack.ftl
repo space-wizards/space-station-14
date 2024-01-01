@@ -61,3 +61,8 @@ thief-backpack-category-smuggler-description =
     and an invisible crate. You can't move in them,
     but you can quickly hide or carry valuable loot.
     This kit also has a cool void cloak to go along with it.
+
+thief-backpack-category-robbers-name = robber's kit
+thief-backpack-category-robbers-description = 
+    A true thief's kit. Includes a thief pinpointer to track
+    the location of your targets and 2 storage implanters.

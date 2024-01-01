@@ -156,6 +156,7 @@
     - SleeperSet
     - CommunicatorSet
     - SmugglerSet
+    - RobbersSet
   - type: ActivatableUI
     key: enum.ThiefBackpackUIKey.Key
   - type: UserInterface

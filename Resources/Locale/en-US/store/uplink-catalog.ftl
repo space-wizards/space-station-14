@@ -376,3 +376,6 @@ uplink-bribe-desc = A heartfelt gift that can help you sway someone's opinion. R
 
 uplink-hypodart-name = Hypodart
 uplink-hypodart-desc = A seemingly unremarkable dart with an enlarged reservoir for chemicals. It can store up to 7u reagents in itself, and instantly inject when it hits the target. Starts empty.
+
+uplink-pinpointer-name = Thief pinpointer
+uplink-pinpointer-desc = A thieving device that allows you to track the location of any objects you personally want.
