@@ -560,7 +560,7 @@
   description: Produces animal cubes using biomass.
   components:
   - type: Sprite
-    sprite: Structures/Machines/autolathe.rsi
+    sprite: Structures/Machines/biofabricator.rsi
     snapCardinals: true
     layers:
     - state: icon
