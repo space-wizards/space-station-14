@@ -27,12 +27,12 @@ ghost-role-information-angry-slimes-description = Everything around you irritate
 ghost-role-information-smile-name = Smile the Slime
 ghost-role-information-smile-description = The sweetest creature in the world. Smile Slime!
 
-ghost-role-information-hobo-name = Hobo
-ghost-role-information-hobo-description = A homeless man mysteriously appeared at the station!
-ghost-role-information-hobo-rules = You don't remember any of your previous life unless an administrator tells you otherwise.
-                                     You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
-                                     You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
-                                     You are absolutely [color=red]NOT[/color] allowed to tell or use meta information received from ghosts.
+ghost-role-information-space-drifter-name = Space drifter
+ghost-role-information-space-drifter-description = A man mysteriously appeared at the station!
+ghost-role-information-space-drifter-rules = You don't remember any of your previous life unless an administrator tells you otherwise.
+                                             You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                             You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+                                             You are absolutely [color=red]NOT[/color] allowed to tell or use meta information received from ghosts.
 
 ghost-role-information-punpun-name = Pun Pun
 ghost-role-information-punpun-description = An honorable member of the monkey society in charge of the bar and helping the bartenders in any way he can.

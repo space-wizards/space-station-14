@@ -1,8 +1,8 @@
 - type: entity
   save: false
-  parent: BaseMobHoboPerson
-  name: Hobo
-  id: MobHoboPerson
+  parent: BaseMobSpaceDrifterPerson
+  name: SpaceDrifter
+  id: MobSpaceDrifterPerson
   components:
   - type: InteractionPopup
     successChance: 1
@@ -10,16 +10,16 @@
     interactSuccessSound: /Audio/Effects/thudswoosh.ogg
     messagePerceivedByOthers: hugging-success-generic-others
   - type: Loadout
-    prototypes: [HoboGear]
+    prototypes: [SpaceDrifterGear]
   - type: RandomHumanoidAppearance
 
 - type: entity
-  parent: MobHoboPerson
-  id: MobHoboGhost
+  parent: MobSpaceDrifterPerson
+  id: MobSpaceDrifterGhost
   suffix: Ghost role
   components:
   - type: GhostRole
-    name: ghost-role-information-hobo-name
-    description: ghost-role-information-hobo-description
-    rules: ghost-role-information-hobo-rules
+    name: ghost-role-information-space-drifter-name
+    description: ghost-role-information-space-drifter-description
+    rules: ghost-role-information-space-drifter-rules
   - type: GhostTakeoverAvailable

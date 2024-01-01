@@ -95,7 +95,7 @@
 
 - type: entity
   parent: BaseGameRule
-  id: HoboSpawn
+  id: SpaceDrifterSpawn
   noSpawn: true
   components:
   - type: StationEvent
@@ -105,7 +105,7 @@
     reoccurrenceDelay: 20
     minimumPlayers: 5
   - type: RandomSpawnRule
-    prototype: MobHoboGhost
+    prototype: MobSpaceDrifterGhost
 
 - type: entity
   parent: BaseGameRule

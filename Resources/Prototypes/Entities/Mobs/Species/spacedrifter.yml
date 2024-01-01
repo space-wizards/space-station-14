@@ -1,8 +1,8 @@
 - type: entity
   save: false
-  name: Hobo
+  name: SpaceDrifter
   parent: BaseMobHuman
-  id: BaseMobHoboPerson
+  id: BaseMobSpaceDrifterPerson
   abstract: true
   components:
   - type: GhostObserver
@@ -10,7 +10,7 @@
 
 - type: entity
   parent: BaseSpeciesDummy
-  id: MobHoboPersonDummy
+  id: MobSpaceDrifterPersonDummy
   noSpawn: true
   components:
     - type: HumanoidAppearance

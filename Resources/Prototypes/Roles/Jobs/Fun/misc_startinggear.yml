@@ -291,7 +291,7 @@
   innerClothingSkirt: ClothingUniformJumpskirtColorGrey
 
 - type: startingGear
-  id: HoboGear
+  id: SpaceDrifterGear
   equipment:
     shoes: ClothingShoesBootsWinter
     jumpsuit: ClothingUniformJumpsuitColorBrown
