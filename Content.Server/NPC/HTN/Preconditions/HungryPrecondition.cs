@@ -11,7 +11,7 @@ public sealed partial class HungryPrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    [DataField("MinHungerState", required: true)]
+    [DataField(required: true)]
     public HungerThreshold MinHungerState = HungerThreshold.Starving;
 
     public override bool IsMet(NPCBlackboard blackboard)

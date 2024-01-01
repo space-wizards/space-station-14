@@ -6,7 +6,7 @@
         - !type:HTNPrimitiveTask
           preconditions:
             - !type:HungryPrecondition
-              MinHungerState: Starving  # See HungerThreshold enum
+              minHungerState: Starving  # See HungerThreshold enum
           operator: !type:UtilityOperator
             proto: NearbyFood
 
@@ -36,7 +36,7 @@
         - !type:HTNPrimitiveTask
           preconditions:
             - !type:ThirstyPrecondition
-              MinThirstState: Parched  # See ThirstThreshold enum
+              minThirstState: Parched  # See ThirstThreshold enum
           operator: !type:UtilityOperator
             proto: NearbyDrink
 

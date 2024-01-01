@@ -11,7 +11,7 @@ public sealed partial class ThirstyPrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    [DataField("MinThirstState", required: true)]
+    [DataField(required: true)]
     public ThirstThreshold MinThirstState = ThirstThreshold.Parched;
 
     public override bool IsMet(NPCBlackboard blackboard)
