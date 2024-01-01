@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Arcade;
+using Content.Server.Communications;
 using Robust.Shared.Random;
 using static Content.Shared.Paper.SharedPaperComponent;
 
@@ -20,6 +21,13 @@ public sealed class IlliterateSystem : EntitySystem
 
         SubscribeLocalEvent<WriteAttemptEvent>(OnWriteAttempt);
         SubscribeLocalEvent<ReadAttemptEvent>(OnReadAttempt);
+        SubscribeLocalEvent<CommunicationConsoleAnnouncementEvent>(OnAnnouncement);
+    }
+
+    private void OnAnnouncement(ref CommunicationConsoleAnnouncementEvent args)
+    {
+        if (IsIlliterate(args.Sender))
+            args.Text = ScrambleString(args.Text);
     }
 
     private void OnWriteAttempt(WriteAttemptEvent ev)
