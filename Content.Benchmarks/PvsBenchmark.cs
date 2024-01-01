@@ -55,6 +55,7 @@ public class PvsBenchmark
         _entMan = _pair.Server.ResolveDependency<IEntityManager>();
         _pair.Server.CfgMan.SetCVar(CVars.NetPVS, true);
         _pair.Server.CfgMan.SetCVar(CVars.ThreadParallelCount, 0);
+        _pair.Server.CfgMan.SetCVar(CVars.NetPvsAsync, false);
         _sys = _entMan.System<SharedTransformSystem>();
 
         // Spawn the map
