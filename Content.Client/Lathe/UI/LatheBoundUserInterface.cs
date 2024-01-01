@@ -31,10 +31,6 @@ namespace Content.Client.Lathe.UI
                 SendMessage(new LatheQueueRecipeMessage(recipe, amount));
             };
 
-            /*
-                SendMessage(new EjectMaterialMessage(material, sheetsToExtract));
-            */
-
             _menu.OpenCentered();
         }
 
