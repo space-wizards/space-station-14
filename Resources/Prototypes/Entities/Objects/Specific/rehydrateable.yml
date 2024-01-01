@@ -67,7 +67,17 @@
   components:
   - type: Rehydratable
     possibleSpawns:
-    - MobSpaceCarp
+    - MobCarp
+
+- type: entity
+  parent: MonkeyCube
+  id: SpaceTickCube
+  name: tick cube
+  description: Just add water! At your own risk.
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobTick
 
 - type: entity
   parent: PlushieCarp

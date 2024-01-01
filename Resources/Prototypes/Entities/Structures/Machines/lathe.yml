@@ -553,9 +553,9 @@
     - Robotics
 
 - type: entity
-  id: Cubelathe
+  id: Biofabricator
   parent: BaseLathe
-  name: cubelathe
+  name: biofabricator
   description: Produces animal cubes using biomass.
   components:
   - type: Sprite
@@ -589,6 +589,7 @@
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - SpaceCarpCube
+      - SpaceTickCube
 
 - type: entity
   id: SecurityTechFab

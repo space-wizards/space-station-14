@@ -68,10 +68,10 @@
         ExamineName: Igniter
 
 - type: entity
-  id: CubelatheMachineCircuitboard
+  id: BiofabricatorMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: cubelathe machine board
-  description: A machine printed circuit board for a cubelathe
+  name: biofabricator machine board
+  description: A machine printed circuit board for a biofabricator.
   components:
     - type: MachineBoard
       prototype: Cubelathe
