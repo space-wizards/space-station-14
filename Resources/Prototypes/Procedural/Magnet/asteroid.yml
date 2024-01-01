@@ -34,8 +34,7 @@
 
     # Generate ore veins
     - !type:MarkerLayerPostGen
-      count: 2
-      markerTemplates: AsteroidOre
+      markerTemplate: AsteroidOre
 
 # Multiple smaller asteroids
 # This is a pain so we generate fewer tiles
@@ -56,16 +55,13 @@
           lacunarity: 2
   # Everything else
   postGeneration:
-    # Generate vents
-    # TODO: Completely random poisson or whatever the fuck
     # Generate biome
     - !type:BiomePostGen
       biomeTemplate: Asteroid
 
     # Generate ore veins
     - !type:MarkerLayerPostGen
-      count: 2
-      markerTemplates: AsteroidOre
+      markerTemplate: AsteroidOre
 
 # Long and spindly, less smooth than blob
 - type: dungeonConfig
@@ -91,8 +87,7 @@
 
     # Generate ore veins
     - !type:MarkerLayerPostGen
-      count: 2
-      markerTemplates: AsteroidOre
+      markerTemplate: AsteroidOre
 
 # Lots of holes in it
 - type: dungeonConfig
@@ -118,5 +113,4 @@
 
     # Generate ore veins
     - !type:MarkerLayerPostGen
-      count: 2
-      markerTemplates: AsteroidOre
+      markerTemplate: AsteroidOre

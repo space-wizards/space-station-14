@@ -11,6 +11,8 @@ public sealed class SalvageMagnetBoundUserInterfaceState : BoundUserInterfaceSta
     public TimeSpan Cooldown;
     public TimeSpan Duration;
 
+    public int ActiveSeed;
+
     public List<int> Offers;
 
     public SalvageMagnetBoundUserInterfaceState(List<int> offers)

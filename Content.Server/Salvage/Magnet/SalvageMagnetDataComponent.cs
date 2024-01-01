@@ -45,4 +45,7 @@ public sealed partial class SalvageMagnetDataComponent : Component
 
     [DataField]
     public int OfferCount = 6;
+
+    [DataField]
+    public int ActiveSeed;
 }

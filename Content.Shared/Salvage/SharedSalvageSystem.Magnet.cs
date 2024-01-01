@@ -27,7 +27,6 @@ public abstract partial class SharedSalvageSystem
         if (seed % 2 == 0)
         {
             var config = _asteroidConfigs[rand.Next(_asteroidConfigs.Count)];
-            // TODO: Loot, need runtime layers.
             var layerRand = new System.Random(seed);
             var configProto = _proto.Index(config);
             var layers = new Dictionary<string, int>();
@@ -52,6 +51,7 @@ public abstract partial class SharedSalvageSystem
             return new AsteroidOffering
             {
                 DungeonConfig = configProto,
+                MarkerLayers = layers,
             };
         }
 

@@ -1,5 +1,6 @@
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Magnet;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Salvage.UI;
 
@@ -38,18 +39,32 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
         _window.Cooldown = current.Cooldown;
         _window.ProgressionCooldown = current.Duration;
 
-        foreach (var seed in current.Offers)
+        for (var i = 0; i < current.Offers.Count; i++)
         {
+            var seed = current.Offers[i];
             var offer = salvageSystem.GetSalvageOffering(seed);
             var option = new OfferingWindowOption();
+            option.Disabled = current.EndTime != null;
+            option.Claimed = current.ActiveSeed == seed;
 
             switch (offer)
             {
                 case AsteroidOffering asteroid:
-                    option.Title = asteroid.DungeonConfig.ID;
+                    option.Title = Loc.GetString($"dungeon-config-proto-{asteroid.DungeonConfig.ID}");
+
+                    foreach (var (resource, count) in asteroid.MarkerLayers)
+                    {
+                        option.AddContent(new Label()
+                        {
+                            Text = Loc.GetString("salvage-magnet-resources",
+                                ("resource", resource),
+                                ("count", count))
+                        });
+                    }
+
                     break;
                 case SalvageOffering salvage:
-                    option.Title = salvage.SalvageMap.ID;
+                    option.Title = Loc.GetString($"salvage-map-proto-{salvage.SalvageMap.ID}");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

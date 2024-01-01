@@ -139,7 +139,8 @@ public sealed partial class SalvageSystem
                 Cooldown = dataComp.OfferCooldown,
                 Duration = dataComp.ActiveTime,
                 EndTime = dataComp.EndTime,
-                NextOffer = dataComp.NextOffer
+                NextOffer = dataComp.NextOffer,
+                ActiveSeed = dataComp.ActiveSeed,
             });
     }
 
@@ -160,7 +161,8 @@ public sealed partial class SalvageSystem
                     Cooldown = data.Comp.OfferCooldown,
                     Duration = data.Comp.ActiveTime,
                     EndTime = data.Comp.EndTime,
-                    NextOffer = data.Comp.NextOffer
+                    NextOffer = data.Comp.NextOffer,
+                    ActiveSeed = data.Comp.ActiveSeed,
                 });
         }
     }
@@ -170,6 +172,7 @@ public sealed partial class SalvageSystem
         var seed = data.Comp.Offered[index];
 
         var offering = GetSalvageOffering(seed);
+        data.Comp.ActiveSeed = seed;
 
         // TODO: Old code
 
