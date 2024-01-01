@@ -43,7 +43,7 @@
   - type: StorageFill
     contents:
       - id: MindShieldImplanter
-        amount: 3
+        amount: 2
 
 - type: entity
   id: CrateMedicalSurgery
