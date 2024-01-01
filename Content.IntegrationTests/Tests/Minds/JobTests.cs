@@ -1,5 +1,6 @@
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
+using Robust.Shared.Prototypes;
 using System.Linq;
 
 namespace Content.IntegrationTests.Tests.Station;
@@ -34,7 +35,7 @@ public sealed class JobTest
                 var primaries = 0;
                 foreach (var department in departments)
                 {
-                    if (!departments.Roles.ContainsKey(job.ID))
+                    if (!department.Roles.Contains(job.ID))
                         continue;
 
                     primaries++;
