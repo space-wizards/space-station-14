@@ -29,10 +29,12 @@ public sealed class RotationVisualizerSystem : SharedRotationVisualsSystem
         switch (state)
         {
             case RotationState.Vertical:
-                AnimateSpriteRotation(uid, args.Sprite, component.VerticalRotation, component.AnimationTime);
+                component.DefaultRotation = component.VerticalRotation;
+                AnimateSpriteRotation(uid, args.Sprite, component.DefaultRotation, component.AnimationTime);
                 break;
             case RotationState.Horizontal:
-                AnimateSpriteRotation(uid, args.Sprite, component.HorizontalRotation, component.AnimationTime);
+                component.DefaultRotation = (-component.HorizontalRotation);
+                AnimateSpriteRotation(uid, args.Sprite, component.DefaultRotation, component.AnimationTime);
                 break;
         }
     }

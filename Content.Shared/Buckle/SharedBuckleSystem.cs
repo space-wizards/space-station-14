@@ -76,7 +76,7 @@ public abstract partial class SharedBuckleSystem : EntitySystem
         if (buckleTransform.ParentUid != strapUid)
             return;
 
-        _transform.SetLocalRotation(buckleUid, Angle.Zero, buckleTransform);
+        _transform.SetLocalRotation(buckleUid, strapComp.Rotation, buckleTransform);
         _joints.SetRelay(buckleUid, strapUid);
 
         switch (strapComp.Position)
@@ -90,5 +90,4 @@ public abstract partial class SharedBuckleSystem : EntitySystem
                 _standing.Down(buckleUid, false, false);
                 break;
         }
-    }
-}
+    }}

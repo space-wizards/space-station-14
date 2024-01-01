@@ -344,6 +344,7 @@ public abstract partial class SharedBuckleSystem
         if (!CanBuckle(buckleUid, userUid, strapUid, out var strapComp, buckleComp))
             return false;
 
+        //straps the player into the object (bed, etc)
         if (!StrapTryAdd(strapUid, buckleUid, buckleComp, false, strapComp))
         {
             var message = Loc.GetString(buckleUid == userUid
@@ -353,11 +354,14 @@ public abstract partial class SharedBuckleSystem
                 _popup.PopupEntity(message, userUid, userUid);
             return false;
         }
-
+        //updates the visuals to show player on the object
         if (TryComp<AppearanceComponent>(buckleUid, out var appearance))
             Appearance.SetData(buckleUid, BuckleVisuals.Buckled, true, appearance);
+        //rotates the player to the right rotation
 
-        _rotationVisuals.SetHorizontalAngle(buckleUid,  strapComp.Rotation);
+        //THIS IS 100% THE ISSUE: _rotationVisuals.SetHorizontalAngle(buckleUid, strapComp.Rotation);
+        //SETTING IT TO Angle.FromDegrees(-90), makes us lay correctly, it just doesnt work for chairs/atv, etc.
+        _rotationVisuals.SetHorizontalAngle(buckleUid, strapComp.Rotation);
 
         ReAttach(buckleUid, strapUid, buckleComp, strapComp);
         SetBuckledTo(buckleUid, strapUid, strapComp, buckleComp);

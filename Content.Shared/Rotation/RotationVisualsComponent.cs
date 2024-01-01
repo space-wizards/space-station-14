@@ -9,14 +9,16 @@ public sealed partial class RotationVisualsComponent : Component
     /// <summary>
     /// Default value of <see cref="HorizontalRotation"/>
     /// </summary>
+    ///
+    //should we not be changing the default rotation to be either horizontal or vertical?
     [DataField]
-    public Angle DefaultRotation = Angle.FromDegrees(90);
+    public Angle DefaultRotation = Angle.Zero; //should this not be 0 degrees? as the character stands up by default (as opposed to 90 degrees - laying down)
 
     [DataField]
-    public Angle VerticalRotation = 0;
+    public Angle VerticalRotation = Angle.Zero;
 
     [DataField, AutoNetworkedField]
-    public Angle HorizontalRotation = Angle.FromDegrees(90);
+    public Angle HorizontalRotation = Angle.FromDegrees(180); //this should be -90, because the beds are all at rotation -90, regular 90 degrees will have you facing the wrong way
 
     [DataField]
     public float AnimationTime = 0.125f;
@@ -39,5 +41,5 @@ public enum RotationState
     /// <summary>
     ///     Laying down
     /// </summary>
-    Horizontal,
+    Horizontal
 }
