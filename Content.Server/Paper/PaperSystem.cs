@@ -228,6 +228,7 @@ namespace Content.Server.Paper
 
             var content = paperComp.Content;
 
+            //If the reader is illiterate, scramble the contents
             if (session != null)
             {
                 var ev = new ReadAttemptEvent(session.AttachedEntity, uid);
