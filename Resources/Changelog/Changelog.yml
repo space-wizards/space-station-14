@@ -1,11 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - message: The radiation collector has been updated to provide better visual feedback
-      on its status.
-    type: Tweak
-  id: 5000
-  time: '2023-10-13T23:08:00.0000000+00:00'
 - author: liltenhead
   changes:
   - message: Increased containment field duration after power loss.
@@ -3562,3 +3555,17 @@ Entries:
   id: 5500
   time: '2024-01-01T06:40:49.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23295
+- author: TheShuEd
+  changes:
+  - message: Tesla coils now have a 50% chance of not attracting lightning.  Installing
+      ground rods is now much more important!
+    type: Tweak
+  - message: Nerf tesla energy producing.
+    type: Tweak
+  - message: Now tesla coils are gradually wearing out, taking damage from lightning.
+      Keep an eye on them and repair them with a welder every 20-30 minutes. Grounding
+      rods are immune to lightning damage.
+    type: Add
+  id: 5501
+  time: '2024-01-01T07:33:48.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23235
