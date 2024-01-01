@@ -124,12 +124,6 @@ public abstract partial class SharedEntityStorageComponent : Component
     /// </summary>
     [ViewVariables]
     public Container Contents = default!;
-
-    /// <summary>
-    /// Multiplier for explosion damage that gets applied to contained entities.
-    /// </summary>
-    [DataField]
-    public float ExplosionDamageCoefficient = 1;
 }
 
 [Serializable, NetSerializable]

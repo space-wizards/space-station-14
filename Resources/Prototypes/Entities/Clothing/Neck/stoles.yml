@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckStoleChaplain
+  name: chaplain stole
+  description: An elegantly designed stole, with a vibrant gold plus on either end.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Stoles/chaplain.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Stoles/chaplain.rsi

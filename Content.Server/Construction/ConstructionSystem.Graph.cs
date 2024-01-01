@@ -388,8 +388,8 @@ namespace Content.Server.Construction
                     for (var i = ourContainer.ContainedEntities.Count - 1; i >= 0; i--)
                     {
                         var entity = ourContainer.ContainedEntities[i];
-                        ourContainer.ForceRemove(entity);
-                        otherContainer.Insert(entity);
+                        _container.Remove(entity, ourContainer, reparent: false, force: true);
+                        _container.Insert(entity, otherContainer);
                     }
                 }
             }

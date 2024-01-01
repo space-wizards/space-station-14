@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Adapted from CEV-Eris by EmoGarbage404 (github) for Space Station 14.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "spinning",
+      "delays":
+        [
+          [
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ]
+        ]
+    },
+    {
+      "name": "panel"
+    },
+    {
+      "name": "unshaded"
+    }
+  ]
+}

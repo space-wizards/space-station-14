@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Inventory;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -33,12 +33,16 @@ public partial class SharedGunSystem
     {
         slotEntity = null;
 
-        if (!_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator, component.TargetSlot))
+        if (!Containers.TryGetContainingContainer(uid, out var container))
+            return false;
+        var user = container.Owner;
+
+        if (!_inventory.TryGetContainerSlotEnumerator(user, out var enumerator, component.TargetSlot))
             return false;
 
         while (enumerator.NextItem(out var item))
         {
-            if (component.ProviderWhitelist == null || component.ProviderWhitelist.IsValid(item, EntityManager))
+            if (component.ProviderWhitelist == null || !component.ProviderWhitelist.IsValid(item, EntityManager))
                 continue;
 
             slotEntity = item;
