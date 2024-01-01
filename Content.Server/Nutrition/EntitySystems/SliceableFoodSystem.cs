@@ -76,7 +76,7 @@ namespace Content.Server.Nutrition.EntitySystems
             // If someone makes food proto with 1 slice...
             if (component.Count < 1)
             {
-                DeleteFood(uid, user);
+                DeleteFood(uid, user, food);
                 return true;
             }
 
@@ -89,11 +89,7 @@ namespace Content.Server.Nutrition.EntitySystems
             // Fill last slice with the rest of the solution
             FillSlice(sliceUid, solution);
 
-            // If the food has a trash, we should return it now
-            // Good for things like pies which always use pie tins
-            Spawn(food.Trash, transform.Coordinates);
-
-            DeleteFood(uid, user);
+            DeleteFood(uid, user, food);
             return true;
         }
 
@@ -122,16 +118,39 @@ namespace Content.Server.Nutrition.EntitySystems
             return sliceUid;
         }
 
-        private void DeleteFood(EntityUid uid, EntityUid user)
+        private void DeleteFood(EntityUid uid, EntityUid user, FoodComponent foodComp)
         {
             var ev = new BeforeFullySlicedEvent
             {
                 User = user
             };
             RaiseLocalEvent(uid, ev);
+            if (ev.Cancelled)
+                return;
 
-            if (!ev.Cancelled)
-                Del(uid);
+            if (string.IsNullOrEmpty(foodComp.Trash))
+            {
+                QueueDel(uid);
+                return;
+            }
+
+            // Locate the sliced food and spawn its trash
+            var position = Transform(uid).Coordinates;
+            var finisher = Spawn(foodComp.Trash, position);
+
+            var inCont = _containerSystem.IsEntityInContainer(uid);
+            if (inCont)
+            {
+                _handsSystem.PickupOrDrop(user, finisher);
+            }
+            else
+            {
+                var xform = Transform(finisher);
+                _containerSystem.AttachParentToContainerOrGrid((finisher, xform));
+                xform.LocalRotation = 0;
+            }
+
+            QueueDel(uid);
         }
 
         private void FillSlice(EntityUid sliceUid, Solution solution)
