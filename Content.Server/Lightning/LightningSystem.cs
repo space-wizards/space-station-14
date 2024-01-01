@@ -75,16 +75,26 @@ public sealed class LightningSystem : SharedLightningSystem
         var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).MapPosition, range).ToList();
         _random.Shuffle(targets);
         targets.Sort((x, y) => y.Priority.CompareTo(x.Priority));
-        var realCount = Math.Min(targets.Count, boltCount);
-        if (realCount <= 0)
-            return;
-        for (int i = 0; i < realCount; i++)
+        //var realCount = Math.Min(targets.Count, boltCount);
+
+        int shootedCount = 0;
+        int count = -1;
+        while(shootedCount < boltCount)
         {
-            ShootLightning(user, targets[i].Owner, lightningPrototype);
-            if (arcDepth > 0)
+            count++;
+
+            if (count >= targets.Count) { break; }
+
+            var curTarget = targets[count];
+            if (!_random.Prob(curTarget.HitProbability)) //Chance to ignore target
+                continue;
+
+            ShootLightning(user, targets[count].Owner, lightningPrototype);
+            if (arcDepth - targets[count].LightningResistance > 0)
             {
-                ShootRandomLightnings(targets[i].Owner, range, 1, lightningPrototype, arcDepth - targets[i].LightningResistance);
+                ShootRandomLightnings(targets[count].Owner, range, 1, lightningPrototype, arcDepth - targets[count].LightningResistance);
             }
+            shootedCount++;
         }
     }
 }
