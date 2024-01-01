@@ -1,11 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - message: Added the igniter for sparking flames, can be found in the vendomat and
-      robotics vendor or produced by science.
-    type: Add
-  id: 5003
-  time: '2023-10-14T07:11:50.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - message: Fixed librarians, lawyers, ninjas and nukeops having their starting in-hand
@@ -3573,3 +3566,10 @@ Entries:
   id: 5503
   time: '2024-01-01T07:57:33.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22536
+- author: themias
+  changes:
+  - message: Heat damage cauterizes bleeding again.
+    type: Fix
+  id: 5504
+  time: '2024-01-01T08:08:26.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23264
