@@ -5,8 +5,8 @@ using System.Linq;
 namespace Content.IntegrationTests.Tests.Station;
 
 [TestFixture]
-[TestOf(typeof(SharedJobsSystem))]
-public sealed class JobsTest
+[TestOf(typeof(SharedJobSystem))]
+public sealed class JobTest
 {
     /// <summary>
     /// Ensures that every job belongs to at most 1 primary department.
