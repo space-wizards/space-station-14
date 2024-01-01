@@ -141,7 +141,7 @@
         maxVol: 10 # needs room for more blood
         reagents:
         - ReagentId: Blood
-          Quantity: 5
+          Quantity: 9
   - type: Reactive
     reactions:
     - reagents: [Blood]

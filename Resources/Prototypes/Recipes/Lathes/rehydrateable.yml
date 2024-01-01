@@ -55,7 +55,7 @@
   completetime: 30
   materials:
     Biomass: 24
-    Plasma: 1500
+    Plasma: 1200
 
 - type: latheRecipe
   id: SpaceTickCube
@@ -68,7 +68,7 @@
 - type: latheRecipe
   id: AbominationCube
   result: AbominationCube
-  completetime: 45
-  materials:
-    Biomass: 40
-    Plasma: 2000 # more biomass but less plasma
+  completetime: 30
+  materials: # abominations are slow and essentially worse than even carp
+    Biomass: 28
+    Plasma: 1000 # more biomass but less plasma
