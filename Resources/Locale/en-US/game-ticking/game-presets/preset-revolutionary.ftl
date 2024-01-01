@@ -66,5 +66,5 @@ rev-deconverted-title = Deconverted!
 rev-deconverted-text =
     As the last headrev has died, the revolution is over.
 
-    You are no longer an antagonist, so be nice.
+    You are no longer a revolutionary, so be nice.
 rev-deconverted-confirm = Confirm
