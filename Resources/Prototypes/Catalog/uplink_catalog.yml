@@ -1066,6 +1066,20 @@
       - Science
 
 - type: listing
+  id: UplinkGrenadeAnomaly
+  name: uplink-anomaly-grenade-name
+  description: uplink-anomaly-grenade-desc
+  productEntity: GrenadeAnomaly
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkJob
+  conditions:
+    - !type:BuyerDepartmentCondition
+      whitelist:
+      - Science
+
+- type: listing
   id: uplinkProximityMine
   name: uplink-proximity-mine-name
   description: uplink-proximity-mine-desc

@@ -82,6 +82,16 @@
     - Security
 
 - type: entity
+  name: anomaly grenade
+  description: Grenade that creates an anomaly when used.
+  parent: GrenadeBase
+  id: GrenadeAnomaly
+  components:
+  - type: DeleteOnTrigger
+  - type: SpawnOnTrigger
+    proto: RandomAnomalySpawner
+
+- type: entity
   id: GrenadeFlashEffect
   noSpawn: true
   components:

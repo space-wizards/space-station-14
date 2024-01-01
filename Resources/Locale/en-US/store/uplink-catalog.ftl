@@ -248,6 +248,9 @@ uplink-hot-potato-desc = Once activated, this time bomb can't be dropped - only 
 uplink-chimp-upgrade-kit-name = C.H.I.M.P. Handcannon Upgrade Chip
 uplink-chimp-upgrade-kit-desc = Insert this chip into a standard C.H.I.M.P. handcannon to allow it to fire omega particles. Omega particles inflict severe burns and cause anomalies to go supercritical.
 
+uplink-anomaly-grenade-name = Anomaly Grenade
+uplink-anomaly-grenade-desc = A grenade with a random condensed anomaly inside. Releases the anomaly when the timer runs out, useful if you want an anomaly somewhere specific.
+
 uplink-proximity-mine-name = Proximity Mine
 uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
 
