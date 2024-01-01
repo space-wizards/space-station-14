@@ -4,17 +4,20 @@ using Content.Server.Administration.Logs;
 using Content.Server.Decals;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
+using Content.Server.Traits.Assorted;
 using Content.Shared.Crayon;
 using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Crayon;
 
@@ -26,6 +29,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly IlliterateSystem _illiterate = default!;
 
     public override void Initialize()
     {
@@ -112,7 +116,24 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (!_prototypeManager.TryIndex<DecalPrototype>(args.State, out var prototype) || !prototype.Tags.Contains("crayon"))
             return;
 
-        component.SelectedState = args.State;
+        //All letters have states 1 character long
+        //If this is unacceptable, just make it randomise which state is selected
+        if (args.State.Length == 1)
+        {
+            var ev = new WriteAttemptEvent(args.Session.AttachedEntity, uid);
+            RaiseLocalEvent(ev);
+            if (!ev.CanWrite)
+            {
+                var newState = _illiterate.ScrambleString(args.State);
+                if (_prototypeManager.HasIndex<DecalPrototype>(newState))
+                    component.SelectedState = newState;
+            }
+        }
+        else
+        {
+            component.SelectedState = args.State;
+        }
+
 
         Dirty(uid, component);
     }
