@@ -114,12 +114,14 @@
   - type: Fixtures
   - type: Transform
     anchored: true
+    noRot: false
   - type: Physics
     bodyType: Static
     canCollide: false
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Power/Generation/wallmount_generator.rsi
+    snapCardinals: false
     layers:
     - state: panel
     - state: on

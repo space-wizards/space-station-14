@@ -18,6 +18,10 @@
     sprite: Structures/Doors/Airlocks/Standard/external.rsi
   - type: PaintableAirlock
     group: External
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#FFAF38"
 
 - type: entity
   parent: AirlockExternal

@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+  "copyright": "by MIXnikita for SS220",
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "shuttle_construct-0"
+        },
+        {
+            "name": "shuttle_construct-1"
+        },
+        {
+            "name": "shuttle_construct-2"
+        },
+        {
+            "name": "shuttle_construct-3"
+        },
+        {
+            "name": "shuttle_construct-4"
+        },
+        {
+            "name": "shuttle_construct-5"
+        },
+        {
+            "name": "state0",
+            "directions": 4
+        },
+        {
+            "name": "state1",
+            "directions": 4
+        },
+        {
+            "name": "state2",
+            "directions": 4
+        },
+        {
+            "name": "state3",
+            "directions": 4
+        },
+        {
+            "name": "state4",
+            "directions": 4
+        },
+        {
+            "name": "state5",
+            "directions": 4
+        },
+        {
+            "name": "state6",
+            "directions": 4
+        },
+        {
+            "name": "state7",
+            "directions": 4
+        }
+    ]
+}

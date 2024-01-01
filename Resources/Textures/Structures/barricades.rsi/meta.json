@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/fa615ead9d02b879b2ed0461f36622affb32088f",
+  "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+  "copyright": "Made by MIXnikita for SS220",
   "size": {
     "x": 32,
     "y": 32
@@ -9,11 +9,11 @@
   "states": [
     {
       "name": "barricade",
-      "directions": 1
+      "directions": 4
     },
 	{
 	  "name": "barricade_full",
-	  "directions": 1
+	  "directions": 4
 	},
 	{
 	  "name": "barricade_directional",

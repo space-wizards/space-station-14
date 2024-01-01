@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "CC-BY-NC-SA-3.0",
-  "copyright": "Taken from paradise station at commit https://github.com/ss220club/Paradise/pull/51/commits/1b7d24d4804ae184c624cd6f51760c86edf093aa",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/commit/e9f937f52b9f63acb49ffd6ab5e6de68e7b13e73",
   "size": {
     "x": 32,
     "y": 32
@@ -16,33 +16,7 @@
     },
     {
       "name": "cryopodSSD-closed",
-      "directions": 4,
-      "delays": [
-        [
-          0.3,
-          0.3,
-          0.3,
-          0.3
-        ],
-        [
-          0.3,
-          0.3,
-          0.3,
-          0.3
-        ],
-        [
-          0.3,
-          0.3,
-          0.3,
-          0.3
-        ],
-        [
-          0.3,
-          0.3,
-          0.3,
-          0.3
-        ]
-      ]
+      "directions": 4
     }
   ]
 }

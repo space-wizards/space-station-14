@@ -24,7 +24,7 @@
   - type: SignalSwitch
     state: true
   - type: Sprite
-    drawdepth: Objects
+    drawdepth: AboveFovOverlay
     sprite: SS220/Structures/Wallmounts/open_sign.rsi
     layers:
     - state: off

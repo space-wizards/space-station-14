@@ -1,0 +1,4 @@
+- type: shader
+  id: BlurryLighting
+  kind: source
+  path: "/Textures/SS220/Shaders/lighting_blur.swsl"

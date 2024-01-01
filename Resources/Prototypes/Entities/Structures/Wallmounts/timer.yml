@@ -56,7 +56,7 @@
     timerOffset: 0,8
     textLength: 5
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: AboveFovOverlay
     sprite: Structures/Wallmounts/signalscreen.rsi
     state: signalscreen
     noRot: true

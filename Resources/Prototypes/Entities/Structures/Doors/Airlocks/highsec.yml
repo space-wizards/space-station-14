@@ -6,6 +6,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: FoVOverlay # SS220 perspective-wall-fov
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Doors/Airlocks/highsec/highsec.rsi

@@ -5,6 +5,7 @@
   name: firelock
   description: Apply crowbar.
   components:
+    - type: FoVOverlay # SS220 perspective-wall-fov
     - type: AtmosAlarmable
       syncWith:
         - FireAlarm
@@ -29,7 +30,6 @@
           acts: ["Destruction"]
     - type: Sprite
       sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
-      snapCardinals: true
       layers:
         - state: closed
           map: ["enum.DoorVisualLayers.Base"]

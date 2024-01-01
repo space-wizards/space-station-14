@@ -1,1 +1,23 @@
-{"version":1,"size":{"x":32,"y":32},"copyright":"Taken from tgstation","license":"CC-BY-SA-3.0","states":[{"name":"mirror"},{"name":"mirror_broke"}]}
+{
+    "version": 1,
+    "size":
+    {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "by MIXnikita for SS220",
+    "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+    "states": [
+        {
+            "name": "mirror",
+            "directions": 4
+
+        },
+        {
+            "name": "mirror_broke",
+            "directions": 4
+
+        }
+    ]
+
+}

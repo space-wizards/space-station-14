@@ -22,6 +22,17 @@
     sprite: Structures/Storage/Crates/plastic.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/plastic.rsi
+#SS220 Crate-tg-resprite begin
+    offset: 0, 0
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+#SS220 Crate-tg-resprite end
   - type: Construction
     graph: CratePlastic
     node: crateplastic
@@ -39,6 +50,15 @@
     sprite: Structures/Storage/Crates/freezer.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/freezer.rsi
+#SS220 Crate-tg-resprite begin
+    offset: 0, 0.25
+    layers:
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+#SS220 Crate-tg-resprite end
   - type: AntiRottingContainer
 
 - type: entity
@@ -50,6 +70,15 @@
     sprite: Structures/Storage/Crates/hydroponics.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/hydroponics.rsi
+#SS220 Crate-tg-resprite begin
+    offset: 0, 0.25
+    layers:
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+#SS220 Crate-tg-resprite end
 
 - type: entity
   parent: CratePlastic
@@ -60,6 +89,15 @@
     sprite: Structures/Storage/Crates/medical.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/medical.rsi
+#SS220 Crate-tg-resprite begin
+    offset: 0, 0.25
+    layers:
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+#SS220 Crate-tg-resprite end
 
 - type: entity
   parent: CrateGenericSteel
@@ -81,6 +119,15 @@
     sprite: Structures/Storage/Crates/o2.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/o2.rsi
+#SS220 Crate-tg-resprite begin
+    offset: 0, 0.25
+    layers:
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+#SS220 Crate-tg-resprite end
 
 - type: entity
   parent: CratePlastic
@@ -91,6 +138,15 @@
     sprite: Structures/Storage/Crates/electrical.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/electrical.rsi
+#SS220 Crate-tg-resprite begin
+    offset: 0, 0.25
+    layers:
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+#SS220 Crate-tg-resprite end
 
 - type: entity
   parent: CrateGenericSteel
@@ -130,6 +186,7 @@
   - type: Icon
     sprite: Structures/Storage/Crates/web.rsi
   - type: Sprite
+    offset: 0, 0 #SS220 Crate-tg-resprite
     sprite: Structures/Storage/Crates/web.rsi
     layers:
     - state: base
@@ -301,6 +358,7 @@
   - type: EntityStorage
     airtight: false
   - type: Sprite
+    offset: 0, 0 #SS220 Crate-tg-resprite
     sprite: Structures/Storage/Crates/livestock.rsi
     layers:
     - state: base
@@ -353,6 +411,7 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/Crates/cage.rsi
+    offset: 0, 0 #SS220 Crate-tg-resprite
     layers:
     - state: base
     - state: closed
@@ -402,6 +461,7 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/Crates/piratechest.rsi
+    offset: 0, 0 #SS220 Crate-tg-resprite
     layers:
     - state: crate
       map: ["enum.StorageVisualLayers.Base"]
@@ -446,6 +506,7 @@
   description: A comfy coffin, excelent place for the vampires and corpses.
   components:
   - type: Sprite
+    offset: 0, 0 #SS220 Crate-tg-resprite
     sprite: Structures/Storage/Crates/coffin.rsi
     layers:
     - state: base
@@ -484,6 +545,7 @@
   description: Someone died here...
   components:
   - type: Sprite
+    offset: 0, 0 #SS220 Crate-tg-resprite
     sprite: Structures/Storage/Crates/wooden_grave.rsi
     layers:
     - state: base
@@ -546,6 +608,17 @@
     sprite: Structures/Storage/Crates/trashcart.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/trashcart.rsi
+#SS220 Crate-tg-resprite begin
+    offset: 0, 0
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+#SS220 Crate-tg-resprite end
   - type: Cart #SS220-Cart-system
 
 - type: entity
@@ -557,6 +630,19 @@
     sprite: Structures/Storage/Crates/trashcart_jani.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/trashcart_jani.rsi
+#SS220 Crate-tg-resprite begin
+    offset: 0, 0
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.StorageVisualLayers.Lock"]
+      shader: unshaded
+#SS220 Crate-tg-resprite end
   - type: AccessReader
     access: [["Janitor"]]
   - type: Cart #SS220-Cart-system

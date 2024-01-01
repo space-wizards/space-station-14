@@ -1,37 +1,115 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from shiptest at commmit https://github.com/shiptest-ss13/Shiptest/commit/440a15fb476a20d77ba28c1fe315c1b659032ce8",
+  "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+  "copyright": "Textured by MIXnikita for SS220",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-    { "name": "atmos_door" },
-    { "name": "black_door" },
-    { "name": "blue_door" },
-    { "name": "emergency" },
-    { "name": "emergency_door" },
-    { "name": "emergency_open" },
-    { "name": "fire" },
-    { "name": "fire_door" },
-    { "name": "fire_open" },
-    { "name": "generic" },
-    { "name": "generic_door" },
-    { "name": "generic_open" },
-    { "name": "gray_door" },
-    { "name": "green_door" },
-    { "name": "locked" },
-    { "name": "med" },
-    { "name": "med_door" },
-    { "name": "med_open" },
-    { "name": "mixed_door" },
-    { "name": "orange_door" },
-    { "name": "pink_door" },
-    { "name": "red_door" },
-    { "name": "unlocked" },
-    { "name": "welded" },
-    { "name": "white_door" },
-    { "name": "yellow_door" }
+    {
+        "name": "atmos_door",
+        "directions": 4
+    },
+    {
+        "name": "black_door",
+        "directions": 4
+    },
+    {
+        "name": "blue_door",
+        "directions": 4
+    },
+    {
+        "name": "emergency",
+        "directions": 4
+    },
+    {
+        "name": "emergency_door",
+        "directions": 4
+    },
+    {
+        "name": "emergency_open",
+        "directions": 4
+    },
+    {
+        "name": "fire",
+        "directions": 4
+    },
+    {
+        "name": "fire_door",
+        "directions": 4
+    },
+    {
+        "name": "fire_open",
+        "directions": 4
+    },
+    {
+        "name": "generic",
+        "directions": 4
+    },
+    {
+        "name": "generic_door",
+        "directions": 4
+    },
+    {
+        "name": "generic_open",
+        "directions": 4
+    },
+    {
+        "name": "gray_door",
+        "directions": 4
+    },
+    {
+        "name": "green_door",
+        "directions": 4
+    },
+    {
+        "name": "locked",
+        "directions": 4
+    },
+    {
+        "name": "med",
+        "directions": 4
+    },
+    {
+        "name": "med_door",
+        "directions": 4
+    },
+    {
+        "name": "med_open",
+        "directions": 4
+    },
+    {
+        "name": "mixed_door",
+        "directions": 4
+    },
+    {
+        "name": "orange_door",
+        "directions": 4
+    },
+    {
+        "name": "pink_door",
+        "directions": 4
+    },
+    {
+        "name": "red_door",
+        "directions": 4
+    },
+    {
+        "name": "unlocked",
+        "directions": 4
+    },
+    {
+        "name": "welded",
+        "directions": 4
+    },
+    {
+        "name": "white_door",
+        "directions": 4
+    },
+    {
+        "name": "yellow_door",
+        "directions": 4
+    }
   ]
 }

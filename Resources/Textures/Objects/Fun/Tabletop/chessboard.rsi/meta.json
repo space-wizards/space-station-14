@@ -1,10 +1,10 @@
 ﻿{
     "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Visne",
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Taken from Goonstation https://github.com/goonstation/goonstation/pull/15019",
     "size": {
-        "x": 18,
-        "y": 18
+        "x": 32,
+        "y": 32
     },
     "states": [
         {

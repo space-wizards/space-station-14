@@ -120,9 +120,9 @@
   components:
   - type: LightBulb
     bulb: Bulb
-    color: "#FFD1A3" # 4000K color temp
-    lightEnergy: 1.0
-    lightRadius: 6
+    color: "#FFAA66" # SS220-lighting
+    lightEnergy: 0.9 # SS220-lighting
+    lightRadius: 3.5 # SS220-lighting
     lightSoftness: 1.1
 
 - type: entity

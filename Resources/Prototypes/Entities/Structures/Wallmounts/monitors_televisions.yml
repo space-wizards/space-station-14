@@ -39,7 +39,7 @@
     graph: WallmountTelescreen
     node: TelescreenFrame
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: AboveFovOverlay #SS220 Perpective-wall-fov
     sprite: Structures/Machines/computers.rsi
     layers:
       - map: ["computerLayerBody"]
@@ -135,7 +135,7 @@
     graph: WallmountTelevision
     node: TelevisionFrame
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: AboveFovOverlay #SS220 Perpective-wall-fov
     sprite: Structures/Wallmounts/flatscreentv.rsi
     layers:
       - map: ["computerLayerBody"]

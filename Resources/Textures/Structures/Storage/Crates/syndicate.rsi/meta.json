@@ -1,17 +1,14 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-4.0",
-  "copyright": "Hyenh#6078 (313846233099927552)",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit 9b3b026a7590372e42ecb9c44283c1ea17bba506, modified by TheArturZh for SS220, custom welded sprite from SS14 by comasqw",
   "size": {
     "x": 32,
-    "y": 32
+    "y": 48
   },
   "states": [
     {
       "name": "icon"
-    },
-    {
-      "name": "base"
     },
     {
       "name": "closed"

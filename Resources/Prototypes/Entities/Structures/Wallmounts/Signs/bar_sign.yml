@@ -11,7 +11,7 @@
           "/Audio/Effects/glass_hit.ogg"
   - type: WallMount
   - type: Sprite
-    drawdepth: Objects
+    drawdepth: AboveFovOverlay #SS220 Perpective-wall-fov
     sprite: Structures/Wallmounts/barsign.rsi
     state: empty
   - type: ApcPowerReceiver

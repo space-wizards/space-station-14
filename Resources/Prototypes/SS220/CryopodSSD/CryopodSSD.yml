@@ -1,7 +1,7 @@
 ﻿# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 - type: entity
-  noSpawn: true
+  abstract: true
   id: BaseSSDConsole
   name: Консоль крио хранилища
   description: С помощью этой консоли вы можете узнать имена членов экипажа которые переместились в криохранилище
@@ -11,14 +11,6 @@
     - type: AccessReader
       access: [ [ "Command" ] ]
     - type: Appearance
-    - type: Sprite
-      sprite: SS220/Structures/Machines/ssdStorageConsole.rsi
-      drawdepth: WallMountedItems
-      layers:
-        - state: ssdStorageConsole
-    - type: Icon
-      sprite: SS220/Structures/Machines/ssdStorageConsole.rsi
-      state: icon
     - type: Transform
       anchored: true
     - type: Storage
@@ -51,7 +43,15 @@
 - type: entity
   parent: BaseSSDConsole
   id: SSDStorageConsole
-
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Machines/ssdStorageConsole.rsi
+    drawdepth: AboveFovOverlay #SS220 Perpective-wall-fov
+    layers:
+    - state: ssdStorageConsole
+  - type: Icon
+    sprite: SS220/Structures/Machines/ssdStorageConsole.rsi
+    state: icon
 
 - type: entity
   parent: [ SSDStorageConsole, BaseStructure ]

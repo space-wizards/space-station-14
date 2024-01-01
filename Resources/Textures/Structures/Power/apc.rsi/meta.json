@@ -1,139 +1,371 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from TauCetiClassic at commit https://github.com/TauCetiStation/TauCetiClassic/commit/fca7f2a0f9154c0c6c4efc2f8f58441fb9b34759",
+  "copyright": "Taken from TauCetiClassic at commit https://github.com/TauCetiStation/TauCetiClassic/commit/fca7f2a0f9154c0c6c4efc2f8f58441fb9b34759, Retextured by MIXnikita for SS220",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "base"
+        "name": "base",
+        "directions": 4
     },
 	{
       "name": "static"
     },
     {
-      "name": "broken"
+        "name": "broken",
+        "directions": 4
     },
     {
-      "name": "frame"
+        "name": "frame",
+        "directions": 4
     },
     {
-      "name": "panel"
+        "name": "panel",
+        "directions": 4
     },
     {
-      "name": "lock0-unlocked"
+        "name": "lock0-unlocked",
+        "directions": 4
     },
     {
-      "name": "lock0-locked"
+        "name": "lock0-locked",
+        "directions": 4
     },
     {
-      "name": "lock1-unlocked"
+        "name": "lock1-unlocked",
+        "directions": 4
     },
     {
-      "name": "lock1-locked"
+        "name": "lock1-locked",
+        "directions": 4
     },
     {
-      "name": "channel0-auto_off"
+        "name": "channel0-auto_off",
+        "directions": 4
     },
     {
-      "name": "channel0-manual_off"
+        "name": "channel0-manual_off",
+        "directions": 4
     },
     {
-      "name": "channel0-auto_on"
+        "name": "channel0-auto_on",
+        "directions": 4
     },
     {
-      "name": "channel0-manual_on"
+        "name": "channel0-manual_on",
+        "directions": 4
     },
     {
-      "name": "channel1-auto_off"
+        "name": "channel1-auto_off",
+        "directions": 4
     },
     {
-      "name": "channel1-manual_off"
+        "name": "channel1-manual_off",
+        "directions": 4
     },
     {
-      "name": "channel1-auto_on"
+        "name": "channel1-auto_on",
+        "directions": 4
     },
     {
-      "name": "channel1-manual_on"
+        "name": "channel1-manual_on",
+        "directions": 4
     },
     {
-      "name": "channel2-auto_off"
+        "name": "channel2-auto_off",
+        "directions": 4
     },
     {
-      "name": "channel2-manual_off"
+        "name": "channel2-manual_off",
+        "directions": 4
     },
     {
-      "name": "channel2-auto_on"
+        "name": "channel2-auto_on",
+        "directions": 4
     },
     {
-      "name": "channel2-manual_on"
+        "name": "channel2-manual_on",
+        "directions": 4
     },
     {
-      "name": "display-lack",
-      "delays": [
-        [
-          1,
-          2
+        "name": "display-lack",
+        "directions": 4,
+        "delays": [
+            [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+            ]
         ]
-      ]
     },
     {
-      "name": "display-charging",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.2
+        "name": "display-charging",
+        "directions": 4,
+        "delays": [
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.2
+            ],
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.2
+            ],
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.2
+            ],
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.2
+            ]
         ]
-      ]
     },
     {
-      "name": "display-full",
-      "delays": [
-        [
-          1,
-          1
+        "name": "display-full",
+        "directions": 4,
+        "delays": [
+            [
+                1,
+                1
+            ],
+            [
+                1,
+                1
+            ],
+            [
+                1,
+                1
+            ],
+            [
+                1,
+                1
+            ]
+
         ]
-      ]
     },
     {
-      "name": "display-remote",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
+        "name": "display-remote",
+        "directions": 4,
+        "delays": [
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ],
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ],
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ],
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ]
         ]
-      ]
     },
     {
-      "name": "emag-unlit",
-      "delays": [
-        [
-          0.5,
-          0.5
+        "name": "emag-unlit",
+        "directions": 4,
+        "delays": [
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ],
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ],
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ],
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ]
         ]
-      ]
     },
     {
-      "name": "sparks-unlit",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
+        "name": "sparks-unlit",
+        "directions": 4,
+        "delays": [
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ],
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ],
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ],
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ]
         ]
-      ]
     }
   ]
 }

@@ -15,7 +15,7 @@
     sprite: Structures/barricades.rsi
     state: barricade_full
     drawdepth: BlastDoors
-    noRot: true
+    noRot: false
   - type: Physics
   - type: Fixtures
     fixtures:

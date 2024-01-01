@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Paradise station https://github.com/ParadiseSS13/Paradise/blob/master/icons/obj/smooth_structures/windows/pod_window.dmi and modified by NULL882",
+  "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+  "copyright": "Made by MIXnikita for SS220",
   "size": {
     "x": 32,
     "y": 32

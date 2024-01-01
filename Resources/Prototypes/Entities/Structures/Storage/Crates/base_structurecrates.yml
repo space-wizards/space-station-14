@@ -13,11 +13,14 @@
   - type: Sprite
     noRot: true
     sprite: Structures/Storage/Crates/generic.rsi
+#SS220 Crate-tg-resprite begin
+    offset: 0, 0.25
     layers:
-    - state: base
-      map: ["enum.StorageVisualLayers.Base"]
+#    - state: base
+#      map: ["enum.StorageVisualLayers.Base"]
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
+#SS220 Crate-tg-resprite end
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
@@ -90,10 +93,13 @@
     state: icon
   - type: Sprite
     sprite: Structures/Storage/Crates/secure.rsi
+#SS220 Crate-tg-resprite begin
+    offset: 0, 0.25
     layers:
-    - state: base
+#    - state: base
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
+#SS220 Crate-tg-resprite end
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]

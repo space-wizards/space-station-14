@@ -12,7 +12,7 @@
           "/Audio/Effects/glass_hit.ogg"
   - type: WallMount
   - type: Sprite
-    drawdepth: Objects
+    drawdepth: AboveFovOverlay
     sprite: SS220/Structures/Wallmounts/bar_mini_sign.rsi
     layers:
     - state: base

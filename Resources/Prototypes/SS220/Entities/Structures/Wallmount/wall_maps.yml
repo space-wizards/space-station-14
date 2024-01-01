@@ -9,7 +9,7 @@
     state: frank_map
     sprite: SS220/Structures/Wallmounts/wallmap.rsi
     snapCardinals: false
-    drawdepth: Overdoors
+    drawdepth: AboveFovOverlay
   - type: ActivatableUI
     key: enum.ViewableStationMapUiKey.Key
   - type: ActivatableUIRequiresVision

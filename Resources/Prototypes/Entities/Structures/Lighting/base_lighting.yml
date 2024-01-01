@@ -10,6 +10,13 @@
   description: "An always powered light."
   suffix: Always powered
   components:
+  - type: BloomLightMask # SS220 Grafon-Light
+    lightMasks:
+    - sprite: "SS220/BloomLight/Masks/lightmask_lamp.png"
+      modulate: "#FFFFFF90"
+    - sprite: "SS220/BloomLight/Masks/tube_short.png"
+      modulate: "#FFFFFF80"
+      useShader: false
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -152,6 +159,8 @@
   suffix: Blue
   parent: Poweredlight
   components:
+  - type: BloomLightMask # SS220 Grafon-Light
+    useLightColor: true
   - type: PoweredLight
     hasLampOnSpawn: ExteriorLightTube
     damage:
@@ -181,6 +190,8 @@
     damage:
       types:
         Heat: 5
+  - type: BloomLightMask # SS220 Grafon-Light
+    useLightColor: true
 
 - type: entity
   parent: AlwaysPoweredWallLight
@@ -201,6 +212,12 @@
   suffix: Always Powered
   parent: AlwaysPoweredWallLight
   components:
+    - type: BloomLightMask # SS220 Grafon-Light
+      lightMasks:
+      - sprite: "SS220/BloomLight/Masks/lightmask_lamp.png"
+      - sprite: "SS220/BloomLight/Masks/bulb_short.png"
+        modulate: "#FFE4CEFF"
+        useShader: false
     - type: AmbientSound
       volume: -15
       range: 2

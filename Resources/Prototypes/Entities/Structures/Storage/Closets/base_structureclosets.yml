@@ -119,7 +119,6 @@
   - type: Transform
     noRot: false
   - type: Sprite
-    drawdepth: WallMountedItems
     noRot: false
     sprite: Structures/Storage/wall_locker.rsi
     layers:

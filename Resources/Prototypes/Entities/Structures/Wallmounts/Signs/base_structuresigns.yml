@@ -30,7 +30,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Sprite
-    drawdepth: WallTops
+    drawdepth: AboveFovOverlay #SS220 Perpective-wall-fov
     sprite: Structures/Wallmounts/signs.rsi
     snapCardinals: true
   - type: StaticPrice

@@ -1,0 +1,66 @@
+uniform sampler2D SCREEN_TEXTURE;
+
+const highp float[3] weight = float[](0.2, 0.0625, 0.0375); // 0.2 0.5 0.3
+
+highp float alphaAdjustment(highp vec4 background) {
+	highp float avgColor = ((background.x + background.y + background.z)/3.0);
+	highp float boost = (1.0 - (1.0 - avgColor)/1.25);
+	highp float transition = clamp((avgColor - 0.035) / 0.125, 0.0, 2.0);
+	highp float lerped = boost * (1.0 - transition) + transition;
+	return lerped;
+}
+
+highp vec4 blurSample(highp vec2 offset, highp vec2 uv, highp vec2 frag, lowp int step) {
+	highp vec4 bsample = texture2D(TEXTURE, uv + offset * TEXTURE_PIXEL_SIZE) * weight[step];
+	bsample.a *= alphaAdjustment(zTextureSpec(SCREEN_TEXTURE, (frag + offset) * SCREEN_PIXEL_SIZE ));
+	
+	return bsample;
+}
+
+void fragment() {
+
+    highp vec4 sprite = zTexture(UV);
+
+    if (sprite.a == 0.0) {
+        discard;
+    }
+	
+	// Very simple gaussian blur.
+	highp vec3 offsetBase = vec3(1.0, 0.0, -1.0);
+	highp vec4 sum = blurSample(vec2(0,0), UV.xy, FRAGCOORD.xy, 0);
+
+	highp vec4 bsample;
+	highp float floatstep = 0.0;
+
+	for (lowp int i = 0; i < 2; i++) {
+		floatstep += 1.0;
+	
+		//square
+		bsample = blurSample(offsetBase.xy * floatstep, UV.xy, FRAGCOORD.xy, i+1);
+		sum += bsample;
+		
+		bsample = blurSample(-offsetBase.xy * floatstep, UV.xy, FRAGCOORD.xy, i+1);
+		sum += bsample;
+		
+		bsample = blurSample(offsetBase.yx * floatstep, UV.xy, FRAGCOORD.xy, i+1);
+		sum += bsample;
+		
+		bsample = blurSample(-offsetBase.yx * floatstep, UV.xy, FRAGCOORD.xy, i+1);
+		sum += bsample;
+		
+		//diagonal
+		bsample = blurSample(offsetBase.xx * floatstep, UV.xy, FRAGCOORD.xy, i+1);
+		sum += bsample;
+		
+		bsample = blurSample(offsetBase.xz * floatstep, UV.xy, FRAGCOORD.xy, i+1);
+		sum += bsample;
+		
+		bsample = blurSample(offsetBase.zx * floatstep, UV.xy, FRAGCOORD.xy, i+1);
+		sum += bsample;
+		
+		bsample = blurSample(offsetBase.zz * floatstep, UV.xy, FRAGCOORD.xy, i+1);
+		sum += bsample;
+	}
+
+    COLOR = sum;
+}

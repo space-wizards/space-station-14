@@ -44,6 +44,7 @@
         - WallLayer
         density: 1000
   - type: Occluder
+  - type: FoVOverlay # SS220 perspective-wall-fov
   - type: Airtight
   - type: StaticPrice
     price: 75

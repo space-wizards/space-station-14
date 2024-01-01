@@ -5,13 +5,15 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from: https://github.com/tgstation/tgstation/commit/847e50af31a6c2b797c0de213e725f24b6175e17#diff-d887f4300e059d5fba9576e24bf1e6268a2fd25791f3d13f2636402492f6d917",
+    "copyright": "by MIXnikita for SS220",
     "states": [
         {
-            "name": "state0"
+            "name": "state0",
+            "directions": 4
         },
         {
-            "name": "state1"
+            "name": "state1",
+            "directions": 4
         }
     ]
 }

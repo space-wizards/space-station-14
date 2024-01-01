@@ -1,53 +1,67 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/d0d81185f09ca30d3b0856d476544240dba0de53",
+  "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+  "copyright": "by MIXnikita for SS220",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "cabinet-empty-closed"
+        "name": "cabinet-empty-closed",
+        "directions": 4
     },
     {
-      "name": "cabinet-empty-open"
+        "name": "cabinet-empty-open",
+        "directions": 4
     },
     {
-      "name": "cabinet-filled-open"
+        "name": "cabinet-filled-open",
+        "directions": 4
     },
     {
-      "name": "cabinet-filled-closed"
+        "name": "cabinet-filled-closed",
+        "directions": 4
     },
     {
-      "name": "cabinet"
+        "name": "cabinet",
+        "directions": 4
     },
     {
-      "name": "fireaxe"
+        "name": "fireaxe",
+        "directions": 4
     },
     {
-      "name": "glass"
+        "name": "glass",
+        "directions": 4
     },
     {
-      "name": "glass-1"
+        "name": "glass-1",
+        "directions": 4
     },
     {
-      "name": "glass-2"
+        "name": "glass-2",
+        "directions": 4
     },
     {
-      "name": "glass-3"
+        "name": "glass-3",
+        "directions": 4
     },
     {
-      "name": "glass-4"
+        "name": "glass-4",
+        "directions": 4
     },
     {
-      "name": "glass-up"
+        "name": "glass-up",
+        "directions": 4
     },
     {
-      "name": "unlocked"
+        "name": "unlocked",
+        "directions": 4
     },
     {
-      "name": "locked"
+        "name": "locked",
+        "directions": 4
     }
   ]
 }

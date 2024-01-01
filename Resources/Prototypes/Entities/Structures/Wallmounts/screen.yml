@@ -15,7 +15,7 @@
     timerOffset: 0,-4
     rows: 2
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: AboveFovOverlay #SS220 FoV
     sprite: Structures/Wallmounts/screen.rsi
     state: screen
     noRot: true

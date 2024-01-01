@@ -8,6 +8,15 @@
     sprite: SS220/Structures/Storage/Crates/ussp_crate.rsi
   - type: Sprite
     sprite: SS220/Structures/Storage/Crates/ussp_crate.rsi
+    offset: 0, 0
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
 
 - type: entity
   parent: CrateGeneric
@@ -16,6 +25,7 @@
   description: Простой ящик из дерева.
   components:
   - type: Sprite
+    offset: 0, 0
     sprite: SS220/Structures/Storage/Crates/wood_crate.rsi
     layers:
     - state: base

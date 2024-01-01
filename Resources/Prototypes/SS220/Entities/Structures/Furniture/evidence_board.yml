@@ -12,7 +12,7 @@
     arc: 360
   - type: Sprite
     sprite: SS220/Structures/Furniture/evidence_board.rsi
-    drawdepth: WallTops
+    drawdepth: AboveFovOverlay #SS220 Perpective-wall-fov
     layers:
       - state: icon
   - type: Transform

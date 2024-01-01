@@ -159,9 +159,10 @@
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
     sprite: Structures/Power/substation.rsi
+    snapCardinals: false
     layers:
     - state: substation_wall
-    - state: screen
+    - state: screen_wall
       shader: unshaded
   - type: Battery
     maxCharge: 2000000

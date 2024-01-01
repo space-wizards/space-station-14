@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e idcluwne made by brainfood1183 (github) for ss14, idbrigmedic made by PuroSlavKing (Github), pirate made by brainfood1183 (github), ussp is made by MIXnikita for SS220",
+  "copyright": "Taken from Skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/commit/e9f937f52b9f63acb49ffd6ab5e6de68e7b13e73 with some modifications by TheArturZh for SS220, ussp is made by MIXnikita for SS220",
   "size": {
     "x": 32,
     "y": 32

@@ -1,23 +1,27 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from TauCetiStation at https://github.com/TauCetiStation/TauCetiClassic/commit/afc73216e6a893d5f2fc3caa6bdd2adb06c113e3",
+  "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+  "copyright": "by MIXnikita for SS220",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "closed"
+        "name": "closed",
+        "directions": 4
     },
     {
-      "name": "extinguisher"
+        "name": "extinguisher",
+        "directions": 4
     },
     {
-      "name": "frame"
+        "name": "frame",
+        "directions": 4
     },
     {
-      "name": "open"
+        "name": "open",
+        "directions": 4
     }
   ]
 }

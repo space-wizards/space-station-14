@@ -4,8 +4,8 @@
         "x": 32,
         "y": 32
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/Skyrat-SS13/Skyrat-tg/blob/6e7197f550aac62a165c0a8c6b0835de19342623/modular_skyrat/modules/aesthetics/intercom/icons/intercom.dmi & build state from DenLemp#2965",
+    "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+    "copyright": "by MIXnikita for SS220",
     "states": [
         {
             "name": "base",

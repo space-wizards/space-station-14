@@ -75,7 +75,7 @@ namespace Content.Shared.DrawDepth
         Items = DrawDepthTag.Default + 3,
 
         Mobs = DrawDepthTag.Default + 4,
-		
+
         OverMobs = DrawDepthTag.Default + 5,
 
         Doors = DrawDepthTag.Default + 6,
@@ -90,17 +90,20 @@ namespace Content.Shared.DrawDepth
         /// </summary>
         Overdoors = DrawDepthTag.Default + 8,
 
+        WallFovOverlay = DrawDepthTag.Default + 9, //SS220 Perpective-wall-fov
+        AboveFovOverlay = DrawDepthTag.Default + 10, //SS220 Perpective-wall-fov
+
         /// <summary>
         ///     Explosions, fire, melee swings. Whatever.
         /// </summary>
-        Effects = DrawDepthTag.Default + 9,
+        Effects = DrawDepthTag.Default + 11,
 
-        Ghosts = DrawDepthTag.Default + 10,
+        Ghosts = DrawDepthTag.Default + 12,
 
         /// <summary>
         ///    Use this selectively if it absolutely needs to be drawn above (almost) everything else. Examples include
         ///    the pointing arrow, the drag & drop ghost-entity, and some debug tools.
         /// </summary>
-        Overlays = DrawDepthTag.Default + 11,
+        Overlays = DrawDepthTag.Default + 13,
     }
 }

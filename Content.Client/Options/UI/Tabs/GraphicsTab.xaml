@@ -10,6 +10,7 @@
                 <Control MinSize="4 0" />
                 <OptionButton Name="LightingPresetOption" MinSize="100 0" />
             </BoxContainer>
+            <CheckBox Name="BloomLightingCheckBox" Text="{Loc 'ui-options-bloom-lighting'}"/> <!-- SS220 Grafon-lighting -->
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'ui-options-scale-label'}" />
                 <Control MinSize="4 0" />

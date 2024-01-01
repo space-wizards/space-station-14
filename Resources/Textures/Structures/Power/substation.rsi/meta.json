@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/b63634bc17efe2f09cf06ef0e9a90d24d37f6203, wall modified by Peptide90",
+  "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/b63634bc17efe2f09cf06ef0e9a90d24d37f6203, wall retextured by MIXnikita for SS220",
   "size": {
     "x": 32,
     "y": 32
@@ -10,11 +10,12 @@
     {
       "name": "substation"
     },
-	{
-	  "name": "substation_static"
-	},
-    {		
-      "name": "substation_wall"
+    {
+        "name": "substation_static"
+    },
+    {
+        "name": "substation_wall",
+        "directions": 4
     },
 	{
 	  "name": "substation_wall_static"
@@ -26,7 +27,45 @@
       "name": "charging"
     },
     {
-      "name": "dead"
+        "name": "dead"
+    },
+    {
+        "name": "screen_wall",
+        "directions": 4,
+        "delays": [
+            [
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                0.15
+            ],
+            [
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                0.15
+            ],
+            [
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                0.15
+            ],
+            [
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                0.15
+            ]
+        ]
     },
     {
       "name": "screen",

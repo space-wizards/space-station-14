@@ -1,42 +1,83 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation/pull/71788/commits/2f94363d12aae96e757cb052d0f7846d7e11d1066",
+  "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+  "copyright": "by MIXnikita for SS220",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "broken"
+      "name": "broken",
+      "directions": 4
     },
     {
-      "name": "panel"
+      "name": "panel",
+      "directions": 4
     },
     {
       "name": "deny-unshaded",
+      "directions": 4,
       "delays": [
         [
           0.2,
           0.2,
+          0.1,
+          0.1
+        ],
+        [
           0.2,
-          0.2
+          0.2,
+          0.1,
+          0.1
+        ],
+        [
+          0.2,
+          0.2,
+          0.1,
+          0.1
+        ],
+        [
+          0.2,
+          0.2,
+          0.1,
+          0.1
         ]
       ]
     },
     {
       "name": "normal-unshaded",
+      "directions": 4,
       "delays": [
         [
           0.2,
+          0.1,
           0.2,
+          0.1
+        ],
+        [
           0.2,
-          0.2
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.2,
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.2,
+          0.1,
+          0.2,
+          0.1
         ]
       ]
     },
     {
-      "name": "off"
+      "name": "off",
+      "directions": 4
     }
   ]
 }

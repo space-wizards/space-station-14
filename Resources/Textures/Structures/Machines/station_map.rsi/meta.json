@@ -1,31 +1,85 @@
 {
   "version": 1,
-  "license": "CC0-1.0",
-  "copyright": "Made by brainfood1183 (github) for ss14",
+  "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+  "copyright": "by MIXnikita for SS220",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "station_map0"
+      "name": "station_map0",
+      "directions": 4
     },
     {
-      "name": "station_map_broken"
+      "name": "station_map_broken",
+      "directions": 4
     },
     {
-      "name": "station_map_frame2"
+      "name": "station_map_frame2",
+      "directions": 4
     },
     {
-      "name": "station_map_frame1"
+      "name": "station_map_frame1",
+      "directions": 4
     },
     {
-      "name": "station_map_frame0"
+      "name": "station_map_frame0",
+      "directions": 4
     },
     {
       "name": "unshaded",
+      "directions": 4,
       "delays": [
         [
+          1.0,
+          5.0,
+          1.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        [
+          1.0,
+          5.0,
+          1.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        [
+          1.0,
+          5.0,
+          1.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        [
+          1.0,
+          5.0,
+          1.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
           2.0,
           2.0
         ]

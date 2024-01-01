@@ -1,17 +1,14 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/3ad3c092599897a0b8d2415f1e8bd16829fc292b and recolord medical crate by comasqw & custom welded sprite",
+  "copyright": "Taken from tgstation at commit 9b3b026a7590372e42ecb9c44283c1ea17bba506, modified by TheArturZh for SS220, custom welded sprite from SS14 by comasqw",
   "size": {
     "x": 32,
-    "y": 32
+    "y": 48
   },
   "states": [
     {
       "name": "icon"
-    },
-    {
-      "name": "base"
     },
     {
       "name": "closed"

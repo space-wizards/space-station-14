@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from TauCetiClassic at commit https://github.com/TauCetiStation/TauCetiClassic/commit/b7ac5798ae0d411b0cdeaf7efbc4ac86d24b4634, fire_emagged.png edited by github:Morb0",
+  "copyright": "Taken from TauCetiClassic at commit https://github.com/TauCetiStation/TauCetiClassic/commit/b7ac5798ae0d411b0cdeaf7efbc4ac86d24b4634, fire_emagged.png edited by github:Morb0, Retextured by MIXnikita for SS220",
   "size": {
     "x": 32,
     "y": 32
@@ -302,7 +302,7 @@
     },
     {
       "name": "fire_bitem",
-      "directions": 1
+      "directions": 4
     },
     {
       "name": "fire_emagged",

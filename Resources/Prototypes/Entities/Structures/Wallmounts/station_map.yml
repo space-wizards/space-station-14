@@ -12,7 +12,7 @@
       anchored: true
     - type: Sprite
       sprite: Structures/Machines/station_map.rsi
-      drawdepth: WallMountedItems
+      drawdepth: AboveFovOverlay #SS220 Perpective-wall-fov
       layers:
         - state: station_map_broken
     - type: Damageable
@@ -43,6 +43,7 @@
       anchored: true
     - type: Sprite
       sprite: Structures/Machines/station_map.rsi
+      drawdepth: AboveFovOverlay #SS220 Perpective-wall-fov
       layers:
       - map: ["computerLayerBody"]
         state: station_map0
@@ -100,6 +101,7 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Machines/station_map.rsi
+    drawdepth: AboveFovOverlay #SS220 Perpective-wall-fov
     layers:
     - state: station_map_frame1
       map: [ "enum.ConstructionVisuals.Layer" ]
