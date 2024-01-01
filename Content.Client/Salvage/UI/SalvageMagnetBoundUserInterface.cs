@@ -1,5 +1,6 @@
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Magnet;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Salvage.UI;
@@ -20,7 +21,7 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
         base.Open();
         _window = new OfferingWindow();
         _window.OnClose += Close;
-        _window.OpenCentered();
+        _window.OpenCenteredLeft();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -44,6 +45,7 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
             var seed = current.Offers[i];
             var offer = salvageSystem.GetSalvageOffering(seed);
             var option = new OfferingWindowOption();
+            option.MinWidth = 210f;
             option.Disabled = current.EndTime != null;
             option.Claimed = current.ActiveSeed == seed;
 
@@ -54,12 +56,30 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
 
                     foreach (var (resource, count) in asteroid.MarkerLayers)
                     {
-                        option.AddContent(new Label()
+                        var container = new BoxContainer()
+                        {
+                            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                            HorizontalExpand = true,
+                        };
+
+                        var resourceLabel = new Label()
                         {
                             Text = Loc.GetString("salvage-magnet-resources",
-                                ("resource", resource),
-                                ("count", count))
-                        });
+                                ("resource", resource)),
+                            HorizontalAlignment = Control.HAlignment.Left,
+                        };
+
+                        var countLabel = new Label()
+                        {
+                            Text = Loc.GetString("salvage-magnet-resources-count", ("count", count)),
+                            HorizontalAlignment = Control.HAlignment.Right,
+                            HorizontalExpand = true,
+                        };
+
+                        container.AddChild(resourceLabel);
+                        container.AddChild(countLabel);
+
+                        option.AddContent(container);
                     }
 
                     break;

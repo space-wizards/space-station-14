@@ -1,7 +1,18 @@
-salvage-magnet-resources = {$count ->
-    [one] {$resource} (Poor)
-    [two] {$resource} (Rich)
-    *[other] {$resource} (Extraordinary)
+salvage-magnet-resources = {$resource ->
+    [OreTin] Tin
+    [OreCoal] Coal
+    [OreQuartz] Quartz
+    [OreGold] Gold
+    [OreSilver] Silver
+    [OrePlasma] Plasma
+    [OreUranium] Uranium
+    *[other] {$resource}
+}
+
+salvage-magnet-resources-count = {$count ->
+    [1] (Poor)
+    [2] (Rich)
+    *[other] (Extraordinary)
 }
 
 # Asteroids
