@@ -115,7 +115,7 @@
       visible: false
   - type: Item
     sprite: Objects/Devices/pinpointer.rsi  
-  - type: ThiefPinpointer
+  - type: AntagPinpointer
   - type: Pinpointer 
     updateTargetName: true
     canRetarget: false
