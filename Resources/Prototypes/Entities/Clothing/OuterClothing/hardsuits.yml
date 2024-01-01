@@ -882,3 +882,25 @@
     node: clownHardsuit
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitClown
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitHop
+  name: head of personnel hardsuit
+  description: Special development of NT scientists for HoP. Made of many layers of dense durathread. Has minor protection. Very light.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/hop.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/hop.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.95
+        Caustic: 0.95
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitHop

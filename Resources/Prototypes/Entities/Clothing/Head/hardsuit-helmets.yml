@@ -698,3 +698,19 @@
     sprite: Clothing/Head/Hardsuits/clown.rsi
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Effects/Emotes/parp1.ogg
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitHop
+  noSpawn: true
+  name: head of personnel hardsuit helmet
+  description: Special helmet for HoP's hardsuit, provides minor protection against hits.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/hop.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/hop.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95

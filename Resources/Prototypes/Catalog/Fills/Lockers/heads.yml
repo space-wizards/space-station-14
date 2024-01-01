@@ -119,6 +119,7 @@
       - id: ClothingBackpackIan
         prob: 0.5
       - id: AccessConfigurator
+      - id: ClothingOuterHardsuitHop
 
 - type: entity
   id: LockerChiefEngineerFilledHardsuit
