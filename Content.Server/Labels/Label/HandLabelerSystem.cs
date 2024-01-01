@@ -1,6 +1,6 @@
 using Content.Server.Labels.Components;
-using Content.Server.UserInterface;
 using Content.Server.Popups;
+using Content.Server.Traits.Assorted;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
@@ -8,7 +8,7 @@ using Content.Shared.Labels;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
+using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Labels
 {
@@ -22,6 +22,7 @@ namespace Content.Server.Labels
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly LabelSystem _labelSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IlliterateSystem _illiterate = default!;
 
         public override void Initialize()
         {
@@ -95,6 +96,12 @@ namespace Content.Server.Labels
 
             var label = args.Label.Trim();
             handLabeler.AssignedLabel = label.Substring(0, Math.Min(handLabeler.MaxLabelChars, label.Length));
+
+            var ev = new WriteAttemptEvent(args.Session.AttachedEntity, uid);
+            RaiseLocalEvent(ev);
+            if (!ev.CanWrite)
+                handLabeler.AssignedLabel = _illiterate.ScrambleString(handLabeler.AssignedLabel);
+
             DirtyUI(uid, handLabeler);
 
             // Log label change

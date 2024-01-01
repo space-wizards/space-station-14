@@ -57,3 +57,10 @@
   description: trait-frontal-lisp-desc
   components:
     - type: FrontalLisp
+
+- type: trait
+  id: Illiterate
+  name: trait-illiterate-name
+  description: trait-illiterate-desc
+  components:
+    - type: Illiterate

@@ -1,6 +1,6 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
+using Content.Server.Traits.Assorted;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -8,8 +8,9 @@ using Content.Shared.Interaction;
 using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
+using System.Linq;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Paper
@@ -24,6 +25,7 @@ namespace Content.Server.Paper
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly IlliterateSystem _illiterate = default!;
 
         public override void Initialize()
         {
@@ -151,6 +153,14 @@ namespace Content.Server.Paper
             {
                 paperComp.Content = args.Text;
 
+                var ev = new WriteAttemptEvent(args.Session.AttachedEntity, uid);
+                RaiseLocalEvent<WriteAttemptEvent>(uid, ev);
+
+                //If the writer is illiterate, scramble the text
+                if (!ev.CanWrite)
+                    paperComp.Content = _illiterate.ScrambleString(paperComp.Content);
+
+
                 if (TryComp<AppearanceComponent>(uid, out var appearance))
                     _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Written, appearance);
 
@@ -216,8 +226,19 @@ namespace Content.Server.Paper
             if (!Resolve(uid, ref paperComp))
                 return;
 
+            var content = paperComp.Content;
+
+            if (session != null)
+            {
+                var ev = new ReadAttemptEvent(session.AttachedEntity, uid);
+                RaiseLocalEvent(ev);
+
+                if (!ev.CanRead)
+                    content = _illiterate.ScrambleString(content);
+            }
+
             if (_uiSystem.TryGetUi(uid, PaperUiKey.Key, out var bui))
-                _uiSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode), session);
+                _uiSystem.SetUiState(bui, new PaperBoundUserInterfaceState(content, paperComp.StampedBy, paperComp.Mode), session);
         }
     }
 

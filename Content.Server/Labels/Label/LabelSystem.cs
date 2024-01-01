@@ -1,12 +1,13 @@
 using Content.Server.Labels.Components;
 using Content.Server.Paper;
+using Content.Server.Traits.Assorted;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
+using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Labels
 {
@@ -19,6 +20,7 @@ namespace Content.Server.Labels
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly IlliterateSystem _illiterate = default!;
 
         public const string ContainerName = "paper_label";
 
