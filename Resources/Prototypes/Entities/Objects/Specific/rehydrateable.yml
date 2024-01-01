@@ -48,6 +48,11 @@
         hard: false
         layer:
         - LowImpassable
+  #ss220 chiefs belt start
+  - type: Tag
+    tags:
+      - MonkeyCube
+  #ss220 chiefs belt end
 
 - type: entity
   parent: PlushieCarp

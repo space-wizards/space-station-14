@@ -1188,3 +1188,14 @@
 
 - type: Tag
   id:  boots
+
+#ss220 chiefs belt start
+- type: Tag
+  id:  WaterBottle
+
+- type: Tag
+  id:  Vinegar
+
+- type: Tag
+  id:  OilOlive
+#ss220 chiefs belt end

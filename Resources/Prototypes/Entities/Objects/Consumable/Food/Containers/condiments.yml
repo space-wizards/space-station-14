@@ -474,6 +474,11 @@
       visible: true
   - type: Icon
     state: bottle-vinegar
+  #ss220 chiefs belt start
+  - type: Tag
+    tags:
+      - Vinegar
+  #ss220 chiefs belt end
 
 - type: entity
   parent: BaseFoodCondimentBottle

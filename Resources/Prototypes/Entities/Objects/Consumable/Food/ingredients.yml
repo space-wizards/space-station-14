@@ -220,6 +220,11 @@
         reagents:
         - ReagentId: OilOlive
           Quantity: 20
+  #ss220 chiefs belt start
+  - type: Tag
+    tags:
+      - OilOlive
+  #ss220 chiefs belt end
 
 - type: entity
   parent: ReagentPacketBase

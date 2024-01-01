@@ -451,3 +451,8 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
+  #ss220 chiefs belt start
+  - type: Tag
+    tags:
+      - WaterBottle
+  #ss220 chiefs belt end
