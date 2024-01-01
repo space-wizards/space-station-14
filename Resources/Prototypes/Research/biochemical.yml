@@ -94,7 +94,7 @@
   id: Biofabrication
   name: research-technology-biofabrication
   icon:
-    sprite: Structures/Machines/autolathe.rsi
+    sprite: Structures/Machines/biofabricator.rsi
     state: icon
   discipline: Biochemical
   tier: 2
