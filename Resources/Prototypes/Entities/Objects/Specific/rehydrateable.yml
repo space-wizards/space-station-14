@@ -53,7 +53,6 @@
   parent: MonkeyCube
   id: KoboldCube
   name: kobold cube
-  description: Just add water!
   components:
   - type: Rehydratable
     possibleSpawns:
@@ -63,7 +62,6 @@
   parent: MonkeyCube
   id: CowCube
   name: cow cube
-  description: Just add water!
   components:
   - type: Rehydratable
     possibleSpawns:
@@ -73,7 +71,6 @@
   parent: MonkeyCube
   id: GoatCube
   name: goat cube
-  description: Just add water!
   components:
   - type: Rehydratable
     possibleSpawns:
@@ -83,7 +80,6 @@
   parent: MonkeyCube
   id: MothroachCube
   name: mothroach cube
-  description: Just add water!
   components:
   - type: Rehydratable
     possibleSpawns:
@@ -93,7 +89,6 @@
   parent: MonkeyCube
   id: MouseCube
   name: mouse cube
-  description: Just add water!
   components:
   - type: Rehydratable
     possibleSpawns:
