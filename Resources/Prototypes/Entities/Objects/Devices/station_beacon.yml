@@ -97,7 +97,7 @@
 - type: entity
   parent: BaseItem
   id: StationBeaconPart
-  name: station beacon assembly
+  name: station beacon flatpack
   description: A flatpack used for constructing a station beacon.
   components:
   - type: Item

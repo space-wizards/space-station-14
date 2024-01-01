@@ -23,13 +23,13 @@ public abstract class SharedFlatpackSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly MachinePartSystem _machinePart = default!;
-    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] protected readonly MachinePartSystem MachinePart = default!;
+    [Dependency] protected readonly SharedMaterialStorageSystem MaterialStorage = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
@@ -40,7 +40,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
         SubscribeLocalEvent<FlatpackComponent, InteractUsingEvent>(OnFlatpackInteractUsing);
         SubscribeLocalEvent<FlatpackComponent, ExaminedEvent>(OnFlatpackExamined);
 
-        SubscribeLocalEvent<FlatpackCreatorComponent, InteractUsingEvent>(OnCreatorInteractUsing);
+        SubscribeLocalEvent<FlatpackCreatorComponent, ContainerIsRemovingAttemptEvent>(OnCreatorRemovingAttempt);
     }
 
     private void OnFlatpackInteractUsing(Entity<FlatpackComponent> ent, ref InteractUsingEvent args)
@@ -103,25 +103,13 @@ public abstract class SharedFlatpackSystem : EntitySystem
         args.PushMarkup(Loc.GetString("flatpack-examine"));
     }
 
-    //todo this will eventually be a UI and a slot
-    private void OnCreatorInteractUsing(Entity<FlatpackCreatorComponent> ent, ref InteractUsingEvent args)
+    private void OnCreatorRemovingAttempt(Entity<FlatpackCreatorComponent> ent, ref ContainerIsRemovingAttemptEvent args)
     {
-        var (_, comp) = ent;
-        if (!TryComp<MachineBoardComponent>(args.Used, out var machineBoard))
-            return;
-
-        var materialCost = GetFlatpackCreationCost(ent, (args.Used, machineBoard));
-        if (!_materialStorage.TryChangeMaterialAmount((ent, null), materialCost))
-            return;
-
-        if (_net.IsServer)
-        {
-            var flatpack = Spawn(comp.BaseFlatpackPrototype, Transform(ent).Coordinates);
-            SetFlatpackMachine(flatpack, (args.Used, machineBoard));
-        }
+        if (args.Container.ID == ent.Comp.SlotId && ent.Comp.Packing)
+            args.Cancel();
     }
 
-    public void SetFlatpackMachine(Entity<FlatpackComponent?> ent, Entity<MachineBoardComponent?> machineBoard)
+    public void SetupFlatpack(Entity<FlatpackComponent?> ent, Entity<MachineBoardComponent?> machineBoard)
     {
         if (!Resolve(ent, ref ent.Comp) || !Resolve(machineBoard, ref machineBoard.Comp))
             return;
@@ -139,12 +127,12 @@ public abstract class SharedFlatpackSystem : EntitySystem
         comp.Entity = machinePrototypeId;
         Dirty(ent, comp);
 
-        _appearance.SetData(ent, FlatpackVisuals.Machine, MetaData(machineBoard).EntityPrototype?.ID ?? string.Empty);
+        Appearance.SetData(ent, FlatpackVisuals.Machine, MetaData(machineBoard).EntityPrototype?.ID ?? string.Empty);
     }
 
     public Dictionary<string, int> GetFlatpackCreationCost(Entity<FlatpackCreatorComponent> entity, Entity<MachineBoardComponent> machineBoard)
     {
-        var cost = _machinePart.GetMachineBoardMaterialCost(machineBoard, -1);
+        var cost = MachinePart.GetMachineBoardMaterialCost(machineBoard, -1);
         foreach (var (mat, amount) in entity.Comp.BaseMaterialCost)
         {
             cost.TryAdd(mat, 0);

@@ -1,6 +1,8 @@
 using Content.Shared.Materials;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Construction.Components;
 
@@ -9,8 +11,29 @@ namespace Content.Shared.Construction.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedFlatpackSystem))]
+[AutoGenerateComponentState]
 public sealed partial class FlatpackCreatorComponent : Component
 {
+    /// <summary>
+    /// Whether or not packing is occuring
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public bool Packing;
+
+    /// <summary>
+    /// The time at which packing ends
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public TimeSpan PackEndTime;
+
+    /// <summary>
+    /// How long packing lasts.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan PackDuration = TimeSpan.FromSeconds(5);
+
     /// <summary>
     /// The prototype used when spawning a flatpack.
     /// </summary>
@@ -22,4 +45,25 @@ public sealed partial class FlatpackCreatorComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<ProtoId<MaterialPrototype>, int> BaseMaterialCost = new();
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public string SlotId = "board_slot";
+}
+
+[Serializable, NetSerializable]
+public enum FlatpackCreatorUIKey : byte
+{
+    Key
+}
+
+[Serializable, NetSerializable]
+public enum FlatpackCreatorVisuals : byte
+{
+    Packing
+}
+
+[Serializable, NetSerializable]
+public sealed class FlatpackCreatorStartPackBuiMessage : BoundUserInterfaceMessage
+{
+
 }

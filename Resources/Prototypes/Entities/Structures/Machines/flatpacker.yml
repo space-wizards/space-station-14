@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: MachineFlatpacker
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: flatpacker
+  name: Flatpacker 1001
   description: An industrial machine used for expediting machine construction across the station.
   components:
   - type: Sprite
@@ -15,6 +15,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - state: packing
+      map: ["anim"]
       visible: false
     - state: inserting
       visible: false
@@ -23,6 +24,10 @@
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.FlatpackCreatorVisuals.Packing:
+        anim:
           True: { visible: true }
           False: { visible: false }
   - type: FlatpackCreator
@@ -37,11 +42,41 @@
       - Sheet
       - RawMaterial
       - Ingot
+  - type: AmbientSound
+    enabled: false
+    volume: 5
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/crushing.ogg
   - type: WiresPanel
   - type: WiresVisuals
   - type: Wires
     boardName: wires-board-name-flatpacker
     layoutId: Flatpacker
   - type: Appearance
+  - type: ActivatableUI
+    key: enum.FlatpackCreatorUIKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.FlatpackCreatorUIKey.Key
+      type: FlatpackCreatorBoundUserInterface
+  - type: ItemSlots
+    slots:
+      board_slot:
+        name: flatpacker-item-slot-name
+        whitelist:
+          components:
+          - MachineBoard
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      board_slot: !type:ContainerSlot
+  - type: Construction
+    containers:
+    - machine_parts
+    - machine_board
+    - board_slot
   - type: StaticPrice
     price: 2000
