@@ -13,6 +13,6 @@ namespace Content.Server.SS220.ItemOfferVerb.Components
         [ViewVariables(VVAccess.ReadOnly)]
         public EntityUid? Item { get; set; }
         [ViewVariables(VVAccess.ReadOnly)]
-        public float ReceiveRange = 1.3f;
+        public float ReceiveRange = 2f;
     }
 }
