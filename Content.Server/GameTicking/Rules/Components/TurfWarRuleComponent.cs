@@ -48,6 +48,12 @@ public sealed partial class TurfWarRuleComponent : Component
     };
 
     /// <summary>
+    /// The objective to give each turf tagger.
+    /// </summary>
+    [DataField]
+    public EntProtoId Objective = "TurfTaggingObjective";
+
+    /// <summary>
     /// When starting the gamemode, the number of departments is the player count divided by this number.
     /// If it is below <c>Min</c> then the gamemode is cancelled.
     /// If it is above <c>Max</c> then it is clamped.

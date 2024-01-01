@@ -145,6 +145,8 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
 
         _role.MindAddRole(mindId, new TurfTaggerRoleComponent(rule, department), mind);
 
+        _mind.TryAddObjective(mindId, mind, rule.Comp.Objective);
+
         _antagSelection.GiveAntagBagGear(mob, rule.Comp.StartingGear);
 
         _role.MindPlaySound(mindId, rule.Comp.GreetingSound, mind);
