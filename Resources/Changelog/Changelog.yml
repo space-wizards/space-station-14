@@ -1,10 +1,4 @@
 Entries:
-- author: pigeonpeas
-  changes:
-  - message: Reptilians can now choose to have floppy kobold ears.
-    type: Add
-  id: 4998
-  time: '2023-10-13T01:30:31.0000000+00:00'
 - author: TheShuEd
   changes:
   - message: Animals now give cute hearts when you pet them.
@@ -3560,3 +3554,10 @@ Entries:
   id: 5498
   time: '2024-01-01T02:24:13.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23269
+- author: Rainfey
+  changes:
+  - message: Ensure correct number of thieves
+    type: Fix
+  id: 5499
+  time: '2024-01-01T02:25:28.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23270
