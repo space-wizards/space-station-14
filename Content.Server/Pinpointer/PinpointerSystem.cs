@@ -4,7 +4,18 @@ using System.Linq;
 using System.Numerics;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
-using Content.Shared.IdentityManagement;
+using Robust.Shared.Prototypes;
+using Content.Shared.Objectives;
+using Content.Server.Objectives.Components.Targets;
+using Robust.Shared.Random;
+using Content.Shared.Popups;
+using Content.Shared.Verbs;
+using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Roles;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Systems;
+using Content.Shared.Mind.Components;
+using Content.Server.Objectives.Components;
 
 namespace Content.Server.Pinpointer;
 
@@ -12,6 +23,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -22,6 +35,52 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
+        SubscribeLocalEvent<AntagPinpointerComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+    }
+
+    private void OnGetVerb(Entity<AntagPinpointerComponent> antagPinpointer, ref GetVerbsEvent<Verb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            return;
+
+        if (!TryComp<PinpointerComponent>(antagPinpointer, out var pinpointer))
+            return;
+
+        if (!TryComp<MindContainerComponent>(args.User, out var mindContainer))
+            return;
+
+        if (!mindContainer.HasMind)
+            return;
+
+        if (!TryComp<MindComponent>(mindContainer.Mind, out var mind))
+            return;
+
+        var objectives = mind.Objectives;
+
+        if (objectives.Count == 0)
+            return;
+
+        List<ProtoId<StealTargetGroupPrototype>> groups = new();
+        foreach (var objective in objectives)
+        {
+            var info = _objectives.GetInfo(objective, mind.Owner, mind);
+            if (info == null)
+                continue;
+            if (!TryComp<StealConditionComponent>(objective, out var steal))
+                continue;
+
+            var v = new Verb
+            {
+                Priority = 1,
+                Category = VerbCategory.SelectType,
+                Text = steal.StealGroup,
+                Act = () =>
+                {
+                    LocateStealGroupTarget(antagPinpointer, steal.StealGroup, pinpointer);
+                }
+            };
+            args.Verbs.Add(v);
+        }
     }
 
     public bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
@@ -46,6 +105,9 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
     {
         TogglePinpointer(uid, component);
+
+        if (HasComp<AntagPinpointerComponent>(uid))
+            return;
 
         if (!component.CanRetarget)
             LocateTarget(uid, component);
@@ -81,6 +143,16 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             }
 
             var target = FindTargetFromComponent(uid, reg.Type);
+            SetTarget(uid, target, component);
+        }
+    }
+
+    private void LocateStealGroupTarget(EntityUid uid, ProtoId<StealTargetGroupPrototype> stealGroup, PinpointerComponent component)
+    {
+        if (component.IsActive && component.Component != null)
+        {
+            component.TargetName = stealGroup;
+            var target = FindTargetFromStealGroup(uid, stealGroup);
             SetTarget(uid, target, component);
         }
     }
@@ -125,6 +197,26 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         // return uid with a smallest distance
         return l.Count > 0 ? l.First().Value : null;
+    }
+
+    /// <summary>
+    ///     Try to find the closest entity from stealGroup on a current map
+    ///     Will return null if can't find anything
+    /// </summary>
+    private EntityUid? FindTargetFromStealGroup(EntityUid uid, string group)
+    {
+        foreach (var target in _lookup.GetEntitiesInRange<StealTargetComponent>(_transform.GetMapCoordinates(uid), 100))
+        {
+            if (target.Comp.StealGroup != group)
+                continue;
+
+            var distance = Vector2.Distance(Transform(uid).Coordinates.Position, Transform(target.Owner).Coordinates.Position);
+            if (distance < 3)
+                continue;
+
+            return target.Owner;
+        }
+        return null;
     }
 
     /// <summary>
