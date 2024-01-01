@@ -69,6 +69,12 @@ namespace Content.Client.Lobby
                 _lobby.CharacterPreview.UpdateUI();
             };
 
+            //wire up the anonymous class for our Show Round End button:
+            _lobby.ShowRoundSummaryButton.OnPressed += _ =>
+            {
+                _gameTicker.DisplayRoundEndSummary();
+            };
+
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
             _lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
             UpdateLobbyUi();

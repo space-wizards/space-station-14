@@ -1,4 +1,6 @@
-﻿using Content.Client.Gameplay;
+using Content.Client.Gameplay;
+using Content.Client.GameTicking.Managers;
+using Content.Client.RoundEnd;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.Info;
@@ -26,7 +28,11 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     [Dependency] private readonly OptionsUIController _options = default!;
     [Dependency] private readonly GuidebookUIController _guidebook = default!;
 
-    private Options.UI.EscapeMenu? _escapeWindow;
+    public Options.UI.EscapeMenu? _escapeWindow = default!;
+
+    //this object is used when the player clicks on the "Show round end summary" button
+        //init out here, so that we arent creating a new instance of the object on every click - we're reusing the same object
+    private ClientGameTicker cgtTickingManager = new ClientGameTicker();
 
     private MenuButton? EscapeButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EscapeButton;
 
@@ -102,6 +108,13 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         {
             _guidebook.ToggleGuidebook();
         };
+
+        //wire up the anonymous class for our Show Round End button:
+        _escapeWindow.ShowRoundSummaryButton.OnPressed += _ =>
+        {
+            cgtTickingManager.DisplayRoundEndSummary();
+        };
+
 
         // Hide wiki button if we don't have a link for it.
         _escapeWindow.WikiButton.Visible = _cfg.GetCVar(CCVars.InfoLinksWiki) != "";

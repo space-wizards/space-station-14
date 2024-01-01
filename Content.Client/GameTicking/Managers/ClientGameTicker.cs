@@ -1,12 +1,14 @@
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
+using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -24,14 +26,17 @@ namespace Content.Client.GameTicking.Managers
         [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         [ViewVariables] private bool _initialized;
-        private Dictionary<NetEntity, Dictionary<string, uint?>>  _jobsAvailable = new();
+        private Dictionary<NetEntity, Dictionary<string, uint?>> _jobsAvailable = new();
         private Dictionary<NetEntity, string> _stationNames = new();
+
+        //this needs to be static, for us to review the round-end summary. Calling a non-static version of this will not show you round-end data
+            //this object is just stored/held here for data persistence
+        private static RoundEndMessageEvent _backedUpRoundEndMessage = default!;
 
         /// <summary>
         /// The current round-end window. Could be used to support re-opening the window after closing it.
         /// </summary>
         private RoundEndSummaryWindow? _window;
-
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
         [ViewVariables] public string? LobbySong { get; private set; }
@@ -135,6 +140,12 @@ namespace Content.Client.GameTicking.Managers
         private void JoinGame(TickerJoinGameEvent message)
         {
             _stateManager.RequestStateChange<GameplayState>();
+
+            //todo: figure out some clever way of hiding the button - without using static objects to access the same instance of an object
+                //when they join the game, we want to hide the button for user experience
+
+            //set the round end message to basically null - so it doesnt show the summary of the last round, in the current round
+            _backedUpRoundEndMessage = default!;
         }
 
         private void LobbyCountdown(TickerLobbyCountdownEvent message)
@@ -153,8 +164,19 @@ namespace Content.Client.GameTicking.Managers
             if (_window?.RoundId == message.RoundId)
                 return;
 
-            //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
+            //todo: figure out some clever way of showing the button  - without using static objects to access the same instance of an object
+                //when the round ends, we want to enable the button again for user experience
+
+            //back up the round info, to show it later when requested:
+            _backedUpRoundEndMessage = message;
+
+            DisplayRoundEndSummary();
+        }
+
+        public void DisplayRoundEndSummary()
+        {
+            if (_backedUpRoundEndMessage != null)
+                _window = new RoundEndSummaryWindow(_backedUpRoundEndMessage.GamemodeTitle, _backedUpRoundEndMessage.RoundEndText, _backedUpRoundEndMessage.RoundDuration, _backedUpRoundEndMessage.RoundId, _backedUpRoundEndMessage.AllPlayersEndInfo, _entityManager);
         }
 
         private void RoundRestartCleanup(RoundRestartCleanupEvent ev)
