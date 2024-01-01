@@ -24,7 +24,7 @@ namespace Content.Client.Access.UI
         protected override void Open()
         {
             base.Open();
-            List<ProtoId<AccessLevelPrototype>> accessLevels;
+            List<string> accessLevels;
 
             if (EntMan.TryGetComponent<IdCardConsoleComponent>(Owner, out var idCard))
             {
@@ -32,7 +32,7 @@ namespace Content.Client.Access.UI
             }
             else
             {
-                accessLevels = new List<ProtoId<AccessLevelPrototype>>();
+                accessLevels = new List<string>();
                 _idCardConsoleSystem.Log.Error($"No IdCardConsole component found for {EntMan.ToPrettyString(Owner)}!");
             }
 

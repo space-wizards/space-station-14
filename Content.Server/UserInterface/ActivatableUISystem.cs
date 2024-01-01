@@ -112,7 +112,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (args.Handled) return;
         if (component.AllowedItems == null) return;
         if (!component.AllowedItems.IsValid(args.Used, EntityManager)) return;
-        args.Handled = InteractUI(args.User, component);
+        args.Handled = InteractUI(args.User, uid, component);
     }
 
     private void OnParentChanged(EntityUid uid, ActivatableUIComponent aui, ref EntParentChangedMessage args)

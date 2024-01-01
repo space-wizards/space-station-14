@@ -18,7 +18,7 @@ public sealed partial class DoorElectronicsConfigurationMenu : FancyWindow
     private readonly DoorElectronicsBoundUserInterface _owner;
     private AccessLevelControl _buttonsList;
 
-    public DoorElectronicsConfigurationMenu(DoorElectronicsBoundUserInterface ui, List<ProtoId<AccessLevelPrototype>> accessLevels, IPrototypeManager prototypeManager)
+    public DoorElectronicsConfigurationMenu(DoorElectronicsBoundUserInterface ui, List<string> accessLevels, IPrototypeManager prototypeManager)
     {
         RobustXamlLoader.Load(this);
 
@@ -32,5 +32,10 @@ public sealed partial class DoorElectronicsConfigurationMenu : FancyWindow
             button.OnPressed += _ => _owner.UpdateConfiguration(
                 _buttonsList.ButtonsList.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
         }
+    }
+
+    public void UpdateState(DoorElectronicsConfigurationState state)
+    {
+        _buttonsList.UpdateState(state.accessList);
     }
 }

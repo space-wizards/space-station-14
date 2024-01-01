@@ -40,9 +40,9 @@ namespace Content.Shared.Access.Systems
         [Serializable, NetSerializable]
         private sealed class IdCardConsoleComponentState : ComponentState
         {
-            public List<ProtoId<AccessLevelPrototype>> AccessLevels;
+            public List<string> AccessLevels;
 
-            public IdCardConsoleComponentState(List<ProtoId<AccessLevelPrototype>> accessLevels)
+            public IdCardConsoleComponentState(List<string> accessLevels)
             {
                 AccessLevels = accessLevels;
             }
