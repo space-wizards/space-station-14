@@ -107,7 +107,7 @@ namespace Content.Server.Lathe
             if (args.Storage != uid)
                 return;
             var materialWhitelist = new List<ProtoId<MaterialPrototype>>();
-            var recipes = GetAllBaseRecipes(component);
+            var recipes = GetAllBaseRecipes(uid, component);
             foreach (var id in recipes)
             {
                 if (!_proto.TryIndex(id, out var proto))
@@ -150,10 +150,10 @@ namespace Content.Server.Lathe
             return component.StaticRecipes.Union(component.DynamicRecipes).ToList();
         }
 
-        public List<ProtoId<LatheRecipePrototype>> GetAllRecipes(LatheComponent component)
+        public List<ProtoId<LatheRecipePrototype>> GetAllRecipes(EntityUid uid, LatheComponent component)
         {
             var baseRecipes = component.StaticRecipes.Union(component.DynamicRecipes);
-            if (!TryComp<EmagLatheRecipesComponent>(component.Owner, out var emagRecipes))
+            if (!TryComp<EmagLatheRecipesComponent>(uid, out var emagRecipes))
                 return baseRecipes.ToList();
             return baseRecipes.Union(emagRecipes.EmagStaticRecipes).Union(emagRecipes.EmagDynamicRecipes).ToList();
         }
