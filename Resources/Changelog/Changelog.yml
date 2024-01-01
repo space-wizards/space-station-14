@@ -1,12 +1,6 @@
 Entries:
 - author: liltenhead
   changes:
-  - message: Increased containment field duration after power loss.
-    type: Tweak
-  id: 5001
-  time: '2023-10-13T23:41:43.0000000+00:00'
-- author: liltenhead
-  changes:
   - message: Increased the stability of the AME, it now takes about three minutes
       for the AME to overload.
     type: Tweak
@@ -3569,3 +3563,10 @@ Entries:
   id: 5501
   time: '2024-01-01T07:33:48.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23235
+- author: 778b
+  changes:
+  - message: Fixed appearance of welded airlocks!
+    type: Fix
+  id: 5502
+  time: '2024-01-01T07:36:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23300
