@@ -1,16 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - message: mindshields to meta station armory
-    type: Add
-  id: 5006
-  time: '2023-10-14T21:50:44.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - message: chem dispensers to barratry, you can stop crying now
-    type: Add
-  id: 5007
-  time: '2023-10-14T21:51:33.0000000+00:00'
 - author: ike709
   changes:
   - message: All non-high-security airlocks can now be pried open by hand when unpowered,
@@ -3575,3 +3563,17 @@ Entries:
   id: 5506
   time: '2024-01-01T23:27:14.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23219
+- author: Lukasz825700516
+  changes:
+  - message: Zombiefied reptilians no longer can pull objects with their tail.
+    type: Fix
+  id: 5507
+  time: '2024-01-01T23:31:36.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23066
+- author: SonicHDC
+  changes:
+  - message: Changed shape of Pistols to L!
+    type: Tweak
+  id: 5508
+  time: '2024-01-01T23:32:16.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23104
