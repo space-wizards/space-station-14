@@ -25,6 +25,7 @@ using Content.Shared.Roles;
 using Content.Shared.Stunnable;
 using Content.Shared.Zombies;
 using Robust.Server.Audio;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -35,6 +36,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 {
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -51,21 +53,48 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<CommandStaffComponent, MapInitEvent>(OnCommandStaffInit);
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
-        SubscribeLocalEvent<CommandStaffComponent, ChangedGridEvent>(OnCommandGridChanged);
+        SubscribeLocalEvent<ExiledComponent, ChangedGridEvent>(OnExiledGridChanged);
         SubscribeLocalEvent<CommandStaffComponent, MobStateChangedEvent>(OnCommandMobStateChanged);
-        SubscribeLocalEvent<HeadRevolutionaryComponent, ChangedGridEvent>(OnHeadRevGridChanged);
+        SubscribeLocalEvent<CommandStaffComponent, ExiledEvent>(OnCommandExiled);
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
+        SubscribeLocalEvent<HeadRevolutionaryComponent, ExiledEvent>(OnHeadRevExiled);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<HeadRevolutionaryComponent, AfterFlashedEvent>(OnPostFlash);
         SubscribeLocalEvent<RevolutionaryComponent, CloningEvent>(OnClone);
     }
 
+    private void OnCommandStaffInit(EntityUid uid, CommandStaffComponent comp, MapInitEvent ev)
+    {
+        EnsureComp<ExiledComponent>(uid);
+    }
+
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
+    }
+
+    protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    {
+        base.ActiveTick(uid, component, gameRule, frameTime);
+        var query = AllEntityQuery<ExiledComponent>();
+        while (query.MoveNext(out var id, out var exiled))
+        {
+            if (exiled.NextExileCheck == TimeSpan.Zero || exiled.NextExileCheck >= _timing.CurTime)
+                continue;
+
+            if (_antagSelection.IsOffStation(uid, false))
+            {
+                exiled.Exiled = true;
+                exiled.NextExileCheck = TimeSpan.Zero;
+                exiled.ConsideredForExile = false;
+                var ev = new ExiledEvent(id);
+                RaiseLocalEvent(id, ref ev);
+            }
+        }
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -152,6 +181,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             _antagSelection.GiveAntagBagGear(headRev, comp.StartingGear);
             EnsureComp<RevolutionaryComponent>(headRev);
             EnsureComp<HeadRevolutionaryComponent>(headRev);
+            EnsureComp<ExiledComponent>(headRev);
         }
     }
 
@@ -171,7 +201,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             !HasComp<HumanoidAppearanceComponent>(ev.Target) &&
             !alwaysConvertible ||
             !_mobState.IsAlive(ev.Target) ||
-            HasComp<ZombieComponent>(ev.Target))
+            HasComp<ZombieComponent>(ev.Target) ||
+            (TryComp<ExiledComponent>(ev.User, out var exiled) && exiled.Exiled))
         {
             return;
         }
@@ -229,15 +260,34 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
         }
     }
+    private void OnCommandExiled(EntityUid uid, CommandStaffComponent comp, ExiledEvent ev)
+    {
+
+    }
     private void OnCommandMobStateChanged(EntityUid uid, CommandStaffComponent comp, MobStateChangedEvent ev)
     {
         if (ev.NewMobState == MobState.Dead || ev.NewMobState == MobState.Invalid)
             CheckCommandLose(false);
     }
 
-    private void OnCommandGridChanged(EntityUid uid, CommandStaffComponent comp, ChangedGridEvent ev)
+    private void OnExiledGridChanged(EntityUid uid, ExiledComponent comp, ChangedGridEvent ev)
     {
-        CheckCommandLose(false);
+        if (comp.ConsideredForExile && !comp.Exiled)
+        {
+            if (!_antagSelection.IsOffStation(uid, false))
+            {
+                comp.ConsideredForExile = false;
+                comp.NextExileCheck = TimeSpan.Zero;
+            }
+        }
+        else if (!comp.Exiled)
+        {
+            if (_antagSelection.IsOffStation(uid, false))
+            {
+                comp.NextExileCheck = comp.AllowedExileTime + _timing.CurTime;
+                comp.ConsideredForExile = true;
+            }
+        }
     }
 
     /// <summary>
@@ -264,15 +314,14 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         else return false;
     }
 
+    private void OnHeadRevExiled(EntityUid uid, HeadRevolutionaryComponent comp, ExiledEvent ev)
+    {
+        CheckRevsLose(false);
+    }
     private void OnHeadRevMobStateChanged(EntityUid uid, HeadRevolutionaryComponent comp, MobStateChangedEvent ev)
     {
         if (ev.NewMobState == MobState.Dead || ev.NewMobState == MobState.Invalid)
             CheckRevsLose(false);
-    }
-
-    private void OnHeadRevGridChanged(EntityUid uid, HeadRevolutionaryComponent comp, ChangedGridEvent ev)
-    {
-        CheckRevsLose(false);
     }
 
     /// <summary>
@@ -351,7 +400,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             RemComp<RevolutionaryComponent>(ev.Source);
             AddComp<RevolutionaryComponent>(ev.Target);
         }
-        
     }
 
     private static readonly string[] Outcomes =
@@ -365,4 +413,18 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         // revs lost and heads died
         "rev-stalemate"
     };
+
+    /// <summary>
+    /// Event that triggers when someone has become exiled.
+    /// </summary>
+    [ByRefEvent]
+    public readonly struct ExiledEvent
+    {
+        public readonly EntityUid Exiled;
+
+        public ExiledEvent(EntityUid exiled)
+        {
+            Exiled = exiled;
+        }
+    }
 }

@@ -12,6 +12,18 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class RevolutionaryRuleComponent : Component
 {
     /// <summary>
+    /// When the round will if all the command are dead (Incase they are in space)
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan ExileCheck;
+
+    /// <summary>
+    /// The amount of time between each check for exile check.
+    /// </summary>
+    [DataField]
+    public TimeSpan TimerWait = TimeSpan.FromSeconds(20);
+
+    /// <summary>
     /// Stores players minds
     /// </summary>
     [DataField]

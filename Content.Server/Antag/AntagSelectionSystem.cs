@@ -27,6 +27,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
+using Content.Server.Revolutionary.Components;
 
 namespace Content.Server.Antag;
 
@@ -226,8 +227,6 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     public bool IsGroupDead(List<EntityUid> list, bool checkOffStation, bool endRound)
     {
         var dead = 0;
-        var stations = _stationSystem.GetStations();
-        var station = stations.FirstOrDefault();
         foreach (var entity in list)
         {
             if (TryComp<MobStateComponent>(entity, out var state))
@@ -237,29 +236,18 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                     dead++;
                     continue;
                 }
-                else if (checkOffStation && !_emergencyShuttle.EmergencyShuttleArrived || endRound)
+                else if (checkOffStation)
                 {
-                    if (endRound && !_emergencyShuttle.IsTargetEscaping(entity))
+                    if (TryComp<ExiledComponent>(entity, out var exiled) && exiled.Exiled)
                     {
                         dead++;
                         continue;
                     }
-
-                    if (checkOffStation && !endRound)
+                    if (IsOffStation(entity, endRound))
                     {
-                        if (TryComp<TransformComponent>(entity, out var comp))
-                        {
-                            if (TryComp<StationDataComponent>(station, out var stationData) && _stationSystem.GetLargestGrid(stationData) != comp.GridUid)
-                            {
-                                dead++;
-                                continue;
-                            }
-                        }
-                        else
-                            dead++;
-                    }
-                    else
                         dead++;
+                        continue;
+                    }
                 }
             }
             //If they don't have the MobStateComponent they might as well be dead.
@@ -268,8 +256,24 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 dead++;
             }
         }
-
         return dead == list.Count || list.Count == 0;
+    }
+
+    public bool IsOffStation(EntityUid uid, bool endRound)
+    {
+        var stations = _stationSystem.GetStations();
+        var station = stations.FirstOrDefault();
+        if (TryComp<TransformComponent>(uid, out var comp))
+        {
+            if (TryComp<StationDataComponent>(station, out var stationData) && _stationSystem.GetLargestGrid(stationData) != comp.GridUid && (!endRound && !_emergencyShuttle.IsTargetEscaping(uid)))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        else
+            return true;
     }
 
     /// <summary>
