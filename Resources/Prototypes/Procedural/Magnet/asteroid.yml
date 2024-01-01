@@ -1,3 +1,14 @@
+- type: weightedRandom
+  id: AsteroidOre
+  weights:
+    OreTin: 1.0
+    OreQuartz: 1.0
+    OreCoal: 1.0
+    OreGold: 0.25
+    OreSilver: 0.25
+    OrePlasma: 0.15
+    OreUranium: 0.15
+
 # Large asteroids, typically 1
 - type: dungeonConfig
   id: BlobAsteroid
@@ -24,7 +35,7 @@
     # Generate ore veins
     - !type:MarkerLayerPostGen
       count: 2
-      markerTemplate: OreTin
+      markerTemplates: AsteroidOre
 
 # Multiple smaller asteroids
 # This is a pain so we generate fewer tiles
@@ -52,12 +63,9 @@
       biomeTemplate: Asteroid
 
     # Generate ore veins
-    #- !type:MarkerLayerPostGen
-    #  markerTemplate: OreTin
-
-    # TODO: Remove biome
-
-    # Generate flora / fauna if we want
+    - !type:MarkerLayerPostGen
+      count: 2
+      markerTemplates: AsteroidOre
 
 # Long and spindly, less smooth than blob
 - type: dungeonConfig
@@ -77,11 +85,14 @@
           lacunarity: 2
           cellularDistanceFunction: Euclidean
   postGeneration:
-    # Generate vents
-    # TODO: Completely random poisson or whatever the fuck
     # Generate biome
     - !type:BiomePostGen
       biomeTemplate: Asteroid
+
+    # Generate ore veins
+    - !type:MarkerLayerPostGen
+      count: 2
+      markerTemplates: AsteroidOre
 
 # Lots of holes in it
 - type: dungeonConfig
@@ -101,29 +112,11 @@
           lacunarity: 2
   # Everything else
   postGeneration:
-    # Generate vents
-    # TODO: Completely random poisson or whatever the fuck
     # Generate biome
     - !type:BiomePostGen
       biomeTemplate: Asteroid
 
-# YIELD TYPES:
-# Low yield 1 ore
-
-# High yield 1
-
-# Low yield 2 ore
-
-# ALSO GAS
-
-# Ore types
-
-# Blob
-
-# Snakey windy
-
-# Donut
-
-# scrunguly
-
-# Noise should be overloid on top
+    # Generate ore veins
+    - !type:MarkerLayerPostGen
+      count: 2
+      markerTemplates: AsteroidOre

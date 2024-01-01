@@ -1,8 +1,10 @@
 using System.Threading.Tasks;
 using Content.Server.Parallax;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
@@ -63,65 +65,63 @@ public sealed partial class DungeonJob
             return;
 
         var biomeSystem = _entManager.System<BiomeSystem>();
-        var markerTemplate = _prototype.Index(postGen.MarkerTemplate);
+        var weightedRandom = _prototype.Index(postGen.MarkerTemplate);
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
-        var bounds = new Box2i();
-
-        foreach (var tile in dungeon.RoomTiles)
+        for (var i = 0; i < postGen.Count; i++)
         {
-            if (bounds.Contains(tile))
-                continue;
+            var template = weightedRandom.Pick(random);
+            var markerTemplate = _prototype.Index<BiomeMarkerLayerPrototype>(template);
 
-            bounds = bounds.UnionTile(tile);
-        }
+            var bounds = new Box2i();
 
-        await SuspendIfOutOfTime();
-        ValidateResume();
-
-        int count = postGen.Count;
-
-        if (count == 0)
-        {
-            count = (int) (bounds.Area / (markerTemplate.Radius * markerTemplate.Radius));
-            count = Math.Min(count, markerTemplate.MaxCount);
-        }
-
-        biomeSystem.GetMarkerNodes(gridUid, biomeComp, grid, markerTemplate, true, bounds, count,
-            random, out var spawnSet, out var existing, false);
-
-        await SuspendIfOutOfTime();
-        ValidateResume();
-
-        foreach (var ent in existing)
-        {
-            _entManager.DeleteEntity(ent);
-        }
-
-        await SuspendIfOutOfTime();
-        ValidateResume();
-
-        foreach (var (node, mask) in spawnSet)
-        {
-            string? proto;
-
-            if (mask != null && markerTemplate.EntityMask.TryGetValue(mask, out var maskedProto))
+            foreach (var tile in dungeon.RoomTiles)
             {
-                proto = maskedProto;
-            }
-            else
-            {
-                proto = markerTemplate.Prototype;
-            }
+                if (bounds.Contains(tile))
+                    continue;
 
-            var ent = _entManager.SpawnAtPosition(proto, new EntityCoordinates(gridUid, node + grid.TileSizeHalfVector));
-            var xform = xformQuery.Get(ent);
-
-            if (!xform.Comp.Anchored)
-                _transform.AnchorEntity(ent, xform);
+                bounds = bounds.UnionTile(tile);
+            }
 
             await SuspendIfOutOfTime();
             ValidateResume();
+
+            biomeSystem.GetMarkerNodes(gridUid, biomeComp, grid, markerTemplate, true, bounds, 1,
+                random, out var spawnSet, out var existing, false);
+
+            await SuspendIfOutOfTime();
+            ValidateResume();
+
+            foreach (var ent in existing)
+            {
+                _entManager.DeleteEntity(ent);
+            }
+
+            await SuspendIfOutOfTime();
+            ValidateResume();
+
+            foreach (var (node, mask) in spawnSet)
+            {
+                string? proto;
+
+                if (mask != null && markerTemplate.EntityMask.TryGetValue(mask, out var maskedProto))
+                {
+                    proto = maskedProto;
+                }
+                else
+                {
+                    proto = markerTemplate.Prototype;
+                }
+
+                var ent = _entManager.SpawnAtPosition(proto, new EntityCoordinates(gridUid, node + grid.TileSizeHalfVector));
+                var xform = xformQuery.Get(ent);
+
+                if (!xform.Comp.Anchored)
+                    _transform.AnchorEntity(ent, xform);
+
+                await SuspendIfOutOfTime();
+                ValidateResume();
+            }
         }
     }
 }

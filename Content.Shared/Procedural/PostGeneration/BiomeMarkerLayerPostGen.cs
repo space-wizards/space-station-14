@@ -1,5 +1,6 @@
 using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Procedural.PostGeneration;
+using Content.Shared.Random;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural.PostGeneration;
@@ -10,11 +11,11 @@ namespace Content.Shared.Procedural.PostGeneration;
 public sealed partial class BiomeMarkerLayerPostGen : IPostDunGen
 {
     /// <summary>
-    /// Overwrites the marker layer count if > 0.
+    /// How many times to spawn marker layers; can duplicate.
     /// </summary>
     [DataField]
-    public int Count = 0;
+    public int Count = 3;
 
     [DataField(required: true)]
-    public ProtoId<BiomeMarkerLayerPrototype> MarkerTemplate;
+    public ProtoId<WeightedRandomPrototype> MarkerTemplate;
 }
