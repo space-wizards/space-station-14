@@ -65,7 +65,6 @@ rev-headrev-player = {$title} converted {$count} {$count ->
 rev-deconverted-title = Deconverted!
 rev-deconverted-text =
     As the last headrev has died, the revolution is over.
-    You forget everything that happened since being converted.
 
     You are no longer an antagonist, so be nice.
 rev-deconverted-confirm = Confirm
