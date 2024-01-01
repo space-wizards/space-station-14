@@ -21,7 +21,7 @@ public abstract class SharedRotationVisualsSystem : EntitySystem
         ent.Comp.DefaultRotation = ent.Comp.HorizontalRotation;
 
         //why do we do this here, but not in the method below?
-        //Dirty(ent);
+        Dirty(ent);
     }
 
 
