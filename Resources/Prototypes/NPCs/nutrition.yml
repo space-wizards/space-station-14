@@ -34,6 +34,9 @@
     # Picks nearby drink then consumes it and waits idle time
     - tasks:
         - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:ThirstyPrecondition
+              MinThirstState: Parched  # See ThirstThreshold enum
           operator: !type:UtilityOperator
             proto: NearbyDrink
 
