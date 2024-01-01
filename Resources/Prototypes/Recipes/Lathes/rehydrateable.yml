@@ -15,6 +15,41 @@
     Biomass: 16
 
 - type: latheRecipe
+  id: CowCube
+  result: CowCube
+  completetime: 30
+  materials:
+    Biomass: 120
+
+- type: latheRecipe
+  id: GoatCube
+  result: GoatCube
+  completetime: 30
+  materials:
+    Biomass: 35
+
+- type: latheRecipe
+  id: MothroachCube
+  result: MothroachCube
+  completetime: 45 # prevent biblical floods
+  materials:
+    Biomass: 20 # a lot of materials wasted due to complex genetics
+
+- type: latheRecipe
+  id: MouseCube
+  result: MouseCube
+  completetime: 15
+  materials:
+    Biomass: 12
+
+- type: latheRecipe
+  id: CockroachCube
+  result: CockroachCube
+  completetime: 15
+  materials:
+    Biomass: 16
+
+- type: latheRecipe
   id: SpaceCarpCube
   result: SpaceCarpCube
   completetime: 30
@@ -25,7 +60,15 @@
 - type: latheRecipe
   id: SpaceTickCube
   result: SpaceTickCube
-  completetime: 30
+  completetime: 15
   materials:
     Biomass: 8
-    Plasma: 750 # less biomass but more plasma as compared to its power than carp
+    Plasma: 750 # less biomass but more plasma
+
+- type: latheRecipe
+  id: AbominationCube
+  result: AbominationCube
+  completetime: 45
+  materials:
+    Biomass: 40
+    Plasma: 2000 # more biomass but less plasma

@@ -586,10 +586,16 @@
     staticRecipes:
       - MonkeyCube
       - KoboldCube
+      - CowCube
+      - GoatCube
+      - MothroachCube
+      - MouseCube
   - type: EmagLatheRecipes
     emagStaticRecipes:
+      - AbominationCube
       - SpaceCarpCube
       - SpaceTickCube
+      - CockroachCube
 
 - type: entity
   id: SecurityTechFab
