@@ -299,6 +299,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.panic_bunker.min_overall_hours", 10, CVar.SERVERONLY);
 
         /// <summary>
+        /// A custom message that will be used for connections denied to the panic bunker
+        /// If not empty, then will overwrite <see cref="PanicBunkerShowReason"/>
+        /// </summary>
+        public static readonly CVarDef<string> PanicBunkerCustomReason =
+            CVarDef.Create("game.panic_bunker.custom_reason", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
         /// Make people bonk when trying to climb certain objects like tables.
         /// </summary>
         public static readonly CVarDef<bool> GameTableBonk =
