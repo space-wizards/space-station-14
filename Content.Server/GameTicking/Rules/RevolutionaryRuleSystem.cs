@@ -56,6 +56,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<CommandStaffComponent, MapInitEvent>(OnCommandStaffInit);
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
+        SubscribeLocalEvent<ExiledComponent, EntityUnpausedEvent>(OnExiledUnpaused);
         SubscribeLocalEvent<ExiledComponent, ChangedGridEvent>(OnExiledGridChanged);
         SubscribeLocalEvent<CommandStaffComponent, MobStateChangedEvent>(OnCommandMobStateChanged);
         SubscribeLocalEvent<CommandStaffComponent, ExiledEvent>(OnCommandExiled);
@@ -70,6 +71,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     private void OnCommandStaffInit(EntityUid uid, CommandStaffComponent comp, MapInitEvent ev)
     {
         EnsureComp<ExiledComponent>(uid);
+    }
+
+    private void OnExiledUnpaused(EntityUid uid, ExiledComponent comp, EntityUnpausedEvent ev)
+    {
+        comp.NextExileCheck += ev.PausedTime;
     }
 
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
