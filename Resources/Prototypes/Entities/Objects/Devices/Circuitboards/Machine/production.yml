@@ -68,6 +68,19 @@
         ExamineName: Igniter
 
 - type: entity
+  id: CubelatheMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cubelathe machine board
+  description: A machine printed circuit board for a cubelathe
+  components:
+    - type: MachineBoard
+      prototype: Cubelathe
+      requirements:
+        MatterBin: 4
+      materialRequirements:
+        Glass: 1
+
+- type: entity
   id: SecurityTechFabCircuitboard
   parent: BaseMachineCircuitboard
   name: security techfab machine board

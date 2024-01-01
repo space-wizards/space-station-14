@@ -47,6 +47,9 @@
   id: BikeHorn
 
 - type: Tag
+  id: Biomass
+
+- type: Tag
   id: Bloodpack
 
 - type: Tag

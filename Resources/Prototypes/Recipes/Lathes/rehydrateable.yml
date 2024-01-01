@@ -1,0 +1,23 @@
+# recipes should generally cost 1.5x of the biomass output of their mob
+
+- type: latheRecipe
+  id: MonkeyCube
+  result: MonkeyCube
+  completetime: 30
+  materials:
+    Biomass: 16
+
+- type: latheRecipe
+  id: KoboldCube
+  result: KoboldCube
+  completetime: 30
+  materials:
+    Biomass: 16
+
+- type: latheRecipe
+  id: SpaceCarpCube
+  result: SpaceCarpCube
+  completetime: 30
+  materials:
+    Biomass: 24
+    Plasma: 600

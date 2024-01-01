@@ -60,6 +60,16 @@
     - MobKobold
 
 - type: entity
+  parent: MonkeyCube
+  id: SpaceCarpCube
+  name: carp cube
+  description: Just add water! At your own risk.
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobSpaceCarp
+
+- type: entity
   parent: PlushieCarp
   id: DehydratedSpaceCarp
   name: dehydrated space carp
