@@ -68,7 +68,8 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 var item = EntityManager.SpawnEntity(slot.StartingItem, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
-                slot.ContainerSlot?.Insert(item);
+                if (slot.ContainerSlot != null)
+                    _containers.Insert(item, slot.ContainerSlot);
             }
         }
 
@@ -115,7 +116,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (Terminating(uid) || slot.ContainerSlot == null)
                 return;
 
-            slot.ContainerSlot.Shutdown();
+            _containers.ShutdownContainer(slot.ContainerSlot);
 
             // Don't log missing resolves. when an entity has all of its components removed, the ItemSlotsComponent may
             // have been removed before some other component that added an item slot (and is now trying to remove it).
@@ -228,7 +229,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// Useful for predicted interactions</param>
         private void Insert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
-            var inserted = slot.ContainerSlot?.Insert(item);
+            bool? inserted = slot.ContainerSlot != null ? _containers.Insert(item, slot.ContainerSlot) : null;
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
             // Logging
@@ -350,7 +351,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// Useful for predicted interactions</param>
         private void Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
-            var ejected = slot.ContainerSlot?.Remove(item);
+            bool? ejected = slot.ContainerSlot != null ? _containers.Remove(item, slot.ContainerSlot) : null;
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
             // Logging

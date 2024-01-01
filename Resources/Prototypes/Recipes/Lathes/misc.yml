@@ -94,8 +94,8 @@
     Plastic: 50
 
 - type: latheRecipe
-  id: ClothingShoesBootsMag
-  result: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagSci
+  result: ClothingShoesBootsMagSci
   completetime: 10
   materials:
     Steel: 1000

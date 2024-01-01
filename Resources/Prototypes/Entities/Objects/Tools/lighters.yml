@@ -123,3 +123,102 @@
         - ReagentId: WeldingFuel
           Quantity: 4
         maxVol: 4 #uses less fuel than a welder, so this isnt as bad as it looks
+
+- type: entity
+  name: flippo lighter
+  parent: BaseItem
+  id: FlippoLighter
+  description: "A rugged metal lighter, lasts quite a while."
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/lighters.rsi
+    layers:
+    - state: zippo_top
+      map: ["top"]
+    - state: zippo_icon_base
+      map: ["base"]
+    - state: zippo_open
+      map: ["open"]
+      visible: false
+    - state: lighter_flame
+      map: ["flame"]
+      visible: false
+      shader: unshaded
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      path: /Audio/Items/Lighters/zippo_open.ogg
+    soundDeactivate:
+      path: /Audio/Items/Lighters/zippo_close.ogg
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+        types:
+            Heat: 1
+  - type: ItemToggleSize
+    activatedSize: Small
+  - type: ItemToggleHot
+  - type: Item
+    size: Tiny
+    sprite: Objects/Tools/lighters.rsi
+    heldPrefix: zippo
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        flame:
+          True: { visible: true }
+          False: { visible: false }
+        open:
+          True: { visible: true }
+          False: { visible: false }
+        base:
+          True: { visible: false }
+          False: { visible: true }
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 12
+        maxVol: 12 #uses less fuel than a welder, so this isnt as bad as it looks
+  - type: ToggleableLightVisuals
+    spriteLayer: lighter_flame
+    inhandVisuals:
+      left:
+      - state: zippo-inhand-left-flame
+        shader: unshaded
+      right:
+      - state: zippo-inhand-right-flame
+        shader: unshaded
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 1 # does a little bit of damage on hit when off
+  - type: PointLight
+    enabled: false
+    netsync: false
+    radius: 1.2 #slightly stronger than the other lighters
+    color: orange
+
+- type: entity
+  name: flippo engraved lighter
+  parent: FlippoLighter
+  id: FlippoEngravedLighter
+  description: "A rugged golden lighter, lasts quite a while. Engravings serve no tactical advantage whatsoever."
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/lighters.rsi
+    layers:
+    - state: zippo_top
+      map: ["top"]
+    - state: zippo_engraved_icon_base
+      map: ["base"]
+    - state: zippo_engraved_open
+      map: ["open"]
+      visible: false
+    - state: lighter_flame
+      map: ["flame"]
+      visible: false
+      shader: unshaded
+  - type: StealTarget
+    stealGroup: FlippoEngravedLighter

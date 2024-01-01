@@ -46,6 +46,15 @@ namespace Content.Shared.Atmos
         public const float T20C = 293.15f;
 
         /// <summary>
+        ///     Do not allow any gas mixture temperatures to exceed this number. It is occasionally possible
+        ///     to have very small heat capacity (e.g. room that was just unspaced) and for large amounts of
+        ///     energy to be transferred to it, even for a brief moment. However, this messes up subsequent
+        ///     calculations and so cap it here. The physical interpretation is that at this temperature, any
+        ///     gas that you would have transforms into plasma.
+        /// </summary>
+        public const float Tmax = 200e3f;
+
+        /// <summary>
         ///     Liters in a cell.
         /// </summary>
         public const float CellVolume = 2500f;
@@ -195,6 +204,30 @@ namespace Content.Shared.Atmos
         public const float PlasmaOxygenFullburn = 10f;
         public const float PlasmaBurnRateDelta = 9f;
 
+        /// <summary>
+        ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
+        /// </summary>
+        public const float MinimumTritiumOxyburnEnergy = 143000f;
+
+        public const float TritiumBurnOxyFactor = 100f;
+        public const float TritiumBurnTritFactor = 10f;
+
+        public const float FrezonCoolLowerTemperature = 23.15f;
+
+        /// <summary>
+        ///     Frezon cools better at higher temperatures.
+        /// </summary>
+        public const float FrezonCoolMidTemperature = 373.15f;
+
+        public const float FrezonCoolMaximumEnergyModifier = 10f;
+
+        /// <summary>
+        ///     Remove X mol of nitrogen for each mol of frezon.
+        /// </summary>
+        public const float FrezonNitrogenCoolRatio = 5;
+        public const float FrezonCoolEnergyReleased = -600e3f;
+        public const float FrezonCoolRateModifier = 20f;
+
         public const float FrezonProductionMaxEfficiencyTemperature = 73.15f;
 
         /// <summary>
@@ -211,6 +244,16 @@ namespace Content.Shared.Atmos
         ///     1 / X of the tritium is converted into Frezon each tick
         /// </summary>
         public const float FrezonProductionConversionRate = 50f;
+
+        /// <summary>
+        ///     The maximum portion of the N2O that can decompose each reaction tick. (50%)
+        /// </summary>
+        public const float N2ODecompositionRate = 2f;
+
+        /// <summary>
+        ///     Divisor for Ammonia Oxygen reaction so that it doesn't happen instantaneously.
+        /// </summary>
+        public const float AmmoniaOxygenReactionRate = 10f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.

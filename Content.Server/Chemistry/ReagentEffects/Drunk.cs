@@ -9,13 +9,13 @@ public sealed partial class Drunk : ReagentEffect
     /// <summary>
     ///     BoozePower is how long each metabolism cycle will make the drunk effect last for.
     /// </summary>
-    [DataField("boozePower")]
+    [DataField]
     public float BoozePower = 3f;
 
     /// <summary>
     ///     Whether speech should be slurred.
     /// </summary>
-    [DataField("slurSpeech")]
+    [DataField]
     public bool SlurSpeech = true;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
