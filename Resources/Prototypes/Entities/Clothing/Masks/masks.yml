@@ -322,7 +322,6 @@
     sprite: Clothing/Mask/swat.rsi
   - type: Clothing
     sprite: Clothing/Mask/swat.rsi
-  - type: FlashImmunity
 
 - type: entity
   parent: ClothingMaskGasExplorer
@@ -560,4 +559,3 @@
     sprite: Clothing/Mask/warden.rsi
   - type: Clothing
     sprite: Clothing/Mask/warden.rsi
-  - type: FlashImmunity
