@@ -5,22 +5,19 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Lathe
 {
-    [RegisterComponent, NetworkedComponent]
-    [AutoGenerateComponentState]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class EmagLatheRecipesComponent : Component
     {
         /// <summary>
         /// All of the dynamic recipes that the lathe is capable to get using EMAG
         /// </summary>
-        [DataField("emagDynamicRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        [AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public List<ProtoId<LatheRecipePrototype>> EmagDynamicRecipes = new();
 
         /// <summary>
         /// All of the static recipes that the lathe is capable to get using EMAG
         /// </summary>
-        [DataField("emagStaticRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        [AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public List<ProtoId<LatheRecipePrototype>> EmagStaticRecipes = new();
     }
 }
