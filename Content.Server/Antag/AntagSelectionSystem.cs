@@ -156,7 +156,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="candidates">a list of players to check out</param>
     /// <param name="antagPreferenceId">antagonist's code id</param>
     /// <returns></returns>
-    public List<ICommonSession> FindPotentialAntags(in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, string antagPreferenceId)
+    public List<ICommonSession> FindPotentialAntags(in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, string antagPreferenceId, bool includeHeads = false)
     {
         var list = new List<ICommonSession>();
         var pendingQuery = GetEntityQuery<PendingClockInComponent>();
@@ -164,7 +164,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         foreach (var player in candidates.Keys)
         {
             // Role prevents antag.
-            if (!_jobs.CanBeAntag(player))
+            if (!includeHeads && !_jobs.CanBeAntag(player))
                 continue;
 
             // Latejoin

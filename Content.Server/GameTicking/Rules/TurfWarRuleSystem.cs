@@ -72,7 +72,7 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
         }
 
         // group all players by their department
-        var taggerPool = _antagSelection.FindPotentialAntags(candidates, comp.Antag);
+        var taggerPool = _antagSelection.FindPotentialAntags(candidates, comp.Antag, includeHeads: true);
         var departments = new Dictionary<string, List<EntityUid>>();
         foreach (var session in taggerPool)
         {
@@ -80,6 +80,10 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
                 continue;
 
             if (_mind.GetMind(mob) is not {} mind)
+                continue;
+
+            if (!_job.MindTryGetJob(mind, out _, out var job)
+                || !_job.TryGetPrimaryDepartment(job.ID, out var department))
                 continue;
 
             var station = _station.GetOwningStation(mob);
@@ -93,10 +97,6 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
                 // only use players from the same station, if that ever happens
                 continue;
             }
-
-            if (!_job.MindTryGetJob(mind, out _, out var job)
-                || !_job.TryGetDepartment(job.ID, out var department))
-                continue;
 
             if (departments.TryGetValue(department.ID, out var list))
                 list.Add(mind);
