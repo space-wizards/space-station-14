@@ -107,7 +107,7 @@ namespace Content.Server.Lathe
             if (args.Storage != uid)
                 return;
             var materialWhitelist = new List<ProtoId<MaterialPrototype>>();
-            var recipes = GetAllBaseRecipes(uid, component);
+            var recipes = GetAllRecipes(uid, component);
             foreach (var id in recipes)
             {
                 if (!_proto.TryIndex(id, out var proto))
