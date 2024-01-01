@@ -227,6 +227,14 @@
       text: law office
 
 - type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconSecurityCheckpoint
+  suffix: Sec Checkpoint
+  components:
+    - type: NavMapBeacon
+      text: checkpoint
+
+- type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconMedical
   suffix: Medical
