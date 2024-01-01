@@ -49,6 +49,12 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: input
+    collectionName: teslaCoil
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    state: coil
   - type: Battery
     maxCharge: 1000000
     startingCharge: 0
@@ -68,7 +74,7 @@
   - type: Clickable
   - type: InteractionOutline
   #- type: GuideHelp #   To Do - add Tesla Guide
-  
+
 - type: entity
   id: TeslaGroundingRod
   name: grounding rod

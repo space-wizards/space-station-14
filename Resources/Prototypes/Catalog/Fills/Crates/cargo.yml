@@ -332,6 +332,8 @@
       prob: 0.01
       orGroup: Useful
     - id: FloraTreeLarge05
+      prob: 0.01
+      orGroup: Useful
     #notuseful
     - id: LidSalami
       prob: 0.01
