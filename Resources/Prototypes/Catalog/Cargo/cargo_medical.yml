@@ -114,7 +114,7 @@
     sprite: Objects/Specific/Medical/implanter.rsi
     state: implanter0
   product: CrateMindShieldImplants
-  cost: 3000
+  cost: 7500
   category: Medical
   group: market
 
