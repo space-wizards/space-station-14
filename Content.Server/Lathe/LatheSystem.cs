@@ -150,6 +150,14 @@ namespace Content.Server.Lathe
             return component.StaticRecipes.Union(component.DynamicRecipes).ToList();
         }
 
+        public List<ProtoId<LatheRecipePrototype>> GetAllRecipes(LatheComponent component)
+        {
+            var baseRecipes = component.StaticRecipes.Union(component.DynamicRecipes);
+            if (!TryComp<EmagLatheRecipesComponent>(component.Owner, out var emagRecipes))
+                return baseRecipes.ToList();
+            return baseRecipes.Union(emagRecipes.EmagStaticRecipes).Union(emagRecipes.EmagDynamicRecipes).ToList();
+        }
+
         public bool TryAddToQueue(EntityUid uid, LatheRecipePrototype recipe, LatheComponent? component = null)
         {
             if (!Resolve(uid, ref component))
