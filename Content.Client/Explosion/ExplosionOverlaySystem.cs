@@ -5,7 +5,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Explosion;
 
@@ -53,7 +52,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
     private void OnCompRemove(EntityUid uid, ExplosionVisualsComponent component, ComponentRemove args)
     {
-        if (TryComp(uid, out ExplosionVisualsTexturesComponent? textures))
+        if (TryComp(uid, out ExplosionVisualsTexturesComponent? textures) && !Deleted(textures.LightEntity))
             QueueDel(textures.LightEntity);
     }
 
