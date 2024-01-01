@@ -7,11 +7,8 @@ using Content.Server.Shuttles.Events;
 using Robust.Shared.Prototypes;
 using Content.Shared.Objectives;
 using Content.Server.Objectives.Components.Targets;
-using Robust.Shared.Random;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Roles;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Mind.Components;
@@ -25,6 +22,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -69,14 +68,16 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             if (!TryComp<StealConditionComponent>(objective, out var steal))
                 continue;
 
+            var group = _proto.Index(steal.StealGroup);
+
             var v = new Verb
             {
                 Priority = 1,
                 Category = VerbCategory.SelectType,
-                Text = steal.StealGroup,
+                Text = group.Name,
                 Act = () =>
                 {
-                    LocateStealGroupTarget(antagPinpointer, steal.StealGroup, pinpointer);
+                    LocateStealGroupTarget(antagPinpointer, steal.StealGroup, pinpointer, group.Name);
                 }
             };
             args.Verbs.Add(v);
@@ -147,13 +148,13 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
     }
 
-    private void LocateStealGroupTarget(EntityUid uid, ProtoId<StealTargetGroupPrototype> stealGroup, PinpointerComponent component)
+    private void LocateStealGroupTarget(EntityUid uid, ProtoId<StealTargetGroupPrototype> stealGroup, PinpointerComponent component, string popupText = "")
     {
         if (component.IsActive && component.Component != null)
         {
             component.TargetName = stealGroup;
             var target = FindTargetFromStealGroup(uid, stealGroup);
-            SetTarget(uid, target, component);
+            SetTarget(uid, target, component, popupText);
         }
     }
 
@@ -222,10 +223,23 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// <summary>
     ///     Set pinpointers target to track
     /// </summary>
-    public void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null)
+    public void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null, string popupText = "")
     {
+
         if (!Resolve(uid, ref pinpointer))
             return;
+
+        if (popupText != "")
+        {
+            if (target != null)
+            {
+                _popup.PopupEntity(Loc.GetString("pinpointer-success", ("target", popupText)), uid);
+            }
+            else
+            {
+                _popup.PopupEntity(Loc.GetString("pinpointer-failure", ("target", popupText)), uid);
+            }
+        }
 
         if (pinpointer.Target == target)
             return;
