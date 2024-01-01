@@ -69,22 +69,33 @@
   id: Musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
+  - type: Sharp
   - type: Item
     size: Large
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
+    state: base
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
   - type: Gun
+    useKey: false
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
+  - type: UseDelayOnShoot
+  - type: UseDelay
+    delay: 5
   - type: BallisticAmmoProvider
     whitelist:
       tags:
       - CartridgeAntiMateriel
     capacity: 1
     proto: CartridgeAntiMateriel
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 15 #you fucking stab em
+        Bloodloss: 5 #no way to apply bleed, triangular bayonet wounds are hard to fix(source:that one copypasta)
 
 - type: entity
   name: flintlock pistol
@@ -92,6 +103,9 @@
   id: WeaponPistolFlintlock
   description: A pirate's companion. Yarrr! Uses .60 anti-materiel ammo.
   components:
+  - type: Gun
+    minAngle: 30
+    maxAngle: 30 #miss him entirely because the barrel is smoothbore
   - type: Item
     size: Small
     storedRotation: 90
@@ -99,6 +113,9 @@
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+  - type: UseDelayOnShoot
+  - type: UseDelay
+    delay: 5
   - type: BallisticAmmoProvider
     whitelist:
       tags:

@@ -177,3 +177,16 @@
   color: "#9e6b38"
   boilingPoint: 190.0 # Perfluorooctanoic Acid.
   meltingPoint: 45.0
+
+- type: reagent
+  id: Gunpowder
+  name: reagent-name-gunpowder
+  parent: BasePyrotechnic
+  desc: reagent-desc-gunpowder
+  physicalDesc: reagent-physical-desc-powder
+  flavor: bitter
+  color: "#9e6b38"
+  boilingPoint: 190.0 
+  meltingPoint: 45.0
+
+

@@ -188,3 +188,29 @@
     sprite: Objects/Materials/materials.rsi
     state: cloth_3
   objectType: Item
+
+- type: construction
+  name: cannonball
+  id: CannonBall
+  graph: CannonBall
+  startNode: start
+  targetNode: cannonball
+  category: construction-category-weapons
+  objectType: Item
+  description: A cannonball, to be fired out of a cannon. Tally Ho!
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: ball
+
+- type: construction
+  name: grapeshot
+  id: GrapeShot
+  graph: GrapeShot
+  startNode: start
+  targetNode: grapeshot
+  category: construction-category-weapons
+  objectType: Item
+  description: A bag of grapeshot, to be fired out of a cannon. Tally Ho!
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: grapeshot

@@ -135,3 +135,63 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     state: ball
+
+- type: entity
+  id: CannonBallEmpty
+  name: cannonball shell
+  suffix: Pirate
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: ball
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 60
+        canMix: true
+
+- type: entity
+  id: Grapeshot
+  name: grapeshot
+  suffix: Pirate
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: PelletGrapeshot
+    count: 15
+    spread: 40
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: ball
+
+- type: entity
+  id: GrapeshotEmpty
+  name: grapeshot bag
+  suffix: Pirate
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: ball
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        canMix: true
+
+- type: entity
+  id: Glassshot
+  name: glassshot
+  suffix: Pirate
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: PelletGlass
+    count: 5
+    spread: 10
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: ball
