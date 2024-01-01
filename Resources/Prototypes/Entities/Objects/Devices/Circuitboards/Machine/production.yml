@@ -74,7 +74,7 @@
   description: A machine printed circuit board for a biofabricator.
   components:
     - type: MachineBoard
-      prototype: Cubelathe
+      prototype: Biofabricator
       requirements:
         MatterBin: 4
       materialRequirements:

@@ -370,6 +370,7 @@
       - ChemMasterMachineCircuitboard
       - ChemDispenserMachineCircuitboard
       - BiomassReclaimerMachineCircuitboard
+      - BiofabricatorMachineCircuitboard
       - SurveillanceCameraRouterCircuitboard
       - SurveillanceCameraMonitorCircuitboard
       - SurveillanceWirelessCameraMonitorCircuitboard
@@ -572,7 +573,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
-    board: AutolatheMachineCircuitboard
+    board: BiofabricatorMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
