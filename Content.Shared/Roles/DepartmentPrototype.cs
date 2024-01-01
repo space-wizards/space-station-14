@@ -23,4 +23,11 @@ public sealed partial class DepartmentPrototype : IPrototype
     [ViewVariables(VVAccess.ReadWrite),
      DataField("roles", customTypeSerializer: typeof(PrototypeIdListSerializer<JobPrototype>))]
     public List<string> Roles = new();
+
+    /// <summary>
+    /// Whether this is a primary department or not.
+    /// For example, CE's primary department is engineering since Command has primary: false.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Primary = true;
 }

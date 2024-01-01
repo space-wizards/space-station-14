@@ -76,6 +76,29 @@ public abstract class SharedJobSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Like <see cref="TryGetDepartment"/> but ignores any non-primary departments.
+    /// For example, with CE it will return Engineering but with captain it will
+    /// not return anything, since Command is not a primary department.
+    /// </summary>
+    public bool TryGetPrimaryDepartment(string jobProto, [NotNullWhen(true)] out DepartmentPrototype? departmentPrototype)
+    {
+        // not sorting it since there should only be 1 primary department for a job.
+        var departmentProtos = _protoManager.EnumeratePrototypes<DepartmentPrototype>().ToList();
+
+        foreach (var department in departmentProtos)
+        {
+            if (department.Primary && department.Roles.Contains(jobProto))
+            {
+                departmentPrototype = department;
+                return true;
+            }
+        }
+
+        departmentPrototype = null;
+        return false;
+    }
+
     public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
     {
         return CompOrNull<JobComponent>(mindId)?.Prototype == prototypeId;
