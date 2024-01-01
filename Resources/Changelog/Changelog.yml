@@ -1,11 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - message: Increased the stability of the AME, it now takes about three minutes
-      for the AME to overload.
-    type: Tweak
-  id: 5002
-  time: '2023-10-13T23:42:46.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Added the igniter for sparking flames, can be found in the vendomat and
@@ -3570,3 +3563,13 @@ Entries:
   id: 5502
   time: '2024-01-01T07:36:32.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23300
+- author: mirrorcult
+  changes:
+  - message: Ambient sounds are now more audible by default (unless you have the audio
+      setting changed already)
+    type: Tweak
+  - message: LV/MV wires & pipes no longer make ambient noises
+    type: Tweak
+  id: 5503
+  time: '2024-01-01T07:57:33.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22536
