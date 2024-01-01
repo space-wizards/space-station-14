@@ -45,7 +45,6 @@
       - id: ForensicScanner
       - id: FlashlightSeclite
       - id: DrinkRelaxingPeachCan
-      - id: ExpensiveLighterDetective #SS220-Zippo
 
 - type: entity
   noSpawn: true

@@ -7,78 +7,86 @@
   - type: Sprite
     sprite: SS220/Objects/Tools/lighters.rsi
     layers:
-    - state: zippo_icon_nanotrasen
-    - state: lighter_flame
-      map: ["lighter_flame"]
-      shader: unshaded
+    - state: zippo_top
+      map: ["top"]
+    - state: zippo_nt_icon_base
+      map: ["base"]
+    - state: zippo_nt_open
+      map: ["open"]
       visible: false
-    - state: zippo_icon_top
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        lighter_flame:
-          True: { visible: true }
-          False: { visible: false }
+    - state: lighter_flame
+      map: ["flame"]
+      visible: false
+      shader: unshaded
+  - type: Item
+    size: Tiny
+    sprite: SS220/Objects/Tools/lighters.rsi
+    heldPrefix: zippo
+  - type: StealTarget
+    stealGroup: ExpensiveLighterNanotrasen
 
 - type: entity
-  parent: FlippoLighter
+  parent: ExpensiveLighterNanotrasen
   id: ExpensiveLighterShield
   description: "The lighter is a bright blue color - the same color as its owner is currently in the bar. The lighter depicts a white shield going into the sunset - just like the career of the owner of the lighter."
   components:
   - type: Sprite
     sprite: SS220/Objects/Tools/lighters.rsi
     layers:
-    - state: zippo_icon_shield
-    - state: lighter_flame
-      map: ["lighter_flame"]
-      shader: unshaded
+    - state: zippo_top
+      map: ["top"]
+    - state: zippo_shield_icon_base
+      map: ["base"]
+    - state: zippo_shield_open
+      map: ["open"]
       visible: false
-    - state: zippo_icon_top
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        lighter_flame:
-          True: { visible: true }
-          False: { visible: false }
+    - state: lighter_flame
+      map: ["flame"]
+      visible: false
+      shader: unshaded
+  - type: StealTarget
+    stealGroup: ExpensiveLighterShield
 
 - type: entity
-  parent: FlippoLighter
+  parent: ExpensiveLighterNanotrasen
   id: ExpensiveLighterDetective
   description: "The lighter reeks of whiskey. Oil fingerprints are clearly visible on the olive cover, and the wooden bottom and top of the lighter are badly worn."
   components:
   - type: Sprite
     sprite: SS220/Objects/Tools/lighters.rsi
     layers:
-    - state: zippo_icon_detective
-    - state: lighter_flame
-      map: ["lighter_flame"]
-      shader: unshaded
+    - state: zippo_top
+      map: ["top"]
+    - state: zippo_detective_icon_base
+      map: ["base"]
+    - state: zippo_detective_open
+      map: ["open"]
       visible: false
-    - state: zippo_icon_top
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        lighter_flame:
-          True: { visible: true }
-          False: { visible: false }
+    - state: lighter_flame
+      map: ["flame"]
+      visible: false
+      shader: unshaded
+  - type: StealTarget
+    stealGroup: ExpensiveLighterDetective
 
 - type: entity
-  parent: FlippoLighter
+  parent: ExpensiveLighterNanotrasen
   id: ExpensiveLighterSyndicate
   description: "Used by hardened syndicate agents. Show your style and hatred of NanoTrasen with this lighter!"
   components:
   - type: Sprite
     sprite: SS220/Objects/Tools/lighters.rsi
     layers:
-    - state: zippo_icon_syndicate_map
-    - state: lighter_flame
-      map: ["lighter_flame"]
-      shader: unshaded
+    - state: zippo_top
+      map: ["top"]
+    - state: zippo_syndi_icon_base
+      map: ["base"]
+    - state: zippo_syndi_open
+      map: ["open"]
       visible: false
-    - state: zippo_icon_top
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        lighter_flame:
-          True: { visible: true }
-          False: { visible: false }
+    - state: lighter_flame
+      map: ["flame"]
+      visible: false
+      shader: unshaded
+  - type: StealTarget
+    stealGroup: ExpensiveLighterSyndicate

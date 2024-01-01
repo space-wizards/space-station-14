@@ -1,24 +1,12 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "lighter_flame and inhand sprites taken from tgstation at https://github.com/tgstation/tgstation/commit/a28b24f149702527f3eb22f5c686f06c836f2f99; Zippo sprites made by 4ase (Discord) for SS220",
+  "copyright": "lighter_flame and inhand sprites taken from tgstation at https://github.com/tgstation/tgstation/commit/a28b24f149702527f3eb22f5c686f06c836f2f99; Zippo sprites made by 4ase (Discord) for SS220 and edited by Kit0vras",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-    {
-      "name": "zippo_icon_map"
-    },
-    {
-      "name": "zippo_icon_syndicate_map"
-    },
-    {
-      "name": "zippo_icon_base"
-    },
-    {
-      "name": "zippo_icon_top"
-    },
     {
       "name": "lighter_flame",
       "delays": [
@@ -29,46 +17,46 @@
       ]
     },
     {
-      "name": "zippo_icon_base-1"
+      "name": "zippo_top"
     },
     {
-      "name": "zippo_icon_base-2"
+      "name": "zippo_detective_icon_base"
     },
     {
-      "name": "zippo_icon_base-3"
+      "name": "zippo_detective_open"
     },
     {
-      "name": "zippo_icon_base-4"
+      "name": "zippo_nt_icon_base"
     },
     {
-      "name": "zippo_icon_base-5"
+      "name": "zippo_nt_open"
     },
     {
-      "name": "zippo_icon_detective"
+      "name": "zippo_shield_icon_base"
     },
     {
-      "name": "zippo_icon_nanotrasen"
+      "name": "zippo_shield_open"
     },
     {
-      "name": "zippo_icon_shield"
+      "name": "zippo_syndi_icon_base"
     },
     {
-      "name": "zippo_icon_syndicate"
+      "name": "zippo_syndi_open"
     },
     {
-      "name": "off-inhand-left",
+      "name": "zippo-inhand-left",
       "directions": 4
     },
     {
-      "name": "off-inhand-right",
+      "name": "zippo-inhand-right",
       "directions": 4
     },
     {
-      "name": "on-inhand-left",
+      "name": "zippo-inhand-left-flame",
       "directions": 4
     },
     {
-      "name": "on-inhand-right",
+      "name": "zippo-inhand-right-flame",
       "directions": 4
     }
 

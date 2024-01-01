@@ -44,7 +44,7 @@
       - id: MagazinePistolRubber
       - id: FlashlightSeclite
       - id: DrinkRelaxingPeachCan
-      
+
 - type: entity
   noSpawn: true
   parent: ClothingBackpackSatchelSecurity
@@ -59,7 +59,6 @@
       - id: ForensicScanner
       - id: FlashlightSeclite
       - id: DrinkRelaxingPeachCan
-      - id: ExpensiveLighterDetective #SS220-Zippo
 
 - type: entity
   noSpawn: true
@@ -172,7 +171,7 @@
       - id: MagazinePistolRubber
       - id: DrinkRelaxingPeachCan
       - id: PilotBriefing
-      
+
 - type: entity
   noSpawn: true
   parent: ClothingBackpackSatchelSecurity

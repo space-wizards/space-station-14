@@ -79,7 +79,7 @@
   id: ThiefObjectiveGroupItem
   weights:
     ForensicScannerStealObjective: 1                    #sec
-    FlippoEngravedLighterStealObjective: 0.5
+    ExpensiveLighterDetectiveStealObjective: 0.5 #SS220 Zippo-Steal-Detective
     AmmoTechFabCircuitboardStealObjective: 1
     ClothingHeadHatWardenStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
@@ -94,7 +94,10 @@
     BibleStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
-    
+    ExpensiveLighterNanotrasenStealObjective: 0.5 #SS220 Zippo-Steal-Begin
+    ExpensiveLighterShieldStealObjective: 0.5
+    ExpensiveLighterSyndicateStealObjective: 0.5 #SS220 Zippo-Steal-End
+
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure
   weights:
@@ -122,7 +125,7 @@
     ShivaStealObjective: 1
     SmileStealObjective: 1
     PunPunStealObjective: 1
-    
+
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape
   weights:

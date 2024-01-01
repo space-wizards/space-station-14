@@ -17,6 +17,7 @@
   id: UplinkExpensiveLighter
   name: uplink-expensive-lighter-name
   description: uplink-expensive-lighter-desc
+  icon: { sprite: /Textures/SS220/Objects/Tools/lighters.rsi, state: zippo_syndi_icon_base }
   productEntity: ExpensiveLighterSyndicate
   cost:
     Telecrystal: 1
