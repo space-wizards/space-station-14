@@ -1,11 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed librarians, lawyers, ninjas and nukeops having their starting in-hand
-      items dropped on the floor.
-    type: Fix
-  id: 5004
-  time: '2023-10-14T17:28:52.0000000+00:00'
 - author: liltenhead
   changes:
   - message: Reduced the bombsuit helmet's explosive resistance.
@@ -3573,3 +3566,11 @@ Entries:
   id: 5504
   time: '2024-01-01T08:08:26.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23264
+- author: TheShuEd
+  changes:
+  - message: the lightning from the electrical anomaly now works the same way as the
+      tesla. They can charge the tesla coils, and blow up machinery.
+    type: Tweak
+  id: 5505
+  time: '2024-01-01T10:24:38.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23173
