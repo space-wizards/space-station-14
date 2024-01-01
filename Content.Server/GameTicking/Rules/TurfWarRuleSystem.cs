@@ -123,9 +123,9 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
         }
 
         // make everyone selected a turf tagger!
-        foreach (var mind in comp.Minds.Values)
+        foreach (var (department, mind) in comp.Minds)
         {
-            MakeTagger(comp, mind);
+            MakeTagger((uid, comp), department, mind);
         }
 
         Log.Info($"Turf war started on station {comp.Station}");
@@ -135,7 +135,7 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
     /// Make a mind a turf tagger.
     /// Not added to a rule's <c>Minds</c> so you have to do that yourself.
     /// </summary>
-    public void MakeTagger(TurfWarRuleComponent rule, EntityUid mindId, MindComponent? mind = null)
+    public void MakeTagger(Entity<TurfWarRuleComponent> rule, string department, EntityUid mindId, MindComponent? mind = null)
     {
         if (!Resolve(mindId, ref mind) || mind.Session == null)
             return;
@@ -143,14 +143,11 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
         if (mind.OwnedEntity is not {} mob)
             return;
 
-        _role.MindAddRole(mindId, new TurfTaggerRoleComponent()
-        {
-            PrototypeId = rule.Antag
-        }, mind);
+        _role.MindAddRole(mindId, new TurfTaggerRoleComponent(rule, department), mind);
 
-        _antagSelection.GiveAntagBagGear(mob, rule.StartingGear);
+        _antagSelection.GiveAntagBagGear(mob, rule.Comp.StartingGear);
 
-        _role.MindPlaySound(mindId, rule.GreetingSound, mind);
+        _role.MindPlaySound(mindId, rule.Comp.GreetingSound, mind);
         _chatMan.DispatchServerMessage(mind.Session, Loc.GetString("turf-tagger-role-greeting"));
     }
 
@@ -211,5 +208,6 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
     {
         args.Minds = new List<EntityUid>(ent.Comp.Minds.Values);
         args.AgentName = Loc.GetString("turf-war-round-end-agent-name");
+        args.HideObjectives = true;
     }
 }
