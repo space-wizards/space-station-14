@@ -190,6 +190,12 @@
     - salutes!
 
 - type: emote
+  id: Gasp
+  chatMessages: [gasps]
+  chatTriggers:
+  - gasp
+
+- type: emote
   id: DefaultDeathgasp
   chatMessages: ["emote-deathgasp"]
   chatTriggers:

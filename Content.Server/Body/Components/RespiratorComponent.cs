@@ -1,6 +1,7 @@
 using Content.Server.Body.Systems;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
-using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Body.Components
 {
@@ -36,21 +37,24 @@ namespace Content.Server.Body.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier DamageRecovery = default!;
 
-        [DataField("gaspPopupCooldown")]
-        public TimeSpan GaspPopupCooldown { get; private set; } = TimeSpan.FromSeconds(8);
+        [DataField("gaspEmoteCooldown")]
+        public TimeSpan GaspEmoteCooldown { get; private set; } = TimeSpan.FromSeconds(8);
 
         /// <summary>
-        /// Sound to play when person is gasping
+        ///     The emote when gasps
         /// </summary>
-        [DataField("gaspSound")]
-        public SoundSpecifier GaspSound = new SoundPathSpecifier("/Audio/Effects/Gasp/gasp.ogg")
-        {
-            Params = AudioParams.Default.WithVolume(0f).WithMaxDistance(10f)
-        };
+        [DataField("gaspEmote", customTypeSerializer:typeof(PrototypeIdSerializer<EmotePrototype>))]
+        public string GaspEmote = "Gasp";
 
+        /// <summary>
+        /// Hide the chat message from the chat window, only showing the popup.
+        /// This does nothing if WithChat is false.
+        /// <summary>
+        [DataField("hiddenFromChatWindow")]
+        public bool HiddenFromChatWindow = false;
 
         [ViewVariables]
-        public TimeSpan LastGaspPopupTime;
+        public TimeSpan LastGaspEmoteTime;
 
         /// <summary>
         ///     How many cycles in a row has the mob been under-saturated?

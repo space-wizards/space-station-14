@@ -35,7 +35,7 @@ public sealed partial class EmoteOnDamageComponent : Component
     /// This does nothing if WithChat is false.
     /// <summary>
     [DataField("hiddenFromChatWindow")]
-    public bool HiddenFromChatWindow = false;
+    public bool HiddenFromChatWindow = true;
 
     /// <summary>
     /// The simulation time of the last emote preformed due to taking damage.

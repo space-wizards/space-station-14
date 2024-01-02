@@ -32,6 +32,10 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
+    Gasp:
+      collection: MaleGasp
+    DeathGasp:
+      collection: MaleDeathGasp
 
 - type: emoteSounds
   id: FemaleHuman
@@ -66,6 +70,10 @@
       collection: FemaleCry
     Whistle:
       collection: Whistles
+    Gasp:
+      collection: FemaleGasp
+    DeathGasp:
+      collection: FemaleDeathGasp
 
 - type: emoteSounds
   id: UnisexReptilian
@@ -82,6 +90,10 @@
       collection: Whistles
     Crying:
       collection: MaleCry
+    Gasp:
+      collection: MaleGasp
+    DeathGasp:
+      collection: DeathGasp
 
 - type: emoteSounds
   id: MaleSlime
@@ -116,6 +128,10 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
+    Gasp:
+      collection: MaleGasp
+    DeathGasp:
+      collection: MaleDeathGasp
   params:
     variation: 0.125
 
@@ -152,6 +168,10 @@
       collection: FemaleCry
     Whistle:
       collection: Whistles
+    Gasp:
+      collection: FemaleGasp
+    DeathGasp:
+      collection: FemaleDeathGasp
   params:
     variation: 0.125
 
@@ -171,6 +191,10 @@
       collection: DionaLaugh
     Honk:
       collection: BikeHorn
+    Gasp:
+      collection: MaleGasp
+    DeathGasp:
+      collection: DeathGasp
   params:
     variation: 0.125
 
@@ -184,6 +208,10 @@
       path: /Audio/Voice/Arachnid/arachnid_scream.ogg
     Laugh:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+    Gasp:
+      collection: MaleGasp
+    DeathGasp:
+      collection: DeathGasp
 
 - type: emoteSounds
   id: UnisexDwarf
@@ -216,6 +244,10 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
+    Gasp:
+      collection: MaleGasp
+    DeathGasp:
+      collection: MaleDeathGasp
   params:
     variation: 0.125
     pitch: 0.75
@@ -251,6 +283,10 @@
       collection: FemaleCry
     Whistle:
       collection: Whistles
+    Gasp:
+      collection: FemaleGasp
+    DeathGasp:
+      collection: FemaleDeathGasp
   params:
     variation: 0.125
     pitch: 0.75
@@ -268,6 +304,10 @@
       path: /Audio/Voice/Moth/moth_chitter.ogg
     Squeak:
       path: /Audio/Voice/Moth/moth_squeak.ogg
+    Gasp:
+      collection: MaleGasp
+    DeathGasp:
+      collection: DeathGasp
 
 # body emotes
 - type: emoteSounds
