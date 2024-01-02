@@ -14,7 +14,7 @@ public sealed partial class BiomeMarkerLayerPostGen : IPostDunGen
     /// How many times to spawn marker layers; can duplicate.
     /// </summary>
     [DataField]
-    public int Count = 3;
+    public int Count = 5;
 
     [DataField(required: true)]
     public ProtoId<WeightedRandomPrototype> MarkerTemplate;

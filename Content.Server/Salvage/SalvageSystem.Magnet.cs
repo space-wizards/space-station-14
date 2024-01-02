@@ -101,7 +101,7 @@ public sealed partial class SalvageSystem
                     if (magnet != null)
                     {
                         Report(magnet.Value.Owner, MagnetChannel,
-                            Loc.GetString("salvage-system-announcement-losing"),
+                            "salvage-system-announcement-losing",
                             ("timeLeft", (magnetData.EndTime.Value - curTime).TotalSeconds));
                     }
 
@@ -311,7 +311,7 @@ public sealed partial class SalvageSystem
 
         data.Comp.Announced = false;
         data.Comp.EndTime = _timing.CurTime + data.Comp.ActiveTime;
-        data.Comp.NextOffer = data.Comp.EndTime.Value + data.Comp.OfferCooldown;
+        data.Comp.NextOffer = data.Comp.EndTime.Value;
         var active = new SalvageMagnetActivatedEvent()
         {
             Magnet = magnet,
