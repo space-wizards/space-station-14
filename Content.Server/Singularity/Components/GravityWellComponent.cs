@@ -51,11 +51,11 @@ public sealed partial class GravityWellComponent : Component
     public bool ApplyCounterforce = false;
 
     /// <summary>
-    /// If <see cref="ApplyCounterforce"/> is true, how much to pull self to static objects. Disabled if negative.
+    /// If <see cref="ApplyCounterforce"/> is true, how much to pull self to static objects. Does not pull static objects if null.
     /// </summary>
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float StaticAttraction = -1f;
+    public float? StaticAttraction = null;
 
     #region Update Timing
 
