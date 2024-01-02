@@ -38,12 +38,12 @@
         volume: -5
   - type: ItemToggleMeleeWeapon
     activatedSoundOnHit:
-      path: /Audio/Weapons/eblade1.ogg
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
       params:
         variation: 0.250
         volume: -10
     activatedSoundOnHitNoDamage:
-      path: /Audio/Weapons/eblade1.ogg
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
       params:
         variation: 0.250
         volume: -12

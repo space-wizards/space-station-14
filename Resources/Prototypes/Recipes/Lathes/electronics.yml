@@ -189,6 +189,24 @@
      Glass: 900
 
 - type: latheRecipe
+  id: AutolatheHyperConvectionMachineCircuitboard
+  result: AutolatheHyperConvectionMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
+  id: ProtolatheHyperConvectionMachineCircuitboard
+  result: ProtolatheHyperConvectionMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
   id: CircuitImprinterMachineCircuitboard
   result: CircuitImprinterMachineCircuitboard
   completetime: 4
@@ -386,6 +404,14 @@
 - type: latheRecipe
   id: OreProcessorMachineCircuitboard
   result: OreProcessorMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: OreProcessorIndustrialMachineCircuitboard
+  result: OreProcessorIndustrialMachineCircuitboard
   completetime: 4
   materials:
     Steel: 100
