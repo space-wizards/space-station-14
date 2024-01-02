@@ -22,3 +22,5 @@
   - type: GuideHelp
     guides:
     - Bartender
+  - type: StealTarget
+    stealGroup: BoozeDispenser

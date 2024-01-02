@@ -2,78 +2,58 @@
   id: Shiv
   start: start
   graph:
-    - node: start
-      edges:
-        - to: icon
-          steps:
-            - material: Cloth
-              amount: 1
-              doAfter: 1
-            - tag: GlassShard
-              name: Glass Shard
-              icon:
-                sprite: Objects/Materials/Shards/shard.rsi
-                state: shard1
-              doAfter: 1
-    - node: icon
-      entity: Shiv
+  - node: start
+    entity: ShardGlass
+    edges:
+    - to: icon
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: Shiv
 
 - type: constructionGraph
   id: ReinforcedShiv
   start: start
   graph:
-    - node: start
-      edges:
-        - to: icon
-          steps:
-            - material: Cloth
-              amount: 1
-              doAfter: 1
-            - tag: ReinforcedGlassShard
-              name: Reinforced Glass Shard
-              icon:
-                sprite: Objects/Materials/Shards/shard.rsi
-                state: shard1
-              doAfter: 1
-    - node: icon
-      entity: ReinforcedShiv
+  - node: start
+    entity: ShardGlassReinforced
+    edges:
+    - to: icon
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: ReinforcedShiv
 
 - type: constructionGraph
   id: PlasmaShiv
   start: start
   graph:
-    - node: start
-      edges:
-        - to: icon
-          steps:
-            - material: Cloth
-              amount: 1
-              doAfter: 1
-            - tag: PlasmaGlassShard
-              name: Plasma Glass Shard
-              icon:
-                sprite: Objects/Materials/Shards/shard.rsi
-                state: shard1
-              doAfter: 1
-    - node: icon
-      entity: PlasmaShiv
+  - node: start
+    entity: ShardGlassPlasma
+    edges:
+    - to: icon
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: PlasmaShiv
 
 - type: constructionGraph
   id: UraniumShiv
   start: start
   graph:
-    - node: start
-      edges:
-        - to: icon
-          steps:
-            - material: Cloth
-              amount: 1
-              doAfter: 1
-            - tag: UraniumGlassShard
-              name: Uranium Glass Shard
-              icon:
-                sprite: Objects/Materials/Shards/shard.rsi
-                state: shard1
-              doAfter: 1
-    - node: icon
-      entity: UraniumShiv
+  - node: start
+    entity: ShardGlassUranium
+    edges:
+    - to: icon
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: UraniumShiv

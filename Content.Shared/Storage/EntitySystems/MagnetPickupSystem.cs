@@ -1,10 +1,7 @@
 using Content.Server.Storage.Components;
-using Content.Shared.Hands;
 using Content.Shared.Inventory;
-using Content.Shared.Stacks;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Storage.EntitySystems;
@@ -45,24 +42,24 @@ public sealed class MagnetPickupSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var query = EntityQueryEnumerator<MagnetPickupComponent, StorageComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<MagnetPickupComponent, StorageComponent, TransformComponent, MetaDataComponent>();
         var currentTime = _timing.CurTime;
 
-        while (query.MoveNext(out var uid, out var comp, out var storage, out var xform))
+        while (query.MoveNext(out var uid, out var comp, out var storage, out var xform, out var meta))
         {
             if (comp.NextScan > currentTime)
                 continue;
 
             comp.NextScan += ScanDelay;
 
-            // No space
-            if (storage.StorageUsed >= storage.StorageCapacityMax)
-                continue;
-
-            if (!_inventory.TryGetContainingSlot(uid, out var slotDef))
+            if (!_inventory.TryGetContainingSlot((uid, xform, meta), out var slotDef))
                 continue;
 
             if ((slotDef.SlotFlags & comp.SlotFlags) == 0x0)
+                continue;
+
+            // No space
+            if (!_storage.HasSpace((uid, storage)))
                 continue;
 
             var parentUid = xform.ParentUid;

@@ -15,6 +15,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
+using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -180,7 +181,7 @@ namespace Content.Server.Polymorph.Systems
             childXform.LocalRotation = targetTransformComp.LocalRotation;
 
             if (_container.TryGetContainingContainer(uid, out var cont))
-                cont.Insert(child);
+                _container.Insert(child, cont);
 
             //Transfers all damage from the original to the new one
             if (proto.TransferDamage &&

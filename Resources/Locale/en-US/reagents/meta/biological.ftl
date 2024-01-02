@@ -4,8 +4,8 @@ reagent-desc-blood = I hope this is ketchup.
 reagent-name-slime = slime
 reagent-desc-slime = You thought this was gradient blood at first, but you were mistaken.
 
-reagent-name-spider-blood = blue blood
-reagent-desc-spider-blood = Doesn't taste like blueberry juice.
+reagent-name-hemocyanin-blood = blue blood
+reagent-desc-hemocyanin-blood = Contains copper as opposed to iron which gives it a distinct blue color.
 
 reagent-name-zombie-blood = zombie blood
 reagent-desc-zombie-blood = Would not advise eating. Can be used to create an inoculation against the infection.
@@ -17,4 +17,4 @@ reagent-name-fat = fat
 reagent-desc-fat = No matter how it was obtained, its application is important.
 
 reagent-name-vomit = vomit
-reagent-desc-vomit = You can see a few chunks of someones last meal in it.
+reagent-desc-vomit = You can see a few chunks of someone's last meal in it.

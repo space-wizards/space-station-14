@@ -18,6 +18,11 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
+    /// <summary>
+    /// Default volume for a sheet if the material's entity prototype has no material composition.
+    /// </summary>
+    private const int DefaultSheetVolume = 100;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -248,5 +253,18 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (args.Handled || !component.InsertOnInteract)
             return;
         args.Handled = TryInsertMaterialEntity(args.User, args.Used, uid, component);
+    }
+
+    public int GetSheetVolume(MaterialPrototype material)
+    {
+        if (material.StackEntity == null)
+            return DefaultSheetVolume;
+
+        var proto = _prototype.Index<EntityPrototype>(material.StackEntity);
+
+        if (!proto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
+            return DefaultSheetVolume;
+
+        return composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == material.ID).Value;
     }
 }

@@ -48,7 +48,7 @@ namespace Content.Server.Atmos.Portable
             return component.Air.Pressure >= component.MaxPressure;
         }
 
-        private void OnDeviceUpdated(EntityUid uid, PortableScrubberComponent component, AtmosDeviceUpdateEvent args)
+        private void OnDeviceUpdated(EntityUid uid, PortableScrubberComponent component, ref AtmosDeviceUpdateEvent args)
         {
             if (!TryComp(uid, out AtmosDeviceComponent? device))
                 return;
@@ -79,8 +79,7 @@ namespace Content.Server.Atmos.Portable
             if (xform.GridUid == null)
                 return;
 
-            var position = _transformSystem.GetGridOrMapTilePosition(uid, xform);
-
+            var position = _transformSystem.GetGridTilePositionOrDefault((uid,xform));
             var environment = _atmosphereSystem.GetTileMixture(xform.GridUid, xform.MapUid, position, true);
 
             var running = Scrub(timeDelta, component, environment);
@@ -146,7 +145,7 @@ namespace Content.Server.Atmos.Portable
 
         private bool Scrub(float timeDelta, PortableScrubberComponent scrubber, GasMixture? tile)
         {
-            return _scrubberSystem.Scrub(timeDelta, scrubber.TransferRate, ScrubberPumpDirection.Scrubbing, scrubber.FilterGases, tile, scrubber.Air);
+            return _scrubberSystem.Scrub(timeDelta, scrubber.TransferRate * _atmosphereSystem.PumpSpeedup(), ScrubberPumpDirection.Scrubbing, scrubber.FilterGases, tile, scrubber.Air);
         }
 
         private void UpdateAppearance(EntityUid uid, bool isFull, bool isRunning)

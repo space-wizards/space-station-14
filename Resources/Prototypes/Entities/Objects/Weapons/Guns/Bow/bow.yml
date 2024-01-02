@@ -8,7 +8,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Bow/bow.rsi
   - type: Item
-    size: 60
+    size: Normal
   - type: Clothing
     quickEquip: false
     slots:

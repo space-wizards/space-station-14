@@ -182,7 +182,9 @@ public abstract partial class SharedHandsSystem : EntitySystem
     //TODO: Actually shows all items/clothing/etc.
     private void HandleExamined(EntityUid uid, HandsComponent handsComp, ExaminedEvent args)
     {
-        var held = EnumerateHeld(uid, handsComp).ToList();
+        var held = EnumerateHeld(uid, handsComp)
+            .Where(x => !HasComp<HandVirtualItemComponent>(x)).ToList();
+
         if (!held.Any())
         {
             args.PushText(Loc.GetString("comp-hands-examine-empty",
@@ -191,7 +193,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
         }
 
         var heldList = ContentLocalizationManager.FormatList(held
-            .Where(x => !HasComp<HandVirtualItemComponent>(x))
             .Select(x => Loc.GetString("comp-hands-examine-wrapper",
                 ("item", Identity.Entity(x, EntityManager)))).ToList());
 

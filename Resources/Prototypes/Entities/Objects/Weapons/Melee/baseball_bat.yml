@@ -12,13 +12,15 @@
     damage:
       types:
         Blunt: 10
+        Structural: 5
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 8
+        Blunt: 5
+        Structural: 10
   - type: Item
-    size: 80
+    size: Normal
   - type: Tool
     qualities:
     - Rolling
@@ -35,3 +37,16 @@
   - type: Tag
     tags:
     - BaseballBat
+
+- type: entity
+  name: knockback stick
+  parent: BaseBallBat
+  id: WeaponMeleeKnockbackStick
+  description: And then he spleefed all over.
+  suffix: Do not map
+  components:
+  - type: MeleeThrowOnHit
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 1

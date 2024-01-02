@@ -49,6 +49,16 @@
   group: market
 
 - type: cargoProduct
+  id: StationBeaconBundle
+  icon:
+    sprite: Objects/Devices/station_beacon.rsi
+    state: icon
+  product: CrateEngineeringStationBeaconBundle
+  cost: 500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
   id: EngineeringJetpack
   icon:
     sprite: Objects/Tanks/Jetpacks/blue.rsi
@@ -85,5 +95,25 @@
     state: icon
   product: CrateEvaKit
   cost: 5000
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringRCDAmmo
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: icon
+  product: CrateRCDAmmo
+  cost: 2500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringRCD
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: ammo
+  product: CrateRCD
+  cost: 800
   category: Engineering
   group: market

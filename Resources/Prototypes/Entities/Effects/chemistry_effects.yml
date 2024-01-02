@@ -1,62 +1,12 @@
 - type: entity
-  id: Smoke
-  name: smoke
-  noSpawn: true
+  id: BaseFoam
+  abstract: true
   components:
-  - type: Occluder
   - type: Sprite
     drawdepth: Effects
-    sprite: Effects/chemsmoke.rsi
-    state: chemsmoke
   - type: Appearance
-  - type: SmokeVisuals
-  - type: Transform
-    anchored: true
-  - type: Smoke
-  - type: ActiveEdgeSpreader
-  - type: EdgeSpreader
-    id: Smoke
-  - type: SolutionContainerManager
-    solutions:
-      solutionArea:
-        maxVol: 600
-        canReact: false
-  - type: TimedDespawn
-    lifetime: 10
-  - type: Tag
-    tags:
-      - HideContextMenu
-
-- type: entity
-  id: Foam
-  name: foam
-  noSpawn: true
-  components:
-  - type: Sprite
-    drawdepth: Effects
-    color: "#ffffffcc"
-    sprite: Effects/foam.rsi
-    layers:
-      - state: foam
-        map: ["enum.FoamVisualLayers.Base"]
-      - map: [ "enum.EdgeLayer.South" ]
-        state: foam-south
-      - map: [ "enum.EdgeLayer.East" ]
-        state: foam-east
-      - map: [ "enum.EdgeLayer.North" ]
-        state: foam-north
-      - map: [ "enum.EdgeLayer.West" ]
-        state: foam-west
   - type: AnimationPlayer
-  - type: Appearance
-  - type: SmoothEdge
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
   - type: SmokeVisuals
-  - type: FoamVisuals
-    animationTime: 0.6
-    animationState: foam-dissolve
   - type: Transform
     anchored: true
   - type: Physics
@@ -80,6 +30,50 @@
       solutionArea:
         maxVol: 600
         canReact: false
+
+- type: entity
+  parent: BaseFoam
+  id: Smoke
+  name: smoke
+  noSpawn: true
+  components:
+  - type: Occluder
+  - type: Sprite
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: BaseFoam
+  id: Foam
+  name: foam
+  noSpawn: true
+  components:
+  - type: Sprite
+    color: "#ffffffcc"
+    sprite: Effects/foam.rsi
+    layers:
+    - state: foam
+      map: ["enum.FoamVisualLayers.Base"]
+    - map: [ "enum.EdgeLayer.South" ]
+      state: foam-south
+    - map: [ "enum.EdgeLayer.East" ]
+      state: foam-east
+    - map: [ "enum.EdgeLayer.North" ]
+      state: foam-north
+    - map: [ "enum.EdgeLayer.West" ]
+      state: foam-west
+  - type: SmoothEdge
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: FoamVisuals
+    animationTime: 0.6
+    animationState: foam-dissolve
   - type: Slippery
   - type: StepTrigger
 
@@ -90,26 +84,22 @@
   parent: Foam
   components:
   - type: Sprite
-    drawdepth: Effects
     color: "#ffffffcc"
     sprite: Effects/foam.rsi
     layers:
-      - state: m_foam
-        map: ["enum.FoamVisualLayers.Base"]
-      - map: [ "enum.EdgeLayer.South" ]
-        state: m_foam-south
-      - map: [ "enum.EdgeLayer.East" ]
-        state: m_foam-east
-      - map: [ "enum.EdgeLayer.North" ]
-        state: m_foam-north
-      - map: [ "enum.EdgeLayer.West" ]
-        state: m_foam-west
-  - type: Appearance
-  - type: SmokeVisuals
+    - state: m_foam
+      map: ["enum.FoamVisualLayers.Base"]
+    - map: [ "enum.EdgeLayer.South" ]
+      state: m_foam-south
+    - map: [ "enum.EdgeLayer.East" ]
+      state: m_foam-east
+    - map: [ "enum.EdgeLayer.North" ]
+      state: m_foam-north
+    - map: [ "enum.EdgeLayer.West" ]
+      state: m_foam-west
   - type: FoamVisuals
     animationTime: 0.6
     animationState: m_foam-dissolve
-  - type: Smoke
 
 - type: entity
   id: IronMetalFoam
@@ -136,11 +126,11 @@
   placement:
     mode: SnapgridCenter
     snap:
-      - Wall
+    - Wall
   components:
   - type: Tag
     tags:
-      - RCDDeconstructWhitelist
+    - RCDDeconstructWhitelist
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -187,16 +177,16 @@
     color: "#ffffffcc"
     sprite: Effects/foam.rsi
     layers:
-      - state: iron_foam
-        map: ["enum.FoamVisualLayers.Base"]
-      - map: [ "enum.EdgeLayer.South" ]
-        state: iron_foam-south
-      - map: [ "enum.EdgeLayer.East" ]
-        state: iron_foam-east
-      - map: [ "enum.EdgeLayer.North" ]
-        state: iron_foam-north
-      - map: [ "enum.EdgeLayer.West" ]
-        state: iron_foam-west
+    - state: iron_foam
+      map: ["enum.FoamVisualLayers.Base"]
+    - map: [ "enum.EdgeLayer.South" ]
+      state: iron_foam-south
+    - map: [ "enum.EdgeLayer.East" ]
+      state: iron_foam-east
+    - map: [ "enum.EdgeLayer.North" ]
+      state: iron_foam-north
+    - map: [ "enum.EdgeLayer.West" ]
+      state: iron_foam-west
 
 - type: entity
   id: FoamedAluminiumMetal
@@ -209,13 +199,13 @@
     color: "#ffffffcc"
     sprite: Effects/foam.rsi
     layers:
-      - state: metal_foam
-        map: ["enum.FoamVisualLayers.Base"]
-      - map: [ "enum.EdgeLayer.South" ]
-        state: metal_foam-south
-      - map: [ "enum.EdgeLayer.East" ]
-        state: metal_foam-east
-      - map: [ "enum.EdgeLayer.North" ]
-        state: metal_foam-north
-      - map: [ "enum.EdgeLayer.West" ]
-        state: metal_foam-west
+    - state: metal_foam
+      map: ["enum.FoamVisualLayers.Base"]
+    - map: [ "enum.EdgeLayer.South" ]
+      state: metal_foam-south
+    - map: [ "enum.EdgeLayer.East" ]
+      state: metal_foam-east
+    - map: [ "enum.EdgeLayer.North" ]
+      state: metal_foam-north
+    - map: [ "enum.EdgeLayer.West" ]
+      state: metal_foam-west

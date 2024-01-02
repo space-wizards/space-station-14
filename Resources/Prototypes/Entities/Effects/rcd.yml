@@ -1,0 +1,16 @@
+﻿- type: entity
+  id: EffectRCDConstruction
+  noSpawn: true
+  components:
+  - type: Transform
+    anchored: True
+  - type: Sprite
+    drawdepth: Effects
+    sprite: /Textures/Effects/rcd.rsi
+    state: construct
+  - type: TimedDespawn
+    lifetime: 3.2
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: AnimationPlayer

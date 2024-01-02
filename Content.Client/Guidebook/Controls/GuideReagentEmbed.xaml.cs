@@ -53,7 +53,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
 
     public void SetHiddenState(bool state, string query)
     {
-        this.Visible = CheckMatchesSearch(query) ? state : !state;
+        Visible = CheckMatchesSearch(query) ? state : !state;
     }
 
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
@@ -84,7 +84,11 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
             BackgroundColor = reagent.SubstanceColor
         };
 
-        var textColor = Color.ToHsl(reagent.SubstanceColor).Z > 0.45
+        var r = reagent.SubstanceColor.R;
+        var g = reagent.SubstanceColor.G;
+        var b = reagent.SubstanceColor.B;
+
+        var textColor = 0.2126f * r + 0.7152f * g + 0.0722f * b > 0.5
             ? Color.Black
             : Color.White;
 
@@ -92,49 +96,18 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
             ("color", textColor), ("name", reagent.LocalizedName)));
 
         #region Recipe
-        // by default, we assume that the reaction has the same ID as the reagent.
-        // if this isn't true, we'll loop through reactions.
-        if (!_prototype.TryIndex<ReactionPrototype>(reagent.ID, out var reactionPrototype))
+        var reactions = _prototype.EnumeratePrototypes<ReactionPrototype>()
+            .Where(p => !p.Source && p.Products.ContainsKey(reagent.ID))
+            .OrderBy(p => p.Priority)
+            .ThenBy(p => p.Products.Count)
+            .ToList();
+
+        if (reactions.Any())
         {
-            reactionPrototype = _prototype.EnumeratePrototypes<ReactionPrototype>()
-                .FirstOrDefault(p => p.Products.ContainsKey(reagent.ID));
-        }
-
-        if (reactionPrototype != null)
-        {
-            var reactantMsg = new FormattedMessage();
-            var reactantsCount = reactionPrototype.Reactants.Count;
-            var i = 0;
-            foreach (var (product, reactant) in reactionPrototype.Reactants)
+            foreach (var reactionPrototype in reactions)
             {
-                reactantMsg.AddMarkup(Loc.GetString("guidebook-reagent-recipes-reagent-display",
-                    ("reagent", _prototype.Index<ReagentPrototype>(product).LocalizedName), ("ratio", reactant.Amount)));
-                i++;
-                if (i < reactantsCount)
-                    reactantMsg.PushNewline();
+                RecipesDescriptionContainer.AddChild(new GuideReagentReaction(reactionPrototype, _prototype, _systemManager));
             }
-            reactantMsg.Pop();
-            ReactantsLabel.SetMessage(reactantMsg);
-
-            if (reactionPrototype.MinimumTemperature > 0.0f)
-            {
-                MixLabel.Text = Loc.GetString("guidebook-reagent-recipes-mix-and-heat",
-                    ("temperature", reactionPrototype.MinimumTemperature));
-            }
-
-            var productMsg = new FormattedMessage();
-            var productCount = reactionPrototype.Products.Count;
-            var u = 0;
-            foreach (var (product, ratio) in reactionPrototype.Products)
-            {
-                productMsg.AddMarkup(Loc.GetString("guidebook-reagent-recipes-reagent-display",
-                    ("reagent", _prototype.Index<ReagentPrototype>(product).LocalizedName), ("ratio", ratio)));
-                u++;
-                if (u < productCount)
-                    productMsg.PushNewline();
-            }
-            productMsg.Pop();
-            ProductsLabel.SetMessage(productMsg);
         }
         else
         {
@@ -183,11 +156,55 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         }
         #endregion
 
+        GenerateSources(reagent);
+
         FormattedMessage description = new();
         description.AddText(reagent.LocalizedDescription);
         description.PushNewline();
-        description.AddText(Loc.GetString("guidebook-reagent-physical-description",
+        description.AddMarkup(Loc.GetString("guidebook-reagent-physical-description",
             ("description", reagent.LocalizedPhysicalDescription)));
         ReagentDescription.SetMessage(description);
+    }
+
+    private void GenerateSources(ReagentPrototype reagent)
+    {
+        var sources = _chemistryGuideData.GetReagentSources(reagent.ID);
+        if (sources.Count == 0)
+        {
+            SourcesContainer.Visible = false;
+            return;
+        }
+        SourcesContainer.Visible = true;
+
+        var orderedSources = sources
+            .OrderBy(o => o.OutputCount)
+            .ThenBy(o => o.IdentifierString);
+        foreach (var source in orderedSources)
+        {
+            if (source is ReagentEntitySourceData entitySourceData)
+            {
+                SourcesDescriptionContainer.AddChild(new GuideReagentReaction(
+                    entitySourceData.SourceEntProto,
+                    entitySourceData.Solution,
+                    entitySourceData.MixingType,
+                    _prototype,
+                    _systemManager));
+            }
+            else if (source is ReagentReactionSourceData reactionSourceData)
+            {
+                SourcesDescriptionContainer.AddChild(new GuideReagentReaction(
+                    reactionSourceData.ReactionPrototype,
+                    _prototype,
+                    _systemManager));
+            }
+            else if (source is ReagentGasSourceData gasSourceData)
+            {
+                SourcesDescriptionContainer.AddChild(new GuideReagentReaction(
+                    gasSourceData.GasPrototype,
+                    gasSourceData.MixingType,
+                    _prototype,
+                    _systemManager));
+            }
+        }
     }
 }

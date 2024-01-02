@@ -27,11 +27,10 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Slash: 5
-        Blunt: 5
-        Structural: 20
+        Slash: 10
+        Structural: 10
   - type: Item
-    size: 50
+    size: Normal
     sprite: Objects/Weapons/Melee/chainsaw.rsi
   - type: DisarmMalus
   - type: RefillableSolution

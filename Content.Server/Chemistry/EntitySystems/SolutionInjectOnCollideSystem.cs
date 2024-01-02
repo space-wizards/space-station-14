@@ -1,19 +1,17 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class SolutionInjectOnCollideSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainersSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
@@ -30,23 +28,21 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (!args.OtherBody.Hard ||
                 !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) ||
-                !_solutionsSystem.TryGetInjectableSolution(ent, out var solution))
+                !_solutionContainersSystem.TryGetInjectableSolution(ent.Owner, out var solution, out _))
             {
                 return;
             }
 
-            if (component.BlockSlots != 0x0 && TryComp<InventoryComponent>(target, out var inventory))
+            if (component.BlockSlots != 0x0)
             {
-                var containerEnumerator = new InventorySystem.ContainerSlotEnumerator(target, inventory.TemplateId, _protoManager, _inventorySystem, component.BlockSlots);
+                var containerEnumerator = _inventorySystem.GetSlotEnumerator(target, component.BlockSlots);
 
-                while (containerEnumerator.MoveNext(out var container))
-                {
-                    if (!container.ContainedEntity.HasValue) continue;
+                // TODO add a helper method for this?
+                if (containerEnumerator.MoveNext(out _))
                     return;
-                }
             }
 
-            var solRemoved = solution.SplitSolution(component.TransferAmount);
+            var solRemoved = _solutionContainersSystem.SplitSolution(solution.Value, component.TransferAmount);
             var solRemovedVol = solRemoved.Volume;
 
             var solToInject = solRemoved.SplitSolution(solRemovedVol * component.TransferEfficiency);

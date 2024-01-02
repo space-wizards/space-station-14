@@ -41,13 +41,35 @@
   # TODO solution temperature!!
   - !type:ExplosionReactionEffect
     explosionType: Default # 15 damage per intensity.
-    maxIntensity: 1 # at most 15 damage per tile.
-    intensityPerUnit: 3 # 12 total input reagent units reach max total intensity
-    intensitySlope: 0.5
-    maxTotalIntensity: 9
+    maxIntensity: 200
+    intensityPerUnit: 5
+    intensitySlope: 5
+    maxTotalIntensity: 200
   - !type:PopupMessage
     messages: [ "clf3-explosion" ]
     type: Pvs
     visualType: LargeCaution
   products:
     ChlorineTrifluoride: 4
+
+- type: reaction
+  id: Ash
+  minTemp: 520
+  reactants:
+    Oil:
+      amount: 1
+  products:
+    Ash: 1
+
+- type: reaction
+  id: WeldingFuelBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    WeldingFuel:
+      amount: 10
+  products:
+    Ethanol: 5
+    Hydrogen: 3
+    Sulfur: 2
