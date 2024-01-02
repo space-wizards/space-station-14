@@ -418,8 +418,7 @@ entities:
     - pos: -5.5,-1.5
       parent: 50
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 89
     components:
     - pos: -4.5,-3.5
@@ -435,22 +434,19 @@ entities:
     - pos: -4.5,-5.5
       parent: 50
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 92
     components:
     - pos: -2.5,-5.5
       parent: 50
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 93
     components:
     - pos: -3.5,-5.5
       parent: 50
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 100
     components:
     - pos: -3.5,-3.5
