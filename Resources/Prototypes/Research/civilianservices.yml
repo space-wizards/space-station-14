@@ -8,7 +8,7 @@
     state: mop
   discipline: CivilianServices
   tier: 1
-  cost: 5000
+  cost: 2500 #imperia edit
   recipeUnlocks:
   - MopItem
   - Holoprojector
@@ -24,7 +24,7 @@
     state: icon
   discipline: CivilianServices
   tier: 1
-  cost: 5000
+  cost: 2500 #imperia edit
   recipeUnlocks:
   - UniformPrinterMachineCircuitboard
 
@@ -71,7 +71,7 @@
     state: juicer1
   discipline: CivilianServices
   tier: 1
-  cost: 7500
+  cost: 5000 #imperia edit
   recipeUnlocks: #remove all of these once we have more kitchen equipment
   - MicrowaveMachineCircuitboard
   - ReagentGrinderMachineCircuitboard
@@ -105,7 +105,7 @@
     state: television
   discipline: CivilianServices
   tier: 1
-  cost: 7500
+  cost: 5000 #imperia edit
   recipeUnlocks:
     - ComputerTelevisionCircuitboard
     - SynthesizerInstrument
@@ -139,7 +139,7 @@
     state: advmop
   discipline: CivilianServices
   tier: 2
-  cost: 10000
+  cost: 7500 #imperia edit
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
@@ -187,7 +187,7 @@
     state: icon
   discipline: CivilianServices
   tier: 2
-  cost: 10000
+  cost: 7500 #imperia edit
   recipeUnlocks:
   - WeaponSprayNozzle
   - ClothingBackpackWaterTank
