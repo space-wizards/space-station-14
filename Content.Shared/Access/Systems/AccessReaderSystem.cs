@@ -110,6 +110,31 @@ public sealed class AccessReaderSystem : EntitySystem
         return false;
     }
 
+    public bool GetMainAccessReader(EntityUid uid, [NotNullWhen(true)] out AccessReaderComponent? component)
+    {
+        component = null;
+        if (!TryComp(uid, out AccessReaderComponent? accessReader))
+            return false;
+
+        component = accessReader;
+
+        if (component.ContainerAccessProvider == null)
+            return true;
+
+        if (!_containerSystem.TryGetContainer(uid, component.ContainerAccessProvider, out var container))
+            return true;
+
+        foreach (var entity in container.ContainedEntities)
+        {
+            if (TryComp(entity, out AccessReaderComponent? containedReader))
+            {
+                component = containedReader;
+                return true;
+            }
+        }
+        return true;
+    }
+
     /// <summary>
     /// Check whether the given access permissions satisfy an access reader's requirements.
     /// </summary>

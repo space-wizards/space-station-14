@@ -26,6 +26,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -114,7 +115,10 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             targetLabel = Loc.GetString("access-overrider-window-target-label") + " " + EntityManager.GetComponent<MetaDataComponent>(component.TargetAccessReaderId).EntityName;
             targetLabelColor = Color.White;
 
-            List<HashSet<string>> currentAccessHashsets = EntityManager.GetComponent<AccessReaderComponent>(accessReader).AccessLists;
+            if (!_accessReader.GetMainAccessReader(accessReader, out var accessReaderComponent))
+                return;
+
+            List<HashSet<string>> currentAccessHashsets = accessReaderComponent.AccessLists;
             currentAccess = ConvertAccessHashSetsToList(currentAccessHashsets)?.ToArray();
         }
 
@@ -208,9 +212,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             return;
         }
 
-        TryComp(component.TargetAccessReaderId, out AccessReaderComponent? accessReader);
-
-        if (accessReader == null)
+        if (!_accessReader.GetMainAccessReader(component.TargetAccessReaderId, out var accessReader))
             return;
 
         var oldTags = ConvertAccessHashSetsToList(accessReader.AccessLists);
@@ -259,10 +261,10 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         if (!Resolve(uid, ref component))
             return true;
 
-        if (!EntityManager.TryGetComponent<AccessReaderComponent>(uid, out var reader))
+        if (_accessReader.GetMainAccessReader(uid, out var accessReader))
             return true;
 
         var privilegedId = component.PrivilegedIdSlot.Item;
-        return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, uid, reader);
+        return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, uid, accessReader);
     }
 }
