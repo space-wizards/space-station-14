@@ -1,11 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - message: Stun batons now take three hits to stun and have had their battery use
-      dropped by half
-    type: Tweak
-  id: 5014
-  time: '2023-10-16T11:39:06.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix item drops mispredicting.
@@ -3584,3 +3577,10 @@ Entries:
   id: 5514
   time: '2024-01-02T18:47:31.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23333
+- author: 778b
+  changes:
+  - message: Improved mice's eating everything behavior, now they can stop!
+    type: Tweak
+  id: 5515
+  time: '2024-01-02T18:49:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23322
