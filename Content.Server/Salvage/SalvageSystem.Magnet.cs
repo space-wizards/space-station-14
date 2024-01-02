@@ -93,7 +93,7 @@ public sealed partial class SalvageSystem
                 {
                     EndMagnet((uid, magnetData));
                 }
-                else if (!magnetData.Announced && (magnetData.EndTime.Value - curTime).TotalSeconds < 30)
+                else if (!magnetData.Announced && (magnetData.EndTime.Value - curTime).TotalSeconds < 31)
                 {
                     var magnet = GetMagnet((uid, magnetData));
 
