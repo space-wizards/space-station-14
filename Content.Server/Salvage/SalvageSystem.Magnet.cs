@@ -367,7 +367,7 @@ public sealed partial class SalvageSystem
     private bool TryGetSalvagePlacementLocation(MapId mapId, Box2 attachedBounds, Box2 bounds, out MapCoordinates coords, out Angle angle)
     {
         const float OffsetRadiusMin = 4f;
-        const float OffsetRadiusMax = 8f;
+        const float OffsetRadiusMax = 16f;
 
         var minDistance = (attachedBounds.Height < attachedBounds.Width ? attachedBounds.Width : attachedBounds.Height) / 2f;
         var minActualDistance = bounds.Height < bounds.Width ? minDistance + bounds.Width / 2f : minDistance + bounds.Height / 2f;
