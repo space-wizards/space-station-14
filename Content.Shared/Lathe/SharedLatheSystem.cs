@@ -4,6 +4,7 @@ using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Lathe;
 
@@ -71,8 +72,7 @@ public abstract class SharedLatheSystem : EntitySystem
         _inverseRecipeDictionary.Clear();
         foreach (var latheRecipe in _proto.EnumeratePrototypes<LatheRecipePrototype>())
         {
-            _inverseRecipeDictionary.TryAdd(latheRecipe.Result, new List<LatheRecipePrototype>());
-            _inverseRecipeDictionary[latheRecipe.Result].Add(latheRecipe);
+            _inverseRecipeDictionary.GetOrNew(latheRecipe.Result).Add(latheRecipe);
         }
     }
 

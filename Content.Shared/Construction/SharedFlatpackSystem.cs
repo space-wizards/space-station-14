@@ -41,6 +41,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
         SubscribeLocalEvent<FlatpackComponent, ExaminedEvent>(OnFlatpackExamined);
 
         SubscribeLocalEvent<FlatpackCreatorComponent, ContainerIsRemovingAttemptEvent>(OnCreatorRemovingAttempt);
+        SubscribeLocalEvent<FlatpackCreatorComponent, EntityUnpausedEvent>(OnCreatorUnpaused);
     }
 
     private void OnFlatpackInteractUsing(Entity<FlatpackComponent> ent, ref InteractUsingEvent args)
@@ -66,8 +67,8 @@ public abstract class SharedFlatpackSystem : EntitySystem
         }
 
         var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
-        var intersecting = _entityLookup.GetEntitiesIntersecting(buildPos.ToEntityCoordinates(grid, _mapManager).Offset(new Vector2(0.5f, 0.5f)),
-            LookupFlags.Dynamic | LookupFlags.Static);
+        var intersecting = _entityLookup.GetEntitiesIntersecting(buildPos.ToEntityCoordinates(grid, _mapManager).Offset(new Vector2(0.5f, 0.5f))
+            , LookupFlags.Dynamic | LookupFlags.Static);
 
         // todo make this logic smarter.
         // This should eventually allow for shit like building microwaves on tables and such.
@@ -107,6 +108,11 @@ public abstract class SharedFlatpackSystem : EntitySystem
     {
         if (args.Container.ID == ent.Comp.SlotId && ent.Comp.Packing)
             args.Cancel();
+    }
+
+    private void OnCreatorUnpaused(Entity<FlatpackCreatorComponent> ent, ref EntityUnpausedEvent args)
+    {
+        ent.Comp.PackEndTime += args.PausedTime;
     }
 
     public void SetupFlatpack(Entity<FlatpackComponent?> ent, Entity<MachineBoardComponent?> machineBoard)

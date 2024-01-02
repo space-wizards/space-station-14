@@ -52,6 +52,12 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
+        
+        if (_machinePreview is not { } && _entityManager.Deleted(_machinePreview))
+        {
+            _machinePreview = null;
+            MachineSprite.SetEntity(_machinePreview);
+        }
 
         if (!_entityManager.TryGetComponent<FlatpackCreatorComponent>(_owner, out var flatpacker) ||
             !_itemSlots.TryGetSlot(_owner, flatpacker.SlotId, out var itemSlot))
