@@ -1,6 +1,8 @@
 using Content.Shared.Maps;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Procedural.DungeonGenerators;
 
@@ -49,7 +51,7 @@ public record struct NoiseDunGenLayer
     public float Threshold;
 
     [DataField(required: true)]
-    public ProtoId<ContentTileDefinition> Tile;
+    public string Tile;
 
     [DataField(required: true)]
     public FastNoiseLite Noise;

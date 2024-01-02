@@ -1,5 +1,6 @@
 using System.Numerics;
 using System.Threading.Tasks;
+using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Robust.Shared.Map;
@@ -82,7 +83,7 @@ public sealed partial class DungeonJob
                     roomArea = roomArea.UnionTile(node);
                     foundNoise = true;
                     noiseFill = true;
-                    var tileDef = _tileDefManager[layer.Tile.Id];
+                    var tileDef = _tileDefManager[layer.Tile];
                     var variant = rand.NextByte(tileDef.Variants);
 
                     tiles.Add((node, new Tile(tileDef.TileId, variant: variant)));
