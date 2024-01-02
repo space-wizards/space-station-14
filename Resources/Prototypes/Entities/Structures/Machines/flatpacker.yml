@@ -47,7 +47,7 @@
     volume: 5
     range: 3
     sound:
-      path: /Audio/Ambience/Objects/crushing.ogg
+      path: /Audio/Items/rped.ogg
   - type: WiresPanel
   - type: WiresVisuals
   - type: Wires
