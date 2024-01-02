@@ -51,7 +51,7 @@ public sealed class RandomSpriteSystem: SharedRandomSpriteSystem
                 var selectedState = _random.Pick(layer.Value);
                 if (!string.IsNullOrEmpty(selectedState.Value))
                 {
-                    if (selectedState.Value == $"Inherit" && !(previousColor == null))
+                    if (selectedState.Value == $"Inherit")
                         color = previousColor;
                     else
                     {
