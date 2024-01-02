@@ -225,7 +225,7 @@
 
 - type: cargoBounty
   id: BountyInstrument
-  reward: 1900
+  reward: 4000
   description: bounty-description-instrument
   entries:
   - name: bounty-item-instrument
@@ -247,22 +247,22 @@
 
 - type: cargoBounty
   id: BountyLemon
-  reward: 20000
+  reward: 15000
   description: bounty-description-lemon
   entries:
   - name: bounty-item-lemon
-    amount: 7
+    amount: 6
     whitelist:
       tags:
       - Lemon
 
 - type: cargoBounty
   id: BountyLime
-  reward: 20000
+  reward: 15000
   description: bounty-description-lime
   entries:
   - name: bounty-item-lime
-    amount: 7
+    amount: 6
     whitelist:
       tags:
       - Lime
@@ -306,7 +306,7 @@
   description: bounty-description-pancake
   entries:
   - name: bounty-item-pancake
-    amount: 13
+    amount: 12
     whitelist:
       tags:
       - Pancake
@@ -371,7 +371,7 @@
 
 - type: cargoBounty
   id: BountyResearchDisk
-  reward: 12000
+  reward: 35000
   description: bounty-description-research-disk
   entries:
   - name: bounty-item-research-disk
@@ -514,7 +514,7 @@
 
 - type: cargoBounty
   id: BountyLabeler
-  reward: 6660
+  reward: 5000
   description: bounty-description-labeler
   entries:
   - name: bounty-item-labeler
