@@ -101,7 +101,7 @@ public sealed partial class SalvageSystem
                     {
                         Report(magnet.Value.Owner, MagnetChannel,
                             "salvage-system-announcement-losing",
-                            ("timeLeft", (magnetData.EndTime.Value - curTime).TotalSeconds));
+                            ("timeLeft", (magnetData.EndTime.Value - curTime).Seconds));
                     }
 
                     magnetData.Announced = true;
