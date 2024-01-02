@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: bow
   parent: BaseItem
   id: BaseBow
@@ -31,18 +31,26 @@
     soundEmpty: null
   - type: ItemSlots
     slots:
-      arrow:
-        name: Arrow
-        startingItem: null
-        insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
-        whitelist:
-          tags:
-          - Arrow
+      projectiles:
+        arrow:
+          name: Arrow
+          startingItem: null
+          insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+          whitelist:
+            tags:
+            - Arrow
+        plunger:
+          name: Plunger
+          startingItem: null
+          insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+          whitelist:
+            tags:
+            - Plunger
   - type: ContainerContainer
     containers:
-      arrow: !type:ContainerSlot
+      projectiles: !type:ContainerSlot
   - type: ContainerAmmoProvider
-    container: arrow
+    container: projectiles
 
 - type: entity
   id: BowImprovised
@@ -55,6 +63,9 @@
     - state: unwielded-arrow
       map: [ arrow ]
       visible: false
+    - state: unwielded-plunger
+      map: [ plunger ]
+      visible: false
   # to elucidate whats intended here:
   # arrow is inserted -> ItemMapper sets layer with map `arrow` to visible
   # bow is wielded -> generic vis sets states of layers with map `arrow` and `base`
@@ -63,17 +74,25 @@
   - type: ItemMapper
     spriteLayers:
     - arrow
+    - plunger
     mapLayers:
       arrow:
         whitelist:
           tags:
           - Arrow
+      plunger:
+        whitelist:
+          tags:
+          - Plunger
   - type: GenericVisualizer
     visuals:
       enum.WieldableVisuals.Wielded:
         arrow:
           True: { state: wielded-arrow }
           False: { state: unwielded-arrow }
+        plunger:
+          True: { state: wielded-plunger }
+          False: { state: unwielded-plunger }
         base:
           True: { state: wielded }
           False: { state: unwielded }
