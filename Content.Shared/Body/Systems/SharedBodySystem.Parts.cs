@@ -21,6 +21,8 @@ public partial class SharedBodySystem
         // If you modify this also see the Body partial for root parts.
         SubscribeLocalEvent<BodyPartComponent, EntInsertedIntoContainerMessage>(OnBodyPartInserted);
         SubscribeLocalEvent<BodyPartComponent, EntRemovedFromContainerMessage>(OnBodyPartRemoved);
+
+        SubscribeLocalEvent<BodyPartComponent, RefreshMovementSpeed
     }
 
     private void OnBodyPartInserted(EntityUid uid, BodyPartComponent component, EntInsertedIntoContainerMessage args)
@@ -477,9 +479,9 @@ public partial class SharedBodySystem
             if (!TryComp<MovementBodyPartComponent>(legEntity, out var legModifier))
                 continue;
 
-            walkSpeed += legModifier.WalkSpeed;
-            sprintSpeed += legModifier.SprintSpeed;
-            acceleration += legModifier.Acceleration;
+            walkSpeed *= legModifier.WalkSpeed;
+            sprintSpeed *= legModifier.SprintSpeed;
+            acceleration *= legModifier.Acceleration;
         }
         walkSpeed /= body.RequiredLegs;
         sprintSpeed /= body.RequiredLegs;

@@ -29,10 +29,10 @@ public sealed class SkatesSystem : EntitySystem
         if (!TryComp(args.Equipee, out MovementSpeedModifierComponent? speedModifier))
             return;
 
+        // ! Pixel's note: Why the fuck is the slot hardcoded? Bulldoze this shit later.
         if (args.Slot == "shoes")
         {
-            _move.ChangeFriction(args.Equipee, MovementSpeedModifierComponent.DefaultFriction, MovementSpeedModifierComponent.DefaultFrictionNoInput, MovementSpeedModifierComponent.DefaultAcceleration, speedModifier);
-            _impact.ChangeCollide(args.Equipee, component.DefaultMinimumSpeed, component.DefaultStunSeconds, component.DefaultDamageCooldown, component.DefaultSpeedDamage);
+            _impact.ChangeCollide(args.Equipee, component.DefaultMinimumSpeed, component.DefaultStunSeconds, component.DefaultDamageCooldown, component.DefaultSpeedDamage); // ? Think of a way to handle this.
         }
     }
 
@@ -42,8 +42,7 @@ public sealed class SkatesSystem : EntitySystem
     private void OnGotEquipped(EntityUid uid, SkatesComponent component, GotEquippedEvent args)
     {
         if (args.Slot == "shoes")
-        { 
-            _move.ChangeFriction(args.Equipee, component.Friction, component.FrictionNoInput, component.Acceleration);
+        {
             _impact.ChangeCollide(args.Equipee, component.MinimumSpeed, component.StunSeconds, component.DamageCooldown, component.SpeedDamage);
         }
     }

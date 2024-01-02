@@ -20,18 +20,24 @@ public sealed class LegsParalyzedSystem : EntitySystem
         SubscribeLocalEvent<LegsParalyzedComponent, BuckleChangeEvent>(OnBuckleChange);
         SubscribeLocalEvent<LegsParalyzedComponent, ThrowPushbackAttemptEvent>(OnThrowPushbackAttempt);
         SubscribeLocalEvent<LegsParalyzedComponent, UpdateCanMoveEvent>(OnUpdateCanMoveEvent);
+        SubscribeLocalEvent<LegsParalyzedComponent, RefreshMovementSpeedModifiersEvent>(OnUpdateSpeedModifiers);
     }
 
     private void OnStartup(EntityUid uid, LegsParalyzedComponent component, ComponentStartup args)
     {
-        // TODO: In future probably must be surgery related wound
-        _movementSpeedModifierSystem.ChangeBaseSpeed(uid, 0, 0, 20);
+        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
     }
 
     private void OnShutdown(EntityUid uid, LegsParalyzedComponent component, ComponentShutdown args)
     {
         _standingSystem.Stand(uid);
         _bodySystem.UpdateMovementSpeed(uid);
+    }
+
+    private void OnUpdateSpeedModifiers(EntityUid uid, LegsParalyzedComponent comp, RefreshMovementSpeedModifiersEvent args)
+    {
+        // TODO: In future probably must be surgery related wound
+        args.ModifySpeed(0, 0); // It's hardcoded, sure, but it's full on leg paralysis.
     }
 
     private void OnBuckleChange(EntityUid uid, LegsParalyzedComponent component, ref BuckleChangeEvent args)
