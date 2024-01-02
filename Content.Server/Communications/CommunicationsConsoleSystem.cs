@@ -1,4 +1,3 @@
-using System.Globalization;
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
@@ -17,6 +16,7 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using System.Globalization;
 
 namespace Content.Server.Communications
 {

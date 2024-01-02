@@ -4,10 +4,10 @@ using Content.Server.Traits.Assorted;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels;
+using Content.Shared.Traits.Assorted;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
-using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Labels
 {

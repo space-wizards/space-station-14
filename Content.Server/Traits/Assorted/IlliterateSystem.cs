@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Arcade;
 using Content.Server.Communications;
+using Content.Shared.Traits.Assorted;
 using Robust.Shared.Random;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Traits.Assorted;
 
-public sealed class IlliterateSystem : EntitySystem
+public sealed class IlliterateSystem : SharedIlliterateSystem
 {
 
     [Dependency] private readonly IRobustRandom _random = default!;

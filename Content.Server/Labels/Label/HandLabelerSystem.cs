@@ -5,10 +5,10 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Labels;
+using Content.Shared.Traits.Assorted;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Labels
 {
