@@ -11,6 +11,8 @@ using Content.Shared.Physics;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Map;
+using System.Numerics;
 
 namespace Content.Server.Anomaly;
 
@@ -21,6 +23,9 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
+
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
     private void InitializeGenerator()
     {
         SubscribeLocalEvent<AnomalyGeneratorComponent, BoundUIOpenedEvent>(OnGeneratorBUIOpened);
@@ -124,6 +129,22 @@ public sealed partial class AnomalySystem
 
                 valid = false;
                 break;
+            }
+            if (!valid)
+                continue;
+
+            // don't spawn in AntiAnomalyZones
+            var antiAnomalyZonesQueue = AllEntityQuery<AntiAnomalyZoneComponent>();
+            while (antiAnomalyZonesQueue.MoveNext(out var uid, out var zone))
+            {
+                var zoneTile = _transform.GetGridTilePositionOrDefault(uid, gridComp);
+
+                var delta = (zoneTile - tile);
+                if (delta.LengthSquared < zone.ZoneRadius * zone.ZoneRadius)
+                {
+                    valid = false;
+                    break;
+                }
             }
             if (!valid)
                 continue;
