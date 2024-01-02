@@ -156,6 +156,10 @@
   - type: StealCondition
     stealGroup: Hypospray
     owner: job-name-cmo
+    name: objective-steal-name-hypospray
+    sprite: 
+      sprite: Objects/Specific/Medical/hypospray.rsi
+      state: hypo
 
 ## rd
 
@@ -167,6 +171,10 @@
   - type: StealCondition
     stealGroup: ClothingOuterHardsuitRd
     owner: job-name-rd
+    name: objective-steal-name-rd-hardsuit
+    sprite: 
+      sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
+      state: icon
 
 - type: entity
   noSpawn: true
@@ -176,6 +184,10 @@
   - type: StealCondition
     stealGroup: HandTeleporter
     owner: job-name-rd
+    name: objective-steal-name-hand-teleporter
+    sprite: 
+      sprite: Objects/Devices/hand_teleporter.rsi
+      state: icon
 
 ## hos
 
@@ -192,6 +204,10 @@
   - type: StealCondition
     stealGroup: BookSecretDocuments
     owner: job-name-hos
+    name: objective-steal-name-emergency-orders
+    sprite: 
+      sprite: Objects/Misc/bureaucracy.rsi
+      state: folder-sec-doc
 
 ## ce
 
@@ -205,6 +221,10 @@
   - type: StealCondition
     stealGroup: ClothingShoesBootsMagAdv
     owner: job-name-ce
+    name: objective-steal-name-advanced-magboots
+    sprite: 
+      sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
+      state: icon
 
 ## qm
 
@@ -218,6 +238,10 @@
   - type: StealCondition
     stealGroup: BoxFolderQmClipboard
     owner: job-name-qm
+    name: objective-steal-name-digi-board
+    sprite: 
+      sprite: Objects/Misc/qm_clipboard.rsi
+      state: qm_clipboard
 
 ## hop
 
@@ -233,6 +257,10 @@
   - type: StealCondition
     stealGroup: FoodMeatCorgi
     owner: objective-condition-steal-Ian
+    name: objective-steal-name-corgi-meat
+    sprite: 
+      sprite: Objects/Consumable/Food/meat.rsi
+      state: corgi
 
 ## cap
 
@@ -254,6 +282,10 @@
   components:
   - type: StealCondition
     stealGroup: CaptainIDCard
+    name: objective-steal-name-captain-ID
+    sprite: 
+      sprite: Objects/Misc/id_cards.rsi
+      state: ert_commander #no one will know the difference.
 
 - type: entity
   noSpawn: true
@@ -262,6 +294,10 @@
   components:
   - type: StealCondition
     stealGroup: JetpackCaptainFilled
+    name: objective-steal-name-captain-jetpack
+    sprite: 
+      sprite: Objects/Tanks/Jetpacks/captain.rsi
+      state: icon
 
 - type: entity
   noSpawn: true
@@ -271,6 +307,10 @@
   - type: StealCondition
     stealGroup: WeaponAntiqueLaser
     owner: job-name-captain
+    name: objective-steal-name-antique-laser-pistol
+    sprite: 
+      sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+      state: base
 
 - type: entity
   noSpawn: true
@@ -286,3 +326,7 @@
   - type: StealCondition
     stealGroup: NukeDisk
     owner: objective-condition-steal-station
+    name: objective-steal-name-nuclear-disk
+    sprite: 
+      sprite: Objects/Misc/nukedisk.rsi
+      state: icon

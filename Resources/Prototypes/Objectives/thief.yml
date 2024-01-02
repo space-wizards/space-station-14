@@ -63,6 +63,10 @@
     stealGroup: Figurines
     minCollectionSize: 10
     maxCollectionSize: 50 #will be limited to the number of figures on the station anyway.
+    name: objective-steal-name-figurines
+    sprite: 
+      sprite: Objects/Fun/figurines.rsi
+      state: figurine_spawner
   - type: Objective
     difficulty: 0.25
     
@@ -75,6 +79,10 @@
     stealGroup: HeadCloak
     minCollectionSize: 3
     maxCollectionSize: 6
+    name: objective-steal-name-head-cloak
+    sprite: 
+      sprite: Clothing/Neck/Cloaks/cap.rsi
+      state: icon
   - type: Objective
     difficulty: 1.5
 
@@ -87,6 +95,10 @@
     stealGroup: HeadBedsheet
     minCollectionSize: 3
     maxCollectionSize: 6
+    name: objective-steal-name-head-bedsheet
+    sprite: 
+      sprite: Objects/Misc/bedsheets.rsi
+      state: sheetNT
   - type: Objective
     difficulty: 1.0
 
@@ -99,6 +111,10 @@
     stealGroup: Stamp
     minCollectionSize: 5
     maxCollectionSize: 15
+    name: objective-steal-name-stamps
+    sprite:
+      sprite: Objects/Misc/stamps.rsi
+      state: stamp-cap
   - type: Objective
     difficulty: 1.0
 
@@ -111,6 +127,10 @@
     stealGroup: DoorRemote
     minCollectionSize: 2
     maxCollectionSize: 5
+    name: objective-steal-name-door-remote
+    sprite:
+      sprite: Objects/Devices/door_remote.rsi
+      state: door_remotebase
   - type: Objective
     difficulty: 1.5
 
@@ -126,6 +146,10 @@
     minCollectionSize: 5
     maxCollectionSize: 15
     verifyMapExistance: false
+    name: objective-steal-name-tech-disk
+    sprite:
+      sprite: Objects/Misc/module.rsi
+      state: datadisk_base
   - type: Objective
     difficulty: 0.8
 
@@ -139,6 +163,10 @@
     minCollectionSize: 5
     maxCollectionSize: 15
     verifyMapExistance: false
+    name: objective-steal-name-id-cards
+    sprite:
+      sprite: Objects/Misc/id_cards.rsi
+      state: default
   - type: Objective
     difficulty: 0.7
 
@@ -154,6 +182,10 @@
     minCollectionSize: 20
     maxCollectionSize: 30
     verifyMapExistance: false
+    name: objective-steal-name-cannabis
+    sprite:
+      sprite: Objects/Specific/Hydroponics/cannabis.rsi
+      state: produce
   - type: Objective
     difficulty: 0.5
 
@@ -170,6 +202,10 @@
     minCollectionSize: 1
     maxCollectionSize: 10
     verifyMapExistance: true
+    name: objective-steal-name-LAMPS
+    sprite:
+      sprite: Objects/Tools/lantern.rsi
+      state: lantern
   - type: Objective
     difficulty: 0.5 # just for fun, collectings LAMP on Moth
 
@@ -184,6 +220,10 @@
     job: Detective
   - type: StealCondition
     stealGroup: ForensicScanner
+    name: objective-steal-name-forensic-scanner
+    sprite:
+      sprite: Objects/Devices/forensic_scanner.rsi
+      state: forensicnew
   - type: Objective
     difficulty: 1
 
@@ -196,6 +236,10 @@
     job: Detective
   - type: StealCondition
     stealGroup: FlippoEngravedLighter
+    name: objective-steal-name-flippo-lighter
+    sprite:
+      sprite: Objects/Tools/lighters.rsi
+      state: zippo_engraved_icon_base
   - type: Objective
     difficulty: 0.8
 
@@ -206,6 +250,10 @@
   components:
   - type: StealCondition
     stealGroup: AmmoTechFabCircuitboard
+    name: objective-steal-name-ammo-techfab
+    sprite:
+      sprite: Objects/Misc/module.rsi
+      state: security
   - type: Objective
     difficulty: 1.5
 
@@ -216,6 +264,10 @@
   components:
   - type: StealCondition
     stealGroup: ClothingHeadHatWarden
+    name: objective-steal-name-warden-cap
+    sprite:
+      sprite: Clothing/Head/Hats/warden.rsi
+      state: icon
   - type: Objective
     difficulty: 1.2
 
@@ -228,6 +280,10 @@
     job: Paramedic
   - type: StealCondition
     stealGroup: ClothingOuterHardsuitVoidParamed
+    name: objective-steal-name-void-suit
+    sprite:
+      sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+      state: icon
   - type: Objective
     difficulty: 1
 
@@ -240,6 +296,10 @@
     job: MedicalDoctor
   - type: StealCondition
     stealGroup: MedicalTechFabCircuitboard
+    name: objective-steal-name-medical-techfab
+    sprite:
+      sprite: Objects/Misc/module.rsi
+      state: medical
   - type: Objective
     difficulty: 1
 
@@ -252,6 +312,10 @@
     job: ChiefMedicalOfficer
   - type: StealCondition
     stealGroup: ClothingHeadsetAltMedical
+    name: objective-steal-name-CMO-headset
+    sprite:
+      sprite: Clothing/Ears/Headsets/medical.rsi
+      state: icon_alt
   - type: Objective
     difficulty: 1
 
@@ -264,6 +328,10 @@
     job: AtmosphericTechnician
   - type: StealCondition
     stealGroup: FireAxe
+    name: objective-steal-name-fireaxe
+    sprite:
+      sprite: Objects/Weapons/Melee/fireaxe.rsi
+      state: icon
   - type: Objective
     difficulty: 0.8
 
@@ -276,6 +344,10 @@
     job: StationEngineer
   - type: StealCondition
     stealGroup: AmePart
+    name: objective-steal-name-AME-part
+    sprite:
+      sprite: Objects/Power/AME/ame_part.rsi
+      state: box
   - type: Objective
     difficulty: 1
 
@@ -288,6 +360,10 @@
     job: SalvageSpecialist
   - type: StealCondition
     stealGroup: SalvageExpeditionsComputerCircuitboard
+    name: objective-steal-name-salvage-expedition
+    sprite:
+      sprite: Objects/Misc/module.rsi
+      state: cpu_supply
   - type: Objective
     difficulty: 0.7
 
@@ -300,6 +376,10 @@
     job: CargoTechnician
   - type: StealCondition
     stealGroup: CargoShuttleConsoleCircuitboard
+    name: objective-steal-name-cargo-shuttle
+    sprite:
+      sprite: Objects/Misc/module.rsi
+      state: cpuboard
   - type: Objective
     difficulty: 0.7
 
@@ -312,6 +392,10 @@
     job: SalvageSpecialist
   - type: StealCondition
     stealGroup: SalvageShuttleConsoleCircuitboard
+    name: objective-steal-name-salvage-shuttle
+    sprite:
+      sprite: Objects/Misc/module.rsi
+      state: cpuboard
   - type: Objective
     difficulty: 0.7
 
@@ -324,6 +408,10 @@
     job: Bartender
   - type: StealCondition
     stealGroup: ClothingEyesHudBeer
+    name: objective-steal-name-beer-goggles
+    sprite:
+      sprite: Clothing/Eyes/Hud/beergoggles.rsi
+      state: icon
   - type: Objective
     difficulty: 0.3
 
@@ -336,6 +424,10 @@
     job: Chaplain
   - type: StealCondition
     stealGroup: Bible
+    name: objective-steal-name-bible
+    sprite:
+      sprite: Objects/Specific/Chapel/bible.rsi
+      state: icon
   - type: Objective
     difficulty: 0.4
 
@@ -348,6 +440,10 @@
     job: HeadOfPersonnel
   - type: StealCondition
     stealGroup: ClothingNeckGoldmedal
+    name: objective-steal-name-gold-medal
+    sprite:
+      sprite: Clothing/Neck/Medals/gold.rsi
+      state: icon
   - type: Objective
     difficulty: 1
 
@@ -360,6 +456,10 @@
     job: Captain
   - type: StealCondition
     stealGroup: ClothingNeckClownmedal
+    name: objective-steal-name-clown-medal
+    sprite:
+      sprite: Clothing/Neck/Medals/clownmedal.rsi
+      state: icon
   - type: Objective
     difficulty: 1
 
@@ -374,6 +474,10 @@
     job: Captain
   - type: StealCondition
     stealGroup: NuclearBomb
+    name: objective-steal-name-nuclear-fission
+    sprite:
+      sprite: Objects/Devices/nuke.rsi
+      state: nuclearbomb_base
   - type: Objective
     difficulty: 2.5 #Good luck
 
@@ -386,6 +490,10 @@
     job: Captain
   - type: StealCondition
     stealGroup: FaxMachineCaptain
+    name: objective-steal-name-captain-fax
+    sprite:
+      sprite: Structures/Machines/fax_machine.rsi
+      state: icon
   - type: Objective
     difficulty: 2
 
@@ -398,6 +506,10 @@
     job: SecurityOfficer
   - type: StealCondition
     stealGroup: VehicleSecway
+    name: objective-steal-name-secway
+    sprite:
+      sprite: Objects/Vehicles/secway.rsi
+      state: icon
   - type: Objective
     difficulty: 1
 
@@ -410,6 +522,10 @@
     job: Chemist
   - type: StealCondition
     stealGroup: ChemDispenser
+    name: objective-steal-name-chemical-dispenser
+    sprite:
+      sprite: Structures/dispensers.rsi
+      state: industrial-working
   - type: Objective
     difficulty: 1
     
@@ -422,6 +538,10 @@
     job: Scientist
   - type: StealCondition
     stealGroup: XenoArtifact
+    name: objective-steal-name-artifact
+    sprite:
+      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+      state: ano28
   - type: Objective
     difficulty: 0.5
     
@@ -434,6 +554,10 @@
     job: AtmosphericTechnician
   - type: StealCondition
     stealGroup: FreezerHeater
+    name: objective-steal-name-freezer-heater
+    sprite:
+      sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+      state: heaterOff
   - type: Objective
     difficulty: 0.5
     
@@ -446,6 +570,10 @@
     job: AtmosphericTechnician
   - type: StealCondition
     stealGroup: Teg
+    name: objective-steal-name-teg
+    sprite:
+      sprite: Structures/Power/Generation/teg.rsi
+      state: teg
   - type: Objective
     difficulty: 1
     
@@ -458,6 +586,10 @@
     job: Bartender
   - type: StealCondition
     stealGroup: BoozeDispenser
+    name: objective-steal-name-booze
+    sprite:
+      sprite: Structures/smalldispensers.rsi
+      state: booze
   - type: Objective
     difficulty: 0.5
     
@@ -470,6 +602,10 @@
     job: Chaplain
   - type: StealCondition
     stealGroup: AltarNanotrasen
+    name: objective-steal-name-altar
+    sprite:
+      sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+      state: nanotrasen
   - type: Objective
     difficulty: 0.5
     
@@ -482,6 +618,10 @@
     job: Scientist
   - type: StealCondition
     stealGroup: PlantRD
+    name: objective-steal-name-RD-plant
+    sprite:
+      sprite: Structures/Furniture/potted_plants.rsi
+      state: plant-25
   - type: Objective
     difficulty: 0.8
 
@@ -496,6 +636,10 @@
     job: HeadOfPersonnel
   - type: StealCondition
     stealGroup: AnimalIan
+    name: objective-steal-name-ian
+    sprite:
+      sprite: Mobs/Pets/corgi.rsi
+      state: ian
   - type: Objective
     difficulty: 2.5
 
@@ -506,6 +650,10 @@
   components:
   - type: StealCondition
     stealGroup: AnimalBingus
+    name: objective-steal-name-bingus
+    sprite:
+      sprite: Mobs/Pets/bingus.rsi
+      state: bingus
   - type: Objective
     difficulty: 1
 
@@ -518,6 +666,10 @@
     job: Detective
   - type: StealCondition
     stealGroup: AnimalMcGriff
+    name: objective-steal-name-McGriff
+    sprite:
+      sprite: Mobs/Pets/mcgriff.rsi
+      state: mcgriff
   - type: Objective
     difficulty: 1
 
@@ -530,6 +682,10 @@
     job: Chemist
   - type: StealCondition
     stealGroup: AnimalWalter
+    name: objective-steal-name-walter
+    sprite:
+      sprite: Mobs/Pets/walter.rsi
+      state: walter
   - type: Objective
     difficulty: 1
 
@@ -540,6 +696,10 @@
   components:
   - type: StealCondition
     stealGroup: AnimalMorty
+    name: objective-steal-name-morty
+    sprite:
+      sprite: Mobs/Animals/possum.rsi
+      state: possum
   - type: Objective
     difficulty: 0.5
 
@@ -552,6 +712,10 @@
     job: Captain
   - type: StealCondition
     stealGroup: AnimalRenault
+    name: objective-steal-name-renault
+    sprite:
+      sprite: Mobs/Animals/fox.rsi
+      state: fox
   - type: Objective
     difficulty: 2
     
@@ -564,6 +728,10 @@
     job: Captain
   - type: StealCondition
     stealGroup: AnimalHamlet
+    name: objective-steal-name-hamlet
+    sprite:
+      sprite: Mobs/Pets/hamlet.rsi
+      state: hamster-0
   - type: Objective
     difficulty: 1
     
@@ -576,6 +744,10 @@
     job: SecurityOfficer
   - type: StealCondition
     stealGroup: AnimalShiva
+    name: objective-steal-name-shiva
+    sprite:
+      sprite: Mobs/Pets/shiva.rsi
+      state: shiva
   - type: Objective
     difficulty: 2
     
@@ -588,6 +760,10 @@
     job: Scientist
   - type: StealCondition
     stealGroup: AnimalSmile
+    name: objective-steal-name-smile
+    sprite:
+      sprite: Mobs/Aliens/slimes.rsi
+      state: rainbow_baby_slime
   - type: Objective
     difficulty: 1
     
@@ -600,6 +776,10 @@
     job: Bartender
   - type: StealCondition
     stealGroup: AnimalPunPun
+    name: objective-steal-name-punpun
+    sprite:
+      sprite: Mobs/Animals/monkey.rsi
+      state: monkey
   - type: Objective
     difficulty: 2
 

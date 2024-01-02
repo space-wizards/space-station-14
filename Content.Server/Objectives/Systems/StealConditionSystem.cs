@@ -42,15 +42,6 @@ public sealed class StealConditionSystem : EntitySystem
     {
         List<StealTargetComponent?> targetList = new();
 
-        // cancel if invalid TargetStealName
-        var group = _proto.Index<StealTargetGroupPrototype>(condition.Comp.StealGroup);
-        if (group == null)
-        {
-            args.Cancelled = true;
-            Log.Error("StealTargetGroup invalid prototype!");
-            return;
-        }
-
         var query = EntityQueryEnumerator<StealTargetComponent>();
         while (query.MoveNext(out var uid, out var target))
         {
@@ -81,19 +72,17 @@ public sealed class StealConditionSystem : EntitySystem
     //Set the visual, name, icon for the objective.
     private void OnAfterAssign(Entity<StealConditionComponent> condition, ref ObjectiveAfterAssignEvent args)
     {
-        var group = _proto.Index(condition.Comp.StealGroup);
-
         var title =condition.Comp.OwnerText == null
-            ? Loc.GetString(condition.Comp.ObjectiveNoOwnerText, ("itemName", group.Name))
-            : Loc.GetString(condition.Comp.ObjectiveText, ("owner", Loc.GetString(condition.Comp.OwnerText)), ("itemName", group.Name));
+            ? Loc.GetString(condition.Comp.ObjectiveNoOwnerText, ("itemName", Loc.GetString(condition.Comp.Name)))
+            : Loc.GetString(condition.Comp.ObjectiveText, ("owner", Loc.GetString(condition.Comp.OwnerText)), ("itemName", Loc.GetString(condition.Comp.Name)));
 
         var description = condition.Comp.CollectionSize > 1
-            ? Loc.GetString(condition.Comp.DescriptionMultiplyText, ("itemName", group.Name), ("count", condition.Comp.CollectionSize))
-            : Loc.GetString(condition.Comp.DescriptionText, ("itemName", group.Name));
+            ? Loc.GetString(condition.Comp.DescriptionMultiplyText, ("itemName", Loc.GetString(condition.Comp.Name)), ("count", condition.Comp.CollectionSize))
+            : Loc.GetString(condition.Comp.DescriptionText, ("itemName", Loc.GetString(condition.Comp.Name)));
 
         _metaData.SetEntityName(condition.Owner, title, args.Meta);
         _metaData.SetEntityDescription(condition.Owner, description, args.Meta);
-        _objectives.SetIcon(condition.Owner, group.Sprite, args.Objective);
+        _objectives.SetIcon(condition.Owner, condition.Comp.Sprite, args.Objective);
     }
     private void OnGetProgress(Entity<StealConditionComponent> condition, ref ObjectiveGetProgressEvent args)
     {
