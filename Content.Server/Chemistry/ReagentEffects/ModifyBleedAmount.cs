@@ -7,10 +7,10 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class ModifyBleedAmount : ReagentEffect
 {
-    [DataField("scaled")]
+    [DataField]
     public bool Scaled = false;
 
-    [DataField("amount")]
+    [DataField]
     public float Amount = -1.0f;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

@@ -89,8 +89,7 @@ entities:
     - pos: 0.5,-0.5
       parent: 1
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: CableHV
   entities:
   - uid: 12
@@ -98,8 +97,7 @@ entities:
     - pos: 0.5,-0.5
       parent: 1
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: CableMV
   entities:
   - uid: 14
@@ -107,8 +105,7 @@ entities:
     - pos: 0.5,-0.5
       parent: 1
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: ChairPilotSeat
   entities:
   - uid: 15

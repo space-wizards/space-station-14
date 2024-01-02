@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Serialization;
 
@@ -103,4 +104,52 @@ public sealed class MagicMirrorUiData : BoundUserInterfaceMessage
     public List<Marking> FacialHair { get; }
     public int FacialHairSlotTotal { get; }
 
+}
+
+[Serializable, NetSerializable]
+public sealed partial class RemoveSlotDoAfterEvent : DoAfterEvent
+{
+    public MagicMirrorRemoveSlotMessage Message;
+
+    public RemoveSlotDoAfterEvent(MagicMirrorRemoveSlotMessage message)
+    {
+        Message = message;
+    }
+    public override DoAfterEvent Clone() => this;
+}
+
+[Serializable, NetSerializable]
+public sealed partial class AddSlotDoAfterEvent : DoAfterEvent
+{
+    public MagicMirrorAddSlotMessage Message;
+
+    public AddSlotDoAfterEvent(MagicMirrorAddSlotMessage message)
+    {
+        Message = message;
+    }
+    public override DoAfterEvent Clone() => this;
+}
+
+[Serializable, NetSerializable]
+public sealed partial class SelectDoAfterEvent : DoAfterEvent
+{
+    public MagicMirrorSelectMessage Message;
+
+    public SelectDoAfterEvent(MagicMirrorSelectMessage message)
+    {
+        Message = message;
+    }
+    public override DoAfterEvent Clone() => this;
+}
+
+[Serializable, NetSerializable]
+public sealed partial class ChangeColorDoAfterEvent : DoAfterEvent
+{
+    public MagicMirrorChangeColorMessage Message;
+
+    public ChangeColorDoAfterEvent(MagicMirrorChangeColorMessage message)
+    {
+        Message = message;
+    }
+    public override DoAfterEvent Clone() => this;
 }

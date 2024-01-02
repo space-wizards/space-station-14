@@ -50,7 +50,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             UpdateAppearance(uid, filter);
         }
 
-        private void OnFilterUpdated(EntityUid uid, GasFilterComponent filter, AtmosDeviceUpdateEvent args)
+        private void OnFilterUpdated(EntityUid uid, GasFilterComponent filter, ref AtmosDeviceUpdateEvent args)
         {
             if (!filter.Enabled
                 || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
@@ -65,7 +65,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferVol = filter.TransferRate * args.dt;
+            var transferVol = filter.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
 
             if (transferVol <= 0)
             {
@@ -90,7 +90,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             _atmosphereSystem.Merge(outletNode.Air, removed);
         }
 
-        private void OnFilterLeaveAtmosphere(EntityUid uid, GasFilterComponent filter, AtmosDeviceDisabledEvent args)
+        private void OnFilterLeaveAtmosphere(EntityUid uid, GasFilterComponent filter, ref AtmosDeviceDisabledEvent args)
         {
             filter.Enabled = false;
 
