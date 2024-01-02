@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -29,6 +30,7 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
     public override void Initialize()
     {
@@ -82,6 +84,10 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
             if (_mind.GetMind(mob) is not {} mind)
                 continue;
 
+            // don't pick antagonists of christmas present
+            if (_role.MindIsAntagonist(mind))
+                continue;
+
             if (!_job.MindTryGetJob(mind, out _, out var job)
                 || !_job.TryGetPrimaryDepartment(job.ID, out var department))
                 continue;
@@ -122,10 +128,22 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
             comp.Minds[department] = mind;
         }
 
+        var traitorRules = EntityQuery<TraitorRuleComponent>().ToList();
+
         // make everyone selected a turf tagger!
         foreach (var (department, mind) in comp.Minds)
         {
             MakeTagger((uid, comp), department, mind);
+
+            if (!_mind.TryGetSession(mind, out var session))
+                continue;
+
+            // prevent antag of christmas future combining with tagger
+            // TODO: make a generic thingy so this isnt specific to traitor
+            foreach (var traitor in traitorRules)
+            {
+                _traitorRule.RemoveCandidate(traitor, session);
+            }
         }
 
         Log.Info($"Turf war started on station {comp.Station}");

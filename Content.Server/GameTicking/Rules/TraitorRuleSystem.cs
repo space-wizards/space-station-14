@@ -350,6 +350,18 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return allTraitors;
     }
 
+    /// <summary>
+    /// Tries to remove the player session as a candidate.
+    /// </summary>
+    /// <remarks>
+    /// To reduce copypasta the candidate/X+Y delaying thing should be moved to a reusable component.
+    /// Then this isn't specific to traitors, but its a big TODO.
+    /// </remarks>
+    public void RemoveCandidate(TraitorRuleComponent comp, ICommonSession session)
+    {
+        comp.StartCandidates.Remove(session);
+    }
+
     private List<(EntityUid Id, MindComponent Mind)> GetOtherTraitorMindsAliveAndConnected(MindComponent ourMind, TraitorRuleComponent component)
     {
         var traitors = new List<(EntityUid Id, MindComponent Mind)>();
