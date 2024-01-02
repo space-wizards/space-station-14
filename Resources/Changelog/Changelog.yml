@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix item drops mispredicting.
-    type: Fix
-  id: 5015
-  time: '2023-10-16T11:49:41.0000000+00:00'
 - author: Vasilis
   changes:
   - message: Pneumatic Cannons can no longer shoot arrows.
@@ -3584,3 +3578,11 @@ Entries:
   id: 5515
   time: '2024-01-02T18:49:20.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23322
+- author: Ilya246
+  changes:
+  - message: Science may now research the Biofabricator, which can make animal cubes
+      from biomass!
+    type: Add
+  id: 5516
+  time: '2024-01-02T18:53:35.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23319
