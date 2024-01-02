@@ -643,7 +643,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.40
-        density: 1400
+        density: 400
         mask:
         - MobMask
         layer:

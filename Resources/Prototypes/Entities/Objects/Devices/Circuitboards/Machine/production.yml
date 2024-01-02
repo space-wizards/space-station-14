@@ -68,6 +68,19 @@
         ExamineName: Igniter
 
 - type: entity
+  id: BiofabricatorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: biofabricator machine board
+  description: A machine printed circuit board for a biofabricator.
+  components:
+    - type: MachineBoard
+      prototype: Biofabricator
+      requirements:
+        MatterBin: 4
+      materialRequirements:
+        Glass: 1
+
+- type: entity
   id: SecurityTechFabCircuitboard
   parent: BaseMachineCircuitboard
   name: security techfab machine board
