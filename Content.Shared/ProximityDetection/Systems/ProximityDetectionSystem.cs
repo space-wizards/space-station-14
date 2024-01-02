@@ -5,7 +5,7 @@ namespace Content.Shared.ProximityDetection.Systems;
 
 
 //This handles generic proximity detector logic
-public abstract class SharedProximityDetectionSystem : EntitySystem
+public sealed class ProximityDetectionSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -33,6 +33,23 @@ public abstract class SharedProximityDetectionSystem : EntitySystem
         if (!Resolve(owner, ref detector) || detector.Enabled == enabled)
             return;
         SetEnable_Internal(owner ,detector, enabled);
+    }
+
+    public override void Update(float frameTime)
+    {
+        if (_net.IsClient)
+            return;
+        var query = EntityQueryEnumerator<ProximityDetectorComponent>();
+        while (query.MoveNext(out var owner, out var detector))
+        {
+            if (!detector.Enabled)
+                continue;
+            detector.AccumulatedFrameTime += frameTime;
+            if (detector.AccumulatedFrameTime < detector.UpdateRate)
+                continue;
+            detector.AccumulatedFrameTime -= detector.UpdateRate;
+            RunUpdate_Internal(owner, detector);
+        }
     }
 
     protected internal bool GetEnable(EntityUid owner, ProximityDetectorComponent? detector = null)

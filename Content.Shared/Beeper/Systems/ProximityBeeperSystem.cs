@@ -15,7 +15,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedProximityDetectionSystem _sharedProximity = default!;
+    [Dependency] private readonly ProximityDetectionSystem _proximity = default!;
     [Dependency] private readonly BeeperSystem _beeper = default!;
 
     /// <inheritdoc/>
@@ -54,7 +54,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
 
     private void OnPowerCellSlotEmpty(EntityUid uid, ProximityBeeperComponent beeper, ref PowerCellSlotEmptyEvent args)
     {
-        if (_sharedProximity.GetEnable(uid))
+        if (_proximity.GetEnable(uid))
             TryDisable(uid);
     }
     public bool TryEnable(EntityUid owner, BeeperComponent? beeper = null, ProximityDetectorComponent? detector = null,
@@ -70,7 +70,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
     private void Enable(EntityUid owner, BeeperComponent beeper,
         ProximityDetectorComponent detector, PowerCellDrawComponent? draw)
     {
-        _sharedProximity.SetEnable(owner, true, detector);
+        _proximity.SetEnable(owner, true, detector);
         _appearance.SetData(owner, ProximityBeeperVisuals.Enabled, true);
         _powerCell.SetPowerCellDrawEnabled(owner, true, draw);
     }
@@ -92,7 +92,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
     private void Disable(EntityUid owner, BeeperComponent beeper,
         ProximityDetectorComponent detector, PowerCellDrawComponent? draw)
     {
-        _sharedProximity.SetEnable(owner, false, detector);
+        _proximity.SetEnable(owner, false, detector);
         _appearance.SetData(owner, ProximityBeeperVisuals.Enabled, false);
         _beeper.SetEnable(owner, false, beeper);
         _powerCell.SetPowerCellDrawEnabled(owner, false, draw);
