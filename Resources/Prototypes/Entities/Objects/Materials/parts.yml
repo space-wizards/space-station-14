@@ -26,7 +26,7 @@
 - type: entity
   parent: PartBase
   id: PartRodMetal
-  name: metal rods
+  name: metal rod
   suffix: Full
   components:
   - type: PhysicalComposition
