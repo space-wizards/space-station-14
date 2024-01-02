@@ -107,7 +107,7 @@ namespace Content.Server.Lathe
             if (args.Storage != uid)
                 return;
             var materialWhitelist = new List<ProtoId<MaterialPrototype>>();
-            var recipes = GetAllRecipes(uid, component);
+            var recipes = GetAvailableRecipes(uid, component, true);
             foreach (var id in recipes)
             {
                 if (!_proto.TryIndex(id, out var proto))
@@ -126,18 +126,18 @@ namespace Content.Server.Lathe
         }
 
         [PublicAPI]
-        public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<ProtoId<LatheRecipePrototype>>? recipes, [NotNullWhen(true)] LatheComponent? component = null)
+        public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<ProtoId<LatheRecipePrototype>>? recipes, [NotNullWhen(true)] LatheComponent? component = null, bool getUnavailable = false)
         {
             recipes = null;
             if (!Resolve(uid, ref component))
                 return false;
-            recipes = GetAvailableRecipes(uid, component);
+            recipes = GetAvailableRecipes(uid, component, getUnavailable);
             return true;
         }
 
-        public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component)
+        public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component, bool getUnavailable = false)
         {
-            var ev = new LatheGetRecipesEvent(uid)
+            var ev = new LatheGetRecipesEvent(uid, getUnavailable)
             {
                 Recipes = new List<ProtoId<LatheRecipePrototype>>(component.StaticRecipes)
             };
@@ -148,14 +148,6 @@ namespace Content.Server.Lathe
         public static List<ProtoId<LatheRecipePrototype>> GetAllBaseRecipes(LatheComponent component)
         {
             return component.StaticRecipes.Union(component.DynamicRecipes).ToList();
-        }
-
-        public List<ProtoId<LatheRecipePrototype>> GetAllRecipes(EntityUid uid, LatheComponent component)
-        {
-            var baseRecipes = component.StaticRecipes.Union(component.DynamicRecipes);
-            if (!TryComp<EmagLatheRecipesComponent>(uid, out var emagRecipes))
-                return baseRecipes.ToList();
-            return baseRecipes.Union(emagRecipes.EmagStaticRecipes).Union(emagRecipes.EmagDynamicRecipes).ToList();
         }
 
         public bool TryAddToQueue(EntityUid uid, LatheRecipePrototype recipe, LatheComponent? component = null)
@@ -244,7 +236,7 @@ namespace Content.Server.Lathe
 
             foreach (var recipe in latheComponent.DynamicRecipes)
             {
-                if (!component.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
+                if (!(args.getUnavailable || component.UnlockedRecipes.Contains(recipe)) || args.Recipes.Contains(recipe))
                     continue;
                 args.Recipes.Add(recipe);
             }
@@ -258,7 +250,7 @@ namespace Content.Server.Lathe
                 return;
             foreach (var recipe in component.EmagDynamicRecipes)
             {
-                if (!technologyDatabase.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
+                if (!(args.getUnavailable || technologyDatabase.UnlockedRecipes.Contains(recipe)) || args.Recipes.Contains(recipe))
                     continue;
                 args.Recipes.Add(recipe);
             }
