@@ -61476,35 +61476,6 @@ entities:
     - pos: 30.5,-2.5
       parent: 60
       type: Transform
-- proto: CrateEngineeringAMEJar
-  entities:
-  - uid: 16061
-    components:
-    - pos: 6.5,23.5
-      parent: 60
-      type: Transform
-    - containers:
-      - EntityStorageComponent
-      - entity_storage
-      type: Construction
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6495836
-        - 6.2055764
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
 - proto: CrateEngineeringAMEShielding
   entities:
   - uid: 16062
@@ -62271,7 +62242,7 @@ entities:
     components:
     - name: Antique Cryostasis Beaker
       type: MetaData
-    - pos: -40.50437,9.594639
+    - pos: -40.29651,7.527995
       parent: 60
       type: Transform
 - proto: CryoxadoneBeakerSmall
@@ -67659,6 +67630,13 @@ entities:
     - pos: 45.5,15.5
       parent: 60
       type: Transform
+- proto: DresserResearchDirectorFilled
+  entities:
+  - uid: 15163
+    components:
+    - pos: -40.5,9.5
+      parent: 60
+      type: Transform
 - proto: DrinkDoctorsDelightGlass
   entities:
   - uid: 16136
@@ -68331,16 +68309,6 @@ entities:
     components:
     - rot: -1.5707963267948966 rad
       pos: 7.5,51.5
-      parent: 60
-      type: Transform
-  - uid: 16166
-    components:
-    - pos: 4.5,54.5
-      parent: 60
-      type: Transform
-  - uid: 16168
-    components:
-    - pos: -3.5,54.5
       parent: 60
       type: Transform
   - uid: 16169
@@ -111627,11 +111595,12 @@ entities:
     - pos: -8.500896,-50.426304
       parent: 60
       type: Transform
-- proto: ParticleAcceleratorControlBoxUnfinished
+- proto: ParticleAcceleratorControlBox
   entities:
-  - uid: 16456
+  - uid: 16166
     components:
-    - pos: 2.5,27.5
+    - rot: 3.141592653589793 rad
+      pos: 1.5,33.5
       parent: 60
       type: Transform
 - proto: ParticleAcceleratorEmitterForeUnfinished
@@ -111668,10 +111637,10 @@ entities:
       type: Transform
 - proto: ParticleAcceleratorFuelChamberUnfinished
   entities:
-  - uid: 16406
+  - uid: 16061
     components:
     - rot: 3.141592653589793 rad
-      pos: -0.5,33.5
+      pos: 0.5,33.5
       parent: 60
       type: Transform
 - proto: ParticleAcceleratorPowerBoxUnfinished
@@ -135734,11 +135703,6 @@ entities:
   - uid: 14436
     components:
     - pos: -10.5,13.5
-      parent: 60
-      type: Transform
-  - uid: 15163
-    components:
-    - pos: -40.5,9.5
       parent: 60
       type: Transform
   - uid: 17372
