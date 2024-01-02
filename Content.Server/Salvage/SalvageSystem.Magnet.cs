@@ -301,6 +301,7 @@ public sealed partial class SalvageSystem
             if (offering is AsteroidOffering)
             {
                 _metaData.SetEntityName(mapChild, Loc.GetString("salvage-asteroid-name"));
+                _gravity.EnableGravity(mapChild);
             }
         }
 
