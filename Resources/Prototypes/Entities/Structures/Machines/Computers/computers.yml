@@ -990,7 +990,9 @@
   - type: DeviceNetworkRequiresPower
   - type: NewsWrite
   - type: AccessReader
-    access: [[ "Command" ]]
+    access: 
+    - [ Command ]
+    - [ Service ]
   - type: ActivatableUI
     key: enum.NewsWriteUiKey.Key
   - type: ActivatableUIRequiresVision
