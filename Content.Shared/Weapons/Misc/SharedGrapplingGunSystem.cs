@@ -6,7 +6,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
-using Content.Shared.Timing;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio.Systems;
@@ -29,7 +28,6 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly UseDelaySystem _delay = default!;
 
     public const string GrapplingJoint = "grappling";
 
@@ -116,10 +114,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
     private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
     {
-        if (!Timing.IsFirstTimePredicted || !TryComp(uid, out UseDelayComponent? useDelay))
-            return;
-
-        if (!_delay.TryResetDelay((uid, useDelay), true))
+        if (!Timing.IsFirstTimePredicted || args.Handled)
             return;
 
         _audio.PlayPredicted(component.CycleSound, uid, args.User);
@@ -138,6 +133,8 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             component.Projectile = null;
             Dirty(uid, component);
         }
+
+        args.Handled = true;
     }
 
     private void SetReeling(EntityUid uid, GrapplingGunComponent component, bool value, EntityUid? user)

@@ -142,6 +142,7 @@
     - type: Item
       size: Small
       sprite: Objects/Weapons/Melee/flash.rsi
+    - type: UseDelay
     - type: StaticPrice
       price: 40
     - type: Appearance

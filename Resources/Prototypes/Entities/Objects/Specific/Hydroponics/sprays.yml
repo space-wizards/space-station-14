@@ -45,7 +45,6 @@
     solution: spray
   - type: Spillable
     solution: spray
-  - type: UseDelay
   - type: Tag
     tags:
     - Spray

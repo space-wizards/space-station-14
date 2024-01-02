@@ -31,7 +31,7 @@ public sealed class WieldableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand, before: new[] { typeof(UseDelaySystem) });
+        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
@@ -104,9 +104,9 @@ public sealed class WieldableSystem : EntitySystem
         InteractionVerb verb = new()
         {
             Text = component.Wielded ? Loc.GetString("wieldable-verb-text-unwield") : Loc.GetString("wieldable-verb-text-wield"),
-            Act = component.Wielded ?
-            () => TryUnwield(uid, component, args.User) :
-            () => TryWield(uid, component, args.User)
+            Act = component.Wielded
+                ? () => TryUnwield(uid, component, args.User)
+                : () => TryWield(uid, component, args.User)
         };
 
         args.Verbs.Add(verb);
@@ -125,10 +125,6 @@ public sealed class WieldableSystem : EntitySystem
 
     public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet = false)
     {
-        if (TryComp(uid, out UseDelayComponent? useDelay)
-            && !_delay.TryResetDelay((uid, useDelay), true))
-            return false;
-
         // Do they have enough hands free?
         if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
         {
@@ -191,6 +187,10 @@ public sealed class WieldableSystem : EntitySystem
             _virtualItemSystem.TrySpawnVirtualItemInHand(used, user);
         }
 
+        if (TryComp(used, out UseDelayComponent? useDelay)
+            && !_delay.TryResetDelay((used, useDelay), true))
+            return false;
+
         _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", used)), user, user);
         _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", user), ("item", used)), user, Filter.PvsExcept(user), true);
 
@@ -207,10 +207,6 @@ public sealed class WieldableSystem : EntitySystem
     /// <returns>True if the attempt wasn't blocked.</returns>
     public bool TryUnwield(EntityUid used, WieldableComponent component, EntityUid user)
     {
-        if (TryComp(used, out UseDelayComponent? useDelay)
-            && _delay.IsDelayed((used, useDelay)))
-            return false;
-
         var ev = new BeforeUnwieldEvent();
         RaiseLocalEvent(used, ev);
 

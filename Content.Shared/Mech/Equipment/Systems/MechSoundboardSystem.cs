@@ -44,7 +44,8 @@ public sealed class MechSoundboardSystem : EntitySystem
         if (msg.Sound >= comp.Sounds.Count)
             return;
 
-        if (TryComp(uid, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
+        if (TryComp(uid, out UseDelayComponent? useDelay)
+            && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 
         // honk!!!!!
