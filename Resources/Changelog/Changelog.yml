@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed being permanently cuffed if you transformed into a zombie with
-      cuffs on.
-    type: Fix
-  id: 5012
-  time: '2023-10-16T05:31:04.0000000+00:00'
 - author: Lomcastar
   changes:
   - message: Uranium crabs are more radioactive!
@@ -3582,3 +3575,11 @@ Entries:
   id: 5512
   time: '2024-01-02T15:51:22.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23352
+- author: DrMelon
+  changes:
+  - message: Fixed the Tesla Ball moving too fast by being pushed with explosions.
+      Now it moves as-designed.
+    type: Fix
+  id: 5513
+  time: '2024-01-02T18:09:06.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23377
