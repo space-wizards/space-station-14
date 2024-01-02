@@ -1951,15 +1951,15 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<float> TimeBeforeFlashCanExpire =
-            CVarDef.Create("antagonists.revolutionaries.time_before_flash_can_wear_off_seconds", 900.0f);
+            CVarDef.Create("antagonists.revolutionaries.time_before_flash_can_wear_off_seconds", 900.0f); // 15 minutes
 
         public static readonly CVarDef<float> TimeBetweenFlashWearOffAttempts =
-            CVarDef.Create("antagonists.revolutionaries.time_between_wear_off_attempts", 60.0f);
+            CVarDef.Create("antagonists.revolutionaries.time_between_wear_off_attempts", 60.0f); // 1 minute
 
         public static readonly CVarDef<float> BaseChanceOfFlashWearingOff =
-            CVarDef.Create("antagonists.revolutionaries.base_chance_flash_wearing_off", 0.05f);
+            CVarDef.Create("antagonists.revolutionaries.base_chance_flash_wearing_off", 0.0056f); // Approximately 50% chance of breaking free after 30 minutes
 
         public static readonly CVarDef<float> IncrementChanceOfFlashWearingOff =
-            CVarDef.Create("antagonists.revolutionaries.increment_chance_flash_wearing_off", 0.05f);
+            CVarDef.Create("antagonists.revolutionaries.increment_chance_flash_wearing_off", 0.0056f);
     }
 }
