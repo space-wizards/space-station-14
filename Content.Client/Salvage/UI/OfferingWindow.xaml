@@ -3,7 +3,7 @@
                       Title="{Loc 'salvage-expedition-window-title'}"
                       MinSize="800 360">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Horizontal" Name="ProgressionBox">
+        <BoxContainer Orientation="Horizontal" Name="ProgressionBox" Visible="False">
             <Label Name="ProgressionLabel"
                    Text="{Loc 'salvage-expedition-window-progression'}"
                    SetWidth="96"

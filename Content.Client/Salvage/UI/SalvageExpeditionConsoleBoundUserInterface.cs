@@ -49,6 +49,7 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
         if (state is not SalvageExpeditionConsoleState current || _window == null)
             return;
 
+        _window.Progression = null;
         _window.Cooldown = TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.SalvageExpeditionCooldown));
         _window.NextOffer = current.NextOffer;
         _window.Claimed = current.Claimed;

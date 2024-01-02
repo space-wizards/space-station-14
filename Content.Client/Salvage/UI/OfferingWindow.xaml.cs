@@ -39,6 +39,9 @@ public sealed partial class OfferingWindow : FancyWindow,
         get => _progression;
         set
         {
+            if (_progression == value)
+                return;
+
             _progression = value;
 
             if (value == null)
