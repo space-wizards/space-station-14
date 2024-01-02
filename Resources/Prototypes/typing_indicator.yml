@@ -34,6 +34,6 @@
   typingState: spider0
   offset: 0, 0.125
 
-  type: typingIndicator
+- type: typingIndicator
   id: reptilian
   typingState: reptilian0
