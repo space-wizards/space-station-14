@@ -37,3 +37,4 @@
 - type: typingIndicator
   id: lizard
   typingState: lizard0
+  offset: 0, 0.0625
