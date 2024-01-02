@@ -59,7 +59,7 @@
     fireSpread: true
     damage:
       types:
-        Heat: 1 #per second, scales with number of fire 'stacks'
+        Heat: 3 #per second, scales with number of fire 'stacks'
   - type: Appearance
   - type: FireVisuals
     sprite: Effects/fire.rsi
@@ -107,7 +107,7 @@
     fireSpread: true
     damage:
       types:
-        Heat: 1 #per second, scales with number of fire 'stacks'
+        Heat: 3 #per second, scales with number of fire 'stacks'
   - type: Appearance
   - type: FireVisuals
     sprite: Effects/fire.rsi

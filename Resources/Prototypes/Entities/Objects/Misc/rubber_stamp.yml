@@ -154,7 +154,7 @@
     stampedName: stamp-component-stamped-name-mime
     stampedColor: "#777777"
     stampState: "paper_stamp-mime"
-    # TODO remove sound from mime's rubber stamp
+    sound: null
   - type: Sprite
     state: stamp-mime
 

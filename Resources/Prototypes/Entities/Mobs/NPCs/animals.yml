@@ -643,7 +643,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.40
-        density: 1400
+        density: 400
         mask:
         - MobMask
         layer:
@@ -1187,16 +1187,10 @@
       types:
         Piercing: 9
   - type: Temperature
-    heatDamageThreshold: 400
+    heatDamageThreshold: 360
     coldDamageThreshold: 285
     currentTemperature: 310.15
     specificHeat: 42
-    coldDamage:
-      types:
-        Cold : 0.1 #per second, scales with temperature & other constants
-    heatDamage:
-      types:
-        Heat : 0.1 #per second, scales with temperature & other constants
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1311,7 +1305,17 @@
       Dead:
         Base: splat-0
   - type: Food
+  - type: Thirst
+    startingThirst: 25  # spawn with Okay thirst state
+    thresholds:
+      OverHydrated: 35
+      Okay: 25
+      Thirsty: 15
+      Parched: 10
+      Dead: 0
+    baseDecayRate: 0.04
   - type: Hunger
+    currentHunger: 25   # spawn with Okay hunger state
     thresholds:
       Overfed: 35
       Okay: 25

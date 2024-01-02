@@ -79,3 +79,5 @@
         reagents:
         - ReagentId: WeldingFuel
           Quantity: 1000
+  - type: ReagentTank
+    tankType: Fuel
