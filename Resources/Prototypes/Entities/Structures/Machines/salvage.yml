@@ -30,6 +30,8 @@
     interfaces:
     - key: enum.SalvageMagnetUiKey.Key
       type: SalvageMagnetBoundUserInterface
+  - type: Transform
+    noRot: false
   - type: Appearance
   - type: Rotatable
   - type: IntrinsicRadioReceiver
