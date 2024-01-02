@@ -32,20 +32,13 @@
   - type: ItemSlots
     slots:
       projectiles:
-        arrow:
-          name: Arrow
-          startingItem: null
-          insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
-          whitelist:
-            tags:
-            - Arrow
-        plunger:
-          name: Plunger
-          startingItem: null
-          insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
-          whitelist:
-            tags:
-            - Plunger
+        name: Projectiles
+        startingItem: null
+        insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+        whitelist:
+          tags:
+          - Arrow
+          - Plunger
   - type: ContainerContainer
     containers:
       projectiles: !type:ContainerSlot
