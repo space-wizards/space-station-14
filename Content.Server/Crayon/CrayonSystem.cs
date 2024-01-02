@@ -115,9 +115,8 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (!_prototypeManager.TryIndex<DecalPrototype>(args.State, out var prototype) || !prototype.Tags.Contains("crayon"))
             return;
 
-        //All letters have states 1 character long
-        //If this is unacceptable, just make it randomise which state is selected
-        if (args.State.Length == 1)
+        //If this is a digit or letter decal, randomise it
+        if (prototype.IsDigitOrLetter)
         {
             var ev = new WriteAttemptEvent(args.Session.AttachedEntity, uid);
             RaiseLocalEvent(ev);

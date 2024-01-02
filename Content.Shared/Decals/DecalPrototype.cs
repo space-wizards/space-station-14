@@ -33,5 +33,11 @@ namespace Content.Shared.Decals
         /// </summary>
         [DataField]
         public bool DefaultSnap = true;
+
+        /// <summary>
+        /// True if this decal represents a digit or letter, for illiteracy
+        /// </summary>
+        [DataField("isDigitOrLetter")]
+        public bool IsDigitOrLetter = false;
     }
 }
