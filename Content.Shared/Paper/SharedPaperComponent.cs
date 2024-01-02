@@ -30,6 +30,9 @@ public abstract partial class SharedPaperComponent : Component
         }
     }
 
+    /// <summary>
+    /// Raised when there is an attempt to read an entity such as paper
+    /// </summary>
     public sealed class ReadAttemptEvent : EventArgs
     {
         /// <summary>
@@ -55,6 +58,9 @@ public abstract partial class SharedPaperComponent : Component
         }
     }
 
+    /// <summary>
+    /// Raised when there is an attempt to write to an entity such as paper
+    /// </summary>
     public sealed class WriteAttemptEvent : EventArgs
     {
         /// <summary>

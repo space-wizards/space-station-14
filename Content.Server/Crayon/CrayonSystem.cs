@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Decals;
 using Content.Server.Nutrition.EntitySystems;
@@ -10,13 +8,14 @@ using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Linq;
+using System.Numerics;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Crayon;
