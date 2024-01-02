@@ -194,17 +194,22 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
         var xformQuery = GetEntityQuery<TransformComponent>();
 
         var applyCounterforce = gravWell.ApplyCounterforce;
+        var attractToStatic = gravWell.StaticAttraction > 0f;
         var counterforce = new Vector2(0f, 0f);
+        
+        var flags = LookupFlags.Dynamic | LookupFlags.Sundries;
+        if (attractToStatic)
+            flags |= LookupFlags.Static;
 
-        foreach(var entity in _lookup.GetEntitiesInRange(mapPos.MapId, epicenter, maxRange, flags: LookupFlags.Dynamic | LookupFlags.Sundries))
+        foreach(var entity in _lookup.GetEntitiesInRange(mapPos.MapId, epicenter, maxRange, flags: flags))
         {
-            if (!bodyQuery.TryGetComponent(entity, out var physics)
-                || physics.BodyType == BodyType.Static)
-            {
+            if (!bodyQuery.TryGetComponent(entity, out var physics))
                 continue;
-            }
+            bool isStatic = physics.BodyType == BodyType.Static;
+            if (!attractToStatic && isStatic)
+                continue;
 
-            if(!CanGravPulseAffect(entity))
+            if (!CanGravPulseAffect(entity))
                 continue;
 
             var displacement = epicenter - _transform.GetWorldPosition(entity, xformQuery);
@@ -212,9 +217,12 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
             if (distance2 < minRange2)
                 continue;
 
-            var scaling = (1f / distance2) * physics.Mass; // TODO: Variable falloff gradiants.
+            var scaling = (1f / distance2) * physics.FixturesMass; // TODO: Variable falloff gradiants.
+            if (isStatic)
+                scaling *= gravWell.StaticAttraction;
             var impulse = (displacement * baseMatrixDeltaV) * scaling;
-            _physics.ApplyLinearImpulse(entity, impulse, body: physics);
+            if (!isStatic)
+                _physics.ApplyLinearImpulse(entity, impulse, body: physics);
             if (applyCounterforce)
                 counterforce += -impulse; // apply an equal and opposite force
         }

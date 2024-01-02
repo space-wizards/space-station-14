@@ -23,6 +23,7 @@
     baseRadialAcceleration: 10
     maxRange: 4
     applyCounterforce: true
+    staticAttraction: 0.1
   - type: Fixtures
     fixtures:
       EventHorizonCollider:
