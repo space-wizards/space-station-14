@@ -104,14 +104,13 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         if (!Resolve(uid, ref args.Sprite))
             return;
 
-        var appearance = args.Component;
-
-        if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.TargetTime, out TimeSpan time, appearance))
+        if (args.AppearanceData.TryGetValue(TextScreenVisuals.TargetTime, out var time) && time is TimeSpan)
         {
-            if (time > _gameTiming.CurTime)
+            var target = (TimeSpan) time;
+            if (target > _gameTiming.CurTime)
             {
                 var timer = EnsureComp<TextScreenTimerComponent>(uid);
-                timer.Target = time;
+                timer.Target = target;
                 BuildTimerLayers(uid, timer, component);
                 DrawLayers(uid, timer.LayerStatesToDraw);
             }
@@ -121,13 +120,16 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             }
         }
 
-        if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.ScreenText, out string?[] text, appearance))
+        if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenText, out var text) && text is string?[])
         {
-            component.TextToDraw = text;
+            component.TextToDraw = (string?[]) text;
             ResetText(uid, component);
             BuildTextLayers(uid, component, args.Sprite);
             DrawLayers(uid, component.LayerStatesToDraw);
         }
+
+        if (args.AppearanceData.TryGetValue(TextScreenVisuals.Color, out var color) && color is Color)
+            component.Color = (Color) color;
     }
 
     /// <summary>

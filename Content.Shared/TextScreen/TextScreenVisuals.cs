@@ -6,12 +6,6 @@ namespace Content.Shared.TextScreen;
 public enum TextScreenVisuals : byte
 {
     /// <summary>
-    ///     Should this show any text? <br/>
-    ///     Expects a <see cref="bool"/>.
-    /// </summary>
-    On,
-
-    /// <summary>
     ///     What text to show? <br/>
     ///     Expects a <see cref="string?[]"/>.
     /// </summary>
@@ -21,5 +15,11 @@ public enum TextScreenVisuals : byte
     ///     What is the target time? <br/>
     ///     Expects a <see cref="TimeSpan"/>.
     /// </summary>
-    TargetTime
+    TargetTime,
+
+    /// <summary>
+    ///     Change text color on the entire screen
+    ///     Expects a <see cref="Color"/>.
+    /// </summary>
+    Color
 }
