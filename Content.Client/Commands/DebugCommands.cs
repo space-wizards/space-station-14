@@ -8,47 +8,44 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Commands;
 
-internal sealed class ShowMarkersCommand : IConsoleCommand
+internal sealed class ShowMarkersCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "showmarkers";
-    public string Description => Loc.GetString("debug-command-show-markers-description");
-    public string Help => Loc.GetString("debug-command-show-markers-help", ("command", Command));
+    public override string Command => "showmarkers";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         _entitySystemManager.GetEntitySystem<MarkerSystem>().MarkersVisible ^= true;
     }
 }
 
-internal sealed class ShowSubFloor : IConsoleCommand
+internal sealed class ShowSubFloor : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "showsubfloor";
-    public string Description => Loc.GetString("debug-command-show-sub-floor-description");
-    public string Help => Loc.GetString("debug-command-show-sub-floor-help", ("command", Command));
+    public override string Command => "showsubfloor";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         _entitySystemManager.GetEntitySystem<SubFloorHideSystem>().ShowAll ^= true;
     }
 }
 
-internal sealed class ShowSubFloorForever : IConsoleCommand
+internal sealed class ShowSubFloorForever : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
     public const string CommandName = "showsubfloorforever";
-    public string Command => CommandName;
-    public string Description => Loc.GetString("debug-command-show-sub-floor-forever-description");
-    public string Help => Loc.GetString("debug-command-show-sub-floor-forever-help", ("command", Command));
+    public override string Command => CommandName;
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         _entitySystemManager.GetEntitySystem<SubFloorHideSystem>().ShowAll = true;
 
@@ -62,15 +59,15 @@ internal sealed class ShowSubFloorForever : IConsoleCommand
     }
 }
 
-internal sealed class NotifyCommand : IConsoleCommand
+internal sealed class NotifyCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    public string Command => "notify";
-    public string Description => Loc.GetString("debug-command-notify-description");
-    public string Help => Loc.GetString("debug-command-notify-help", ("command", Command));
+    public override string Command => "notify";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var message = args[0];
 

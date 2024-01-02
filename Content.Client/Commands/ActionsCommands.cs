@@ -9,15 +9,15 @@ namespace Content.Client.Commands;
 // sandboxing and uncomment this code (and the SaveActionAssignments() function).
 /*
 [AnyCommand]
-public sealed class SaveActionsCommand : IConsoleCommand
+public sealed class SaveActionsCommand : LocalizedCommands
 {
-    public string Command => "saveacts";
+    public override string Command => "saveacts";
 
-    public string Description => "Saves the current action toolbar assignments to a file";
+    public override string Description => "Saves the current action toolbar assignments to a file";
 
-    public string Help => $"Usage: {Command} <user resource path>";
+    public override string Help => $"Usage: {Command} <user resource path>";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {

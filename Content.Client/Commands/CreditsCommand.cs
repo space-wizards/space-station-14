@@ -6,13 +6,13 @@ using Robust.Shared.Console;
 namespace Content.Client.Commands;
 
 [UsedImplicitly, AnyCommand]
-public sealed class CreditsCommand : IConsoleCommand
+public sealed class CreditsCommand : LocalizedCommands
 {
-    public string Command => "credits";
-    public string Description => Loc.GetString("credits-command-description");
-    public string Help => Loc.GetString("credits-command-help", ("command", Command));
+    public override string Command => "credits";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         new CreditsWindow().Open();
     }

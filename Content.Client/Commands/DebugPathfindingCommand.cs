@@ -7,16 +7,15 @@ using System.Linq;
 namespace Content.Client.Commands;
 
 [UsedImplicitly]
-public sealed class DebugPathfindingCommand : IConsoleCommand
+public sealed class DebugPathfindingCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "pathfinder";
-    public string Description => Loc.GetString("debug-pathfinding-command-description");
-    public string Help => Loc.GetString("debug-pathfinding-command-help", ("command", Command));
+    public override string Command => "pathfinder";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var system = _entitySystemManager.GetEntitySystem<PathfindingSystem>();
 
@@ -30,12 +29,12 @@ public sealed class DebugPathfindingCommand : IConsoleCommand
         {
             if (!Enum.TryParse<PathfindingDebugMode>(arg, out var mode))
             {
-                shell.WriteError(Loc.GetString("debug-pathfinding-command-error", ("arg", arg)));
+                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error", ("arg", arg)));
                 continue;
             }
 
             system.Modes ^= mode;
-            shell.WriteLine(Loc.GetString("debug-pathfinding-command-notify", ("arg", arg), ("newMode", (system.Modes & mode) != 0x0)));
+            shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-notify", ("arg", arg), ("newMode", (system.Modes & mode) != 0x0)));
         }
     }
 

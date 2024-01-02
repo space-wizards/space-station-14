@@ -9,17 +9,15 @@ using System.Numerics;
 namespace Content.Client.Commands;
 
 [UsedImplicitly]
-public sealed class ZoomCommand : IConsoleCommand
+public sealed class ZoomCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-    public string Command => "zoom";
-    public string Description => Loc.GetString("zoom-command-description");
-    public string Help => Loc.GetString("zoom-command-help");
+    public override string Command => "zoom";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         Vector2 zoom;
         if (args.Length is not (1 or 2))
@@ -30,7 +28,7 @@ public sealed class ZoomCommand : IConsoleCommand
 
         if (!float.TryParse(args[0], out var arg0))
         {
-            shell.WriteError(Loc.GetString("cmd-parse-failure-float", ("arg", args[0])));
+            shell.WriteError(LocalizationManager.GetString("cmd-parse-failure-float", ("arg", args[0])));
             return;
         }
 
@@ -38,7 +36,7 @@ public sealed class ZoomCommand : IConsoleCommand
             zoom = new(arg0, arg0);
         else
         {
-            shell.WriteError(Loc.GetString("zoom-command-error"));
+            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
             return;
         }
 
@@ -46,7 +44,7 @@ public sealed class ZoomCommand : IConsoleCommand
         {
             if (!float.TryParse(args[1], out var arg1))
             {
-                shell.WriteError(Loc.GetString("cmd-parse-failure-float", ("arg", args[1])));
+                shell.WriteError(LocalizationManager.GetString("cmd-parse-failure-float", ("arg", args[1])));
                 return;
             }
 
@@ -54,7 +52,7 @@ public sealed class ZoomCommand : IConsoleCommand
                 zoom.Y = arg1;
             else
             {
-                shell.WriteError(Loc.GetString("zoom-command-error"));
+                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
                 return;
             }
         }

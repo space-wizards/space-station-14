@@ -6,21 +6,20 @@ using Robust.Shared.Console;
 namespace Content.Client.Commands;
 
 [AnyCommand]
-public sealed class ToggleOutlineCommand : IConsoleCommand
+public sealed class ToggleOutlineCommand : LocalizedCommands
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "toggleoutline";
-    public string Description => Loc.GetString("toggle-outline-command-description");
-    public string Help => Loc.GetString("toggle-outline-command-help", ("command", Command));
+    public override string Command => "toggleoutline";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var cvar = CCVars.OutlineEnabled;
         var old = _configurationManager.GetCVar(cvar);
 
         _configurationManager.SetCVar(cvar, !old);
-        shell.WriteLine(Loc.GetString("toggle-outline-command-notify", ("state", _configurationManager.GetCVar(cvar))));
+        shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-notify", ("state", _configurationManager.GetCVar(cvar))));
     }
 }

@@ -7,16 +7,15 @@ using Robust.Shared.Network;
 namespace Content.Client.Commands;
 
 [AnyCommand]
-public sealed class OpenAHelpCommand : IConsoleCommand
+public sealed class OpenAHelpCommand : LocalizedCommands
 {
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "openahelp";
-    public string Description => Loc.GetString("open-a-help-command-description");
-    public string Help => Loc.GetString("open-a-help-command-help", ("command", Command));
+    public override string Command => "openahelp";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length >= 2)
         {
@@ -36,7 +35,7 @@ public sealed class OpenAHelpCommand : IConsoleCommand
             }
             else
             {
-                shell.WriteError(Loc.GetString("open-a-help-command-error"));
+                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
             }
         }
     }

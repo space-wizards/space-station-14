@@ -1,3 +1,3 @@
-toggle-outline-command-description = Toggles outline drawing on entities.
-toggle-outline-command-help = Usage: {$command}
-toggle-outline-command-notify = Draw outlines set to: {$cvar}
+cmd-toggleoutline-desc = Toggles outline drawing on entities.
+cmd-toggleoutline-help = Usage: {$command}
+cmd-toggleoutline-notify = Draw outlines set to: {$cvar}

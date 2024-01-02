@@ -5,16 +5,17 @@ using Robust.Shared.Containers;
 
 namespace Content.Client.Commands;
 
-public sealed class HideMechanismsCommand : IConsoleCommand
+public sealed class HideMechanismsCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "hidemechanisms";
-    public string Description => Loc.GetString("hide-mechanisms-command-description", ("showMechanismsCommand", ShowMechanismsCommand.CommandName));
-    public string Help => Loc.GetString("hide-mechanisms-command-help", ("command", Command));
+    public override string Command => "hidemechanisms";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Description => LocalizationManager.GetString($"cmd-{Command}-desc", ("showMechanismsCommand", ShowMechanismsCommand.CommandName));
+
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var containerSys = _entityManager.System<SharedContainerSystem>();
         var query = _entityManager.AllEntityQueryEnumerator<OrganComponent>();

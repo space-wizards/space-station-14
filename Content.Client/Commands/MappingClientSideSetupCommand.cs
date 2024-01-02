@@ -6,25 +6,22 @@ using Robust.Shared.Console;
 namespace Content.Client.Commands;
 
 [UsedImplicitly]
-internal sealed class MappingClientSideSetupCommand : IConsoleCommand
+internal sealed class MappingClientSideSetupCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     [Dependency] private readonly ILightManager _lightManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "mappingclientsidesetup";
-    public string Description => Loc.GetString("mapping-client-side-setup-command-description");
-    public string Help => Loc.GetString("mapping-client-side-setup-command-help", ("command", Command));
+    public override string Command => "mappingclientsidesetup";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (!_lightManager.LockConsoleAccess)
         {
             _entitySystemManager.GetEntitySystem<MarkerSystem>().MarkersVisible = true;
             _lightManager.Enabled = false;
-            // ReSharper disable once StringLiteralTypo
             shell.ExecuteCommand(ShowSubFloorForever.CommandName);
-            // ReSharper disable once StringLiteralTypo
             shell.ExecuteCommand(LoadMappingActionsCommand.CommandName);
         }
     }

@@ -1,4 +1,4 @@
-debug-pathfinding-command-description = Toggles visibility of pathfinding debuggers.
-debug-pathfinding-command-help = Usage: {$command} [options]
-debug-pathfinding-command-error = Unrecognised pathfinder args {$arg}
-debug-pathfinding-command-notify = Toggled {$arg} to {$newMode}
+cmd-pathfinder-desc = Toggles visibility of pathfinding debuggers.
+cmd-pathfinder-help = Usage: {$command} [options]
+cmd-pathfinder-error = Unrecognised pathfinder args {$arg}
+cmd-pathfinder-notify = Toggled {$arg} to {$newMode}

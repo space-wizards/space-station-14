@@ -1,11 +1,11 @@
-debug-command-show-markers-description = Toggles visibility of markers such as spawn points.
-debug-command-show-markers-help = Usage: {$command}
+cmd-showmarkers-desc = Toggles visibility of markers such as spawn points.
+cmd-showmarkers-help = Usage: {$command}
 
-debug-command-show-sub-floor-description = Makes entities below the floor always visible.
-debug-command-show-sub-floor-help = Usage: {$command}
+cmd-showsubfloor-desc = Makes entities below the floor always visible.
+cmd-showsubfloor-help = Usage: {$command}
 
-debug-command-show-sub-flow-forever-description = Makes entities below the floor always visible until the client is restarted.
-debug-command-show-sub-flow-forever-help = Usage: {$command}
+cmd-showsubfloorforever-desc = Makes entities below the floor always visible until the client is restarted.
+cmd-showsubfloorforever-help = Usage: {$command}
 
-debug-command-notify-description = Send a notify client side.
-debug-command-notify-help = Usage: {$command} <message>
+cmd-notify-desc = Send a notify client side.
+cmd-notify-help = Usage: {$command} <message>

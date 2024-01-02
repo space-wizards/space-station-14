@@ -5,16 +5,15 @@ using Robust.Shared.Console;
 namespace Content.Client.Commands;
 
 [UsedImplicitly]
-internal sealed class SetMenuVisibilityCommand : IConsoleCommand
+internal sealed class SetMenuVisibilityCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "menuvis";
-    public string Description => Loc.GetString("set-menu-visibility-command-description");
-    public string Help => Loc.GetString("set-menu-visibility-command-help", ("command", Command));
+    public override string Command => "menuvis";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (!TryParseArguments(shell, args, out var visibility))
             return;
@@ -45,7 +44,7 @@ internal sealed class SetMenuVisibilityCommand : IConsoleCommand
                     visibility |= MenuVisibility.All;
                     break;
                 default:
-                    shell.WriteError(Loc.GetString("set-menu-visibility-command-error", ("arg", arg)));
+                    shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error", ("arg", arg)));
                     return false;
             }
         }

@@ -1,3 +1,3 @@
-toggle-health-overlay-command-description = Toggles a health bar above mobs.
-toggle-health-overlay-command-help = Usage: {$command}
-toggle-health-overlay-command-notify = Health overlay system {$state}.
+cmd-togglehealthoverlay-desc = Toggles a health bar above mobs.
+cmd-togglehealthoverlay-help = Usage: {$command}
+cmd-togglehealthoverlay-notify = Health overlay system {$state}.
