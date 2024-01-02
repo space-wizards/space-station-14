@@ -1945,5 +1945,21 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> GatewayGeneratorEnabled =
             CVarDef.Create("gateway.generator_enabled", true);
+
+        /*
+         * Antagonist rules
+         */
+
+        public static readonly CVarDef<float> TimeBeforeFlashCanExpire =
+            CVarDef.Create("antagonists.revolutionaries.time_before_flash_can_wear_off_seconds", 900.0f);
+
+        public static readonly CVarDef<float> TimeBetweenFlashWearOffAttempts =
+            CVarDef.Create("antagonists.revolutionaries.time_between_wear_off_attempts", 60.0f);
+
+        public static readonly CVarDef<float> BaseChanceOfFlashWearingOff =
+            CVarDef.Create("antagonists.revolutionaries.base_chance_flash_wearing_off", 0.05f);
+
+        public static readonly CVarDef<float> IncrementChanceOfFlashWearingOff =
+            CVarDef.Create("antagonists.revolutionaries.increment_chance_flash_wearing_off", 0.05f);
     }
 }

@@ -5,13 +5,16 @@ using Content.Server.Chat.Managers;
 using Content.Server.Flash;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
+using Content.Server.NodeContainer;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
 using Content.Server.Objectives;
 using Content.Server.Popups;
+using Content.Server.Revolutionary;
 using Content.Server.Revolutionary.Components;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
@@ -27,6 +30,8 @@ using Content.Shared.Stunnable;
 using Content.Shared.Zombies;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
@@ -49,6 +54,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
+    [Dependency] private readonly RevolutionarySystem _revSystem = default!;
 
     [ValidatePrototypeId<NpcFactionPrototype>]
     public const string RevolutionaryNpcFaction = "Revolutionary";
@@ -189,8 +195,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (!_mind.TryGetMind(ev.Target, out var mindId, out var mind) && !alwaysConvertible)
             return;
 
-        if (HasComp<RevolutionaryComponent>(ev.Target) ||
-            HasComp<MindShieldComponent>(ev.Target) ||
+        if (HasComp<MindShieldComponent>(ev.Target) ||
             !HasComp<HumanoidAppearanceComponent>(ev.Target) &&
             !alwaysConvertible ||
             !_mobState.IsAlive(ev.Target) ||
@@ -199,9 +204,19 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             return;
         }
 
+        if (HasComp<RevolutionaryComponent>(ev.Target))
+        {
+            _revSystem.ResetRevFlashedTimer(Comp<RevolutionaryComponent>(ev.Target));
+
+            return;
+        }
+
         _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
-        EnsureComp<RevolutionaryComponent>(ev.Target);
+
+        var revComp = EnsureComp<RevolutionaryComponent>(ev.Target);
+        _revSystem.ResetRevFlashedTimer(Comp<RevolutionaryComponent>(ev.Target));
         _stun.TryParalyze(ev.Target, comp.StunTime, true);
+
         if (ev.User != null)
         {
             _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
@@ -214,6 +229,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             _role.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = RevolutionaryAntagRole });
         }
+
         if (mind?.Session != null)
         {
             var message = Loc.GetString("rev-role-greeting");
