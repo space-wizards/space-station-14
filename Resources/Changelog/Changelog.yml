@@ -1,10 +1,4 @@
 Entries:
-- author: iacore
-  changes:
-  - message: Secure crates are now weldable!
-    type: Fix
-  id: 5009
-  time: '2023-10-16T05:27:23.0000000+00:00'
 - author: brainfood1183
   changes:
   - message: Behonkers are fixed (in combat use right click to fire laser)
@@ -3577,3 +3571,13 @@ Entries:
   id: 5509
   time: '2024-01-02T00:12:05.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23304
+- author: EmoGarbage404
+  changes:
+  - message: Defibrillators no longer reset the rot timer when failing to revive a
+      body.
+    type: Fix
+  - message: Slimes now rot.
+    type: Tweak
+  id: 5510
+  time: '2024-01-02T02:12:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23340
