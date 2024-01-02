@@ -11,7 +11,10 @@ using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
@@ -28,6 +31,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     #endregion Dependencies
@@ -131,6 +135,13 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         }
 
         EntityManager.QueueDeleteEntity(morsel);
+
+        if (eventHorizon.InheritMomentum && TryComp<PhysicsComponent>(hungry, out var thisPhysics) && TryComp<PhysicsComponent>(morsel, out var otherPhysics))
+        {
+            var impulse = (otherPhysics.LinearVelocity - thisPhysics.LinearVelocity) * otherPhysics.Mass;
+            _physics.ApplyLinearImpulse(hungry, impulse, body: thisPhysics);
+        }
+
         var evSelf = new EntityConsumedByEventHorizonEvent(morsel, hungry, eventHorizon, outerContainer);
         var evEaten = new EventHorizonConsumedEntityEvent(morsel, hungry, eventHorizon, outerContainer);
         RaiseLocalEvent(hungry, ref evSelf);

@@ -43,6 +43,13 @@ public sealed partial class GravityWellComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float BaseTangentialAcceleration = 0.0f;
 
+    /// <summary>
+    /// Whether to also apply Newton's third law.
+    /// </summary>
+    [DataField("applyCounterforce")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool ApplyCounterforce = false;
+
     #region Update Timing
 
     /// <summary>

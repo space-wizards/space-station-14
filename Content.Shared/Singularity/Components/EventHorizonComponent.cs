@@ -22,6 +22,12 @@ public sealed partial class EventHorizonComponent : Component
     public float Radius;
 
     /// <summary>
+    /// Whether to inherit the momentum of consumed objects.
+    /// </summary>
+    [DataField]
+    public bool InheritMomentum = false;
+
+    /// <summary>
     /// involves periodically destroying tiles within a specified radius
     /// </summary>
     [DataField]
