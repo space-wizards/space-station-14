@@ -43,7 +43,7 @@ public sealed partial class PsychosisComponent : Component
     public TimeSpan NextIncrease = TimeSpan.Zero;
     [DataField("IncreaseTime"), ViewVariables(VVAccess.ReadWrite)]
 
-    public TimeSpan IncreaseTime = TimeSpan.FromSeconds(15);
+    public TimeSpan IncreaseTime = TimeSpan.FromSeconds(22.5);
     [DataField("increase"), ViewVariables(VVAccess.ReadWrite)]
 
     public float Increase = 5f;
@@ -87,6 +87,8 @@ public sealed partial class PsychosisComponent : Component
 
     public List<string> CreatureTable = new();
     public float ChanceForCreature = 0.3f;
+
+    public string PopUp = string.Empty;
 
     public IPlayingAudioStream? Stream;
 }

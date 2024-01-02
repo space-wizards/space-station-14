@@ -10,6 +10,8 @@ using Content.Shared.Paper;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
+using Content.Shared.Dataset;
 
 namespace Content.Server.Psychosis
 {
@@ -21,6 +23,7 @@ namespace Content.Server.Psychosis
         [Dependency] private readonly PaperSystem _paper = default!;
         [Dependency] private readonly FaxSystem _faxSystem = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -40,41 +43,10 @@ namespace Content.Server.Psychosis
                 return;
             if (!TryComp<PaperComponent>(uid, out var papcomp))
                 return;
+            var system = _entityManager.System<PsychosisSystem>();
             _entityManager.System<PaperSystem>().TryStamp(uid, new StampDisplayInfo { StampedName = "stamp-component-stamped-name-centcom", StampedColor = Color.FromHex("#006600") }, "paper_stamp-centcom", papcomp);
             _entityManager.System<PaperSystem>().UpdateUserInterface(uid, papcomp);
-            var psychosisMessage = new FormattedMessage();
-            for (var str = 0; str < 29; str++)
-            {
-                if (str == 0)
-                    continue;
-                if (str == 13)
-                {
-                    psychosisMessage.AddMarkup(Loc.GetString("psychosis-heal-psychosis-13", ("first", Loc.GetString("psychosis-" + _entityManager.System<PsychosisSystem>().GetFirst()))));
-                    psychosisMessage.PushNewline();
-                    continue;
-                }
-                if (str == 17)
-                {
-                    psychosisMessage.AddMarkup(Loc.GetString("psychosis-heal-psychosis-17", ("second", Loc.GetString("psychosis-" + _entityManager.System<PsychosisSystem>().GetSecond()))));
-                    psychosisMessage.PushNewline();
-                    continue;
-                }
-                if (str == 21)
-                {
-                    psychosisMessage.AddMarkup(Loc.GetString("psychosis-heal-psychosis-21", ("third", Loc.GetString("psychosis-" + _entityManager.System<PsychosisSystem>().GetThird()))));
-                    psychosisMessage.PushNewline();
-                    continue;
-                }
-                if (Loc.GetString("heal-psychosis-" + str.ToString()) == "empty")
-                {
-                    psychosisMessage.PushNewline();
-                    continue;
-                }
-                psychosisMessage.AddMarkup(Loc.GetString("psychosis-heal-psychosis-" + str.ToString()));
-                if (str != 28)
-                    psychosisMessage.PushNewline();
-            }
-            //psychosisMessage.AddMarkup(Loc.GetString("heal-psychosis-listfirst", ("first", Loc.GetString(_entityManager.System<PsychosisSystem>().GetFirst()))));
+            var psychosisMessage = Loc.GetString("psychosis-heal-psychosis", ("heal1psychosis-popup-headache", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-headache", 1))), ("heal2psychosis-popup-headache", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-headache", 2))), ("heal3psychosis-popup-headache", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-headache", 3))), ("heal1psychosis-popup-alert", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-alert", 1))), ("heal2psychosis-popup-alert", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-alert", 2))), ("heal3psychosis-popup-alert", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-alert", 3))), ("heal1psychosis-popup-eyes", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-eyes", 1))), ("heal2psychosis-popup-eyes", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-eyes", 2))), ("heal3psychosis-popup-eyes", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-eyes", 3))), ("heal1psychosis-popup-headrotate", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-headrotate", 1))), ("heal2psychosis-popup-headrotate", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-headrotate", 2))), ("heal3psychosis-popup-headrotate", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-headrotate", 3))), ("heal1psychosis-popup-skinfeel", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-skinfeel", 1))), ("heal2psychosis-popup-skinfeel", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-skinfeel", 2))), ("heal3psychosis-popup-skinfeel", Loc.GetString("psychosis-" + system.GetHeal("psychosis-popup-skinfeel", 3))));
             _paper.SetContent(uid, psychosisMessage.ToString());
         }
     }

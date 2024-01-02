@@ -59,6 +59,12 @@
   metabolisms:
     Poison:
       effects:
+      - !type:HealPsychosis # psychosis
+        reagent: Chlor # psychosis
+        stage: 2 # psychosis
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 9 # psychosis
       - !type:MovespeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
@@ -382,6 +388,12 @@
     Poison:
       metabolismRate: 0.05
       effects:
+      - !type:HealPsychosis # psychosis
+        reagent: Teobromine # psychosis
+        stage: 1 # psychosis
+        conditions: # psychosis
+        - !type:ReagentThreshold # psychosis
+          min: 1 # psychosis
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -536,7 +548,7 @@
         damage:
           types:
             Poison: 0.06
-            
+
 
 - type: reagent
   id: Lead

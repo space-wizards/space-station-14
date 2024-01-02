@@ -73,7 +73,7 @@
         stage: 3 # psychosis
         conditions: # psychosis
         - !type:ReagentThreshold # psychosis
-          min: 10 # psychosis
+          min: 9 # psychosis
       - !type:HealthChange
         damage:
           types:

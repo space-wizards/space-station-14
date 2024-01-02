@@ -18,4 +18,27 @@ namespace Content.Shared.Traits.Assorted
             Psychosis = component;
         }
     }
+    [Serializable, NetSerializable]
+    public sealed class PopUpTransfer : EntityEventArgs
+    {
+        public string Popup = string.Empty;
+
+        public NetEntity Psychosis = default!;
+        public PopUpTransfer(string popup, NetEntity component)
+        {
+            Popup = popup;
+            Psychosis = component;
+        }
+    }
+    [Serializable, NetSerializable]
+    public sealed class GetPopup : EntityEventArgs
+    {
+
+        public NetEntity Psychosis = default!;
+        public GetPopup(NetEntity component)
+        {
+            Psychosis = component;
+        }
+    }
 }
+
