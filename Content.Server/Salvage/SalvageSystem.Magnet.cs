@@ -7,8 +7,6 @@ using Content.Shared.Radio;
 using Content.Shared.Salvage.Magnet;
 using Robust.Server.Maps;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Salvage;
 
@@ -246,13 +244,12 @@ public sealed partial class SalvageSystem
         var offering = GetSalvageOffering(seed);
         var salvMap = _mapManager.CreateMap();
 
-        EntityUid salvageEnt;
+        List<EntityUid> salvageEnts;
 
         switch (offering)
         {
             case AsteroidOffering asteroid:
                 var grid = _mapManager.CreateGrid(salvMap);
-                salvageEnt = grid.Owner;
                 _dungeon.GenerateDungeon(asteroid.DungeonConfig, grid.Owner, grid, Vector2i.Zero, seed);
                 break;
             case SalvageOffering wreck:
@@ -263,50 +260,70 @@ public sealed partial class SalvageSystem
                     Offset = new Vector2(0, 0)
                 };
 
-                if (!_map.TryLoad(salvMap, salvageProto.MapPath.ToString(), out var roots, opts) ||
-                    roots.FirstOrNull() is not { } root)
+                if (!_map.TryLoad(salvMap, salvageProto.MapPath.ToString(), out var roots, opts))
                 {
                     Report(magnet, MagnetChannel, "salvage-system-announcement-spawn-debris-disintegrated");
                     _mapManager.DeleteMap(salvMap);
                     return;
                 }
 
-                salvageEnt = root;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
 
         data.Comp.ActiveSeed = seed;
-        var bounds = Comp<MapGridComponent>(salvageEnt).LocalAABB;
-        if (!TryGetSalvagePlacementLocation(magnet, bounds, out var spawnLocation, out var spawnAngle))
+
+        Box2? bounds = null;
+        var mapXform = _xformQuery.GetComponent(_mapManager.GetMapEntityId(salvMap));
+
+        if (mapXform.ChildCount == 0)
+        {
+            Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-spawn-no-debris-available");
+            return;
+        }
+
+        var mapChildren = mapXform.ChildEnumerator;
+
+        while (mapChildren.MoveNext(out var mapChild))
+        {
+            var childAABB = _transform.GetWorldMatrix(mapChild).TransformBox(_gridQuery.GetComponent(mapChild).LocalAABB);
+            bounds = bounds?.Union(childAABB) ?? childAABB;
+        }
+
+        if (!TryGetSalvagePlacementLocation(magnet, bounds!.Value, out var spawnLocation, out var spawnAngle))
         {
             Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-spawn-no-debris-available");
             _mapManager.DeleteMap(salvMap);
             return;
         }
 
-        // It worked, move it into position and cleanup values.
-        var salvXForm = Transform(salvageEnt);
-        _transform.SetParent(salvageEnt, salvXForm, _mapManager.GetMapEntityId(spawnLocation.MapId));
-        _transform.SetWorldPositionRotation(salvageEnt, spawnLocation.Position, spawnAngle, salvXForm);
-
         data.Comp.ActiveEntities = null;
-        data.Comp.ActiveEntities = new List<EntityUid>();
-        data.Comp.ActiveEntities?.Add(salvageEnt);
 
-        // Handle mob restrictions
-        var children = salvXForm.ChildEnumerator;
-
-        while (children.MoveNext(out var child))
+        // It worked, move it into position and cleanup values.
+        while (mapChildren.MoveNext(out var mapChild))
         {
-            if (!_salvMobQuery.TryGetComponent(child, out var salvMob))
-                continue;
+            var salvXForm = _xformQuery.GetComponent(mapChild);
+            var localPos = salvXForm.LocalPosition;
+            _transform.SetParent(mapChild, salvXForm, _mapManager.GetMapEntityId(spawnLocation.MapId));
+            _transform.SetWorldPositionRotation(mapChild, spawnLocation.Position + localPos, spawnAngle, salvXForm);
 
-            salvMob.LinkedEntity = salvageEnt;
+            data.Comp.ActiveEntities ??= new List<EntityUid>();
+            data.Comp.ActiveEntities?.Add(mapChild);
+
+            // Handle mob restrictions
+            var children = salvXForm.ChildEnumerator;
+
+            while (children.MoveNext(out var child))
+            {
+                if (!_salvMobQuery.TryGetComponent(child, out var salvMob))
+                    continue;
+
+                salvMob.LinkedEntity = mapChild;
+            }
         }
 
-        Report(salvageEnt, MagnetChannel, "salvage-system-announcement-arrived", ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
+        Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-arrived", ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
         _mapManager.DeleteMap(salvMap);
 
         data.Comp.Announced = false;

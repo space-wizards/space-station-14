@@ -56,12 +56,14 @@ namespace Content.Server.Salvage
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
+        private EntityQuery<MapGridComponent> _gridQuery;
         private EntityQuery<TransformComponent> _xformQuery;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            _gridQuery = GetEntityQuery<MapGridComponent>();
             _xformQuery = GetEntityQuery<TransformComponent>();
 
             InitializeExpeditions();
