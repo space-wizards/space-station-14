@@ -1,3 +1,5 @@
+salvage-expedition-window-progression = Progression
+
 salvage-magnet-resources = {$resource ->
     [OreTin] Tin
     [OreCoal] Coal

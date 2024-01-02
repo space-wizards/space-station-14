@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Magnet;
 using Robust.Client.UserInterface;
@@ -35,7 +36,7 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
 
         var salvageSystem = _entManager.System<SharedSalvageSystem>();
         _window.NextOffer = current.NextOffer;
-        _window.Progression = current.EndTime;
+        _window.Progression = current.EndTime ?? TimeSpan.Zero;
         _window.Claimed = current.EndTime != null;
         _window.Cooldown = current.Cooldown;
         _window.ProgressionCooldown = current.Duration;
@@ -53,9 +54,13 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
             {
                 case AsteroidOffering asteroid:
                     option.Title = Loc.GetString($"dungeon-config-proto-{asteroid.DungeonConfig.ID}");
+                    var layerKeys = asteroid.MarkerLayers.Keys.ToList();
+                    layerKeys.Sort();
 
-                    foreach (var (resource, count) in asteroid.MarkerLayers)
+                    foreach (var resource in layerKeys)
                     {
+                        var count = asteroid.MarkerLayers[resource];
+
                         var container = new BoxContainer()
                         {
                             Orientation = BoxContainer.LayoutOrientation.Horizontal,
