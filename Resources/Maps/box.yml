@@ -71431,13 +71431,6 @@ entities:
     - pos: -29.5,-12.5
       parent: 8364
       type: Transform
-- proto: CrateEngineeringAMEJar
-  entities:
-  - uid: 17715
-    components:
-    - pos: -10.5,-72.5
-      parent: 8364
-      type: Transform
 - proto: CrateEngineeringAMEShielding
   entities:
   - uid: 17716
@@ -81811,6 +81804,13 @@ entities:
     - pos: -30.5,-24.5
       parent: 8364
       type: Transform
+- proto: DresserResearchDirectorFilled
+  entities:
+  - uid: 17575
+    components:
+    - pos: 71.5,-33.5
+      parent: 8364
+      type: Transform
 - proto: DrinkBeerBottleFull
   entities:
   - uid: 27600
@@ -82189,6 +82189,11 @@ entities:
     components:
     - rot: -1.5707963267948966 rad
       pos: 7.5,-90.5
+      parent: 8364
+      type: Transform
+  - uid: 15509
+    components:
+    - pos: -9.5,-65.5
       parent: 8364
       type: Transform
   - uid: 17158
@@ -144989,11 +144994,6 @@ entities:
     - pos: -24.5,-68.5
       parent: 8364
       type: Transform
-  - uid: 21527
-    components:
-    - pos: -9.5,-65.5
-      parent: 8364
-      type: Transform
   - uid: 22090
     components:
     - pos: -22.5,-71.5
@@ -150283,11 +150283,6 @@ entities:
   - uid: 19198
     components:
     - pos: 30.5,-30.5
-      parent: 8364
-      type: Transform
-  - uid: 19213
-    components:
-    - pos: 71.5,-33.5
       parent: 8364
       type: Transform
   - uid: 19286
@@ -180760,13 +180755,6 @@ entities:
       type: Transform
 - proto: WarpPoint
   entities:
-  - uid: 22214
-    components:
-    - pos: 66.5,-23.5
-      parent: 8364
-      type: Transform
-    - location: science
-      type: WarpPoint
   - uid: 22219
     components:
     - pos: -49.5,18.5
@@ -180824,20 +180812,6 @@ entities:
       parent: 8364
       type: Transform
     - location: Showroom
-      type: WarpPoint
-  - uid: 27706
-    components:
-    - pos: 70.5,-35.5
-      parent: 8364
-      type: Transform
-    - location: RD Office
-      type: WarpPoint
-  - uid: 27744
-    components:
-    - pos: -0.5,-12.5
-      parent: 8364
-      type: Transform
-    - location: AI Upload
       type: WarpPoint
 - proto: WaterCooler
   entities:
