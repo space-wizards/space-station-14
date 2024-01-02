@@ -14323,9 +14323,7 @@ entities:
     - pos: -27.5,-15.5
       parent: 60
       type: Transform
-    - configurators:
-      - invalid
-      deviceLists:
+    - deviceLists:
       - 21736
       type: DeviceNetwork
   - uid: 21772
@@ -54906,6 +54904,11 @@ entities:
     - pos: -28.5,-18.5
       parent: 60
       type: Transform
+  - uid: 662
+    components:
+    - pos: 27.5,-22.5
+      parent: 60
+      type: Transform
   - uid: 739
     components:
     - pos: 38.5,-22.5
@@ -54924,16 +54927,6 @@ entities:
   - uid: 922
     components:
     - pos: 39.5,-22.5
-      parent: 60
-      type: Transform
-  - uid: 1240
-    components:
-    - pos: 28.5,-22.5
-      parent: 60
-      type: Transform
-  - uid: 1242
-    components:
-    - pos: 25.5,-22.5
       parent: 60
       type: Transform
   - uid: 1361
@@ -70733,9 +70726,7 @@ entities:
     - pos: -30.5,-8.5
       parent: 60
       type: Transform
-    - configurators:
-      - invalid
-      deviceLists:
+    - deviceLists:
       - 21736
       type: DeviceNetwork
   - uid: 5563
@@ -70743,9 +70734,7 @@ entities:
     - pos: -22.5,-8.5
       parent: 60
       type: Transform
-    - configurators:
-      - invalid
-      deviceLists:
+    - deviceLists:
       - 21736
       type: DeviceNetwork
   - uid: 5565
@@ -70753,9 +70742,7 @@ entities:
     - pos: -31.5,-8.5
       parent: 60
       type: Transform
-    - configurators:
-      - invalid
-      deviceLists:
+    - deviceLists:
       - 21736
       type: DeviceNetwork
   - uid: 5623
@@ -70848,9 +70835,7 @@ entities:
     - pos: -23.5,-9.5
       parent: 60
       type: Transform
-    - configurators:
-      - invalid
-      deviceLists:
+    - deviceLists:
       - 21736
       type: DeviceNetwork
   - uid: 6736
@@ -70883,9 +70868,7 @@ entities:
     - pos: -19.5,-17.5
       parent: 60
       type: Transform
-    - configurators:
-      - invalid
-      deviceLists:
+    - deviceLists:
       - 21736
       type: DeviceNetwork
   - uid: 7146
@@ -70963,9 +70946,7 @@ entities:
     - pos: -21.5,-8.5
       parent: 60
       type: Transform
-    - configurators:
-      - invalid
-      deviceLists:
+    - deviceLists:
       - 21736
       type: DeviceNetwork
   - uid: 8611
@@ -71133,10 +71114,7 @@ entities:
     - pos: -29.5,-9.5
       parent: 60
       type: Transform
-    - configurators:
-      - invalid
-      - invalid
-      deviceLists:
+    - deviceLists:
       - 21736
       type: DeviceNetwork
   - uid: 13106
@@ -113375,14 +113353,11 @@ entities:
       type: Transform
 - proto: PottedPlantRandom
   entities:
-  - uid: 1631
+  - uid: 1238
     components:
-    - pos: -17.5,-0.5
+    - pos: -17.5,2.5
       parent: 60
       type: Transform
-    - containers:
-        stash: !type:ContainerSlot {}
-      type: ContainerContainer
   - uid: 1638
     components:
     - pos: -26.5,-18.5
@@ -113505,14 +113480,6 @@ entities:
   - uid: 17382
     components:
     - pos: -63.5,25.5
-      parent: 60
-      type: Transform
-    - containers:
-        stash: !type:ContainerSlot {}
-      type: ContainerContainer
-  - uid: 18091
-    components:
-    - pos: -13.5,-0.5
       parent: 60
       type: Transform
     - containers:
@@ -119573,11 +119540,6 @@ entities:
     - pos: 10.5,-27.5
       parent: 60
       type: Transform
-  - uid: 13977
-    components:
-    - pos: -14.5,-6.5
-      parent: 60
-      type: Transform
   - uid: 17260
     components:
     - pos: -37.5,26.5
@@ -119595,11 +119557,6 @@ entities:
     - pos: 7.5,-19.5
       parent: 60
       type: Transform
-  - uid: 1603
-    components:
-    - pos: -17.5,2.5
-      parent: 60
-      type: Transform
   - uid: 6320
     components:
     - pos: 9.5,11.5
@@ -119608,11 +119565,6 @@ entities:
   - uid: 7421
     components:
     - pos: -3.5,-65.5
-      parent: 60
-      type: Transform
-  - uid: 13976
-    components:
-    - pos: -14.5,-10.5
       parent: 60
       type: Transform
   - uid: 18523
@@ -124564,7 +124516,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2881
+      - 1242
       type: DeviceLinkSink
   - uid: 1353
     components:
@@ -124573,7 +124525,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2881
+      - 1242
       type: DeviceLinkSink
   - uid: 1354
     components:
@@ -124582,7 +124534,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2881
+      - 1242
       type: DeviceLinkSink
   - uid: 1357
     components:
@@ -124590,7 +124542,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2881
+      - 1242
       type: DeviceLinkSink
   - uid: 1454
     components:
@@ -124599,6 +124551,15 @@ entities:
       type: Transform
     - links:
       - 13575
+      type: DeviceLinkSink
+  - uid: 1631
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 7.5,-26.5
+      parent: 60
+      type: Transform
+    - links:
+      - 1240
       type: DeviceLinkSink
   - uid: 2250
     components:
@@ -124624,7 +124585,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2881
+      - 1242
       type: DeviceLinkSink
   - uid: 2892
     components:
@@ -124632,7 +124593,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2881
+      - 1242
       type: DeviceLinkSink
   - uid: 3093
     components:
@@ -124641,7 +124602,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2881
+      - 1242
       type: DeviceLinkSink
   - uid: 3106
     components:
@@ -124675,7 +124636,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2881
+      - 1242
       type: DeviceLinkSink
   - uid: 3737
     components:
@@ -124709,7 +124670,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 4140
+      - 1603
       type: DeviceLinkSink
   - uid: 4487
     components:
@@ -124717,7 +124678,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 4140
+      - 1603
       type: DeviceLinkSink
   - uid: 4496
     components:
@@ -124725,7 +124686,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 4140
+      - 1603
       type: DeviceLinkSink
   - uid: 5149
     components:
@@ -124865,7 +124826,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2881
+      - 1242
       type: DeviceLinkSink
   - uid: 7032
     components:
@@ -124934,15 +124895,6 @@ entities:
       type: Transform
     - links:
       - 14549
-      type: DeviceLinkSink
-  - uid: 11508
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 7.5,-26.5
-      parent: 60
-      type: Transform
-    - links:
-      - 662
       type: DeviceLinkSink
   - uid: 12303
     components:
@@ -125125,7 +125077,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 662
+      - 1240
       type: DeviceLinkSink
   - uid: 21341
     components:
@@ -125133,7 +125085,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 662
+      - 1240
       type: DeviceLinkSink
   - uid: 21342
     components:
@@ -125141,7 +125093,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 662
+      - 1240
       type: DeviceLinkSink
   - uid: 21753
     components:
@@ -125813,7 +125765,7 @@ entities:
       type: DeviceLinkSource
 - proto: SignalButtonDirectional
   entities:
-  - uid: 662
+  - uid: 1240
     components:
     - rot: -1.5707963267948966 rad
       pos: 6.5,-30.5
@@ -125826,7 +125778,48 @@ entities:
         - Pressed: Toggle
         21342:
         - Pressed: Toggle
-        11508:
+        1631:
+        - Pressed: Toggle
+      type: DeviceLinkSource
+  - uid: 1242
+    components:
+    - name: Bar Shutters
+      type: MetaData
+    - rot: 1.5707963267948966 rad
+      pos: 12.5,-33.5
+      parent: 60
+      type: Transform
+    - linkedPorts:
+        2892:
+        - Pressed: Toggle
+        1357:
+        - Pressed: Toggle
+        1352:
+        - Pressed: Toggle
+        1353:
+        - Pressed: Toggle
+        1354:
+        - Pressed: Toggle
+        3493:
+        - Pressed: Toggle
+        6813:
+        - Pressed: Toggle
+        2877:
+        - Pressed: Toggle
+        3093:
+        - Pressed: Toggle
+      type: DeviceLinkSource
+  - uid: 1603
+    components:
+    - pos: 34.5,-11.5
+      parent: 60
+      type: Transform
+    - linkedPorts:
+        4487:
+        - Pressed: Toggle
+        4496:
+        - Pressed: Toggle
+        4355:
         - Pressed: Toggle
       type: DeviceLinkSource
   - uid: 2287
@@ -125898,34 +125891,6 @@ entities:
         6773:
         - Pressed: Toggle
       type: DeviceLinkSource
-  - uid: 2881
-    components:
-    - name: Bar Shutters
-      type: MetaData
-    - rot: 1.5707963267948966 rad
-      pos: 12.5,-33.5
-      parent: 60
-      type: Transform
-    - linkedPorts:
-        2892:
-        - Pressed: Toggle
-        1357:
-        - Pressed: Toggle
-        1352:
-        - Pressed: Toggle
-        1353:
-        - Pressed: Toggle
-        1354:
-        - Pressed: Toggle
-        3493:
-        - Pressed: Toggle
-        6813:
-        - Pressed: Toggle
-        2877:
-        - Pressed: Toggle
-        3093:
-        - Pressed: Toggle
-      type: DeviceLinkSource
   - uid: 2882
     components:
     - rot: 1.5707963267948966 rad
@@ -125938,19 +125903,6 @@ entities:
         7664:
         - Pressed: Toggle
         21334:
-        - Pressed: Toggle
-      type: DeviceLinkSource
-  - uid: 4140
-    components:
-    - pos: 34.5,-11.5
-      parent: 60
-      type: Transform
-    - linkedPorts:
-        4487:
-        - Pressed: Toggle
-        4496:
-        - Pressed: Toggle
-        4355:
         - Pressed: Toggle
       type: DeviceLinkSource
   - uid: 4260
@@ -137266,15 +137218,6 @@ entities:
     - pos: 14.5,-26.5
       parent: 60
       type: Transform
-- proto: VendingMachineCola
-  entities:
-  - uid: 2773
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: 27.5,-22.5
-      parent: 60
-      type: Transform
 - proto: VendingMachineCondiments
   entities:
   - uid: 21774
@@ -137522,13 +137465,6 @@ entities:
       type: Transform
 - proto: VendingMachineSnack
   entities:
-  - uid: 1238
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: 26.5,-22.5
-      parent: 60
-      type: Transform
   - uid: 17840
     components:
     - flags: SessionSpecific
@@ -159857,6 +159793,23 @@ entities:
       pos: 36.5,-39.5
       parent: 60
       type: Transform
+  - uid: 2773
+    components:
+    - pos: 49.5,23.5
+      parent: 60
+      type: Transform
+  - uid: 2881
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 49.5,23.5
+      parent: 60
+      type: Transform
+  - uid: 4140
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 50.5,23.5
+      parent: 60
+      type: Transform
   - uid: 5172
     components:
     - pos: -51.5,-30.5
@@ -159915,46 +159868,29 @@ entities:
       pos: -42.5,12.5
       parent: 60
       type: Transform
-  - uid: 15191
-    components:
-    - pos: 49.5,23.5
-      parent: 60
-      type: Transform
-  - uid: 18544
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 49.5,23.5
-      parent: 60
-      type: Transform
-  - uid: 18785
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 50.5,23.5
-      parent: 60
-      type: Transform
-  - uid: 19446
+  - uid: 11508
     components:
     - pos: 48.5,23.5
       parent: 60
       type: Transform
-  - uid: 19447
+  - uid: 13976
     components:
     - pos: 50.5,23.5
       parent: 60
       type: Transform
-  - uid: 19449
+  - uid: 13977
     components:
     - rot: 3.141592653589793 rad
       pos: 48.5,23.5
       parent: 60
       type: Transform
-  - uid: 19450
+  - uid: 15191
     components:
     - rot: 3.141592653589793 rad
       pos: 50.5,23.5
       parent: 60
       type: Transform
-  - uid: 19451
+  - uid: 18091
     components:
     - rot: -1.5707963267948966 rad
       pos: 48.5,23.5
