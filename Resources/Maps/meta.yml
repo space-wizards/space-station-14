@@ -73484,9 +73484,7 @@ entities:
     - pos: 56.5,17.5
       parent: 5350
       type: Transform
-    - configurators:
-      - invalid
-      deviceLists:
+    - deviceLists:
       - 23905
       type: DeviceNetwork
   - uid: 23921
@@ -73494,9 +73492,7 @@ entities:
     - pos: 56.5,23.5
       parent: 5350
       type: Transform
-    - configurators:
-      - invalid
-      deviceLists:
+    - deviceLists:
       - 23905
       type: DeviceNetwork
   - uid: 24061
