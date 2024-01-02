@@ -1,12 +1,6 @@
 Entries:
 - author: Vasilis
   changes:
-  - message: Pneumatic Cannons can no longer shoot arrows.
-    type: Tweak
-  id: 5016
-  time: '2023-10-17T22:58:05.0000000+00:00'
-- author: Vasilis
-  changes:
   - message: Spears and arrows can now only hold up to 2u of liquids instead of 5u.
     type: Tweak
   id: 5017
@@ -3586,3 +3580,10 @@ Entries:
   id: 5516
   time: '2024-01-02T18:53:35.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23319
+- author: themias
+  changes:
+  - message: Welders can be refilled directly from wall fuel dispensers
+    type: Tweak
+  id: 5517
+  time: '2024-01-02T21:11:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23376
