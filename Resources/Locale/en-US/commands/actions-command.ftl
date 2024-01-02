@@ -1,7 +1,7 @@
-actions-command-load-description = Loads action toolbar assignments from a user-file.
-actions-command-load-help = Usage: {$command} <user resource path>
-actions-command-load-error = Failed to load action assignments
+cmd-loadacts-desc = Loads action toolbar assignments from a user-file.
+cmd-loadacts-help = Usage: {$command} <user resource path>
+cmd-loadacts-error = Failed to load action assignments
 
-actions-command-load-mapping-description = Loads the mapping preset action toolbar assignments.
-actions-command-load-mapping-help = Usage: {$command} <user resource path>
-actions-command-load-mapping-error = Failed to load action assignments
+cmd-loadmapacts-desc = Loads the mapping preset action toolbar assignments.
+cmd-loadmapacts-help = Usage: {$command} <user resource path>
+cmd-loadmapacts-error = Failed to load action assignments

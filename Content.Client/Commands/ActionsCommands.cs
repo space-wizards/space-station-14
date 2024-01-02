@@ -38,16 +38,15 @@ public sealed class SaveActionsCommand : IConsoleCommand
 */
 
 [AnyCommand]
-public sealed class LoadActionsCommand : IConsoleCommand
+public sealed class LoadActionsCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "loadacts";
-    public string Description => Loc.GetString("actions-command-load-description");
-    public string Help => Loc.GetString("actions-command-load-help", ("command", Command));
+    public override string Command => "loadacts";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
@@ -61,23 +60,23 @@ public sealed class LoadActionsCommand : IConsoleCommand
         }
         catch
         {
-            shell.WriteError(Loc.GetString("actions-command-load-error"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-error"));
         }
     }
 }
 
 [AnyCommand]
-public sealed class LoadMappingActionsCommand : IConsoleCommand
+public sealed class LoadMappingActionsCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
     public const string CommandName = "loadmapacts";
-    public string Command => CommandName;
-    public string Description => Loc.GetString("actions-command-load-mapping-description");
-    public string Help => Loc.GetString("actions-command-load-mapping-help", ("command", Command));
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => CommandName;
+
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         try
         {
@@ -85,7 +84,7 @@ public sealed class LoadMappingActionsCommand : IConsoleCommand
         }
         catch
         {
-            shell.WriteError(Loc.GetString("actions-command-load-mapping-error"));
+            shell.WriteError(Loc.GetString($"cmd-{Command}-error"));
         }
     }
 }
