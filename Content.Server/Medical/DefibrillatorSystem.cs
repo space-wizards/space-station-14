@@ -214,7 +214,6 @@ public sealed class DefibrillatorSystem : EntitySystem
 
         ICommonSession? session = null;
 
-        var dead = true;
         if (_rotting.IsRotten(target))
         {
             _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-rotten"),
@@ -224,16 +223,9 @@ public sealed class DefibrillatorSystem : EntitySystem
         {
             if (_mobState.IsDead(target, mob))
                 _damageable.TryChangeDamage(target, component.ZapHeal, true, origin: uid);
+            _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
 
-            if (_mobThreshold.TryGetThresholdForState(target, MobState.Dead, out var threshold) &&
-                TryComp<DamageableComponent>(target, out var damageableComponent) &&
-                damageableComponent.TotalDamage < threshold)
-            {
-                _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
-                dead = false;
-            }
-
-            if (_mind.TryGetMind(target, out _, out var mind) &&
+            if (_mind.TryGetMind(target, out var mindId, out var mind) &&
                 mind.Session is { } playerSession)
             {
                 session = playerSession;
@@ -250,7 +242,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             }
         }
 
-        var sound = dead || session == null
+        var sound = _mobState.IsDead(target, mob) || session == null
             ? component.FailureSound
             : component.SuccessSound;
         _audio.PlayPvs(sound, uid);

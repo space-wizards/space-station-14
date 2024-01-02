@@ -28,6 +28,7 @@
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#75b1f0"
+  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:

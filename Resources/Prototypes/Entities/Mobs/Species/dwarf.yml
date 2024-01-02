@@ -28,6 +28,7 @@
   - type: Body
     prototype: Dwarf
     requiredLegs: 2
+  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:
