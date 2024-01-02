@@ -583,18 +583,18 @@
     idleState: icon
     runningState: building
     staticRecipes:
-      - MonkeyCube
-      - KoboldCube
-      - CowCube
-      - GoatCube
-      - MothroachCube
-      - MouseCube
-      - CockroachCube
+    - MonkeyCube
+    - KoboldCube
+    - CowCube
+    - GoatCube
+    - MothroachCube
+    - MouseCube
+    - CockroachCube
   - type: EmagLatheRecipes
     emagStaticRecipes:
-      - AbominationCube
-      - SpaceCarpCube
-      - SpaceTickCube
+    - AbominationCube
+    - SpaceCarpCube
+    - SpaceTickCube
 
 - type: entity
   id: SecurityTechFab
