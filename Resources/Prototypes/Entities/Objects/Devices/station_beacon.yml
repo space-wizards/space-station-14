@@ -231,8 +231,8 @@
   id: DefaultStationBeaconSecurityCheckpoint
   suffix: Sec Checkpoint
   components:
-    - type: NavMapBeacon
-      text: checkpoint
+  - type: NavMapBeacon
+    text: checkpoint
 
 - type: entity
   parent: DefaultStationBeacon
@@ -565,8 +565,8 @@
   id: DefaultStationBeaconEvac
   suffix: Evac
   components:
-    - type: NavMapBeacon
-      text: evac
+  - type: NavMapBeacon
+    text: evac
 
 - type: entity
   parent: DefaultStationBeacon
