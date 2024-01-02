@@ -44,7 +44,7 @@ public sealed class LoadActionsCommand : LocalizedCommands
 
     public override string Command => "loadacts";
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -60,7 +60,7 @@ public sealed class LoadActionsCommand : LocalizedCommands
         }
         catch
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-error"));
+            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
         }
     }
 }
@@ -74,7 +74,7 @@ public sealed class LoadMappingActionsCommand : LocalizedCommands
 
     public override string Command => CommandName;
 
-    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command));
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -84,7 +84,7 @@ public sealed class LoadMappingActionsCommand : LocalizedCommands
         }
         catch
         {
-            shell.WriteError(Loc.GetString($"cmd-{Command}-error"));
+            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
         }
     }
 }

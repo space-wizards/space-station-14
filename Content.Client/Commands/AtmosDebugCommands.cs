@@ -6,16 +6,15 @@ using Robust.Shared.Console;
 namespace Content.Client.Commands;
 
 [UsedImplicitly]
-internal sealed class AtvRangeCommand : IConsoleCommand
+internal sealed class AtvRangeCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "atvrange";
-    public string Description => Loc.GetString("atmos-debug-command-range-description");
-    public string Help => Loc.GetString("atmos-debug-command-range-help", ("command", Command));
+    public override string Command => "atvrange";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
         {
@@ -24,17 +23,17 @@ internal sealed class AtvRangeCommand : IConsoleCommand
         }
         if (!float.TryParse(args[0], out var xStart))
         {
-            shell.WriteError(Loc.GetString("atmos-debug-command-range-error-start"));
+            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-start"));
             return;
         }
         if (!float.TryParse(args[1], out var xEnd))
         {
-            shell.WriteError(Loc.GetString("atmos-debug-command-range-error-end"));
+            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-end"));
             return;
         }
         if (xStart == xEnd)
         {
-            shell.WriteError(Loc.GetString("atmos-debug-command-range-error-zero"));
+            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-zero"));
             return;
         }
         var sys = _entitySystemManager.GetEntitySystem<AtmosDebugOverlaySystem>();
@@ -44,16 +43,15 @@ internal sealed class AtvRangeCommand : IConsoleCommand
 }
 
 [UsedImplicitly]
-internal sealed class AtvModeCommand : IConsoleCommand
+internal sealed class AtvModeCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "atvmode";
-    public string Description => Loc.GetString("atmos-debug-command-mode-description");
-    public string Help => Loc.GetString("atmos-debug-command-mode-help", ("command", Command));
+    public override string Command => "atvmode";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length < 1)
         {
@@ -62,7 +60,7 @@ internal sealed class AtvModeCommand : IConsoleCommand
         }
         if (!Enum.TryParse<AtmosDebugOverlayMode>(args[0], out var xMode))
         {
-            shell.WriteError(Loc.GetString("atmos-debug-command-mode-error-invalid"));
+            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-invalid"));
             return;
         }
         int xSpecificGas = 0;
@@ -72,12 +70,12 @@ internal sealed class AtvModeCommand : IConsoleCommand
         {
             if (args.Length != 2)
             {
-                shell.WriteError(Loc.GetString("atmos-debug-command-mode-error-target-gas"));
+                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-target-gas"));
                 return;
             }
             if (!AtmosCommandUtils.TryParseGasID(args[1], out xSpecificGas))
             {
-                shell.WriteError(Loc.GetString("atmos-debug-command-mode-error-out-of-range"));
+                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-out-of-range"));
                 return;
             }
         }
@@ -85,7 +83,7 @@ internal sealed class AtvModeCommand : IConsoleCommand
         {
             if (args.Length != 1)
             {
-                shell.WriteLine(Loc.GetString("atmos-debug-command-mode-error-info"));
+                shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-error-info"));
                 return;
             }
             if (xMode == AtmosDebugOverlayMode.Temperature)
@@ -104,16 +102,15 @@ internal sealed class AtvModeCommand : IConsoleCommand
 }
 
 [UsedImplicitly]
-internal sealed class AtvCBMCommand : IConsoleCommand
+internal sealed class AtvCBMCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "atvcbm";
-    public string Description => Loc.GetString("atmos-debug-command-cbm-description");
-    public string Help => Loc.GetString("atmos-debug-command-cbm-help", ("command", Command));
+    public override string Command => "atvcbm";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
@@ -122,7 +119,7 @@ internal sealed class AtvCBMCommand : IConsoleCommand
         }
         if (!bool.TryParse(args[0], out var xFlag))
         {
-            shell.WriteError(Loc.GetString("atmos-debug-command-cbm-error"));
+            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
             return;
         }
         var sys = _entitySystemManager.GetEntitySystem<AtmosDebugOverlaySystem>();
