@@ -115,13 +115,6 @@
     state: door_remotebase
     
 - type: stealTargetGroup
-  id: EncryptionKey
-  name: encryption keys (any)
-  sprite:
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: crypt_gray
-    
-- type: stealTargetGroup
   id: TechnologyDisk
   name: technology disks
   sprite:
