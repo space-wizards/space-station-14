@@ -27,7 +27,6 @@
     - FootstepSound
     - DoorBumpOpener
     - SpiderCraft
-  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:

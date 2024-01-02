@@ -223,9 +223,15 @@ public sealed class DefibrillatorSystem : EntitySystem
         {
             if (_mobState.IsDead(target, mob))
                 _damageable.TryChangeDamage(target, component.ZapHeal, true, origin: uid);
-            _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
 
-            if (_mind.TryGetMind(target, out var mindId, out var mind) &&
+            if (_mobThreshold.TryGetThresholdForState(target, MobState.Dead, out var threshold) &&
+                TryComp<DamageableComponent>(target, out var damageableComponent) &&
+                damageableComponent.TotalDamage < threshold)
+            {
+                _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
+            }
+
+            if (_mind.TryGetMind(target, out _, out var mind) &&
                 mind.Session is { } playerSession)
             {
                 session = playerSession;
