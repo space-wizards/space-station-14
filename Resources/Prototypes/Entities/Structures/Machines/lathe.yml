@@ -579,8 +579,6 @@
       tags:
         - Sheet
         - RawMaterial
-        - Ingot
-        - Biomass
   - type: Lathe
     idleState: icon
     runningState: building
@@ -591,12 +589,12 @@
       - GoatCube
       - MothroachCube
       - MouseCube
+      - CockroachCube
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - AbominationCube
       - SpaceCarpCube
       - SpaceTickCube
-      - CockroachCube
 
 - type: entity
   id: SecurityTechFab

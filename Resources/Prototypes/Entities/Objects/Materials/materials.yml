@@ -274,9 +274,6 @@
   name: biomass
   suffix: Full
   components:
-  - type: Tag
-    tags:
-      - Biomass
   - type: Material
   - type: PhysicalComposition
     materialComposition:
