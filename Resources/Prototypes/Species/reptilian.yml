@@ -50,7 +50,7 @@
       required: true
       defaultMarkings: [ LizardSnoutRound ]
     HeadTop:
-      points: 1
+      points: 2
       required: false
     HeadSide:
       points: 1
