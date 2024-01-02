@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using Content.Server.Salvage.Magnet;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
@@ -237,20 +238,24 @@ public sealed partial class SalvageSystem
         }
     }
 
-    public void TakeMagnetOffer(Entity<SalvageMagnetDataComponent> data, int index, Entity<SalvageMagnetComponent> magnet)
+    private async Task TakeMagnetOffer(Entity<SalvageMagnetDataComponent> data, int index, Entity<SalvageMagnetComponent> magnet)
     {
         var seed = data.Comp.Offered[index];
 
         var offering = GetSalvageOffering(seed);
         var salvMap = _mapManager.CreateMap();
 
-        List<EntityUid> salvageEnts;
+        // Set values while awaiting asteroid dungeon if relevant so we can't double-take offers.
+        data.Comp.ActiveSeed = seed;
+        data.Comp.EndTime = _timing.CurTime + data.Comp.ActiveTime;
+        data.Comp.NextOffer = data.Comp.EndTime.Value;
+        UpdateMagnetUIs(data);
 
         switch (offering)
         {
             case AsteroidOffering asteroid:
                 var grid = _mapManager.CreateGrid(salvMap);
-                _dungeon.GenerateDungeon(asteroid.DungeonConfig, grid.Owner, grid, Vector2i.Zero, seed);
+                await _dungeon.GenerateDungeonAsync(asteroid.DungeonConfig, grid.Owner, grid, Vector2i.Zero, seed);
                 break;
             case SalvageOffering wreck:
                 var salvageProto = wreck.SalvageMap;
@@ -272,8 +277,6 @@ public sealed partial class SalvageSystem
                 throw new ArgumentOutOfRangeException();
         }
 
-        data.Comp.ActiveSeed = seed;
-
         Box2? bounds = null;
         var mapXform = _xformQuery.GetComponent(_mapManager.GetMapEntityId(salvMap));
 
@@ -287,11 +290,34 @@ public sealed partial class SalvageSystem
 
         while (mapChildren.MoveNext(out var mapChild))
         {
-            var childAABB = _transform.GetWorldMatrix(mapChild).TransformBox(_gridQuery.GetComponent(mapChild).LocalAABB);
+            // If something went awry in dungen.
+            if (!_gridQuery.TryGetComponent(mapChild, out var childGrid))
+                continue;
+
+            var childAABB = _transform.GetWorldMatrix(mapChild).TransformBox(childGrid.LocalAABB);
             bounds = bounds?.Union(childAABB) ?? childAABB;
+
+            // Update mass scanner names as relevant.
+            if (offering is AsteroidOffering)
+            {
+                _metaData.SetEntityName(mapChild, Loc.GetString("salvage-asteroid-name"));
+            }
         }
 
-        if (!TryGetSalvagePlacementLocation(magnet, bounds!.Value, out var spawnLocation, out var spawnAngle))
+        var magnetGridUid = _xformQuery.GetComponent(magnet.Owner).GridUid;
+        Box2 attachedBounds = Box2.Empty;
+        MapId mapId = MapId.Nullspace;
+
+        if (magnetGridUid != null)
+        {
+            var magnetGridXform = _xformQuery.GetComponent(magnetGridUid.Value);
+            attachedBounds = _transform.GetWorldMatrix(magnetGridXform)
+                .TransformBox(_gridQuery.GetComponent(magnetGridUid.Value).LocalAABB);
+
+            mapId = magnetGridXform.MapID;
+        }
+
+        if (!TryGetSalvagePlacementLocation(mapId, attachedBounds, bounds!.Value, out var spawnLocation, out var spawnAngle))
         {
             Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-spawn-no-debris-available");
             _mapManager.DeleteMap(salvMap);
@@ -299,6 +325,7 @@ public sealed partial class SalvageSystem
         }
 
         data.Comp.ActiveEntities = null;
+        mapChildren = mapXform.ChildEnumerator;
 
         // It worked, move it into position and cleanup values.
         while (mapChildren.MoveNext(out var mapChild))
@@ -327,39 +354,34 @@ public sealed partial class SalvageSystem
         _mapManager.DeleteMap(salvMap);
 
         data.Comp.Announced = false;
-        data.Comp.EndTime = _timing.CurTime + data.Comp.ActiveTime;
-        data.Comp.NextOffer = data.Comp.EndTime.Value;
+
         var active = new SalvageMagnetActivatedEvent()
         {
             Magnet = magnet,
         };
 
         RaiseLocalEvent(ref active);
-        UpdateMagnetUIs(data);
     }
 
-    private bool TryGetSalvagePlacementLocation(Entity<SalvageMagnetComponent> magnet, Box2 bounds, out MapCoordinates coords, out Angle angle)
+    private bool TryGetSalvagePlacementLocation(MapId mapId, Box2 attachedBounds, Box2 bounds, out MapCoordinates coords, out Angle angle)
     {
-        const float OffsetRadiusMax = 32f;
+        const float OffsetRadiusMin = 4f;
+        const float OffsetRadiusMax = 8f;
 
-        var xform = Transform(magnet.Owner);
-        var smallestBound = (bounds.Height < bounds.Width
-            ? bounds.Height
-            : bounds.Width) / 2f;
-        var maxRadius = OffsetRadiusMax + smallestBound;
+        var minDistance = (attachedBounds.Height < attachedBounds.Width ? attachedBounds.Width : attachedBounds.Height) / 2f;
+        var minActualDistance = bounds.Height < bounds.Width ? minDistance + bounds.Width / 2f : minDistance + bounds.Height / 2f;
 
-        angle = Angle.Zero;
-        coords = new EntityCoordinates(magnet.Owner, new Vector2(0, -maxRadius)).ToMap(EntityManager, _transform);
+        var attachedCenter = attachedBounds.Center;
 
-        if (xform.GridUid is not null)
-            angle = _transform.GetWorldRotation(Transform(xform.GridUid.Value));
+        angle = _random.NextAngle();
 
         // Thanks 20kdc
         for (var i = 0; i < 20; i++)
         {
-            var randomRadius = _random.NextFloat(OffsetRadiusMax);
-            var randomOffset = _random.NextAngle().ToVec() * randomRadius;
-            var finalCoords = new MapCoordinates(coords.Position + randomOffset, coords.MapId);
+            var randomPos = attachedCenter +
+                            _random.NextAngle().ToVec() * (minActualDistance +
+                                                           _random.NextFloat(OffsetRadiusMin, OffsetRadiusMax));
+            var finalCoords = new MapCoordinates(randomPos, mapId);
 
             var box2 = Box2.CenteredAround(finalCoords.Position, bounds.Size);
             var box2Rot = new Box2Rotated(box2, angle, finalCoords.Position);
@@ -368,9 +390,12 @@ public sealed partial class SalvageSystem
             // Might be better like this, ghosts could stop it before
             if (_mapManager.FindGridsIntersecting(finalCoords.MapId, box2Rot).Any())
                 continue;
+
             coords = finalCoords;
             return true;
         }
+
+        coords = MapCoordinates.Nullspace;
         return false;
     }
 }

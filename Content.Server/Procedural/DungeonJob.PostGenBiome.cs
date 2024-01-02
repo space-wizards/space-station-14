@@ -7,6 +7,7 @@ using Content.Shared.Procedural.PostGeneration;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
@@ -45,11 +46,16 @@ public sealed partial class DungeonJob
 
             if (biomeSystem.TryGetEntity(node, biomeComp, grid, out var entityProto))
             {
-                var ent = _entManager.SpawnAtPosition(entityProto, new EntityCoordinates(gridUid, node + grid.TileSizeHalfVector));
+                var ent = _entManager.SpawnEntity(entityProto, new EntityCoordinates(gridUid, node + grid.TileSizeHalfVector));
                 var xform = xformQuery.Get(ent);
 
                 if (!xform.Comp.Anchored)
+                {
                     _transform.AnchorEntity(ent, xform);
+                }
+
+                // TODO: Engine bug with SpawnAtPosition
+                DebugTools.Assert(xform.Comp.Anchored);
             }
 
             await SuspendIfOutOfTime();
@@ -67,26 +73,31 @@ public sealed partial class DungeonJob
         var biomeSystem = _entManager.System<BiomeSystem>();
         var weightedRandom = _prototype.Index(postGen.MarkerTemplate);
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+        var templates = new Dictionary<string, int>();
 
         for (var i = 0; i < postGen.Count; i++)
         {
             var template = weightedRandom.Pick(random);
+            var count = templates.GetOrNew(template);
+            count++;
+            templates[template] = count;
+        }
+
+        foreach (var (template, count) in templates)
+        {
             var markerTemplate = _prototype.Index<BiomeMarkerLayerPrototype>(template);
 
             var bounds = new Box2i();
 
             foreach (var tile in dungeon.RoomTiles)
             {
-                if (bounds.Contains(tile))
-                    continue;
-
                 bounds = bounds.UnionTile(tile);
             }
 
             await SuspendIfOutOfTime();
             ValidateResume();
 
-            biomeSystem.GetMarkerNodes(gridUid, biomeComp, grid, markerTemplate, true, bounds, 1,
+            biomeSystem.GetMarkerNodes(gridUid, biomeComp, grid, markerTemplate, true, bounds, count,
                 random, out var spawnSet, out var existing, false);
 
             await SuspendIfOutOfTime();

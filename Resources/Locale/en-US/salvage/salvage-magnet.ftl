@@ -2,6 +2,7 @@ salvage-system-announcement-losing = The magnet is no longer able to hold the sa
 salvage-system-announcement-spawn-debris-disintegrated = Debris disintegrated during orbital transfer.
 salvage-system-announcement-spawn-no-debris-available = No debris could be recovered by the salvage magnet.
 salvage-system-announcement-arrived = A piece of salvagable debris has been pulled in. Estimated hold time: {$timeLeft} seconds.
+salvage-asteroid-name = Asteroid
 
 salvage-expedition-window-progression = Progression
 
@@ -19,6 +20,7 @@ salvage-magnet-resources = {$resource ->
 salvage-magnet-resources-count = {$count ->
     [1] (Poor)
     [2] (Rich)
+    [3] (Rich)
     *[other] (Extraordinary)
 }
 

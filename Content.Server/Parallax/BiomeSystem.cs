@@ -552,6 +552,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         out HashSet<EntityUid> existingEnts,
         bool emptyTiles = true)
     {
+        DebugTools.Assert(count > 0);
+
         var frontier = new ValueList<Vector2i>(32);
         // TODO: Need poisson but crashes whenever I use moony's due to inputs or smth idk
         // Get the total amount of groups to spawn across the entire chunk.
