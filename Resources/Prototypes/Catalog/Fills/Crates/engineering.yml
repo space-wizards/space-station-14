@@ -89,6 +89,15 @@
         amount: 2
 
 - type: entity
+  id: CrateEngineeringStationBeaconBundle
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+    - id: StationBeaconPart
+      amount: 5
+
+- type: entity
   id: CrateEngineeringJetpack
   parent: CrateGenericSteel
   components:

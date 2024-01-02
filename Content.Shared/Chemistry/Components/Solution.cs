@@ -71,6 +71,7 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     The name of this solution, if it is contained in some <see cref="SolutionContainerManagerComponent"/>
         /// </summary>
+        [DataField]
         public string? Name;
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace Content.Shared.Chemistry.Components
             foreach (var (reagent, quantity) in Contents)
             {
                 _heatCapacity += (float) quantity *
-                                 protoMan.Index<ReagentPrototype>(reagent.Prototype).SpecificHeat;
+                                    protoMan.Index<ReagentPrototype>(reagent.Prototype).SpecificHeat;
             }
         }
 
@@ -158,10 +159,12 @@ namespace Content.Shared.Chemistry.Components
 
         public Solution(Solution solution)
         {
+            Contents = solution.Contents.ShallowClone();
             Volume = solution.Volume;
+            MaxVolume = solution.MaxVolume;
+            Temperature = solution.Temperature;
             _heatCapacity = solution._heatCapacity;
             _heatCapacityDirty = solution._heatCapacityDirty;
-            Contents = solution.Contents.ShallowClone();
             ValidateSolution();
         }
 
@@ -174,7 +177,7 @@ namespace Content.Shared.Chemistry.Components
         public void ValidateSolution()
         {
             // sandbox forbids: [Conditional("DEBUG")]
-#if DEBUG
+    #if DEBUG
             // Correct volume
             DebugTools.Assert(Contents.Select(x => x.Quantity).Sum() == Volume);
 
@@ -192,7 +195,7 @@ namespace Content.Shared.Chemistry.Components
                 UpdateHeatCapacity(null);
                 DebugTools.Assert(MathHelper.CloseTo(_heatCapacity, cur));
             }
-#endif
+    #endif
         }
 
         void ISerializationHooks.AfterDeserialization()
