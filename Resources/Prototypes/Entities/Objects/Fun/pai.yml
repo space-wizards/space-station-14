@@ -60,6 +60,7 @@
     allowedStates:
       - Alive
   - type: Appearance
+  - type: BorgBrain
   - type: GenericVisualizer
     visuals:
       enum.ToggleableGhostRoleVisuals.Status:
