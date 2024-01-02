@@ -37,10 +37,6 @@
   name: ball lightning
   description: A giant ball of pure energy. The space around it is humming and melting.
   components:
-  #- type: Physics
-  #  bodyType: KinematicController
-  #  bodyStatus: InAir
-  #- type: CanMoveInAir
   - type: Fixtures
     fixtures:
       EventHorizonCollider:
