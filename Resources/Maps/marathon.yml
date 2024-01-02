@@ -7519,6 +7519,7 @@ entities:
             0: 17
           -16,0:
             0: 32768
+            3: 2048
           -16,-3:
             0: 52416
           -15,-3:
@@ -62185,16 +62186,6 @@ entities:
     - pos: 3.5,15.5
       parent: 30
       type: Transform
-  - uid: 4989
-    components:
-    - pos: -17.5,30.5
-      parent: 30
-      type: Transform
-  - uid: 5715
-    components:
-    - pos: -1.5,35.5
-      parent: 30
-      type: Transform
   - uid: 6427
     components:
     - pos: 16.5,39.5
@@ -62218,6 +62209,55 @@ entities:
   - uid: 21299
     components:
     - pos: -29.5,-45.5
+      parent: 30
+      type: Transform
+- proto: DresserCaptainFilled
+  entities:
+  - uid: 4989
+    components:
+    - pos: -17.5,30.5
+      parent: 30
+      type: Transform
+- proto: DresserChiefEngineerFilled
+  entities:
+  - uid: 11614
+    components:
+    - pos: -15.5,-36.5
+      parent: 30
+      type: Transform
+- proto: DresserChiefMedicalOfficerFilled
+  entities:
+  - uid: 20613
+    components:
+    - pos: -12.5,-16.5
+      parent: 30
+      type: Transform
+- proto: DresserFilled
+  entities:
+  - uid: 20615
+    components:
+    - pos: 29.5,15.5
+      parent: 30
+      type: Transform
+- proto: DresserHeadOfPersonnelFilled
+  entities:
+  - uid: 5715
+    components:
+    - pos: -1.5,35.5
+      parent: 30
+      type: Transform
+- proto: DresserHeadOfSecurityFilled
+  entities:
+  - uid: 20616
+    components:
+    - pos: -26.5,48.5
+      parent: 30
+      type: Transform
+- proto: DresserQuarterMasterFilled
+  entities:
+  - uid: 20614
+    components:
+    - pos: 23.5,2.5
       parent: 30
       type: Transform
 - proto: DrinkBeepskySmashGlass
@@ -121334,38 +121374,6 @@ entities:
     - pos: -8.5,-9.5
       parent: 30
       type: Transform
-- proto: SpawnPointAssistant
-  entities:
-  - uid: 16883
-    components:
-    - pos: -29.5,31.5
-      parent: 30
-      type: Transform
-  - uid: 16884
-    components:
-    - pos: -28.5,31.5
-      parent: 30
-      type: Transform
-  - uid: 16885
-    components:
-    - pos: -27.5,31.5
-      parent: 30
-      type: Transform
-  - uid: 16886
-    components:
-    - pos: -27.5,30.5
-      parent: 30
-      type: Transform
-  - uid: 16887
-    components:
-    - pos: -28.5,30.5
-      parent: 30
-      type: Transform
-  - uid: 16888
-    components:
-    - pos: -30.5,32.5
-      parent: 30
-      type: Transform
 - proto: SpawnPointAtmos
   entities:
   - uid: 20345
@@ -121639,6 +121647,38 @@ entities:
   - uid: 957
     components:
     - pos: -22.5,-22.5
+      parent: 30
+      type: Transform
+- proto: SpawnPointPassenger
+  entities:
+  - uid: 16883
+    components:
+    - pos: -29.5,31.5
+      parent: 30
+      type: Transform
+  - uid: 16884
+    components:
+    - pos: -28.5,31.5
+      parent: 30
+      type: Transform
+  - uid: 16885
+    components:
+    - pos: -27.5,31.5
+      parent: 30
+      type: Transform
+  - uid: 16886
+    components:
+    - pos: -27.5,30.5
+      parent: 30
+      type: Transform
+  - uid: 16887
+    components:
+    - pos: -28.5,30.5
+      parent: 30
+      type: Transform
+  - uid: 16888
+    components:
+    - pos: -30.5,32.5
       parent: 30
       type: Transform
 - proto: SpawnPointPsychologist
@@ -123395,11 +123435,6 @@ entities:
       type: Transform
 - proto: SurveillanceCameraRouterEngineering
   entities:
-  - uid: 11614
-    components:
-    - pos: -15.5,-36.5
-      parent: 30
-      type: Transform
   - uid: 22807
     components:
     - pos: -38.5,-57.5
@@ -123419,11 +123454,6 @@ entities:
       type: Transform
 - proto: SurveillanceCameraRouterMedical
   entities:
-  - uid: 21194
-    components:
-    - pos: -12.5,-16.5
-      parent: 30
-      type: Transform
   - uid: 22809
     components:
     - pos: -38.5,-62.5
@@ -123467,11 +123497,6 @@ entities:
       type: Transform
 - proto: SurveillanceCameraRouterSupply
   entities:
-  - uid: 21201
-    components:
-    - pos: 23.5,2.5
-      parent: 30
-      type: Transform
   - uid: 22808
     components:
     - pos: -38.5,-58.5
