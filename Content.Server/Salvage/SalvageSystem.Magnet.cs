@@ -94,8 +94,20 @@ public sealed partial class SalvageSystem
                 {
                     EndMagnet((uid, magnetData));
                 }
-            }
+                else if (!magnetData.Announced && (magnetData.EndTime.Value - curTime).TotalSeconds < 30)
+                {
+                    var magnet = GetMagnet((uid, magnetData));
 
+                    if (magnet != null)
+                    {
+                        Report(magnet.Value.Owner, MagnetChannel,
+                            Loc.GetString("salvage-system-announcement-losing"),
+                            ("timeLeft", (magnetData.EndTime.Value - curTime).TotalSeconds));
+                    }
+
+                    magnetData.Announced = true;
+                }
+            }
             if (magnetData.NextOffer < curTime)
             {
                 CreateMagnetOffers((uid, magnetData));
@@ -166,6 +178,24 @@ public sealed partial class SalvageSystem
 
         data.Comp.NextOffer = _timing.CurTime + data.Comp.OfferCooldown;
         UpdateMagnetUIs(data);
+    }
+
+    // Just need something to announce.
+    private Entity<SalvageMagnetComponent>? GetMagnet(Entity<SalvageMagnetDataComponent> data)
+    {
+        var query = AllEntityQuery<SalvageMagnetComponent, TransformComponent>();
+
+        while (query.MoveNext(out var magnetUid, out var magnet, out var xform))
+        {
+            var stationUid = _station.GetOwningStation(magnetUid, xform);
+
+            if (stationUid != data.Owner)
+                continue;
+
+            return (magnetUid, magnet);
+        }
+
+        return null;
     }
 
     private void UpdateMagnetUI(Entity<SalvageMagnetComponent> entity, TransformComponent xform)
@@ -256,6 +286,7 @@ public sealed partial class SalvageSystem
             return;
         }
 
+        // It worked, move it into position and cleanup values.
         var salvXForm = Transform(salvageEnt);
         _transform.SetParent(salvageEnt, salvXForm, _mapManager.GetMapEntityId(spawnLocation.MapId));
         _transform.SetWorldPositionRotation(salvageEnt, spawnLocation.Position, spawnAngle, salvXForm);
@@ -278,6 +309,7 @@ public sealed partial class SalvageSystem
         Report(salvageEnt, MagnetChannel, "salvage-system-announcement-arrived", ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
         _mapManager.DeleteMap(salvMap);
 
+        data.Comp.Announced = false;
         data.Comp.EndTime = _timing.CurTime + data.Comp.ActiveTime;
         data.Comp.NextOffer = data.Comp.EndTime.Value + data.Comp.OfferCooldown;
         var active = new SalvageMagnetActivatedEvent()

@@ -48,4 +48,10 @@ public sealed partial class SalvageMagnetDataComponent : Component
 
     [DataField]
     public int ActiveSeed;
+
+    /// <summary>
+    /// Final countdown announcement.
+    /// </summary>
+    [DataField]
+    public bool Announced;
 }
