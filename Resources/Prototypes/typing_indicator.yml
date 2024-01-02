@@ -35,5 +35,5 @@
   offset: 0, 0.125
 
 - type: typingIndicator
-  id: reptilian
-  typingState: reptilian0
+  id: lizard
+  typingState: lizard0
