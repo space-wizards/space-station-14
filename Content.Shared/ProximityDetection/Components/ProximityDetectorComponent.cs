@@ -7,7 +7,7 @@ namespace Content.Shared.ProximityDetection.Components;
 /// <summary>
 /// This is used to search for the closest entity with a range that matches specified requirements (tags and/or components)
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState ,Access(typeof(SharedProximityDetectionSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState ,Access(typeof(ProximityDetectionSystem))]
 public sealed partial class ProximityDetectorComponent : Component
 {
     /// <summary>
