@@ -46,13 +46,6 @@ namespace Content.Server.Body.Components
         [DataField("gaspEmote", customTypeSerializer:typeof(PrototypeIdSerializer<EmotePrototype>))]
         public string GaspEmote = "Gasp";
 
-        /// <summary>
-        /// Hide the chat message from the chat window, only showing the popup.
-        /// This does nothing if WithChat is false.
-        /// <summary>
-        [DataField("hiddenFromChatWindow")]
-        public bool HiddenFromChatWindow = false;
-
         [ViewVariables]
         public TimeSpan LastGaspEmoteTime;
 
