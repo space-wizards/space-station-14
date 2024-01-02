@@ -28,8 +28,8 @@
   - PowerCellHigh
 
 - type: technology
-  id: ElectronicCompression
-  name: research-technology-electronic-compression
+  id: MechanicalCompression
+  name: research-technology-mechanical-compression
   icon:
     sprite: Structures/Machines/flatpacker.rsi
     state: base
