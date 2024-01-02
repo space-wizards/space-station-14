@@ -158,6 +158,18 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Version of TryGetSolution that doesn't take or return an entity.
+    /// Used for prototypes and with old code parity.
+    public bool TryGetSolution(SolutionContainerManagerComponent container, string name, [NotNullWhen(true)] out Solution? solution)
+    {
+        solution = null;
+        if (container.Solutions == null)
+            return false;
+
+        return container.Solutions.TryGetValue(name, out solution);
+    }
+
     public IEnumerable<(string? Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(Entity<SolutionContainerManagerComponent?> container, bool includeSelf = true)
     {
         if (includeSelf && TryComp(container, out SolutionComponent? solutionComp))
