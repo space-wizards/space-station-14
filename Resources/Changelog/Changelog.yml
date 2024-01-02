@@ -1,10 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - message: Behonkers are fixed (in combat use right click to fire laser)
-    type: Fix
-  id: 5010
-  time: '2023-10-16T05:29:14.0000000+00:00'
 - author: ShadowCommander
   changes:
   - message: Fixed material reclaimer sound error when processing something.
@@ -3581,3 +3575,10 @@ Entries:
   id: 5510
   time: '2024-01-02T02:12:32.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23340
+- author: Ubaser
+  changes:
+  - message: Salvage mobs can no longer be ghost roles.
+    type: Remove
+  id: 5511
+  time: '2024-01-02T08:15:29.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23355
