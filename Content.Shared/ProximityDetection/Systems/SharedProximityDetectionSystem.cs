@@ -5,44 +5,42 @@ namespace Content.Shared.ProximityDetection.Systems;
 
 
 //This handles generic proximity detector logic
-public sealed class ProximityDetectionSystem : EntitySystem
+public abstract class SharedProximityDetectionSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly INetManager _net = default!;
-    private const float HighTickWarningRange = 15;
-    private const float LowTickWarningRange = 50;
-    private const float HighImpactTickRateThreshold = 0.5f;
+
+    //update is only run on the server
 
     public override void Initialize()
     {
         SubscribeLocalEvent<ProximityDetectorComponent, EntityPausedEvent>(OnPaused);
         SubscribeLocalEvent<ProximityDetectorComponent, EntityUnpausedEvent>(OnUnpaused);
-        SubscribeLocalEvent<ProximityDetectorComponent, ComponentStartup>(OnCompStartup);
     }
 
-    private void OnPaused(EntityUid owner, ProximityDetectorComponent component, EntityPausedEvent args)
+    protected void OnPaused(EntityUid owner, ProximityDetectorComponent component, EntityPausedEvent args)
     {
         SetEnable_Internal(owner,component,false);
     }
 
-    private void OnUnpaused(EntityUid owner, ProximityDetectorComponent detector, ref EntityUnpausedEvent args)
+    protected void OnUnpaused(EntityUid owner, ProximityDetectorComponent detector, ref EntityUnpausedEvent args)
     {
         SetEnable_Internal(owner, detector,true);
     }
-    public void SetEnable(EntityUid owner, bool enabled, ProximityDetectorComponent? detector = null)
+    protected internal void SetEnable(EntityUid owner, bool enabled, ProximityDetectorComponent? detector = null)
     {
         if (!Resolve(owner, ref detector) || detector.Enabled == enabled)
             return;
         SetEnable_Internal(owner ,detector, enabled);
     }
 
-    public bool GetEnable(EntityUid owner, ProximityDetectorComponent? detector = null)
+    protected internal bool GetEnable(EntityUid owner, ProximityDetectorComponent? detector = null)
     {
         return Resolve(owner, ref detector, false) && detector.Enabled;
     }
 
-    private void SetEnable_Internal(EntityUid owner,ProximityDetectorComponent detector, bool enabled)
+    protected void SetEnable_Internal(EntityUid owner,ProximityDetectorComponent detector, bool enabled)
     {
         detector.Enabled = enabled;
         var noDetectEvent = new ProximityTargetUpdatedEvent(detector, detector.TargetEnt, detector.Distance);
@@ -57,7 +55,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
         RunUpdate_Internal(owner, detector);
     }
 
-    public void ForceUpdate(EntityUid owner, ProximityDetectorComponent? detector = null)
+    protected void ForceUpdate(EntityUid owner, ProximityDetectorComponent? detector = null)
     {
         if (!Resolve(owner, ref detector))
             return;
@@ -65,9 +63,9 @@ public sealed class ProximityDetectionSystem : EntitySystem
     }
 
 
-    private void RunUpdate_Internal(EntityUid owner,ProximityDetectorComponent detector)
+    protected void RunUpdate_Internal(EntityUid owner,ProximityDetectorComponent detector)
     {
-        if (!_net.IsServer) //only run detection checks on the server! TODO: Move to server
+        if (!_net.IsServer) //only run detection checks on the server!
             return;
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(owner);
@@ -86,14 +84,14 @@ public sealed class ProximityDetectionSystem : EntitySystem
         UpdateTargetFromClosest(owner, detector, detections);
     }
 
-    private bool CheckDetectConditions(EntityUid targetEntity, float dist, EntityUid owner, ProximityDetectorComponent detector)
+    protected bool CheckDetectConditions(EntityUid targetEntity, float dist, EntityUid owner, ProximityDetectorComponent detector)
     {
         var detectAttempt = new ProximityDetectionAttemptEvent(false, dist, (owner, detector));
         RaiseLocalEvent(targetEntity, ref detectAttempt);
         return !detectAttempt.Cancel;
     }
 
-    private void UpdateTargetFromClosest(EntityUid owner, ProximityDetectorComponent detector, List<(EntityUid TargetEnt, float Distance)> detections)
+    protected void UpdateTargetFromClosest(EntityUid owner, ProximityDetectorComponent detector, List<(EntityUid TargetEnt, float Distance)> detections)
     {
         if (detections.Count == 0)
         {
@@ -135,51 +133,11 @@ public sealed class ProximityDetectionSystem : EntitySystem
         Dirty(owner, detector);
     }
 
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<ProximityDetectorComponent>();
-        while (query.MoveNext(out var owner, out var detector))
-        {
-            if (!detector.Enabled)
-                continue;
-            detector.AccumulatedFrameTime += frameTime;
-            if (detector.AccumulatedFrameTime < detector.UpdateRate)
-                continue;
-            detector.AccumulatedFrameTime -= detector.UpdateRate;
-            RunUpdate_Internal(owner, detector);
-        }
-    }
-
     public void SetRange(EntityUid owner, float newRange, ProximityDetectorComponent? detector = null)
     {
         if (!Resolve(owner, ref detector))
             return;
         detector.Range = newRange;
-        CheckPerf(owner, detector);
         Dirty(owner, detector);
-    }
-
-    private void OnCompStartup(EntityUid owner, ProximityDetectorComponent detector, ComponentStartup args)
-    {
-        CheckPerf(owner, detector);
-    }
-
-    //TODO: move this to a test!
-    private void CheckPerf(EntityUid owner,ProximityDetectorComponent detector)
-    {
-        if (detector.Range < LowTickWarningRange)
-            return;
-        var range = LowTickWarningRange;
-        var extra = "";
-        if (detector.UpdateRate <= HighImpactTickRateThreshold)
-        {
-            range = HighTickWarningRange;
-            extra = "or decrease update frequency";
-        }
-        Log.Error($"{ToPrettyString(owner)} : " +
-                  $"\n ProximityDetector Range: {detector.Range} is excessive! Recommend using under {range} {extra}!");
     }
 }
