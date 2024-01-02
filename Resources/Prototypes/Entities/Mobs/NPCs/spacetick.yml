@@ -95,5 +95,5 @@
     name: ghost-role-information-salvage-tick-name
     description: ghost-role-information-salvage-tick-description
   - type: GhostTakeoverAvailable
-  # - type: SalvageMobRestrictions
+  - type: SalvageMobRestrictions
 

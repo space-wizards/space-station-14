@@ -1,6 +1,8 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Salvage.Magnet;
+using Content.Shared.Humanoid;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Radio;
 using Content.Shared.Salvage.Magnet;
 using Robust.Server.Maps;
@@ -15,8 +17,12 @@ public sealed partial class SalvageSystem
     [ValidatePrototypeId<RadioChannelPrototype>]
     private const string MagnetChannel = "Supply";
 
+    private EntityQuery<SalvageMobRestrictionsComponent> _salvMobQuery;
+
     private void InitializeMagnet()
     {
+        _salvMobQuery = GetEntityQuery<SalvageMobRestrictionsComponent>();
+
         SubscribeLocalEvent<SalvageMagnetDataComponent, MapInitEvent>(OnMagnetDataMapInit);
 
         SubscribeLocalEvent<SalvageMagnetTargetComponent, GridSplitEvent>(OnMagnetTargetSplit);
@@ -36,12 +42,12 @@ public sealed partial class SalvageSystem
         var station = _station.GetOwningStation(uid);
 
         if (!TryComp(station, out SalvageMagnetDataComponent? dataComp) ||
-            dataComp.NextOffer > _timing.CurTime)
+            dataComp.EndTime != null)
         {
             return;
         }
 
-        TakeMagnetOffer((station.Value, dataComp), args.Index, uid);
+        TakeMagnetOffer((station.Value, dataComp), args.Index, (uid, component));
     }
 
     private void OnMagnetStartup(EntityUid uid, SalvageMagnetComponent component, ComponentStartup args)
@@ -97,13 +103,39 @@ public sealed partial class SalvageSystem
         }
     }
 
+    /// <summary>
+    /// Ends the magnet attachment and deletes the relevant grids.
+    /// </summary>
     private void EndMagnet(Entity<SalvageMagnetDataComponent> data)
     {
         if (data.Comp.ActiveEntities != null)
         {
+            // Handle mobrestrictions getting deleted
+            var query = AllEntityQuery<SalvageMobRestrictionsComponent>();
+
+            while (query.MoveNext(out var salvUid, out var salvMob))
+            {
+                if (data.Comp.ActiveEntities.Contains(salvMob.LinkedEntity))
+                {
+                    QueueDel(salvUid);
+                }
+            }
+
+            // Uhh yeah don't delete mobs or whatever
+            var mobQuery = AllEntityQuery<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
+
+            while (mobQuery.MoveNext(out var mobUid, out _, out _, out var xform))
+            {
+                if (xform.GridUid == null || !data.Comp.ActiveEntities.Contains(xform.GridUid.Value) || xform.MapUid == null)
+                    continue;
+
+                _transform.SetParent(mobUid, xform.MapUid.Value);
+            }
+
+            // Go and cleanup the active ents.
             foreach (var ent in data.Comp.ActiveEntities)
             {
-                QueueDel(ent);
+                Del(ent);
             }
 
             data.Comp.ActiveEntities = null;
@@ -231,6 +263,17 @@ public sealed partial class SalvageSystem
         data.Comp.ActiveEntities = null;
         data.Comp.ActiveEntities = new List<EntityUid>();
         data.Comp.ActiveEntities?.Add(salvageEnt);
+
+        // Handle mob restrictions
+        var children = salvXForm.ChildEnumerator;
+
+        while (children.MoveNext(out var child))
+        {
+            if (!_salvMobQuery.TryGetComponent(child, out var salvMob))
+                continue;
+
+            salvMob.LinkedEntity = salvageEnt;
+        }
 
         Report(salvageEnt, MagnetChannel, "salvage-system-announcement-arrived", ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
         _mapManager.DeleteMap(salvMap);

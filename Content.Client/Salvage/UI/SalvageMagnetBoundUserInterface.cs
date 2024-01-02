@@ -49,6 +49,15 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
             option.MinWidth = 210f;
             option.Disabled = current.EndTime != null;
             option.Claimed = current.ActiveSeed == seed;
+            var claimIndex = i;
+
+            option.ClaimPressed += args =>
+            {
+                SendMessage(new MagnetClaimOfferEvent()
+                {
+                    Index = claimIndex
+                });
+            };
 
             switch (offer)
             {
