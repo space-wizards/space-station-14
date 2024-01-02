@@ -246,7 +246,7 @@ namespace Content.Server.Lathe
         {
             if (uid != args.Lathe || !TryComp<TechnologyDatabaseComponent>(uid, out var technologyDatabase))
                 return;
-            if (!HasComp<EmaggedComponent>(uid))
+            if (!args.getUnavailable && !HasComp<EmaggedComponent>(uid))
                 return;
             foreach (var recipe in component.EmagDynamicRecipes)
             {
