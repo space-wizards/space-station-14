@@ -370,6 +370,7 @@
       - ChemMasterMachineCircuitboard
       - ChemDispenserMachineCircuitboard
       - BiomassReclaimerMachineCircuitboard
+      - BiofabricatorMachineCircuitboard
       - SurveillanceCameraRouterCircuitboard
       - SurveillanceCameraMonitorCircuitboard
       - SurveillanceWirelessCameraMonitorCircuitboard
@@ -551,6 +552,49 @@
   - type: GuideHelp
     guides:
     - Robotics
+
+- type: entity
+  id: Biofabricator
+  parent: BaseLathe
+  name: biofabricator
+  description: Produces animal cubes using biomass.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/biofabricator.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: BiofabricatorMachineCircuitboard
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    staticRecipes:
+    - MonkeyCube
+    - KoboldCube
+    - CowCube
+    - GoatCube
+    - MothroachCube
+    - MouseCube
+    - CockroachCube
+  - type: EmagLatheRecipes
+    emagStaticRecipes:
+    - AbominationCube
+    - SpaceCarpCube
+    - SpaceTickCube
 
 - type: entity
   id: SecurityTechFab
