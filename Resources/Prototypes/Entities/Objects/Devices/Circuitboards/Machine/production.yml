@@ -983,6 +983,19 @@
           ExamineName: Utensil
 
 - type: entity
+  parent: BaseMachineCircuitboard
+  id: FlatpackerMachineCircuitboard
+  name: Flatpacker 1001 machine board
+  components:
+  - type: MachineBoard
+    prototype: MachineFlatpacker
+    requirements:
+      Manipulator: 2
+      MatterBin: 1
+    materialRequirements:
+      Steel: 1
+
+- type: entity
   id: EmitterCircuitboard
   parent: BaseMachineCircuitboard
   name: emitter machine board
