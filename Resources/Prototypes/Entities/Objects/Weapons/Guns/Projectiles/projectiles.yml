@@ -130,8 +130,8 @@
     color: "#ff4300"
     radius: 2.0
     energy: 7.0
-  - type: IgniteOnCollide
-    fireStacks: 1
+  - type: IgniteOnHit
+    fireStacks: 0.25
 
 - type: entity
   id: BaseBulletAP

@@ -51,8 +51,7 @@
     damage:
       groups:
         Burn: 4
-  - type: IgniteOnCollide
-    fireStacks: 3
-    count: 10
+  - type: IgniteOnHit
+    fireStacks: 1.5
   - type: TimedDespawn
     lifetime: 0.25

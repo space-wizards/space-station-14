@@ -15,6 +15,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Content.Shared.Throwing;
@@ -72,6 +73,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFire);
             SubscribeLocalEvent<FlammableComponent, RejuvenateEvent>(OnRejuvenate);
 
+            SubscribeLocalEvent<IgniteOnHitComponent, ProjectileHitEvent>(IgniteOnHit);
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
             SubscribeLocalEvent<IgniteOnCollideComponent, LandEvent>(OnIgniteLand);
 
@@ -114,6 +116,17 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (component.Count == 0)
                 RemCompDeferred<IgniteOnCollideComponent>(uid);
+        }
+
+        private void IgniteOnHit(EntityUid uid, IgniteOnHitComponent component, ref ProjectileHitEvent args)
+        {
+            var otherEnt = args.Target;
+
+            if (!EntityManager.TryGetComponent(otherEnt, out FlammableComponent? flammable))
+                return;
+
+            flammable.FireStacks += component.FireStacks;
+            Ignite(otherEnt, uid, flammable);
         }
 
         private void OnMapInit(EntityUid uid, FlammableComponent component, MapInitEvent args)
