@@ -1228,6 +1228,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("vote.restart_enabled", true, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Config for when the restart vote should be allowed to be called
+        /// </summary>
+        public static readonly CVarDef<int> VoteRestartMinPlayers =
+            CVarDef.Create("vote.restart_min_players", 20, CVar.SERVERONLY);
+
+        /// <summary>
         ///     See vote.enabled, but specific to preset votes
         /// </summary>
         public static readonly CVarDef<bool> VotePresetEnabled =

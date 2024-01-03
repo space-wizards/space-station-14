@@ -49,72 +49,84 @@ namespace Content.Server.Voting.Managers
 
         private void CreateRestartVote(ICommonSession? initiator)
         {
-            var alone = _playerManager.PlayerCount == 1 && initiator != null;
-            var options = new VoteOptions
+            var playerVoteMaximum = _cfg.GetCVar(CCVars.VoteRestartMinPlayers);
+
+            if (_playerManager.PlayerCount > playerVoteMaximum)
             {
-                Title = Loc.GetString("ui-vote-restart-title"),
-                Options =
+                var alone = _playerManager.PlayerCount == 1 && initiator != null;
+                var options = new VoteOptions
                 {
-                    (Loc.GetString("ui-vote-restart-yes"), "yes"),
-                    (Loc.GetString("ui-vote-restart-no"), "no"),
-                    (Loc.GetString("ui-vote-restart-abstain"), "abstain")
-                },
-                Duration = alone
-                    ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
-                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerRestart)),
-                InitiatorTimeout = TimeSpan.FromMinutes(5)
-            };
+                    Title = Loc.GetString("ui-vote-restart-title"),
+                    Options =
+                    {
+                        (Loc.GetString("ui-vote-restart-yes"), "yes"),
+                        (Loc.GetString("ui-vote-restart-no"), "no"),
+                        (Loc.GetString("ui-vote-restart-abstain"), "abstain")
+                    },
+                    Duration = alone
+                        ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
+                        : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerRestart)),
+                    InitiatorTimeout = TimeSpan.FromMinutes(5)
+                };
 
-            if (alone)
-                options.InitiatorTimeout = TimeSpan.FromSeconds(10);
+                if (alone)
+                    options.InitiatorTimeout = TimeSpan.FromSeconds(10);
 
-            WirePresetVoteInitiator(options, initiator);
+                WirePresetVoteInitiator(options, initiator);
 
-            var vote = CreateVote(options);
+                var vote = CreateVote(options);
 
-            vote.OnFinished += (_, _) =>
-            {
-                var votesYes = vote.VotesPerOption["yes"];
-                var votesNo = vote.VotesPerOption["no"];
-                var total = votesYes + votesNo;
-
-                var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio);
-                if (total > 0 && votesYes / (float) total >= ratioRequired)
+                vote.OnFinished += (_, _) =>
                 {
-                    // Check if an admin is online, and ignore the passed vote if the cvar is enabled
-                    if (_cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
+                    var votesYes = vote.VotesPerOption["yes"];
+                    var votesNo = vote.VotesPerOption["no"];
+                    var total = votesYes + votesNo;
+
+                    var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio);
+                    if (total > 0 && votesYes / (float) total >= ratioRequired)
                     {
-                        _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote attempted to pass, but an admin was online. {votesYes}/{votesNo}");
-                    } 
-                    else // If the cvar is disabled or there's no admins on, proceed as normal
+                        // Check if an admin is online, and ignore the passed vote if the cvar is enabled
+                        if (_cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
+                        {
+                            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote attempted to pass, but an admin was online. {votesYes}/{votesNo}");
+                        }
+                        else // If the cvar is disabled or there's no admins on, proceed as normal
+                        {
+                            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote succeeded: {votesYes}/{votesNo}");
+                            _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
+                            var roundEnd = _entityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
+                            roundEnd.EndRound();
+                        }
+                    }
+                    else
                     {
-                        _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote succeeded: {votesYes}/{votesNo}");
-                        _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
-                        var roundEnd = _entityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
-                        roundEnd.EndRound();
+                        _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote failed: {votesYes}/{votesNo}");
+                        _chatManager.DispatchServerAnnouncement(
+                            Loc.GetString("ui-vote-restart-failed", ("ratio", ratioRequired)));
+                    }
+                };
+
+                if (initiator != null)
+                {
+                    // Cast yes vote if created the vote yourself.
+                    vote.CastVote(initiator, 0);
+                }
+
+                foreach (var player in _playerManager.Sessions)
+                {
+                    if (player != initiator)
+                    {
+                        // Everybody else defaults to an abstain vote to say they don't mind.
+                        vote.CastVote(player, 2);
                     }
                 }
-                else
-                {
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote failed: {votesYes}/{votesNo}");
-                    _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("ui-vote-restart-failed", ("ratio", ratioRequired)));
-                }
-            };
-
-            if (initiator != null)
-            {
-                // Cast yes vote if created the vote yourself.
-                vote.CastVote(initiator, 0);
             }
-
-            foreach (var player in _playerManager.Sessions)
+            else
             {
-                if (player != initiator)
-                {
-                    // Everybody else defaults to an abstain vote to say they don't mind.
-                    vote.CastVote(player, 2);
-                }
+                var logPlayerVoteMaximum = playerVoteMaximum.ToString();
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote failed: Player count:{_playerManager.PlayerCount} exceeded:{logPlayerVoteMaximum}");
+                _chatManager.DispatchServerAnnouncement(
+                    Loc.GetString("ui-vote-restart-fail-too-many-players", ("maxPlayers", logPlayerVoteMaximum)));
             }
         }
 
