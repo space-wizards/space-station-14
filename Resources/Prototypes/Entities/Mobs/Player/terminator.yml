@@ -175,6 +175,10 @@
         Structural: 5
   - type: Puller
     needsHands: false
+  - type: Prying
+    pryPowered: true
+    force: true
+    useSound: /Audio/Items/crowbar.ogg
   - type: Tag
     tags:
     - DoorBumpOpener
