@@ -177,7 +177,7 @@ public sealed class WieldableSystem : EntitySystem
         if (TryComp<ItemComponent>(used, out var item))
         {
             component.OldInhandPrefix = item.HeldPrefix;
-            _itemSystem.SetHeldPrefix(used, component.WieldedInhandPrefix, item);
+            _itemSystem.SetHeldPrefix(used, component.WieldedInhandPrefix, component: item);
         }
 
         component.Wielded = true;
@@ -229,7 +229,7 @@ public sealed class WieldableSystem : EntitySystem
 
         if (TryComp<ItemComponent>(uid, out var item))
         {
-            _itemSystem.SetHeldPrefix(uid, component.OldInhandPrefix, item);
+            _itemSystem.SetHeldPrefix(uid, component.OldInhandPrefix, component: item);
         }
 
         component.Wielded = false;

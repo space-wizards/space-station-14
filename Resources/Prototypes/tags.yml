@@ -1012,9 +1012,6 @@
   id: Soap
 
 - type: Tag
-  id: SolarAssemblyPart
-
-- type: Tag
   id: SolarTrackerElectronics
 
 - type: Tag

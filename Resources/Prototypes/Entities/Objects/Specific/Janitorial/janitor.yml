@@ -552,28 +552,59 @@
   parent: BaseItem
   description: A plunger with a red plastic suction-cup and a wooden handle. Used to unclog drains.
   components:
-    - type: Tag
-      tags:
-        - Plunger
-        - WhitelistChameleon
-    - type: Sprite
-      sprite: Objects/Specific/Janitorial/plunger.rsi
-      state: plunger
-    - type: Item
-      sprite: Objects/Specific/Janitorial/plunger.rsi
-      heldPrefix: plunger
-    - type: ItemCooldown
-    - type: GuideHelp
-      guides:
-      - Janitorial
-    - type: Clothing
-      sprite: Objects/Specific/Janitorial/plunger.rsi
-      slots:
-        - HEAD
-      clothingVisuals:
-        head:
-          - state: equipped-HELMET
-            offset: "0, 0.15625"
+  - type: Tag
+    tags:
+       - Plunger
+       - WhitelistChameleon
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/plunger.rsi
+    state: plunger
+  - type: Item
+    sprite: Objects/Specific/Janitorial/plunger.rsi
+    heldPrefix: plunger
+  - type: ItemCooldown
+  - type: GuideHelp
+    guides:
+    - Janitorial
+  - type: Clothing
+    sprite: Objects/Specific/Janitorial/plunger.rsi
+    slots:
+      - HEAD
+    clothingVisuals:
+      head:
+        - state: equipped-HELMET
+          offset: "0, 0.15625"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/pop.ogg
+    embedOnThrow: True
+  - type: ThrowingAngle
+    angle: 0
+  - type: Ammo
+    muzzleFlash: null
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Blunt: 3
 
 - type: entity
   parent: BaseItem

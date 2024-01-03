@@ -274,3 +274,15 @@
     icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
     event: !type:ActivateImplantEvent
     useDelay: 1
+
+- type: entity
+  id: ActionToggleEyes
+  name: Open/Close eyes
+  description: Close your eyes to protect your peepers, or open your eyes to enjoy the pretty lights.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/eyeopen.png
+    iconOn: Interface/Actions/eyeclose.png
+    event: !type:ToggleEyesActionEvent
+    useDelay: 1 # so u cant give yourself and observers eyestrain by rapidly spamming the action
