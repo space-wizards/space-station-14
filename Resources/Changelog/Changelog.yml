@@ -1,10 +1,4 @@
 Entries:
-- author: daerSeebaer
-  changes:
-  - message: The AME controller now shows the current load and maximum capacity.
-    type: Add
-  id: 5020
-  time: '2023-10-18T17:46:33.0000000+00:00'
 - author: Errant
   changes:
   - message: Temperature alerts are now more accurate for different species.
@@ -3593,3 +3587,14 @@ Entries:
   id: 5520
   time: '2024-01-03T05:36:17.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23406
+- author: EmoGarbage404
+  changes:
+  - message: Added flatpacks, boxes that unpack into a full-sized machine when activated
+      with a multitool.
+    type: Add
+  - message: Added the Flatpacker 1001 to industrial research. A machine capable of
+      creating flatpacks from machine boards.
+    type: Add
+  id: 5521
+  time: '2024-01-03T06:16:03.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23338
