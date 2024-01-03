@@ -60,13 +60,21 @@ public sealed partial class RevolutionaryRuleComponent : Component
     public int PlayersPerHeadRev = 15;
 
     /// <summary>
-    /// The gear head revolutionaries are given on spawn.
+    /// The gear head revolutionaries are given in their backpack on spawn.
     /// </summary>
     [DataField]
-    public List<EntProtoId> StartingGear = new()
+    public List<EntProtoId> StartingBagGear = new()
     {
-        "FlashPen",
         "ClothingEyesGlassesSunglasses"
+    };
+
+    /// <summary>
+    /// The gear head revolutionaries are given in their pda on spawn.
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> StartingPdaGear = new()
+    {
+        "FlashPen"
     };
 
     /// <summary>

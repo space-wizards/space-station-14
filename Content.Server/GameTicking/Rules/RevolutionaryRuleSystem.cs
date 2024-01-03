@@ -174,7 +174,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 }
             }
 
-            _antagSelection.GiveAntagBagGear(headRev, comp.StartingGear);
+            _antagSelection.GiveAntagBagGear(headRev, comp.StartingBagGear);
+            _antagSelection.GiveAntagPdaGear(headRev, comp.StartingPdaGear);
             EnsureComp<RevolutionaryComponent>(headRev);
             EnsureComp<HeadRevolutionaryComponent>(headRev);
         }
