@@ -1,22 +1,27 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Localizations;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Stacks;
 
 [Prototype("stack")]
-public sealed partial class StackPrototype : IPrototype
+public sealed partial class StackPrototype : IPrototype, ISerializationHooks
 {
+    private ContentLocalizationManager _contentLoc = default!;
+
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    /// <summary>
-    ///     Human-readable name for this stack type e.g. "Steel"
-    /// </summary>
-    /// <remarks>This is a localization string ID.</remarks>
     [DataField("name")]
-    public string Name { get; private set; } = string.Empty;
+    private string _name = string.Empty;
+
+    /// <summary>
+    ///     Human-readable localized name for this stack type e.g. "Steel"
+    /// </summary>
+    public string Name => _contentLoc.GetStackPrototypeLocalization(ID).Name ?? _name;
 
     /// <summary>
     ///     An icon that will be used to represent this stack type.
@@ -43,5 +48,10 @@ public sealed partial class StackPrototype : IPrototype
     /// </summary>
     [DataField("itemSize")]
     public int? ItemSize;
+
+    void ISerializationHooks.AfterDeserialization()
+    {
+        _contentLoc = IoCManager.Resolve<ContentLocalizationManager>();
+    }
 }
 

@@ -1,14 +1,18 @@
 ﻿using Content.Shared.Construction.Conditions;
+using Content.Shared.Localizations;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Prototypes;
 
 [Prototype("construction")]
-public sealed partial class ConstructionPrototype : IPrototype
+public sealed partial class ConstructionPrototype : IPrototype, ISerializationHooks
 {
+    private ContentLocalizationManager _contentLoc = default!;
+
     [DataField("conditions")] private List<IConstructionCondition> _conditions = new();
 
     /// <summary>
@@ -17,17 +21,21 @@ public sealed partial class ConstructionPrototype : IPrototype
     [DataField("hide")]
     public bool Hide = false;
 
-    /// <summary>
-    ///     Friendly name displayed in the construction GUI.
-    /// </summary>
     [DataField("name")]
-    public string Name = string.Empty;
+    private string _name = string.Empty;
 
     /// <summary>
-    ///     "Useful" description displayed in the construction GUI.
+    ///     Friendly localized name displayed in the construction GUI.
     /// </summary>
+    public string Name => _contentLoc.GetConstructionPrototypeLocalization(ID).Name ?? _name;
+
     [DataField("description")]
-    public string Description = string.Empty;
+    private string _description = string.Empty;
+
+    /// <summary>
+    ///     "Useful" localized description displayed in the construction GUI.
+    /// </summary>
+    public string Description => _contentLoc.GetConstructionPrototypeLocalization(ID).Description ?? _description;
 
     /// <summary>
     ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
@@ -97,6 +105,11 @@ public sealed partial class ConstructionPrototype : IPrototype
 
     public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
     public IReadOnlyList<SpriteSpecifier> Layers => _layers ?? new List<SpriteSpecifier> { Icon };
+
+    void ISerializationHooks.AfterDeserialization()
+    {
+        _contentLoc = IoCManager.Resolve<ContentLocalizationManager>();
+    }
 }
 
 public enum ConstructionType

@@ -1,3 +1,4 @@
+using Content.Shared.Examine;
 using Content.Shared.Tag;
 
 namespace Content.Shared.Construction.Steps
@@ -35,6 +36,31 @@ namespace Content.Shared.Construction.Steps
 
             // This entity is valid!
             return true;
+        }
+
+        public override void DoExamine(ExaminedEvent examinedEvent)
+        {
+            if (string.IsNullOrEmpty(Name))
+                return;
+
+            examinedEvent.Message.AddMarkup(Loc.GetString("construction-insert-arbitrary-entity",
+                ("name", GetLocName())));
+        }
+
+        public override ConstructionGuideEntry GenerateGuideEntry()
+        {
+            return new ConstructionGuideEntry
+            {
+                Localization = "construction-presenter-arbitrary-step",
+                Arguments = new (string, object)[] { ("name", GetLocName()) },
+                Icon = Icon,
+            };
+        }
+
+        private string GetLocName()
+        {
+            // TODO improve
+            return Name;
         }
     }
 }

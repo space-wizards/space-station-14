@@ -28,5 +28,20 @@ namespace Content.Shared.Construction.Steps
                     "construction-insert-exact-entity",
                     ("entityName", Name)));
         }
+
+        public override ConstructionGuideEntry GenerateGuideEntry()
+        {
+            return new ConstructionGuideEntry
+            {
+                Localization = "construction-presenter-arbitrary-step",
+                Arguments = new (string, object)[] { ("name", GetLocalizedName()) },
+                Icon = Icon,
+            };
+        }
+
+        private string GetLocalizedName()
+        {
+            return Loc.TryGetString($"construction-insert-entity-with-component-{Component}", out var locName) ? locName : Name;
+        }
     }
 }
