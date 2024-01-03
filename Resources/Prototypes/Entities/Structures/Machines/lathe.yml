@@ -89,6 +89,8 @@
       - Multitool
       - NetworkConfigurator
       - SprayPainter
+      - WeaponParticleDecelerator
+      - HoloprojectorField
       - FlashlightLantern
       - CableStack
       - CableMVStack

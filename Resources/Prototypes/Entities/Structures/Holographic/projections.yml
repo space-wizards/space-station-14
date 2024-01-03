@@ -80,7 +80,7 @@
 - type: entity
   id: HolosignForcefield
   parent: HolosignWetFloor
-  name: holographic barrier
+  name: holographic force field
   description: A powerful temporal containment field that doesn't let anything through, not even a tesla or singularity.
   components:
     - type: Physics
