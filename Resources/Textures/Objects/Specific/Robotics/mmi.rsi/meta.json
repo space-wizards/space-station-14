@@ -76,7 +76,7 @@
       ]
     },
     {
-      "name": "pai-mmi",
+      "name": "mmi_pai",
       "delays": [
           [
               0.8,
