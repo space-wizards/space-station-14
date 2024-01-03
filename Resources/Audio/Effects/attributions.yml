@@ -195,7 +195,7 @@
 - files: [Smoke-grenade.ogg]
   copyright: Bhijn and Myr (github username deathride58)
   license: CC0-1.0
-  source: [INSERT PR HERE AFTER PR CREATION]
+  source: https://github.com/space-wizards/space-station-14/pull/23476
 
 - files: ["eye_open.ogg", "eye_close.ogg"]
   copyright: Bhijn and Myr (github username deathride58)
