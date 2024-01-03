@@ -240,7 +240,6 @@
       - id: ClothingHandsGlovesColorPurple
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
-      - id: NanomachinesMedipen
       - id: BoxEncryptionKeyScience
 
 - type: entity
@@ -261,7 +260,6 @@
       - id: ClothingHandsGlovesColorPurple
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
-      - id: NanomachinesMedipen
       - id: BoxEncryptionKeyScience
 
 - type: entity
