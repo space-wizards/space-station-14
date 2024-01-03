@@ -85,7 +85,6 @@ namespace Content.Server.Flash
                 return false;
 
             _charges.UseCharge(uid, charges);
-            _audio.PlayPvs(comp.Sound, uid);
             comp.Flashing = true;
             _appearance.SetData(uid, FlashVisuals.Flashing, true);
 
