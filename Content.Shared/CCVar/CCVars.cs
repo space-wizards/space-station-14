@@ -82,16 +82,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ambience.lobby_music_volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
-         * Status
-         */
-
-        public static readonly CVarDef<string> StatusMoMMIUrl =
-            CVarDef.Create("status.mommiurl", "", CVar.SERVERONLY);
-
-        public static readonly CVarDef<string> StatusMoMMIPassword =
-            CVarDef.Create("status.mommipassword", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
-
-        /*
          * Events
          */
 
