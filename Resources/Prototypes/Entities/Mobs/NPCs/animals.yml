@@ -1990,6 +1990,12 @@
     bloodReagent: CopperBlood
   - type: Speech
     speechVerb: Arachnid
+    speechSounds: Arachnid
+  - type: Vocal
+    sounds:
+      Male: UnisexArachnid
+      Female: UnisexArachnid
+      Unsexed: UnisexArachnid
   - type: Tag
     tags:
     - DoorBumpOpener
