@@ -21,7 +21,7 @@ public sealed partial class LinkedEntityComponent : Component
     /// <summary>
     ///     Should this entity be deleted if all of its links are removed?
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool DeleteOnEmptyLinks;
 }
 

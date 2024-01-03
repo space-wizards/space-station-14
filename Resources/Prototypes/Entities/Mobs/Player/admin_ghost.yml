@@ -30,6 +30,7 @@
     tags:
     - NuclearOperative
     - SyndicateAgent
+    - CentralCommand
   - type: UserInterface
     interfaces:
       - key: enum.SolarControlConsoleUiKey.Key

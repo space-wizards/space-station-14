@@ -119,7 +119,7 @@ namespace Content.Client.Lobby.UI
                         OverrideDirection = Direction.South,
                         Scale = new Vector2(4f, 4f),
                         MaxSize = new Vector2(112, 112),
-                        Stretch = SpriteView.StretchMode.None,
+                        Stretch = SpriteView.StretchMode.Fill,
                     };
                     spriteView.SetEntity(_previewDummy.Value);
                     _viewBox.AddChild(spriteView);

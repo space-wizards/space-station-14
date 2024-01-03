@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.Miasma;
+﻿using Content.Server.Atmos.Rotting;
 using Content.Server.Chat.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Electrocution;
@@ -19,6 +19,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -76,7 +77,8 @@ public sealed class DefibrillatorSystem : EntitySystem
 
     private void OnPowerCellSlotEmpty(EntityUid uid, DefibrillatorComponent component, ref PowerCellSlotEmptyEvent args)
     {
-        TryDisable(uid, component);
+        if (!TerminatingOrDeleted(uid))
+            TryDisable(uid, component);
     }
 
     private void OnAfterInteract(EntityUid uid, DefibrillatorComponent component, AfterInteractEvent args)
@@ -138,6 +140,7 @@ public sealed class DefibrillatorSystem : EntitySystem
 
         component.Enabled = false;
         _appearance.SetData(uid, ToggleVisuals.Toggled, false);
+
         _audio.PlayPvs(component.PowerOffSound, uid);
         return true;
     }
@@ -211,6 +214,7 @@ public sealed class DefibrillatorSystem : EntitySystem
 
         ICommonSession? session = null;
 
+        var dead = true;
         if (_rotting.IsRotten(target))
         {
             _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-rotten"),
@@ -220,9 +224,16 @@ public sealed class DefibrillatorSystem : EntitySystem
         {
             if (_mobState.IsDead(target, mob))
                 _damageable.TryChangeDamage(target, component.ZapHeal, true, origin: uid);
-            _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
 
-            if (_mind.TryGetMind(target, out var mindId, out var mind) &&
+            if (_mobThreshold.TryGetThresholdForState(target, MobState.Dead, out var threshold) &&
+                TryComp<DamageableComponent>(target, out var damageableComponent) &&
+                damageableComponent.TotalDamage < threshold)
+            {
+                _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
+                dead = false;
+            }
+
+            if (_mind.TryGetMind(target, out _, out var mind) &&
                 mind.Session is { } playerSession)
             {
                 session = playerSession;
@@ -239,7 +250,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             }
         }
 
-        var sound = _mobState.IsDead(target, mob) || session == null
+        var sound = dead || session == null
             ? component.FailureSound
             : component.SuccessSound;
         _audio.PlayPvs(sound, uid);

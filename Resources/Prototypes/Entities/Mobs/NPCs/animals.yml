@@ -104,9 +104,12 @@
         Base: 0
       Dead:
         Base: dead
+  - type: Item
+    size: Tiny
   - type: Tag
     tags:
     - Bee
+    - Trash
   - type: Bloodstream
     bloodMaxVolume: 0.1
   - type: MobPrice
@@ -313,6 +316,7 @@
         damage: 10
       behaviors:
       - !type:GibBehavior { }
+  - type: NonSpreaderZombie
 
 - type: entity
   name: glockroach
@@ -363,6 +367,7 @@
   - type: Speech
     speechVerb: Moth
     speechSounds: Squeak
+  - type: MothAccent
   - type: Sprite
     sprite: Mobs/Animals/mothroach.rsi
     layers:
@@ -389,10 +394,10 @@
     thresholds:
       0: Alive
       25: Critical
-      50: Dead
+      45: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
+    baseSprintSpeed : 4
     weightlessAcceleration: 1.5
     weightlessFriction: 1
     weightlessModifier: 1
@@ -415,6 +420,8 @@
     grindableSolutionName: food
   - type: ReplacementAccent
     accent: mothroach
+  - type: ZombieAccentOverride
+    accent: zombieMoth
   - type: Vocal
     sounds:
       Male: UnisexMoth
@@ -422,17 +429,18 @@
       Unsexed: UnisexMoth
     wilhelmProbability: 0.001
   - type: MobPrice
-    price: 60
+    price: 150
   - type: Tag
     tags:
     - Trash
     - CannotSuicide
+    - VimPilot
   - type: CanEscapeInventory
   - type: NpcFactionMember
     factions:
     - Mouse
   - type: Body
-    prototype: Moth
+    prototype: Mothroach
   - type: TypingIndicator
     proto: moth
 
@@ -635,7 +643,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.40
-        density: 1400
+        density: 400
         mask:
         - MobMask
         layer:
@@ -711,6 +719,9 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: Arachnid
+    speechSounds: Arachnid
   - type: DamageStateVisuals
     states:
       Alive:
@@ -726,6 +737,10 @@
     interactSuccessString: petting-success-crab
     interactFailureString: petting-failure-crab
     interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: ReplacementAccent
+    accent: crab
   - type: Bloodstream
     bloodMaxVolume: 50
     bloodReagent: CopperBlood
@@ -1112,6 +1127,7 @@
       amount: 3
   - type: MonkeyAccent
   - type: Puller
+    needsHands: false
   - type: CanHostGuardian
   - type: NPCRetaliation
     attackMemoryLength: 10
@@ -1141,6 +1157,71 @@
   - type: AlwaysRevolutionaryConvertible
 
 - type: entity
+  name: kobold
+  id: MobKobold
+  parent: MobMonkey
+  description: Cousins to the sentient race of lizard people, kobolds blend in with industrial tiling and are as nasty as monkeys; ready to pull out your hair and stab you to death.
+  components:
+  - type: LizardAccent
+  - type: Speech # I don't know how to get it to work and i want someone to make them speak like a lizard with normal accents (or optionally another language altogether)
+    speechSounds: Lizard
+    speechVerb: Reptilian
+  - type: Vocal
+    sounds:
+      Male: UnisexReptilian
+      Female: UnisexReptilian
+      Unsexed: UnisexReptilian
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      40: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 5
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Piercing: 9
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 42
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: kobold
+      sprite: Mobs/Animals/kobold.rsi
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "ears" ]
+    - map: [ "id" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 2
+  - type: GhostRole
+    prob: 0.1
+    makeSentient: true
+    name: ghost-role-information-kobold-name
+    description: ghost-role-information-kobold-description
+
+- type: entity
   name: guidebook monkey
   parent: MobMonkey
   noSpawn: true
@@ -1155,6 +1236,8 @@
   id: MobMouse
   description: Squeak!
   components:
+  - type: Body
+    prototype: Mouse
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -1222,7 +1305,23 @@
       Dead:
         Base: splat-0
   - type: Food
+  - type: Thirst
+    startingThirst: 25  # spawn with Okay thirst state
+    thresholds:
+      OverHydrated: 35
+      Okay: 25
+      Thirsty: 15
+      Parched: 10
+      Dead: 0
+    baseDecayRate: 0.04
   - type: Hunger
+    currentHunger: 25   # spawn with Okay hunger state
+    thresholds:
+      Overfed: 35
+      Okay: 25
+      Peckish: 15
+      Starving: 10
+      Dead: 0
     baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
   - type: Extractable
     grindableSolutionName: food
@@ -1272,6 +1371,8 @@
   - type: Puller
     needsHands: true
   - type: BadFood
+  - type: NonSpreaderZombie
+  - type: PreventSpiller
 
 - type: entity
   parent: MobMouse
@@ -2013,6 +2114,25 @@
     - VimPilot
 
 - type: entity
+  name: possum
+  parent: MobPossum
+  suffix: Old sprite
+  id: MobPossumOld
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/possum_old.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: possum_old
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: possum_old
+      Dead:
+        Base: possum_dead_old
+
+- type: entity
   name: raccoon
   parent: SimpleMobBase
   id: MobRaccoon
@@ -2690,6 +2810,7 @@
     BaseResistTime: 3
   - type: MobPrice
     price: 60
+  - type: NonSpreaderZombie
 
 - type: entity
   name: pig

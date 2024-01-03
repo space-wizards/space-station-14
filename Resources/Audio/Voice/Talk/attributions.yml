@@ -29,5 +29,5 @@
     "slime_exclaim.ogg",
   ]
   license: "CC-BY-NC-SA-3.0"
-  copyright: "Goonstation"
+  copyright: "Goonstation, Modified by Whisper"
   source: "https://github.com/goonstation/goonstation/tree/eb3e7df6292d23f6af2f18b4372d3a8ba4b0fda7/sound/misc/talk"

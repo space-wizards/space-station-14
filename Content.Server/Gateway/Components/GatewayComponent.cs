@@ -21,7 +21,7 @@ public sealed partial class GatewayComponent : Component
     /// <summary>
     /// Can the gateway be interacted with? If false then only settable via admins / mappers.
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool Interactable = true;
 
     /// <summary>

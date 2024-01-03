@@ -13,9 +13,9 @@
     <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieCommander" Caption="Commander Hardsuit"/>
   </Box>
 
-  - The [color=#a4885c]Nukie Agent[/color] wears the black elite hardsuit, and can act as a combat medic for the mission.
+  - The [color=#a4885c]Nukie Agent[/color] wears the blood-red medic hardsuit, and can act as a combat medic for the mission.
   <Box>
-    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieElite" Caption="Agent Hardsuit"/>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieMedic" Caption="Blood-Red Medic Hardsuit"/>
   </Box>
 
   - Regular [color=#a4885c]Nuclear Operatives[/color], who have the normal blood red hardsuit.

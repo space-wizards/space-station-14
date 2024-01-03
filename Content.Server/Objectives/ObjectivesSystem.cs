@@ -110,33 +110,16 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             if (!TryComp(mindId, out MindComponent? mind))
                 continue;
 
-            var name = mind.CharacterName;
-            _mind.TryGetSession(mindId, out var session);
-            var username = session?.Name;
-
-            string title;
-            if (username != null)
-            {
-                if (name != null)
-                    title = Loc.GetString("objectives-player-user-named", ("user", username), ("name", name));
-                else
-                    title = Loc.GetString("objectives-player-user", ("user", username));
-            }
-            else
-            {
-                // nothing to identify the player by, just give up
-                if (name == null)
-                    continue;
-
-                title = Loc.GetString("objectives-player-named", ("name", name));
-            }
+            var title = GetTitle(mindId, mind);
+            if (title == null)
+                continue;
 
             result += "\n";
 
-            var custody = IsInCustody(mindId, mind) ? Loc.GetString("objectives-in-custody") + " " : "";
+            var custody = IsInCustody(mindId, mind) ? Loc.GetString("objectives-in-custody") : string.Empty;
 
-            var objectives = mind.AllObjectives.ToArray();
-            if (objectives.Length == 0)
+            var objectives = mind.Objectives;
+            if (objectives.Count == 0)
             {
                 result += Loc.GetString("objectives-no-objectives", ("custody", custody), ("title", title), ("agent", agent));
                 continue;
@@ -146,6 +129,9 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
             foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
             {
+                //TO DO:
+                //check for the right group here. Getting the target issuer is easy: objectiveGroup.Key
+                //It should be compared to the type of the group's issuer.
                 result += "\n" + Loc.GetString($"objective-issuer-{objectiveGroup.Key}");
 
                 foreach (var objective in objectiveGroup)
@@ -229,6 +215,33 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
         return originalEntityInCustody || (TryComp<CuffableComponent>(mind.OwnedEntity, out var cuffed) && cuffed.CuffedHandCount > 0
                && _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value));
+    }
+
+    /// <summary>
+    /// Get the title for a player's mind used in round end.
+    /// </summary>
+    public string? GetTitle(EntityUid mindId, MindComponent? mind = null)
+    {
+        if (!Resolve(mindId, ref mind))
+            return null;
+
+        var name = mind.CharacterName;
+        _mind.TryGetSession(mindId, out var session);
+        var username = session?.Name;
+
+        if (username != null)
+        {
+            if (name != null)
+                return Loc.GetString("objectives-player-user-named", ("user", username), ("name", name));
+
+            return Loc.GetString("objectives-player-user", ("user", username));
+        }
+
+        // nothing to identify the player by, just give up
+        if (name == null)
+            return null;
+
+        return Loc.GetString("objectives-player-named", ("name", name));
     }
 }
 
