@@ -120,6 +120,7 @@
     description: ghost-role-information-slimes-description
   - type: Speech
     speechVerb: Slime
+    speechSounds: Slime
   - type: TypingIndicator
     proto: slime
 
