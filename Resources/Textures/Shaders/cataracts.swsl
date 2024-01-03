@@ -60,7 +60,6 @@ void fragment() {
     highp float distortionZoom = pow(Zoom, DistortionZoomPow);
 
     highp float centergradient = zCircleGradient(aspect, FRAGCOORD.xy, DistortionGradientMax, DistortionCenterRadius / distortionZoom, DistortionCenterMinDist / distortionZoom, DistortionCenterPow);
-    //highp vec2 coord = (FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy) * aspect * centergradient * 0.0001;
     highp vec2 coord = (FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy) * centergradient * DistortionCoordScalar;
     highp vec2 offset = vec2((zFBM(coord * NoiseScalar + timesin) - 0.5) * centergradient, (zFBM(coord * NoiseScalar + timecos) - 0.5) * centergradient);
     COLOR = zTextureSpec(SCREEN_TEXTURE, Pos + (offset * DistortionScalar));
