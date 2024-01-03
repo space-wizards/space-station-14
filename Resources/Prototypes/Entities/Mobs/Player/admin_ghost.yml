@@ -4,6 +4,11 @@
   name: admin observer
   noSpawn: true
   components:
+  - type: Eye
+    visMask:
+      - AdminObserver
+      - Ghost
+      - Normal
   - type: ContentEye
     maxZoom: 8.916104, 8.916104
   - type: Tag
