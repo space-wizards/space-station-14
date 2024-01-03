@@ -20,7 +20,9 @@ using Robust.Shared.Containers;
 using Content.Shared.Mobs.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Shuttles.Systems;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mobs;
+using Content.Shared.PDA;
 using Robust.Server.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -41,6 +43,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     [Dependency] private readonly StorageSystem _storageSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private readonly ItemSlotsSystem _slotSystem = default!;
 
     /// <summary>
     /// Attempts to start the game rule by checking if there are enough players in lobby and readied.
@@ -198,9 +201,23 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// </summary>
     /// <param name="antag">The entity that you want to spawn an item on</param>
     /// <param name="item">The prototype ID that you want to spawn in the bag.</param>
-    public void GiveAntagBagGear(EntityUid antag, string item)
+    /// <param name="spawnItem"> Whether to spawn the antag item, if not then <paramref name="spawnedItem"/> should not be null.</param>
+    /// <param name="spawnedItem"> An item that already exists if <paramref name="spawnedItem"/> is true, otherwise null </param>
+    public void GiveAntagBagGear(EntityUid antag, string item, bool spawnItem = true, EntityUid? spawnedItem = null)
     {
-        var itemToSpawn = Spawn(item, new EntityCoordinates(antag, Vector2.Zero));
+        EntityUid itemToSpawn;
+        if (spawnItem)
+        {
+            itemToSpawn = Spawn(item, new EntityCoordinates(antag, Vector2.Zero));
+        }
+        else
+        {
+            if (spawnedItem is null)
+                return;
+
+            itemToSpawn = spawnedItem.Value;
+        }
+
         if (!_inventory.TryGetSlotContainer(antag, "back", out var backSlot, out _))
             return;
 
@@ -231,6 +248,64 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                     }
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// Will attempt to spawn the items inside of a person's pda.
+    /// If it fails it will attempt to spawn the item inside that person's backpack and pockets.
+    /// </summary>
+    /// <param name="antag">The entity that you want to spawn an item on</param>
+    /// <param name="items">A list of prototype IDs that you want to spawn in the pda.</param>
+    public void GiveAntagPdaGear(EntityUid antag, List<EntProtoId> items)
+    {
+        foreach (var item in (items))
+        {
+            GiveAntagPdaGear(antag, item);
+        }
+    }
+
+    /// <summary>
+    /// Will attempt to spawn an item inside of a person's pda.
+    /// If it fails it will attempt to spawn the item inside that person's backpack and pockets.
+    /// </summary>
+    /// <param name="antag">The entity that you want to spawn an item on</param>
+    /// <param name="item"> The prototype id that you want to spawn in the pda.</param>
+    public void GiveAntagPdaGear(EntityUid antag, EntProtoId item)
+    {
+
+        var itemToSpawn = Spawn(item, new EntityCoordinates(antag, Vector2.Zero));
+
+        if (!_inventory.TryGetSlotContainer(antag, "id", out var pdaSlot, out _)
+            || pdaSlot.ContainedEntity is null
+            || !HasComp<PdaComponent>(pdaSlot.ContainedEntity.Value)
+            )
+        {
+            GiveAntagBagGear(antag, item, false, itemToSpawn);
+            return;
+        }
+
+        var pda = pdaSlot.ContainedEntity.Value;
+
+        if (_slotSystem.TryGetSlot(pda, PdaComponent.PdaIdSlotId, out var id)
+            && _slotSystem.CanInsert(pda, itemToSpawn, antag, id, swap: true))
+        {
+            if (_slotSystem.TryEject(pda, id, antag, out var oldItem))
+                Del(oldItem);
+
+            _slotSystem.TryInsert(pda, id, itemToSpawn, antag);
+        }
+        else if (_slotSystem.TryGetSlot(pda, PdaComponent.PdaPenSlotId, out var pen)
+                 && _slotSystem.CanInsert(pda, itemToSpawn, antag, pen, swap: true))
+        {
+            if (_slotSystem.TryEject(pda, pen, antag, out var oldItem))
+                Del(oldItem);
+
+            _slotSystem.TryInsert(pda, pen, itemToSpawn, antag);
+        }
+        else
+        {
+            GiveAntagBagGear(antag, item, false, itemToSpawn);
         }
     }
 }
