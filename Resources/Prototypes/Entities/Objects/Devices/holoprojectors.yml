@@ -43,6 +43,23 @@
   - type: StaticPrice
     price: 80
 
+- type: entity
+  parent: Holoprojector
+  id: HoloprojectorField
+  name: force field projector
+  description: Creates a powerful temporal containment field that won't let anything through, not even a tesla or singularity.
+  components:
+    - type: HolosignProjector
+      signProto: HolosignForcefield
+      chargeUse: 120
+    - type: Sprite
+      sprite: Objects/Devices/Holoprojectors/field.rsi
+      state: icon
+    - type: Tag
+      tags:
+        - HolofanProjector
+    - type: StaticPrice
+      price: 250
 
 - type: entity
   parent: Holoprojector
