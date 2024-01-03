@@ -25,15 +25,17 @@ public sealed partial class MappingScreen : InGameScreen
     private PaletteColorPicker? _picker;
 
     private ProtoId<DecalPrototype>? _id;
-    private Color _color = Color.White;
-    private float _rotation;
-    private bool _snap;
-    private int _zIndex;
-    private bool _cleanable;
+    private Color _decalColor = Color.White;
+    private float _decalRotation;
+    private bool _decalSnap;
+    private int _decalZIndex;
+    private bool _decalCleanable;
 
-    private bool _auto;
+    private bool _decalAuto;
 
     public override ChatBox ChatBox => GetWidget<ChatBox>()!;
+
+    public event Func<MappingSpawnButton, bool>? IsDecalVisible;
 
     public MappingScreen()
     {
@@ -62,28 +64,28 @@ public sealed partial class MappingScreen : InGameScreen
         DecalPickerOpen.OnPressed += OnDecalPickerOpenPressed;
         rotationSpinBox.OnValueChanged += args =>
         {
-            _rotation = args.Value;
+            _decalRotation = args.Value;
             UpdateDecal();
         };
         DecalEnableAuto.OnToggled += args =>
         {
-            _auto = args.Pressed;
+            _decalAuto = args.Pressed;
             if (_id is { } id)
                 SelectDecal(id);
         };
         DecalEnableSnap.OnToggled += args =>
         {
-            _snap = args.Pressed;
+            _decalSnap = args.Pressed;
             UpdateDecal();
         };
         DecalEnableCleanable.OnToggled += args =>
         {
-            _cleanable = args.Pressed;
+            _decalCleanable = args.Pressed;
             UpdateDecal();
         };
         DecalZIndexSpinBox.ValueChanged += args =>
         {
-            _zIndex = args.Value;
+            _decalZIndex = args.Value;
             UpdateDecal();
         };
 
@@ -98,7 +100,7 @@ public sealed partial class MappingScreen : InGameScreen
 
     private void OnDecalColorPicked(Color color)
     {
-        _color = color;
+        _decalColor = color;
         DecalColorPicker.Color = color;
         UpdateDecal();
     }
@@ -129,7 +131,7 @@ public sealed partial class MappingScreen : InGameScreen
         if (_id is not { } id)
             return;
 
-        DecalSystem.UpdateDecalInfo(id, _color, _rotation, _snap, _zIndex, _cleanable);
+        DecalSystem.UpdateDecalInfo(id, _decalColor, _decalRotation, _decalSnap, _decalZIndex, _decalCleanable);
     }
 
     public void SelectDecal(string decalId)
@@ -139,15 +141,15 @@ public sealed partial class MappingScreen : InGameScreen
 
         _id = decalId;
 
-        if (_auto)
+        if (_decalAuto)
         {
-            _color = Color.White;
-            _cleanable = decal.DefaultCleanable;
-            _snap = decal.DefaultSnap;
+            _decalColor = Color.White;
+            _decalCleanable = decal.DefaultCleanable;
+            _decalSnap = decal.DefaultSnap;
 
-            DecalColorPicker.Color = _color;
-            DecalEnableCleanable.Pressed = _cleanable;
-            DecalEnableSnap.Pressed = _snap;
+            DecalColorPicker.Color = _decalColor;
+            DecalEnableCleanable.Pressed = _decalCleanable;
+            DecalEnableSnap.Pressed = _decalSnap;
         }
 
         UpdateDecal();
@@ -166,13 +168,13 @@ public sealed partial class MappingScreen : InGameScreen
 
             foreach (var child in button.Children)
             {
-                if (child is not MappingSpawnButton childButton ||
-                    button.Prototype?.Prototype is not DecalPrototype decal)
+                if (child is not MappingSpawnButton { Prototype.Prototype: DecalPrototype } childButton)
                 {
                     continue;
                 }
 
-                childButton.Texture.Modulate = _color;
+                childButton.Texture.Modulate = _decalColor;
+                childButton.Visible = IsDecalVisible?.Invoke(childButton) ?? true;
             }
         }
     }
