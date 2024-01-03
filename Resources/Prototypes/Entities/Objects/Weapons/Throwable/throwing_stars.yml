@@ -6,7 +6,19 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Throwable/throwing_star.rsi
-    state: icon
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Appearance
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        base:
+          festive: { state: festive }
   - type: Fixtures
     fixtures:
       fix1:

@@ -145,7 +145,7 @@ public sealed class ThrowingSystem : EntitySystem
         var impulseVector = direction.Normalized() * strength * physics.Mass;
         _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);
 
-        if (comp.LandTime <= TimeSpan.Zero)
+        if (comp.LandTime == null || comp.LandTime <= TimeSpan.Zero)
         {
             _thrownSystem.LandComponent(uid, comp, physics, playSound);
         }

@@ -4,10 +4,13 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -23,6 +26,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
     private ISawmill _sawmill = default!;
@@ -33,6 +37,8 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         SubscribeLocalEvent<AnomalyComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<AnomalyComponent, AttackedEvent>(OnAttacked);
+        SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitStartEvent>(OnAnomalyThrowStart);
+        SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitEndEvent>(OnAnomalyThrowEnd);
 
         SubscribeLocalEvent<AnomalyComponent, EntityUnpausedEvent>(OnAnomalyUnpause);
         SubscribeLocalEvent<AnomalyPulsingComponent, EntityUnpausedEvent>(OnPulsingUnpause);
@@ -49,7 +55,23 @@ public abstract class SharedAnomalySystem : EntitySystem
 
     private void OnAttacked(EntityUid uid, AnomalyComponent component, AttackedEvent args)
     {
+        if (HasComp<CorePoweredThrowerComponent>(args.Used))
+            return;
+
         DoAnomalyBurnDamage(uid, args.User, component);
+    }
+
+    private void OnAnomalyThrowStart(Entity<AnomalyComponent> ent, ref MeleeThrowOnHitStartEvent args)
+    {
+        if (!TryComp<CorePoweredThrowerComponent>(args.Used, out var corePowered) || !TryComp<PhysicsComponent>(ent, out var body))
+            return;
+        _physics.SetBodyType(ent, BodyType.Dynamic, body: body);
+        ChangeAnomalyStability(ent, Random.NextFloat(corePowered.StabilityPerThrow.X, corePowered.StabilityPerThrow.Y), ent.Comp);
+    }
+
+    private void OnAnomalyThrowEnd(Entity<AnomalyComponent> ent, ref MeleeThrowOnHitEndEvent args)
+    {
+        _physics.SetBodyType(ent, BodyType.Static);
     }
 
     public void DoAnomalyBurnDamage(EntityUid source, EntityUid target, AnomalyComponent component)
@@ -111,7 +133,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         var pulse = EnsureComp<AnomalyPulsingComponent>(uid);
         pulse.EndTime  = Timing.CurTime + pulse.PulseDuration;
         Appearance.SetData(uid, AnomalyVisuals.IsPulsing, true);
-        
+
         var ev = new AnomalyPulseEvent(uid, component.Stability, component.Severity);
         RaiseLocalEvent(uid, ref ev, true);
     }
