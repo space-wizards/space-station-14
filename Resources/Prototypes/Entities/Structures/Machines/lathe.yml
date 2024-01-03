@@ -360,6 +360,8 @@
     - CentrifugeMachineCircuitboard
     - CondenserMachineCircuitBoard
     - UniformPrinterMachineCircuitboard
+    - FloorGreenCircuit
+    - FloorBlueCircuit
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
