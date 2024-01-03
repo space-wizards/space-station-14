@@ -21758,13 +21758,6 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-- proto: Dresser
-  entities:
-  - uid: 2458
-    components:
-    - pos: -19.5,-10.5
-      parent: 30
-      type: Transform
 - proto: DresserCaptainFilled
   entities:
   - uid: 1639
@@ -21822,6 +21815,13 @@ entities:
   - uid: 7727
     components:
     - pos: -26.5,21.5
+      parent: 30
+      type: Transform
+- proto: DresserResearchDirectorFilled
+  entities:
+  - uid: 2458
+    components:
+    - pos: -19.5,-10.5
       parent: 30
       type: Transform
 - proto: DrinkBottleOfNothingFull

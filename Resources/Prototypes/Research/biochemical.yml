@@ -91,6 +91,19 @@
   - CryoPodMachineCircuitboard
 
 - type: technology
+  id: Biofabrication
+  name: research-technology-biofabrication
+  icon:
+    sprite: Structures/Machines/biofabricator.rsi
+    state: icon
+  discipline: Biochemical
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - BiofabricatorMachineCircuitboard
+  - BiomassReclaimerMachineCircuitboard
+
+- type: technology
   id: ChemicalDispensary
   name: research-technology-chemical-dispensary
   icon:

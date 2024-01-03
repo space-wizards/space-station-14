@@ -258,7 +258,7 @@ namespace Content.Shared.CCVar
         /// Whether or not panic bunker is currently enabled.
         /// </summary>
         public static readonly CVarDef<bool> PanicBunkerEnabled =
-            CVarDef.Create("game.panic_bunker.enabled", false, CVar.NOTIFY | CVar.REPLICATED);
+            CVarDef.Create("game.panic_bunker.enabled", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         /// Whether or not the panic bunker will disable when an admin comes online.
@@ -1504,6 +1504,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> SeparatedScreenChatSize =
             CVarDef.Create("ui.separated_chat_size", "0.6,0", CVar.CLIENTONLY | CVar.ARCHIVE);
 
+
+        /*
+        * Accessibility
+        */
+
+        /// <summary>
+        /// Toggle for visual effects that may potentially cause motion sickness.
+        /// Where reasonable, effects affected by this CVar should use an alternate effect.
+        /// Please do not use this CVar as a bandaid for effects that could otherwise be made accessible without issue.
+        /// </summary>
+        public static readonly CVarDef<bool> ReducedMotion =
+            CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
          * CHAT

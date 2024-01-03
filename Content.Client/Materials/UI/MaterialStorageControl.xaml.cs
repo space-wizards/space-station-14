@@ -37,9 +37,9 @@ public sealed partial class MaterialStorageControl : BoxContainer
         if (_owner == null)
             return;
 
-        if (!_entityManager.TryGetComponent<MaterialStorageComponent>(_owner, out var materialStorage))
+        if (_entityManager.Deleted(_owner) || !_entityManager.TryGetComponent<MaterialStorageComponent>(_owner, out var materialStorage))
         {
-            Dispose();
+            _owner = null;
             return;
         }
 
