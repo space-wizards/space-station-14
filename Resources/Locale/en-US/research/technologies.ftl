@@ -8,6 +8,7 @@ research-discipline-civilian-services = Civilian Services
 research-technology-fulton = Fultons
 research-technology-salvage-equipment = Salvage Equipment
 research-technology-advanced-powercells = Advanced Powercells
+research-technology-mechanical-compression = Mechanical Compression
 research-technology-compact-power = Compact Power
 research-technology-industrial-engineering = Industrial Engineering
 research-technology-power-generation = Power Generation

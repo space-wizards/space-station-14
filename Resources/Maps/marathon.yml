@@ -55416,35 +55416,6 @@ entities:
     - pos: 23.5,-3.5
       parent: 30
       type: Transform
-- proto: CrateEngineeringAMEJar
-  entities:
-  - uid: 9475
-    components:
-    - pos: -15.5,-28.5
-      parent: 30
-      type: Transform
-    - containers:
-      - EntityStorageComponent
-      - entity_storage
-      type: Construction
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
 - proto: CrateEngineeringAMEShielding
   entities:
   - uid: 9478
@@ -55692,6 +55663,27 @@ entities:
         - 0
         - 0
       type: EntityStorage
+- proto: CrateEngineeringTeslaCoil
+  entities:
+  - uid: 20617
+    components:
+    - pos: -12.5,-69.5
+      parent: 30
+      type: Transform
+- proto: CrateEngineeringTeslaGenerator
+  entities:
+  - uid: 9475
+    components:
+    - pos: -13.5,-69.5
+      parent: 30
+      type: Transform
+- proto: CrateEngineeringTeslaGroundingRod
+  entities:
+  - uid: 20618
+    components:
+    - pos: -11.5,-69.5
+      parent: 30
+      type: Transform
 - proto: CrateFilledSpawner
   entities:
   - uid: 3505
@@ -62232,13 +62224,6 @@ entities:
     - pos: -12.5,-16.5
       parent: 30
       type: Transform
-- proto: DresserFilled
-  entities:
-  - uid: 20615
-    components:
-    - pos: 29.5,15.5
-      parent: 30
-      type: Transform
 - proto: DresserHeadOfPersonnelFilled
   entities:
   - uid: 5715
@@ -62258,6 +62243,13 @@ entities:
   - uid: 20614
     components:
     - pos: 23.5,2.5
+      parent: 30
+      type: Transform
+- proto: DresserResearchDirectorFilled
+  entities:
+  - uid: 20615
+    components:
+    - pos: 29.5,15.5
       parent: 30
       type: Transform
 - proto: DrinkBeepskySmashGlass

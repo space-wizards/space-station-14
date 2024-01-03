@@ -167,6 +167,7 @@
   components:
   - type: Sprite
     state: plushie_rouny
+  - type: Rotatable
 
 - type: entity
   parent: BasePlushie
