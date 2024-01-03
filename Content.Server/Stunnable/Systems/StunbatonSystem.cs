@@ -64,7 +64,7 @@ namespace Content.Server.Stunnable.Systems
             if (!TryComp<ItemComponent>(entity, out var item))
                 return;
 
-            _item.SetHeldPrefix(entity.Owner, args.Activated ? "on" : "off", item);
+            _item.SetHeldPrefix(entity.Owner, args.Activated ? "on" : "off", component: item);
         }
 
         private void TryTurnOn(Entity<StunbatonComponent> entity, ref ItemToggleActivateAttemptEvent args)

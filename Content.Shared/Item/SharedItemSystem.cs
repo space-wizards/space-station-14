@@ -22,11 +22,17 @@ public abstract class SharedItemSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
-        SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract, before: new []{typeof(SharedItemSystem)});
+        SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract);
+        SubscribeLocalEvent<ItemComponent, AfterAutoHandleStateEvent>(OnItemAutoState);
 
         SubscribeLocalEvent<ItemComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<ItemToggleSizeComponent, ItemToggledEvent>(OnItemToggle);
+    }
+
+    private void OnItemAutoState(EntityUid uid, ItemComponent component, ref AfterAutoHandleStateEvent args)
+    {
+        SetHeldPrefix(uid, component.HeldPrefix, force: true, component);
     }
 
     #region Public API
@@ -40,12 +46,12 @@ public abstract class SharedItemSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    public void SetHeldPrefix(EntityUid uid, string? heldPrefix, ItemComponent? component = null)
+    public void SetHeldPrefix(EntityUid uid, string? heldPrefix, bool force = false, ItemComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
             return;
 
-        if (component.HeldPrefix == heldPrefix)
+        if (!force && component.HeldPrefix == heldPrefix)
             return;
 
         component.HeldPrefix = heldPrefix;

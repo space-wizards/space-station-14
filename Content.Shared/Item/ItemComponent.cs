@@ -12,7 +12,7 @@ namespace Content.Shared.Item;
 /// </summary>
 [RegisterComponent]
 [NetworkedComponent]
-[Access(typeof(SharedItemSystem)), AutoGenerateComponentState]
+[Access(typeof(SharedItemSystem)), AutoGenerateComponentState(true)]
 public sealed partial class ItemComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
