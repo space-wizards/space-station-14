@@ -27,7 +27,7 @@ public abstract class ClothingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand, before: new []{typeof(UseDelaySystem)});
+        SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ClothingComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<ClothingComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);

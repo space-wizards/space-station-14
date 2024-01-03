@@ -142483,7 +142483,6 @@ entities:
         20499:
         - Pressed: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 20513
     components:
     - rot: 1.5707963267948966 rad
@@ -142716,7 +142715,6 @@ entities:
         20423:
         - Pressed: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 20528
     components:
     - rot: 3.141592653589793 rad

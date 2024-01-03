@@ -25,6 +25,7 @@
   - type: AmmoCounter
   - type: UseDelayOnShoot
   - type: UseDelay
+    delay: 0.9
   - type: LeechOnMarker
     leech:
       groups:
