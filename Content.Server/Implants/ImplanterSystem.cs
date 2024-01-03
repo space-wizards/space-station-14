@@ -107,19 +107,8 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
 		// Checks for sleeping but let slime people be awake. TODO: generalize this to use the organType when metabolism is reworked / when consciousness states are added.
-		if (TryComp<HumanoidAppearanceComponent>(target, out var appearance) && appearance.Species == "SlimePerson"){
+		if (TryComp<HumanoidAppearanceComponent>(target, out var appearance) && appearance.Species != "SlimePerson"){
 			var args = new DoAfterArgs(EntityManager, user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
-            {
-                BreakOnUserMove = true,
-                BreakOnTargetMove = true,
-                BreakOnDamage = true,
-			    BreakOnTargetWake = false,
-                NeedHand = true,
-            };
-			if (_doAfter.TryStartDoAfter(args))
-            _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
-		} else {
-		    var args = new DoAfterArgs(EntityManager, user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
             {
                 BreakOnUserMove = true,
                 BreakOnTargetMove = true,
@@ -133,6 +122,19 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 			} else {
 			_popup.PopupEntity(Loc.GetString("injector-component-implant-draw-fail-not-asleep"), target, user);
 			}
+			
+		} else {
+		    var args = new DoAfterArgs(EntityManager, user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
+            {
+                BreakOnUserMove = true,
+                BreakOnTargetMove = true,
+                BreakOnDamage = true,
+			    BreakOnTargetWake = false,
+                NeedHand = true,
+            };
+			
+			if (_doAfter.TryStartDoAfter(args))
+            _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
 		}
     }
 
