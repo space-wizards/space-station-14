@@ -41,11 +41,18 @@ public sealed partial class MMIComponent : Component
     /// </summary>
     [DataField("noBrainState")]
     public string NoBrainState = "mmi_off";
+
+    /// <summary>
+    /// The sprite state when there is a PAI inserted
+    /// </summary>
+    [DataField("hasPaiState")]
+    public string PaiState = "mmi_pai";
 }
 
 [Serializable, NetSerializable]
 public enum MMIVisuals : byte
 {
+    PaiPresent,
     BrainPresent,
     HasMind
 }
@@ -53,6 +60,7 @@ public enum MMIVisuals : byte
 [Serializable, NetSerializable]
 public enum MMIVisualLayers : byte
 {
+    Pai,
     Brain,
     Base
 }

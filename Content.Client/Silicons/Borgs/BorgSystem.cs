@@ -68,6 +68,7 @@ public sealed class BorgSystem : SharedBorgSystem
         sprite.LayerSetState(BorgVisualLayers.Light, hasPlayer ? component.HasMindState : component.NoMindState);
     }
 
+
     private void OnMMIAppearanceChanged(EntityUid uid, MMIComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -78,8 +79,23 @@ public sealed class BorgSystem : SharedBorgSystem
             brain = false;
         if (!_appearance.TryGetData(uid, MMIVisuals.HasMind, out bool hasMind))
             hasMind = false;
+        if (!_appearance.TryGetData(uid, MMIVisuals.PaiPresent, out bool hasPai))
+            hasPai = false;
 
         sprite.LayerSetVisible(MMIVisualLayers.Brain, brain);
+        // Gross override of the normal layers to make the weird, unlayered PAI_MMI sprite work.
+        if (hasPai)
+        {
+            sprite.LayerSetVisible(MMIVisualLayers.Base, false);
+            sprite.LayerSetVisible(MMIVisualLayers.Brain, false);
+            sprite.LayerSetVisible(MMIVisualLayers.Pai, true);
+            return;
+        }
+        else
+        {
+            sprite.LayerSetVisible(MMIVisualLayers.Pai, false);
+        }
+
         if (!brain)
         {
             sprite.LayerSetState(MMIVisualLayers.Base, component.NoBrainState);

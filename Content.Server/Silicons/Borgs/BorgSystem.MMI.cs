@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind.Components;
+using Content.Shared.PAI;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
 
@@ -43,6 +44,10 @@ public sealed partial class BorgSystem
         if (_mind.TryGetMind(ent, out var mindId, out var mind))
             _mind.TransferTo(mindId, uid, true, mind: mind);
 
+        if (TryComp<PAIComponent>(ent, out var paiComponent))
+        {
+            _appearance.SetData(uid, MMIVisuals.PaiPresent, true);
+        }
         _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
     }
 
@@ -78,5 +83,6 @@ public sealed partial class BorgSystem
             _mind.TransferTo(mindId, uid, true, mind: mind);
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
+        _appearance.SetData(linked, MMIVisuals.PaiPresent, false);
     }
 }

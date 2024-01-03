@@ -7,6 +7,9 @@
   - type: Sprite
     sprite: Objects/Specific/Robotics/mmi.rsi
     layers:
+    - state: mmi_pai
+      map: ["enum.MMIVisualLayers.Pai"]
+      visible: false
     - state: mmi_brain
       map: ["enum.MMIVisualLayers.Brain"]
       visible: false
@@ -41,6 +44,7 @@
         whitelist:
           components:
           - Brain
+          - PAI
   - type: ContainerContainer
     containers:
       brain_slot: !type:ContainerSlot
