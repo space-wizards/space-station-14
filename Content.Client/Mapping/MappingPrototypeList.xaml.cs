@@ -104,13 +104,16 @@ public sealed partial class MappingPrototypeList : Control
         UpdateSearch();
     }
 
+    /// <summary>
+    ///     Constructs a virtual list where not all buttons exist at one time, since there may be thousands of them.
+    /// </summary>
     private void UpdateSearch()
     {
         if (!SearchList.Visible)
             return;
 
         var height = MeasureButton.DesiredSize.Y + PrototypeListContainer.Separation;
-        var offset = Math.Max((float) -SearchList.Position.Y, 0);
+        var offset = Math.Max(-SearchList.Position.Y, 0);
         var startIndex = (int) Math.Floor(offset / height);
         SearchList.ItemOffset = startIndex;
 
@@ -118,6 +121,7 @@ public sealed partial class MappingPrototypeList : Control
         var endIndex = startIndex - 1;
         var spaceUsed = -height;
 
+        // calculate how far down we are scrolled
         while (spaceUsed < SearchList.Parent!.Height)
         {
             spaceUsed += height;
@@ -126,28 +130,33 @@ public sealed partial class MappingPrototypeList : Control
 
         endIndex = Math.Min(endIndex, _search.Count - 1);
 
+        // nothing changed in terms of which buttons are visible now and before
         if (endIndex == prevEnd && startIndex == prevStart)
             return;
 
         _lastIndices = (startIndex, endIndex);
 
+        // remove previously seen but now unseen buttons from the top
         for (var i = prevStart; i < startIndex && i <= prevEnd; i++)
         {
             var control = SearchList.GetChild(0);
             SearchList.RemoveChild(control);
         }
 
+        // remove previously seen but now unseen buttons from the bottom
         for (var i = prevEnd; i > endIndex && i >= prevStart; i--)
         {
             var control = SearchList.GetChild(SearchList.ChildCount - 1);
             SearchList.RemoveChild(control);
         }
 
+        // insert buttons that can now be seen, from the start
         for (var i = Math.Min(prevStart - 1, endIndex); i >= startIndex; i--)
         {
             Insert(SearchList, _search[i], false).SetPositionInParent(0);
         }
 
+        // insert buttons that can now be seen, from the end
         for (var i = Math.Max(prevEnd + 1, startIndex); i <= endIndex; i++)
         {
             Insert(SearchList, _search[i], false);
