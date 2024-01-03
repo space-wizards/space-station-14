@@ -11084,6 +11084,11 @@ entities:
     - pos: -17.5,-0.5
       parent: 4812
       type: Transform
+  - uid: 744
+    components:
+    - pos: -25.5,-28.5
+      parent: 4812
+      type: Transform
   - uid: 1256
     components:
     - pos: -17.5,4.5
@@ -11122,11 +11127,6 @@ entities:
   - uid: 7128
     components:
     - pos: -30.5,-21.5
-      parent: 4812
-      type: Transform
-  - uid: 7455
-    components:
-    - pos: -24.5,-28.5
       parent: 4812
       type: Transform
   - uid: 7575
@@ -11178,9 +11178,9 @@ entities:
       type: Transform
 - proto: BedsheetCMO
   entities:
-  - uid: 7456
+  - uid: 2501
     components:
-    - pos: -24.5,-28.5
+    - pos: -25.5,-28.5
       parent: 4812
       type: Transform
 - proto: BedsheetCult
@@ -31812,6 +31812,13 @@ entities:
     - pos: 13.532155,-11.236504
       parent: 4812
       type: Transform
+- proto: ClothingHeadHatBeretWarden
+  entities:
+  - uid: 12145
+    components:
+    - pos: -35.744057,17.561283
+      parent: 4812
+      type: Transform
 - proto: ClothingHeadHatCone
   entities:
   - uid: 11339
@@ -33985,6 +33992,20 @@ entities:
     - pos: -9.581426,-1.3989067
       parent: 4812
       type: Transform
+- proto: DefaultStationBeaconAICore
+  entities:
+  - uid: 12477
+    components:
+    - pos: 10.5,53.5
+      parent: 4812
+      type: Transform
+- proto: DefaultStationBeaconAISatellite
+  entities:
+  - uid: 12478
+    components:
+    - pos: 6.5,46.5
+      parent: 4812
+      type: Transform
 - proto: DefaultStationBeaconAME
   entities:
   - uid: 9615
@@ -34137,6 +34158,13 @@ entities:
   - uid: 12335
     components:
     - pos: -31.5,-1.5
+      parent: 4812
+      type: Transform
+- proto: DefaultStationBeaconEvac
+  entities:
+  - uid: 12480
+    components:
+    - pos: 28.5,-2.5
       parent: 4812
       type: Transform
 - proto: DefaultStationBeaconEVAStorage
@@ -36835,11 +36863,6 @@ entities:
       type: Transform
 - proto: Dresser
   entities:
-  - uid: 744
-    components:
-    - pos: -12.5,29.5
-      parent: 4812
-      type: Transform
   - uid: 1254
     components:
     - pos: -17.5,5.5
@@ -36848,11 +36871,6 @@ entities:
   - uid: 1693
     components:
     - pos: -7.5,0.5
-      parent: 4812
-      type: Transform
-  - uid: 2501
-    components:
-    - pos: 7.5,29.5
       parent: 4812
       type: Transform
   - uid: 5363
@@ -36865,14 +36883,51 @@ entities:
     - pos: -27.5,-37.5
       parent: 4812
       type: Transform
-  - uid: 8251
+  - uid: 9046
+    components:
+    - pos: -26.5,-40.5
+      parent: 4812
+      type: Transform
+- proto: DresserCaptainFilled
+  entities:
+  - uid: 7064
+    components:
+    - pos: -12.5,29.5
+      parent: 4812
+      type: Transform
+- proto: DresserChiefEngineerFilled
+  entities:
+  - uid: 12479
+    components:
+    - pos: -48.5,-7.5
+      parent: 4812
+      type: Transform
+- proto: DresserChiefMedicalOfficerFilled
+  entities:
+  - uid: 7461
+    components:
+    - pos: -24.5,-28.5
+      parent: 4812
+      type: Transform
+- proto: DresserHeadOfPersonnelFilled
+  entities:
+  - uid: 7455
+    components:
+    - pos: 7.5,29.5
+      parent: 4812
+      type: Transform
+- proto: DresserHeadOfSecurityFilled
+  entities:
+  - uid: 7456
     components:
     - pos: -23.5,28.5
       parent: 4812
       type: Transform
-  - uid: 9046
+- proto: DresserQuarterMasterFilled
+  entities:
+  - uid: 12476
     components:
-    - pos: -26.5,-40.5
+    - pos: 16.5,35.5
       parent: 4812
       type: Transform
 - proto: DrinkBottleOfNothingFull
@@ -57658,11 +57713,6 @@ entities:
     - pos: 19.5,36.5
       parent: 4812
       type: Transform
-  - uid: 7461
-    components:
-    - pos: -24.5,-28.5
-      parent: 4812
-      type: Transform
 - proto: hydroponicsSoil
   entities:
   - uid: 8385
@@ -62750,14 +62800,6 @@ entities:
       pos: -22.5,-28.5
       parent: 4812
       type: Transform
-  - uid: 7064
-    components:
-    - flags: PvsPriority
-      type: MetaData
-    - rot: 3.141592653589793 rad
-      pos: -25.5,-28.5
-      parent: 4812
-      type: Transform
   - uid: 7288
     components:
     - flags: PvsPriority
@@ -62971,6 +63013,14 @@ entities:
       type: Transform
     - powerLoad: 0
       type: ApcPowerReceiver
+  - uid: 8251
+    components:
+    - flags: PvsPriority
+      type: MetaData
+    - rot: -1.5707963267948966 rad
+      pos: -24.5,-27.5
+      parent: 4812
+      type: Transform
   - uid: 8269
     components:
     - flags: PvsPriority
@@ -69684,28 +69734,6 @@ entities:
     - pos: -11.5,-14.5
       parent: 4812
       type: Transform
-- proto: SpawnPointAssistant
-  entities:
-  - uid: 12382
-    components:
-    - pos: -19.5,8.5
-      parent: 4812
-      type: Transform
-  - uid: 12383
-    components:
-    - pos: -18.5,11.5
-      parent: 4812
-      type: Transform
-  - uid: 12384
-    components:
-    - pos: -17.5,9.5
-      parent: 4812
-      type: Transform
-  - uid: 12385
-    components:
-    - pos: -20.5,10.5
-      parent: 4812
-      type: Transform
 - proto: SpawnPointAtmos
   entities:
   - uid: 3259
@@ -69947,6 +69975,28 @@ entities:
   - uid: 5059
     components:
     - pos: -2.5,2.5
+      parent: 4812
+      type: Transform
+- proto: SpawnPointPassenger
+  entities:
+  - uid: 12382
+    components:
+    - pos: -19.5,8.5
+      parent: 4812
+      type: Transform
+  - uid: 12383
+    components:
+    - pos: -18.5,11.5
+      parent: 4812
+      type: Transform
+  - uid: 12384
+    components:
+    - pos: -17.5,9.5
+      parent: 4812
+      type: Transform
+  - uid: 12385
+    components:
+    - pos: -20.5,10.5
       parent: 4812
       type: Transform
 - proto: SpawnPointQuartermaster
@@ -85655,96 +85705,12 @@ entities:
       type: Transform
 - proto: WarpPoint
   entities:
-  - uid: 12145
-    components:
-    - pos: -16.5,-34.5
-      parent: 4812
-      type: Transform
-    - location: chapel
-      type: WarpPoint
-  - uid: 12476
-    components:
-    - pos: -10.5,-21.5
-      parent: 4812
-      type: Transform
-    - location: medbay
-      type: WarpPoint
-  - uid: 12477
-    components:
-    - pos: -28.5,-16.5
-      parent: 4812
-      type: Transform
-    - location: library
-      type: WarpPoint
-  - uid: 12478
-    components:
-    - pos: -32.5,-2.5
-      parent: 4812
-      type: Transform
-    - location: engi
-      type: WarpPoint
-  - uid: 12479
-    components:
-    - pos: -20.5,1.5
-      parent: 4812
-      type: Transform
-    - location: dorms
-      type: WarpPoint
-  - uid: 12480
-    components:
-    - pos: -29.5,15.5
-      parent: 4812
-      type: Transform
-    - location: security
-      type: WarpPoint
-  - uid: 12481
-    components:
-    - pos: -2.5,31.5
-      parent: 4812
-      type: Transform
-    - location: bridge
-      type: WarpPoint
-  - uid: 12482
-    components:
-    - pos: 10.5,49.5
-      parent: 4812
-      type: Transform
-    - location: ai core
-      type: WarpPoint
-  - uid: 12483
-    components:
-    - pos: 16.5,20.5
-      parent: 4812
-      type: Transform
-    - location: cargo
-      type: WarpPoint
-  - uid: 12484
-    components:
-    - pos: 28.5,-2.5
-      parent: 4812
-      type: Transform
-    - location: evac
-      type: WarpPoint
   - uid: 12485
     components:
     - pos: 8.5,-21.5
       parent: 4812
       type: Transform
     - location: sci
-      type: WarpPoint
-  - uid: 12486
-    components:
-    - pos: -2.5,0.5
-      parent: 4812
-      type: Transform
-    - location: service
-      type: WarpPoint
-  - uid: 12517
-    components:
-    - pos: 33.5,-25.5
-      parent: 4812
-      type: Transform
-    - location: anomaly Lab
       type: WarpPoint
 - proto: WaterCooler
   entities:

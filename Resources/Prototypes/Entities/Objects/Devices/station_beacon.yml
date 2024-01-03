@@ -223,8 +223,16 @@
   id: DefaultStationBeaconLawOffice
   suffix: Law Office
   components:
-    - type: NavMapBeacon
-      text: law office
+  - type: NavMapBeacon
+    text: law office
+
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconSecurityCheckpoint
+  suffix: Sec Checkpoint
+  components:
+  - type: NavMapBeacon
+    text: checkpoint
 
 - type: entity
   parent: DefaultStationBeacon
@@ -533,16 +541,16 @@
   id: DefaultStationBeaconAISatellite
   suffix: AI Satellite
   components:
-    - type: NavMapBeacon
-      text: AI satellite
+  - type: NavMapBeacon
+    text: AI satellite
 
 - type: entity
   parent: DefaultStationBeaconAI
   id: DefaultStationBeaconAICore
   suffix: AI Core
   components:
-    - type: NavMapBeacon
-      text: AI core
+  - type: NavMapBeacon
+    text: AI core
 
 - type: entity
   parent: DefaultStationBeacon
@@ -551,6 +559,14 @@
   components:
   - type: NavMapBeacon
     text: arrivals
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEvac
+  suffix: Evac
+  components:
+  - type: NavMapBeacon
+    text: evac
 
 - type: entity
   parent: DefaultStationBeacon
