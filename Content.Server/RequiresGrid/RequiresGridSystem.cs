@@ -1,12 +1,10 @@
 ﻿using Content.Server.Destructible;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.RequiresGrid;
 
 public sealed class RequiresGridSystem : EntitySystem
 {
     [Dependency] private readonly DestructibleSystem _destructible = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
 
     public override void Initialize()
     {
@@ -18,14 +16,14 @@ public sealed class RequiresGridSystem : EntitySystem
     private void OnEntParentChanged(EntityUid owner, RequiresGridComponent component, EntParentChangedMessage args)
     {
         if (args.OldParent == null)
-        {
             return;
-        }
 
-        var parent = _transformSystem.GetParent(owner);
-        if (parent?.GridUid == null)
-        {
-            _destructible.DestroyEntity(owner);
-        }
+        if (args.Transform.GridUid != null)
+            return;
+
+        if (TerminatingOrDeleted(owner))
+            return;
+
+        _destructible.DestroyEntity(owner);
     }
 }
