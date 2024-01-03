@@ -5,18 +5,12 @@
     "y": 32
   },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made by Kit0vras#5869 (discord) / Kit0vras (github) for SS14, recolored by TheShuEd (github)",
+    "copyright": "Made by TheShuEd (github) for SS14",
     "states": [
         {
             "name": "icon",
             "delays": [
                 [
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
                     0.2,
                     0.2,
                     0.2,
