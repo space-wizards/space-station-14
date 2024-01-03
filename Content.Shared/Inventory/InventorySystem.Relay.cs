@@ -16,6 +16,9 @@ using Robust.Shared.Containers;
 // stamina resistance begin
 using Content.Shared.Damage.Events;
 // stamina resistance end
+// anti hypospray begin
+using Content.Shared.AntiHypo;
+// anti hyposray end
 
 namespace Content.Shared.Inventory;
 
@@ -50,6 +53,9 @@ public partial class InventorySystem
         // stamina resistance begin
         SubscribeLocalEvent<InventoryComponent, StaminaModifyEvent>(RelayInventoryEvent);
         // stamina resistance end
+        // anti hypospray begin
+        SubscribeLocalEvent<InventoryComponent, AntiHyposprayEvent>(RelayInventoryEvent);
+        // anti hypospray end
     }
 
     protected void RefRelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, ref T args) where T : IInventoryRelayEvent

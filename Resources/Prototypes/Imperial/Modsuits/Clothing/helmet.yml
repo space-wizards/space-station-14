@@ -19,6 +19,7 @@
         Slash: 0.85
         Heat: 0.85
         Piercing: 0.9
+    antihypo: true # anti hypo thing
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000

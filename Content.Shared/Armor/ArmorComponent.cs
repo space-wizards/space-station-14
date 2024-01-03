@@ -15,6 +15,10 @@ public sealed partial class ArmorComponent : Component
     /// </summary>
     [DataField(required: true)]
     public DamageModifierSet Modifiers = default!;
+    // anti hypospray begin
+    [DataField("antihypo")]
+    public bool AntiHypo = false;
+    // anti hypospray end
 }
 
 /// <summary>

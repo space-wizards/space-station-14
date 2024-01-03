@@ -14,6 +14,9 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Timing;
 using Robust.Shared.GameStates;
+// anti hypospray begin
+using Content.Shared.AntiHypo;
+// anti hypospray end
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -82,7 +85,18 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
 
             string? msgFormat = null;
-
+            // anti hypospray begin
+            var ev = new AntiHyposprayEvent(true);
+            RaiseLocalEvent(target.Value, ev);
+            if (ev.Inject != true)
+            {
+                if (component.CanPenetrate == false)
+                {
+                    _popup.PopupCursor(Loc.GetString("antihypospray-cant-inject"), user);
+                    return false;
+                }
+            }
+            // anti hypospray end
             if (target == user)
                 msgFormat = "hypospray-component-inject-self-message";
             else if (EligibleEntity(user, _entMan, component) && _interaction.TryRollClumsy(user, component.ClumsyFailChance))
