@@ -1,6 +1,8 @@
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Content.Server.Actions;
+using Content.Server.Antag;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
@@ -49,6 +51,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
 
     public override void Initialize()
     {
@@ -145,24 +148,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out _, out var gameRule))
         {
-            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-                continue;
-
-            var minPlayers = _cfg.GetCVar(CCVars.ZombieMinPlayers);
-            if (!ev.Forced && ev.Players.Length < minPlayers)
-            {
-                _chatManager.SendAdminAnnouncement(Loc.GetString("zombie-not-enough-ready-players",
-                    ("readyPlayersCount", ev.Players.Length),
-                    ("minimumPlayers", minPlayers)));
-                ev.Cancel();
-                continue;
-            }
-
-            if (ev.Players.Length == 0)
-            {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("zombie-no-one-ready"));
-                ev.Cancel();
-            }
+            _antagSelection.AttemptStartGameRule(ev, uid, _cfg.GetCVar(CCVars.ZombieMinPlayers), gameRule, Loc.GetString("zombie-title"));
         }
     }
 
@@ -266,78 +252,54 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             return;
         component.InfectedChosen = true;
 
-        var allPlayers = _playerManager.Sessions.ToList();
-        var playerList = new List<ICommonSession>();
-        var prefList = new List<ICommonSession>();
-        foreach (var player in allPlayers)
-        {
-            if (player.AttachedEntity == null || !HasComp<HumanoidAppearanceComponent>(player.AttachedEntity) || HasComp<ZombieImmuneComponent>(player.AttachedEntity))
-                continue;
-            playerList.Add(player);
+        //Get all players with initial infected enabled, and exclude those with the ZombieImmuneComponent
+        var eligiblePlayers = _antagSelection.GetEligiblePlayers(component.PatientZeroPrototypeId, false, false, false, x => HasComp<ZombieImmuneComponent>(x));
 
-            var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
-            if (pref.AntagPreferences.Contains(component.PatientZeroPrototypeId))
-                prefList.Add(player);
-        }
-
-        if (playerList.Count == 0)
+        if (eligiblePlayers.Count == 0)
             return;
 
-        var numInfected = Math.Max(1,
-            (int) Math.Min(
-                Math.Floor((double) playerList.Count / component.PlayersPerInfected), component.MaxInitialInfected));
+        var initialInfectedCount = _antagSelection.CalculateAntagNumber(_playerManager.Sessions.Count(), component.PlayersPerInfected, component.MaxInitialInfected);
 
-        var totalInfected = 0;
-        while (totalInfected < numInfected)
+        var initialInfected = _antagSelection.ChooseAntags(eligiblePlayers, initialInfectedCount);
+
+        if (initialInfected.Count < initialInfectedCount)
         {
-            ICommonSession zombie;
-            if (prefList.Count == 0)
-            {
-                if (playerList.Count == 0)
-                {
-                    Log.Info("Insufficient number of players. stopping selection.");
-                    break;
-                }
-                zombie = _random.Pick(playerList);
-                Log.Info("Insufficient preferred patient 0, picking at random.");
-            }
-            else
-            {
-                zombie = _random.Pick(prefList);
-                Log.Info("Selected a patient 0.");
-            }
+            //Get all players this time, ignore their preferences
+            eligiblePlayers = _antagSelection.GetEligiblePlayers(component.PatientZeroPrototypeId, false, false, true, x => HasComp<ZombieImmuneComponent>(x));
 
-            prefList.Remove(zombie);
-            playerList.Remove(zombie);
-            if (!_mindSystem.TryGetMind(zombie, out var mindId, out var mind) ||
-                mind.OwnedEntity is not { } ownedEntity)
-            {
-                continue;
-            }
+            //Remove everyone we already chose
+            foreach (var alreadyChosen in initialInfected)
+                eligiblePlayers.Remove(alreadyChosen);
 
-            totalInfected++;
-
-            _roles.MindAddRole(mindId, new InitialInfectedRoleComponent { PrototypeId = component.PatientZeroPrototypeId });
-
-            var pending = EnsureComp<PendingZombieComponent>(ownedEntity);
-            pending.GracePeriod = _random.Next(component.MinInitialInfectedGrace, component.MaxInitialInfectedGrace);
-            EnsureComp<ZombifyOnDeathComponent>(ownedEntity);
-            EnsureComp<IncurableZombieComponent>(ownedEntity);
-            var inCharacterName = MetaData(ownedEntity).EntityName;
-            _action.AddAction(ownedEntity, ref pending.Action, ZombieRuleComponent.ZombifySelfActionPrototype, ownedEntity);
-
-            var message = Loc.GetString("zombie-patientzero-role-greeting");
-            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-
-            //gets the names now in case the players leave.
-            //this gets unhappy if people with the same name get chosen. Probably shouldn't happen.
-            component.InitialInfectedNames.Add(inCharacterName, zombie.Name);
-
-            // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
-            // You got a free T-shirt!?!?
-            _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message,
-               wrappedMessage, default, false, zombie.ConnectedClient, Color.Plum);
-            _audio.PlayGlobal(component.InitialInfectedSound, ownedEntity);
+            //Fill the ranks the best we can
+            initialInfected.AddRange(_antagSelection.ChooseAntags(eligiblePlayers, initialInfectedCount - initialInfected.Count));
         }
+
+        MakeZombie(initialInfected, component);
+
+        _antagSelection.SendBriefing(initialInfected, Loc.GetString("zombie-patientzero-role-greeting"), null, component.InitialInfectedSound);
+    }
+
+    private void MakeZombie(List<EntityUid> entities, ZombieRuleComponent component)
+    {
+        foreach (var entity in entities)
+            MakeZombie(entity, component);
+    }
+    private void MakeZombie(EntityUid entity, ZombieRuleComponent component)
+    {
+        if (!_mindSystem.TryGetMind(entity, out var mind, out var mindComponent))
+            return;
+
+        _roles.MindAddRole(mind, new InitialInfectedRoleComponent { PrototypeId = component.PatientZeroPrototypeId }, silent: true);
+
+        var pending = EnsureComp<PendingZombieComponent>(entity);
+        pending.GracePeriod = _random.Next(component.MinInitialInfectedGrace, component.MaxInitialInfectedGrace);
+        EnsureComp<ZombifyOnDeathComponent>(entity);
+        EnsureComp<IncurableZombieComponent>(entity);
+        _action.AddAction(entity, ref pending.Action, ZombieRuleComponent.ZombifySelfActionPrototype, entity);
+
+        var inCharacterName = MetaData(entity).EntityName;
+        var accountName = mindComponent.Session == null ? string.Empty : mindComponent.Session.Name;
+        component.InitialInfectedNames.Add(inCharacterName, accountName);
     }
 }

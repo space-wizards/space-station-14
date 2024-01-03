@@ -56,21 +56,21 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
 
     public void AttemptStartGameRule(RoundStartAttemptEvent ev, EntityUid uid, int minPlayers, GameRuleComponent gameRule, string gameRuleName)
     {
-        if (GameTicker.IsGameRuleAdded(uid, gameRule))
+        if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+            return;
+
+        if (!ev.Forced && ev.Players.Length < minPlayers)
         {
-            if (!ev.Forced && ev.Players.Length < minPlayers)
-            {
-                _chatManager.SendAdminAnnouncement(Loc.GetString("antag-selection-attempt-start-insufficient-players",
-                    ("failedGameMode", gameRuleName),
-                    ("readyPlayersCount", ev.Players.Length),
-                    ("minimumPlayers", minPlayers)));
-                ev.Cancel();
-            }
-            else if (ev.Players.Length == 0)
-            {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("antag-selection-attempt-start-no-players", ("failedGameMode", gameRuleName)));
-                ev.Cancel();
-            }
+            _chatManager.SendAdminAnnouncement(Loc.GetString("antag-selection-attempt-start-insufficient-players",
+                ("failedGameMode", gameRuleName),
+                ("readyPlayersCount", ev.Players.Length),
+                ("minimumPlayers", minPlayers)));
+            ev.Cancel();
+        }
+        else if (ev.Players.Length == 0)
+        {
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("antag-selection-attempt-start-no-players", ("failedGameMode", gameRuleName)));
+            ev.Cancel();
         }
     }
 
@@ -80,8 +80,9 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="antagPrototype">The prototype to get eligible players for</param>
     /// <param name="includeAllJobs">Should jobs that prohibit antag roles (ie Heads, Sec, Interns) be included</param>
     /// <param name="allowMultipleAntagRoles">Should players that already have an antag role be included</param>
+    /// <param name="customExcludeCondition">A custom condition that each player is tested against, if it returns true the player is excluded from eligibility</param>
     /// <returns></returns>
-    public List<EntityUid> GetEligiblePlayers(string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false)
+    public List<EntityUid> GetEligiblePlayers(string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, Func<EntityUid?, bool>? customExcludeCondition = null)
     {
         var allPlayers = _playerSystem.Sessions.ToList();
         var eligiblePlayers = new List<EntityUid>();
@@ -119,9 +120,14 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             if (!HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
                 continue;
 
+            //If a custom condition was provided, test it and exclude the player if it returns true
+            if (customExcludeCondition != null && customExcludeCondition(player.AttachedEntity))
+                continue;
+
             //Test the player has this antag enabled as a preference
+            //Or if we are ignoring preferences
             var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
-            if (pref.AntagPreferences.Contains(antagPrototype))
+            if (pref.AntagPreferences.Contains(antagPrototype) || ignorePreferences)
                 eligiblePlayers.Add(player.AttachedEntity.Value);
         }
 
@@ -152,6 +158,9 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
 
         for (int i = 0; i < count; i++)
         {
+            if (eligiblePlayers.Count == 0)
+                break;
+
             chosenPlayers.Add(_random.PickAndTake(eligiblePlayers));
         }
 
