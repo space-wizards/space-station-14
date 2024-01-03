@@ -27,10 +27,23 @@ namespace Content.Client.Paint
             if (args.Sprite == null)
                 return;
 
-            for (var layer = 0; layer < args.Sprite.AllLayers.Count(); ++layer)
+            var layer = 0;
+
+
+            for (layer = 0; layer < args.Sprite.AllLayers.Count(); ++layer)
             {
-                args.Sprite.LayerSetShader(layer, component.ShaderName);
-                args.Sprite.LayerSetColor(layer, component.Color);
+                component.BeforePaintedColor = args.Sprite.Color;
+
+                if (component.Enabled == true)
+                {
+                    args.Sprite.LayerSetShader(layer, component.ShaderName);
+                    args.Sprite.LayerSetColor(layer, component.Color);
+                }
+                else if (component.Enabled == false)
+                {
+                    args.Sprite.LayerSetColor(layer, component.BeforePaintedColor);
+                    args.Sprite.LayerSetShader(layer, component.BeforePaintedShader);
+                }
             }
         }
 
@@ -55,8 +68,15 @@ namespace Content.Client.Paint
                 if (!sprite.LayerMapTryGet(revealed, out var layer) || sprite[layer] is not Layer notlayer)
                     continue;
 
-                sprite.LayerSetShader(layer, component.ShaderName);
-                sprite.LayerSetColor(layer, component.Color);
+                if (component.Enabled == true)
+                {
+                    sprite.LayerSetShader(layer, component.ShaderName);
+                    sprite.LayerSetColor(layer, component.Color);
+                    return;
+                }
+                else
+                    sprite.LayerSetColor(layer, component.BeforePaintedColor);
+                return;
             }
         }
 
@@ -76,8 +96,15 @@ namespace Content.Client.Paint
                 if (!sprite.LayerMapTryGet(revealed, out var layer) || sprite[layer] is not Layer notlayer)
                     continue;
 
-                sprite.LayerSetShader(layer, component.ShaderName);
-                sprite.LayerSetColor(layer, component.Color);
+                if (component.Enabled == true)
+                {
+                    sprite.LayerSetShader(layer, component.ShaderName);
+                    sprite.LayerSetColor(layer, component.Color);
+                    return;
+                }
+                else
+                    sprite.LayerSetColor(layer, component.BeforePaintedColor);
+                return;
             }
         }
     }

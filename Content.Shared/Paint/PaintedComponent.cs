@@ -14,6 +14,15 @@ public sealed partial class PaintedComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public Color Color = Color.FromHex("#e9be1a");
 
+    [DataField, AutoNetworkedField]
+    public bool Enabled;
+
+    [DataField]
+    public Color BeforePaintedColor;
+
+    [DataField]
+    public string BeforePaintedShader = "";
+
     /// <summary>
     /// The shader that is applied to the entity.
     /// </summary>

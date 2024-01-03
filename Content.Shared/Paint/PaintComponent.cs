@@ -25,6 +25,9 @@ public sealed partial class PaintComponent : Component
     [DataField]
     public string Solution = "drink";
 
+    [DataField, AutoNetworkedField]
+    public bool Painter = true;
+
     /// <summary>
     /// Reagent that will be used as paint.
     /// </summary>
