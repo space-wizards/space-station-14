@@ -27,6 +27,15 @@
       - id: PlushiePenguin
 
 - type: entity
+  id: CrateFunLizardPlushieBulk
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: PlushieLizard
+        amount: 3
+
+- type: entity
   id: CrateFunInstrumentsVariety
   parent: CrateGenericSteel
   components:
