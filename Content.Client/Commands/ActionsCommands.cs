@@ -1,5 +1,4 @@
 ﻿using Content.Client.Actions;
-using Content.Client.Mapping;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -57,28 +56,6 @@ public sealed class LoadActionsCommand : IConsoleCommand
         try
         {
             EntitySystem.Get<ActionsSystem>().LoadActionAssignments(args[0], true);
-        }
-        catch
-        {
-            shell.WriteLine("Failed to load action assignments");
-        }
-    }
-}
-
-[AnyCommand]
-public sealed class LoadMappingActionsCommand : IConsoleCommand
-{
-    public string Command => "loadmapacts";
-
-    public string Description => "Loads the mapping preset action toolbar assignments.";
-
-    public string Help => $"Usage: {Command}";
-
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
-    {
-        try
-        {
-            EntitySystem.Get<MappingSystem>().LoadMappingActions();
         }
         catch
         {
