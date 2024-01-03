@@ -89,8 +89,6 @@
       - Multitool
       - NetworkConfigurator
       - SprayPainter
-      - WeaponParticleDecelerator
-      - HoloprojectorField
       - FlashlightLantern
       - CableStack
       - CableMVStack
@@ -247,6 +245,8 @@
       - Retractor
       - Cautery
       - Drill
+      - WeaponParticleDecelerator
+      - HoloprojectorField
       - Saw
       - Hemostat
       - Beaker
