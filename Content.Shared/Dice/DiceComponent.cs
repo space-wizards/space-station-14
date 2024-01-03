@@ -32,6 +32,9 @@ public sealed partial class DiceComponent : Component
     [DataField("currentValue")]
     public int CurrentValue { get; set; } = 20;
 
+    [DataField("diceBomb")]
+    public bool DiceBomb;
+
     [Serializable, NetSerializable]
     public sealed class DiceState : ComponentState
     {
