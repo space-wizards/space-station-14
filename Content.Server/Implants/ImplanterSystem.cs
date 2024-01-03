@@ -7,6 +7,7 @@ using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Humanoid;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Implants;
@@ -105,19 +106,33 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     //TODO: Remove when surgery is in
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        var args = new DoAfterArgs(EntityManager, user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
-        {
-            BreakOnUserMove = true,
-            BreakOnTargetMove = true,
-            BreakOnDamage = true,
-			BreakOnTargetWake = true,
-            NeedHand = true,
-        };
-
-        if (_doAfter.TryStartDoAfter(args) && HasComp<SleepingComponent>(target)){
+		// Checks for sleeping but let slime people be awake. TODO: generalize this to use the organType when metabolism is reworked / when consciousness states are added.
+		if (TryComp<HumanoidAppearanceComponent>(target, out var appearance) && appearance.Species == "SlimePerson"){
+			var args = new DoAfterArgs(EntityManager, user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
+            {
+                BreakOnUserMove = true,
+                BreakOnTargetMove = true,
+                BreakOnDamage = true,
+			    BreakOnTargetWake = false,
+                NeedHand = true,
+            };
+			if (_doAfter.TryStartDoAfter(args))
             _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
-        } else {
+		} else {
+		    var args = new DoAfterArgs(EntityManager, user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
+            {
+                BreakOnUserMove = true,
+                BreakOnTargetMove = true,
+                BreakOnDamage = true,
+			    BreakOnTargetWake = true,
+                NeedHand = true,
+            };
+			
+			if (_doAfter.TryStartDoAfter(args) && HasComp<SleepingComponent>(target)){
+            _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
+			} else {
 			_popup.PopupEntity(Loc.GetString("injector-component-implant-draw-fail-not-asleep"), target, user);
+			}
 		}
     }
 
