@@ -9,14 +9,9 @@ namespace Content.Server.Geras;
 [RegisterComponent]
 public sealed partial class GerasComponent : Component
 {
-    [DataField("gerasId")] public ProtoId<EntityPrototype> GerasId = "MobSlimesGeras";
+    [DataField("gerasId")] public ProtoId<EntityPrototype> GerasPolymorphId = "SlimeMorphGeras";
 
     [DataField("gerasAction")] public ProtoId<EntityPrototype> GerasAction = "ActionMorphGeras";
 
-    [DataField("gerasActionEntity")] public EntityUid? GerasActionEntity;
-}
-
-public sealed partial class MorphIntoGeras : InstantActionEvent
-{
-
+    public EntityUid? GerasActionEntity;
 }

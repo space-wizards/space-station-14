@@ -72,7 +72,7 @@
   entity: MobSlimesGeras
   transferName: false
   transferHumanoidAppearance: false
-  inventory: None
+  inventory: Drop
   transferDamage: true
   revertOnDeath: true
   revertOnCrit: true

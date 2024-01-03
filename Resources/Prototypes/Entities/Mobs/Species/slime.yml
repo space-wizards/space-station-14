@@ -15,6 +15,22 @@
   - type: Body
     prototype: Slime
     requiredLegs: 2
+  # they like eat it idk lol
+  - type: Storage
+    grid:
+    - 0,0,2,2
+    maxItemSize: Large
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  # to prevent bag open/honk spam
+  - type: UseDelay
+    delay: 0.5
   - type: HumanoidAppearance
     species: SlimePerson
   - type: Speech
