@@ -116,10 +116,10 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
             result += "\n";
 
-            var custody = IsInCustody(mindId, mind) ? Loc.GetString("objectives-in-custody") + " " : "";
+            var custody = IsInCustody(mindId, mind) ? Loc.GetString("objectives-in-custody") : string.Empty;
 
-            var objectives = mind.AllObjectives.ToArray();
-            if (objectives.Length == 0)
+            var objectives = mind.Objectives;
+            if (objectives.Count == 0)
             {
                 result += Loc.GetString("objectives-no-objectives", ("custody", custody), ("title", title), ("agent", agent));
                 continue;
@@ -129,6 +129,9 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
             foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
             {
+                //TO DO:
+                //check for the right group here. Getting the target issuer is easy: objectiveGroup.Key
+                //It should be compared to the type of the group's issuer.
                 result += "\n" + Loc.GetString($"objective-issuer-{objectiveGroup.Key}");
 
                 foreach (var objective in objectiveGroup)

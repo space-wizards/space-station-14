@@ -26,7 +26,7 @@
   - name: gloves
     slotTexture: gloves
     slotFlags: GLOVES
-    uiWindowPos: 2,2
+    uiWindowPos: 0,1
     strippingWindowPos: 2,2
     displayName: Gloves
     whitelist:
@@ -71,7 +71,7 @@
   - name: gloves
     slotTexture: gloves
     slotFlags: GLOVES
-    uiWindowPos: 2,2
+    uiWindowPos: 1,0
     strippingWindowPos: 2,2
     displayName: Gloves
     whitelist:

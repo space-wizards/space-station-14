@@ -360,6 +360,8 @@
   - type: SoundOnTrigger
     sound: /Audio/Effects/smoke.ogg
   - type: DeleteOnTrigger
+    primingSound:
+      path: /Audio/Effects/Smoke-grenade.ogg
 
 - type: entity
   parent: SmokeGrenade

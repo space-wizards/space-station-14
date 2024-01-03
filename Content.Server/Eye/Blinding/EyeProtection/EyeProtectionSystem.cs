@@ -1,10 +1,10 @@
-using Content.Shared.Eye.Blinding;
 using Content.Shared.StatusEffect;
 using Content.Shared.Inventory;
-using Content.Server.Tools;
+using Content.Shared.Item;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Tools.Components;
+using Content.Shared.Item.ItemToggle;
 
 namespace Content.Server.Eye.Blinding.EyeProtection
 {
@@ -12,11 +12,13 @@ namespace Content.Server.Eye.Blinding.EyeProtection
     {
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly BlindableSystem _blindingSystem = default!;
+        [Dependency] private readonly SharedItemToggleSystem _itemToggle = default!;
+        
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<RequiresEyeProtectionComponent, ToolUseAttemptEvent>(OnUseAttempt);
-            SubscribeLocalEvent<RequiresEyeProtectionComponent, WelderToggledEvent>(OnWelderToggled);
+            SubscribeLocalEvent<RequiresEyeProtectionComponent, ItemToggleDoneEvent>(OnWelderToggled);
 
             SubscribeLocalEvent<EyeProtectionComponent, GetEyeProtectionEvent>(OnGetProtection);
             SubscribeLocalEvent<EyeProtectionComponent, InventoryRelayedEvent<GetEyeProtectionEvent>>(OnGetRelayedProtection);
@@ -44,7 +46,7 @@ namespace Content.Server.Eye.Blinding.EyeProtection
             var ev = new GetEyeProtectionEvent();
             RaiseLocalEvent(args.User, ev);
 
-            var time = (float) (component.StatusEffectTime- ev.Protection).TotalSeconds;
+            var time = (float) (component.StatusEffectTime - ev.Protection).TotalSeconds;
             if (time <= 0)
                 return;
 
@@ -55,9 +57,9 @@ namespace Content.Server.Eye.Blinding.EyeProtection
             _statusEffectsSystem.TryAddStatusEffect(args.User, TemporaryBlindnessSystem.BlindingStatusEffect,
                 statusTimeSpan, false, TemporaryBlindnessSystem.BlindingStatusEffect);
         }
-        private void OnWelderToggled(EntityUid uid, RequiresEyeProtectionComponent component, WelderToggledEvent args)
+        private void OnWelderToggled(EntityUid uid, RequiresEyeProtectionComponent component, ItemToggleDoneEvent args)
         {
-            component.Toggled = args.WelderOn;
+            component.Toggled = _itemToggle.IsActivated(uid);
         }
     }
 }
