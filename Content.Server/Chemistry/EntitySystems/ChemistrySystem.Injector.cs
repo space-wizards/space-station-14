@@ -17,6 +17,9 @@ using Content.Shared.Verbs;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
 using Content.Shared.Popups;
+//anti hypo begin
+using Content.Shared.AntiHypo;
+//anti hypo end
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -37,7 +40,23 @@ public sealed partial class ChemistrySystem
         SubscribeLocalEvent<InjectorComponent, AfterInteractEvent>(OnInjectorAfterInteract);
         SubscribeLocalEvent<InjectorComponent, ComponentGetState>(OnInjectorGetState);
     }
-
+    // anti hypo begin
+    private bool CanInject(EntityUid target, EntityUid user, InjectorComponent component)
+    {
+        if (component.CanPenetrate)
+        {
+            return true;
+        }
+        var ev = new AntiHyposprayEvent(true);
+        RaiseLocalEvent(target, ev);
+        if (ev.Inject != true)
+        {
+            _popup.PopupCursor(Loc.GetString("antihypospray-cant-inject"), user);
+            return false;
+        }
+        return true;
+    }
+    // anti hypo end
     private void AddSetTransferVerbs(EntityUid uid, InjectorComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
@@ -273,7 +292,10 @@ public sealed partial class ChemistrySystem
     {
         // Get transfer amount. May be smaller than _transferAmount if not enough room
         var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetBloodstream.ChemicalSolution.AvailableVolume);
-
+        // anti hypo begin
+        if (!CanInject(target, user, component))
+            return;
+        // anti hypo end
         if (realTransferAmount <= 0)
         {
             _popup.PopupEntity(Loc.GetString("injector-component-cannot-inject-message", ("target", Identity.Entity(target, EntityManager))), injector, user);
@@ -300,7 +322,10 @@ public sealed partial class ChemistrySystem
         if (!_solutions.TryGetSolution(injector, InjectorComponent.SolutionName, out var solution)
             || solution.Volume == 0)
             return;
-
+        // anti hypo begin
+        if (!CanInject(targetEntity, user, component))
+            return;
+        // anti hypo end
         // Get transfer amount. May be smaller than _transferAmount if not enough room
         var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);
 
@@ -360,6 +385,10 @@ public sealed partial class ChemistrySystem
         {
             return;
         }
+        // anti hypo begin
+        if (!CanInject(targetEntity, user, component))
+            return;
+        // anti hypo end
 
         // Get transfer amount. May be smaller than _transferAmount if not enough room, also make sure there's room in the injector
         var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.Volume, solution.AvailableVolume);
@@ -396,6 +425,10 @@ public sealed partial class ChemistrySystem
 
     private void DrawFromBlood(EntityUid user, EntityUid injector, EntityUid target, InjectorComponent component, Solution injectorSolution, BloodstreamComponent stream, FixedPoint2 transferAmount)
     {
+        // anti hypo begin
+        if (!CanInject(target, user, component))
+            return;
+        // anti hypo end
         var drawAmount = (float) transferAmount;
         var bloodAmount = drawAmount;
         var chemAmount = 0f;
