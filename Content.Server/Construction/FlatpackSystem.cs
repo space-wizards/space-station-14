@@ -33,11 +33,16 @@ public sealed class FlatpackSystem : SharedFlatpackSystem
         if (!_itemSlots.TryGetSlot(uid, comp.SlotId, out var itemSlot) || itemSlot.Item is not { } machineBoard)
             return;
 
-        if (!TryComp<MachineBoardComponent>(machineBoard, out var boardComp))
-            return;
-
-        if (!MaterialStorage.CanChangeMaterialAmount(uid, GetFlatpackCreationCost(ent, (machineBoard, boardComp))))
-            return;
+        if (TryComp<MachineBoardComponent>(machineBoard, out var boardComp))
+        {
+            if (!MaterialStorage.CanChangeMaterialAmount(uid, GetFlatpackCreationCost(ent, (machineBoard, boardComp))))
+                return;
+        }
+        else
+        {
+            if (!MaterialStorage.CanChangeMaterialAmount(uid, GetFlatpackCreationCostForComputer(ent)))
+                return;
+        }
 
         comp.Packing = true;
         comp.PackEndTime = _timing.CurTime + comp.PackDuration;
@@ -68,15 +73,21 @@ public sealed class FlatpackSystem : SharedFlatpackSystem
         if (!_itemSlots.TryGetSlot(uid, comp.SlotId, out var itemSlot) || itemSlot.Item is not { } machineBoard)
             return;
 
-        if (!TryComp<MachineBoardComponent>(machineBoard, out var boardComp))
-            return;
-
-        var materialCost = GetFlatpackCreationCost(ent, (machineBoard, boardComp));
-        if (!MaterialStorage.TryChangeMaterialAmount((ent, null), materialCost))
-            return;
-
-        var flatpack = Spawn(comp.BaseFlatpackPrototype, Transform(ent).Coordinates);
-        SetupFlatpack(flatpack, (machineBoard, boardComp));
+        if (TryComp<MachineBoardComponent>(machineBoard, out var boardComp)) {
+            var materialCost = GetFlatpackCreationCost(ent, (machineBoard, boardComp));
+            if (!MaterialStorage.TryChangeMaterialAmount((ent, null), materialCost))
+                return;
+            var flatpack = Spawn(comp.BaseFlatpackPrototype, Transform(ent).Coordinates);
+            SetupFlatpack(flatpack, (machineBoard, boardComp));
+        }
+        else if (TryComp<ComputerBoardComponent>(machineBoard, out var computerBoardComponent))
+        {
+            var materialCost = GetFlatpackCreationCostForComputer(ent);
+            if (!MaterialStorage.TryChangeMaterialAmount((ent, null), materialCost))
+                return;
+            var flatpack = Spawn(comp.BaseFlatpackPrototype, Transform(ent).Coordinates);
+            SetupFlatpack(flatpack, (machineBoard, computerBoardComponent));
+        }
     }
 
     public override void Update(float frameTime)

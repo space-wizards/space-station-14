@@ -52,7 +52,7 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
-        
+
         if (_machinePreview is not { } && _entityManager.Deleted(_machinePreview))
         {
             _machinePreview = null;
@@ -70,11 +70,17 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
         else if (_currentBoard != null)
         {
             //todo double trycomp is kinda stinky.
-            if (_entityManager.TryGetComponent<MachineBoardComponent>(_currentBoard, out var board) &&
-                board.Prototype != null)
+            if (_entityManager.TryGetComponent<MachineBoardComponent>(_currentBoard, out var machineBoardComp) &&
+                machineBoardComp.Prototype != null)
             {
                 var cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker),
-                    (_currentBoard.Value, board));
+                    (_currentBoard.Value, machineBoardComp));
+                PackButton.Disabled = !_materialStorage.CanChangeMaterialAmount(_owner, cost);
+            }
+            else if (_entityManager.TryGetComponent<ComputerBoardComponent>(_currentBoard, out var computerBoardComp) &&
+                     computerBoardComp.Prototype != null)
+            {
+                var cost = _flatpack.GetFlatpackCreationCostForComputer((_owner, flatpacker));
                 PackButton.Disabled = !_materialStorage.CanChangeMaterialAmount(_owner, cost);
             }
         }
@@ -98,6 +104,17 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
             MachineNameLabel.SetMessage(proto.Name);
             var cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker),
                 (_currentBoard.Value, machineBoard));
+            CostLabel.SetMarkup(GetCostString(cost));
+        }
+        else if (_currentBoard != null &&
+                 _entityManager.TryGetComponent<ComputerBoardComponent>(_currentBoard, out var computerBoard) &&
+                 computerBoard.Prototype != null)
+        {
+            var proto = _prototypeManager.Index<EntityPrototype>(computerBoard.Prototype);
+            _machinePreview = _entityManager.Spawn(proto.ID);
+            _spriteSystem.ForceUpdate(_machinePreview.Value);
+            MachineNameLabel.SetMessage(proto.Name);
+            var cost = _flatpack.GetFlatpackCreationCostForComputer((_owner, flatpacker));
             CostLabel.SetMarkup(GetCostString(cost));
         }
         else
