@@ -378,7 +378,17 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DiscordRoundEndRoleWebhook =
             CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Discord bot token for link stuff.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordToken =
+            CVarDef.Create("discord.token", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
+        /// <summary>
+        ///     The Discord guild ID to use for link stuff.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordGuildId =
+            CVarDef.Create("discord.guild_id", string.Empty, CVar.SERVERONLY);
         /*
          * Suspicion
          */
@@ -708,6 +718,9 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
+
+        public static readonly CVarDef<string> AdminRelayChannelId =
+            CVarDef.Create("admin.relay_channel_id", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
         /// Should users be able to see their own notes? Admins will be able to see and set notes regardless
@@ -1133,6 +1146,9 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> OocEnableDuringRound =
             CVarDef.Create("ooc.enable_during_round", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
+
+        public static readonly CVarDef<string> OocRelayChannelId =
+            CVarDef.Create("ooc.relay_channel_id", "", CVar.SERVERONLY);
 
         /*
          * LOOC
