@@ -1,17 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
-using Content.Server.MoMMI;
+using Content.Server.Discord;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Mind;
+using Discord.WebSocket;
 using Robust.Server.Player;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -36,7 +39,6 @@ namespace Content.Server.Chat.Managers
 
         [Dependency] private readonly IReplayRecordingManager _replay = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
-        [Dependency] private readonly IMoMMILink _mommiLink = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
@@ -45,6 +47,8 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly DiscordLink _discordLink = default!;
+        [Dependency] private readonly ITaskManager _taskManager = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -53,6 +57,8 @@ namespace Content.Server.Chat.Managers
 
         private bool _oocEnabled = true;
         private bool _adminOocEnabled = true;
+        private ulong _relayChannelId = 0;
+        private ulong _adminRelayChannelId = 0;
 
         private readonly Dictionary<NetUserId, ChatUser> _players = new();
 
@@ -63,8 +69,53 @@ namespace Content.Server.Chat.Managers
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
             _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
+            _configurationManager.OnValueChanged(CCVars.OocRelayChannelId, OnOocChannelChanged, true);
+            _configurationManager.OnValueChanged(CCVars.AdminRelayChannelId, OnAdminChannelChanged, true);
+
+            _discordLink.Client!.MessageReceived += MessageReceived;
 
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
+        }
+
+        private Task MessageReceived(SocketMessage arg)
+        {
+            if (arg.Author.IsBot)
+            {
+                return Task.CompletedTask;
+            }
+            if (arg.Channel.Id == _relayChannelId)
+            {
+                _taskManager.RunOnMainThread(() =>
+                {
+                    SendHookOOC(arg.Author.Username, arg.Content);
+                });
+            }
+            else if (arg.Channel.Id == _adminRelayChannelId)
+            {
+                _taskManager.RunOnMainThread(() =>
+                {
+                    SendAdminChat("(D) " + arg.Author.Username, arg.Content);
+                });
+            }
+            return Task.CompletedTask;
+        }
+
+        private void OnAdminChannelChanged(string id)
+        {
+            if (!ulong.TryParse(id, out var channelId))
+            {
+                return;
+            }
+            _adminRelayChannelId = channelId;
+        }
+
+        private void OnOocChannelChanged(string id)
+        {
+            if (!ulong.TryParse(id, out var channelId))
+            {
+                return;
+            }
+            _relayChannelId = channelId;
         }
 
         private void OnOocEnabledChanged(bool val)
@@ -238,7 +289,7 @@ namespace Content.Server.Chat.Managers
 
             //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
             ChatMessageToAll(ChatChannel.OOC, message, wrappedMessage, EntityUid.Invalid, hideChat: false, recordReplay: true, colorOverride: colorOverride, author: player.UserId);
-            _mommiLink.SendOOCMessage(player.Name, message);
+            _discordLink.SendMessage($"**OOC**: `{player.Name}`: {message}", _relayChannelId);
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"OOC from {player:Player}: {message}");
         }
 
@@ -269,7 +320,31 @@ namespace Content.Server.Chat.Managers
                     author: player.UserId);
             }
 
+            _discordLink.SendMessage($"**Admin Chat**: `{player.Name}`: {message}", _adminRelayChannelId);
             _adminLogger.Add(LogType.Chat, $"Admin chat from {player:Player}: {message}");
+        }
+
+        private void SendAdminChat(string username, string message)
+        {
+            var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
+            var wrappedMessage = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
+                ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
+                ("playerName", username), ("message", FormattedMessage.EscapeText(message)));
+
+            foreach (var client in clients)
+            {
+
+                ChatMessageToOne(ChatChannel.AdminChat,
+                    message,
+                    wrappedMessage,
+                    default,
+                    false,
+                    client,
+                    audioPath: default,
+                    audioVolume: default);
+            }
+
+            _adminLogger.Add(LogType.Chat, $"Admin chat (relay) from {username}: {message}");
         }
 
         #endregion
