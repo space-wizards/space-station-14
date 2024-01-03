@@ -1195,14 +1195,14 @@
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: kobold
       sprite: Mobs/Animals/kobold.rsi
+      state: kobold
     - map: [ "outline" ]
+      sprite: Mobs/Animals/kobold.rsi
       state: outline
-      sprite: Mob/Animals/kobold.rsi
     - map: [ "horns" ]
-      state: horns_short
       sprite: Mobs/Customization/reptilian_parts.rsi
+      state: horns_short
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi
