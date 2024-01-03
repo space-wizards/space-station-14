@@ -41,6 +41,7 @@
         Slash: 7
   - type: Item
     sprite: Objects/Tools/Hydroponics/clippers.rsi
+    storedRotation: -90
 
 - type: entity
   name: scythe
@@ -123,6 +124,8 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
     state: icon
+  - type: Item
+    storedRotation: -90
   - type: Clothing
     quickEquip: false
     slots:

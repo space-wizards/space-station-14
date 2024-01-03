@@ -190,7 +190,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if (!slotContainer.Insert(itemUid))
+        if (!_containerSystem.Insert(itemUid, slotContainer))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
@@ -331,6 +331,10 @@ public abstract partial class InventorySystem
         bool force = false, bool predicted = false, InventoryComponent? inventory = null, ClothingComponent? clothing = null)
     {
         removedItem = null;
+
+        if (TerminatingOrDeleted(target))
+            return false;
+
         if (!Resolve(target, ref inventory, false))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
@@ -347,7 +351,7 @@ public abstract partial class InventorySystem
 
         removedItem = slotContainer.ContainedEntity;
 
-        if (!removedItem.HasValue)
+        if (!removedItem.HasValue || TerminatingOrDeleted(removedItem.Value))
             return false;
 
         if (!force && !CanUnequip(actor, target, slot, out var reason, slotContainer, slotDefinition, inventory))
@@ -370,7 +374,7 @@ public abstract partial class InventorySystem
             }
         }
 
-        if (!slotContainer.Remove(removedItem.Value, force: force))
+        if (!_containerSystem.Remove(removedItem.Value, slotContainer, force: force))
             return false;
 
         // TODO: Inventory needs a hot cleanup hoo boy

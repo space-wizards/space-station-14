@@ -50,6 +50,12 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: input
+    collectionName: radiationCollector
+    sprite: Structures/Power/Generation/Singularity/collector.rsi
+    state: static
   - type: RadiationCollector
     chargeModifier: 7500
     radiationReactiveGases:

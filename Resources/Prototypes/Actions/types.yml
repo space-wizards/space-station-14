@@ -181,7 +181,7 @@
   noSpawn: true
   components:
   - type: InstantAction
-    icon: Interface/Actions/scream.png # somebody else can figure out a better icon for this
+    icon: { sprite: Interface/Actions/voice-mask.rsi, state: icon }
     event: !type:VoiceMaskSetNameEvent
 
 - type: entity
@@ -286,3 +286,16 @@
     useDelay: 30
     icon: Interface/Actions/firestarter.png
     event: !type:FireStarterActionEvent
+
+- type: entity
+  id: ActionToggleEyes
+  name: Open/Close eyes
+  description: Close your eyes to protect your peepers, or open your eyes to enjoy the pretty lights.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/eyeopen.png
+    iconOn: Interface/Actions/eyeclose.png
+    event: !type:ToggleEyesActionEvent
+    useDelay: 1 # so u cant give yourself and observers eyestrain by rapidly spamming the action
+

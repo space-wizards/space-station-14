@@ -67,7 +67,7 @@ public sealed partial class ContentAudioSystem
         _nextAudio = TimeSpan.MaxValue;
 
         SetupAmbientSounds();
-        _proto.PrototypesReloaded += OnProtoReload;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnProtoReload);
         _state.OnStateChanged += OnStateChange;
         // On round end summary OR lobby cut audio.
         SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEndMessage);
@@ -75,7 +75,7 @@ public sealed partial class ContentAudioSystem
 
     private void AmbienceCVarChanged(float obj)
     {
-        _volumeSlider = obj;
+        _volumeSlider = SharedAudioSystem.GainToVolume(obj);
 
         if (_ambientMusicStream != null && _musicProto != null)
         {
@@ -86,21 +86,14 @@ public sealed partial class ContentAudioSystem
     private void ShutdownAmbientMusic()
     {
         _configManager.UnsubValueChanged(CCVars.AmbientMusicVolume, AmbienceCVarChanged);
-        _proto.PrototypesReloaded -= OnProtoReload;
         _state.OnStateChanged -= OnStateChange;
         _ambientMusicStream = _audio.Stop(_ambientMusicStream);
     }
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
     {
-        if (!obj.ByType.ContainsKey(typeof(AmbientMusicPrototype)) &&
-            !obj.ByType.ContainsKey(typeof(RulesPrototype)))
-        {
-            return;
-        }
-
-        _ambientSounds.Clear();
-        SetupAmbientSounds();
+        if (obj.WasModified<AmbientMusicPrototype>() || obj.WasModified<RulesPrototype>())
+            SetupAmbientSounds();
     }
 
     private void OnStateChange(StateChangedEventArgs obj)
@@ -114,6 +107,7 @@ public sealed partial class ContentAudioSystem
 
     private void SetupAmbientSounds()
     {
+        _ambientSounds.Clear();
         foreach (var ambience in _proto.EnumeratePrototypes<AmbientMusicPrototype>())
         {
             var tracks = _ambientSounds.GetOrNew(ambience.ID);
@@ -159,7 +153,7 @@ public sealed partial class ContentAudioSystem
         // Update still runs in lobby so just ignore it.
         if (_state.CurrentState is not GameplayState)
         {
-            FadeOut(_ambientMusicStream);
+            Audio.Stop(_ambientMusicStream);
             _ambientMusicStream = null;
             _musicProto = null;
             return;
