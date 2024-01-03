@@ -190,3 +190,5 @@
   - type: Construction
     graph: Windoor
     node: windoorSecure
+  - type: StaticPrice
+    price: 200

@@ -537,15 +537,13 @@ entities:
     - pos: 0.5,-1.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 144
     components:
     - pos: 2.5,-3.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 146
     components:
     - pos: 1.5,-3.5
@@ -656,8 +654,7 @@ entities:
     - pos: 5.5,-7.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 168
     components:
     - pos: 5.5,-8.5
@@ -698,22 +695,19 @@ entities:
     - pos: -0.5,-5.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 240
     components:
     - pos: -0.5,-6.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 241
     components:
     - pos: -0.5,-7.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 242
     components:
     - pos: 5.5,-11.5
@@ -729,22 +723,19 @@ entities:
     - pos: 3.5,-11.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 245
     components:
     - pos: 2.5,-11.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 246
     components:
     - pos: 1.5,-11.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 247
     components:
     - pos: 12.5,-6.5
@@ -755,15 +746,13 @@ entities:
     - pos: 13.5,-6.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 249
     components:
     - pos: 13.5,-7.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 256
     components:
     - pos: 11.5,-7.5
@@ -796,15 +785,13 @@ entities:
     - pos: 1.5,-0.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 226
     components:
     - pos: 2.5,-0.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: CableMV
   entities:
   - uid: 220
@@ -812,8 +799,7 @@ entities:
     - pos: 2.5,-3.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 221
     components:
     - pos: 2.5,-2.5
@@ -829,8 +815,7 @@ entities:
     - pos: 2.5,-0.5
       parent: 289
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: Catwalk
   entities:
   - uid: 138

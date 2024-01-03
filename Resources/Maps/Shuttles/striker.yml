@@ -412,8 +412,7 @@ entities:
     - pos: 0.5,-6.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 121
     components:
     - pos: -0.5,-6.5
@@ -424,8 +423,7 @@ entities:
     - pos: -0.5,-7.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 123
     components:
     - pos: -0.5,-8.5
@@ -446,43 +444,37 @@ entities:
     - pos: 1.5,-8.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 127
     components:
     - pos: -2.5,-8.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 128
     components:
     - pos: -3.5,-8.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 129
     components:
     - pos: -3.5,-7.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 130
     components:
     - pos: 2.5,-8.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 131
     components:
     - pos: 2.5,-7.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 132
     components:
     - pos: -0.5,-5.5
@@ -528,22 +520,19 @@ entities:
     - pos: -0.5,2.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 141
     components:
     - pos: -1.5,1.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 143
     components:
     - pos: 0.5,1.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 145
     components:
     - pos: -1.5,-1.5
@@ -584,8 +573,7 @@ entities:
     - pos: 3.5,-1.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 153
     components:
     - pos: 0.5,-4.5
@@ -596,15 +584,13 @@ entities:
     - pos: 1.5,-4.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 155
     components:
     - pos: 1.5,-5.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 156
     components:
     - pos: -1.5,-4.5
@@ -615,15 +601,13 @@ entities:
     - pos: -2.5,-4.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 158
     components:
     - pos: -2.5,-5.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: CableHV
   entities:
   - uid: 111
@@ -636,22 +620,19 @@ entities:
     - pos: 0.5,-7.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 113
     components:
     - pos: -0.5,-7.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 114
     components:
     - pos: -1.5,-7.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 115
     components:
     - pos: -2.5,-7.5
@@ -662,8 +643,7 @@ entities:
     - pos: -1.5,-6.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: CableHVStack1
   entities:
   - uid: 235
@@ -693,8 +673,7 @@ entities:
     - pos: -1.5,-6.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 118
     components:
     - pos: -0.5,-6.5
@@ -705,8 +684,7 @@ entities:
     - pos: 0.5,-6.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: CapacitorStockPart
   entities:
   - uid: 233
@@ -1124,8 +1102,7 @@ entities:
       pos: -0.5,-7.5
       parent: 325
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 212
     components:
     - rot: 1.5707963267948966 rad
@@ -1151,8 +1128,7 @@ entities:
       transmitFrequency: 1621
       receiveFrequency: 1621
       type: DeviceNetwork
-    - enabled: False
-      type: AmbientSound
+
   - uid: 219
     components:
     - rot: 1.5707963267948966 rad
@@ -1163,8 +1139,7 @@ entities:
       transmitFrequency: 1621
       receiveFrequency: 1621
       type: DeviceNetwork
-    - enabled: False
-      type: AmbientSound
+
   - uid: 220
     components:
     - rot: -1.5707963267948966 rad
@@ -1175,8 +1150,7 @@ entities:
       transmitFrequency: 1621
       receiveFrequency: 1621
       type: DeviceNetwork
-    - enabled: False
-      type: AmbientSound
+
   - uid: 221
     components:
     - rot: -1.5707963267948966 rad
@@ -1187,8 +1161,7 @@ entities:
       transmitFrequency: 1621
       receiveFrequency: 1621
       type: DeviceNetwork
-    - enabled: False
-      type: AmbientSound
+
   - uid: 222
     components:
     - rot: 1.5707963267948966 rad
@@ -1199,8 +1172,7 @@ entities:
       transmitFrequency: 1621
       receiveFrequency: 1621
       type: DeviceNetwork
-    - enabled: False
-      type: AmbientSound
+
 - proto: GeneratorBasic15kW
   entities:
   - uid: 41
@@ -1712,16 +1684,14 @@ entities:
       pos: 0.5,0.5
       parent: 325
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
   - uid: 110
     components:
     - rot: 3.141592653589793 rad
       pos: -2.5,-2.5
       parent: 325
       type: Transform
-    - enabled: False
-      type: AmbientSound
+
 - proto: PoweredlightLED
   entities:
   - uid: 182
