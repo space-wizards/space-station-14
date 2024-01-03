@@ -57,8 +57,8 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         if (UIManager.ActiveScreen == null)
             return;
 
-        var inventoryGui = UIManager.GetActiveUIWidget<InventoryGui>();
-        RegisterInventoryButton(inventoryGui.InventoryButton);
+        if (UIManager.GetActiveUIWidgetOrNull<InventoryGui>() is { } inventoryGui)
+            RegisterInventoryButton(inventoryGui.InventoryButton);
     }
 
     public void OnStateEntered(GameplayState state)
