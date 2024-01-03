@@ -51501,10 +51501,10 @@ entities:
       parent: 1
 - proto: DefaultStationBeaconArtifactLab
   entities:
-  - uid: 8959
+  - uid: 9609
     components:
     - type: Transform
-      pos: -9.5,32.5
+      pos: -9.5,30.5
       parent: 1
 - proto: DefaultStationBeaconAtmospherics
   entities:
@@ -51602,7 +51602,7 @@ entities:
   - uid: 9375
     components:
     - type: Transform
-      pos: 9.5,32.5
+      pos: 10.5,30.5
       parent: 1
 - proto: DefaultStationBeaconDetectiveRoom
   entities:
@@ -51702,10 +51702,10 @@ entities:
       parent: 1
 - proto: DefaultStationBeaconMorgue
   entities:
-  - uid: 9609
+  - uid: 9680
     components:
     - type: Transform
-      pos: 19.5,33.5
+      pos: 20.5,31.5
       parent: 1
 - proto: DefaultStationBeaconPermaBrig
   entities:
@@ -51744,10 +51744,10 @@ entities:
       parent: 1
 - proto: DefaultStationBeaconRobotics
   entities:
-  - uid: 9680
+  - uid: 8959
     components:
     - type: Transform
-      pos: -18.5,32.5
+      pos: -17.5,33.5
       parent: 1
 - proto: DefaultStationBeaconSalvage
   entities:
