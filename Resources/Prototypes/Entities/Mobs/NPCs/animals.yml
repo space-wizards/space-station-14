@@ -1171,6 +1171,8 @@
       Male: UnisexReptilian
       Female: UnisexReptilian
       Unsexed: UnisexReptilian
+  - type: TypingIndicator
+    proto: lizard
   - type: MobThresholds
     thresholds:
       0: Alive
