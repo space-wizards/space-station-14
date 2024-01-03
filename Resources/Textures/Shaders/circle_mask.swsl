@@ -1,19 +1,17 @@
-uniform highp float ZOOM;
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float Zoom;
 
-highp vec4 circle(in highp vec2 uv, in highp vec2 pos, highp float rad, in highp vec3 color) {
-    highp float d = length(pos - uv) - rad;
-    highp float t = clamp(d, 0.0, 1.0);
-    return vec4(color, t);
-}
+uniform highp float CircleRadius; //= 15.0; // radius of the circular gradient
+uniform highp float CircleMinDist; //= 0.25; // minimum distance from the center of the screen for the gradient
+uniform highp float CirclePow; //= 0.5; // the exponent used for the gradient
+uniform highp float CircleMax; //= 4.0; // Maximum value for the gradient used for the gradient. Don't worry, the end result gets clamped.
+uniform highp float CircleMult; //= 0.5; // Multiplier for the total value of the circle gradient.
+
+
 void fragment(){
-	highp vec2 uv = FRAGCOORD.xy;
-    highp vec2 res_xy = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
-    highp vec2 center = res_xy*0.5;
-    highp float radius = 0.05 * res_xy.y / ZOOM;
+    highp vec2 aspect = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
+    highp float actualZoom = Zoom;
 
-    highp vec4 layer1 = vec4(vec3(0.0), 0.0);
-
-    highp vec4 layer2 = circle(uv, center, radius, vec3(0.0));
-
-    COLOR = mix(layer1, layer2, layer2.a);
+    highp float circle = zCircleGradient(aspect * 0.5, FRAGCOORD.xy, CircleMax, CircleRadius / actualZoom, /*CircleMinDist / actualZoom*/ 0.0, CirclePow) * CircleMult;
+    COLOR = mix(vec4(0.0), vec4(vec3(0.0), 1.0), clamp(circle, 0.0, 1.0));
 }

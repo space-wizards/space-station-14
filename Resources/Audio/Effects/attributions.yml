@@ -196,3 +196,8 @@
   copyright: 'Sound effects from https://quicksounds.com"'
   license: CC0-1.0
   source: https://quicksounds.com/library/sounds/grenade
+
+- files: ["eye_open.ogg", "eye_close.ogg"]
+  copyright: Bhijn and Myr (github username deathride58)
+  license: CC0-1.0
+  source: https://github.com/space-wizards/space-station-14/pull/23212
