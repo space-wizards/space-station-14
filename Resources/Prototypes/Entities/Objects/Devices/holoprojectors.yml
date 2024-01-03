@@ -47,7 +47,7 @@
   parent: Holoprojector
   id: HoloprojectorField
   name: force field projector
-  description: Creates a powerful temporal containment field that won't let anything through, not even a tesla or singularity.
+  description: Creates an impassable forcefield that won't let anything through. Close proximity may or may not cause cancer.
   components:
     - type: HolosignProjector
       signProto: HolosignForcefield

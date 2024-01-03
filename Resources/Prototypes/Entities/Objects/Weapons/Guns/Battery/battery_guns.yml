@@ -314,6 +314,34 @@
     fireCost: 100
 
 - type: entity
+  name: Particle Decelerator
+  parent: BaseWeaponBattery
+  id: WeaponAntiPA
+  description: A portable antimetter marticle accselerator capable of decomposing a tesla or singularity
+  components:
+    - type: Item
+      size: Ginormous
+    - type: MultiHandedItem
+    - type: ClothingSpeedModifier
+      walkModifier: 0.6
+      sprintModifier: 0.6
+    - type: HeldSpeedModifier
+    - type: Sprite 
+      sprite: Objects/Weapons/Guns/Battery/antiPA.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+    - type: Gun
+      fireRate: 0.5
+      soundGunshot:
+        path: /Audio/Weapons/emitter.ogg
+        params:
+          pitch: 2
+    - type: ProjectileBatteryAmmoProvider
+      proto: AntiParticlesProjectile
+      fireCost: 200
+
+- type: entity
   name: x-ray cannon
   parent: BaseWeaponBattery
   id: WeaponXrayCannon
