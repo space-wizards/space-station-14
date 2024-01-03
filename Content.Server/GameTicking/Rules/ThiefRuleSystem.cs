@@ -16,6 +16,7 @@ using Content.Server.Antag;
 using Robust.Server.Audio;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Random;
+using System.Text;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -49,93 +50,83 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
     {
-        var query = EntityQueryEnumerator<ThiefRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var thief, out var gameRule))
+        var query = QueryActiveRules();
+        while (query.MoveNext(out _, out var comp, out _))
         {
             //Chance to not lauch gamerule  
-            if (_random.Prob(thief.RuleChance))
+            if (_random.Prob(comp.RuleChance))
             {
-                if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+                var eligiblePlayers = _antagSelection.GetEligiblePlayers(comp.ThiefPrototypeId);
+
+                if (eligiblePlayers.Count == 0)
                     continue;
 
-                foreach (var player in ev.Players)
-                {
-                    if (!ev.Profiles.TryGetValue(player.UserId, out var profile))
-                        continue;
+                var thiefCount = Math.Min(comp.MaxAllowThief, eligiblePlayers.Count);
 
-                    thief.StartCandidates[player] = profile;
-                }
-                DoThiefStart(thief);
+                var thieves = _antagSelection.ChooseAntags(eligiblePlayers, thiefCount);
+
+                MakeThief(thieves, comp, comp.PacifistThieves);
             }
         }
     }
 
-    private void DoThiefStart(ThiefRuleComponent component)
+    public void MakeThief(List<EntityUid> players, ThiefRuleComponent thiefRule, bool addPacified)
     {
-        if (!component.StartCandidates.Any())
+        foreach (var thief in players)
         {
-            Log.Error("There are no players who can become thieves.");
+            MakeThief(thief, thiefRule, addPacified);
+        }
+    }
+    public void MakeThief(EntityUid thief, ThiefRuleComponent thiefRule, bool addPacified)
+    {
+        if (!_mindSystem.TryGetMind(thief, out var mind, out var mindComponent))
             return;
-        }
-
-        var startThiefCount = Math.Min(component.MaxAllowThief, component.StartCandidates.Count);
-        var thiefPool = _antagSelection.FindPotentialAntags(component.StartCandidates, component.ThiefPrototypeId);
-        //TO DO: When voxes specifies are added, increase their chance of becoming a thief by 4 times >:)
-
-        //Add 1, as Next() is exclusive of maxValue
-        var numberOfThievesToSelect = _random.Next(1, startThiefCount + 1);
-
-        //While we dont have the correct number of thieves, and there are potential thieves remaining
-        while (component.ThievesMinds.Count < numberOfThievesToSelect && thiefPool.Count > 0)
-        {
-            Log.Info($"{numberOfThievesToSelect} thieves required, {component.ThievesMinds.Count} currently chosen, {thiefPool.Count} potentials");
-            var selectedThieves = _antagSelection.PickAntag(numberOfThievesToSelect - component.ThievesMinds.Count, thiefPool);
-            foreach (var thief in selectedThieves)
-            {
-                MakeThief(component, thief, component.PacifistThieves);
-            }
-        }
-    }
-
-    public bool MakeThief(ThiefRuleComponent thiefRule, ICommonSession thief, bool addPacified)
-    {
-        //checks
-        if (!_mindSystem.TryGetMind(thief, out var mindId, out var mind))
-        {
-            Log.Info("Failed getting mind for picked thief.");
-            return false;
-        }
-        if (HasComp<ThiefRoleComponent>(mindId))
-        {
-            Log.Error($"Player {thief.Name} is already a thief.");
-            return false;
-        }
-        if (mind.OwnedEntity is not { } entity)
-        {
-            Log.Error("Mind picked for thief did not have an attached entity.");
-            return false;
-        }
 
         // Assign thief roles
-        _roleSystem.MindAddRole(mindId, new ThiefRoleComponent
+        _roleSystem.MindAddRole(mind, new ThiefRoleComponent
         {
-            PrototypeId = thiefRule.ThiefPrototypeId
-        });
+            PrototypeId = thiefRule.ThiefPrototypeId,
+        }, silent: true);
 
         //Add Pacified  
         //To Do: Long-term this should just be using the antag code to add components.
         if (addPacified) //This check is important because some servers may want to disable the thief's pacifism. Do not remove.
         {
-            EnsureComp<PacifiedComponent>(mind.OwnedEntity.Value);
+            EnsureComp<PacifiedComponent>(thief);
         }
 
-        // Notificate player about new role assignment
-        if (_mindSystem.TryGetSession(mindId, out var session))
+        //Generate objectives
+        GenerateObjectives(mind, mindComponent, thiefRule);
+
+        //Send briefing here to account for humanoid/animal
+        _antagSelection.SendBriefing(thief, MakeBriefing(thief), null, thiefRule.GreetingSound);
+
+        // Give starting items
+        _antagSelection.GiveAntagBagGear(thief, thiefRule.StarterItems);
+
+        thiefRule.ThievesMinds.Add(mind);
+    }
+
+    public void AdminMakeThief(EntityUid mindID, MindComponent mind, bool addPacified)
+    {
+        var thiefRule = EntityQuery<ThiefRuleComponent>().FirstOrDefault();
+        if (thiefRule == null)
         {
-            _audio.PlayGlobal(thiefRule.GreetingSound, session);
-            _chatManager.DispatchServerMessage(session, MakeBriefing(mind.OwnedEntity.Value));
+            GameTicker.StartGameRule("Thief", out var ruleEntity);
+            thiefRule = Comp<ThiefRuleComponent>(ruleEntity);
         }
 
+        if (!HasComp<ThiefRoleComponent>(mind.OwnedEntity))
+        {
+            if (mind.OwnedEntity != null)
+            {
+                MakeThief(mind.OwnedEntity.Value, thiefRule, addPacified);
+            }
+        }
+    }
+
+    private void GenerateObjectives(EntityUid mindId, MindComponent mind, ThiefRuleComponent thiefRule)
+    {
         // Give thieves their objectives
         var difficulty = 0f;
 
@@ -163,24 +154,6 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         var escapeObjective = _objectives.GetRandomObjective(mindId, mind, EscapeObjectiveGroup);
         if (escapeObjective != null)
             _mindSystem.AddObjective(mindId, mind, escapeObjective.Value);
-
-        // Give starting items
-        _antagSelection.GiveAntagBagGear(mind.OwnedEntity.Value, thiefRule.StarterItems);
-
-        thiefRule.ThievesMinds.Add(mindId);
-        return true;
-    }
-
-    public void AdminMakeThief(ICommonSession thief, bool addPacified)
-    {
-        var thiefRule = EntityQuery<ThiefRuleComponent>().FirstOrDefault();
-        if (thiefRule == null)
-        {
-            GameTicker.StartGameRule("Thief", out var ruleEntity);
-            thiefRule = Comp<ThiefRuleComponent>(ruleEntity);
-        }
-
-        MakeThief(thiefRule, thief, addPacified);
     }
 
     //Add mind briefing
@@ -195,13 +168,12 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
     private string MakeBriefing(EntityUid thief)
     {
         var isHuman = HasComp<HumanoidAppearanceComponent>(thief);
-        var briefing = "\n";
-        briefing = isHuman
-            ? Loc.GetString("thief-role-greeting-human")
-            : Loc.GetString("thief-role-greeting-animal");
+        var sb = new StringBuilder();
+        sb.AppendLine(isHuman ? Loc.GetString("thief-role-greeting-human") : Loc.GetString("thief-role-greeting-animal"));
+        sb.AppendLine();
+        sb.AppendLine(Loc.GetString("thief-role-greeting-equipment"));
 
-        briefing += "\n \n" + Loc.GetString("thief-role-greeting-equipment") + "\n";
-        return briefing;
+        return sb.ToString();
     }
 
     private void OnObjectivesTextGetInfo(Entity<ThiefRuleComponent> thiefs, ref ObjectivesTextGetInfoEvent args)

@@ -45,7 +45,7 @@ public sealed partial class RevolutionaryRuleComponent : Component
     /// Min players needed for Revolutionary gamemode to start.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int MinPlayers = 15;
+    public int MinPlayers = 1;//15;
 
     /// <summary>
     /// Max Head Revs allowed during selection.

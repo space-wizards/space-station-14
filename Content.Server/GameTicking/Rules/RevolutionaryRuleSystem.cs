@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Antag;
 using Content.Server.Chat.Managers;
@@ -11,7 +10,6 @@ using Content.Server.Popups;
 using Content.Server.Revolutionary.Components;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
-using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
@@ -25,8 +23,9 @@ using Content.Shared.Roles;
 using Content.Shared.Stunnable;
 using Content.Shared.Zombies;
 using Robust.Server.Audio;
-using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -140,7 +139,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var comp, out var gameRule))
         {
-            _antagSelection.AttemptStartGameRule(ev, uid, comp.MinPlayers, gameRule);
+            _antagSelection.AttemptStartGameRule(ev, uid, comp.MinPlayers, gameRule, Loc.GetString("roles-antag-rev-name"));
         }
     }
 
@@ -149,14 +148,17 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var query = QueryActiveRules();
         while (query.MoveNext(out _, out var comp, out _))
         {
-            _antagSelection.EligiblePlayers(comp.HeadRevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
-                "head-rev-role-greeting", "#5e9cff", out var chosen);
-            if (chosen.Any())
-                GiveHeadRev(chosen, comp.HeadRevPrototypeId, comp);
-            else
-            {
-                _chatManager.SendAdminAnnouncement(Loc.GetString("rev-no-heads"));
-            }
+            var eligiblePlayers = _antagSelection.GetEligiblePlayers(comp.HeadRevPrototypeId);
+
+            if (eligiblePlayers.Count == 0)
+                continue;
+
+            var headRevCount = _antagSelection.CalculateAntagNumber(eligiblePlayers.Count, comp.PlayersPerHeadRev, comp.MaxHeadRevs);
+
+            var headRevs = _antagSelection.ChooseAntags(eligiblePlayers, headRevCount);
+
+            _antagSelection.SendBriefing(headRevs, Loc.GetString("head-rev-role-greeting"), Color.CornflowerBlue, comp.HeadRevStartSound);
+            GiveHeadRev(headRevs, comp.HeadRevPrototypeId, comp);
         }
     }
 
@@ -164,21 +166,20 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         foreach (var headRev in chosen)
         {
+
             RemComp<CommandStaffComponent>(headRev);
 
             var inCharacterName = MetaData(headRev).EntityName;
-            if (_mind.TryGetMind(headRev, out var mindId, out var mind))
+
+            if (!_mind.TryGetMind(headRev, out var mind, out var mindComponent))
+                continue;
+
+            if (!_role.MindHasRole<RevolutionaryRoleComponent>(mind))
             {
-                if (!_role.MindHasRole<RevolutionaryRoleComponent>(mindId))
-                {
-                    _role.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = antagProto });
-                }
-                if (mind.Session != null)
-                {
-                    comp.HeadRevs.Add(inCharacterName, mindId);
-                }
+                _role.MindAddRole(mind, new RevolutionaryRoleComponent { PrototypeId = antagProto }, silent: true);
             }
 
+            comp.HeadRevs.Add(inCharacterName, mind);
             _antagSelection.GiveAntagBagGear(headRev, comp.StartingGear);
             EnsureComp<RevolutionaryComponent>(headRev);
             EnsureComp<HeadRevolutionaryComponent>(headRev);
@@ -215,19 +216,16 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
             if (_mind.TryGetRole<RevolutionaryRoleComponent>(ev.User.Value, out var headrev))
                 headrev.ConvertedCount++;
+
         }
 
         if (mindId == default || !_role.MindHasRole<RevolutionaryRoleComponent>(mindId))
         {
             _role.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = RevolutionaryAntagRole });
         }
-        if (mind?.Session != null)
-        {
-            var message = Loc.GetString("rev-role-greeting");
-            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Red);
-            _audioSystem.PlayGlobal("/Audio/Ambience/Antag/headrev_start.ogg", ev.Target);
-        }
+
+        if (mind != null && mind.OwnedEntity.HasValue)
+            _antagSelection.SendBriefing(mind.OwnedEntity.Value, Loc.GetString("rev-role-greeting"), Color.Red, new SoundPathSpecifier("/Audio/Ambience/Antag/headrev_start.ogg"));
     }
 
     public void OnHeadRevAdmin(EntityUid mindId, MindComponent? mind = null)
@@ -251,12 +249,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     mind.OwnedEntity.Value
                 };
                 GiveHeadRev(player, RevolutionaryAntagRole, revRule);
-            }
-            if (mind.Session != null)
-            {
-                var message = Loc.GetString("head-rev-role-greeting");
-                var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.FromHex("#5e9cff"));
+                _antagSelection.SendBriefing(player, Loc.GetString("head-rev-role-greeting"), Color.CornflowerBlue, revRule.HeadRevStartSound);
             }
         }
     }
