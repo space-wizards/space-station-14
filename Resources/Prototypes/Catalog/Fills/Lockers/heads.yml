@@ -205,6 +205,7 @@
       - id: DoorRemoteResearch
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
+      - id: NanomachinesMedipen
       - id: BoxEncryptionKeyScience
 
 - type: entity
@@ -222,6 +223,7 @@
       - id: DoorRemoteResearch
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
+      - id: NanomachinesMedipen
       - id: BoxEncryptionKeyScience
 
 - type: entity
