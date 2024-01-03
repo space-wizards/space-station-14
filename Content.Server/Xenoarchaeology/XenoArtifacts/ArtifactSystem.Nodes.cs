@@ -199,8 +199,8 @@ public sealed partial class ArtifactSystem
 
             var temp = (object) comp;
             _serialization.CopyTo(entry.Component, ref temp);
-
-            EntityManager.AddComponent(uid, (Component) temp!, true);
+            EntityManager.RemoveComponent(uid, temp!.GetType());
+            EntityManager.AddComponent(uid, (Component) temp!);
         }
 
         node.Discovered = true;
