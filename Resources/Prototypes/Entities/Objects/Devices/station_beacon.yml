@@ -433,7 +433,7 @@
 - type: entity
   parent: DefaultStationBeaconEngineering
   id: DefaultStationBeaconSingularity
-  suffix: Singularity
+  suffix: PA Control
   components:
   - type: NavMapBeacon
     text: PA Control
@@ -473,7 +473,7 @@
 - type: entity
   parent: DefaultStationBeaconEngineering
   id: DefaultStationBeaconTeslaEngine
-  suffix: Tesla Engine
+  suffix: Tesla Engine (Do Not Map - use PA Control instead)
   components:
   - type: NavMapBeacon
     text: Tesla
