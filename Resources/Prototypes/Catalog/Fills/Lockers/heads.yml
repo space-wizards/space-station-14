@@ -199,16 +199,12 @@
       - id: ResearchComputerCircuitboard
       - id: ProtolatheMachineCircuitboard
       - id: CircuitImprinterMachineCircuitboard
-      - id: ClothingNeckCloakRd
       - id: ClothingHeadsetMedicalScience
       - id: ClothingOuterHardsuitRd
       - id: HandTeleporter
       - id: DoorRemoteResearch
-      - id: ClothingHeadHatBeretRND
-      - id: ClothingHandsGlovesColorPurple
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
-      - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
 
 - type: entity
@@ -221,15 +217,11 @@
       - id: ResearchComputerCircuitboard
       - id: ProtolatheMachineCircuitboard
       - id: CircuitImprinterMachineCircuitboard
-      - id: ClothingNeckCloakRd
       - id: ClothingHeadsetMedicalScience
       - id: HandTeleporter
       - id: DoorRemoteResearch
-      - id: ClothingHeadHatBeretRND
-      - id: ClothingHandsGlovesColorPurple
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
-      - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
 
 - type: entity
