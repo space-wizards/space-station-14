@@ -151,12 +151,12 @@ namespace Content.Shared.Damage
                 float newValue = value.Float();
 
                 if (modifierSet.FlatReduction.TryGetValue(key, out var reduction))
-                    newValue -= reduction;
+                    newValue = Math.Max(0f, newValue - reduction); // flat reductions can't heal you
 
                 if (modifierSet.Coefficients.TryGetValue(key, out var coefficient))
-                    newValue *= coefficient;
+                    newValue *= coefficient; // coefficients can heal you, e.g. cauterizing bleeding
 
-                if (newValue > 0)
+                if(newValue != 0)
                     newDamage.DamageDict[key] = FixedPoint2.New(newValue);
             }
 
