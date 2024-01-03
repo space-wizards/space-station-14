@@ -25,8 +25,6 @@ public sealed partial class MappingSystem : EntitySystem
     /// </summary>
     private readonly SpriteSpecifier _deleteIcon = new Texture(new ("Interface/VerbIcons/delete.svg.192dpi.png"));
 
-    public string DefaultMappingActions = "/mapping_actions.yml";
-
     public override void Initialize()
     {
         base.Initialize();

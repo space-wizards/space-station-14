@@ -1,6 +1,6 @@
-﻿<controls:MappingSpawnButton
+﻿<mapping:MappingSpawnButton
     xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client._CM14.Mapping">
+    xmlns:mapping="clr-namespace:Content.Client.Mapping">
     <BoxContainer Orientation="Vertical">
         <Control>
             <Button Name="Button" Access="Public" ToggleMode="True" StyleClasses="ButtonSquare" />
@@ -19,4 +19,4 @@
         <BoxContainer Name="ChildrenPrototypes" Access="Public" Orientation="Vertical"
                       Margin="24 0 0 0" />
     </BoxContainer>
-</controls:MappingSpawnButton>
+</mapping:MappingSpawnButton>

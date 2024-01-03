@@ -13,7 +13,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client._CM14.Mapping;
+namespace Content.Client.Mapping;
 
 [GenerateTypedNameReferences]
 public sealed partial class MappingScreen : InGameScreen
@@ -86,18 +86,14 @@ public sealed partial class MappingScreen : InGameScreen
             _zIndex = args.Value;
             UpdateDecal();
         };
-        DecalShowNonCMCheckbox.OnPressed += _ =>
-        {
-            RefreshList();
-        };
 
         for (var i = 0; i < EntitySpawnWindow.InitOpts.Length; i++)
         {
             EntityPlacementMode.AddItem(EntitySpawnWindow.InitOpts[i], i);
         }
 
-        Pick.Texture.TexturePath = "/Textures/_CM14/Interface/eyedropper.svg.png";
-        Delete.Texture.TexturePath = "/Textures/_CM14/Interface/eraser.svg.png";
+        Pick.Texture.TexturePath = "/Textures/Interface/eyedropper.svg.png";
+        Delete.Texture.TexturePath = "/Textures/Interface/eraser.svg.png";
     }
 
     private void OnDecalColorPicked(Color color)
@@ -177,7 +173,6 @@ public sealed partial class MappingScreen : InGameScreen
                 }
 
                 childButton.Texture.Modulate = _color;
-                childButton.Visible = DecalShowNonCMCheckbox.Pressed || decal.IsCM;
             }
         }
     }

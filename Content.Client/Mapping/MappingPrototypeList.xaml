@@ -1,6 +1,6 @@
-﻿<cc:MappingPrototypeList
+﻿<mapping:MappingPrototypeList
     xmlns="https://spacestation14.io"
-    xmlns:cc="clr-namespace:Content.Client._CM14.Mapping">
+    xmlns:mapping="clr-namespace:Content.Client.Mapping">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Button Name="CollapseAllButton" Access="Public" Text="-"
@@ -14,8 +14,8 @@
             <BoxContainer Name="PrototypeList" Access="Public" Orientation="Vertical" />
             <PrototypeListContainer Name="SearchList" Access="Public" Visible="False" />
         </ScrollContainer>
-        <cc:MappingDoNotMeasure Visible="False">
-            <cc:MappingSpawnButton Name="MeasureButton" Access="Public" />
-        </cc:MappingDoNotMeasure>
+        <mapping:MappingDoNotMeasure Visible="False">
+            <mapping:MappingSpawnButton Name="MeasureButton" Access="Public" />
+        </mapping:MappingDoNotMeasure>
     </BoxContainer>
-</cc:MappingPrototypeList>
+</mapping:MappingPrototypeList>

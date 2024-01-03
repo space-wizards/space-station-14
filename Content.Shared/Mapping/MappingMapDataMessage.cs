@@ -1,11 +1,10 @@
-﻿using System.Buffers;
-using System.IO;
+﻿using System.IO;
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared._CM14.Mapping;
+namespace Content.Shared.Mapping;
 
 public sealed class MappingMapDataMessage : NetMessage
 {

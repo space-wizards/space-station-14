@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Content.Shared._CM14.Mapping;
+using Content.Shared.Mapping;
 using Robust.Client.UserInterface;
 using Robust.Shared.Network;
 
-namespace Content.Client._CM14.Mapping;
+namespace Content.Client.Mapping;
 
 public sealed class MappingManager : IPostInjectInit
 {

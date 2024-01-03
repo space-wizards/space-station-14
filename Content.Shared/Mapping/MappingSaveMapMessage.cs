@@ -2,9 +2,9 @@
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared._CM14.Mapping;
+namespace Content.Shared.Mapping;
 
-public sealed class MappingSaveMapErrorMessage : NetMessage
+public sealed class MappingSaveMapMessage : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;
     public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableUnordered;

@@ -7,16 +7,15 @@ using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.Verbs;
-using Content.Shared._CM14.Input;
 using Content.Shared.Administration;
 using Content.Shared.Decals;
+using Content.Shared.Input;
 using Content.Shared.Maps;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Placement;
 using Robust.Client.ResourceManagement;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
@@ -34,7 +33,7 @@ using static Robust.Client.UserInterface.Controls.LineEdit;
 using static Robust.Client.UserInterface.Controls.OptionButton;
 using static Robust.Shared.Input.Binding.PointerInputCmdHandler;
 
-namespace Content.Client._CM14.Mapping;
+namespace Content.Client.Mapping;
 
 public sealed class MappingState : GameplayStateBase
 {
@@ -89,14 +88,14 @@ public sealed class MappingState : GameplayStateBase
 
         UserInterfaceManager.LoadScreen<MappingScreen>();
         _loadController.LoadScreen();
-        _input.Contexts.GetContext("common").AddFunction(CMKeyFunctions.MappingUnselect);
-        _input.Contexts.GetContext("common").AddFunction(CMKeyFunctions.SaveMap);
-        _input.Contexts.GetContext("common").AddFunction(CMKeyFunctions.MappingEnablePick);
-        _input.Contexts.GetContext("common").AddFunction(CMKeyFunctions.MappingEnableDelete);
-        _input.Contexts.GetContext("common").AddFunction(CMKeyFunctions.MappingPick);
-        _input.Contexts.GetContext("common").AddFunction(CMKeyFunctions.MappingRemoveDecal);
-        _input.Contexts.GetContext("common").AddFunction(CMKeyFunctions.MappingCancelEraseDecal);
-        _input.Contexts.GetContext("common").AddFunction(CMKeyFunctions.MappingOpenContextMenu);
+        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingUnselect);
+        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.SaveMap);
+        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingEnablePick);
+        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingEnableDelete);
+        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingPick);
+        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingRemoveDecal);
+        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingCancelEraseDecal);
+        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingOpenContextMenu);
 
         Screen.DecalSystem = _decal;
         Screen.Prototypes.SearchBar.OnTextChanged += OnSearch;
@@ -114,14 +113,14 @@ public sealed class MappingState : GameplayStateBase
         _placement.PlacementChanged += OnPlacementChanged;
 
         CommandBinds.Builder
-            .Bind(CMKeyFunctions.MappingUnselect, new PointerInputCmdHandler(HandleMappingUnselect, outsidePrediction: true))
-            .Bind(CMKeyFunctions.SaveMap, new PointerInputCmdHandler(HandleSaveMap, outsidePrediction: true))
-            .Bind(CMKeyFunctions.MappingEnablePick, new PointerStateInputCmdHandler(HandleEnablePick, HandleDisablePick, outsidePrediction: true))
-            .Bind(CMKeyFunctions.MappingEnableDelete, new PointerStateInputCmdHandler(HandleEnableDelete, HandleDisableDelete, outsidePrediction: true))
-            .Bind(CMKeyFunctions.MappingPick, new PointerInputCmdHandler(HandlePick, outsidePrediction: true))
-            .Bind(CMKeyFunctions.MappingRemoveDecal, new PointerInputCmdHandler(HandleEditorCancelPlace, outsidePrediction: true))
-            .Bind(CMKeyFunctions.MappingCancelEraseDecal, new PointerInputCmdHandler(HandleCancelEraseDecal, outsidePrediction: true))
-            .Bind(CMKeyFunctions.MappingOpenContextMenu, new PointerInputCmdHandler(HandleOpenContextMenu, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.MappingUnselect, new PointerInputCmdHandler(HandleMappingUnselect, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.SaveMap, new PointerInputCmdHandler(HandleSaveMap, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.MappingEnablePick, new PointerStateInputCmdHandler(HandleEnablePick, HandleDisablePick, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.MappingEnableDelete, new PointerStateInputCmdHandler(HandleEnableDelete, HandleDisableDelete, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.MappingPick, new PointerInputCmdHandler(HandlePick, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.MappingRemoveDecal, new PointerInputCmdHandler(HandleEditorCancelPlace, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.MappingCancelEraseDecal, new PointerInputCmdHandler(HandleCancelEraseDecal, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.MappingOpenContextMenu, new PointerInputCmdHandler(HandleOpenContextMenu, outsidePrediction: true))
             .Register<MappingState>();
 
         _overlays.AddOverlay(new MappingOverlay(this));
@@ -159,14 +158,14 @@ public sealed class MappingState : GameplayStateBase
         UserInterfaceManager.ClearWindows();
         _loadController.UnloadScreen();
         UserInterfaceManager.UnloadScreen();
-        _input.Contexts.GetContext("common").RemoveFunction(CMKeyFunctions.MappingUnselect);
-        _input.Contexts.GetContext("common").RemoveFunction(CMKeyFunctions.SaveMap);
-        _input.Contexts.GetContext("common").RemoveFunction(CMKeyFunctions.MappingEnablePick);
-        _input.Contexts.GetContext("common").RemoveFunction(CMKeyFunctions.MappingEnableDelete);
-        _input.Contexts.GetContext("common").RemoveFunction(CMKeyFunctions.MappingPick);
-        _input.Contexts.GetContext("common").RemoveFunction(CMKeyFunctions.MappingRemoveDecal);
-        _input.Contexts.GetContext("common").RemoveFunction(CMKeyFunctions.MappingCancelEraseDecal);
-        _input.Contexts.GetContext("common").RemoveFunction(CMKeyFunctions.MappingOpenContextMenu);
+        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingUnselect);
+        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.SaveMap);
+        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingEnablePick);
+        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingEnableDelete);
+        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingPick);
+        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingRemoveDecal);
+        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingCancelEraseDecal);
+        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingOpenContextMenu);
 
         _overlays.RemoveOverlay<MappingOverlay>();
 
@@ -851,7 +850,7 @@ public sealed class MappingState : GameplayStateBase
     }
 
 
-    // TODO CM14 this doesn't handle pressing down multiple state hotkeys at the moment
+    // TODO this doesn't handle pressing down multiple state hotkeys at the moment
     public enum CursorState
     {
         None,

@@ -1,8 +1,8 @@
 using System.Numerics;
 using System.Threading;
-using Content.Client._CM14.Mapping;
 using Content.Client.CombatMode;
 using Content.Client.Gameplay;
+using Content.Client.Mapping;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Timer = Robust.Shared.Timing.Timer;

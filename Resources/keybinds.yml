@@ -524,10 +524,6 @@ binds:
 - function: Hotbar9
   type: State
   key: Num9
-
-
-
-# CM14
 - function: MappingUnselect
   type: State
   key: MouseRight

@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Content.Server.Administration.Managers;
-using Content.Shared._CM14.Mapping;
 using Content.Shared.Administration;
+using Content.Shared.Mapping;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Server._CM14.Mapping;
+namespace Content.Server.Mapping;
 
 public sealed class MappingManager : IPostInjectInit
 {

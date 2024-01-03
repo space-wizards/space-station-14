@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Prototypes;
 
-namespace Content.Client._CM14.Mapping;
+namespace Content.Client.Mapping;
 
 public sealed class MappingPrototype
 {

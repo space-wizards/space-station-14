@@ -8,7 +8,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client._CM14.Mapping;
+namespace Content.Client.Mapping;
 
 [GenerateTypedNameReferences]
 public sealed partial class MappingPrototypeList : Control
@@ -110,7 +110,7 @@ public sealed partial class MappingPrototypeList : Control
             return;
 
         var height = MeasureButton.DesiredSize.Y + PrototypeListContainer.Separation;
-        var offset = Math.Max(-SearchList.Position.Y, 0);
+        var offset = Math.Max((float) -SearchList.Position.Y, 0);
         var startIndex = (int) Math.Floor(offset / height);
         SearchList.ItemOffset = startIndex;
 
