@@ -88,14 +88,16 @@ public sealed class MappingState : GameplayStateBase
 
         UserInterfaceManager.LoadScreen<MappingScreen>();
         _loadController.LoadScreen();
-        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingUnselect);
-        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.SaveMap);
-        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingEnablePick);
-        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingEnableDelete);
-        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingPick);
-        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingRemoveDecal);
-        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingCancelEraseDecal);
-        _input.Contexts.GetContext("common").AddFunction(ContentKeyFunctions.MappingOpenContextMenu);
+
+        var context = _input.Contexts.GetContext("common");
+        context.AddFunction(ContentKeyFunctions.MappingUnselect);
+        context.AddFunction(ContentKeyFunctions.SaveMap);
+        context.AddFunction(ContentKeyFunctions.MappingEnablePick);
+        context.AddFunction(ContentKeyFunctions.MappingEnableDelete);
+        context.AddFunction(ContentKeyFunctions.MappingPick);
+        context.AddFunction(ContentKeyFunctions.MappingRemoveDecal);
+        context.AddFunction(ContentKeyFunctions.MappingCancelEraseDecal);
+        context.AddFunction(ContentKeyFunctions.MappingOpenContextMenu);
 
         Screen.DecalSystem = _decal;
         Screen.Prototypes.SearchBar.OnTextChanged += OnSearch;
@@ -158,14 +160,16 @@ public sealed class MappingState : GameplayStateBase
         UserInterfaceManager.ClearWindows();
         _loadController.UnloadScreen();
         UserInterfaceManager.UnloadScreen();
-        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingUnselect);
-        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.SaveMap);
-        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingEnablePick);
-        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingEnableDelete);
-        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingPick);
-        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingRemoveDecal);
-        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingCancelEraseDecal);
-        _input.Contexts.GetContext("common").RemoveFunction(ContentKeyFunctions.MappingOpenContextMenu);
+
+        var context = _input.Contexts.GetContext("common");
+        context.RemoveFunction(ContentKeyFunctions.MappingUnselect);
+        context.RemoveFunction(ContentKeyFunctions.SaveMap);
+        context.RemoveFunction(ContentKeyFunctions.MappingEnablePick);
+        context.RemoveFunction(ContentKeyFunctions.MappingEnableDelete);
+        context.RemoveFunction(ContentKeyFunctions.MappingPick);
+        context.RemoveFunction(ContentKeyFunctions.MappingRemoveDecal);
+        context.RemoveFunction(ContentKeyFunctions.MappingCancelEraseDecal);
+        context.RemoveFunction(ContentKeyFunctions.MappingOpenContextMenu);
 
         _overlays.RemoveOverlay<MappingOverlay>();
 
