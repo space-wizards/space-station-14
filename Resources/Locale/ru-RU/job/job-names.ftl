@@ -51,11 +51,11 @@ job-name-iaa = агент внутренних дел
 job-name-roboticist = робототехник
 job-name-coroner = патологоанатом
 job-name-prisoner = заключённый
-job-name-blueshield = офицер синего щита
+job-name-blueshield = офицер синий щит
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = атмосферный техник
 JobBartender = бармен
-JobBlueShield = офицер синего щита
+JobBlueShield = офицер синий щит
 JobBotanist = ботаник
 JobCaptain = капитан
 JobCargoTechnician = грузчик

@@ -32,6 +32,17 @@
 - type: entity
   noSpawn: true
   parent: ClothingBackpackSecurity
+  id: ClothingBackpackSecurityBlueShieldFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSecurity
+      - id: Flash
+      - id: SpeedLoaderMagnum
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSecurity
   id: ClothingBackpackSecurityFilledDetective
   components:
   - type: StorageFill

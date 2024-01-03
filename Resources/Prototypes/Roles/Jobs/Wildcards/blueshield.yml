@@ -41,7 +41,7 @@
   id: BlueShieldGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitBlueShield
-    back: ClothingBackpackSecurityFilled
+    back: ClothingBackpackSecurityBlueShieldFilled
     shoes: ClothingShoesBootsJack
     eyes: ClothingEyesGlassesBlueShield
     head: ClothingHeadHatBeretBlueShield
@@ -54,5 +54,5 @@
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponRevolverDeckard
   innerClothingskirt: ClothingUniformJumpskirtBlueShield
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+  satchel: ClothingBackpackSatchelSecurityBlueShieldFilled
+  duffelbag: ClothingBackpackDuffelSecurityBlueShieldFilled
