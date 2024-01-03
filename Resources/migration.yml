@@ -126,3 +126,9 @@ MiasmaCanister: AmmoniaCanister
 
 # 2023-12-28 - SS220 Zippos
 ExpensiveLighter: FlippoLighter
+
+# 2024-01-02 - SS220 Stairs
+StairsSolo: SteelStairsSolo
+StairsLeft: SteelStairsLeft
+StairsMiddle: SteelStairsMiddle
+StairsRight: SteelStairsRight

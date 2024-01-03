@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from GoonStation at https://github.com/goonstation/goonstation/blob/7bbddd189a3a82a09c87d43420b515db268e5c81/icons/turf/floors.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "left"
+    },
+    {
+      "name": "middle"
+    },
+    {
+      "name": "right"
+    },
+    {
+      "name": "solo"
+    }
+  ]
+}

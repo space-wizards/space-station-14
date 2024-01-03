@@ -1,5 +1,7 @@
+# EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+#Стальные, база
 - type: entity
-  id: StairsBase
+  id: SteelStairsBase
   name: stairs
   abstract: true
   description: Главное - не споткнуться!
@@ -7,10 +9,10 @@
     mode: SnapgridCenter
   components:
   - type: Construction
-    graph: Stairs
+    graph: SteelStairs
   - type: Clickable
   - type: Sprite
-    sprite: SS220/Structures/Floor/stairs.rsi
+    sprite: SS220/Structures/Floor/Stairs/steel.rsi
     drawdepth: FloorTiles
   - type: Transform
     anchored: true
@@ -19,12 +21,29 @@
       collection: FootstepCatwalk
       params:
         volume: 8
-  - type: Tag
-    tags:
-      - Catwalk
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+  - type: SlowContacts
+    walkSpeedModifier: 0.8
+    sprintSpeedModifier: 0.8
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+          #bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - SlipLayer
+        density: 1000
+        hard: false
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -39,52 +58,200 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          PartRodMetal: # takes two to construct, so drop less than that
+          PartRodMetal:
             min: 0
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
+#Деревянные, база
 - type: entity
-  id: StairsSolo
-  parent: StairsBase
-  name: ступеньки
-  suffix: Одиночные, НЕ ИСПОЛЬЗОВАТЬ (ПОД ЗАМЕНУ)
+  id: WoodStairsBase
+  parent: SteelStairsBase
+  name: stairs
+  abstract: true
+  description: Главное - не споткнуться!
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Construction
-    node: StairsSolo
+    graph: WoodStairs
+  - type: Sprite
+    sprite: SS220/Structures/Floor/Stairs/wood.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWood
+      params:
+        volume: 8
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+#Тёмные стальные, база
+- type: entity
+  id: DarkSteelStairsBase
+  parent: SteelStairsBase
+  name: stairs
+  abstract: true
+  description: Главное - не споткнуться!
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Construction
+    graph: DarkSteelStairs
+  - type: Sprite
+    sprite: SS220/Structures/Floor/Stairs/dark_steel.rsi
+
+#Стальные ступеньки
+- type: entity
+  id: SteelStairsSolo
+  parent: SteelStairsBase
+  name: ступеньки
+  suffix: Одиночные, сталь
+  components:
+  - type: Construction
+    node: SteelStairsSolo
   - type: Sprite
     state: solo
 
 - type: entity
-  id: StairsLeft
-  parent: StairsBase
+  id: SteelStairsLeft
+  parent: SteelStairsBase
   name: ступеньки
-  suffix: Левые, НЕ ИСПОЛЬЗОВАТЬ (ПОД ЗАМЕНУ)
+  suffix: Левые, сталь
   components:
   - type: Construction
-    node: StairsLeft
+    node: SteelStairsLeft
   - type: Sprite
     state: left
 
 - type: entity
-  id: StairsMiddle
-  parent: StairsBase
+  id: SteelStairsMiddle
+  parent: SteelStairsBase
   name: ступеньки
-  suffix: По середине, НЕ ИСПОЛЬЗОВАТЬ (ПОД ЗАМЕНУ)
+  suffix: Центральные, сталь
   components:
   - type: Construction
-    node: StairsMiddle
+    node: SteelStairsMiddle
   - type: Sprite
     state: middle
 
 - type: entity
-  id: StairsRight
-  parent: StairsBase
+  id: SteelStairsRight
+  parent: SteelStairsBase
   name: ступеньки
-  suffix: Правые, НЕ ИСПОЛЬЗОВАТЬ (ПОД ЗАМЕНУ)
+  suffix: Правые, сталь
   components:
   - type: Construction
-    node: StairsRight
+    node: SteelStairsRight
+  - type: Sprite
+    state: right
+
+#Деревянные ступеньки
+- type: entity
+  id: WoodStairsSolo
+  parent: WoodStairsBase
+  name: ступеньки
+  suffix: Одиночные, дерево
+  components:
+  - type: Construction
+    node: WoodStairsSolo
+  - type: Sprite
+    state: solo
+
+- type: entity
+  id: WoodStairsLeft
+  parent: WoodStairsBase
+  name: ступеньки
+  suffix: Левые, дерево
+  components:
+  - type: Construction
+    node: WoodStairsLeft
+  - type: Sprite
+    state: left
+
+- type: entity
+  id: WoodStairsMiddle
+  parent: WoodStairsBase
+  name: ступеньки
+  suffix: Центральные, дерево
+  components:
+  - type: Construction
+    node: WoodStairsMiddle
+  - type: Sprite
+    state: middle
+
+- type: entity
+  id: WoodStairsRight
+  parent: WoodStairsBase
+  name: ступеньки
+  suffix: Правые, дерево
+  components:
+  - type: Construction
+    node: WoodStairsRight
+  - type: Sprite
+    state: right
+
+#Тёмные стальные ступеньки
+- type: entity
+  id: DarkSteelStairsSolo
+  parent: DarkSteelStairsBase
+  name: ступеньки
+  suffix: Одиночные, тёмные, сталь
+  components:
+  - type: Construction
+    node: DarkSteelStairsSolo
+  - type: Sprite
+    state: solo
+
+- type: entity
+  id: DarkSteelStairsLeft
+  parent: DarkSteelStairsBase
+  name: ступеньки
+  suffix: Левые, тёмные, сталь
+  components:
+  - type: Construction
+    node: DarkSteelStairsLeft
+  - type: Sprite
+    state: left
+
+- type: entity
+  id: DarkSteelStairsMiddle
+  parent: DarkSteelStairsBase
+  name: ступеньки
+  suffix: Центральные, тёмные, сталь
+  components:
+  - type: Construction
+    node: DarkSteelStairsMiddle
+  - type: Sprite
+    state: middle
+
+- type: entity
+  id: DarkSteelStairsRight
+  parent: DarkSteelStairsBase
+  name: ступеньки
+  suffix: Правые, тёмные, сталь
+  components:
+  - type: Construction
+    node: DarkSteelStairsRight
   - type: Sprite
     state: right

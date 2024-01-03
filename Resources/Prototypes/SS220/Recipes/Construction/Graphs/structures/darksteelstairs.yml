@@ -1,0 +1,87 @@
+﻿- type: constructionGraph
+  id: DarkSteelStairs
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: DarkSteelStairsSolo
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+        - to: DarkSteelStairsLeft
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+        - to: DarkSteelStairsRight
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+        - to: DarkSteelStairsMiddle
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+
+    - node: DarkSteelStairsSolo
+      entity: DarkSteelStairsSolo
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 2
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: DarkSteelStairsLeft
+      entity: DarkSteelStairsLeft
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 2
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: DarkSteelStairsMiddle
+      entity: DarkSteelStairsMiddle
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 2
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: DarkSteelStairsRight
+      entity: DarkSteelStairsRight
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 2
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Anchoring
+              doAfter: 1

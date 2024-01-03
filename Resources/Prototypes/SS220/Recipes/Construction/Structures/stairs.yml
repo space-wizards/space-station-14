@@ -1,9 +1,10 @@
+#Стальные ступеньки
 - type: construction
-  name: ступеньки (одиночные)
-  id: StairsSolo
-  graph: Stairs
+  name: стальные ступеньки (одиночные)
+  id: SteelStairsSolo
+  graph: SteelStairs
   startNode: start
-  targetNode: StairsSolo
+  targetNode: SteelStairsSolo
   category: construction-category-structures
   description: Главное - не споткнуться!
   conditions:
@@ -14,18 +15,18 @@
         - Lattice
         - Plating
   icon:
-    sprite: SS220/Structures/Floor/stairs.rsi
+    sprite: SS220/Structures/Floor/Stairs/steel.rsi
     state: solo
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
 
 - type: construction
-  name: ступеньки (левые)
-  id: StairsLeft
-  graph: Stairs
+  name: стальные ступеньки (левые)
+  id: SteelStairsLeft
+  graph: SteelStairs
   startNode: start
-  targetNode: StairsLeft
+  targetNode: SteelStairsLeft
   category: construction-category-structures
   description: Главное - не споткнуться!
   conditions:
@@ -36,18 +37,18 @@
         - Lattice
         - Plating
   icon:
-    sprite: SS220/Structures/Floor/stairs.rsi
+    sprite: SS220/Structures/Floor/Stairs/steel.rsi
     state: left
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
 
 - type: construction
-  name: ступеньки (по середине)
-  id: StairsMiddle
-  graph: Stairs
+  name: стальные ступеньки (центральные)
+  id: SteelStairsMiddle
+  graph: SteelStairs
   startNode: start
-  targetNode: StairsMiddle
+  targetNode: SteelStairsMiddle
   category: construction-category-structures
   description: Главное - не споткнуться!
   conditions:
@@ -58,18 +59,18 @@
         - Lattice
         - Plating
   icon:
-    sprite: SS220/Structures/Floor/stairs.rsi
+    sprite: SS220/Structures/Floor/Stairs/steel.rsi
     state: middle
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
 
 - type: construction
-  name: ступеньки (правые)
-  id: StairsRight
-  graph: Stairs
+  name: стальные ступеньки (правые)
+  id: SteelStairsRight
+  graph: SteelStairs
   startNode: start
-  targetNode: StairsRight
+  targetNode: SteelStairsRight
   category: construction-category-structures
   description: Главное - не споткнуться!
   conditions:
@@ -80,7 +81,185 @@
         - Lattice
         - Plating
   icon:
-    sprite: SS220/Structures/Floor/stairs.rsi
+    sprite: SS220/Structures/Floor/Stairs/steel.rsi
+    state: right
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+#Деревянные ступеньки
+- type: construction
+  name: деревянные ступеньки (одиночные)
+  id: WoodStairsSolo
+  graph: WoodStairs
+  startNode: start
+  targetNode: WoodStairsSolo
+  category: construction-category-structures
+  description: Главное - не споткнуться!
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  icon:
+    sprite: SS220/Structures/Floor/Stairs/wood.rsi
+    state: solo
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: деревянные ступеньки (левые)
+  id: WoodStairsLeft
+  graph: WoodStairs
+  startNode: start
+  targetNode: WoodStairsLeft
+  category: construction-category-structures
+  description: Главное - не споткнуться!
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  icon:
+    sprite: SS220/Structures/Floor/Stairs/wood.rsi
+    state: left
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: деревянные ступеньки (центральные)
+  id: WoodStairsMiddle
+  graph: WoodStairs
+  startNode: start
+  targetNode: WoodStairsMiddle
+  category: construction-category-structures
+  description: Главное - не споткнуться!
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  icon:
+    sprite: SS220/Structures/Floor/Stairs/wood.rsi
+    state: middle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: деревянные ступеньки (правые)
+  id: WoodStairsRight
+  graph: WoodStairs
+  startNode: start
+  targetNode: WoodStairsRight
+  category: construction-category-structures
+  description: Главное - не споткнуться!
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  icon:
+    sprite: SS220/Structures/Floor/Stairs/wood.rsi
+    state: right
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+#Тёмные стальные ступеньки
+- type: construction
+  name: тёмные стальные ступеньки (одиночные)
+  id: DarkSteelStairsSolo
+  graph: DarkSteelStairs
+  startNode: start
+  targetNode: DarkSteelStairsSolo
+  category: construction-category-structures
+  description: Главное - не споткнуться!
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  icon:
+    sprite: SS220/Structures/Floor/Stairs/dark_steel.rsi
+    state: solo
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: тёмные стальные ступеньки (левые)
+  id: DarkSteelStairsLeft
+  graph: DarkSteelStairs
+  startNode: start
+  targetNode: DarkSteelStairsLeft
+  category: construction-category-structures
+  description: Главное - не споткнуться!
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  icon:
+    sprite: SS220/Structures/Floor/Stairs/dark_steel.rsi
+    state: left
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: тёмные стальные ступеньки (центральные)
+  id: DarkSteelStairsMiddle
+  graph: DarkSteelStairs
+  startNode: start
+  targetNode: DarkSteelStairsMiddle
+  category: construction-category-structures
+  description: Главное - не споткнуться!
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  icon:
+    sprite: SS220/Structures/Floor/Stairs/dark_steel.rsi
+    state: middle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: тёмные стальные ступеньки (правые)
+  id: DarkSteelStairsRight
+  graph: DarkSteelStairs
+  startNode: start
+  targetNode: DarkSteelStairsRight
+  category: construction-category-structures
+  description: Главное - не споткнуться!
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  icon:
+    sprite: SS220/Structures/Floor/Stairs/dark_steel.rsi
     state: right
   objectType: Structure
   placementMode: SnapgridCenter

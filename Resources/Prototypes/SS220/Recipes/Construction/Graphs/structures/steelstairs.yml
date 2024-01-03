@@ -1,10 +1,10 @@
 ﻿- type: constructionGraph
-  id: Stairs
+  id: SteelStairs
   start: start
   graph:
     - node: start
       edges:
-        - to: StairsSolo
+        - to: SteelStairsSolo
           completed:
             - !type:SnapToGrid
               southRotation: true
@@ -12,7 +12,7 @@
             - material: Steel
               amount: 2
               doAfter: 1
-        - to: StairsLeft
+        - to: SteelStairsLeft
           completed:
             - !type:SnapToGrid
               southRotation: true
@@ -20,7 +20,7 @@
             - material: Steel
               amount: 2
               doAfter: 1
-        - to: StairsRight
+        - to: SteelStairsRight
           completed:
             - !type:SnapToGrid
               southRotation: true
@@ -28,7 +28,7 @@
             - material: Steel
               amount: 2
               doAfter: 1
-        - to: StairsMiddle
+        - to: SteelStairsMiddle
           completed:
             - !type:SnapToGrid
               southRotation: true
@@ -37,8 +37,8 @@
               amount: 2
               doAfter: 1
 
-    - node: StairsSolo
-      entity: StairsSolo
+    - node: SteelStairsSolo
+      entity: SteelStairsSolo
       edges:
         - to: start
           completed:
@@ -49,8 +49,8 @@
           steps:
             - tool: Anchoring
               doAfter: 1
-    - node: StairsLeft
-      entity: StairsLeft
+    - node: SteelStairsLeft
+      entity: SteelStairsLeft
       edges:
         - to: start
           completed:
@@ -61,8 +61,8 @@
           steps:
             - tool: Anchoring
               doAfter: 1
-    - node: StairsMiddle
-      entity: StairsMiddle
+    - node: SteelStairsMiddle
+      entity: SteelStairsMiddle
       edges:
         - to: start
           completed:
@@ -73,8 +73,8 @@
           steps:
             - tool: Anchoring
               doAfter: 1
-    - node: StairsRight
-      entity: StairsRight
+    - node: SteelStairsRight
+      entity: SteelStairsRight
       edges:
         - to: start
           completed:
