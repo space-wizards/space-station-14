@@ -80,6 +80,7 @@
 - type: entity
   parent: MobHumanDummy
   id: MobSlimePersonDummy
+  noRot: true
   noSpawn: true
   components:
     - type: HumanoidAppearance
