@@ -314,7 +314,7 @@
     fireCost: 100
 
 - type: entity
-  name: portable Particle Decelerator
+  name: portable particle decelerator
   parent: BaseWeaponBattery
   id: WeaponParticleDecelerator
   description: A portable particle decelerator capable of decomposing a tesla or singularity
