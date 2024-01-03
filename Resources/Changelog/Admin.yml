@@ -81,3 +81,8 @@ Entries:
   - {message: 'Fixed not being able to right click in AHelps and the players and objects tabs.', type: Fix}
   id: 13
   time: '2023-12-21T06:34:00.0000000+00:00'
+- author: Simyon
+  changes:
+    - {message: 'Added 4 buttons to help fight of the ghost gang. One set of buttons to toggle invisibility (other aghosts can still see you), and another set of buttons to toggle other observers ability to follow you.', type: Add}
+  id: 14
+  time: '2024-01-03T03:18:00.0000000+00:00'
