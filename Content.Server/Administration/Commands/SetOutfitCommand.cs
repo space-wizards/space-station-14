@@ -34,15 +34,15 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!int.TryParse(args[0], out var entityUid))
+            if (!int.TryParse(args[0], out var entInt))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            var target = new EntityUid(entityUid);
+            var nent = new NetEntity(entInt);
 
-            if (!target.IsValid() || !_entities.EntityExists(target))
+            if (!_entities.TryGetEntity(nent, out var target))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
@@ -63,12 +63,12 @@ namespace Content.Server.Administration.Commands
                 }
 
                 var eui = IoCManager.Resolve<EuiManager>();
-                var ui = new SetOutfitEui(target);
+                var ui = new SetOutfitEui(nent);
                 eui.OpenEui(ui, player);
                 return;
             }
 
-            if (!SetOutfit(target, args[1], _entities))
+            if (!SetOutfit(target.Value, args[1], _entities))
                 shell.WriteLine(Loc.GetString("set-outfit-command-invalid-outfit-id-error"));
         }
 
