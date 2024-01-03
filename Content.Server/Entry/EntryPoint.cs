@@ -117,7 +117,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<TTSManager>().Initialize(); // Corvax-TTS
                 IoCManager.Resolve<ServerInfoManager>().Initialize();
                 IoCManager.Resolve<Primelist>().Initialize();
-                IoCManager.Resolve<DiscordPlayerManager>().Initialize();
+                IoCManager.Resolve<DiscordPlayerManager>().Initialize(); // SS220 discord player manager
                 IoCManager.Resolve<ServerControlController>().Initialize();
 
                 _voteManager.Initialize();

@@ -1,4 +1,4 @@
-﻿using Content.Client.Administration.Managers;
+using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
@@ -24,6 +24,7 @@ using Content.Shared.Module;
 using Content.Client.Guidebook;
 using Content.Client.Replay;
 using Content.Shared.Administration.Managers;
+using Content.Client.SS220.Discord;
 
 
 namespace Content.Client.IoC
@@ -55,6 +56,7 @@ namespace Content.Client.IoC
             IoCManager.Register<DiscordAuthManager>(); // Corvax-DiscordAuth
             IoCManager.Register<DocumentParsingManager>();
             IoCManager.Register<ContentReplayPlaybackManager, ContentReplayPlaybackManager>();
+            IoCManager.Register<DiscordPlayerInfoManager>(); //SS220 discord user info
         }
     }
 }

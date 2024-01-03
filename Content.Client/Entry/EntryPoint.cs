@@ -39,6 +39,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
+using Content.Client.SS220.Discord;
 
 namespace Content.Client.Entry
 {
@@ -77,6 +78,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly IResourceManager _resourceManager = default!;
         [Dependency] private readonly IReplayLoadManager _replayLoad = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly DiscordPlayerInfoManager _discordPlayerInfoManager = default!; // SS220 discord info manager
 
         public override void Init()
         {
@@ -175,6 +177,7 @@ namespace Content.Client.Entry
             _discordAuthManager.Initialize(); // Corvax-DiscordAuth
             _userInterfaceManager.SetActiveTheme(_configManager.GetCVar(CVars.InterfaceTheme));
             _documentParsingManager.Initialize();
+            _discordPlayerInfoManager.Initialize();
 
             _baseClient.RunLevelChanged += (_, args) =>
             {
