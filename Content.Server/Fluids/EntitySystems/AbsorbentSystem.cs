@@ -107,10 +107,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         if (!_solutionContainerSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorberSoln))
             return;
 
-        if (!TryComp<UseDelayComponent>(used, out var useDelay))
-            return;
-
-        if (_useDelay.IsDelayed((used, useDelay)))
+        if (TryComp<UseDelayComponent>(used, out var useDelay)
+            && _useDelay.IsDelayed((used, useDelay)))
             return;
 
         // If it's a puddle try to grab from
@@ -125,7 +123,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     /// <summary>
     ///     Logic for an absorbing entity interacting with a refillable.
     /// </summary>
-    private bool TryRefillableInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent component, UseDelayComponent useDelay, Entity<SolutionComponent> absorbentSoln)
+    private bool TryRefillableInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent component, UseDelayComponent? useDelay, Entity<SolutionComponent> absorbentSoln)
     {
         if (!TryComp(target, out RefillableSolutionComponent? refillable))
             return false;
@@ -147,7 +145,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         }
 
         _audio.PlayPvs(component.TransferSound, target);
-        _useDelay.TryResetDelay((used, useDelay));
+        if (useDelay != null)
+            _useDelay.TryResetDelay((used, useDelay));
         return true;
     }
 
@@ -268,7 +267,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     /// <summary>
     ///     Logic for an absorbing entity interacting with a puddle.
     /// </summary>
-    private bool TryPuddleInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent absorber, UseDelayComponent useDelay, Entity<SolutionComponent> absorberSoln)
+    private bool TryPuddleInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent absorber, UseDelayComponent? useDelay, Entity<SolutionComponent> absorberSoln)
     {
         if (!TryComp(target, out PuddleComponent? puddle))
             return false;
@@ -313,7 +312,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         _solutionContainerSystem.AddSolution(absorberSoln, puddleSplit);
 
         _audio.PlayPvs(absorber.PickupSound, target);
-        _useDelay.TryResetDelay((used, useDelay));
+        if (useDelay != null)
+            _useDelay.TryResetDelay((used, useDelay));
 
         var userXform = Transform(user);
         var targetPos = _transform.GetWorldPosition(target);
