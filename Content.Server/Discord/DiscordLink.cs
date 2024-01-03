@@ -28,7 +28,15 @@ public sealed class DiscordLink : IPostInjectInit
         });
         Client.Log += Log;
 
-        _configuration.OnValueChanged(CCVars.DiscordGuildId, OnGuildIdChanged, true);
+        try
+        {
+            _configuration.OnValueChanged(CCVars.DiscordGuildId, OnGuildIdChanged, true);
+        }
+        catch (Exception e)
+        {
+            _sawmill.Fatal($"Failed to setup cvar.");
+            return;
+        }
 
         if (_configuration.GetCVar(CCVars.DiscordToken) is not { } token)
         {
