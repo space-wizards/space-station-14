@@ -53,11 +53,11 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="uid">The entity the gamerule you are using is on</param>
     /// <param name="minPlayers">The minimum amount of players needed for you gamerule to start.</param>
     /// <param name="gameRule">The gamerule component.</param>
-
-    public void AttemptStartGameRule(RoundStartAttemptEvent ev, EntityUid uid, int minPlayers, GameRuleComponent gameRule, string gameRuleName)
+    /// <param name="gameRuleName">The gamerule name, used for the admin announcement</param>
+    public bool AttemptStartGameRule(RoundStartAttemptEvent ev, EntityUid uid, int minPlayers, GameRuleComponent gameRule, string gameRuleName)
     {
         if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-            return;
+            return false;
 
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {
@@ -72,66 +72,85 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             _chatManager.DispatchServerAnnouncement(Loc.GetString("antag-selection-attempt-start-no-players", ("failedGameMode", gameRuleName)));
             ev.Cancel();
         }
+
+        return true;
     }
 
     /// <summary>
     /// Get all players that are eligible for an antag role
     /// </summary>
+    /// <param name="playerSessions">All sessions from which to select eligible players</param>
     /// <param name="antagPrototype">The prototype to get eligible players for</param>
     /// <param name="includeAllJobs">Should jobs that prohibit antag roles (ie Heads, Sec, Interns) be included</param>
     /// <param name="allowMultipleAntagRoles">Should players that already have an antag role be included</param>
+    /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
     /// <param name="customExcludeCondition">A custom condition that each player is tested against, if it returns true the player is excluded from eligibility</param>
     /// <returns></returns>
-    public List<EntityUid> GetEligiblePlayers(string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, Func<EntityUid?, bool>? customExcludeCondition = null)
+    public List<EntityUid> GetEligiblePlayers(ICommonSession[] playerSessions, string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, Func<EntityUid?, bool>? customExcludeCondition = null)
     {
-        var allPlayers = _playerSystem.Sessions.ToList();
         var eligiblePlayers = new List<EntityUid>();
 
-        foreach (var player in allPlayers)
+        foreach (var player in playerSessions)
         {
-            //Ensure the player has a mind
-            if (player.GetMind() is not { } playerMind)
-                continue;
-
-            //Ensure the player has an attached entity
-            if (!player.AttachedEntity.HasValue)
-                continue;
-
-            //Ignore latejoined players, ie those on the arrivals station
-            if (HasComp<PendingClockInComponent>(player.AttachedEntity))
-                continue;
-
-            //Exclude jobs that cannot be antag, unless explicitly allowed
-            if (!includeAllJobs && !_jobs.CanBeAntag(player))
-                continue;
-
-            //Test is player already is an antag, to prevent double roles
-            //As antags are balanced around themselves, introducing additional antag gear (ie Head Rev with thief equipment) can destabilise that balance
-            if (!allowMultipleAntagRoles)
-            {
-                var ev = new MindIsAntagonistEvent();
-                RaiseLocalEvent(playerMind, ref ev);
-
-                if (ev.IsAntagonist)
-                    continue;
-            }
-
-            //Only allow humanoids
-            if (!HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
-                continue;
-
-            //If a custom condition was provided, test it and exclude the player if it returns true
-            if (customExcludeCondition != null && customExcludeCondition(player.AttachedEntity))
-                continue;
-
-            //Test the player has this antag enabled as a preference
-            //Or if we are ignoring preferences
-            var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
-            if (pref.AntagPreferences.Contains(antagPrototype) || ignorePreferences)
-                eligiblePlayers.Add(player.AttachedEntity.Value);
+            if (IsEligible(player, antagPrototype, includeAllJobs, allowMultipleAntagRoles, ignorePreferences, customExcludeCondition))
+                eligiblePlayers.Add(player.AttachedEntity!.Value);
         }
 
         return eligiblePlayers;
+    }
+
+    /// <summary>
+    /// Test eligibility of the player for a specific antag role
+    /// </summary>
+    /// <param name="session">The player session to test</param>
+    /// <param name="antagPrototype">The prototype to get eligible players for</param>
+    /// <param name="includeAllJobs">Should jobs that prohibit antag roles (ie Heads, Sec, Interns) be included</param>
+    /// <param name="allowMultipleAntagRoles">Should players that already have an antag role be included</param>
+    /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
+    /// <param name="customExcludeCondition">A custom condition that each player is tested against, if it returns true the player is excluded from eligibility</param>
+    /// <returns></returns>
+    public bool IsEligible(ICommonSession session, string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, Func<EntityUid?, bool>? customExcludeCondition = null)
+    {
+        //Ensure the player has a mind
+        if (session.GetMind() is not { } playerMind)
+            return false;
+
+        //Ensure the player has an attached entity
+        if (!session.AttachedEntity.HasValue)
+            return false;
+
+        //Ignore latejoined players, ie those on the arrivals station
+        if (HasComp<PendingClockInComponent>(session.AttachedEntity))
+            return false;
+
+        //Exclude jobs that cannot be antag, unless explicitly allowed
+        if (!includeAllJobs && !_jobs.CanBeAntag(session))
+            return false;
+
+        //Test is player already is an antag, to prevent double roles
+        //As antags are balanced around themselves, introducing additional antag gear (ie Head Rev with thief equipment) can destabilise that balance
+        if (!allowMultipleAntagRoles)
+        {
+            var ev = new MindIsAntagonistEvent();
+            RaiseLocalEvent(playerMind, ref ev);
+
+            if (ev.IsAntagonist)
+                return false;
+        }
+
+        //Only allow humanoids
+        if (!HasComp<HumanoidAppearanceComponent>(session.AttachedEntity))
+            return false;
+
+        //If a custom condition was provided, test it and exclude the player if it returns true
+        if (customExcludeCondition != null && customExcludeCondition(session.AttachedEntity))
+            return false;
+
+        var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(session.UserId).SelectedCharacter;
+        if (!pref.AntagPreferences.Contains(antagPrototype) && !ignorePreferences)
+            return false;
+
+        return true;
     }
 
     /// <summary>

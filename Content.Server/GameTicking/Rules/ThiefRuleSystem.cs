@@ -56,12 +56,12 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             //Chance to not lauch gamerule  
             if (_random.Prob(comp.RuleChance))
             {
-                var eligiblePlayers = _antagSelection.GetEligiblePlayers(comp.ThiefPrototypeId);
+                var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.ThiefPrototypeId);
 
                 if (eligiblePlayers.Count == 0)
                     continue;
 
-                var thiefCount = Math.Min(comp.MaxAllowThief, eligiblePlayers.Count);
+                var thiefCount = _random.Next(1, comp.MaxAllowThief + 1);
 
                 var thieves = _antagSelection.ChooseAntags(eligiblePlayers, thiefCount);
 

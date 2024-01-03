@@ -1,6 +1,3 @@
-using System.Globalization;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using Content.Server.Actions;
 using Content.Server.Antag;
 using Content.Server.Chat.Managers;
@@ -19,17 +16,16 @@ using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Zombies;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using System.Globalization;
+using System.Linq;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -37,10 +33,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -253,7 +247,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         component.InfectedChosen = true;
 
         //Get all players with initial infected enabled, and exclude those with the ZombieImmuneComponent
-        var eligiblePlayers = _antagSelection.GetEligiblePlayers(component.PatientZeroPrototypeId, false, false, false, x => HasComp<ZombieImmuneComponent>(x));
+        var eligiblePlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.PatientZeroPrototypeId, false, false, false, x => HasComp<ZombieImmuneComponent>(x));
 
         if (eligiblePlayers.Count == 0)
             return;
@@ -265,7 +259,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         if (initialInfected.Count < initialInfectedCount)
         {
             //Get all players this time, ignore their preferences
-            eligiblePlayers = _antagSelection.GetEligiblePlayers(component.PatientZeroPrototypeId, false, false, true, x => HasComp<ZombieImmuneComponent>(x));
+            eligiblePlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.PatientZeroPrototypeId, false, false, true, x => HasComp<ZombieImmuneComponent>(x));
 
             //Remove everyone we already chose
             foreach (var alreadyChosen in initialInfected)

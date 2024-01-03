@@ -1,4 +1,4 @@
-﻿using Content.Shared.Preferences;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -20,13 +20,12 @@ public sealed partial class TraitorRuleComponent : Component
     public enum SelectionState
     {
         WaitingForSpawn = 0,
-        ReadyToSelect = 1,
-        SelectionMade = 2,
+        ReadyToStart = 1,
+        Started = 2,
     }
 
     public SelectionState SelectionStatus = SelectionState.WaitingForSpawn;
     public TimeSpan AnnounceAt = TimeSpan.Zero;
-    public Dictionary<ICommonSession, HumanoidCharacterProfile> StartCandidates = new();
 
     /// <summary>
     ///     Path to antagonist alert sound.

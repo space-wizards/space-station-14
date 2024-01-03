@@ -44,12 +44,9 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Structures/Wallmounts/posters.rsi"), "poster5_contraband"),
             Act = () =>
             {
-                if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
-                    return;
-
                 // if its a monkey or mouse or something dont give uplink or objectives
                 var isHuman = HasComp<HumanoidAppearanceComponent>(args.Target);
-                _traitorRule.MakeTraitor(session, giveUplink: isHuman, giveObjectives: isHuman);
+                _traitorRule.MakeTraitorAdmin(args.Target, giveUplink: isHuman, giveObjectives: isHuman);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-traitor"),

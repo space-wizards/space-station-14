@@ -37,7 +37,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    //[Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -149,12 +149,12 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var query = QueryActiveRules();
         while (query.MoveNext(out _, out var comp, out _))
         {
-            var eligiblePlayers = _antagSelection.GetEligiblePlayers(comp.HeadRevPrototypeId);
+            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.HeadRevPrototypeId);
 
             if (eligiblePlayers.Count == 0)
                 continue;
 
-            var headRevCount = _antagSelection.CalculateAntagNumber(_playerManager.Sessions.Count(), comp.PlayersPerHeadRev, comp.MaxHeadRevs);
+            var headRevCount = _antagSelection.CalculateAntagNumber(ev.Players.Count(), comp.PlayersPerHeadRev, comp.MaxHeadRevs);
 
             var headRevs = _antagSelection.ChooseAntags(eligiblePlayers, headRevCount);
 
