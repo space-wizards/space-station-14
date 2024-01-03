@@ -549,7 +549,7 @@ namespace Content.Server.GameTicking
             _audio.PlayGlobal(_audio.GetSound(new SoundCollectionSpecifier("RoundEnd")), Filter.Broadcast(), true);
         }
 
-        public bool DelayStart(TimeSpan time)s
+        public bool DelayStart(TimeSpan time)
         {
             if (_runLevel != GameRunLevel.PreRoundLobby)
             {
@@ -565,253 +565,253 @@ namespace Content.Server.GameTicking
             return true;
         }
 
-    private void UpdateRoundFlow(float frameTime)
-    {
-        if (RunLevel == GameRunLevel.InRound)
+        private void UpdateRoundFlow(float frameTime)
         {
-            RoundLengthMetric.Inc(frameTime);
+            if (RunLevel == GameRunLevel.InRound)
+            {
+                RoundLengthMetric.Inc(frameTime);
+            }
+
+            if (_roundStartTime == TimeSpan.Zero ||
+                RunLevel != GameRunLevel.PreRoundLobby ||
+                Paused ||
+                _roundStartTime - RoundPreloadTime > _gameTiming.CurTime ||
+                _roundStartCountdownHasNotStartedYetDueToNoPlayers)
+            {
+                return;
+            }
+
+            if (_roundStartTime < _gameTiming.CurTime)
+            {
+                StartRound();
+            }
+            // Preload maps so we can start faster
+            else if (_roundStartTime - RoundPreloadTime < _gameTiming.CurTime)
+            {
+                LoadMaps();
+            }
         }
 
-        if (_roundStartTime == TimeSpan.Zero ||
-            RunLevel != GameRunLevel.PreRoundLobby ||
-            Paused ||
-            _roundStartTime - RoundPreloadTime > _gameTiming.CurTime ||
-            _roundStartCountdownHasNotStartedYetDueToNoPlayers)
+        public TimeSpan RoundDuration()
         {
-            return;
+            return _gameTiming.CurTime.Subtract(RoundStartTimeSpan);
         }
 
-        if (_roundStartTime < _gameTiming.CurTime)
+        private void AnnounceRound()
         {
-            StartRound();
-        }
-        // Preload maps so we can start faster
-        else if (_roundStartTime - RoundPreloadTime < _gameTiming.CurTime)
-        {
-            LoadMaps();
-        }
-    }
+            if (CurrentPreset == null) return;
 
-    public TimeSpan RoundDuration()
-    {
-        return _gameTiming.CurTime.Subtract(RoundStartTimeSpan);
-    }
+            var options = _prototypeManager.EnumeratePrototypes<RoundAnnouncementPrototype>().ToList();
 
-    private void AnnounceRound()
-    {
-        if (CurrentPreset == null) return;
-
-        var options = _prototypeManager.EnumeratePrototypes<RoundAnnouncementPrototype>().ToList();
-
-        if (options.Count == 0)
-            return;
-
-        var proto = _robustRandom.Pick(options);
-
-        if (proto.Message != null)
-            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);
-
-        if (proto.Sound != null)
-            _audio.PlayGlobal(proto.Sound, Filter.Broadcast(), true);
-    }
-
-    private async void SendRoundStartedDiscordMessage()
-    {
-        try
-        {
-            if (_webhookIdentifier == null)
+            if (options.Count == 0)
                 return;
 
-            var mapName = _gameMapManager.GetSelectedMap()?.MapName ?? Loc.GetString("discord-round-notifications-unknown-map");
-            var content = Loc.GetString("discord-round-notifications-started", ("id", RoundId), ("map", mapName));
+            var proto = _robustRandom.Pick(options);
 
-            var payload = new WebhookPayload { Content = content };
+            if (proto.Message != null)
+                _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);
 
-            await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            if (proto.Sound != null)
+                _audio.PlayGlobal(proto.Sound, Filter.Broadcast(), true);
         }
-        catch (Exception e)
+
+        private async void SendRoundStartedDiscordMessage()
         {
-            Log.Error($"Error while sending discord round start message:\n{e}");
+            try
+            {
+                if (_webhookIdentifier == null)
+                    return;
+
+                var mapName = _gameMapManager.GetSelectedMap()?.MapName ?? Loc.GetString("discord-round-notifications-unknown-map");
+                var content = Loc.GetString("discord-round-notifications-started", ("id", RoundId), ("map", mapName));
+
+                var payload = new WebhookPayload { Content = content };
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending discord round start message:\n{e}");
+            }
         }
     }
-}
 
-public enum GameRunLevel
-{
-    PreRoundLobby = 0,
-    InRound = 1,
-    PostRound = 2
-}
-
-public sealed class GameRunLevelChangedEvent
-{
-    public GameRunLevel Old { get; }
-    public GameRunLevel New { get; }
-
-    public GameRunLevelChangedEvent(GameRunLevel old, GameRunLevel @new)
+    public enum GameRunLevel
     {
-        Old = old;
-        New = @new;
+        PreRoundLobby = 0,
+        InRound = 1,
+        PostRound = 2
     }
-}
 
-/// <summary>
-///     Event raised before maps are loaded in pre-round setup.
-///     Contains a list of game map prototypes to load; modify it if you want to load different maps,
-///     for example as part of a game rule.
-/// </summary>
-[PublicAPI]
-public sealed class LoadingMapsEvent : EntityEventArgs
-{
-    public List<GameMapPrototype> Maps;
-
-    public LoadingMapsEvent(List<GameMapPrototype> maps)
+    public sealed class GameRunLevelChangedEvent
     {
-        Maps = maps;
+        public GameRunLevel Old { get; }
+        public GameRunLevel New { get; }
+
+        public GameRunLevelChangedEvent(GameRunLevel old, GameRunLevel @new)
+        {
+            Old = old;
+            New = @new;
+        }
     }
-}
-
-/// <summary>
-///     Event raised before the game loads a given map.
-///     This event is mutable, and load options should be tweaked if necessary.
-/// </summary>
-/// <remarks>
-///     You likely want to subscribe to this after StationSystem.
-/// </remarks>
-[PublicAPI]
-public sealed class PreGameMapLoad : EntityEventArgs
-{
-    public readonly MapId Map;
-    public GameMapPrototype GameMap;
-    public MapLoadOptions Options;
-
-    public PreGameMapLoad(MapId map, GameMapPrototype gameMap, MapLoadOptions options)
-    {
-        Map = map;
-        GameMap = gameMap;
-        Options = options;
-    }
-}
-
-
-/// <summary>
-///     Event raised after the game loads a given map.
-/// </summary>
-/// <remarks>
-///     You likely want to subscribe to this after StationSystem.
-/// </remarks>
-[PublicAPI]
-public sealed class PostGameMapLoad : EntityEventArgs
-{
-    public readonly GameMapPrototype GameMap;
-    public readonly MapId Map;
-    public readonly IReadOnlyList<EntityUid> Grids;
-    public readonly string? StationName;
-
-    public PostGameMapLoad(GameMapPrototype gameMap, MapId map, IReadOnlyList<EntityUid> grids, string? stationName)
-    {
-        GameMap = gameMap;
-        Map = map;
-        Grids = grids;
-        StationName = stationName;
-    }
-}
-
-/// <summary>
-///     Event raised to refresh the late join status.
-///     If you want to disallow late joins, listen to this and call Disallow.
-/// </summary>
-public sealed class RefreshLateJoinAllowedEvent
-{
-    public bool DisallowLateJoin { get; private set; } = false;
-
-    public void Disallow()
-    {
-        DisallowLateJoin = true;
-    }
-}
-
-/// <summary>
-///     Attempt event raised on round start.
-///     This can be listened to by GameRule systems to cancel round start if some condition is not met, like player count.
-/// </summary>
-public sealed class RoundStartAttemptEvent : CancellableEntityEventArgs
-{
-    public ICommonSession[] Players { get; }
-    public bool Forced { get; }
-
-    public RoundStartAttemptEvent(ICommonSession[] players, bool forced)
-    {
-        Players = players;
-        Forced = forced;
-    }
-}
-
-/// <summary>
-///     Event raised before readied up players are spawned and given jobs by the GameTicker.
-///     You can use this to spawn people off-station, like in the case of nuke ops or wizard.
-///     Remove the players you spawned from the PlayerPool and call <see cref="GameTicker.PlayerJoinGame"/> on them.
-/// </summary>
-public sealed class RulePlayerSpawningEvent
-{
-    /// <summary>
-    ///     Pool of players to be spawned.
-    ///     If you want to handle a specific player being spawned, remove it from this list and do what you need.
-    /// </summary>
-    /// <remarks>If you spawn a player by yourself from this event, don't forget to call <see cref="GameTicker.PlayerJoinGame"/> on them.</remarks>
-    public List<ICommonSession> PlayerPool { get; }
-    public IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> Profiles { get; }
-    public bool Forced { get; }
-
-    public RulePlayerSpawningEvent(List<ICommonSession> playerPool, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles, bool forced)
-    {
-        PlayerPool = playerPool;
-        Profiles = profiles;
-        Forced = forced;
-    }
-}
-
-/// <summary>
-///     Event raised after players were assigned jobs by the GameTicker.
-///     You can give on-station people special roles by listening to this event.
-/// </summary>
-public sealed class RulePlayerJobsAssignedEvent
-{
-    public ICommonSession[] Players { get; }
-    public IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> Profiles { get; }
-    public bool Forced { get; }
-
-    public RulePlayerJobsAssignedEvent(ICommonSession[] players, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles, bool forced)
-    {
-        Players = players;
-        Profiles = profiles;
-        Forced = forced;
-    }
-}
-
-/// <summary>
-///     Event raised to allow subscribers to add text to the round end summary screen.
-/// </summary>
-public sealed class RoundEndTextAppendEvent
-{
-    private bool _doNewLine;
 
     /// <summary>
-    ///     Text to display in the round end summary screen.
+    ///     Event raised before maps are loaded in pre-round setup.
+    ///     Contains a list of game map prototypes to load; modify it if you want to load different maps,
+    ///     for example as part of a game rule.
     /// </summary>
-    public string Text { get; private set; } = string.Empty;
+    [PublicAPI]
+    public sealed class LoadingMapsEvent : EntityEventArgs
+    {
+        public List<GameMapPrototype> Maps;
+
+        public LoadingMapsEvent(List<GameMapPrototype> maps)
+        {
+            Maps = maps;
+        }
+    }
 
     /// <summary>
-    ///     Invoke this method to add text to the round end summary screen.
+    ///     Event raised before the game loads a given map.
+    ///     This event is mutable, and load options should be tweaked if necessary.
     /// </summary>
-    /// <param name="text"></param>
-    public void AddLine(string text)
+    /// <remarks>
+    ///     You likely want to subscribe to this after StationSystem.
+    /// </remarks>
+    [PublicAPI]
+    public sealed class PreGameMapLoad : EntityEventArgs
     {
-        if (_doNewLine)
-            Text += "\n";
+        public readonly MapId Map;
+        public GameMapPrototype GameMap;
+        public MapLoadOptions Options;
 
-        Text += text;
-        _doNewLine = true;
+        public PreGameMapLoad(MapId map, GameMapPrototype gameMap, MapLoadOptions options)
+        {
+            Map = map;
+            GameMap = gameMap;
+            Options = options;
+        }
     }
-}
+
+
+    /// <summary>
+    ///     Event raised after the game loads a given map.
+    /// </summary>
+    /// <remarks>
+    ///     You likely want to subscribe to this after StationSystem.
+    /// </remarks>
+    [PublicAPI]
+    public sealed class PostGameMapLoad : EntityEventArgs
+    {
+        public readonly GameMapPrototype GameMap;
+        public readonly MapId Map;
+        public readonly IReadOnlyList<EntityUid> Grids;
+        public readonly string? StationName;
+
+        public PostGameMapLoad(GameMapPrototype gameMap, MapId map, IReadOnlyList<EntityUid> grids, string? stationName)
+        {
+            GameMap = gameMap;
+            Map = map;
+            Grids = grids;
+            StationName = stationName;
+        }
+    }
+
+    /// <summary>
+    ///     Event raised to refresh the late join status.
+    ///     If you want to disallow late joins, listen to this and call Disallow.
+    /// </summary>
+    public sealed class RefreshLateJoinAllowedEvent
+    {
+        public bool DisallowLateJoin { get; private set; } = false;
+
+        public void Disallow()
+        {
+            DisallowLateJoin = true;
+        }
+    }
+
+    /// <summary>
+    ///     Attempt event raised on round start.
+    ///     This can be listened to by GameRule systems to cancel round start if some condition is not met, like player count.
+    /// </summary>
+    public sealed class RoundStartAttemptEvent : CancellableEntityEventArgs
+    {
+        public ICommonSession[] Players { get; }
+        public bool Forced { get; }
+
+        public RoundStartAttemptEvent(ICommonSession[] players, bool forced)
+        {
+            Players = players;
+            Forced = forced;
+        }
+    }
+
+    /// <summary>
+    ///     Event raised before readied up players are spawned and given jobs by the GameTicker.
+    ///     You can use this to spawn people off-station, like in the case of nuke ops or wizard.
+    ///     Remove the players you spawned from the PlayerPool and call <see cref="GameTicker.PlayerJoinGame"/> on them.
+    /// </summary>
+    public sealed class RulePlayerSpawningEvent
+    {
+        /// <summary>
+        ///     Pool of players to be spawned.
+        ///     If you want to handle a specific player being spawned, remove it from this list and do what you need.
+        /// </summary>
+        /// <remarks>If you spawn a player by yourself from this event, don't forget to call <see cref="GameTicker.PlayerJoinGame"/> on them.</remarks>
+        public List<ICommonSession> PlayerPool { get; }
+        public IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> Profiles { get; }
+        public bool Forced { get; }
+
+        public RulePlayerSpawningEvent(List<ICommonSession> playerPool, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles, bool forced)
+        {
+            PlayerPool = playerPool;
+            Profiles = profiles;
+            Forced = forced;
+        }
+    }
+
+    /// <summary>
+    ///     Event raised after players were assigned jobs by the GameTicker.
+    ///     You can give on-station people special roles by listening to this event.
+    /// </summary>
+    public sealed class RulePlayerJobsAssignedEvent
+    {
+        public ICommonSession[] Players { get; }
+        public IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> Profiles { get; }
+        public bool Forced { get; }
+
+        public RulePlayerJobsAssignedEvent(ICommonSession[] players, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles, bool forced)
+        {
+            Players = players;
+            Profiles = profiles;
+            Forced = forced;
+        }
+    }
+
+    /// <summary>
+    ///     Event raised to allow subscribers to add text to the round end summary screen.
+    /// </summary>
+    public sealed class RoundEndTextAppendEvent
+    {
+        private bool _doNewLine;
+
+        /// <summary>
+        ///     Text to display in the round end summary screen.
+        /// </summary>
+        public string Text { get; private set; } = string.Empty;
+
+        /// <summary>
+        ///     Invoke this method to add text to the round end summary screen.
+        /// </summary>
+        /// <param name="text"></param>
+        public void AddLine(string text)
+        {
+            if (_doNewLine)
+                Text += "\n";
+
+            Text += text;
+            _doNewLine = true;
+        }
+    }
 }
