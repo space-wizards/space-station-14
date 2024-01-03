@@ -30,6 +30,16 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime
+  - type: Geras
+  - type: PassiveDamage # Around 8 damage a minute healed
+    allowedStates:
+    - Alive
+    damageCap: 35
+    damage:
+      types:
+        Heat: -0.14
+      groups:
+        Brute: -0.14
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:

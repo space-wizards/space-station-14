@@ -67,6 +67,16 @@
   inventory: Transfer
   revertOnDeath: true
 
+- type: polymorph
+  id: SlimeMorphGeras
+  entity: MobSlimesGeras
+  transferName: false
+  transferHumanoidAppearance: false
+  inventory: None
+  transferDamage: true
+  revertOnDeath: true
+  revertOnCrit: true
+
 # this is a test for transferring some visual appearance stuff
 - type: polymorph
   id: TestHumanMorph
