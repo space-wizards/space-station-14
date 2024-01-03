@@ -39,7 +39,7 @@
   parent: BaseMagazineNail
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeNail
+    proto: BulletNail
     capacity: 20
   - type: Sprite
     layers:
