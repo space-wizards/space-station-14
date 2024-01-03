@@ -388,6 +388,18 @@ entities:
     - pos: 1.5,0.5
       parent: 2
       type: Transform
+- proto: Carpet
+  entities:
+  - uid: 382
+    components:
+    - pos: 0.5,5.5
+      parent: 2
+      type: Transform
+  - uid: 383
+    components:
+    - pos: 0.5,6.5
+      parent: 2
+      type: Transform
 - proto: chem_master
   entities:
   - uid: 37
@@ -490,7 +502,14 @@ entities:
     - pos: 1.5,12.5
       parent: 2
       type: Transform
-- proto: CrateElectrical
+- proto: CottonSeeds
+  entities:
+  - uid: 384
+    components:
+    - pos: 2.2198243,8.552075
+      parent: 2
+      type: Transform
+- proto: CrateEngineeringCableBulk
   entities:
   - uid: 7
     components:
@@ -595,6 +614,15 @@ entities:
       pos: 3.5,5.5
       parent: 2
       type: Transform
+- proto: FloorDrain
+  entities:
+  - uid: 381
+    components:
+    - pos: 0.5,8.5
+      parent: 2
+      type: Transform
+    - fixtures: {}
+      type: Fixtures
 - proto: FoodBurgerMime
   entities:
   - uid: 204
@@ -1588,9 +1616,12 @@ entities:
   entities:
   - uid: 16
     components:
-    - pos: 4.5,0.5
+    - anchored: True
+      pos: 4.5,0.5
       parent: 2
       type: Transform
+    - bodyType: Static
+      type: Physics
 - proto: PortableScrubber
   entities:
   - uid: 326
@@ -1704,48 +1735,6 @@ entities:
     - pos: -0.5,10.5
       parent: 2
       type: Transform
-- proto: SpawnPointAssistant
-  entities:
-  - uid: 25
-    components:
-    - pos: 4.5,4.5
-      parent: 2
-      type: Transform
-  - uid: 29
-    components:
-    - pos: 3.5,9.5
-      parent: 2
-      type: Transform
-  - uid: 30
-    components:
-    - pos: 4.5,7.5
-      parent: 2
-      type: Transform
-  - uid: 31
-    components:
-    - pos: 2.5,4.5
-      parent: 2
-      type: Transform
-  - uid: 122
-    components:
-    - pos: 2.5,9.5
-      parent: 2
-      type: Transform
-  - uid: 123
-    components:
-    - pos: 1.5,4.5
-      parent: 2
-      type: Transform
-  - uid: 130
-    components:
-    - pos: 4.5,9.5
-      parent: 2
-      type: Transform
-  - uid: 332
-    components:
-    - pos: 3.5,4.5
-      parent: 2
-      type: Transform
 - proto: SpawnPointBotanist
   entities:
   - uid: 138
@@ -1835,6 +1824,48 @@ entities:
   - uid: 202
     components:
     - pos: 0.5,3.5
+      parent: 2
+      type: Transform
+- proto: SpawnPointPassenger
+  entities:
+  - uid: 25
+    components:
+    - pos: 4.5,4.5
+      parent: 2
+      type: Transform
+  - uid: 29
+    components:
+    - pos: 3.5,9.5
+      parent: 2
+      type: Transform
+  - uid: 30
+    components:
+    - pos: 4.5,7.5
+      parent: 2
+      type: Transform
+  - uid: 31
+    components:
+    - pos: 2.5,4.5
+      parent: 2
+      type: Transform
+  - uid: 122
+    components:
+    - pos: 2.5,9.5
+      parent: 2
+      type: Transform
+  - uid: 123
+    components:
+    - pos: 1.5,4.5
+      parent: 2
+      type: Transform
+  - uid: 130
+    components:
+    - pos: 4.5,9.5
+      parent: 2
+      type: Transform
+  - uid: 332
+    components:
+    - pos: 3.5,4.5
       parent: 2
       type: Transform
 - proto: SpawnPointQuartermaster
