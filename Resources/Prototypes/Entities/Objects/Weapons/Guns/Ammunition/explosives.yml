@@ -137,21 +137,6 @@
     state: ball
 
 - type: entity
-  id: CannonBallEmpty
-  name: cannonball shell
-  suffix: Pirate
-  parent: BaseItem
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    state: ball
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 60
-        canMix: true
-
-- type: entity
   id: Grapeshot
   name: grapeshot
   suffix: Pirate
@@ -164,22 +149,7 @@
     deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    state: ball
-
-- type: entity
-  id: GrapeshotEmpty
-  name: grapeshot bag
-  suffix: Pirate
-  parent: BaseItem
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    state: ball
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 30
-        canMix: true
+    state: grapeshot
 
 - type: entity
   id: Glassshot
@@ -194,4 +164,4 @@
     deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    state: ball
+    state: grapeshot

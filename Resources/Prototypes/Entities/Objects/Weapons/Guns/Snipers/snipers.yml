@@ -84,7 +84,7 @@
     - SemiAuto
   - type: UseDelayOnShoot
   - type: UseDelay
-    delay: 5
+    delay: 8 #it's a musket
   - type: BallisticAmmoProvider
     whitelist:
       tags:
@@ -92,11 +92,16 @@
     capacity: 1
     proto: CartridgeAntiMateriel
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 15 #you fucking stab em
-        Bloodloss: 5 #no way to apply bleed, triangular bayonet wounds are hard to fix(source:that one copypasta)
-
+        Bloodloss: 2 #no way to apply bleed, triangular bayonet wounds are hard to fix(source:that one copypasta)
+    angle: 0
+    animation: WeaponArcThrust
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+    
 - type: entity
   name: flintlock pistol
   parent: BaseWeaponSniper
@@ -115,7 +120,7 @@
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: UseDelayOnShoot
   - type: UseDelay
-    delay: 5
+    delay: 8 #it's a flintlock
   - type: BallisticAmmoProvider
     whitelist:
       tags:
@@ -124,3 +129,4 @@
     proto: CartridgeAntiMateriel
   - type: StaticPrice
     price: 0
+
