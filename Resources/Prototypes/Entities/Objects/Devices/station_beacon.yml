@@ -119,7 +119,7 @@
   components:
   - type: NavMapBeacon
     text: Command
-    color: "#334E6D"
+    color: "#FFFF00"
 
 - type: entity
   parent: DefaultStationBeaconCommand
