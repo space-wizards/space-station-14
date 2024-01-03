@@ -317,7 +317,7 @@
   name: portable particle decelerator
   parent: BaseWeaponBattery
   id: WeaponParticleDecelerator
-  description: A portable particle decelerator capable of decomposing a tesla or singularity
+  description: A portable particle decelerator capable of decomposing a tesla or singularity.
   components:
     - type: Item
       size: Ginormous
