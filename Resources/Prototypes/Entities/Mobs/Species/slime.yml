@@ -18,7 +18,7 @@
   # they like eat it idk lol
   - type: Storage
     grid:
-    - 0,0,2,2
+    - 0,0,1,1
     maxItemSize: Large
   - type: ContainerContainer
     containers:
