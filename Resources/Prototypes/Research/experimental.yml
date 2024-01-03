@@ -8,7 +8,7 @@
     state: drone
   discipline: Experimental
   tier: 1
-  cost: 3500
+  cost: 5000
   recipeUnlocks:
   #- ProximitySensor #imperia edit
   - Drone
@@ -54,7 +54,7 @@
     state: display
   discipline: Experimental
   tier: 1
-  cost: 2500 #imperia edit
+  cost: 3000 #imperia edit
   recipeUnlocks:
   - TechDiskComputerCircuitboard
 
@@ -66,7 +66,7 @@
     state: icon
   discipline: Experimental
   tier: 1
-  cost: 5000 #imperia edit
+  cost: 6000 #imperia edit
   recipeUnlocks:
   - ClothingShoesBootsMag
 
@@ -94,7 +94,7 @@
     state: display
   discipline: Experimental
   tier: 2
-  cost: 4000
+  cost: 5000
   recipeUnlocks:
   - TraversalDistorterMachineCircuitboard
 
@@ -120,7 +120,7 @@
     state: icon
   discipline: Experimental
   tier: 2
-  cost: 6000 #imperia edit
+  cost: 7500
   recipeUnlocks:
   - RPED
 
