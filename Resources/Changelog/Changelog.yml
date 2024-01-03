@@ -1,11 +1,4 @@
 Entries:
-- author: notquitehadouken
-  changes:
-  - message: The grey stick that shows up when you wide swing a weapon now looks like
-      the weapon used.
-    type: Tweak
-  id: 5018
-  time: '2023-10-18T01:12:00.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix vaulting mispredict.
@@ -3588,3 +3581,10 @@ Entries:
   id: 5518
   time: '2024-01-03T01:36:18.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23407
+- author: CaasGit
+  changes:
+  - message: Give slimes their custom speech bubble!
+    type: Tweak
+  id: 5519
+  time: '2024-01-03T05:12:56.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23415
