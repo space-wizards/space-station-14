@@ -123,8 +123,8 @@
     job: Scientist
   - type: StealCondition
     stealGroup: TechnologyDisk
-    minCollectionSize: 10
-    maxCollectionSize: 20
+    minCollectionSize: 5
+    maxCollectionSize: 15
     verifyMapExistance: false
   - type: Objective
     difficulty: 0.8
@@ -136,8 +136,8 @@
   components:
   - type: StealCondition
     stealGroup: IDCard
-    minCollectionSize: 10
-    maxCollectionSize: 20
+    minCollectionSize: 5
+    maxCollectionSize: 15
     verifyMapExistance: false
   - type: Objective
     difficulty: 0.7
@@ -150,7 +150,7 @@
   - type: StealCondition
     stealGroup: EncryptionKey
     minCollectionSize: 5
-    maxCollectionSize: 25
+    maxCollectionSize: 15
   - type: Objective
     difficulty: 0.7
 
@@ -180,7 +180,7 @@
   - type: StealCondition
     stealGroup: LAMP
     minCollectionSize: 1
-    maxCollectionSize: 30
+    maxCollectionSize: 10
     verifyMapExistance: true
   - type: Objective
     difficulty: 0.5 # just for fun, collectings LAMP on Moth
@@ -198,6 +198,18 @@
     stealGroup: ForensicScanner
   - type: Objective
     difficulty: 1
+
+- type: entity                                      
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: FlippoEngravedLighterStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Detective
+  - type: StealCondition
+    stealGroup: FlippoEngravedLighter
+  - type: Objective
+    difficulty: 0.8
 
 - type: entity
   noSpawn: true

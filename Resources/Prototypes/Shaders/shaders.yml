@@ -2,6 +2,12 @@
   id: CircleMask
   kind: source
   path: "/Textures/Shaders/circle_mask.swsl"
+  params:
+    CircleRadius: 15.0
+    CircleMinDist: 0.25
+    CirclePow: 0.5
+    CircleMax: 4.0
+    CircleMult: 0.5
 
 - type: shader
   id: GradientCircleMask
@@ -87,3 +93,9 @@
   id: HorizontalCut
   kind: source
   path: "/Textures/Shaders/hcut.swsl"
+
+# Stylized simulation of blindness
+- type: shader
+  id: Cataracts
+  kind: source
+  path: "/Textures/Shaders/cataracts.swsl"
