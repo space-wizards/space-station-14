@@ -143,7 +143,7 @@
   suffix: Captain's Quarters
   components:
   - type: NavMapBeacon
-    text: Captain's
+    text: Captain
 
 - type: entity
   parent: DefaultStationBeaconCommand
@@ -151,7 +151,7 @@
   suffix: HOP's Office
   components:
   - type: NavMapBeacon
-    text: HOP Office
+    text: HOP
 
 - type: entity
   parent: DefaultStationBeacon
@@ -176,7 +176,7 @@
   suffix: Warden's Office
   components:
   - type: NavMapBeacon
-    text: Warden's
+    text: Warden
 
 - type: entity
   parent: DefaultStationBeaconSecurity
@@ -200,7 +200,7 @@
   suffix: Perma Brig
   components:
   - type: NavMapBeacon
-    text: Perma Brig
+    text: Perma
 
 - type: entity
   parent: DefaultStationBeaconSecurity
@@ -257,7 +257,7 @@
   suffix: Chemistry
   components:
   - type: NavMapBeacon
-    text: Chemistry
+    text: Chem
 
 - type: entity
   parent: DefaultStationBeaconMedical
@@ -265,7 +265,7 @@
   suffix: Cryonics
   components:
   - type: NavMapBeacon
-    text: Cryonics
+    text: Cryo
 
 - type: entity
   parent: DefaultStationBeaconMedical
@@ -273,7 +273,7 @@
   suffix: CMO's room
   components:
   - type: NavMapBeacon
-    text: CMO’s room
+    text: CMO
 
 - type: entity
   parent: DefaultStationBeaconMedical
@@ -303,7 +303,7 @@
 - type: entity
   parent: DefaultStationBeaconScience
   id: DefaultStationBeaconRND
-  suffix: RND
+  suffix: Research and Development
   components:
   - type: NavMapBeacon
     text: Research
@@ -311,10 +311,10 @@
 - type: entity
   parent: DefaultStationBeaconScience
   id: DefaultStationBeaconServerRoom
-  suffix: Server Room
+  suffix: Research Server Room
   components:
   - type: NavMapBeacon
-    text: Sci Server
+    text: Server
 
 - type: entity
   parent: DefaultStationBeaconScience
@@ -322,7 +322,7 @@
   suffix: RD's Room
   components:
   - type: NavMapBeacon
-    text: RD's room
+    text: RD
 
 - type: entity
   parent: DefaultStationBeaconScience
@@ -338,7 +338,7 @@
   suffix: Artifact Lab
   components:
   - type: NavMapBeacon
-    text: Artifact Lab
+    text: Artifact
 
 - type: entity
   parent: DefaultStationBeaconScience
@@ -346,7 +346,7 @@
   suffix: Anomaly Generator
   components:
   - type: NavMapBeacon
-    text: Anomaly Gen
+    text: Anomaly
 
 - type: entity
   parent: DefaultStationBeacon
@@ -379,7 +379,7 @@
   suffix: QM's Room
   components:
   - type: NavMapBeacon
-    text: QM's room
+    text: QM
 
 - type: entity
   parent: DefaultStationBeaconSupply
@@ -404,7 +404,7 @@
   suffix: CE's Room
   components:
   - type: NavMapBeacon
-    text: CE's room
+    text: CE
 
 - type: entity
   parent: DefaultStationBeaconEngineering
@@ -428,7 +428,7 @@
   suffix: Grav Gen
   components:
   - type: NavMapBeacon
-    text: Grav Gen
+    text: Grav
 
 - type: entity
   parent: DefaultStationBeaconEngineering
@@ -441,10 +441,10 @@
 - type: entity
   parent: DefaultStationBeaconEngineering
   id: DefaultStationBeaconPowerBank
-  suffix: Power Bank
+  suffix: SMES Power Bank
   components:
   - type: NavMapBeacon
-    text: SMES Bank
+    text: SMES
 
 - type: entity
   parent: DefaultStationBeaconEngineering
@@ -614,7 +614,7 @@
   suffix: Tool Room
   components:
   - type: NavMapBeacon
-    text: Tool Room
+    text: Tools
 
 - type: entity
   parent: DefaultStationBeacon
