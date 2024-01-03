@@ -72,19 +72,3 @@
     Ethanol: 5
     Hydrogen: 3
     Sulfur: 2
-
-- type: reaction
-  id: Gunpowder
-  reactants:  
-    Sulfur:
-      amount: 1
-    Charcoal:
-      amount: 1
-    Potassium:
-      amount: 1
-    Nitrogen:
-      amount: 1
-    Oxygen:
-      amount: 1
-  products:
-    Gunpowder: 1

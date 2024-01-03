@@ -26,6 +26,9 @@
             "name": "ball"
         },
         {
+            "name": "grapeshot"
+        },
+        {
             "name": "spent"
         }
     ]
