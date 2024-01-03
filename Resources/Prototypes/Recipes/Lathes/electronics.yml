@@ -620,6 +620,15 @@
      Glass: 900
 
 - type: latheRecipe
+  id: FlatpackerMachineCircuitboard
+  result: FlatpackerMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
   id: SheetifierMachineCircuitboard
   result: SheetifierMachineCircuitboard
   completetime: 4
