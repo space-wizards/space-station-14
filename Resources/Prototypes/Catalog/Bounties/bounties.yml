@@ -211,7 +211,7 @@
 
 - type: cargoBounty
   id: BountyHandcuffs
-  reward: 4000
+  reward: 1000
   description: bounty-description-handcuffs
   idPrefix: CC
   entries:
@@ -268,7 +268,7 @@
 
 - type: cargoBounty
   id: BountyLung
-  reward: 15000
+  reward: 2000
   description: bounty-description-lung
   entries:
   - name: bounty-item-lung
@@ -279,7 +279,7 @@
 
 - type: cargoBounty
   id: BountyMonkeyCube
-  reward: 4000
+  reward: 2000
   description: bounty-description-monkey-cube
   idPrefix: CC
   entries:
@@ -321,7 +321,7 @@
     amount: 5
     whitelist:
       tags:
-      - Write
+      - Pen
 
 - type: cargoBounty
   id: BountyPercussion
@@ -453,7 +453,7 @@
 
 - type: cargoBounty
   id: BountyTrash
-  reward: 700
+  reward: 500
   description: bounty-description-trash
   entries:
   - name: bounty-item-trash
@@ -497,7 +497,7 @@
 
 - type: cargoBounty
   id: BountyOrgans
-  reward: 10000
+  reward: 2000
   description: bounty-description-organs
   idPrefix: UNTH
   entries:
@@ -520,7 +520,7 @@
 
 - type: cargoBounty
   id: BountyWarmCloth
-  reward: 6000
+  reward: 2000
   description: bounty-description-warm-cloth
   idPrefix: UNTH
   entries:
@@ -556,7 +556,7 @@
 
 - type: cargoBounty
   id: BountyFood
-  reward: 9500
+  reward: 4000
   description: bounty-description-food
   idPrefix: UNTH
   entries:
