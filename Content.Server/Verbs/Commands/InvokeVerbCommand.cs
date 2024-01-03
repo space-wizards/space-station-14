@@ -39,9 +39,9 @@ namespace Content.Server.Verbs.Commands
                     return;
                 }
             }
-            else if (_entManager.EntityExists(new EntityUid(intPlayerUid)))
+            else
             {
-                playerEntity = new EntityUid(intPlayerUid);
+                _entManager.TryGetEntity(new NetEntity(intPlayerUid), out playerEntity);
             }
 
             // gets the target entity
