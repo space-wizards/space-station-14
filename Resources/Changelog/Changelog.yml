@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix vaulting mispredict.
-    type: Fix
-  id: 5019
-  time: '2023-10-18T05:11:33.0000000+00:00'
 - author: daerSeebaer
   changes:
   - message: The AME controller now shows the current load and maximum capacity.
@@ -3588,3 +3582,14 @@ Entries:
   id: 5519
   time: '2024-01-03T05:12:56.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23415
+- author: zzylex
+  changes:
+  - message: You can now make plungers stick to walls.
+    type: Tweak
+  - message: A sound is made when a plunger gets stuck to something.
+    type: Add
+  - message: You can now shoot plungers with bows.
+    type: Tweak
+  id: 5520
+  time: '2024-01-03T05:36:17.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23406
