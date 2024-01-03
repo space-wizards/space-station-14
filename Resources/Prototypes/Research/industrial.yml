@@ -22,7 +22,7 @@
     state: medium
   discipline: Industrial
   tier: 1
-  cost: 2000 #imperia edit
+  cost: 5000
   recipeUnlocks:
   - PowerCellMedium
 
@@ -34,7 +34,7 @@
     state: panel
   discipline: Industrial
   tier: 1
-  cost: 5000 #imperia edit
+  cost: 7500
   recipeUnlocks:
   - WallmountSubstationElectronics
   - WallmountGeneratorElectronics
@@ -63,7 +63,7 @@
     state: portgen0
   discipline: Industrial
   tier: 1
-  cost: 5000 #imperia edit
+  cost: 7500
   recipeUnlocks:
   - PortableGeneratorPacmanMachineCircuitboard
   - PortableGeneratorSuperPacmanMachineCircuitboard
@@ -81,7 +81,7 @@
     state: freezerOff
   discipline: Industrial
   tier: 1
-  cost: 2500 #imperia edit
+  cost: 7500
   recipeUnlocks:
   - BorgModuleGasAnalyzer
   - ThermomachineFreezerMachineCircuitBoard
@@ -110,7 +110,7 @@
     state: icon
   discipline: Industrial
   tier: 2
-  cost: 7500 #imperia edit
+  cost: 10000
   recipeUnlocks:
   - RCD
   - RCDAmmo
@@ -124,7 +124,7 @@
     state: base
   discipline: Industrial
   tier: 2
-  cost: 7500 #imperia edit
+  cost: 10000
   recipeUnlocks:
   - ShuttleConsoleCircuitboard
   - RadarConsoleCircuitboard
@@ -172,7 +172,7 @@
     state: high
   discipline: Industrial
   tier: 2
-  cost: 5000 #imperia edit
+  cost: 7500
   recipeUnlocks:
   - PowerCellHigh
   technologyPrerequisites:
