@@ -38,6 +38,13 @@ public sealed class FollowerSystem : EntitySystem
         SubscribeLocalEvent<FollowerComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<FollowedComponent, EntityTerminatingEvent>(OnFollowedTerminating);
         SubscribeLocalEvent<BeforeSaveEvent>(OnBeforeSave);
+
+        SubscribeLocalEvent<DenyFollowComponent, ComponentInit>(OnDenyAdd);
+    }
+
+    private void OnDenyAdd(EntityUid uid, DenyFollowComponent component, ComponentInit args)
+    {
+        StopAllFollowers(uid);
     }
 
     private void OnBeforeSave(BeforeSaveEvent ev)
@@ -63,7 +70,7 @@ public sealed class FollowerSystem : EntitySystem
         if (ev.User == ev.Target || IsClientSide(ev.Target))
             return;
 
-        if (HasComp<GhostComponent>(ev.User))
+        if (HasComp<GhostComponent>(ev.User) && !HasComp<DenyFollowComponent>(ev.User))
         {
             var verb = new AlternativeVerb()
             {
@@ -128,6 +135,10 @@ public sealed class FollowerSystem : EntitySystem
     /// <param name="entity">The entity to be followed</param>
     public void StartFollowingEntity(EntityUid follower, EntityUid entity)
     {
+        // If the entity has the deny follow component, don't follow.
+        if (HasComp<DenyFollowComponent>(entity))
+            return;
+
         // No recursion for you
         var targetXform = Transform(entity);
         while (targetXform.ParentUid.IsValid())
