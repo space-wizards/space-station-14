@@ -44,7 +44,9 @@ public sealed class FollowerSystem : EntitySystem
 
     private void OnDenyAdd(EntityUid uid, DenyFollowComponent component, ComponentInit args)
     {
-        StopAllFollowers(uid);
+        if (!TryComp(uid, out FollowedComponent? follower))
+            return;
+        StopAllFollowers(uid, follower);
     }
 
     private void OnBeforeSave(BeforeSaveEvent ev)
