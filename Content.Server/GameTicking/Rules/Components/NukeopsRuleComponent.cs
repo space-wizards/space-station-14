@@ -233,3 +233,10 @@ public enum WinCondition : byte
     SomeNukiesAlive,
     AllNukiesAlive
 }
+
+public enum NukieType
+{
+    Commander,
+    Agent,
+    Operative
+}

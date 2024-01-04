@@ -60,6 +60,14 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<HeadRevolutionaryComponent, AfterFlashedEvent>(OnPostFlash);
     }
 
+    //Set miniumum players
+    protected override void Added(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    {
+        base.Added(uid, component, gameRule, args);
+
+        gameRule.MinPlayers = component.MinPlayers;
+    }
+
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
@@ -130,13 +138,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         args.Append(Loc.GetString(head ? "head-rev-briefing" : "rev-briefing"));
     }
 
+    //Check for enough players to start rule
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var gameRule))
-        {
-            _antagSelection.AttemptStartGameRule(ev, uid, comp.MinPlayers, gameRule, Loc.GetString("roles-antag-rev-name"));
-        }
+        TryRoundStartAttempt(ev, Loc.GetString("roles-antag-rev-name"));
     }
 
     private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)

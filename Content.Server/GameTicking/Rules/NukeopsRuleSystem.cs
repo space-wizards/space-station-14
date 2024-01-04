@@ -116,6 +116,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         SubscribeLocalEvent<ConsoleFTLAttemptEvent>(OnShuttleFTLAttempt);
     }
 
+    //Set minimum players
+    protected override void Added(EntityUid uid, NukeopsRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    {
+        base.Added(uid, component, gameRule, args);
+
+        gameRule.MinPlayers = component.MinPlayers;
+    }
     /// <summary>
     ///     Returns true when the player with UID opUid is a nuclear operative. Prevents random
     ///     people from using the war declarator outside of the game mode.
@@ -603,6 +610,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 continue;
             }
 
+            //Handle there being nobody readied up
+            if (ev.PlayerPool.Count == 0)
+                continue;
+
             //INCONSISTENCY! Why does RulePlayerJobsAssignedEvent use an array and this uses a list?!
             var playerPoolArray = ev.PlayerPool.ToArray();
 
@@ -610,44 +621,52 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             var agentEligible = _antagSelection.GetEligibleSessions(playerPoolArray, nukeops.MedicRoleProto, false);
             var operativeEligible = _antagSelection.GetEligibleSessions(playerPoolArray, nukeops.OperativeRoleProto, false);
 
-            //Handle there being nobody readied up
-            if (ev.PlayerPool.Count > 0)
-                continue;
-
-            var nukiesToSelect = _antagSelection.CalculateAntagNumber(_playerManager.PlayerCount, nukeops.PlayersPerOperative, nukeops.MaxOps);
+            var nukiesToSelect = 6;//_antagSelection.CalculateAntagNumber(_playerManager.PlayerCount, nukeops.PlayersPerOperative, nukeops.MaxOps);
 
             //Select Nukies
-            ICommonSession? selectedCommander = _antagSelection.ChooseAntags<ICommonSession>(new List<ICommonSession>[] { commanderEligible, agentEligible, operativeEligible, ev.PlayerPool}, 1).FirstOrDefault();
+            //Select Commander, priority : commanderEligible, agentEligible, operativeEligible, all players
+            ICommonSession? selectedCommander = _antagSelection.ChooseAntags<ICommonSession>(new List<ICommonSession>[] { commanderEligible, agentEligible, operativeEligible, ev.PlayerPool }, 1).FirstOrDefault();
+            //Select Agent, priority : agentEligible, operativeEligible, all players
             ICommonSession? selectedAgent = _antagSelection.ChooseAntags<ICommonSession>(new List<ICommonSession>[] { agentEligible, operativeEligible, ev.PlayerPool }, 1).FirstOrDefault();
+            //Select Operatives, priority : operativeEligible, all players
             List<ICommonSession> selectedOperatives = _antagSelection.ChooseAntags<ICommonSession>(new List<ICommonSession>[] { operativeEligible, ev.PlayerPool }, nukiesToSelect - 2);
 
-            //No commander available, abort
-            if (selectedCommander == null)
-                continue;
+            //Create the team!
+            //Provide a player session if possible, otherwise spawn them as ghost roles
+            var operatives = new List<NukieSpawn>();
+            operatives.Add(new NukieSpawn(selectedCommander ?? null, NukieType.Commander));
+            operatives.Add(new NukieSpawn(selectedAgent ?? null, NukieType.Agent));
 
-            if (selectedAgent == null)
-                continue;
-
-            //Compatibility with existing code
-            //If someone wants to update that - good luck
-            var operatives = new List<ICommonSession>();
-            operatives.Add(selectedCommander);
-            operatives.Add(selectedAgent);
-            operatives.AddRange(selectedOperatives);
+            //For each of the remaining slots, fill with operatives
+            for (int i = 0; i < nukiesToSelect - 2; i++)
+            {
+                //First fill with players
+                if (selectedOperatives.Count > i)
+                {
+                    operatives.Add(new NukieSpawn(selectedOperatives[i], NukieType.Operative));
+                }
+                //Then fill the remaining with ghost roles
+                else
+                {
+                    operatives.Add(new NukieSpawn(null, NukieType.Operative));
+                }
+            }
 
             SpawnOperatives(nukiesToSelect, operatives, false, nukeops);
 
-            foreach (var session in operatives)
+            foreach (var nukieSpawn in operatives)
             {
-                ev.PlayerPool.Remove(session);
-                GameTicker.PlayerJoinGame(session);
-
-                if (!_mind.TryGetMind(session, out var mind, out _))
+                if (nukieSpawn.Session == null)
                     continue;
 
-                var name = session.AttachedEntity == null
+                GameTicker.PlayerJoinGame(nukieSpawn.Session);
+
+                if (!_mind.TryGetMind(nukieSpawn.Session, out var mind, out _))
+                    continue;
+
+                var name = nukieSpawn.Session!.AttachedEntity == null
                     ? string.Empty
-                    : Name(session.AttachedEntity.Value);
+                    : Name(nukieSpawn.Session.AttachedEntity.Value);
                 nukeops.OperativePlayers[name] = mind;
             }
         }
@@ -773,21 +792,21 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         return true;
     }
 
-    private (string Name, string Role, string Gear) GetOperativeSpawnDetails(int spawnNumber, NukeopsRuleComponent component )
+    private (string Name, string Role, string Gear) GetOperativeSpawnDetails(NukieType type, NukeopsRuleComponent component )
     {
         string name;
         string role;
         string gear;
 
         // Spawn the Commander then Agent first.
-        switch (spawnNumber)
+        switch (type)
         {
-            case 0:
+            case NukieType.Commander:
                 name = Loc.GetString("nukeops-role-commander") + " " + _random.PickAndTake(component.OperativeNames[component.EliteNames]);
                 role = component.CommanderRoleProto;
                 gear = component.CommanderStartGearProto;
                 break;
-            case 1:
+            case NukieType.Agent:
                 name = Loc.GetString("nukeops-role-agent") + " " + _random.PickAndTake(component.OperativeNames[component.NormalNames]);
                 role = component.MedicRoleProto;
                 gear = component.MedicStartGearProto;
@@ -822,7 +841,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         _npcFaction.AddFaction(mob, "Syndicate");
     }
 
-    private void SpawnOperatives(int spawnCount, List<ICommonSession> sessions, bool addSpawnPoints, NukeopsRuleComponent component)
+    private void SpawnOperatives(int spawnCount, List<NukieSpawn> sessions, bool addSpawnPoints, NukeopsRuleComponent component)
     {
         if (component.NukieOutpost == null)
             return;
@@ -849,15 +868,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
         }
 
-        // TODO: This should spawn the nukies in regardless and transfer if possible; rest should go to shot roles.
-        for(var i = 0; i < spawnCount; i++)
+        foreach (var nukieSession in sessions)
         {
-            var spawnDetails = GetOperativeSpawnDetails(i, component);
+            var spawnDetails = GetOperativeSpawnDetails(nukieSession.Type, component);
             var nukeOpsAntag = _prototypeManager.Index<AntagPrototype>(spawnDetails.Role);
 
-            if (sessions.TryGetValue(i, out var session))
+            //If a session is available, spawn mob and transfer mind
+            if (nukieSession.Session != null)
             {
-                var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
+                var profile = _prefs.GetPreferences(nukieSession.Session.UserId).SelectedCharacter as HumanoidCharacterProfile;
                 if (!_prototypeManager.TryIndex(profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies, out SpeciesPrototype? species))
                 {
                     species = _prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies);
@@ -865,13 +884,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
                 var mob = Spawn(species.Prototype, _random.Pick(spawns));
                 SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile, component);
-                var newMind = _mind.CreateMind(session.UserId, spawnDetails.Name);
-                _mind.SetUserId(newMind, session.UserId);
+
+                var newMind = _mind.CreateMind(nukieSession.Session.UserId, spawnDetails.Name);
+                _mind.SetUserId(newMind, nukieSession.Session.UserId);
                 _roles.MindAddRole(newMind, new NukeopsRoleComponent { PrototypeId = spawnDetails.Role });
 
                 _mind.TransferTo(newMind, mob);
             }
-            else if (addSpawnPoints)
+            //Otherwise, spawn as a ghost role
+            else
             {
                 var spawnPoint = Spawn(component.GhostSpawnPointProto, _random.Pick(spawns));
                 var ghostRole = EnsureComp<GhostRoleComponent>(spawnPoint);
@@ -912,7 +933,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         var numNukies = _antagSelection.CalculateAntagNumber(_playerManager.PlayerCount, component.PlayersPerOperative, component.MaxOps);
 
-        var operatives = new List<ICommonSession>();
+        var operatives = new List<NukieSpawn>();
+        if (numNukies >= 1) operatives.Add(new NukieSpawn(null, NukieType.Commander));
+        if (numNukies >= 2) operatives.Add(new NukieSpawn(null, NukieType.Agent));
+        if (numNukies >= 3)
+            for (int i = 2; i < numNukies; i++)
+                operatives.Add(new NukieSpawn(null, NukieType.Operative));
+
         SpawnOperatives(numNukies, operatives, true, component);
     }
 
@@ -937,11 +964,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        var query = EntityQueryEnumerator<NukeopsRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var nukeops, out var gameRule))
-        {
-            _antagSelection.AttemptStartGameRule(ev, uid, nukeops.MinPlayers, gameRule, Loc.GetString("nukeops-title"));
-        }
+        TryRoundStartAttempt(ev, Loc.GetString("nukeops-title"));
     }
 
     private void OnShuttleFTLAttempt(ref ConsoleFTLAttemptEvent ev)
@@ -1050,5 +1073,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         if (GameTicker.RunLevel == GameRunLevel.InRound)
             SpawnOperativesForGhostRoles(uid, component);
+    }
+
+    private sealed class NukieSpawn
+    {
+        public ICommonSession? Session { get; private set; }
+        public NukieType Type { get; private set; }
+
+        public NukieSpawn(ICommonSession? session, NukieType type)
+        {
+            Session = session;
+            Type = type;
+        }
     }
 }

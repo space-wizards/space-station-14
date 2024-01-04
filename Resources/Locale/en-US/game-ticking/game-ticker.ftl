@@ -38,5 +38,5 @@ latejoin-arrival-sender = Station
 latejoin-arrivals-direction = A shuttle transferring you to your station will arrive shortly.
 latejoin-arrivals-direction-time = A shuttle transferring you to your station will arrive in {$time}.
 
-antag-selection-attempt-start-insufficient-players = Can't start {$failedGameMode}. Requires {$minimumPlayers} players but we have {$readyPlayersCount}.
-antag-selection-attempt-start-no-players = Can't start {$failedGameMode}. No players are ready.
+preset-not-enough-ready-players = Can't start {$presetName}. Requires {$minimumPlayers} players but we have {$readyPlayersCount}.
+preset-no-one-ready = Can't start {$presetName}. No players are ready.

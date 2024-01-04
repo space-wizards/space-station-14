@@ -55,6 +55,14 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
     }
 
+    //Set min players on game rule
+    protected override void Added(EntityUid uid, TraitorRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    {
+        base.Added(uid, component, gameRule, args);
+
+        gameRule.MinPlayers = _cfg.GetCVar(CCVars.TraitorMinPlayers);
+    }
+
     protected override void ActiveTick(EntityUid uid, TraitorRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
@@ -63,16 +71,13 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             DoTraitorStart(component);
     }
 
+    /// <summary>
+    /// Check for enough players
+    /// </summary>
+    /// <param name="ev"></param>
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        var query = EntityQueryEnumerator<TraitorRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var traitor, out var gameRule))
-        {
-            if (!_antagSelection.AttemptStartGameRule(ev, uid, _cfg.GetCVar(CCVars.TraitorMinPlayers), gameRule, Loc.GetString("traitor-title")))
-                continue;
-
-            MakeCodewords(traitor);
-        }
+        TryRoundStartAttempt(ev, Loc.GetString("traitor-title"));
     }
 
     private void MakeCodewords(TraitorRuleComponent component)
@@ -91,6 +96,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
     private void DoTraitorStart(TraitorRuleComponent component)
     {
+        MakeCodewords(component);
+
         var eligiblePlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.TraitorPrototypeId);
 
         if (eligiblePlayers.Count == 0)

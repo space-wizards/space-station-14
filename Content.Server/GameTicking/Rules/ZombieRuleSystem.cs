@@ -52,6 +52,13 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         SubscribeLocalEvent<PendingZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
     }
 
+    protected override void Added(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    {
+        base.Added(uid, component, gameRule, args);
+
+        gameRule.MinPlayers = _cfg.GetCVar(CCVars.ZombieMinPlayers);
+    }
+
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
         foreach (var zombie in EntityQuery<ZombieRuleComponent>())
@@ -135,11 +142,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out _, out var gameRule))
-        {
-            _antagSelection.AttemptStartGameRule(ev, uid, _cfg.GetCVar(CCVars.ZombieMinPlayers), gameRule, Loc.GetString("zombie-title"));
-        }
+        TryRoundStartAttempt(ev, Loc.GetString("zombie-title"));
     }
 
     protected override void Started(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)

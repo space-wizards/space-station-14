@@ -47,36 +47,6 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
 
     /// <summary>
-    /// Attempts to start the game rule by checking if there are enough players in lobby and readied.
-    /// </summary>
-    /// <param name="ev">The roundstart attempt event</param>
-    /// <param name="uid">The entity the gamerule you are using is on</param>
-    /// <param name="minPlayers">The minimum amount of players needed for you gamerule to start.</param>
-    /// <param name="gameRule">The gamerule component.</param>
-    /// <param name="gameRuleName">The gamerule name, used for the admin announcement</param>
-    public bool AttemptStartGameRule(RoundStartAttemptEvent ev, EntityUid uid, int minPlayers, GameRuleComponent gameRule, string gameRuleName)
-    {
-        if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-            return false;
-
-        if (!ev.Forced && ev.Players.Length < minPlayers)
-        {
-            _chatManager.SendAdminAnnouncement(Loc.GetString("antag-selection-attempt-start-insufficient-players",
-                ("failedGameMode", gameRuleName),
-                ("readyPlayersCount", ev.Players.Length),
-                ("minimumPlayers", minPlayers)));
-            ev.Cancel();
-        }
-        else if (ev.Players.Length == 0)
-        {
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("antag-selection-attempt-start-no-players", ("failedGameMode", gameRuleName)));
-            ev.Cancel();
-        }
-
-        return true;
-    }
-
-    /// <summary>
     /// Get all players that are eligible for an antag role
     /// </summary>
     /// <param name="playerSessions">All sessions from which to select eligible players</param>
