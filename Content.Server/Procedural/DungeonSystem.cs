@@ -227,7 +227,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
 
         _dungeonJobs.Add(job, cancelToken);
         _dungeonJobQueue.EnqueueJob(job);
-        job.Run();
         await job.AsTask;
 
         if (job.Exception != null)

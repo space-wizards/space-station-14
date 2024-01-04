@@ -3,10 +3,24 @@
                       Title="{Loc 'salvage-expedition-window-title'}"
                       MinSize="800 360">
     <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal" Name="ProgressionBox" Visible="False">
+            <Label Name="ProgressionLabel"
+                   Text="{Loc 'salvage-expedition-window-progression'}"
+                   SetWidth="96"
+                   Margin="5"/>
+            <ProgressBar Name="ProgressionBar"
+                         HorizontalExpand="True"
+                         MinValue="0"
+                         MaxValue="1"
+                         SetHeight="25"/>
+            <Label Name="ProgressionText" Text="00:00"
+                   Margin="5"/>
+        </BoxContainer>
         <BoxContainer Orientation="Horizontal">
             <Label Name="NextOfferLabel"
                    Text="{Loc 'salvage-expedition-window-next'}"
-                   Margin="5"></Label>
+                   SetWidth="96"
+                   Margin="5"/>
             <ProgressBar Name="NextOfferBar"
                          HorizontalExpand="True"
                          MinValue="0"
