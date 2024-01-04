@@ -15,9 +15,7 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           shard1: ""
-      - enum.DamageStateVisualLayers.Base:
           shard2: ""
-      - enum.DamageStateVisualLayers.Base:
           shard3: ""
   - type: SpaceGarbage
   - type: MeleeWeapon
