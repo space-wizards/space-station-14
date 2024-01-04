@@ -738,7 +738,7 @@
     interactFailureString: petting-failure-crab
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
-      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+      path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
   - type: ReplacementAccent
     accent: crab
   - type: Bloodstream
