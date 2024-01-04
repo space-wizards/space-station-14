@@ -93,7 +93,7 @@ namespace Content.Server.Administration.Systems
             if (threadChannel.ParentChannel.Id != _channelId)
                 return Task.CompletedTask;
 
-            if (arg.Author.IsBot)
+            if (arg.Author.IsBot) // Not ignoring bots would probably cause a loop.
                 return Task.CompletedTask;
 
             foreach (var messages in _relayMessages)
@@ -107,7 +107,8 @@ namespace Content.Server.Administration.Systems
                     continue;
                 }
 
-                var content = "[color=blue] (d) " + arg.Author.Username + "[/color]: " + arg.Content;
+                // It was originally blue, but that blue tone was too dark, then lucky said I should make it yellow. So now it's yellow.
+                var content = "[color=yellow] (d) " + arg.Author.Username + "[/color]: " + arg.Content;
 
                 var msg = new BwoinkTextMessage(messages.Key, messages.Key, content);
                 RaiseNetworkEvent(msg, session.ConnectedClient);
