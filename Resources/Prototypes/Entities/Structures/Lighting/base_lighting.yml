@@ -26,9 +26,12 @@
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
     drawdepth: WallMountedItems
     layers:
-    - state: on
-      map: ["enum.PoweredLightLayers.Base"]
-    state: on
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: base
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: glow
+      shader: unshaded
+    state: base
   - type: PointLight
     radius: 10
     energy: 0.8
@@ -98,6 +101,12 @@
   - type: PoweredLightVisuals
     blinkingSound:
       path: "/Audio/Machines/light_tube_on.ogg"
+    spriteStateMap:
+      empty: empty
+      off: base
+      on: base
+      broken: broken
+      burned: burned
 
 - type: entity
   id: Poweredlight
@@ -106,7 +115,7 @@
   parent: PoweredlightEmpty
   components:
   - type: Sprite
-    state: off
+    state: base
   - type: PointLight
     enabled: true
   - type: PoweredLight
@@ -208,7 +217,7 @@
         path: /Audio/Ambience/Objects/light_hum.ogg
     - type: Sprite
       sprite: Structures/Wallmounts/Lighting/light_small.rsi
-      state: on
+      state: base
     - type: PointLight
       energy: 1.0
       radius: 6
@@ -272,6 +281,12 @@
     range: 200
   - type: Appearance
   - type: PoweredLightVisuals
+    spriteStateMap:
+      empty: empty
+      off: base
+      on: base
+      broken: broken
+      burned: burned
   - type: DeviceLinkSink
     ports:
       - On
@@ -284,7 +299,7 @@
   parent: PoweredSmallLightEmpty
   components:
   - type: Sprite
-    state: off
+    state: base
   - type: PointLight
     enabled: true
   - type: PoweredLight
