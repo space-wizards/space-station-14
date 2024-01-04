@@ -53,7 +53,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
 
-        private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
+        public readonly Dictionary<NetUserId, PlayerInfo> PlayerList = new();
 
         /// <summary>
         ///     Set of players that have participated in this round.
@@ -90,7 +90,7 @@ namespace Content.Server.Administration.Systems
         {
             _roundActivePlayers.Clear();
 
-            foreach (var (id, data) in _playerList)
+            foreach (var (id, data) in PlayerList)
             {
                 if (!data.ActiveThisRound)
                     continue;
@@ -99,10 +99,10 @@ namespace Content.Server.Administration.Systems
                     return;
 
                 _playerManager.TryGetSessionById(id, out var session);
-                _playerList[id] = GetPlayerInfo(playerData, session);
+                PlayerList[id] = GetPlayerInfo(playerData, session);
             }
 
-            var updateEv = new FullPlayerListEvent() { PlayersInfo = _playerList.Values.ToList() };
+            var updateEv = new FullPlayerListEvent() { PlayersInfo = PlayerList.Values.ToList() };
 
             foreach (var admin in _adminManager.ActiveAdmins)
             {
@@ -112,11 +112,11 @@ namespace Content.Server.Administration.Systems
 
         public void UpdatePlayerList(ICommonSession player)
         {
-            _playerList[player.UserId] = GetPlayerInfo(player.Data, player);
+            PlayerList[player.UserId] = GetPlayerInfo(player.Data, player);
 
             var playerInfoChangedEvent = new PlayerInfoChangedEvent
             {
-                PlayerInfo = _playerList[player.UserId]
+                PlayerInfo = PlayerList[player.UserId]
             };
 
             foreach (var admin in _adminManager.ActiveAdmins)
@@ -130,7 +130,7 @@ namespace Content.Server.Administration.Systems
             if (netUserId == null)
                 return null;
 
-            _playerList.TryGetValue(netUserId.Value, out var value);
+            PlayerList.TryGetValue(netUserId.Value, out var value);
             return value ?? null;
         }
 
@@ -208,7 +208,7 @@ namespace Content.Server.Administration.Systems
         {
             var ev = new FullPlayerListEvent();
 
-            ev.PlayersInfo = _playerList.Values.ToList();
+            ev.PlayersInfo = PlayerList.Values.ToList();
 
             RaiseNetworkEvent(ev, playerSession.ConnectedClient);
         }
