@@ -19,7 +19,6 @@
   - type: EmitSoundOnLand
     sound:
       collection: ToyFall
-  - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
   - type: MeleeWeapon
@@ -168,6 +167,7 @@
   components:
   - type: Sprite
     state: plushie_rouny
+  - type: Rotatable
 
 - type: entity
   parent: BasePlushie
@@ -708,7 +708,7 @@
     size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: foamblade
-  - type: ItemCooldown
+  - type: UseDelay
 
 # MISC
 
@@ -822,6 +822,32 @@
     sprite: Objects/Fun/toys.rsi
     heldPrefix: singularitytoy
 
+- type: entity
+  parent: BaseItem
+  id: TeslaToy
+  name: Teddy Tesla
+  description: The favorite toy of the great engineer Nikola Tesla.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
+    shader: unshaded
+    layers:
+    - state: tesla_projectile
+  - type: PointLight
+    enabled: true
+    radius: 5
+    color: "#4080FF"
+  - type: Electrified
+    shockDamage: 2
+    shockTime: 0.8
+    requirePower: false
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Lightning/lightningshock.ogg
+      params:
+        variation: 0.65
+        volume: -10
+    
 - type: entity
   parent: BaseItem
   id: PonderingOrb
@@ -1019,7 +1045,6 @@
     sprite: Objects/Fun/whoopie.rsi
     state: icon
     quickEquip: false
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       collection: Parp

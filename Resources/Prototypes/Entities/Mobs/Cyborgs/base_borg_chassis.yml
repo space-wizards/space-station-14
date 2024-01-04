@@ -200,6 +200,7 @@
     tags:
     - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
+    - CanPilot
   - type: Emoting
   - type: GuideHelp
     guides:
