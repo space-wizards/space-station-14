@@ -49,10 +49,11 @@
     deleteOnCollide: false
     canPenetrate: true
     damage:
-      groups:
-        Burn: 4
+      types:
+        Blunt: 1
+        Heat: 2
   - type: IgniteOnCollide
-    fireStacks: 1
+    fireStacks: 2
     count: 10
   - type: TimedDespawn
     lifetime: 0.25
