@@ -848,7 +848,6 @@
         variation: 0.65
         volume: -10
     
-
 - type: entity
   parent: BaseItem
   id: PonderingOrb
