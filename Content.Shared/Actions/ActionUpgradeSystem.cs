@@ -27,7 +27,7 @@ public sealed class ActionUpgradeSystem : EntitySystem
 
     private void OnActionUpgradeEvent(EntityUid uid, ActionUpgradeComponent component, ActionUpgradeEvent args)
     {
-        if (!CanLevelUp(args.NewLevel, component.EffectedLevels, out var newActionProto)
+        if (!CanUpgrade(args.NewLevel, component.EffectedLevels, out var newActionProto)
             || !_actions.TryGetActionData(uid, out var actionComp))
             return;
 
@@ -74,21 +74,15 @@ public sealed class ActionUpgradeSystem : EntitySystem
         if (newLevel < 1)
             newLevel = actionUpgradeComponent.Level + 1;
 
-        if (!CanLevelUp(newLevel, actionUpgradeComponent.EffectedLevels, out _))
+        if (!CanLevelUp(newLevel, actionUpgradeComponent.EffectedLevels))
             return false;
 
         UpgradeAction(actionId, actionUpgradeComp);
         return true;
     }
 
-    // TODO: Add checks for branching upgrades
-    private bool CanLevelUp(
-        int newLevel,
-        Dictionary<int, EntProtoId> levelDict,
-        [NotNullWhen(true)]out EntProtoId? newLevelProto)
+    private bool CanLevelUp(int newLevel, Dictionary<int, EntProtoId> levelDict)
     {
-        newLevelProto = null;
-
         if (levelDict.Count < 1)
             return false;
 
@@ -97,16 +91,38 @@ public sealed class ActionUpgradeSystem : EntitySystem
 
         foreach (var (level, proto) in levelDict)
         {
+            if (newLevel > finalLevel)
+                continue;
+
+            if ((newLevel <= finalLevel && newLevel != level) || newLevel == level)
+            {
+                canLevel = true;
+                break;
+            }
+        }
+
+        return canLevel;
+    }
+
+    private bool CanUpgrade(int newLevel, Dictionary<int, EntProtoId> levelDict,  [NotNullWhen(true)]out EntProtoId? newLevelProto)
+    {
+        var canUpgrade = false;
+        newLevelProto = null;
+
+        var finalLevel = levelDict.Keys.ToList()[levelDict.Keys.Count - 1];
+
+        foreach (var (level, proto) in levelDict)
+        {
             if (newLevel != level || newLevel > finalLevel)
                 continue;
 
-            canLevel = true;
+            canUpgrade = true;
             newLevelProto = proto;
             DebugTools.AssertNotNull(newLevelProto);
             break;
         }
 
-        return canLevel;
+        return canUpgrade;
     }
 
     /// <summary>
@@ -124,6 +140,7 @@ public sealed class ActionUpgradeSystem : EntitySystem
         if (newLevel < 1)
             newLevel = actionUpgradeComponent.Level + 1;
 
+        actionUpgradeComponent.Level = newLevel;
         RaiseActionUpgradeEvent(newLevel, actionId.Value);
     }
 

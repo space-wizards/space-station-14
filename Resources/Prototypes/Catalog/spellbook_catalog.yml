@@ -32,7 +32,7 @@
   categories:
     - SpellbookDefensive
 
-# Lists itself, but does nothing on purchase
+# Need to delist when no more upgrades are available, probably with a condition?
 - type: listing
   id: SpellbookFireballUpgrade
   productUpgradeID: SpellbookFireballUpgrade
