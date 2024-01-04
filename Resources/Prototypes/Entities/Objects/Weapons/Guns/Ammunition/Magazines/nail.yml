@@ -11,9 +11,9 @@
     mayTransfer: true
     whitelist:
       tags:
-        - CartridgeNail
+        - BulletNail
         - Nail
-    proto: CartridgeNail
+    proto: BulletNail
     capacity: 20
   - type: Item
     size: Small
