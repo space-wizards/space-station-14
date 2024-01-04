@@ -31,9 +31,13 @@
           True: { visible: true }
           False: { visible: false }
   - type: FlatpackCreator
-    baseMaterialCost:
+    baseMachineCost:
       Steel: 600
       Plastic: 200
+    baseComputerCost:
+      Steel: 600
+      Plastic: 200
+      Glass: 200
   - type: Machine
     board: FlatpackerMachineCircuitboard
   - type: MaterialStorage
@@ -68,6 +72,7 @@
         whitelist:
           components:
           - MachineBoard
+          - ComputerBoard
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
