@@ -72,8 +72,8 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     protected virtual void ActiveTick(EntityUid uid, T component, GameRuleComponent gameRule, float frameTime)
     {
         var toRemove = new List<GameRuleTask<T>>();
-        var now = _timing.CurTime;
-        foreach (var task in scheduledTasks)
+        var now = Timing.CurTime;
+        foreach (var task in _scheduledTasks)
         {
             if (task.NextRunTime <= now)
             {
@@ -87,16 +87,18 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
                     if (!task.Interval.HasValue)
                     {
                         toRemove.Add(task);
-                        continue;
                     }
-
-                    task.NextRunTime = now + task.Interval.Value;
+                    else
+                    {
+                        task.NextRunTime = now + task.Interval.Value;
+                    }
                 }
             }
         }
 
+        //Remove expired tasks
         foreach (var taskToRemove in toRemove)
-            scheduledTasks.Remove(taskToRemove);
+            _scheduledTasks.Remove(taskToRemove);
     }
 
     protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
@@ -155,7 +157,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     /// <param name="interval">Timespan specifying the interval to run the task</param>
     public void ScheduleRecurringTask(Action<EntityUid, T, GameRuleComponent, float> task, TimeSpan interval)
     {
-        var now = _timing.CurTime;
+        var now = Timing.CurTime;
         _scheduledTasks.Add(new GameRuleTask<T>(task, now + interval, false, interval));
     }
     /// <summary>
@@ -165,7 +167,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     /// <param name="delay">Timespan specifying how long to delay before running the task</param>
     public void ScheduleOneshotTask(Action<EntityUid, T, GameRuleComponent, float> task, TimeSpan delay)
     {
-        var now = _timing.CurTime;
+        var now = Timing.CurTime;
         _scheduledTasks.Add(new GameRuleTask<T>(task, now + delay, true));
     }
 

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
@@ -81,7 +81,7 @@ public abstract class SharedRoleSystem : EntitySystem
         AddComp(mindId, component);
         var antagonist = IsAntagonistRole<T>();
 
-        var mindEv = new MindRoleAddedEvent();
+        var mindEv = new MindRoleAddedEvent(silent);
         RaiseLocalEvent(mindId, ref mindEv);
 
         var message = new RoleAddedEvent(mindId, mind, antagonist, silent);

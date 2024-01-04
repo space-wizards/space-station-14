@@ -1,7 +1,6 @@
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -75,12 +74,6 @@ public sealed partial class ZombieRuleComponent : Component
     /// </summary>
     [DataField("zombieShuttleCallPercentage")]
     public float ZombieShuttleCallPercentage = 0.5f;
-
-    /// <summary>
-    /// Have we called the evac shuttle yet?
-    /// </summary>
-    [DataField("shuttleCalled")]
-    public bool ShuttleCalled;
 
     [ValidatePrototypeId<EntityPrototype>]
     public const string ZombifySelfActionPrototype = "ActionTurnUndead";
