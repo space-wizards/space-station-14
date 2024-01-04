@@ -39,19 +39,7 @@
   - type: MovementIgnoreGravity
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
-    channels:
-    - Binary
-    - Common
-    - Command
-    - CentCom
-    - Engineering
-    - Medical
-    - Science
-    - Security
-    - Service
-    - Supply
-    - Syndicate
-    - Freelance
+    receiveAllChannels: true
     globalReceive: true
   - type: Physics
     bodyType: KinematicController

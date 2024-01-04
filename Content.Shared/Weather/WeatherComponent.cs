@@ -43,12 +43,6 @@ public sealed partial class WeatherData
 
     [DataField("state")]
     public WeatherState State = WeatherState.Invalid;
-
-    [ViewVariables, NonSerialized]
-    public float LastAlpha;
-
-    [ViewVariables, NonSerialized]
-    public float LastOcclusion;
 }
 
 public enum WeatherState : byte

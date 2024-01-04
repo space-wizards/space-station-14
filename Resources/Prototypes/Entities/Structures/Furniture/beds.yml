@@ -153,3 +153,29 @@
   - type: Construction
     graph: WebStructures
     node: bed
+
+- type: entity
+  parent: Bed
+  id: PsychBed
+  name: psychologist bed
+  description: An upholstered bed for the psychological care of patients.
+  components:
+  - type: Sprite
+    state: psychbed
+  - type: HealOnBuckle
+    damage:
+      types:
+        Cold: -0.5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 2
+            max: 2

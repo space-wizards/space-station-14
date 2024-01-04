@@ -5,9 +5,7 @@
   description: A handy-dandy holographic projector that displays a janitorial sign.
   components:
   - type: HolosignProjector
-  - type: ItemCooldown
   - type: UseDelay
-    delay: 1.0
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot {}

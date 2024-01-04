@@ -8,8 +8,9 @@
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: firstaid
   - type: Storage
-    maxTotalWeight: 8
     maxItemSize: Small
+    grid:
+    - 0,0,3,1
   - type: Item
     size: Large
     sprite: Objects/Specific/Medical/firstaidkits.rsi
