@@ -361,6 +361,7 @@
     - UniformPrinterMachineCircuitboard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
+      - HellfireFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
