@@ -33,7 +33,7 @@ namespace Content.Server.Afk
     }
 
     [UsedImplicitly]
-    public sealed class AfkManager : IAfkManager, IEntityEventSubscriber
+    public sealed class AfkManager : IAfkManager
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -49,11 +49,6 @@ namespace Content.Server.Afk
 
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
             _consoleHost.AnyCommandExecuted += ConsoleHostOnAnyCommandExecuted;
-
-            _entityManager.EventBus.SubscribeSessionEvent<FullInputCmdMessage>(
-                EventSource.Network,
-                this,
-                HandleInputCmd);
         }
 
         public void PlayerDidAction(ICommonSession player)
@@ -90,11 +85,6 @@ namespace Content.Server.Afk
         {
             if (shell.Player is { } player)
                 PlayerDidAction(player);
-        }
-
-        private void HandleInputCmd(FullInputCmdMessage msg, EntitySessionEventArgs args)
-        {
-            PlayerDidAction(args.SenderSession);
         }
     }
 }

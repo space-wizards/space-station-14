@@ -67,19 +67,25 @@ namespace Content.Shared.CCVar
         /// Ambience volume.
         /// </summary>
         public static readonly CVarDef<float> AmbienceVolume =
-            CVarDef.Create("ambience.volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
+            CVarDef.Create("ambience.volume", 1.5f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /// <summary>
         /// Ambience music volume.
         /// </summary>
         public static readonly CVarDef<float> AmbientMusicVolume =
-            CVarDef.Create("ambience.music_volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
+            CVarDef.Create("ambience.music_volume", 1.5f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /// <summary>
         /// Lobby / round end music volume.
         /// </summary>
         public static readonly CVarDef<float> LobbyMusicVolume =
             CVarDef.Create("ambience.lobby_music_volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /// <summary>
+        /// UI volume.
+        /// </summary>
+        public static readonly CVarDef<float> InterfaceVolume =
+            CVarDef.Create("audio.interface_volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * Status
@@ -180,6 +186,19 @@ namespace Content.Shared.CCVar
             GameMap = CVarDef.Create("game.map", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Controls whether to use world persistence or not.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            UsePersistence = CVarDef.Create("game.usepersistence", false, CVar.ARCHIVE);
+
+        /// <summary>
+        ///     If world persistence is used, what map prototype should be initially loaded.
+        ///     If the save file exists, it replaces MapPath but everything else stays the same (station name and such).
+        /// </summary>
+        public static readonly CVarDef<string>
+            PersistenceMap = CVarDef.Create("game.persistencemap", "Empty", CVar.ARCHIVE);
+
+        /// <summary>
         ///     Prototype to use for map pool.
         /// </summary>
         public static readonly CVarDef<string>
@@ -239,7 +258,7 @@ namespace Content.Shared.CCVar
         /// Whether or not panic bunker is currently enabled.
         /// </summary>
         public static readonly CVarDef<bool> PanicBunkerEnabled =
-            CVarDef.Create("game.panic_bunker.enabled", false, CVar.NOTIFY | CVar.REPLICATED);
+            CVarDef.Create("game.panic_bunker.enabled", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         /// Whether or not the panic bunker will disable when an admin comes online.
@@ -278,6 +297,13 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> PanicBunkerMinOverallHours =
             CVarDef.Create("game.panic_bunker.min_overall_hours", 10, CVar.SERVERONLY);
+
+        /// <summary>
+        /// A custom message that will be used for connections denied to the panic bunker
+        /// If not empty, then will overwrite <see cref="PanicBunkerShowReason"/>
+        /// </summary>
+        public static readonly CVarDef<string> PanicBunkerCustomReason =
+            CVarDef.Create("game.panic_bunker.custom_reason", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
         /// Make people bonk when trying to climb certain objects like tables.
@@ -349,6 +375,11 @@ namespace Content.Shared.CCVar
             CVarDef.Create("discord.ahelp_avatar", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
+        /// URL of the Discord webhook which will relay all custom votes. If left empty, disables the webhook.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordVoteWebhook =
+            CVarDef.Create("discord.vote_webhook", string.Empty, CVar.SERVERONLY);
+
         /// URL of the Discord webhook which will relay round restart messages.
         /// </summary>
         public static readonly CVarDef<string> DiscordRoundUpdateWebhook =
@@ -359,6 +390,7 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> DiscordRoundEndRoleWebhook =
             CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
+
 
         /*
          * Suspicion
@@ -555,6 +587,16 @@ namespace Content.Shared.CCVar
             CVarDef.Create("database.sync", false, CVar.SERVERONLY);
 
         /*
+         * Interface
+         */
+
+        public static readonly CVarDef<string> UIClickSound =
+            CVarDef.Create("interface.click_sound", "/Audio/UserInterface/click.ogg", CVar.REPLICATED);
+
+        public static readonly CVarDef<string> UIHoverSound =
+            CVarDef.Create("interface.hover_sound", "/Audio/UserInterface/hover.ogg", CVar.REPLICATED);
+
+        /*
          * Outline
          */
 
@@ -628,6 +670,8 @@ namespace Content.Shared.CCVar
             CVarDef.Create("audio.admin_chat_sound_path", "/Audio/Items/pop.ogg", CVar.ARCHIVE | CVar.CLIENT | CVar.REPLICATED);
         public static readonly CVarDef<float> AdminChatSoundVolume =
             CVarDef.Create("audio.admin_chat_sound_volume", -5f, CVar.ARCHIVE | CVar.CLIENT | CVar.REPLICATED);
+        public static readonly CVarDef<string> AHelpSound =
+            CVarDef.Create("audio.ahelp_sound", "/Audio/Effects/adminhelp.ogg", CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * HUD
@@ -755,6 +799,11 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AdminDeadminOnJoin =
             CVarDef.Create("admin.deadmin_on_join", false, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Overrides the name the client sees in ahelps. Set empty to disable.
+        /// </summary>
+        public static readonly CVarDef<string> AdminAhelpOverrideClientName =
+            CVarDef.Create("admin.override_adminname_in_client_ahelp", string.Empty, CVar.SERVERONLY);
         /*
          * Explosions
          */
@@ -838,7 +887,7 @@ namespace Content.Shared.CCVar
         ///     This determines for how many seconds an explosion should stay visible once it has finished expanding.
         /// </summary>
         public static readonly CVarDef<float> ExplosionPersistence =
-            CVarDef.Create("explosion.persistence", 0.3f, CVar.SERVERONLY);
+            CVarDef.Create("explosion.persistence", 1.0f, CVar.SERVERONLY);
 
         /// <summary>
         ///     If an explosion covers a larger area than this number, the damaging/processing will always start during
@@ -1051,14 +1100,14 @@ namespace Content.Shared.CCVar
         ///     in-game.
         /// </summary>
         public static readonly CVarDef<float> AtmosSpeedup =
-            CVarDef.Create("atmos.speedup", 1f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.speedup", 8f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Like atmos.speedup, but only for gas and reaction heat values. 64x means
         ///     gases heat up and cool down 64x faster than real life.
         /// </summary>
         public static readonly CVarDef<float> AtmosHeatScale =
-            CVarDef.Create("atmos.heat_scale", 1f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.heat_scale", 8f, CVar.SERVERONLY);
 
         /*
          * MIDI instruments
@@ -1197,7 +1246,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("vote.restart_required_ratio", 0.85f, CVar.SERVERONLY);
 
         /// <summary>
-        /// Whether or not to restrict the restart vote when there's online admins.
+        /// Whether or not to prevent the restart vote from having any effect when there is an online admin
         /// </summary>
         public static readonly CVarDef<bool> VoteRestartNotAllowedWhenAdminOnline =
             CVarDef.Create("vote.restart_not_allowed_when_admin_online", true, CVar.SERVERONLY);
@@ -1457,6 +1506,18 @@ namespace Content.Shared.CCVar
 
 
         /*
+        * Accessibility
+        */
+
+        /// <summary>
+        /// Toggle for visual effects that may potentially cause motion sickness.
+        /// Where reasonable, effects affected by this CVar should use an alternate effect.
+        /// Please do not use this CVar as a bandaid for effects that could otherwise be made accessible without issue.
+        /// </summary>
+        public static readonly CVarDef<bool> ReducedMotion =
+            CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
          * CHAT
          */
 
@@ -1576,12 +1637,6 @@ namespace Content.Shared.CCVar
         /*
          * Salvage
          */
-
-        /// <summary>
-        ///     Forced salvage map prototype name (if empty, randomly selected)
-        /// </summary>
-        public static readonly CVarDef<string>
-            SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
 
         /// <summary>
         /// Duration for missions

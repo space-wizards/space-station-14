@@ -220,6 +220,12 @@
       "name": "woodpatternfloor"
     },
     {
+      "name": "astrograss"
+    },
+    {
+      "name": "astroice"
+    },
+    {
       "name": "bcircuit-inhand-left",
       "directions": 4
     },

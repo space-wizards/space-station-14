@@ -10,7 +10,6 @@
   - type: Sprite
     sprite: Objects/Tools/Cowtools/haycutters.rsi
     state: haycutters
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
@@ -36,7 +35,6 @@
     state: moodriver
   - type: Item
     sprite: Objects/Tools/Cowtools/moodriver.rsi
-  - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
@@ -60,7 +58,6 @@
     state: wronch
   - type: Item
     sprite: Objects/Tools/Cowtools/wronch.rsi
-  - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
@@ -84,7 +81,6 @@
     state: cowbar
   - type: Item
     sprite: Objects/Tools/Cowtools/cowbar.rsi
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
@@ -185,4 +181,3 @@
     - id: Mooltitool
     - id: Cowelder
     - id: Milkalyzer
-

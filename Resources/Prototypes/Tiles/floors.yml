@@ -1770,3 +1770,49 @@
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemReinforced #same case as FloorHull
+
+# Faux sci tiles
+
+# Grass
+- type: tile
+  id: FloorAstroGrass
+  name: tiles-astro-grass
+  sprite: /Textures/Tiles/Planet/Grass/grass.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Planet/Grass/single_edge.png
+    NorthEast: /Textures/Tiles/Planet/Grass/single_edge.png
+    NorthWest: /Textures/Tiles/Planet/Grass/single_edge.png
+    SouthWest: /Textures/Tiles/Planet/Grass/single_edge.png
+    South: /Textures/Tiles/Planet/Grass/double_edge.png
+    East: /Textures/Tiles/Planet/Grass/double_edge.png
+    North: /Textures/Tiles/Planet/Grass/double_edge.png
+    West: /Textures/Tiles/Planet/Grass/double_edge.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepGrass
+  itemDrop: FloorTileItemAstroGrass
+  heatCapacity: 10000
+
+# Ice
+- type: tile
+  id: FloorAstroIce
+  name: tiles-astro-ice
+  sprite: /Textures/Tiles/Planet/Snow/ice.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  friction: 0.05
+  heatCapacity: 10000
+  mobFriction: 0.5
+  mobFrictionNoInput: 0.05
+  mobAcceleration: 2
+  itemDrop: FloorTileItemAstroIce
