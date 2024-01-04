@@ -23,6 +23,11 @@
     state: pda
   - type: Pda
     state: pda
+    paiSlot:
+      priority: -2
+      whitelist:
+        components:
+        - PAI
     penSlot:
       startingItem: Pen
       priority: -1
@@ -42,6 +47,7 @@
     containers:
       PDA-id: !type:ContainerSlot {}
       PDA-pen: !type:ContainerSlot {}
+      PDA-pai: !type:ContainerSlot {}
       Cartridge-Slot: !type:ContainerSlot {}
       program-container: !type:Container
   - type: ItemSlots

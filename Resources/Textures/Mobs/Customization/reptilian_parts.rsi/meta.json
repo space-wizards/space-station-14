@@ -178,6 +178,10 @@
     {
       "name": "body_underbelly",
       "directions": 4
+	},
+	{
+	  "name": "body_backspikes",
+	  "directions": 4
 	}
   ]
 }
