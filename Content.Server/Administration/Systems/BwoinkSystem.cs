@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -468,6 +468,8 @@ namespace Content.Server.Administration.Systems
             else
                 stringbuilder.Append(":inbox_tray:");
 
+            if(roundTime != string.Empty && roundState == GameRunLevel.InRound)
+                stringbuilder.Append($" **{roundTime}**");
             stringbuilder.Append($" **{username}:** ");
             stringbuilder.Append(message);
             return stringbuilder.ToString();
