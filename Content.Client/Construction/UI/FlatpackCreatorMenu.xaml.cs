@@ -70,19 +70,14 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
         else if (_currentBoard != null)
         {
             //todo double trycomp is kinda stinky.
+            Dictionary<string, int> cost;
             if (_entityManager.TryGetComponent<MachineBoardComponent>(_currentBoard, out var machineBoardComp) &&
-                machineBoardComp.Prototype != null)
-            {
-                var cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker),
-                    (_currentBoard.Value, machineBoardComp));
-                PackButton.Disabled = !_materialStorage.CanChangeMaterialAmount(_owner, cost);
-            }
-            else if (_entityManager.TryGetComponent<ComputerBoardComponent>(_currentBoard, out var computerBoardComp) &&
-                     computerBoardComp.Prototype != null)
-            {
-                var cost = _flatpack.GetFlatpackCreationCostForComputer((_owner, flatpacker));
-                PackButton.Disabled = !_materialStorage.CanChangeMaterialAmount(_owner, cost);
-            }
+                machineBoardComp.Prototype is not null)
+                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker), (_currentBoard.Value, machineBoardComp));
+            else
+                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker));
+
+            PackButton.Disabled = !_materialStorage.CanChangeMaterialAmount(_owner, cost);
         }
 
         if (_currentBoard == itemSlot.Item)
@@ -94,28 +89,30 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
         _currentBoard = itemSlot.Item;
         CostHeaderLabel.Visible = _currentBoard != null;
 
-        if (_currentBoard != null &&
-            _entityManager.TryGetComponent<MachineBoardComponent>(_currentBoard, out var machineBoard) &&
-            machineBoard.Prototype != null)
+        if (_currentBoard is not null)
         {
-            var proto = _prototypeManager.Index<EntityPrototype>(machineBoard.Prototype);
-            _machinePreview = _entityManager.Spawn(proto.ID);
-            _spriteSystem.ForceUpdate(_machinePreview.Value);
-            MachineNameLabel.SetMessage(proto.Name);
-            var cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker),
-                (_currentBoard.Value, machineBoard));
-            CostLabel.SetMarkup(GetCostString(cost));
-        }
-        else if (_currentBoard != null &&
-                 _entityManager.TryGetComponent<ComputerBoardComponent>(_currentBoard, out var computerBoard) &&
-                 computerBoard.Prototype != null)
-        {
-            var proto = _prototypeManager.Index<EntityPrototype>(computerBoard.Prototype);
-            _machinePreview = _entityManager.Spawn(proto.ID);
-            _spriteSystem.ForceUpdate(_machinePreview.Value);
-            MachineNameLabel.SetMessage(proto.Name);
-            var cost = _flatpack.GetFlatpackCreationCostForComputer((_owner, flatpacker));
-            CostLabel.SetMarkup(GetCostString(cost));
+            string? prototype = null;
+            Dictionary<string, int>? cost = null;
+
+            if (_entityManager.TryGetComponent<MachineBoardComponent>(_currentBoard, out var machineBoard))
+            {
+                prototype = machineBoard.Prototype;
+                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker), (_currentBoard.Value, machineBoard));
+            }
+            else if (_entityManager.TryGetComponent<ComputerBoardComponent>(_currentBoard, out var computerBoard))
+            {
+                prototype = computerBoard.Prototype;
+                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker));
+            }
+
+            if (prototype is not null && cost is not null)
+            {
+                var proto = _prototypeManager.Index<EntityPrototype>(prototype);
+                _machinePreview = _entityManager.Spawn(proto.ID);
+                _spriteSystem.ForceUpdate(_machinePreview.Value);
+                MachineNameLabel.SetMessage(proto.Name);
+                CostLabel.SetMarkup(GetCostString(cost));
+            }
         }
         else
         {
