@@ -224,6 +224,9 @@
   id: BypassInteractionRangeChecks
 
 - type: Tag
+  id: BypassDropChecks
+
+- type: Tag
   id: CableCoil
 
 - type: Tag
