@@ -238,6 +238,14 @@
     Caustic: 0.0
 
 - type: damageModifierSet
+  id: HellSpawn
+  coefficients:
+    Heat: 0.0
+    Radiation: 0.0
+    Shock: 0.8
+    Bloodloss: 0.4
+
+- type: damageModifierSet
   id: Cockroach
   coefficients:
     Blunt: 1.0

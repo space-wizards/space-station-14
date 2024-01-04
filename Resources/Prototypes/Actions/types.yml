@@ -292,6 +292,18 @@
     useDelay: 1
 
 - type: entity
+  id: ActionFireStarter
+  name: Ignite
+  description: Ignites enemies in a radius around you.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    priority: -1
+    useDelay: 30
+    icon: Interface/Actions/firestarter.png
+    event: !type:FireStarterActionEvent
+
+- type: entity
   id: ActionToggleEyes
   name: Open/Close eyes
   description: Close your eyes to protect your peepers, or open your eyes to enjoy the pretty lights.
@@ -302,3 +314,4 @@
     iconOn: Interface/Actions/eyeclose.png
     event: !type:ToggleEyesActionEvent
     useDelay: 1 # so u cant give yourself and observers eyestrain by rapidly spamming the action
+
