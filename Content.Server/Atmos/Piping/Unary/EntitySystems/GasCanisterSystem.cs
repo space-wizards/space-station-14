@@ -134,7 +134,7 @@ public sealed class GasCanisterSystem : EntitySystem
 
     private void OnCanisterChangeReleaseValve(EntityUid uid, GasCanisterComponent canister, GasCanisterChangeReleaseValveMessage args)
     {
-        var impact = LogImpact.High; 
+        var impact = LogImpact.High;
         // filling a jetpack with plasma is less important than filling a room with it
         impact = canister.GasTankSlot.HasItem ? LogImpact.Medium : LogImpact.High;
 
@@ -152,7 +152,7 @@ public sealed class GasCanisterSystem : EntitySystem
         DirtyUI(uid, canister);
     }
 
-    private void OnCanisterUpdated(EntityUid uid, GasCanisterComponent canister, AtmosDeviceUpdateEvent args)
+    private void OnCanisterUpdated(EntityUid uid, GasCanisterComponent canister, ref AtmosDeviceUpdateEvent args)
     {
         _atmos.React(canister.Air, canister);
 
@@ -167,7 +167,7 @@ public sealed class GasCanisterSystem : EntitySystem
         {
             MixContainerWithPipeNet(canister.Air, net.Air);
         }
-        
+
         // Release valve is open, release gas.
         if (canister.ReleaseValve)
         {
@@ -250,9 +250,9 @@ public sealed class GasCanisterSystem : EntitySystem
         }
 
         // Preventing inserting a tank since if its locked you cant remove it.
-        if (!CheckLocked(uid, component, args.User.Value)) 
+        if (!CheckLocked(uid, component, args.User.Value))
             return;
-        
+
         args.Cancelled = true;
     }
 
