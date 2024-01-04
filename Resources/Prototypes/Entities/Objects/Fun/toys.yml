@@ -1148,7 +1148,7 @@
   parent: BasePlushie
   id: PlushieHuman
   name: human plushie
-  description: This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is naked. The human is crying. The human is creaming. His name is Isaac.
+  description: This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is naked. The human is crying. The human is screaming.
   components:
   - type: Sprite
     state: plushie_human
