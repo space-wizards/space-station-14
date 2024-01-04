@@ -1,7 +1,7 @@
 using Content.Server.StationRecords.Systems;
 using Content.Shared.StationRecords;
 
-namespace Content.Server.StationRecords;
+namespace Content.Server.StationRecords.Components;
 
 [RegisterComponent, Access(typeof(GeneralStationRecordConsoleSystem))]
 public sealed partial class GeneralStationRecordConsoleComponent : Component
@@ -14,7 +14,7 @@ public sealed partial class GeneralStationRecordConsoleComponent : Component
     public uint? ActiveKey;
 
     /// <summary>
-    /// Qualitites to filter a search by.
+    /// Qualities to filter a search by.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public GeneralStationRecordsFilter? Filter;

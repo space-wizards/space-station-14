@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Station.Systems;
+using Content.Server.StationRecords.Components;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 
@@ -14,47 +15,43 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, SelectGeneralStationRecord>(OnKeySelected);
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, GeneralStationRecordsFilterMsg>(OnFiltersChanged);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, RecordRemovedEvent>(UpdateUserInterface);
+
+        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, SelectGeneralStationRecord>(OnKeySelected);
+        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, GeneralStationRecordsFilterMsg>(OnFiltersChanged);
     }
 
-    private void UpdateUserInterface<T>(EntityUid uid, GeneralStationRecordConsoleComponent component, T ev)
+    private void UpdateUserInterface<T>(Entity<GeneralStationRecordConsoleComponent> ent, ref T args)
     {
-        UpdateUserInterface(uid, component);
+        UpdateUserInterface(ent);
     }
 
-    private void OnKeySelected(EntityUid uid, GeneralStationRecordConsoleComponent component,
-        SelectGeneralStationRecord msg)
+    private void OnKeySelected(Entity<GeneralStationRecordConsoleComponent> ent, ref SelectGeneralStationRecord msg)
     {
-        component.ActiveKey = msg.SelectedKey;
-        UpdateUserInterface(uid, component);
+        ent.Comp.ActiveKey = msg.SelectedKey;
+        UpdateUserInterface(ent);
     }
 
-    private void OnFiltersChanged(EntityUid uid,
-        GeneralStationRecordConsoleComponent component, GeneralStationRecordsFilterMsg msg)
+    private void OnFiltersChanged(Entity<GeneralStationRecordConsoleComponent> ent, ref GeneralStationRecordsFilterMsg msg)
     {
-        if (component.Filter == null ||
-            component.Filter.Type != msg.Type || component.Filter.Value != msg.Value)
+        if (ent.Comp.Filter == null ||
+            ent.Comp.Filter.Type != msg.Type || ent.Comp.Filter.Value != msg.Value)
         {
-            component.Filter = new GeneralStationRecordsFilter(msg.Type, msg.Value);
-            UpdateUserInterface(uid, component);
+            ent.Comp.Filter = new GeneralStationRecordsFilter(msg.Type, msg.Value);
+            UpdateUserInterface(ent);
         }
     }
 
-    private void UpdateUserInterface(EntityUid uid,
-        GeneralStationRecordConsoleComponent? console = null)
+    private void UpdateUserInterface(Entity<GeneralStationRecordConsoleComponent> ent)
     {
-        if (!Resolve(uid, ref console))
-            return;
-
+        var (uid, console) = ent;
         var owningStation = _station.GetOwningStation(uid);
 
         if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecords))
         {
-            SetStateForInterface(uid, new GeneralStationRecordConsoleState());
+            _ui.TrySetUiState(uid, GeneralStationRecordConsoleKey.Key, new GeneralStationRecordConsoleState());
             return;
         }
 
@@ -73,44 +70,35 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             listing.Add(pair.Item1, pair.Item2.Name);
         }
 
-        if (listing.Count == 0)
+        switch (listing.Count)
         {
-            GeneralStationRecordConsoleState state = new(null, null, null, console.Filter);
-            SetStateForInterface(uid, state);
+            case 0:
+                _ui.TrySetUiState(uid, GeneralStationRecordConsoleKey.Key, new GeneralStationRecordConsoleState());
+                return;
+            case 1:
+                console.ActiveKey = listing.Keys.First();
+                break;
+        }
+
+        if (console.ActiveKey is not { } id)
             return;
-        }
 
-        if (listing.Count == 1)
-        {
-            console.ActiveKey = listing.Keys.First();
-        }
+        var key = new StationRecordKey(id, owningStation.Value);
+        _stationRecords.TryGetRecord<GeneralStationRecord>(key, out var record, stationRecords);
 
-        GeneralStationRecord? record = null;
-        if (console.ActiveKey != null)
-        {
-            var key = new StationRecordKey(console.ActiveKey.Value, owningStation.Value);
-            _stationRecords.TryGetRecord(key, out record, stationRecords);
-        }
-
-        GeneralStationRecordConsoleState newState = new(console.ActiveKey, record, listing, console.Filter);
-        SetStateForInterface(uid, newState);
-    }
-
-    private void SetStateForInterface(EntityUid uid, GeneralStationRecordConsoleState newState)
-    {
+        GeneralStationRecordConsoleState newState = new(id, record, listing, console.Filter);
         _ui.TrySetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
     }
 
     private bool IsSkippedRecord(GeneralStationRecordsFilter filter,
         GeneralStationRecord someRecord)
     {
-        bool isFilter = filter.Value.Length > 0;
-        string filterLowerCaseValue = "";
+        var isFilter = filter.Value.Length > 0;
 
         if (!isFilter)
             return false;
 
-        filterLowerCaseValue = filter.Value.ToLower();
+        var filterLowerCaseValue = filter.Value.ToLower();
 
         return filter.Type switch
         {

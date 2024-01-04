@@ -1,5 +1,4 @@
 using Content.Shared.StationRecords;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.StationRecords;
 

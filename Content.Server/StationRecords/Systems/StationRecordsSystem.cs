@@ -45,26 +45,22 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
 
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
     {
-        if (!HasComp<StationRecordsComponent>(args.Station))
+        if (!TryComp<StationRecordsComponent>(args.Station, out var stationRecords))
             return;
 
-        CreateGeneralRecord(args.Station, args.Mob, args.Profile, args.JobId);
+        CreateGeneralRecord(args.Station, args.Mob, args.Profile, args.JobId, stationRecords);
     }
 
     private void CreateGeneralRecord(EntityUid station, EntityUid player, HumanoidCharacterProfile profile,
-        string? jobId, StationRecordsComponent? records = null)
+        string? jobId, StationRecordsComponent records)
     {
-        if (!Resolve(station, ref records)
-            || string.IsNullOrEmpty(jobId)
+        // TODO make PlayerSpawnCompleteEvent.JobId a ProtoId
+        if (string.IsNullOrEmpty(jobId)
             || !_prototypeManager.HasIndex<JobPrototype>(jobId))
-        {
             return;
-        }
 
         if (!_inventory.TryGetSlotEntity(player, "id", out var idUid))
-        {
             return;
-        }
 
         TryComp<FingerprintComponent>(player, out var fingerprintComponent);
         TryComp<DnaComponent>(player, out var dnaComponent);
@@ -100,12 +96,19 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
     ///     Optional - other systems should anticipate this.
     /// </param>
     /// <param name="records">Station records component.</param>
-    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string jobId, string? mobFingerprint, string? dna, HumanoidCharacterProfile? profile = null,
-        StationRecordsComponent? records = null)
+    public void CreateGeneralRecord(
+        EntityUid station,
+        EntityUid? idUid,
+        string name,
+        int age,
+        string species,
+        Gender gender,
+        string jobId,
+        string? mobFingerprint,
+        string? dna,
+        HumanoidCharacterProfile profile,
+        StationRecordsComponent records)
     {
-        if (!Resolve(station, ref records))
-            return;
-
         if (!_prototypeManager.TryIndex<JobPrototype>(jobId, out var jobPrototype))
             throw new ArgumentException($"Invalid job prototype ID: {jobId}");
 
@@ -299,10 +302,10 @@ public sealed class AfterGeneralRecordCreatedEvent : StationRecordEvent
     ///     about the player character.
     ///     Optional - other systems should anticipate this.
     /// </summary>
-    public readonly HumanoidCharacterProfile? Profile;
+    public readonly HumanoidCharacterProfile Profile;
 
     public AfterGeneralRecordCreatedEvent(StationRecordKey key, GeneralStationRecord record,
-        HumanoidCharacterProfile? profile) : base(key)
+        HumanoidCharacterProfile profile) : base(key)
     {
         Record = record;
         Profile = profile;

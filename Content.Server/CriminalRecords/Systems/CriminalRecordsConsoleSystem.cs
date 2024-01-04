@@ -6,12 +6,10 @@ using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.CriminalRecords;
-using Content.Shared.Radio;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 
@@ -21,7 +19,6 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
@@ -31,33 +28,38 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
-        SubscribeLocalEvent<CriminalRecordsConsoleComponent, SelectCriminalRecords>(OnKeySelected);
-        SubscribeLocalEvent<CriminalRecordsConsoleComponent, GeneralStationRecordsFilterMsg>(OnFiltersChanged);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
+
+        SubscribeLocalEvent<CriminalRecordsConsoleComponent, SelectCriminalRecords>(OnKeySelected);
+        SubscribeLocalEvent<CriminalRecordsConsoleComponent, GeneralStationRecordsFilterMsg>(OnFiltersChanged);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalRecordArrestButtonPressed>(OnButtonPressed);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalStatusOptionButtonSelected>(OnStatusSelected);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalRecordAddHistory>(OnAddHistory);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalRecordDeleteHistory>(OnDeleteHistory);
     }
 
-    private void UpdateUserInterface<T>(EntityUid uid, CriminalRecordsConsoleComponent component, T ev)
+    private void UpdateUserInterface<T>(Entity<CriminalRecordsConsoleComponent> ent, ref T args)
     {
         // TODO: this is probably wasteful, maybe better to send a message to modify the exact state?
-        UpdateUserInterface(uid, component);
+        UpdateUserInterface(ent);
     }
 
     private void OnKeySelected(Entity<CriminalRecordsConsoleComponent> ent, ref SelectCriminalRecords msg)
     {
         // no concern of sus client since record retrieval will fail if invalid id is given
         ent.Comp.ActiveKey = msg.SelectedKey;
-        UpdateUserInterface(ent, ent.Comp);
+        UpdateUserInterface(ent);
     }
 
-    private void SendRadioMessage(EntityUid sender, string message, string channel)
+    private void OnFiltersChanged(Entity<CriminalRecordsConsoleComponent> ent, ref GeneralStationRecordsFilterMsg msg)
     {
-        _radio.SendRadioMessage(sender, message,
-            _proto.Index<RadioChannelPrototype>(channel), sender);
+        if (ent.Comp.Filter == null ||
+            ent.Comp.Filter.Type != msg.Type || ent.Comp.Filter.Value != msg.Value)
+        {
+            ent.Comp.Filter = new GeneralStationRecordsFilter(msg.Type, msg.Value);
+            UpdateUserInterface(ent);
+        }
     }
 
     private void OnButtonPressed(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordArrestButtonPressed msg)
@@ -75,9 +77,9 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         };
 
         var message = status == SecurityStatus.Detained ? "detained" : "released";
-        SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{message}", args), ent.Comp.SecurityChannel);
+        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{message}", args), ent.Comp.SecurityChannel, ent);
 
-        UpdateUserInterface(ent, ent.Comp);
+        UpdateUserInterface(ent);
     }
 
     private void OnStatusSelected(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalStatusOptionButtonSelected msg)
@@ -95,14 +97,14 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         };
 
         var message = status == SecurityStatus.Wanted ? "wanted" : "not-wanted";
-        SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{message}", args), ent.Comp.SecurityChannel);
+        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{message}", args), ent.Comp.SecurityChannel, ent);
 
-        UpdateUserInterface(ent, ent.Comp);
+        UpdateUserInterface(ent);
     }
 
     private void OnAddHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordAddHistory msg)
     {
-        if (!CheckSelected(ent, msg.Session, out var mob, out var key))
+        if (!CheckSelected(ent, msg.Session, out _, out var key))
             return;
 
         var line = msg.Line.Trim();
@@ -114,12 +116,12 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
 
         // no radio message since its not crucial to officers patrolling
 
-        UpdateUserInterface(ent, ent.Comp);
+        UpdateUserInterface(ent);
     }
 
     private void OnDeleteHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordDeleteHistory msg)
     {
-        if (!CheckSelected(ent, msg.Session, out var mob, out var key))
+        if (!CheckSelected(ent, msg.Session, out _, out var key))
             return;
 
         if (!_criminalRecords.TryDeleteHistory(key.Value, msg.Index))
@@ -127,19 +129,17 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
 
         // a bit sus but not crucial to officers patrolling
 
-        UpdateUserInterface(ent, ent.Comp);
+        UpdateUserInterface(ent);
     }
 
-    private void UpdateUserInterface(EntityUid uid, CriminalRecordsConsoleComponent? console = null)
+    private void UpdateUserInterface(Entity<CriminalRecordsConsoleComponent> ent)
     {
-        if (!Resolve(uid, ref console))
-            return;
-
+        var (uid, console) = ent;
         var owningStation = _station.GetOwningStation(uid);
 
         if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecords))
         {
-            SetStateForInterface(uid, new CriminalRecordsConsoleState());
+            _ui.TrySetUiState(uid, CriminalRecordsConsoleKey.Key, new CriminalRecordsConsoleState());
             return;
         }
 
@@ -161,7 +161,7 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         switch (listing.Count)
         {
             case 0:
-                SetStateForInterface(uid, new CriminalRecordsConsoleState());
+                _ui.TrySetUiState(uid, CriminalRecordsConsoleKey.Key, new CriminalRecordsConsoleState());
                 return;
             case 1:
                 console.ActiveKey = listing.Keys.First();
@@ -169,23 +169,16 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         }
 
         // get records to display when a crewmember is selected
-        GeneralStationRecord? stationRecord = null;
-        CriminalRecord? criminalRecord = null;
-        if (console.ActiveKey is {} id)
-        {
-            Log.Debug($"Selected id is {id}");
-            var key = new StationRecordKey(id, owningStation.Value);
-            _stationRecords.TryGetRecord<GeneralStationRecord>(key, out stationRecord, stationRecords);
-            _stationRecords.TryGetRecord<CriminalRecord>(key, out criminalRecord, stationRecords);
-            Log.Debug($"Record {stationRecord} {criminalRecord}");
-        }
+        if (console.ActiveKey is not { } id)
+            return;
 
-        CriminalRecordsConsoleState newState = new(console.ActiveKey, stationRecord, criminalRecord, listing, console.Filter);
-        SetStateForInterface(uid, newState);
-    }
+        Log.Debug($"Selected id is {id}");
+        var key = new StationRecordKey(id, owningStation.Value);
+        _stationRecords.TryGetRecord<GeneralStationRecord>(key, out var stationRecord, stationRecords);
+        _stationRecords.TryGetRecord<CriminalRecord>(key, out var criminalRecord, stationRecords);
+        Log.Debug($"Record {stationRecord} {criminalRecord}");
 
-    private void SetStateForInterface(EntityUid uid, CriminalRecordsConsoleState newState)
-    {
+        CriminalRecordsConsoleState newState = new(id, stationRecord, criminalRecord, listing, console.Filter);
         _ui.TrySetUiState(uid, CriminalRecordsConsoleKey.Key, newState);
     }
 
@@ -219,28 +212,15 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         return true;
     }
 
-    #region Filters
-    private void OnFiltersChanged(EntityUid uid,
-        CriminalRecordsConsoleComponent component, GeneralStationRecordsFilterMsg msg)
-    {
-        if (component.Filter == null ||
-            component.Filter.Type != msg.Type || component.Filter.Value != msg.Value)
-        {
-            component.Filter = new GeneralStationRecordsFilter(msg.Type, msg.Value);
-            UpdateUserInterface(uid, component);
-        }
-    }
-
     private bool IsSkippedRecord(GeneralStationRecordsFilter filter,
         GeneralStationRecord someRecord)
     {
-        bool isFilter = filter.Value.Length > 0;
-        string filterLowerCaseValue = "";
+        var isFilter = filter.Value.Length > 0;
 
         if (!isFilter)
             return false;
 
-        filterLowerCaseValue = filter.Value.ToLower();
+        var filterLowerCaseValue = filter.Value.ToLower();
 
         return filter.Type switch
         {
@@ -257,5 +237,4 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
     {
         return !value.ToLower().StartsWith(filter);
     }
-    #endregion
 }

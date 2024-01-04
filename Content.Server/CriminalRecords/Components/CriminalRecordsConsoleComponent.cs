@@ -27,8 +27,4 @@ public sealed partial class CriminalRecordsConsoleComponent : Component
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<RadioChannelPrototype> SecurityChannel = "Security";
-
-    // TODO: remove and have either per-player access or locking like robor ui
-    [DataField]
-    public bool HasAccess;
 }
