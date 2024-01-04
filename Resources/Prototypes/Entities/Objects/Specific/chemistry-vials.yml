@@ -9,6 +9,7 @@
   - type: Tag
     tags:
     - Trash
+    - Vial
   - type: PhysicalComposition
     materialComposition:
       Glass: 25

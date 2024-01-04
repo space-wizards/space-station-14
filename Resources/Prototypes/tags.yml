@@ -225,7 +225,7 @@
 
 - type: Tag
   id: BypassInteractionRangeChecks
-  
+
 - type: Tag
   id: CableCoil
 
@@ -1181,3 +1181,6 @@
 
 - type: Tag
   id:  boots
+
+- type: Tag
+  id: Vial
