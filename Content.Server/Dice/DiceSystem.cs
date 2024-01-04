@@ -1,10 +1,13 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Explosion.Components;
 using Content.Server.Explosion.Components.OnTrigger;
 using Content.Shared.Dice;
+using Content.Shared.Throwing;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Dice;
@@ -28,16 +31,21 @@ public sealed class DiceSystem : SharedDiceSystem
         _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land", ("die", uid), ("currentSide", die.CurrentValue)), uid);
         _audio.PlayPvs(die.Sound, uid);
 
-        // For dice bomb to boom after value seconds after landing
-        if (!TryComp<TwoStageTriggerComponent>(uid, out var twostage) || !die.DiceBomb)
-            return;
-        DiceBombExplode(uid, die, twostage);
-
     }
-
-    public void DiceBombExplode(EntityUid uid, DiceComponent component, TwoStageTriggerComponent twostage)
+    public void DiceBombExplode(EntityUid uid, DiceComponent dice, ref LandEvent args)
     {
-        twostage.TriggerDelay = TimeSpan.FromSeconds(component.CurrentValue);
+        if (!TryComp<TwoStageTriggerComponent>(uid, out var twoStage) || !dice.DiceBomb || !TryComp<ExplodeOnTriggerComponent>(uid, out var explodeTrigger))
+            return;
+        twoStage.TriggerDelay = TimeSpan.FromSeconds(dice.CurrentValue);
+        twoStage.SecondStageComponents = new ComponentRegistry
+        {
+            new ExplosiveComponent
+            {
+                MaxIntensity = (((dice.CurrentValue)/3)*2 ), // Makes 1 value on dice making 10 damage
+                IntensitySlope = 5,
+                TotalIntensity = 20
+            }
+        };
         _trigger.Trigger(uid);
     }
 }
