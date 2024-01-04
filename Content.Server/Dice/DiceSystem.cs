@@ -39,8 +39,8 @@ public sealed class DiceSystem : SharedDiceSystem
         if (!TryComp<TwoStageTriggerComponent>(uid, out var twoStage) || !TryComp<ExplosiveComponent>(uid, out var explosive))
             return;
         explosive.MaxIntensity = (dice.CurrentValue/3*2); // Makes 1 value on dice making 10 damag at boom center
-        explosive.IntensitySlope = (dice.CurrentValue/3*2);
-        explosive.TotalIntensity = (dice.CurrentValue/3*2);
+        explosive.IntensitySlope = (dice.CurrentValue/3);
+        explosive.TotalIntensity = (dice.CurrentValue/3*8);
         twoStage.TriggerDelay = TimeSpan.FromSeconds(dice.CurrentValue);
         _trigger.Trigger(uid);
     }
