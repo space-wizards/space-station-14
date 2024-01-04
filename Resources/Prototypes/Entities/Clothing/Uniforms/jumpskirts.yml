@@ -843,9 +843,9 @@
   description: A loose worn red shirt with a grey skirt, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing\Uniforms\Jumpskirt\casual\casual_red.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/casual/casual_red.rsi
   - type: Clothing
-    sprite: Clothing\Uniforms\Jumpskirt\casual\casual_red.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/casual/casual_red.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -854,9 +854,9 @@
   description: A loose worn blue shirt with a grey skirt, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing\Uniforms\Jumpskirt\casual\casual_blue.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/casual/casual_blue.rsi
   - type: Clothing
-    sprite: Clothing\Uniforms\Jumpskirt\casual\casual_blue.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/casual/casual_blue.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -865,6 +865,6 @@
   description: A loose worn purple shirt with a grey skirt, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing\Uniforms\Jumpskirt\casual\casual_purple.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/casual/casual_purple.rsi
   - type: Clothing
-    sprite: Clothing\Uniforms\Jumpskirt\casual\casual_purple.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/casual/casual_purple.rsi

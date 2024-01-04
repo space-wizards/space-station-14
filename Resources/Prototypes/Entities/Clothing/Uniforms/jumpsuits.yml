@@ -1366,9 +1366,9 @@
   description: A loose worn red shirt with a grey pants, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing\Uniforms\Jumpsuit\casual\casual_red.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/casual/casual_red.rsi
   - type: Clothing
-    sprite: Clothing\Uniforms\Jumpsuit\casual\casual_red.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/casual/casual_red.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -1377,9 +1377,9 @@
   description: A loose worn blue shirt with a grey pants, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing\Uniforms\Jumpsuit\casual\casual_blue.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/casual/casual_blue.rsi
   - type: Clothing
-    sprite: Clothing\Uniforms\Jumpsuit\casual\casual_blue.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/casual/casual_blue.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -1388,7 +1388,7 @@
   description: A loose worn purple shirt with a grey pants, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing\Uniforms\Jumpsuit\casual\casual_purple.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/casual/casual_purple.rsi
   - type: Clothing
-    sprite: Clothing\Uniforms\Jumpsuit\casual\casual_purple.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/casual/casual_purple.rsi
 
