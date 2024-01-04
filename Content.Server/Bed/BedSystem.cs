@@ -5,6 +5,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Construction;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Atmos.Rotting;
 using Content.Shared.Bed;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Components;
@@ -107,6 +108,17 @@ namespace Content.Server.Bed
         {
             UpdateAppearance(uid, args.Powered);
             UpdateMetabolisms(uid, component, args.Powered);
+            if (component.AntiRotting)
+            {
+                if (args.Powered)
+                {
+                    EnsureComp<ActiveAntiRottingOnBuckleComponent>(uid);
+                }
+                else
+                {
+                    RemComp<ActiveAntiRottingOnBuckleComponent>(uid);
+                }
+            }
         }
 
         private void OnEmagged(EntityUid uid, StasisBedComponent component, ref GotEmaggedEvent args)
