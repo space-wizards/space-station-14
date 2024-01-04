@@ -24,6 +24,7 @@ uniform highp float Zoom;
 
 // Base distortion
 uniform highp float DistortionScalar; // Scales the total distortion applied to the final image.
+const highp float DistortionCoordScalar = 0.1125; //Scales the coordinates for the distortion texture
 const highp float DistortionCenterRadius = 200.0; // radius of the gradient used to tone down the distortion effect
 const highp float DistortionCenterMinDist = 0.25; // minimum distance from the center of the screen for the distortion to appear at all
 const highp float DistortionCenterPow = 1.1; // the exponent used for the distortion center
@@ -58,14 +59,14 @@ void fragment() {
 
     highp float distortionZoom = pow(Zoom, DistortionZoomPow);
 
-    highp float centergradient = zCircleGradient(aspect * 0.5, FRAGCOORD.xy, DistortionGradientMax, DistortionCenterRadius / distortionZoom, DistortionCenterMinDist / distortionZoom, DistortionCenterPow);
-    highp vec2 coord = (FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy) * aspect * centergradient * 0.0001; // That magic number on the end there is due to how tiny the FBM noise is. It's incredibly noisy.
+    highp float centergradient = zCircleGradient(aspect, FRAGCOORD.xy, DistortionGradientMax, DistortionCenterRadius / distortionZoom, DistortionCenterMinDist / distortionZoom, DistortionCenterPow);
+    highp vec2 coord = (FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy) * centergradient * DistortionCoordScalar;
     highp vec2 offset = vec2((zFBM(coord * NoiseScalar + timesin) - 0.5) * centergradient, (zFBM(coord * NoiseScalar + timecos) - 0.5) * centergradient);
     COLOR = zTextureSpec(SCREEN_TEXTURE, Pos + (offset * DistortionScalar));
 
     highp float cloudyZoom = pow(Zoom, CloudinessZoomPow);
 
-    highp float cloudygradient = zCircleGradient(aspect * 0.5, FRAGCOORD.xy, CloudinessGradientMax, CloudinessCenterRadius / cloudyZoom, CloudinessCenterMinDist / cloudyZoom, CloudinessCenterPow) * CloudinessScalar;
+    highp float cloudygradient = zCircleGradient(aspect, FRAGCOORD.xy, CloudinessGradientMax, CloudinessCenterRadius / cloudyZoom, CloudinessCenterMinDist / cloudyZoom, CloudinessCenterPow) * CloudinessScalar;
     COLOR.rgb = mix(COLOR.rgb, vec3(zGrayscale(COLOR.rgb)), min(cloudygradient * CloudinessGrayscaleMult, CloudinessGrayscaleMax));
     COLOR.rgb = pow(COLOR.rgb, vec3((cloudygradient * CloudinessScalar + 1.0)));
 
