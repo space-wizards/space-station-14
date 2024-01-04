@@ -186,6 +186,8 @@
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
     Chitter:
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
+    Click:
+      path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
 
 - type: emoteSounds
   id: UnisexDwarf
