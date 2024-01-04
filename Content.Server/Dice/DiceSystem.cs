@@ -2,12 +2,10 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Explosion.Components;
 using Content.Server.Explosion.Components.OnTrigger;
 using Content.Shared.Dice;
-using Content.Shared.Throwing;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Dice;
@@ -31,21 +29,19 @@ public sealed class DiceSystem : SharedDiceSystem
         _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land", ("die", uid), ("currentSide", die.CurrentValue)), uid);
         _audio.PlayPvs(die.Sound, uid);
 
-    }
-    public void DiceBombExplode(EntityUid uid, DiceComponent dice, ref LandEvent args)
-    {
-        if (!TryComp<TwoStageTriggerComponent>(uid, out var twoStage) || !dice.DiceBomb || !TryComp<ExplodeOnTriggerComponent>(uid, out var explodeTrigger))
-            return;
-        twoStage.TriggerDelay = TimeSpan.FromSeconds(dice.CurrentValue);
-        twoStage.SecondStageComponents = new ComponentRegistry
+        if (die.DiceBomb && !TryComp<ExplodeOnTriggerComponent>(uid, out var explodeTrigger)) // True only on first roll, so cannot be activated twice
         {
-            new ExplosiveComponent
-            {
-                MaxIntensity = (((dice.CurrentValue)/3)*2 ), // Makes 1 value on dice making 10 damage
-                IntensitySlope = 5,
-                TotalIntensity = 20
-            }
-        };
+            DiceBombExplode(uid, die);
+        }
+    }
+    public void DiceBombExplode(EntityUid uid, DiceComponent dice)
+    {
+        if (!TryComp<TwoStageTriggerComponent>(uid, out var twoStage) || !TryComp<ExplosiveComponent>(uid, out var explosive))
+            return;
+        explosive.MaxIntensity = (dice.CurrentValue/3*2); // Makes 1 value on dice making 10 damag at boom center
+        explosive.IntensitySlope = (dice.CurrentValue/3*2);
+        explosive.TotalIntensity = (dice.CurrentValue/3*2);
+        twoStage.TriggerDelay = TimeSpan.FromSeconds(dice.CurrentValue);
         _trigger.Trigger(uid);
     }
 }
