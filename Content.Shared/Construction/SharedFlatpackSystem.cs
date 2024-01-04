@@ -157,22 +157,19 @@ public abstract class SharedFlatpackSystem : EntitySystem
         Appearance.SetData(ent, FlatpackVisuals.Machine, MetaData(machineBoard).EntityPrototype?.ID ?? string.Empty);
     }
 
-    public Dictionary<string, int> GetFlatpackCreationCost(Entity<FlatpackCreatorComponent> entity, Entity<MachineBoardComponent> machineBoard)
+    public Dictionary<string, int> GetFlatpackCreationCost(Entity<FlatpackCreatorComponent> entity, Entity<MachineBoardComponent>? machineBoard = null)
     {
-        var cost = MachinePart.GetMachineBoardMaterialCost(machineBoard, -1);
-        foreach (var (mat, amount) in entity.Comp.BaseMaterialCost)
-        {
-            cost.TryAdd(mat, 0);
-            cost[mat] -= amount;
-        }
+        Dictionary<string, int> cost = new();
+        if (machineBoard is not null)
+            cost = MachinePart.GetMachineBoardMaterialCost(machineBoard.Value, -1);
 
-        return cost;
-    }
+        Dictionary<ProtoId<MaterialPrototype>, int> baseCost;
+        if (machineBoard is not null)
+            baseCost = entity.Comp.BaseMachineCost;
+        else
+            baseCost = entity.Comp.BaseComputerCost;
 
-    public Dictionary<string, int> GetFlatpackCreationCostForComputer(Entity<FlatpackCreatorComponent> entity)
-    {
-        var cost = new Dictionary<string, int> {["Glass"] = -200}; // glass for the computer screen
-        foreach (var (mat, amount) in entity.Comp.BaseMaterialCost)
+        foreach (var (mat, amount) in baseCost)
         {
             cost.TryAdd(mat, 0);
             cost[mat] -= amount;
