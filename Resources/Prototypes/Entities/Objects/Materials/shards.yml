@@ -14,9 +14,7 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           shard1: ""
-      - enum.DamageStateVisualLayers.Base:
           shard2: ""
-      - enum.DamageStateVisualLayers.Base:
           shard3: ""
   - type: MeleeWeapon
     attackRate: 1.5
