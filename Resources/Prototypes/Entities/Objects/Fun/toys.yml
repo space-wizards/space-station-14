@@ -1148,7 +1148,7 @@
   parent: BasePlushie
   id: PlushieHuman
   name: human plushie
-  description: a naked and ugly little Isaac made of plush. He's screaming!
+  description: This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is naked. The human is crying. The human is creaming. His name is Isaac.
   components:
   - type: Sprite
     state: plushie_human
