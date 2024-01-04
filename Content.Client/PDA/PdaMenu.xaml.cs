@@ -15,6 +15,7 @@ namespace Content.Client.PDA
     [GenerateTypedNameReferences]
     public sealed partial class PdaMenu : PdaWindow
     {
+        [Dependency] private readonly IClipboardManager _clipboard = null!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         private readonly ClientGameTicker _gameTicker;
@@ -23,6 +24,8 @@ namespace Content.Client.PDA
         public const int ProgramListView = 1;
         public const int SettingsView = 2;
         public const int ProgramContentView = 3;
+
+        private string _StationName = Loc.GetString("comp-pda-ui-unknown");
 
         private int _currentView;
 
@@ -84,6 +87,17 @@ namespace Content.Client.PDA
                 ToHomeScreen();
             };
 
+            CopyStationNameButton.OnPressed += _ =>
+            {
+                _clipboard.SetText(_StationName?? Loc.GetString("comp-pda-ui-unknown"));
+            };
+
+            CopyStationTimeButton.OnPressed += _ =>
+            {
+                var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
+                _clipboard.SetText((stationTime.ToString("hh\\:mm\\:ss") ?? Loc.GetString("comp-pda-ui-unknown")));
+            };
+
 
             HideAllViews();
             ToHomeScreen();
@@ -113,6 +127,7 @@ namespace Content.Client.PDA
 
             StationNameLabel.SetMarkup(Loc.GetString("comp-pda-ui-station",
                 ("station", state.StationName ?? Loc.GetString("comp-pda-ui-unknown"))));
+            _StationName = state.StationName ?? Loc.GetString("comp-pda-ui-unknown");
 
             var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
 

@@ -36,11 +36,23 @@
                 <BoxContainer Orientation="Horizontal">
                     <RichTextLabel Name="StationNameLabel"
                                    Access="Public"
-                                   HorizontalExpand="True" />
+                                   HorizontalExpand="True" Margin="0 0 5 0" />
+                    <Button Name = "CopyStationNameButton"
+                            Access="Public"
+                            Text="{Loc 'comp-pda-ui-copy'}"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
                 </BoxContainer>
             </PanelContainer>
             <RichTextLabel Name="StationAlertLevelLabel" Access="Public" />
-            <RichTextLabel Name="StationTimeLabel" Access="Public" />
+            <BoxContainer Orientation="Horizontal">
+                <RichTextLabel Name="StationTimeLabel" Access="Public" HorizontalExpand="True" Margin="0 0 5 0"  />
+                <Button Name = "CopyStationTimeButton"
+                            Access="Public"
+                            Text="{Loc 'comp-pda-ui-copy'}"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+            </BoxContainer>
             <RichTextLabel Name="StationAlertLevelInstructions" Access="Public" />
         </BoxContainer>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
