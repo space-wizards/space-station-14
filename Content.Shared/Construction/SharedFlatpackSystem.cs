@@ -115,13 +115,17 @@ public abstract class SharedFlatpackSystem : EntitySystem
         ent.Comp.PackEndTime += args.PausedTime;
     }
 
-    public void SetupFlatpack(Entity<FlatpackComponent?> ent, Entity<MachineBoardComponent?> machineBoard)
+    public void SetupFlatpack(Entity<FlatpackComponent?> ent, EntityUid? board)
     {
-        if (!Resolve(ent, ref ent.Comp) || !Resolve(machineBoard, ref machineBoard.Comp))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (machineBoard.Comp.Prototype is not { } machinePrototypeId)
-            return;
+        EntProtoId machinePrototypeId;
+        string? entityPrototype;
+        if (TryComp<MachineBoardComponent>(board, out var machineBoard) && machineBoard.Prototype is not null)
+            machinePrototypeId = machineBoard.Prototype;
+        else if (TryComp<ComputerBoardComponent>(board, out var computerBoard) && computerBoard.Prototype is not null)
+            machinePrototypeId = computerBoard.Prototype;
 
         var comp = ent.Comp!;
         var machinePrototype = PrototypeManager.Index(machinePrototypeId);
@@ -133,39 +137,21 @@ public abstract class SharedFlatpackSystem : EntitySystem
         comp.Entity = machinePrototypeId;
         Dirty(ent, comp);
 
-        Appearance.SetData(ent, FlatpackVisuals.Machine, MetaData(machineBoard).EntityPrototype?.ID ?? string.Empty);
-    }
-
-    public void SetupFlatpack(Entity<FlatpackComponent?> ent, Entity<ComputerBoardComponent?> machineBoard)
-    {
-        if (!Resolve(ent, ref ent.Comp) || !Resolve(machineBoard, ref machineBoard.Comp))
+        if (board is null)
             return;
 
-        if (machineBoard.Comp.Prototype is not { } machinePrototypeId)
-            return;
-
-        var comp = ent.Comp!;
-        var machinePrototype = PrototypeManager.Index(machinePrototypeId);
-
-        var meta = MetaData(ent);
-        _metaData.SetEntityName(ent, Loc.GetString("flatpack-entity-name", ("name", machinePrototype.Name)), meta);
-        _metaData.SetEntityDescription(ent, Loc.GetString("flatpack-entity-description", ("name", machinePrototype.Name)), meta);
-
-        comp.Entity = machinePrototypeId;
-        Dirty(ent, comp);
-
-        Appearance.SetData(ent, FlatpackVisuals.Machine, MetaData(machineBoard).EntityPrototype?.ID ?? string.Empty);
+        Appearance.SetData(ent, FlatpackVisuals.Machine, MetaData(board.Value).EntityPrototype?.ID ?? string.Empty);
     }
 
     public Dictionary<string, int> GetFlatpackCreationCost(Entity<FlatpackCreatorComponent> entity, Entity<MachineBoardComponent>? machineBoard = null)
     {
         Dictionary<string, int> cost = new();
-        if (machineBoard is not null)
-            cost = MachinePart.GetMachineBoardMaterialCost(machineBoard.Value, -1);
-
         Dictionary<ProtoId<MaterialPrototype>, int> baseCost;
         if (machineBoard is not null)
+        {
+            cost = MachinePart.GetMachineBoardMaterialCost(machineBoard.Value, -1);
             baseCost = entity.Comp.BaseMachineCost;
+        }
         else
             baseCost = entity.Comp.BaseComputerCost;
 
