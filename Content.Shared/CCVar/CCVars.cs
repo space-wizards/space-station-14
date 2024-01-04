@@ -709,8 +709,17 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     The channel that admin messages are sent to.
+        /// </summary>
         public static readonly CVarDef<string> AdminRelayChannelId =
             CVarDef.Create("admin.relay_channel_id", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The **FORUM** channel that admin messages are sent to. If it's not a forum channel, everything will explode.
+        /// </summary>
+        public static readonly CVarDef<string> AdminAhelpRelayChannelId =
+            CVarDef.Create("admin.ahelp_relay_channel_id", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
         /// Should users be able to see their own notes? Admins will be able to see and set notes regardless
@@ -1137,6 +1146,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> OocEnableDuringRound =
             CVarDef.Create("ooc.enable_during_round", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        /// The channel that OOC messages are sent to.
+        /// </summary>
         public static readonly CVarDef<string> OocRelayChannelId =
             CVarDef.Create("ooc.relay_channel_id", "", CVar.SERVERONLY);
 
