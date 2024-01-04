@@ -421,7 +421,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         BuildMarkerChunks(component, gridUid, grid, seed);
 
         var active = _activeChunks[component];
-        List<(Vector2i, Tile)>? tiles = null;
 
         foreach (var chunk in active)
         {
@@ -430,9 +429,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             if (!component.LoadedChunks.Add(chunk))
                 continue;
 
-            tiles ??= new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
             // Load NOW!
-            LoadChunk(component, gridUid, grid, chunk, seed, tiles);
+            LoadChunk(component, gridUid, grid, chunk, seed);
         }
     }
 
