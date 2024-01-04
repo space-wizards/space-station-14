@@ -20,7 +20,6 @@
           False: { visible: false }
   - type: Item
     size: Normal
-  - type: ItemCooldown
   - type: EmitSoundOnUse #placeholder for future unical mechanic
     sound:
       collection: RadiationPulse

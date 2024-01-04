@@ -71,7 +71,7 @@
   - type: Item
     size: Tiny
     sprite: Objects/Tools/lighters.rsi
-  - type: ItemCooldown
+  - type: UseDelay
   - type: RefillableSolution
     solution: Welder
   - type: SolutionContainerManager
