@@ -442,17 +442,6 @@
   - UplinkUtility
 
 - type: listing
-  id: UplinkHardsuitSyndieMonkey
-  name: uplink-hardsuit-syndie-monkey-name
-  description: uplink-hardsuit-syndie-monkey-desc
-  productEntity: ClothingOuterHardsuitSyndieMonkey
-  icon: { sprite: Clothing/OuterClothing/Hardsuits/syndicate-monkey.rsi, state: icon }
-  cost:
-    Telecrystal: 5
-  categories:
-  - UplinkUtility
-
-- type: listing
   id: UplinkStealthBox
   name: uplink-stealth-box-name
   description: uplink-stealth-box-desc
@@ -798,6 +787,17 @@
   productEntity: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   cost:
     Telecrystal: 25
+  categories:
+  - UplinkBundles
+
+- type: listing
+  id: UplinkHardsuitSyndieMonkey
+  name: uplink-hardsuit-syndie-monkey-name
+  description: uplink-hardsuit-syndie-monkey-desc
+  productEntity: ClothingBackpackDuffelSyndicateFilledSyndieMonkey
+  icon: { sprite: Clothing/OuterClothing/Hardsuits/syndicate-monkey.rsi, state: icon }
+  cost:
+    Telecrystal: 12
   categories:
   - UplinkBundles
 

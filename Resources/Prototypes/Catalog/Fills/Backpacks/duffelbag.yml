@@ -99,6 +99,17 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledSyndieMonkey
+  name: Syndicate monkey hardsuit bundle
+  description: "A reinforcement monkey teleporter bundled with a compact monkey blood-red hardsuit!"
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSyndieMonkey
+      - id: ReinforcementRadioSyndicateMonkey
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   name: China-Lake bundle
   description: "An old China-Lake grenade launcher bundled with 11 rounds of various destruction capability."
