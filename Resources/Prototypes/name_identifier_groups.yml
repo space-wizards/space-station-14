@@ -4,6 +4,10 @@
   prefix: MK
 
 - type: nameIdentifierGroup
+  id: Kobold
+  prefix: KB
+
+- type: nameIdentifierGroup
   id: Holoparasite
   prefix: HOLO
 
