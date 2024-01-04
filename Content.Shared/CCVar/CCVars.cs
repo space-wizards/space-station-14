@@ -1639,12 +1639,6 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        ///     Forced salvage map prototype name (if empty, randomly selected)
-        /// </summary>
-        public static readonly CVarDef<string>
-            SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
-
-        /// <summary>
         /// Duration for missions
         /// </summary>
         public static readonly CVarDef<float>

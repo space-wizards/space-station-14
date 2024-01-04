@@ -401,6 +401,14 @@ public sealed class StationSystem : EntitySystem
         QueueDel(station);
     }
 
+    public EntityUid? GetOwningStation(EntityUid? entity, TransformComponent? xform = null)
+    {
+        if (entity == null)
+            return null;
+
+        return GetOwningStation(entity.Value, xform);
+    }
+
     /// <summary>
     /// Gets the station that "owns" the given entity (essentially, the station the grid it's on is attached to)
     /// </summary>
