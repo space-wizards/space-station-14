@@ -31,11 +31,10 @@ public sealed partial class PAIComponent : Component
     [DataField("midiAction", serverOnly: true)] // server only, as it uses a server-BUI event !type
     public EntityUid? MidiAction;
 
-    [DataField("mapActionId", serverOnly: true,
-        customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? MapActionId = "ActionPAIOpenMap";
+    [DataField("mapActionId", serverOnly: true)]
+    public ProtoId<EntityPrototype> MapActionId = "ActionPAIOpenMap";
 
-    [DataField("mapAction", serverOnly: true)] // server only, as it uses a server-BUI event !type
+    [DataField("mapAction")]
     public EntityUid? MapAction;
 
     /// <summary>
