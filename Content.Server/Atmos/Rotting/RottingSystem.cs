@@ -154,11 +154,7 @@ public sealed class RottingSystem : EntitySystem
     {
         if (args.Handled)
             return;
-
-        if (component.CurrentTemperature < Atmospherics.T0C + 0.85f)
-        {
-            args.Handled = true;
-        }
+        args.Handled = component.CurrentTemperature < Atmospherics.T0C + 0.85f;
     }
 
     public override void Update(float frameTime)

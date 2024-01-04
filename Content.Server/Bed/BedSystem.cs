@@ -133,12 +133,8 @@ namespace Content.Server.Bed
         {
             if (args.Handled)
                 return;
-
-            if (component is { Buckled: true, BuckledTo: not null } &&
-                HasComp<ActiveAntiRottingOnBuckleComponent>(component.BuckledTo.Value))
-            {
-                args.Handled = true;
-            }
+            args.Handled = component is { Buckled: true, BuckledTo: not null } &&
+                           HasComp<ActiveAntiRottingOnBuckleComponent>(component.BuckledTo.Value);
         }
 
         private void UpdateMetabolisms(EntityUid uid, StasisBedComponent component, bool shouldApply)
