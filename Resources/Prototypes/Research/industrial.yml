@@ -12,7 +12,7 @@
   recipeUnlocks:
   - MiningDrill
   - BorgModuleMining
-  - OreProcessorMachineCircuitboard
+  - OreProcessorIndustrialMachineCircuitboard
   - OreBagOfHolding
 
 - type: technology
@@ -20,12 +20,24 @@
   name: research-technology-advanced-powercells
   icon:
     sprite: Objects/Power/power_cells.rsi
-    state: medium
+    state: high
   discipline: Industrial
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - PowerCellMedium
+  - PowerCellHigh
+
+- type: technology
+  id: MechanicalCompression
+  name: research-technology-mechanical-compression
+  icon:
+    sprite: Structures/Machines/flatpacker.rsi
+    state: base
+  discipline: Industrial
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - FlatpackerMachineCircuitboard
 
 - type: technology
   id: CompactPower
@@ -45,16 +57,14 @@
   id: IndustrialEngineering
   name: research-technology-industrial-engineering
   icon:
-    sprite: Structures/Machines/protolathe.rsi
-    state: icon
+    sprite: Structures/Machines/protolathe_hypercon.rsi
+    state: building
   discipline: Industrial
   tier: 1
-  cost: 7500
+  cost: 10000
   recipeUnlocks:
-  - ProtolatheMachineCircuitboard
-  - AutolatheMachineCircuitboard
-  - CircuitImprinterMachineCircuitboard
-  - MaterialReclaimerMachineCircuitboard
+  - AutolatheHyperConvectionMachineCircuitboard
+  - ProtolatheHyperConvectionMachineCircuitboard
   - SheetifierMachineCircuitboard
 
 - type: technology
@@ -153,20 +163,6 @@
   - PortableScrubberMachineCircuitBoard
 
 - type: technology
-  id: SuperPowercells
-  name: research-technology-super-powercells
-  icon:
-    sprite: Objects/Power/power_cells.rsi
-    state: high
-  discipline: Industrial
-  tier: 2
-  cost: 7500
-  recipeUnlocks:
-  - PowerCellHigh
-  technologyPrerequisites:
-  - AdvancedPowercells
-
-- type: technology
   id: AdvancedToolsTechnology
   name: research-technology-advanced-tools
   icon:
@@ -210,4 +206,4 @@
   recipeUnlocks:
   - PowerCellMicroreactor
   technologyPrerequisites:
-  - SuperPowercells
+  - AdvancedPowercells

@@ -132,6 +132,8 @@
   - type: AccessReader
   - type: StaticPrice
     price: 150
+  - type: LightningTarget
+    priority: 1
   - type: Tag
     tags:
       - Airlock
@@ -139,4 +141,5 @@
   - type: PryUnpowered
   placement:
     mode: SnapgridCenter
+
 

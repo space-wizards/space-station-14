@@ -58,6 +58,19 @@
 
 - type: entity
   parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagSci
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/magboots-science.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/magboots-science.rsi
+  - type: Magboots
+    toggleAction: ActionToggleMagbootsSci
+  - type: StaticPrice
+    price: 400
+
+- type: entity
+  parent: ClothingShoesBootsMag
   id: ClothingShoesBootsMagBlinding
   name: magboots of blinding speed
   description: These would look fetching on a fetcher like you.
@@ -144,6 +157,15 @@
   - type: InstantAction
     icon: { sprite: Clothing/Shoes/Boots/magboots-advanced.rsi, state: icon }
     iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
+
+- type: entity
+  id: ActionToggleMagbootsSci
+  parent: ActionBaseToggleMagboots
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Shoes/Boots/magboots-science.rsi, state: icon }
+    iconOn: Clothing/Shoes/Boots/magboots-science.rsi/icon-on.png
 
 - type: entity
   id: ActionToggleMagbootsSyndie

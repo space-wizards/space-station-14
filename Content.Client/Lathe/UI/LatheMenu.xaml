@@ -1,6 +1,7 @@
 <DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:ui="clr-namespace:Content.Client.Materials.UI"
     Title="{Loc 'lathe-menu-title'}"
     MinSize="550 450"
     SetSize="750 500">
@@ -135,14 +136,7 @@
                 Orientation="Vertical"
                 VerticalExpand="True"
                 HorizontalExpand="True">
-                <BoxContainer
-                Name="MaterialsList"
-                Orientation="Vertical"
-                SizeFlagsStretchRatio="8"
-                HorizontalExpand="True"
-                VerticalExpand="True">
-                <!-- Materials populated in C# file -->
-                </BoxContainer>
+                <ui:MaterialStorageControl Name="MaterialsList" SizeFlagsStretchRatio="8"/>
             </BoxContainer>
         </BoxContainer>
         </BoxContainer>

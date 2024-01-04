@@ -1,9 +1,9 @@
 using Content.Server.Body.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -37,15 +37,15 @@ namespace Content.Server.Body.Systems
             SubscribeLocalEvent<MetabolizerComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
-        private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
+        private void OnMetabolizerInit(Entity<MetabolizerComponent> entity, ref ComponentInit args)
         {
-            if (!component.SolutionOnBody)
+            if (!entity.Comp.SolutionOnBody)
             {
-                _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
+                _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName);
             }
-            else if (_organQuery.CompOrNull(uid)?.Body is { } body)
+            else if (_organQuery.CompOrNull(entity)?.Body is { } body)
             {
-                _solutionContainerSystem.EnsureSolution(body, component.SolutionName);
+                _solutionContainerSystem.EnsureSolution(body, entity.Comp.SolutionName);
             }
         }
 
@@ -95,6 +95,7 @@ namespace Content.Server.Body.Systems
 
             // First step is get the solution we actually care about
             Solution? solution = null;
+            Entity<SolutionComponent>? soln = default!;
             EntityUid? solutionEntityUid = null;
 
             SolutionContainerManagerComponent? manager = null;
@@ -106,7 +107,7 @@ namespace Content.Server.Body.Systems
                     if (!_solutionQuery.Resolve(body, ref manager, false))
                         return;
 
-                    _solutionContainerSystem.TryGetSolution(body, meta.SolutionName, out solution, manager);
+                    _solutionContainerSystem.TryGetSolution((body, manager), meta.SolutionName, out soln, out solution);
                     solutionEntityUid = body;
                 }
             }
@@ -115,11 +116,11 @@ namespace Content.Server.Body.Systems
                 if (!_solutionQuery.Resolve(uid, ref manager, false))
                     return;
 
-                _solutionContainerSystem.TryGetSolution(uid, meta.SolutionName, out solution, manager);
+                _solutionContainerSystem.TryGetSolution((uid, manager), meta.SolutionName, out soln, out solution);
                 solutionEntityUid = uid;
             }
 
-            if (solutionEntityUid == null || solution == null || solution.Contents.Count == 0)
+            if (solutionEntityUid == null || soln is null || solution is null || solution.Contents.Count == 0)
                 return;
 
             // randomize the reagent list so we don't have any weird quirks
@@ -138,8 +139,7 @@ namespace Content.Server.Body.Systems
                 {
                     if (meta.RemoveEmpty)
                     {
-                        _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent,
-                            FixedPoint2.New(1));
+                        solution.RemoveReagent(reagent, FixedPoint2.New(1));
                     }
 
                     continue;
@@ -198,12 +198,14 @@ namespace Content.Server.Body.Systems
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
                 {
-                    _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent, mostToRemove);
+                    solution.RemoveReagent(reagent, mostToRemove);
 
                     // We have processed a reagant, so count it towards the cap
                     reagents += 1;
                 }
             }
+
+            _solutionContainerSystem.UpdateChemicals(soln.Value);
         }
     }
 

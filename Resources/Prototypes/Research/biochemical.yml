@@ -61,18 +61,20 @@
   - BorgModuleDiagnosis
   - BorgModuleDefibrillator
 
-- type: technology
-  id: Virology
-  name: research-technology-virology
-  icon:
-    sprite: Structures/Machines/diagnoser.rsi
-    state: icon
-  discipline: Biochemical
-  tier: 1
-  cost: 5000
-  recipeUnlocks:
-  - VaccinatorMachineCircuitboard
-  - DiagnoserMachineCircuitboard
+# doesn't do anything right now
+#
+#- type: technology
+#  id: Virology
+#  name: research-technology-virology
+#  icon:
+#    sprite: Structures/Machines/diagnoser.rsi
+#    state: icon
+#  discipline: Biochemical
+#  tier: 1
+#  cost: 5000
+#  recipeUnlocks:
+#  - VaccinatorMachineCircuitboard
+#  - DiagnoserMachineCircuitboard
 
 # Tier 2
 
@@ -87,6 +89,19 @@
   cost: 7500
   recipeUnlocks:
   - CryoPodMachineCircuitboard
+
+- type: technology
+  id: Biofabrication
+  name: research-technology-biofabrication
+  icon:
+    sprite: Structures/Machines/biofabricator.rsi
+    state: icon
+  discipline: Biochemical
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - BiofabricatorMachineCircuitboard
+  - BiomassReclaimerMachineCircuitboard
 
 - type: technology
   id: ChemicalDispensary
