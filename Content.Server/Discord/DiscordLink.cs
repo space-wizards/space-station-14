@@ -128,4 +128,21 @@ public sealed class DiscordLink : IPostInjectInit
             .GetTextChannel(channel)
             .SendMessageAsync(message);
     }
+
+    public SocketGuild GetGuild()
+    {
+        if (Client is null)
+        {
+            _sawmill.Error("Tried to get a Discord guild but the client is null! Is the token not set?");
+            return null!;
+        }
+
+        if (_guildId == string.Empty)
+        {
+            _sawmill.Error("Tried to get a Discord guild but the guild ID is not set! Blow up now!");
+            return null!;
+        }
+
+        return Client.GetGuild(ulong.Parse(_guildId));
+    }
 }
