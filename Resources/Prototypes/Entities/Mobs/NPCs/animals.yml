@@ -1792,6 +1792,7 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Stripping
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1841,6 +1842,7 @@
       amount: 3
   - type: MonkeyAccent
   - type: Puller
+    needsHands: false
   - type: CanHostGuardian
   - type: NpcFactionMember
     factions:
