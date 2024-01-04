@@ -631,8 +631,12 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 }
 
                 DebugTools.Assert(layerProto.EntityMask.Count == 0 || !string.IsNullOrEmpty(proto));
+
+                // Don't fight other layers.
+                if (!spawnSet.TryAdd(node, proto))
+                    continue;
+
                 groupSize--;
-                spawnSet.Add(node, proto);
 
                 if (existing != null)
                 {
