@@ -47,7 +47,7 @@
   - type: Flammable
     damage:
       types:
-        Heat: 2.0
+        Heat: 6.0
   # slightly wider thresholds
   - type: Temperature
     heatDamageThreshold: 390
@@ -175,6 +175,9 @@
         Structural: 5
   - type: Puller
     needsHands: false
+  - type: Prying
+    pryPowered: true
+    force: true
   - type: Tag
     tags:
     - DoorBumpOpener
