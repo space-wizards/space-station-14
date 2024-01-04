@@ -46,6 +46,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
 
+    #region Eligible Player Selection
     /// <summary>
     /// Get all players that are eligible for an antag role
     /// </summary>
@@ -55,7 +56,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="allowMultipleAntagRoles">Should players that already have an antag role be included</param>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
     /// <param name="customExcludeCondition">A custom condition that each player is tested against, if it returns true the player is excluded from eligibility</param>
-    /// <returns></returns>
+    /// <returns>List of all player entities that match the requirements</returns>
     public List<EntityUid> GetEligiblePlayers(ICommonSession[] playerSessions, string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, Func<EntityUid?, bool>? customExcludeCondition = null)
     {
         var eligiblePlayers = new List<EntityUid>();
@@ -76,7 +77,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="playerSessions">All sessions from which to select eligible players</param>
     /// <param name="antagPrototype">The prototype to get eligible players for</param>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
-    /// <returns></returns>
+    /// <returns>List of all player sessions that match the requirements</returns>
     public List<ICommonSession> GetEligibleSessions(ICommonSession[] playerSessions, string antagPrototype, bool ignorePreferences = false)
     {
         var eligibleSessions = new List<ICommonSession>();
@@ -98,8 +99,8 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="includeAllJobs">Should jobs that prohibit antag roles (ie Heads, Sec, Interns) be included</param>
     /// <param name="allowMultipleAntagRoles">Should players that already have an antag role be included</param>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
-    /// <param name="customExcludeCondition">A custom condition that each player is tested against, if it returns true the player is excluded from eligibility</param>
-    /// <returns></returns>
+    /// <param name="customExcludeCondition">A function, accepting an EntityUid and returning bool. Each player is tested against this, returning truw will exclude the player from eligibility</param>
+    /// <returns>True if the player session matches the requirements, false otherwise</returns>
     public bool IsEligible(ICommonSession session, string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, Func<EntityUid?, bool>? customExcludeCondition = null)
     {
         if (!IsSessionEligible(session, antagPrototype, ignorePreferences))
@@ -150,22 +151,26 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="session">Player session to check</param>
     /// <param name="antagPrototype">Which antag prototype to check for</param>
     /// <param name="ignorePreferences">Ignore if the player has enabled this antag</param>
+    /// <returns>True if the session matches the requirements, false otherwise</returns>
     public bool IsSessionEligible(ICommonSession session, string antagPrototype, bool ignorePreferences = false)
     {
+        //Exclude disconnected or zombie sessions
+        //No point giving antag roles to them
         if (session.Status == Robust.Shared.Enums.SessionStatus.Disconnected)
             return false;
+
         if (session.Status == Robust.Shared.Enums.SessionStatus.Zombie)
             return false;
 
-        if (ignorePreferences)
-            return true;
-
+        //Check the player has this antag preference selected
+        //Unless we are ignoring preferences, in which case add them anyway
         var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(session.UserId).SelectedCharacter;
-        if (pref.AntagPreferences.Contains(antagPrototype))
-            return true;
+        if (!pref.AntagPreferences.Contains(antagPrototype) && !ignorePreferences)
+            return false;
 
-        return false;
+        return true;
     }
+    #endregion
 
     /// <summary>
     /// Helper method to calculate the number of antags to select based upon the number of players
@@ -173,18 +178,19 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="playerCount">How many players there are on the server</param>
     /// <param name="playersPerAntag">How many players should there be for an additional antag</param>
     /// <param name="maxAntags">Maximum number of antags allowed</param>
-    /// <returns></returns>
-    public int CalculateAntagNumber(int playerCount, int playersPerAntag, int maxAntags)
+    /// <returns>The number of antags that should be chosen</returns>
+    public int CalculateAntagCount(int playerCount, int playersPerAntag, int maxAntags)
     {
         return Math.Clamp(playerCount / playersPerAntag, 1, maxAntags);
     }
 
+    #region Antag Selection
     /// <summary>
     /// Helper method to choose antags from a list
     /// </summary>
     /// <param name="eligiblePlayers">List of eligible players</param>
     /// <param name="count">How many to choose</param>
-    /// <returns></returns>
+    /// <returns>Up to the specified count of elements from the provided list</returns>
     public List<T> ChooseAntags<T>(List<T> eligiblePlayers, int count)
     {
         var chosenPlayers = new List<T>();
@@ -206,7 +212,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <typeparam name="T">The type of item you are choosing</typeparam>
     /// <param name="eligiblePlayerLists">Array of lists, which are chosen from in order until the correct number of items are selected</param>
     /// <param name="count">How many items to select</param>
-    /// <returns>The list of selected items</returns>
+    /// <returns>Up to the specified count of elements from all provided lists</returns>
     public List<T> ChooseAntags<T>(List<T>[] eligiblePlayerLists, int count)
     {
         var chosenPlayers = new List<T>();
@@ -225,6 +231,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         }
         return chosenPlayers;
     }
+    #endregion
 
     #region Briefings
     /// <summary>

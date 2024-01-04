@@ -103,7 +103,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (eligiblePlayers.Count == 0)
             return;
 
-        var traitorsToSelect = _antagSelection.CalculateAntagNumber(_playerManager.PlayerCount, PlayersPerTraitor, MaxTraitors);
+        var traitorsToSelect = _antagSelection.CalculateAntagCount(_playerManager.PlayerCount, PlayersPerTraitor, MaxTraitors);
 
         var selectedTraitors = _antagSelection.ChooseAntags<EntityUid>(eligiblePlayers, traitorsToSelect);
 

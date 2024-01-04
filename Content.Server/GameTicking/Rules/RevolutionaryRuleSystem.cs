@@ -154,7 +154,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             if (eligiblePlayers.Count == 0)
                 continue;
 
-            var headRevCount = _antagSelection.CalculateAntagNumber(ev.Players.Count(), comp.PlayersPerHeadRev, comp.MaxHeadRevs);
+            var headRevCount = _antagSelection.CalculateAntagCount(ev.Players.Count(), comp.PlayersPerHeadRev, comp.MaxHeadRevs);
 
             var headRevs = _antagSelection.ChooseAntags<EntityUid>(eligiblePlayers, headRevCount);
 

@@ -931,7 +931,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
         }
 
-        var numNukies = _antagSelection.CalculateAntagNumber(_playerManager.PlayerCount, component.PlayersPerOperative, component.MaxOps);
+        var numNukies = _antagSelection.CalculateAntagCount(_playerManager.PlayerCount, component.PlayersPerOperative, component.MaxOps);
 
         var operatives = new List<NukieSpawn>();
         if (numNukies >= 1) operatives.Add(new NukieSpawn(null, NukieType.Commander));

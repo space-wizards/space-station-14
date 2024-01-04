@@ -30,7 +30,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
@@ -52,6 +51,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         SubscribeLocalEvent<PendingZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
     }
 
+    //Set the required minimum players
     protected override void Added(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         base.Added(uid, component, gameRule, args);
@@ -148,29 +148,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     protected override void Started(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
-        component.StartTime = _timing.CurTime + _random.Next(component.MinStartDelay, component.MaxStartDelay);
+
+        ScheduleOneshotTask((u, z, g, t) => InfectInitialPlayers(z), _random.Next(component.MinStartDelay, component.MaxStartDelay));
+        ScheduleRecurringTask((u, z, g, t) => { if (z.InfectedChosen) CheckRoundEnd(); }, component.EndCheckDelay);
     }
 
     protected override void ActiveTick(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
-
-        if (component.InfectedChosen)
-        {
-            if (_timing.CurTime >= component.NextRoundEndCheck)
-            {
-                component.NextRoundEndCheck += component.EndCheckDelay;
-                CheckRoundEnd();
-            }
-            return;
-        }
-
-        if (component.StartTime == null || _timing.CurTime < component.StartTime)
-            return;
-
-        InfectInitialPlayers(component);
     }
-
     private void OnZombifySelf(EntityUid uid, PendingZombieComponent component, ZombifySelfActionEvent args)
     {
         _zombie.ZombifyEntity(uid);
@@ -252,7 +238,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         if (allPlayers.Count == 0)
             return;
 
-        var initialInfectedCount = _antagSelection.CalculateAntagNumber(_playerManager.PlayerCount, component.PlayersPerInfected, component.MaxInitialInfected);
+        var initialInfectedCount = _antagSelection.CalculateAntagCount(_playerManager.PlayerCount, component.PlayersPerInfected, component.MaxInitialInfected);
 
         var initialInfected = _antagSelection.ChooseAntags(new List<EntityUid>[] { eligiblePlayers, allPlayers }, initialInfectedCount);
 
