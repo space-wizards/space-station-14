@@ -23,7 +23,7 @@ internal sealed class MappingClientSideSetupCommand : LocalizedCommands
         if (!_lightManager.LockConsoleAccess)
         {
             _entitySystemManager.GetEntitySystem<MarkerSystem>().MarkersVisible = true;
-            mgr.Enabled = false;
+            _lightManager.Enabled = false;
             shell.ExecuteCommand("showsubfloorforever");
             _stateManager.RequestStateChange<MappingState>();
         }
