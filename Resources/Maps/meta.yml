@@ -13697,6 +13697,23 @@ entities:
     - type: Transform
       pos: 71.5,8.5
       parent: 5350
+- proto: AmePart
+  entities:
+  - uid: 23810
+    components:
+    - type: Transform
+      pos: 73.35088,8.671538
+      parent: 5350
+  - uid: 23811
+    components:
+    - type: Transform
+      pos: 73.50713,8.562163
+      parent: 5350
+  - uid: 23812
+    components:
+    - type: Transform
+      pos: 73.67901,8.421538
+      parent: 5350
 - proto: AnomalyScanner
   entities:
   - uid: 22380
@@ -137627,7 +137644,7 @@ entities:
   - uid: 9200
     components:
     - type: Transform
-      pos: 44.5,26.5
+      pos: 44.5,25.5
       parent: 5350
   - uid: 9207
     components:
@@ -137674,12 +137691,12 @@ entities:
     - type: Transform
       pos: 39.5,-60.5
       parent: 5350
-  - uid: 23810
+  - uid: 24070
     components:
     - type: Transform
-      pos: 44.5,25.5
+      pos: 44.5,26.5
       parent: 5350
-  - uid: 23811
+  - uid: 24073
     components:
     - type: Transform
       pos: 57.5,9.5
