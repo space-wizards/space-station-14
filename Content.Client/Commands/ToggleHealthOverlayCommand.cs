@@ -1,21 +1,21 @@
-﻿using Content.Client.HealthOverlay;
+using Content.Client.HealthOverlay;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
-namespace Content.Client.Commands
+namespace Content.Client.Commands;
+
+public sealed class ToggleHealthOverlayCommand : LocalizedCommands
 {
-    public sealed class ToggleHealthOverlayCommand : IConsoleCommand
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
+    public override string Command => "togglehealthoverlay";
+
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "togglehealthoverlay";
-        public string Description => "Toggles a health bar above mobs.";
-        public string Help => $"Usage: {Command}";
+        var system = _entitySystemManager.GetEntitySystem<HealthOverlaySystem>();
+        system.Enabled = !system.Enabled;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
-        {
-            var system = EntitySystem.Get<HealthOverlaySystem>();
-            system.Enabled = !system.Enabled;
-
-            shell.WriteLine($"Health overlay system {(system.Enabled ? "enabled" : "disabled")}.");
-        }
+        shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-notify", ("state", system.Enabled ? "enabled" : "disabled")));
     }
 }

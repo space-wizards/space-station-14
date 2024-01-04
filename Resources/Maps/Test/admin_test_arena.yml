@@ -266,36 +266,31 @@ entities:
     - pos: -5.5,6.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 14
     components:
     - pos: -6.5,6.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 15
     components:
     - pos: -7.5,6.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 16
     components:
     - pos: -7.5,5.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 17
     components:
     - pos: -7.5,4.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 113
     components:
     - pos: -0.5,0.5
@@ -473,29 +468,25 @@ entities:
     - pos: -8.5,6.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 21
     components:
     - pos: -6.5,7.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 22
     components:
     - pos: -7.5,7.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 23
     components:
     - pos: -8.5,7.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: CableMV
   entities:
   - uid: 155
@@ -503,29 +494,25 @@ entities:
     - pos: -8.5,6.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 156
     components:
     - pos: -7.5,6.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 157
     components:
     - pos: -7.5,5.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
   - uid: 158
     components:
     - pos: -7.5,4.5
       parent: 104
       type: Transform
-    - enabled: True
-      type: AmbientSound
+
 - proto: GeneratorBasic15kW
   entities:
   - uid: 34

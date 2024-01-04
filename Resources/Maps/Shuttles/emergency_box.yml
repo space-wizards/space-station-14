@@ -495,6 +495,8 @@ entities:
     - pos: 14.5,0.5
       parent: 1
       type: Transform
+    - joinedGrid: 1
+      type: AtmosDevice
 - proto: Airlock
   entities:
   - uid: 417
@@ -600,6 +602,28 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 15.5,-4.5
+      parent: 1
+      type: Transform
+- proto: AtmosDeviceFanTiny
+  entities:
+  - uid: 580
+    components:
+    - pos: 0.5,9.5
+      parent: 1
+      type: Transform
+  - uid: 581
+    components:
+    - pos: 0.5,7.5
+      parent: 1
+      type: Transform
+  - uid: 582
+    components:
+    - pos: 0.5,1.5
+      parent: 1
+      type: Transform
+  - uid: 583
+    components:
+    - pos: 0.5,-0.5
       parent: 1
       type: Transform
 - proto: BookHowToSurvive
@@ -1746,6 +1770,19 @@ entities:
     - pos: 3.561532,-1.6020434
       parent: 1
       type: Transform
+- proto: DefibrillatorCabinetFilled
+  entities:
+  - uid: 592
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 7.5,-4.5
+      parent: 1
+      type: Transform
+  - uid: 593
+    components:
+    - pos: 5.5,8.5
+      parent: 1
+      type: Transform
 - proto: EmergencyLight
   entities:
   - uid: 263
@@ -1813,6 +1850,21 @@ entities:
     - pos: 2.5,-2.5
       parent: 1
       type: Transform
+  - uid: 589
+    components:
+    - pos: 10.5,5.5
+      parent: 1
+      type: Transform
+  - uid: 590
+    components:
+    - pos: 4.5,1.5
+      parent: 1
+      type: Transform
+  - uid: 591
+    components:
+    - pos: 6.5,8.5
+      parent: 1
+      type: Transform
 - proto: FireAxeCabinetFilled
   entities:
   - uid: 215
@@ -1835,6 +1887,8 @@ entities:
       pos: 17.5,-1.5
       parent: 1
       type: Transform
+    - joinedGrid: 1
+      type: AtmosDevice
 - proto: GasPassiveVent
   entities:
   - uid: 436
@@ -1843,6 +1897,8 @@ entities:
       pos: 17.5,-3.5
       parent: 1
       type: Transform
+    - joinedGrid: 1
+      type: AtmosDevice
 - proto: GasPipeBend
   entities:
   - uid: 158
@@ -2218,6 +2274,8 @@ entities:
       pos: 14.5,0.5
       parent: 1
       type: Transform
+    - joinedGrid: 1
+      type: AtmosDevice
 - proto: GasVentPump
   entities:
   - uid: 127
@@ -2225,47 +2283,63 @@ entities:
     - pos: 3.5,10.5
       parent: 1
       type: Transform
+    - joinedGrid: 1
+      type: AtmosDevice
   - uid: 171
     components:
     - rot: 3.141592653589793 rad
       pos: 2.5,-1.5
       parent: 1
       type: Transform
+    - joinedGrid: 1
+      type: AtmosDevice
   - uid: 492
     components:
     - rot: -1.5707963267948966 rad
       pos: 10.5,10.5
       parent: 1
       type: Transform
+    - joinedGrid: 1
+      type: AtmosDevice
   - uid: 499
     components:
     - pos: 2.5,6.5
       parent: 1
       type: Transform
+    - joinedGrid: 1
+      type: AtmosDevice
   - uid: 500
     components:
     - rot: 3.141592653589793 rad
       pos: 14.5,4.5
       parent: 1
       type: Transform
+    - joinedGrid: 1
+      type: AtmosDevice
   - uid: 501
     components:
     - rot: 3.141592653589793 rad
       pos: 18.5,4.5
       parent: 1
       type: Transform
+    - joinedGrid: 1
+      type: AtmosDevice
   - uid: 502
     components:
     - rot: 3.141592653589793 rad
       pos: 12.5,-3.5
       parent: 1
       type: Transform
+    - joinedGrid: 1
+      type: AtmosDevice
   - uid: 503
     components:
     - rot: 1.5707963267948966 rad
       pos: 6.5,-2.5
       parent: 1
       type: Transform
+    - joinedGrid: 1
+      type: AtmosDevice
 - proto: GeneratorBasic15kW
   entities:
   - uid: 294
@@ -2517,6 +2591,23 @@ entities:
     - pos: 20.5,3.5
       parent: 1
       type: Transform
+- proto: PosterLegitNanotrasenLogo
+  entities:
+  - uid: 586
+    components:
+    - pos: 10.5,1.5
+      parent: 1
+      type: Transform
+  - uid: 587
+    components:
+    - pos: 4.5,5.5
+      parent: 1
+      type: Transform
+  - uid: 588
+    components:
+    - pos: 16.5,7.5
+      parent: 1
+      type: Transform
 - proto: PosterLegitReportCrimes
   entities:
   - uid: 347
@@ -2595,6 +2686,12 @@ entities:
   - uid: 561
     components:
     - pos: 3.5,11.5
+      parent: 1
+      type: Transform
+  - uid: 594
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 17.5,-2.5
       parent: 1
       type: Transform
 - proto: PoweredSmallLight
@@ -2726,6 +2823,13 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 9.5,12.5
+      parent: 1
+      type: Transform
+- proto: ShotGunCabinetFilled
+  entities:
+  - uid: 585
+    components:
+    - pos: 3.5,12.5
       parent: 1
       type: Transform
 - proto: ShuttleWindow
@@ -2884,6 +2988,13 @@ entities:
   - uid: 287
     components:
     - pos: 17.5,1.5
+      parent: 1
+      type: Transform
+- proto: SpawnMobMedibot
+  entities:
+  - uid: 584
+    components:
+    - pos: 8.5,-2.5
       parent: 1
       type: Transform
 - proto: StasisBed

@@ -33,7 +33,7 @@ public sealed partial class BorgSystem
 
         _adminLog.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(attachedEntity):player} removed brain {ToPrettyString(brain)} from borg {ToPrettyString(uid)}");
-        component.BrainContainer.Remove(brain, EntityManager);
+        _container.Remove(brain, component.BrainContainer);
         _hands.TryPickupAnyHand(attachedEntity, brain);
         UpdateUI(uid, component);
     }
@@ -91,7 +91,7 @@ public sealed partial class BorgSystem
 
         _adminLog.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(attachedEntity):player} removed module {ToPrettyString(module)} from borg {ToPrettyString(uid)}");
-        component.ModuleContainer.Remove(module);
+        _container.Remove(module, component.ModuleContainer);
         _hands.TryPickupAnyHand(attachedEntity, module);
 
         UpdateUI(uid, component);
