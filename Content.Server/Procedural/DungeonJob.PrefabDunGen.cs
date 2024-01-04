@@ -191,58 +191,28 @@ public sealed partial class DungeonJob
 
                         grid.SetTiles(tiles);
                         tiles.Clear();
-                        Logger.Error($"Unable to find room variant for {roomDimensions}, leaving empty.");
+                        _sawmill.Error($"Unable to find room variant for {roomDimensions}, leaving empty.");
                         continue;
                     }
 
                     roomRotation = new Angle(Math.PI / 2);
-                    Logger.Debug($"Using rotated variant for room");
-                }
-
-                if (roomDimensions.X == roomDimensions.Y)
-                {
-                    // Give it a random rotation
-                    roomRotation = random.Next(4) * Math.PI / 2;
-                }
-                else if (random.Next(2) == 1)
-                {
-                    roomRotation += Math.PI;
+                    _sawmill.Debug($"Using rotated variant for room");
                 }
 
                 var roomTransform = Matrix3.CreateTransform(roomSize.Center - packCenter, roomRotation);
-                var finalRoomRotation = roomRotation + packRotation + dungeonRotation;
 
                 Matrix3.Multiply(roomTransform, packTransform, out matty);
                 Matrix3.Multiply(matty, dungeonTransform, out var dungeonMatty);
 
+                // The expensive bit yippy.
                 var room = roomProto[random.Next(roomProto.Count)];
-                var roomMap = _dungeon.GetOrCreateTemplate(room);
-                var templateMapUid = _mapManager.GetMapEntityId(roomMap);
-                var templateGrid = _entManager.GetComponent<MapGridComponent>(templateMapUid);
+                _dungeon.SpawnRoom(gridUid, grid, matty, room, random, rotation: true);
+
                 var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
                 var roomTiles = new HashSet<Vector2i>(room.Size.X * room.Size.Y);
                 var exterior = new HashSet<Vector2i>(room.Size.X * 2 + room.Size.Y * 2);
                 var tileOffset = -roomCenter + grid.TileSizeHalfVector;
                 Box2i? mapBounds = null;
-
-                // Load tiles
-                for (var x = 0; x < room.Size.X; x++)
-                {
-                    for (var y = 0; y < room.Size.Y; y++)
-                    {
-                        var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
-                        var tileRef = templateGrid.GetTileRef(indices);
-
-                        var tilePos = dungeonMatty.Transform(indices + tileOffset);
-                        var rounded = tilePos.Floored();
-                        tiles.Add((rounded, tileRef.Tile));
-                        roomTiles.Add(rounded);
-
-                        // If this were a Box2 we'd add tilesize although here I think that's undesirable as
-                        // for example, a box2i of 0,0,1,1 is assumed to also include the tile at 1,1
-                        mapBounds = mapBounds?.Union(new Box2i(rounded, rounded)) ?? new Box2i(rounded, rounded);
-                    }
-                }
 
                 for (var x = -1; x <= room.Size.X; x++)
                 {
@@ -258,111 +228,16 @@ public sealed partial class DungeonJob
                     }
                 }
 
-                var bounds = new Box2(room.Offset, room.Offset + room.Size);
                 var center = Vector2.Zero;
 
                 foreach (var tile in roomTiles)
                 {
-                    center += (Vector2) tile + grid.TileSizeHalfVector;
+                    center += tile + grid.TileSizeHalfVector;
                 }
 
                 center /= roomTiles.Count;
 
                 dungeon.Rooms.Add(new DungeonRoom(roomTiles, center, mapBounds!.Value, exterior));
-                grid.SetTiles(tiles);
-                tiles.Clear();
-                var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
-                var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
-
-                // Load entities
-                // TODO: I don't think engine supports full entity copying so we do this piece of shit.
-
-                foreach (var templateEnt in _lookup.GetEntitiesIntersecting(templateMapUid, bounds, LookupFlags.Uncontained))
-                {
-                    var templateXform = xformQuery.GetComponent(templateEnt);
-                    var childPos = dungeonMatty.Transform(templateXform.LocalPosition - roomCenter);
-                    var childRot = templateXform.LocalRotation + finalRoomRotation;
-                    var protoId = metaQuery.GetComponent(templateEnt).EntityPrototype?.ID;
-
-                    // TODO: Copy the templated entity as is with serv
-                    var ent = _entManager.SpawnEntity(protoId,
-                        new EntityCoordinates(gridUid, childPos));
-
-                    var childXform = xformQuery.GetComponent(ent);
-                    var anchored = templateXform.Anchored;
-                    _transform.SetLocalRotation(ent, childRot, childXform);
-
-                    // If the templated entity was anchored then anchor us too.
-                    if (anchored && !childXform.Anchored)
-                        _transform.AnchorEntity(ent, childXform, grid);
-                    else if (!anchored && childXform.Anchored)
-                        _transform.Unanchor(ent, childXform);
-                }
-
-                // Load decals
-                if (_entManager.TryGetComponent<DecalGridComponent>(templateMapUid, out var loadedDecals))
-                {
-                    _entManager.EnsureComponent<DecalGridComponent>(gridUid);
-
-                    foreach (var (_, decal) in _decals.GetDecalsIntersecting(templateMapUid, bounds, loadedDecals))
-                    {
-                        // Offset by 0.5 because decals are offset from bot-left corner
-                        // So we convert it to center of tile then convert it back again after transform.
-                        // Do these shenanigans because 32x32 decals assume as they are centered on bottom-left of tiles.
-                        var position = dungeonMatty.Transform(decal.Coordinates + Vector2Helpers.Half - roomCenter);
-                        position -= Vector2Helpers.Half;
-
-                        // Umm uhh I love decals so uhhhh idk what to do about this
-                        var angle = (decal.Angle + finalRoomRotation).Reduced();
-
-                        // Adjust because 32x32 so we can't rotate cleanly
-                        // Yeah idk about the uhh vectors here but it looked visually okay but they may still be off by 1.
-                        // Also EyeManager.PixelsPerMeter should really be in shared.
-                        if (angle.Equals(Math.PI))
-                        {
-                            position += new Vector2(-1f / 32f, 1f / 32f);
-                        }
-                        else if (angle.Equals(-Math.PI / 2f))
-                        {
-                            position += new Vector2(-1f / 32f, 0f);
-                        }
-                        else if (angle.Equals(Math.PI / 2f))
-                        {
-                            position += new Vector2(0f, 1f / 32f);
-                        }
-                        else if (angle.Equals(Math.PI * 1.5f))
-                        {
-                            // I hate this but decals are bottom-left rather than center position and doing the
-                            // matrix ops is a PITA hence this workaround for now; I also don't want to add a stupid
-                            // field for 1 specific op on decals
-                            if (decal.Id != "DiagonalCheckerAOverlay" &&
-                                decal.Id != "DiagonalCheckerBOverlay")
-                            {
-                                position += new Vector2(-1f / 32f, 0f);
-                            }
-                        }
-
-                        var tilePos = position.Floored();
-
-                        // Fallback because uhhhhhhhh yeah, a corner tile might look valid on the original
-                        // but place 1 nanometre off grid and fail the add.
-                        if (!grid.TryGetTileRef(tilePos, out var tileRef) || tileRef.Tile.IsEmpty)
-                        {
-                            grid.SetTile(tilePos, fallbackTile);
-                        }
-
-                        var result = _decals.TryAddDecal(
-                            decal.Id,
-                            new EntityCoordinates(gridUid, position),
-                            out _,
-                            decal.Color,
-                            angle,
-                            decal.ZIndex,
-                            decal.Cleanable);
-
-                        DebugTools.Assert(result);
-                    }
-                }
 
                 await SuspendIfOutOfTime();
                 ValidateResume();
