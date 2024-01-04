@@ -36,6 +36,7 @@ namespace Content.Server.Bed
             SubscribeLocalEvent<StasisBedComponent, GotEmaggedEvent>(OnEmagged);
             SubscribeLocalEvent<StasisBedComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<StasisBedComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+            SubscribeLocalEvent<BuckleComponent, IsRottingEvent>(OnIsRotting);
         }
 
         private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, ref BuckleChangeEvent args)
@@ -108,16 +109,13 @@ namespace Content.Server.Bed
         {
             UpdateAppearance(uid, args.Powered);
             UpdateMetabolisms(uid, component, args.Powered);
-            if (component.AntiRotting)
+            if (args.Powered && component.AntiRotting)
             {
-                if (args.Powered)
-                {
-                    EnsureComp<ActiveAntiRottingOnBuckleComponent>(uid);
-                }
-                else
-                {
-                    RemComp<ActiveAntiRottingOnBuckleComponent>(uid);
-                }
+                EnsureComp<ActiveAntiRottingOnBuckleComponent>(uid);
+            }
+            else
+            {
+                RemComp<ActiveAntiRottingOnBuckleComponent>(uid);
             }
         }
 
@@ -129,6 +127,18 @@ namespace Content.Server.Bed
             component.Multiplier = 1 / component.Multiplier;
             UpdateMetabolisms(uid, component, true);
             args.Handled = true;
+        }
+
+        private void OnIsRotting(EntityUid uid, BuckleComponent component, ref IsRottingEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (component is { Buckled: true, BuckledTo: not null } &&
+                HasComp<ActiveAntiRottingOnBuckleComponent>(component.BuckledTo.Value))
+            {
+                args.Handled = true;
+            }
         }
 
         private void UpdateMetabolisms(EntityUid uid, StasisBedComponent component, bool shouldApply)
