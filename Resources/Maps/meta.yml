@@ -135841,7 +135841,6 @@ entities:
         - Pressed: Toggle
         19434:
         - Pressed: Toggle
-    - type: ItemCooldown
   - uid: 19438
     components:
     - type: MetaData
