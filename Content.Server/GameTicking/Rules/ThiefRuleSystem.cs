@@ -1,31 +1,24 @@
-using Content.Server.Chat.Managers;
+using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.Roles;
+using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
-using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
-using System.Linq;
-using Content.Shared.Humanoid;
-using Content.Server.Antag;
-using Robust.Server.Audio;
-using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Random;
+using Content.Shared.Roles;
+using Robust.Shared.Random;
+using System.Linq;
 using System.Text;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 {
-    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
@@ -63,7 +56,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
                 var thiefCount = _random.Next(1, comp.MaxAllowThief + 1);
 
-                var thieves = _antagSelection.ChooseAntags(eligiblePlayers, thiefCount);
+                var thieves = _antagSelection.ChooseAntags<EntityUid>(eligiblePlayers, thiefCount);
 
                 MakeThief(thieves, comp, comp.PacifistThieves);
             }

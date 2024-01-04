@@ -1,6 +1,4 @@
-using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using Content.Server.StationEvents.Events;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -8,8 +6,8 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Utility;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems;
 

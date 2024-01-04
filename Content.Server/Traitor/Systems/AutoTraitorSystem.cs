@@ -1,9 +1,6 @@
 using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Traitor.Components;
-using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
-using System.Linq;
 
 namespace Content.Server.Traitor.Systems;
 
@@ -18,13 +15,7 @@ public sealed class AutoTraitorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AutoTraitorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AutoTraitorComponent, MindAddedMessage>(OnMindAdded);
-    }
-
-    private void OnMapInit(EntityUid uid, AutoTraitorComponent comp, MapInitEvent args)
-    {
-        TryMakeTraitor(uid, comp);
     }
 
     private void OnMindAdded(EntityUid uid, AutoTraitorComponent comp, MindAddedMessage args)

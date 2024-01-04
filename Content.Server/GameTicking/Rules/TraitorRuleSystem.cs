@@ -1,5 +1,4 @@
 using Content.Server.Antag;
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.NPC.Systems;
@@ -16,7 +15,6 @@ using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -98,9 +96,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (eligiblePlayers.Count == 0)
             return;
 
-        var traitorsToSelect = _antagSelection.CalculateAntagNumber(_playerManager.Sessions.Length, PlayersPerTraitor, MaxTraitors);
+        var traitorsToSelect = _antagSelection.CalculateAntagNumber(_playerManager.PlayerCount, PlayersPerTraitor, MaxTraitors);
 
-        var selectedTraitors = _antagSelection.ChooseAntags(eligiblePlayers, traitorsToSelect);
+        var selectedTraitors = _antagSelection.ChooseAntags<EntityUid>(eligiblePlayers, traitorsToSelect);
 
         MakeTraitor(selectedTraitors, component);
 
@@ -123,6 +121,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
     }
 
+    /// <summary>
+    /// Start this game rule manually
+    /// </summary>
     public TraitorRuleComponent StartGameRule()
     {
         var comp = EntityQuery<TraitorRuleComponent>().FirstOrDefault();
@@ -157,14 +158,14 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             return false;
         }
 
-        // Calculate the amount of currency on the uplink.
-        var startingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
-        if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
-            startingBalance = Math.Max(startingBalance - prototype.AntagAdvantage, 0);
-
         Note[]? code = null;
         if (giveUplink)
         {
+            // Calculate the amount of currency on the uplink.
+            var startingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
+            if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
+                startingBalance = Math.Max(startingBalance - prototype.AntagAdvantage, 0);
+
             // creadth: we need to create uplink for the antag.
             // PDA should be in place already
             var pda = _uplink.FindUplinkTarget(traitor);

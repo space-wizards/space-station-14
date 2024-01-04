@@ -1,11 +1,7 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Numerics;
 using Content.Server.Administration.Commands;
-using Content.Server.Chat.Managers;
+using Content.Server.Antag;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
-using Content.Server.RandomMetadata;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
@@ -17,6 +13,7 @@ using Content.Server.Nuke;
 using Content.Server.NukeOps;
 using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
+using Content.Server.RandomMetadata;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
@@ -45,13 +42,15 @@ using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -60,7 +59,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -74,14 +72,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly WarDeclaratorSystem _warDeclarator = default!;
-
+    [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
 
     [ValidatePrototypeId<CurrencyPrototype>]
     private const string TelecrystalCurrencyPrototype = "Telecrystal";
@@ -606,128 +603,39 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 continue;
             }
 
-            // Basically copied verbatim from traitor code
-            var playersPerOperative = nukeops.PlayersPerOperative;
-            var maxOperatives = nukeops.MaxOps;
+            //INCONSISTENCY! Why does RulePlayerJobsAssignedEvent use an array and this uses a list?!
+            var playerPoolArray = ev.PlayerPool.ToArray();
 
-            // Dear lord what is happening HERE.
-            var everyone = new List<ICommonSession>(ev.PlayerPool);
-            var prefList = new List<ICommonSession>();
-            var medPrefList = new List<ICommonSession>();
-            var cmdrPrefList = new List<ICommonSession>();
+            var commanderEligible = _antagSelection.GetEligibleSessions(playerPoolArray, nukeops.CommanderRoleProto, false);
+            var agentEligible = _antagSelection.GetEligibleSessions(playerPoolArray, nukeops.MedicRoleProto, false);
+            var operativeEligible = _antagSelection.GetEligibleSessions(playerPoolArray, nukeops.OperativeRoleProto, false);
+
+            //Handle there being nobody readied up
+            if (ev.PlayerPool.Count > 0)
+                continue;
+
+            var nukiesToSelect = _antagSelection.CalculateAntagNumber(_playerManager.PlayerCount, nukeops.PlayersPerOperative, nukeops.MaxOps);
+
+            //Select Nukies
+            ICommonSession? selectedCommander = _antagSelection.ChooseAntags<ICommonSession>(new List<ICommonSession>[] { commanderEligible, agentEligible, operativeEligible, ev.PlayerPool}, 1).FirstOrDefault();
+            ICommonSession? selectedAgent = _antagSelection.ChooseAntags<ICommonSession>(new List<ICommonSession>[] { agentEligible, operativeEligible, ev.PlayerPool }, 1).FirstOrDefault();
+            List<ICommonSession> selectedOperatives = _antagSelection.ChooseAntags<ICommonSession>(new List<ICommonSession>[] { operativeEligible, ev.PlayerPool }, nukiesToSelect - 2);
+
+            //No commander available, abort
+            if (selectedCommander == null)
+                continue;
+
+            if (selectedAgent == null)
+                continue;
+
+            //Compatibility with existing code
+            //If someone wants to update that - good luck
             var operatives = new List<ICommonSession>();
+            operatives.Add(selectedCommander);
+            operatives.Add(selectedAgent);
+            operatives.AddRange(selectedOperatives);
 
-            // The LINQ expression ReSharper keeps suggesting is completely unintelligible so I'm disabling it
-            // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
-            foreach (var player in everyone)
-            {
-                if (!ev.Profiles.ContainsKey(player.UserId))
-                {
-                    continue;
-                }
-
-                var profile = ev.Profiles[player.UserId];
-                if (profile.AntagPreferences.Contains(nukeops.OperativeRoleProto.Id))
-                {
-                    prefList.Add(player);
-                }
-                if (profile.AntagPreferences.Contains(nukeops.MedicRoleProto.Id))
-	            {
-	                medPrefList.Add(player);
-	            }
-                if (profile.AntagPreferences.Contains(nukeops.CommanderRoleProto.Id))
-                {
-                    cmdrPrefList.Add(player);
-                }
-            }
-
-            var numNukies = MathHelper.Clamp(_playerManager.PlayerCount / playersPerOperative, 1, maxOperatives);
-
-            for (var i = 0; i < numNukies; i++)
-            {
-                // TODO: Please fix this if you touch it.
-                ICommonSession nukeOp;
-                // Only one commander, so we do it at the start
-                if (i == 0)
-                {
-                    if (cmdrPrefList.Count == 0)
-                    {
-                        if (medPrefList.Count == 0)
-                        {
-                            if (prefList.Count == 0)
-                            {
-                                if (everyone.Count == 0)
-                                {
-                                    Logger.InfoS("preset", "Insufficient ready players to fill up with nukeops, stopping the selection");
-                                    break;
-                                }
-                                nukeOp = _random.PickAndTake(everyone);
-                                Logger.InfoS("preset", "Insufficient preferred nukeop commanders, agents or nukies, picking at random.");
-                            }
-                            else
-                            {
-                                nukeOp = _random.PickAndTake(prefList);
-                                everyone.Remove(nukeOp);
-                                Logger.InfoS("preset", "Insufficient preferred nukeop commander or agents, picking at random from regular op list.");
-                            }
-                        }
-                        else
-                        {
-                            nukeOp = _random.PickAndTake(medPrefList);
-                            everyone.Remove(nukeOp);
-                            prefList.Remove(nukeOp);
-                            Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking an agent");
-                        }
-                    }
-                    else
-                    {
-                        nukeOp = _random.PickAndTake(cmdrPrefList);
-                        everyone.Remove(nukeOp);
-                        prefList.Remove(nukeOp);
-                        medPrefList.Remove(nukeOp);
-                        Logger.InfoS("preset", "Selected a preferred nukeop commander.");
-                    }
-                }
-                else if (i == 1)
-                {
-                    if (medPrefList.Count == 0)
-                    {
-                        if (prefList.Count == 0)
-                        {
-                            if (everyone.Count == 0)
-                            {
-                                Logger.InfoS("preset", "Insufficient ready players to fill up with nukeops, stopping the selection");
-                                break;
-                            }
-                            nukeOp = _random.PickAndTake(everyone);
-                            Logger.InfoS("preset", "Insufficient preferred nukeop commanders, agents or nukies, picking at random.");
-                        }
-                        else
-                        {
-                            nukeOp = _random.PickAndTake(prefList);
-                            everyone.Remove(nukeOp);
-                            Logger.InfoS("preset", "Insufficient preferred nukeop commander or agents, picking at random from regular op list.");
-                        }
-                    }
-                    else
-                    {
-                        nukeOp = _random.PickAndTake(medPrefList);
-                        everyone.Remove(nukeOp);
-                        Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking an agent");
-                    }
-
-                }
-                else
-                {
-                    nukeOp = _random.PickAndTake(prefList);
-                    everyone.Remove(nukeOp);
-                    Logger.InfoS("preset", "Selected a preferred nukeop commander.");
-                }
-
-                operatives.Add(nukeOp);
-            }
-
-            SpawnOperatives(numNukies, operatives, false, nukeops);
+            SpawnOperatives(nukiesToSelect, operatives, false, nukeops);
 
             foreach (var session in operatives)
             {
@@ -987,8 +895,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (nukeopsRule.TargetStation is not { } station)
             return;
 
-        _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station), ("name", nukeopsRule.OperationName)));
-        _audio.PlayGlobal(nukeop.GreetSoundNotification, session);
+        _antagSelection.SendBriefing(session, Loc.GetString("nukeops-welcome", ("station", station), ("name", nukeopsRule.OperationName)), Color.Red, nukeop.GreetSoundNotification);
     }
 
 
@@ -1002,12 +909,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             Logger.InfoS("nukies", "Failed to load map for nukeops");
             return;
         }
-        // Basically copied verbatim from traitor code
-        var playersPerOperative = component.PlayersPerOperative;
-        var maxOperatives = component.MaxOps;
 
-        var playerPool = _playerManager.Sessions.ToList();
-        var numNukies = MathHelper.Clamp(playerPool.Count / playersPerOperative, 1, maxOperatives);
+        var numNukies = _antagSelection.CalculateAntagNumber(_playerManager.PlayerCount, component.PlayersPerOperative, component.MaxOps);
 
         var operatives = new List<ICommonSession>();
         SpawnOperatives(numNukies, operatives, true, component);
@@ -1037,23 +940,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var query = EntityQueryEnumerator<NukeopsRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var nukeops, out var gameRule))
         {
-            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-                continue;
-
-            var minPlayers = nukeops.MinPlayers;
-            if (!ev.Forced && ev.Players.Length < minPlayers)
-            {
-                _chatManager.SendAdminAnnouncement(Loc.GetString("nukeops-not-enough-ready-players",
-                    ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
-                ev.Cancel();
-                continue;
-            }
-
-            if (ev.Players.Length != 0)
-                continue;
-
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-no-one-ready"));
-            ev.Cancel();
+            _antagSelection.AttemptStartGameRule(ev, uid, nukeops.MinPlayers, gameRule, Loc.GetString("nukeops-title"));
         }
     }
 
