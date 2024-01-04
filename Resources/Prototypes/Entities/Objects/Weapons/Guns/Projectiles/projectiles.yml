@@ -130,7 +130,7 @@
     color: "#ff4300"
     radius: 2.0
     energy: 7.0
-  - type: IgniteOnHit
+  - type: IgniteOnCollide
     fireStacks: 0.25
 
 - type: entity

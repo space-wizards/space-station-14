@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.IgnitionSource;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Components;
@@ -12,16 +11,15 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
@@ -73,7 +71,6 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFire);
             SubscribeLocalEvent<FlammableComponent, RejuvenateEvent>(OnRejuvenate);
 
-            SubscribeLocalEvent<IgniteOnHitComponent, ProjectileHitEvent>(IgniteOnHit);
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
             SubscribeLocalEvent<IgniteOnCollideComponent, LandEvent>(OnIgniteLand);
 
@@ -110,23 +107,17 @@ namespace Content.Server.Atmos.EntitySystems
             if (!EntityManager.TryGetComponent(otherEnt, out FlammableComponent? flammable))
                 return;
 
+            if (args.OurFixtureId == SharedFlyBySoundSystem.FlyByFixture)
+            {
+                return;
+            }
+
             flammable.FireStacks += component.FireStacks;
             Ignite(otherEnt, uid, flammable);
             component.Count--;
 
             if (component.Count == 0)
                 RemCompDeferred<IgniteOnCollideComponent>(uid);
-        }
-
-        private void IgniteOnHit(EntityUid uid, IgniteOnHitComponent component, ref ProjectileHitEvent args)
-        {
-            var otherEnt = args.Target;
-
-            if (!EntityManager.TryGetComponent(otherEnt, out FlammableComponent? flammable))
-                return;
-
-            flammable.FireStacks += component.FireStacks;
-            Ignite(otherEnt, uid, flammable);
         }
 
         private void OnMapInit(EntityUid uid, FlammableComponent component, MapInitEvent args)
