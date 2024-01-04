@@ -82,3 +82,17 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
     - state: incendiary
+
+- type: entity
+  id: MagazineBoxMagnumUranium
+  parent: BaseMagazineBoxMagnum
+  name: ammunition box (.45 magnum uranium)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumUranium
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]

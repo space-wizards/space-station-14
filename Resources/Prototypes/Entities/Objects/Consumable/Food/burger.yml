@@ -354,7 +354,7 @@
     - Meat
 
 - type: entity
-  name: corgi burger #curger...
+  name: corger #not curger
   parent: FoodBurgerBase
   id: FoodBurgerCorgi
   description: The Head of Personnel's favorite!

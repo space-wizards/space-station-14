@@ -104,6 +104,16 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/mining.rsi
 
+- type: entity
+  parent: Airlock
+  id: AirlockCentralCommand
+  suffix: Central Command
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/centcomm.rsi
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
+
 # Glass
 
 - type: entity
@@ -267,3 +277,13 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/mining.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockCentralCommandGlass
+  suffix: Central Command
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/centcomm.rsi
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity

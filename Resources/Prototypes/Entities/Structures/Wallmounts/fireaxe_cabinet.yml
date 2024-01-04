@@ -3,6 +3,9 @@
   name: fire axe cabinet
   description: There is a small label that reads "For Emergency use only" along with details for safe use of the axe. As if.
   components:
+  - type: Damageable # adding destructible causes the entity inside to be deleted when the cabinet is destroyed :(
+    damageContainer: Inorganic
+    damageModifierSet: Glass
   - type: MeleeSound
     soundGroups:
       Brute:

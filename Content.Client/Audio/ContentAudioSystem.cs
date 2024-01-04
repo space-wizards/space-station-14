@@ -1,14 +1,18 @@
 using Content.Shared.Audio;
-using Content.Shared.CCVar;
-using Robust.Client.GameObjects;
-using Robust.Shared;
-using Robust.Shared.Audio;
+using Content.Shared.GameTicking;
+using Robust.Client.Audio;
+using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
 using AudioComponent = Robust.Shared.Audio.Components.AudioComponent;
 
 namespace Content.Client.Audio;
 
 public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 {
+    [Dependency] private readonly IAudioManager _audioManager = default!;
+    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+
     // Need how much volume to change per tick and just remove it when it drops below "0"
     private readonly Dictionary<EntityUid, float> _fadingOut = new();
 
@@ -31,12 +35,31 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
     public const float AmbienceMultiplier = 3f;
     public const float AmbientMusicMultiplier = 3f;
     public const float LobbyMultiplier = 3f;
+    public const float InterfaceMultiplier = 2f;
 
     public override void Initialize()
     {
         base.Initialize();
         UpdatesOutsidePrediction = true;
         InitializeAmbientMusic();
+        SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
+    }
+
+    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
+    {
+        _fadingOut.Clear();
+
+        // Preserve lobby music but everything else should get dumped.
+        var lobbyStream = EntityManager.System<BackgroundAudioSystem>().LobbyStream;
+        TryComp(lobbyStream, out AudioComponent? audioComp);
+        var oldGain = audioComp?.Gain;
+
+        SilenceAudio();
+
+        if (oldGain != null)
+        {
+            Audio.SetGain(lobbyStream, oldGain.Value, audioComp);
+        }
     }
 
     public override void Shutdown()

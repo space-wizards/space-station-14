@@ -86,6 +86,7 @@
     - PlushieMoth
     - PlushieHampter
     - PlushiePenguin
+    - PlushieHuman
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade

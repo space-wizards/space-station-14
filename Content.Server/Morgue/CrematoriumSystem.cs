@@ -16,6 +16,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server.Morgue;
@@ -29,6 +30,7 @@ public sealed class CrematoriumSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
 
     public override void Initialize()
     {
@@ -126,11 +128,11 @@ public sealed class CrematoriumSystem : EntitySystem
             for (var i = storage.Contents.ContainedEntities.Count - 1; i >= 0; i--)
             {
                 var item = storage.Contents.ContainedEntities[i];
-                storage.Contents.Remove(item);
+                _containers.Remove(item, storage.Contents);
                 EntityManager.DeleteEntity(item);
             }
             var ash = Spawn("Ash", Transform(uid).Coordinates);
-            storage.Contents.Insert(ash);
+            _containers.Insert(ash, storage.Contents);
         }
 
         _entityStorage.OpenStorage(uid, storage);
