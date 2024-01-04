@@ -1982,6 +1982,8 @@
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
   - type: NoSlip
   - type: Spider
   - type: IgnoreSpiderWeb
@@ -1990,6 +1992,12 @@
     bloodReagent: CopperBlood
   - type: Speech
     speechVerb: Arachnid
+    speechSounds: Arachnid
+  - type: Vocal
+    sounds:
+      Male: UnisexArachnid
+      Female: UnisexArachnid
+      Unsexed: UnisexArachnid
   - type: Tag
     tags:
     - DoorBumpOpener
