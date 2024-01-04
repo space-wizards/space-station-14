@@ -18,7 +18,6 @@
           shard2: ""
       - enum.DamageStateVisualLayers.Base:
           shard3: ""
-  - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 1.5
     damage:

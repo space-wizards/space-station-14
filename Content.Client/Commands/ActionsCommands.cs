@@ -1,4 +1,6 @@
 ﻿using Content.Client.Actions;
+using Content.Client.Actions;
+using Content.Client.Mapping;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -11,11 +13,8 @@ namespace Content.Client.Commands;
 public sealed class SaveActionsCommand : IConsoleCommand
 {
     public string Command => "saveacts";
-
     public string Description => "Saves the current action toolbar assignments to a file";
-
     public string Help => $"Usage: {Command} <user resource path>";
-
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
@@ -37,15 +36,15 @@ public sealed class SaveActionsCommand : IConsoleCommand
 */
 
 [AnyCommand]
-public sealed class LoadActionsCommand : IConsoleCommand
+public sealed class LoadActionsCommand : LocalizedCommands
 {
-    public string Command => "loadacts";
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-    public string Description => "Loads action toolbar assignments from a user-file.";
+    public override string Command => "loadacts";
 
-    public string Help => $"Usage: {Command} <user resource path>";
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
@@ -55,11 +54,11 @@ public sealed class LoadActionsCommand : IConsoleCommand
 
         try
         {
-            EntitySystem.Get<ActionsSystem>().LoadActionAssignments(args[0], true);
+            _entitySystemManager.GetEntitySystem<ActionsSystem>().LoadActionAssignments(args[0], true);
         }
         catch
         {
-            shell.WriteLine("Failed to load action assignments");
+            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
         }
     }
 }
