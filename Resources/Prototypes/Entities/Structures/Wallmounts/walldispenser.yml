@@ -81,3 +81,9 @@
           Quantity: 1000
   - type: ReagentTank
     tankType: Fuel
+  - type: DamageOnToolInteract
+    tools:
+    - Welding
+    weldingDamage:
+      types:
+        Heat: 20

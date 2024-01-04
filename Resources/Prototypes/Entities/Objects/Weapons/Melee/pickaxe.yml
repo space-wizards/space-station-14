@@ -10,7 +10,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     state: pickaxe
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -31,7 +30,6 @@
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     storedRotation: -45
   - type: UseDelay
-    delay: 1
 
 - type: entity
   name: mining drill
@@ -45,7 +43,6 @@
   - type: Sprite
     sprite: Objects/Tools/handdrill.rsi
     state: handdrill
-  - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
