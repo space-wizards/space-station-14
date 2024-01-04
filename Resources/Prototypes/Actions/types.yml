@@ -124,6 +124,22 @@
     event: !type:ActivateImplantEvent
 
 - type: entity
+  id: ActionActivateScramImplant
+  name: SCRAM!
+  description: Randomly teleports you within a large distance.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    charges: 2
+    useDelay: 5
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Structures/Specific/anomaly.rsi
+      state: anom4
+    event: !type:UseScramImplantEvent
+
+- type: entity
   id: ActionActivateDnaScramblerImplant
   name: Scramble DNA
   description:  Randomly changes your name and appearance.
