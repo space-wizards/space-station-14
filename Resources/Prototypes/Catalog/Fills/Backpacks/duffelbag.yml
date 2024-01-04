@@ -100,7 +100,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledSyndieMonkey
-  name: Syndicate monkey hardsuit bundle
+  name: syndicate monkey hardsuit bundle
   description: "A reinforcement monkey teleporter bundled with a compact monkey blood-red hardsuit!"
   components:
   - type: StorageFill
