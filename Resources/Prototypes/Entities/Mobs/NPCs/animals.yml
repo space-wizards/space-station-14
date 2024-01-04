@@ -1864,6 +1864,8 @@
     - id: FoodMeat
       amount: 3
   - type: MonkeyAccent
+  - type: Puller
+    needsHands: false
   - type: CanHostGuardian
   - type: NpcFactionMember
     factions:
