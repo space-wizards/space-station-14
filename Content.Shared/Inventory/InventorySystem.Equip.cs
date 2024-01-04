@@ -4,18 +4,13 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -31,7 +26,6 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     [ValidatePrototypeId<ItemSizePrototype>]
@@ -44,41 +38,6 @@ public abstract partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
 
         SubscribeAllEvent<UseSlotNetworkMessage>(OnUseSlot);
-    }
-
-    protected void QuickEquip(EntityUid uid, ClothingComponent component, UseInHandEvent args)
-    {
-        if (!TryComp(args.User, out InventoryComponent? inv) || !HasComp<HandsComponent>(args.User))
-            return;
-
-        foreach (var slotDef in inv.Slots)
-        {
-            if (!CanEquip(args.User, uid, slotDef.Name, out _, slotDef, inv))
-                continue;
-
-            if (TryGetSlotEntity(args.User, slotDef.Name, out var slotEntity, inv))
-            {
-                // Item in slot has to be quick equipable as well
-                if (TryComp(slotEntity, out ClothingComponent? item) && !item.QuickEquip)
-                    continue;
-
-                if (!TryUnequip(args.User, slotDef.Name, true, inventory: inv))
-                    continue;
-
-                if (!TryEquip(args.User, uid, slotDef.Name, true, inventory: inv))
-                    continue;
-
-                _handsSystem.PickupOrDrop(args.User, slotEntity.Value);
-            }
-            else
-            {
-                if (!TryEquip(args.User, uid, slotDef.Name, true, inventory: inv))
-                    continue;
-            }
-
-            args.Handled = true;
-            break;
-        }
     }
 
     private void OnEntRemoved(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)

@@ -23,36 +23,17 @@
     - state: salvage-magnet-o4
       map: ["chargeState"]
       shader: unshaded
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.SalvageMagnetVisuals.ChargeState:
-        chargeState:
-          0: { state: salvage-magnet-o0, shader: "unshaded", visible: false }
-          1: { state: salvage-magnet-o0, shader: "unshaded", visible: true }
-          2: { state: salvage-magnet-o1, shader: "unshaded", visible: true }
-          3: { state: salvage-magnet-o2, shader: "unshaded", visible: true }
-          4: { state: salvage-magnet-o3, shader: "unshaded", visible: true }
-          5: { state: salvage-magnet-o4, shader: "unshaded", visible: true }
-      enum.SalvageMagnetVisuals.Ready:
-        ready:
-          False: { state: salvage-magnet-ready, visible: false, shader: "unshaded" }
-          True: { state: salvage-magnet-ready, visible: true, shader: "unshaded" }
-      enum.SalvageMagnetVisuals.ReadyBlinking:
-        readyBlinking:
-          False: { state: salvage-magnet-ready-blinking, visible: false, shader: "unshaded" }
-          True: { state: salvage-magnet-ready-blinking, visible: true, shader: "unshaded" }
-      enum.SalvageMagnetVisuals.Unready:
-        unready:
-          False: { state: salvage-magnet-unready, visible: false, shader: "unshaded" }
-          True: { state: salvage-magnet-unready, visible: true, shader: "unshaded" }
-      enum.SalvageMagnetVisuals.UnreadyBlinking:
-        unreadyBlinking:
-          False: { state: salvage-magnet-unready-blinking, visible: false, shader: "unshaded" }
-          True: { state: salvage-magnet-unready-blinking, visible: true, shader: "unshaded" }
-  - type: Rotatable
+  - type: ActivatableUI
+    key: enum.SalvageMagnetUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.SalvageMagnetUiKey.Key
+      type: SalvageMagnetBoundUserInterface
   - type: Transform
     noRot: false
+  - type: Appearance
+  - type: Rotatable
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
