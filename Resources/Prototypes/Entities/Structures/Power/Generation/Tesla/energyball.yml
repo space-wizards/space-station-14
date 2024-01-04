@@ -4,14 +4,14 @@
   components:
   - type: Clickable
   - type: Physics
-    bodyType: Dynamic
+    bodyType: KinematicController
     bodyStatus: InAir
     sleepingAllowed: false
   - type: CanMoveInAir
   - type: ChasingWalk
     minSpeed: 1
     maxSpeed: 3
-    chasingComponent: 
+    chasingComponent:
     - type: LightningTarget
   - type: AmbientSound
     volume: 3
@@ -29,14 +29,14 @@
     shootMinInterval: 4
     shootMaxInterval: 10
     shootRange: 3
-    lightningPrototype: Lightning 
+    lightningPrototype: Lightning
 
 - type: entity
   id: TeslaEnergyBall
   parent: BaseEnergyBall
   name: ball lightning
   description: A giant ball of pure energy. The space around it is humming and melting.
-  components: 
+  components:
   - type: Fixtures
     fixtures:
       EventHorizonCollider:
@@ -45,7 +45,7 @@
             radius: 0.55
         hard: true
         restitution: 0.8
-        density: 99999 # to do: remove the interaction with the explosions. Now the explosions can push the Tesla very far away from the station.
+        density: 99999
         mask:
         - Opaque
         layer:
@@ -64,10 +64,10 @@
     canBreachContainment: false
     colliderFixtureId: EventHorizonCollider
     consumerFixtureId: EventHorizonConsumer
-    consumeTiles: false 
-    consumeEntities: false 
+    consumeTiles: false
+    consumeEntities: false
   - type: TeslaEnergyBall
-    spawnProto: TeslaMiniEnergyBall 
+    spawnProto: TeslaMiniEnergyBall
   - type: LightningArcShooter
     arcDepth: 3
     maxLightningArc: 4
@@ -92,7 +92,7 @@
     layers:
     - state: energy_ball
   - type: EmitSoundOnSpawn
-    sound: 
+    sound:
       path: /Audio/Effects/tesla_collapse.ogg
       params:
         variation: 0.3
@@ -102,16 +102,16 @@
     interactFailureString: petting-failure-tesla
     interactSuccessSpawn: EffectHearts
 
-- type: entity 
+- type: entity
   id: TeslaMiniEnergyBall
   parent: BaseEnergyBall
   name: mini ball lightning
   description: The cub of a destructive energy cage. Not as dangerous, but still not worth touching with bare hands.
-  components: 
+  components:
   - type: ChasingWalk
     minSpeed: 2
     maxSpeed: 3
-    chasingComponent: 
+    chasingComponent:
     - type: TeslaEnergyBall
   - type: Fixtures
     fixtures:

@@ -54,6 +54,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private const float DefaultLoadRange = 16f;
     private float _loadRange = DefaultLoadRange;
 
+    private List<(Vector2i, Tile)> _tiles = new();
+
     private ObjectPool<HashSet<Vector2i>> _tilePool =
         new DefaultObjectPool<HashSet<Vector2i>>(new SetPolicy<Vector2i>(), 256);
 
@@ -719,11 +721,11 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         EntityUid gridUid,
         MapGridComponent grid,
         Vector2i chunk,
-        int seed,
-        List<(Vector2i, Tile)> tiles)
+        int seed)
     {
         component.ModifiedTiles.TryGetValue(chunk, out var modified);
         modified ??= _tilePool.Get();
+        _tiles.Clear();
 
         // Set tiles first
         for (var x = 0; x < ChunkSize; x++)
@@ -740,15 +742,15 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 if (_mapSystem.TryGetTileRef(gridUid, grid, indices, out var tileRef) && !tileRef.Tile.IsEmpty)
                     continue;
 
-                if (!TryGetBiomeTile(indices, component.Layers, seed, grid, out var biomeTile) || biomeTile.Value == tileRef.Tile)
+                if (!TryGetBiomeTile(indices, component.Layers, seed, grid, out var biomeTile))
                     continue;
 
-                tiles.Add((indices, biomeTile.Value));
+                _tiles.Add((indices, biomeTile.Value));
             }
         }
 
-        _mapSystem.SetTiles(gridUid, grid, tiles);
-        tiles.Clear();
+        _mapSystem.SetTiles(gridUid, grid, _tiles);
+        _tiles.Clear();
 
         // Now do entities
         var loadedEntities = new Dictionary<EntityUid, Vector2i>();
