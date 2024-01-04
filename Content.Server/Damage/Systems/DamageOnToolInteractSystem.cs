@@ -27,7 +27,7 @@ namespace Content.Server.Damage.Systems
             if (args.Handled)
                 return;
 
-            if (!TryComp<ItemToggleComponent>(uid, out var itemToggle))
+            if (!TryComp<ItemToggleComponent>(args.Used, out var itemToggle))
                 return;
 
             if (component.WeldingDamage is {} weldingDamage
