@@ -1,4 +1,4 @@
-cmd-showhealthbars-desc = Toggles a health bar above mobs.
+cmd-showhealthbars-desc = Toggles health bars above mobs.
 cmd-showhealthbars-help = Usage: {$command} [<DamageContainerId>]
 cmd-showhealthbars-error-not-player = You aren't a player.
 cmd-showhealthbars-error-no-entity = You do not have an attached entity.
