@@ -11,6 +11,7 @@
     - InstantDoAfters
     - CanPilot
     - BypassInteractionRangeChecks
+    - BypassDropChecks
   - type: Input
     context: "aghost"
   - type: Ghost
