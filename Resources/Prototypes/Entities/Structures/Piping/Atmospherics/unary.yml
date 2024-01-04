@@ -367,7 +367,7 @@
   - type: GasThermoMachine
     minTemperature: 30.15
     heatCapacity: 40000
-    energyLeakPercentage: 0.2
+    energyLeakPercentage: 0.15
   - type: Machine
     board: HellfireFreezerMachineCircuitBoard
 
@@ -382,7 +382,7 @@
   - type: GasThermoMachine
     maxTemperature: 1000.15
     heatCapacity: 40000
-    energyLeakPercentage: 0.2
+    energyLeakPercentage: 0.15
   - type: Machine
     board: HellfireHeaterMachineCircuitBoard
 
