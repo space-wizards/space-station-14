@@ -141,7 +141,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             _entSet.Clear();
-            _lookup.GetLocalEntitiesIntersecting(tile.GridIndex, tile.GridIndices,  0f);
+            _lookup.GetLocalEntitiesIntersecting(tile.GridIndex, tile.GridIndices, _entSet, 0f);
 
             foreach (var entity in _entSet)
             {
