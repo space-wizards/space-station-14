@@ -1,31 +1,29 @@
-#- type: entity
-#  id: BaseCartridgeNail
-#  name: nail (.10 engineering) 
-#  parent: BaseCartridge
-#  abstract: true
-#  components:
-#  - type: Tag
-#    tags:
-#      - Nail
-#      - Cartridge
-#      - CartridgeNail
-#  - type: CartridgeAmmo
-#    deleteOnSpawn: true
-#  - type: Sprite
-#    noRot: false
-#    sprite: Objects\Weapons\Guns\Ammunition\Casings\nail.rsi
-#    layers:
-#   - state: base
-#      map: ["enum.AmmoVisualLayers.Base"]
-#  - type: Appearance
-#  - type: SpentAmmoVisuals
-#
-#- type: entity
-#  id: CartridgeNail
-#  name: nail (.10 engineering)  
-#  parent: BaseCartridgeNail
-#  components:
-#  - type: CartridgeAmmo
-#    proto: BulletNail
-#
-# Depricated but not deleted
+- type: entity
+  id: BaseCartridgeNail
+  name: nail (.10 engineering) 
+  parent: BaseCartridge
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Nail
+      - Cartridge
+      - CartridgeNail
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+  - type: Sprite
+    noRot: false
+    sprite: Objects\Weapons\Guns\Ammunition\Casings\nail.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+
+- type: entity
+  id: CartridgeNail
+  name: nail (.10 engineering) (only here to make it work)
+  parent: BaseCartridgeNail
+  components:
+  - type: CartridgeAmmo
+    proto: BulletNail
