@@ -241,23 +241,25 @@ namespace Content.Shared.Examine
                 return message;
             }
 
-            var doNewline = false;
+            var hasDescription = false;
 
             //Add an entity description if one is declared
             if (!string.IsNullOrEmpty(EntityManager.GetComponent<MetaDataComponent>(entity).EntityDescription))
             {
                 message.AddText(EntityManager.GetComponent<MetaDataComponent>(entity).EntityDescription);
-                doNewline = true;
+                hasDescription = true;
             }
 
             message.PushColor(Color.DarkGray);
 
             // Raise the event and let things that subscribe to it change the message...
             var isInDetailsRange = IsInDetailsRange(examiner.Value, entity);
-            var examinedEvent = new ExaminedEvent(message, entity, examiner.Value, isInDetailsRange, doNewline);
-            RaiseLocalEvent(entity, examinedEvent, true);
+            var examinedEvent = new ExaminedEvent(message, entity, examiner.Value, isInDetailsRange, hasDescription);
+            RaiseLocalEvent(entity, examinedEvent);
 
             var newMessage = examinedEvent.GetTotalMessage();
+
+            // pop color tag
             newMessage.Pop();
 
             return newMessage;
@@ -304,17 +306,17 @@ namespace Content.Shared.Examine
         /// </summary>
         public EntityUid Examined { get; }
 
-        private bool _doNewLine;
+        private bool _hasDescription;
 
         private ExamineMessagePart? _currentGroupPart;
 
-        public ExaminedEvent(FormattedMessage message, EntityUid examined, EntityUid examiner, bool isInDetailsRange, bool doNewLine)
+        public ExaminedEvent(FormattedMessage message, EntityUid examined, EntityUid examiner, bool isInDetailsRange, bool hasDescription)
         {
             Message = message;
             Examined = examined;
             Examiner = examiner;
             IsInDetailsRange = isInDetailsRange;
-            _doNewLine = doNewLine;
+            _hasDescription = hasDescription;
         }
 
         /// <summary>
@@ -327,7 +329,9 @@ namespace Content.Shared.Examine
                 // Try sort by priority, then group, then by string contents
                 if (a.Priority != b.Priority)
                 {
-                    return a.Priority.CompareTo(b.Priority);
+                    // negative so that expected behavior is consistent with what makes sense
+                    // i.e. a negative priority should mean its at the bottom of the list, right?
+                    return -a.Priority.CompareTo(b.Priority);
                 }
 
                 if (a.Group != b.Group)
@@ -344,9 +348,16 @@ namespace Content.Shared.Examine
             var totalMessage = new FormattedMessage(Message);
             parts.Sort(Comparison);
 
+            if (_hasDescription)
+            {
+                totalMessage.PushNewline();
+            }
+
             foreach (var part in parts)
             {
                 totalMessage.AddMessage(part.Message);
+                if (part.DoNewLine && parts.Last() != part)
+                    totalMessage.PushNewline();
             }
 
             return totalMessage;
@@ -362,13 +373,13 @@ namespace Content.Shared.Examine
         {
             // Ensure that other examine events correctly ended their groups.
             DebugTools.Assert(_currentGroupPart == null);
-            _currentGroupPart = new ExamineMessagePart(new FormattedMessage(), priority, groupName);
+            _currentGroupPart = new ExamineMessagePart(new FormattedMessage(), priority, false, groupName);
             return new ExamineGroupDisposable(this);
         }
 
         /// <summary>
         ///     Ends the current group and pushes its groups contents to the message.
-        ///     This will be called
+        ///     This will be called automatically if in using a `using` block with <see cref="PushGroup"/>.
         /// </summary>
         private void PopGroup()
         {
@@ -388,8 +399,18 @@ namespace Content.Shared.Examine
         /// <seealso cref="PushText"/>
         public void PushMessage(FormattedMessage message, int priority=0)
         {
-            AddMessage(message, priority);
-            _doNewLine = true;
+            if (message.Nodes.Count == 0)
+                return;
+
+            if (_currentGroupPart != null)
+            {
+                message.PushNewline();
+                _currentGroupPart.Message.AddMessage(message);
+            }
+            else
+            {
+                Parts.Add(new ExamineMessagePart(message, priority, true, null));
+            }
         }
 
         /// <summary>
@@ -425,15 +446,10 @@ namespace Content.Shared.Examine
         /// </summary>
         /// <seealso cref="AddMarkup"/>
         /// <seealso cref="AddText"/>
-        public void AddMessage(FormattedMessage message, int priority=0)
+        public void AddMessage(FormattedMessage message, int priority = 0)
         {
             if (message.Nodes.Count == 0)
                 return;
-
-            // Respect _doNewLine if it was passed earlier but don't
-            // set it after we add our part.
-            if (_doNewLine)
-                FormattedMessage.FromUnformatted("\n").AddMessage(message);
 
             if (_currentGroupPart != null)
             {
@@ -441,7 +457,7 @@ namespace Content.Shared.Examine
             }
             else
             {
-                Parts.Add(new ExamineMessagePart(message, priority, null));
+                Parts.Add(new ExamineMessagePart(message, priority, false, null));
             }
         }
 
@@ -486,7 +502,7 @@ namespace Content.Shared.Examine
             }
         }
 
-        private record ExamineMessagePart(FormattedMessage Message, int Priority, string? Group);
+        private record ExamineMessagePart(FormattedMessage Message, int Priority, bool DoNewLine, string? Group);
     }
 
 
