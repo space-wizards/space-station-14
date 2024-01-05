@@ -142471,7 +142471,6 @@ entities:
         - Pressed: Toggle
         20499:
         - Pressed: Toggle
-    - type: ItemCooldown
   - uid: 20513
     components:
     - type: Transform
@@ -142704,7 +142703,6 @@ entities:
         - Pressed: Toggle
         20423:
         - Pressed: Toggle
-    - type: ItemCooldown
   - uid: 20528
     components:
     - type: Transform

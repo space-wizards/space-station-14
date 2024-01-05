@@ -26,6 +26,13 @@
       security: "#DE3A3A"
       science: "#D381C9"
       supply: "#A46106"
+      cpu_command: "#334E6D"
+      cpu_medical: "#52B4E9"
+      cpu_service: "#9FED58"
+      cpu_engineering: "#EFB341"
+      cpu_security: "#DE3A3A"
+      cpu_science: "#D381C9"
+      cpu_supply: "#A46106"
   - type: StaticPrice
     price: 500
   - type: Tag

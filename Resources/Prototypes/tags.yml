@@ -221,8 +221,11 @@
   id: BulletFoam
 
 - type: Tag
-  id: BypassInteractionRangeChecks
+  id: BypassDropChecks
 
+- type: Tag
+  id: BypassInteractionRangeChecks
+  
 - type: Tag
   id: CableCoil
 
