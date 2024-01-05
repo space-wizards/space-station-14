@@ -196,7 +196,7 @@
   - type: Sprite
     sprite: Structures/Machines/autolathe_hypercon.rsi
   - type: Lathe
-    materialUseMultiplier: 0.70
+    materialUseMultiplier: 0.5
     timeMultiplier: 1.5
   - type: LatheHeatProducing
   - type: Machine
@@ -321,7 +321,7 @@
   - type: Sprite
     sprite: Structures/Machines/protolathe_hypercon.rsi
   - type: Lathe
-    materialUseMultiplier: 0.70
+    materialUseMultiplier: 0.5
     timeMultiplier: 1.5
   - type: LatheHeatProducing
   - type: Machine
