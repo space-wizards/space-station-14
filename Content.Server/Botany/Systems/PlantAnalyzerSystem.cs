@@ -1,18 +1,12 @@
 using System.Linq;
-//using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.PlantAnalyzer;
-//using Content.Shared.Botany;
 using Content.Server.Botany.Components;
-//using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
-//using Content.Server.PowerCell;
 using Robust.Shared.Player;
-//using Robust.Shared.Audio;
-//using Robust.Shared.Utility;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Botany.Systems

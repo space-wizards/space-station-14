@@ -33,7 +33,7 @@
                     Margin="0 8 5 10"/>
                 <Label
                     Name="Traits"
-                    Margin="0 8 5 10"/>
+                    Margin="0 0 5 10"/>
             </BoxContainer>
         </ScrollContainer>
     </BoxContainer>

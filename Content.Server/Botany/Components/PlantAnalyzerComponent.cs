@@ -1,6 +1,3 @@
-//using Content.Server.UserInterface;
-//using Content.Shared.MedicalScanner;
-//using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Botany.Components;
@@ -12,7 +9,7 @@ namespace Content.Server.Botany.Components;
 public sealed partial class PlantAnalyzerComponent : Component
 {
     /// <summary>
-    ///     How long it takes to scan someone.
+    ///     How long it takes to scan.
     /// </summary>
     [DataField("scanDelay")]
     public float ScanDelay = 0.8f;
@@ -29,4 +26,3 @@ public sealed partial class PlantAnalyzerComponent : Component
     [DataField("scanningEndSound")]
     public SoundSpecifier? ScanningEndSound;
 }
-

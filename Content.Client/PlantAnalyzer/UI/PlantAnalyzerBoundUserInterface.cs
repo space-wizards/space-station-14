@@ -1,6 +1,5 @@
 using Content.Shared.PlantAnalyzer;
 using JetBrains.Annotations;
-//using Robust.Client.GameObjects;
 
 namespace Content.Client.PlantAnalyzer.UI;
 
@@ -48,4 +47,3 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
         _window?.Dispose();
     }
 }
-

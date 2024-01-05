@@ -8,17 +8,15 @@
       netsync: false
       sprite: Objects/Devices/plant_analyzer.rsi
       state: icon
-    - type: Clothing
-      sprite: Objects/Devices/plant_analyzer.rsi
-      quickEquip: false
-      slots:
-        - Belt
+    - type: Item
+      storedRotation: -90
     - type: ActivatableUI
       key: enum.PlantAnalyzerUiKey.Key
-      inHandsOnly: true
       closeOnHandDeselect: false
     - type: UserInterface
       interfaces:
         - key: enum.PlantAnalyzerUiKey.Key
           type: PlantAnalyzerBoundUserInterface
     - type: PlantAnalyzer
+      scanningEndSound:
+        path: "/Audio/Items/Medical/healthscanner.ogg"
