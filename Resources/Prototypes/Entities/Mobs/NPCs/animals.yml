@@ -1710,10 +1710,21 @@
   - type: NpcFactionMember
     factions:
     - Passive
+  - type: Temperature
+    heatDamageThreshold: 335
+    coldDamageThreshold: 230
+    currentTemperature: 310.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 0.05 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 0.2 #per second, scales with temperature & other constants
 
 - type: entity
   name: grenade penguin
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ MobPenguin, MobCombat ]
   id: MobGrenadePenguin
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:
@@ -1734,7 +1745,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: penguin
       sprite: Mobs/Animals/grenadepenguin.rsi
-  - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
@@ -1752,10 +1762,6 @@
         Base: penguin
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatPenguin
-      amount: 3
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcBite
