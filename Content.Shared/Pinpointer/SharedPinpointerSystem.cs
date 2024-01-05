@@ -27,7 +27,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// </summary>
     private void OnAfterInteract(EntityUid uid, PinpointerComponent component, AfterInteractEvent args)
     {
-        if (!args.CanReach || args.Target is not { } target || args.Target == component.Target)
+        if (!args.CanReach || args.Target is not { } target)
             return;
 
         if (component.IsActive && component.CanRetarget)
