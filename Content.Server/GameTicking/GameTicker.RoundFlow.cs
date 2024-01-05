@@ -503,29 +503,9 @@ namespace Content.Server.GameTicking
             RaiseLocalEvent(ev);
 
             // So clients' entity systems can clean up too...
-            RaiseNetworkEvent(ev, Filter.Broadcast());
+            RaiseNetworkEvent(ev);
 
-            // Delete all entities.
-            foreach (var entity in EntityManager.GetEntities().ToArray())
-            {
-#if EXCEPTION_TOLERANCE
-                try
-                {
-#endif
-                // TODO: Maybe something less naive here?
-                // FIXME: Actually, definitely.
-                if (!Deleted(entity) && !Terminating(entity))
-                    EntityManager.DeleteEntity(entity);
-#if EXCEPTION_TOLERANCE
-                }
-                catch (Exception e)
-                {
-                    _sawmill.Error($"Caught exception while trying to delete entity {ToPrettyString(entity)}, this might corrupt the game state...");
-                    _runtimeLog.LogException(e, nameof(GameTicker));
-                    continue;
-                }
-#endif
-            }
+            EntityManager.FlushEntities();
 
             _mapManager.Restart();
 

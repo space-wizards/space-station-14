@@ -173,7 +173,7 @@ namespace Content.Server.Flash
             }
             if (sound != null)
             {
-                _audio.PlayPvs(sound, source);
+                _audio.PlayPvs(sound, source, AudioParams.Default.WithVolume(1f).WithMaxDistance(3f));
             }
         }
 

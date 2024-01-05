@@ -1,16 +1,16 @@
-using Robust.Shared.GameStates;
-using Robust.Shared.Audio;
 using Content.Shared.Damage;
+using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Shared.Item;
+namespace Content.Shared.Item.ItemToggle.Components;
 
 /// <summary>
-/// Handles the changes to the melee weapon component when the item is toggled. 
+/// Handles the changes to the melee weapon component when the item is toggled.
 /// </summary>
 /// <remarks>
 /// You can change the damage, sound on hit, on swing, as well as hidden status while activated.
 /// </remarks>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ItemToggleMeleeWeaponComponent : Component
 {
     /// <summary>
@@ -67,13 +67,3 @@ public sealed partial class ItemToggleMeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public bool DeactivatedSecret = false;
 }
-
-/// <summary>
-/// Raised in order to effect changes upon the MeleeWeaponComponent of the entity.
-/// </summary>
-[ByRefEvent]
-public record struct ItemToggleMeleeWeaponUpdateEvent(bool Activated)
-{
-    public bool Activated = Activated;
-}
-

@@ -69,41 +69,22 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           pill1: ""
-      - enum.DamageStateVisualLayers.Base:
           pill2: ""
-      - enum.DamageStateVisualLayers.Base:
           pill3: ""
-      - enum.DamageStateVisualLayers.Base:
           pill4: ""
-      - enum.DamageStateVisualLayers.Base:
           pill5: ""
-      - enum.DamageStateVisualLayers.Base:
           pill6: ""
-      - enum.DamageStateVisualLayers.Base:
           pill7: ""
-      - enum.DamageStateVisualLayers.Base:
           pill8: ""
-      - enum.DamageStateVisualLayers.Base:
           pill9: ""
-      - enum.DamageStateVisualLayers.Base:
           pill10: ""
-      - enum.DamageStateVisualLayers.Base:
           pill11: ""
-      - enum.DamageStateVisualLayers.Base:
           pill12: ""
-      - enum.DamageStateVisualLayers.Base:
           pill13: ""
-      - enum.DamageStateVisualLayers.Base:
           pill14: ""
-      - enum.DamageStateVisualLayers.Base:
           pill15: ""
-      - enum.DamageStateVisualLayers.Base:
           pill16: ""
-      - enum.DamageStateVisualLayers.Base:
           pill17: ""
-      - enum.DamageStateVisualLayers.Base:
           pill18: ""
-      - enum.DamageStateVisualLayers.Base:
           pill19: ""
-      - enum.DamageStateVisualLayers.Base:
           pill20: ""
