@@ -1018,21 +1018,21 @@
 
 - type: latheRecipe
   id: ClothingHeadPyjamaSyndicateBlack
-  result: ClothingPyjamaSyndicateBlack
+  result: ClothingHeadPyjamaSyndicateBlack
   completetime: 2
   materials:
     Cloth: 100
 
 - type: latheRecipe
   id: ClothingHeadPyjamaSyndicatePink
-  result: ClothingPyjamaSyndicatePink
+  result: ClothingHeadPyjamaSyndicatePink
   completetime: 2
   materials:
     Cloth: 100
 
 - type: latheRecipe
   id: ClothingHeadPyjamaSyndicateRed
-  result: ClothingPyjamaSyndicateRed
+  result: ClothingHeadPyjamaSyndicateRed
   completetime: 2
   materials:
     Cloth: 100
