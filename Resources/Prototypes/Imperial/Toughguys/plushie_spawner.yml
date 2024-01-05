@@ -29,5 +29,6 @@
         - PlushieBartender
         - PlushieSO
         - PlushieBarmem
+        - PlushieCoroner
       chance: 0.65
       offset: 0.10
