@@ -1,6 +1,6 @@
 If you’re new to roleplaying or are unfamiliar with IC and OOC please read on. If not, skip to the next section.
 
-SS14 is at its core a roleplaying game - You play a role on the station through your character which you can customise from the lobby prior to joining the game. You can select the roles or jobs your character plays via the customisation menu too. Therefore when you’re in a round playing your character, you are IC or In Character. When you’re in character you forget any knowledge of previous rounds or essentially of the outside world and you play as if you’re a member of the ships crew.
+SS14 is at its core a roleplaying game - You play a role on the station through your character which you can customise from the lobby prior to joining the game. You can select the roles or jobs your character plays via the customisation menu too. When you’re in a round playing your character, you are IC or In Character. When you’re in character you forget any knowledge of previous rounds or essentially of the outside world and you play as if you’re a member of the station's crew.
 
 Therefore, OOC or Out of Character is any conversations you have outside of the game world e.g. in the OOC chat, on discord or with your friends. You shouldn’t discuss the current round or anything that’s IC (in character) in out of character OOC chats. Likewise anything you see or read in OOC cannot be used by your character in game such as if someone on discord names a traitor or tells you they’re dying in a certain location and for you to go help them. This is known as metagaming and will get you banned if discovered.
 
@@ -13,9 +13,9 @@ Traitors, antagonists, RDM and “self antag”
 
 If in your character customisation settings you selected the chance to become an antagonist (antag) or other traitor role, it is not guaranteed that you will be one. When a traitor gamemode round starts there is a random roll of all the players who selected the chance to become a traitor and only some get selected. They will be notified they are a traitor in chat and will have a set of objectives they can view by pressing C.
 
-Being an antagonist is not an excuse to go on a murder spree and your job is to complete your objectives which on occasion will include escaping alive or dying a glorious death. How you complete your objectives is up to you so murder is valid but try to have fun (ideally not at everyones expense but that’s up to you).
+Being an antagonist is not an excuse to go on a murder spree. Your job is to complete your objectives which on occasion will include escaping alive or dying a glorious death. How you complete your objectives is up to you so murder is valid but try to have fun (ideally not at everyones expense but that’s up to you).
 
-If you suspect an antagonist such as a traitor or cultist etc report them to security as fast as possible and if necessary do what you can to protect yourself. Remember traitors are people too so ideally they should be arrested and prosecuted under space law and not just murdered (but do what you need to do to survive).
+If you suspect an antagonist such as a traitor or cultist etc report them to security as fast as possible and if necessary do what you can to protect yourself. Remember traitors are people too, so ideally they should be arrested and prosecuted under space law and not just murdered (but do what you need to do to survive).
 
 RDM or random deathmatch is the act of killing someone for no reason or attempting to. If you are being attacked it is likely the other person could be an antag but if you’re unsure, ask the admins for help (ahelp) to check this when convenient.
 
