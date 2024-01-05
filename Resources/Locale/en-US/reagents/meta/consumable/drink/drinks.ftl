@@ -46,6 +46,9 @@ reagent-desc-nothing = Absolutely nothing.
 reagent-name-nuclear-cola = nuclear cola
 reagent-desc-nuclear-cola = Cola, cola never changes.
 
+reagent-name-hot-cocoa = hot cocoa
+reagent-desc-hot-cocoa = Smells like the holidays!
+
 reagent-name-soda-water = soda water
 reagent-desc-soda-water = A container of club soda. Why not make a scotch and soda?
 

@@ -210,8 +210,6 @@
       - AnomalyScanner
       - AnomalyLocator
       - AnomalyLocatorWide
-      - RCD
-      - RCDAmmo
       - HandheldCrewMonitor
       - Scalpel
       - Retractor
@@ -265,7 +263,9 @@
       - SyringeBluespace
       - WeaponCrusher
       - WeaponCrusherDagger
+      - WeaponCrusherGlaive
       - WeaponForceGun
+      - WeaponLaserSvalinn
       - WeaponProtoKineticAccelerator
       - WeaponTetherGun
       - WeaponGrapplingGun
@@ -275,6 +275,9 @@
       - WelderExperimental
       - JawsOfLife
       - ClothingEyesGlassesChemical
+      - FauxTileAstroGrass
+      - FauxTileAstroIce
+      - OreBagOfHolding
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload
@@ -282,7 +285,6 @@
       - WeaponAdvancedLaser
       - WeaponLaserCannon
       - WeaponXrayCannon
-      - WeaponTaser
 
 - type: entity
   id: CircuitImprinter
@@ -307,6 +309,10 @@
     producingSound: /Audio/Machines/circuitprinter.ogg
     idleState: icon
     runningState: building
+    staticRecipes:
+    - ElectrolysisUnitMachineCircuitboard
+    - CentrifugeMachineCircuitboard
+    - CondenserMachineCircuitBoard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
@@ -375,6 +381,7 @@
       - APECircuitboard
       - ArtifactAnalyzerMachineCircuitboard
       - TraversalDistorterMachineCircuitboard
+      - ArtifactCrusherMachineCircuitboard
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
@@ -533,7 +540,6 @@
       - Zipties
       - Stunbaton
       - ForensicPad
-      - ClothingEyesGlassesSecurity
       - RiotShield
       - ShellShotgun
       - ShellShotgunFlare
@@ -560,6 +566,7 @@
       - CartridgeMagnumRubber
       - CartridgePistolRubber
       - CartridgeRifleRubber
+      - ClothingEyesGlassesSecurity
       - ExplosivePayload
       - FlashPayload
       - HoloprojectorSecurity
@@ -589,7 +596,6 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponLaserCarbinePractice
-      - WeaponTaser
       - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:
@@ -760,6 +766,8 @@
       - ClothingUniformJumpskirtHoS
       - ClothingUniformJumpsuitHoSAlt
       - ClothingUniformJumpskirtHoSAlt
+      - ClothingUniformJumpsuitHoSParadeMale
+      - ClothingUniformJumpskirtHoSParadeMale
       - ClothingUniformJumpsuitHydroponics
       - ClothingUniformJumpskirtHydroponics
       - ClothingUniformJumpsuitJanitor

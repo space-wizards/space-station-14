@@ -56,6 +56,14 @@
     Gold: 500
 
 - type: latheRecipe
+  id: WeaponLaserSvalinn
+  result: WeaponLaserSvalinn
+  completetime: 5
+  materials:
+    Steel: 2000
+    Gold: 500
+
+- type: latheRecipe
   id: WeaponXrayCannon
   result: WeaponXrayCannon
   completetime: 5
@@ -64,16 +72,6 @@
     Glass: 500
     Plastic: 250
     Gold: 100
-
-- type: latheRecipe
-  id: WeaponTaser
-  result: WeaponTaser
-  completetime: 5
-  materials:
-    Steel: 700
-    Plastic: 300
-    Gold: 250
-    Silver: 500
 
 - type: latheRecipe
   id: ForensicPad
@@ -89,7 +87,7 @@
   materials:
     Steel: 300
     Glass: 200
-    
+
 - type: latheRecipe
   id: ClothingEyesHudSecurity
   result: ClothingEyesHudSecurity

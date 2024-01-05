@@ -9,6 +9,17 @@
     Ammonia: 4
 
 - type: reaction
+  id: CelluloseBreakdown
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Cellulose:
+      amount: 3
+  products:
+    Sugar: 2
+    Carbon: 1
+
+- type: reaction
   id: Diethylamine
   reactants:
     Ammonia:
@@ -20,6 +31,8 @@
 
 - type: reaction
   id: Phenol
+  minTemp: 325
+  maxTemp: 480
   reactants:
     Oxygen:
       amount: 1
@@ -197,6 +210,7 @@
 
 - type: reaction
   id: TableSalt
+  minTemp: 370
   reactants:
     Chlorine:
       amount: 1
@@ -204,6 +218,17 @@
       amount: 1
   products:
     TableSalt: 2
+
+- type: reaction
+  id: TableSaltBreakdown
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    TableSalt:
+      amount: 2
+  products:
+    Chlorine: 1
+    Sodium: 1
 
 - type: reaction
   id: Thermite
@@ -272,6 +297,20 @@
     Desoxyephedrine: 4 #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
 
 - type: reaction
+  id: Stimulants
+  impact: Medium
+  minTemp: 370
+  reactants:
+    Ephedrine:
+      amount: 1
+    Vestine:
+      amount: 1
+    Oxygen:
+      amount: 2
+  products:
+    Stimulants: 2
+
+- type: reaction
   id: Ephedrine
   impact: Medium
   reactants:
@@ -289,13 +328,14 @@
 - type: reaction
   id: MuteToxin
   impact: Medium
+  minTemp: 370
   reactants:
     Uranium:
+      amount: 1
+    Vestine:
       amount: 2
-    Water:
-      amount: 1
-    Carbon:
-      amount: 1
+    SpaceGlue:
+      amount: 2
   products:
     MuteToxin: 2
 
@@ -399,3 +439,25 @@
       amount: 1
   products:
     SodiumPolyacrylate: 4
+
+- type: reaction
+  id: Nocturine
+  impact: High
+  reactants:
+    Impedrezene:
+      amount: 2
+    Vestine:
+      amount: 1
+  products:
+    Nocturine: 1
+
+- type: reaction
+  id: Tazinide
+  impact: Medium
+  reactants:
+    Licoxide:
+      amount: 1
+    Vestine:
+      amount: 1
+  products:
+    Tazinide: 1
