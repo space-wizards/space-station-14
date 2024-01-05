@@ -1,5 +1,5 @@
 - type: entity
-  id: BaseShuttleGun
+  id: ShuttleGunBase
   name: shittle gun
   parent: ConstructibleMachine
   abstract: true
@@ -11,6 +11,7 @@
   - type: Physics
     bodyType: Static
   - type: Fixtures
+    hard: false
     fixtures:
       fix1:
         shape:
@@ -35,9 +36,19 @@
   - type: DeviceLinkSink
     ports:
     - Trigger
+    - On
+    - Off
   - type: GunSignalControl
+
+- type: entity
+  id: ShuttleGunProtoKineticBallistic
+  parent: ShuttleGunBase
+  name: PTK-800 Matter Dematerializer
+  suffix: Ballistic Test
+  description: A powerful shuttle drill that allows for efficient asteroid digging.
+  components:
   - type: Gun
-    fireRate: 1
+    fireRate: 8
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
@@ -47,15 +58,64 @@
     whitelist:
       tags:
         - ShellShotgun
-    proto: ShellShotgunFlare
-    capacity: 10
+    proto: ShellShotgun
+    capacity: 1
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
         ents: []
-
+    
 - type: entity
-  id: TestShuttleGun
-  parent: BaseShuttleGun
+  id: ShuttleGunProtoKineticLaser
+  parent: ShuttleGunBase
+  name: PTK-800 Matter Dematerializer
+  suffix: Laser Test
+  description: A powerful shuttle drill that allows for efficient asteroid digging.
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLightLaser
+    fireCost: 50
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 50
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: Gun
+    fireRate: 1
+    useKey: false
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg 
+    
+- type: entity
+  id: ShuttleGunProtoKineticShotgun
+  parent: ShuttleGunBase
+  name: PTK-800 Matter Dematerializer
+  suffix: base entity Test
+  description: A powerful shuttle drill that allows for efficient asteroid digging.
+  components:
+  - type: GunWieldBonus
+    minAngle: -43
+    maxAngle: -43
+  - type: Gun
+    fireRate: 0.5
+    selectedMode: SemiAuto
+    angleDecay: 45
+    minAngle: 44
+    maxAngle: 45
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.75
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: BasicEntityAmmoProvider
+    proto: BulletKinetic
+    capacity: 1
+    count: 1
