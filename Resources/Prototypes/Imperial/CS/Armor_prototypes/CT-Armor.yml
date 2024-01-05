@@ -1,0 +1,141 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: CTHelmet
+  name: CT-helmet
+  description: A fairly lightweight helmet for anti-terrorist operations.
+  suffix: CS, CT
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Armor/CT-clothing/CT-helmet.rsi
+  - type: Clothing
+    sprite: Imperial/CS/Armor/CT-clothing/CT-helmet.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+  - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingMaskGas
+  id: CTMask
+  name: CT gas mask
+  description: A military-grade gas mask that can be connected to an air supply.
+  suffix: CS, CT
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Armor/CT-clothing/CT-mask.rsi
+  - type: Clothing
+    sprite: Imperial/CS/Armor/CT-clothing/CT-mask.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.95
+
+- type: entity
+  parent: ClothingUniformBase
+  id: CTUniformArmored
+  name: CT uniform
+  description: Advanced armored jumpsuit used by special forces in special operations.
+  suffix: CS, CT
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Armor/CT-clothing/CT-jumpsuit.rsi
+  - type: Clothing
+    sprite: Imperial/CS/Armor/CT-clothing/CT-jumpsuit.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: CTUniform
+  name: CT uniform
+  description: Advanced jumpsuit used by special forces in special operations.
+  suffix: CS, CT
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Armor/CT-clothing/CT-jumpsuit.rsi
+  - type: Clothing
+    sprite: Imperial/CS/Armor/CT-clothing/CT-jumpsuit.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: CTBoots
+  name: CT-boots
+  description: Nice boots.
+  suffix: CS, CT
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Armor/CT-clothing/CT-boots.rsi
+  - type: Clothing
+    sprite: Imperial/CS/Armor/CT-clothing/CT-boots.rsi
+#  - type: FootstepModifier # Corvax-Sounds
+#    footstepSoundCollection:
+#      collection: FootstepBoots
+
+- type: entity
+  parent: ClothingOuterBase
+  id: CTVestLight
+  name: CT bulletproof vest
+  description: An armored vest with plates to protect against ballistic projectiles.
+  suffix: CS, CT
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Armor/CT-clothing/CT-vest-light.rsi
+  - type: Clothing
+    sprite: Imperial/CS/Armor/CT-clothing/CT-vest-light.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.5
+        Heat: 0.9
+
+- type: entity
+  parent: ClothingOuterBase
+  id: CTVestHeavy
+  name: CT heavy vest
+  description: An armored vest with heavy plates to protect against ballistic projectiles.
+  suffix: CS, CT
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Armor/CT-clothing/CT-vest-heavy.rsi
+  - type: Clothing
+    sprite: Imperial/CS/Armor/CT-clothing/CT-vest-heavy.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.4
+        Heat: 0.8
+
+- type: entity
+  parent: ClothingHandsBase
+  id: CTGloves
+  name: CT gloves
+  description: These tactical gloves are fireproof and shock resistant.
+  suffix: CS, CT
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Armor/CT-clothing/CT-gloves.rsi
+  - type: Clothing
+    sprite: Imperial/CS/Armor/CT-clothing/CT-gloves.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-black
+  - type: FingerprintMask
