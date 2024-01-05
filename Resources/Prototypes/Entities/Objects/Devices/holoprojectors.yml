@@ -5,9 +5,7 @@
   description: A handy-dandy holographic projector that displays a janitorial sign.
   components:
   - type: HolosignProjector
-  - type: ItemCooldown
   - type: UseDelay
-    delay: 1.0
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot {}
@@ -43,6 +41,23 @@
   - type: StaticPrice
     price: 80
 
+- type: entity
+  parent: Holoprojector
+  id: HoloprojectorField
+  name: force field projector
+  description: Creates an impassable forcefield that won't let anything through. Close proximity may or may not cause cancer.
+  components:
+    - type: HolosignProjector
+      signProto: HolosignForcefield
+      chargeUse: 120
+    - type: Sprite
+      sprite: Objects/Devices/Holoprojectors/field.rsi
+      state: icon
+    - type: Tag
+      tags:
+        - HolofanProjector
+    - type: StaticPrice
+      price: 250
 
 - type: entity
   parent: Holoprojector

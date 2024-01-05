@@ -71,6 +71,7 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     The name of this solution, if it is contained in some <see cref="SolutionContainerManagerComponent"/>
         /// </summary>
+        [DataField]
         public string? Name;
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace Content.Shared.Chemistry.Components
             foreach (var (reagent, quantity) in Contents)
             {
                 _heatCapacity += (float) quantity *
-                                 protoMan.Index<ReagentPrototype>(reagent.Prototype).SpecificHeat;
+                                    protoMan.Index<ReagentPrototype>(reagent.Prototype).SpecificHeat;
             }
         }
 
@@ -158,10 +159,12 @@ namespace Content.Shared.Chemistry.Components
 
         public Solution(Solution solution)
         {
+            Contents = solution.Contents.ShallowClone();
             Volume = solution.Volume;
+            MaxVolume = solution.MaxVolume;
+            Temperature = solution.Temperature;
             _heatCapacity = solution._heatCapacity;
             _heatCapacityDirty = solution._heatCapacityDirty;
-            Contents = solution.Contents.ShallowClone();
             ValidateSolution();
         }
 
@@ -174,7 +177,7 @@ namespace Content.Shared.Chemistry.Components
         public void ValidateSolution()
         {
             // sandbox forbids: [Conditional("DEBUG")]
-#if DEBUG
+    #if DEBUG
             // Correct volume
             DebugTools.Assert(Contents.Select(x => x.Quantity).Sum() == Volume);
 
@@ -192,7 +195,7 @@ namespace Content.Shared.Chemistry.Components
                 UpdateHeatCapacity(null);
                 DebugTools.Assert(MathHelper.CloseTo(_heatCapacity, cur));
             }
-#endif
+    #endif
         }
 
         void ISerializationHooks.AfterDeserialization()
@@ -463,7 +466,7 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="toRemove">The reagent to be removed.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-        public FixedPoint2 RemoveReagent(ReagentQuantity toRemove)
+        public FixedPoint2 RemoveReagent(ReagentQuantity toRemove, bool preserveOrder = false)
         {
             if (toRemove.Quantity <= FixedPoint2.Zero)
                 return FixedPoint2.Zero;
@@ -480,7 +483,11 @@ namespace Content.Shared.Chemistry.Components
 
                 if (newQuantity <= 0)
                 {
-                    Contents.RemoveSwap(i);
+                    if (!preserveOrder)
+                        Contents.RemoveSwap(i);
+                    else
+                        Contents.RemoveAt(i);
+
                     Volume -= curQuantity;
                     ValidateSolution();
                     return curQuantity;
@@ -513,9 +520,9 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="reagentId">The reagent to be removed.</param>
         /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-        public FixedPoint2 RemoveReagent(ReagentId reagentId, FixedPoint2 quantity)
+        public FixedPoint2 RemoveReagent(ReagentId reagentId, FixedPoint2 quantity, bool preserveOrder = false)
         {
-            return RemoveReagent(new ReagentQuantity(reagentId, quantity));
+            return RemoveReagent(new ReagentQuantity(reagentId, quantity), preserveOrder);
         }
 
         public void RemoveAllSolution()

@@ -11,7 +11,6 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 135
     swingLeft: true
@@ -33,7 +32,6 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/clippers.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 90
     damage:
@@ -41,6 +39,7 @@
         Slash: 7
   - type: Item
     sprite: Objects/Tools/Hydroponics/clippers.rsi
+    storedRotation: -90
 
 - type: entity
   name: scythe
@@ -52,7 +51,6 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 135
     damage:
@@ -80,7 +78,6 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 135
     swingLeft: true
@@ -104,7 +101,6 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/spade.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 45
     damage:
@@ -123,12 +119,15 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
     state: icon
+  - type: Item
+    storedRotation: -90
   - type: Clothing
     quickEquip: false
     slots:
     - belt
   - type: Storage
-    maxSlots: 40
+    grid:
+    - 0,0,7,4
     maxItemSize: Small
     quickInsert: true
     areaInsert: true

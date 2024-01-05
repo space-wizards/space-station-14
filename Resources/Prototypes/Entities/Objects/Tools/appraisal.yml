@@ -4,22 +4,23 @@
   name: appraisal tool
   description: A beancounter's best friend, with a quantum connection to the galactic market and the ability to appraise even the toughest items.
   components:
-    - type: Sprite
-      sprite: Objects/Tools/appraisal-tool.rsi
-      state: icon
-    - type: Item
-      sprite: Objects/Tools/appraisal-tool.rsi
-    - type: PriceGun
-    - type: UseDelay
-      delay: 3
-    - type: Clothing
-      sprite: Objects/Tools/appraisal-tool.rsi
-      quickEquip: false
-      slots:
-      - Belt
-    - type: Tag
-      tags:
-      - AppraisalTool
-    - type: GuideHelp
-      guides:
-      - Cargo
+  - type: Sprite
+    sprite: Objects/Tools/appraisal-tool.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/appraisal-tool.rsi
+  - type: PriceGun
+  - type: UseDelay
+    delay: 3
+  - type: Clothing
+    sprite: Objects/Tools/appraisal-tool.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Tag
+    tags:
+    - AppraisalTool
+    - Sidearm
+  - type: GuideHelp
+    guides:
+    - Cargo

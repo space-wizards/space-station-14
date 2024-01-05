@@ -38,7 +38,8 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         if (speed < component.MinimumSpeed)
             return;
 
-        if ((_gameTiming.CurTime - component.LastHit).TotalSeconds < component.DamageCooldown)
+        if (component.LastHit != null
+            && (_gameTiming.CurTime - component.LastHit.Value).TotalSeconds < component.DamageCooldown)
             return;
 
         component.LastHit = _gameTiming.CurTime;

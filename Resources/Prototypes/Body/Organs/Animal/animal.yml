@@ -82,6 +82,17 @@
     - id: Drink
 
 - type: entity
+  id: OrganMouseStomach
+  parent: OrganAnimalStomach
+  name: stomach
+  noSpawn: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 30
+
+- type: entity
   id: OrganAnimalLiver
   parent: BaseAnimalOrgan
   name: liver
