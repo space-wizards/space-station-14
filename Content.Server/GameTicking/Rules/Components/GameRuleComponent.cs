@@ -21,7 +21,7 @@ public sealed partial class GameRuleComponent : Component
     [DataField]
     public int MinPlayers;
 
-    public SortedList<TimeSpan, GameRuleTask> ScheduledTasks = new SortedList<TimeSpan, GameRuleTask>();
+    public SortedList<TimeSpan, GameRuleTask> ScheduledTasks = new();
 }
 
 /// <summary>

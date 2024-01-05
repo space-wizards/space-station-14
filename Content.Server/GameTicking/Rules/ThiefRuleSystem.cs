@@ -104,7 +104,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         thiefRule.ThievesMinds.Add(mind);
     }
 
-    public void AdminMakeThief(EntityUid mindID, MindComponent mind, bool addPacified)
+    public void AdminMakeThief(MindComponent mind, bool addPacified)
     {
         var thiefRule = EntityQuery<ThiefRuleComponent>().FirstOrDefault();
         if (thiefRule == null)

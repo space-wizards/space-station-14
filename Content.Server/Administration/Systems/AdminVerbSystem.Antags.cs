@@ -126,7 +126,7 @@ public sealed partial class AdminVerbSystem
             {
                 if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
                     return;
-                _thief.AdminMakeThief(mindId, mind, false); //Midround add pacific is bad
+                _thief.AdminMakeThief(mind, false); //Midround add pacified is bad
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-thief"),

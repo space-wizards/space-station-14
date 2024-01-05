@@ -22,7 +22,6 @@ using Content.Shared.Roles;
 using Content.Shared.Stunnable;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
-using Robust.Shared.Timing;
 using System.Linq;
 
 namespace Content.Server.GameTicking.Rules;
@@ -33,7 +32,6 @@ namespace Content.Server.GameTicking.Rules;
 public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleComponent>
 {
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -86,9 +84,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             if (eligiblePlayers.Count == 0)
                 continue;
 
-            var headRevCount = _antagSelection.CalculateAntagCount(ev.Players.Count(), comp.PlayersPerHeadRev, comp.MaxHeadRevs);
+            var headRevCount = _antagSelection.CalculateAntagCount(ev.Players.Length, comp.PlayersPerHeadRev, comp.MaxHeadRevs);
 
-            var headRevs = _antagSelection.ChooseAntags<EntityUid>(eligiblePlayers, headRevCount);
+            var headRevs = _antagSelection.ChooseAntags(eligiblePlayers, headRevCount);
 
             _antagSelection.SendBriefing(headRevs, Loc.GetString("head-rev-role-greeting"), Color.CornflowerBlue, comp.HeadRevStartSound);
             GiveHeadRev(headRevs, comp.HeadRevPrototypeId, comp);
@@ -219,7 +217,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
             var inCharacterName = MetaData(headRev).EntityName;
 
-            if (!_mind.TryGetMind(headRev, out var mind, out var mindComponent))
+            if (!_mind.TryGetMind(headRev, out var mind, out _))
                 continue;
 
             if (!_role.MindHasRole<RevolutionaryRoleComponent>(mind))

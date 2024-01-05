@@ -633,11 +633,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             //Select Nukies
             //Select Commander, priority : commanderEligible, agentEligible, operativeEligible, all players
-            ICommonSession? selectedCommander = _antagSelection.ChooseAntags<ICommonSession>(new List<ICommonSession>[] { commanderEligible, agentEligible, operativeEligible, ev.PlayerPool }, 1).FirstOrDefault();
+            var selectedCommander = _antagSelection.ChooseAntags(new List<ICommonSession>[] { commanderEligible, agentEligible, operativeEligible, ev.PlayerPool }, 1).FirstOrDefault();
             //Select Agent, priority : agentEligible, operativeEligible, all players
-            ICommonSession? selectedAgent = _antagSelection.ChooseAntags<ICommonSession>(new List<ICommonSession>[] { agentEligible, operativeEligible, ev.PlayerPool }, 1).FirstOrDefault();
+            var selectedAgent = _antagSelection.ChooseAntags(new List<ICommonSession>[] { agentEligible, operativeEligible, ev.PlayerPool }, 1).FirstOrDefault();
             //Select Operatives, priority : operativeEligible, all players
-            List<ICommonSession> selectedOperatives = _antagSelection.ChooseAntags<ICommonSession>(new List<ICommonSession>[] { operativeEligible, ev.PlayerPool }, nukiesToSelect - 2);
+            var selectedOperatives = _antagSelection.ChooseAntags(new List<ICommonSession>[] { operativeEligible, ev.PlayerPool }, nukiesToSelect - 2);
 
             //Create the team!
             //Provide a player session if possible, otherwise spawn them as ghost roles
@@ -646,7 +646,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             operatives.Add(new NukieSpawn(selectedAgent ?? null, NukieType.Agent));
 
             //For each of the remaining slots, fill with operatives
-            for (int i = 0; i < nukiesToSelect - 2; i++)
+            for (var i = 0; i < nukiesToSelect - 2; i++)
             {
                 //First fill with players
                 if (selectedOperatives.Count > i)
@@ -660,7 +660,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 }
             }
 
-            SpawnOperatives(nukiesToSelect, operatives, _cfg.GetCVar(CCVars.NukeopsSpawnGhostRoles), nukeops);
+            SpawnOperatives(operatives, _cfg.GetCVar(CCVars.NukeopsSpawnGhostRoles), nukeops);
 
             foreach (var nukieSpawn in operatives)
             {
@@ -848,7 +848,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         _npcFaction.AddFaction(mob, "Syndicate");
     }
 
-    private void SpawnOperatives(int spawnCount, List<NukieSpawn> sessions, bool spawnGhostRoles, NukeopsRuleComponent component)
+    private void SpawnOperatives(List<NukieSpawn> sessions, bool spawnGhostRoles, NukeopsRuleComponent component)
     {
         if (component.NukieOutpost == null)
             return;
@@ -950,10 +950,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (numNukies >= 1) operatives.Add(new NukieSpawn(null, NukieType.Commander));
         if (numNukies >= 2) operatives.Add(new NukieSpawn(null, NukieType.Agent));
         if (numNukies >= 3)
-            for (int i = 2; i < numNukies; i++)
+            for (var i = 2; i < numNukies; i++)
                 operatives.Add(new NukieSpawn(null, NukieType.Operative));
 
-        SpawnOperatives(numNukies, operatives, true, component);
+        SpawnOperatives(operatives, true, component);
     }
 
     //For admins forcing someone to nukeOps.
