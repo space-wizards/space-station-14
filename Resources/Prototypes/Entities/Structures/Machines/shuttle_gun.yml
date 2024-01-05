@@ -19,9 +19,9 @@
           bounds: "-0.25,-0.25,0.25,0.25"
         density: 400
         mask:
-        - MachineMask
+        - None
         layer:
-        - MachineLayer
+        - None 
   - type: Transform
     anchored: true
   - type: Sprite
