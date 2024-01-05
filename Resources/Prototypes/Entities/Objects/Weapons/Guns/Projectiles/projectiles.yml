@@ -187,7 +187,7 @@
   - type: StunOnCollide
     stunAmount: 0
     knockdownAmount: 0
-    slowdownAmount: 4
+    slowdownAmount: 3
     walkSpeedMultiplier: 0.75
     runSpeedMultiplier: 0.75
 
