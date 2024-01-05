@@ -1228,10 +1228,16 @@ namespace Content.Shared.CCVar
             CVarDef.Create("vote.restart_enabled", true, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Config for when the restart vote should be allowed to be called
+        ///     Config for when the restart vote should be allowed to be called regardless with less than this amount of players.
         /// </summary>
-        public static readonly CVarDef<int> VoteRestartMinPlayers =
+        public static readonly CVarDef<int> VoteRestartMaxPlayers =
             CVarDef.Create("vote.restart_min_players", 20, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Config for when the restart vote should be allowed to be called based on percentage of ghosts.
+        ///
+        public static readonly CVarDef<int> VoteRestartGhostPercentage =
+            CVarDef.Create("vote.restart_ghost_percentage", 75, CVar.SERVERONLY);
 
         /// <summary>
         ///     See vote.enabled, but specific to preset votes

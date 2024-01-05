@@ -3,10 +3,13 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Server.RoundEnd;
+using Content.Server.Worldgen.Tools;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
 using Content.Shared.Voting;
 using Robust.Shared.Configuration;
+using Robust.Shared.Enums;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -49,11 +52,41 @@ namespace Content.Server.Voting.Managers
 
         private void CreateRestartVote(ICommonSession? initiator)
         {
-            var playerVoteMaximum = _cfg.GetCVar(CCVars.VoteRestartMinPlayers);
+            var playerVoteMaximum = _cfg.GetCVar(CCVars.VoteRestartMaxPlayers);
+            var ghostVotePercentageRequirement = _cfg.GetCVar(CCVars.VoteRestartGhostPercentage);
+            var totalPlayers = _playerManager.PlayerCount;
+            var ghostCount = 0;
 
-            if (_playerManager.PlayerCount > playerVoteMaximum)
+            foreach (var player in _playerManager.Sessions)
             {
-                var alone = _playerManager.PlayerCount == 1 && initiator != null;
+                _playerManager.UpdateState(player);
+                if (player.Status == SessionStatus.InGame && _entityManager.HasComponent<GhostComponent>(player.AttachedEntity))
+                {
+                    ghostCount++;
+                }
+            }
+
+            var ghostPercentage = 0.0;
+            if (totalPlayers > 0)
+            {
+                ghostPercentage = ((double)ghostCount / totalPlayers) * 100;
+            }
+
+            var roundedGhostPercentage = (int)Math.Round(ghostPercentage);
+
+            if (totalPlayers <= playerVoteMaximum || roundedGhostPercentage >= ghostVotePercentageRequirement)
+            {
+                StartVote(initiator);
+            }
+            else
+            {
+                NotifyNotEnoughGhostPlayers(ghostVotePercentageRequirement, roundedGhostPercentage);
+            }
+        }
+
+        private void StartVote(ICommonSession? initiator)
+        {
+            var alone = _playerManager.PlayerCount == 1 && initiator != null;
                 var options = new VoteOptions
                 {
                     Title = Loc.GetString("ui-vote-restart-title"),
@@ -120,14 +153,14 @@ namespace Content.Server.Voting.Managers
                         vote.CastVote(player, 2);
                     }
                 }
-            }
-            else
-            {
-                var logPlayerVoteMaximum = playerVoteMaximum.ToString();
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote failed: Player count:{_playerManager.PlayerCount} exceeded:{logPlayerVoteMaximum}");
-                _chatManager.DispatchServerAnnouncement(
-                    Loc.GetString("ui-vote-restart-fail-too-many-players", ("maxPlayers", logPlayerVoteMaximum)));
-            }
+        }
+
+        private void NotifyNotEnoughGhostPlayers(int ghostPercentageRequirement, int roundedGhostPercentage)
+        {
+            // Logic to notify that there are not enough ghost players to start a vote
+            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote failed: Current Ghost player percentage:{roundedGhostPercentage.ToString()}% does not meet {ghostPercentageRequirement.ToString()}%");
+            _chatManager.DispatchServerAnnouncement(
+                Loc.GetString("ui-vote-restart-fail-not-enough-ghost-players", ("ghostPlayerRequirement", ghostPercentageRequirement)));
         }
 
         private void CreatePresetVote(ICommonSession? initiator)
