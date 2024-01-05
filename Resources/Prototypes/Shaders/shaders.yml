@@ -87,3 +87,9 @@
   id: HorizontalCut
   kind: source
   path: "/Textures/Shaders/hcut.swsl"
+
+- type: shader
+  id: Colored
+  kind: source
+  path: "/Textures/Shaders/colored.swsl"
+

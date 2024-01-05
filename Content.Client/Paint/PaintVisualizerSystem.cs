@@ -3,8 +3,11 @@ using Robust.Client.GameObjects;
 using static Robust.Client.GameObjects.SpriteComponent;
 using Content.Shared.Clothing;
 using Content.Shared.Hands;
+using Robust.Client.Graphics;
 using Content.Shared.Paint;
 using Content.Shared.Humanoid;
+using Robust.Shared.Prototypes;
+using System.Reflection.Metadata;
 
 namespace Content.Client.Paint
 {
@@ -27,22 +30,22 @@ namespace Content.Client.Paint
             if (args.Sprite == null)
                 return;
 
+
             var layer = 0;
 
 
             for (layer = 0; layer < args.Sprite.AllLayers.Count(); ++layer)
             {
                 component.BeforePaintedColor = args.Sprite.Color;
-
                 if (component.Enabled == true)
                 {
                     args.Sprite.LayerSetShader(layer, component.ShaderName);
                     args.Sprite.LayerSetColor(layer, component.Color);
                 }
-                else if (component.Enabled == false)
+                else if(component.Enabled == false)
                 {
+                    args.Sprite.LayerSetShader(layer, component.ShaderRemove);
                     args.Sprite.LayerSetColor(layer, component.BeforePaintedColor);
-                    args.Sprite.LayerSetShader(layer, component.BeforePaintedShader);
                 }
             }
         }
@@ -74,8 +77,6 @@ namespace Content.Client.Paint
                     sprite.LayerSetColor(layer, component.Color);
                     return;
                 }
-                else
-                    sprite.LayerSetColor(layer, component.BeforePaintedColor);
                 return;
             }
         }
@@ -102,9 +103,6 @@ namespace Content.Client.Paint
                     sprite.LayerSetColor(layer, component.Color);
                     return;
                 }
-                else
-                    sprite.LayerSetColor(layer, component.BeforePaintedColor);
-                return;
             }
         }
     }

@@ -1,0 +1,9 @@
+uniform highp vec4 color;
+
+void fragment() {
+    highp vec4 pixelColor = zTexture(UV);
+    highp float brightness = (pixelColor.r, pixelColor.g, pixelColor.b);
+    highp vec4 greyscale = vec4(brightness, brightness, brightness, pixelColor.a);
+    COLOR = greyscale * color;
+}
+

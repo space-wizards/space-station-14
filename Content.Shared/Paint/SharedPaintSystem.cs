@@ -35,27 +35,7 @@ public sealed class SharedPaintSystem : EntitySystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
-        if (component.Painter == false)
-        {
-            if (!TryComp(target, out PaintedComponent? paint))
-            {
-                return;
-            }
-
-            if (HasComp<AppearanceComponent>(target))
-            {
-                RemComp<AppearanceComponent>(target);
-            }
-            AddComp<AppearanceComponent>(target);
-
-            paint.Enabled = false;
-            UpdateAppearance(target, paint);
-            Dirty(target, paint);
-            _popup.PopupClient(Loc.GetString("you clean off the paint", ("target", target)), args.User, args.User, PopupType.Medium);
-            args.Handled = true;
-            return;
-        }
-        else if (TryPaint(uid, component, target, args.User) && component.Painter == true)
+        if (TryPaint(uid, component, target, args.User) && component.Painter == true)
         {
             if (HasComp<AppearanceComponent>(target))
             {
@@ -111,7 +91,7 @@ public sealed class SharedPaintSystem : EntitySystem
         return false;
     }
 
-    private void UpdateAppearance(EntityUid uid, PaintedComponent? component = null)
+    public void UpdateAppearance(EntityUid uid, PaintedComponent? component = null)
     {
     }
 }
