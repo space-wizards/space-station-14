@@ -8,23 +8,23 @@ using Robust.Shared.GameObjects;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class RoundEndTest : IEntityEventSubscriber
+    public sealed class RoundEndTest
     {
-        public sealed class RoundEndTestSystem : EntitySystem
+        private sealed class RoundEndTestSystem : EntitySystem
         {
-            public int Count = 0;
+            public int Count;
 
             public override void Initialize()
             {
-                SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnEv);
+                base.Initialize();
+                SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnRoundEnd);
             }
 
-            private void OnEv(RoundEndSystemChangedEvent ev)
+            private void OnRoundEnd(RoundEndSystemChangedEvent ev)
             {
-                Count++;
+                Interlocked.Increment(ref Count);
             }
         }
-
 
         [Test]
         public async Task Test()
@@ -37,12 +37,13 @@ namespace Content.IntegrationTests.Tests
             });
 
             var server = pair.Server;
+
             var config = server.ResolveDependency<IConfigurationManager>();
             var sysManager = server.ResolveDependency<IEntitySystemManager>();
             var ticker = sysManager.GetEntitySystem<GameTicker>();
             var roundEndSystem = sysManager.GetEntitySystem<RoundEndSystem>();
-            var testSystem = sysManager.GetEntitySystem<RoundEndTestSystem>();
-            testSystem.Count = 0;
+            var sys = server.System<RoundEndTestSystem>();
+            sys.Count = 0;
 
             await server.WaitAssertion(() =>
             {
@@ -57,6 +58,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
+
                 // Press the shuttle call button
                 roundEndSystem.RequestRoundEnd();
                 Assert.Multiple(() =>
@@ -126,8 +128,8 @@ namespace Content.IntegrationTests.Tests
             async Task WaitForEvent()
             {
                 var timeout = Task.Delay(TimeSpan.FromSeconds(10));
-                var currentCount = Thread.VolatileRead(ref testSystem.Count);
-                while (currentCount == Thread.VolatileRead(ref testSystem.Count) && !timeout.IsCompleted)
+                var currentCount = Thread.VolatileRead(ref sys.Count);
+                while (currentCount == Thread.VolatileRead(ref sys.Count) && !timeout.IsCompleted)
                 {
                     await pair.RunTicksSync(5);
                 }

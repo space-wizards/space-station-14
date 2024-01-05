@@ -46,6 +46,15 @@ namespace Content.Shared.Atmos
         public const float T20C = 293.15f;
 
         /// <summary>
+        ///     Do not allow any gas mixture temperatures to exceed this number. It is occasionally possible
+        ///     to have very small heat capacity (e.g. room that was just unspaced) and for large amounts of
+        ///     energy to be transferred to it, even for a brief moment. However, this messes up subsequent
+        ///     calculations and so cap it here. The physical interpretation is that at this temperature, any
+        ///     gas that you would have transforms into plasma.
+        /// </summary>
+        public const float Tmax = 200e3f;
+
+        /// <summary>
         ///     Liters in a cell.
         /// </summary>
         public const float CellVolume = 2500f;
@@ -123,7 +132,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum temperature difference before the gas temperatures are just set to be equal.
         /// </summary>
-        public const float MinimumTemperatureDeltaToConsider = 0.1f;
+        public const float MinimumTemperatureDeltaToConsider = 0.01f;
 
         /// <summary>
         ///     Minimum temperature for starting superconduction.
@@ -183,7 +192,7 @@ namespace Content.Shared.Atmos
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
-        public const float FirePlasmaEnergyReleased = 16e3f; // methane is 16 kJ/mol
+        public const float FirePlasmaEnergyReleased = 160e3f; // methane is 16 kJ/mol, plus plasma's spark of magic
         public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;
@@ -237,9 +246,14 @@ namespace Content.Shared.Atmos
         public const float FrezonProductionConversionRate = 50f;
 
         /// <summary>
-        ///     How many mol of frezon can be converted into miasma in one cycle.
+        ///     The maximum portion of the N2O that can decompose each reaction tick. (50%)
         /// </summary>
-        public const float MiasmicSubsumationMaxConversionRate = 5f;
+        public const float N2ODecompositionRate = 2f;
+
+        /// <summary>
+        ///     Divisor for Ammonia Oxygen reaction so that it doesn't happen instantaneously.
+        /// </summary>
+        public const float AmmoniaOxygenReactionRate = 10f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
@@ -324,7 +338,7 @@ namespace Content.Shared.Atmos
         Plasma = 3,
         Tritium = 4,
         WaterVapor = 5,
-        Miasma = 6,
+        Ammonia = 6,
         NitrousOxide = 7,
         Frezon = 8
     }

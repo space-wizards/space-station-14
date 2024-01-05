@@ -29,6 +29,7 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/fireplace.ogg
+  - type: AlwaysHot
 
 - type: entity
   id: LegionnaireBonfire

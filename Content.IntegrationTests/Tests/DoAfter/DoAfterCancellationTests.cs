@@ -38,10 +38,10 @@ public sealed class DoAfterCancellationTests : InteractionTest
         AssertAnchored(false);
 
         // Repeat for screwdriver interaction.
-        AssertDeleted(false);
+        AssertExists();
         await Interact(Screw, awaitDoAfters: false);
         await CancelDoAfters();
-        AssertDeleted(false);
+        AssertExists();
         await Interact(Screw);
         AssertDeleted();
     }
