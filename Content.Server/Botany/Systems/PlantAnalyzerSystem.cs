@@ -77,17 +77,17 @@ namespace Content.Server.Botany.Systems
             TryComp<SeedComponent>(target, out var seedcomponent);
 
             var state = default(PlantAnalyzerScannedSeedPlantInformation);
-            var seedData = default(SeedData);
-            var seedProtoId = default(SeedPrototype);
+            var seedData = default(SeedData);   // data of a unique Seed
+            var seedProtoId = default(SeedPrototype);   // data of base seed prototype 
 
             if (seedcomponent != null)
             {
-                if (seedcomponent.Seed != null) //if  unqiue seed
+                if (seedcomponent.Seed != null) //if unqiue seed
                 {
                     seedData = seedcomponent.Seed;
-                    state = ObtainingGeneDataSeed(seedData, target, false); //no tray cause on the floor
+                    state = ObtainingGeneDataSeed(seedData, target, false);
                 }
-                else if (seedcomponent.SeedId != null && _prototypeManager.TryIndex(seedcomponent.SeedId, out SeedPrototype? protoSeed)) //wir haben eine SeedId, also holen wir den prototypen
+                else if (seedcomponent.SeedId != null && _prototypeManager.TryIndex(seedcomponent.SeedId, out SeedPrototype? protoSeed)) // getting the protoype seed
                 {
                     seedProtoId = protoSeed;
                     state = ObtainingGeneDataSeedProt(protoSeed, target);
@@ -109,8 +109,11 @@ namespace Content.Server.Botany.Systems
             _uiSystem.SendUiMessage(ui, state);
 
         }
+        /// <summary>
+        ///     Analysis of seed from prototype
+        /// </summary>
         public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeedProt(SeedPrototype comp, EntityUid target)
-        {   //for non unique seedpacket
+        {
             var seedName = Loc.GetString(comp.DisplayName);
             var seedYield = comp.Yield;
             var seedPotency = comp.Potency;
@@ -119,11 +122,9 @@ namespace Content.Server.Botany.Systems
             var plantMutations = "";
             var exudeGases = "";
 
-            if (comp.HarvestRepeat == HarvestType.Repeat)
-                plantHarvestType = "Repeat";
-            else
-                plantHarvestType = "No Repeat";
-            if (comp.HarvestRepeat == HarvestType.SelfHarvest) plantHarvestType = "Auto";
+            if (comp.HarvestRepeat == HarvestType.Repeat) plantHarvestType = Loc.GetString("plant-analyzer-harvest-repeat");
+            if (comp.HarvestRepeat == HarvestType.NoRepeat) plantHarvestType = Loc.GetString("plant-analyzer-harvest-ephemeral");
+            if (comp.HarvestRepeat == HarvestType.SelfHarvest) plantHarvestType = Loc.GetString("plant-analyzer-harvest-autoharvest");
 
             seedChem += String.Join("\r\n   ", comp.Chemicals.Select(item => item.Key.ToString()));
 
@@ -141,9 +142,11 @@ namespace Content.Server.Botany.Systems
             plantMutations = CheckAllMutation(comp, plantMutations);
             return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName, seedYield.ToString(), seedPotency.ToString(), seedChem, plantHarvestType, exudeGases, plantMutations, false);
         }
-
+        /// <summary>
+        ///     Analysis of unique seed .
+        /// </summary>
         public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeed(SeedData comp, EntityUid target, bool trayChecker)
-        {   //analyze seed from hydroponic
+        {
             var seedName = Loc.GetString(comp.DisplayName);
             var seedYield = comp.Yield;
             var seedPotency = comp.Potency;
@@ -173,10 +176,12 @@ namespace Content.Server.Botany.Systems
             plantMutations = CheckAllMutation(comp, plantMutations);
             return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName, seedYield.ToString(), seedPotency.ToString(), seedChem, plantHarvestType, exudeGases, plantMutations, trayChecker);
         }
-
+        /// <summary>
+        ///     Returns mutations the seed has.
+        /// </summary>
         public string CheckAllMutation(SeedData plant, string plantMutations)
         {
-            //plantMut += String.Join(", \r\n", plant.MutationPrototypes.Select(item => item.ToString())); possible Speciation 
+            //plantSpeciation += String.Join(", \r\n", plant.MutationPrototypes.Select(item => item.ToString())); 
             plantMutations += "\r\n   ";
             if (plant.Viable == false) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-unviable")}" + "\r\n   ";
             if (plant.TurnIntoKudzu) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-turnintokudzu")}" + "\r\n   ";
@@ -186,7 +191,6 @@ namespace Content.Server.Botany.Systems
             if (plant.Ligneous) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-ligneous")}" + "\r\n   ";
             if (plant.Bioluminescent) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-bioluminescent")}" + "\r\n   ";
             if (plant.CanScream) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-canscream")}" + "   ";
-            plantMutations = plantMutations.TrimEnd(',');
 
             return plantMutations;
         }

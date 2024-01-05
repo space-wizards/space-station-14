@@ -25,9 +25,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-using System.Diagnostics;
-using Robust.Shared.Utility;
-
 namespace Content.Server.Botany.Systems;
 
 public sealed class PlantHolderSystem : EntitySystem

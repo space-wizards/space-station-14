@@ -26,7 +26,7 @@
                 Margin="0 8 5 10"/>
             <Label
                 Name="Chemicals"
-                Margin="0 8 5 10"/>           
+                Margin="0 8 5 10"/>
             <Label
                 Name="Gases"
                 Margin="0 8 5 10"/>
