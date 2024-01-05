@@ -83,9 +83,9 @@
   suffix: Rigged
   components:
   - type: StaminaDamageOnHit
-    damage: 30
+    damage: 24
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1.2
     damage:
       types:
         Blunt: 8

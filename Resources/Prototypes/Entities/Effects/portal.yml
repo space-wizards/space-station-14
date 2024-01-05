@@ -51,3 +51,20 @@
     radius: 3
     energy: 1
     netsync: false
+    
+- type: entity
+  id: PortalArtifact
+  parent: BasePortal
+  components:
+  - type: Sprite
+    layers:
+    - state: portal-artifact
+  - type: PointLight
+    color: "#ed85c2"
+    radius: 3
+    energy: 1
+    netsync: false
+  - type: TimedDespawn
+    lifetime: 120
+  - type: Portal
+    canTeleportToOtherMaps: true
