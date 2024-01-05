@@ -11,18 +11,6 @@
     - ClothingHandsGlovesNitrile
 
 - type: loadout
-  id: LoadoutMedicalEyesMediHUD
-  category: Jobs
-  cost: 3
-  exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
-    - Paramedic
-    - ChiefMedicalOfficer
-  items:
-    - ClothingEyesHudMedical
-
-- type: loadout
   id: LoadoutMedicalOuterLabcoat
   category: Jobs
   cost: 2

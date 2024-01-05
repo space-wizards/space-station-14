@@ -106,13 +106,3 @@
     - AtmosphericTechnician
   items:
     - ClothingHeadHatHardhatRed
-
-- type: loadout
-  id: LoadoutEngineeringItemInflatable
-  category: Jobs
-  cost: 4
-  jobWhitelist:
-    - StationEngineer
-    - AtmosphericTechnician
-  items:
-    - BoxInflatable

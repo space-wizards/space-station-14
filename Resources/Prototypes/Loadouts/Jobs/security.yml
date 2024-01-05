@@ -12,28 +12,6 @@
     - ClothingUniformJumpsuitSecGrey
 
 - type: loadout
-  id: LoadoutSecurityOuterArmorBasic
-  category: Jobs
-  cost: 4
-  exclusive: true
-  jobWhitelist:
-    - SecurityOfficer
-    - SeniorOfficer
-  items:
-    - ClothingOuterArmorBasic
-
-- type: loadout
-  id: LoadoutSecurityHeadHelmetBasic
-  category: Jobs
-  cost: 2
-  exclusive: true
-  jobWhitelist:
-    - SecurityOfficer
-    - SeniorOfficer
-  items:
-    - ClothingHeadHelmetBasic
-
-- type: loadout
   id: LoadoutSecurityMaskGasSwat
   category: Jobs
   cost: 2
@@ -44,46 +22,6 @@
     - HeadOfSecurity
   items:
     - ClothingMaskGasSwat
-
-- type: loadout
-  id: LoadoutSecurityEyesGlasses
-  category: Jobs
-  cost: 1
-  exclusive: true
-  jobWhitelist:
-    - SecurityOfficer
-    - SecurityCadet
-    - SeniorOfficer
-    - Warden
-    - HeadOfSecurity
-  items:
-    - ClothingEyesGlassesSecurity
-
-- type: loadout
-  id: LoadoutSecurityEyesHud
-  category: Jobs
-  cost: 3
-  exclusive: true
-  jobWhitelist:
-    - SecurityOfficer
-    - SeniorOfficer
-    - Warden
-    - HeadOfSecurity
-  items:
-    - ClothingEyesHudSecurity
-
-- type: loadout
-  id: LoadoutSecurityShoesBootsCombatFilled
-  category: Jobs
-  cost: 3
-  exclusive: true
-  jobWhitelist:
-    - SecurityOfficer
-    - SeniorOfficer
-    - Warden
-    - HeadOfSecurity
-  items:
-    - ClothingShoesBootsCombatFilled
 
 - type: loadout
   id: LoadoutSecurityShoesJackboots
