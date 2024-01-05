@@ -86,7 +86,6 @@ namespace Content.Shared.Throwing
 
         private void OnSleep(EntityUid uid, ThrownItemComponent thrownItem, ref PhysicsSleepEvent @event)
         {
-            @event.Cancelled = true;
             StopThrow(uid, thrownItem);
         }
 
@@ -102,7 +101,9 @@ namespace Content.Shared.Throwing
             if (TryComp<PhysicsComponent>(uid, out var physics))
             {
                 _physics.SetBodyStatus(physics, BodyStatus.OnGround);
-                _broadphase.RegenerateContacts(uid, physics);
+
+                if (physics.CanCollide)
+                    _broadphase.RegenerateContacts(uid, physics);
             }
 
             if (EntityManager.TryGetComponent(uid, out FixturesComponent? manager))
