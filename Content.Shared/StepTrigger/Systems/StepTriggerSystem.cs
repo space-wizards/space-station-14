@@ -39,10 +39,12 @@ public sealed class StepTriggerSystem : EntitySystem
 
         while (enumerator.MoveNext(out var uid, out var active, out var trigger, out var transform))
         {
-            if (!Update(uid, trigger, transform, query))
-                continue;
+            if (Update(uid, trigger, transform, query))
+            {
+                RemCompDeferred(uid, active);
+            }
 
-            RemCompDeferred(uid, active);
+            ProcessStepOff(uid, trigger);
         }
     }
 
@@ -75,16 +77,19 @@ public sealed class StepTriggerSystem : EntitySystem
             UpdateColliding(uid, component, transform, otherUid, query);
         }
 
+        return false;
+    }
+
+    private void ProcessStepOff(EntityUid uid, StepTriggerComponent component)
+    {
+        // We shouldn't raise this event in OnEndCollide - game shits itself once in a while
         foreach (var otherUid in component.StoppedColliding)
         {
-            // We shouldn't raise this event in OnEndCollide - game shits itself once in a while
             var evStepOff = new StepOffTriggeredEvent { Source = uid, Tripper = otherUid };
             RaiseLocalEvent(uid, ref evStepOff, true);
         }
 
         component.StoppedColliding.Clear();
-
-        return false;
     }
 
     private void UpdateColliding(EntityUid uid, StepTriggerComponent component, TransformComponent ownerXform, EntityUid otherUid, EntityQuery<PhysicsComponent> query)
