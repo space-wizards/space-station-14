@@ -6,7 +6,6 @@
   jobWhitelist:
     - SecurityOfficer
     - SecurityCadet
-    - SeniorOfficer
     - Warden
   items:
     - ClothingUniformJumpsuitSecGrey
@@ -17,7 +16,6 @@
   cost: 2
   exclusive: true
   jobWhitelist:
-    - SeniorOfficer
     - Warden
     - HeadOfSecurity
   items:
@@ -31,7 +29,6 @@
     - Detective
     - SecurityOfficer
     - SecurityCadet
-    - SeniorOfficer
     - Warden
     - HeadOfSecurity
   items:

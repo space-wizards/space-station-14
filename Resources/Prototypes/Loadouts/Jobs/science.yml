@@ -21,15 +21,15 @@
   items:
     - ClothingOuterCoatLab
 
-- type: loadout
-  id: LoadoutScienceOuterLabcoatSeniorResearcher
-  category: Jobs
-  cost: 2
-  exclusive: true
-  jobWhitelist:
-    - SeniorResearcher
-  items:
-    - ClothingOuterCoatLabSeniorResearcher
+# - type: loadout
+#   id: LoadoutScienceOuterLabcoatSeniorResearcher
+#   category: Jobs
+#   cost: 2
+#   exclusive: true
+#   jobWhitelist:
+#     - SeniorResearcher
+#   items:
+#     - ClothingOuterCoatLabSeniorResearcher
 
 - type: loadout
   id: LoadoutScienceHatBeret
