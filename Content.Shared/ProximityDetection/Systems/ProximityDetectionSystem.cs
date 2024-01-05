@@ -19,16 +19,16 @@ public sealed class ProximityDetectionSystem : EntitySystem
         SubscribeLocalEvent<ProximityDetectorComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
-    protected void OnPaused(EntityUid owner, ProximityDetectorComponent component, EntityPausedEvent args)
+    private void OnPaused(EntityUid owner, ProximityDetectorComponent component, EntityPausedEvent args)
     {
         SetEnable_Internal(owner,component,false);
     }
 
-    protected void OnUnpaused(EntityUid owner, ProximityDetectorComponent detector, ref EntityUnpausedEvent args)
+    private void OnUnpaused(EntityUid owner, ProximityDetectorComponent detector, ref EntityUnpausedEvent args)
     {
         SetEnable_Internal(owner, detector,true);
     }
-    protected internal void SetEnable(EntityUid owner, bool enabled, ProximityDetectorComponent? detector = null)
+    private void SetEnable(EntityUid owner, bool enabled, ProximityDetectorComponent? detector = null)
     {
         if (!Resolve(owner, ref detector) || detector.Enabled == enabled)
             return;
@@ -52,12 +52,12 @@ public sealed class ProximityDetectionSystem : EntitySystem
         }
     }
 
-    protected internal bool GetEnable(EntityUid owner, ProximityDetectorComponent? detector = null)
+    private bool GetEnable(EntityUid owner, ProximityDetectorComponent? detector = null)
     {
         return Resolve(owner, ref detector, false) && detector.Enabled;
     }
 
-    protected void SetEnable_Internal(EntityUid owner,ProximityDetectorComponent detector, bool enabled)
+    private void SetEnable_Internal(EntityUid owner,ProximityDetectorComponent detector, bool enabled)
     {
         detector.Enabled = enabled;
         var noDetectEvent = new ProximityTargetUpdatedEvent(detector, detector.TargetEnt, detector.Distance);
@@ -72,7 +72,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
         RunUpdate_Internal(owner, detector);
     }
 
-    protected void ForceUpdate(EntityUid owner, ProximityDetectorComponent? detector = null)
+    private void ForceUpdate(EntityUid owner, ProximityDetectorComponent? detector = null)
     {
         if (!Resolve(owner, ref detector))
             return;
@@ -80,7 +80,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
     }
 
 
-    protected void RunUpdate_Internal(EntityUid owner,ProximityDetectorComponent detector)
+    private void RunUpdate_Internal(EntityUid owner,ProximityDetectorComponent detector)
     {
         if (!_net.IsServer) //only run detection checks on the server!
             return;
@@ -101,14 +101,14 @@ public sealed class ProximityDetectionSystem : EntitySystem
         UpdateTargetFromClosest(owner, detector, detections);
     }
 
-    protected bool CheckDetectConditions(EntityUid targetEntity, float dist, EntityUid owner, ProximityDetectorComponent detector)
+    private bool CheckDetectConditions(EntityUid targetEntity, float dist, EntityUid owner, ProximityDetectorComponent detector)
     {
         var detectAttempt = new ProximityDetectionAttemptEvent(false, dist, (owner, detector));
         RaiseLocalEvent(targetEntity, ref detectAttempt);
         return !detectAttempt.Cancel;
     }
 
-    protected void UpdateTargetFromClosest(EntityUid owner, ProximityDetectorComponent detector, List<(EntityUid TargetEnt, float Distance)> detections)
+    private void UpdateTargetFromClosest(EntityUid owner, ProximityDetectorComponent detector, List<(EntityUid TargetEnt, float Distance)> detections)
     {
         if (detections.Count == 0)
         {
