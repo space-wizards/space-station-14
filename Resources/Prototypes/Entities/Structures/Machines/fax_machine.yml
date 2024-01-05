@@ -95,8 +95,8 @@
   - type: FaxMachine
     name: "ERR*?*%!"
     responsePings: false
-    emagged: true
     notifyAdmins: true
+  - type: Emagged
 
 - type: entity
   parent: FaxMachineBase
