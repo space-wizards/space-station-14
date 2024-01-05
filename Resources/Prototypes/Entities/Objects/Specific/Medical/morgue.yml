@@ -2,7 +2,7 @@
   id: BodyBag_Container
   parent: BaseFoldable
   name: body bag
-  description: A plastic bag designed for the storage and transportation of cadavers.
+  description: A plastic bag designed for the storage and transportation of cadavers to stop body decomposition.
   components:
   - type: Item
     size: Small
@@ -85,7 +85,7 @@
 - type: entity
   id: BodyBag_Folded
   name: body bag
-  description: A plastic bag designed for the storage and transportation of cadavers.
+  description: A plastic bag designed for the storage and transportation of cadavers to stop body decomposition.
   parent: BodyBag_Container
   suffix: folded
   components:

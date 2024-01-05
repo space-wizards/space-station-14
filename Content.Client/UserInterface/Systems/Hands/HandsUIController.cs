@@ -3,10 +3,9 @@ using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
-using Content.Shared.Cooldown;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
-using Robust.Client.GameObjects;
+using Content.Shared.Timing;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -253,7 +252,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
         if (HandsGui != null &&
             _playerHandsComponent != null &&
-            _player.LocalEntity is { } playerEntity &&
+            _player.LocalSession?.AttachedEntity is { } playerEntity &&
             _handsSystem.TryGetHand(playerEntity, handName, out var hand, _playerHandsComponent))
         {
             if (hand.Location == HandLocation.Left)
@@ -355,7 +354,6 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     private bool RemoveHand(string handName, out HandButton? handButton)
     {
-        handButton = null;
         if (!_handLookup.TryGetValue(handName, out handButton))
             return false;
         if (handButton.Parent is HandsContainer handContainer)
@@ -426,11 +424,12 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             foreach (var hand in container.GetButtons())
             {
-                if (!_entities.TryGetComponent(hand.Entity, out ItemCooldownComponent? cooldown) ||
-                    cooldown is not { CooldownStart: { } start, CooldownEnd: { } end})
+
+                if (!_entities.TryGetComponent(hand.Entity, out UseDelayComponent? useDelay) ||
+                    useDelay is not { DelayStartTime: var start, DelayEndTime: var end })
                 {
                     hand.CooldownDisplay.Visible = false;
-                    return;
+                    continue;
                 }
 
                 hand.CooldownDisplay.Visible = true;

@@ -1,10 +1,10 @@
-using System.Text.Json.Serialization;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using System.Text.Json.Serialization;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// <summary>
         ///     The type of explosion. Determines damage types and tile break chance scaling.
         /// </summary>
-        [DataField("explosionType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ExplosionPrototype>))]
+        [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ExplosionPrototype>))]
         [JsonIgnore]
         public string ExplosionType = default!;
 
@@ -22,14 +22,14 @@ namespace Content.Server.Chemistry.ReactionEffects
         ///     The max intensity the explosion can have at a given tile. Places an upper limit of damage and tile break
         ///     chance.
         /// </summary>
-        [DataField("maxIntensity")]
+        [DataField]
         [JsonIgnore]
         public float MaxIntensity = 5;
 
         /// <summary>
         ///     How quickly intensity drops off as you move away from the epicenter
         /// </summary>
-        [DataField("intensitySlope")]
+        [DataField]
         [JsonIgnore]
         public float IntensitySlope = 1;
 
@@ -40,14 +40,14 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// <remarks>
         ///     A slope of 1 and MaxTotalIntensity of 100 corresponds to a radius of around 4.5 tiles.
         /// </remarks>
-        [DataField("maxTotalIntensity")]
+        [DataField]
         [JsonIgnore]
         public float MaxTotalIntensity = 100;
 
         /// <summary>
         ///     The intensity of the explosion per unit reaction.
         /// </summary>
-        [DataField("intensityPerUnit")]
+        [DataField]
         [JsonIgnore]
         public float IntensityPerUnit = 1;
 

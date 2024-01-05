@@ -13,6 +13,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Components;
@@ -28,6 +29,8 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Toolshed.Syntax;
+using ItemToggleMeleeWeaponComponent = Content.Shared.Item.ItemToggle.Components.ItemToggleMeleeWeaponComponent;
 
 namespace Content.Shared.Weapons.Melee;
 
@@ -73,7 +76,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeLocalEvent<BonusMeleeDamageComponent, GetHeavyDamageModifierEvent>(OnGetBonusHeavyDamageModifier);
         SubscribeLocalEvent<BonusMeleeAttackRateComponent, GetMeleeAttackRateEvent>(OnGetBonusMeleeAttackRate);
 
-        SubscribeLocalEvent<ItemToggleMeleeWeaponComponent, ItemToggleMeleeWeaponUpdateEvent>(OnItemToggle);
+        SubscribeLocalEvent<ItemToggleMeleeWeaponComponent, ItemToggledEvent>(OnItemToggle);
 
         SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<LightAttackEvent>(OnLightAttack);
@@ -350,7 +353,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             case LightAttackEvent light:
                 var lightTarget = GetEntity(light.Target);
 
-                if (!Blocker.CanAttack(user, lightTarget))
+                if (!Blocker.CanAttack(user, lightTarget, (weaponUid, weapon)))
                     return false;
 
                 // Can't self-attack if you're the weapon
@@ -361,11 +364,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             case DisarmAttackEvent disarm:
                 var disarmTarget = GetEntity(disarm.Target);
 
-                if (!Blocker.CanAttack(user, disarmTarget))
+                if (!Blocker.CanAttack(user, disarmTarget, (weaponUid, weapon), true))
                     return false;
                 break;
             default:
-                if (!Blocker.CanAttack(user))
+                if (!Blocker.CanAttack(user, weapon: (weaponUid, weapon)))
                     return false;
                 break;
         }
@@ -466,7 +469,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 AdminLogger.Add(LogType.MeleeHit, LogImpact.Low,
                     $"{ToPrettyString(user):actor} melee attacked (light) using {ToPrettyString(meleeUid):tool} and missed");
             }
-            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage);
+            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage, null);
             RaiseLocalEvent(meleeUid, missEvent);
             Audio.PlayPredicted(component.SwingSound, meleeUid, user);
             return;
@@ -475,7 +478,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(new List<EntityUid> { target.Value }, user, meleeUid, damage);
+        var hitEvent = new MeleeHitEvent(new List<EntityUid> { target.Value }, user, meleeUid, damage, null);
         RaiseLocalEvent(meleeUid, hitEvent);
 
         if (hitEvent.Handled)
@@ -577,7 +580,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 AdminLogger.Add(LogType.MeleeHit, LogImpact.Low,
                     $"{ToPrettyString(user):actor} melee attacked (heavy) using {ToPrettyString(meleeUid):tool} and missed");
             }
-            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage);
+            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage, direction);
             RaiseLocalEvent(meleeUid, missEvent);
 
             Audio.PlayPredicted(component.SwingSound, meleeUid, user);
@@ -618,7 +621,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(targets, user, meleeUid, damage);
+        var hitEvent = new MeleeHitEvent(targets, user, meleeUid, damage, direction);
         RaiseLocalEvent(meleeUid, hitEvent);
 
         if (hitEvent.Handled)
@@ -642,20 +645,27 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         foreach (var entity in targets)
         {
+            // We raise an attack attempt here as well,
+            // primarily because this was an untargeted wideswing: if a subscriber to that event cared about
+            // the potential target (such as for pacifism), they need to be made aware of the target here.
+            // In that case, just continue.
+            if (!Blocker.CanAttack(user, entity, (weapon, component)))
+                continue;
+
             var attackedEvent = new AttackedEvent(meleeUid, user, GetCoordinates(ev.Coordinates));
             RaiseLocalEvent(entity, attackedEvent);
             var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
 
             var damageResult = Damageable.TryChangeDamage(entity, modifiedDamage, origin:user);
 
-            if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
+            if (damageResult != null && damageResult.GetTotal() > FixedPoint2.Zero)
             {
                 appliedDamage += damageResult;
 
                 if (meleeUid == user)
                 {
                     AdminLogger.Add(LogType.MeleeHit, LogImpact.Medium,
-                        $"{ToPrettyString(user):actor} melee attacked (heavy) {ToPrettyString(entity):subject} using their hands and dealt {damageResult.Total:damage} damage");
+                        $"{ToPrettyString(user):actor} melee attacked (heavy) {ToPrettyString(entity):subject} using their hands and dealt {damageResult.GetTotal():damage} damage");
                 }
                 else
                 {
@@ -667,7 +677,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         if (entities.Count != 0)
         {
-            if (appliedDamage.Total > FixedPoint2.Zero)
+            if (appliedDamage.GetTotal() > FixedPoint2.Zero)
             {
                 var target = entities.First();
                 PlayHitSound(target, user, GetHighestDamageSound(appliedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
@@ -685,7 +695,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             }
         }
 
-        if (appliedDamage.Total > FixedPoint2.Zero)
+        if (appliedDamage.GetTotal() > FixedPoint2.Zero)
         {
             DoDamageEffect(targets, user, Transform(targets[0]));
         }
@@ -856,7 +866,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     /// <summary>
     /// Used to update the MeleeWeapon component on item toggle.
     /// </summary>
-    private void OnItemToggle(EntityUid uid, ItemToggleMeleeWeaponComponent itemToggleMelee, ItemToggleMeleeWeaponUpdateEvent args)
+    private void OnItemToggle(EntityUid uid, ItemToggleMeleeWeaponComponent itemToggleMelee, ItemToggledEvent args)
     {
         if (!TryComp(uid, out MeleeWeaponComponent? meleeWeapon))
             return;
