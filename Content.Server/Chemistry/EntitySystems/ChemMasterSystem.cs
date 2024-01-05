@@ -140,7 +140,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (fromBuffer) // Buffer to container
             {
                 amount = FixedPoint2.Min(amount, containerSolution.AvailableVolume);
-                amount = bufferSolution.RemoveReagent(id, amount);
+                amount = bufferSolution.RemoveReagent(id, amount, preserveOrder: true);
                 _solutionContainerSystem.TryAddReagent(containerSoln.Value, id, amount, out var _);
             }
             else // Container to buffer
@@ -158,7 +158,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (fromBuffer)
             {
                 if (_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var bufferSolution))
-                    bufferSolution.RemoveReagent(id, amount);
+                    bufferSolution.RemoveReagent(id, amount, preserveOrder: true);
                 else
                     return;
             }

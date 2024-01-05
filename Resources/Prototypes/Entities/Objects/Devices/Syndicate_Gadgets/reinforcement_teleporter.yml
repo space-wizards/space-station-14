@@ -16,7 +16,6 @@
     prototype: MobHumanSyndicateAgent
   - type: EmitSoundOnUse
     sound: /Audio/Effects/Emotes/parp1.ogg
-  - type: ItemCooldown
   - type: UseDelay
     delay: 300
 

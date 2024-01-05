@@ -42,7 +42,6 @@
   - type: Item
     size: Tiny
     sprite: Objects/Fun/Darts/dart_red.rsi
-  - type: ItemCooldown
   - type: SolutionContainerManager
     solutions:
       melee:
