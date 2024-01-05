@@ -9,7 +9,7 @@
     - ClothingNeckMantleHOP
 
 - type: loadout
-  id: LoadoutcommandHOPNeckCloak
+  id: LoadoutCommandHOPNeckCloak
   category: Jobs
   cost: 2
   exclusive: true
@@ -19,7 +19,7 @@
     - ClothingNeckCloakHop
 
 - type: loadout
-  id: LoadoutcommandHOPBackIan
+  id: LoadoutCommandHOPBackIan
   category: Jobs
   cost: 4
   jobWhitelist:
