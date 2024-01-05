@@ -7,7 +7,7 @@
     earliestStart: 20
     reoccurrenceDelay: 20
     weight: 20
-    minimumPlayers: 10
+    minimumPlayers: 20
     startAnnouncement: psychosis-event-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
