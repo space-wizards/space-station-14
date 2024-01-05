@@ -31,6 +31,7 @@ public sealed class AFKSystem : EntitySystem
         base.Initialize();
         _playerManager.PlayerStatusChanged += OnPlayerChange;
         _configManager.OnValueChanged(CCVars.AfkTime, SetAfkDelay, true);
+
         SubscribeNetworkEvent<FullInputCmdMessage>(HandleInputCmd);
     }
 
