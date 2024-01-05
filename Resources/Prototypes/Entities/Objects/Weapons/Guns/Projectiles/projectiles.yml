@@ -871,7 +871,7 @@
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     soundForce: true
   - type: StaminaDamageOnCollide
-    damage: 170
+    damage: 100
 
 - type: entity
   name: LethalOrb
