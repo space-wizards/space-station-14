@@ -46,20 +46,24 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         var query = QueryActiveRules();
         while (query.MoveNext(out _, out var comp, out _))
         {
-            //Chance to not lauch gamerule  
-            if (_random.Prob(comp.RuleChance))
-            {
-                var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.ThiefPrototypeId);
+            //Chance to not launch the game rule
+            if (!_random.Prob(comp.RuleChance))
+                continue;
 
-                if (eligiblePlayers.Count == 0)
-                    continue;
+            //Get all players eligible for this role
+            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.ThiefPrototypeId);
 
-                var thiefCount = _random.Next(1, comp.MaxAllowThief + 1);
+            //Abort if there are none
+            if (eligiblePlayers.Count == 0)
+                continue;
 
-                var thieves = _antagSelection.ChooseAntags<EntityUid>(eligiblePlayers, thiefCount);
+            //Calculate number of thieves to choose
+            var thiefCount = _random.Next(1, comp.MaxAllowThief + 1);
 
-                MakeThief(thieves, comp, comp.PacifistThieves);
-            }
+            //Select our theives
+            var thieves = _antagSelection.ChooseAntags(eligiblePlayers, thiefCount);
+
+            MakeThief(thieves, comp, comp.PacifistThieves);
         }
     }
 

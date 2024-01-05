@@ -46,6 +46,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
         SubscribeLocalEvent<PendingZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
     }
 
@@ -57,6 +58,31 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         base.Added(uid, component, gameRule, args);
 
         gameRule.MinPlayers = _cfg.GetCVar(CCVars.ZombieMinPlayers);
+    }
+
+    /// <summary>
+    /// Check we have enough players to start this game mode, if not - cancel and announce
+    /// </summary>
+    private void OnStartAttempt(RoundStartAttemptEvent ev)
+    {
+        TryRoundStartAttempt(ev, Loc.GetString("zombie-title"));
+    }
+
+    private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
+    {
+        var query = QueryActiveRules();
+        while (query.MoveNext(out var uid, out var comp, out var gameRule))
+        {
+            ScheduleOneshotTask((u, z, g, t) => InfectInitialPlayers((ZombieRuleComponent) z), _random.Next(comp.MinStartDelay, comp.MaxStartDelay), gameRule);
+            ScheduleRecurringTask((u, z, g, t) => CheckRoundEnd((ZombieRuleComponent) z), comp.EndCheckDelay, gameRule);
+        }
+    }
+
+    private void OnZombifySelf(EntityUid uid, PendingZombieComponent component, ZombifySelfActionEvent args)
+    {
+        _zombie.ZombifyEntity(uid);
+        if (component.Action != null)
+            Del(component.Action.Value);
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -111,59 +137,25 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     /// <summary>
     ///     The big kahoona function for checking if the round is gonna end
     /// </summary>
-    private void CheckRoundEnd()
+    private void CheckRoundEnd(ZombieRuleComponent zombieRuleComponent)
     {
-        var query = QueryActiveRules();
-        while (query.MoveNext(out _, out var zombieRuleComponent, out _))
+        var healthy = GetHealthyHumans();
+        if (healthy.Count == 1) // Only one human left. spooky
+            _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
+
+        if (GetInfectedFraction(false) > zombieRuleComponent.ZombieShuttleCallPercentage && !_roundEnd.IsRoundEndRequested())
         {
-            var healthy = GetHealthyHumans();
-            if (healthy.Count == 1) // Only one human left. spooky
-                _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
-
-            if (GetInfectedFraction(false) > zombieRuleComponent.ZombieShuttleCallPercentage && !_roundEnd.IsRoundEndRequested())
+            foreach (var station in _station.GetStations())
             {
-                foreach (var station in _station.GetStations())
-                {
-                    _chat.DispatchStationAnnouncement(station, Loc.GetString("zombie-shuttle-call"), colorOverride: Color.Crimson);
-                }
-                _roundEnd.RequestRoundEnd(null, false);
+                _chat.DispatchStationAnnouncement(station, Loc.GetString("zombie-shuttle-call"), colorOverride: Color.Crimson);
             }
-
-            // we include dead for this count because we don't want to end the round
-            // when everyone gets on the shuttle.
-            if (GetInfectedFraction() >= 1) // Oops, all zombies
-                _roundEnd.EndRound();
+            _roundEnd.RequestRoundEnd(null, false);
         }
-    }
 
-    /// <summary>
-    /// Check we have enough players to start this game mode, if not - cancel
-    /// </summary>
-    private void OnStartAttempt(RoundStartAttemptEvent ev)
-    {
-        TryRoundStartAttempt(ev, Loc.GetString("zombie-title"));
-    }
-
-    /// <summary>
-    /// Schedule the initial infection and round end check
-    /// </summary>
-    protected override void Started(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
-    {
-        base.Started(uid, component, gameRule, args);
-
-        ScheduleOneshotTask((u, z, g, t) => InfectInitialPlayers(z), _random.Next(component.MinStartDelay, component.MaxStartDelay));
-        ScheduleRecurringTask((u, z, g, t) => { if (z.InfectedChosen) CheckRoundEnd(); }, component.EndCheckDelay);
-    }
-
-    protected override void ActiveTick(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, float frameTime)
-    {
-        base.ActiveTick(uid, component, gameRule, frameTime);
-    }
-    private void OnZombifySelf(EntityUid uid, PendingZombieComponent component, ZombifySelfActionEvent args)
-    {
-        _zombie.ZombifyEntity(uid);
-        if (component.Action != null)
-            Del(component.Action.Value);
+        // we include dead for this count because we don't want to end the round
+        // when everyone gets on the shuttle.
+        if (GetInfectedFraction() >= 1) // Oops, all zombies
+            _roundEnd.EndRound();
     }
 
     /// <summary>
@@ -235,12 +227,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     /// </remarks>
     private void InfectInitialPlayers(ZombieRuleComponent component)
     {
-        if (component.InfectedChosen)
-            return;
-        component.InfectedChosen = true;
-
         //Get all players with initial infected enabled, and exclude those with the ZombieImmuneComponent
         var eligiblePlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.PatientZeroPrototypeId, includeAllJobs: true, customExcludeCondition: x => HasComp<ZombieImmuneComponent>(x));
+        //And get all players, excluding ZombieImmune - to fill any leftover initial infected slots
         var allPlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.PatientZeroPrototypeId, includeAllJobs: true, ignorePreferences: true, customExcludeCondition: x => HasComp<ZombieImmuneComponent>(x));
 
         //If there are no players to choose, abort
