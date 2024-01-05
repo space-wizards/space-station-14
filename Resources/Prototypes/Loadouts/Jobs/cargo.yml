@@ -1,0 +1,10 @@
+- type: loadout
+  id: LoadoutCargoNeckGoliathCloak
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - SalvageSpecialist
+  # TODO Time whitelist
+  items:
+    - ClothingNeckCloakGoliathCloak
