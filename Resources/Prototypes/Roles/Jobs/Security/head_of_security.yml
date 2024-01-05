@@ -43,7 +43,8 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoS
     back: ClothingBackpackHOSFilled
-    shoes: ClothingShoesColorBlack
+    shoes: ClothingShoesBootsCombatFilled
+    eyes: ClothingEyesGlassesSunglasses
     id: HoSPDA
     gloves: ClothingHandsGlovesCombat
     ears: ClothingHeadsetAltSecurity

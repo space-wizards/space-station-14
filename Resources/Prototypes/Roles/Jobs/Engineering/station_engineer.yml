@@ -24,6 +24,7 @@
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesBootsWork
     id: EngineerPDA
+    eyes: ClothingEyesGlassesMeson
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
   innerClothingSkirt: ClothingUniformJumpskirtEngineering

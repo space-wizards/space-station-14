@@ -27,6 +27,9 @@
     jumpsuit: ClothingUniformJumpsuitSec
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsCombatFilled
+    eyes: ClothingEyesGlassesSunglasses
+    head: ClothingHeadHelmetBasic
+    outerClothing: ClothingOuterArmorBasic
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
