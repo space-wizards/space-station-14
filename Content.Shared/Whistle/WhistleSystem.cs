@@ -32,9 +32,9 @@ public abstract class SharedWhistleSystem : EntitySystem
         args.Handled = true;
     }
 
-    public bool TryMakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
+    public bool TryMakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent? component = null)
     {
-        if (component.Distance <= 0)
+        if (!Resolve(uid, ref component, false) || component.Distance <= 0)
             return false;
 
         MakeLoudWhistle(uid, owner, component);
