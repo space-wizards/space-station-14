@@ -34,7 +34,7 @@
       collection: Whistles
     Gasp:
       collection: MaleGasp
-    DeathGasp:
+    DefaultDeathgasp:
       collection: MaleDeathGasp
 
 - type: emoteSounds
@@ -72,7 +72,7 @@
       collection: Whistles
     Gasp:
       collection: FemaleGasp
-    DeathGasp:
+    DefaultDeathgasp:
       collection: FemaleDeathGasp
 
 - type: emoteSounds
@@ -92,7 +92,7 @@
       collection: MaleCry
     Gasp:
       collection: MaleGasp
-    DeathGasp:
+    DefaultDeathgasp:
       collection: DeathGasp
 
 - type: emoteSounds
@@ -130,7 +130,7 @@
       collection: Whistles
     Gasp:
       collection: MaleGasp
-    DeathGasp:
+    DefaultDeathgasp:
       collection: MaleDeathGasp
   params:
     variation: 0.125
@@ -170,7 +170,7 @@
       collection: Whistles
     Gasp:
       collection: FemaleGasp
-    DeathGasp:
+    DefaultDeathgasp:
       collection: FemaleDeathGasp
   params:
     variation: 0.125
@@ -193,7 +193,7 @@
       collection: BikeHorn
     Gasp:
       collection: MaleGasp
-    DeathGasp:
+    DefaultDeathgasp:
       collection: DeathGasp
   params:
     variation: 0.125
@@ -210,7 +210,7 @@
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
     Gasp:
       collection: MaleGasp
-    DeathGasp:
+    DefaultDeathgasp:
       collection: DeathGasp
 
 - type: emoteSounds
@@ -246,7 +246,7 @@
       collection: Whistles
     Gasp:
       collection: MaleGasp
-    DeathGasp:
+    DefaultDeathgasp:
       collection: MaleDeathGasp
   params:
     variation: 0.125
@@ -285,7 +285,7 @@
       collection: Whistles
     Gasp:
       collection: FemaleGasp
-    DeathGasp:
+    DefaultDeathgasp:
       collection: FemaleDeathGasp
   params:
     variation: 0.125
@@ -306,7 +306,7 @@
       path: /Audio/Voice/Moth/moth_squeak.ogg
     Gasp:
       collection: MaleGasp
-    DeathGasp:
+    DefaultDeathgasp:
       collection: DeathGasp
 
 # body emotes
