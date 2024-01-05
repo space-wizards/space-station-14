@@ -12,6 +12,12 @@ namespace Content.Shared.Silicons.Bots;
 public sealed partial class EmaggableMedibotComponent : Component
 {
     /// <summary>
+    /// Serves to store original treatments in case a rollback is needed.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public Dictionary<MobState, MedibotTreatment> Original = new();
+
+    /// <summary>
     /// Treatments to replace from the original set.
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]

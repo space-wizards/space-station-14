@@ -304,6 +304,7 @@
       - FauxTileAstroGrass
       - FauxTileAstroIce
       - OreBagOfHolding
+      - FirmwareKey
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload

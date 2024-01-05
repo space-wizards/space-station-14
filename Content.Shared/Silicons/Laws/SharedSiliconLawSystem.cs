@@ -16,6 +16,7 @@ public abstract class SharedSiliconLawSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<EmagSiliconLawComponent, GotEmaggedEvent>(OnGotEmagged);
+        SubscribeLocalEvent<EmagSiliconLawComponent, GotDeemaggedEvent>(OnGotDeemagged);
     }
 
     protected virtual void OnGotEmagged(EntityUid uid, EmagSiliconLawComponent component, ref GotEmaggedEvent args)
@@ -30,5 +31,10 @@ public abstract class SharedSiliconLawSystem : EntitySystem
 
         component.OwnerName = Name(args.UserUid);
         args.Handled = true;
+    }
+
+    protected virtual void OnGotDeemagged(Entity<EmagSiliconLawComponent> ent, ref GotDeemaggedEvent args)
+    {
+        ent.Comp.OwnerName = null;
     }
 }

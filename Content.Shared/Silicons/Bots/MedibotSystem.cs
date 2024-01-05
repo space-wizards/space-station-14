@@ -17,6 +17,7 @@ public sealed class MedibotSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<EmaggableMedibotComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<EmaggableMedibotComponent, GotDeemaggedEvent>(OnDeemagged);
     }
 
     private void OnEmagged(EntityUid uid, EmaggableMedibotComponent comp, ref GotEmaggedEvent args)
@@ -28,10 +29,22 @@ public sealed class MedibotSystem : EntitySystem
 
         foreach (var (state, treatment) in comp.Replacements)
         {
+            comp.Original[state] = medibot.Treatments[state];
             medibot.Treatments[state] = treatment;
         }
 
         args.Handled = true;
+    }
+
+    private void OnDeemagged(Entity<EmaggableMedibotComponent> ent, ref GotDeemaggedEvent args)
+    {
+        if (!TryComp<MedibotComponent>(ent, out var medibot))
+            return;
+
+        foreach (var (state, treatment) in ent.Comp.Original)
+        {
+            medibot.Treatments[state] = treatment;
+        }
     }
 
     /// <summary>
