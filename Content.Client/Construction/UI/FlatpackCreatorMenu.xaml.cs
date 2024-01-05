@@ -92,7 +92,6 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
 
         _currentBoard = itemSlot.Item;
         CostHeaderLabel.Visible = _currentBoard != null;
-        MachineNameLabel.Visible = _currentBoard != null;
         InsertLabel.Visible = _currentBoard == null;
 
         if (_currentBoard is not null)
@@ -100,7 +99,7 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
             string? prototype = null;
             Dictionary<string, int>? cost = null;
 
-            if (machineBoardComp != null)
+            if (machineBoardComp != null || _entityManager.TryGetComponent(_currentBoard, out machineBoardComp))
             {
                 prototype = machineBoardComp.Prototype;
                 cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker), (_currentBoard.Value, machineBoardComp));
@@ -124,6 +123,7 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
         {
             _machinePreview = _entityManager.Spawn(NoBoardEffectId);
             CostLabel.SetMessage(Loc.GetString("flatpacker-ui-no-board-label"));
+            MachineNameLabel.SetMessage(" ");
             PackButton.Disabled = true;
         }
 
