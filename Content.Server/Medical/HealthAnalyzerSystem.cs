@@ -1,14 +1,14 @@
+using Content.Server.Body.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Medical.Components;
 using Content.Server.PowerCell;
+using Content.Server.Temperature.Components;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
 using Robust.Server.GameObjects;
-using Content.Server.Temperature.Components;
-using Content.Server.Body.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
@@ -19,6 +19,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly PowerCellSystem _cell = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
@@ -28,14 +29,14 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<HealthAnalyzerComponent, HealthAnalyzerDoAfterEvent>(OnDoAfter);
         }
 
-        private void OnAfterInteract(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, AfterInteractEvent args)
+        private void OnAfterInteract(Entity<HealthAnalyzerComponent> entity, ref AfterInteractEvent args)
         {
-            if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasActivatableCharge(uid, user: args.User))
+            if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasActivatableCharge(entity.Owner, user: args.User))
                 return;
 
-            _audio.PlayPvs(healthAnalyzer.ScanningBeginSound, uid);
+            _audio.PlayPvs(entity.Comp.ScanningBeginSound, entity);
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, healthAnalyzer.ScanDelay, new HealthAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, TimeSpan.FromSeconds(entity.Comp.ScanDelay), new HealthAnalyzerDoAfterEvent(), entity.Owner, target: args.Target, used: entity.Owner)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -43,14 +44,14 @@ namespace Content.Server.Medical
             });
         }
 
-        private void OnDoAfter(EntityUid uid, HealthAnalyzerComponent component, DoAfterEvent args)
+        private void OnDoAfter(Entity<HealthAnalyzerComponent> entity, ref HealthAnalyzerDoAfterEvent args)
         {
-            if (args.Handled || args.Cancelled || args.Args.Target == null || !_cell.TryUseActivatableCharge(uid, user: args.User))
+            if (args.Handled || args.Cancelled || args.Target == null || !_cell.TryUseActivatableCharge(entity.Owner, user: args.User))
                 return;
 
-            _audio.PlayPvs(component.ScanningEndSound, args.Args.User);
+            _audio.PlayPvs(entity.Comp.ScanningEndSound, args.User);
 
-            UpdateScannedUser(uid, args.Args.User, args.Args.Target.Value, component);
+            UpdateScannedUser(entity, args.User, args.Target.Value, entity.Comp);
             args.Handled = true;
         }
 
@@ -73,13 +74,26 @@ namespace Content.Server.Medical
             if (!HasComp<DamageableComponent>(target))
                 return;
 
-            TryComp<TemperatureComponent>(target, out var temp);
-            TryComp<BloodstreamComponent>(target, out var bloodstream);
+            float bodyTemperature;
+            if (TryComp<TemperatureComponent>(target, out var temp))
+                bodyTemperature = temp.CurrentTemperature;
+            else
+                bodyTemperature = float.NaN;
+
+            float bloodAmount;
+            if (TryComp<BloodstreamComponent>(target, out var bloodstream) &&
+                _solutionContainerSystem.ResolveSolution(target.Value, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
+                bloodAmount = bloodSolution.FillFraction;
+            else
+                bloodAmount = float.NaN;
 
             OpenUserInterface(user, uid);
 
-            _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(GetNetEntity(target), temp != null ? temp.CurrentTemperature : float.NaN,
-                bloodstream != null ? bloodstream.BloodSolution.FillFraction : float.NaN));
+            _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(
+                GetNetEntity(target),
+                bodyTemperature,
+                bloodAmount
+            ));
         }
     }
 }

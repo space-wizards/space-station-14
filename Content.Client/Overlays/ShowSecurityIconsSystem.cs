@@ -8,6 +8,7 @@ using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
+
 public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
@@ -30,9 +31,9 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
             return;
         }
 
-        var healthIcons = DecideSecurityIcon(uid);
+        var securityIcons = DecideSecurityIcon(uid);
 
-        @event.StatusIcons.AddRange(healthIcons);
+        @event.StatusIcons.AddRange(securityIcons);
     }
 
     private IReadOnlyList<StatusIconPrototype> DecideSecurityIcon(EntityUid uid)

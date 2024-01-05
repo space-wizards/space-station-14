@@ -11,7 +11,6 @@
     - state: icon
       map: ["base"]
   - type: Item
-    sprite: Objects/Weapons/Bombs/c4.rsi
     size: Small
   - type: OnUseTimerTrigger
     delay: 10
@@ -54,6 +53,13 @@
           - !type:ExplodeBehavior
   - type: StickyVisualizer
   - type: Appearance
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: HolidayRsiSwap
+    sprite:
+      festive: Objects/Weapons/Bombs/c4gift.rsi
   - type: GenericVisualizer
     visuals:
       enum.Trigger.TriggerVisuals.VisualState:

@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Rounding;
 using Robust.Client.GameObjects;

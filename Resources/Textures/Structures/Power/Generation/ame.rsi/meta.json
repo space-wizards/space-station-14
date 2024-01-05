@@ -7,7 +7,7 @@
     "y": 32
   },
   "states": [
-    {
+	{
       "name": "shield_0"
     },
     {
@@ -86,6 +86,9 @@
     },
     {
       "name": "control"
+    },
+	{
+      "name": "static"
     },
     {
       "name": "control_critical",
