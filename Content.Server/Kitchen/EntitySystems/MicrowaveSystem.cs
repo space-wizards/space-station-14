@@ -261,16 +261,15 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             }
 
-            if (ent.Comp.Storage.Count < ent.Comp.Capacity)
-            {
-                args.Handled = true;
-                _handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Storage);
-                UpdateUserInterfaceState(ent, ent.Comp);
-            }
-            else
+            if (ent.Comp.Storage.Count >= ent.Comp.Capacity)
             {
                 _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-full"), ent, args.User);
+                return;
             }
+
+            args.Handled = true;
+            _handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Storage);
+            UpdateUserInterfaceState(ent, ent.Comp);
         }
 
         private void OnBreak(Entity<MicrowaveComponent> ent, ref BreakageEventArgs args)
