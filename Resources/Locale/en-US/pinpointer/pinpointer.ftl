@@ -2,3 +2,4 @@
 targeting-pinpointer-succeeded = Target changed to: {$target}
 targeting-pinpointer-failed = Target not detected
 cycle-pinpointer-target = Change target
+suffix-pinpointer-duplicate =  [{$duplicateIndex}]

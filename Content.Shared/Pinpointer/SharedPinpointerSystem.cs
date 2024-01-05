@@ -30,13 +30,10 @@ public abstract class SharedPinpointerSystem : EntitySystem
         if (!args.CanReach || args.Target is not { } target)
             return;
 
-        if (component.IsActive && component.CanRetarget)
-            return;
-
         // TODO add doafter once the freeze is lifted
         args.Handled = true;
 
-        if (component.CanRetarget)
+        if (component.CanRetarget && !component.IsActive || TryComp<NavMapBeaconComponent>(args.Target, out var nukeComponent))
         {
             component.Target = args.Target;
         }
@@ -53,6 +50,11 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return;
         }
 
+
+        if(component.StoredTargets.Contains(component.Target.Value))
+            return;
+
+        component.StoredTargets.Add(component.Target.Value);
         _popup.PopupEntity(Loc.GetString("targeting-pinpointer-succeeded", ("target", component.Target.Value)), args.User, args.User);
 
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(uid):pinpointer} to {ToPrettyString(component.Target.Value):target}");

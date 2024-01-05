@@ -15,16 +15,17 @@ public sealed partial class PinpointerComponent : Component
 {
     // TODO: Type serializer oh god
     /// <summary>
-    /// The list of entities that are able to be tracked
+    /// The list of components that will be searched for when the pinpointer is turned on.
+    /// The closest entities found with one of the components in this list will be added to the StoredTargets.
     /// </summary>
     [DataField("components"), ViewVariables(VVAccess.ReadWrite)]
-    public List<string>? Components;
+    public List<string> Components = new();
 
     /// <summary>
-    /// The index of the target currently being tracked
+    /// The list of entities that are able to be tracked
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public int CurrentTargetIndex = 0;
+    [DataField("storedTargets"), ViewVariables(VVAccess.ReadWrite)]
+    public List<EntityUid> StoredTargets = new();
 
     [DataField("mediumDistance"), ViewVariables(VVAccess.ReadWrite)]
     public float MediumDistance = 16f;

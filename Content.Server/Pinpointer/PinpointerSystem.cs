@@ -51,7 +51,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     {
         TogglePinpointer(uid, component);
 
-        if (!component.CanRetarget)
+        if (!component.CanRetarget && component.StoredTargets.Count < component.Components.Count)
             LocateTarget(uid, component);
     }
 
@@ -72,21 +72,34 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
     }
 
+    /// <summary>
+    /// Searches the closest object that has a specific component for every component the pinpointer has stored.
+    /// This entity is then added to the stored targets.
+    /// </summary>
     private void LocateTarget(EntityUid uid, PinpointerComponent component, EntityUid? user = null)
     {
         // try to find target from whitelist
-        if (component.IsActive && component.Components != null)
+        if (component.IsActive)
         {
-            var trackedComponent = component.Components[component.CurrentTargetIndex];
-            if (!EntityManager.ComponentFactory.TryGetRegistration(trackedComponent, out var reg))
+            foreach (var preinstalledTarget in component.Components)
             {
-                Log.Error($"Unable to find component registration for {trackedComponent} for pinpointer!");
-                DebugTools.Assert(false);
-                return;
-            }
+                if (!EntityManager.ComponentFactory.TryGetRegistration(preinstalledTarget, out var reg))
+                {
+                    Log.Error($"Unable to find component registration for {preinstalledTarget} for pinpointer!");
+                    DebugTools.Assert(false);
+                    return;
+                }
 
-            var target = FindTargetFromComponent(uid, reg.Type);
-            SetTarget(uid, target, component, user);
+                var target = FindTargetFromComponent(uid, reg.Type);
+
+                //Adds the target to the stored targets if it's not already in there.
+                if(target != null && !component.StoredTargets.Contains(target.Value))
+                {
+                    component.StoredTargets.Add(target.Value);
+                }
+
+                SetTarget(uid, target, component, user);
+            }
         }
     }
 
@@ -237,41 +250,67 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     }
 
     /// <summary>
-    /// Cycles between the targets the pinpointer is able to track.
+    /// Clears the list with stored targets and turns off the pinpointer.
     /// </summary>
-    private void CycleTarget(EntityUid uid, PinpointerComponent component, EntityUid user)
+    private void DeleteStoredTargets(EntityUid uid, PinpointerComponent component, EntityUid? user)
     {
-        if (component.Components == null)
-            return;
-
-        if (component.CurrentTargetIndex == component.Components.Count - 1)
+        component.StoredTargets.Clear();
+        if (component.IsActive)
         {
-            component.CurrentTargetIndex = 0;
-        }
-        else
-        {
-            component.CurrentTargetIndex++;
+            TogglePinpointer(uid, component);
         }
 
-        LocateTarget(uid, component, user);
     }
 
     /// <summary>
-    /// Adds the verb that allows the pinpointer to cycle targets if it has more than one trackable target.
+    /// Adds the verb that allows the user to select any of the stored targets.
+    /// Additionally adds a verb that allows the user to clear the stored targets.
     /// </summary>
     private void OnPinpointerVerb(EntityUid uid, PinpointerComponent component, GetVerbsEvent<Verb> args)
     {
-        if (component.Components == null)
+        if (!args.CanInteract || args.Hands == null)
             return;
 
-        if (!args.CanInteract || args.Hands == null || component.Components.Count <= 1)
-            return;
+        var duplicateIndex = 1;
+        var duplicateSuffix = "";
 
-        args.Verbs.Add(new Verb()
+        foreach (var target in component.StoredTargets)
         {
-            Text = Loc.GetString("cycle-pinpointer-target"),
-            Act = () => CycleTarget(uid, component, args.User),
-            Priority = 1
-        });
+            if (Deleted(target))
+            {
+                continue;
+            }
+            // Adds a number behind a name if the menu already contains an entity with the same same.
+            if (duplicateIndex > 1)
+            {
+                duplicateSuffix = Loc.GetString("suffix-pinpointer-duplicate", ("duplicateIndex", duplicateIndex));
+            }
+            duplicateIndex++;
+
+            //Adds the verb if there is more than 1 stored target.
+            if (component.StoredTargets.Count > 1)
+            {
+                args.Verbs.Add(new Verb()
+                {
+                    Text = Loc.GetString(Identity.Name(target, EntityManager) + duplicateSuffix),
+                    Act = () => SetTarget(uid, target, component, args.User),
+                    Priority = 50,
+                    Category = VerbCategory.SelectType
+                });
+            }
+
+        }
+
+        if (component.StoredTargets.Count != 0)
+        {
+            args.Verbs.Add(new Verb()
+            {
+                Text = Loc.GetString("Reset targets"),
+                Act = () => DeleteStoredTargets(uid, component, args.User),
+                Category = null,
+                Priority = 1
+            });
+        }
+
     }
 }

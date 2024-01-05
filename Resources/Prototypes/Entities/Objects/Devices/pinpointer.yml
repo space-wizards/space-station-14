@@ -63,7 +63,6 @@
   - type: Pinpointer
     components:
     - NukeDisk
-    - Nuke
     targetName: nuclear authentication disk
     updateTargetName: true
 
