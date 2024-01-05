@@ -81,11 +81,12 @@ namespace Content.Client.Construction
 
         private void HandleConstructionGhostExamined(EntityUid uid, ConstructionGhostComponent component, ExaminedEvent args)
         {
-            if (component.Prototype == null) return;
+            if (component.Prototype == null)
+                return;
 
             args.PushMarkup(Loc.GetString(
                 "construction-ghost-examine-message",
-                ("name", component.Prototype.Name)));
+                ("name", component.Prototype.Name)), group: nameof(ConstructionGhostComponent));
 
             if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
                 return;
@@ -98,9 +99,8 @@ namespace Content.Client.Construction
                 return;
             }
 
-            foreach (ConstructionGraphStep step in edge.Steps)
+            foreach (var step in edge.Steps)
             {
-                args.Message.PushNewline();
                 step.DoExamine(args);
             }
         }

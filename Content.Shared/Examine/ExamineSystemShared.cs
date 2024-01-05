@@ -1,4 +1,6 @@
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
@@ -254,9 +256,10 @@ namespace Content.Shared.Examine
             var examinedEvent = new ExaminedEvent(message, entity, examiner.Value, isInDetailsRange, doNewline);
             RaiseLocalEvent(entity, examinedEvent, true);
 
-            message.Pop();
+            var newMessage = examinedEvent.GetTotalMessage();
+            newMessage.Pop();
 
-            return message;
+            return newMessage;
         }
     }
 
@@ -267,13 +270,26 @@ namespace Content.Shared.Examine
     {
         /// <summary>
         ///     The message that will be displayed as the examine text.
-        /// For most use cases, you probably want to use <see cref="PushMarkup"/> and similar instead to modify this,
-        /// since it handles newlines and such correctly.
+        ///     You should use <see cref="PushMarkup"/> and similar instead to modify this,
+        ///     since it handles newlines/priority and such correctly.
         /// </summary>
         /// <seealso cref="PushMessage"/>
         /// <seealso cref="PushMarkup"/>
         /// <seealso cref="PushText"/>
-        public FormattedMessage Message { get; }
+        /// <seealso cref="AddMessage"/>
+        /// <seealso cref="AddMarkup"/>
+        /// <seealso cref="AddText"/>
+        private FormattedMessage Message { get; }
+
+        /// <summary>
+        ///     Parts of the examine message that will later be sorted by priority and pushed onto <see cref="Message"/>.
+        /// </summary>
+        private List<ExamineMessagePart> Parts { get; } = new();
+
+        /// <summary>
+        ///     Whether the examiner is in range of the entity to get some extra details.
+        /// </summary>
+        public bool IsInDetailsRange { get; }
 
         /// <summary>
         ///     The entity performing the examining.
@@ -284,11 +300,6 @@ namespace Content.Shared.Examine
         ///     Entity being examined, for broadcast event purposes.
         /// </summary>
         public EntityUid Examined { get; }
-
-        /// <summary>
-        ///     Whether the examiner is in range of the entity to get some extra details.
-        /// </summary>
-        public bool IsInDetailsRange { get; }
 
         private bool _doNewLine;
 
@@ -302,44 +313,134 @@ namespace Content.Shared.Examine
         }
 
         /// <summary>
+        ///     Returns <see cref="Message"/> with all <see cref="Parts"/> appended according to their priority.
+        /// </summary>
+        public FormattedMessage GetTotalMessage()
+        {
+            int Comparison(ExamineMessagePart a, ExamineMessagePart b)
+            {
+                // Try sort by priority, then group, then by string contents
+                if (a.Priority != b.Priority)
+                {
+                    return a.Priority.CompareTo(b.Priority);
+                }
+
+                if (a.Group != b.Group)
+                {
+                    return string.Compare(a.Group, b.Group, StringComparison.Ordinal);
+                }
+
+                return string.Compare(a.Message.ToString(), b.Message.ToString(), StringComparison.Ordinal);
+            }
+
+            // tolist/clone formatted message so calling this multiple times wont fuck shit up
+            // (if that happens for some reason)
+            var parts = Parts.ToList();
+            var totalMessage = new FormattedMessage(Message);
+            parts.Sort(Comparison);
+
+            foreach (var part in parts)
+            {
+                totalMessage.AddMessage(part.Message);
+            }
+
+            return totalMessage;
+        }
+
+        /// <summary>
         /// Push another message into this examine result, on its own line.
+        /// End message will be grouped by <see cref="priority"/>, then by <see cref="group"/> (e.g. component name),
+        /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="PushMarkup"/>
         /// <seealso cref="PushText"/>
-        public void PushMessage(FormattedMessage message)
+        public void PushMessage(FormattedMessage message, int priority=0, string? group=null)
         {
             if (message.Nodes.Count == 0)
                 return;
 
             if (_doNewLine)
-                Message.AddText("\n");
+                FormattedMessage.FromUnformatted("\n").AddMessage(message);
 
-            Message.AddMessage(message);
+            Parts.Add(new ExamineMessagePart(message, priority, group));
             _doNewLine = true;
         }
 
         /// <summary>
         /// Push another message parsed from markup into this examine result, on its own line.
+        /// End message will be grouped by <see cref="priority"/>, then by <see cref="group"/> (e.g. component name),
+        /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="PushText"/>
         /// <seealso cref="PushMessage"/>
-        public void PushMarkup(string markup)
+        public void PushMarkup(string markup, int priority=0, string? group=null)
         {
-            PushMessage(FormattedMessage.FromMarkup(markup));
+            PushMessage(FormattedMessage.FromMarkup(markup), priority);
         }
 
         /// <summary>
         /// Push another message containing raw text into this examine result, on its own line.
+        /// End message will be grouped by <see cref="priority"/>, then by <see cref="group"/> (e.g. component name),
+        /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="PushMarkup"/>
         /// <seealso cref="PushMessage"/>
-        public void PushText(string text)
+        public void PushText(string text, int priority=0, string? group=null)
         {
             var msg = new FormattedMessage();
             msg.AddText(text);
-            PushMessage(msg);
+            PushMessage(msg, priority);
         }
+
+        /// <summary>
+        /// Adds a message directly without starting a newline after.
+        /// End message will be grouped by <see cref="priority"/>, then by <see cref="group"/> (e.g. component name),
+        /// then by ordinal comparison.
+        /// </summary>
+        /// <seealso cref="AddMarkup"/>
+        /// <seealso cref="AddText"/>
+        public void AddMessage(FormattedMessage message, int priority = 0, string? group=null)
+        {
+            if (message.Nodes.Count == 0)
+                return;
+
+            // Respect _doNewLine if it was passed earlier but don't
+            // set it after we add our part.
+            if (_doNewLine)
+                FormattedMessage.FromUnformatted("\n").AddMessage(message);
+
+            Parts.Add(new ExamineMessagePart(message, priority, group));
+        }
+
+        /// <summary>
+        /// Adds markup directly without starting a newline after.
+        /// End message will be grouped by <see cref="priority"/>, then by <see cref="group"/> (e.g. component name),
+        /// then by ordinal comparison.
+        /// </summary>
+        /// <seealso cref="AddText"/>
+        /// <seealso cref="AddMessage"/>
+        public void AddMarkup(string markup, int priority = 0, string? group=null)
+        {
+            AddMessage(FormattedMessage.FromMarkup(markup), priority);
+        }
+
+        /// <summary>
+        /// Adds text directly without starting a newline after.
+        /// End message will be grouped by <see cref="priority"/>, then by <see cref="group"/> (e.g. component name),
+        /// then by ordinal comparison.
+        /// </summary>
+        /// <seealso cref="AddMarkup"/>
+        /// <seealso cref="AddMessage"/>
+        public void AddText(string text, int priority=0, string? group=null)
+        {
+            var msg = new FormattedMessage();
+            msg.AddText(text);
+            AddMessage(msg, priority, group);
+        }
+
+        private record struct ExamineMessagePart(FormattedMessage Message, int Priority, string? Group);
     }
+
 
     /// <summary>
     ///     Event raised directed at an entity that someone is attempting to examine
