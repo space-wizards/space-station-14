@@ -95,6 +95,6 @@
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
-    component:
+    components:
     - BecomesStation
     targetName: the station
