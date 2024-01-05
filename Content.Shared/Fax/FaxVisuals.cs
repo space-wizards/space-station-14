@@ -15,5 +15,6 @@ public enum FaxMachineVisualState : byte
     Inserting,
     InsertingHamlet,
     InsertingMouse,
+    InsertingMothroach,
     Printing
 }

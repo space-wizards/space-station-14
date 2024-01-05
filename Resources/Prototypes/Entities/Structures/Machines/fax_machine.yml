@@ -54,6 +54,7 @@
           Inserting: { state: inserting }
           InsertingHamlet: { state: inserting_hamster }
           InsertingMouse: { state: inserting_mouse }
+          InsertingMothroach: { state: inserting_mothroach }
           Printing: { state: printing }
   - type: ItemSlots
   - type: ContainerContainer

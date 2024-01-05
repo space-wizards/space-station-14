@@ -349,6 +349,8 @@ public sealed class FaxSystem : EntitySystem
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingHamlet);
         else if (component.InsertingTimeRemaining > 0 && component.PaperSlot.Item != null && _tagSystem.HasTag(component.PaperSlot.Item.Value, "Mouse"))
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMouse);
+        else if (component.InsertingTimeRemaining > 0 && component.PaperSlot.Item != null && _tagSystem.HasTag(component.PaperSlot.Item.Value, "MothRoach"))
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMothroach);
         else if (component.InsertingTimeRemaining > 0)
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
         else if (component.PrintingTimeRemaining > 0)
@@ -422,6 +424,15 @@ public sealed class FaxSystem : EntitySystem
         var sendEntity = component.PaperSlot.Item;
         if (sendEntity == null)
             return;
+
+        if (HasComp<MobStateComponent>(sendEntity))
+        {
+            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Brute"), 300);
+            _damageable.TryChangeDamage(sendEntity, damageSpec);
+            _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", uid)), uid, PopupType.LargeCaution);
+            return;
+        }
+
 
         if (!TryComp<MetaDataComponent>(sendEntity, out var metadata) ||
             !TryComp<PaperComponent>(sendEntity, out var paper))

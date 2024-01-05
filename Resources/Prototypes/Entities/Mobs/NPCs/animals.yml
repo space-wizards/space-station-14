@@ -422,6 +422,7 @@
     accent: mothroach
   - type: ZombieAccentOverride
     accent: zombieMoth
+  - type: Paper
   - type: Vocal
     sounds:
       Male: UnisexMoth
@@ -435,6 +436,7 @@
     - Trash
     - CannotSuicide
     - VimPilot
+    - MothRoach
   - type: CanEscapeInventory
   - type: NpcFactionMember
     factions:

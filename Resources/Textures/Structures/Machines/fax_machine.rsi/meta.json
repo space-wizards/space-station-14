@@ -60,6 +60,25 @@
       ]
     },
     {
+      "name": "inserting_mothroach",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
       "name": "inserting_mouse",
       "delays": [
         [
