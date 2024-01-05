@@ -82,7 +82,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly WarDeclaratorSystem _warDeclarator = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ISawmill _logger = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+
+    private ISawmill _sawmill = default!;
 
     [ValidatePrototypeId<CurrencyPrototype>]
     private const string TelecrystalCurrencyPrototype = "Telecrystal";
@@ -102,6 +104,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     public override void Initialize()
     {
         base.Initialize();
+
+        _sawmill = _logManager.GetSawmill("NukeOps");
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
@@ -610,7 +614,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             if (!SpawnMap(uid, nukeops))
             {
-                _logger.Info("Failed to load map for nukeops");
+                _sawmill.Info("Failed to load map for nukeops");
                 continue;
             }
 
@@ -760,7 +764,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         if (!_map.TryLoad(mapId, path.ToString(), out var outpostGrids, options) || outpostGrids.Count == 0)
         {
-            _logger.Error($"Error loading map {path} for nukies!");
+            _sawmill.Error($"Error loading map {path} for nukies!");
             return false;
         }
 
@@ -770,7 +774,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         // Listen I just don't want it to overlap.
         if (!_map.TryLoad(mapId, shuttlePath.ToString(), out var grids, new MapLoadOptions {Offset = Vector2.One * 1000f}) || !grids.Any())
         {
-            _logger.Error($"Error loading grid {shuttlePath} for nukies!");
+            _sawmill.Error($"Error loading grid {shuttlePath} for nukies!");
             return false;
         }
 
@@ -779,7 +783,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         // Naughty, someone saved the shuttle as a map.
         if (Deleted(shuttleId))
         {
-            _logger.Error($"Tried to load nukeops shuttle as a map, aborting.");
+            _sawmill.Error($"Tried to load nukeops shuttle as a map, aborting.");
             _mapManager.DeleteMap(mapId);
             return false;
         }
@@ -868,7 +872,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (spawns.Count == 0)
         {
             spawns.Add(Transform(outpostUid).Coordinates);
-            _logger.Warning($"Fell back to default spawn for nukies!");
+            _sawmill.Warning($"Fell back to default spawn for nukies!");
         }
 
         foreach (var nukieSession in sessions)
@@ -930,7 +934,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         if (!SpawnMap(uid, component))
         {
-            _logger.Info("Failed to load map for nukeops");
+            _sawmill.Info("Failed to load map for nukeops");
             return;
         }
 
