@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
@@ -20,6 +20,8 @@ public sealed partial class GameRuleComponent : Component
     /// </summary>
     [DataField]
     public int MinPlayers;
+
+    public SortedList<TimeSpan, GameRuleTask> ScheduledTasks = new SortedList<TimeSpan, GameRuleTask>();
 }
 
 /// <summary>
@@ -42,3 +44,17 @@ public readonly record struct GameRuleStartedEvent(EntityUid RuleEntity, string 
 /// </summary>
 [ByRefEvent]
 public readonly record struct GameRuleEndedEvent(EntityUid RuleEntity, string RuleId);
+
+public sealed class GameRuleTask
+{
+    public Action<EntityUid, IComponent, GameRuleComponent, float> Action { get; private set; }
+    public TimeSpan? Interval { get; private set; }
+    public bool Oneshot { get; private set; }
+
+    public GameRuleTask(Action<EntityUid, IComponent, GameRuleComponent, float> action, bool oneshot = false, TimeSpan? interval = null)
+    {
+        Action = action;
+        Interval = interval;
+        Oneshot = oneshot;
+    }
+}

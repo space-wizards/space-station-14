@@ -10,7 +10,6 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     [Dependency] protected readonly GameTicker GameTicker = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
 
-    private List<GameRuleTask<T>> _scheduledTasks = new List<GameRuleTask<T>>();
     public override void Initialize()
     {
         base.Initialize();
@@ -71,34 +70,16 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     /// </summary>
     protected virtual void ActiveTick(EntityUid uid, T component, GameRuleComponent gameRule, float frameTime)
     {
-        var toRemove = new List<GameRuleTask<T>>();
         var now = Timing.CurTime;
-        foreach (var task in _scheduledTasks)
+        if (gameRule.ScheduledTasks.Count > 0 && gameRule.ScheduledTasks.GetKeyAtIndex(0) <= now)
         {
-            if (task.NextRunTime <= now)
-            {
-                task.Action(uid, component, gameRule, frameTime);
-                if (task.Oneshot)
-                {
-                    toRemove.Add(task);
-                }
-                else
-                {
-                    if (!task.Interval.HasValue)
-                    {
-                        toRemove.Add(task);
-                    }
-                    else
-                    {
-                        task.NextRunTime = now + task.Interval.Value;
-                    }
-                }
-            }
-        }
+            var task = gameRule.ScheduledTasks.GetValueAtIndex(0);
+            task.Action(uid, component, gameRule, frameTime);
+            gameRule.ScheduledTasks.RemoveAt(0);
 
-        //Remove expired tasks
-        foreach (var taskToRemove in toRemove)
-            _scheduledTasks.Remove(taskToRemove);
+            if (!task.Oneshot && task.Interval.HasValue)
+                gameRule.ScheduledTasks.Add(now + task.Interval.Value, task);
+        }
     }
 
     protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
@@ -155,35 +136,19 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     /// </summary>
     /// <param name="task">An action accepting : Rule entity, T Component, GameRuleComponent and frameTime</param>
     /// <param name="interval">Timespan specifying the interval to run the task</param>
-    public void ScheduleRecurringTask(Action<EntityUid, T, GameRuleComponent, float> task, TimeSpan interval)
+    public void ScheduleRecurringTask(Action<EntityUid, IComponent, GameRuleComponent, float> task, TimeSpan interval, GameRuleComponent gameRule)
     {
         var now = Timing.CurTime;
-        _scheduledTasks.Add(new GameRuleTask<T>(task, now + interval, false, interval));
+        gameRule.ScheduledTasks.Add(now + interval, new GameRuleTask(task, false, interval));
     }
     /// <summary>
     /// Schedule a task to be run once after a delay
     /// </summary>
     /// <param name="task">An action accepting : Rule entity, T Component, GameRuleComponent and frameTime</param>
     /// <param name="delay">Timespan specifying how long to delay before running the task</param>
-    public void ScheduleOneshotTask(Action<EntityUid, T, GameRuleComponent, float> task, TimeSpan delay)
+    public void ScheduleOneshotTask(Action<EntityUid, IComponent, GameRuleComponent, float> task, TimeSpan delay, GameRuleComponent gameRule)
     {
         var now = Timing.CurTime;
-        _scheduledTasks.Add(new GameRuleTask<T>(task, now + delay, true));
-    }
-
-    private sealed class GameRuleTask<T2> where T2 : IComponent
-    {
-        public Action<EntityUid, T2, GameRuleComponent, float> Action { get; private set; }
-        public TimeSpan? Interval { get; private set; }
-        public bool Oneshot { get; private set; }
-        public TimeSpan NextRunTime { get; set; }
-
-        public GameRuleTask(Action<EntityUid, T2, GameRuleComponent, float> action, TimeSpan nextRunTime, bool oneshot = false, TimeSpan? interval = null)
-        {
-            Action = action;
-            Interval = interval;
-            Oneshot = oneshot;
-            NextRunTime = nextRunTime;
-        }
+        gameRule.ScheduledTasks.Add(now + delay, new GameRuleTask(task, true));
     }
 }

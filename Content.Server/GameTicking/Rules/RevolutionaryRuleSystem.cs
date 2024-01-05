@@ -71,24 +71,90 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
-        component.CommandCheck = _timing.CurTime + component.TimerWait;
+
+        //Schedule check for round end
+        ScheduleRecurringTask((u, r, g, f) => CheckRoundEnd(u, (RevolutionaryRuleComponent) r, g), component.TimerWait, gameRule);
+    }
+
+    private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
+    {
+        var query = QueryActiveRules();
+        while (query.MoveNext(out var uid, out var comp, out var gameRule))
+        {
+            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.HeadRevPrototypeId);
+
+            if (eligiblePlayers.Count == 0)
+                continue;
+
+            var headRevCount = _antagSelection.CalculateAntagCount(ev.Players.Count(), comp.PlayersPerHeadRev, comp.MaxHeadRevs);
+
+            var headRevs = _antagSelection.ChooseAntags<EntityUid>(eligiblePlayers, headRevCount);
+
+            _antagSelection.SendBriefing(headRevs, Loc.GetString("head-rev-role-greeting"), Color.CornflowerBlue, comp.HeadRevStartSound);
+            GiveHeadRev(headRevs, comp.HeadRevPrototypeId, comp);
+        }
     }
 
     /// <summary>
-    /// Checks if the round should end and also checks who has a mindshield.
+    /// Called when a Head Rev uses a flash in melee to convert somebody else.
     /// </summary>
-    protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    private void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, ref AfterFlashedEvent ev)
     {
-        base.ActiveTick(uid, component, gameRule, frameTime);
-        if (component.CommandCheck <= _timing.CurTime)
-        {
-            component.CommandCheck = _timing.CurTime + component.TimerWait;
+        TryComp<AlwaysRevolutionaryConvertibleComponent>(ev.Target, out var alwaysConvertibleComp);
+        var alwaysConvertible = alwaysConvertibleComp != null;
 
-            if (CheckCommandLose())
-            {
-                _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime);
-                GameTicker.EndGameRule(uid, gameRule);
-            }
+        if (!_mind.TryGetMind(ev.Target, out var mindId, out var mind) && !alwaysConvertible)
+            return;
+
+        if (HasComp<RevolutionaryComponent>(ev.Target) ||
+            HasComp<MindShieldComponent>(ev.Target) ||
+            !HasComp<HumanoidAppearanceComponent>(ev.Target) &&
+            !alwaysConvertible ||
+            !_mobState.IsAlive(ev.Target) ||
+            HasComp<ZombieComponent>(ev.Target))
+        {
+            return;
+        }
+
+        _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
+        EnsureComp<RevolutionaryComponent>(ev.Target);
+        _stun.TryParalyze(ev.Target, comp.StunTime, true);
+        if (ev.User != null)
+        {
+            _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
+
+            if (_mind.TryGetRole<RevolutionaryRoleComponent>(ev.User.Value, out var headrev))
+                headrev.ConvertedCount++;
+
+        }
+
+        if (mindId == default || !_role.MindHasRole<RevolutionaryRoleComponent>(mindId))
+        {
+            _role.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = RevolutionaryAntagRole });
+        }
+
+        if (mind != null && mind.OwnedEntity.HasValue)
+            _antagSelection.SendBriefing(mind.OwnedEntity.Value, Loc.GetString("rev-role-greeting"), Color.Red, new SoundPathSpecifier("/Audio/Ambience/Antag/headrev_start.ogg"));
+    }
+
+    private void OnCommandMobStateChanged(EntityUid uid, CommandStaffComponent comp, MobStateChangedEvent ev)
+    {
+        if (ev.NewMobState == MobState.Dead || ev.NewMobState == MobState.Invalid)
+            CheckCommandLose();
+    }
+
+    private void OnHeadRevMobStateChanged(EntityUid uid, HeadRevolutionaryComponent comp, MobStateChangedEvent ev)
+    {
+        if (ev.NewMobState == MobState.Dead || ev.NewMobState == MobState.Invalid)
+            CheckRevsLose();
+    }
+
+    private void CheckRoundEnd(EntityUid ruleEntity, RevolutionaryRuleComponent component, GameRuleComponent gameRule)
+    {
+        if (CheckCommandLose())
+        {
+            _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime);
+            GameTicker.EndGameRule(ruleEntity, gameRule);
         }
     }
 
@@ -144,25 +210,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         TryRoundStartAttempt(ev, Loc.GetString("roles-antag-rev-name"));
     }
 
-    private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
-    {
-        var query = QueryActiveRules();
-        while (query.MoveNext(out _, out var comp, out _))
-        {
-            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.HeadRevPrototypeId);
-
-            if (eligiblePlayers.Count == 0)
-                continue;
-
-            var headRevCount = _antagSelection.CalculateAntagCount(ev.Players.Count(), comp.PlayersPerHeadRev, comp.MaxHeadRevs);
-
-            var headRevs = _antagSelection.ChooseAntags<EntityUid>(eligiblePlayers, headRevCount);
-
-            _antagSelection.SendBriefing(headRevs, Loc.GetString("head-rev-role-greeting"), Color.CornflowerBlue, comp.HeadRevStartSound);
-            GiveHeadRev(headRevs, comp.HeadRevPrototypeId, comp);
-        }
-    }
-
     private void GiveHeadRev(List<EntityUid> chosen, string antagProto, RevolutionaryRuleComponent comp)
     {
         foreach (var headRev in chosen)
@@ -185,48 +232,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             EnsureComp<RevolutionaryComponent>(headRev);
             EnsureComp<HeadRevolutionaryComponent>(headRev);
         }
-    }
-
-    /// <summary>
-    /// Called when a Head Rev uses a flash in melee to convert somebody else.
-    /// </summary>
-    public void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, ref AfterFlashedEvent ev)
-    {
-        TryComp<AlwaysRevolutionaryConvertibleComponent>(ev.Target, out var alwaysConvertibleComp);
-        var alwaysConvertible = alwaysConvertibleComp != null;
-
-        if (!_mind.TryGetMind(ev.Target, out var mindId, out var mind) && !alwaysConvertible)
-            return;
-
-        if (HasComp<RevolutionaryComponent>(ev.Target) ||
-            HasComp<MindShieldComponent>(ev.Target) ||
-            !HasComp<HumanoidAppearanceComponent>(ev.Target) &&
-            !alwaysConvertible ||
-            !_mobState.IsAlive(ev.Target) ||
-            HasComp<ZombieComponent>(ev.Target))
-        {
-            return;
-        }
-
-        _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
-        EnsureComp<RevolutionaryComponent>(ev.Target);
-        _stun.TryParalyze(ev.Target, comp.StunTime, true);
-        if (ev.User != null)
-        {
-            _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
-
-            if (_mind.TryGetRole<RevolutionaryRoleComponent>(ev.User.Value, out var headrev))
-                headrev.ConvertedCount++;
-
-        }
-
-        if (mindId == default || !_role.MindHasRole<RevolutionaryRoleComponent>(mindId))
-        {
-            _role.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = RevolutionaryAntagRole });
-        }
-
-        if (mind != null && mind.OwnedEntity.HasValue)
-            _antagSelection.SendBriefing(mind.OwnedEntity.Value, Loc.GetString("rev-role-greeting"), Color.Red, new SoundPathSpecifier("/Audio/Ambience/Antag/headrev_start.ogg"));
     }
 
     public void OnHeadRevAdmin(EntityUid mindId, MindComponent? mind = null)
@@ -254,11 +259,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
         }
     }
-    private void OnCommandMobStateChanged(EntityUid uid, CommandStaffComponent comp, MobStateChangedEvent ev)
-    {
-        if (ev.NewMobState == MobState.Dead || ev.NewMobState == MobState.Invalid)
-            CheckCommandLose();
-    }
 
     /// <summary>
     /// Checks if all of command is dead and if so will remove all sec and command jobs if there were any left.
@@ -274,12 +274,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         return _antagSelection.IsGroupDead(commandList, true);
-    }
-
-    private void OnHeadRevMobStateChanged(EntityUid uid, HeadRevolutionaryComponent comp, MobStateChangedEvent ev)
-    {
-        if (ev.NewMobState == MobState.Dead || ev.NewMobState == MobState.Invalid)
-            CheckRevsLose();
     }
 
     /// <summary>

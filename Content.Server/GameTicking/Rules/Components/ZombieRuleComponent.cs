@@ -15,12 +15,6 @@ public sealed partial class ZombieRuleComponent : Component
     public string PatientZeroPrototypeId = "InitialInfected";
 
     /// <summary>
-    /// Whether or not the initial infected have been chosen.
-    /// </summary>
-    [DataField("infectedChosen")]
-    public bool InfectedChosen;
-
-    /// <summary>
     /// The amount of time between each check for the end of the round.
     /// </summary>
     [DataField("endCheckDelay")]

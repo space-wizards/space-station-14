@@ -798,7 +798,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         string role;
         string gear;
 
-        // Spawn the Commander then Agent first.
         switch (type)
         {
             case NukieType.Commander:
@@ -933,6 +932,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         var numNukies = _antagSelection.CalculateAntagCount(_playerManager.PlayerCount, component.PlayersPerOperative, component.MaxOps);
 
+        //Dont continue if we have no nukies to spawn
+        if (numNukies == 0)
+            return;
+
+        //Fill the ranks, commander first, then agent, then operatives
+        //TODO: Possible alternative team compositions? Like multiple commanders or agents
         var operatives = new List<NukieSpawn>();
         if (numNukies >= 1) operatives.Add(new NukieSpawn(null, NukieType.Commander));
         if (numNukies >= 2) operatives.Add(new NukieSpawn(null, NukieType.Agent));
