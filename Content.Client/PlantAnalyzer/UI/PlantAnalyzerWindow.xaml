@@ -1,5 +1,5 @@
 <DefaultWindow xmlns="https://spacestation14.io"
-               Title="{Loc plant-analyzer-interface-title}"
+               Title="{Loc 'plant-analyzer-interface-title'}"
                MinSize="300 500"
                SetSize="300 500">
     <BoxContainer
@@ -17,22 +17,22 @@
                 Margin="0 0 5 10"/>
             <Label
                 Name="Yield"
-                Margin="0 10 5 10"/>
+                Margin="0 8 5 10"/>
             <Label
                 Name="Potency"
-                Margin="0 10 5 10"/>
+                Margin="0 8 5 10"/>
             <Label
                 Name="Repeat"
-                Margin="0 10 5 10"/>
+                Margin="0 8 5 10"/>
             <Label
                 Name="Chemicals"
-                Margin="0 10 5 10"/>           
+                Margin="0 8 5 10"/>           
             <Label
                 Name="Gases"
-                Margin="0 10 5 10"/>
+                Margin="0 8 5 10"/>
             <Label
                 Name="Traits"
-                Margin="0 10 5 10"/>
+                Margin="0 8 5 10"/>
         </BoxContainer>
         <BoxContainer
             Name="GroupsContainer"

@@ -2,14 +2,12 @@
   name: plant analyzer
   parent: BaseItem
   id: PlantAnalyzer
-  description: A handheld device allows you to scan seeds and get detailed information about the genes.
+  description: A handheld device allows you to scan seeds and plants to get detailed information about their genes.
   components:
     - type: Sprite
       netsync: false
       sprite: Objects/Devices/plant_analyzer.rsi
-      state: plantanalyzer
-    - type: Item
-      size: 5
+      state: icon
     - type: Clothing
       sprite: Objects/Devices/plant_analyzer.rsi
       quickEquip: false

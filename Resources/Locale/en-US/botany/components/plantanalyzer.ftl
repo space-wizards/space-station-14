@@ -1,8 +1,9 @@
 plant-analyzer-interface-title = AgriMax Plant analyzer
-plant-analyzer-window-no-seed-information-text = No seed/plant data.
+plant-analyzer-window-no-seed-information-text = No seed/plant scanned.
 plant-analyzer-window-label-name-scanned-plant = Scanned plant: {$seedName}
 plant-analyzer-plant-endurance-text = Plant endurance: {$seedEndurance}
 plant-analyzer-plant-chemistry-text =  Сontained substances: {$seedChem}
+plant-analyzer-plant-gasses-No = No
 plant-analyzer-plant-yield-text = Plant Yield:  {$seedYield}
 plant-analyzer-plant-harvest-text = Harvest type:  {$plantHarvestType}
 plant-analyzer-plant-potency-text = Plant Potency: {$seedPotency}
@@ -15,9 +16,13 @@ plant-analyzer-plant-holder-problems = Problems:
 
 plant-analyzer-mutation-unviable = Unviable
 plant-analyzer-mutation-turnintokudzu = Kudzufication
-plant-analyzer-mutation-seedless = [color=red]Seedless
+plant-analyzer-mutation-seedless = Seedless
 plant-analyzer-mutation-slip = Slippery
 plant-analyzer-mutation-sentient = Sentient
 plant-analyzer-mutation-ligneous = Ligneous
 plant-analyzer-mutation-bioluminescent = Bioluminescent
 plant-analyzer-mutation-canscream = Mandragora
+
+plant-analyzer-harvest-repeat = Perennial
+plant-analyzer-harvest-ephemeral = Ephemeral
+plant-analyzer-harvest-autoharvest = Autoharvest
