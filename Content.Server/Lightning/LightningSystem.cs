@@ -75,6 +75,7 @@ public sealed class LightningSystem : SharedLightningSystem
         var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).MapPosition, range).ToList();
         _random.Shuffle(targets);
         targets.Sort((x, y) => y.Priority.CompareTo(x.Priority));
+        //var realCount = Math.Min(targets.Count, boltCount);
 
         int shootedCount = 0;
         int count = -1;
