@@ -25,7 +25,9 @@ namespace Content.Client.PDA
         public const int SettingsView = 2;
         public const int ProgramContentView = 3;
 
-        private string _StationName = Loc.GetString("comp-pda-ui-unknown");
+        private string _stationName = Loc.GetString("comp-pda-ui-unknown");
+        private string _owner = Loc.GetString("comp-pda-ui-unknown");
+        private string _jobTitle = Loc.GetString("comp-pda-ui-unassigned");
 
         private int _currentView;
 
@@ -89,13 +91,18 @@ namespace Content.Client.PDA
 
             CopyStationNameButton.OnPressed += _ =>
             {
-                _clipboard.SetText(_StationName?? Loc.GetString("comp-pda-ui-unknown"));
+                _clipboard.SetText(_stationName);
             };
 
             CopyStationTimeButton.OnPressed += _ =>
             {
                 var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
-                _clipboard.SetText((stationTime.ToString("hh\\:mm\\:ss") ?? Loc.GetString("comp-pda-ui-unknown")));
+                _clipboard.SetText((stationTime.ToString("hh\\:mm\\:ss")));
+            };
+
+            IdInfoButton.OnPressed += _ =>
+            {
+                _clipboard.SetText(_owner + ", " + _jobTitle);
             };
 
 
@@ -116,18 +123,21 @@ namespace Content.Client.PDA
 
             if (state.PdaOwnerInfo.IdOwner != null || state.PdaOwnerInfo.JobTitle != null)
             {
+                _owner = state.PdaOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown");
+                _jobTitle = state.PdaOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned");
                 IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui",
-                    ("owner", state.PdaOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
-                    ("jobTitle", state.PdaOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
+                    ("owner", _owner),
+                    ("jobTitle", _jobTitle)));
             }
             else
             {
                 IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui-blank"));
             }
 
+            _stationName = state.StationName ?? Loc.GetString("comp-pda-ui-unknown");
             StationNameLabel.SetMarkup(Loc.GetString("comp-pda-ui-station",
-                ("station", state.StationName ?? Loc.GetString("comp-pda-ui-unknown"))));
-            _StationName = state.StationName ?? Loc.GetString("comp-pda-ui-unknown");
+                ("station", _stationName)));
+            
 
             var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
 
