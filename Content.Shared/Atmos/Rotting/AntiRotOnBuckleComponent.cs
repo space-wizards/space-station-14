@@ -9,11 +9,14 @@ namespace Content.Shared.Atmos.Rotting;
 public sealed partial class AntiRotOnBuckleComponent : Component
 {
     /// <summary>
-    /// Does this component require power to function
+    /// Does this component require power to function.
     /// </summary>
     [DataField("requiresPower"), ViewVariables(VVAccess.ReadWrite)]
     public bool RequiresPower = true;
 
+    /// <summary>
+    /// Whether this component is active or not.
+    /// </summarY>
     [ViewVariables(VVAccess.ReadWrite)]
-    public bool Enabled { get; set; } = true;
+    public bool Enabled = true;
 }
