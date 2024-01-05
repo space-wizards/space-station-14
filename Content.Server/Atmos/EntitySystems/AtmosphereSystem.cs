@@ -42,6 +42,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     private EntityQuery<GridAtmosphereComponent> _atmosQuery;
     private EntityQuery<AirtightComponent> _airtightQuery;
     private EntityQuery<FirelockComponent> _firelockQuery;
+    private HashSet<EntityUid> _entSet = new();
 
     public override void Initialize()
     {

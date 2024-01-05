@@ -129,6 +129,16 @@
   group: market
 
 - type: cargoProduct
+  id: LivestockKoboldCube
+  icon:
+    sprite: Mobs/Animals/kobold.rsi
+    state: kobold
+  product: CrateNPCKoboldCube
+  cost: 2000
+  category: Livestock
+  group: market
+
+- type: cargoProduct
   id: LivestockMouse
   icon:
     sprite: Mobs/Animals/mouse.rsi

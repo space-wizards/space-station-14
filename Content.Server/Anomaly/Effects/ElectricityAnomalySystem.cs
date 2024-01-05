@@ -1,10 +1,8 @@
-﻿using Content.Server.Electrocution;
+using Content.Server.Electrocution;
 using Content.Server.Emp;
 using Content.Server.Lightning;
-using Content.Server.Power.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
-using Content.Shared.Mobs.Components;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -14,6 +12,7 @@ namespace Content.Server.Anomaly.Effects;
 public sealed class ElectricityAnomalySystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly LightningSystem _lightning = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
@@ -27,38 +26,21 @@ public sealed class ElectricityAnomalySystem : EntitySystem
         SubscribeLocalEvent<ElectricityAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
     }
 
-    private void OnPulse(EntityUid uid, ElectricityAnomalyComponent component, ref AnomalyPulseEvent args)
+    private void OnPulse(Entity<ElectricityAnomalyComponent> anomaly, ref AnomalyPulseEvent args)
     {
-        var range = component.MaxElectrocuteRange * args.Stability;
-        var xform = Transform(uid);
-        foreach (var (ent, comp) in _lookup.GetEntitiesInRange<MobStateComponent>(xform.MapPosition, range))
-        {
-            _lightning.ShootLightning(uid, ent);
-        }
+        var range = anomaly.Comp.MaxElectrocuteRange * args.Stability;
+
+        int boltCount = (int)MathF.Floor(MathHelper.Lerp((float)anomaly.Comp.MinBoltCount, (float)anomaly.Comp.MaxBoltCount, args.Severity));
+
+        _lightning.ShootRandomLightnings(anomaly, range, boltCount);
     }
 
-    private void OnSupercritical(EntityUid uid, ElectricityAnomalyComponent component, ref AnomalySupercriticalEvent args)
+    private void OnSupercritical(Entity<ElectricityAnomalyComponent> anomaly, ref AnomalySupercriticalEvent args)
     {
-        var poweredQuery = GetEntityQuery<ApcPowerReceiverComponent>();
-        var mobQuery = GetEntityQuery<MobThresholdsComponent>();
-        var validEnts = new HashSet<EntityUid>();
-        foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MaxElectrocuteRange * 2))
-        {
-            if (mobQuery.HasComponent(ent))
-                validEnts.Add(ent);
+        var range = anomaly.Comp.MaxElectrocuteRange * 3;
 
-            if (_random.Prob(0.01f) && poweredQuery.HasComponent(ent))
-                validEnts.Add(ent);
-        }
-
-        // goodbye, sweet perf
-        foreach (var ent in validEnts)
-        {
-            _lightning.ShootLightning(uid, ent);
-        }
-
-        var empRange = component.MaxElectrocuteRange * 3;
-        _emp.EmpPulse(Transform(uid).MapPosition, empRange, component.EmpEnergyConsumption, component.EmpDisabledDuration);
+        _emp.EmpPulse(_transform.GetMapCoordinates(anomaly), range, anomaly.Comp.EmpEnergyConsumption, anomaly.Comp.EmpDisabledDuration);
+        _lightning.ShootRandomLightnings(anomaly, range, anomaly.Comp.MaxBoltCount * 3, arcDepth: 3);
     }
 
     public override void Update(float frameTime)

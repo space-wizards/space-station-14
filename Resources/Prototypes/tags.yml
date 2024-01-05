@@ -221,8 +221,11 @@
   id: BulletFoam
 
 - type: Tag
-  id: BypassInteractionRangeChecks
+  id: BypassDropChecks
 
+- type: Tag
+  id: BypassInteractionRangeChecks
+  
 - type: Tag
   id: CableCoil
 
@@ -831,6 +834,9 @@
   id: Pancake
 
 - type: Tag
+  id: Pen
+
+- type: Tag
   id: PepperShaker
 
 - type: Tag
@@ -1010,9 +1016,6 @@
 
 - type: Tag
   id: Soap
-
-- type: Tag
-  id: SolarAssemblyPart
 
 - type: Tag
   id: SolarTrackerElectronics

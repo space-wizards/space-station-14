@@ -6,14 +6,14 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class Electrocute : ReagentEffect
 {
-    [DataField("electrocuteTime")] public int ElectrocuteTime = 2;
+    [DataField] public int ElectrocuteTime = 2;
 
-    [DataField("electrocuteDamageScale")] public int ElectrocuteDamageScale = 5;
+    [DataField] public int ElectrocuteDamageScale = 5;
 
     /// <remarks>
     ///     true - refresh electrocute time,  false - accumulate electrocute time
     /// </remarks>
-    [DataField("refresh")] public bool Refresh = true;
+    [DataField] public bool Refresh = true;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-electrocute", ("chance", Probability), ("time", ElectrocuteTime));
