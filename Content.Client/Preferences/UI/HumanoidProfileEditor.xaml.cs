@@ -461,9 +461,11 @@ namespace Content.Client.Preferences.UI
 
             #region Loadouts
 
+            // Set up the loadouts tab
             _tabContainer.SetTabTitle(4, Loc.GetString("humanoid-profile-editor-loadouts-tab"));
             _loadoutPreferences = new List<LoadoutPreferenceSelector>();
 
+            // Show/Hide loadouts tab if they ever get enabled/disabled
             var loadoutsEnabled = _configurationManager.GetCVar(CCVars.GameLoadoutsEnabled);
             _tabContainer.SetTabVisible(4, loadoutsEnabled);
             ShowLoadouts.Visible = loadoutsEnabled;
@@ -473,31 +475,36 @@ namespace Content.Client.Preferences.UI
                 ShowLoadouts.Visible = enabled;
             });
 
-            var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
-            _loadoutPointsLabelB.Text = "0";
-            _loadoutPointsLabelI.Text = points.ToString();
-            _loadoutPointsLabelA.Text = points.ToString();
-            _loadoutPointsBar.MaxValue = points;
-            _loadoutPointsBar.Value = points;
-
 
             _loadoutsShowUnusableButton.OnToggled += args => UpdateLoadouts(args.Pressed);
             // UpdateLoadouts(false); // Initial UpdateLoadouts call has to be after the dummy is made, so it's there instead
 
-            // TODO Make this not local if needed
+            // TODO Make this not local if needed by something for some reason
             void UpdateLoadouts(bool showUnusable)
             {
+                // Reset loadout points so you don't get -14 points or something for no reason
+                var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
+                _loadoutPointsLabelB.Text = "0";
+                _loadoutPointsLabelI.Text = points.ToString();
+                _loadoutPointsLabelA.Text = points.ToString();
+                _loadoutPointsBar.MaxValue = points;
+                _loadoutPointsBar.Value = points;
+
+                // Clear current listings
+                _loadoutPreferences.Clear();
                 _loadoutsTabs.DisposeAllChildren();
 
+
+                // Get the highest priority job to use for loadout filtering
                 var highJob = _jobPriorities.FirstOrDefault(j => j.Priority == JobPriority.High);
 
                 // Get all loadout prototypes
-                // If showUnusable is false filter out loadouts that are unusable
-                // TODO Make unusable loadouts red or something
-                var loadouts = prototypeManager.EnumeratePrototypes<LoadoutPrototype>().Where(l =>
+                // If showUnusable is false filter out loadouts that are unusable based on your current character setup
+                // TODO Make unusable loadouts red or something // TODO Make the selectors a toggleable button instead of a checkbox
+                var loadouts = prototypeManager.EnumeratePrototypes<LoadoutPrototype>().Where(loadout =>
                     showUnusable ||
                     _loadoutSystem.CheckWhitelistBlacklistValid(
-                        l,
+                        loadout,
                         _previewDummy ?? EntityUid.Invalid,
                         highJob == null ? new JobPrototype() : highJob.Proto,
                         Profile ?? HumanoidCharacterProfile.DefaultWithSpecies()
@@ -567,6 +574,7 @@ namespace Content.Client.Preferences.UI
                             match = (BoxContainer) child;
                     }
 
+                    // If there is no category put it in Uncategorized
                     if (match?.Name == null)
                         uncategorized.AddChild(selector);
                     else
@@ -602,6 +610,7 @@ namespace Content.Client.Preferences.UI
                     };
                 }
 
+                // Hide Uncategorized tab if it's empty, other tabs already shouldn't exist if they're empty
                 if (!uncategorized.Children.Any())
                     _loadoutsTabs.SetTabVisible(0, false);
             }
