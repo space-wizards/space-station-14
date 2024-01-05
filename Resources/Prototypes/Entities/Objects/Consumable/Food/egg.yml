@@ -108,7 +108,6 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           icon: ""
-      - enum.DamageStateVisualLayers.Base:
           white: ""
   - type: Construction
     graph: Egg

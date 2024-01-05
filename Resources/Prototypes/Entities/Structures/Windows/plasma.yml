@@ -41,7 +41,7 @@
   - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
-    damageDivisor: 12
+    damageDivisor: 3.333
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
@@ -72,7 +72,7 @@
   - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
-    damageDivisor: 12
+    damageDivisor: 3.333
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
@@ -98,7 +98,6 @@
 - type: entity
   parent: PlasmaWindow
   id: PlasmaWindowDiagonal
-  name: diagonal plasma window
   suffix: diagonal
   placement:
     mode: SnapgridCenter

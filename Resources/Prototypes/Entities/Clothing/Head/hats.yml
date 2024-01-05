@@ -471,6 +471,8 @@
     sprite: Clothing/Head/Hats/warden.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/warden.rsi
+  - type: StealTarget
+    stealGroup: ClothingHeadHatWarden
 
 - type: entity
   parent: ClothingHeadBase
@@ -819,3 +821,49 @@
     sprite: Clothing/Head/Hats/gladiator.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/gladiator.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPartyRed
+  name: red party hat
+  description: Spread a joy!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/party_red.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/party_red.rsi
+  - type: Tag
+    tags:
+      - DroneUsable
+      - WhitelistChameleon
+      - HamsterWearable
+
+- type: entity
+  parent: ClothingHeadHatPartyRed
+  id: ClothingHeadHatPartyYellow
+  name: yellow party hat
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/party_yellow.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/party_yellow.rsi
+
+- type: entity
+  parent: ClothingHeadHatPartyRed
+  id: ClothingHeadHatPartyGreen
+  name: green party hat
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/party_green.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/party_green.rsi
+
+- type: entity
+  parent: ClothingHeadHatPartyRed
+  id: ClothingHeadHatPartyBlue
+  name: blue party hat
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/party_blue.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/party_blue.rsi

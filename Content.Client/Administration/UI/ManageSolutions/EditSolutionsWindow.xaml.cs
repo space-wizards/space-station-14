@@ -20,7 +20,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
         private NetEntity _target = NetEntity.Invalid;
         private string? _selectedSolution;
         private AddReagentWindow? _addReagentWindow;
-        private Dictionary<string, Solution>? _solutions;
+        private Dictionary<string, EntityUid>? _solutions;
 
         public EditSolutionsWindow()
         {
@@ -60,9 +60,11 @@ namespace Content.Client.Administration.UI.ManageSolutions
             if (_selectedSolution == null || _solutions == null)
                 return;
 
-            if (!_solutions.TryGetValue(_selectedSolution, out var solution))
+            if (!_solutions.TryGetValue(_selectedSolution, out var solutionId) ||
+                !_entityManager.TryGetComponent(solutionId, out SolutionComponent? solutionComp))
                 return;
 
+            var solution = solutionComp.Solution;
             UpdateVolumeBox(solution);
             UpdateThermalBox(solution);
 
@@ -198,10 +200,13 @@ namespace Content.Client.Administration.UI.ManageSolutions
         /// </summary>
         private void SetReagent(FloatSpinBox.FloatSpinBoxEventArgs args, string prototype)
         {
-            if (_solutions == null || _selectedSolution == null)
+            if (_solutions == null || _selectedSolution == null ||
+                !_solutions.TryGetValue(_selectedSolution, out var solutionId) ||
+                !_entityManager.TryGetComponent(solutionId, out SolutionComponent? solutionComp))
                 return;
 
-            var current = _solutions[_selectedSolution].GetTotalPrototypeQuantity(prototype);
+            var solution = solutionComp.Solution;
+            var current = solution.GetTotalPrototypeQuantity(prototype);
             var delta = args.Value - current.Float();
 
             if (MathF.Abs(delta) < 0.01)
@@ -275,22 +280,38 @@ namespace Content.Client.Administration.UI.ManageSolutions
         /// <summary>
         ///     Update the solution options.
         /// </summary>
-        public void UpdateSolutions(Dictionary<string, Solution>? solutions)
+        public void UpdateSolutions(List<(string, NetEntity)>? solutions)
         {
             SolutionOption.Clear();
-            _solutions = solutions;
+
+            if (solutions is { Count: > 0 })
+            {
+                if (_solutions is { Count: > 0 })
+                    _solutions.Clear();
+                else
+                    _solutions = new(solutions.Count);
+
+                foreach (var (name, netSolution) in solutions)
+                {
+                    if (_entityManager.TryGetEntity(netSolution, out var solution))
+                        _solutions.Add(name, solution.Value);
+                }
+            }
+            else
+                _solutions = null;
 
             if (_solutions == null)
                 return;
 
             int i = 0;
-            foreach (var solution in _solutions.Keys)
+            int selectedIndex = 0; // Default to the first solution if none are found.
+            foreach (var (name, _) in _solutions)
             {
-                SolutionOption.AddItem(solution, i);
-                SolutionOption.SetItemMetadata(i, solution);
+                SolutionOption.AddItem(name, i);
+                SolutionOption.SetItemMetadata(i, name);
 
-                if (solution == _selectedSolution)
-                    SolutionOption.Select(i);
+                if (name == _selectedSolution)
+                    selectedIndex = i;
 
                 i++;
             }
@@ -300,14 +321,11 @@ namespace Content.Client.Administration.UI.ManageSolutions
                 // No applicable solutions
                 Close();
                 Dispose();
+                return;
             }
 
-            if (_selectedSolution == null || !_solutions.ContainsKey(_selectedSolution))
-            {
-                // the previously selected solution is no longer valid.
-                SolutionOption.Select(0);
-                _selectedSolution = (string?) SolutionOption.SelectedMetadata;
-            }
+            SolutionOption.Select(selectedIndex);
+            _selectedSolution = (string?) SolutionOption.SelectedMetadata;
         }
     }
 }

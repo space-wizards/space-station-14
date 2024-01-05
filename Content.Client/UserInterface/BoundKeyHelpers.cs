@@ -13,6 +13,11 @@ public static class BoundKeyHelper
         return TryGetShortKeyName(keyFunction, out var name) ? Loc.GetString(name) : " ";
     }
 
+    public static bool IsBound(BoundKeyFunction keyFunction)
+    {
+        return TryGetShortKeyName(keyFunction, out _);
+    }
+
     private static string? DefaultShortKeyName(BoundKeyFunction keyFunction)
     {
         var name = FormattedMessage.EscapeText(IoCManager.Resolve<IInputManager>().GetKeyFunctionButtonString(keyFunction));

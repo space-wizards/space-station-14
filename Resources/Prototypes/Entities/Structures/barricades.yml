@@ -59,7 +59,7 @@
     fireSpread: true
     damage:
       types:
-        Heat: 1 #per second, scales with number of fire 'stacks'
+        Heat: 3 #per second, scales with number of fire 'stacks'
   - type: Appearance
   - type: FireVisuals
     sprite: Effects/fire.rsi
@@ -86,6 +86,9 @@
     sprite: Structures/barricades.rsi
     state: barricade_directional
     noRot: false #Results in smoother rotation when turning the camera, the sprite's dirs are just it rotated anyways so there's no reason to not set this.
+  - type: Construction
+    graph: BarricadeDirectional
+    node: barricadefull
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -104,7 +107,7 @@
     fireSpread: true
     damage:
       types:
-        Heat: 1 #per second, scales with number of fire 'stacks'
+        Heat: 3 #per second, scales with number of fire 'stacks'
   - type: Appearance
   - type: FireVisuals
     sprite: Effects/fire.rsi
