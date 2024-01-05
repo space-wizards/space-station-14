@@ -92,7 +92,8 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         //Don't filter anything if the device list is empty
         if (component.Devices.Count == 0)
         {
-            if (component.IsAllowList) args.Cancel();
+            if (component.IsAllowList)
+                args.Cancel();
             return;
         }
 
@@ -100,7 +101,8 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
 
         foreach (var recipient in args.Recipients)
         {
-            if (component.Devices.Contains(recipient.Owner) == component.IsAllowList) filteredRecipients.Add(recipient);
+            if (component.Devices.Contains(recipient.Owner) == component.IsAllowList)
+                filteredRecipients.Add(recipient);
         }
 
         args.ModifiedRecipients = filteredRecipients;
@@ -162,7 +164,7 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
             var old = device.Devices.ToList();
             device.Devices.ExceptWith(toRemove);
             RaiseLocalEvent(uid, new DeviceListUpdateEvent(old, device.Devices.ToList()));
-            Dirty(device);
+            Dirty(uid, device);
             toRemove.Clear();
         }
     }

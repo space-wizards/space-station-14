@@ -377,12 +377,12 @@
       food:
         reagents:
         - ReagentId: Ichor
-          Quantity: 2
+          Quantity: 10
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: Ichor
-        Quantity: 2
+        Quantity: 10
 
 - type: entity
   name: raw rat meat
@@ -608,9 +608,20 @@
     - Raw
     - Meat
   - type: Sprite
+    sprite: Objects/Consumable/Food/salami.rsi
     state: salami
   - type: SliceableFood
     slice: FoodMeatSalamiSlice
+  - type: MeleeWeapon
+    wideAnimationRotation: 100
+    damage:
+      types:
+        Blunt: 6
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 2
 
 - type: entity
   name: meat clown
@@ -740,7 +751,6 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           bacon-cooked: ""
-      - enum.DamageStateVisualLayers.Base:
           bacon2-cooked: ""
   - type: SolutionContainerManager
     solutions:
@@ -856,7 +866,6 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           chicken-fried: ""
-      - enum.DamageStateVisualLayers.Base:
           chicken2-fried: ""
   - type: SolutionContainerManager
     solutions:

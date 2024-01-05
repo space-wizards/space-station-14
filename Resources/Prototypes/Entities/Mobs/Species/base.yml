@@ -266,7 +266,7 @@
   - type: Blindable
   # Other
   - type: Temperature
-    heatDamageThreshold: 360
+    heatDamageThreshold: 325
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
@@ -275,7 +275,7 @@
         Cold: 0.1 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat: 0.1 #per second, scales with temperature & other constants
+        Heat: 1.5 #per second, scales with temperature & other constants
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -284,6 +284,7 @@
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
+  - type: Perishable
   - type: Butcherable
     butcheringType: Spike # TODO human.
     spawned:

@@ -17,7 +17,6 @@
     - state: cutters
       map: [ "enum.DamageStateVisualLayers.Base" ]
     - state: cutters-cutty-thingy
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -90
     damage:
@@ -66,7 +65,6 @@
   - type: Item
     sprite: Objects/Tools/screwdriver.rsi
     storedRotation: -90
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -90
     attackRate: 1
@@ -110,7 +108,6 @@
     storedSprite:
       sprite: Objects/Tools/wrench.rsi
       state: storage
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 135
     attackRate: 1.5
@@ -149,7 +146,6 @@
     storedSprite:
       sprite: Objects/Tools/crowbar.rsi
       state: storage
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -351,7 +347,6 @@
     maxCharges: 5
     charges: 5
   - type: UseDelay
-    delay: 1.0
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: icon
@@ -500,7 +495,6 @@
   - type: Sprite
     sprite: Objects/Tools/shovel.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -533,7 +527,6 @@
     quickEquip: false
     slots:
     - Belt
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
