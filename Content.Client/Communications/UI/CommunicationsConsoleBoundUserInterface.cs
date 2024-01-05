@@ -63,7 +63,7 @@ namespace Content.Client.Communications.UI
 
         public void AnnounceButtonPressed(string message)
         {
-            var msg = (message.Length <= 256 ? message.Trim() : $"{message.Trim().Substring(0, 256)}...").ToCharArray();
+            var msg = message.ToCharArray();
 
             // No more than 2 newlines, other replaced to spaces
             var newlines = 0;
