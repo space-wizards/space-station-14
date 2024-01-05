@@ -3,6 +3,7 @@ using Content.Server.Humanoid;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
+using Content.Shared.Wagging;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Wagging;
