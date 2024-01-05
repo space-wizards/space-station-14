@@ -978,9 +978,9 @@
       - ClothingHeadHatCentcomcap
       - ClothingHeadHatSyndie
       - ClothingHeadHatSyndieMAA
-      - ClothingHeadPyjamaSyndieBlack
-      - ClothingHeadPyjamaSyndiePink
-      - ClothingHeadPyjamaSyndieRed
+      - ClothingHeadPyjamaSyndicateBlack
+      - ClothingHeadPyjamaSyndicatePink
+      - ClothingHeadPyjamaSyndicateRed
   - type: MaterialStorage
     whitelist:
       tags:
