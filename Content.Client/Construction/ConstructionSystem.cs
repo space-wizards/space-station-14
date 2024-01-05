@@ -86,7 +86,7 @@ namespace Content.Client.Construction
 
             args.PushMarkup(Loc.GetString(
                 "construction-ghost-examine-message",
-                ("name", component.Prototype.Name)), group: nameof(ConstructionGhostComponent));
+                ("name", component.Prototype.Name)));
 
             if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
                 return;

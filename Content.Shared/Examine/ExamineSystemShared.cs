@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -303,6 +304,8 @@ namespace Content.Shared.Examine
 
         private bool _doNewLine;
 
+        private ExamineMessagePart? _currentGroupPart;
+
         public ExaminedEvent(FormattedMessage message, EntityUid examined, EntityUid examiner, bool isInDetailsRange, bool doNewLine)
         {
             Message = message;
@@ -348,44 +351,62 @@ namespace Content.Shared.Examine
         }
 
         /// <summary>
+        ///     Message group handling. Call this if you want the next set of examine messages that you're adding to have
+        ///     a consistent order with regards to each other. This is done so that client & server will always
+        ///     sort messages the same grouped together properly, even if subscriptions are different.
+        /// </summary>
+        public void PushGroup(string groupName, int priority=0)
+        {
+            // Ensure that other examine events correctly ended their groups.
+            DebugTools.Assert(_currentGroupPart == null);
+            _currentGroupPart = new ExamineMessagePart(new FormattedMessage(), priority, groupName);
+        }
+
+        /// <summary>
+        ///     Ends the current group and pushes its groups contents to the message.
+        /// </summary>
+        public void PopGroup()
+        {
+            DebugTools.Assert(_currentGroupPart != null);
+            if (_currentGroupPart != null)
+                Parts.Add(_currentGroupPart);
+
+            _currentGroupPart = null;
+        }
+
+        /// <summary>
         /// Push another message into this examine result, on its own line.
-        /// End message will be grouped by <see cref="priority"/>, then by <see cref="group"/> (e.g. component name),
+        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
         /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="PushMarkup"/>
         /// <seealso cref="PushText"/>
-        public void PushMessage(FormattedMessage message, int priority=0, string? group=null)
+        public void PushMessage(FormattedMessage message, int priority=0)
         {
-            if (message.Nodes.Count == 0)
-                return;
-
-            if (_doNewLine)
-                FormattedMessage.FromUnformatted("\n").AddMessage(message);
-
-            Parts.Add(new ExamineMessagePart(message, priority, group));
+            AddMessage(message, priority);
             _doNewLine = true;
         }
 
         /// <summary>
         /// Push another message parsed from markup into this examine result, on its own line.
-        /// End message will be grouped by <see cref="priority"/>, then by <see cref="group"/> (e.g. component name),
+        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
         /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="PushText"/>
         /// <seealso cref="PushMessage"/>
-        public void PushMarkup(string markup, int priority=0, string? group=null)
+        public void PushMarkup(string markup, int priority=0)
         {
             PushMessage(FormattedMessage.FromMarkup(markup), priority);
         }
 
         /// <summary>
         /// Push another message containing raw text into this examine result, on its own line.
-        /// End message will be grouped by <see cref="priority"/>, then by <see cref="group"/> (e.g. component name),
+        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
         /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="PushMarkup"/>
         /// <seealso cref="PushMessage"/>
-        public void PushText(string text, int priority=0, string? group=null)
+        public void PushText(string text, int priority=0)
         {
             var msg = new FormattedMessage();
             msg.AddText(text);
@@ -394,12 +415,12 @@ namespace Content.Shared.Examine
 
         /// <summary>
         /// Adds a message directly without starting a newline after.
-        /// End message will be grouped by <see cref="priority"/>, then by <see cref="group"/> (e.g. component name),
+        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
         /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="AddMarkup"/>
         /// <seealso cref="AddText"/>
-        public void AddMessage(FormattedMessage message, int priority = 0, string? group=null)
+        public void AddMessage(FormattedMessage message, int priority = 0)
         {
             if (message.Nodes.Count == 0)
                 return;
@@ -409,36 +430,43 @@ namespace Content.Shared.Examine
             if (_doNewLine)
                 FormattedMessage.FromUnformatted("\n").AddMessage(message);
 
-            Parts.Add(new ExamineMessagePart(message, priority, group));
+            if (_currentGroupPart != null)
+            {
+                _currentGroupPart.Message.AddMessage(message);
+            }
+            else
+            {
+                Parts.Add(new ExamineMessagePart(message, priority, null));
+            }
         }
 
         /// <summary>
         /// Adds markup directly without starting a newline after.
-        /// End message will be grouped by <see cref="priority"/>, then by <see cref="group"/> (e.g. component name),
+        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
         /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="AddText"/>
         /// <seealso cref="AddMessage"/>
-        public void AddMarkup(string markup, int priority = 0, string? group=null)
+        public void AddMarkup(string markup, int priority = 0)
         {
             AddMessage(FormattedMessage.FromMarkup(markup), priority);
         }
 
         /// <summary>
         /// Adds text directly without starting a newline after.
-        /// End message will be grouped by <see cref="priority"/>, then by <see cref="group"/> (e.g. component name),
+        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
         /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="AddMarkup"/>
         /// <seealso cref="AddMessage"/>
-        public void AddText(string text, int priority=0, string? group=null)
+        public void AddText(string text, int priority=0)
         {
             var msg = new FormattedMessage();
             msg.AddText(text);
-            AddMessage(msg, priority, group);
+            AddMessage(msg, priority);
         }
 
-        private record struct ExamineMessagePart(FormattedMessage Message, int Priority, string? Group);
+        private record ExamineMessagePart(FormattedMessage Message, int Priority, string? Group);
     }
 
 
