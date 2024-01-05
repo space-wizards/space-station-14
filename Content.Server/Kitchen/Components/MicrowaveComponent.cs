@@ -67,7 +67,7 @@ namespace Content.Server.Kitchen.Components
 
         public Container Storage = default!;
 
-        [DataField("capacity")]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public int Capacity = 10;
     }
 
