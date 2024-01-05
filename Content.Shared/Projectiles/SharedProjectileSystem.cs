@@ -89,6 +89,13 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         // try place it in the user's hand
         _hands.TryPickupAnyHand(args.User, uid);
+
+        if (!component.Embedded.HasValue)
+            return;
+
+        var ev = new EmbeddedProjectileRemovedEvent(uid, component.Embedded.Value , false);
+        RaiseLocalEvent(uid , ref ev);
+        component.Embedded = null;
     }
 
     private void OnEmbedThrowDoHit(EntityUid uid, EmbeddableProjectileComponent component, ThrowDoHitEvent args)
@@ -97,6 +104,10 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             return;
 
         Embed(uid, args.Target, component);
+        component.Embedded = args.Target;
+
+        var ev = new ProjectileEmbedEvent(args.Component.Thrower, args.Thrown, args.Target);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void OnEmbedProjectileHit(EntityUid uid, EmbeddableProjectileComponent component, ref ProjectileHitEvent args)
@@ -128,6 +139,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         {
             _audio.PlayPredicted(component.Sound, uid, null);
         }
+
+        component.Embedded = target;
     }
 
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
@@ -174,6 +187,12 @@ public sealed class ImpactEffectEvent : EntityEventArgs
         Coordinates = coordinates;
     }
 }
+
+/// <summary>
+/// Raised when projectile removed from entity
+/// </summary>
+[ByRefEvent]
+public record struct EmbeddedProjectileRemovedEvent(EntityUid Projectile, EntityUid Target ,  bool Cancelled);
 
 /// <summary>
 /// Raised when an entity is just about to be hit with a projectile but can reflect it
