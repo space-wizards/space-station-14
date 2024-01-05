@@ -13,6 +13,24 @@
         Glass: 1
 
 - type: entity
+  parent: BaseMachineCircuitboard
+  id: AutolatheHyperConvectionMachineCircuitboard
+  name: hyper convection autolathe machine board
+  description: A machine printed circuit board for a hyper convection autolathe
+  components:
+  - type: MachineBoard
+    prototype: AutolatheHyperConvection
+    requirements:
+      MatterBin: 3
+    materialRequirements:
+      Glass: 1
+    tagRequirements:
+      Igniter:
+        Amount: 1
+        DefaultPrototype: Igniter
+        ExamineName: Igniter
+
+- type: entity
   id: ProtolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: protolathe machine board
@@ -28,6 +46,39 @@
           Amount: 2
           DefaultPrototype: Beaker
           ExamineName: Glass Beaker
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: ProtolatheHyperConvectionMachineCircuitboard
+  name: hyper convection protolathe machine board
+  description: A machine printed circuit board for a hyper convection protolathe.
+  components:
+  - type: MachineBoard
+    prototype: ProtolatheHyperConvection
+    requirements:
+      MatterBin: 2
+    tagRequirements:
+      GlassBeaker:
+        Amount: 2
+        DefaultPrototype: Beaker
+        ExamineName: Glass Beaker
+      Igniter:
+        Amount: 1
+        DefaultPrototype: Igniter
+        ExamineName: Igniter
+
+- type: entity
+  id: BiofabricatorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: biofabricator machine board
+  description: A machine printed circuit board for a biofabricator.
+  components:
+    - type: MachineBoard
+      prototype: Biofabricator
+      requirements:
+        MatterBin: 4
+      materialRequirements:
+        Glass: 1
 
 - type: entity
   id: SecurityTechFabCircuitboard
@@ -874,6 +925,21 @@
         Glass: 1
 
 - type: entity
+  parent: BaseMachineCircuitboard
+  id: OreProcessorIndustrialMachineCircuitboard
+  name: industrial ore processor machine board
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: OreProcessorIndustrial
+    requirements:
+      MatterBin: 1
+      Manipulator: 3
+    materialRequirements:
+      Glass: 1
+
+- type: entity
   id: SheetifierMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: sheet-meister 2000 machine board
@@ -915,6 +981,19 @@
           Amount: 1
           DefaultPrototype: ForkPlastic
           ExamineName: Utensil
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: FlatpackerMachineCircuitboard
+  name: Flatpacker 1001 machine board
+  components:
+  - type: MachineBoard
+    prototype: MachineFlatpacker
+    requirements:
+      Manipulator: 2
+      MatterBin: 1
+    materialRequirements:
+      Steel: 1
 
 - type: entity
   id: EmitterCircuitboard

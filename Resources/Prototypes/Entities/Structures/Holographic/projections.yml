@@ -76,3 +76,43 @@
       color: red
     - type: Climbable
     - type: Clickable
+
+- type: entity
+  id: HolosignForcefield
+  parent: HolosignWetFloor
+  name: holographic force field
+  description: A powerful temporal containment field that doesn't let anything through, not even a tesla or singularity.
+  components:
+  - type: Physics
+    bodyType: Static
+    canCollide: true
+  - type: Sprite
+    sprite: Structures/Holo/field.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: TimedDespawn
+    lifetime: 180
+  - type: PointLight
+    enabled: true
+    radius: 3
+    color: blue
+  - type: Clickable
+  - type: ContainmentField
+    throwForce: 0
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 60
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
