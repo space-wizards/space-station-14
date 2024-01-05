@@ -17,8 +17,5 @@ namespace Content.Server.Bed.Components
 
         [DataField("machinePartMetabolismModifier", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
         public string MachinePartMetabolismModifier = "Capacitor";
-
-        [DataField("antiRotting"), ViewVariables(VVAccess.ReadWrite)]
-        public bool AntiRotting = true;
     }
 }

@@ -5,7 +5,6 @@ using Content.Server.Body.Systems;
 using Content.Server.Construction;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Shared.Atmos.Rotting;
 using Content.Shared.Bed;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Components;
@@ -36,7 +35,6 @@ namespace Content.Server.Bed
             SubscribeLocalEvent<StasisBedComponent, GotEmaggedEvent>(OnEmagged);
             SubscribeLocalEvent<StasisBedComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<StasisBedComponent, UpgradeExamineEvent>(OnUpgradeExamine);
-            SubscribeLocalEvent<BuckleComponent, IsRottingEvent>(OnIsRotting);
         }
 
         private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, ref BuckleChangeEvent args)
@@ -109,14 +107,6 @@ namespace Content.Server.Bed
         {
             UpdateAppearance(uid, args.Powered);
             UpdateMetabolisms(uid, component, args.Powered);
-            if (args.Powered && component.AntiRotting)
-            {
-                EnsureComp<ActiveAntiRottingOnBuckleComponent>(uid);
-            }
-            else
-            {
-                RemComp<ActiveAntiRottingOnBuckleComponent>(uid);
-            }
         }
 
         private void OnEmagged(EntityUid uid, StasisBedComponent component, ref GotEmaggedEvent args)
@@ -127,14 +117,6 @@ namespace Content.Server.Bed
             component.Multiplier = 1 / component.Multiplier;
             UpdateMetabolisms(uid, component, true);
             args.Handled = true;
-        }
-
-        private void OnIsRotting(EntityUid uid, BuckleComponent component, ref IsRottingEvent args)
-        {
-            if (args.Handled)
-                return;
-            args.Handled = component is { Buckled: true, BuckledTo: not null } &&
-                           HasComp<ActiveAntiRottingOnBuckleComponent>(component.BuckledTo.Value);
         }
 
         private void UpdateMetabolisms(EntityUid uid, StasisBedComponent component, bool shouldApply)
