@@ -1,6 +1,6 @@
 using Content.Shared.PlantAnalyzer;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
+//using Robust.Client.GameObjects;
 
 namespace Content.Client.PlantAnalyzer.UI;
 

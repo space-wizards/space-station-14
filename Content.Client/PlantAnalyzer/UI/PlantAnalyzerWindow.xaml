@@ -8,35 +8,33 @@
         <Label
             Name="NoData"
             Text="{Loc plant-analyzer-window-no-seed-information-text}" />
-        <BoxContainer
-                Name="PlantDataContainer"
-                Orientation="Vertical"
-                Margin="0 0 5 10">
-            <Label
-                Name="PlantName"
-                Margin="0 0 5 10"/>
-            <Label
-                Name="Yield"
-                Margin="0 8 5 10"/>
-            <Label
-                Name="Potency"
-                Margin="0 8 5 10"/>
-            <Label
-                Name="Repeat"
-                Margin="0 8 5 10"/>
-            <Label
-                Name="Chemicals"
-                Margin="0 8 5 10"/>
-            <Label
-                Name="Gases"
-                Margin="0 8 5 10"/>
-            <Label
-                Name="Traits"
-                Margin="0 8 5 10"/>
-        </BoxContainer>
-        <BoxContainer
-            Name="GroupsContainer"
-            Orientation="Vertical">
-        </BoxContainer>
+        <ScrollContainer VerticalExpand="True">
+            <BoxContainer
+                    Name="PlantDataContainer"
+                    Orientation="Vertical"
+                    Margin="0 0 5 10">
+                <Label
+                    Name="PlantName"
+                    Margin="0 0 5 10"/>
+                <Label
+                    Name="Yield"
+                    Margin="0 8 5 10"/>
+                <Label
+                    Name="Potency"
+                    Margin="0 8 5 10"/>
+                <Label
+                    Name="Repeat"
+                    Margin="0 8 5 10"/>
+                <Label
+                    Name="Chemicals"
+                    Margin="0 8 5 10"/>
+                <Label
+                    Name="Gases"
+                    Margin="0 8 5 10"/>
+                <Label
+                    Name="Traits"
+                    Margin="0 8 5 10"/>
+            </BoxContainer>
+        </ScrollContainer>
     </BoxContainer>
 </DefaultWindow>

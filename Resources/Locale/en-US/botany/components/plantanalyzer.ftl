@@ -10,10 +10,6 @@ plant-analyzer-plant-harvest-text = Harvest type:  {$plantHarvestType}
 plant-analyzer-plant-potency-text = Plant Potency: {$seedPotency}
 plant-analyzer-plant-exude-text = Gas emissions: {$exudeGases}
 plant-analyzer-plant-mutations-text = Mutations: {$traits}
-plant-analyzer-plant-temp-comfort-text = Comfort temperature range: {$seedMin}K({$seedMinC}°C) / {$seedMax}K({$seedMaxC}°C)
-plant-analyzer-plant-holder = Data of planted in hydroponics
-plant-analyzer-plant-holder-health = Health: {$seedHealth}
-plant-analyzer-plant-holder-problems = Problems:
 
 plant-analyzer-mutation-unviable = Unviable
 plant-analyzer-mutation-turnintokudzu = Kudzufication
