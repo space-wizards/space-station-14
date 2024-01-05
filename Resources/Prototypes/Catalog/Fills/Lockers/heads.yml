@@ -25,6 +25,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingOuterArmorCaptainCarapace
       - id: NukeDisk
       - id: PinpointerNuclear
       - id: CaptainIDCard
@@ -51,6 +52,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingOuterArmorCaptainCarapace
       - id: NukeDisk
       - id: PinpointerNuclear
       - id: CaptainIDCard
@@ -192,10 +194,8 @@
       - id: ClothingOuterHardsuitRd
       - id: HandTeleporter
       - id: DoorRemoteResearch
-      - id: ClothingHandsGlovesColorPurple
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
-      - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
 
 - type: entity
@@ -211,10 +211,8 @@
       - id: ClothingHeadsetMedicalScience
       - id: HandTeleporter
       - id: DoorRemoteResearch
-      - id: ClothingHandsGlovesColorPurple
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
-      - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
 
 - type: entity
@@ -224,11 +222,14 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
       - id: ClothingOuterCoatHoSTrench
       - id: ClothingOuterHardsuitSecurityRed
       - id: ClothingBeltSecurityFilled
       - id: ClothingHeadsetAltSecurity
+      - id: ClothingEyesGlassesSunglasses
+      - id: ClothingShoesBootsJack
       - id: CigarGoldCase
         prob: 0.50
       - id: DoorRemoteSecurity
@@ -246,10 +247,13 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
       - id: ClothingOuterCoatHoSTrench
       - id: ClothingBeltSecurityFilled
       - id: ClothingHeadsetAltSecurity
+      - id: ClothingEyesGlassesSunglasses
+      - id: ClothingShoesBootsJack
       - id: CigarGoldCase
         prob: 0.50
       - id: DoorRemoteSecurity

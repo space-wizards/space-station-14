@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -109,11 +109,18 @@ namespace Content.Server.Connection
             if (_cfg.GetCVar(CCVars.PanicBunkerEnabled))
             {
                 var showReason = _cfg.GetCVar(CCVars.PanicBunkerShowReason);
+                var customReason = _cfg.GetCVar(CCVars.PanicBunkerCustomReason);
 
                 var minMinutesAge = _cfg.GetCVar(CCVars.PanicBunkerMinAccountAge);
                 var record = await _dbManager.GetPlayerRecordByUserId(userId);
                 var validAccountAge = record != null &&
                                         record.FirstSeenTime.CompareTo(DateTimeOffset.Now - TimeSpan.FromMinutes(minMinutesAge)) <= 0;
+
+                // Use the custom reason if it exists & they don't have the minimum account age
+                if (customReason != string.Empty && !validAccountAge)
+                {
+                    return (ConnectionDenyReason.Panic, customReason, null);
+                }
 
                 if (showReason && !validAccountAge)
                 {
@@ -125,6 +132,12 @@ namespace Content.Server.Connection
                 var minOverallHours = _cfg.GetCVar(CCVars.PanicBunkerMinOverallHours);
                 var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
                 var haveMinOverallTime = overallTime != null && overallTime.TimeSpent.TotalHours > minOverallHours;
+
+                // Use the custom reason if it exists & they don't have the minimum time
+                if (customReason != string.Empty && !haveMinOverallTime)
+                {
+                    return (ConnectionDenyReason.Panic, customReason, null);
+                }
 
                 if (showReason && !haveMinOverallTime)
                 {

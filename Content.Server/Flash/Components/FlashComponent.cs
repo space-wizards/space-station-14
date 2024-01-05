@@ -5,6 +5,7 @@ namespace Content.Server.Flash.Components
     [RegisterComponent, Access(typeof(FlashSystem))]
     public sealed partial class FlashComponent : Component
     {
+
         [DataField("duration")]
         [ViewVariables(VVAccess.ReadWrite)]
         public int FlashDuration { get; set; } = 5000;
@@ -23,7 +24,10 @@ namespace Content.Server.Flash.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound")]
-        public SoundSpecifier Sound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/flash.ogg");
+        public SoundSpecifier Sound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/flash.ogg")
+        {
+            Params = AudioParams.Default.WithVolume(1f).WithMaxDistance(3f)
+        };
 
         public bool Flashing;
     }

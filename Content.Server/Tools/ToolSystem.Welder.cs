@@ -12,6 +12,7 @@ using Content.Shared.Item.ItemToggle;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameStates;
 using System.Linq;
+using Content.Shared.Item.ItemToggle.Components;
 
 namespace Content.Server.Tools
 {
