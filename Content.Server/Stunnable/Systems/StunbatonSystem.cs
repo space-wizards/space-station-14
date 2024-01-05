@@ -52,11 +52,15 @@ namespace Content.Server.Stunnable.Systems
             var onMsg = _itemToggle.IsActivated(entity.Owner)
             ? Loc.GetString("comp-stunbaton-examined-on")
             : Loc.GetString("comp-stunbaton-examined-off");
-            args.PushMarkup(onMsg);
 
-            var chargeMessage = Loc.GetString("stunbaton-component-on-examine-charge",
-                ("charge", (int) (entity.Comp.CurrentCharge / entity.Comp.MaxCharge * 100)));
-            args.PushMarkup(chargeMessage);
+            using (args.PushGroup(nameof(BatteryComponent)))
+            {
+                args.PushMarkup(onMsg);
+
+                var chargeMessage = Loc.GetString("stunbaton-component-on-examine-charge",
+                    ("charge", (int) (entity.Comp.CurrentCharge / entity.Comp.MaxCharge * 100)));
+                args.PushMarkup(chargeMessage);
+            }
         }
 
         private void ToggleDone(Entity<StunbatonComponent> entity, ref ItemToggledEvent args)

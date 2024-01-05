@@ -266,6 +266,8 @@ namespace Content.Shared.Examine
 
     /// <summary>
     ///     Raised when an entity is examined.
+    ///     If you're pushing multiple messages that should be grouped together (or ordered in some way),
+    ///     call <see cref="PushGroup"/> before pushing and <see cref="PopGroup"/> when finished.
     /// </summary>
     public sealed class ExaminedEvent : EntityEventArgs
     {
@@ -353,19 +355,22 @@ namespace Content.Shared.Examine
         /// <summary>
         ///     Message group handling. Call this if you want the next set of examine messages that you're adding to have
         ///     a consistent order with regards to each other. This is done so that client & server will always
-        ///     sort messages the same grouped together properly, even if subscriptions are different.
+        ///     sort messages the same as well as grouped together properly, even if subscriptions are different.
+        ///     You should wrap it in a using() block so popping automatically occurs.
         /// </summary>
-        public void PushGroup(string groupName, int priority=0)
+        public ExamineGroupDisposable PushGroup(string groupName, int priority=0)
         {
             // Ensure that other examine events correctly ended their groups.
             DebugTools.Assert(_currentGroupPart == null);
             _currentGroupPart = new ExamineMessagePart(new FormattedMessage(), priority, groupName);
+            return new ExamineGroupDisposable(this);
         }
 
         /// <summary>
         ///     Ends the current group and pushes its groups contents to the message.
+        ///     This will be called
         /// </summary>
-        public void PopGroup()
+        private void PopGroup()
         {
             DebugTools.Assert(_currentGroupPart != null);
             if (_currentGroupPart != null)
@@ -420,7 +425,7 @@ namespace Content.Shared.Examine
         /// </summary>
         /// <seealso cref="AddMarkup"/>
         /// <seealso cref="AddText"/>
-        public void AddMessage(FormattedMessage message, int priority = 0)
+        public void AddMessage(FormattedMessage message, int priority=0)
         {
             if (message.Nodes.Count == 0)
                 return;
@@ -447,7 +452,7 @@ namespace Content.Shared.Examine
         /// </summary>
         /// <seealso cref="AddText"/>
         /// <seealso cref="AddMessage"/>
-        public void AddMarkup(string markup, int priority = 0)
+        public void AddMarkup(string markup, int priority=0)
         {
             AddMessage(FormattedMessage.FromMarkup(markup), priority);
         }
@@ -464,6 +469,21 @@ namespace Content.Shared.Examine
             var msg = new FormattedMessage();
             msg.AddText(text);
             AddMessage(msg, priority);
+        }
+
+        public struct ExamineGroupDisposable : IDisposable
+        {
+            private ExaminedEvent _event;
+
+            public ExamineGroupDisposable(ExaminedEvent @event)
+            {
+                _event = @event;
+            }
+
+            public void Dispose()
+            {
+                _event.PopGroup();
+            }
         }
 
         private record ExamineMessagePart(FormattedMessage Message, int Priority, string? Group);
