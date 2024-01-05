@@ -1231,7 +1231,7 @@ namespace Content.Shared.CCVar
         ///     Config for when the restart vote should be allowed to be called regardless with less than this amount of players.
         /// </summary>
         public static readonly CVarDef<int> VoteRestartMaxPlayers =
-            CVarDef.Create("vote.restart_min_players", 20, CVar.SERVERONLY);
+            CVarDef.Create("vote.restart_max_players", 20, CVar.SERVERONLY);
 
         /// <summary>
         ///     Config for when the restart vote should be allowed to be called based on percentage of ghosts.
