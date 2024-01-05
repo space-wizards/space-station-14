@@ -698,7 +698,9 @@
       whitelist:
         tags:
           - Sheet
-
+    - type: StealTarget
+      stealGroup: AmmoTechFabCircuitboard
+      
 - type: entity
   id: MedicalTechFab
   parent: BaseLathe
@@ -766,7 +768,9 @@
       - SyringeCryostasis
   - type: Machine
     board: MedicalTechFabCircuitboard
-
+  - type: StealTarget
+    stealGroup: MedicalTechFabCircuitboard
+    
 - type: entity
   parent: BaseLathe
   id: UniformPrinter
