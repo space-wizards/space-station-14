@@ -75,6 +75,15 @@ public sealed class StepTriggerSystem : EntitySystem
             UpdateColliding(uid, component, transform, otherUid, query);
         }
 
+        foreach (var otherUid in component.StoppedColliding)
+        {
+            // We shouldn't raise this event in OnEndCollide - game shits itself once in a while
+            var evStepOff = new StepOffTriggeredEvent { Source = uid, Tripper = otherUid };
+            RaiseLocalEvent(uid, ref evStepOff, true);
+        }
+
+        component.StoppedColliding.Clear();
+
         return false;
     }
 
@@ -90,12 +99,9 @@ public sealed class StepTriggerSystem : EntitySystem
 
         if (!ourAabb.Intersects(otherAabb))
         {
-            // We shouldn't raise this event in OnEndCollide - game shits itself once in a while
-            var evStepOff = new StepOffTriggeredEvent { Source = uid, Tripper = otherUid };
-            RaiseLocalEvent(uid, ref evStepOff, true);
-
             if (component.CurrentlySteppedOn.Remove(otherUid))
             {
+                component.StoppedColliding.Add(otherUid);
                 Dirty(uid, component);
             }
             return;
@@ -165,6 +171,7 @@ public sealed class StepTriggerSystem : EntitySystem
             return;
 
         component.CurrentlySteppedOn.Remove(otherUid);
+        component.StoppedColliding.Add(otherUid);
         Dirty(uid, component);
 
         if (component.Colliding.Count == 0)

@@ -181,3 +181,8 @@
   copyright: 'Sound effects from https://quicksounds.com"'
   license: CC0-1.0
   source: https://quicksounds.com/library/sounds/grenade
+
+- files: [beep_landmine.ogg]
+  copyright: '"beep_landmine.ogg" by kaktuscsc of Discord for SS14'
+  license: "CC-BY-SA-3.0"
+  source: 

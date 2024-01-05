@@ -32,11 +32,12 @@ public sealed class LandMineSystem : EntitySystem
             return;
         }
 
-        TriggerLandmine(uid, args.Tripper);
+        _trigger.Trigger(uid, args.Tripper);
     }
 
     private void HandleStepTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredEvent args)
     {
+        ShowLandminePopup(uid, args.Tripper);
         PlayLandmineActivatedSound(uid, component);
 
         if (!component.ExplodeImmediately)
@@ -44,7 +45,16 @@ public sealed class LandMineSystem : EntitySystem
             return;
         }
 
-        TriggerLandmine(uid, args.Tripper);
+        _trigger.Trigger(uid, args.Tripper);
+    }
+
+    private void ShowLandminePopup(EntityUid uid, EntityUid tripper)
+    {
+        _popupSystem.PopupCoordinates(
+                Loc.GetString("land-mine-triggered", ("mine", uid)),
+                Transform(uid).Coordinates,
+                tripper,
+                PopupType.LargeCaution);
     }
 
     private void PlayLandmineActivatedSound(EntityUid uid, LandMineComponent component)
@@ -55,20 +65,7 @@ public sealed class LandMineSystem : EntitySystem
         var filter = Filter.Pvs(landmineMapCoords).AddInRange(landmineMapCoords, component.TriggerAudioRange);
         var landmineEntityCoords = EntityCoordinates.FromMap(_mapManager, landmineMapCoords);
 
-        // I wonder, where do I get a beep sound?
-        // _audioSystem.PlayStatic(sound, filter, landmineEntityCoords, true, sound.Params);
-    }
-
-    private void TriggerLandmine(EntityUid uid, EntityUid tripper)
-    {
-        if (_trigger.Trigger(uid, tripper))
-        {
-            _popupSystem.PopupCoordinates(
-                Loc.GetString("land-mine-triggered", ("mine", uid)),
-                Transform(uid).Coordinates,
-                tripper,
-                PopupType.LargeCaution);
-        }
+        _audioSystem.PlayStatic(component.MineBeepAudioPath, filter, landmineEntityCoords, true);
     }
 
     private static void HandleStepTriggerAttempt(EntityUid uid, LandMineComponent component, ref StepTriggerAttemptEvent args)
