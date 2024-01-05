@@ -180,6 +180,7 @@
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Gun
+    projectileSpeed: 10
     soundGunshot:
       path: /Audio/Effects/Lightning/lightningshock.ogg
       params:
