@@ -1,10 +1,12 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Nuke
 {
     /// <summary>
     ///     Paper with a written nuclear code in it.
     ///     Can be used in mapping or admins spawn.
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed partial class NukeCodePaperComponent : Component
     {
         /// <summary>
