@@ -943,6 +943,20 @@
       - ClothingOuterWinterSci
       - ClothingOuterWinterRobo
       - ClothingOuterWinterSec
+      - ClothingHeadHatCaptain
+      - ClothingHeadHatCapcap
+      - ClothingHeadHatHopcap
+      - ClothingHeadHatHoshat
+      - ClothingHeadHatWarden
+      - ClothingHeadHatQMsoft
+      - ClothingHeadHatBeretHoS
+      - ClothingHeadHatBeretWarden
+      - ClothingHeadHatBeretSecurity
+      - ClothingHeadHatBeretRND
+      - ClothingHeadHatBeretEngineering
+      - ClothingHeadHatBeretCmo
+      - ClothingHeadHatBeretSeniorPhysician
+      - ClothingHeadHatBeretBrigmedic
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - ClothingUniformJumpsuitCentcomAgent
@@ -960,6 +974,13 @@
       - ClothingOuterWinterCentcom
       - ClothingOuterWinterSyndie
       - ClothingOuterWinterSyndieCap
+      - ClothingHeadHatCentcom
+      - ClothingHeadHatCentcomcap
+      - ClothingHeadHatSyndie
+      - ClothingHeadHatSyndieMAA
+      - ClothingHeadPyjamaSyndieBlack
+      - ClothingHeadPyjamaSyndiePink
+      - ClothingHeadPyjamaSyndieRed
   - type: MaterialStorage
     whitelist:
       tags:
