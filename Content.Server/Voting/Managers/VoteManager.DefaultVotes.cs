@@ -3,7 +3,6 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Server.RoundEnd;
-using Content.Server.Worldgen.Tools;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
@@ -52,15 +51,17 @@ namespace Content.Server.Voting.Managers
 
         private void CreateRestartVote(ICommonSession? initiator)
         {
-            var playerVoteMaximum = _cfg.GetCVar(CCVars.VoteRestartMaxPlayers);
-            var ghostVotePercentageRequirement = _cfg.GetCVar(CCVars.VoteRestartGhostPercentage);
-            var totalPlayers = _playerManager.PlayerCount;
-            var ghostCount = 0;
 
+            var playerVoteMaximum = _cfg.GetCVar(CCVars.VoteRestartMaxPlayers);
+            var totalPlayers = _playerManager.Sessions.Count(session => session.Status != SessionStatus.Disconnected);
+
+            var ghostVotePercentageRequirement = _cfg.GetCVar(CCVars.VoteRestartGhostPercentage);
+            var ghostCount = 0;
+            
             foreach (var player in _playerManager.Sessions)
             {
                 _playerManager.UpdateState(player);
-                if (player.Status == SessionStatus.InGame && _entityManager.HasComponent<GhostComponent>(player.AttachedEntity))
+                if (player.Status != SessionStatus.Disconnected && _entityManager.HasComponent<GhostComponent>(player.AttachedEntity))
                 {
                     ghostCount++;
                 }
