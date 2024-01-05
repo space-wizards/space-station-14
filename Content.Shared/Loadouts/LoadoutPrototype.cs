@@ -11,6 +11,9 @@ namespace Content.Shared.Loadouts;
 [Prototype("loadout")]
 public sealed class LoadoutPrototype : IPrototype
 {
+    /// <summary>
+    ///     Formatted like "Loadout<Department><CommonClothingSlot><SimplifiedClothingId>", example: "LoadoutScienceOuterLabcoatSeniorResearcher"
+    /// </summary>
     [IdDataField]
     public string ID { get; } = default!;
 

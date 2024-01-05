@@ -1,4 +1,5 @@
 using Content.Shared.Clothing.Components;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Inventory;
 using Content.Shared.Loadouts;
 using Content.Shared.Preferences;
@@ -143,6 +144,7 @@ public sealed class LoadoutSystem : EntitySystem
         {
             foreach (var component in loadout.EntityWhitelist.Components)
             {
+                // TODO Component localization sounds a bit absurd but uhh..
                 whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-component", ("component", component)));
             }
         }
@@ -151,6 +153,7 @@ public sealed class LoadoutSystem : EntitySystem
         {
             foreach (var tag in loadout.EntityWhitelist.Tags)
             {
+                // TODO Tag localization?
                 whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-tag", ("tag", tag)));
             }
         }
@@ -159,7 +162,8 @@ public sealed class LoadoutSystem : EntitySystem
         {
             foreach (var job in loadout.JobWhitelist)
             {
-                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-job", ("job", job)));
+                var JobPrototype = _prototype.Index<JobPrototype>(job);
+                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-job", ("job", Loc.GetString(JobPrototype.Name))));
             }
         }
 
@@ -167,7 +171,8 @@ public sealed class LoadoutSystem : EntitySystem
         {
             foreach (var species in loadout.SpeciesWhitelist)
             {
-                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-species", ("species", species)));
+                var speciesPrototype = _prototype.Index<SpeciesPrototype>(species);
+                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-species", ("species", Loc.GetString(speciesPrototype.Name))));
             }
         }
 
@@ -191,6 +196,7 @@ public sealed class LoadoutSystem : EntitySystem
         {
             foreach (var component in loadout.EntityBlacklist.Components)
             {
+                // TODO Component localization sounds a bit absurd but uhh..
                 blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-component", ("component", component)));
             }
         }
@@ -199,6 +205,7 @@ public sealed class LoadoutSystem : EntitySystem
         {
             foreach (var tag in loadout.EntityBlacklist.Tags)
             {
+                // TODO Tag localization?
                 blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-tag", ("tag", tag)));
             }
         }
@@ -207,7 +214,8 @@ public sealed class LoadoutSystem : EntitySystem
         {
             foreach (var job in loadout.JobBlacklist)
             {
-                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-job", ("job", job)));
+                var JobPrototype = _prototype.Index<JobPrototype>(job);
+                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-job", ("job", Loc.GetString(JobPrototype.Name))));
             }
         }
 
@@ -215,7 +223,8 @@ public sealed class LoadoutSystem : EntitySystem
         {
             foreach (var species in loadout.SpeciesBlacklist)
             {
-                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-species", ("species", species)));
+                var speciesPrototype = _prototype.Index<SpeciesPrototype>(species);
+                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-species", ("species", Loc.GetString(speciesPrototype.Name))));
             }
         }
 
