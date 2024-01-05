@@ -31,6 +31,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Linq;
+using Content.Shared.Access.Components;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -260,9 +261,16 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             }
 
-            args.Handled = true;
-            _handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Storage);
-            UpdateUserInterfaceState(ent, ent.Comp);
+            if (ent.Comp.Storage.Count < ent.Comp.Capacity)
+            {
+                args.Handled = true;
+                _handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Storage);
+                UpdateUserInterfaceState(ent, ent.Comp);
+            }
+            else
+            {
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-full"), ent, args.User);
+            }
         }
 
         private void OnBreak(Entity<MicrowaveComponent> ent, ref BreakageEventArgs args)
