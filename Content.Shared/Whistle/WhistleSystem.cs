@@ -18,11 +18,9 @@ public abstract class SharedWhistleSystem : EntitySystem
         base.Initialize();
     }
 
-    private bool ExclamateTarget(EntityUid target, WhistleComponent component)
+    private void ExclamateTarget(EntityUid target, WhistleComponent component)
     {
         SpawnAttachedTo(component.Effect, target.ToCoordinates());
-
-        return true;
     }
 
     public void OnUseInHand(EntityUid uid, WhistleComponent component, UseInHandEvent args)
@@ -43,7 +41,7 @@ public abstract class SharedWhistleSystem : EntitySystem
         return true;
     }
 
-    private bool MakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
+    private void MakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
     {
         foreach (var iterator in
             _entityLookup.GetComponentsInRange<HumanoidAppearanceComponent>(Transform(uid).Coordinates, component.Distance))
@@ -56,6 +54,5 @@ public abstract class SharedWhistleSystem : EntitySystem
 
             ExclamateTarget(iterator.Owner, component);
         }
-        return true;
     }
 }
