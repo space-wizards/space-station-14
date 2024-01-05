@@ -206,18 +206,39 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// <summary>
     /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
     /// </summary>
-    public void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates)
+    public void AttemptShoot(EntityUid? user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates, bool needUser = true)
     {
         gun.ShootCoordinates = toCoordinates;
-        AttemptShoot(user, gunUid, gun);
+        AttemptShoot(user, gunUid, gun, needUser);
         gun.ShotCounter = 0;
     }
 
-    private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
+    private void AttemptShoot(EntityUid? user, EntityUid gunUid, GunComponent gun, bool needUser = true)
     {
-        if (gun.FireRate <= 0f ||
-            !_actionBlockerSystem.CanUseHeldEntity(user))
+        if (gun.FireRate <= 0f)
             return;
+
+        if (needUser)
+        {
+            if (user == null) return;
+
+            if (!_actionBlockerSystem.CanUseHeldEntity(user.Value))
+                return;
+
+            // check if anything wants to prevent shooting
+            var prevention = new ShotAttemptedEvent
+            {
+                User = user.Value,
+                Used = gunUid
+            };
+            RaiseLocalEvent(gunUid, ref prevention);
+            if (prevention.Cancelled)
+                return;
+
+            RaiseLocalEvent(user.Value, ref prevention);
+            if (prevention.Cancelled)
+                return;
+        }
 
         var toCoordinates = gun.ShootCoordinates;
 
@@ -225,20 +246,6 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
 
         var curTime = Timing.CurTime;
-
-        // check if anything wants to prevent shooting
-        var prevention = new ShotAttemptedEvent
-        {
-            User = user,
-            Used = gunUid
-        };
-        RaiseLocalEvent(gunUid, ref prevention);
-        if (prevention.Cancelled)
-            return;
-
-        RaiseLocalEvent(user, ref prevention);
-        if (prevention.Cancelled)
-            return;
 
         // Need to do this to play the clicking sound for empty automatic weapons
         // but not play anything for burst fire.
@@ -286,16 +293,18 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (attemptEv.Cancelled)
         {
-            if (attemptEv.Message != null)
+            if (attemptEv.Message != null && user != null)
             {
-                PopupSystem.PopupClient(attemptEv.Message, gunUid, user);
+                PopupSystem.PopupClient(attemptEv.Message, gunUid, user.Value);
             }
 
             gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
             return;
         }
 
-        var fromCoordinates = Transform(user).Coordinates;
+        // if the user exists, we use its coordinates. Otherwise - coordinates of the weapon.
+        var fromCoordinates = (user != null) ? Transform(user.Value).Coordinates : Transform(gunUid).Coordinates;
+
         // Remove ammo
         var ev = new TakeAmmoEvent(shots, new List<(EntityUid? Entity, IShootable Shootable)>(), fromCoordinates, user);
 
@@ -321,9 +330,9 @@ public abstract partial class SharedGunSystem : EntitySystem
             // If they're firing an existing clip then don't play anything.
             if (shots > 0)
             {
-                if (ev.Reason != null)
+                if (ev.Reason != null && user != null)
                 {
-                    PopupSystem.PopupClient(ev.Reason, gunUid, user);
+                    PopupSystem.PopupClient(ev.Reason, gunUid, user.Value);
                 }
 
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
@@ -341,10 +350,18 @@ public abstract partial class SharedGunSystem : EntitySystem
         var shotEv = new GunShotEvent(user, ev.Ammo);
         RaiseLocalEvent(gunUid, ref shotEv);
 
-        if (userImpulse && TryComp<PhysicsComponent>(user, out var userPhysics))
+        if (userImpulse)
         {
-            if (_gravity.IsWeightless(user, userPhysics))
-                CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
+            if (user != null && TryComp<PhysicsComponent>(user, out var userPhysics)) // user impulse
+            {
+                if (_gravity.IsWeightless(user.Value, userPhysics))
+                    CauseImpulse(fromCoordinates, toCoordinates.Value, user.Value, userPhysics);
+            }
+            else if (TryComp<PhysicsComponent>(gunUid, out var gunPhysics)) // gun impulse
+            {
+                if (_gravity.IsWeightless(gunUid, gunPhysics))
+                    CauseImpulse(fromCoordinates, toCoordinates.Value, gunUid, gunPhysics);
+            }
         }
 
         Dirty(gunUid, gun);
@@ -478,14 +495,14 @@ public abstract partial class SharedGunSystem : EntitySystem
 /// <param name="Cancelled">Set this to true if the shot should be cancelled.</param>
 /// <param name="ThrowItems">Set this to true if the ammo shouldn't actually be fired, just thrown.</param>
 [ByRefEvent]
-public record struct AttemptShootEvent(EntityUid User, string? Message, bool Cancelled = false, bool ThrowItems = false);
+public record struct AttemptShootEvent(EntityUid? User, string? Message, bool Cancelled = false, bool ThrowItems = false);
 
 /// <summary>
 ///     Raised directed on the gun after firing.
 /// </summary>
 /// <param name="User">The user that fired this gun.</param>
 [ByRefEvent]
-public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
+public record struct GunShotEvent(EntityUid? User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
 
 public enum EffectLayers : byte
 {
