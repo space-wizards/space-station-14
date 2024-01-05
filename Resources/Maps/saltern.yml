@@ -31933,6 +31933,13 @@ entities:
     - pos: 26.5,10.5
       parent: 31
       type: Transform
+- proto: DresserResearchDirectorFilled
+  entities:
+  - uid: 5153
+    components:
+    - pos: -5.5,-19.5
+      parent: 31
+      type: Transform
 - proto: DrinkBottleRum
   entities:
   - uid: 10630
@@ -33185,7 +33192,7 @@ entities:
     - pos: 38.5,-5.5
       parent: 31
       type: Transform
-    - secondsUntilStateChange: -5658.055
+    - secondsUntilStateChange: -5678.821
       state: Closing
       type: Door
   - uid: 4019
@@ -50126,11 +50133,6 @@ entities:
       type: AtmosDevice
 - proto: NitrogenTankFilled
   entities:
-  - uid: 9624
-    components:
-    - pos: -5.613141,-19.356611
-      parent: 31
-      type: Transform
   - uid: 10652
     components:
     - pos: 43.475277,-13.455894
@@ -53709,11 +53711,6 @@ entities:
     - pos: 59.5,6.5
       parent: 31
       type: Transform
-  - uid: 5153
-    components:
-    - pos: -5.5,-19.5
-      parent: 31
-      type: Transform
   - uid: 6853
     components:
     - pos: 29.5,16.5
@@ -56930,7 +56927,6 @@ entities:
         260:
         - Pressed: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 8766
     components:
     - pos: -13.5,12.5
@@ -56968,7 +56964,6 @@ entities:
         7588:
         - Pressed: Toggle
       type: DeviceLinkSource
-    - type: ItemCooldown
   - uid: 10449
     components:
     - pos: 51.5,18.5
@@ -74529,11 +74524,6 @@ entities:
   - uid: 4626
     components:
     - pos: 59.472126,6.503501
-      parent: 31
-      type: Transform
-  - uid: 7422
-    components:
-    - pos: -5.4065356,-19.504105
       parent: 31
       type: Transform
   - uid: 7794

@@ -289,3 +289,12 @@
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: body_underbelly
+
+- type: marking
+  id: LizardChestBackspikes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: body_backspikes

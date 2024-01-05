@@ -23,9 +23,9 @@ public sealed class ShowSyndicateIconsSystem : EquipmentHudSystem<ShowSyndicateI
             return;
         }
 
-        var healthIcons = SyndicateIcon(uid, nukeOperativeComponent);
+        var syndicateIcons = SyndicateIcon(uid, nukeOperativeComponent);
 
-        args.StatusIcons.AddRange(healthIcons);
+        args.StatusIcons.AddRange(syndicateIcons);
     }
 
     private IReadOnlyList<StatusIconPrototype> SyndicateIcon(EntityUid uid, NukeOperativeComponent nukeOperativeComponent)

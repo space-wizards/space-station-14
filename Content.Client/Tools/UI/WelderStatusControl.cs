@@ -5,6 +5,7 @@ using Content.Shared.Item;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
+using ItemToggleComponent = Content.Shared.Item.ItemToggle.Components.ItemToggleComponent;
 
 namespace Content.Client.Tools.UI;
 
