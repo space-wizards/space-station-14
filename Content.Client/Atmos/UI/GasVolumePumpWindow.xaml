@@ -11,7 +11,7 @@
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Label Text="{Loc comp-gas-pump-ui-pump-transfer-rate}"/>
             <Control MinSize="5 0" />
-            <LineEdit Name="PumpTransferRateInput" MinSize="60 0" />
+            <LineEdit Name="PumpTransferRateInput" MinSize="70 0" />
             <Control MinSize="5 0" />
             <Button Name="SetMaxRateButton" Text="{Loc comp-gas-pump-ui-pump-set-max}" />
             <Control MinSize="5 0" />
