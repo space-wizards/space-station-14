@@ -4,12 +4,15 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Nuke;
+using Content.Shared.Popups;
 
 namespace Content.Shared.Pinpointer;
 
 public abstract class SharedPinpointerSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -24,15 +27,34 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// </summary>
     private void OnAfterInteract(EntityUid uid, PinpointerComponent component, AfterInteractEvent args)
     {
-        if (!args.CanReach || args.Target is not { } target)
+        if (!args.CanReach || args.Target is not { } target || args.Target == component.Target)
             return;
 
-        if (!component.CanRetarget || component.IsActive)
+        if (component.IsActive && component.CanRetarget)
             return;
 
         // TODO add doafter once the freeze is lifted
         args.Handled = true;
-        component.Target = args.Target;
+
+        if (component.CanRetarget)
+        {
+            component.Target = args.Target;
+        }
+
+        else if (TryComp<NukeCodePaperComponent>(args.Target, out var nukeCodePaperComponent))
+        {
+            if (nukeCodePaperComponent.Nuke == null)
+                return;
+
+            component.Target = nukeCodePaperComponent.Nuke;
+        }
+        else
+        {
+            return;
+        }
+
+        _popup.PopupEntity(Loc.GetString("targeting-pinpointer-succeeded", ("target", component.Target.Value)), args.User, args.User);
+
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(uid):pinpointer} to {ToPrettyString(component.Target.Value):target}");
         if (component.UpdateTargetName)
             component.TargetName = component.Target == null ? null : Identity.Name(component.Target.Value, EntityManager);

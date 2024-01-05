@@ -1,4 +1,4 @@
-namespace Content.Server.Nuke
+namespace Content.Shared.Nuke
 {
     /// <summary>
     ///     Paper with a written nuclear code in it.
@@ -14,5 +14,10 @@ namespace Content.Server.Nuke
         /// </summary>
         [DataField("allNukesAvailable")]
         public bool AllNukesAvailable;
+
+        /// <summary>
+        /// The nuke that will get primed using the code on the paper.
+        /// </summary>
+        public EntityUid? Nuke;
     }
 }

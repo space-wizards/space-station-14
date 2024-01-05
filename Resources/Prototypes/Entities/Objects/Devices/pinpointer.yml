@@ -65,6 +65,7 @@
     - NukeDisk
     - Nuke
     targetName: nuclear authentication disk
+    updateTargetName: true
 
 - type: entity
   name: universal pinpointer

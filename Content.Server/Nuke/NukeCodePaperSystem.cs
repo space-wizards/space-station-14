@@ -4,6 +4,7 @@ using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Nuke;
 using Content.Shared.Paper;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -119,6 +120,11 @@ namespace Content.Server.Nuke
                     nuke.OriginStation != owningStation))
                 {
                     continue;
+                }
+
+                if (TryComp<NukeCodePaperComponent>(uid, out var nukeCodePaper))
+                {
+                    nukeCodePaper.Nuke = nukeUid;
                 }
 
                 codesMessage.PushNewline();
