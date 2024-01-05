@@ -45,7 +45,8 @@
   parent: PinpointerBase
   components:
   - type: Pinpointer
-    component: NukeDisk
+    components:
+    - NukeDisk
     targetName: nuclear authentication disk
 
 - type: entity
@@ -60,7 +61,9 @@
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
-    component: NukeDisk
+    components:
+    - NukeDisk
+    - Nuke
     targetName: nuclear authentication disk
 
 - type: entity
@@ -91,5 +94,6 @@
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
-    component: BecomesStation
+    component:
+    - BecomesStation
     targetName: the station

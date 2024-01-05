@@ -1,5 +1,7 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Pinpointer;
 
@@ -12,8 +14,17 @@ namespace Content.Shared.Pinpointer;
 public sealed partial class PinpointerComponent : Component
 {
     // TODO: Type serializer oh god
-    [DataField("component"), ViewVariables(VVAccess.ReadWrite)]
-    public string? Component;
+    /// <summary>
+    /// The list of entities that are able to be tracked
+    /// </summary>
+    [DataField("components"), ViewVariables(VVAccess.ReadWrite)]
+    public List<string>? Components;
+
+    /// <summary>
+    /// The index of the target currently being tracked
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int CurrentTargetIndex = 0;
 
     [DataField("mediumDistance"), ViewVariables(VVAccess.ReadWrite)]
     public float MediumDistance = 16f;

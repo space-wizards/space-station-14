@@ -2,9 +2,11 @@ using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
 using System.Linq;
 using System.Numerics;
+using Content.Server.Popups;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Verbs;
 
 namespace Content.Server.Pinpointer;
 
@@ -12,6 +14,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -22,6 +25,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
+        SubscribeLocalEvent<PinpointerComponent, GetVerbsEvent<Verb>>(OnPinpointerVerb);
     }
 
     public bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
@@ -68,20 +72,21 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
     }
 
-    private void LocateTarget(EntityUid uid, PinpointerComponent component)
+    private void LocateTarget(EntityUid uid, PinpointerComponent component, EntityUid? user = null)
     {
         // try to find target from whitelist
-        if (component.IsActive && component.Component != null)
+        if (component.IsActive && component.Components != null)
         {
-            if (!EntityManager.ComponentFactory.TryGetRegistration(component.Component, out var reg))
+            var trackedComponent = component.Components[component.CurrentTargetIndex];
+            if (!EntityManager.ComponentFactory.TryGetRegistration(trackedComponent, out var reg))
             {
-                Log.Error($"Unable to find component registration for {component.Component} for pinpointer!");
+                Log.Error($"Unable to find component registration for {trackedComponent} for pinpointer!");
                 DebugTools.Assert(false);
                 return;
             }
 
             var target = FindTargetFromComponent(uid, reg.Type);
-            SetTarget(uid, target, component);
+            SetTarget(uid, target, component, user);
         }
     }
 
@@ -130,7 +135,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// <summary>
     ///     Set pinpointers target to track
     /// </summary>
-    public void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null)
+    public void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref pinpointer))
             return;
@@ -139,6 +144,21 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             return;
 
         pinpointer.Target = target;
+
+        //Searches for the name of the tracked entity
+        if (pinpointer.Target != null)
+        {
+            pinpointer.TargetName = Identity.Name(pinpointer.Target.Value, EntityManager);
+        }
+
+        if (user != null && pinpointer.TargetName != null)
+        {
+            _popup.PopupEntity(
+                target == null
+                    ? Loc.GetString("targeting-pinpointer-failed")
+                    : Loc.GetString("targeting-pinpointer-succeeded", ("target", pinpointer.TargetName)), user.Value, user.Value);
+        }
+
         if (pinpointer.IsActive)
             UpdateDirectionToTarget(uid, pinpointer);
     }
@@ -154,7 +174,12 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         var target = pinpointer.Target;
         if (target == null || !EntityManager.EntityExists(target.Value))
         {
-            SetDistance(uid, Distance.Unknown, pinpointer);
+            //Updates appearance when currently tracking entity gets deleted or moves off-station
+            if (pinpointer.DistanceToTarget != Distance.Unknown)
+            {
+                SetDistance(uid, Distance.Unknown, pinpointer);
+                UpdateAppearance(uid,pinpointer);
+            }
             return;
         }
 
@@ -209,5 +234,44 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             return Distance.Medium;
         else
             return Distance.Far;
+    }
+
+    /// <summary>
+    /// Cycles between the targets the pinpointer is able to track.
+    /// </summary>
+    private void CycleTarget(EntityUid uid, PinpointerComponent component, EntityUid user)
+    {
+        if (component.Components == null)
+            return;
+
+        if (component.CurrentTargetIndex == component.Components.Count - 1)
+        {
+            component.CurrentTargetIndex = 0;
+        }
+        else
+        {
+            component.CurrentTargetIndex++;
+        }
+
+        LocateTarget(uid, component, user);
+    }
+
+    /// <summary>
+    /// Adds the verb that allows the pinpointer to cycle targets if it has more than one trackable target.
+    /// </summary>
+    private void OnPinpointerVerb(EntityUid uid, PinpointerComponent component, GetVerbsEvent<Verb> args)
+    {
+        if (component.Components == null)
+            return;
+
+        if (!args.CanInteract || args.Hands == null || component.Components.Count <= 1)
+            return;
+
+        args.Verbs.Add(new Verb()
+        {
+            Text = Loc.GetString("cycle-pinpointer-target"),
+            Act = () => CycleTarget(uid, component, args.User),
+            Priority = 1
+        });
     }
 }
