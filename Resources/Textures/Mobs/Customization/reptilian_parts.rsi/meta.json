@@ -12,6 +12,10 @@
       "directions": 4
     },
     {
+      "name": "tail_salamander_front",
+      "directions": 4
+    },
+    {
       "name": "tail_spikes_front",
       "directions": 4
     },
@@ -28,6 +32,10 @@
       "directions": 4
     },
     {
+      "name": "tail_salamander_behind",
+      "directions": 4
+    },
+    {
       "name": "tail_spikes_behind",
       "directions": 4
     },
@@ -41,6 +49,10 @@
     },
     {
       "name": "tail_smooth",
+      "directions": 4
+    },
+    {
+      "name": "tail_salamander",
       "directions": 4
     },
     {

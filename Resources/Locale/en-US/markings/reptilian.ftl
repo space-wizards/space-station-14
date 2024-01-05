@@ -25,6 +25,9 @@ marking-LizardHornsSimple = Lizard Horns
 marking-LizardTailSmooth-tail_smooth = Lizard Tail (Smooth)
 marking-LizardTailSmooth = Lizard Tail (Smooth)
 
+marking-LizardTailSalamander-tail_salamander = Lizard Tail (Salamander)
+marking-LizardTailSalamander = Lizard Tail (Salamander)
+
 marking-LizardTailSpikes-tail_spikes = Lizard Tail (Spiky)
 marking-LizardTailSpikes = Lizard Tail (Spiky)
 
