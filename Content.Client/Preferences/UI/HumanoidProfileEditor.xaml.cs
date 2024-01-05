@@ -98,7 +98,7 @@ namespace Content.Client.Preferences.UI
         private readonly List<SpeciesPrototype> _speciesList;
         private readonly List<AntagPreferenceSelector> _antagPreferences;
         private readonly List<TraitPreferenceSelector> _traitPreferences;
-        private readonly List<LoadoutPreferenceSelector>? _loadoutPreferences;
+        private readonly List<LoadoutPreferenceSelector> _loadoutPreferences;
 
         private SpriteView _previewSpriteView => CSpriteView;
         private Button _previewRotateLeftButton => CSpriteRotateLeft;
@@ -475,145 +475,7 @@ namespace Content.Client.Preferences.UI
                 ShowLoadouts.Visible = enabled;
             });
 
-
             _loadoutsShowUnusableButton.OnToggled += args => UpdateLoadouts(args.Pressed);
-            // UpdateLoadouts(false); // Initial UpdateLoadouts call has to be after the dummy is made, so it's there instead
-
-            // TODO Make this not local if needed by something for some reason
-            void UpdateLoadouts(bool showUnusable)
-            {
-                // Reset loadout points so you don't get -14 points or something for no reason
-                var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
-                _loadoutPointsLabelB.Text = "0";
-                _loadoutPointsLabelI.Text = points.ToString();
-                _loadoutPointsLabelA.Text = points.ToString();
-                _loadoutPointsBar.MaxValue = points;
-                _loadoutPointsBar.Value = points;
-
-                // Clear current listings
-                _loadoutPreferences.Clear();
-                _loadoutsTabs.DisposeAllChildren();
-
-
-                // Get the highest priority job to use for loadout filtering
-                var highJob = _jobPriorities.FirstOrDefault(j => j.Priority == JobPriority.High);
-
-                // Get all loadout prototypes
-                // If showUnusable is false filter out loadouts that are unusable based on your current character setup
-                // TODO Make unusable loadouts red or something // TODO Make the selectors a toggleable button instead of a checkbox
-                var loadouts = prototypeManager.EnumeratePrototypes<LoadoutPrototype>().Where(loadout =>
-                    showUnusable ||
-                    _loadoutSystem.CheckWhitelistBlacklistValid(
-                        loadout,
-                        _previewDummy ?? EntityUid.Invalid,
-                        highJob == null ? new JobPrototype() : highJob.Proto,
-                        Profile ?? HumanoidCharacterProfile.DefaultWithSpecies()
-                    )
-                ).ToList();
-
-                if (!loadouts.Any())
-                {
-                    _loadoutsTab.AddChild(new Label { Text = Loc.GetString("humanoid-profile-editor-loadouts-no-loadouts") });
-                    return;
-                }
-
-                // Make Uncategorized category
-                var uncategorized = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Vertical,
-                    VerticalExpand = true,
-                    Name = "Uncategorized_0"
-                };
-
-                _loadoutsTabs.AddChild(uncategorized);
-                _loadoutsTabs.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-loadouts-uncategorized-tab"));
-
-                // Make categories
-                var currentCategory = 1;
-                foreach (var loadout in loadouts.OrderBy(l => l.Category))
-                {
-                    // Check for existing category
-                    BoxContainer? match = null;
-                    foreach (var child in _loadoutsTabs.Children)
-                    {
-                        if (match != null || child.Name == null)
-                            continue;
-                        if (child.Name.Split("_")[0] == loadout.Category)
-                            match = (BoxContainer) child;
-                    }
-
-                    // If there is a category do nothing
-                    if (match != null)
-                        continue;
-
-                    // If not, make it
-                    var box = new BoxContainer
-                    {
-                        Orientation = LayoutOrientation.Vertical,
-                        VerticalExpand = true,
-                        Name = $"{loadout.Category}_{currentCategory}"
-                    };
-
-                    _loadoutsTabs.AddChild(box);
-                    _loadoutsTabs.SetTabTitle(currentCategory, Loc.GetString($"loadout-category-{loadout.Category}"));
-                    currentCategory++;
-                }
-
-                // Fill categories
-                foreach (var loadout in loadouts.OrderBy(l => l.ID))
-                {
-                    var selector = new LoadoutPreferenceSelector(loadout, _entMan, _loadoutSystem);
-
-                    // Look for an existing loadout category
-                    BoxContainer? match = null;
-                    foreach (var child in _loadoutsTabs.Children)
-                    {
-                        if (match != null || child.Name == null)
-                            continue;
-                        if (child.Name.Split("_")[0] == loadout.Category)
-                            match = (BoxContainer) child;
-                    }
-
-                    // If there is no category put it in Uncategorized
-                    if (match?.Name == null)
-                        uncategorized.AddChild(selector);
-                    else
-                        match.AddChild(selector);
-
-                    _loadoutPreferences.Add(selector);
-                    selector.PreferenceChanged += preference =>
-                    {
-                        // Make sure they have enough loadout points
-                        if (preference)
-                        {
-                            var temp = _loadoutPointsBar.Value - loadout.Cost;
-
-                            if (temp < 0)
-                                preference = false;
-                            else
-                            {
-                                _loadoutPointsBar.Value = temp;
-                                _loadoutPointsLabelI.Text = temp.ToString();
-                            }
-                        }
-                        else
-                        {
-                            _loadoutPointsBar.Value += loadout.Cost;
-                            _loadoutPointsLabelI.Text = _loadoutPointsBar.Value.ToString();
-                        }
-
-                        // Update Preference
-                        Profile = Profile?.WithLoadoutPreference(loadout.ID, preference);
-                        IsDirty = true;
-
-                        UpdateLoadoutPreferences();
-                    };
-                }
-
-                // Hide Uncategorized tab if it's empty, other tabs already shouldn't exist if they're empty
-                if (!uncategorized.Children.Any())
-                    _loadoutsTabs.SetTabVisible(0, false);
-            }
 
             #endregion
 
@@ -670,6 +532,7 @@ namespace Content.Client.Preferences.UI
             _previewSpriteView.SetEntity(_previewDummy);
 
             UpdateLoadouts(false); // Initial UpdateLoadouts call has to have a dummy to get information from, so it's here
+
             #endregion Dummy
 
             #endregion Left
@@ -1289,6 +1152,7 @@ namespace Content.Client.Preferences.UI
             UpdateJobPriorities();
             UpdateAntagPreferences();
             UpdateTraitPreferences();
+            UpdateLoadouts(_loadoutsShowUnusableButton.Pressed);
             UpdateLoadoutPreferences();
             UpdateMarkings();
             RebuildSpriteView();
@@ -1506,6 +1370,141 @@ namespace Content.Client.Preferences.UI
                     _loadoutPointsLabelI.Text = points.ToString();
                 }
             }
+        }
+
+        private void UpdateLoadouts(bool showUnusable)
+        {
+            // Reset loadout points so you don't get -14 points or something for no reason
+            var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
+            _loadoutPointsLabelB.Text = "0";
+            _loadoutPointsLabelI.Text = points.ToString();
+            _loadoutPointsLabelA.Text = points.ToString();
+            _loadoutPointsBar.MaxValue = points;
+            _loadoutPointsBar.Value = points;
+
+            // Clear current listings
+            _loadoutPreferences.Clear();
+            _loadoutsTabs.DisposeAllChildren();
+
+
+            // Get the highest priority job to use for loadout filtering
+            var highJob = _jobPriorities.FirstOrDefault(j => j.Priority == JobPriority.High);
+
+            // Get all loadout prototypes
+            // If showUnusable is false filter out loadouts that are unusable based on your current character setup
+            // TODO Make unusable loadouts red or something // TODO Make the selectors a toggleable button instead of a checkbox
+            var loadouts = _prototypeManager.EnumeratePrototypes<LoadoutPrototype>().Where(loadout =>
+                showUnusable ||
+                _loadoutSystem.CheckWhitelistBlacklistValid(
+                    loadout,
+                    _previewDummy ?? EntityUid.Invalid,
+                    highJob == null ? new JobPrototype() : highJob.Proto,
+                    Profile ?? HumanoidCharacterProfile.DefaultWithSpecies()
+                )
+            ).ToList();
+
+            if (!loadouts.Any())
+            {
+                _loadoutsTab.AddChild(new Label { Text = Loc.GetString("humanoid-profile-editor-loadouts-no-loadouts") });
+                return;
+            }
+
+            // Make Uncategorized category
+            var uncategorized = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                VerticalExpand = true,
+                Name = "Uncategorized_0"
+            };
+
+            _loadoutsTabs.AddChild(uncategorized);
+            _loadoutsTabs.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-loadouts-uncategorized-tab"));
+
+            // Make categories
+            var currentCategory = 1;
+            foreach (var loadout in loadouts.OrderBy(l => l.Category))
+            {
+                // Check for existing category
+                BoxContainer? match = null;
+                foreach (var child in _loadoutsTabs.Children)
+                {
+                    if (match != null || child.Name == null)
+                        continue;
+                    if (child.Name.Split("_")[0] == loadout.Category)
+                        match = (BoxContainer) child;
+                }
+
+                // If there is a category do nothing
+                if (match != null)
+                    continue;
+
+                // If not, make it
+                var box = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Vertical,
+                    VerticalExpand = true,
+                    Name = $"{loadout.Category}_{currentCategory}"
+                };
+
+                _loadoutsTabs.AddChild(box);
+                _loadoutsTabs.SetTabTitle(currentCategory, Loc.GetString($"loadout-category-{loadout.Category}"));
+                currentCategory++;
+            }
+
+            // Fill categories
+            foreach (var loadout in loadouts.OrderBy(l => l.ID))
+            {
+                var selector = new LoadoutPreferenceSelector(loadout, _entMan, _loadoutSystem);
+
+                // Look for an existing loadout category
+                BoxContainer? match = null;
+                foreach (var child in _loadoutsTabs.Children)
+                {
+                    if (match != null || child.Name == null)
+                        continue;
+                    if (child.Name.Split("_")[0] == loadout.Category)
+                        match = (BoxContainer) child;
+                }
+
+                // If there is no category put it in Uncategorized
+                if (match?.Name == null)
+                    uncategorized.AddChild(selector);
+                else
+                    match.AddChild(selector);
+
+                _loadoutPreferences.Add(selector);
+                selector.PreferenceChanged += preference =>
+                {
+                    // Make sure they have enough loadout points
+                    if (preference)
+                    {
+                        var temp = _loadoutPointsBar.Value - loadout.Cost;
+
+                        if (temp < 0)
+                            preference = false;
+                        else
+                        {
+                            _loadoutPointsBar.Value = temp;
+                            _loadoutPointsLabelI.Text = temp.ToString();
+                        }
+                    }
+                    else
+                    {
+                        _loadoutPointsBar.Value += loadout.Cost;
+                        _loadoutPointsLabelI.Text = _loadoutPointsBar.Value.ToString();
+                    }
+
+                    // Update Preference
+                    Profile = Profile?.WithLoadoutPreference(loadout.ID, preference);
+                    IsDirty = true;
+
+                    UpdateLoadoutPreferences();
+                };
+            }
+
+            // Hide Uncategorized tab if it's empty, other tabs already shouldn't exist if they're empty
+            if (!uncategorized.Children.Any())
+                _loadoutsTabs.SetTabVisible(0, false);
         }
 
         private sealed class AntagPreferenceSelector : RequirementsSelector<AntagPrototype>
