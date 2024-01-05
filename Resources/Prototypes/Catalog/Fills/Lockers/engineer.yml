@@ -135,7 +135,6 @@
     contents:
       - id: ClothingHandsGlovesColorYellow
       - id: ClothingMaskGas
-      - id: trayScanner
       - id: RCD
       - id: RCDAmmo
 
