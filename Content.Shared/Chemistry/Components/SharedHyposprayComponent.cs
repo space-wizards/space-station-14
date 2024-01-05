@@ -9,6 +9,10 @@ public abstract partial class SharedHyposprayComponent : Component
 {
     [DataField("solutionName")]
     public string SolutionName = "hypospray";
+    // anti hypospray begin
+    [DataField("canPenetrate")]
+    public bool CanPenetrate = false;
+    // anti hypospray end
 }
 
 [Serializable, NetSerializable]

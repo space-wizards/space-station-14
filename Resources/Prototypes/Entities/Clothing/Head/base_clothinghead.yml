@@ -161,6 +161,7 @@
         Piercing: 0.95
         Heat: 0.90
         Radiation: 0.25
+    antihypo: true # anti hypo thing
   - type: GroupExamine
   - type: IngestionBlocker
   - type: Tag

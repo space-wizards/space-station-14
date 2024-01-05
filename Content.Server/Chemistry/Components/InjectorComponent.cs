@@ -62,6 +62,10 @@ namespace Content.Server.Chemistry.Components
         [DataField("delay")]
         public float Delay = 5;
 
+        // anti hypo begin
+        [DataField("canPenetrate")]
+        public bool CanPenetrate = false;
+        // anti hypo end
         [DataField("toggleState")] private InjectorToggleMode _toggleState;
 
         /// <summary>

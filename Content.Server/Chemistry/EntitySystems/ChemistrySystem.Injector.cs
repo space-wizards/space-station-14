@@ -17,6 +17,9 @@ using Content.Shared.Verbs;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
 using Content.Shared.Popups;
+//anti hypo begin
+using Content.Shared.AntiHypo;
+//anti hypo end
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -37,7 +40,23 @@ public sealed partial class ChemistrySystem
         SubscribeLocalEvent<InjectorComponent, AfterInteractEvent>(OnInjectorAfterInteract);
         SubscribeLocalEvent<InjectorComponent, ComponentGetState>(OnInjectorGetState);
     }
-
+    // anti hypo begin
+    private bool CanInject(EntityUid target, EntityUid user, InjectorComponent component)
+    {
+        if (component.CanPenetrate)
+        {
+            return true;
+        }
+        var ev = new AntiHyposprayEvent(true);
+        RaiseLocalEvent(target, ev);
+        if (ev.Inject != true)
+        {
+            _popup.PopupCursor(Loc.GetString("antihypospray-cant-inject"), user);
+            return false;
+        }
+        return true;
+    }
+    // anti hypo end
     private void AddSetTransferVerbs(EntityUid uid, InjectorComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
@@ -212,6 +231,10 @@ public sealed partial class ChemistrySystem
     /// </summary>
     private void InjectDoAfter(InjectorComponent component, EntityUid user, EntityUid target, EntityUid injector)
     {
+        // anti hypo begin
+        if (!CanInject(target, user, component))
+            return;
+        // anti hypo end
         // Create a pop-up for the user
         _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
 
@@ -273,7 +296,6 @@ public sealed partial class ChemistrySystem
     {
         // Get transfer amount. May be smaller than _transferAmount if not enough room
         var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetBloodstream.ChemicalSolution.AvailableVolume);
-
         if (realTransferAmount <= 0)
         {
             _popup.PopupEntity(Loc.GetString("injector-component-cannot-inject-message", ("target", Identity.Entity(target, EntityManager))), injector, user);
@@ -300,7 +322,6 @@ public sealed partial class ChemistrySystem
         if (!_solutions.TryGetSolution(injector, InjectorComponent.SolutionName, out var solution)
             || solution.Volume == 0)
             return;
-
         // Get transfer amount. May be smaller than _transferAmount if not enough room
         var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);
 

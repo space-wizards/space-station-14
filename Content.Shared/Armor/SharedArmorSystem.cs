@@ -7,6 +7,9 @@ using Robust.Shared.Utility;
 // stamina resistance begin
 using Content.Shared.Damage.Events;
 // stamina resistance end
+// anti hypo begin
+using Content.Shared.AntiHypo;
+// anti hypo end
 namespace Content.Shared.Armor;
 
 /// <summary>
@@ -27,6 +30,9 @@ public abstract class SharedArmorSystem : EntitySystem
         // stamina resistance begin
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<StaminaModifyEvent>>(OnStaminaModify);
         // stamina resistance end
+        // anti hypo begin
+        SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<AntiHyposprayEvent>>(OnHypo);
+        // anti hypo end
     }
 
     private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
@@ -47,6 +53,14 @@ public abstract class SharedArmorSystem : EntitySystem
         }
     }
     // stamina resistance end
+    // anti hypo begin
+    private void OnHypo(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<AntiHyposprayEvent> args)
+    {
+        if (!component.AntiHypo)
+            return;
+        args.Args.Inject = false;
+    }
+    // anti hypo end
 
     private void OnArmorVerbExamine(EntityUid uid, ArmorComponent component, GetVerbsEvent<ExamineVerb> args)
     {
