@@ -114,7 +114,7 @@ namespace Content.Server.Botany.Systems
             var seedName = Loc.GetString(comp.DisplayName);
             var seedYield = comp.Yield;
             var seedPotency = comp.Potency;
-            var seedChem = "";
+            var seedChem = "\r\n   ";
             var plantHarvestType = "";
             var plantMutations = "";
             var exudeGases = "";
@@ -125,44 +125,13 @@ namespace Content.Server.Botany.Systems
                 plantHarvestType = "No Repeat";
             if (comp.HarvestRepeat == HarvestType.SelfHarvest) plantHarvestType = "Auto";
 
-            seedChem += "\r\n";
-            seedChem += String.Join(", ", comp.Chemicals.Select(item => item.Key.ToString()));
+            seedChem += String.Join("\r\n   ", comp.Chemicals.Select(item => item.Key.ToString()));
 
             if (comp.ExudeGasses.Count > 0)
             {
                 foreach (var (gas, amount) in comp.ExudeGasses)
                 {
-                    exudeGases += gas;
-                }
-            }
-            else
-            {
-                exudeGases = Loc.GetString("plant-analyzer-plant-gasses-No");
-            }
-            plantMutations = CheckAllMutation(comp, plantMutations);
-            return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName, seedYield.ToString(), seedPotency.ToString(), seedChem, plantHarvestType, exudeGases, plantMutations);
-        }
-
-        public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeed(SeedData comp, EntityUid target, bool trayChecker)
-        {   //analyze seed from hydroponic
-            var seedName = Loc.GetString(comp.DisplayName);
-            var seedYield = comp.Yield;
-            var seedPotency = comp.Potency;
-            var seedChem = "";
-            var plantHarvestType = "";
-            var plantMutations = "";
-            var exudeGases = "";
-
-            if (comp.HarvestRepeat == HarvestType.Repeat) plantHarvestType = Loc.GetString("plant-analyzer-harvest-repeat"); else plantHarvestType = Loc.GetString("plant-analyzer-harvest-ephemeral");
-            if (comp.HarvestRepeat == HarvestType.SelfHarvest) plantHarvestType = Loc.GetString("plant-analyzer-harvest-autoharvest");
-            seedChem += "\r\n   ";
-            seedChem += String.Join(", \r\n   ", comp.Chemicals.Select(item => item.Key.ToString()));
-
-            if (comp.ExudeGasses.Count > 0)
-            {
-                foreach (var (gas, amount) in comp.ExudeGasses)
-                {
-                    exudeGases += gas + ", \r\n   ";
+                    exudeGases += "\r\n   " + gas;
                 };
             }
             else
@@ -170,25 +139,54 @@ namespace Content.Server.Botany.Systems
                 exudeGases = Loc.GetString("plant-analyzer-plant-gasses-No");
             }
             plantMutations = CheckAllMutation(comp, plantMutations);
-            return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName, seedYield.ToString(), seedPotency.ToString(), seedChem, plantHarvestType, exudeGases, plantMutations);
+            return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName, seedYield.ToString(), seedPotency.ToString(), seedChem, plantHarvestType, exudeGases, plantMutations, false);
+        }
+
+        public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeed(SeedData comp, EntityUid target, bool trayChecker)
+        {   //analyze seed from hydroponic
+            var seedName = Loc.GetString(comp.DisplayName);
+            var seedYield = comp.Yield;
+            var seedPotency = comp.Potency;
+            var seedChem = "\r\n   ";
+            var plantHarvestType = "";
+            var plantMutations = "";
+            var exudeGases = "";
+            var isTray = trayChecker;
+
+            if (comp.HarvestRepeat == HarvestType.Repeat) plantHarvestType = Loc.GetString("plant-analyzer-harvest-repeat");
+            if (comp.HarvestRepeat == HarvestType.NoRepeat) plantHarvestType = Loc.GetString("plant-analyzer-harvest-ephemeral");
+            if (comp.HarvestRepeat == HarvestType.SelfHarvest) plantHarvestType = Loc.GetString("plant-analyzer-harvest-autoharvest");
+
+            seedChem += String.Join("\r\n   ", comp.Chemicals.Select(item => item.Key.ToString()));
+
+            if (comp.ExudeGasses.Count > 0)
+            {
+                foreach (var (gas, amount) in comp.ExudeGasses)
+                {
+                    exudeGases += "\r\n   " + gas;
+                };
+            }
+            else
+            {
+                exudeGases = Loc.GetString("plant-analyzer-plant-gasses-No");
+            }
+            plantMutations = CheckAllMutation(comp, plantMutations);
+            return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName, seedYield.ToString(), seedPotency.ToString(), seedChem, plantHarvestType, exudeGases, plantMutations, trayChecker);
         }
 
         public string CheckAllMutation(SeedData plant, string plantMutations)
         {
-            String plantMut = "test";
-
             //plantMut += String.Join(", \r\n", plant.MutationPrototypes.Select(item => item.ToString())); possible Speciation 
             plantMutations += "\r\n   ";
-            if (plant.Viable == false) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-unviable")}" + ", \r\n   ";
-            if (plant.TurnIntoKudzu) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-turnintokudzu")}" + ", \r\n   ";
-            if (plant.Seedless) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-seedless")}" + ", \r\n   ";
-            if (plant.Slip) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-slip")}" + ", \r\n   ";
-            if (plant.Sentient) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-sentient")}" + ", \r\n   ";
-            if (plant.Ligneous) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-ligneous")}" + ", \r\n   ";
-            if (plant.Bioluminescent) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-bioluminescent")}" + ", \r\n   ";
-            if (plant.CanScream) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-canscream")}" + ",    ";
+            if (plant.Viable == false) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-unviable")}" + "\r\n   ";
+            if (plant.TurnIntoKudzu) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-turnintokudzu")}" + "\r\n   ";
+            if (plant.Seedless) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-seedless")}" + "\r\n   ";
+            if (plant.Slip) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-slip")}" + "\r\n   ";
+            if (plant.Sentient) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-sentient")}" + "\r\n   ";
+            if (plant.Ligneous) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-ligneous")}" + "\r\n   ";
+            if (plant.Bioluminescent) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-bioluminescent")}" + "\r\n   ";
+            if (plant.CanScream) plantMutations += $"{Loc.GetString("plant-analyzer-mutation-canscream")}" + "   ";
             plantMutations = plantMutations.TrimEnd(',');
-            //plantMutations += "+++++++";
 
             return plantMutations;
         }

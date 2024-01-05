@@ -1,9 +1,10 @@
-plant-analyzer-interface-title = AgriMax Plant analyzer
+plant-analyzer-interface-title = AgriMax 3000 Plant analyzer
 plant-analyzer-window-no-seed-information-text = No seed/plant scanned.
 plant-analyzer-window-label-name-scanned-plant = Scanned plant: {$seedName}
+plant-analyzer-window-label-name-scanned-seed = Scanned seed: {$seedName}
 plant-analyzer-plant-endurance-text = Plant endurance: {$seedEndurance}
-plant-analyzer-plant-chemistry-text =  Сontained substances: {$seedChem}
-plant-analyzer-plant-gasses-No = No
+plant-analyzer-plant-chemistry-text = Сontained substances: {$seedChem}
+plant-analyzer-plant-gasses-No = None
 plant-analyzer-plant-yield-text = Plant Yield:  {$seedYield}
 plant-analyzer-plant-harvest-text = Harvest type:  {$plantHarvestType}
 plant-analyzer-plant-potency-text = Plant Potency: {$seedPotency}

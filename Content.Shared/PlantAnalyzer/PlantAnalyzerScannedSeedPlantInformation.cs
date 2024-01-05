@@ -17,10 +17,10 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
     public string SeedChem = "";
     public string SeedMutations = "";
     public string ExudeGases = "";
+    public Boolean IsTray;
 
-    public bool IsTray;
     public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntit, string seedName, string seedYield, string seedPotency,
-        string seedChem, string plantHarvestType, string exudeGases, string seedMutations)
+        string seedChem, string plantHarvestType, string exudeGases, string seedMutations, Boolean isTray)
     {
         TargetEntity = targetEntit;
 
@@ -32,6 +32,6 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
 
         ExudeGases = exudeGases;
         SeedMutations = seedMutations;
-
+        IsTray = isTray;
     }
 }

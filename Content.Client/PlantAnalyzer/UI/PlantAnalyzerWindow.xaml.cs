@@ -36,6 +36,7 @@ namespace Content.Client.PlantAnalyzer.UI
             GroupsContainer.RemoveAllChildren();
 
             var target = _entityManager.GetEntity(msg.TargetEntity);
+            Boolean plantTray = msg.IsTray;
 
             if (target == null)
             {
@@ -44,7 +45,16 @@ namespace Content.Client.PlantAnalyzer.UI
             }
             NoData.Visible = false;
 
-            PlantName.Text = Loc.GetString("plant-analyzer-window-label-name-scanned-plant", ("seedName", msg.SeedName));
+            Title = Loc.GetString("plant-analyzer-interface-title");
+
+            if (plantTray)
+            {
+                PlantName.Text = Loc.GetString("plant-analyzer-window-label-name-scanned-plant", ("seedName", msg.SeedName));
+            }
+            else
+            {
+                PlantName.Text = Loc.GetString("plant-analyzer-window-label-name-scanned-seed", ("seedName", msg.SeedName));
+            }
 
             Yield.Text = Loc.GetString("plant-analyzer-plant-yield-text", ("seedYield", msg.SeedYield));
 
@@ -57,7 +67,6 @@ namespace Content.Client.PlantAnalyzer.UI
             Gases.Text = Loc.GetString("plant-analyzer-plant-exude-text", ("exudeGases", msg.ExudeGases));
 
             Traits.Text = Loc.GetString("plant-analyzer-plant-mutations-text", ("traits", msg.SeedMutations));
-
         }
     }
 }
