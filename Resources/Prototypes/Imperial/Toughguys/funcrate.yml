@@ -18,6 +18,7 @@
       - id: PlushieScientist
       - id: PlushieSurgeon
       - id: PlushieBarmem
+      - id: PlushieCoroner
 
 - type: cargoProduct
   id: FunPlushieCommunity
@@ -25,6 +26,6 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
   product: CrateFunPlushieCommunity
-  cost: 2000
+  cost: 2999
   category: Fun
   group: market

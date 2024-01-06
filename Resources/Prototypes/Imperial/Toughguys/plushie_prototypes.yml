@@ -251,3 +251,16 @@
     state: plushie_barmem
   - type: StaticPrice
     price: 299
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieCoroner
+  name: Whirlow
+  description: Nuclear operatives at the station? Has the singularity escaped or the Zombies? Don't be afraid, because she will be the one who will document your death.
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_coroner
+  - type: StaticPrice
+    price: 299
