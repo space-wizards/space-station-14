@@ -273,6 +273,10 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         {
             if (player.AttachedEntity == null || !HasComp<HumanoidAppearanceComponent>(player.AttachedEntity) || HasComp<ZombieImmuneComponent>(player.AttachedEntity))
                 continue;
+
+            if (HasComp<InitialInfectedExemptComponent>(player.AttachedEntity))
+                continue; // used (for example) on ERT
+
             playerList.Add(player);
 
             var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
