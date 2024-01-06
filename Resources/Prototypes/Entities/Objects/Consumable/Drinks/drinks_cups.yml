@@ -37,7 +37,6 @@
     damage:
       types:
         Blunt: 0
-  - type: ItemCooldown
 
 - type: entity
   parent: DrinkBaseCup

@@ -262,6 +262,7 @@
 
 - type: reaction
   id: EthanolBreakdown
+  source: true
   requiredMixerCategories:
   - Electrolysis
   reactants:
@@ -895,6 +896,7 @@
 
 - type: reaction
   id: WaterBreakdown
+  source: true
   requiredMixerCategories:
   - Electrolysis
   reactants:

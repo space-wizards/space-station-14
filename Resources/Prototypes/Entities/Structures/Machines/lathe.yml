@@ -105,6 +105,7 @@
       - SheetRGlass
       - Beaker
       - Syringe
+      - HandLabeler
       - LightTube
       - SodiumLightTube
       - ExteriorLightTube
@@ -115,7 +116,13 @@
       - FoodPlatePlastic
       - FoodPlateSmallPlastic
       - SprayBottle
+      - MopItem
+      - Holoprojector
+      - Mousetrap
+      - LightReplacer
+      - TrashBag
       - PowerCellSmall
+      - PowerCellMedium
       - VehicleWheelchairFolded
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
@@ -189,7 +196,7 @@
   - type: Sprite
     sprite: Structures/Machines/autolathe_hypercon.rsi
   - type: Lathe
-    materialUseMultiplier: 0.70
+    materialUseMultiplier: 0.5
     timeMultiplier: 1.5
   - type: LatheHeatProducing
   - type: Machine
@@ -239,6 +246,8 @@
       - Retractor
       - Cautery
       - Drill
+      - WeaponParticleDecelerator
+      - HoloprojectorField
       - Saw
       - Hemostat
       - Beaker
@@ -257,11 +266,6 @@
       - SuperCapacitorStockPart
       - SuperMatterBinStockPart
       - PicoManipulatorStockPart
-      - MopItem
-      - Holoprojector
-      - Mousetrap
-      - LightReplacer
-      - TrashBag
       - AdvMopItem
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
@@ -273,7 +277,6 @@
       - SignalTrigger
       - VoiceTrigger
       - Igniter
-      - PowerCellMedium
       - PowerCellMicroreactor
       - PowerCellHigh
       - WeaponPistolCHIMP
@@ -320,7 +323,7 @@
   - type: Sprite
     sprite: Structures/Machines/protolathe_hypercon.rsi
   - type: Lathe
-    materialUseMultiplier: 0.70
+    materialUseMultiplier: 0.5
     timeMultiplier: 1.5
   - type: LatheHeatProducing
   - type: Machine
@@ -358,6 +361,9 @@
     - ElectrolysisUnitMachineCircuitboard
     - CentrifugeMachineCircuitboard
     - CondenserMachineCircuitBoard
+    - UniformPrinterMachineCircuitboard
+    - FloorGreenCircuit
+    - FloorBlueCircuit
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
@@ -369,6 +375,7 @@
       - ChemMasterMachineCircuitboard
       - ChemDispenserMachineCircuitboard
       - BiomassReclaimerMachineCircuitboard
+      - BiofabricatorMachineCircuitboard
       - SurveillanceCameraRouterCircuitboard
       - SurveillanceCameraMonitorCircuitboard
       - SurveillanceWirelessCameraMonitorCircuitboard
@@ -387,8 +394,8 @@
       - MicrowaveMachineCircuitboard
       - ElectricGrillMachineCircuitboard
       - FatExtractorMachineCircuitboard
+      - FlatpackerMachineCircuitboard
       - SheetifierMachineCircuitboard
-      - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
       - TechDiskComputerCircuitboard
@@ -553,6 +560,49 @@
     - Robotics
 
 - type: entity
+  id: Biofabricator
+  parent: BaseLathe
+  name: biofabricator
+  description: Produces animal cubes using biomass.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/biofabricator.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: BiofabricatorMachineCircuitboard
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    staticRecipes:
+    - MonkeyCube
+    - KoboldCube
+    - CowCube
+    - GoatCube
+    - MothroachCube
+    - MouseCube
+    - CockroachCube
+  - type: EmagLatheRecipes
+    emagStaticRecipes:
+    - AbominationCube
+    - SpaceCarpCube
+    - SpaceTickCube
+
+- type: entity
   id: SecurityTechFab
   parent: BaseLathe
   name: security techfab
@@ -698,7 +748,9 @@
       whitelist:
         tags:
           - Sheet
-
+    - type: StealTarget
+      stealGroup: AmmoTechFabCircuitboard
+      
 - type: entity
   id: MedicalTechFab
   parent: BaseLathe
@@ -724,6 +776,7 @@
     staticRecipes:
       - Brutepack
       - Ointment
+      - Gauze
       - HandLabeler
       - Defibrillator
       - HandheldHealthAnalyzer
@@ -766,7 +819,9 @@
       - SyringeCryostasis
   - type: Machine
     board: MedicalTechFabCircuitboard
-
+  - type: StealTarget
+    stealGroup: MedicalTechFabCircuitboard
+    
 - type: entity
   parent: BaseLathe
   id: UniformPrinter
@@ -937,9 +992,7 @@
     - type: Machine
       board: OreProcessorMachineCircuitboard
     - type: MaterialStorage
-      dropOnDeconstruct: false #should drop ores instead of ingots/sheets
       ignoreColor: true
-      canEjectStoredMaterials: false
       whitelist:
         tags:
           - Ore

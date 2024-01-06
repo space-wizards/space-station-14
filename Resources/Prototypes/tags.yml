@@ -221,6 +221,9 @@
   id: BulletFoam
 
 - type: Tag
+  id: BypassDropChecks
+
+- type: Tag
   id: BypassInteractionRangeChecks
 
 - type: Tag
@@ -289,6 +292,9 @@
 # Allows you to walk over tile entities such as lava without steptrigger
 - type: Tag
   id: Catwalk
+
+- type: Tag
+  id: CentrifugeCompatible
 
 - type: Tag
   id: Chicken
@@ -782,7 +788,13 @@
   id: MicrowaveSelfUnsafe
 
 - type: Tag
+  id: MindShield
+
+- type: Tag
   id: MindTransferTarget
+
+- type: Tag
+  id: ModularReceiver
 
 - type: Tag
   id: MonkeyCube
@@ -801,7 +813,6 @@
 
 - type: Tag
   id: Multitool
-
 
 - type: Tag
   id: NoBlockAnchoring
@@ -829,6 +840,9 @@
 
 - type: Tag
   id: Pancake
+
+- type: Tag
+  id: Pen
 
 - type: Tag
   id: PepperShaker
@@ -931,6 +945,9 @@
   id: ReinforcedGlassShard
 
 - type: Tag
+  id: RifleStock
+
+- type: Tag
   id: RipleyCentralControlModule
 
 - type: Tag
@@ -1010,9 +1027,6 @@
 
 - type: Tag
   id: Soap
-
-- type: Tag
-  id: SolarAssemblyPart
 
 - type: Tag
   id: SolarTrackerElectronics
@@ -1167,14 +1181,4 @@
 - type: Tag
   id: WriteIgnoreStamps
 
-- type: Tag
-  id: RifleStock
-
-- type: Tag
-  id: ModularReceiver
-
-- type: Tag
-  id: MindShield
-
-- type: Tag
-  id:  boots
+# PUT YOUR TAGS IN ALPHABETICAL ORDER

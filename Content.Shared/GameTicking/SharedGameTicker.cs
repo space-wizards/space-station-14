@@ -166,8 +166,7 @@ namespace Content.Shared.GameTicking
             int roundId,
             int playerCount,
             RoundEndPlayerInfo[] allPlayersEndInfo,
-            string? lobbySong,
-            string? restartSound)
+            string? lobbySong)
         {
             GamemodeTitle = gamemodeTitle;
             RoundEndText = roundEndText;
@@ -176,10 +175,8 @@ namespace Content.Shared.GameTicking
             PlayerCount = playerCount;
             AllPlayersEndInfo = allPlayersEndInfo;
             LobbySong = lobbySong;
-            RestartSound = restartSound;
         }
     }
-
 
     [Serializable, NetSerializable]
     public enum PlayerGameStatus : sbyte

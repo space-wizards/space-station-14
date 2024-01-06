@@ -361,23 +361,27 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     private void HandlePuddleExamined(Entity<PuddleComponent> entity, ref ExaminedEvent args)
     {
-        if (TryComp<StepTriggerComponent>(entity, out var slippery) && slippery.Active)
+        using (args.PushGroup(nameof(PuddleComponent)))
         {
-            args.PushMarkup(Loc.GetString("puddle-component-examine-is-slipper-text"));
-        }
+            if (TryComp<StepTriggerComponent>(entity, out var slippery) && slippery.Active)
+            {
+                args.PushMarkup(Loc.GetString("puddle-component-examine-is-slipper-text"));
+            }
 
-        if (HasComp<EvaporationComponent>(entity) &&
-            _solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution))
-        {
-            if (CanFullyEvaporate(solution))
-                args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));
-            else if (solution.GetTotalPrototypeQuantity(EvaporationReagents) > FixedPoint2.Zero)
-                args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-partial"));
+            if (HasComp<EvaporationComponent>(entity) &&
+                _solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName,
+                    ref entity.Comp.Solution, out var solution))
+            {
+                if (CanFullyEvaporate(solution))
+                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));
+                else if (solution.GetTotalPrototypeQuantity(EvaporationReagents) > FixedPoint2.Zero)
+                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-partial"));
+                else
+                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
+            }
             else
                 args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
         }
-        else
-            args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
     }
 
     private void OnAnchorChanged(Entity<PuddleComponent> entity, ref AnchorStateChangedEvent args)
