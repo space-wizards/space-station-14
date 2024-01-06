@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Linq;
 using Content.Server.NPC.Components;
 using JetBrains.Annotations;
@@ -18,31 +19,23 @@ public sealed partial class NpcFactionSystem : EntitySystem
     /// <summary>
     /// To avoid prototype mutability we store an intermediary data class that gets used instead.
     /// </summary>
-    private Dictionary<string, FactionData> _factions = new();
+    private FrozenDictionary<string, FactionData> _factions = FrozenDictionary<string, FactionData>.Empty;
 
     public override void Initialize()
     {
         base.Initialize();
         _sawmill = Logger.GetSawmill("faction");
         SubscribeLocalEvent<NpcFactionMemberComponent, ComponentStartup>(OnFactionStartup);
-        _protoManager.PrototypesReloaded += OnProtoReload;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnProtoReload);
 
         InitializeException();
         RefreshFactions();
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _protoManager.PrototypesReloaded -= OnProtoReload;
-    }
-
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
     {
-        if (!obj.ByType.ContainsKey(typeof(NpcFactionPrototype)))
-            return;
-
-        RefreshFactions();
+        if (obj.WasModified<NpcFactionPrototype>())
+            RefreshFactions();
     }
 
     private void OnFactionStartup(EntityUid uid, NpcFactionMemberComponent memberComponent, ComponentStartup args)
@@ -237,16 +230,15 @@ public sealed partial class NpcFactionSystem : EntitySystem
 
     private void RefreshFactions()
     {
-        _factions.Clear();
 
-        foreach (var faction in _protoManager.EnumeratePrototypes<NpcFactionPrototype>())
-        {
-            _factions[faction.ID] = new FactionData()
+        _factions = _protoManager.EnumeratePrototypes<NpcFactionPrototype>().ToFrozenDictionary(
+            faction => faction.ID,
+            faction =>  new FactionData
             {
                 Friendly = faction.Friendly.ToHashSet(),
-                Hostile = faction.Hostile.ToHashSet(),
-            };
-        }
+                Hostile = faction.Hostile.ToHashSet()
+
+            });
 
         foreach (var comp in EntityQuery<NpcFactionMemberComponent>(true))
         {

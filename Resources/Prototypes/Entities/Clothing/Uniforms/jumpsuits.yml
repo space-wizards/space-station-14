@@ -125,6 +125,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomAgent
+  name: CentCom agent's jumpsuit
+  description: A suit worn by CentCom's legal team. Smells of burnt coffee.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/centcom_agent.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/centcom_agent.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomOfficial
   name: CentCom official's jumpsuit
   description: It's a jumpsuit worn by CentCom's officials.
@@ -1426,3 +1437,14 @@
       - state: equipped-INNERCLOTHING-jumpsuit
       - state: equipped-INNERCLOTHING-shirt
         color: "#b30000"
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitFamilyGuy
+  name: familiar garbs
+  description: Makes you remember the time you did something funny.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi

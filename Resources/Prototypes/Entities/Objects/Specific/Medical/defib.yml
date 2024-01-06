@@ -28,8 +28,7 @@
             True: { visible: true }
             False: { visible: false }
     - type: Item
-      size: Normal
-    - type: ItemCooldown
+      size: Large
     - type: Speech
       speechVerb: Robotic
     - type: Defibrillator

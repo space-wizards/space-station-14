@@ -62,4 +62,4 @@
     - 0,0,19,9
     quickInsert: true
     areaInsert: true
-    areaInsertRadius: 1000
+    areaInsertRadius: 5

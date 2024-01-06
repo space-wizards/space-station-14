@@ -1,0 +1,23 @@
+<PanelContainer xmlns="https://spacestation14.io"
+                HorizontalExpand="True">
+    <BoxContainer Orientation="Horizontal">
+        <TextureRect Name="Icon"
+                     Access="Public"
+                     MinSize="32 32"
+                     RectClipContent="True" />
+        <BoxContainer Orientation="Vertical"
+                      HorizontalExpand="True"
+                      VerticalExpand="False">
+            <Label Name="ProductName"
+                   Access="Public"
+                   HorizontalExpand="True"
+                   ClipText="True"
+                   Margin="4 4 4 4"/>
+        </BoxContainer>
+        <BoxContainer Name="Content"
+                      Orientation="Horizontal"
+                      HorizontalAlignment="Right">
+            <!--Here go buttons which added in c#-->
+        </BoxContainer>
+    </BoxContainer>
+</PanelContainer>

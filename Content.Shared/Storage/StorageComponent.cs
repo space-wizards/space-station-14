@@ -94,6 +94,14 @@ namespace Content.Shared.Storage
         [DataField("storageCloseSound")]
         public SoundSpecifier? StorageCloseSound;
 
+        /// <summary>
+        /// If not null, ensures that all inserted items are of the same orientation
+        /// Horizontal - items are stored laying down
+        /// Vertical - items are stored standing up
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public StorageDefaultOrientation? DefaultStorageOrientation;
+
         [Serializable, NetSerializable]
         public enum StorageUiKey
         {
@@ -129,6 +137,20 @@ namespace Content.Shared.Storage
             ItemEnt = itemEnt;
             StorageEnt = storageEnt;
             Location = location;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class StorageRemoveItemEvent : EntityEventArgs
+    {
+        public readonly NetEntity ItemEnt;
+
+        public readonly NetEntity StorageEnt;
+
+        public StorageRemoveItemEvent(NetEntity itemEnt, NetEntity storageEnt)
+        {
+            ItemEnt = itemEnt;
+            StorageEnt = storageEnt;
         }
     }
 
@@ -170,6 +192,15 @@ namespace Content.Shared.Storage
         }
     }
 
+    /// <summary>
+    /// An extra BUI message that either opens, closes, or focuses the storage window based on context.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class StorageModifyWindowMessage : BoundUserInterfaceMessage
+    {
+
+    }
+
     [NetSerializable]
     [Serializable]
     public enum StorageVisuals : byte
@@ -180,5 +211,12 @@ namespace Content.Shared.Storage
         Locked,
         StorageUsed,
         Capacity
+    }
+
+    [Serializable, NetSerializable]
+    public enum StorageDefaultOrientation : byte
+    {
+        Horizontal,
+        Vertical
     }
 }
