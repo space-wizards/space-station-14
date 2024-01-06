@@ -67,4 +67,10 @@ namespace Content.Shared.Toilet
     public sealed partial class ToiletPryDoAfterEvent : SimpleDoAfterEvent
     {
     }
+
+    public enum ToiletVisualLayers
+    {
+        Door,
+        Lid
+    }
 }

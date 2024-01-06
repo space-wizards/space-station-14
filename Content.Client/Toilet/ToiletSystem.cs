@@ -24,8 +24,3 @@ public sealed class ToiletSystem : SharedToiletSystem
     }
 }
 
-public enum ToiletVisualLayers
-{
-    Door,
-    Lid
-}

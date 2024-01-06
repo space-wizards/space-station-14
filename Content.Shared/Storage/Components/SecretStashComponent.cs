@@ -26,7 +26,7 @@ namespace Content.Shared.Storage.Components
         ///     IC secret stash name. For example "the toilet cistern".
         ///     If empty string, will replace it with entity name in init.
         /// </summary>
-        [DataField, AutoNetworkedField]
+        [DataField]
         public string SecretPartName { get; set; } = "";
 
         /// <summary>

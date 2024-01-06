@@ -16,7 +16,7 @@ using Content.Shared.Examine;
 namespace Content.Shared.Toilet
 {
     /// <summary>
-    /// Handles sprite changes for both troilet seat up and down as well as for lid open and closed. Handles interactions with hidden stash
+    /// Handles sprite changes for both toilet seat up and down as well as for lid open and closed. Handles interactions with hidden stash
     /// </summary>
     public abstract class SharedToiletSystem : EntitySystem
     {
@@ -48,6 +48,7 @@ namespace Content.Shared.Toilet
         private void OnComponentStartup(EntityUid uid, ToiletComponent component, ComponentStartup args)
         {
             UpdateAppearance(uid, component);
+            Dirty(uid, component);
         }
 
         private void OnInteractUsing(EntityUid uid, ToiletComponent component, InteractUsingEvent args)
@@ -89,7 +90,7 @@ namespace Content.Shared.Toilet
 
         private void OnToggleSeatVerb(EntityUid uid, ToiletComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanInteract || !args.CanAccess || !CanToggle(uid) || !HasComp<HandsComponent>(args.User))
+            if (!args.CanInteract || !args.CanAccess || !CanToggle(uid) || args.Hands == null)
                 return;
 
             AlternativeVerb toggleVerb = new()
