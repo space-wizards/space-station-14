@@ -18,6 +18,7 @@ public sealed class SharedTurnstileSystem : EntitySystem
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
+    [Dependency] protected readonly EntityLookupSystem EntityLookupSystem = default!;
     [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
@@ -25,12 +26,6 @@ public sealed class SharedTurnstileSystem : EntitySystem
 
 
     private EntityQuery<TransformComponent> _xformQuery;
-
-    /// <summary>
-    ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
-    ///     turnstile. Used for understanding when a mob has finished passing through.
-    /// </summary>
-    public const float IntersectPercentage = 0.2f;
 
     /// <summary>
     ///     A set of turnstiles that are currently rotating.
@@ -115,10 +110,41 @@ public sealed class SharedTurnstileSystem : EntitySystem
     /// </summary>
     private void NextState(Entity<TurnstileComponent> ent, TimeSpan time)
     {
-        var door = ent.Comp;
-        door.NextStateChange = null;
+        var turnstile = ent.Comp;
 
-        SetState(ent.Owner, TurnstileState.Idle);
+        if (turnstile.State == TurnstileState.Rotating)
+        {
+            // Check and see if we're still colliding with the admitted entity.
+            var stillCollidingWithAdmitted = GetIsCollidingWithAdmitted(ent.Owner);
+            if (!stillCollidingWithAdmitted)
+            {
+                turnstile.NextStateChange = null;
+                SetState(ent.Owner, TurnstileState.Idle);
+            }
+            else
+            {
+                turnstile.NextStateChange = GameTiming.CurTime + turnstile.TurnstileTurnTime;
+            }
+        }
+    }
+
+    private bool GetIsCollidingWithAdmitted(EntityUid uid, TurnstileComponent? turnstile = null, PhysicsComponent? physics = null)
+    {
+        if (!Resolve(uid, ref physics, ref turnstile, false))
+            return false;
+
+        var doorAABB = EntityLookupSystem.GetWorldAABB(uid);
+
+        foreach (var otherPhysics in PhysicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
+        {
+            if (otherPhysics == physics)
+                continue;
+
+            if (otherPhysics.Owner == turnstile.CurrentlyAdmittingEntity)
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -156,7 +182,7 @@ public sealed class SharedTurnstileSystem : EntitySystem
 
     private Direction GetDirectionOfContact(EntityUid uid, EntityUid other)
     {
-        return (XformSystem.GetWorldPosition(other) - XformSystem.GetWorldPosition(uid)).GetDir();
+        return (XformSystem.GetWorldPosition(uid) - XformSystem.GetWorldPosition(other)).GetDir();
     }
 
     private void PreventCollision(EntityUid uid, TurnstileComponent component, PreventCollideEvent args)
