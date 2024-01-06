@@ -64,7 +64,7 @@
       right:
       - state: inhand-right-flame
         shader: unshaded
-  - type: ItemCooldown
+  - type: UseDelay
   - type: MeleeWeapon
     wideAnimationRotation: -90
     damage:

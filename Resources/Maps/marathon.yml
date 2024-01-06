@@ -118234,7 +118234,6 @@ entities:
         - Pressed: Toggle
         9404:
         - Pressed: Toggle
-    - type: ItemCooldown
   - uid: 8610
     components:
     - type: Transform

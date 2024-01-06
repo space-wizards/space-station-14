@@ -100405,7 +100405,6 @@ entities:
         - Pressed: Toggle
         1065:
         - Pressed: Toggle
-    - type: ItemCooldown
   - uid: 7826
     components:
     - type: Transform
@@ -100451,7 +100450,6 @@ entities:
         - Pressed: Toggle
         2822:
         - Pressed: Toggle
-    - type: ItemCooldown
   - uid: 8749
     components:
     - type: Transform
@@ -100550,7 +100548,6 @@ entities:
       linkedPorts:
         4205:
         - Pressed: Toggle
-    - type: ItemCooldown
   - uid: 17649
     components:
     - type: Transform
@@ -100563,7 +100560,6 @@ entities:
       linkedPorts:
         3066:
         - Pressed: Toggle
-    - type: ItemCooldown
 - proto: SignalButtonBridge
   entities:
   - uid: 4305
