@@ -5,61 +5,62 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
+using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 
-namespace Content.Client.PlantAnalyzer.UI
+namespace Content.Client.PlantAnalyzer.UI;
+
+[GenerateTypedNameReferences]
+public sealed partial class PlantAnalyzerWindow : FancyWindow
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class PlantAnalyzerWindow : DefaultWindow
+    private readonly IEntityManager _entityManager;
+    private readonly SpriteSystem _spriteSystem;
+    private readonly IPrototypeManager _prototypes;
+    private readonly IResourceCache _cache;
+
+    public PlantAnalyzerWindow()
     {
-        private readonly IEntityManager _entityManager;
-        private readonly SpriteSystem _spriteSystem;
-        private readonly IPrototypeManager _prototypes;
-        private readonly IResourceCache _cache;
+        RobustXamlLoader.Load(this);
 
-        public PlantAnalyzerWindow()
+        var dependencies = IoCManager.Instance!;
+        _entityManager = dependencies.Resolve<IEntityManager>();
+        _spriteSystem = _entityManager.System<SpriteSystem>();
+        _prototypes = dependencies.Resolve<IPrototypeManager>();
+        _cache = dependencies.Resolve<IResourceCache>();
+    }
+    public void Populate(PlantAnalyzerScannedSeedPlantInformation msg)
+    {
+        var target = _entityManager.GetEntity(msg.TargetEntity);
+        Boolean plantTray = msg.IsTray;
+
+        if (target == null)
         {
-            RobustXamlLoader.Load(this);
-
-            var dependencies = IoCManager.Instance!;
-            _entityManager = dependencies.Resolve<IEntityManager>();
-            _spriteSystem = _entityManager.System<SpriteSystem>();
-            _prototypes = dependencies.Resolve<IPrototypeManager>();
-            _cache = dependencies.Resolve<IResourceCache>();
+            NoData.Visible = true;
+            return;
         }
-        public void Populate(PlantAnalyzerScannedSeedPlantInformation msg)
+        NoData.Visible = false;
+        Traits.Visible = false;
+
+        Title = Loc.GetString("plant-analyzer-interface-title");
+
+        if (plantTray)
         {
-            var target = _entityManager.GetEntity(msg.TargetEntity);
-            Boolean plantTray = msg.IsTray;
-
-            if (target == null)
-            {
-                NoData.Visible = true;
-                return;
-            }
-            NoData.Visible = false;
-
-            Title = Loc.GetString("plant-analyzer-interface-title");
-
-            if (plantTray)
-            {
-                PlantName.Text = Loc.GetString("plant-analyzer-window-label-name-scanned-plant", ("seedName", msg.SeedName));
-            }
-            else
-            {
-                PlantName.Text = Loc.GetString("plant-analyzer-window-label-name-scanned-seed", ("seedName", msg.SeedName));
-            }
-
-            Yield.Text = Loc.GetString("plant-analyzer-plant-yield-text", ("seedYield", msg.SeedYield));
-
-            Potency.Text = Loc.GetString("plant-analyzer-plant-potency-text", ("seedPotency", msg.SeedPotency));
-
-            Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", msg.Repeat));
-
-            Chemicals.Text = Loc.GetString("plant-analyzer-plant-chemistry-text", ("seedChem", msg.SeedChem));
-
-            Gases.Text = Loc.GetString("plant-analyzer-plant-exude-text", ("exudeGases", msg.ExudeGases));
-
-            Traits.Text = Loc.GetString("plant-analyzer-plant-mutations-text", ("traits", msg.SeedMutations));
+            PlantName.Text = Loc.GetString("plant-analyzer-window-label-name-scanned-plant", ("seedName", msg.SeedName));
         }
+        else
+        {
+            PlantName.Text = Loc.GetString("plant-analyzer-window-label-name-scanned-seed", ("seedName", msg.SeedName));
+        }
+
+        Yield.Text = Loc.GetString("plant-analyzer-plant-yield-text", ("seedYield", msg.SeedYield));
+
+        Potency.Text = Loc.GetString("plant-analyzer-plant-potency-text", ("seedPotency", msg.SeedPotency));
+
+        Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", msg.Repeat));
+
+        Chemicals.Text = Loc.GetString("plant-analyzer-plant-chemistry-text", ("seedChem", msg.SeedChem));
+
+        Gases.Text = Loc.GetString("plant-analyzer-plant-exude-text", ("exudeGases", msg.ExudeGases));
+
+        Traits.Text = Loc.GetString("plant-analyzer-plant-mutations-text", ("traits", msg.SeedMutations));
     }
 }

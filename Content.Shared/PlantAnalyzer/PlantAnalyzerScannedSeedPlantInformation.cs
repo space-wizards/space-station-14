@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.PlantAnalyzer;
 
 /// <summary>
-///     The information about the last scanned plant is stored here
+///     The information about the last scanned plant/seed is stored here
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfaceMessage

@@ -1,9 +1,9 @@
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
-using Content.Shared.PlantAnalyzer;
 using Content.Server.Botany.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.PlantAnalyzer;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
@@ -104,7 +104,7 @@ namespace Content.Server.Botany.Systems
         }
 
         /// <summary>
-        ///     Analysis of seed from prototype
+        ///     Analysis of seed from prototype.
         /// </summary>
         public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeedProt(SeedPrototype comp, EntityUid target)
         {
@@ -138,7 +138,7 @@ namespace Content.Server.Botany.Systems
         }
 
         /// <summary>
-        ///     Analysis of unique seed .
+        ///     Analysis of unique seed.
         /// </summary>
         public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeed(SeedData comp, EntityUid target, bool trayChecker)
         {
@@ -168,7 +168,7 @@ namespace Content.Server.Botany.Systems
             {
                 exudeGases = Loc.GetString("plant-analyzer-plant-gasses-No");
             }
-            plantMutations = CheckAllMutation(comp, plantMutations);
+            //plantMutations = CheckAllMutation(comp, plantMutations);
             return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName, seedYield.ToString(), seedPotency.ToString(), seedChem, plantHarvestType, exudeGases, plantMutations, trayChecker);
         }
 

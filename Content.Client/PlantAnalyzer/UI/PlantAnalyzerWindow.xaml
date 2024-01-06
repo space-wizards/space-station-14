@@ -1,14 +1,18 @@
-<DefaultWindow xmlns="https://spacestation14.io"
-               Title="{Loc 'plant-analyzer-interface-title'}"
-               MinSize="300 500"
-               SetSize="300 500">
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+   xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+   Title="{Loc 'plant-analyzer-interface-title'}"
+   MinSize="300 350"
+   SetSize="300 400"
+   Margin="10 10 10 10">
     <BoxContainer
         Name="RootContainer"
         Orientation="Vertical">
         <Label
             Name="NoData"
             Text="{Loc plant-analyzer-window-no-seed-information-text}" />
-        <ScrollContainer VerticalExpand="True">
+        <ScrollContainer VerticalExpand="True"
+                         Margin="10 10 10 10">
             <BoxContainer
                     Name="PlantDataContainer"
                     Orientation="Vertical"
@@ -37,4 +41,4 @@
             </BoxContainer>
         </ScrollContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>
