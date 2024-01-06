@@ -8,10 +8,12 @@
   },
   "states": [
     {
-      "name": "idle"
+      "name": "idle",
+      "directions": 4
     },
     {
-      "name": "rotating"
+      "name": "rotating",
+      "directions": 4
     }
   ]
 }
