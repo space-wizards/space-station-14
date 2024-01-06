@@ -65,6 +65,13 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: Apc
+  - type: PowerMonitoringDevice
+    group: APC
+    sourceNode: input
+    loadNode: output
+    collectionName: apc
+    sprite: Structures/Power/apc.rsi
+    state: static
   - type: BatteryCharger
     voltage: Medium
   - type: PowerProvider
@@ -124,6 +131,8 @@
     requirePower: true
     mediumVoltageNode: input
     lowVoltageNode: output
+  - type: LightningTarget
+    priority: 1
   - type: StaticPrice
     price: 500
 

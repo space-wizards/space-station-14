@@ -22,6 +22,7 @@ namespace Content.Shared.GameTicking
         // Probably most useful for replays, round end info, and probably things like lobby menus.
         [ViewVariables]
         public int RoundId { get; protected set; }
+        [ViewVariables] public TimeSpan RoundStartTimeSpan { get; protected set; }
 
         public override void Initialize()
         {
@@ -165,8 +166,7 @@ namespace Content.Shared.GameTicking
             int roundId,
             int playerCount,
             RoundEndPlayerInfo[] allPlayersEndInfo,
-            string? lobbySong,
-            string? restartSound)
+            string? lobbySong)
         {
             GamemodeTitle = gamemodeTitle;
             RoundEndText = roundEndText;
@@ -175,10 +175,8 @@ namespace Content.Shared.GameTicking
             PlayerCount = playerCount;
             AllPlayersEndInfo = allPlayersEndInfo;
             LobbySong = lobbySong;
-            RestartSound = restartSound;
         }
     }
-
 
     [Serializable, NetSerializable]
     public enum PlayerGameStatus : sbyte
@@ -188,4 +186,3 @@ namespace Content.Shared.GameTicking
         JoinedGame,
     }
 }
-

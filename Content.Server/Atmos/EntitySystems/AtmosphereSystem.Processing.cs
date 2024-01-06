@@ -406,9 +406,10 @@ namespace Content.Server.Atmos.EntitySystems
 
             var time = _gameTiming.CurTime;
             var number = 0;
+            var ev = new AtmosDeviceUpdateEvent(RealAtmosTime());
             while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
-                RaiseLocalEvent(device, new AtmosDeviceUpdateEvent(RealAtmosTime()));
+                RaiseLocalEvent(device, ref ev);
                 device.Comp.LastProcess = time;
 
                 if (number++ < LagCheckIterations)
@@ -455,9 +456,7 @@ namespace Content.Server.Atmos.EntitySystems
                     || TerminatingOrDeleted(x.MapUid.Value)
                     || x.MapID == MapId.Nullspace)
                 {
-                    Log.Error($"Attempting to process atmos without a map? Entity: {ToPrettyString(owner)}");
-                    _simulationPaused = false;
-                    _currentRunAtmosphere.Clear();
+                    Log.Error($"Attempted to process atmos without a map? Entity: {ToPrettyString(owner)}. Map: {ToPrettyString(x?.MapUid)}. MapId: {x?.MapID}");
                     continue;
                 }
 

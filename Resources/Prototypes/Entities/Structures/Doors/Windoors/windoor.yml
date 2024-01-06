@@ -137,6 +137,14 @@
 
 - type: entity
   parent: WindoorSecure
+  id: WindoorSecureCentralCommandLocked
+  suffix: Central Command, Locked
+  components:
+  - type: AccessReader
+    access: [["CentralCommand"]]
+
+- type: entity
+  parent: WindoorSecure
   id: WindoorSecureCommandLocked
   suffix: Command, Locked
   components:

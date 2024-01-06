@@ -357,6 +357,8 @@ public abstract partial class SharedBuckleSystem
         if (TryComp<AppearanceComponent>(buckleUid, out var appearance))
             Appearance.SetData(buckleUid, BuckleVisuals.Buckled, true, appearance);
 
+        _rotationVisuals.SetHorizontalAngle(buckleUid,  strapComp.Rotation);
+
         ReAttach(buckleUid, strapUid, buckleComp, strapComp);
         SetBuckledTo(buckleUid, strapUid, strapComp, buckleComp);
         // TODO user is currently set to null because if it isn't the sound fails to play in some situations, fix that
@@ -471,6 +473,7 @@ public abstract partial class SharedBuckleSystem
 
         if (TryComp(buckleUid, out AppearanceComponent? appearance))
             Appearance.SetData(buckleUid, BuckleVisuals.Buckled, false, appearance);
+        _rotationVisuals.ResetHorizontalAngle(buckleUid);
 
         if (TryComp<MobStateComponent>(buckleUid, out var mobState)
             && _mobState.IsIncapacitated(buckleUid, mobState)

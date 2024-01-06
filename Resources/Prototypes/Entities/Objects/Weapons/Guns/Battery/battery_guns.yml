@@ -73,6 +73,9 @@
   components:
   - type: Item
     size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
   - type: Tag
     tags:
     - Sidearm
@@ -164,6 +167,35 @@
   - type: Battery
     maxCharge: 500
     startingCharge: 500
+
+- type: entity
+  name: tesla gun
+  parent: BaseWeaponBattery
+  id: WeaponTeslaGun
+  description: The power of the primordial element of lightning in your hands.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/tesla_gun.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Gun
+    projectileSpeed: 10
+    soundGunshot:
+      path: /Audio/Effects/Lightning/lightningshock.ogg
+      params:
+        variation: 0.2
+  - type: ProjectileBatteryAmmoProvider
+    proto: TeslaGunBullet
+    fireCost: 300
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
 
 - type: entity
   name: laser rifle
@@ -311,6 +343,37 @@
     fireCost: 100
 
 - type: entity
+  name: portable particle decelerator
+  parent: BaseWeaponBattery
+  id: WeaponParticleDecelerator
+  description: A portable particle decelerator capable of decomposing a tesla or singularity.
+  components:
+    - type: Item
+      size: Ginormous
+    - type: MultiHandedItem
+    - type: ClothingSpeedModifier
+      walkModifier: 0.6
+      sprintModifier: 0.6
+    - type: HeldSpeedModifier
+    - type: Sprite 
+      sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+    - type: Gun
+      fireRate: 0.5
+      soundGunshot:
+        path: /Audio/Weapons/emitter.ogg
+        params:
+          pitch: 2
+    - type: ProjectileBatteryAmmoProvider
+      proto: AntiParticlesProjectile
+      fireCost: 500
+    - type: Battery
+      maxCharge: 10000
+      startingCharge: 10000
+
+- type: entity
   name: x-ray cannon
   parent: BaseWeaponBattery
   id: WeaponXrayCannon
@@ -376,6 +439,42 @@
     - type: GuideHelp
       guides:
       - Security
+
+- type: entity
+  name: disabler SMG
+  parent: BaseWeaponBattery
+  id: WeaponDisablerSMG
+  description: Advanced weapon that exhausts organic targets, weakening them until they collapse.
+  components:
+  - type: Item
+    size: Large
+  - type: Tag
+    tags:
+      - Taser
+      - Sidearm
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/disabler_smg.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Gun
+    selectedMode: FullAuto
+    fireRate: 4
+    availableModes:
+      - SemiAuto
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisablerSmg
+    fireCost: 33
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
 
 - type: entity
   name: practice disabler
@@ -472,6 +571,8 @@
     - Sidearm
   - type: StaticPrice
     price: 750
+  - type: StealTarget
+    stealGroup: WeaponAntiqueLaser
 
 - type: entity
   name: advanced laser pistol

@@ -66,16 +66,6 @@
   - UplinkWeapons
 
 - type: listing
-  id: UplinkFireAxeFlaming
-  name: uplink-fire-axe-flaming-name
-  description: uplink-fire-axe-flaming-desc
-  productEntity: FireAxeFlaming
-  cost:
-    Telecrystal: 10
-  categories:
-  - UplinkWeapons
-
-- type: listing
   id: UplinkGlovesNorthStar
   name: uplink-gloves-north-star-name
   description: uplink-gloves-north-star-desc
@@ -84,22 +74,6 @@
     Telecrystal: 8
   categories:
   - UplinkWeapons
-
-- type: listing
-  id: UplinkEswordDouble
-  name: uplink-esword-double-name
-  description: uplink-esword-double-desc
-  icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword_double.rsi, state: icon }
-  productEntity: EnergySwordDouble
-  cost:
-    Telecrystal: 20 #(Originally 16)
-  categories:
-  - UplinkWeapons
-  conditions:
-    - !type:StoreWhitelistCondition
-      blacklist:
-        tags:
-          - NukeOpsUplink
 
 - type: listing
   id: UplinkDisposableTurret
@@ -551,7 +525,7 @@
     Telecrystal: 2
   categories:
   - UplinkUtility
-  
+
 # Implants
 
 - type: listing
@@ -582,13 +556,24 @@
     - UplinkImplants
 
 - type: listing
+  id: UplinkScramImplanter
+  name: uplink-scram-implanter-name
+  description: uplink-scram-implanter-desc
+  icon: { sprite: /Textures/Structures/Specific/anomaly.rsi, state: anom4 }
+  productEntity: ScramImplanter
+  cost:
+    Telecrystal: 6 # it's a gamble that may kill you easily so 6 TC per 2 uses, second one more of a backup
+  categories:
+    - UplinkImplants
+
+- type: listing
   id: UplinkDnaScramblerImplant
   name: uplink-dna-scrambler-implanter-name
   description: uplink-dna-scrambler-implanter-desc
   icon: { sprite: /Textures/Mobs/Species/Human/parts.rsi, state: full }
   productEntity: DnaScramblerImplanter
   cost:
-    Telecrystal: 10
+    Telecrystal: 5
   categories:
     - UplinkImplants
 
@@ -599,7 +584,7 @@
   icon: { sprite: /Textures/Objects/Magic/magicactions.rsi, state: shield }
   productEntity: EmpImplanter
   cost:
-    Telecrystal: 3
+    Telecrystal: 2
   categories:
     - UplinkImplants
 
@@ -661,7 +646,7 @@
   icon: { sprite: /Textures/Objects/Devices/communication.rsi, state: old-radio }
   productEntity: UplinkImplanter
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkImplants
   conditions:
@@ -690,6 +675,17 @@
           - SurplusBundle
 
 # Bundles
+
+- type: listing
+  id: Observationkit
+  name: uplink-observation-kit-name
+  description: uplink-observation-kit-desc
+  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: tracks }
+  productEntity: Observationskit
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkBundles
 
 - type: listing
   id: UplinkEmpKit
@@ -942,7 +938,21 @@
     - Botanist
 
 - type: listing
-  id: uplinkRiggedBoxingGloves
+  id: uplinkRiggedBoxingGlovesPassenger
+  name: uplink-rigged-boxing-gloves-name
+  description: uplink-rigged-boxing-gloves-desc
+  productEntity: ClothingHandsGlovesBoxingRigged
+  cost:
+    Telecrystal: 8
+  categories:
+    - UplinkJob
+  conditions:
+    - !type:BuyerJobCondition
+      whitelist:
+        - Passenger
+
+- type: listing
+  id: uplinkRiggedBoxingGlovesBoxer
   name: uplink-rigged-boxing-gloves-name
   description: uplink-rigged-boxing-gloves-desc
   productEntity: ClothingHandsGlovesBoxingRigged
@@ -953,7 +963,6 @@
   conditions:
     - !type:BuyerJobCondition
       whitelist:
-        - Passenger
         - Boxer
 
 - type: listing
@@ -1113,6 +1122,16 @@
     - Scientist
     - ResearchDirector
     - Chef
+
+- type: listing
+  id: UplinkSingarityBeacon
+  name: uplink-singularity-beacon-name
+  description: uplink-singularity-beacon-desc
+  productEntity: SingularityBeacon
+  cost:
+    Telecrystal: 12
+  categories:
+    - UplinkUtility
 
 # Armor
 
@@ -1298,7 +1317,7 @@
   description: uplink-nocturine-chemistry-bottle-desc
   productEntity: NocturineChemistryBottle
   cost:
-    Telecrystal: 5
+    Telecrystal: 6
   categories:
   - UplinkMisc
 
