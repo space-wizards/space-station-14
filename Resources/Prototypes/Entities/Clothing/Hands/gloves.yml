@@ -188,7 +188,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesRobohands
   name: robohands gloves
   description: Beep boop borp!
@@ -322,7 +322,7 @@
 
 - type: entity
   # Intentionally named after regular gloves, they're meant to be sneaky.
-  # This means they can also be butchered if you need to look unsus before a very thorough search...
+  # This means they can also be butchered if you need to look un-sus before a very thorough search...
   parent: ClothingHandsGlovesColorBlack
   id: ThievingGloves
   suffix: Thieving
