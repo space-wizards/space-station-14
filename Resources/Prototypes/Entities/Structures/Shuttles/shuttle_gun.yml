@@ -46,13 +46,14 @@
     receiveFrequencyId: BasicDevice
   - type: WirelessNetworkConnection
     range: 200
-  #- type: DeviceLinkSink # you need to add this component to your ship cannon by selecting the right ports.
-  #  ports:
-  #  - Trigger # for single shots
-  #  - Toggle # 
-  #  - On     # for automatic gun
-  #  - Off    #
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+    - Toggle
+    - On
+    - Off
   - type: GunSignalControl
+  - type: AmmoCounter
     
 - type: entity
   id: ShuttleGunHeavyLaser
@@ -94,15 +95,8 @@
             - PowerCell
   - type: MagazineAmmoProvider
   - type: Appearance
-  - type: DeviceLinkSink
-    ports:
-    - Trigger
   - type: StaticPrice
     price: 1500
-
-
-  #name: SYND-210EX "Dust"
-  #description: Dust and death are all that will remain.
 
 - type: entity
   id: ShuttleGunPirateCannon
@@ -126,9 +120,6 @@
     proto: CannonBall
     soundInsert:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
-  - type: DeviceLinkSink
-    ports:
-    - Trigger
 
 - type: entity
   id: ShuttleGunKineticCannon
@@ -142,7 +133,7 @@
     - state: base
   - type: Gun    
     projectileSpeed: 20
-    fireRate: 3
+    fireRate: 2.5
     selectedMode: SemiAuto
     angleDecay: 45
     minAngle: 1
@@ -152,7 +143,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
   - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 2
+    rechargeCooldown: 4
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
       params:
@@ -161,8 +152,49 @@
     proto: BulletKinetic
     capacity: 10
     count: 10
-  - type: DeviceLinkSink
-    ports:
-    - Toggle
-    - On
-    - Off
+
+- type: entity
+  id: ShuttleGunNukeCannon
+  parent: ShuttleGunBase
+  name: SYND-210EX "Dust"
+  description: Dust and death are all that will remain.
+  components:
+  - type: Gun
+    fireRate: 1
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: MagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineShuttleCannonExplosive
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineShuttleCannon
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        
+        
+        
+  #- type: Gun
+  #  fireRate: 1
+  #  selectedMode: SemiAuto
+  #  availableModes:
+  #    - SemiAuto
+  #  soundGunshot:
+  #    path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  #- type: BallisticAmmoProvider
+  #  whitelist:
+  #    tags:
+  #      - Grenade
+  #  capacity: 3
+  #  proto: GrenadeFrag
+  #  soundInsert:
+  #    path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg

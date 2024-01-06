@@ -7,8 +7,8 @@
         "y": 64
     },
     "states": [
-	{
-		"name": "base"
-	}
+    {
+        "name": "base"
+    }
     ]
 }

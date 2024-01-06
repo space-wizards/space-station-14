@@ -1,0 +1,43 @@
+- type: entity
+  id: ShuttleGunRocketBullet
+  name: weak rocket
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
+  - type: ExplodeOnTrigger
+  - type: Ammo
+    muzzleFlash: null
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 100 # max 30 per tile
+    intensitySlope: 5
+    totalIntensity: 50 # 60 total damage to distribute over tiles
+    maxTileBreak: 2
+  - type: PointLight
+    radius: 3.5
+    color: orange
+    energy: 0.5
+
+- type: entity
+  id: ShuttleGunRocketEMP
+  name: weak rocket
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
+  - type: EmpOnTrigger
+    range: 10
+    energyConsumption: 50000
+  - type: Ammo
+    muzzleFlash: null
+  - type: PointLight
+    radius: 3.5
+    color: orange
+    energy: 0.5 

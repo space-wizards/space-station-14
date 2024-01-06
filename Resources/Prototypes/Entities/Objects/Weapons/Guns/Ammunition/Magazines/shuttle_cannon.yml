@@ -1,0 +1,62 @@
+- type: entity
+  id: BaseMagazineShuttleCannon
+  name: ammunition pack for the shuttle cannon
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - MagazineShuttleCannon
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - ShellShuttleCannon
+    capacity: 3
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazineShuttleCannonEMP
+  name: EMP shuttle ammunition pack
+  parent: BaseMagazineShuttleCannon
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShuttleEMP
+  - type: Sprite
+    layers:
+    - state: slug
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineShuttleCannonExplosive
+  name: Explosive shuttle ammunition pack #stupid naming
+  parent: BaseMagazineShuttleCannon
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShuttleRocket
+  - type: Sprite
+    layers:
+    - state: slug
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]

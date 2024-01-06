@@ -764,6 +764,9 @@
   id: MagazinePistolSubMachineGun
 
 - type: Tag
+  id: MagazineShuttleCannon
+
+- type: Tag
   id: MailingUnitElectronics
 
 - type: Tag
@@ -986,6 +989,9 @@
 
 - type: Tag
   id: ShellShotgun
+
+- type: Tag
+  id: ShellShuttleCannon
 
 - type: Tag
   id: PelletShotgunFlare
