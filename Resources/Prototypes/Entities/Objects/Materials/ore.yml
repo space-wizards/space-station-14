@@ -98,6 +98,7 @@
   - type: PointLight
     radius: 1.2
     energy: 0.6
+    castShadows: false
     color: "#e592e7"
 
 - type: entity
@@ -171,6 +172,7 @@
   - type: PointLight
     radius: 1.2
     energy: 0.8
+    castShadows: false
     color: "#9be792"
 
 - type: entity
@@ -198,6 +200,7 @@
   - type: PointLight
     radius: 1.2
     energy: 1
+    castShadows: false
     color: "#eef066"
 
 - type: entity
