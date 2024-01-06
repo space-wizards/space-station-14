@@ -42,19 +42,19 @@
 
 - type: ore
   id: OreQuartzCrab
-  oreEntity: MobQuartzCrab
+  oreEntity: MobSpawnCrabQuartz
 
 - type: ore
   id: OreIronCrab
-  oreEntity: MobIronCrab
+  oreEntity: MobSpawnCrabIron
 
 - type: ore
   id: OreSilverCrab
-  oreEntity: MobSilverCrab
+  oreEntity: MobSpawnCrabSilver
 
 - type: ore
   id: OreUraniumCrab
-  oreEntity: MobUraniumCrab
+  oreEntity: MobSpawnCrabUranium
 
 - type: ore
   id: OreArtifactFragment
@@ -78,7 +78,7 @@
 - type: weightedRandomOre
   id: OreCrab
   weights:
-    MobSpawnCrabQuartz: 5
-    MobSpawnCrabIron: 5
-    MobSpawnCrabUranium: 2
-    MobSpawnCrabSilver: 3
+    OreQuartzCrab: 5
+    OreIronCrab: 5
+    OreUraniumCrab: 2
+    OreSilverCrab: 3
