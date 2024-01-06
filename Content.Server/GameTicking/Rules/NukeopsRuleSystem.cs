@@ -1,7 +1,6 @@
 using Content.Server.Administration.Commands;
-using Content.Server.Antag;
 using Content.Server.Administration.Managers;
-using Content.Server.Chat.Managers;
+using Content.Server.Antag;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
@@ -55,7 +54,6 @@ using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using Robust.Shared.Configuration;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -86,7 +84,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly WarDeclaratorSystem _warDeclarator = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
 
     private ISawmill _sawmill = default!;
@@ -902,8 +899,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 _roles.MindAddRole(newMind, new NukeopsRoleComponent { PrototypeId = spawnDetails.Role });
 
                 // Automatically de-admin players who are being made nukeops
-                if (_cfg.GetCVar(CCVars.AdminDeadminOnJoin) && _adminManager.IsAdmin(session))
-                    _adminManager.DeAdmin(session);
+                if (_cfg.GetCVar(CCVars.AdminDeadminOnJoin) && _adminManager.IsAdmin(nukieSession.Session))
+                    _adminManager.DeAdmin(nukieSession.Session);
 
                 _mind.TransferTo(newMind, mob);
             }
