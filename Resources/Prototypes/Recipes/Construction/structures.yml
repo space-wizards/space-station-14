@@ -947,7 +947,7 @@
   - !type:TileNotBlocked
 
 - type: construction
-  name: turnstileshort
+  name: short turnstile
   id: TurnstileShort
   graph: TurnstileShort
   startNode: start
