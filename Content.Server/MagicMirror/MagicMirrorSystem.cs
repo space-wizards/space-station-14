@@ -47,7 +47,7 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void OnMirrorRangeCheck(EntityUid uid, MagicMirrorComponent component, ref BoundUserInterfaceCheckRangeEvent args)
     {
-        if (!Exists(component.Target) || _interaction.InRangeUnobstructed(uid, component.Target.Value))
+        if (!Exists(component.Target) || !_interaction.InRangeUnobstructed(uid, component.Target.Value))
         {
             args.Result = BoundUserInterfaceRangeResult.Fail;
         }
