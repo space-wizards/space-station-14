@@ -95,6 +95,10 @@
   - type: PhysicalComposition
     materialComposition:
       RawPlasma: 500
+  - type: PointLight
+    radius: 1.2
+    energy: 0.6
+    color: "#e592e7"
 
 - type: entity
   parent: PlasmaOre
@@ -164,6 +168,10 @@
   - type: PhysicalComposition
     materialComposition:
       RawUranium: 500
+  - type: PointLight
+    radius: 1.2
+    energy: 0.8
+    color: "#9be792"
 
 - type: entity
   parent: UraniumOre
@@ -189,7 +197,7 @@
       RawBananium: 500
   - type: PointLight
     radius: 1.2
-    energy: 2
+    energy: 1
     color: "#eef066"
 
 - type: entity
