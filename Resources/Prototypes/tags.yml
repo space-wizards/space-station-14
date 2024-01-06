@@ -294,6 +294,9 @@
   id: Catwalk
 
 - type: Tag
+  id: CentrifugeCompatible
+
+- type: Tag
   id: Chicken
 
 - type: Tag
@@ -1181,6 +1184,3 @@
 
 - type: Tag
   id:  boots
-
-- type: Tag
-  id: CentrifugeCompatible
