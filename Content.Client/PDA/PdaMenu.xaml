@@ -29,16 +29,11 @@
                       MinSize="50 50"
                       Margin="8">
             <RichTextLabel Name="PdaOwnerLabel" Access="Public" />
-            <BoxContainer Orientation="Horizontal">
+            <ContainerButton Name = "IdInfoButton" Access="Public">
                 <RichTextLabel Name="IdInfoLabel"
                             Access="Public"
                             HorizontalExpand="True" />
-                <Button Name = "IdInfoButton"
-                            Access="Public"
-                            Text="{Loc 'comp-pda-ui-copy'}"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center" />
-            </BoxContainer>
+            </ContainerButton>
             <PanelContainer>
                 <BoxContainer Orientation="Horizontal">
                     <RichTextLabel Name="StationNameLabel"
