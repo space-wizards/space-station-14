@@ -12,6 +12,7 @@ public sealed class VariantizeCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
 
     public string Command => "variantize";
 
@@ -39,11 +40,14 @@ public sealed class VariantizeCommand : IConsoleCommand
             return;
         }
 
-        foreach (var tile in gridComp.GetAllTiles())
+        var mapsSystem = _entManager.System<SharedMapSystem>();
+        var tileSystem = _entManager.System<TileSystem>();
+
+        foreach (var tile in mapsSystem.GetAllTiles(euid.Value, gridComp))
         {
-            var def = tile.GetContentTileDefinition();
-            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, def.PickVariant(_random));
-            gridComp.SetTile(tile.GridIndices, newTile);
+            var def = tile.GetContentTileDefinition(_tileDefManager);
+            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, tileSystem.PickVariant(def));
+            mapsSystem.SetTile(euid.Value, gridComp, tile.GridIndices, newTile);
         }
     }
 }

@@ -1,14 +1,11 @@
 using System.Linq;
-using Content.Shared.DragDrop;
-using Content.Shared.Interaction;
-using Content.Shared.Eye.Blinding;
 using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using static Content.Shared.Interaction.SharedInteractionSystem;
@@ -40,6 +37,8 @@ namespace Content.Shared.Examine
 
         public const float ExamineRange = 16f;
         protected const float ExamineDetailsRange = 3f;
+
+        protected const float ExamineBlurrinessMult = 2.5f;
 
         /// <summary>
         ///     Creates a new examine tooltip with arbitrary info.
@@ -128,7 +127,7 @@ namespace Content.Shared.Examine
                     return CritExamineRange;
 
                 if (TryComp<BlurryVisionComponent>(examiner, out var blurry))
-                    return Math.Clamp(ExamineRange - blurry.Magnitude, 2, ExamineRange);
+                    return Math.Clamp(ExamineRange - blurry.Magnitude * ExamineBlurrinessMult, 2, ExamineRange);
             }
             return ExamineRange;
         }
@@ -191,7 +190,7 @@ namespace Content.Shared.Examine
                 }
 
                 var bBox = o.BoundingBox;
-                bBox = bBox.Translated(entMan.GetComponent<TransformComponent>(o.Owner).WorldPosition);
+                bBox = bBox.Translated(entMan.GetComponent<TransformComponent>(result.HitEntity).WorldPosition);
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {
@@ -209,15 +208,6 @@ namespace Content.Shared.Examine
             var entMan = IoCManager.Resolve<IEntityManager>();
             var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
             var otherPos = entMan.GetComponent<TransformComponent>(other).MapPosition;
-
-            return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
-        }
-
-        public static bool InRangeUnOccluded(EntityUid origin, IComponent other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
-        {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
-            var otherPos = entMan.GetComponent<TransformComponent>(other.Owner).MapPosition;
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }

@@ -29,6 +29,8 @@ public sealed class BanPanelEui : BaseEui, IPostInjectInit
     private string PlayerName { get; set; } = string.Empty;
     private IPAddress? LastAddress { get; set; }
     private ImmutableArray<byte>? LastHwid { get; set; }
+    private const int Ipv4_CIDR = 32;
+    private const int Ipv6_CIDR = 64;
 
     public BanPanelEui()
     {
@@ -78,20 +80,20 @@ public sealed class BanPanelEui : BaseEui, IPostInjectInit
             if (split.Length > 1)
                 hid = split[1];
 
-            if (!IPAddress.TryParse(ipAddressString, out var ipAddress) || !uint.TryParse(hid, out var hidInt) || hidInt > 128 || hidInt > 32 && ipAddress.AddressFamily == AddressFamily.InterNetwork)
+            if (!IPAddress.TryParse(ipAddressString, out var ipAddress) || !uint.TryParse(hid, out var hidInt) || hidInt > Ipv6_CIDR || hidInt > Ipv4_CIDR && ipAddress.AddressFamily == AddressFamily.InterNetwork)
             {
                 _chat.DispatchServerMessage(Player, Loc.GetString("ban-panel-invalid-ip"));
                 return;
             }
 
             if (hidInt == 0)
-                hidInt = (uint) (ipAddress.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32);
+                hidInt = (uint) (ipAddress.AddressFamily == AddressFamily.InterNetworkV6 ? Ipv6_CIDR : Ipv4_CIDR);
 
             addressRange = (ipAddress, (int) hidInt);
         }
 
         var targetUid = target is not null ? PlayerId : null;
-        addressRange = useLastIp && LastAddress is not null ? (LastAddress, LastAddress.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32) : addressRange;
+        addressRange = useLastIp && LastAddress is not null ? (LastAddress, LastAddress.AddressFamily == AddressFamily.InterNetworkV6 ? Ipv6_CIDR : Ipv4_CIDR) : addressRange;
         var targetHWid = useLastHwid ? LastHwid : hwid;
         if (target != null && target != PlayerName || Guid.TryParse(target, out var parsed) && parsed != PlayerId)
         {
@@ -108,8 +110,8 @@ public sealed class BanPanelEui : BaseEui, IPostInjectInit
                 if (targetAddress.IsIPv4MappedToIPv6)
                     targetAddress = targetAddress.MapToIPv4();
 
-                // Ban /128 for IPv6, /32 for IPv4.
-                var hid = targetAddress.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32;
+                // Ban /64 for IPv6, /32 for IPv4.
+                var hid = targetAddress.AddressFamily == AddressFamily.InterNetworkV6 ? Ipv6_CIDR : Ipv4_CIDR;
                 addressRange = (targetAddress, hid);
             }
             targetHWid = useLastHwid ? located.LastHWId : hwid;

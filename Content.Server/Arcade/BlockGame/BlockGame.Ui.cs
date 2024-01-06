@@ -1,6 +1,6 @@
 using Content.Shared.Arcade;
-using Robust.Server.Player;
 using System.Linq;
+using Robust.Shared.Player;
 
 namespace Content.Server.Arcade.BlockGame;
 
@@ -166,7 +166,7 @@ public sealed partial class BlockGame
     /// </summary>
     /// <param name="message">The message to send to a specific player/spectator.</param>
     /// <param name="session">The target recipient.</param>
-    private void SendMessage(BoundUserInterfaceMessage message, IPlayerSession session)
+    private void SendMessage(BoundUserInterfaceMessage message, ICommonSession session)
     {
         if (_uiSystem.TryGetUi(_owner, BlockGameUiKey.Key, out var bui))
             _uiSystem.TrySendUiMessage(bui, message, session);
@@ -176,7 +176,7 @@ public sealed partial class BlockGame
     /// Handles sending the current state of the game to a player that has just opened the UI.
     /// </summary>
     /// <param name="session">The target recipient.</param>
-    public void UpdateNewPlayerUI(IPlayerSession session)
+    public void UpdateNewPlayerUI(ICommonSession session)
     {
         if (_gameOver)
         {
@@ -209,7 +209,7 @@ public sealed partial class BlockGame
     /// Handles broadcasting the full player-visible game state to a specific player/spectator.
     /// </summary>
     /// <param name="session">The target recipient.</param>
-    private void FullUpdate(IPlayerSession session)
+    private void FullUpdate(ICommonSession session)
     {
         UpdateFieldUI(session);
         SendNextPieceUpdate(session);
@@ -235,7 +235,7 @@ public sealed partial class BlockGame
     /// Handles broadcasting the current location of all of the blocks in the playfield + the active piece to a specific player/spectator.
     /// </summary>
     /// <param name="session">The target recipient.</param>
-    public void UpdateFieldUI(IPlayerSession session)
+    public void UpdateFieldUI(ICommonSession session)
     {
         if (!Started)
             return;
@@ -283,7 +283,7 @@ public sealed partial class BlockGame
     /// Broadcasts the state of the next queued piece to a specific viewer.
     /// </summary>
     /// <param name="session">The target recipient.</param>
-    private void SendNextPieceUpdate(IPlayerSession session)
+    private void SendNextPieceUpdate(ICommonSession session)
     {
         SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(NextPiece.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.NextBlock), session);
     }
@@ -303,7 +303,7 @@ public sealed partial class BlockGame
     /// Broadcasts the state of the currently held piece to a specific viewer.
     /// </summary>
     /// <param name="session">The target recipient.</param>
-    private void SendHoldPieceUpdate(IPlayerSession session)
+    private void SendHoldPieceUpdate(ICommonSession session)
     {
         if (HeldPiece.HasValue)
             SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(HeldPiece.Value.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.HoldBlock), session);
@@ -323,7 +323,7 @@ public sealed partial class BlockGame
     /// Broadcasts the current game level to a specific viewer.
     /// </summary>
     /// <param name="session">The target recipient.</param>
-    private void SendLevelUpdate(IPlayerSession session)
+    private void SendLevelUpdate(ICommonSession session)
     {
         SendMessage(new BlockGameMessages.BlockGameLevelUpdateMessage(Level), session);
     }
@@ -340,7 +340,7 @@ public sealed partial class BlockGame
     /// Broadcasts the current game score to a specific viewer.
     /// </summary>
     /// <param name="session">The target recipient.</param>
-    private void SendPointsUpdate(IPlayerSession session)
+    private void SendPointsUpdate(ICommonSession session)
     {
         SendMessage(new BlockGameMessages.BlockGameScoreUpdateMessage(Points), session);
     }
@@ -357,7 +357,7 @@ public sealed partial class BlockGame
     /// Broadcasts the current game high score positions to a specific viewer.
     /// </summary>
     /// <param name="session">The target recipient.</param>
-    private void SendHighscoreUpdate(IPlayerSession session)
+    private void SendHighscoreUpdate(ICommonSession session)
     {
         SendMessage(new BlockGameMessages.BlockGameHighScoreUpdateMessage(_arcadeSystem.GetLocalHighscores(), _arcadeSystem.GetGlobalHighscores()), session);
     }

@@ -8,7 +8,7 @@
 
 - type: stack
   id: SteelOre
-  name: steel ore
+  name: iron ore
   icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: iron }
   spawn: SteelOre1
   maxCount: 30
@@ -52,5 +52,13 @@
   name: bananium ore
   icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: bananium }
   spawn: BananiumOre1
+  maxCount: 30
+  itemSize: 2
+
+- type: stack
+  id: Coal
+  name: coal
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: coal }
+  spawn: Coal1
   maxCount: 30
   itemSize: 2

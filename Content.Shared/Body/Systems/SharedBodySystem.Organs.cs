@@ -98,7 +98,7 @@ public partial class SharedBodySystem
         if (!Containers.TryGetContainer(partId, containerId, out var container))
             return false;
 
-        return container.Insert(organId);
+        return Containers.Insert(organId, container);
     }
 
     /// <summary>
@@ -114,7 +114,7 @@ public partial class SharedBodySystem
         if (!HasComp<BodyPartComponent>(parent))
             return false;
 
-        return container.Remove(organId);
+        return Containers.Remove(organId, container);
     }
 
     /// <summary>
@@ -151,7 +151,7 @@ public partial class SharedBodySystem
     public List<(T Comp, OrganComponent Organ)> GetBodyOrganComponents<T>(
         EntityUid uid,
         BodyComponent? body = null)
-        where T : Component
+        where T : IComponent
     {
         if (!Resolve(uid, ref body))
             return new List<(T Comp, OrganComponent Organ)>();
@@ -180,7 +180,7 @@ public partial class SharedBodySystem
         EntityUid uid,
         [NotNullWhen(true)] out List<(T Comp, OrganComponent Organ)>? comps,
         BodyComponent? body = null)
-        where T : Component
+        where T : IComponent
     {
         if (!Resolve(uid, ref body))
         {

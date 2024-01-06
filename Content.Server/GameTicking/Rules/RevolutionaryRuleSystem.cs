@@ -24,6 +24,8 @@ using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles;
 using Content.Shared.Stunnable;
 using Content.Shared.Zombies;
+using Robust.Server.Audio;
+using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
@@ -44,6 +46,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly AudioSystem _audioSystem = default!;
 
     [ValidatePrototypeId<NpcFactionPrototype>]
     public const string RevolutionaryNpcFaction = "Revolutionary";
@@ -98,24 +101,28 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             var index = (commandLost ? 1 : 0) | (revsLost ? 2 : 0);
             ev.AddLine(Loc.GetString(Outcomes[index]));
 
-            ev.AddLine(Loc.GetString("head-rev-initial-count", ("initialCount", headrev.HeadRevs.Count)));
+            ev.AddLine(Loc.GetString("rev-headrev-count", ("initialCount", headrev.HeadRevs.Count)));
             foreach (var player in headrev.HeadRevs)
             {
+                // TODO: when role entities are a thing this has to change
+                var count = CompOrNull<RevolutionaryRoleComponent>(player.Value)?.ConvertedCount ?? 0;
+
                 _mind.TryGetSession(player.Value, out var session);
                 var username = session?.Name;
                 if (username != null)
                 {
-                    ev.AddLine(Loc.GetString("head-rev-initial-name-user",
+                    ev.AddLine(Loc.GetString("rev-headrev-name-user",
                     ("name", player.Key),
-                    ("username", username)));
+                    ("username", username), ("count", count)));
                 }
                 else
                 {
-                    ev.AddLine(Loc.GetString("head-rev-initial-name",
-                    ("name", player.Key)));
+                    ev.AddLine(Loc.GetString("rev-headrev-name",
+                    ("name", player.Key), ("count", count)));
                 }
+
+                // TODO: someone suggested listing all alive? revs maybe implement at some point
             }
-            break;
         }
     }
 
@@ -142,9 +149,14 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var query = QueryActiveRules();
         while (query.MoveNext(out _, out var comp, out _))
         {
-            _antagSelection.EligiblePlayers(comp.RevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
+            _antagSelection.EligiblePlayers(comp.HeadRevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
                 "head-rev-role-greeting", "#5e9cff", out var chosen);
-            GiveHeadRev(chosen, comp.RevPrototypeId, comp);
+            if (chosen.Any())
+                GiveHeadRev(chosen, comp.HeadRevPrototypeId, comp);
+            else
+            {
+                _chatManager.SendAdminAnnouncement(Loc.GetString("rev-no-heads"));
+            }
         }
     }
 
@@ -200,6 +212,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (ev.User != null)
         {
             _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
+
+            if (_mind.TryGetRole<RevolutionaryRoleComponent>(ev.User.Value, out var headrev))
+                headrev.ConvertedCount++;
         }
 
         if (mindId == default || !_role.MindHasRole<RevolutionaryRoleComponent>(mindId))
@@ -211,6 +226,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             var message = Loc.GetString("rev-role-greeting");
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
             _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Red);
+            _audioSystem.PlayGlobal("/Audio/Ambience/Antag/headrev_start.ogg", ev.Target);
         }
     }
 

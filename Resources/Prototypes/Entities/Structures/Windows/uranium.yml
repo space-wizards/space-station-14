@@ -10,13 +10,19 @@
     sprite: Structures/Windows/uranium_window.rsi
     state: full
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -36,7 +42,7 @@
   - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
-    damageDivisor: 12
+    damageDivisor: 3.333
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
@@ -44,3 +50,43 @@
     price: 80
   - type: RadiationBlocker
     resistance: 3
+
+- type: entity
+  parent: UraniumWindow
+  id: UraniumWindowDiagonal
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/uranium_window_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: windows
+    base: state
+  - type: Icon
+    sprite: Structures/Windows/uranium_window_diagonal.rsi
+    state: state0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PolygonShape
+            vertices:
+            - "-0.5,-0.5"
+            - "0.5,0.5"
+            - "0.5,-0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: DamageVisuals
+    damageOverlay:
+      sprite: Structures/Windows/cracks_diagonal.rsi
+  - type: Construction
+    graph: WindowDiagonal
+    node: uraniumWindowDiagonal

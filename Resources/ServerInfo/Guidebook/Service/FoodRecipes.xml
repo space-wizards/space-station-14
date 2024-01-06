@@ -10,13 +10,16 @@ WARNING: This is not an automatically generated list, things here may become out
 
 - Dough = 15 Flour, 10 Water
 - Cornmeal Dough = 1 Egg (6u), 10 Milk, 15 Cornmeal
-- Tofu = 5 Enzyme, 30 Soy Milk
+- Tortila Dough = 15 Cornmeal, 10 Water
+- Tofu = 5 Enzyme (Catalyst), 30 Soy Milk
 - Pie Dough = 2 Eggs (12u), 15 Flour, 5 Table Salt
 - Cake Batter = 2 Eggs(12u), 15 flour, 5 Sugar
 - Vegan Cake Batter = 15 Soy Milk, 15 Flour, 5 Sugar
-- Butter = 30 Milk, 5 Table Salt
-- Cheese Wheel = 5 Enzyme, 40 Milk
+- Butter = 30 Milk, 5 Table Salt (Catalyst)
+- Cheese Wheel = 5 Enzyme (Catalyst), 40 Milk
+- Chèvre Log = 5 Enzyme (Catalyst), 10 Goat Milk
 - Meatball = 1 Egg (6u), 5 Flour, 5 Uncooked Animal Proteins
+- Chocolate = 6 Cocoa Powder, 2 Milk, 2 Sugar
 - Uncooked Animal Protein: Grind Raw Meat
 
 <Box>
@@ -26,12 +29,15 @@ WARNING: This is not an automatically generated list, things here may become out
 <GuideEntityEmbed Entity="FoodDoughPie"/>
 <GuideEntityEmbed Entity="FoodCakeBatter"/>
 <GuideEntityEmbed Entity="FoodDoughFlat"/>
+<GuideEntityEmbed Entity="FoodDoughTortilla"/>
 </Box>
 
 <Box>
 <GuideEntityEmbed Entity="FoodButter"/>
 <GuideEntityEmbed Entity="FoodMeatMeatball"/>
 <GuideEntityEmbed Entity="FoodCheese"/>
+<GuideEntityEmbed Entity="FoodChevre"/>
+<GuideEntityEmbed Entity="FoodSnackChocolateBar"/>
 </Box>
 
 ## Secondary Products
@@ -41,6 +47,9 @@ WARNING: This is not an automatically generated list, things here may become out
 - Cutlet: Slice Raw Meat
 - Cheese Wedge: Slice Cheese Wheel
 - Flat Dough: Use a rolling pin or a round object (fire extinguisher, soda can, bottle) on Dough.
+- Tortilla Dough Slice: cut Tortilla Dough
+- Flat Tortilla Dough: Use a rolling pin or a round object (fire extinguisher, soda can, bottle) on Tortilla Dough Slice
+- Taco Shell: Microwave Flat Tortilla Dough for 5 Seconds
 
 ## Food Examples
 
@@ -51,6 +60,7 @@ WARNING: This is not an automatically generated list, things here may become out
 - Margherita Pizza: Microwave 1 Flat Dough, 1 Cheese Wedge, and 4 Tomatoes for 30 Seconds
 - Cake: 1 Cake Batter for 15 Seconds
 - Apple Pie: 1 Pie Dough, 3 Apples, and 1 Pie Tin for 15 Seconds
+- Beef Taco: Microwave 1 Taco Shell, 1 Raw Meat Cutlet, 1 Cheese Wedge for 10 Seconds
 
 <Box>
 <GuideEntityEmbed Entity="FoodBreadPlain"/>
@@ -62,6 +72,7 @@ WARNING: This is not an automatically generated list, things here may become out
 <GuideEntityEmbed Entity="FoodPizzaMargherita"/>
 <GuideEntityEmbed Entity="FoodCakePlain"/>
 <GuideEntityEmbed Entity="FoodPieApple"/>
+<GuideEntityEmbed Entity="FoodTacoBeef"/>
 </Box>
 
 </Document>

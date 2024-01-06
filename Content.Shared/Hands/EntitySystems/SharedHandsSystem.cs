@@ -20,8 +20,9 @@ public abstract partial class SharedHandsSystem
     [Dependency] private readonly SharedItemSystem _items = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
+    [Dependency] private readonly SharedHandVirtualItemSystem _virtualSystem = default!;
 
-    protected event Action<HandsComponent?>? OnHandSetActive;
+    protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
 
     public override void Initialize()
     {
@@ -31,6 +32,7 @@ public abstract partial class SharedHandsSystem
         InitializeDrop();
         InitializePickup();
         InitializeVirtual();
+        InitializeRelay();
     }
 
     public override void Shutdown()
@@ -69,9 +71,10 @@ public abstract partial class SharedHandsSystem
         if (!handsComp.Hands.Remove(handName, out var hand))
             return;
 
-        TryDrop(uid, hand, null, false, true, handsComp);
-        hand.Container?.Shutdown();
         handsComp.SortedHands.Remove(hand.Name);
+        TryDrop(uid, hand, null, false, true, handsComp);
+        if (hand.Container != null)
+            ContainerSystem.ShutdownContainer(hand.Container);
 
         if (handsComp.ActiveHand == hand)
             TrySetActiveHand(uid, handsComp.SortedHands.FirstOrDefault(), handsComp);
@@ -216,7 +219,7 @@ public abstract partial class SharedHandsSystem
         }
 
         handComp.ActiveHand = hand;
-        OnHandSetActive?.Invoke(handComp);
+        OnHandSetActive?.Invoke((uid, handComp));
 
         if (hand.HeldEntity != null)
             RaiseLocalEvent(hand.HeldEntity.Value, new HandSelectedEvent(uid));

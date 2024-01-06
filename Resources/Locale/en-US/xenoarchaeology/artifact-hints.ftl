@@ -19,6 +19,8 @@ artifact-effect-hint-communication = Long-distance communication
 artifact-effect-hint-phasing = Structural phasing
 artifact-effect-hint-sentience = Neurological activity
 artifact-effect-hint-polymorph = Transmogrificational activity
+artifact-effect-hint-magnet = Magnetic waves
+artifact-effect-hint-visual = Visual distortions
 
 # the triggers should be more obvious than the effects
 # gives people an idea of what to do: don't be too specific (i.e. no "welders")
@@ -29,6 +31,7 @@ artifact-trigger-hint-physical = Physical trauma
 artifact-trigger-hint-tool = Tool usage
 artifact-trigger-hint-music = Sonic vibrations
 artifact-trigger-hint-water = Hydro-reactive
+artifact-trigger-hint-blood = Reaction with hemoglobin
 artifact-trigger-hint-magnet = Magnetic waves
 artifact-trigger-hint-death = Life essence
 artifact-trigger-hint-radiation = Radiation
@@ -36,3 +39,4 @@ artifact-trigger-hint-pressure = Extreme pressure
 artifact-trigger-hint-regular-gases = Standard atmospheric gases
 artifact-trigger-hint-plasma = Gaseous plasma
 artifact-trigger-hint-land = Active deceleration
+artifact-trigger-hint-examine = Examination

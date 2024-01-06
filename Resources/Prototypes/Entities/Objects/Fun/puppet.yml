@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, MobCombat ]
   id: MrChips
   name: mr chips
   suffix: Dummy
@@ -14,7 +14,7 @@
   - type: DoAfter
   - type: VentriloquistPuppet
   - type: Item
-    size: 30
+    size: Normal
   - type: Muted
   - type: TypingIndicator
     proto: robot
@@ -23,7 +23,6 @@
     allowedStates:
       - Alive
   - type: MeleeWeapon
-    hidden: true
     soundHit:
       path: /Audio/Weapons/boxingpunch1.ogg
     angle: 30

@@ -65,6 +65,13 @@
     Plastic: 25
 
 - type: latheRecipe
+  id: Gauze
+  result: Gauze1
+  completetime: 1
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
   id: HandheldCrewMonitor
   result: HandheldCrewMonitorEmpty
   completetime: 2
@@ -203,3 +210,36 @@
   completetime: 4
   materials:
     Plastic: 400
+
+- type: latheRecipe
+  id: VehicleWheelchairFolded
+  result: VehicleWheelchairFolded
+  completetime: 1
+  materials:
+    Steel: 500
+    Plastic: 300
+    
+- type: latheRecipe
+  id: RollerBedSpawnFolded
+  result: RollerBedSpawnFolded
+  completetime: 1
+  materials:
+    Steel: 600
+    Plastic: 300
+
+- type: latheRecipe
+  id: CheapRollerBedSpawnFolded
+  result: CheapRollerBedSpawnFolded
+  completetime: 1
+  materials:
+    Steel: 600
+    Plastic: 300
+
+- type: latheRecipe
+  id: EmergencyRollerBedSpawnFolded
+  result: EmergencyRollerBedSpawnFolded
+  completetime: 1
+  materials:
+    Steel: 600
+    Plastic: 300
+

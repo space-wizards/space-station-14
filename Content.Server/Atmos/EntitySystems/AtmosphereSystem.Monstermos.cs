@@ -1,16 +1,15 @@
+using System.Linq;
+using System.Numerics;
 using Content.Server.Atmos.Components;
 using Content.Server.Doors.Systems;
-using Content.Shared.Doors.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Database;
-using Robust.Shared.Map;
+using Content.Shared.Doors.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using System.Linq;
-using System.Numerics;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -28,7 +27,7 @@ namespace Content.Server.Atmos.EntitySystems
         private readonly TileAtmosphere[] _depressurizeSpaceTiles = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit];
         private readonly TileAtmosphere[] _depressurizeProgressionOrder = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit * 2];
 
-        private void EqualizePressureInZone(MapGridComponent mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum, GasTileOverlayComponent? visuals)
+        private void EqualizePressureInZone(Entity<MapGridComponent, GridAtmosphereComponent> ent, TileAtmosphere tile, int cycleNum, GasTileOverlayComponent? visuals)
         {
             if (tile.Air == null || (tile.MonstermosInfo.LastCycle >= cycleNum))
                 return; // Already done.
@@ -57,6 +56,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
+            var (_, mapGrid, gridAtmosphere) = ent;
             var queueCycle = ++gridAtmosphere.EqualizationQueueCycleControl;
             var totalMoles = 0f;
             _equalizeTiles[0] = tile;
@@ -91,7 +91,7 @@ namespace Content.Server.Atmos.EntitySystems
                     {
                         // Looks like someone opened an airlock to space!
 
-                        ExplosivelyDepressurize(mapGrid, gridAtmosphere, tile, cycleNum, visuals);
+                        ExplosivelyDepressurize(ent, tile, cycleNum, visuals);
                         return;
                     }
                 }
@@ -359,7 +359,7 @@ namespace Content.Server.Atmos.EntitySystems
             Array.Clear(_equalizeQueue, 0, Atmospherics.MonstermosTileLimit);
         }
 
-        private void ExplosivelyDepressurize(MapGridComponent mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum, GasTileOverlayComponent? visuals)
+        private void ExplosivelyDepressurize(Entity<MapGridComponent, GridAtmosphereComponent> ent, TileAtmosphere tile, int cycleNum, GasTileOverlayComponent? visuals)
         {
             // Check if explosive depressurization is enabled and if the tile is valid.
             if (!MonstermosDepressurization || tile.Air == null)
@@ -368,6 +368,7 @@ namespace Content.Server.Atmos.EntitySystems
             const int limit = Atmospherics.MonstermosHardTileLimit;
 
             var totalMolesRemoved = 0f;
+            var (owner, mapGrid, gridAtmosphere) = ent;
             var queueCycle = ++gridAtmosphere.EqualizationQueueCycleControl;
 
             var tileCount = 0;
@@ -394,7 +395,7 @@ namespace Content.Server.Atmos.EntitySystems
                         DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
                         if (otherTile2.MonstermosInfo.LastQueueCycle == queueCycle) continue;
 
-                        ConsiderFirelocks(gridAtmosphere, otherTile, otherTile2, visuals, mapGrid);
+                        ConsiderFirelocks((owner, gridAtmosphere), otherTile, otherTile2, visuals, mapGrid);
 
                         // The firelocks might have closed on us.
                         if (!otherTile.AdjacentBits.IsFlagSet(direction)) continue;
@@ -527,11 +528,11 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var direction = ((Vector2)_depressurizeTiles[tileCount - 1].GridIndices - tile.GridIndices).Normalized();
 
-                var gridPhysics = Comp<PhysicsComponent>(mapGrid.Owner);
+                var gridPhysics = Comp<PhysicsComponent>(owner);
 
                 // TODO ATMOS: Come up with better values for these.
-                _physics.ApplyLinearImpulse(mapGrid.Owner, direction * totalMolesRemoved * gridPhysics.Mass, body: gridPhysics);
-                _physics.ApplyAngularImpulse(mapGrid.Owner, Vector2Helpers.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved, body: gridPhysics);
+                _physics.ApplyLinearImpulse(owner, direction * totalMolesRemoved * gridPhysics.Mass, body: gridPhysics);
+                _physics.ApplyAngularImpulse(owner, Vector2Helpers.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved, body: gridPhysics);
             }
 
             if(tileCount > 10 && (totalMolesRemoved / tileCount) > 10)
@@ -543,7 +544,7 @@ namespace Content.Server.Atmos.EntitySystems
             Array.Clear(_depressurizeProgressionOrder, 0, Atmospherics.MonstermosHardTileLimit * 2);
         }
 
-        private void ConsiderFirelocks(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, TileAtmosphere other, GasTileOverlayComponent? visuals, MapGridComponent mapGrid)
+        private void ConsiderFirelocks(Entity<GridAtmosphereComponent> ent, TileAtmosphere tile, TileAtmosphere other, GasTileOverlayComponent? visuals, MapGridComponent mapGrid)
         {
             var reconsiderAdjacent = false;
 
@@ -566,10 +567,11 @@ namespace Content.Server.Atmos.EntitySystems
             if (!reconsiderAdjacent)
                 return;
 
-            var tileEv = new UpdateAdjacentMethodEvent(mapGrid.Owner, tile.GridIndices);
-            var otherEv = new UpdateAdjacentMethodEvent(mapGrid.Owner, other.GridIndices);
-            GridUpdateAdjacent(mapGrid.Owner, gridAtmosphere, ref tileEv);
-            GridUpdateAdjacent(mapGrid.Owner, gridAtmosphere, ref otherEv);
+            var (owner, gridAtmosphere) = ent;
+            var tileEv = new UpdateAdjacentMethodEvent(owner, tile.GridIndices);
+            var otherEv = new UpdateAdjacentMethodEvent(owner, other.GridIndices);
+            GridUpdateAdjacent(owner, gridAtmosphere, ref tileEv);
+            GridUpdateAdjacent(owner, gridAtmosphere, ref otherEv);
             InvalidateVisuals(tile.GridIndex, tile.GridIndices, visuals);
             InvalidateVisuals(other.GridIndex, other.GridIndices, visuals);
         }

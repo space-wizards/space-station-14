@@ -21,7 +21,6 @@
   - type: Body
     prototype: Reptilian
     requiredLegs: 2
-  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:
@@ -40,7 +39,6 @@
     damageContainer: Biological
     damageModifierSet: Scale
   - type: MeleeWeapon
-    hidden: true
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     angle: 30
@@ -58,7 +56,7 @@
         Cold : 0.1 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 0.1 #per second, scales with temperature & other constants
+        Heat : 1.5 #per second, scales with temperature & other constants
 
 - type: entity
   parent: BaseSpeciesDummy

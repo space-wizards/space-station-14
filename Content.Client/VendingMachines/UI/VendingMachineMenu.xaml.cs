@@ -6,7 +6,6 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.Graphics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.VendingMachines.UI
@@ -32,7 +31,6 @@ namespace Content.Client.VendingMachines.UI
 
             VendingContents.OnItemSelected += args =>
             {
-                SearchBar.Text = string.Empty;
                 OnItemSelected?.Invoke(args);
             };
         }
@@ -41,8 +39,10 @@ namespace Content.Client.VendingMachines.UI
         /// Populates the list of available items on the vending machine interface
         /// and sets icons based on their prototypes
         /// </summary>
-        public void Populate(List<VendingMachineInventoryEntry> inventory, string? filter = null)
+        public void Populate(List<VendingMachineInventoryEntry> inventory, out List<int> filteredInventory,  string? filter = null)
         {
+            filteredInventory = new();
+
             if (inventory.Count == 0)
             {
                 VendingContents.Clear();
@@ -93,6 +93,7 @@ namespace Content.Client.VendingMachines.UI
 
                 vendingItem.Text = $"{itemName} [{entry.Amount}]";
                 vendingItem.Icon = icon;
+                filteredInventory.Add(i);
             }
 
             SetSizeAfterUpdate(longestEntry.Length, inventory.Count);

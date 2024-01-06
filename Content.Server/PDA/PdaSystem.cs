@@ -4,9 +4,6 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
-using Content.Server.MassMedia.Components;
-using Content.Server.MassMedia.Systems;
-using Content.Server.Mind;
 using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
@@ -16,7 +13,6 @@ using Content.Shared.CartridgeLoader;
 using Content.Shared.Light.Components;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
 
 namespace Content.Server.PDA
@@ -68,7 +64,7 @@ namespace Content.Server.PDA
 
         protected override void OnItemRemoved(EntityUid uid, PdaComponent pda, EntRemovedFromContainerMessage args)
         {
-            if (args.Container.ID != pda.IdSlot.ID && args.Container.ID != pda.PenSlot.ID)
+            if (args.Container.ID != pda.IdSlot.ID && args.Container.ID != pda.PenSlot.ID && args.Container.ID != pda.PaiSlot.ID)
                 return;
 
             // TODO: This is super cursed just use compstates please.
@@ -141,6 +137,7 @@ namespace Content.Server.PDA
                 GetNetEntity(loader.ActiveProgram),
                 pda.FlashlightOn,
                 pda.PenSlot.HasItem,
+                pda.PaiSlot.HasItem,
                 new PdaIdInfoText
                 {
                     ActualOwnerName = pda.OwnerName,
@@ -180,7 +177,7 @@ namespace Content.Server.PDA
                 return;
 
             if (HasComp<RingerComponent>(uid))
-                _ringer.ToggleRingerUI(uid, (IPlayerSession) msg.Session);
+                _ringer.ToggleRingerUI(uid, msg.Session);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaShowMusicMessage msg)
@@ -189,7 +186,7 @@ namespace Content.Server.PDA
                 return;
 
             if (TryComp<InstrumentComponent>(uid, out var instrument))
-                _instrument.ToggleInstrumentUi(uid, (IPlayerSession) msg.Session, instrument);
+                _instrument.ToggleInstrumentUi(uid, msg.Session, instrument);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaShowUplinkMessage msg)

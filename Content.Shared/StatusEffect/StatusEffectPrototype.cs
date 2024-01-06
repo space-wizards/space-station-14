@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.StatusEffect
 {
     [Prototype("statusEffect")]
-    public sealed class StatusEffectPrototype : IPrototype
+    public sealed partial class StatusEffectPrototype : IPrototype
     {
         [IdDataField]
         public string ID { get; private set; } = default!;
