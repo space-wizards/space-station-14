@@ -314,6 +314,37 @@
     fireCost: 100
 
 - type: entity
+  name: portable particle decelerator
+  parent: BaseWeaponBattery
+  id: WeaponParticleDecelerator
+  description: A portable particle decelerator capable of decomposing a tesla or singularity.
+  components:
+    - type: Item
+      size: Ginormous
+    - type: MultiHandedItem
+    - type: ClothingSpeedModifier
+      walkModifier: 0.6
+      sprintModifier: 0.6
+    - type: HeldSpeedModifier
+    - type: Sprite 
+      sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+    - type: Gun
+      fireRate: 0.5
+      soundGunshot:
+        path: /Audio/Weapons/emitter.ogg
+        params:
+          pitch: 2
+    - type: ProjectileBatteryAmmoProvider
+      proto: AntiParticlesProjectile
+      fireCost: 500
+    - type: Battery
+      maxCharge: 10000
+      startingCharge: 10000
+
+- type: entity
   name: x-ray cannon
   parent: BaseWeaponBattery
   id: WeaponXrayCannon

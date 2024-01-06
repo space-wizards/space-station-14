@@ -139,6 +139,19 @@
   recipeUnlocks:
   - RPED
 
+- type: technology
+  id: DeterrenceTechnologies
+  name: research-technology-deterrence
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
+    state: base
+  discipline: Experimental
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - WeaponParticleDecelerator
+  - HoloprojectorField
+
 # Tier 3
 
 - type: technology

@@ -720,6 +720,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                     {
                         nukeOp = _random.PickAndTake(medPrefList);
                         everyone.Remove(nukeOp);
+                        prefList.Remove(nukeOp);
                         Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking an agent");
                     }
 

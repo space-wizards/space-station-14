@@ -10,7 +10,7 @@
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Label Text="{Loc comp-gas-mixer-ui-mixer-output-pressure}"/>
             <Control MinSize="5 0" />
-            <LineEdit Name="MixerPressureOutputInput" MinSize="60 0" />
+            <LineEdit Name="MixerPressureOutputInput" MinSize="70 0" />
             <Control MinSize="5 0" />
             <Button Name="SetMaxPressureButton" Text="{Loc comp-gas-mixer-ui-mixer-max}" />
             <Control MinSize="5 0" />
