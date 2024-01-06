@@ -104,7 +104,7 @@
       displayName: Suit
       blacklist:
         tags:
-          - MonkeyHardsuit
+          - MonkeyOuterclothingWearable
     - name: pocket1
       slotTexture: pocket
       slotFlags: POCKET

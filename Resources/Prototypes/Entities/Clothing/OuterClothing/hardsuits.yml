@@ -609,7 +609,7 @@
     sprintModifier: 0.85
   - type: Tag
     tags:
-    - MonkeyHardsuit
+    - MonkeyOuterclothingWearable
 
 #Wizard Hardsuit
 - type: entity

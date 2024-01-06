@@ -24,7 +24,7 @@
       displayName: Suit
       blacklist:
         tags:
-          - MonkeyHardsuit
+          - MonkeyOuterclothingWearable
     - name: gloves
       slotTexture: gloves
       slotFlags: GLOVES
