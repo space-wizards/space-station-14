@@ -1,5 +1,6 @@
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.DeviceLinking.Components;
@@ -19,28 +20,28 @@ public sealed partial class SignalTimerComponent : Component
     /// <summary>
     ///     The label, used for TextScreen visuals currently.
     /// </summary>
-    [DataField("label"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string Label = string.Empty;
 
     /// <summary>
     ///     The port that gets signaled when the timer triggers.
     /// </summary>
-    [DataField("triggerPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string TriggerPort = "Timer";
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<SourcePortPrototype> TriggerPort = "Timer";
 
     /// <summary>
     ///     The port that gets signaled when the timer starts.
     /// </summary>
-    [DataField("startPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string StartPort = "Start";
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<SourcePortPrototype> StartPort = "Start";
 
-    [DataField("trigger", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string Trigger = "Trigger";
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<SinkPortPrototype> Trigger = "Trigger";
 
     /// <summary>
     ///     If not null, this timer will play this sound when done.
     /// </summary>
-    [DataField("doneSound"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? DoneSound;
 }
 

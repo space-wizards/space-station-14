@@ -20,6 +20,11 @@ public sealed class SignalTimerSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
+    /// <summary>
+    /// Per-tick timer cache.
+    /// </summary>
+    private List<Entity<SignalTimerComponent>> _timers = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -61,14 +66,13 @@ public sealed class SignalTimerSystem : EntitySystem
     public void Trigger(EntityUid uid, SignalTimerComponent signalTimer)
     {
         RemComp<ActiveSignalTimerComponent>(uid);
+
         if (TryComp<AppearanceComponent>(uid, out var appearance))
         {
-            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, new string?[] { signalTimer.Label }, appearance);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, new[] { signalTimer.Label }, appearance);
         }
 
-        if (signalTimer.DoneSound != null)
-            _audio.PlayPvs(signalTimer.DoneSound, uid);
-
+        _audio.PlayPvs(signalTimer.DoneSound, uid);
         _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
 
         if (_ui.TryGetUi(uid, SignalTimerUiKey.Key, out var bui))
@@ -91,22 +95,24 @@ public sealed class SignalTimerSystem : EntitySystem
 
     private void UpdateTimer()
     {
-        List<EntityUid> uids = new List<EntityUid>();
+        _timers.Clear();
 
         var query = EntityQueryEnumerator<ActiveSignalTimerComponent, SignalTimerComponent>();
         while (query.MoveNext(out var uid, out var active, out var timer))
         {
             if (active.TriggerTime > _gameTiming.CurTime)
                 continue;
-            uids.Add(uid);
+
+            _timers.Add((uid, timer));
         }
 
-        foreach (var uid in uids)
+        foreach (var timer in _timers)
         {
-            if (TryComp(uid, out SignalTimerComponent? activeComp))
-            {
-                Trigger(uid, activeComp);
-            }
+            // Exploded or the likes.
+            if (!Exists(timer.Owner))
+                continue;
+
+            Trigger(timer.Owner, timer.Comp);
         }
     }
 
