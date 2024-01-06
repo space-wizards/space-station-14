@@ -187,6 +187,10 @@
   - type: PhysicalComposition
     materialComposition:
       RawBananium: 500
+  - type: PointLight
+    radius: 1.2
+    energy: 2
+    color: "#eef066"
 
 - type: entity
   parent: BananiumOre
