@@ -675,7 +675,6 @@
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
       - state: frag
-        color: blue #TODODODODO
   - type: EmpOnTrigger
     range: 10
     energyConsumption: 50000

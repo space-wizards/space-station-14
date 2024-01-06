@@ -137,7 +137,7 @@
     selectedMode: SemiAuto
     angleDecay: 45
     minAngle: 1
-    maxAngle: 6
+    maxAngle: 15
     availableModes:
     - SemiAuto
     soundGunshot:
@@ -159,6 +159,13 @@
   name: SYND-210EX "Dust"
   description: A stationary rocket launcher. Can be loaded with various grenades.
   components:
+  - type: Appearance
+  - type: Sprite
+    sprite: Structures/Shuttles/Guns/grenade_cannon.rsi
+    layers:
+    - state: base
+    - state: mag-3
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 1
     selectedMode: FullAuto
@@ -169,6 +176,10 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: MagazineAmmoProvider
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: false
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -180,21 +191,3 @@
           - MagazineGrenade
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        
-        
-        
-  #- type: Gun
-  #  fireRate: 1
-  #  selectedMode: SemiAuto
-  #  availableModes:
-  #    - SemiAuto
-  #  soundGunshot:
-  #    path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
-  #- type: BallisticAmmoProvider
-  #  whitelist:
-  #    tags:
-  #      - Grenade
-  #  capacity: 3
-  #  proto: GrenadeFrag
-  #  soundInsert:
-  #    path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
