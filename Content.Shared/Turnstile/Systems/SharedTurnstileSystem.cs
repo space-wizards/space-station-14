@@ -20,7 +20,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] protected readonly EntityLookupSystem EntityLookupSystem = default!;
-    [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
+    [Dependency] protected readonly SharedBroadphaseSystem Broadphase = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
 
@@ -70,6 +70,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
         AppearanceSystem.SetData(ent, TurnstileVisuals.State, turnstile.State);
     }
 
+
     protected virtual void HandleCollide(Entity<TurnstileComponent> ent, ref StartCollideEvent args)
     {
         // If the colliding entity cannot open doors by bumping into them, then it can't turn the turnstile either.
@@ -88,16 +89,16 @@ public abstract class SharedTurnstileSystem : EntitySystem
             if (facingDirection == directionOfContact)
             {
                 // Admit the entity.
-                SetState(ent.Owner, TurnstileState.Rotating);
-
                 var comp = EnsureComp<PreventCollideComponent>(ent);
                 comp.Uid = args.OtherEntity;
 
                 // Play sound of turning
                 Audio.PlayPvs(turnstile.TurnSound, ent.Owner, AudioParams.Default.WithVolume(-3));
 
-                // Break the physics contact so that they can now pass through.
-                PhysicsSystem.DestroyContacts(args.OurBody);
+                // We have to set collidable to false for one frame, otherwise the client does not
+                // predict the removal of the contacts properly, and instead thinks the mob is colliding when it isn't.
+                SetCollidable(ent.Owner, false);
+                SetState(ent.Owner, TurnstileState.Rotating);
             }
             else
             {
@@ -141,9 +142,9 @@ public abstract class SharedTurnstileSystem : EntitySystem
         _activeTurnstiles.Remove(turnstile);
     }
 
-    private bool GetIsCollidingWithAdmitted(EntityUid uid, TurnstileComponent? turnstile = null, PhysicsComponent? physics = null, PreventCollideComponent? preventCollide = null)
+    private bool GetIsCollidingWithAdmitted(EntityUid uid, TurnstileComponent? turnstile = null, PreventCollideComponent? preventCollide = null)
     {
-        if (!Resolve(uid, ref physics, ref turnstile, ref preventCollide, false))
+        if (!Resolve(uid, ref turnstile, ref preventCollide, false))
             return false;
 
         var turnstileAABB = EntityLookupSystem.GetWorldAABB(uid);
@@ -163,6 +164,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
         var time = GameTiming.CurTime;
         foreach (var ent in _activeTurnstiles.ToList())
         {
+            SetCollidable(ent.Owner, true);
             var turnstile = ent.Comp;
             if (turnstile.Deleted || turnstile.NextStateChange == null)
             {

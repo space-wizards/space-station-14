@@ -56,7 +56,6 @@
     price: 50
   - type: LightningTarget
     priority: 1
-  - type: Anchorable
   placement:
     mode: SnapgridCenter
 
@@ -77,3 +76,7 @@
     snapCardinals: true
     layers:
     - state: idle_short
+  - type: Construction
+    graph: TurnstileShort
+    node: turnstileshort
+  - type: Anchorable
