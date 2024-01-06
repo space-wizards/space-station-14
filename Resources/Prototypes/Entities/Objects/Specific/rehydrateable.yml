@@ -50,6 +50,107 @@
         - LowImpassable
 
 - type: entity
+  parent: MonkeyCube
+  id: KoboldCube
+  name: kobold cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobKobold
+
+- type: entity
+  parent: MonkeyCube
+  id: CowCube
+  name: cow cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobCow
+
+- type: entity
+  parent: MonkeyCube
+  id: GoatCube
+  name: goat cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobGoat
+
+- type: entity
+  parent: MonkeyCube
+  id: MothroachCube
+  name: mothroach cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobMothroach
+
+- type: entity
+  parent: MonkeyCube
+  id: MouseCube
+  name: mouse cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobMouse
+
+- type: entity
+  parent: MonkeyCube
+  id: CockroachCube
+  name: cockroach cube
+  description: Just add wa- OH GOD!
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobCockroach
+
+- type: entity
+  parent: MonkeyCube
+  id: SpaceCarpCube
+  name: carp cube
+  description: Just add water! At your own risk.
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobCarp
+
+- type: entity
+  parent: MonkeyCube
+  id: SpaceTickCube
+  name: tick cube
+  description: Just add water! At your own risk.
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobTick
+
+- type: entity
+  parent: MonkeyCube
+  id: AbominationCube
+  name: abomination cube
+  description: Just add blood!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      cube:
+        maxVol: 10 # needs room for more blood
+        reagents:
+        - ReagentId: Blood
+          Quantity: 9
+  - type: Reactive
+    reactions:
+    - reagents: [Blood]
+      methods: [Touch, Ingestion, Injection]
+      effects:
+      - !type:AddToSolutionReaction
+        solution: cube
+  - type: Rehydratable
+    catalyst: Blood # blood is fuel
+    catalystMinimum: 10
+    possibleSpawns:
+    - MobAbomination
+
+- type: entity
   parent: PlushieCarp
   id: DehydratedSpaceCarp
   name: dehydrated space carp

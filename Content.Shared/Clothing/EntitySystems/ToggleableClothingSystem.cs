@@ -143,7 +143,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (!_inventorySystem.TryUnequip(Transform(uid).ParentUid, toggleCom.Slot, force: true))
             return;
 
-        toggleCom.Container.Insert(uid, EntityManager);
+        _containerSystem.Insert(uid, toggleCom.Container);
         args.Handled = true;
     }
 
@@ -229,8 +229,8 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
         // As unequipped gets called in the middle of container removal, we cannot call a container-insert without causing issues.
         // So we delay it and process it during a system update:
-        if (toggleComp.ClothingUid != null)
-            toggleComp.Container?.Insert(toggleComp.ClothingUid.Value);
+        if (toggleComp.ClothingUid != null && toggleComp.Container != null)
+            _containerSystem.Insert(toggleComp.ClothingUid.Value, toggleComp.Container);
     }
 
     /// <summary>
@@ -302,7 +302,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
             var attachedClothing = EnsureComp<AttachedClothingComponent>(component.ClothingUid.Value);
             attachedClothing.AttachedUid = uid;
             Dirty(component.ClothingUid.Value, attachedClothing);
-            component.Container.Insert(component.ClothingUid.Value, EntityManager, ownerTransform: xform);
+            _containerSystem.Insert(component.ClothingUid.Value, component.Container, containerXform: xform);
             Dirty(uid, component);
         }
 

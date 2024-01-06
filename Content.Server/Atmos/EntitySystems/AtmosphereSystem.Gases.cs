@@ -10,7 +10,6 @@ namespace Content.Server.Atmos.EntitySystems
     public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
-        [Dependency] private readonly GenericGasReactionSystem _reaction = default!;
 
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
         private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
@@ -123,7 +122,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var receiverHeatCapacity = GetHeatCapacity(receiver);
                 var giverHeatCapacity = GetHeatCapacity(giver);
                 var combinedHeatCapacity = receiverHeatCapacity + giverHeatCapacity;
-                if (combinedHeatCapacity > 0f)
+                if (combinedHeatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
                     receiver.Temperature = (GetThermalEnergy(giver, giverHeatCapacity) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
                 }
@@ -167,7 +166,7 @@ namespace Content.Server.Atmos.EntitySystems
                         sourceHeatCapacity ??= GetHeatCapacity(source);
                         var receiverHeatCapacity = GetHeatCapacity(receiver);
                         var combinedHeatCapacity = receiverHeatCapacity + sourceHeatCapacity.Value * fraction;
-                        if (combinedHeatCapacity > 0f)
+                        if (combinedHeatCapacity > Atmospherics.MinimumHeatCapacity)
                             receiver.Temperature = (GetThermalEnergy(source, sourceHeatCapacity.Value * fraction) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
                     }
                 }
@@ -347,7 +346,7 @@ namespace Content.Server.Atmos.EntitySystems
                     break;
             }
 
-            return _reaction.ReactAll(GasReactions, mixture, holder);
+            return reaction;
         }
 
         public enum GasCompareResult

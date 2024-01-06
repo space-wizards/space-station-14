@@ -12,7 +12,7 @@
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: 90
+    wideAnimationRotation: -135
     swingLeft: true
     attackRate: 0.75
     damage:
@@ -42,6 +42,8 @@
   - type: Prying
   - type: UseDelay
     delay: 1
+  - type: StealTarget
+    stealGroup: FireAxe
   - type: IgniteOnMeleeHit
     fireStacks: -4
 

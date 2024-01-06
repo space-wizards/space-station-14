@@ -274,21 +274,13 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           book0: ""
-      - enum.DamageStateVisualLayers.Base:
           book1: ""
-      - enum.DamageStateVisualLayers.Base:
           book2: ""
-      - enum.DamageStateVisualLayers.Base:
           book3: ""
-      - enum.DamageStateVisualLayers.Base:
           book4: ""
-      - enum.DamageStateVisualLayers.Base:
           book5: ""
-      - enum.DamageStateVisualLayers.Base:
           book6: ""
-      - enum.DamageStateVisualLayers.Base:
           book7: ""
-      - enum.DamageStateVisualLayers.Base:
           book8: ""
 
 - type: entity
