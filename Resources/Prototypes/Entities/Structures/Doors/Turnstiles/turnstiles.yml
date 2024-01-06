@@ -11,11 +11,10 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    sprite: Structures/Doors/turnstile.rsi
     snapCardinals: true
     layers:
     - state: idle
-      map: ["enum.DoorVisualLayers.Base"]
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -50,7 +49,6 @@
   - type: Construction
     graph: Turnstile
     node: turnstile
-  - type: Climbable
   - type: StaticPrice
     price: 50
   - type: LightningTarget
@@ -58,3 +56,11 @@
   - type: Anchorable
   placement:
     mode: SnapgridCenter
+
+- type: entity
+  id: TurnstileShort
+  parent: Turnstile
+  name: short turnstile
+  description: A smaller, less-secure turnstile.
+  components:
+  - type: Climbable

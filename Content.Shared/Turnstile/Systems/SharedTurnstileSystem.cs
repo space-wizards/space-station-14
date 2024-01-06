@@ -182,7 +182,7 @@ public sealed class SharedTurnstileSystem : EntitySystem
 
     private Direction GetDirectionOfContact(EntityUid uid, EntityUid other)
     {
-        return (XformSystem.GetWorldPosition(uid) - XformSystem.GetWorldPosition(other)).GetDir();
+        return (XformSystem.GetGridOrMapTilePosition(uid) - XformSystem.GetGridOrMapTilePosition(other)).GetDir();
     }
 
     private void PreventCollision(EntityUid uid, TurnstileComponent component, PreventCollideEvent args)
