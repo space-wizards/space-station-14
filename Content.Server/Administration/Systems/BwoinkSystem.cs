@@ -104,6 +104,24 @@ namespace Content.Server.Administration.Systems
                 if (!_playerManager.TryGetSessionById(messages.Key, out var session))
                 {
                     _sawmill.Warning($"Failed to find session for {messages.Key.UserId}.");
+                    // Respond with error message to inform admins that the player is not online.
+                    arg.Channel.SendMessageAsync("**Warning**: Failed to find session for player. They may not be online.");
+                    continue;
+                }
+
+                // Command handling
+                if (arg.Content.StartsWith("!"))
+                {
+                    switch (arg.Content)
+                    {
+                        case "!status":
+                            var embed = GenerateEmbed(session);
+                            arg.Channel.SendMessageAsync(embed: embed.Build());
+                            break;
+                        default:
+                            arg.Channel.SendMessageAsync("**Warning**: Unknown command.");
+                            break;
+                    }
                     continue;
                 }
 
@@ -131,6 +149,19 @@ namespace Content.Server.Administration.Systems
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
+            if (_relayMessages.TryGetValue(e.Session.UserId, out var relay))
+            {
+                switch (e.NewStatus)
+                {
+                    case SessionStatus.Connected:
+                        relay.channel.SendMessageAsync($"**Warning**: {e.Session.Name} has reconnected. Further messages will be relayed to them.");
+                        break;
+                    case SessionStatus.Disconnected:
+                        relay.channel.SendMessageAsync($"**Warning**: {e.Session.Name} has disconnected. Any messages sent to them will not be received.");
+                        break;
+                }
+            }
+
             if (e.NewStatus != SessionStatus.InGame)
                 return;
 
@@ -139,6 +170,20 @@ namespace Content.Server.Administration.Systems
 
         private void OnGameRunLevelChanged(GameRunLevelChangedEvent args)
         {
+            foreach (var relayMessage in _relayMessages)
+            {
+                var text = args.New switch
+                {
+                    GameRunLevel.PreRoundLobby => "\n\n:arrow_forward: _**Pre-round lobby started**_\n",
+                    GameRunLevel.InRound => "\n\n:arrow_forward: _**Round started**_\n",
+                    GameRunLevel.PostRound => "\n\n:stop_button: _**Post-round started**_\n",
+                    _ => throw new ArgumentOutOfRangeException(nameof(_gameTicker.RunLevel),
+                        $"{_gameTicker.RunLevel} was not matched.")
+                };
+
+                relayMessage.Value.channel.SendMessageAsync(text);
+            }
+
             // Don't make a new embed if we
             // 1. were in the lobby just now, and
             // 2. are not entering the lobby or directly into a new round.
@@ -251,21 +296,52 @@ namespace Content.Server.Administration.Systems
         {
             if (_discord.Client is null)
                 return null;
-            var clr = GetTargetAdmins().Count > 0 ? Color.Green : Color.Red;
             if (!_playerManager.TryGetSessionById(targetPlayer, out var playerUid))
             {
                 _sawmill.Error($"Requested new relay, but player session for {targetPlayer.UserId} was not found.");
                 return null;
             }
 
-            var job = "No entity attached";
-            if (playerUid.AttachedEntity.HasValue)
+            var embed = GenerateEmbed(playerUid);
+
+            var relay = await _discord.GetGuild()
+                    .GetForumChannel(_channelId)
+                    .CreatePostAsync(title,
+                        ThreadArchiveDuration.OneHour,
+                        null,
+                        null,
+                        embed.Build()
+                    );
+
+            // If the relay is not null, give a list of available commands for the admins to use.
+            if (relay is not null)
             {
-                if (_idCardSystem.TryFindIdCard(playerUid.AttachedEntity.Value, out var idCard))
+                await relay.SendMessageAsync("Use `!status` to get regenerate the status embed as seen above.");
+            }
+
+            return relay;
+        }
+
+        private EmbedBuilder GenerateEmbed(ICommonSession session)
+        {
+            var clr = GetTargetAdmins().Count > 0 ? Color.Green : Color.Red;
+
+            var job = "No entity attached";
+            if (session.AttachedEntity.HasValue)
+            {
+                if (_idCardSystem.TryFindIdCard(session.AttachedEntity.Value, out var idCard))
                 {
                     job = idCard.Comp.JobTitle ?? "Unknown";
                 }
             }
+
+            var gameRules = string.Join(", ", _gameTicker.GetActiveGameRules()
+                .Select(addedGameRule => _entityManager.MetaQuery.GetComponent(addedGameRule))
+                .Select(meta => meta.EntityPrototype?.ID ?? meta.EntityPrototype?.Name ?? "Unknown")
+                .ToList());
+
+            if (gameRules == string.Empty)
+                gameRules = "None";
 
             var embed = new EmbedBuilder()
             {
@@ -283,10 +359,7 @@ namespace Content.Server.Administration.Systems
                     new()
                     {
                         Name = "Active Gamerules",
-                        Value = string.Join(", ", _gameTicker.GetActiveGameRules()
-                            .Select(addedGameRule => _entityManager.MetaQuery.GetComponent(addedGameRule))
-                            .Select(meta => meta.EntityPrototype?.ID ?? meta.EntityPrototype?.Name ?? "Unknown")
-                            .ToList())
+                        Value = gameRules
                     },
                     new()
                     {
@@ -302,7 +375,7 @@ namespace Content.Server.Administration.Systems
                     {
                         Name = "Antag Status",
                         Value = _adminSystem.PlayerList
-                            .Where(p => p.Key == targetPlayer)
+                            .Where(p => p.Key == session.UserId)
                             .Any(p => p.Value.Antag)
                             ? "Yes"
                             : "No"
@@ -316,20 +389,17 @@ namespace Content.Server.Administration.Systems
                     {
                         Name = "Job on ID card",
                         Value = job
+                    },
+                    new()
+                    {
+                        Name = "Run Level",
+                        Value = _gameTicker.RunLevel.ToString()
                     }
                 },
                 Color = clr,
-
             };
 
-            return await _discord.GetGuild()
-                    .GetForumChannel(_channelId)
-                    .CreatePostAsync(title,
-                        ThreadArchiveDuration.OneHour,
-                        null,
-                        null,
-                        embed.Build()
-                    );
+            return embed;
         }
 
 
@@ -435,7 +505,7 @@ namespace Content.Server.Administration.Systems
                 if (!_messageQueues.ContainsKey(msg.UserId))
                     _messageQueues[msg.UserId] = new Queue<string>();
 
-                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, message.Text, !personalChannel, admins.Count == 0));
+                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, EscapeMarkdown(message.Text), !personalChannel, admins.Count == 0));
             }
 
             if (admins.Count != 0 || sendsWebhook)
@@ -472,6 +542,11 @@ namespace Content.Server.Administration.Systems
             stringbuilder.Append($" **{username}:** ");
             stringbuilder.Append(message);
             return stringbuilder.ToString();
+        }
+
+        private static string EscapeMarkdown(string text)
+        {
+            return Regex.Replace(text, @"([*_`])|(```)", "\\$1");
         }
     }
 }
