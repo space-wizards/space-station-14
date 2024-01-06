@@ -1123,6 +1123,16 @@
     - ResearchDirector
     - Chef
 
+- type: listing
+  id: UplinkSingarityBeacon
+  name: uplink-singularity-beacon-name
+  description: uplink-singularity-beacon-desc
+  productEntity: SingularityBeacon
+  cost:
+    Telecrystal: 12
+  categories:
+    - UplinkUtility
+
 # Armor
 
 - type: listing
