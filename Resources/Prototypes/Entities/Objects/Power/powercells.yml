@@ -284,11 +284,7 @@
       state: o2
       shader: unshaded
   - type: Item
-    size: Large
-    shape:
-    - 0,0,2,1
-    - 1,1,1,1
-    sprite: Objects/Power/power_cages.rsi
+    size: Ginormous
   - type: MultiHandedItem
   - type: SolutionContainerManager
     solutions:
@@ -305,6 +301,10 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedShuttleLaser
     fireCost: 100
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
 
 - type: entity
   id: PowerCageSmall
