@@ -7,7 +7,6 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
 using Content.Shared.Tag;
-using Content.Shared.Traits.Assorted;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -152,14 +151,8 @@ namespace Content.Server.Paper
         {
             if (args.Text.Length <= paperComp.ContentSize)
             {
-                paperComp.Content = args.Text;
-
-                var ev = new WriteAttemptEvent(args.Session.AttachedEntity, uid);
-                RaiseLocalEvent<WriteAttemptEvent>(uid, ev);
-
                 //If the writer is illiterate, scramble the text
-                if (!ev.CanWrite)
-                    paperComp.Content = _illiterate.ScrambleString(paperComp.Content);
+                paperComp.Content = _illiterate.IsIlliterate(args.Session.AttachedEntity) ? _illiterate.ScrambleString(args.Text) : args.Text;
 
 
                 if (TryComp<AppearanceComponent>(uid, out var appearance))
@@ -230,14 +223,8 @@ namespace Content.Server.Paper
             var content = paperComp.Content;
 
             //If the reader is illiterate, scramble the contents
-            if (session != null)
-            {
-                var ev = new ReadAttemptEvent(session.AttachedEntity, uid);
-                RaiseLocalEvent(ev);
-
-                if (!ev.CanRead)
-                    content = _illiterate.ScrambleString(content);
-            }
+            if (session != null && _illiterate.IsIlliterate(session.AttachedEntity))
+                content = _illiterate.ScrambleString(paperComp.Content);
 
             if (_uiSystem.TryGetUi(uid, PaperUiKey.Key, out var bui))
                 _uiSystem.SetUiState(bui, new PaperBoundUserInterfaceState(content, paperComp.StampedBy, paperComp.Mode), session);

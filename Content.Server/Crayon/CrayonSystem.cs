@@ -8,7 +8,6 @@ using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Traits.Assorted;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -116,16 +115,11 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
 
         //If this is a digit or letter decal, randomise it
-        if (prototype.IsDigitOrLetter)
+        if (prototype.Alphanumeric && _illiterate.IsIlliterate(args.Session.AttachedEntity))
         {
-            var ev = new WriteAttemptEvent(args.Session.AttachedEntity, uid);
-            RaiseLocalEvent(ev);
-            if (!ev.CanWrite)
-            {
-                var newState = _illiterate.ScrambleString(args.State);
-                if (_prototypeManager.HasIndex<DecalPrototype>(newState))
-                    component.SelectedState = newState;
-            }
+            var newState = _illiterate.ScrambleString(args.State);
+            if (_prototypeManager.HasIndex<DecalPrototype>(newState))
+                component.SelectedState = newState;
         }
         else
         {

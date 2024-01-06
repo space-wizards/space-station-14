@@ -4,7 +4,6 @@ using Content.Server.Traits.Assorted;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels;
-using Content.Shared.Traits.Assorted;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
@@ -121,7 +120,7 @@ namespace Content.Server.Labels
                 }
 
                 args.PushMarkup(Loc.GetString("comp-paper-label-has-label"));
-                var text = paper.Content;
+                var text = _illiterate.IsIlliterate(args.Examiner) ? _illiterate.ScrambleString(paper.Content) : paper.Content;
                 args.PushMarkup(text.TrimEnd());
             }
         }

@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Content.Server.Arcade;
 using Content.Server.Communications;
-using Content.Shared.Traits.Assorted;
 using Robust.Shared.Random;
-using static Content.Shared.Paper.SharedPaperComponent;
+using System.Text;
 
 namespace Content.Server.Traits.Assorted;
 
-public sealed class IlliterateSystem : SharedIlliterateSystem
+public sealed class IlliterateSystem : EntitySystem
 {
 
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -20,8 +13,6 @@ public sealed class IlliterateSystem : SharedIlliterateSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WriteAttemptEvent>(OnWriteAttempt);
-        SubscribeLocalEvent<ReadAttemptEvent>(OnReadAttempt);
         SubscribeLocalEvent<CommunicationConsoleAnnouncementEvent>(OnAnnouncement);
     }
 
@@ -30,19 +21,6 @@ public sealed class IlliterateSystem : SharedIlliterateSystem
         if (IsIlliterate(args.Sender))
             args.Text = ScrambleString(args.Text);
     }
-
-    private void OnWriteAttempt(WriteAttemptEvent ev)
-    {
-        if (IsIlliterate(ev.Writer))
-            ev.CanWrite = false;
-    }
-
-    private void OnReadAttempt(ReadAttemptEvent ev)
-    {
-        if (IsIlliterate(ev.Reader))
-            ev.CanRead = false;
-    }
-
     public string ScrambleString(string str)
     {
         var sb = new StringBuilder();
@@ -64,7 +42,7 @@ public sealed class IlliterateSystem : SharedIlliterateSystem
         return sb.ToString();
     }
 
-    private bool IsIlliterate(EntityUid? entity)
+    public bool IsIlliterate(EntityUid? entity)
     {
         if (!entity.HasValue)
             return false;

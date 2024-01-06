@@ -4,7 +4,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: 0
@@ -15,7 +15,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: 1
@@ -26,7 +26,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: 2
@@ -37,7 +37,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: 3
@@ -48,7 +48,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: 4
@@ -59,7 +59,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: 5
@@ -70,7 +70,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: 6
@@ -81,7 +81,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: 7
@@ -92,7 +92,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: 8
@@ -103,7 +103,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: 9
@@ -284,7 +284,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: a
@@ -325,7 +325,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: b
@@ -396,7 +396,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: c
@@ -497,7 +497,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: d
@@ -548,7 +548,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: e
@@ -619,7 +619,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: f
@@ -680,7 +680,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: g
@@ -711,7 +711,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: h
@@ -732,7 +732,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: i
@@ -743,7 +743,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: j
@@ -754,7 +754,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: k
@@ -765,7 +765,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: l
@@ -806,7 +806,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: m
@@ -847,7 +847,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: n
@@ -868,7 +868,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: o
@@ -879,7 +879,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: p
@@ -950,7 +950,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: q
@@ -971,7 +971,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: r
@@ -1062,7 +1062,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: s
@@ -1203,7 +1203,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: t
@@ -1264,7 +1264,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: u
@@ -1285,7 +1285,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: v
@@ -1296,7 +1296,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: w
@@ -1307,7 +1307,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: x
@@ -1318,7 +1318,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: y
@@ -1329,7 +1329,7 @@
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
-  isDigitOrLetter: true
+  alphanumeric: true
   sprite:
     sprite: Effects/crayondecals.rsi
     state: z

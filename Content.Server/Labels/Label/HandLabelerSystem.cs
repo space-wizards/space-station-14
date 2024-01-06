@@ -5,7 +5,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Labels;
-using Content.Shared.Traits.Assorted;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -97,9 +96,7 @@ namespace Content.Server.Labels
             var label = args.Label.Trim();
             handLabeler.AssignedLabel = label.Substring(0, Math.Min(handLabeler.MaxLabelChars, label.Length));
 
-            var ev = new WriteAttemptEvent(args.Session.AttachedEntity, uid);
-            RaiseLocalEvent(ev);
-            if (!ev.CanWrite)
+            if (_illiterate.IsIlliterate(args.Session.AttachedEntity))
                 handLabeler.AssignedLabel = _illiterate.ScrambleString(handLabeler.AssignedLabel);
 
             DirtyUI(uid, handLabeler);
