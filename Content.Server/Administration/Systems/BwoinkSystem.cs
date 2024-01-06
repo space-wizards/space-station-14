@@ -68,10 +68,73 @@ namespace Content.Server.Administration.Systems
             _config.OnValueChanged(CCVars.AdminAhelpRelayChannelId, OnChannelIdChanged, true);
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             if (_discord.Client is not null)
+            {
                 _discord.Client.MessageReceived += OnDiscordMessageReceived;
+                _discord.Client.MessageReceived += OnReceiveNewRelay;
+            }
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
             SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
+        }
+
+        private async Task<Task> OnReceiveNewRelay(SocketMessage arg)
+        {
+            if (arg.Author.IsBot)
+                return Task.CompletedTask;
+
+            if (!arg.Content.StartsWith("!ahelp")) // Not an ahelp request
+                return Task.CompletedTask;
+
+            // Check if args are valid
+            var args = arg.Content.Split(" ");
+            if (args.Length != 2)
+            {
+                // Don't respond to user, multiple servers may be running on the same bot.
+                return Task.CompletedTask;
+            }
+
+            // Try to find user
+            var username = args[1];
+            if (!_playerManager.TryGetSessionByUsername(username, out var session))
+            {
+                // Don't respond to user, multiple servers may be running on the same bot.
+                return Task.CompletedTask;
+            }
+
+            // Check if user is already in ahelp
+            if (_relayMessages.TryGetValue(session.UserId, out var relay))
+            {
+                await arg.Channel.SendMessageAsync("**Warning**: There is already an ahelp thread for this player.");
+                await arg.Channel.SendMessageAsync($"<#{relay.channel.Id}>");
+                return Task.CompletedTask;
+            }
+
+            var charName = _minds.GetCharacterName(session.UserId);
+            var lookup = await _playerLocator.LookupIdAsync(session.UserId);
+
+            if (lookup is null)
+            {
+                _sawmill.Warning($"Failed to lookup Discord ID for {charName} ({session.UserId}).");
+                await arg.Channel.SendMessageAsync("**Warning**: Failed to lookup Discord ID for player.");
+                return Task.CompletedTask;
+            }
+
+            // Create new ahelp thread
+            var channel = await RequestNewRelay($"{lookup.Username} ({charName}) - {_gameTicker.RoundId}", session.UserId);
+            if (channel is null)
+            {
+                await arg.Channel.SendMessageAsync("**Warning**: Failed to create ahelp thread.");
+                return Task.CompletedTask;
+            }
+
+            // Add to relay messages
+            relay = (channel, _gameTicker.RunLevel);
+            _relayMessages[session.UserId] = relay;
+
+            // Notify admins
+            await channel.SendMessageAsync($"**Info:** Thread created. Further messages will be relayed to the player. <@{arg.Author.Id}>");
+            await arg.Channel.SendMessageAsync($"<#{relay.channel.Id}>");
+            return Task.CompletedTask;
         }
 
         private void OnChannelIdChanged(string obj)
