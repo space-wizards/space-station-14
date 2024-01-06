@@ -3,16 +3,17 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.MagicMirror;
 
+/// <summary>
+/// Allows humanoids to change their appearance mid-round.
+/// </summary>
 [RegisterComponent]
 public sealed partial class MagicMirrorComponent : Component
 {
-    public EntityUid? Target;
-
     /// <summary>
-    /// radius in which the component can edit hairstyles
+    /// Magic mirror target, used for validating UI messages.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float Range = 1f;
+    [DataField]
+    public EntityUid? Target;
 
     /// <summary>
     /// doafter time required to add a new slot
@@ -39,9 +40,8 @@ public sealed partial class MagicMirrorComponent : Component
     public TimeSpan ChangeSlotTime = TimeSpan.FromSeconds(1);
 
     /// <summary>
-    /// sound emitted when slots are changed
+    /// Sound emitted when slots are changed
     /// </summary>
-
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier ChangeHairSound = new SoundPathSpecifier("/Audio/Items/scissors.ogg");
 }

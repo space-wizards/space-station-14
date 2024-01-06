@@ -57,7 +57,7 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
     {
         base.ReceiveMessage(message);
 
-        if (message is not MagicMirrorUiData data || _window == null)
+        if (message is not MagicMirrorUiState data || _window == null)
         {
             return;
         }
