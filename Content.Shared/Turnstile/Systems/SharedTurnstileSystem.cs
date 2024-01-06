@@ -53,7 +53,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
             _activeTurnstiles.Add(ent);
 
         RaiseLocalEvent(ent, new TurnstileEvents.TurnstileStateChangedEvent(turnstile.State));
-        //AppearanceSystem.SetData(ent, TurnstileVisuals.State, turnstile.State);
+        AppearanceSystem.SetData(ent, TurnstileVisuals.State, turnstile.State);
     }
 
     private void OnComponentInit(Entity<TurnstileComponent> ent, ref ComponentInit args)
@@ -65,7 +65,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
             turnstile.State = TurnstileState.Idle;
 
         SetCollidable(ent, true);
-        //AppearanceSystem.SetData(ent, TurnstileVisuals.State, turnstile.State);
+        AppearanceSystem.SetData(ent, TurnstileVisuals.State, turnstile.State);
     }
 
 
@@ -221,6 +221,6 @@ public abstract class SharedTurnstileSystem : EntitySystem
         turnstile.State = state;
         Dirty(ent.Owner, turnstile);
         RaiseLocalEvent(ent.Owner, new TurnstileEvents.TurnstileStateChangedEvent(state));
-        //AppearanceSystem.SetData(ent.Owner, TurnstileVisuals.State, turnstile.State);
+        AppearanceSystem.SetData(ent.Owner, TurnstileVisuals.State, turnstile.State);
     }
 }
