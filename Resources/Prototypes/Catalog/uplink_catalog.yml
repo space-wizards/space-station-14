@@ -1160,7 +1160,11 @@
   id: UplinkgClothingThievingGloves
   name: uplink-clothing-thieving-gloves-name
   description: uplink-clothing-thieving-gloves-desc
-  productEntity: ThievingGloves
+  productEntity: ClothingHandsGlovesColorBlack
+  secretComponents:
+  - type: Thieving
+    stripTimeReduction: 1.5
+    stealthy: true
   cost:
     Telecrystal: 4
   categories:

@@ -8,7 +8,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 using static Content.Shared.Storage.EntitySpawnCollection;
 
 namespace Content.Server.Storage.EntitySystems
@@ -20,6 +22,8 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedHandsSystem _hands = default!;
         [Dependency] private readonly PricingSystem _pricing = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly ISerializationManager _serialization = default!;
+        [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
         public override void Initialize()
         {
@@ -77,6 +81,20 @@ namespace Content.Server.Storage.EntitySystems
             foreach (var proto in spawnEntities)
             {
                 entityToPlaceInHands = Spawn(proto, coords);
+
+                foreach (var (name, data) in component.SecretComponents)
+                {
+                    var reg = _componentFactory.GetRegistration(name);
+
+                    var comp = (Component) _componentFactory.GetComponent(reg);
+                    var temp = (object) comp;
+                    _serialization.CopyTo(data.Component, ref temp);
+                    if (HasComp(entityToPlaceInHands, reg.Type))
+                        RemComp(entityToPlaceInHands.Value, temp!.GetType());
+
+                    AddComp(entityToPlaceInHands.Value, (Component) temp!);
+                }
+
                 _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(entityToPlaceInHands.Value)}");
             }
 
