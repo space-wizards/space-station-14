@@ -86,7 +86,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
             var headRevCount = _antagSelection.CalculateAntagCount(ev.Players.Length, comp.PlayersPerHeadRev, comp.MaxHeadRevs);
 
-            var headRevs = _antagSelection.ChooseAntags(eligiblePlayers, headRevCount);
+            var headRevs = _antagSelection.ChooseAntags(headRevCount, eligiblePlayers);
 
             _antagSelection.SendBriefing(headRevs, Loc.GetString("head-rev-role-greeting"), Color.CornflowerBlue, comp.HeadRevStartSound);
             GiveHeadRev(headRevs, comp.HeadRevPrototypeId, comp);

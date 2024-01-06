@@ -633,17 +633,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             //Select Nukies
             //Select Commander, priority : commanderEligible, agentEligible, operativeEligible, all players
-            var selectedCommander = _antagSelection.ChooseAntags(new List<ICommonSession>[] { commanderEligible, agentEligible, operativeEligible, ev.PlayerPool }, 1).FirstOrDefault();
+            var selectedCommander = _antagSelection.ChooseAntags(1, commanderEligible, agentEligible, operativeEligible, ev.PlayerPool).FirstOrDefault();
             //Select Agent, priority : agentEligible, operativeEligible, all players
-            var selectedAgent = _antagSelection.ChooseAntags(new List<ICommonSession>[] { agentEligible, operativeEligible, ev.PlayerPool }, 1).FirstOrDefault();
+            var selectedAgent = _antagSelection.ChooseAntags(1, agentEligible, operativeEligible, ev.PlayerPool).FirstOrDefault();
             //Select Operatives, priority : operativeEligible, all players
-            var selectedOperatives = _antagSelection.ChooseAntags(new List<ICommonSession>[] { operativeEligible, ev.PlayerPool }, nukiesToSelect - 2);
+            var selectedOperatives = _antagSelection.ChooseAntags(nukiesToSelect - 2, operativeEligible, ev.PlayerPool);
 
             //Create the team!
             //Provide a player session if possible, otherwise spawn them as ghost roles
             var operatives = new List<NukieSpawn>();
-            operatives.Add(new NukieSpawn(selectedCommander ?? null, NukieType.Commander));
-            operatives.Add(new NukieSpawn(selectedAgent ?? null, NukieType.Agent));
+            operatives.Add(new NukieSpawn(selectedCommander, NukieType.Commander));
+            operatives.Add(new NukieSpawn(selectedAgent, NukieType.Agent));
 
             //For each of the remaining slots, fill with operatives
             for (var i = 0; i < nukiesToSelect - 2; i++)

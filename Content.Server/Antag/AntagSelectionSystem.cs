@@ -191,7 +191,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="eligiblePlayers">List of eligible players</param>
     /// <param name="count">How many to choose</param>
     /// <returns>Up to the specified count of elements from the provided list</returns>
-    public List<T> ChooseAntags<T>(List<T> eligiblePlayers, int count)
+    public List<T> ChooseAntags<T>(int count, List<T> eligiblePlayers)
     {
         var chosenPlayers = new List<T>();
 
@@ -213,7 +213,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="eligiblePlayerLists">Array of lists, which are chosen from in order until the correct number of items are selected</param>
     /// <param name="count">How many items to select</param>
     /// <returns>Up to the specified count of elements from all provided lists</returns>
-    public List<T> ChooseAntags<T>(List<T>[] eligiblePlayerLists, int count)
+    public List<T> ChooseAntags<T>(int count, params List<T>[] eligiblePlayerLists)
     {
         var chosenPlayers = new List<T>();
         foreach (var playerList in eligiblePlayerLists)
@@ -227,7 +227,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 continue;
 
             //Pick and choose a random number of players from this list
-            chosenPlayers.AddRange(ChooseAntags<T>(playerList, count - chosenPlayers.Count));
+            chosenPlayers.AddRange(ChooseAntags<T>(count - chosenPlayers.Count, playerList));
         }
         return chosenPlayers;
     }

@@ -126,7 +126,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         var traitorsToSelect = _antagSelection.CalculateAntagCount(_playerManager.PlayerCount, PlayersPerTraitor, MaxTraitors);
 
-        var selectedTraitors = _antagSelection.ChooseAntags(eligiblePlayers, traitorsToSelect);
+        var selectedTraitors = _antagSelection.ChooseAntags(traitorsToSelect, eligiblePlayers);
 
         MakeTraitor(selectedTraitors, component);
 
