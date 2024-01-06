@@ -16,7 +16,7 @@ namespace Content.Client.Communications.UI
 
         private CommunicationsConsoleBoundUserInterface Owner { get; set; }
         private readonly CancellationTokenSource _timerCancelTokenSource = new();
-        private int ChatMaxAnnounceMessageLength => _config.GetCVar(CCVars.ChatMaxAnnounceMessageLength);
+        private int MaxMessageLength => _config.GetCVar(CCVars.ChatMaxAnnounceMessageLength);
 
         public CommunicationsConsoleMenu(CommunicationsConsoleBoundUserInterface owner)
         {
@@ -27,19 +27,19 @@ namespace Content.Client.Communications.UI
 
             var loc = IoCManager.Resolve<ILocalizationManager>();
             MessageInput.Placeholder = new Rope.Leaf(loc.GetString("comms-console-menu-announcement-placeholder"));
-            MessageInput.OnKeyBindUp += (_) =>
+            MessageInput.OnTextChanged += (_) =>
             {
-                var length = MessageInput.TextLength;
-                MessageLengthLabel.Text = $"{MessageInput.TextLength}";
-                MessageLengthLabel.FontColorOverride = length > ChatMaxAnnounceMessageLength ? Color.Red : null;
+                var messageLength = MessageInput.TextLength;
+                MessageLengthLabel.Text = $"{messageLength}";
+                MessageLengthLabel.FontColorOverride = messageLength > MaxMessageLength ? Color.Red : null;
             };
 
             AnnounceButton.OnPressed += (_) =>
             {
                 var message = Rope.Collapse(MessageInput.TextRope).Trim();
-                if (message.Length > ChatMaxAnnounceMessageLength)
+                if (message.Length > MaxMessageLength)
                 {
-                    message = $"{message.Substring(0, ChatMaxAnnounceMessageLength)}...";
+                    message = $"{message.Substring(0, MaxMessageLength)}...";
                 }
                 Owner.AnnounceButtonPressed(message);
             };
