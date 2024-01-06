@@ -208,10 +208,13 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         var container = _itemSlotsSystem.GetItemOrNull(entity.Owner, entity.Comp.SolutionContainerName);
         if (args.IsInDetailsRange && container != null && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out _, out var containerSolution))
         {
-            args.PushMarkup(Loc.GetString("cryo-pod-examine", ("beaker", Name(container.Value))));
-            if (containerSolution.Volume == 0)
+            using (args.PushGroup(nameof(CryoPodComponent)))
             {
-                args.PushMarkup(Loc.GetString("cryo-pod-empty-beaker"));
+                args.PushMarkup(Loc.GetString("cryo-pod-examine", ("beaker", Name(container.Value))));
+                if (containerSolution.Volume == 0)
+                {
+                    args.PushMarkup(Loc.GetString("cryo-pod-empty-beaker"));
+                }
             }
         }
     }

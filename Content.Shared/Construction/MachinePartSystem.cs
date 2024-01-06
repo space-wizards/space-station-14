@@ -28,33 +28,37 @@ namespace Content.Shared.Construction
         {
             if (!args.IsInDetailsRange)
                 return;
-            args.PushMarkup(Loc.GetString("machine-board-component-on-examine-label"));
-            foreach (var (part, amount) in component.Requirements)
-            {
-                args.PushMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
-                                                ("amount", amount),
-                                                ("requiredElement", Loc.GetString(_prototype.Index<MachinePartPrototype>(part).Name))));
-            }
 
-            foreach (var (material, amount) in component.MaterialRequirements)
+            using (args.PushGroup(nameof(MachineBoardComponent)))
             {
-                args.PushMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
-                                                ("amount", amount),
-                                                ("requiredElement", Loc.GetString(material.Name))));
-            }
+                args.PushMarkup(Loc.GetString("machine-board-component-on-examine-label"));
+                foreach (var (part, amount) in component.Requirements)
+                {
+                    args.PushMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
+                        ("amount", amount),
+                        ("requiredElement", Loc.GetString(_prototype.Index<MachinePartPrototype>(part).Name))));
+                }
 
-            foreach (var (_, info) in component.ComponentRequirements)
-            {
-                args.PushMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
-                                                ("amount", info.Amount),
-                                                ("requiredElement", Loc.GetString(info.ExamineName))));
-            }
+                foreach (var (material, amount) in component.MaterialRequirements)
+                {
+                    args.PushMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
+                        ("amount", amount),
+                        ("requiredElement", Loc.GetString(material.Name))));
+                }
 
-            foreach (var (_, info) in component.TagRequirements)
-            {
-                args.PushMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
-                                                ("amount", info.Amount),
-                                                ("requiredElement", Loc.GetString(info.ExamineName))));
+                foreach (var (_, info) in component.ComponentRequirements)
+                {
+                    args.PushMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
+                        ("amount", info.Amount),
+                        ("requiredElement", Loc.GetString(info.ExamineName))));
+                }
+
+                foreach (var (_, info) in component.TagRequirements)
+                {
+                    args.PushMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
+                        ("amount", info.Amount),
+                        ("requiredElement", Loc.GetString(info.ExamineName))));
+                }
             }
         }
 
@@ -62,9 +66,14 @@ namespace Content.Shared.Construction
         {
             if (!args.IsInDetailsRange)
                 return;
-            args.PushMarkup(Loc.GetString("machine-part-component-on-examine-rating-text", ("rating", component.Rating)));
-            args.PushMarkup(Loc.GetString("machine-part-component-on-examine-type-text", ("type",
-                Loc.GetString(_prototype.Index<MachinePartPrototype>(component.PartType).Name))));
+
+            using (args.PushGroup(nameof(MachinePartComponent)))
+            {
+                args.PushMarkup(Loc.GetString("machine-part-component-on-examine-rating-text",
+                    ("rating", component.Rating)));
+                args.PushMarkup(Loc.GetString("machine-part-component-on-examine-type-text", ("type",
+                    Loc.GetString(_prototype.Index<MachinePartPrototype>(component.PartType).Name))));
+            }
         }
 
         public Dictionary<string, int> GetMachineBoardMaterialCost(Entity<MachineBoardComponent> entity, int coefficient = 1)

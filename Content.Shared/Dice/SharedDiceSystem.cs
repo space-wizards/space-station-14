@@ -48,8 +48,12 @@ public abstract class SharedDiceSystem : EntitySystem
     private void OnExamined(EntityUid uid, DiceComponent dice, ExaminedEvent args)
     {
         //No details check, since the sprite updates to show the side.
-        args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-1", ("sidesAmount", dice.Sides)));
-        args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-2", ("currentSide", dice.CurrentValue)));
+        using (args.PushGroup(nameof(DiceComponent)))
+        {
+            args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-1", ("sidesAmount", dice.Sides)));
+            args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-2",
+                ("currentSide", dice.CurrentValue)));
+        }
     }
 
     public void SetCurrentSide(EntityUid uid, int side, DiceComponent? die = null)
