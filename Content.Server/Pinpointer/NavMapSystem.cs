@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Station.Systems;
 using Content.Server.Warps;
 using Content.Shared.Database;
-using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
 using Content.Shared.Pinpointer;
 using Content.Shared.Tag;
