@@ -94,6 +94,9 @@
   id: HydroponicsToolSpade
   description: A small tool for digging and moving dirt.
   components:
+  - type: Tag
+    tags:
+    - BotanyShovel
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/spade.rsi
     state: icon
