@@ -51,5 +51,3 @@ pda-bound-user-interface-music-button-description = Play music on your PDA
 comp-pda-ui-unknown = Unknown
 
 comp-pda-ui-unassigned = Unassigned
-
-comp-pda-ui-copy = Copy
