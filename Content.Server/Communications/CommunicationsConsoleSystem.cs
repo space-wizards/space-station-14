@@ -35,7 +35,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-        private const int MaxMessageLength = 256;
+        private int MaxMessageLength => _cfg.GetCVar(CCVars.ChatMaxAnnounceMessageLength);
         private const int MaxMessageNewlines = 2;
         private const float UIUpdateInterval = 5.0f;
 
