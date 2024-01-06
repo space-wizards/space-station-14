@@ -121,6 +121,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
         if (turnstile.State == TurnstileState.Rotating)
         {
             // Check and see if we're still colliding with the admitted entity.
+
             var stillCollidingWithAdmitted = GetIsCollidingWithAdmitted(ent);
             if (!stillCollidingWithAdmitted)
             {
@@ -142,7 +143,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
     private bool GetIsCollidingWithAdmitted(Entity<TurnstileComponent, PreventCollideComponent?> ent)
     {
-        if (ent.Comp2 == null)
+        if (!Resolve(ent.Owner, ref ent.Comp2))
             return false;
 
         var turnstileAABB = EntityLookupSystem.GetWorldAABB(ent.Owner);
@@ -193,6 +194,9 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
     private void SetCollidable(Entity<TurnstileComponent, PhysicsComponent?> ent, bool collidable)
     {
+        if (!Resolve(ent.Owner, ref ent.Comp2))
+            return;
+
         PhysicsSystem.SetCanCollide(ent.Owner, collidable, body: ent.Comp2);
     }
 
