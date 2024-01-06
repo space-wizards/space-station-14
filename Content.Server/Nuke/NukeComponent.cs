@@ -174,13 +174,13 @@ namespace Content.Server.Nuke
         /// </summary>
         public bool PlayedAlertSound = false;
 
-        public IPlayingAudioStream? AlertAudioStream = default;
+        public EntityUid? AlertAudioStream = default;
 
         /// <summary>
         ///     The radius from the nuke for which there must be floor tiles for it to be anchorable.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("requiredFloorRadius")]
-        public float RequiredFloorRadius = 7;
+        public float RequiredFloorRadius = 5;
     }
 }

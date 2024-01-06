@@ -6,33 +6,52 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Instruments;
 
 [NetworkedComponent]
-[AutoGenerateComponentState(true)]
 [Access(typeof(SharedInstrumentSystem))]
 public abstract partial class SharedInstrumentComponent : Component
 {
-    [ViewVariables, AutoNetworkedField]
+    [ViewVariables]
     public bool Playing { get; set; }
 
-    [DataField("program"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("program"), ViewVariables(VVAccess.ReadWrite)]
     public byte InstrumentProgram { get; set; }
 
-    [DataField("bank"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("bank"), ViewVariables(VVAccess.ReadWrite)]
     public byte InstrumentBank { get; set; }
 
-    [DataField("allowPercussion"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("allowPercussion"), ViewVariables(VVAccess.ReadWrite)]
     public bool AllowPercussion { get; set; }
 
-    [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite)]
     public bool AllowProgramChange { get ; set; }
 
-    [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
     public bool RespectMidiLimits { get; set; } = true;
 
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? Master { get; set; } = null;
 
-    [ViewVariables, AutoNetworkedField]
+    [ViewVariables]
     public BitArray FilteredChannels { get; set; } = new(RobustMidiEvent.MaxChannels, true);
+}
+
+[Serializable, NetSerializable]
+public sealed class InstrumentComponentState : ComponentState
+{
+    public bool Playing;
+
+    public byte InstrumentProgram;
+
+    public byte InstrumentBank;
+
+    public bool AllowPercussion;
+
+    public bool AllowProgramChange;
+
+    public bool RespectMidiLimits;
+
+    public NetEntity? Master;
+
+    public BitArray FilteredChannels = default!;
 }
 
 

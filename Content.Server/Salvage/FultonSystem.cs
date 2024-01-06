@@ -5,6 +5,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Salvage;
 
+/// <summary>
+/// Transports attached entities to the linked beacon after a timer has elapsed.
+/// </summary>
 public sealed class FultonSystem : SharedFultonSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -66,7 +69,7 @@ public sealed class FultonSystem : SharedFultonSystem
             RaiseNetworkEvent(new FultonAnimationMessage()
             {
                 Entity = GetNetEntity(uid, metadata),
-                Coordinates = GetNetCoordinates(oldCoords, metadata),
+                Coordinates = GetNetCoordinates(oldCoords),
             });
         }
 

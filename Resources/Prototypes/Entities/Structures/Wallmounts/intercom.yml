@@ -50,8 +50,8 @@
     anchored: true
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-intercom
-    LayoutId: Intercom
+    boardName: wires-board-name-intercom
+    layoutId: Intercom
   - type: ActivatableUIRequiresPower
   - type: ActivatableUI
     key: enum.IntercomUiKey.Key
@@ -82,6 +82,8 @@
           - !type:PlaySoundBehavior
             sound:
               path: /Audio/Effects/metalbreak.ogg
+              params:
+                volume: -4
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:

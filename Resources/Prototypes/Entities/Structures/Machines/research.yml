@@ -8,6 +8,7 @@
     sprite: Structures/Machines/server.rsi
     layers:
       - state: server
+      - state: variant-research
       - state: server_o
         map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ResearchServer
@@ -24,7 +25,7 @@
   - type: ExtensionCableReceiver
   - type: WiresPanel
   - type: Wires
-    LayoutId: rndserver
+    layoutId: rndserver
   - type: WiresVisuals
   - type: Machine
     board: ResearchAndDevelopmentServerMachineCircuitboard

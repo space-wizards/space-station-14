@@ -12,7 +12,6 @@
     - type: Clothing
       sprite: Clothing/Shoes/Boots/magboots.rsi
     - type: Magboots
-      toggleAction: ActionToggleMagboots
     - type: ClothingSpeedModifier
       walkModifier: 0.85
       sprintModifier: 0.8
@@ -54,6 +53,21 @@
     - HighRiskItem
   - type: StaticPrice
     price: 750
+  - type: StealTarget
+    stealGroup: ClothingShoesBootsMagAdv
+
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagSci
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/magboots-science.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/magboots-science.rsi
+  - type: Magboots
+    toggleAction: ActionToggleMagbootsSci
+  - type: StaticPrice
+    price: 400
 
 - type: entity
   parent: ClothingShoesBootsMag
@@ -105,6 +119,7 @@
     maxIntensity: 20
   - type: Jetpack
     moleUsage: 0.00085
+  - type: CanMoveInAir
   - type: InputMover
     toParent: true
   - type: MovementSpeedModifier
@@ -117,8 +132,8 @@
 
 - type: entity
   id: ActionBaseToggleMagboots
-  name: action-name-magboot-toggle
-  description: action-description-magboot-toggle
+  name: Toggle Magboots
+  description: Toggles the magboots on and off.
   noSpawn: true
   components:
   - type: InstantAction
@@ -142,6 +157,15 @@
   - type: InstantAction
     icon: { sprite: Clothing/Shoes/Boots/magboots-advanced.rsi, state: icon }
     iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
+
+- type: entity
+  id: ActionToggleMagbootsSci
+  parent: ActionBaseToggleMagboots
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Shoes/Boots/magboots-science.rsi, state: icon }
+    iconOn: Clothing/Shoes/Boots/magboots-science.rsi/icon-on.png
 
 - type: entity
   id: ActionToggleMagbootsSyndie

@@ -9,7 +9,7 @@ namespace Content.Server.Friends.Systems;
 
 public sealed class PettableFriendSystem : EntitySystem
 {
-    [Dependency] private readonly FactionExceptionSystem _factionException = default!;
+    [Dependency] private readonly NpcFactionSystem _factionException = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
@@ -26,7 +26,7 @@ public sealed class PettableFriendSystem : EntitySystem
         if (args.Handled || !TryComp<FactionExceptionComponent>(uid, out var factionException))
             return;
 
-        if (_factionException.IsIgnored(factionException, user))
+        if (_factionException.IsIgnored(uid, user, factionException))
         {
             _popup.PopupEntity(Loc.GetString(comp.FailureString, ("target", uid)), user, user);
             return;
@@ -34,7 +34,7 @@ public sealed class PettableFriendSystem : EntitySystem
 
         // you have made a new friend :)
         _popup.PopupEntity(Loc.GetString(comp.SuccessString, ("target", uid)), user, user);
-        _factionException.IgnoreEntity(factionException, user);
+        _factionException.IgnoreEntity(uid, user, factionException);
         args.Handled = true;
     }
 
@@ -45,6 +45,6 @@ public sealed class PettableFriendSystem : EntitySystem
             return;
 
         var targetComp = AddComp<FactionExceptionComponent>(args.Target);
-        _factionException.IgnoreEntities(targetComp, comp.Ignored);
+        _factionException.IgnoreEntities(args.Target, comp.Ignored, targetComp);
     }
 }

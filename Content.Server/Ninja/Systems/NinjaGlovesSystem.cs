@@ -1,16 +1,10 @@
 using Content.Server.Communications;
-using Content.Server.DoAfter;
 using Content.Server.Mind;
-using Content.Server.Ninja.Systems;
-using Content.Server.Power.Components;
-using Content.Server.Roles;
+using Content.Server.Ninja.Events;
+using Content.Server.Objectives.Components;
 using Content.Shared.Communications;
-using Content.Shared.DoAfter;
-using Content.Shared.Interaction.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
-using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.Toggleable;
 
@@ -22,11 +16,10 @@ namespace Content.Server.Ninja.Systems;
 public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
     [Dependency] private readonly EmagProviderSystem _emagProvider = default!;
-    [Dependency] private readonly SharedBatteryDrainerSystem _drainer = default!;
-    [Dependency] private readonly SharedStunProviderSystem _stunProvider = default!;
-    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly CommsHackerSystem _commsHacker = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedStunProviderSystem _stunProvider = default!;
+    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
 
     public override void Initialize()
     {
@@ -73,6 +66,10 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 
     private void EnableGloves(EntityUid uid, NinjaGlovesComponent comp, EntityUid user, SpaceNinjaComponent ninja)
     {
+        // can't use abilities if suit is not equipped, this is checked elsewhere but just making sure to satisfy nullability
+        if (ninja.Suit == null)
+            return;
+
         comp.User = user;
         Dirty(uid, comp);
         _ninja.AssignGloves(user, uid, ninja);
@@ -82,8 +79,8 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         _stunProvider.SetNoPowerPopup(user, "ninja-no-power", stun);
         if (_ninja.GetNinjaBattery(user, out var battery, out var _))
         {
-            _drainer.SetBattery(user, battery, drainer);
-            _stunProvider.SetBattery(user, battery, stun);
+            var ev = new NinjaBatteryChangedEvent(battery.Value, ninja.Suit.Value);
+            RaiseLocalEvent(user, ref ev);
         }
 
         var emag = EnsureComp<EmagProviderComponent>(user);
@@ -91,7 +88,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 
         EnsureComp<ResearchStealerComponent>(user);
         // prevent calling in multiple threats by toggling gloves after
-        if (_mind.TryGetRole<NinjaRoleComponent>(user, out var role) && !role.CalledInThreat)
+        if (_mind.TryGetObjectiveComp<TerrorConditionComponent>(user, out var obj) && !obj.CalledInThreat)
         {
             var hacker = EnsureComp<CommsHackerComponent>(user);
             var rule = _ninja.NinjaRule(user);

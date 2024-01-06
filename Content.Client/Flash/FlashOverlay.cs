@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.State;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.Graphics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;

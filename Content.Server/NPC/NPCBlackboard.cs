@@ -320,6 +320,16 @@ public sealed partial class NPCBlackboard : IEnumerable<KeyValuePair<string, obj
     public const string VisionRadius = "VisionRadius";
     public const string UtilityTarget = "UtilityTarget";
 
+    /// <summary>
+    /// A configurable "order" enum that can be given to an NPC from an external source.
+    /// </summary>
+    public const string CurrentOrders = "CurrentOrders";
+
+    /// <summary>
+    /// A configurable target that's ordered by external sources.
+    /// </summary>
+    public const string CurrentOrderedTarget = "CurrentOrderedTarget";
+
     public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
     {
         return _blackboard.GetEnumerator();

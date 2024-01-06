@@ -36,6 +36,10 @@ marking-ArachnidAppendagesShort = Appendages (Short)
 marking-ArachnidAppendagesShort-short_primary = Appendage
 marking-ArachnidAppendagesShort-short_secondary = Stripes
 
+marking-ArachnidAppendagesFreaky = Appendages (Freaky long)
+marking-ArachnidAppendagesFreaky-freaky_primary = Appendage
+marking-ArachnidAppendagesFreaky-freaky_secondary = Stripes
+
 marking-ArachnidTorsoStripes = Stripes
 marking-ArachnidTorsoStripes-stripes = Design
 

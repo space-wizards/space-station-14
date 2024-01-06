@@ -31,9 +31,9 @@ public sealed class VehicleSystem : SharedVehicleSystem
     private void OnRiderShutdown(EntityUid uid, RiderComponent component, ComponentShutdown args)
     {
         // reset the riders eye centering.
-        if (TryComp(uid, out EyeComponent? eyeComp) && eyeComp.Target == component.Vehicle)
+        if (TryComp(uid, out EyeComponent? eyeComp))
         {
-            _eye.SetTarget(uid, eyeComp.Target, eyeComp);
+            _eye.SetTarget(uid, null, eyeComp);
         }
     }
 

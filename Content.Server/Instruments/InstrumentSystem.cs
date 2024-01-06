@@ -5,18 +5,17 @@ using Content.Server.Stunnable;
 using Content.Shared.Administration;
 using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
-using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Instruments;
 
@@ -55,7 +54,24 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         SubscribeLocalEvent<InstrumentComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
         SubscribeLocalEvent<InstrumentComponent, InstrumentBandRequestBuiMessage>(OnBoundUIRequestBands);
 
+        SubscribeLocalEvent<InstrumentComponent, ComponentGetState>(OnStrumentGetState);
+
         _conHost.RegisterCommand("addtoband", AddToBandCommand);
+    }
+
+    private void OnStrumentGetState(EntityUid uid, InstrumentComponent component, ref ComponentGetState args)
+    {
+        args.State = new InstrumentComponentState()
+        {
+            Playing = component.Playing,
+            InstrumentProgram = component.InstrumentProgram,
+            InstrumentBank = component.InstrumentBank,
+            AllowPercussion = component.AllowPercussion,
+            AllowProgramChange = component.AllowProgramChange,
+            RespectMidiLimits = component.RespectMidiLimits,
+            Master = GetNetEntity(component.Master),
+            FilteredChannels = component.FilteredChannels
+        };
     }
 
     [AdminCommand(AdminFlags.Fun)]
@@ -369,7 +385,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
                 var nearby = GetBands(entity);
                 _bui.TrySendUiMessage(entity, request.UiKey, new InstrumentBandResponseBuiMessage(nearby),
-                    (IPlayerSession)request.Session);
+                    request.Session);
             }
 
             _bandRequestQueue.Clear();
@@ -417,9 +433,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
                 // Just in case
                 Clean(uid);
-
-                if (instrument.UserInterface is not null)
-                    _bui.CloseAll(instrument.UserInterface);
+                _bui.TryCloseAll(uid, InstrumentUiKey.Key);
             }
 
             instrument.Timer += frameTime;
@@ -433,12 +447,22 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         }
     }
 
-    public void ToggleInstrumentUi(EntityUid uid, IPlayerSession session, InstrumentComponent? component = null)
+    public void ToggleInstrumentUi(EntityUid uid, ICommonSession session, InstrumentComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
         if (_bui.TryGetUi(uid, InstrumentUiKey.Key, out var bui))
             _bui.ToggleUi(bui, session);
+    }
+
+    public override bool ResolveInstrument(EntityUid uid, ref SharedInstrumentComponent? component)
+    {
+        if (component is not null)
+            return true;
+
+        TryComp<InstrumentComponent>(uid, out var localComp);
+        component = localComp;
+        return component != null;
     }
 }

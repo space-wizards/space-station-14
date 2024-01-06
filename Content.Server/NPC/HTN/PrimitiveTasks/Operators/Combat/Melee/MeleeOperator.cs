@@ -68,6 +68,20 @@ public sealed partial class MeleeOperator : HTNOperator, IHtnConditionalShutdown
         blackboard.Remove<EntityUid>(TargetKey);
     }
 
+    public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
+    {
+        base.TaskShutdown(blackboard, status);
+
+        ConditionalShutdown(blackboard);
+    }
+
+    public override void PlanShutdown(NPCBlackboard blackboard)
+    {
+        base.PlanShutdown(blackboard);
+        
+        ConditionalShutdown(blackboard);
+    }
+
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         base.Update(blackboard, frameTime);

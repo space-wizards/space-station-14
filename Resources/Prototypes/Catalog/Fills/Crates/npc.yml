@@ -31,6 +31,9 @@
       - id: MobCatCaracal
         prob: 0.5
         orGroup: MobCat
+      - id: MobCatKitten
+        prob: 0.25
+        orGroup: MobCat
       - id: MobBingus
         prob: 0.005
         orGroup: MobCat
@@ -75,6 +78,14 @@
       - id: MobCorgi
 
 - type: entity
+  id: CrateNPCPuppyCorgi
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+    - id: MobCorgiPuppy
+
+- type: entity
   id: CrateNPCCow
   parent: CrateLivestock
   components:
@@ -114,6 +125,14 @@
   - type: StorageFill
     contents:
       - id: MonkeyCubeBox
+
+- type: entity
+  id: CrateNPCKoboldCube
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: KoboldCubeBox
 
 - type: entity
   id: CrateNPCMouse
@@ -192,3 +211,12 @@
   - type: StorageFill
     contents:
       - id: MobKangaroo
+
+- type: entity
+  id: CrateNPCMothroach
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobMothroach
+        amount: 4

@@ -39,7 +39,7 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
-  
+
 - type: entity
   parent: BaseVehicle
   id: BaseVehicleRideable
@@ -72,7 +72,7 @@
   - type: ItemSlots
     slots:
       key_slot: #this slot name is important
-        name: Keys
+        name: vehicle-slot-component-slot-name-keys
         whitelist:
           requireAll: true
           tags:
@@ -135,7 +135,7 @@
   - type: ItemSlots
     slots:
       key_slot:
-        name: Keys
+        name: vehicle-slot-component-slot-name-keys
         whitelist:
           requireAll: true
           tags:
@@ -146,7 +146,7 @@
           params:
             volume: -3
       trashbag_slot:
-        name: Bag
+        name: janitorial-trolley-slot-component-slot-name-trashbag
         whitelist:
           tags:
             - TrashBag
@@ -198,14 +198,14 @@
     baseSprintSpeed: 6
   - type: Armor
     modifiers:
-      coeffecients:
+      coefficients:
         Blunt: 0.8
         Slash: 0.6
         Piercing: 0.85
   - type: ItemSlots
     slots:
       key_slot:
-        name: Keys
+        name: vehicle-slot-component-slot-name-keys
         whitelist:
           requireAll: true
           tags:
@@ -215,6 +215,8 @@
           path: /Audio/Effects/Vehicle/vehiclestartup.ogg
           params:
             volume: -3
+  - type: StealTarget
+    stealGroup: VehicleSecway
 
 - type: entity
   parent: BaseVehicleRideable
@@ -253,7 +255,7 @@
   - type: ItemSlots
     slots:
       key_slot:
-        name: Keys
+        name: vehicle-slot-component-slot-name-keys
         whitelist:
           requireAll: true
           tags:
@@ -289,14 +291,14 @@
       maxBuckleDistance: 1
     - type: Armor
       modifiers:
-        coeffecients:
+        coefficients:
           Blunt: 0.8
           Slash: 0.6
           Piercing: 0.85
     - type: ItemSlots
       slots:
         key_slot:
-          name: Keys
+          name: vehicle-slot-component-slot-name-keys
           whitelist:
             requireAll: true
             tags:
@@ -342,7 +344,7 @@
     - type: ItemSlots
       slots:
         key_slot:
-          name: Keys
+          name: vehicle-slot-component-slot-name-keys
           whitelist:
             requireAll: true
             tags:
@@ -451,6 +453,8 @@
             - MobMask
           layer:
             - TableLayer
+    - type: StaticPrice
+      price: 70
 
 - type: entity
   parent: VehicleWheelchair

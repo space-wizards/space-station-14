@@ -4,7 +4,6 @@ using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -27,7 +26,7 @@ namespace Content.Server.Body.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
 
             EntityUid entity;
             EntityUid hand;
@@ -118,7 +117,7 @@ namespace Content.Server.Body.Commands
                 }
             }
 
-            if (!_entManager.TryGetComponent(entity, out BodyComponent? body) || body.Root == null)
+            if (!_entManager.TryGetComponent(entity, out BodyComponent? body) || body.RootContainer.ContainedEntity == null)
             {
                 var text = $"You have no body{(_random.Prob(0.2f) ? " and you must scream." : ".")}";
 
@@ -140,7 +139,7 @@ namespace Content.Server.Body.Commands
 
             var slotId = part.GetHashCode().ToString();
 
-            if (!bodySystem.TryCreatePartSlotAndAttach(attachAt.Id, slotId, hand, attachAt.Component, part))
+            if (!bodySystem.TryCreatePartSlotAndAttach(attachAt.Id, slotId, hand, BodyPartType.Hand,attachAt.Component, part))
             {
                 shell.WriteError($"Couldn't create a slot with id {slotId} on entity {_entManager.ToPrettyString(entity)}");
                 return;

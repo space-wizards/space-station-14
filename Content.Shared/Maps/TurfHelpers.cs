@@ -1,11 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Decals;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Maps
@@ -90,30 +87,6 @@ namespace Content.Shared.Maps
         }
 
         /// <summary>
-        ///     Returns a weighted pick of a tile variant.
-        /// </summary>
-        public static byte PickVariant(this ContentTileDefinition tile, IRobustRandom? random = null)
-        {
-            IoCManager.Resolve(ref random);
-            var variants = tile.PlacementVariants;
-
-            var sum = variants.Sum();
-            var accumulated = 0f;
-            var rand = random.NextFloat() * sum;
-
-            for (byte i = 0; i < variants.Length; ++i)
-            {
-                accumulated += variants[i];
-
-                if (accumulated >= rand)
-                    return i;
-            }
-
-            // Shouldn't happen
-            throw new InvalidOperationException($"Invalid weighted variantize tile pick for {tile.ID}!");
-        }
-
-        /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -175,7 +148,7 @@ namespace Content.Shared.Maps
 
             if (map.TryGetGrid(turf.GridUid, out var tileGrid))
             {
-                var gridRot = entManager.GetComponent<TransformComponent>(tileGrid.Owner).WorldRotation;
+                var gridRot = entManager.GetComponent<TransformComponent>(turf.GridUid).WorldRotation;
 
                 // This is scaled to 90 % so it doesn't encompass walls on other tiles.
                 var tileBox = Box2.UnitCentered.Scale(0.9f);

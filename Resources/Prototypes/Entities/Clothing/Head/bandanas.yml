@@ -32,6 +32,7 @@
     sprite: Clothing/Head/Bandanas/botany.rsi
   - type: Tag
     tags:
+    - ClothMade
     - HamsterWearable
     - WhitelistChameleon
 

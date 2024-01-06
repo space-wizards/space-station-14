@@ -19,8 +19,8 @@ public sealed partial class SignalTimerComponent : Component
     /// <summary>
     ///     The label, used for TextScreen visuals currently.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string Label = "";
+    [DataField("label"), ViewVariables(VVAccess.ReadWrite)]
+    public string Label = string.Empty;
 
     /// <summary>
     ///     The port that gets signaled when the timer triggers.

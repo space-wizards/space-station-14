@@ -47,7 +47,7 @@
 
 - type: entity
   id: ActionStethoscope
-  name: stethoscope-verb
+  name: Listen with stethoscope
   noSpawn: true
   components:
   - type: EntityTargetAction

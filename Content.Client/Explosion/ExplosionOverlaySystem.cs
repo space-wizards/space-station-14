@@ -1,10 +1,10 @@
 using Content.Shared.Explosion;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
+using Robust.Shared.Graphics.RSI;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Explosion;
 
@@ -17,11 +17,8 @@ public sealed class ExplosionOverlaySystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
-
-    /// <summary>
-    ///     For how many seconds should an explosion stay on-screen once it has finished expanding?
-    /// </summary>
-    public float ExplosionPersistence = 0.3f;
+    [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly IMapManager _mapMan = default!;
 
     public override void Initialize()
     {
@@ -55,7 +52,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
     private void OnCompRemove(EntityUid uid, ExplosionVisualsComponent component, ComponentRemove args)
     {
-        if (TryComp(uid, out ExplosionVisualsTexturesComponent? textures))
+        if (TryComp(uid, out ExplosionVisualsTexturesComponent? textures) && !Deleted(textures.LightEntity))
             QueueDel(textures.LightEntity);
     }
 
@@ -69,20 +66,27 @@ public sealed class ExplosionOverlaySystem : EntitySystem
             return;
         }
 
-        // spawn in a client-side light source at the epicenter
-        var lightEntity = Spawn("ExplosionLight", component.Epicenter);
-        var light = EnsureComp<PointLightComponent>(lightEntity);
-        light.Energy = light.Radius = component.Intensity.Count;
-        light.Color = type.LightColor;
+        // Map may have been deleted.
+        if (_mapMan.MapExists(component.Epicenter.MapId))
+        {
+            // spawn in a client-side light source at the epicenter
+            var lightEntity = Spawn("ExplosionLight", component.Epicenter);
+            var light = _lights.EnsureLight(lightEntity);
 
-        textures.LightEntity = lightEntity;
+            _lights.SetRadius(lightEntity, component.Intensity.Count, light);
+            _lights.SetEnergy(lightEntity, component.Intensity.Count, light);
+            _lights.SetColor(lightEntity, type.LightColor, light);
+            textures.LightEntity = lightEntity;
+        }
+
+
         textures.FireColor = type.FireColor;
         textures.IntensityPerState = type.IntensityPerState;
 
         var fireRsi = _resCache.GetResource<RSIResource>(type.TexturePath).RSI;
         foreach (var state in fireRsi)
         {
-            textures.FireFrames.Add(state.GetFrames(RSI.State.Direction.South));
+            textures.FireFrames.Add(state.GetFrames(RsiDirection.South));
             if (textures.FireFrames.Count == type.FireStates)
                 break;
         }

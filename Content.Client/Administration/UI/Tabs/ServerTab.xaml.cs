@@ -18,7 +18,6 @@ namespace Content.Client.Administration.UI.Tabs
 
             _config.OnValueChanged(CCVars.OocEnabled, OocEnabledChanged, true);
             _config.OnValueChanged(CCVars.LoocEnabled, LoocEnabledChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerEnabled, BunkerEnabledChanged, true);
         }
 
         private void OocEnabledChanged(bool value)
@@ -31,11 +30,6 @@ namespace Content.Client.Administration.UI.Tabs
             SetLoocButton.Pressed = value;
         }
 
-        private void BunkerEnabledChanged(bool value)
-        {
-            SetPanicbunkerButton.Pressed = value;
-        }
-
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -44,7 +38,6 @@ namespace Content.Client.Administration.UI.Tabs
             {
                 _config.UnsubValueChanged(CCVars.OocEnabled, OocEnabledChanged);
                 _config.UnsubValueChanged(CCVars.LoocEnabled, LoocEnabledChanged);
-                _config.UnsubValueChanged(CCVars.PanicBunkerEnabled, BunkerEnabledChanged);
             }
         }
     }

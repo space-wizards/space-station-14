@@ -6,6 +6,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -43,6 +45,8 @@ public abstract partial class SharedFultonSystem : EntitySystem
         SubscribeLocalEvent<FultonedComponent, EntGotInsertedIntoContainerMessage>(OnFultonContainerInserted);
 
         SubscribeLocalEvent<FultonComponent, AfterInteractEvent>(OnFultonInteract);
+
+        SubscribeLocalEvent<FultonComponent, StackSplitEvent>(OnFultonSplit);
     }
 
     private void OnFultonContainerInserted(EntityUid uid, FultonedComponent component, EntGotInsertedIntoContainerMessage args)
@@ -60,6 +64,9 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
     private void OnFultonedGetVerbs(EntityUid uid, FultonedComponent component, GetVerbsEvent<InteractionVerb> args)
     {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
         args.Verbs.Add(new InteractionVerb()
         {
             Text = Loc.GetString("fulton-remove"),
@@ -156,6 +163,13 @@ public abstract partial class SharedFultonSystem : EntitySystem
                 Broadcast = true,
                 NeedHand = true,
             });
+    }
+
+    private void OnFultonSplit(EntityUid uid, FultonComponent component, ref StackSplitEvent args)
+    {
+        var newFulton = EnsureComp<FultonComponent>(args.NewId);
+        newFulton.Beacon = component.Beacon;
+        Dirty(args.NewId, newFulton);
     }
 
     protected virtual void UpdateAppearance(EntityUid uid, FultonedComponent fultoned)

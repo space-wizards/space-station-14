@@ -1,3 +1,4 @@
+using Content.Server.Ninja.Events;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.DoAfter;
@@ -6,6 +7,7 @@ using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -24,6 +26,7 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         base.Initialize();
 
         SubscribeLocalEvent<BatteryDrainerComponent, BeforeInteractHandEvent>(OnBeforeInteractHand);
+        SubscribeLocalEvent<BatteryDrainerComponent, NinjaBatteryChangedEvent>(OnBatteryChanged);
     }
 
     /// <summary>
@@ -48,12 +51,18 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         var doAfterArgs = new DoAfterArgs(EntityManager, uid, comp.DrainTime, new DrainDoAfterEvent(), target: target, eventTarget: uid)
         {
             BreakOnUserMove = true,
+            BreakOnWeightlessMove = true, // prevent a ninja on a pod remotely draining it
             MovementThreshold = 0.5f,
             CancelDuplicate = false,
             AttemptFrequency = AttemptFrequency.StartAndEnd
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
+    }
+
+    private void OnBatteryChanged(EntityUid uid, BatteryDrainerComponent comp, ref NinjaBatteryChangedEvent args)
+    {
+        SetBattery(uid, args.Battery, comp);
     }
 
     /// <inheritdoc/>

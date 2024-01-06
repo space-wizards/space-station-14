@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: ActionSmite
-  name: action-name-spell-smite
-  description: action-description-spell-smite
+  name: Smite
+  description: Instantly gibs a target.
   noSpawn: true
   components:
   - type: EntityTargetAction

@@ -12,8 +12,8 @@ public sealed class HandheldGpsSystem : EntitySystem
         SubscribeLocalEvent<HandheldGPSComponent, ItemStatusCollectMessage>(OnItemStatus);
     }
 
-    private void OnItemStatus(EntityUid uid, HandheldGPSComponent component, ItemStatusCollectMessage args)
+    private void OnItemStatus(Entity<HandheldGPSComponent> ent, ref ItemStatusCollectMessage args)
     {
-        args.Controls.Add(new HandheldGpsStatusControl(component));
+        args.Controls.Add(new HandheldGpsStatusControl(ent));
     }
 }

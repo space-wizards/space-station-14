@@ -11,12 +11,14 @@
           state: icon-super
     - type: RandomSpawner
       rarePrototypes:
+        - ClothingUniformJumpsuitFamilyGuy
         - CigarGold
         - ClothingNeckCloakHerald
         - ClothingHeadHelmetTemplar
         - ClothingNeckCloakTrans
         - ClothingNeckCloakAdmin
         - ClothingNeckCloakMoth
+        - ClothingNeckCloakVoid
         - ClothingNeckCloakGoliathCloak
         - ToySkeleton
         - Basketball
@@ -95,17 +97,23 @@
         - ClothingNeckTieRed
         - ClothingOuterCoatGentle
         - ClothingOuterCoatJensen
+        - ClothingEyesGlassesJensen
         - ClothingOuterCoatLab
         - ClothingOuterCoatPirate
         - ClothingOuterHoodieBlack
         - ClothingOuterHoodieGrey
+        - ClothingOuterFlannelRed
+        - ClothingOuterFlannelBlue
+        - ClothingOuterFlannelGreen
         - ClothingOuterVestHazard
         - ClothingShoesBootsJack
+        - ClothingShoesHighheelBoots
         - ClothingShoesBootsLaceup
         - ClothingShoesLeather
         - ClothingShoesBootsSalvage
         - ClothingShoesBootsWork
         - ClothingShoesTourist
+        - ClothingUniformJumpsuitLoungewear
       chance: 0.6
       offset: 0.0
 
@@ -135,7 +143,10 @@
         - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - ToolboxEmergencyFilled
+        - ToolboxArtisticFilled
         - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
+        - EmergencyFunnyOxygenTankFilled
         - ToolboxElectricalFilled
         - ToolboxMechanicalFilled
         - ClothingBeltUtility
@@ -179,6 +190,7 @@
         - CableHVStack10
         - CableMVStack10
         - CableApcStack10
+        - PetCarrier
       chance: 0.6
       offset: 0.0
 
@@ -207,6 +219,8 @@
         - FlashlightLantern
         - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
+        - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
         - Lighter
         - Matchbox
         - Crowbar
