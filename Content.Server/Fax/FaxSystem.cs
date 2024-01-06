@@ -352,19 +352,29 @@ public sealed class FaxSystem : EntitySystem
             {
 
                 if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "Hamster"))
+                {
                     _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingHamlet);
-                else if(_tagSystem.HasTag(component.PaperSlot.Item.Value, "MothRoach"))
+                }
+
+                if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "MothRoach"))
                 {
                     _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMothroach);
+
                 }
-                else
+
+                if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "Mouse"))
+                {
                     _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMouse);
+                }
             }
             else
                 _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
         }
-        else if (component.PrintingTimeRemaining > 0)
+
+        if (component.PrintingTimeRemaining > 0)
+        {
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
+        }
         else
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Normal);
     }
