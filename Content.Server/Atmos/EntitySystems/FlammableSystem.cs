@@ -107,6 +107,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!EntityManager.TryGetComponent(otherEnt, out FlammableComponent? flammable))
                 return;
 
+            //Only ignite when the colliding fixture is projectile or ignition.
             if (args.OurFixtureId != component.FixtureId && args.OurFixtureId != SharedProjectileSystem.ProjectileFixture)
             {
                 return;
