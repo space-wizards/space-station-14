@@ -131,28 +131,38 @@
     - Trigger
 
 - type: entity
-  id: ShuttleGunProtoKineticBallistic
+  id: ShuttleGunKineticCannon
   parent: ShuttleGunBase
-  name: PTK-800 Matter Dematerializer
-  suffix: Ballistic Test
+  name: PTK-800 "Matter Dematerializer"
   description: A powerful shuttle drill that allows for efficient asteroid digging.
   components:
-  - type: Gun
-    fireRate: 8
+  - type: Sprite
+    sprite: Structures/Shuttles/Guns/kinetic_cannon.rsi
+    layers:
+    - state: base
+  - type: Gun    
+    projectileSpeed: 20
+    fireRate: 3
     selectedMode: SemiAuto
+    angleDecay: 45
+    minAngle: 1
+    maxAngle: 6
     availableModes:
-      - SemiAuto
+    - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - ShellShotgun
-    proto: ShellShotgun
-    capacity: 1
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 2
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+      params:
+        pitch: 0.5
+  - type: BasicEntityAmmoProvider
+    proto: BulletKinetic
+    capacity: 10
+    count: 10
+  - type: DeviceLinkSink
+    ports:
+    - Toggle
+    - On
+    - Off
