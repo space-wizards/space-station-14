@@ -42,8 +42,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
   - type: ClothingSpeedModifier
-    walkModifier: 0.5
-    sprintModifier: 0.5
+    walkModifier: 0.7
+    sprintModifier: 0.7
   - type: HeldSpeedModifier
   - type: TemperatureProtection
     coefficient: 0.5

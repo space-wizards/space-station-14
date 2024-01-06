@@ -17,11 +17,13 @@ public abstract class SharedChargesSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        args.PushMarkup(Loc.GetString("limited-charges-charges-remaining", ("charges", comp.Charges)));
-        if (comp.Charges == comp.MaxCharges)
+        using (args.PushGroup(nameof(LimitedChargesComponent)))
         {
-            args.PushMarkup(Loc.GetString("limited-charges-max-charges"));
-            return;
+            args.PushMarkup(Loc.GetString("limited-charges-charges-remaining", ("charges", comp.Charges)));
+            if (comp.Charges == comp.MaxCharges)
+            {
+                args.PushMarkup(Loc.GetString("limited-charges-max-charges"));
+            }
         }
     }
 

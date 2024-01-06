@@ -25,7 +25,7 @@ namespace Content.Server.Stunnable.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<BatteryComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, SolutionContainerChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
             SubscribeLocalEvent<StunbatonComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
@@ -47,16 +47,12 @@ namespace Content.Server.Stunnable.Systems
             }
         }
 
-        private void OnExamined(Entity<BatteryComponent> entity, ref ExaminedEvent args)
+        private void OnExamined(Entity<StunbatonComponent> entity, ref ExaminedEvent args)
         {
             var onMsg = _itemToggle.IsActivated(entity.Owner)
             ? Loc.GetString("comp-stunbaton-examined-on")
             : Loc.GetString("comp-stunbaton-examined-off");
             args.PushMarkup(onMsg);
-
-            var chargeMessage = Loc.GetString("stunbaton-component-on-examine-charge",
-                ("charge", (int) (entity.Comp.CurrentCharge / entity.Comp.MaxCharge * 100)));
-            args.PushMarkup(chargeMessage);
         }
 
         private void ToggleDone(Entity<StunbatonComponent> entity, ref ItemToggledEvent args)
