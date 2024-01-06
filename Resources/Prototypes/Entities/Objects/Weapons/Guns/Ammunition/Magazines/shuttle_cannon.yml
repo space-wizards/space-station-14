@@ -1,12 +1,12 @@
 - type: entity
-  id: BaseMagazineShuttleCannon
-  name: ammunition pack for the shuttle cannon
+  id: BaseMagazineGrenade
+  name: grenade cartridge
   parent: BaseItem
   abstract: true
   components:
   - type: Tag
     tags:
-    - MagazineShuttleCannon
+    - MagazineGrenade
   - type: BallisticAmmoProvider
     mayTransfer: true
     whitelist:
@@ -14,49 +14,61 @@
         - Grenade
     capacity: 3
     soundRack:
-      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+      path: /Audio/Weapons/Guns/Bolt/lmg_bolt_closed.ogg
   - type: Item
-    size: Small
+    size: Large
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ShuttleGuns/grenade_cartridge.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
+    - state: mag-3
       map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
     magState: mag
-    steps: 2
+    steps: 4
     zeroVisible: false
   - type: Appearance
 
 - type: entity
   id: MagazineShuttleCannonFrag
-  name: Explosive shuttle ammunition pack
-  parent: BaseMagazineShuttleCannon
+  name: frag grenade cartridge
+  parent: BaseMagazineGrenade
   components:
   - type: BallisticAmmoProvider
     proto: GrenadeFrag
-  - type: Sprite
-    layers:
-    - state: slug
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineShuttleCannonEMP
-  name: EMP shuttle ammunition pack #stupid naming
-  parent: BaseMagazineShuttleCannon
+  name: EMP grenade cartridge
+  parent: BaseMagazineGrenade
   components:
   - type: BallisticAmmoProvider
     proto: GrenadeEMP
-  - type: Sprite
-    layers:
-    - state: slug
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineShuttleCannonFlash
+  name: flash grenade cartridge
+  parent: BaseMagazineGrenade
+  components:
+  - type: BallisticAmmoProvider
+    proto: GrenadeFlash
+
+- type: entity
+  id: MagazineShuttleCannonBlast
+  name: blast grenade cartridge
+  parent: BaseMagazineGrenade
+  components:
+  - type: BallisticAmmoProvider
+    proto: GrenadeBlast
+
+- type: entity
+  id: MagazineShuttleCannonBaton
+  name: baton grenade cartridge
+  parent: BaseMagazineGrenade
+  components:
+  - type: BallisticAmmoProvider
+    proto: GrenadeBaton

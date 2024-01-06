@@ -157,7 +157,7 @@
   id: ShuttleGunNukeCannon
   parent: ShuttleGunBase
   name: SYND-210EX "Dust"
-  description: Dust and death are all that will remain.
+  description: A stationary rocket launcher. Can be loaded with various grenades.
   components:
   - type: Gun
     fireRate: 1
@@ -173,11 +173,11 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineShuttleCannonExplosive
+        startingItem: MagazineShuttleCannonFrag
         priority: 2
         whitelist:
           tags:
-          - MagazineShuttleCannon
+          - MagazineGrenade
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
         

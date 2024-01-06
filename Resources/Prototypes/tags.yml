@@ -764,7 +764,7 @@
   id: MagazinePistolSubMachineGun
 
 - type: Tag
-  id: MagazineShuttleCannon
+  id: MagazineGrenade
 
 - type: Tag
   id: MailingUnitElectronics
