@@ -35,7 +35,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
         // TODO add doafter once the freeze is lifted
         args.Handled = true;
 
-        if (component.CanRetarget && !component.IsActive || TryComp<NavMapBeaconComponent>(args.Target, out var nukeComponent))
+        if (component.CanRetarget && !component.IsActive)
         {
             component.Target = args.Target;
         }

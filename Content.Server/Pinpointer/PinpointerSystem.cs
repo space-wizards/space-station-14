@@ -51,7 +51,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     {
         TogglePinpointer(uid, component);
 
-        if (!component.CanRetarget && component.StoredTargets.Count < component.Components.Count)
+        if (component.StoredTargets.Count < component.Components.Count)
             LocateTarget(uid, component);
     }
 
@@ -172,8 +172,12 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                     : Loc.GetString("targeting-pinpointer-succeeded", ("target", pinpointer.TargetName)), user.Value, user.Value);
         }
 
-        if (pinpointer.IsActive)
-            UpdateDirectionToTarget(uid, pinpointer);
+        if (!pinpointer.IsActive)
+        {
+            TogglePinpointer(uid, pinpointer);
+        }
+
+        UpdateDirectionToTarget(uid, pinpointer);
     }
 
     /// <summary>
