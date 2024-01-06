@@ -15,13 +15,13 @@ public sealed partial class PlantAnalyzerComponent : Component
     public float ScanDelay = 0.8f;
 
     /// <summary>
-    ///     Sound played on scanning begin
+    ///     Sound played on scanning begin.
     /// </summary>
     [DataField("scanningBeginSound")]
     public SoundSpecifier? ScanningBeginSound;
 
     /// <summary>
-    ///     Sound played on scanning end
+    ///     Sound played on scanning end.
     /// </summary>
     [DataField("scanningEndSound")]
     public SoundSpecifier? ScanningEndSound;
