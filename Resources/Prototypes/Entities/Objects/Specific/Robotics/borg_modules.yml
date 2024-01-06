@@ -248,6 +248,7 @@
     - SheetSteelLingering0
     - SheetGlassLingering0
     - PartRodMetalLingering0
+    - FloorTileItemSteelLingering0
 
 - type: entity
   id: BorgModuleRCD

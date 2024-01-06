@@ -748,7 +748,9 @@
       whitelist:
         tags:
           - Sheet
-
+    - type: StealTarget
+      stealGroup: AmmoTechFabCircuitboard
+      
 - type: entity
   id: MedicalTechFab
   parent: BaseLathe
@@ -817,7 +819,9 @@
       - SyringeCryostasis
   - type: Machine
     board: MedicalTechFabCircuitboard
-
+  - type: StealTarget
+    stealGroup: MedicalTechFabCircuitboard
+    
 - type: entity
   parent: BaseLathe
   id: UniformPrinter
@@ -988,9 +992,7 @@
     - type: Machine
       board: OreProcessorMachineCircuitboard
     - type: MaterialStorage
-      dropOnDeconstruct: false #should drop ores instead of ingots/sheets
       ignoreColor: true
-      canEjectStoredMaterials: false
       whitelist:
         tags:
           - Ore
