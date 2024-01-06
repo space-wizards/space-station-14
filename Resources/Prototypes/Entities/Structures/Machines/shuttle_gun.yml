@@ -36,6 +36,7 @@
   - type: DeviceLinkSink
     ports:
     - Trigger
+    - Toggle
     - On
     - Off
   - type: GunSignalControl
@@ -119,3 +120,20 @@
     proto: BulletKinetic
     capacity: 1
     count: 1
+
+- type: entity
+  parent: WeaponMinigun
+  id: WeaponMinigunS
+  suffix: Device
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+    - On
+    - Off
+  - type: GunSignalControl

@@ -34,13 +34,17 @@ public sealed partial class GunSignalControlSystem : EntitySystem
         {
             Fire(gunControl);
         }
+        if (args.Port == gunControl.Comp.TogglePort)
+        {
+            gunControl.Comp.Enabled = !gunControl.Comp.Enabled;
+        }
         if (args.Port == gunControl.Comp.OnPort)
         {
-            SwitchOn(gunControl);
+            gunControl.Comp.Enabled = true;
         }
         if (args.Port == gunControl.Comp.OffPort)
         {
-            SwitchOff(gunControl);
+            gunControl.Comp.Enabled = false;
         }
     }
     private void Fire(EntityUid uid)
@@ -50,16 +54,6 @@ public sealed partial class GunSignalControlSystem : EntitySystem
 
         var targetPos = new EntityCoordinates(uid, new Vector2(0, -1));
         _gun.AttemptShoot(null, uid, gun, targetPos, false);
-    }
-
-    private void SwitchOn(Entity<GunSignalControlComponent> gunControl)
-    {
-        gunControl.Comp.Enabled = true;
-    }
-
-    private void SwitchOff(Entity<GunSignalControlComponent> gunControl)
-    {
-        gunControl.Comp.Enabled = false;
     }
 
     public override void Update(float frameTime)
@@ -73,7 +67,7 @@ public sealed partial class GunSignalControlSystem : EntitySystem
 
             gunControl.AccumulatedFrame += frameTime;
 
-            if (gunControl.AccumulatedFrame > gun.FireRate)
+            if (gunControl.AccumulatedFrame > (1 / gun.FireRate))
             {
                 Fire(uid);
                 gunControl.AccumulatedFrame = 0f;

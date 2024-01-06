@@ -23,6 +23,9 @@ public sealed partial class GunSignalControlComponent : Component
     public ProtoId<SinkPortPrototype> TriggerPort = "Trigger";
 
     [DataField]
+    public ProtoId<SinkPortPrototype> TogglePort = "Toggle";
+
+    [DataField]
     public ProtoId<SinkPortPrototype> OnPort = "On";
 
     [DataField]
