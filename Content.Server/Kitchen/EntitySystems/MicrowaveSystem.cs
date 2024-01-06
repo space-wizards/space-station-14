@@ -31,6 +31,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Linq;
+using Content.Shared.Access.Components;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -257,6 +258,12 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!HasComp<ItemComponent>(args.Used))
             {
                 _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-transfer-fail"), ent, args.User);
+                return;
+            }
+
+            if (ent.Comp.Storage.Count >= ent.Comp.Capacity)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-full"), ent, args.User);
                 return;
             }
 

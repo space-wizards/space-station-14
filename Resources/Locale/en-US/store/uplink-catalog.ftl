@@ -142,6 +142,9 @@ uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever y
 uplink-radio-jammer-name = Radio Jammer
 uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication when activated.
 
+uplink-singularity-beacon-name = Singularity Beacon
+uplink-singularity-beacon-desc = A device that attracts singularities. Has to be anchored and powered. Causes singularities to grow when consumed.
+
 # Implants
 uplink-storage-implanter-name = Storage Implanter
 uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!

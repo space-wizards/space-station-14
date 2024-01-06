@@ -66,6 +66,9 @@ namespace Content.Server.Kitchen.Components
         public int CurrentCookTimeButtonIndex;
 
         public Container Storage = default!;
+
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public int Capacity = 10;
     }
 
     public sealed class BeingMicrowavedEvent : HandledEntityEventArgs
