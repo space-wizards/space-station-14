@@ -1,8 +1,8 @@
 ﻿- type: entity
   id: Turnstile
   parent: BaseStructure
-  name: airlock
-  description: It opens, it closes, and maybe crushes you.
+  name: turnstile
+  description: One-way access - control the flow of foot traffic.
   components:
   - type: MeleeSound
     soundGroups:

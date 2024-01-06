@@ -41,6 +41,8 @@ public sealed class SharedTurnstileSystem : EntitySystem
     {
         base.Initialize();
 
+        _xformQuery = GetEntityQuery<TransformComponent>();
+
         SubscribeLocalEvent<TurnstileComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<TurnstileComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<TurnstileComponent, PreventCollideEvent>(PreventCollision);
