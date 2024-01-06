@@ -1,5 +1,6 @@
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid.Markings;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MagicMirror;
@@ -111,18 +112,23 @@ public sealed class MagicMirrorUiState : BoundUserInterfaceState
 public sealed partial class MagicMirrorRemoveSlotDoAfterEvent : DoAfterEvent
 {
     public override DoAfterEvent Clone() => this;
+    public MagicMirrorCategory Category;
+    public int Slot;
 }
 
 [Serializable, NetSerializable]
 public sealed partial class MagicMirrorAddSlotDoAfterEvent : DoAfterEvent
 {
     public override DoAfterEvent Clone() => this;
+    public MagicMirrorCategory Category;
 }
 
 [Serializable, NetSerializable]
 public sealed partial class MagicMirrorSelectDoAfterEvent : DoAfterEvent
 {
     public MagicMirrorCategory Category;
+    public int Slot;
+    public string Marking = string.Empty;
 
     public override DoAfterEvent Clone() => this;
 }
@@ -131,4 +137,7 @@ public sealed partial class MagicMirrorSelectDoAfterEvent : DoAfterEvent
 public sealed partial class MagicMirrorChangeColorDoAfterEvent : DoAfterEvent
 {
     public override DoAfterEvent Clone() => this;
+    public MagicMirrorCategory Category;
+    public int Slot;
+    public List<Color> Colors = new List<Color>();
 }
