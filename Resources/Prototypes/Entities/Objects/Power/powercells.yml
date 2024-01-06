@@ -267,3 +267,71 @@
     - type: BatterySelfRecharger
       autoRecharge: true
       autoRechargeRate: 40
+
+# Power cage (big power cell)
+
+- type: entity
+  id: BasePowerCage
+  abstract: true
+  parent: BasePowerCell
+  components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,1
+    - 1,1,1,1
+    sprite: Objects/Power/power_cages.rsi
+  - type: MultiHandedItem
+  - type: SolutionContainerManager
+    solutions:
+      battery:
+        maxVol: 15
+  - type: Extractable
+    juiceSolution:
+      reagents:
+        - ReagentId: Zinc
+          Quantity: 15
+  - type: Tag
+    tags:
+      - PowerCage
+  - type: HitscanBatteryAmmoProvider
+    proto: RedShuttleLaser
+    fireCost: 100
+
+- type: entity
+  id: PowerCageSmall
+  parent: BasePowerCage
+  name: small-capacity power cage
+  description: A rechargeable power cage for big devices. This is the cheapest kind you can find.
+  components:
+  - type: Battery
+    maxCharge: 700
+    startingCharge: 700
+    
+- type: entity
+  id: PowerCageMedium
+  parent: BasePowerCage
+  name: medium-capacity power cage
+  description: A rechargeable power cage for big devices. The gold standard of capacity and cost.
+  components:
+  - type: Battery
+    maxCharge: 1500
+    startingCharge: 1500
+    
+- type: entity
+  id: PowerCageHigh
+  parent: BasePowerCage
+  name: high-capacity power cage
+  description: A rechargeable power cage for big devices. Increased capacity for increased power levels.
+  components:
+  - type: Battery
+    maxCharge: 2200
+    startingCharge: 2200

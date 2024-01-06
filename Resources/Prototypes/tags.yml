@@ -912,6 +912,9 @@
   id: PowerCellSmall
 
 - type: Tag
+  id: PowerCage
+
+- type: Tag
   id: Powerdrill
 
 - type: Tag

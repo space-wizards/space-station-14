@@ -88,6 +88,26 @@
         blacklist:
           tags:
           - PotatoBattery
+          
+- type: entity
+  parent: BaseItemRecharger
+  id: PowerCageRecharger
+  name: cage recharger
+  components:
+  - type: Sprite
+    sprite: Structures/Power/cage_recharger.rsi
+  #- type: Machine
+  #  board: CellRechargerCircuitboard
+  - type: PowerCellSlot
+    cellSlotId: charger_slot
+  - type: ItemSlots
+    slots:
+      charger_slot:
+        ejectOnInteract: true
+        name: Power cage
+        whitelist:
+          tags:
+          - PowerCage
 
 - type: entity
   parent: BaseItemRecharger
