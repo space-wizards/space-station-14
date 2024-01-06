@@ -667,7 +667,7 @@
 
 - type: entity
   id: BulletGrenadeEMP
-  name: weak rocket
+  name: EMP rocket
   parent: BaseBulletTrigger
   noSpawn: true
   components:

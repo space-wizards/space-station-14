@@ -133,9 +133,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
-    - state: frag
+    - state: emp
       map: ["enum.AmmoVisualLayers.Base"]
-      color: blue #TODODOD
   - type: Appearance
   - type: SpentAmmoVisuals
     state: frag
