@@ -8,7 +8,7 @@ namespace Content.Shared.Dice;
 [AutoGenerateComponentState(true)]
 public sealed partial class DiceComponent : Component
 {
-    [DataField("sound")]
+    [DataField]
     public SoundSpecifier Sound { get; private set; } = new SoundCollectionSpecifier("Dice");
 
     /// <summary>
