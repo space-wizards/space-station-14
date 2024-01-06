@@ -1,0 +1,60 @@
+﻿- type: entity
+  id: Turnstile
+  parent: BaseStructure
+  name: airlock
+  description: It opens, it closes, and maybe crushes you.
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/smash.ogg"
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    snapCardinals: true
+    layers:
+    - state: idle
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: AnimationPlayer
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - AirlockLayer
+  - type: Turnstile
+    turnSound:
+      path: /Audio/Machines/airlock_open.ogg
+    bumpSound:
+      path: /Audio/Machines/airlock_deny.ogg
+  - type: Appearance
+  - type: Occluder
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StrongMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 350
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Construction
+    graph: Turnstile
+    node: turnstile
+  - type: Climbable
+  - type: StaticPrice
+    price: 50
+  - type: LightningTarget
+    priority: 1
+  - type: Anchorable
+  placement:
+    mode: SnapgridCenter

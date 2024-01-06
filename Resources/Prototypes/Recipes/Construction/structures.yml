@@ -930,6 +930,23 @@
   - !type:TileNotBlocked
 
 - type: construction
+  name: turnstile
+  id: Turnstile
+  graph: Turnstile
+  startNode: start
+  targetNode: turnstile
+  category: construction-category-structures
+  description: One-way access - control the flow of foot traffic.
+  icon:
+    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    state: assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   name: airlock
   id: Airlock
   graph: Airlock
