@@ -271,8 +271,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (!args.CanInteract || args.Hands == null)
             return;
 
-        var duplicateIndex = 1;
-        var duplicateSuffix = "";
+        var storedOrder = 0;
 
         foreach (var target in component.StoredTargets)
         {
@@ -280,19 +279,16 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             {
                 continue;
             }
-            // Adds a number behind a name if the menu already contains an entity with the same same.
-            if (duplicateIndex > 1)
-            {
-                duplicateSuffix = Loc.GetString("suffix-pinpointer-duplicate", ("duplicateIndex", duplicateIndex));
-            }
-            duplicateIndex++;
+            // Adds a number in front of a name to order the list based on order added
+            var storedPrefix = Loc.GetString("prefix-pinpointer-targets", ("storedOrder", storedOrder));
+            storedOrder++;
 
             //Adds the verb if there is more than 1 stored target.
             if (component.StoredTargets.Count > 1)
             {
                 args.Verbs.Add(new Verb()
                 {
-                    Text = Loc.GetString(Identity.Name(target, EntityManager) + duplicateSuffix),
+                    Text = Loc.GetString(storedPrefix + Identity.Name(target, EntityManager) ),
                     Act = () => SetTarget(uid, target, component, args.User),
                     Priority = 50,
                     Category = VerbCategory.SelectType

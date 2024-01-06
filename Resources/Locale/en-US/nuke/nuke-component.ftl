@@ -38,3 +38,4 @@ nuke-label-syndicate = SYN-{$serial}
 nuke-codes-message = [color=red]TOP SECRET![/color]
 nuke-codes-list = {$name} code: {$code}
 nuke-codes-fax-paper-name = nuclear authentication codes
+nuke-codes-barcode = It has a barcode for the pinpointer

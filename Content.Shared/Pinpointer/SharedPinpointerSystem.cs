@@ -6,6 +6,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Pinpointer;
 
@@ -13,6 +14,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -50,14 +52,22 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return;
         }
 
-
         if(component.StoredTargets.Contains(component.Target.Value))
             return;
 
-        component.StoredTargets.Add(component.Target.Value);
-        _popup.PopupEntity(Loc.GetString("targeting-pinpointer-succeeded", ("target", component.Target.Value)), args.User, args.User);
+        if (component.StoredTargets.Count >= component.MaxTargets && _net.IsServer)
+        {
+            _popup.PopupEntity(Loc.GetString("storage-pinpointer-full"),args.User,args.User);
+            return;
+        }
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(uid):pinpointer} to {ToPrettyString(component.Target.Value):target}");
+        component.StoredTargets.Add(component.Target.Value);
+        if (_net.IsServer)
+        {
+            _popup.PopupEntity(Loc.GetString("targeting-pinpointer-succeeded", ("target", component.Target.Value)), args.User, args.User);
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(uid):pinpointer} to {ToPrettyString(component.Target.Value):target}");
+        }
+
         if (component.UpdateTargetName)
             component.TargetName = component.Target == null ? null : Identity.Name(component.Target.Value, EntityManager);
     }

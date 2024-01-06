@@ -1,7 +1,5 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Pinpointer;
 
@@ -26,6 +24,12 @@ public sealed partial class PinpointerComponent : Component
     /// </summary>
     [DataField("storedTargets"), ViewVariables(VVAccess.ReadWrite)]
     public List<EntityUid> StoredTargets = new();
+
+    /// <summary>
+    /// The maximum amount of targets the pinpointer is able to store
+    /// </summary>
+    [DataField("maxTargets"), ViewVariables(VVAccess.ReadWrite)]
+    public int MaxTargets = 10;
 
     [DataField("mediumDistance"), ViewVariables(VVAccess.ReadWrite)]
     public float MediumDistance = 16f;
