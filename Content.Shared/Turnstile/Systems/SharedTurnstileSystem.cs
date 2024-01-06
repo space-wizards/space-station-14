@@ -127,8 +127,6 @@ public abstract class SharedTurnstileSystem : EntitySystem
             {
                 turnstile.NextStateChange = null;
                 SetState(ent.Owner, TurnstileState.Idle);
-
-                // Remove preventcollision comp
                 RemComp<PreventCollideComponent>(ent.Owner);
             }
             else
@@ -149,15 +147,10 @@ public abstract class SharedTurnstileSystem : EntitySystem
             return false;
 
         var turnstileAABB = EntityLookupSystem.GetWorldAABB(uid);
+        var otherAABB = EntityLookupSystem.GetWorldAABB(preventCollide.Uid);
 
-        foreach (var otherPhysics in PhysicsSystem.GetCollidingEntities(Transform(uid).MapID, turnstileAABB))
-        {
-            if (otherPhysics == physics)
-                continue;
-
-            if (otherPhysics.Owner == preventCollide.Uid)
-                return true;
-        }
+        if (turnstileAABB.Intersects(otherAABB))
+            return true;
 
         return false;
     }
