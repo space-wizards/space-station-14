@@ -492,9 +492,6 @@
   id: Flesh
 
 - type: Tag
-  id: WhitelistChameleon
-
-- type: Tag
   id: FirelockElectronics
 
 - type: Tag
@@ -1134,9 +1131,6 @@
   id: Wall
 
 - type: Tag
-  id: WetFloorSign
-
-- type: Tag
   id: WallmountGeneratorAPUElectronics
 
 - type: Tag
@@ -1150,6 +1144,12 @@
 
 - type: Tag
   id: WeaponShotgunKammerer
+
+- type: Tag
+  id: WetFloorSign
+
+- type: Tag
+  id: WhitelistChameleon
 
 - type: Tag
   id: Window
