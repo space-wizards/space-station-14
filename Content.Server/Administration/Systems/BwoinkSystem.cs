@@ -109,6 +109,9 @@ namespace Content.Server.Administration.Systems
                     continue;
                 }
 
+                if (arg.Content.Trim().StartsWith("-"))
+                    continue; // That is a comment for breadmemes to discuss within the thread
+
                 // Command handling
                 if (arg.Content.StartsWith("!"))
                 {
@@ -228,6 +231,11 @@ namespace Content.Server.Administration.Systems
 
         public override void Shutdown()
         {
+            foreach (var message in _relayMessages)
+            {
+                message.Value.channel.SendMessageAsync("**Warning**: Server is shutting down. Any messages sent to will not be received.", false, null,null, AllowedMentions.None);
+            }
+
             base.Shutdown();
             _config.UnsubValueChanged(CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged);
             _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
@@ -316,7 +324,7 @@ namespace Content.Server.Administration.Systems
             // If the relay is not null, give a list of available commands for the admins to use.
             if (relay is not null)
             {
-                await relay.SendMessageAsync("Use `!status` to get regenerate the status embed as seen above.");
+                await relay.SendMessageAsync("Use `!status` to get regenerate the status embed as seen above. `-` in the beginning of a message will be cause the message to not be relayed to the player.");
             }
 
             return relay;
