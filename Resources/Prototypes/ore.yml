@@ -78,7 +78,7 @@
 - type: weightedRandomOre
   id: OreCrab
   weights:
-    OreQuartzCrab: 5
-    OreIronCrab: 5
-    OreUraniumCrab: 2
-    OreSilverCrab: 3
+    MobSpawnCrabQuartz: 5
+    MobSpawnCrabIron: 5
+    MobSpawnCrabUranium: 2
+    MobSpawnCrabSilver: 3
