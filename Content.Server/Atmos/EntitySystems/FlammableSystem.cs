@@ -13,13 +13,13 @@ using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
@@ -107,7 +107,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!EntityManager.TryGetComponent(otherEnt, out FlammableComponent? flammable))
                 return;
 
-            if (args.OurFixtureId == SharedFlyBySoundSystem.FlyByFixture)
+            if (args.OurFixtureId != component.FixtureId && args.OurFixtureId != SharedProjectileSystem.ProjectileFixture)
             {
                 return;
             }

@@ -53,7 +53,7 @@
         Blunt: 1
         Heat: 2
   - type: IgniteOnCollide
-    fireStacks: 2
+    fireStacks: 3
     count: 10
   - type: TimedDespawn
     lifetime: 0.25
