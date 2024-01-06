@@ -43,8 +43,6 @@ public abstract class SharedTurnstileSystem : EntitySystem
         SubscribeLocalEvent<TurnstileComponent, ComponentRemove>(OnRemove);
 
         SubscribeLocalEvent<TurnstileComponent, StartCollideEvent>(HandleCollide);
-        SubscribeLocalEvent<TurnstileComponent, PreventCollideEvent>(PreventCollision);
-
         SubscribeLocalEvent<TurnstileComponent, AfterAutoHandleStateEvent>(OnHandleState);
     }
 
@@ -166,17 +164,6 @@ public abstract class SharedTurnstileSystem : EntitySystem
         var xformOther = _xformQuery.GetComponent(other);
         return (xform.LocalPosition - xformOther.LocalPosition).GetDir();
     }
-
-    private void PreventCollision(Entity<TurnstileComponent> ent, ref PreventCollideEvent args)
-    {/*
-        var turnstile = ent.Comp;
-        // Allow currently-admitted entity to pass through.
-        if (turnstile.CurrentlyAdmittingEntity == args.OtherEntity)
-        {
-            args.Cancelled = true;
-        }*/
-    }
-
 
     private void SetCollidable(
         EntityUid uid,
