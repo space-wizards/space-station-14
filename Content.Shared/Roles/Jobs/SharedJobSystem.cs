@@ -84,7 +84,8 @@ public abstract class SharedJobSystem : EntitySystem
     public bool TryGetPrimaryDepartment(string jobProto, [NotNullWhen(true)] out DepartmentPrototype? departmentPrototype)
     {
         // not sorting it since there should only be 1 primary department for a job.
-        var departmentProtos = _protoManager.EnumeratePrototypes<DepartmentPrototype>().ToList();
+        // this is enforced by the job tests.
+        var departmentProtos = _protoManager.EnumeratePrototypes<DepartmentPrototype>();
 
         foreach (var department in departmentProtos)
         {
