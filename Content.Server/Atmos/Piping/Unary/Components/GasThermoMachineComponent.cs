@@ -28,7 +28,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     Implements setpoint hysteresis to prevent heater from rapidly cycling on and off at setpoint.
         ///     If true, add Sign(Cp)*TemperatureTolerance to the temperature setpoint.
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly)]
         public bool HysteresisState;
 
         /// <summary>

@@ -365,7 +365,7 @@
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/hellfirethermomachine.rsi
   - type: GasThermoMachine
-    minTemperature: 30.15
+    minTemperature: 23.15
     heatCapacity: 40000
     energyLeakPercentage: 0.15
   - type: Machine
@@ -380,7 +380,7 @@
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/hellfirethermomachine.rsi
   - type: GasThermoMachine
-    maxTemperature: 1000.15
+    maxTemperature: 1193.15
     heatCapacity: 40000
     energyLeakPercentage: 0.15
   - type: Machine
