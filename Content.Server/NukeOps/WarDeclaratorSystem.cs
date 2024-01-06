@@ -3,9 +3,11 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.NukeOps;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.NukeOps;
 
@@ -18,6 +20,9 @@ public sealed class WarDeclaratorSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRuleSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
+
+    private int ChatMaxAnnounceMessageLength => _config.GetCVar(CCVars.ChatMaxAnnounceMessageLength);
 
     public override void Initialize()
     {
@@ -52,7 +57,9 @@ public sealed class WarDeclaratorSystem : EntitySystem
             return;
         }
 
-        var text = (args.Message.Length <= component.MaxMessageLength ? args.Message.Trim() : $"{args.Message.Trim().Substring(0, 256)}...").ToCharArray();
+        var text = (args.Message.Length <= ChatMaxAnnounceMessageLength
+            ? args.Message.Trim()
+            : $"{args.Message.Trim().Substring(0, ChatMaxAnnounceMessageLength)}...").ToCharArray();
 
         // No more than 2 newlines, other replaced to spaces
         var newlines = 0;
