@@ -57,14 +57,14 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
         if (component.StoredTargets.Count >= component.MaxTargets && _net.IsServer)
         {
-            _popup.PopupEntity(Loc.GetString("storage-pinpointer-full"),args.User,args.User);
+            _popup.PopupEntity(Loc.GetString("target-pinpointer-full"),args.User,args.User);
             return;
         }
 
         component.StoredTargets.Add(component.Target.Value);
         if (_net.IsServer)
         {
-            _popup.PopupEntity(Loc.GetString("targeting-pinpointer-succeeded", ("target", component.Target.Value)), args.User, args.User);
+            _popup.PopupEntity(Loc.GetString("target-pinpointer-stored", ("target", component.Target.Value)), args.User, args.User);
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(uid):pinpointer} to {ToPrettyString(component.Target.Value):target}");
         }
 
