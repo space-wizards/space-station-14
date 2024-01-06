@@ -15,6 +15,7 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.StatusEffect;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -75,6 +76,8 @@ public sealed partial class ShuttleSystem
     /// Minimum mass for an FTL destination
     /// </summary>
     public const float FTLDestinationMass = 500f;
+
+    private HashSet<EntityUid> _lookupEnts = new();
 
     private EntityQuery<BodyComponent> _bodyQuery;
     private EntityQuery<BuckleComponent> _buckleQuery;
@@ -230,8 +233,8 @@ public sealed partial class ShuttleSystem
 
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
-        // TODO: Need BroadcastGrid to not be bad.
-        SoundSystem.Play(_startupSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(uid)), _startupSound.Params);
+        var audio = _audio.PlayPvs(_startupSound, uid);
+        audio.Value.Component.Flags |= AudioFlags.GridAudio;
         // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
         SetupHyperspace();
         return true;
@@ -273,7 +276,7 @@ public sealed partial class ShuttleSystem
                     if (TryComp(uid, out body))
                     {
                         if (shuttle != null)
-                            Enable(uid, body, shuttle);
+                            Enable(uid, component: body, shuttle: shuttle);
                         _physics.SetLinearVelocity(uid, new Vector2(0f, 20f), body: body);
                         _physics.SetAngularVelocity(uid, 0f, body: body);
                         _physics.SetLinearDamping(body, 0f);
@@ -287,11 +290,11 @@ public sealed partial class ShuttleSystem
                     var ev = new FTLStartedEvent(uid, target, fromMapUid, fromMatrix, fromRotation);
                     RaiseLocalEvent(uid, ref ev, true);
 
-                    if (comp.TravelSound != null)
-                    {
-                        comp.TravelStream = SoundSystem.Play(comp.TravelSound.GetSound(),
-                            Filter.Pvs(uid, 4f, entityManager: EntityManager), comp.TravelSound.Params);
-                    }
+                    var wowdio = _audio.PlayPvs(comp.TravelSound, uid);
+                    comp.TravelStream = wowdio?.Entity;
+                    if (wowdio?.Component != null)
+                        wowdio.Value.Component.Flags |= AudioFlags.GridAudio;
+
                     break;
                 // Arriving, play effects
                 case FTLState.Travelling:
@@ -364,11 +367,11 @@ public sealed partial class ShuttleSystem
                         // to event ordering and awake body shenanigans (at least for now).
                         if (HasComp<MapGridComponent>(xform.MapUid))
                         {
-                            Disable(uid, body);
+                            Disable(uid, component: body);
                         }
                         else if (shuttle != null)
                         {
-                            Enable(uid, body, shuttle);
+                            Enable(uid, component: body, shuttle: shuttle);
                         }
                     }
 
@@ -377,13 +380,9 @@ public sealed partial class ShuttleSystem
                         _thruster.DisableLinearThrusters(shuttle);
                     }
 
-                    if (comp.TravelStream != null)
-                    {
-                        comp.TravelStream?.Stop();
-                        comp.TravelStream = null;
-                    }
-
-                    _audio.PlayGlobal(_arrivalSound, Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(uid)), true);
+                    comp.TravelStream = _audio.Stop(comp.TravelStream);
+                    var audio = _audio.PlayPvs(_arrivalSound, uid);
+                    audio.Value.Component.Flags |= AudioFlags.GridAudio;
 
                     if (TryComp<FTLDestinationComponent>(uid, out var dest))
                     {
@@ -504,10 +503,10 @@ public sealed partial class ShuttleSystem
         var childEnumerator = xform.ChildEnumerator;
         while (childEnumerator.MoveNext(out var child))
         {
-            if (!_buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
+            if (!_buckleQuery.TryGetComponent(child, out var buckle) || buckle.Buckled)
                 continue;
 
-            toKnock.Add(child.Value);
+            toKnock.Add(child);
         }
     }
 
@@ -704,6 +703,7 @@ public sealed partial class ShuttleSystem
         var transform = _physics.GetPhysicsTransform(uid, xform, _xformQuery);
         var aabbs = new List<Box2>(manager.Fixtures.Count);
         var immune = new HashSet<EntityUid>();
+        var tileSet = new List<(Vector2i, Tile)>();
 
         foreach (var fixture in manager.Fixtures.Values)
         {
@@ -715,7 +715,13 @@ public sealed partial class ShuttleSystem
             aabb = aabb.Enlarged(0.2f);
             aabbs.Add(aabb);
 
-            foreach (var ent in _lookup.GetEntitiesIntersecting(xform.MapUid.Value, aabb, LookupFlags.Uncontained))
+            // Handle clearing biome stuff as relevant.
+            tileSet.Clear();
+            _biomes.ReserveTiles(xform.MapUid.Value, aabb, tileSet);
+            _lookupEnts.Clear();
+            _lookup.GetEntitiesIntersecting(xform.MapUid.Value, aabb, _lookupEnts, LookupFlags.Uncontained);
+
+            foreach (var ent in _lookupEnts)
             {
                 if (ent == uid || immune.Contains(ent))
                 {

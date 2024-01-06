@@ -55,7 +55,6 @@
   - type: Construction
     graph: Spear
     node: spear
-  - type: ItemCooldown
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -93,6 +92,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -105,7 +106,6 @@
       types:
         Blunt: 5
   - type: UseDelay
-    delay: 1
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1

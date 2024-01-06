@@ -23,6 +23,12 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Shared.DoAfter;
+using Content.Server.Emp;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
+using Content.Shared.Inventory;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -81,7 +87,7 @@ namespace Content.Server.Light.EntitySystems
             if (light.HasLampOnSpawn != null)
             {
                 var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
-                light.LightBulbContainer.Insert(entity);
+                _containerSystem.Insert(entity, light.LightBulbContainer);
             }
             // need this to update visualizers
             UpdateLight(uid, light);
@@ -130,7 +136,7 @@ namespace Content.Server.Light.EntitySystems
                     if (damage != null)
                         _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total:damage} damage");
 
-                    _audio.Play(light.BurnHandSound, Filter.Pvs(uid), uid, true);
+                    _audio.PlayEntity(light.BurnHandSound, Filter.Pvs(uid), uid, true);
 
                     args.Handled = true;
                     return;
@@ -176,7 +182,7 @@ namespace Content.Server.Light.EntitySystems
                 return false;
 
             // try to insert bulb in container
-            if (!light.LightBulbContainer.Insert(bulbUid))
+            if (!_containerSystem.Insert(bulbUid, light.LightBulbContainer))
                 return false;
 
             UpdateLight(uid, light);
@@ -197,7 +203,7 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             // try to remove bulb from container
-            if (!light.LightBulbContainer.Remove(bulb))
+            if (!_containerSystem.Remove(bulb, light.LightBulbContainer))
                 return null;
 
             // try to place bulb in hands
@@ -281,7 +287,7 @@ namespace Content.Server.Light.EntitySystems
                         if (time > light.LastThunk + ThunkDelay)
                         {
                             light.LastThunk = time;
-                            _audio.Play(light.TurnOnSound, Filter.Pvs(uid), uid, true, AudioParams.Default.WithVolume(-10f));
+                            _audio.PlayEntity(light.TurnOnSound, Filter.Pvs(uid), uid, true, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else
@@ -343,7 +349,9 @@ namespace Content.Server.Light.EntitySystems
         private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, ref PowerChangedEvent args)
         {
             // TODO: Power moment
-            if (MetaData(uid).EntityPaused)
+            var metadata = MetaData(uid);
+
+            if (metadata.EntityPaused || TerminatingOrDeleted(uid, metadata))
                 return;
 
             UpdateLight(uid, component);

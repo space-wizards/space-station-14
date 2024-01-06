@@ -118,63 +118,34 @@
     available: #yaml hero
     - enum.ArtifactsVisualLayers.Base:
         ancientball1: ""
-    - enum.ArtifactsVisualLayers.Base:
         ancientball2: ""
-    - enum.ArtifactsVisualLayers.Base:
         ancientball3: ""
-    - enum.ArtifactsVisualLayers.Base:
         ancientball4: ""
-    - enum.ArtifactsVisualLayers.Base:
         ancientball5: ""
-    - enum.ArtifactsVisualLayers.Base:
         ancientball6: ""
-    - enum.ArtifactsVisualLayers.Base:
         eldritchball1: ""
-    - enum.ArtifactsVisualLayers.Base:
         eldritchball2: ""
-    - enum.ArtifactsVisualLayers.Base:
         eldritchball3: ""
-    - enum.ArtifactsVisualLayers.Base:
         eldritchball4: ""
-    - enum.ArtifactsVisualLayers.Base:
         eldritchball5: ""
-    - enum.ArtifactsVisualLayers.Base:
         eldritchball6: ""
-    - enum.ArtifactsVisualLayers.Base:
         martianball1: ""
-    - enum.ArtifactsVisualLayers.Base:
         martianball2: ""
-    - enum.ArtifactsVisualLayers.Base:
         martianball3: ""
-    - enum.ArtifactsVisualLayers.Base:
         martianball4: ""
-    - enum.ArtifactsVisualLayers.Base:
         martianball5: ""
-    - enum.ArtifactsVisualLayers.Base:
         martianball6: ""
-    - enum.ArtifactsVisualLayers.Base:
         precursorball1: ""
-    - enum.ArtifactsVisualLayers.Base:
         precursorball2: ""
-    - enum.ArtifactsVisualLayers.Base:
         precursorball3: ""
-    - enum.ArtifactsVisualLayers.Base:
         precursorball4: ""
-    - enum.ArtifactsVisualLayers.Base:
         precursorball5: ""
-    - enum.ArtifactsVisualLayers.Base:
         precursorball6: ""
-    - enum.ArtifactsVisualLayers.Base:
         wizardball1: ""
-    - enum.ArtifactsVisualLayers.Base:
         wizardball2: ""
-    - enum.ArtifactsVisualLayers.Base:
         wizardball3: ""
-    - enum.ArtifactsVisualLayers.Base:
         wizardball4: ""
-    - enum.ArtifactsVisualLayers.Base:
         wizardball5: ""
-    - enum.ArtifactsVisualLayers.Base:
         wizardball6: ""
   - type: Appearance
   - type: Item

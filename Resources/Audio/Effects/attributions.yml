@@ -68,6 +68,21 @@
   copyright: '"Pop, High, A (H1).wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org. Mixed from stereo to mono.'
   source: "https://freesound.org/people/InspectorJ/sounds/411642/"
 
+- files: ["tesla.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Taken from bzakirasantjago via freesound.org and mixed from stereo to mono."
+  source: "https://freesound.org/people/bzakirasantjago/sounds/404462/"
+
+- files: ["tesla_collapse.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Taken from DragishaRambo21 via freesound.org and mixed from stereo to mono."
+  source: "https://freesound.org/people/DragishaRambo21/sounds/345920/"
+  
+- files: ["tesla_consume.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from egomassive via freesound.org and mixed from stereo to mono."
+  source: "https://freesound.org/people/egomassive/sounds/536741/"
+  
 - files: ["sizzle.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Recorded by deltanedas for SS14"
@@ -106,6 +121,16 @@
   copyright: '"10 Second Countdown.wav" by Thomas Evdokimoff of Freesound.org'
   license: "CC-BY-4.0"
   source: "https://freesound.org/people/thomas_evdokimoff/sounds/202193/"
+
+- files: ["hydraulic_press.ogg"]
+  copyright: 'Created by chainsaw_dinner_party on Freesound.org. Extended and converted to MONO and .ogg by EmoGarbage404 (github)'
+  license: "CC0-1.0"
+  source: "https://freesound.org/people/chainsaw_dinner_party/sounds/403075/"
+
+- files: ["metal_crunch.ogg"]
+  copyright: 'Created by PNMCarrieRailfan on Freesound.org. Edited and exported to .ogg by EmoGarbage404 (github)'
+  license: "CC-BY-NC-4.0"
+  source: "https://freesound.org/people/PNMCarrieRailfan/sounds/682439/"
 
 - files: ["voteding.ogg"]
   copyright: '"Bike, Bell Ding, Single, 01-01.wav" byInspectorJ (www.jshaw.co.uk) of Freesound.org; The volume has been reduced.'
@@ -161,3 +186,18 @@
   copyright: '"jumps from reason.3.Rev.wav" by martian of Freesound.org. Modified by reversing and altering volume.'
   license: CC0-1.0
   source: https://freesound.org/people/martian/sounds/19261/
+
+- files: ["explosion_small1.ogg", "explosion_small2.ogg", "explosion_small3.ogg", "explosion1.ogg", "explosion2.ogg", "explosion3.ogg", "explosion4.ogg", "explosion5.ogg", "explosion6.ogg", "explosionfar.ogg", "explosionsmallfar.ogg"]
+  copyright: "vgstation at c5edbfd7179288080f081e2b8ac2496b7e4455db"
+  license: CC-BY-SA-3.0
+  source: https://github.com/vgstation-coders/vgstation13/tree/c5edbfd7179288080f081e2b8ac2496b7e4455db/sound/effects
+
+- files: [Smoke-grenade.ogg]
+  copyright: Bhijn and Myr (github username deathride58)
+  license: CC0-1.0
+  source: https://github.com/space-wizards/space-station-14/pull/23476
+
+- files: ["eye_open.ogg", "eye_close.ogg"]
+  copyright: Bhijn and Myr (github username deathride58)
+  license: CC0-1.0
+  source: https://github.com/space-wizards/space-station-14/pull/23212

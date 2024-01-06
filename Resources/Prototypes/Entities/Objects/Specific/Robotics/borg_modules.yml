@@ -13,6 +13,9 @@
   - type: Tag
     tags:
     - BorgModuleGeneric
+  - type: GuideHelp
+    guides:
+      - Cyborgs
 
 - type: entity
   id: BaseProviderBorgModule
@@ -245,6 +248,7 @@
     - SheetSteelLingering0
     - SheetGlassLingering0
     - PartRodMetalLingering0
+    - FloorTileItemSteelLingering0
 
 - type: entity
   id: BorgModuleRCD
@@ -413,6 +417,7 @@
     - HandLabeler
     - Lighter
     - DrinkShaker
+    - Syringe
 
 - type: entity
   id: BorgModuleMusique
