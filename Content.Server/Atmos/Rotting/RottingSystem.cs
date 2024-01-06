@@ -157,6 +157,23 @@ public sealed class RottingSystem : EntitySystem
         args.Handled = component.CurrentTemperature > Atmospherics.T0C + 0.85f;
     }
 
+    /// <summary>
+    /// Is anything speeding up the decay?
+    /// e.g. buried in a grave
+    /// TODO: hot temperatures increase rot?
+    /// </summary>
+    /// <returns></returns>
+    private float GetRotRate(EntityUid uid)
+    {
+        if (_container.TryGetOuterContainer(uid, Transform(uid), out var container) &&
+            TryComp<ProRottingContainerComponent>(container.Owner, out var rotContainer))
+        {
+            return rotContainer.DecayModifier;
+        }
+
+        return 1f;
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -171,7 +188,7 @@ public sealed class RottingSystem : EntitySystem
             if (IsRotten(uid) || !IsRotProgressing(uid, perishable))
                 continue;
 
-            perishable.RotAccumulator += perishable.PerishUpdateRate;
+            perishable.RotAccumulator += perishable.PerishUpdateRate * GetRotRate(uid);
             if (perishable.RotAccumulator >= perishable.RotAfter)
             {
                 var rot = AddComp<RottingComponent>(uid);
@@ -188,7 +205,7 @@ public sealed class RottingSystem : EntitySystem
 
             if (!IsRotProgressing(uid, perishable))
                 continue;
-            rotting.TotalRotTime += rotting.RotUpdateRate;
+            rotting.TotalRotTime += rotting.RotUpdateRate * GetRotRate(uid);
 
             if (rotting.DealDamage)
             {

@@ -496,7 +496,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 200 # discourage just beating the grave to break it open
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -510,6 +510,15 @@
         acts: [ "Destruction" ]
   - type: Physics
     bodyType: Static
+  - type: Grave
+  - type: ProRottingContainer
+  - type: EntityStorage
+    airtight: true
+    isCollidableWhenOpen: false
+    closeSound:
+      path: /Audio/Items/shovel_dig.ogg
+    openSound: 
+      path: /Audio/Items/shovel_dig.ogg
 
 - type: entity
   parent: CrateWoodenGrave

@@ -6,6 +6,7 @@ using Content.Server.Fluids.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
+using Content.Server.Tools;
 using Content.Shared.Botany;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
@@ -42,6 +43,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ToolSystem _toolSystem = default!;
 
 
     public const float HydroponicsSpeedMultiplier = 1f;
@@ -188,7 +190,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_tagSystem.HasTag(args.Used, "Shovel"))
+        if (_toolSystem.HasQuality(args.Used, "Digging"))
         {
             if (component.Seed != null)
             {

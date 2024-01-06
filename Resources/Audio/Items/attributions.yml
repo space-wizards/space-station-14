@@ -87,3 +87,8 @@
   license: "CC0-1.0"
   copyright: "User Hanbaal on freesound.org. Converted to ogg by TheShuEd"
   source: "https://freesound.org/people/Hanbaal/sounds/178669/"
+  
+- files: ["shovel_dig.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation, modified by themias (github) for ss14"
+  source: "https://github.com/tgstation/tgstation/tree/85a0925051bb00e7a950ee66cb7f87982cd22439/sound/effects/shovel_dig.ogg"
