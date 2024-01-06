@@ -361,7 +361,6 @@ public partial class NavMapControl : MapGridControl
         }
 
         var airlockBuffer = Vector2.One  * (MinimapScale / 2.25f);
-        var invertYVec = new Vector2(1, -1);
         foreach (var airlock in _navMap.Airlocks)
         {
             var position = airlock.Position - offset;

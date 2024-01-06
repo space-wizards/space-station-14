@@ -203,6 +203,9 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
     private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
     {
+        if (!TryComp<MapGridComponent>(uid, out var mapGrid))
+            return;
+
         var data = new Dictionary<Vector2i, int>(component.Chunks.Count);
         foreach (var (index, chunk) in component.Chunks)
         {
@@ -235,7 +238,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
             beacons.Add(new NavMapBeacon(beacon.Color, name, xform.LocalPosition));
         }
 
-        var comp = EntityManager.GetComponent<MapGridComponent>(uid);
         var airlockQuery = EntityQueryEnumerator<NavMapDoorComponent, TransformComponent>();
         var airlocks = new List<NavMapAirlock>();
         while (airlockQuery.MoveNext(out _, out _, out var xform))
@@ -243,8 +245,8 @@ public sealed class NavMapSystem : SharedNavMapSystem
             if (xform.GridUid != uid || !xform.Anchored)
                 continue;
 
-            var pos = _map.TileIndicesFor(uid, comp, xform.Coordinates);
-            var enumerator = _map.GetAnchoredEntitiesEnumerator(uid, comp, pos);
+            var pos = _map.TileIndicesFor(uid, mapGrid, xform.Coordinates);
+            var enumerator = _map.GetAnchoredEntitiesEnumerator(uid, mapGrid, pos);
 
             var wallPresent = false;
             while (enumerator.MoveNext(out var ent))
