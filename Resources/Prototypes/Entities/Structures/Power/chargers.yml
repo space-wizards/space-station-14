@@ -96,8 +96,6 @@
   components:
   - type: Sprite
     sprite: Structures/Power/cage_recharger.rsi
-  #- type: Machine
-  #  board: CellRechargerCircuitboard
   - type: PowerCellSlot
     cellSlotId: charger_slot
   - type: ItemSlots

@@ -24,6 +24,17 @@
         - TableMask
         layer:
         - TableLayer
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Transform
     anchored: true
   - type: Sprite
@@ -35,12 +46,12 @@
     receiveFrequencyId: BasicDevice
   - type: WirelessNetworkConnection
     range: 200
-  - type: DeviceLinkSink
-    ports:
-    - Trigger
-    - Toggle
-    - On
-    - Off
+  #- type: DeviceLinkSink # you need to add this component to your ship cannon by selecting the right ports.
+  #  ports:
+  #  - Trigger # for single shots
+  #  - Toggle # 
+  #  - On     # for automatic gun
+  #  - Off    #
   - type: GunSignalControl
     
 - type: entity
@@ -50,7 +61,7 @@
   description: A powerful shuttle laser launcher capable of punching through thick walls. Ideal for disabling key components of enemy shuttles.
   components:
   - type: Sprite
-    sprite: Structures/Shuttles/Guns/laser.rsi
+    sprite: Structures/Shuttles/Guns/heavy_laser.rsi
     layers:
     - state: base
     - state: mag-unshaded-9
@@ -83,36 +94,41 @@
             - PowerCell
   - type: MagazineAmmoProvider
   - type: Appearance
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: StaticPrice
+    price: 1500
 
+
+  #name: SYND-210EX "Dust"
+  #description: Dust and death are all that will remain.
 
 - type: entity
-  id: ShuttleGunProtoKineticShotgun
+  id: ShuttleGunPirateCannon
   parent: ShuttleGunBase
-  name: PTK-800 Matter Dematerializer
-  suffix: base entity Test
-  description: A powerful shuttle drill that allows for efficient asteroid digging.
-  components:
-  - type: GunWieldBonus
-    minAngle: -43
-    maxAngle: -43
+  name: pirate ship cannon
+  description: Kaboom!
+  components: 
+  - type: Sprite
+    sprite: Structures/Shuttles/Guns/pirate_cannon.rsi
+    layers:
+    - state: base
   - type: Gun
-    fireRate: 0.5
-    selectedMode: SemiAuto
-    angleDecay: 45
-    minAngle: 44
-    maxAngle: 45
-    availableModes:
-    - SemiAuto
+    fireRate: 1
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
-  - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 0.75
-    rechargeSound:
-      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
-  - type: BasicEntityAmmoProvider
-    proto: BulletKinetic
+      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - Grenade
     capacity: 1
-    count: 1
+    proto: CannonBall
+    soundInsert:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
 
 - type: entity
   id: ShuttleGunProtoKineticBallistic
