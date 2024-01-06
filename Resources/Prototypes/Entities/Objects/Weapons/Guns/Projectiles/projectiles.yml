@@ -666,6 +666,27 @@
     maxIntensity: 10
 
 - type: entity
+  id: BulletGrenadeEMP
+  name: weak rocket
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
+        color: blue #TODODODODO
+  - type: EmpOnTrigger
+    range: 10
+    energyConsumption: 50000
+  - type: Ammo
+    muzzleFlash: null
+  - type: PointLight
+    radius: 3.5
+    color: blue
+    energy: 0.5 
+
+- type: entity
   id: BulletCap
   name: cap bullet
   parent: BaseBullet

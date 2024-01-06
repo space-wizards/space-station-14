@@ -11,7 +11,7 @@
     mayTransfer: true
     whitelist:
       tags:
-        - ShellShuttleCannon
+        - Grenade
     capacity: 3
     soundRack:
       path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
@@ -34,12 +34,12 @@
   - type: Appearance
 
 - type: entity
-  id: MagazineShuttleCannonEMP
+  id: MagazineShuttleCannonFrag
   name: EMP shuttle ammunition pack
   parent: BaseMagazineShuttleCannon
   components:
   - type: BallisticAmmoProvider
-    proto: ShellShuttleEMP
+    proto: GrenadeFrag
   - type: Sprite
     layers:
     - state: slug
@@ -48,12 +48,12 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineShuttleCannonExplosive
+  id: MagazineShuttleCannonEMP
   name: Explosive shuttle ammunition pack #stupid naming
   parent: BaseMagazineShuttleCannon
   components:
   - type: BallisticAmmoProvider
-    proto: ShellShuttleRocket
+    proto: GrenadeEMP
   - type: Sprite
     layers:
     - state: slug

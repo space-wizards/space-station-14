@@ -122,6 +122,24 @@
   - type: SpentAmmoVisuals
     state: frag
     suffix: false
+    
+- type: entity
+  id: GrenadeEMP
+  name: EMP grenade
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: BulletGrenadeEMP
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    layers:
+    - state: frag
+      map: ["enum.AmmoVisualLayers.Base"]
+      color: blue #TODODOD
+  - type: Appearance
+  - type: SpentAmmoVisuals
+    state: frag
+    suffix: false
 
 - type: entity
   id: CannonBall

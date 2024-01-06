@@ -991,9 +991,6 @@
   id: ShellShotgun
 
 - type: Tag
-  id: ShellShuttleCannon
-
-- type: Tag
   id: PelletShotgunFlare
 
 - type: Tag
