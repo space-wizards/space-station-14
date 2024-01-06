@@ -40,6 +40,8 @@ public abstract class SharedTurnstileSystem : EntitySystem
         _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<TurnstileComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<TurnstileComponent, ComponentRemove>(OnRemove);
+
         SubscribeLocalEvent<TurnstileComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<TurnstileComponent, PreventCollideEvent>(PreventCollision);
 
@@ -99,6 +101,11 @@ public abstract class SharedTurnstileSystem : EntitySystem
                 turnstile.NextStateChange = GameTiming.CurTime + turnstile.TurnstileTurnTime;
             }
         }
+    }
+
+    private void OnRemove(Entity<TurnstileComponent> turnstile, ref ComponentRemove args)
+    {
+        _activeTurnstiles.Remove(turnstile);
     }
 
     private bool GetIsCollidingWithAdmitted(EntityUid uid, TurnstileComponent? turnstile = null, PhysicsComponent? physics = null, PreventCollideComponent? preventCollide = null)
