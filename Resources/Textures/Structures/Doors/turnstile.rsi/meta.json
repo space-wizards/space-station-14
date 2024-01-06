@@ -14,6 +14,10 @@
     {
       "name": "rotating",
       "directions": 4
+    },
+    {
+      "name": "idle_short",
+      "directions": 4
     }
   ]
 }

@@ -34,7 +34,6 @@
     bumpSound:
       path: /Audio/Machines/airlock_deny.ogg
   - type: Appearance
-  - type: Occluder
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StrongMetallic
@@ -64,3 +63,8 @@
   description: A smaller, less-secure turnstile.
   components:
   - type: Climbable
+  - type: Sprite
+    sprite: Structures/Doors/turnstile.rsi
+    snapCardinals: true
+    layers:
+    - state: idle_short
