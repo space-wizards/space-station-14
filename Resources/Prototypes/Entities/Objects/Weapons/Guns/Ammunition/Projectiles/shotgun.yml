@@ -137,6 +137,13 @@
           - ItemMask
         restitution: 0.3
         friction: 0.2
+      ignition:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-3,0.25,3"
+        hard: false
+        mask:
+        - BulletImpassable
   - type: Tag
     tags:
       - PelletShotgunFlare
@@ -157,7 +164,7 @@
       params:
         loop: true
   - type: IgniteOnCollide
-    fireStacks: 0.15
+    fireStacks: 1.5
   - type: PointLight
     enabled: true
     color: "#FF8080"
