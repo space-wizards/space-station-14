@@ -1207,10 +1207,6 @@
   - type: AutoTraitor
     giveUplink: false
     giveObjectives: false
-  - type: Tag
-    tags:
-    - VimPilot
-    - DoorBumpOpener
 
 - type: entity
   name: kobold
