@@ -2,9 +2,11 @@ using Content.Server.Administration.Logs;
 using Content.Server.Station.Systems;
 using Content.Server.Warps;
 using Content.Shared.Database;
+using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
 using Content.Shared.Pinpointer;
 using Content.Shared.Tag;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -20,6 +22,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly MapSystem _map = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TagComponent> _tagQuery;
@@ -41,6 +44,9 @@ public sealed class NavMapSystem : SharedNavMapSystem
         SubscribeLocalEvent<NavMapBeaconComponent, ComponentStartup>(OnNavMapBeaconStartup);
         SubscribeLocalEvent<NavMapBeaconComponent, AnchorStateChangedEvent>(OnNavMapBeaconAnchor);
 
+        SubscribeLocalEvent<NavMapDoorComponent, ComponentStartup>(OnNavMapDoorStartup);
+        SubscribeLocalEvent<NavMapDoorComponent, AnchorStateChangedEvent>(OnNavMapDoorAnchor);
+
         SubscribeLocalEvent<ConfigurableNavMapBeaconComponent, NavMapBeaconConfigureBuiMessage>(OnConfigureMessage);
         SubscribeLocalEvent<ConfigurableNavMapBeaconComponent, MapInitEvent>(OnConfigurableMapInit);
         SubscribeLocalEvent<ConfigurableNavMapBeaconComponent, ExaminedEvent>(OnConfigurableExamined);
@@ -61,6 +67,16 @@ public sealed class NavMapSystem : SharedNavMapSystem
     {
         UpdateBeaconEnabledVisuals((uid, component));
         RefreshNavGrid(uid);
+    }
+
+    private void OnNavMapDoorStartup(Entity<NavMapDoorComponent> ent, ref ComponentStartup args)
+    {
+        RefreshNavGrid(ent);
+    }
+
+    private void OnNavMapDoorAnchor(Entity<NavMapDoorComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        RefreshNavGrid(ent);
     }
 
     private void OnConfigureMessage(Entity<ConfigurableNavMapBeaconComponent> ent, ref NavMapBeaconConfigureBuiMessage args)
@@ -219,11 +235,46 @@ public sealed class NavMapSystem : SharedNavMapSystem
             beacons.Add(new NavMapBeacon(beacon.Color, name, xform.LocalPosition));
         }
 
+        var comp = EntityManager.GetComponent<MapGridComponent>(uid);
+        var airlockQuery = EntityQueryEnumerator<NavMapDoorComponent, TransformComponent>();
+        var airlocks = new List<NavMapAirlock>();
+        while (airlockQuery.MoveNext(out _, out _, out var xform))
+        {
+            if (xform.GridUid != uid || !xform.Anchored)
+                continue;
+
+            var pos = _map.TileIndicesFor(uid, comp, xform.Coordinates);
+            var enumerator = _map.GetAnchoredEntitiesEnumerator(uid, comp, pos);
+
+            var wallPresent = false;
+            while (enumerator.MoveNext(out var ent))
+            {
+                if (!_physicsQuery.TryGetComponent(ent, out var body) ||
+                    !body.CanCollide ||
+                    !body.Hard ||
+                    body.BodyType != BodyType.Static ||
+                    !_tags.HasTag(ent.Value, "Wall", _tagQuery) &&
+                    !_tags.HasTag(ent.Value, "Window", _tagQuery))
+                {
+                    continue;
+                }
+
+                wallPresent = true;
+                break;
+            }
+
+            if (wallPresent)
+                continue;
+
+            airlocks.Add(new NavMapAirlock(xform.LocalPosition));
+        }
+
         // TODO: Diffs
         args.State = new NavMapComponentState()
         {
             TileData = data,
             Beacons = beacons,
+            Airlocks = airlocks
         };
     }
 
@@ -283,8 +334,8 @@ public sealed class NavMapSystem : SharedNavMapSystem
                 !body.CanCollide ||
                 !body.Hard ||
                 body.BodyType != BodyType.Static ||
-                (!_tags.HasTag(ent.Value, "Wall", _tagQuery) &&
-                 !_tags.HasTag(ent.Value, "Window", _tagQuery)))
+                !_tags.HasTag(ent.Value, "Wall", _tagQuery) &&
+                !_tags.HasTag(ent.Value, "Window", _tagQuery))
             {
                 continue;
             }

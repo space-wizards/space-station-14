@@ -25,7 +25,7 @@ namespace Content.Client.Pinpointer.UI;
 public partial class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    private readonly SharedTransformSystem _transformSystem = default!;
+    private readonly SharedTransformSystem _transformSystem;
 
     public EntityUid? Owner;
     public EntityUid? MapUid;
@@ -37,7 +37,7 @@ public partial class NavMapControl : MapGridControl
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
     public Dictionary<NetEntity, NavMapBlip> TrackedEntities = new();
-    public Dictionary<Vector2i, List<NavMapLine>> TileGrid = default!;
+    public Dictionary<Vector2i, List<NavMapLine>>? TileGrid = default!;
 
     // Default colors
     public Color WallColor = new(102, 217, 102);
@@ -260,7 +260,7 @@ public partial class NavMapControl : MapGridControl
     {
         base.Draw(handle);
 
-        // Get the components necessary for drawing the navmap 
+        // Get the components necessary for drawing the navmap
         _entManager.TryGetComponent(MapUid, out _navMap);
         _entManager.TryGetComponent(MapUid, out _grid);
         _entManager.TryGetComponent(MapUid, out _xform);
@@ -318,7 +318,7 @@ public partial class NavMapControl : MapGridControl
 
         var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
 
-        // Drawing lines can be rather expensive due to the number of neighbors that need to be checked in order  
+        // Drawing lines can be rather expensive due to the number of neighbors that need to be checked in order
         // to figure out where they should be drawn. However, we don't *need* to do check these every frame.
         // Instead, lets periodically update where to draw each line and then store these points in a list.
         // Then we can just run through the list each frame and draw the lines without any extra computation.
@@ -358,6 +358,20 @@ public partial class NavMapControl : MapGridControl
 
                 handle.DrawPrimitives(DrawPrimitiveTopology.LineList, walls.Span, sRGB);
             }
+        }
+
+        var airlockBuffer = Vector2.One  * (MinimapScale / 2.25f);
+        var invertYVec = new Vector2(1, -1);
+        foreach (var airlock in _navMap.Airlocks)
+        {
+            var position = airlock.Position - offset;
+            position = Scale(position with { Y = -position.Y });
+
+            // line down the middle
+            handle.DrawLine(position + airlockBuffer * -Vector2.UnitY, position - airlockBuffer * -Vector2.UnitY, WallColor);
+
+            // Box around the outside
+            handle.DrawRect(new UIBox2(position + airlockBuffer, position - airlockBuffer), WallColor, false);
         }
 
         if (PostWallDrawingAction != null)
