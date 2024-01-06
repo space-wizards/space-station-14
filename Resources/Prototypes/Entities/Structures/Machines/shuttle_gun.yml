@@ -8,6 +8,9 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Anchorable
+  - type: Pullable
+  - type: Rotatable
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -25,9 +28,9 @@
   - type: Transform
     anchored: true
   - type: Sprite
-    sprite: Structures/Power/Generation/Singularity/emitter.rsi
+    sprite: Structures/Shuttles/Gun/laser.rsi
     layers:
-    - state: emitter1
+    - state: base
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -40,33 +43,6 @@
     - On
     - Off
   - type: GunSignalControl
-
-- type: entity
-  id: ShuttleGunProtoKineticBallistic
-  parent: ShuttleGunBase
-  name: PTK-800 Matter Dematerializer
-  suffix: Ballistic Test
-  description: A powerful shuttle drill that allows for efficient asteroid digging.
-  components:
-  - type: Gun
-    fireRate: 8
-    selectedMode: SemiAuto
-    availableModes:
-      - SemiAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - ShellShotgun
-    proto: ShellShotgun
-    capacity: 1
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
     
 - type: entity
   id: ShuttleGunProtoKineticLaser
@@ -75,6 +51,13 @@
   suffix: Laser Test
   description: A powerful shuttle drill that allows for efficient asteroid digging.
   components:
+  - type: Sprite
+    sprite: Structures/Shuttles/Guns/laser.rsi
+    layers:
+    - state: base
+    - state: mag-unshaded-9
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: HitscanBatteryAmmoProvider
     proto: RedLightLaser
     fireCost: 50
@@ -85,12 +68,17 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: Gun
-    fireRate: 1
+    fireRate: 3
     useKey: false
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg 
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 10
+    zeroVisible: true
+  - type: Appearance
     
 - type: entity
   id: ShuttleGunProtoKineticShotgun
@@ -122,18 +110,28 @@
     count: 1
 
 - type: entity
-  parent: WeaponMinigun
-  id: WeaponMinigunS
-  suffix: Device
+  id: ShuttleGunProtoKineticBallistic
+  parent: ShuttleGunBase
+  name: PTK-800 Matter Dematerializer
+  suffix: Ballistic Test
+  description: A powerful shuttle drill that allows for efficient asteroid digging.
   components:
-  - type: DeviceNetwork
-    deviceNetId: Wireless
-    receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
-    range: 200
-  - type: DeviceLinkSink
-    ports:
-    - Trigger
-    - On
-    - Off
-  - type: GunSignalControl
+  - type: Gun
+    fireRate: 8
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - ShellShotgun
+    proto: ShellShotgun
+    capacity: 1
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
