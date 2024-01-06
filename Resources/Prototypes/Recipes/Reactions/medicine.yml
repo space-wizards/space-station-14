@@ -499,3 +499,21 @@
       amount: 1
   products:
     Razorium: 1
+
+- type: reaction
+  id: Diphenhydramine
+  impact: Medium
+  minTemp: 377.59
+  reactants:
+    Diethylamine:
+      amount: 1
+    Oil:
+      amount: 1
+    TableSalt:
+      amount: 1
+    Carbon:
+      amount: 1
+    Ethanol:
+      amount: 1
+  products:
+    Diphenhydramine: 3
