@@ -26,8 +26,6 @@ namespace Content.Client.Launcher
         private readonly IConfigurationManager _cfg;
 
         private float _redialWaitTime = RedialWaitTimeSeconds;
-        [ValidatePrototypeId<DatasetPrototype>]
-        private string _loginTipsDataset = "Tips";
 
         public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
             IPrototypeManager prototype, IConfigurationManager config)
@@ -68,12 +66,6 @@ namespace Content.Client.Launcher
             var edim = IoCManager.Resolve<ExtendedDisconnectInformationManager>();
             edim.LastNetDisconnectedArgsChanged += LastNetDisconnectedArgsChanged;
             LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
-            _cfg.UnsubValueChanged(CCVars.LoginTipsDataset, SetLoginTipsDataset);
-        }
-
-        private void SetLoginTipsDataset(string value)
-        {
-            _loginTipsDataset = value;
         }
 
         private void ConnectFailReasonChanged(string? reason)
@@ -92,17 +84,16 @@ namespace Content.Client.Launcher
 
         private void ChangeLoginTip()
         {
-            var loginTipsEnable = _cfg.GetCVar(CCVars.LoginTipsEnable);
-            LogitTips.Visible = loginTipsEnable;
-            if (!loginTipsEnable)
+            var tipsDataset = _cfg.GetCVar(CCVars.LoginTipsDataset);
+            var loginTipsEnabled = _prototype.TryIndex<DatasetPrototype>(tipsDataset, out var tips);
+
+            LoginTips.Visible = loginTipsEnabled;
+            if (!loginTipsEnabled)
             {
                 return;
             }
 
-            if (!_prototype.TryIndex<DatasetPrototype>(_loginTipsDataset, out var tips))
-                return;
-
-            var tipList = tips.Values.ToList();
+            var tipList = tips!.Values;
 
             if (tipList.Count == 0)
                 return;
