@@ -3,6 +3,8 @@ using System.Numerics;
 using Content.Shared.Doors.Components;
 using Content.Shared.Tag;
 using Content.Shared.Turnstile.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -18,6 +20,8 @@ public sealed class SharedTurnstileSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
+
 
 
     private EntityQuery<TransformComponent> _xformQuery;
@@ -87,7 +91,20 @@ public sealed class SharedTurnstileSystem : EntitySystem
                 // Admit the entity.
                 turnstile.CurrentlyAdmittingEntity = args.OtherEntity;
                 SetState(ent.Owner, TurnstileState.Rotating);
+
+                // Play sound of turning
+                Audio.PlayPvs(turnstile.TurnSound, ent.Owner, AudioParams.Default.WithVolume(-3));
             }
+            else
+            {
+                // Reject the entity, play sound with cooldown
+                Audio.PlayPvs(turnstile.BumpSound, ent.Owner, AudioParams.Default.WithVolume(-3));
+            }
+        }
+        else
+        {
+            // Reject the entity, play sound with cooldown
+            Audio.PlayPvs(turnstile.BumpSound, ent.Owner, AudioParams.Default.WithVolume(-3));
         }
     }
 
