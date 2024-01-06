@@ -83,7 +83,7 @@
   suffix: Rigged
   components:
   - type: StaminaDamageOnHit
-    damage: 24
+    damage: 16 # actually 24 because of blunt > stamina damage conversion
   - type: MeleeWeapon
     attackRate: 1.2
     damage:

@@ -127,6 +127,15 @@
     state: tail_smooth
 
 - type: marking
+  id: LizardTailLarge
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_large
+
+- type: marking
   id: LizardTailSpikes
   bodyPart: Tail
   markingCategory: Tail
