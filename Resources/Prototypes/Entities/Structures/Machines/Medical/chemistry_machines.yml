@@ -120,6 +120,6 @@
       mixer:
         whitelist:
           tags:
-            - Vial
+            - CentrifugeCompatible
   - type: Machine
     board: CentrifugeMachineCircuitboard
