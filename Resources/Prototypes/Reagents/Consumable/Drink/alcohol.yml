@@ -796,15 +796,15 @@
         amount: 0.07
 
 - type: reagent
-  id: Goldschlager
-  name: reagent-name-goldschlager
+  id: Gildlager
+  name: reagent-name-gildlager
   parent: BaseAlcohol
-  desc: reagent-desc-goldschlager
+  desc: reagent-desc-gildlager
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#FFFF91"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/goldschlagerglass.rsi
+    sprite: Objects/Consumable/Drinks/gildlagerglass.rsi
     state: icon
   metabolisms:
     Drink:
