@@ -17,12 +17,14 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Hands.Systems
 {
     public sealed class HandsSystem : SharedHandsSystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -34,7 +36,7 @@ namespace Content.Server.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] { typeof(StunSystem) });
+            SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] {typeof(StunSystem)});
 
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
@@ -43,6 +45,7 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, BodyPartRemovedEvent>(HandleBodyPartRemoved);
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
+            SubscribeLocalEvent<HandsComponent, EntityUnpausedEvent>(OnUnpaused);
 
             SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
 
@@ -63,11 +66,16 @@ namespace Content.Server.Hands.Systems
             args.State = new HandsComponentState(hands);
         }
 
+        private void OnUnpaused(Entity<HandsComponent> ent, ref EntityUnpausedEvent args)
+        {
+            ent.Comp.NextThrowTime += args.PausedTime;
+        }
+
         private void OnExploded(Entity<HandsComponent> ent, ref BeforeExplodeEvent args)
         {
             foreach (var hand in ent.Comp.Hands.Values)
             {
-                if (hand.HeldEntity is {} uid)
+                if (hand.HeldEntity is { } uid)
                     args.Contents.Add(uid);
             }
         }
@@ -78,7 +86,8 @@ namespace Content.Server.Hands.Systems
                 return;
 
             // Break any pulls
-            if (TryComp(uid, out SharedPullerComponent? puller) && puller.Pulling is EntityUid pulled && TryComp(pulled, out SharedPullableComponent? pullable))
+            if (TryComp(uid, out SharedPullerComponent? puller) && puller.Pulling is EntityUid pulled &&
+                TryComp(pulled, out SharedPullableComponent? pullable))
                 _pullingSystem.TryStopPull(pullable);
 
             if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
@@ -114,6 +123,7 @@ namespace Content.Server.Hands.Systems
         }
 
         #region pulling
+
         private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
             if (args.Puller.Owner != uid)
@@ -146,21 +156,33 @@ namespace Content.Server.Hands.Systems
                 break;
             }
         }
+
         #endregion
 
         #region interactions
+
         private bool HandleThrowItem(ICommonSession? playerSession, EntityCoordinates coordinates, EntityUid entity)
         {
-            if (playerSession == null)
+            if (playerSession?.AttachedEntity is not {Valid: true} player || !Exists(player))
                 return false;
 
-            if (playerSession.AttachedEntity is not {Valid: true} player ||
-                !Exists(player) ||
-                ContainerSystem.IsEntityInContainer(player) ||
+            return ThrowHeldItem(player, coordinates);
+        }
+
+        /// <summary>
+        /// Throw the player's currently held item.
+        /// </summary>
+        public bool ThrowHeldItem(EntityUid player, EntityCoordinates coordinates, float minDistance = 0.1f)
+        {
+            if (ContainerSystem.IsEntityInContainer(player) ||
                 !TryComp(player, out HandsComponent? hands) ||
                 hands.ActiveHandEntity is not { } throwEnt ||
                 !_actionBlockerSystem.CanThrow(player, throwEnt))
                 return false;
+
+            if (_timing.CurTime < hands.NextThrowTime)
+                return false;
+            hands.NextThrowTime = _timing.CurTime + hands.ThrowCooldown;
 
             if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
@@ -176,7 +198,9 @@ namespace Content.Server.Hands.Systems
             if (direction == Vector2.Zero)
                 return true;
 
-            direction = direction.Normalized() * Math.Min(direction.Length(), hands.ThrowRange);
+            var length = direction.Length();
+            var distance = Math.Clamp(length, minDistance, hands.ThrowRange);
+            direction *= distance/length;
 
             var throwStrength = hands.ThrowForceMultiplier;
 
@@ -189,7 +213,7 @@ namespace Content.Server.Hands.Systems
                 return true;
 
             // This can grief the above event so we raise it afterwards
-            if (!TryDrop(player, throwEnt, handsComp: hands))
+            if (IsHolding(player, throwEnt, out _, hands) && !TryDrop(player, throwEnt, handsComp: hands))
                 return false;
 
             _throwingSystem.TryThrow(ev.ItemUid, ev.Direction, ev.ThrowStrength, ev.PlayerUid);

@@ -1,5 +1,5 @@
-using System.Linq;
 using Content.Server.Chemistry.Components;
+using Content.Server.IgnitionSource;
 using Content.Server.Tools.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Database;
@@ -11,12 +11,15 @@ using Content.Shared.Item;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameStates;
+using System.Linq;
+using Content.Shared.Item.ItemToggle.Components;
 
 namespace Content.Server.Tools
 {
     public sealed partial class ToolSystem
     {
         [Dependency] private readonly SharedItemToggleSystem _itemToggle = default!;
+        [Dependency] private readonly IgnitionSourceSystem _ignitionSource = default!;
         private readonly HashSet<EntityUid> _activeWelders = new();
 
         private const float WelderUpdateTimer = 1f;
@@ -36,83 +39,91 @@ namespace Content.Server.Tools
         public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
         {
             if (!Resolve(uid, ref welder, ref solutionContainer)
-                || !_solutionContainer.TryGetSolution(uid, welder.FuelSolution, out var fuelSolution, solutionContainer))
+                || !_solutionContainer.ResolveSolution((uid, solutionContainer), welder.FuelSolutionName, ref welder.FuelSolution, out var fuelSolution))
                 return (FixedPoint2.Zero, FixedPoint2.Zero);
 
-            return (_solutionContainer.GetTotalPrototypeQuantity(uid, welder.FuelReagent), fuelSolution.MaxVolume);
+            return (fuelSolution.GetTotalPrototypeQuantity(welder.FuelReagent), fuelSolution.MaxVolume);
         }
 
-        public void TryTurnOn(EntityUid uid, WelderComponent welder, ref ItemToggleActivateAttemptEvent args)
+        public void TryTurnOn(Entity<WelderComponent> entity, ref ItemToggleActivateAttemptEvent args)
         {
-            if (!_solutionContainer.TryGetSolution(uid, welder.FuelSolution, out var solution) ||
-                !TryComp<TransformComponent>(uid, out var transform))
+            if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.FuelSolutionName, ref entity.Comp.FuelSolution, out var solution) ||
+                !TryComp<TransformComponent>(entity, out var transform))
             {
                 args.Cancelled = true;
                 return;
             }
-            var fuel = solution.GetTotalPrototypeQuantity(welder.FuelReagent);
+
+            var fuel = solution.GetTotalPrototypeQuantity(entity.Comp.FuelReagent);
 
             // Not enough fuel to lit welder.
-            if (fuel == FixedPoint2.Zero || fuel < welder.FuelLitCost)
+            if (fuel == FixedPoint2.Zero || fuel < entity.Comp.FuelLitCost)
             {
                 if (args.User != null)
                 {
-                    _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), uid, (EntityUid) args.User);
+                    _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), entity, (EntityUid) args.User);
                 }
                 args.Cancelled = true;
                 return;
             }
 
-            solution.RemoveReagent(welder.FuelReagent, welder.FuelLitCost);
+            _solutionContainer.RemoveReagent(entity.Comp.FuelSolution.Value, entity.Comp.FuelReagent, entity.Comp.FuelLitCost);
 
             // Logging
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(uid):welder} on");
+            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(entity.Owner):welder} on");
+
+            _ignitionSource.SetIgnited(entity.Owner);
 
             if (transform.GridUid is { } gridUid)
             {
-                var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-                _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, uid, true);
+                var position = _transformSystem.GetGridOrMapTilePosition(entity.Owner, transform);
+                _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, entity.Owner, true);
             }
 
-            Dirty(uid, welder);
+            Dirty(entity);
 
-            _activeWelders.Add(uid);
+            _activeWelders.Add(entity);
         }
 
-        public void TurnOff(EntityUid uid, WelderComponent welder, ref ItemToggleDeactivateAttemptEvent args)
+        public void TurnOff(Entity<WelderComponent> entity, ref ItemToggleDeactivateAttemptEvent args)
         {
             // Logging
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(uid):welder} off");
+            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(entity.Owner):welder} off");
 
-            Dirty(uid, welder);
+            _ignitionSource.SetIgnited(entity.Owner, false);
 
-            _activeWelders.Remove(uid);
+            Dirty(entity);
+
+            _activeWelders.Remove(entity);
         }
 
-        private void OnWelderExamine(EntityUid uid, WelderComponent welder, ExaminedEvent args)
+        private void OnWelderExamine(Entity<WelderComponent> entity, ref ExaminedEvent args)
         {
-            if (_itemToggle.IsActivated(uid))
+            using (args.PushGroup(nameof(WelderComponent)))
             {
-                args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message"));
-            }
-            else
-            {
-                args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-not-lit-message"));
-            }
+                if (_itemToggle.IsActivated(entity.Owner))
+                {
+                    args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message"));
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-not-lit-message"));
+                }
 
-            if (args.IsInDetailsRange)
-            {
-                var (fuel, capacity) = GetWelderFuelAndCapacity(uid, welder);
+                if (args.IsInDetailsRange)
+                {
+                    var (fuel, capacity) = GetWelderFuelAndCapacity(entity.Owner, entity.Comp);
 
-                args.PushMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
-                    ("colorName", fuel < capacity / FixedPoint2.New(4f) ? "darkorange" : "orange"),
-                    ("fuelLeft", fuel),
-                    ("fuelCapacity", capacity),
-                    ("status", string.Empty))); // Lit status is handled above
+                    args.PushMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
+                        ("colorName", fuel < capacity / FixedPoint2.New(4f) ? "darkorange" : "orange"),
+                        ("fuelLeft", fuel),
+                        ("fuelCapacity", capacity),
+                        ("status", string.Empty))); // Lit status is handled above
+                }
             }
         }
 
-        private void OnWelderAfterInteract(EntityUid uid, WelderComponent welder, AfterInteractEvent args)
+        private void OnWelderAfterInteract(Entity<WelderComponent> entity, ref AfterInteractEvent args)
         {
             if (args.Handled)
                 return;
@@ -122,49 +133,49 @@ namespace Content.Server.Tools
 
             if (TryComp(target, out ReagentTankComponent? tank)
                 && tank.TankType == ReagentTankType.Fuel
-                && _solutionContainer.TryGetDrainableSolution(target, out var targetSolution)
-                && _solutionContainer.TryGetSolution(uid, welder.FuelSolution, out var welderSolution))
+                && _solutionContainer.TryGetDrainableSolution(target, out var targetSoln, out var targetSolution)
+                && _solutionContainer.ResolveSolution(entity.Owner, entity.Comp.FuelSolutionName, ref entity.Comp.FuelSolution, out var welderSolution))
             {
                 var trans = FixedPoint2.Min(welderSolution.AvailableVolume, targetSolution.Volume);
                 if (trans > 0)
                 {
-                    var drained = _solutionContainer.Drain(target, targetSolution, trans);
-                    _solutionContainer.TryAddSolution(uid, welderSolution, drained);
-                    _audio.PlayPvs(welder.WelderRefill, uid);
-                    _popup.PopupEntity(Loc.GetString("welder-component-after-interact-refueled-message"), uid, args.User);
+                    var drained = _solutionContainer.Drain(target, targetSoln.Value, trans);
+                    _solutionContainer.TryAddSolution(entity.Comp.FuelSolution.Value, drained);
+                    _audio.PlayPvs(entity.Comp.WelderRefill, entity);
+                    _popup.PopupEntity(Loc.GetString("welder-component-after-interact-refueled-message"), entity, args.User);
                 }
                 else if (welderSolution.AvailableVolume <= 0)
                 {
-                    _popup.PopupEntity(Loc.GetString("welder-component-already-full"), uid, args.User);
+                    _popup.PopupEntity(Loc.GetString("welder-component-already-full"), entity, args.User);
                 }
                 else
                 {
-                    _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-in-tank", ("owner", args.Target)), uid, args.User);
+                    _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-in-tank", ("owner", args.Target)), entity, args.User);
                 }
             }
 
             args.Handled = true;
         }
 
-        private void OnWelderToolUseAttempt(EntityUid uid, WelderComponent welder, DoAfterAttemptEvent<ToolDoAfterEvent> args)
+        private void OnWelderToolUseAttempt(Entity<WelderComponent> entity, ref DoAfterAttemptEvent<ToolDoAfterEvent> args)
         {
             var user = args.DoAfter.Args.User;
 
-            if (!_itemToggle.IsActivated(uid))
+            if (!_itemToggle.IsActivated(entity.Owner))
             {
-                _popup.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, user);
+                _popup.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), entity, user);
                 args.Cancel();
             }
         }
 
-        private void OnWelderShutdown(EntityUid uid, WelderComponent welder, ComponentShutdown args)
+        private void OnWelderShutdown(Entity<WelderComponent> entity, ref ComponentShutdown args)
         {
-            _activeWelders.Remove(uid);
+            _activeWelders.Remove(entity);
         }
 
-        private void OnWelderGetState(EntityUid uid, WelderComponent welder, ref ComponentGetState args)
+        private void OnWelderGetState(Entity<WelderComponent> entity, ref ComponentGetState args)
         {
-            var (fuel, capacity) = GetWelderFuelAndCapacity(uid, welder);
+            var (fuel, capacity) = GetWelderFuelAndCapacity(entity.Owner, entity.Comp);
             args.State = new WelderComponentState(capacity.Float(), fuel.Float());
         }
 
@@ -182,10 +193,10 @@ namespace Content.Server.Tools
                     || !TryComp(tool, out SolutionContainerManagerComponent? solutionContainer))
                     continue;
 
-                if (!_solutionContainer.TryGetSolution(tool, welder.FuelSolution, out var solution, solutionContainer))
+                if (!_solutionContainer.ResolveSolution((tool, solutionContainer), welder.FuelSolutionName, ref welder.FuelSolution, out var solution))
                     continue;
 
-                solution.RemoveReagent(welder.FuelReagent, welder.FuelConsumption * _welderTimer);
+                _solutionContainer.RemoveReagent(welder.FuelSolution.Value, welder.FuelReagent, welder.FuelConsumption * _welderTimer);
 
                 if (solution.GetTotalPrototypeQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
                 {

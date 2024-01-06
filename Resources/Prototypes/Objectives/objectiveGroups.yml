@@ -51,7 +51,7 @@
 - type: weightedRandom
   id: ThiefBigObjectiveGroups
   weights:
-    ThiefObjectiveGroupStructure: 1
+    ThiefObjectiveGroupStructure: 0 #Temporarily disabled until obvious ways to steal structures are added
     ThiefObjectiveGroupAnimal: 2
 
 - type: weightedRandom
@@ -71,7 +71,6 @@
     TechnologyDiskStealCollectionObjective: 1        #rnd
     FigurineStealCollectionObjective: 0.3          #service
     IDCardsStealCollectionObjective: 1
-    EncryptionKeyStealCollectionObjective: 1
     CannabisStealCollectionObjective: 1
     LAMPStealCollectionObjective: 2 #only for moth
 
@@ -79,6 +78,7 @@
   id: ThiefObjectiveGroupItem
   weights:
     ForensicScannerStealObjective: 1                    #sec
+    FlippoEngravedLighterStealObjective: 0.5
     AmmoTechFabCircuitboardStealObjective: 1
     ClothingHeadHatWardenStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med

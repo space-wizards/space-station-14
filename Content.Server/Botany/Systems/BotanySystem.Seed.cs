@@ -1,10 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Botany.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Botany;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Physics;
@@ -20,6 +18,8 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Server.Botany.Systems;
 
@@ -90,10 +90,13 @@ public sealed partial class BotanySystem : EntitySystem
         if (!TryGetSeed(component, out var seed))
             return;
 
-        var name = Loc.GetString(seed.DisplayName);
-        args.PushMarkup(Loc.GetString($"seed-component-description", ("seedName", name)));
-        args.PushMarkup(Loc.GetString($"seed-component-plant-yield-text", ("seedYield", seed.Yield)));
-        args.PushMarkup(Loc.GetString($"seed-component-plant-potency-text", ("seedPotency", seed.Potency)));
+        using (args.PushGroup(nameof(SeedComponent)))
+        {
+            var name = Loc.GetString(seed.DisplayName);
+            args.PushMarkup(Loc.GetString($"seed-component-description", ("seedName", name)));
+            args.PushMarkup(Loc.GetString($"seed-component-plant-yield-text", ("seedYield", seed.Yield)));
+            args.PushMarkup(Loc.GetString($"seed-component-plant-potency-text", ("seedPotency", seed.Potency)));
+        }
     }
 
     #region SeedPrototype prototype stuff

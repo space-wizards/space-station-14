@@ -1,3 +1,4 @@
+using Content.Server.Thief.Systems;
 using Content.Shared.Thief;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -8,7 +9,7 @@ namespace Content.Server.Thief.Components;
 /// This component stores the possible contents of the backpack,
 /// which can be selected via the interface.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(ThiefUndeterminedBackpackSystem))]
 public sealed partial class ThiefUndeterminedBackpackComponent : Component
 {
     /// <summary>

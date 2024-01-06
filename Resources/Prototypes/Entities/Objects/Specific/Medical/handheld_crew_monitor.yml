@@ -65,4 +65,28 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default 
+
+- type: entity
+  id: SyndiCrewMonitor
+  name: Syndicate crew monitor
+  description: The syndicated version of crew monitor, intercepts information from the server.
+  parent: HandheldCrewMonitor
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/syndihandheldcrewmonitor.rsi
+    state: syndiscanner
+  - type: Item
+    sprite: Objects/Specific/Medical/syndihandheldcrewmonitor.rsi
+  - type: PowerCellDraw
+    useRate: 40
+
+- type: entity
+  id: SyndiCrewMonitorEmpty
+  parent: SyndiCrewMonitor
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default 
   

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
@@ -51,6 +52,12 @@ public sealed class MeleeHitEvent : HandledEntityEventArgs
     public readonly EntityUid Weapon;
 
     /// <summary>
+    /// The direction of the attack.
+    /// If null, it was a click-attack.
+    /// </summary>
+    public readonly Vector2? Direction;
+
+    /// <summary>
     /// Check if this is true before attempting to do something during a melee attack other than changing/adding bonus damage. <br/>
     /// For example, do not spend charges unless <see cref="IsHit"/> equals true.
     /// </summary>
@@ -59,12 +66,13 @@ public sealed class MeleeHitEvent : HandledEntityEventArgs
     /// </remarks>
     public bool IsHit = true;
 
-    public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user, EntityUid weapon, DamageSpecifier baseDamage)
+    public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user, EntityUid weapon, DamageSpecifier baseDamage, Vector2? direction)
     {
         HitEntities = hitEntities;
         User = user;
         Weapon = weapon;
         BaseDamage = baseDamage;
+        Direction = direction;
     }
 }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.IntegrationTests.Pair;
 using Content.Server.Administration.Managers;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
@@ -95,6 +96,7 @@ public abstract class ToolshedTest : IInvocationContext
     }
 
     protected ICommonSession? InvocationSession { get; set; }
+    public NetUserId? User => Session?.UserId;
 
     public ICommonSession? Session
     {

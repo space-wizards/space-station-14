@@ -4,6 +4,7 @@ using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.Input;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -30,6 +31,13 @@ public sealed class AFKSystem : EntitySystem
         base.Initialize();
         _playerManager.PlayerStatusChanged += OnPlayerChange;
         _configManager.OnValueChanged(CCVars.AfkTime, SetAfkDelay, true);
+
+        SubscribeNetworkEvent<FullInputCmdMessage>(HandleInputCmd);
+    }
+
+    private void HandleInputCmd(FullInputCmdMessage msg, EntitySessionEventArgs args)
+    {
+        _afkManager.PlayerDidAction(args.SenderSession);
     }
 
     private void SetAfkDelay(float obj)

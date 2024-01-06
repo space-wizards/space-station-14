@@ -3,13 +3,12 @@ using Content.Server.Ninja.Events;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
-using Content.Shared.Actions;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
-using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Timing;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Ninja.Systems;
@@ -94,7 +93,8 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         // need 1 second of charge to turn on stealth
         var chargeNeeded = SuitWattage(uid, comp);
         // being attacked while cloaked gives no power message since it overloads the power supply or something
-        if (!_ninja.GetNinjaBattery(user, out var _, out var battery) || battery.CurrentCharge < chargeNeeded || UseDelay.ActiveDelay(user))
+        if (!_ninja.GetNinjaBattery(user, out var _, out var battery) || battery.CurrentCharge < chargeNeeded
+            || !TryComp(user, out UseDelayComponent? useDelay) || UseDelay.IsDelayed((user, useDelay)))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             args.Cancel();
@@ -108,7 +108,8 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     {
         args.Handled = true;
         var user = args.Performer;
-        if (!_ninja.TryUseCharge(user, comp.ThrowingStarCharge) || UseDelay.ActiveDelay(user))
+        if (!_ninja.TryUseCharge(user, comp.ThrowingStarCharge)
+            || !TryComp(user, out UseDelayComponent? useDelay) || UseDelay.IsDelayed((user, useDelay)))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
@@ -130,7 +131,8 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var coords = _transform.GetWorldPosition(katana);
         var distance = (_transform.GetWorldPosition(user) - coords).Length();
         var chargeNeeded = (float) distance * comp.RecallCharge;
-        if (!_ninja.TryUseCharge(user, chargeNeeded) || UseDelay.ActiveDelay(user))
+        if (!_ninja.TryUseCharge(user, chargeNeeded)
+            || !TryComp(user, out UseDelayComponent? useDelay) || UseDelay.IsDelayed((user, useDelay)))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
@@ -147,14 +149,15 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     {
         args.Handled = true;
         var user = args.Performer;
-        if (!_ninja.TryUseCharge(user, comp.EmpCharge) || UseDelay.ActiveDelay(user))
+        if (!_ninja.TryUseCharge(user, comp.EmpCharge)
+            || !TryComp(user, out UseDelayComponent? useDelay) || UseDelay.IsDelayed((user, useDelay)))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
         }
 
         // I don't think this affects the suit battery, but if it ever does in the future add a blacklist for it
-        var coords = Transform(user).MapPosition;
+        var coords = _transform.GetMapCoordinates(user);
         _emp.EmpPulse(coords, comp.EmpRange, comp.EmpConsumption, comp.EmpDuration);
     }
 }
