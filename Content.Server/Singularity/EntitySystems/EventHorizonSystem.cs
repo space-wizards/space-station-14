@@ -138,7 +138,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
 
         if (eventHorizon.InheritMomentum && TryComp<PhysicsComponent>(hungry, out var thisPhysics) && TryComp<PhysicsComponent>(morsel, out var otherPhysics))
         {
-            var impulse = (otherPhysics.LinearVelocity - thisPhysics.LinearVelocity) * otherPhysics.FixturesMass;
+            var impulse = (otherPhysics.LinearVelocity - thisPhysics.LinearVelocity)
+            * otherPhysics.FixturesMass
+            * thisPhysics.FixturesMass / (thisPhysics.FixturesMass + otherPhysics.FixturesMass); // accounts for the expected mass change from consuming the object
             _physics.ApplyLinearImpulse(hungry, impulse, body: thisPhysics);
         }
 
