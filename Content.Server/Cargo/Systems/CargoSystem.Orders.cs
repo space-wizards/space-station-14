@@ -371,28 +371,16 @@ namespace Content.Server.Cargo.Systems
                 // Create the item itself
                 var item = Spawn(order.ProductId, whereToPutIt);
 
+                if (paperPrototypeToPrint is null)
+                    return true; // return early with true because despite not printing the invoice, we still managed to fufill the order
+
                 // Create a sheet of paper to write the order details on
-                var printed = EntityManager.SpawnEntity(paperPrototypeToPrint, whereToPutIt);
-                if (TryComp<PaperComponent>(printed, out var paper))
+                var printed = GenerateInvoice(order, whereToPutIt, paperPrototypeToPrint);
+
+                // attempt to attach the label to the item
+                if (TryComp<PaperLabelComponent>(item, out var label))
                 {
-                    // fill in the order data
-                    var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.OrderId));
-                    _metaSystem.SetEntityName(printed, val);
-
-                    _paperSystem.SetContent(printed, Loc.GetString(
-                                "cargo-console-paper-print-text",
-                                ("orderNumber", order.OrderId),
-                                ("itemName", MetaData(item).EntityName),
-                                ("requester", order.Requester),
-                                ("reason", order.Reason),
-                                ("approver", order.Approver ?? string.Empty)),
-                            paper);
-
-                    // attempt to attach the label to the item
-                    if (TryComp<PaperLabelComponent>(item, out var label))
-                    {
-                        _slots.TryInsert(item, label.LabelSlot, printed, null);
-                    }
+                    _slots.TryInsert(item, label.LabelSlot, printed, null);
                 }
 
                 // set the OrderId of the invoice
