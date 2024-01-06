@@ -14,7 +14,7 @@ namespace Content.Shared.Construction.Steps
             if (string.IsNullOrEmpty(Name))
                 return;
 
-            examinedEvent.Message.AddMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
+            examinedEvent.PushMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
         }
 
         public override ConstructionGuideEntry GenerateGuideEntry()
