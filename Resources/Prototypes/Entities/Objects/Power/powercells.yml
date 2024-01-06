@@ -313,8 +313,8 @@
   description: A rechargeable power cage for big devices. This is the cheapest kind you can find.
   components:
   - type: Battery
-    maxCharge: 700
-    startingCharge: 700
+    maxCharge: 1000
+    startingCharge: 1000
     
 - type: entity
   id: PowerCageMedium
@@ -323,8 +323,8 @@
   description: A rechargeable power cage for big devices. The gold standard of capacity and cost.
   components:
   - type: Battery
-    maxCharge: 1500
-    startingCharge: 1500
+    maxCharge: 2000
+    startingCharge: 2000
     
 - type: entity
   id: PowerCageHigh
@@ -333,5 +333,5 @@
   description: A rechargeable power cage for big devices. Increased capacity for increased power levels.
   components:
   - type: Battery
-    maxCharge: 2200
-    startingCharge: 2200
+    maxCharge: 3000
+    startingCharge: 3000
