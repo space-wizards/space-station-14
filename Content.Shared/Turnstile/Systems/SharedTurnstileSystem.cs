@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Numerics;
 using Content.Shared.Doors.Components;
+using Content.Shared.Physics;
 using Content.Shared.Tag;
 using Content.Shared.Turnstile.Components;
 using Robust.Shared.Audio;
@@ -13,7 +14,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Turnstile.Systems;
 
-public sealed class SharedTurnstileSystem : EntitySystem
+public abstract class SharedTurnstileSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
@@ -54,7 +55,7 @@ public sealed class SharedTurnstileSystem : EntitySystem
             _activeTurnstiles.Add(ent);
 
         RaiseLocalEvent(ent, new TurnstileEvents.TurnstileStateChangedEvent(turnstile.State));
-        AppearanceSystem.SetData(ent, DoorVisuals.State, turnstile.State);
+        AppearanceSystem.SetData(ent, TurnstileVisuals.State, turnstile.State);
     }
 
     private void OnComponentInit(Entity<TurnstileComponent> ent, ref ComponentInit args)
@@ -68,41 +69,10 @@ public sealed class SharedTurnstileSystem : EntitySystem
         SetCollidable(ent, true, turnstile);
         AppearanceSystem.SetData(ent, TurnstileVisuals.State, turnstile.State);
     }
-    private void HandleCollide(Entity<TurnstileComponent> ent, ref StartCollideEvent args)
+
+    protected virtual void HandleCollide(Entity<TurnstileComponent> ent, ref StartCollideEvent args)
     {
-        // If the colliding entity cannot open doors by bumping into them, then it can't turn the turnstile either.
-        if (!Tags.HasTag(args.OtherEntity, "DoorBumpOpener"))
-            return;
 
-        // Check the contact normal against our direction.
-        // For simplicity, we always want a mob to pass from the "back" to the "front" of the turnstile.
-        // That allows unanchored turnstiles to be dragged and rotated as needed, and will admit passage in the
-        // direction that they are pulled in.
-        var turnstile = ent.Comp;
-        if (turnstile.State == TurnstileState.Idle)
-        {
-            var facingDirection = GetFacingDirection(ent.Owner, turnstile);
-            var directionOfContact = GetDirectionOfContact(ent.Owner, args.OtherEntity);
-            if (facingDirection == directionOfContact)
-            {
-                // Admit the entity.
-                turnstile.CurrentlyAdmittingEntity = args.OtherEntity;
-                SetState(ent.Owner, TurnstileState.Rotating);
-
-                // Play sound of turning
-                Audio.PlayPvs(turnstile.TurnSound, ent.Owner, AudioParams.Default.WithVolume(-3));
-            }
-            else
-            {
-                // Reject the entity, play sound with cooldown
-                Audio.PlayPvs(turnstile.BumpSound, ent.Owner, AudioParams.Default.WithVolume(-3));
-            }
-        }
-        else
-        {
-            // Reject the entity, play sound with cooldown
-            Audio.PlayPvs(turnstile.BumpSound, ent.Owner, AudioParams.Default.WithVolume(-3));
-        }
     }
 
     /// <summary>
@@ -120,6 +90,9 @@ public sealed class SharedTurnstileSystem : EntitySystem
             {
                 turnstile.NextStateChange = null;
                 SetState(ent.Owner, TurnstileState.Idle);
+
+                // Remove preventcollision comp
+                RemComp<PreventCollideComponent>(ent.Owner);
             }
             else
             {
@@ -128,19 +101,19 @@ public sealed class SharedTurnstileSystem : EntitySystem
         }
     }
 
-    private bool GetIsCollidingWithAdmitted(EntityUid uid, TurnstileComponent? turnstile = null, PhysicsComponent? physics = null)
+    private bool GetIsCollidingWithAdmitted(EntityUid uid, TurnstileComponent? turnstile = null, PhysicsComponent? physics = null, PreventCollideComponent? preventCollide = null)
     {
-        if (!Resolve(uid, ref physics, ref turnstile, false))
+        if (!Resolve(uid, ref physics, ref turnstile, ref preventCollide, false))
             return false;
 
-        var doorAABB = EntityLookupSystem.GetWorldAABB(uid);
+        var turnstileAABB = EntityLookupSystem.GetWorldAABB(uid);
 
-        foreach (var otherPhysics in PhysicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
+        foreach (var otherPhysics in PhysicsSystem.GetCollidingEntities(Transform(uid).MapID, turnstileAABB))
         {
             if (otherPhysics == physics)
                 continue;
 
-            if (otherPhysics.Owner == turnstile.CurrentlyAdmittingEntity)
+            if (otherPhysics.Owner == preventCollide.Uid)
                 return true;
         }
 
@@ -171,27 +144,30 @@ public sealed class SharedTurnstileSystem : EntitySystem
         }
     }
 
-    private Direction GetFacingDirection(EntityUid uid, TurnstileComponent? turnstile = null)
+    protected Direction GetFacingDirection(EntityUid uid, TurnstileComponent? turnstile = null)
     {
         if (!Resolve(uid, ref turnstile, false))
             return Direction.Invalid;
 
         var xform = _xformQuery.GetComponent(uid);
-        return xform.LocalRotation.ToWorldVec().GetDir();
+        return xform.LocalRotation.GetDir();
     }
 
-    private Direction GetDirectionOfContact(EntityUid uid, EntityUid other)
+    protected Direction GetDirectionOfContact(EntityUid uid, EntityUid other)
     {
-        return (XformSystem.GetGridOrMapTilePosition(uid) - XformSystem.GetGridOrMapTilePosition(other)).GetDir();
+        var xform = _xformQuery.GetComponent(uid);
+        var xformOther = _xformQuery.GetComponent(other);
+        return (xform.LocalPosition - xformOther.LocalPosition).GetDir();
     }
 
-    private void PreventCollision(EntityUid uid, TurnstileComponent component, PreventCollideEvent args)
-    {
+    private void PreventCollision(Entity<TurnstileComponent> ent, ref PreventCollideEvent args)
+    {/*
+        var turnstile = ent.Comp;
         // Allow currently-admitted entity to pass through.
-        if (component.CurrentlyAdmittingEntity == args.OtherEntity)
+        if (turnstile.CurrentlyAdmittingEntity == args.OtherEntity)
         {
             args.Cancelled = true;
-        }
+        }*/
     }
 
 
@@ -226,7 +202,6 @@ public sealed class SharedTurnstileSystem : EntitySystem
 
             case TurnstileState.Idle:
                 _activeTurnstiles.Remove((uid, turnstile));
-                turnstile.CurrentlyAdmittingEntity = EntityUid.Invalid;
                 break;
         }
 

@@ -19,18 +19,6 @@ public sealed partial class TurnstileComponent : Component
     [Access(typeof(SharedTurnstileSystem))]
     public TurnstileState State = TurnstileState.Idle;
 
-    /// <summary>
-    /// The current entity being admitted by the turnstile.
-    /// </summary>
-    /// <remarks>
-    /// This should never be set directly.
-    /// </remarks>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField, AutoNetworkedField]
-    [Access(typeof(SharedTurnstileSystem))]
-    public EntityUid CurrentlyAdmittingEntity;
-
-
     #region Timing
     /// <summary>
     /// Time between each turn of the turnstile. Allows controlling the "flow rate" of mobs through.

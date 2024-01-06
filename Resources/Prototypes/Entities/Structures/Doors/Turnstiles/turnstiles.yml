@@ -13,10 +13,14 @@
   - type: Sprite
     sprite: Structures/Doors/turnstile.rsi
     snapCardinals: true
+    noRot: true
     layers:
     - state: idle
   - type: AnimationPlayer
   - type: Physics
+  - type: Rotatable
+  - type: Transform
+    noRot: false
   - type: Fixtures
     fixtures:
       fix1:
@@ -30,13 +34,13 @@
         - AirlockLayer
   - type: Turnstile
     turnSound:
-      path: /Audio/Machines/airlock_open.ogg
+      path: /Audio/Effects/unbuckle.ogg
     bumpSound:
-      path: /Audio/Machines/airlock_deny.ogg
+      collection: FenceRattle
   - type: Appearance
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: Inorganic
+    damageModifierSet: FlimsyMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -63,6 +67,11 @@
   description: A smaller, less-secure turnstile.
   components:
   - type: Climbable
+    delay: 5.0
+    startClimbSound:
+      collection: FenceRattle
+    finishClimbSound:
+      collection: FenceRattle
   - type: Sprite
     sprite: Structures/Doors/turnstile.rsi
     snapCardinals: true
