@@ -345,14 +345,24 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.InsertingTimeRemaining > 0 && component.PaperSlot.Item != null && _tagSystem.HasTag(component.PaperSlot.Item.Value, "Hamster"))
-            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingHamlet);
-        else if (component.InsertingTimeRemaining > 0 && component.PaperSlot.Item != null && _tagSystem.HasTag(component.PaperSlot.Item.Value, "Mouse"))
-            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMouse);
-        else if (component.InsertingTimeRemaining > 0 && component.PaperSlot.Item != null && _tagSystem.HasTag(component.PaperSlot.Item.Value, "MothRoach"))
-            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMothroach);
-        else if (component.InsertingTimeRemaining > 0)
-            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
+        if (component.InsertingTimeRemaining > 0 && component.PaperSlot.Item != null)
+        {
+
+            if (HasComp<MobStateComponent>(component.PaperSlot.Item))
+            {
+
+                if (_tagSystem.HasTag(component.PaperSlot.Item.Value, "Hamster"))
+                    _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingHamlet);
+                else if(_tagSystem.HasTag(component.PaperSlot.Item.Value, "MothRoach"))
+                {
+                    _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMothroach);
+                }
+                else
+                    _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMouse);
+            }
+            else
+                _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
+        }
         else if (component.PrintingTimeRemaining > 0)
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
         else
