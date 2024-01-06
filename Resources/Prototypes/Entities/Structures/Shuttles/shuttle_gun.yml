@@ -19,7 +19,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
-        density: 160
+        density: 250
         mask:
         - TableMask
         layer:
