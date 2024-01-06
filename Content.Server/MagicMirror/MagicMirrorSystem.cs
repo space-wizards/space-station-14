@@ -22,6 +22,7 @@ public sealed class MagicMirrorSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly MarkingManager _markings = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
@@ -40,6 +41,16 @@ public sealed class MagicMirrorSystem : EntitySystem
         SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorChangeColorDoAfterEvent>(OnChangeColorDoAfter);
         SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorRemoveSlotDoAfterEvent>(OnRemoveSlotDoAfter);
         SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorAddSlotDoAfterEvent>(OnAddSlotDoAfter);
+
+        SubscribeLocalEvent<MagicMirrorComponent, BoundUserInterfaceCheckRangeEvent>(OnMirrorRangeCheck);
+    }
+
+    private void OnMirrorRangeCheck(EntityUid uid, MagicMirrorComponent component, ref BoundUserInterfaceCheckRangeEvent args)
+    {
+        if (!Exists(component.Target) || _interaction.InRangeUnobstructed(uid, component.Target.Value))
+        {
+            args.Result = BoundUserInterfaceRangeResult.Fail;
+        }
     }
 
     private void OnMagicMirrorInteract(Entity<MagicMirrorComponent> mirror, ref AfterInteractEvent args)
