@@ -225,7 +225,7 @@
 
 - type: Tag
   id: BypassInteractionRangeChecks
-  
+
 - type: Tag
   id: CableCoil
 
@@ -292,6 +292,9 @@
 # Allows you to walk over tile entities such as lava without steptrigger
 - type: Tag
   id: Catwalk
+
+- type: Tag
+  id: CentrifugeCompatible
 
 - type: Tag
   id: Chicken
