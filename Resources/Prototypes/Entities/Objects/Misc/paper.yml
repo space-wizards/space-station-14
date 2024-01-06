@@ -128,7 +128,8 @@
 - type: entity
   name: cargo invoice
   parent: Paper
-  id: PaperCargoInvoice
+  id: PaperCargoInvoiceBase
+  abstract: true
   description: 'A single unit of bureaucracy.'
   components:
   - type: Sprite
@@ -154,8 +155,14 @@
     headerMargin: 0.0, 12.0, 0.0, 0.0
 
 - type: entity
+  id: PaperCargoInvoice
+  parent: PaperCargoInvoiceBase
+  components:
+  - type: CargoInvoice
+
+- type: entity
   id: PaperCargoBountyManifest
-  parent: PaperCargoInvoice
+  parent: PaperCargoInvoiceBase
   name: bounty manifest
   description: A paper label designating a crate as containing a bounty. Selling a crate with this label will fulfill the bounty.
   components:

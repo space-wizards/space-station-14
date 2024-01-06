@@ -89,6 +89,7 @@ namespace Content.Server.Cargo.Systems
 
             var bankAccount = GetBankAccount(uid, component);
 
+
             // No station to deduct from.
             if (!TryGetOrderDatabase(uid, out var dbUid, out var orderDatabase, component) || bankAccount == null)
             {
@@ -392,6 +393,12 @@ namespace Content.Server.Cargo.Systems
                     {
                         _slots.TryInsert(item, label.LabelSlot, printed, null);
                     }
+                }
+
+                // set the OrderId of the invoice
+                if (TryComp<CargoInvoiceComponent>(printed, out var invoice))
+                {
+                    invoice.OrderId = order.OrderId;
                 }
 
                 return true;
