@@ -7,19 +7,19 @@ namespace Content.Server.DeviceLinking.Components;
 [RegisterComponent]
 public sealed partial class SignalTimerComponent : Component
 {
-    [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public double Delay = 5;
 
     /// <summary>
     ///     This shows the Label: text box in the UI.
     /// </summary>
-    [DataField("canEditLabel"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool CanEditLabel = true;
 
     /// <summary>
     ///     The label, used for TextScreen visuals currently.
     /// </summary>
-    [DataField("label"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string Label = "";
 
     /// <summary>
