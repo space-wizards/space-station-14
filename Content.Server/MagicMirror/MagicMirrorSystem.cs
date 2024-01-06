@@ -66,15 +66,15 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void OnMagicMirrorSelect(EntityUid uid, MagicMirrorComponent component, MagicMirrorSelectMessage message)
     {
-        if (!_uiSystem.Try)
-
         if (component.Target is not { } target || message.Session.AttachedEntity is not { } user)
             return;
 
-        var doAfter = new MagicMirrorSelectDoAfterEvent(message);
+        var doAfter = new MagicMirrorSelectDoAfterEvent()
+        {
+            Category = message.Category,
+        };
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.SelectSlotTime, doAfter, uid, target: target, used: uid)
-
         {
             DistanceThreshold = SharedInteractionSystem.InteractionRange,
             BreakOnTargetMove = true,
@@ -87,6 +87,7 @@ public sealed class MagicMirrorSystem : EntitySystem
 
         _audio.PlayPvs(component.ChangeHairSound, uid);
     }
+
     private void OnSelectSlotDoAfter(EntityUid uid, MagicMirrorComponent component, MagicMirrorSelectDoAfterEvent args)
     {
         if (args.Handled || args.Target == null || args.Cancelled)
@@ -95,11 +96,9 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (component.Target != args.Target)
             return;
 
-        if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
-            return;
-
         var category = MarkingCategories.Hair;
-        switch (args.Message.Category)
+
+        switch (args.Category)
         {
             case MagicMirrorCategory.Hair:
                 category = MarkingCategories.Hair;
@@ -121,9 +120,6 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (component.Target is not { } target || message.Session.AttachedEntity is not { } user)
             return;
 
-        if (!_interaction.InRangeUnobstructed(user, target))
-            return;
-
         var doAfter = new MagicMirrorChangeColorDoAfterEvent(message);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.ChangeSlotTime, doAfter, uid, target: target, used: uid)
 
@@ -142,9 +138,6 @@ public sealed class MagicMirrorSystem : EntitySystem
             return;
 
         if (component.Target != args.Target)
-            return;
-
-        if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
             return;
 
         var category = MarkingCategories.Hair;
@@ -171,9 +164,6 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (component.Target is not { } target || message.Session.AttachedEntity is not { } user)
             return;
 
-        if (!_interaction.InRangeUnobstructed(user, target))
-            return;
-
         var doAfter = new MagicMirrorRemoveSlotDoAfterEvent(message);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.RemoveSlotTime, doAfter, uid, target: target, used: uid)
 
@@ -197,7 +187,8 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (component.Target == null) return;
 
         var category = MarkingCategories.Hair;
-        switch (args.Message.Category)
+
+        switch (args.Category)
         {
             case MagicMirrorCategory.Hair:
                 category = MarkingCategories.Hair;
@@ -220,7 +211,8 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (component.Target == null) return;
         if (message.Session.AttachedEntity == null) return;
 
-        var doAfter = new MagicMirrorAddSlotDoAfterEvent(message);
+        var doAfter = new MagicMirrorAddSlotDoAfterEvent();
+
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.AddSlotTime, doAfter, uid, target: component.Target.Value, used: uid)
 
         {
@@ -231,6 +223,7 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnWeightlessMove = false,
             NeedHand = true
         });
+
         _audio.PlayPvs(component.ChangeHairSound, uid);
     }
     private void OnAddSlotDoAfter(EntityUid uid, MagicMirrorComponent component, MagicMirrorAddSlotDoAfterEvent args)
@@ -238,11 +231,9 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (args.Handled || args.Target == null || args.Cancelled)
             return;
 
-        if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
-            return;
-
         var category = MarkingCategories.Hair;
-        switch (args.Message.Category)
+
+        switch (args.Category)
         {
             case MagicMirrorCategory.Hair:
                 category = MarkingCategories.Hair;

@@ -110,47 +110,25 @@ public sealed class MagicMirrorUiState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed partial class MagicMirrorRemoveSlotDoAfterEvent : DoAfterEvent
 {
-    public MagicMirrorRemoveSlotMessage Message;
-
-    public MagicMirrorRemoveSlotDoAfterEvent(MagicMirrorRemoveSlotMessage message)
-    {
-        Message = message;
-    }
     public override DoAfterEvent Clone() => this;
 }
 
 [Serializable, NetSerializable]
 public sealed partial class MagicMirrorAddSlotDoAfterEvent : DoAfterEvent
 {
-    public MagicMirrorAddSlotMessage Message;
-
-    public MagicMirrorAddSlotDoAfterEvent(MagicMirrorAddSlotMessage message)
-    {
-        Message = message;
-    }
     public override DoAfterEvent Clone() => this;
 }
 
 [Serializable, NetSerializable]
 public sealed partial class MagicMirrorSelectDoAfterEvent : DoAfterEvent
 {
-    public MagicMirrorSelectMessage Message;
+    public MagicMirrorCategory Category;
 
-    public MagicMirrorSelectDoAfterEvent(MagicMirrorSelectMessage message)
-    {
-        Message = message;
-    }
     public override DoAfterEvent Clone() => this;
 }
 
 [Serializable, NetSerializable]
 public sealed partial class MagicMirrorChangeColorDoAfterEvent : DoAfterEvent
 {
-    public MagicMirrorChangeColorMessage Message;
-
-    public MagicMirrorChangeColorDoAfterEvent(MagicMirrorChangeColorMessage message)
-    {
-        Message = message;
-    }
     public override DoAfterEvent Clone() => this;
 }
