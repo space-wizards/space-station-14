@@ -81,27 +81,30 @@ namespace Content.Client.Construction
 
         private void HandleConstructionGhostExamined(EntityUid uid, ConstructionGhostComponent component, ExaminedEvent args)
         {
-            if (component.Prototype == null) return;
-
-            args.PushMarkup(Loc.GetString(
-                "construction-ghost-examine-message",
-                ("name", component.Prototype.Name)));
-
-            if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
+            if (component.Prototype == null)
                 return;
 
-            var startNode = graph.Nodes[component.Prototype.StartNode];
-
-            if (!graph.TryPath(component.Prototype.StartNode, component.Prototype.TargetNode, out var path) ||
-                !startNode.TryGetEdge(path[0].Name, out var edge))
+            using (args.PushGroup(nameof(ConstructionGhostComponent)))
             {
-                return;
-            }
+                args.PushMarkup(Loc.GetString(
+                    "construction-ghost-examine-message",
+                    ("name", component.Prototype.Name)));
 
-            foreach (ConstructionGraphStep step in edge.Steps)
-            {
-                args.Message.PushNewline();
-                step.DoExamine(args);
+                if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
+                    return;
+
+                var startNode = graph.Nodes[component.Prototype.StartNode];
+
+                if (!graph.TryPath(component.Prototype.StartNode, component.Prototype.TargetNode, out var path) ||
+                    !startNode.TryGetEdge(path[0].Name, out var edge))
+                {
+                    return;
+                }
+
+                foreach (var step in edge.Steps)
+                {
+                    step.DoExamine(args);
+                }
             }
         }
 
