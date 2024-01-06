@@ -126,7 +126,7 @@ public sealed class DiscordLink : IPostInjectInit
 
         Client.GetGuild(ulong.Parse(_guildId))
             .GetTextChannel(channel)
-            .SendMessageAsync(message);
+            .SendMessageAsync(message, false, null, null,AllowedMentions.None);
     }
 
     public SocketGuild GetGuild()
