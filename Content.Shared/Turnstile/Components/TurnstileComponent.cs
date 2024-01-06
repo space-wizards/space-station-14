@@ -38,41 +38,14 @@ public sealed partial class TurnstileComponent : Component
     /// <summary>
     /// Sound to play when the turnstile admits a mob through.
     /// </summary>
-    [DataField("turnSound")]
+    [DataField]
     public SoundSpecifier? TurnSound;
 
     /// <summary>
     /// Sound to play when the turnstile is bumped from the wrong side
     /// </summary>
-    [DataField("bumpSound")]
+    [DataField]
     public SoundSpecifier? BumpSound;
-
-    #endregion
-
-    #region Graphics
-    /// <summary>
-    /// The key used when playing turnstile rotation animations.
-    /// </summary>
-    public const string AnimationKey = "turnstile_animation";
-
-    /// <summary>
-    /// The sprite state used for the turnstile at rest.
-    /// </summary>
-    [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public string IdleSpriteState = "idle";
-
-    /// <summary>
-    /// The sprite state used for the turnstile performing one rotation.
-    /// </summary>
-    [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public string RotationSpriteState = "rotation";
-
-    /// <summary>
-    /// The animation used when the turnstile turns
-    /// </summary>
-    public object RotatingAnimation = default!;
 
     #endregion
 

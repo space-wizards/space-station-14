@@ -24,8 +24,6 @@ public abstract class SharedTurnstileSystem : EntitySystem
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
 
-
-
     private EntityQuery<TransformComponent> _xformQuery;
 
     /// <summary>
@@ -55,7 +53,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
             _activeTurnstiles.Add(ent);
 
         RaiseLocalEvent(ent, new TurnstileEvents.TurnstileStateChangedEvent(turnstile.State));
-        AppearanceSystem.SetData(ent, TurnstileVisuals.State, turnstile.State);
+        //AppearanceSystem.SetData(ent, TurnstileVisuals.State, turnstile.State);
     }
 
     private void OnComponentInit(Entity<TurnstileComponent> ent, ref ComponentInit args)
@@ -66,8 +64,8 @@ public abstract class SharedTurnstileSystem : EntitySystem
         if (turnstile.State == TurnstileState.Rotating)
             turnstile.State = TurnstileState.Idle;
 
-        SetCollidable(ent, true, turnstile);
-        AppearanceSystem.SetData(ent, TurnstileVisuals.State, turnstile.State);
+        SetCollidable(ent, true);
+        //AppearanceSystem.SetData(ent, TurnstileVisuals.State, turnstile.State);
     }
 
 
@@ -84,7 +82,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
         var turnstile = ent.Comp;
         if (turnstile.State == TurnstileState.Idle)
         {
-            var facingDirection = GetFacingDirection(ent.Owner, turnstile);
+            var facingDirection = GetFacingDirection(ent);
             var directionOfContact = GetDirectionOfContact(ent.Owner, args.OtherEntity);
             if (facingDirection == directionOfContact)
             {
@@ -97,8 +95,8 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
                 // We have to set collidable to false for one frame, otherwise the client does not
                 // predict the removal of the contacts properly, and instead thinks the mob is colliding when it isn't.
-                SetCollidable(ent.Owner, false);
-                SetState(ent.Owner, TurnstileState.Rotating);
+                SetCollidable(ent, false);
+                SetState(ent, TurnstileState.Rotating);
             }
             else
             {
@@ -123,11 +121,11 @@ public abstract class SharedTurnstileSystem : EntitySystem
         if (turnstile.State == TurnstileState.Rotating)
         {
             // Check and see if we're still colliding with the admitted entity.
-            var stillCollidingWithAdmitted = GetIsCollidingWithAdmitted(ent.Owner);
+            var stillCollidingWithAdmitted = GetIsCollidingWithAdmitted(ent);
             if (!stillCollidingWithAdmitted)
             {
                 turnstile.NextStateChange = null;
-                SetState(ent.Owner, TurnstileState.Idle);
+                SetState(ent, TurnstileState.Idle);
                 RemComp<PreventCollideComponent>(ent.Owner);
             }
             else
@@ -142,13 +140,13 @@ public abstract class SharedTurnstileSystem : EntitySystem
         _activeTurnstiles.Remove(turnstile);
     }
 
-    private bool GetIsCollidingWithAdmitted(EntityUid uid, TurnstileComponent? turnstile = null, PreventCollideComponent? preventCollide = null)
+    private bool GetIsCollidingWithAdmitted(Entity<TurnstileComponent, PreventCollideComponent?> ent)
     {
-        if (!Resolve(uid, ref turnstile, ref preventCollide, false))
+        if (ent.Comp2 == null)
             return false;
 
-        var turnstileAABB = EntityLookupSystem.GetWorldAABB(uid);
-        var otherAABB = EntityLookupSystem.GetWorldAABB(preventCollide.Uid);
+        var turnstileAABB = EntityLookupSystem.GetWorldAABB(ent.Owner);
+        var otherAABB = EntityLookupSystem.GetWorldAABB(ent.Comp2!.Uid);
 
         if (turnstileAABB.Intersects(otherAABB))
             return true;
@@ -164,7 +162,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
         var time = GameTiming.CurTime;
         foreach (var ent in _activeTurnstiles.ToList())
         {
-            SetCollidable(ent.Owner, true);
+            SetCollidable(ent, true);
             var turnstile = ent.Comp;
             if (turnstile.Deleted || turnstile.NextStateChange == null)
             {
@@ -177,16 +175,12 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
             if (turnstile.NextStateChange.Value < time)
                 NextState(ent, time);
-
         }
     }
 
-    protected Direction GetFacingDirection(EntityUid uid, TurnstileComponent? turnstile = null)
+    protected Direction GetFacingDirection(Entity<TurnstileComponent> ent)
     {
-        if (!Resolve(uid, ref turnstile, false))
-            return Direction.Invalid;
-
-        var xform = _xformQuery.GetComponent(uid);
+        var xform = _xformQuery.GetComponent(ent.Owner);
         return xform.LocalRotation.GetDir();
     }
 
@@ -197,43 +191,36 @@ public abstract class SharedTurnstileSystem : EntitySystem
         return (xform.LocalPosition - xformOther.LocalPosition).GetDir();
     }
 
-    private void SetCollidable(
-        EntityUid uid,
-        bool collidable,
-        TurnstileComponent? turnstile = null,
-        PhysicsComponent? physics = null)
+    private void SetCollidable(Entity<TurnstileComponent, PhysicsComponent?> ent, bool collidable)
     {
-        if (!Resolve(uid, ref turnstile))
-            return;
-
-        if (Resolve(uid, ref physics, false))
-            PhysicsSystem.SetCanCollide(uid, collidable, body: physics);
+        PhysicsSystem.SetCanCollide(ent.Owner, collidable, body: ent.Comp2);
     }
 
-    protected void SetState(EntityUid uid, TurnstileState state, TurnstileComponent? turnstile = null)
+    protected void SetState(Entity<TurnstileComponent> ent, TurnstileState state)
     {
-        if (!Resolve(uid, ref turnstile))
+        if (ent.Comp == null)
             return;
 
         // If no change, return to avoid firing a new TurnstileStateChangedEvent.
+        var turnstile = ent.Comp;
         if (state == turnstile.State)
             return;
 
         switch (state)
         {
             case TurnstileState.Rotating:
-                _activeTurnstiles.Add((uid, turnstile));
+                _activeTurnstiles.Add((ent.Owner, turnstile));
                 turnstile.NextStateChange = GameTiming.CurTime + turnstile.TurnstileTurnTime;
                 break;
 
             case TurnstileState.Idle:
-                _activeTurnstiles.Remove((uid, turnstile));
+                _activeTurnstiles.Remove((ent.Owner, turnstile));
                 break;
         }
 
         turnstile.State = state;
-        Dirty(uid, turnstile);
-        RaiseLocalEvent(uid, new TurnstileEvents.TurnstileStateChangedEvent(state));
-        AppearanceSystem.SetData(uid, TurnstileVisuals.State, turnstile.State);
+        Dirty(ent.Owner, turnstile);
+        RaiseLocalEvent(ent.Owner, new TurnstileEvents.TurnstileStateChangedEvent(state));
+        //AppearanceSystem.SetData(ent.Owner, TurnstileVisuals.State, turnstile.State);
     }
 }

@@ -12,11 +12,9 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Doors/turnstile.rsi
-    snapCardinals: true
     noRot: true
     drawdepth: Mobs
-    layers:
-    - state: idle
+    state: idle
   - type: AnimationPlayer
   - type: Physics
   - type: Rotatable
@@ -73,12 +71,7 @@
     finishClimbSound:
       collection: FenceRattle
   - type: Sprite
-    sprite: Structures/Doors/turnstile.rsi
-    snapCardinals: true
-    noRot: true
-    drawdepth: Mobs
-    layers:
-    - state: idle_short
+    state: idle_short
   - type: Construction
     graph: TurnstileShort
     node: turnstileshort
