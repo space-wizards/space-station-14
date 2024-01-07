@@ -1,5 +1,16 @@
 - type: entity
   parent: ClothingNeckBase
+  id: ClothingNeckCloakCentcom
+  name: central commander's cloak
+  description: A pompous and elite green cloak with a nice gold trim, tailored specifically to the Central Commander. It's so heavy, the gold trim might be real.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/centcomcloakformal.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak # leaving this here because I suppose it might be interesting?
+    
+- type: entity
+  parent: ClothingNeckBase
   id: ClothingNeckCloakCap
   name: captain's cloak
   description: A pompous and comfy blue cloak with a nice gold trim, while not particularly valuable as your other possessions, it sure is fancy.
@@ -188,7 +199,7 @@
     sprite: Clothing/Neck/Cloaks/void.rsi
   - type: TypingIndicatorClothing
     proto: alien
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakAce
@@ -197,7 +208,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ace.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakAro
@@ -206,7 +217,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/aro.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakBi
@@ -215,7 +226,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/bi.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakIntersex
@@ -224,7 +235,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/intersex.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakLesbian
@@ -233,7 +244,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/les.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakGay
@@ -242,7 +253,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/gay.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakEnby
@@ -251,7 +262,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/enby.rsi
-   
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakPan
@@ -260,4 +271,4 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/pan.rsi
-   
+
