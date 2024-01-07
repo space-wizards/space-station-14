@@ -57,7 +57,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
     /// <param name="customExcludeCondition">A custom condition that each player is tested against, if it returns true the player is excluded from eligibility</param>
     /// <returns>List of all player entities that match the requirements</returns>
-    public List<EntityUid> GetEligiblePlayers(ICommonSession[] playerSessions, string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, Func<EntityUid?, bool>? customExcludeCondition = null)
+    public List<EntityUid> GetEligiblePlayers(IEnumerable<ICommonSession> playerSessions, string antagPrototype, bool includeAllJobs = false, bool allowMultipleAntagRoles = false, bool ignorePreferences = false, Func<EntityUid?, bool>? customExcludeCondition = null)
     {
         var eligiblePlayers = new List<EntityUid>();
 
@@ -78,7 +78,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="antagPrototype">The prototype to get eligible players for</param>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
     /// <returns>List of all player sessions that match the requirements</returns>
-    public List<ICommonSession> GetEligibleSessions(ICommonSession[] playerSessions, string antagPrototype, bool ignorePreferences = false)
+    public List<ICommonSession> GetEligibleSessions(IEnumerable<ICommonSession> playerSessions, string antagPrototype, bool ignorePreferences = false)
     {
         var eligibleSessions = new List<ICommonSession>();
 
@@ -122,8 +122,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         if (!includeAllJobs && !_jobs.CanBeAntag(session))
             return false;
 
-        //Test is player already is an antag, to prevent double roles
-        //As antags are balanced around themselves, introducing additional antag gear (ie Head Rev with thief equipment) can destabilise that balance
+        //Test if the player already is an antag, to prevent double roles
         if (!allowMultipleAntagRoles)
         {
             var ev = new MindIsAntagonistEvent();

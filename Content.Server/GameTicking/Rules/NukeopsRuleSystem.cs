@@ -624,12 +624,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (ev.PlayerPool.Count == 0)
                 continue;
 
-            //INCONSISTENCY! Why does RulePlayerJobsAssignedEvent use an array and this uses a list?!
-            var playerPoolArray = ev.PlayerPool.ToArray();
-
-            var commanderEligible = _antagSelection.GetEligibleSessions(playerPoolArray, nukeops.CommanderRoleProto, false);
-            var agentEligible = _antagSelection.GetEligibleSessions(playerPoolArray, nukeops.MedicRoleProto, false);
-            var operativeEligible = _antagSelection.GetEligibleSessions(playerPoolArray, nukeops.OperativeRoleProto, false);
+            var commanderEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.CommanderRoleProto, false);
+            var agentEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.MedicRoleProto, false);
+            var operativeEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, nukeops.OperativeRoleProto, false);
 
             var nukiesToSelect = 6;//_antagSelection.CalculateAntagNumber(_playerManager.PlayerCount, nukeops.PlayersPerOperative, nukeops.MaxOps);
 
