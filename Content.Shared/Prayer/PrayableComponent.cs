@@ -37,10 +37,7 @@ public sealed partial class PrayableComponent : Component
     /// </summary>
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier SoundForGod = new SoundPathSpecifier("/Audio/Effects/plehnimda.ogg")
-    {
-        Params = AudioParams.Default.WithVolume(5f)
-    };
+    public SoundSpecifier SoundForGod = new SoundPathSpecifier("/Audio/Effects/plehnimda.ogg");
 
     /// <summary>
     /// The last time a sound was played for admins
