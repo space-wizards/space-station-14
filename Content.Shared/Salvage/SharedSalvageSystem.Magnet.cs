@@ -2,6 +2,7 @@ using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage.Magnet;
+using Content.Shared.Store;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -58,6 +59,7 @@ public abstract partial class SharedSalvageSystem
         // Salvage map seed
         _salvageMaps.Clear();
         _salvageMaps.AddRange(_proto.EnumeratePrototypes<SalvageMapPrototype>());
+        _salvageMaps.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         var mapIndex = rand.Next(_salvageMaps.Count);
         var map = _salvageMaps[mapIndex];
 
