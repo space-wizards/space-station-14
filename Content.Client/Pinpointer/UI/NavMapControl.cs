@@ -54,7 +54,7 @@ public partial class NavMapControl : MapGridControl
     private bool _draggin;
     private Vector2 _startDragPosition = default!;
     private bool _recentering = false;
-    private readonly Font _font;
+    private Font _font;
     private float _updateTimer = 0.25f;
     private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
     private Color _beaconColor;
@@ -260,7 +260,7 @@ public partial class NavMapControl : MapGridControl
     {
         base.Draw(handle);
 
-        // Get the components necessary for drawing the navmap 
+        // Get the components necessary for drawing the navmap
         _entManager.TryGetComponent(MapUid, out _navMap);
         _entManager.TryGetComponent(MapUid, out _grid);
         _entManager.TryGetComponent(MapUid, out _xform);
@@ -285,7 +285,12 @@ public partial class NavMapControl : MapGridControl
             }
         }
 
-        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(WorldRange / WorldMaxRange * 100f):0.00}"));
+        //_zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(WorldRange / WorldMaxRange * 100f):0.00}"));
+
+        //var zl = (WorldRange / WorldMaxRange * 100f);
+        //var fontSize = (int) Math.Round((1000 / (zl+50)), 0);
+        //var fontSize = (int) Math.Round((100 - (WorldRange / WorldMaxRange * 100f)) / 5, 0);
+        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(int) Math.Round((100 - (WorldRange / WorldMaxRange * 100f)) / 5, 0):0}"));
 
         if (_navMap == null || _xform == null)
             return;
@@ -318,7 +323,7 @@ public partial class NavMapControl : MapGridControl
 
         var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
 
-        // Drawing lines can be rather expensive due to the number of neighbors that need to be checked in order  
+        // Drawing lines can be rather expensive due to the number of neighbors that need to be checked in order
         // to figure out where they should be drawn. However, we don't *need* to do check these every frame.
         // Instead, lets periodically update where to draw each line and then store these points in a list.
         // Then we can just run through the list each frame and draw the lines without any extra computation.
@@ -367,6 +372,12 @@ public partial class NavMapControl : MapGridControl
         if (_beacons.Pressed)
         {
             var rectBuffer = new Vector2(5f, 3f);
+
+            var cache = IoCManager.Resolve<IResourceCache>();
+            var zl = (WorldRange / WorldMaxRange * 100f);
+            //var fontSize = (int) Math.Round((1000 / (zl+50)), 0);
+            var fontSize = (int) Math.Round((100 - zl) / 5, 0);
+            _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), fontSize);
 
             foreach (var beacon in _navMap.Beacons)
             {
