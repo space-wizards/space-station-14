@@ -17,11 +17,14 @@ namespace Content.Client.Paint
         /// Visualizer for Paint which applies a shader and colors the entity.
         /// </summary>
 
+        [Dependency] private readonly IPrototypeManager _proto = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<PaintedComponent, HeldVisualsUpdatedEvent>(OnHeldVisualsUpdated);
+            SubscribeLocalEvent<PaintedComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<PaintedComponent, EquipmentVisualsUpdatedEvent>(OnEquipmentVisualsUpdated);
         }
 
@@ -30,25 +33,13 @@ namespace Content.Client.Paint
             if (args.Sprite == null)
                 return;
 
+            var shader = _proto.Index<ShaderPrototype>("Colored").InstanceUnique();
 
-            var layer = 0;
+            shader.SetParameter("color", component.Color);
+            args.Sprite.PostShader = component.Enabled ? shader : null;
 
-
-            for (layer = 0; layer < args.Sprite.AllLayers.Count(); ++layer)
-            {
-                component.BeforePaintedColor = args.Sprite.Color;
-                if (component.Enabled == true)
-                {
-                    args.Sprite.LayerSetShader(layer, component.ShaderName);
-                    args.Sprite.LayerSetColor(layer, component.Color);
-                }
-                else if(component.Enabled == false)
-                {
-                    args.Sprite.LayerSetShader(layer, component.ShaderRemove);
-                    args.Sprite.LayerSetColor(layer, component.BeforePaintedColor);
-                }
-            }
         }
+
 
         // Shader and Color for the held sprites.
         private void OnHeldVisualsUpdated(EntityUid uid, PaintedComponent component, HeldVisualsUpdatedEvent args)
@@ -103,6 +94,20 @@ namespace Content.Client.Paint
                     sprite.LayerSetColor(layer, component.Color);
                     return;
                 }
+            }
+        }
+
+        private void OnShutdown(EntityUid uid, PaintedComponent component, ref ComponentShutdown args)
+        {
+            if (!TryComp(uid, out SpriteComponent? sprite))
+                return;
+
+            if (!Terminating(uid))
+            {
+                var shader = _proto.Index<ShaderPrototype>("Colored").InstanceUnique();
+
+                shader.SetParameter("color", component.Color);
+                sprite.PostShader = false ? shader : null;
             }
         }
     }
