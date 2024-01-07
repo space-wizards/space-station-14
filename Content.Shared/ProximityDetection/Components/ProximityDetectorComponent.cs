@@ -21,7 +21,7 @@ public sealed partial class ProximityDetectorComponent : Component
     /// Note: RequireAll is only supported for tags, all components are required to count as a match!
     /// </summary>
     [DataField( required: true), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public EntityWhitelist Criteria = default!;
+    public EntityWhitelist Criteria = new();
 
     /// <summary>
     /// Found Entity
