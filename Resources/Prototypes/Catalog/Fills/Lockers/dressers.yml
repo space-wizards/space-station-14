@@ -76,6 +76,18 @@
       - id: ClothingHandsGlovesColorBrown
 
 - type: entity
+  id: DresserResearchDirectorFilled
+  parent: Dresser
+  suffix: Filled, Research Director
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingNeckCloakRd
+      - id: ClothingHeadHatBeretRND
+      - id: ClothingHandsGlovesColorPurple
+      - id: ClothingHeadsetAltScience
+
+- type: entity
   id: DresserWardenFilled
   parent: Dresser
   suffix: Filled, Warden

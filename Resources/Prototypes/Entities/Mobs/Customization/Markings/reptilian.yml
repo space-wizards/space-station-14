@@ -127,6 +127,15 @@
     state: tail_smooth
 
 - type: marking
+  id: LizardTailLarge
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_large
+
+- type: marking
   id: LizardTailSpikes
   bodyPart: Tail
   markingCategory: Tail
@@ -289,3 +298,12 @@
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: body_underbelly
+
+- type: marking
+  id: LizardChestBackspikes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: body_backspikes

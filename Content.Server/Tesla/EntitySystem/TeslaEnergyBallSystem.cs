@@ -47,5 +47,10 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
             component.Energy -= component.NeedEnergyToSpawn;
             Spawn(component.SpawnProto, Transform(uid).Coordinates);
         }
+        if (component.Energy < component.EnergyToDespawn)
+        {
+            _audio.PlayPvs(component.SoundCollapse, uid);
+            QueueDel(uid);
+        }
     }
 }
