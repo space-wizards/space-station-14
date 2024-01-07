@@ -791,17 +791,6 @@
   - UplinkBundles
 
 - type: listing
-  id: UplinkHardsuitSyndieMonkey
-  name: uplink-hardsuit-syndie-monkey-name
-  description: uplink-hardsuit-syndie-monkey-desc
-  productEntity: ClothingBackpackDuffelSyndicateFilledSyndieMonkey
-  icon: { sprite: Clothing/OuterClothing/Hardsuits/syndicate-monkey.rsi, state: icon }
-  cost:
-    Telecrystal: 12
-  categories:
-  - UplinkBundles
-
-- type: listing
   id: UplinkL6SawBundle
   name: uplink-l6-saw-bundle-name
   description: uplink-l6-saw-bundle-desc

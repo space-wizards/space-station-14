@@ -61,5 +61,6 @@
     whitelist:
       tags:
         - SuitEVA
-        - MonkeyOuterclothingWearable
-
+    blacklist:
+      tags:
+        - NotMonkeyWearable

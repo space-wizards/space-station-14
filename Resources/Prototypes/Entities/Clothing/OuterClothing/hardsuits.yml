@@ -470,6 +470,9 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
+  - type: Tag
+    tags:
+    - SuitEVA
 
 # Syndicate Medic Hardsuit
 - type: entity
@@ -484,6 +487,9 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndiemedic.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieMedic
+  - type: Tag
+    tags:
+    - NotMonkeyWearable
 
 #Syndicate Elite Hardsuit
 - type: entity
@@ -582,34 +588,6 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
-
-#Syndicate monkey hardsuit
-- type: entity
-  parent: ClothingOuterHardsuitSyndie
-  id: ClothingOuterHardsuitSyndieMonkey
-  name: monkey blood-red hardsuit
-  description: A heavily armored hardsuit designed for use by monkey operatives. Property of Gorlex Marauders.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/syndicate-monkey.rsi
-  - type: Item
-    size: Large
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/syndicate-monkey.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.65
-        Heat: 0.65
-        Caustic: 0.6
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.85
-  - type: Tag
-    tags:
-    - MonkeyOuterclothingWearable
 
 #Wizard Hardsuit
 - type: entity
@@ -794,6 +772,9 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
+  - type: Tag
+    tags:
+    - NotMonkeyWearable
 
 #ERT Janitor Hardsuit
 - type: entity
