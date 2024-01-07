@@ -42,19 +42,19 @@
 
 - type: ore
   id: OreQuartzCrab
-  oreEntity: MobQuartzCrab
+  oreEntity: MobSpawnCrabQuartz
 
 - type: ore
   id: OreIronCrab
-  oreEntity: MobIronCrab
+  oreEntity: MobSpawnCrabIron
 
 - type: ore
   id: OreSilverCrab
-  oreEntity: MobSilverCrab
+  oreEntity: MobSpawnCrabSilver
 
 - type: ore
   id: OreUraniumCrab
-  oreEntity: MobUraniumCrab
+  oreEntity: MobSpawnCrabUranium
 
 - type: ore
   id: OreArtifactFragment
