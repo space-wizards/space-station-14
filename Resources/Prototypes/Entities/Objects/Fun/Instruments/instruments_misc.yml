@@ -76,7 +76,7 @@
     state: icon
   - type: Prayable
     sentMessage: prayer-popup-notify-syndicate-sent
-    notifiactionPrefix: prayer-chat-notify-syndicate
+    notificationPrefix: prayer-chat-notify-syndicate
     soundForGod: /Audio/Effects/voicemail.ogg
     ringPeriod: 120
 
@@ -186,7 +186,7 @@
         - ItemMask
   - type: Prayable
     sentMessage: prayer-popup-notify-honkmother-sent
-    notifiactionPrefix: prayer-chat-notify-honkmother
+    notificationPrefix: prayer-chat-notify-honkmother
     verb: prayer-verbs-call
     verbImage: null
     soundForGod: /Audio/Effects/voicemail.ogg
