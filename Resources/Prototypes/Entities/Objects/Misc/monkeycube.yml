@@ -45,7 +45,23 @@
         amount: 6
   - type: Sprite
     sprite: Objects/Misc/monkeycube.rsi
-    state: box
+    state: box_kobold
+
+- type: entity
+  parent: BoxCardboard
+  name: variant cube box
+  id: VariantCubeBox
+  description: Both kobold cubes and monkey cubes. Just add water!
+  components:
+  - type: StorageFill
+    contents:
+      - id: KoboldCubeWrapped
+        amount: 3
+      - id: MonkeyCubeWrapped
+        amount: 3
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box_variant
 
 - type: entity
   parent: BaseItem
@@ -63,7 +79,7 @@
       path: /Audio/Effects/unwrap.ogg
   - type: Sprite
     sprite: Objects/Misc/monkeycube.rsi
-    state: wrapper
+    state: wrapper_kobold
   - type: Tag
     tags:
     - MonkeyCube
