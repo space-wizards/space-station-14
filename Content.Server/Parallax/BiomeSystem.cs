@@ -554,7 +554,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         bool emptyTiles = true)
     {
         DebugTools.Assert(count > 0);
-        var remainingTiles = new List<Vector2i>();
+        var remainingTiles = _tilePool.Get();
         var nodeEntities = new Dictionary<Vector2i, EntityUid?>();
         var nodeMask = new Dictionary<Vector2i, string?>();
 
@@ -619,7 +619,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             // While we have remaining tiles keep iterating
             while (groupSize >= 0 && remainingTiles.Count > 0)
             {
-                var startNode = remainingTiles[rand.Next(remainingTiles.Count)];
+                var startNode = rand.Take(remainingTiles);
                 frontier.Clear();
                 frontier.Add(startNode);
 
@@ -666,6 +666,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 Log.Warning($"Found remaining group size for ore veins!");
             }
         }
+
+        _tilePool.Return(remainingTiles);
     }
 
     /// <summary>

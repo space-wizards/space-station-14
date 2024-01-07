@@ -318,14 +318,16 @@ public sealed partial class SalvageSystem
         }
 
         var magnetGridUid = _xformQuery.GetComponent(magnet.Owner).GridUid;
-        Box2 attachedBounds = Box2.Empty;
-        MapId mapId = MapId.Nullspace;
+        var attachedBounds = new Box2Rotated();
+        var mapId = MapId.Nullspace;
 
         if (magnetGridUid != null)
         {
             var magnetGridXform = _xformQuery.GetComponent(magnetGridUid.Value);
-            attachedBounds = _transform.GetWorldMatrix(magnetGridXform)
-                .TransformBox(_gridQuery.GetComponent(magnetGridUid.Value).LocalAABB);
+            var (gridPos, gridRot) = _transform.GetWorldPositionRotation(magnetGridXform);
+            var gridAABB = _gridQuery.GetComponent(magnetGridUid.Value).LocalAABB;
+
+            attachedBounds = new Box2Rotated(gridAABB.Translated(gridPos), gridRot, gridPos);
 
             mapId = magnetGridXform.MapID;
         }
@@ -376,21 +378,24 @@ public sealed partial class SalvageSystem
         RaiseLocalEvent(ref active);
     }
 
-    private bool TryGetSalvagePlacementLocation(MapId mapId, Box2 attachedBounds, Box2 bounds, out MapCoordinates coords, out Angle angle)
+    private bool TryGetSalvagePlacementLocation(MapId mapId, Box2Rotated attachedBounds, Box2 bounds, out MapCoordinates coords, out Angle angle)
     {
         const float OffsetRadiusMin = 4f;
-        const float OffsetRadiusMax = 16f;
+        const float OffsetRadiusMax = 8f;
 
-        var minDistance = (attachedBounds.Height < attachedBounds.Width ? attachedBounds.Width : attachedBounds.Height) / 2f;
+        // Grid intersection only does AABB atm.
+        var attachedAABB = attachedBounds.CalcBoundingBox();
+
+        var minDistance = (attachedAABB.Height < attachedAABB.Width ? attachedAABB.Width : attachedAABB.Height) / 2f;
         var minActualDistance = bounds.Height < bounds.Width ? minDistance + bounds.Width / 2f : minDistance + bounds.Height / 2f;
 
-        var attachedCenter = attachedBounds.Center;
-
-        angle = _random.NextAngle();
+        var attachedCenter = attachedAABB.Center;
 
         // Thanks 20kdc
         for (var i = 0; i < 20; i++)
         {
+            angle = _random.NextAngle();
+
             var randomPos = attachedCenter +
                             _random.NextAngle().ToVec() * (minActualDistance +
                                                            _random.NextFloat(OffsetRadiusMin, OffsetRadiusMax));
@@ -412,6 +417,7 @@ public sealed partial class SalvageSystem
             return true;
         }
 
+        angle = Angle.Zero;
         coords = MapCoordinates.Nullspace;
         return false;
     }

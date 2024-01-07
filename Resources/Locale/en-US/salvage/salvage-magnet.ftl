@@ -19,8 +19,10 @@ salvage-magnet-resources = {$resource ->
 
 salvage-magnet-resources-count = {$count ->
     [1] (Poor)
-    [2] (Rich)
-    [3] (Rich)
+    [2] (Moderate)
+    [3] (Moderate)
+    [4] (Rich)
+    [5] (Rich)
     *[other] (Extraordinary)
 }
 
