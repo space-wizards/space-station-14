@@ -113,7 +113,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
-    - state: rubber  
+    - state: rubber
   - type: Projectile
     damage:
       types:
