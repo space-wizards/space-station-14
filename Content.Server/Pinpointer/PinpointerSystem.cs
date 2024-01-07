@@ -298,7 +298,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (!args.CanInteract || args.Hands == null)
             return;
 
-        //Adds the closest target verb if there is at least 1 stored component
+        //Adds the closest target verb if there is at least 1 stored component.
         if (component.Components.Count > 0)
         {
             foreach (var targetComponent in component.Components)
@@ -338,7 +338,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             }
         }
 
-        //Adds the stored target reset verb if there is at least 1 stored target
+        //Adds the stored target reset verb if there is at least 1 stored target.
         if (component.StoredTargets.Count > 0)
         {
             args.Verbs.Add(new Verb()
