@@ -103,8 +103,9 @@ public sealed class CargoTrackingSystem : EntitySystem
 
     private void OnCargoOrderArrival(CargoOrderArrivalEvent args)
     {
-        // iterate over every order tracker (this is costly, but it doesn't matter because this event is raised so infrequently
-        while (EntityQueryEnumerator<CargoTrackingComponent>().MoveNext(out var uid, out var comp))
+        // iterating over every order tracker (this is costly, but it doesn't matter because this event is raised so infrequently
+        var query = EntityQueryEnumerator<CargoTrackingComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.TrackedOrderId == args.OrderId)
             {
@@ -115,8 +116,9 @@ public sealed class CargoTrackingSystem : EntitySystem
 
     private void OnCargoOrderDeletion(CargoOrderDeletionEvent args)
     {
-        // iterate over every order tracker (this is costly, but it doesn't matter because this event is raised so infrequently
-        while (EntityQueryEnumerator<CargoTrackingComponent>().MoveNext(out var uid, out var comp))
+        // iterating over every order tracker (this is costly, but it doesn't matter because this event is raised so infrequently
+        var query = EntityQueryEnumerator<CargoTrackingComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.TrackedOrderId == args.OrderId)
             {
