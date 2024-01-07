@@ -7,7 +7,7 @@ salvage-asteroid-name = Asteroid
 salvage-expedition-window-progression = Progression
 
 salvage-magnet-resources = {$resource ->
-    [OreTin] Tin
+    [OreIron] Iron
     [OreCoal] Coal
     [OreQuartz] Quartz
     [OreGold] Gold

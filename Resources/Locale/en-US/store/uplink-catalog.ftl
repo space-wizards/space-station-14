@@ -142,6 +142,9 @@ uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever y
 uplink-radio-jammer-name = Radio Jammer
 uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication when activated.
 
+uplink-singularity-beacon-name = Singularity Beacon
+uplink-singularity-beacon-desc = A device that attracts singularities. Has to be anchored and powered. Causes singularities to grow when consumed.
+
 # Implants
 uplink-storage-implanter-name = Storage Implanter
 uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!
@@ -333,6 +336,9 @@ uplink-syndicate-sponge-box-desc = A box containing 6 syndicate sponges disguise
 
 uplink-slipocalypse-clustersoap-name = Slipocalypse Clustersoap
 uplink-slipocalypse-clustersoap-desc = Scatters arounds small pieces of syndicate-brand soap after being thrown, these pieces of soap evaporate after 60 seconds.
+
+uplink-mobcat-microbomb-name = SyndiCat
+uplink-mobcat-microbomb-desc = A hand cat equipped with a microbomb implant. Explodes when seriously injured. Can bite painfully
 
 # Pointless
 uplink-revolver-cap-gun-name = Cap Gun

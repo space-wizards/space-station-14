@@ -4,6 +4,8 @@
   id: Lighter
   description: "A simple plastic cigarette lighter."
   components:
+  - type: IgnitionSource
+    ignited: false
   - type: ItemToggle
     predictable: false
     soundActivate:

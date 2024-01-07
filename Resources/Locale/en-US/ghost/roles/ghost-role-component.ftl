@@ -195,6 +195,10 @@ ghost-role-information-hellspawn-description = You are an antagonist, bring deat
 ghost-role-information-Death-Squad-name = Death Squad Operative
 ghost-role-information-Death-Squad-description = One of Nanotrasen's top internal affairs agents. Await orders from CentComm or an official.
 
+ghost-role-information-SyndiCat-name = SyndiCat
+ghost-role-information-SyndiCat-description = You're the faithful trained pet of nuclear operatives with a microbomb. Serve your master to the death!
+ghost-role-information-SyndiCat-rules = You're the faithful trained pet of nuclear operatives with a microbomb. Serve your master to the death!
+
 ghost-role-information-Cak-name = Cak
 ghost-role-information-Cak-description = You are the chef's favorite child. You're a living cake cat.
 ghost-role-information-Cak-rules = You are a living edible sweet cat. Your task is to find your place in this world where everything wants to eat you.
