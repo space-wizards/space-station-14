@@ -28,23 +28,23 @@
                       HorizontalExpand="True"
                       MinSize="50 50"
                       Margin="8">
-            <ContainerButton Name = "PdaOwnerButton" Access="Public">
-                <RichTextLabel Name="PdaOwnerLabel" Access="Public" />
+            <ContainerButton Name="PdaOwnerButton">
+                <RichTextLabel Name="PdaOwnerLabel" Access="Public"/>
             </ContainerButton>
-            <ContainerButton Name = "IdInfoButton" Access="Public">
+            <ContainerButton Name="IdInfoButton">
                 <RichTextLabel Name="IdInfoLabel" Access="Public"/>
             </ContainerButton>
-            <ContainerButton Name = "StationNameButton" Access="Public">
+            <ContainerButton Name="StationNameButton">
                 <RichTextLabel Name="StationNameLabel" Access="Public"/>
             </ContainerButton>
-            <ContainerButton Name="StationAlertLevelButton" Access="Public">
-                <RichTextLabel Name="StationAlertLevelLabel" Access="Public" />
+            <ContainerButton Name="StationAlertLevelButton">
+                <RichTextLabel Name="StationAlertLevelLabel" Access="Public"/>
             </ContainerButton>
-            <ContainerButton Name = "StationTimeButton" Access="Public">
+            <ContainerButton Name="StationTimeButton">
                 <RichTextLabel Name="StationTimeLabel" Access="Public"/>
             </ContainerButton>
-            <ContainerButton Name="StationAlertLevelInstructionsButton" Access="Public">
-                <RichTextLabel Name="StationAlertLevelInstructions" Access="Public" />
+            <ContainerButton Name="StationAlertLevelInstructionsButton">
+                <RichTextLabel Name="StationAlertLevelInstructions" Access="Public"/>
             </ContainerButton>
         </BoxContainer>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
