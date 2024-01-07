@@ -63,6 +63,8 @@
   - type: Pinpointer
     components:
     - NukeDisk
+    - Nuke
+    - Airtight
     targetName: nuclear authentication disk
     updateTargetName: true
 

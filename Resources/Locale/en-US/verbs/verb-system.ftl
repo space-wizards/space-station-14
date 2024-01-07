@@ -28,6 +28,8 @@ verb-categories-timer = Set Delay
 verb-categories-lever = Lever
 verb-categories-select-type = Select Type
 verb-categories-fax = Set Destination
+verb-categories-select-target = Select target
+verb-categories-search-closest = Search closest
 
 verb-common-toggle-light = Toggle light
 verb-common-close = Close

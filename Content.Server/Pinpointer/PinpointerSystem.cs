@@ -51,7 +51,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     {
         TogglePinpointer(uid, component);
 
-        if (component.StoredTargets.Count < component.Components.Count)
+        if (component.StoredTargets.Count == 0)
             LocateTarget(uid, component);
     }
 
@@ -76,31 +76,36 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// Searches the closest object that has a specific component for every component the pinpointer has stored.
     /// This entity is then added to the stored targets.
     /// </summary>
-    private void LocateTarget(EntityUid uid, PinpointerComponent component, EntityUid? user = null)
+    private void LocateTarget(EntityUid uid, PinpointerComponent component, EntityUid? user = null, string? selectedComponent = null)
     {
         // try to find target from whitelist
-        if (component.IsActive)
+        var targetedComponent = "";
+        if (selectedComponent == null)
         {
-            foreach (var preinstalledTarget in component.Components)
-            {
-                if (!EntityManager.ComponentFactory.TryGetRegistration(preinstalledTarget, out var reg))
-                {
-                    Log.Error($"Unable to find component registration for {preinstalledTarget} for pinpointer!");
-                    DebugTools.Assert(false);
-                    return;
-                }
-
-                var target = FindTargetFromComponent(uid, reg.Type);
-
-                //Adds the target to the stored targets if it's not already in there.
-                if(target != null && !component.StoredTargets.Contains(target.Value))
-                {
-                    component.StoredTargets.Add(target.Value);
-                }
-
-                SetTarget(uid, target, component, user);
-            }
+            targetedComponent = component.Components[0];
         }
+        else
+        {
+            targetedComponent = selectedComponent;
+        }
+
+        if (!EntityManager.ComponentFactory.TryGetRegistration(targetedComponent, out var reg))
+        {
+            Log.Error($"Unable to find component registration for {targetedComponent} for pinpointer!");
+            DebugTools.Assert(false);
+            return;
+        }
+
+        var target = FindTargetFromComponent(uid, reg.Type);
+
+        //Adds the target to the stored targets if it's not already in there.
+        if(target != null && !component.StoredTargets.Contains(target.Value) && user != null)
+        {
+            component.StoredTargets.Add(target.Value);
+        }
+
+        SetTarget(uid, target, component, user);
+
     }
 
     public override void Update(float frameTime)
@@ -275,40 +280,55 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (!args.CanInteract || args.Hands == null)
             return;
 
+        //Adds the verb if there is at least 1 stored component
+        if (component.Components.Count > 0)
+        {
+            foreach (var targetComponent in component.Components)
+            {
+                args.Verbs.Add(new Verb()
+                {
+                    Text = Loc.GetString("target-pinpointer-component", ("targetComponent", targetComponent)),
+                    Act = () => LocateTarget(uid, component, args.User, targetComponent),
+                    Priority = 100,
+                    Category = VerbCategory.SearchClosest,
+                });
+            }
+        }
+
         var storedOrder = 0;
 
-        foreach (var target in component.StoredTargets)
+        //Adds the verb if there is more than 1 stored target.
+        if (component.StoredTargets.Count > 1)
         {
-            if (Deleted(target))
+            foreach (var target in component.StoredTargets)
             {
-                continue;
-            }
-            // Adds a number in front of a name to order the list based on order added
-            var storedPrefix = Loc.GetString("prefix-pinpointer-targets", ("storedOrder", storedOrder));
-            storedOrder++;
+                if (Deleted(target))
+                {
+                    continue;
+                }
+                // Adds a number in front of a name to order the list based on order added
+                var storedPrefix = Loc.GetString("prefix-pinpointer-targets", ("storedOrder", storedOrder));
+                storedOrder++;
 
-            //Adds the verb if there is more than 1 stored target.
-            if (component.StoredTargets.Count > 1)
-            {
                 args.Verbs.Add(new Verb()
                 {
                     Text = Loc.GetString(storedPrefix + Identity.Name(target, EntityManager) ),
                     Act = () => SetTarget(uid, target, component, args.User),
                     Priority = 50,
-                    Category = VerbCategory.SelectType
+                    Category = VerbCategory.SelectTarget
                 });
             }
-
         }
 
-        if (component.StoredTargets.Count != 0)
+        //Adds the ver if there is at least 1 stored target
+        if (component.StoredTargets.Count > 0)
         {
             args.Verbs.Add(new Verb()
             {
                 Text = Loc.GetString("Reset targets"),
                 Act = () => DeleteStoredTargets(uid, component, args.User),
                 Category = null,
-                Priority = 1
+                Priority = 25
             });
         }
 

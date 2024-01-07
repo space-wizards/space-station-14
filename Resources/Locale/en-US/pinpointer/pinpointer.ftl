@@ -1,7 +1,9 @@
 ﻿examine-pinpointer-linked = It is tracking: {$target}
 targeting-pinpointer-succeeded = Target changed to: {$target}
 targeting-pinpointer-failed = Target not detected
+targeting-pinpointer-already-tracked = Already tracking selected target
 cycle-pinpointer-target = Change target
 prefix-pinpointer-targets = [{$storedOrder}]
 target-pinpointer-stored = {$target} has been saved
 target-pinpointer-full = Pinpointer tracking storage is full
+target-pinpointer-component = {$targetComponent}
