@@ -424,3 +424,17 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/rewriter.rsi
     state: icon
+
+- type: reagent
+  id: Mopwata
+  name: reagent-name-mopwata
+  parent: BaseDrink
+  desc: reagent-desc-mopwata
+  physicalDesc: reagent-physical-desc-murky
+  flavor: mopwata
+  color: "#87ab08"
+    metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 0.8
