@@ -9,7 +9,7 @@
     sprite: Objects/Specific/Robotics/borgmodule.rsi
   - type: BorgModule
   - type: StaticPrice
-    price: 250
+    price: 100
   - type: Tag
     tags:
     - BorgModuleGeneric
