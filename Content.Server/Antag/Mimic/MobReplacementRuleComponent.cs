@@ -1,4 +1,3 @@
-using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Antag.Mimic;
@@ -9,17 +8,10 @@ namespace Content.Server.Antag.Mimic;
 [RegisterComponent]
 public sealed partial class MobReplacementRuleComponent : Component
 {
-    [DataField]
-    public EntProtoId Proto = "MobMimic";
+    // If you want more components use generics, using a whitelist would probably kill the server iterating every single entity.
 
     [DataField]
-    public EntityWhitelist Whitelist = new()
-    {
-        Components = new string[]
-        {
-            "VendingMachine",
-        }
-    };
+    public EntProtoId Proto = "MobMimic";
 
     /// <summary>
     /// Chance per-entity.

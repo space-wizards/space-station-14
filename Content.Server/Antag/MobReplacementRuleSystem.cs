@@ -16,14 +16,14 @@ public sealed class MobReplacementRuleSystem : GameRuleSystem<MobReplacementRule
         base.Started(uid, component, gameRule, args);
 
         var query = AllEntityQuery<VendingMachineComponent, TransformComponent>();
-        var spawns = new List<(Entity<VendingMachineComponent> Entity, EntityCoordinates Coordinates)>();
+        var spawns = new List<(EntityUid Entity, EntityCoordinates Coordinates)>();
 
-        while (query.MoveNext(out var vendingUid, out var vendingComp, out var xform))
+        while (query.MoveNext(out var vendingUid, out _, out var xform))
         {
             if (!_random.Prob(component.Chance))
                 continue;
 
-            spawns.Add(((vendingUid, vendingComp), xform.Coordinates));
+            spawns.Add((vendingUid, xform.Coordinates));
         }
 
         foreach (var entity in spawns)
