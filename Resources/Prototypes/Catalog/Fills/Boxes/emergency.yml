@@ -95,7 +95,7 @@
   - type: StorageFill
     contents:
       - id: ClothingMaskBreath
-      - id: EmergencyOxygenTankFilled
+      - id: EmergencyFunnyOxygenTankFilled
       - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare

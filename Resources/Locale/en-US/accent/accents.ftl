@@ -99,3 +99,22 @@ accent-words-slimes-5 = Blabl blump!
 
 # Mothroach
 accent-words-mothroach-1 = Chirp!
+
+# Crab
+accent-words-crab-1 = Click.
+accent-words-crab-2 = Click-clack!
+accent-words-crab-3 = Clack?
+accent-words-crab-4 = Tipi-tap!
+accent-words-crab-5 = Clik-tap.
+accent-words-crab-6 = Cliliick.
+
+# Kobold
+accent-words-kobold-1 = Yip!
+accent-words-kobold-2 = Grrar.
+accent-words-kobold-3 = Yap!
+accent-words-kobold-4 = Bip.
+accent-words-kobold-5 = Screet?
+accent-words-kobold-6 = Gronk!
+accent-words-kobold-7 = Hiss!
+accent-words-kobold-8 = Eeee!
+accent-words-kobold-9 = Yip.

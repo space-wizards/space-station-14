@@ -105,6 +105,15 @@
     Gold: 50
 
 - type: latheRecipe
+  id: HellfireFreezerMachineCircuitBoard
+  result: HellfireFreezerMachineCircuitBoard
+  completetime: 4
+  materials:
+    Steel: 150
+    Glass: 900
+    Gold: 50
+
+- type: latheRecipe
   id: CondenserMachineCircuitBoard
   result: CondenserMachineCircuitBoard
   completetime: 4
@@ -165,6 +174,15 @@
      Gold: 100
 
 - type: latheRecipe
+  id: BiofabricatorMachineCircuitboard
+  result: BiofabricatorMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
   id: HydroponicsTrayMachineCircuitboard
   result: HydroponicsTrayMachineCircuitboard
   completetime: 4
@@ -187,6 +205,24 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: AutolatheHyperConvectionMachineCircuitboard
+  result: AutolatheHyperConvectionMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
+  id: ProtolatheHyperConvectionMachineCircuitboard
+  result: ProtolatheHyperConvectionMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
 
 - type: latheRecipe
   id: CircuitImprinterMachineCircuitboard
@@ -390,6 +426,14 @@
   materials:
     Steel: 100
     Glass: 900
+
+- type: latheRecipe
+  id: OreProcessorIndustrialMachineCircuitboard
+  result: OreProcessorIndustrialMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
     Gold: 100
 
 - type: latheRecipe
@@ -583,6 +627,15 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: FlatpackerMachineCircuitboard
+  result: FlatpackerMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
 
 - type: latheRecipe
   id: SheetifierMachineCircuitboard

@@ -70,7 +70,7 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
             return;
 
         // no sound spamming
-        if (TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.ActiveDelay(uid))
+        if (!TryComp(uid, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((uid, useDelay)))
             return;
 
         comp.ActiveIndex = NextIndex(uid, comp);
@@ -110,7 +110,7 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
 
         _audio.PlayPvs(comp.SwitchSound, uid);
 
-        _useDelay.BeginDelay(uid, useDelay);
+        _useDelay.TryResetDelay((uid, useDelay));
     }
 }
 

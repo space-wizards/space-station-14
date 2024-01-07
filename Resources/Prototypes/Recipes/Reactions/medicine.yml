@@ -184,9 +184,9 @@
 - type: reaction
   id: Leporazine
   reactants:
-    Silicon:
-      amount: 1
     Copper:
+      amount: 1
+    Fersilicite:
       amount: 1
     Plasma:
       amount: 1
@@ -376,6 +376,8 @@
   reactants:
     SodiumCarbonate:
       amount: 1
+    SodiumHydroxide:
+      amount: 1
     Kelotane:
       amount: 1
     Water:
@@ -402,7 +404,7 @@
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
       amount: 1
-    Water:
+    Benzene:
       amount: 1
   products:
     Lacerinol: 2
@@ -414,7 +416,7 @@
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
       amount: 1
-    Carbon:
+    Hydroxide:
       amount: 1
   products:
     Puncturase: 2
@@ -497,3 +499,21 @@
       amount: 1
   products:
     Razorium: 1
+
+- type: reaction
+  id: Diphenhydramine
+  impact: Medium
+  minTemp: 377.59
+  reactants:
+    Diethylamine:
+      amount: 1
+    Oil:
+      amount: 1
+    TableSalt:
+      amount: 1
+    Carbon:
+      amount: 1
+    Ethanol:
+      amount: 1
+  products:
+    Diphenhydramine: 3

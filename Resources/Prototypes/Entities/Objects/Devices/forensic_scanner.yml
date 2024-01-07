@@ -25,7 +25,7 @@
   - type: ForensicScanner
   - type: GuideHelp
     guides:
-    - DNA
+      - Forensics
   - type: StealTarget
     stealGroup: ForensicScanner
 
@@ -55,4 +55,4 @@
     maxWritableArea: 368.0, 256.0
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics
