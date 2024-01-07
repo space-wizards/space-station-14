@@ -477,6 +477,9 @@
   id: PinpointerScannable
 
 - type: Tag
+  id: Fake
+
+- type: Tag
   id: Figurine
 
 - type: Tag
@@ -931,6 +934,9 @@
 
 - type: Tag
   id: RCDDeconstructWhitelist
+
+- type: Tag
+  id: Real
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag

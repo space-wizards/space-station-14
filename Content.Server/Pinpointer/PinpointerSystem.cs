@@ -6,6 +6,8 @@ using Content.Server.Popups;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Nuke;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 
 namespace Content.Server.Pinpointer;
@@ -15,6 +17,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -99,6 +102,16 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         var target = FindTargetFromComponent(uid, reg.Type);
 
+        //Don't track or store the target if a fake variant is in the list of tracked targets.
+        if (target != null)
+        {
+            foreach (var storedTarget in component.StoredTargets)
+            {
+                if (_tagSystem.HasTag(storedTarget, "Fake") && _tagSystem.HasTag(target.Value, "Real"))
+                    target = storedTarget;
+            }
+        }
+
         //Adds the target to the stored targets if it's not already in there.
         if(target != null && !component.StoredTargets.Contains(target.Value))
         {
@@ -160,7 +173,10 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             return;
 
         if (pinpointer.Target == target)
+        {
+            UpdateDirectionToTarget(uid, pinpointer);
             return;
+        }
 
         pinpointer.Target = target;
 
