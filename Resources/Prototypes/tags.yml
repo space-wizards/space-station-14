@@ -225,7 +225,7 @@
 
 - type: Tag
   id: BypassInteractionRangeChecks
-  
+
 - type: Tag
   id: CableCoil
 
@@ -472,6 +472,9 @@
 
 - type: Tag
   id: ExplosivePassable
+
+- type: Tag
+  id: PinpointerScannable
 
 - type: Tag
   id: Figurine

@@ -100,7 +100,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         var target = FindTargetFromComponent(uid, reg.Type);
 
         //Adds the target to the stored targets if it's not already in there.
-        if(target != null && !component.StoredTargets.Contains(target.Value) && user != null)
+        if(target != null && !component.StoredTargets.Contains(target.Value))
         {
             component.StoredTargets.Add(target.Value);
         }

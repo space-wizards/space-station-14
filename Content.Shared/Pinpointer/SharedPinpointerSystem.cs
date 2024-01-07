@@ -6,6 +6,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Pinpointer;
@@ -15,6 +16,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -35,7 +37,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
         // TODO add doafter once the freeze is lifted
         args.Handled = true;
 
-        if (component.CanRetarget && !component.IsActive)
+        if (component.CanRetarget && !component.IsActive || _tagSystem.HasTag(args.Target.Value, "PinpointerScannable"))
         {
             component.Target = args.Target;
         }
