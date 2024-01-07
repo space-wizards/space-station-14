@@ -62,6 +62,8 @@
     notifiactionPrefix: prayer-chat-notify-centcom
     verb: prayer-verbs-call
     verbImage: null
+    soundForGod: /Audio/Effects/voicemail.ogg
+    ringPeriod: 120
 
 - type: entity
   parent: PhoneInstrument
@@ -75,6 +77,8 @@
   - type: Prayable
     sentMessage: prayer-popup-notify-syndicate-sent
     notifiactionPrefix: prayer-chat-notify-syndicate
+    soundForGod: /Audio/Effects/voicemail.ogg
+    ringPeriod: 120
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -185,3 +189,5 @@
     notifiactionPrefix: prayer-chat-notify-honkmother
     verb: prayer-verbs-call
     verbImage: null
+    soundForGod: /Audio/Effects/voicemail.ogg
+    ringPeriod: 120

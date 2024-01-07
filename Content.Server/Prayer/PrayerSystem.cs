@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Administration.Managers;
 using Content.Server.Administration.Logs;
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
@@ -8,8 +9,11 @@ using Content.Shared.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Prayer;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Prayer;
 /// <summary>
@@ -21,9 +25,12 @@ namespace Content.Server.Prayer;
 public sealed class PrayerSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -104,5 +111,13 @@ public sealed class PrayerSystem : EntitySystem
 
         _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotificationPrefix)} <{sender.Name}>: {message}");
         _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
+		
+        /// Admin sound
+        if (_gameTiming.CurTime > comp.NextRing) {
+            _audioSystem.PlayGlobal(comp.SoundForGod,
+                Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(comp.VolumeForGod));
+            comp.NextRing = _gameTiming.CurTime + comp.RingPeriod;
+        }
+        
     }
 }

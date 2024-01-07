@@ -182,10 +182,20 @@
   license: Custom
   source: https://taira-komori.jpn.org/freesounden.html
 
-- files: [adminhelp.ogg]
+- files: ["adminhelp.ogg", "plehnimda.ogg"]
   copyright: '"jumps from reason.3.Rev.wav" by martian of Freesound.org. Modified by reversing and altering volume.'
   license: CC0-1.0
   source: https://freesound.org/people/martian/sounds/19261/
+
+- files: [gong.ogg]
+  copyright: '"CD_VIE_008FX_Gong_2" by kevp888 of Freesound.org. Converted to ogg.'
+  license: CC-BY-4.0
+  source: https://freesound.org/people/kevp888/sounds/710557/
+
+- files: [voicemail.ogg]
+  copyright: '"Voicemail_Eleanor_Rigbie.wav" by Eleanor_Rigbie of Freesound.org. Trimmed and converted to ogg.'
+  license: CC0-1.0
+  source: https://freesound.org/people/Eleanor_Rigbie/sounds/527190/
 
 - files: ["explosion_small1.ogg", "explosion_small2.ogg", "explosion_small3.ogg", "explosion1.ogg", "explosion2.ogg", "explosion3.ogg", "explosion4.ogg", "explosion5.ogg", "explosion6.ogg", "explosionfar.ogg", "explosionsmallfar.ogg"]
   copyright: "vgstation at c5edbfd7179288080f081e2b8ac2496b7e4455db"

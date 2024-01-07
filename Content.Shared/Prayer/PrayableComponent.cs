@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
@@ -29,6 +30,34 @@ public sealed partial class PrayableComponent : Component
     [DataField("notifiactionPrefix")]
     [ViewVariables(VVAccess.ReadWrite)]
     public string NotificationPrefix = "prayer-chat-notify-pray";
+
+    /// <summary>
+    /// The sound played for admins when a prayer is sent
+	/// </summary>
+    [DataField("soundForGod")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier SoundForGod = new SoundPathSpecifier("/Audio/Effects/plehnimda.ogg");
+
+    /// <summary>
+    /// The volume of the sound played for admins when a prayer is sent
+	/// </summary>
+    [DataField("volumeForGod")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int VolumeForGod = 0;
+	
+    /// <summary>
+    /// The last time a sound was played for admins
+	/// </summary>
+    [DataField("nextRing")]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public TimeSpan NextRing;
+
+    /// <summary>
+    /// The cooldown on playing sounds for admins
+	/// </summary>
+    [DataField("ringPeriod")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan RingPeriod = TimeSpan.FromSeconds(10f);
 
     /// <summary>
     /// Used in window title and context menu
