@@ -20,8 +20,7 @@
         Burn: 10
   - type: Prayable
     bibleUserOnly: true
-    soundForGod: /Audio/Effects/hallelujah.ogg
-    volumeForGod: -3
+    soundForGod: /Audio/Effects/gong.ogg
   - type: Summonable
     specialItem: SpawnPointGhostRemilia
   - type: ReactionMixer

@@ -115,7 +115,7 @@ public sealed class PrayerSystem : EntitySystem
         /// Admin sound
         if (_gameTiming.CurTime > comp.NextRing) {
             _audioSystem.PlayGlobal(comp.SoundForGod,
-                Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(comp.VolumeForGod));
+                Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false);
             comp.NextRing = _gameTiming.CurTime + comp.RingPeriod;
         }
         

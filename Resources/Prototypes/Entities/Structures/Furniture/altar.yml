@@ -360,9 +360,6 @@
   parent: AltarBase
   name: heaven altar
   components:
-  - type: Prayable
-    soundForGod: /Audio/Effects/hallelujah.ogg
-    volumeForGod: -3
   - type: Sprite
     sprite: Structures/Furniture/Altars/Cults/heaven.rsi
     layers:
@@ -404,8 +401,6 @@
   parent: AltarHeaven
   name: fanged altar
   components:
-  - type: Prayable
-    soundForGod: /Audio/Effects/gong.ogg
   - type: Sprite
     sprite: Structures/Furniture/Altars/Cults/fangs.rsi
   - type: Icon
