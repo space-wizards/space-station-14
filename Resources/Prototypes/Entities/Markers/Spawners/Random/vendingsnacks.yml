@@ -20,6 +20,3 @@
       - VendingMachineChang
       - VendingMachineDonut
     chance: 1
-    rarePrototypes:
-      - MobMimic
-    rareChance: 0.001
