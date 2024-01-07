@@ -807,7 +807,7 @@ namespace Content.Shared.CCVar
 
         /// <summary>
         ///     The threshold of minutes to appear as a "new player" in the ahelp menu
-        ///     If 0, appearing as a new player is disabled. 
+        ///     If 0, appearing as a new player is disabled.
         /// </summary>
         public static readonly CVarDef<int> NewPlayerThreshold =
             CVarDef.Create("admin.new_player_threshold", 0, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
@@ -1565,8 +1565,8 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> ChatMaxMessageLength =
             CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);
 
-        public static readonly CVarDef<int> ChatMaxAnnounceMessageLength =
-            CVarDef.Create("chat.max_announce_message_length", 256, CVar.SERVER | CVar.REPLICATED);
+        public static readonly CVarDef<int> ChatMaxAnnouncementMessageLength =
+            CVarDef.Create("chat.max_announcement_message_length", 256, CVar.SERVER | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> ChatSanitizerEnabled =
             CVarDef.Create("chat.chat_sanitizer_enabled", true, CVar.SERVERONLY);
