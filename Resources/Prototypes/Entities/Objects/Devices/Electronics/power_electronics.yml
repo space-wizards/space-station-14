@@ -27,12 +27,12 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
+    - type: StaticPrice
+      price: 40
     - type: Tag
       tags:
         - DroneUsable
         - WallmountSubstationElectronics
-    - type: StaticPrice
-      price: 40
 
 # Wallmount Generator
 - type: entity
@@ -44,6 +44,8 @@
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: charger_APC
+  - type: StaticPrice
+    price: 20
   - type: PhysicalComposition
     materialComposition:
       Glass: 90
@@ -51,8 +53,6 @@
     tags:
       - DroneUsable
       - WallmountGeneratorElectronics
-    - type: StaticPrice
-      price: 20
 
 # APU
 - type: entity
@@ -64,12 +64,12 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
+    - type: StaticPrice
+      price: 40
     - type: Tag
       tags:
         - DroneUsable
         - WallmountGeneratorAPUElectronics
-    - type: StaticPrice
-      price: 40
 
 # Solar Tracker Electronics
 - type: entity
@@ -81,9 +81,9 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: generic
+    - type: StaticPrice
+      price: 85
     - type: Tag
       tags:
         - DroneUsable
         - SolarTrackerElectronics
-    - type: StaticPrice
-      price: 85
