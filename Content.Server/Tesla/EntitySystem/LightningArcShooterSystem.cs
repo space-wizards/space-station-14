@@ -23,7 +23,7 @@ public sealed class LightningArcShooterSystem : EntitySystem
 
     private void OnShooterMapInit(EntityUid uid, LightningArcShooterComponent component, ref MapInitEvent args)
     {
-        component.NextShootTime = _gameTiming.CurTime;
+        component.NextShootTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.ShootMaxInterval);
     }
 
     private void OnShooterUnpaused(EntityUid uid, LightningArcShooterComponent component, ref EntityUnpausedEvent args)

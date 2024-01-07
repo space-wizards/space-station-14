@@ -121,19 +121,22 @@ public sealed class PayloadSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, PayloadCaseComponent component, ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange)
+        using (args.PushGroup(nameof(PayloadCaseComponent)))
         {
-            args.PushMarkup(Loc.GetString("payload-case-not-close-enough", ("ent", uid)));
-            return;
-        }
+            if (!args.IsInDetailsRange)
+            {
+                args.PushMarkup(Loc.GetString("payload-case-not-close-enough", ("ent", uid)));
+                return;
+            }
 
-        if (GetAllPayloads(uid).Any())
-        {
-            args.PushMarkup(Loc.GetString("payload-case-has-payload", ("ent", uid)));
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString("payload-case-does-not-have-payload", ("ent", uid)));
+            if (GetAllPayloads(uid).Any())
+            {
+                args.PushMarkup(Loc.GetString("payload-case-has-payload", ("ent", uid)));
+            }
+            else
+            {
+                args.PushMarkup(Loc.GetString("payload-case-does-not-have-payload", ("ent", uid)));
+            }
         }
     }
 
