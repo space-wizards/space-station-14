@@ -74,8 +74,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     }
 
     /// <summary>
-    /// Searches the closest object that has a specific component for every component the pinpointer has stored.
-    /// This entity is then added to the stored targets.
+    ///     Searches the closest object that has a specific component, this entity is then added to the stored targets.
     /// </summary>
     private void LocateTarget(EntityUid uid, PinpointerComponent component, EntityUid? user = null, string? selectedComponent = null)
     {
@@ -262,7 +261,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     }
 
     /// <summary>
-    /// Clears the list with stored targets and turns off the pinpointer.
+    ///     Clears the list with stored targets and turns off the pinpointer.
     /// </summary>
     private void DeleteStoredTargets(EntityUid uid, PinpointerComponent component, EntityUid? user)
     {
@@ -275,8 +274,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     }
 
     /// <summary>
-    /// Adds a verb that allows the user to search for the closest target containing a certain component, a verb that
-    /// allows the user to select any of the stored targets and a verb that allows the user to clear the stored targets.
+    ///     Adds a verb that allows the user to search for the closest target containing a certain component, a verb that
+    ///     allows the user to select any of the stored targets and a verb that allows the user to clear the stored targets.
     /// </summary>
     private void OnPinpointerVerb(EntityUid uid, PinpointerComponent component, GetVerbsEvent<Verb> args)
     {

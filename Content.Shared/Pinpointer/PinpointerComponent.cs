@@ -13,20 +13,20 @@ public sealed partial class PinpointerComponent : Component
 {
     // TODO: Type serializer oh god
     /// <summary>
-    /// The list of components that will be searched for when the pinpointer is turned on.
-    /// The closest entities found with one of the components in this list will be added to the StoredTargets.
+    ///     A list of components that will be searched for when selected from the verb menu.
+    ///     The closest entities found with one of the components in this list will be added to the StoredTargets.
     /// </summary>
     [DataField("components"), ViewVariables(VVAccess.ReadWrite)]
     public List<string> Components = new();
 
     /// <summary>
-    /// The list of entities that are able to be tracked
+    ///     A list of entities that are stored on the pinpointer
     /// </summary>
     [DataField("storedTargets"), ViewVariables(VVAccess.ReadWrite)]
     public List<EntityUid> StoredTargets = new();
 
     /// <summary>
-    /// The maximum amount of targets the pinpointer is able to store
+    ///     The maximum amount of targets the pinpointer is able to store
     /// </summary>
     [DataField("maxTargets"), ViewVariables(VVAccess.ReadWrite)]
     public int MaxTargets = 10;
