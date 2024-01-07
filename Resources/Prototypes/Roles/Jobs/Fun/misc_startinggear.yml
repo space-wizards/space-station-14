@@ -327,8 +327,7 @@
 - type: startingGear
   id: MobAghostGear
   equipment:
-    id: CentcomPDA
-    
+    id: AdminPDA
 #Head Rev Gear
 - type: startingGear
   id: HeadRevGear

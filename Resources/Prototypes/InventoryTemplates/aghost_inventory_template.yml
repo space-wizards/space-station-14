@@ -6,15 +6,14 @@
       slotFlags: IDCARD
       slotGroup: SecondHotbar
       stripTime: 6
-      uiWindowPos: 0,1
-      strippingWindowPos: 0,1
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,4
       displayName: ID
 
     # For drip reasons.
     - name: head
       slotTexture: head
       slotFlags: HEAD
-      slotGroup: MainHotbar
-      uiWindowPos: 0,0
+      uiWindowPos: 0,1
       strippingWindowPos: 0,0
       displayName: Head
