@@ -59,7 +59,7 @@
     size: Small
   - type: Prayable
     sentMessage: prayer-popup-notify-centcom-sent
-    notifiactionPrefix: prayer-chat-notify-centcom
+    notificationPrefix: prayer-chat-notify-centcom
     verb: prayer-verbs-call
     verbImage: null
     soundForGod: /Audio/Effects/voicemail.ogg
