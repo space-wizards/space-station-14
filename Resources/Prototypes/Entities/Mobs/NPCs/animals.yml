@@ -404,6 +404,8 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Moth
+  - type: Bloodstream
+    bloodReagent: CopperBlood
   - type: Respirator
     damage:
       types:
