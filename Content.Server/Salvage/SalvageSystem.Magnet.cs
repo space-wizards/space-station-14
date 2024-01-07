@@ -18,7 +18,7 @@ public sealed partial class SalvageSystem
 
     private EntityQuery<SalvageMobRestrictionsComponent> _salvMobQuery;
 
-    private List<(Entity<TransformComponent> Entity, EntityUid MapUid)> _detachEnts = new();
+    private List<(Entity<TransformComponent> Entity, EntityUid MapUid, Vector2 LocalPosition)> _detachEnts = new();
 
     private void InitializeMagnet()
     {
@@ -144,7 +144,7 @@ public sealed partial class SalvageSystem
                     continue;
 
                 // Can't parent directly to map as it runs grid traversal.
-                _detachEnts.Add(((mobUid, xform), xform.MapUid.Value));
+                _detachEnts.Add(((mobUid, xform), xform.MapUid.Value, _transform.GetWorldPosition(xform)));
                 _transform.DetachParentToNull(mobUid, xform);
             }
 
@@ -156,7 +156,7 @@ public sealed partial class SalvageSystem
 
             foreach (var entity in _detachEnts)
             {
-                _transform.SetParent(entity.Entity.Owner, entity.Entity.Comp, entity.MapUid);
+                _transform.SetCoordinates(entity.Entity.Owner, new EntityCoordinates(entity.MapUid, entity.LocalPosition));
             }
 
             data.Comp.ActiveEntities = null;
