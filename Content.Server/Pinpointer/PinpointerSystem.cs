@@ -11,7 +11,6 @@ namespace Content.Server.Pinpointer;
 public sealed class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -22,25 +21,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
-    }
-
-    public bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
-    {
-        if (!Resolve(uid, ref pinpointer))
-            return false;
-
-        var isActive = !pinpointer.IsActive;
-        SetActive(uid, isActive, pinpointer);
-        UpdateAppearance(uid, pinpointer);
-        return isActive;
-    }
-
-    private void UpdateAppearance(EntityUid uid, PinpointerComponent pinpointer, AppearanceComponent? appearance = null)
-    {
-        if (!Resolve(uid, ref appearance))
-            return;
-        _appearance.SetData(uid, PinpointerVisuals.IsActive, pinpointer.IsActive, appearance);
-        _appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
     }
 
     private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)

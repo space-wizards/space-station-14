@@ -10,6 +10,7 @@ namespace Content.Shared.Pinpointer;
 public abstract class SharedPinpointerSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -17,6 +18,14 @@ public abstract class SharedPinpointerSystem : EntitySystem
         SubscribeLocalEvent<PinpointerComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<PinpointerComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<PinpointerComponent, ExaminedEvent>(OnExamined);
+    }
+
+    protected void UpdateAppearance(EntityUid uid, PinpointerComponent pinpointer, AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref appearance))
+            return;
+        _appearance.SetData(uid, PinpointerVisuals.IsActive, pinpointer.IsActive, appearance);
+        _appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
     }
 
     /// <summary>
@@ -117,7 +126,8 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return;
 
         pinpointer.IsActive = isActive;
-        Dirty(pinpointer);
+        UpdateAppearance(uid, pinpointer);
+        Dirty(uid, pinpointer);
     }
 
 
