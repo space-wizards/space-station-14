@@ -479,3 +479,18 @@
     - BikeHorn
     - ClownRecorder
     - BikeHornInstrument
+   
+#syndicate modules
+- type: entity
+  id: BorgModuleSyndicateWeapon
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: weapon cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: icon-syndicate
+  - type: ItemBorgModule
+    items:
+    - WeaponAdvancedLaser
+    - Machete

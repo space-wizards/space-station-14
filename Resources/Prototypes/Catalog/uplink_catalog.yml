@@ -526,6 +526,15 @@
   categories:
   - UplinkUtility
 
+- type: listing
+  id: UplinkSyndicateWeaponModule
+  name: uplink-syndicate-weapon-module-name
+  description: uplink-syndicate-weapon-module-desc
+  productEntity: BorgModuleSyndicateWeapon
+  cost:
+    Telecrystal: 5
+  categories:
+    - UplinkUtility
 # Implants
 
 - type: listing
