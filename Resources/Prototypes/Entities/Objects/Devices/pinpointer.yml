@@ -17,6 +17,9 @@
       map: ["enum.PinpointerLayers.Screen"]
       shader: unshaded
       visible: false
+    - state: pinwait
+      map: ["enum.PinpointerLayers.Waiting"]
+      visible: false
   - type: Icon
     sprite: Objects/Devices/pinpointer.rsi
     state: pinpointer
@@ -28,6 +31,10 @@
     visuals:
       enum.PinpointerVisuals.IsActive:
         enum.PinpointerLayers.Screen:
+          True: { visible: True }
+          False: { visible: False }
+      enum.PinpointerVisuals.IsWaiting:
+        enum.PinpointerLayers.Waiting:
           True: { visible: True }
           False: { visible: False }
       enum.PinpointerVisuals.TargetDistance:

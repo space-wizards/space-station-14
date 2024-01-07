@@ -2,9 +2,11 @@ using Content.Server.Cargo.Components;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
 using Content.Shared.Interaction.Events;
+using YamlDotNet.Core.Tokens;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -13,15 +15,29 @@ public sealed class CargoTrackingSystem : EntitySystem
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPinpointerSystem _pinpointerSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<CargoTrackingComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<CargoTrackingComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<CargoTrackingComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<CargoTrackedComponent, ComponentRemove>(OnComponentRemove);
         SubscribeLocalEvent<CargoOrderArrivalEvent>(OnCargoOrderArrival);
         SubscribeLocalEvent<CargoOrderDeletionEvent>(OnCargoOrderDeletion);
+    }
+
+    private void StartWaiting(EntityUid uid, CargoTrackingComponent comp)
+    {
+        comp.Waiting = true;
+        _appearanceSystem.SetData(uid, PinpointerVisuals.IsWaiting, true);
+    }
+
+    private void StopWaiting(EntityUid uid, CargoTrackingComponent comp)
+    {
+        comp.Waiting = false;
+        _appearanceSystem.SetData(uid, PinpointerVisuals.IsWaiting, false);
     }
 
     private void StartTrackingArrival(EntityUid tracker, EntityUid order, CargoTrackingComponent comp, EntityUid? user = null)
@@ -30,6 +46,9 @@ public sealed class CargoTrackingSystem : EntitySystem
         _pinpointerSystem.SetActive(tracker, true);
         if (user is not null)
             _popupSystem.PopupEntity(Loc.GetString("cargo-tracker-start-tracking"), tracker, user.Value);
+
+        // we are no longer waiting (if we were in the first place)
+        StopWaiting(tracker, comp);
     }
 
     private void StopTrackingArrival(EntityUid tracker, EntityUid? user = null)
@@ -43,6 +62,27 @@ public sealed class CargoTrackingSystem : EntitySystem
             comp.TrackedOrderId = null;
     }
 
+    private void OnExamine(EntityUid uid, CargoTrackingComponent comp, ExaminedEvent args)
+    {
+        if (comp.Waiting)
+        {
+            args.PushMarkup(Loc.GetString("cargo-tracker-examine-waiting"));
+            if (comp.TrackedOrderName is not null)
+                args.PushMarkup(Loc.GetString("cargo-tracker-examine-order-name", ("name", comp.TrackedOrderName)));
+            return;
+        }
+
+        if (comp.TrackedOrderId is not null)
+        {
+            args.PushMarkup(Loc.GetString("cargo-tracker-examine-tracking"));
+            if (comp.TrackedOrderName is not null)
+                args.PushMarkup(Loc.GetString("cargo-tracker-examine-order-name", ("name", comp.TrackedOrderName)));
+            return;
+        }
+
+        args.PushMarkup(Loc.GetString("cargo-tracker-examine-idle"));
+    }
+
     private void OnAfterInteract(EntityUid uid, CargoTrackingComponent component, AfterInteractEvent args)
     {
         if (!args.CanReach)
@@ -51,10 +91,11 @@ public sealed class CargoTrackingSystem : EntitySystem
         if (!TryComp<CargoInvoiceComponent>(args.Target, out var cargoInvoiceComponent))
             return;
 
-        if (cargoInvoiceComponent.OrderId is null)
+        if (cargoInvoiceComponent.OrderId is null || cargoInvoiceComponent.OrderName is null)
             return;
 
         component.TrackedOrderId = cargoInvoiceComponent.OrderId;
+        component.TrackedOrderName = cargoInvoiceComponent.OrderName;
 
         var station = _stationSystem.GetOwningStation(uid);
         if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var cargoOrderDatabaseComponent))
@@ -65,8 +106,9 @@ public sealed class CargoTrackingSystem : EntitySystem
         {
             if (order.OrderId == cargoInvoiceComponent.OrderId)
             {
-                // the order is still out for delivery, so we return early
+                // the order is still out for delivery, so we start waiting
                 _popupSystem.PopupEntity(Loc.GetString("cargo-tracker-not-arrived"), uid, args.User);
+                StartWaiting(uid, component);
                 return;
             }
         }
@@ -89,6 +131,7 @@ public sealed class CargoTrackingSystem : EntitySystem
             return;
 
         StopTrackingArrival(uid, args.User);
+        StopWaiting(uid, component);
     }
 
     private void OnComponentRemove(EntityUid uid, CargoTrackedComponent component, ComponentRemove args)

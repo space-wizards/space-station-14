@@ -37,6 +37,7 @@ public sealed partial class CargoSystem
         if (TryComp<CargoInvoiceComponent>(printed, out var invoice))
         {
             invoice.OrderId = order.OrderId;
+            invoice.OrderName = orderPrototype.Name;
         }
 
         return printed;

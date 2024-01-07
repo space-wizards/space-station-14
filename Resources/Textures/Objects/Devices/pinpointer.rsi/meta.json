@@ -157,6 +157,9 @@
             "name": "pinpointer-station"
         },
         {
+            "name": "pinwait"
+        },
+        {
             "name": "inhand-left",
             "directions": 4
         },
