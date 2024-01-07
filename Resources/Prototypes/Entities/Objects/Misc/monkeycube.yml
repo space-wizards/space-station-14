@@ -102,7 +102,7 @@
     state: box
 
 - type: entity
-  parent: MonkeyCubeBox
+  parent: MonkeyCubeWrapped
   name: monkey cube
   suffix: Wrapped, Syndicate
   id: SyndicateSpongeWrapped
