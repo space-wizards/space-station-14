@@ -125,30 +125,27 @@ public sealed class RottingSystem : EntitySystem
 
     private void OnPerishableExamined(Entity<PerishableComponent> perishable, ref ExaminedEvent args)
     {
-        var stage = PerishStage(perishable);
-        if (stage < 1 || stage > 3)
+        int maxStages = 3;
+        int stage = PerishStage(perishable, maxStages);
+        if (stage < 1 || stage > maxStages)
         {
             // We dont push an examined string if it hasen't started "perishing" or it's already rotting
             return;
         }
 
-        var description = stage switch
-        {
-            >= 3 => "perishable-almost-rotting",
-            >= 2 => "perishable-ripe",
-               _ => "perishable-fresh"
-        };
+        var description = "perishable-" + stage;
         args.PushMarkup(Loc.GetString(description));
     }
 
     /// <summary>
-    /// Return close to rotting the thing is. 0 if it hasn't started decaying at all, >=1 otherwise.
+    /// Return an integer from 0 to maxStage representing how close to rotting an entity is. Used to
+    /// generate examine messages for items that are starting to rot.
     /// </summary>
-    public int PerishStage(Entity<PerishableComponent> perishable)
+    public int PerishStage(Entity<PerishableComponent> perishable, int maxStages)
     {
         if (perishable.Comp.RotAfter.TotalSeconds == 0 || perishable.Comp.RotAccumulator.TotalSeconds == 0)
             return 0;
-        return (int) (1 + 3 * perishable.Comp.RotAccumulator.TotalSeconds / perishable.Comp.RotAfter.TotalSeconds);
+        return (int)(1 + maxStages * perishable.Comp.RotAccumulator.TotalSeconds / perishable.Comp.RotAfter.TotalSeconds);
     }
 
     private void OnExamined(EntityUid uid, RottingComponent component, ExaminedEvent args)
