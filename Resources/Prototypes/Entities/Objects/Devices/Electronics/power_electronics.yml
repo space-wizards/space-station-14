@@ -31,6 +31,8 @@
       tags:
         - DroneUsable
         - WallmountSubstationElectronics
+    - type: StaticPrice
+      price: 40
 
 # Wallmount Generator
 - type: entity
@@ -49,6 +51,8 @@
     tags:
       - DroneUsable
       - WallmountGeneratorElectronics
+    - type: StaticPrice
+      price: 20
 
 # APU
 - type: entity
@@ -64,6 +68,8 @@
       tags:
         - DroneUsable
         - WallmountGeneratorAPUElectronics
+    - type: StaticPrice
+      price: 40
 
 # Solar Tracker Electronics
 - type: entity
@@ -79,3 +85,5 @@
       tags:
         - DroneUsable
         - SolarTrackerElectronics
+    - type: StaticPrice
+      price: 85

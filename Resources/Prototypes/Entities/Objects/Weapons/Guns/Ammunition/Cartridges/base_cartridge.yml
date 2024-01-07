@@ -27,3 +27,5 @@
       path: /Audio/Weapons/Guns/Casings/casing_fall_2.ogg
       params:
         volume: -1
+  - type: StaticPrice
+    price: 1
