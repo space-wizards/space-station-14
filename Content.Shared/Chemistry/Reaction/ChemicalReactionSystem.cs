@@ -22,7 +22,7 @@ namespace Content.Shared.Chemistry.Reaction
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] protected   readonly SharedTransformSystem TransformSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         /// <summary>
         /// A cache of all reactions indexed by at most ONE of their required reactants.
@@ -201,7 +201,7 @@ namespace Content.Shared.Chemistry.Reaction
                 reagent,
                 unitReactions, EntityManager, null, 1f);
 
-            var coordinates = TransformSystem.GetMapCoordinates(soln);
+            var coordinates = _transformSystem.GetMapCoordinates(soln);
 
             _adminLogger.Add(LogType.ChemicalReaction, reaction.Impact,
                 $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(soln):metabolizer} at {coordinates}");
