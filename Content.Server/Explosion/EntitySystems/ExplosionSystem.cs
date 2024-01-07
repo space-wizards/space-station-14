@@ -6,6 +6,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Explosion.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Armor;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -13,12 +14,14 @@ using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
+using Content.Shared.Projectiles;
 using Content.Shared.Throwing;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
-using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -44,14 +47,21 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsSys = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+
+    private EntityQuery<TransformComponent> _transformQuery;
+    private EntityQuery<DamageableComponent> _damageQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+    private EntityQuery<ProjectileComponent> _projectileQuery;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
     /// </summary>
     public const ushort DefaultTileSize = 1;
 
-    private AudioParams _audioParams = AudioParams.Default.WithVolume(-3f);
+    public const int MaxExplosionAudioRange = 30;
 
     /// <summary>
     ///     The "default" explosion prototype.
@@ -76,7 +86,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
 
         // as long as explosion-resistance mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
-        SubscribeLocalEvent<ExplosionResistanceComponent, InventoryRelayedEvent<GetExplosionResistanceEvent>>((e, c, ev) => OnGetResistance(e, c, ev.Args));
+        SubscribeLocalEvent<ExplosionResistanceComponent, InventoryRelayedEvent<GetExplosionResistanceEvent>>(RelayedResistance);
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
@@ -92,6 +102,11 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeCvars();
         InitAirtightMap();
         InitVisuals();
+
+        _transformQuery = GetEntityQuery<TransformComponent>();
+        _damageQuery = GetEntityQuery<DamageableComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
+        _projectileQuery = GetEntityQuery<ProjectileComponent>();
     }
 
     private void OnReset(RoundRestartCleanupEvent ev)
@@ -112,10 +127,17 @@ public sealed partial class ExplosionSystem : EntitySystem
         _pathfindingSystem.PauseUpdating = false;
     }
 
-    private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)
+    private void RelayedResistance(EntityUid uid, ExplosionResistanceComponent component,
+        InventoryRelayedEvent<GetExplosionResistanceEvent> args)
+    {
+        if (component.Worn)
+            OnGetResistance(uid, component, ref args.Args);
+    }
+
+    private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, ref GetExplosionResistanceEvent args)
     {
         args.DamageCoefficient *= component.DamageCoefficient;
-        if (component.Modifiers.TryGetValue(args.ExplotionPrototype, out var modifier))
+        if (component.Modifiers.TryGetValue(args.ExplosionPrototype, out var modifier))
             args.DamageCoefficient *= modifier;
     }
 
@@ -228,7 +250,9 @@ public sealed partial class ExplosionSystem : EntitySystem
         var pos = Transform(uid);
 
 
-        QueueExplosion(pos.MapPosition, typeId, totalIntensity, slope, maxTileIntensity, tileBreakScale, maxTileBreak, canCreateVacuum, addLog: false);
+        var coordinates = _transformSystem.GetMapCoordinates(pos);
+
+        QueueExplosion(coordinates, typeId, totalIntensity, slope, maxTileIntensity, tileBreakScale, maxTileBreak, canCreateVacuum, addLog: false);
 
         if (!addLog)
             return;
@@ -236,15 +260,15 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (user == null)
         {
             _adminLogger.Add(LogType.Explosion, LogImpact.High,
-                $"{ToPrettyString(uid):entity} exploded ({typeId}) at {pos.Coordinates:coordinates} with intensity {totalIntensity} slope {slope}");
+                $"{ToPrettyString(uid):entity} exploded ({typeId}) at {coordinates:coordinates} with intensity {totalIntensity} slope {slope}");
         }
         else
         {
             _adminLogger.Add(LogType.Explosion, LogImpact.High,
-                $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at {pos.Coordinates:coordinates} with intensity {totalIntensity} slope {slope}");
+                $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at {coordinates:coordinates} with intensity {totalIntensity} slope {slope}");
             var alertMinExplosionIntensity = _cfg.GetCVar(CCVars.AdminAlertExplosionMinIntensity);
             if (alertMinExplosionIntensity > -1 && totalIntensity >= alertMinExplosionIntensity)
-                _chat.SendAdminAlert(user.Value, $"caused {ToPrettyString(uid)} to explode ({typeId}:{totalIntensity}) at {pos.Coordinates:coordinates}");
+                _chat.SendAdminAlert(user.Value, $"caused {ToPrettyString(uid)} to explode ({typeId}:{totalIntensity}) at {coordinates:coordinates}");
         }
     }
 
@@ -304,15 +328,33 @@ public sealed partial class ExplosionSystem : EntitySystem
         var visualEnt = CreateExplosionVisualEntity(epicenter, type.ID, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
 
         // camera shake
-        CameraShake(iterationIntensity.Count * 2.5f, epicenter, totalIntensity);
+        CameraShake(iterationIntensity.Count * 4f, epicenter, totalIntensity);
 
         //For whatever bloody reason, sound system requires ENTITY coordinates.
         var mapEntityCoords = EntityCoordinates.FromMap(EntityManager, _mapManager.GetMapEntityId(epicenter.MapId), epicenter);
 
         // play sound.
-        var audioRange = iterationIntensity.Count * 5;
+        // for the normal audio, we want everyone in pvs range
+        // + if the bomb is big enough, people outside of it too
+        // this is capped to 30 because otherwise really huge bombs
+        // will attempt to play regular audio for people who can't hear it anyway because the epicenter is so far away
+        var audioRange = Math.Min(iterationIntensity.Count * 2, MaxExplosionAudioRange);
         var filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange);
-        SoundSystem.Play(type.Sound.GetSound(), filter, mapEntityCoords, _audioParams);
+        var sound = iterationIntensity.Count < type.SmallSoundIterationThreshold
+            ? type.SmallSound
+            : type.Sound;
+
+        _audio.PlayStatic(sound, filter, mapEntityCoords, true, sound.Params);
+
+        // play far sound
+        // far sound should play for anyone who wasn't in range of any of the effects of the bomb
+        var farAudioRange = iterationIntensity.Count * 5;
+        var farFilter = Filter.Empty().AddInRange(epicenter, farAudioRange).RemoveInRange(epicenter, audioRange);
+        var farSound = iterationIntensity.Count < type.SmallSoundIterationThreshold
+            ? type.SmallSoundFar
+            : type.SoundFar;
+
+        _audio.PlayGlobal(farSound, farFilter, true, farSound.Params);
 
         return new Explosion(this,
             type,
@@ -355,9 +397,9 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     private void OnArmorExamine(EntityUid uid, ExplosionResistanceComponent component, ref ArmorExamineEvent args)
     {
+        var value = MathF.Round((1f - component.DamageCoefficient) * 100, 1);
+
         args.Msg.PushNewline();
-        args.Msg.AddMarkup(Loc.GetString("explosion-resistance-coefficient-value",
-            ("value", MathF.Round((1f - component.DamageCoefficient) * 100, 1))
-            ));
+        args.Msg.AddMarkup(Loc.GetString(component.Examine, ("value", value)));
     }
 }

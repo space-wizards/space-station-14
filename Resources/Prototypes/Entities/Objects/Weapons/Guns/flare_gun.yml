@@ -10,15 +10,20 @@
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
   - type: Gun
     fireRate: 8
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
+    compatibleAmmo:
+      - PelletShotgunFlare
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
+    damageOnWrongAmmo:
+      types:
+        Blunt: 6.0
   - type: BallisticAmmoProvider
     whitelist:
       tags:

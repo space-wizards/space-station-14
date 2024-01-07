@@ -7,6 +7,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class AddMechanismCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public string Command => "addmechanism";
         public string Description => "Adds a given entity to a containing body.";
         public string Help => "Usage: addmechanism <entity uid> <bodypart uid>";
@@ -19,22 +21,21 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!EntityUid.TryParse(args[0], out var organId))
+            if (!NetEntity.TryParse(args[0], out var organIdNet) || !_entManager.TryGetEntity(organIdNet, out var organId))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            if (!EntityUid.TryParse(args[1], out var partId))
+            if (!NetEntity.TryParse(args[1], out var partIdNet) || !_entManager.TryGetEntity(partIdNet, out var partId))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var bodySystem = entityManager.System<BodySystem>();
+            var bodySystem = _entManager.System<BodySystem>();
 
-            if (bodySystem.AddOrganToFirstValidSlot(organId, partId))
+            if (bodySystem.AddOrganToFirstValidSlot(partId.Value, organId.Value))
             {
                 shell.WriteLine($@"Added {organId} to {partId}.");
             }

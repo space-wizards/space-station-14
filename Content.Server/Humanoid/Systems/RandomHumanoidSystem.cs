@@ -29,7 +29,8 @@ public sealed class RandomHumanoidSystem : EntitySystem
     private void OnMapInit(EntityUid uid, RandomHumanoidSpawnerComponent component, MapInitEvent args)
     {
         QueueDel(uid);
-        SpawnRandomHumanoid(component.SettingsPrototypeId, Transform(uid).Coordinates, MetaData(uid).EntityName);
+        if (component.SettingsPrototypeId != null)
+            SpawnRandomHumanoid(component.SettingsPrototypeId, Transform(uid).Coordinates, MetaData(uid).EntityName);
     }
 
     public EntityUid SpawnRandomHumanoid(string prototypeId, EntityCoordinates coordinates, string name)
@@ -51,7 +52,8 @@ public sealed class RandomHumanoidSystem : EntitySystem
             {
                 var comp = (Component) _serialization.CreateCopy(entry.Component, notNullableOverride: true);
                 comp.Owner = humanoid; // This .owner must survive for now.
-                EntityManager.AddComponent(humanoid, comp, true);
+                EntityManager.RemoveComponent(humanoid, comp.GetType());
+                EntityManager.AddComponent(humanoid, comp);
             }
         }
 

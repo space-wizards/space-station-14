@@ -17,11 +17,11 @@ public sealed class AdminFaxEuiState : EuiStateBase
 [Serializable, NetSerializable]
 public sealed class AdminFaxEntry
 {
-    public EntityUid Uid { get; }
+    public NetEntity Uid { get; }
     public string Name { get; }
     public string Address { get; }
 
-    public AdminFaxEntry(EntityUid uid, string name, string address)
+    public AdminFaxEntry(NetEntity uid, string name, string address)
     {
         Uid = uid;
         Name = name;
@@ -39,9 +39,9 @@ public static class AdminFaxEuiMsg
     [Serializable, NetSerializable]
     public sealed class Follow : EuiMessageBase
     {
-        public EntityUid TargetFax { get; }
+        public NetEntity TargetFax { get; }
 
-        public Follow(EntityUid targetFax)
+        public Follow(NetEntity targetFax)
         {
             TargetFax = targetFax;
         }
@@ -50,14 +50,14 @@ public static class AdminFaxEuiMsg
     [Serializable, NetSerializable]
     public sealed class Send : EuiMessageBase
     {
-        public EntityUid Target { get; }
+        public NetEntity Target { get; }
         public string Title { get; }
         public string From { get; }
         public string Content { get; }
         public string StampState { get; }
         public Color StampColor { get; }
 
-        public Send(EntityUid target, string title, string from, string content, string stamp, Color stampColor)
+        public Send(NetEntity target, string title, string from, string content, string stamp, Color stampColor)
         {
             Target = target;
             Title = title;

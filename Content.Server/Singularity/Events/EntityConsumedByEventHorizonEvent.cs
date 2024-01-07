@@ -8,7 +8,7 @@ namespace Content.Server.Singularity.Events;
 /// </summary>
 [ByRefEvent]
 public readonly record struct EntityConsumedByEventHorizonEvent
-(EntityUid entity, EntityUid eventHorizonUid, EventHorizonComponent eventHorizon, IContainer? container)
+(EntityUid entity, EntityUid eventHorizonUid, EventHorizonComponent eventHorizon, BaseContainer? container)
 {
     /// <summary>
     /// The entity being consumed by the event horizon.
@@ -29,5 +29,5 @@ public readonly record struct EntityConsumedByEventHorizonEvent
     /// The innermost container of the entity being consumed by the event horizon that is not also in the process of being consumed by the event horizon.
     /// Used to correctly dump out the contents containers that are consumed by the event horizon.
     /// </summary>
-    public readonly IContainer? Container = container;
+    public readonly BaseContainer? Container = container;
 }

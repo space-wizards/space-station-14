@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Content.Client.Resources;
 using Content.Client.IoC;
 using Robust.Client.Graphics;
+using Robust.Shared.Graphics;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax.Data;

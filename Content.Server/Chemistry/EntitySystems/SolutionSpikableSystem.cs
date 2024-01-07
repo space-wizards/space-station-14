@@ -1,11 +1,10 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.FixedPoint;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Interaction;
-using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -20,7 +19,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 /// </summary>
 public sealed class SolutionSpikableSystem : EntitySystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly TriggerSystem _triggerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
@@ -29,9 +28,9 @@ public sealed class SolutionSpikableSystem : EntitySystem
         SubscribeLocalEvent<RefillableSolutionComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
-    private void OnInteractUsing(EntityUid uid, RefillableSolutionComponent target, InteractUsingEvent args)
+    private void OnInteractUsing(Entity<RefillableSolutionComponent> entity, ref InteractUsingEvent args)
     {
-        TrySpike(args.Used, args.Target, args.User, target);
+        TrySpike(args.Used, args.Target, args.User, entity.Comp);
     }
 
     /// <summary>
@@ -48,8 +47,8 @@ public sealed class SolutionSpikableSystem : EntitySystem
     {
         if (!Resolve(source, ref spikableSource, ref managerSource, false)
             || !Resolve(target, ref spikableTarget, ref managerTarget, false)
-            || !_solutionSystem.TryGetRefillableSolution(target, out var targetSolution, managerTarget, spikableTarget)
-            || !managerSource.Solutions.TryGetValue(spikableSource.SourceSolution, out var sourceSolution))
+            || !_solutionContainerSystem.TryGetRefillableSolution((target, spikableTarget, managerTarget), out var targetSoln, out var targetSolution)
+            || !_solutionContainerSystem.TryGetSolution((source, managerSource), spikableSource.SourceSolution, out _, out var sourceSolution))
         {
             return;
         }
@@ -60,35 +59,11 @@ public sealed class SolutionSpikableSystem : EntitySystem
             return;
         }
 
-        if (_solutionSystem.TryMixAndOverflow(target,
-                targetSolution,
-                sourceSolution,
-                targetSolution.MaxVolume,
-                out var overflow))
-        {
-            if (overflow.Volume > 0)
-            {
-                RaiseLocalEvent(target, new SolutionSpikeOverflowEvent(overflow));
-            }
+        if (!_solutionContainerSystem.ForceAddSolution(targetSoln.Value, sourceSolution))
+            return;
 
-            _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);
-
-            sourceSolution.RemoveAllSolution();
-
-            _triggerSystem.Trigger(source, user);
-        }
-    }
-}
-
-public sealed class SolutionSpikeOverflowEvent : HandledEntityEventArgs
-{
-    /// <summary>
-    ///     The solution that's been overflowed from the spike.
-    /// </summary>
-    public Solution Overflow { get; }
-
-    public SolutionSpikeOverflowEvent(Solution overflow)
-    {
-        Overflow = overflow;
+        _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);
+        sourceSolution.RemoveAllSolution();
+        _triggerSystem.Trigger(source, user);
     }
 }

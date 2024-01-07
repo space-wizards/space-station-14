@@ -1,6 +1,5 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.DragDrop;
-using Content.Shared.Fluids.Components;
 
 namespace Content.Shared.Fluids;
 
@@ -17,16 +16,26 @@ public abstract class SharedPuddleSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<RefillableSolutionComponent, CanDragEvent>(OnRefillableCanDrag);
-        SubscribeLocalEvent<RefillableSolutionComponent, CanDropDraggedEvent>(OnRefillableCanDropDragged);
+        SubscribeLocalEvent<DumpableSolutionComponent, CanDropTargetEvent>(OnDumpCanDropTarget);
         SubscribeLocalEvent<DrainableSolutionComponent, CanDropTargetEvent>(OnDrainCanDropTarget);
+        SubscribeLocalEvent<RefillableSolutionComponent, CanDropDraggedEvent>(OnRefillableCanDropDragged);
     }
 
-    private void OnRefillableCanDrag(EntityUid uid, RefillableSolutionComponent component, ref CanDragEvent args)
+    private void OnRefillableCanDrag(Entity<RefillableSolutionComponent> entity, ref CanDragEvent args)
     {
         args.Handled = true;
     }
 
-    private void OnDrainCanDropTarget(EntityUid uid, DrainableSolutionComponent component, ref CanDropTargetEvent args)
+    private void OnDumpCanDropTarget(Entity<DumpableSolutionComponent> entity, ref CanDropTargetEvent args)
+    {
+        if (HasComp<DrainableSolutionComponent>(args.Dragged))
+        {
+            args.CanDrop = true;
+            args.Handled = true;
+        }
+    }
+
+    private void OnDrainCanDropTarget(Entity<DrainableSolutionComponent> entity, ref CanDropTargetEvent args)
     {
         if (HasComp<RefillableSolutionComponent>(args.Dragged))
         {
@@ -35,9 +44,9 @@ public abstract class SharedPuddleSystem : EntitySystem
         }
     }
 
-    private void OnRefillableCanDropDragged(EntityUid uid, RefillableSolutionComponent component, ref CanDropDraggedEvent args)
+    private void OnRefillableCanDropDragged(Entity<RefillableSolutionComponent> entity, ref CanDropDraggedEvent args)
     {
-        if (!HasComp<DrainableSolutionComponent>(args.Target) && !HasComp<DrainComponent>(args.Target))
+        if (!HasComp<DrainableSolutionComponent>(args.Target) && !HasComp<DumpableSolutionComponent>(args.Target))
             return;
 
         args.CanDrop = true;

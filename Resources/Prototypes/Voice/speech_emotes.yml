@@ -54,6 +54,11 @@
     - giggled
 
 - type: emote
+  id: Honk
+  category: Vocal
+  chatMessages: [honks]
+
+- type: emote
   id: Sigh
   category: Vocal
   chatMessages: [sighs]
@@ -139,6 +144,18 @@
    - squeaked
    - squeaked.
    - squeaked!
+
+- type: emote
+  id: Click
+  category: Vocal
+  chatMessages: [click.]
+  chatTriggers:
+   - click
+   - click.
+   - click!
+   - clicks
+   - clicks.
+   - clicks!
 
 # hand emotes
 - type: emote

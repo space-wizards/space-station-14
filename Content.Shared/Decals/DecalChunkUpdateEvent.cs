@@ -6,7 +6,7 @@ namespace Content.Shared.Decals
     [Serializable, NetSerializable]
     public sealed class DecalChunkUpdateEvent : EntityEventArgs
     {
-        public Dictionary<EntityUid, Dictionary<Vector2i, DecalChunk>> Data = new();
-        public Dictionary<EntityUid, HashSet<Vector2i>> RemovedChunks = new();
+        public Dictionary<NetEntity, Dictionary<Vector2i, DecalChunk>> Data = new();
+        public Dictionary<NetEntity, HashSet<Vector2i>> RemovedChunks = new();
     }
 }

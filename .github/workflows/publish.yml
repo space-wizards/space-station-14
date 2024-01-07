@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - name: Install dependencies
-      run: sudo apt-get install -y python3-paramiko
+      run: sudo apt-get install -y python3-paramiko python3-lxml
 
     - uses: actions/checkout@v3.6.0
       with:
@@ -22,17 +22,24 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3.2.0
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
 
     - name: Get Engine Tag
       run: |
         cd RobustToolbox
         git fetch --depth=1
 
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build Packaging
+      run: dotnet build Content.Packaging --configuration Release --no-restore /m
+
+    - name: Package server
+      run: dotnet run --project Content.Packaging server --platform win-x64 --platform linux-x64 --platform osx-x64 --platform linux-arm64
+
     - name: Package client
-      run: |
-        Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64
-        Tools/package_client_build.py
+      run: dotnet run --project Content.Packaging client --no-wipe-release
 
     - name: Update Build Info
       run: Tools/gen_build_info.py

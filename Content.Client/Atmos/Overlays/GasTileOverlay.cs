@@ -8,6 +8,8 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
+using Robust.Shared.Graphics;
+using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -79,7 +81,7 @@ namespace Content.Client.Atmos.Overlays
 
                         if (!rsi.TryGetState(stateId, out var state)) continue;
 
-                        _frames[i] = state.GetFrames(RSI.State.Direction.South);
+                        _frames[i] = state.GetFrames(RsiDirection.South);
                         _frameDelays[i] = state.GetDelays();
                         _frameCounter[i] = 0;
                         break;
@@ -97,7 +99,7 @@ namespace Content.Client.Atmos.Overlays
                 if (!fire.TryGetState((i + 1).ToString(), out var state))
                     throw new ArgumentOutOfRangeException($"Fire RSI doesn't have state \"{i}\"!");
 
-                _fireFrames[i] = state.GetFrames(RSI.State.Direction.South);
+                _fireFrames[i] = state.GetFrames(RsiDirection.South);
                 _fireFrameDelays[i] = state.GetDelays();
                 _fireFrameCounter[i] = 0;
             }

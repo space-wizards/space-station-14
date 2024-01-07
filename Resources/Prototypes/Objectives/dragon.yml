@@ -1,0 +1,42 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseDragonObjective
+  components:
+  - type: Objective
+    # difficulty isn't used at all since objective are fixed
+    difficulty: 1.5
+    issuer: dragon
+  - type: RoleRequirement
+    roles:
+      components:
+      - DragonRole
+
+- type: entity
+  noSpawn: true
+  parent: BaseDragonObjective
+  id: CarpRiftsObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: Structures/Specific/carp_rift.rsi
+      state: icon_blue
+  - type: NumberObjective
+    # dragon can only spawn 3 rifts so keep objective the same
+    min: 3
+    max: 3
+    title: objective-carp-rifts-title
+    description: objective-carp-rifts-description
+  - type: CarpRiftsCondition
+
+- type: entity
+  noSpawn: true
+  parent: [BaseDragonObjective, BaseSurviveObjective]
+  id: DragonSurviveObjective
+  name: Survive
+  description: You have to stay alive to maintain control.
+  components:
+  - type: Objective
+    icon:
+      sprite: Mobs/Aliens/Carps/dragon.rsi
+      state: alive

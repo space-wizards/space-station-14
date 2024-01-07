@@ -1,0 +1,401 @@
+- type: entity
+  abstract: true
+  id: BaseAnomaly
+  name: anomaly
+  description: An impossible object. Should you be standing this close to it?
+  components:
+  - type: Anomaly
+    pulseSound:
+      collection: RadiationPulse
+      params:
+        volume: 5
+    anomalyContactDamage:
+      types:
+        Radiation: 10
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/anomaly_drone.ogg
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Sprite
+    noRot: true
+    drawdepth: Effects #it needs to draw over stuff.
+    sprite: Structures/Specific/anomaly.rsi
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Damageable
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: GuideHelp
+    guides:
+    - AnomalousResearch
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Effects/teleport_arrival.ogg
+
+- type: entity
+  id: AnomalyPyroclastic
+  parent: BaseAnomaly
+  suffix: Pyroclastic
+  components:
+  - type: Anomaly
+    corePrototype: AnomalyCorePyroclastic
+    coreInertPrototype: AnomalyCorePyroclasticInert
+  - type: Sprite
+    layers:
+    - state: anom1
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom1-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#fca3c0"
+    castShadows: false
+  - type: PyroclasticAnomaly
+  - type: TempAffectingAnomaly
+    tempChangePerSecond: 25
+    hotspotExposeTemperature: 1000
+  - type: GasProducerAnomaly
+    releasedGas: 3
+    releaseOnMaxSeverity: true
+    spawnRadius: 3
+    tileCount: 5
+    tempChange: 550
+
+- type: entity
+  id: AnomalyGravity
+  parent: BaseAnomaly
+  suffix: Gravity
+  components:
+  - type: Anomaly
+    corePrototype: AnomalyCoreGravity
+    coreInertPrototype: AnomalyCoreGravityInert
+  - type: Sprite
+    layers:
+    - state: anom2
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom2-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 5.0
+    energy: 20
+    color: "#1e070e"
+    castShadows: false
+  - type: GravityAnomaly
+  - type: GravityWell
+  - type: RadiationSource
+
+- type: entity
+  id: AnomalyElectricity
+  parent: BaseAnomaly
+  suffix: Electricity
+  components:
+  - type: Anomaly
+    corePrototype: AnomalyCoreElectricity
+    coreInertPrototype: AnomalyCoreElectricityInert
+  - type: Sprite
+    layers:
+    - state: anom3
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom3-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 5.0
+    color: "#ffffaa"
+    castShadows: false
+  - type: ElectricityAnomaly
+  - type: Electrified
+
+- type: entity
+  id: AnomalyFlesh
+  parent: BaseAnomaly
+  suffix: Flesh
+  components:
+  - type: Anomaly
+    corePrototype: AnomalyCoreFlesh
+    coreInertPrototype: AnomalyCoreFleshInert
+  - type: Sprite
+    layers:
+    - state: anom5
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom5-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#cb5b7e"
+    castShadows: false
+  - type: TileSpawnAnomaly
+    floorTileId: FloorFlesh
+  - type: EntitySpawnAnomaly
+    superCriticalSpawns:
+    - FleshKudzu
+    spawns:
+    - MobFleshJared
+    - MobFleshGolem
+    - MobFleshClamp
+    - MobFleshLover
+    - FleshBlocker
+
+- type: entity
+  id: AnomalyBluespace
+  parent: BaseAnomaly
+  suffix: Bluespace
+  components:
+  - type: Sprite
+    layers:
+    - state: anom4
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom4-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#00ccff"
+    castShadows: false
+  - type: BluespaceAnomaly
+  - type: Portal
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
+  - type: Anomaly
+    corePrototype: AnomalyCoreBluespace
+    coreInertPrototype: AnomalyCoreBluespaceInert
+    pulseSound:
+      collection: RadiationPulse
+      params:
+        volume: 5
+    anomalyContactDamage:
+      types:
+        Radiation: 10
+
+
+- type: entity
+  id: AnomalyIce
+  parent: BaseAnomaly
+  suffix: Ice
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 2.5
+    color: "#befaff"
+    castShadows: false
+  - type: Anomaly
+    corePrototype: AnomalyCoreIce
+    coreInertPrototype: AnomalyCoreIceInert
+    anomalyContactDamage:
+      types:
+        Cold: 10
+  - type: ExplosionAnomaly
+    supercriticalExplosion: Cryo
+    explosionTotalIntensity: 300
+    explosionDropoff: 2
+    explosionMaxTileIntensity: 20
+  - type: ProjectileAnomaly
+    projectilePrototype: ProjectileIcicle
+    targetNonSentientChance: 0.1
+  - type: EntitySpawnAnomaly
+    spawns:
+    - IceCrust
+    maxSpawnAmount: 17
+    spawnOnPulse: false
+    spawnOnSuperCritical: false
+    spawnOnStabilityChanged: true
+  - type: TempAffectingAnomaly
+    tempChangePerSecond: -25
+    hotspotExposeTemperature: -1000
+  - type: GasProducerAnomaly
+    releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
+    releaseOnMaxSeverity: true
+    spawnRadius: 0
+
+- type: entity
+  id: AnomalyRock
+  parent: BaseAnomaly
+  suffix: Rock
+  components:
+  - type: Anomaly
+    corePrototype: AnomalyCoreRock
+    coreInertPrototype: AnomalyCoreRockInert
+  - type: Sprite
+    layers:
+    - state: anom6
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom6-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#5ca8cb"
+    castShadows: false
+  - type: TileSpawnAnomaly
+    floorTileId: FloorAsteroidTile
+    spawnChance: 0.8
+  - type: EntitySpawnAnomaly
+    maxSpawnAmount: 50
+    spawnRange: 10
+    spawns:
+    - WallSpawnAsteroid
+    - RockAnomCrabSpawner
+    - CrystalSpawner
+    superCriticalSpawns:
+    - WallSpawnAsteroid
+    - SpawnMobOreCrab
+
+- type: entity
+  id: AnomalyLiquid
+  parent: BaseAnomaly
+  suffix: Liquid
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/liquid_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: RandomSprite
+    selected: # Initialized layer values. Edited through the ReagentProducerAnomalySystem
+      enum.AnomalyVisualLayers.Base:
+        anom: "#ffffff"
+      enum.AnomalyVisualLayers.Animated:
+        pulse: "#ffffff"
+  - type: PointLight
+    radius: 4.0
+    energy: 3.5
+    color: "#bbbbbb"
+  - type: BadFood
+  - type: Anomaly
+    corePrototype: AnomalyCoreLiquid
+    coreInertPrototype: AnomalyCoreLiquidInert
+    anomalyContactDamage:
+      types:
+        Slash: 1
+  - type: EntitySpawnAnomaly
+    superCriticalSpawns:
+    - ReagentSlimeSpawner
+    spawns:
+      - PuddleSparkle
+  - type: SolutionContainerManager
+    solutions:
+      anomaly:
+        maxVol: 1500
+  - type: PuddleCreateAnomaly
+    solution: anomaly
+  - type: InjectionAnomaly
+    solution: anomaly
+    superCriticalInjectRadius: 10
+  - type: ReagentProducerAnomaly
+    solution: anomaly
+    needRecolor: true
+    dangerousChemicals:
+    - UnstableMutagen
+    - Mold
+    - PolytrinicAcid
+    - FerrochromicAcid
+    - FluorosulfuricAcid
+    - SulfuricAcid
+    - HeartbreakerToxin
+    - VentCrud
+    - UncookedAnimalProteins
+    - Thermite
+    - Napalm
+    - Phlogiston
+    - ChlorineTrifluoride
+    - FoamingAgent
+    - BuzzochloricBees
+    - RobustHarvest
+    usefulChemicals:
+    - Cryptobiolin
+    - Dylovene
+    - Arithrazine
+    - Bicaridine
+    - Cryoxadone
+    - Dermaline
+    - Dexalin
+    - DexalinPlus
+    - Epinephrine
+    - Leporazine
+    - Ambuzol
+    - Tricordrazine
+    - Artifexium
+    - Ethylredoxrazine
+    funChemicals:
+    - Desoxyephedrine
+    - Ephedrine
+    - THC
+    - THCOil
+    - SpaceDrugs
+    - Nocturine
+    - MuteToxin
+    - NorepinephricAcid
+    - Pax
+    - Ipecac
+    - Cognizine
+    - Beer
+    - SpaceGlue
+    - SpaceLube
+    - CogChamp
+    - Honk
+    - Carpetium
+  - type: Drink
+    solution: anomaly
+  - type: DrainableSolution
+    solution: anomaly
+  - type: DrawableSolution
+    solution: anomaly
+  - type: ExaminableSolution
+    solution: anomaly
+  - type: RefillableSolution
+    solution: anomaly
+  - type: InjectableSolution
+    solution: beaker

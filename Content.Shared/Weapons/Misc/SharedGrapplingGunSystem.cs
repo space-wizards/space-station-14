@@ -6,9 +6,9 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
-using Content.Shared.Timing;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -28,7 +28,6 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly UseDelaySystem _delay = default!;
 
     public const string GrapplingJoint = "grappling";
 
@@ -61,13 +60,13 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
             // At least show the visuals.
             component.Projectile = shotUid.Value;
-            Dirty(component);
+            Dirty(uid, component);
             var visuals = EnsureComp<JointVisualsComponent>(shotUid.Value);
             visuals.Sprite =
                 new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
             visuals.OffsetA = new Vector2(0f, 0.5f);
             visuals.Target = uid;
-            Dirty(visuals);
+            Dirty(shotUid.Value, visuals);
         }
 
         TryComp<AppearanceComponent>(uid, out var appearance);
@@ -115,10 +114,9 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
     private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
     {
-        if (!Timing.IsFirstTimePredicted || _delay.ActiveDelay(uid))
+        if (!Timing.IsFirstTimePredicted || args.Handled)
             return;
 
-        _delay.BeginDelay(uid);
         _audio.PlayPredicted(component.CycleSound, uid, args.User);
 
         TryComp<AppearanceComponent>(uid, out var appearance);
@@ -133,8 +131,10 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             }
 
             component.Projectile = null;
-            Dirty(component);
+            Dirty(uid, component);
         }
+
+        args.Handled = true;
     }
 
     private void SetReeling(EntityUid uid, GrapplingGunComponent component, bool value, EntityUid? user)
@@ -145,19 +145,18 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         if (value)
         {
             if (Timing.IsFirstTimePredicted)
-                component.Stream = _audio.PlayPredicted(component.ReelSound, uid, user);
+                component.Stream = _audio.PlayPredicted(component.ReelSound, uid, user)?.Entity;
         }
         else
         {
             if (Timing.IsFirstTimePredicted)
             {
-                component.Stream?.Stop();
-                component.Stream = null;
+                component.Stream = _audio.Stop(component.Stream);
             }
         }
 
         component.Reeling = value;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public override void Update(float frameTime)
@@ -173,8 +172,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
                 if (Timing.IsFirstTimePredicted)
                 {
                     // Just in case.
-                    grappling.Stream?.Stop();
-                    grappling.Stream = null;
+                    grappling.Stream = _audio.Stop(grappling.Stream);
                 }
 
                 continue;
@@ -200,7 +198,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
                 _physics.WakeBody(jointComp.Relay.Value);
             }
 
-            Dirty(jointComp);
+            Dirty(uid, jointComp);
 
             if (distance.MaxLength.Equals(distance.MinLength))
             {
@@ -221,7 +219,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         joint.MinLength = 0.35f;
         // Setting velocity directly for mob movement fucks this so need to make them aware of it.
         // joint.Breakpoint = 4000f;
-        Dirty(jointComp);
+        Dirty(uid, jointComp);
     }
 
     [Serializable, NetSerializable]

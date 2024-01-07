@@ -6,3 +6,27 @@
   - type: WarpPoint
   - type: Sprite
     state: pink
+
+- type: entity
+  id: WarpPointBeacon
+  parent: WarpPoint
+  name: warp point (beacon)
+  components:
+  - type: NavMapBeacon
+  - type: WarpPoint
+    location: beacon
+
+- type: entity
+  parent: WarpPoint
+  id: WarpPointBombing
+  name: warp point
+  suffix: ninja bombing target
+  components:
+  - type: BombingTarget
+  - type: WarpPoint
+    location: bombing target
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Objects/Weapons/Bombs/spidercharge.rsi
+      state: icon

@@ -7,6 +7,8 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Toggleable;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -112,14 +114,16 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             return;
         }
 
-        if (!msg.Coordinates.TryDistance(EntityManager, TransformSystem, Transform(gunUid.Value).Coordinates,
+        var coords = GetCoordinates(msg.Coordinates);
+
+        if (!coords.TryDistance(EntityManager, TransformSystem, Transform(gunUid.Value).Coordinates,
                 out var distance) ||
             distance > gun.MaxDistance)
         {
             return;
         }
 
-        TransformSystem.SetCoordinates(gun.TetherEntity.Value, msg.Coordinates);
+        TransformSystem.SetCoordinates(gun.TetherEntity.Value, coords);
     }
 
     private void OnTetherRanged(EntityUid uid, TetherGunComponent component, AfterInteractEvent args)
@@ -230,10 +234,10 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         // Sad...
         if (_netManager.IsServer && component.Stream == null)
-            component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null);
+            component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null)?.Entity;
 
-        Dirty(tethered);
-        Dirty(component);
+        Dirty(target, tethered);
+        Dirty(gunUid, component);
     }
 
     protected virtual void StopTether(EntityUid gunUid, BaseForceGunComponent component, bool land = true, bool transfer = false)
@@ -257,6 +261,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             {
                 var thrown = EnsureComp<ThrownItemComponent>(component.Tethered.Value);
                 _thrown.LandComponent(component.Tethered.Value, thrown, targetPhysics, true);
+                _thrown.StopThrow(component.Tethered.Value, thrown);
             }
 
             _physics.SetBodyStatus(targetPhysics, BodyStatus.OnGround);
@@ -266,7 +271,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         if (!transfer)
         {
-            component.Stream?.Stop();
+            _audio.Stop(component.Stream);
             component.Stream = null;
         }
 
@@ -283,7 +288,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class RequestTetherMoveEvent : EntityEventArgs
     {
-        public EntityCoordinates Coordinates;
+        public NetCoordinates Coordinates;
     }
 
     [Serializable, NetSerializable]

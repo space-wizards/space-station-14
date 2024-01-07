@@ -1,7 +1,8 @@
-using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Targeting;
+using Content.Shared.MouseRotator;
+using Content.Shared.Movement.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.CombatMode
@@ -32,16 +33,20 @@ namespace Content.Shared.CombatMode
 
         #endregion
 
-        [DataField("combatToggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-        public string CombatToggleActionId = "CombatModeToggle";
+        [DataField("combatToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string CombatToggleAction = "ActionCombatModeToggle";
 
-        [DataField("combatToggleAction")]
-        public InstantAction? CombatToggleAction;
+        [DataField, AutoNetworkedField]
+        public EntityUid? CombatToggleActionEntity;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("isInCombatMode"), AutoNetworkedField]
         public bool IsInCombatMode;
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("activeZone"), AutoNetworkedField]
-        public TargetingZone ActiveZone;
+        /// <summary>
+        ///     Will add <see cref="MouseRotatorComponent"/> and <see cref="NoRotateOnMoveComponent"/>
+        ///     to entities with this flag enabled that enter combat mode, and vice versa for removal.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool ToggleMouseRotator = true;
     }
 }

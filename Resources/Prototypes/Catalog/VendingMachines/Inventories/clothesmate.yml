@@ -5,6 +5,7 @@
     ClothingBackpackDuffel: 5
     ClothingBackpackSatchel: 3
     ClothingBackpackSatchelLeather: 2
+    ClothingHeadHatBeret: 4
     ClothingHeadBandBlack: 2
     ClothingHeadBandBlue: 2
     ClothingHeadBandGreen: 2
@@ -14,6 +15,8 @@
     ClothingUniformJumpskirtColorGrey: 8
     ClothingUniformJumpsuitColorWhite: 3
     ClothingUniformJumpskirtColorWhite: 3
+    ClothingUniformJumpsuitColorBlack: 3
+    ClothingUniformJumpskirtColorBlack: 3
     ClothingUniformJumpsuitColorBlue: 2
     ClothingUniformJumpskirtColorBlue: 2
     ClothingUniformJumpsuitColorYellow: 2
@@ -30,6 +33,8 @@
     ClothingUniformJumpskirtColorPink: 2
     ClothingUniformJumpsuitColorDarkBlue: 2
     ClothingUniformJumpskirtColorDarkBlue: 2
+    ClothingUniformJumpsuitColorDarkGreen:  2
+    ClothingUniformJumpskirtColorDarkGreen: 2
     ClothingUniformJumpsuitColorTeal: 2
     ClothingUniformJumpskirtColorTeal: 2
     ClothingUniformJumpsuitHawaiBlack: 2
@@ -37,6 +42,12 @@
     ClothingUniformJumpsuitHawaiRed: 2
     ClothingUniformJumpsuitHawaiYellow: 2
     ClothingUniformJumpsuitFlannel: 2
+    ClothingUniformJumpsuitCasualBlue: 2
+    ClothingUniformJumpskirtCasualBlue: 2
+    ClothingUniformJumpsuitCasualPurple: 2
+    ClothingUniformJumpskirtCasualPurple: 2
+    ClothingUniformJumpsuitCasualRed: 2
+    ClothingUniformJumpskirtCasualRed: 2
     ClothingShoesColorBlack: 8
     ClothingShoesColorBrown: 4
     ClothingShoesColorWhite: 3
@@ -58,6 +69,17 @@
     ClothingHeadFishCap: 2
     ClothingHeadRastaHat: 2
     ClothingBeltStorageWaistbag: 3
+    ClothingEyesGlasses: 6
+    ClothingEyesGlassesSunglasses: 2
+    ClothingHandsGlovesColorBlack: 4
+    ClothingHandsGlovesColorGray: 4
+    ClothingHandsGlovesColorBrown: 2
+    ClothingHandsGlovesColorWhite: 2
+    ClothingHandsGlovesColorRed: 2
+    ClothingHandsGlovesColorBlue: 2
+    ClothingHandsGlovesColorGreen: 2
+    ClothingHandsGlovesColorOrange: 2
+    ClothingHandsGlovesColorPurple: 2
   contrabandInventory:
     ClothingUniformJumpsuitTacticool: 1
     ClothingUniformJumpskirtTacticool: 1

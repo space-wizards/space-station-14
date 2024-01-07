@@ -100,25 +100,28 @@ namespace Content.Server.Labels
             if (comp.LabelSlot.Item is not {Valid: true} item)
                 return;
 
-            if (!args.IsInDetailsRange)
+            using (args.PushGroup(nameof(PaperLabelComponent)))
             {
-                args.PushMarkup(Loc.GetString("comp-paper-label-has-label-cant-read"));
-                return;
+                if (!args.IsInDetailsRange)
+                {
+                    args.PushMarkup(Loc.GetString("comp-paper-label-has-label-cant-read"));
+                    return;
+                }
+
+                if (!EntityManager.TryGetComponent(item, out PaperComponent? paper))
+                    // Assuming yaml has the correct entity whitelist, this should not happen.
+                    return;
+
+                if (string.IsNullOrWhiteSpace(paper.Content))
+                {
+                    args.PushMarkup(Loc.GetString("comp-paper-label-has-label-blank"));
+                    return;
+                }
+
+                args.PushMarkup(Loc.GetString("comp-paper-label-has-label"));
+                var text = paper.Content;
+                args.PushMarkup(text.TrimEnd());
             }
-
-            if (!EntityManager.TryGetComponent(item, out PaperComponent? paper))
-                // Assuming yaml has the correct entity whitelist, this should not happen.
-                return;
-
-            if (string.IsNullOrWhiteSpace(paper.Content))
-            {
-                args.PushMarkup(Loc.GetString("comp-paper-label-has-label-blank"));
-                return;
-            }
-
-            args.PushMarkup(Loc.GetString("comp-paper-label-has-label"));
-            var text = paper.Content;
-            args.PushMarkup(text.TrimEnd());
         }
 
         private void OnContainerModified(EntityUid uid, PaperLabelComponent label, ContainerModifiedMessage args)

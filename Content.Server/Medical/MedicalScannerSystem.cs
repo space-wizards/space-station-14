@@ -1,4 +1,3 @@
-using Content.Server.Climbing;
 using Content.Server.Cloning;
 using Content.Server.Medical.Components;
 using Content.Shared.Destructible;
@@ -13,6 +12,7 @@ using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Body.Components;
+using Content.Shared.Climbing.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
@@ -233,7 +233,7 @@ namespace Content.Server.Medical
             if (!HasComp<BodyComponent>(to_insert))
                 return;
 
-            scannerComponent.BodyContainer.Insert(to_insert);
+            _containerSystem.Insert(to_insert, scannerComponent.BodyContainer);
             UpdateAppearance(uid, scannerComponent);
         }
 
@@ -245,7 +245,7 @@ namespace Content.Server.Medical
             if (scannerComponent.BodyContainer.ContainedEntity is not { Valid: true } contained)
                 return;
 
-            scannerComponent.BodyContainer.Remove(contained);
+            _containerSystem.Remove(contained, scannerComponent.BodyContainer);
             _climbSystem.ForciblySetClimbing(contained, uid);
             UpdateAppearance(uid, scannerComponent);
         }

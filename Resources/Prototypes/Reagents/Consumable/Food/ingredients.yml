@@ -65,10 +65,26 @@
 
 - type: reagent
   id: Egg
+  name: reagent-name-raw-egg
+  group: Foods
+  desc: reagent-desc-raw-egg
+  physicalDesc: reagent-physical-desc-mucus-like
+  flavor: raw-egg
+  color: white
+  recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: UncookedAnimalProteins
+        amount: 0.5
+
+- type: reagent
+  id: EggCooked
   name: reagent-name-egg
   group: Foods
   desc: reagent-desc-egg
-  physicalDesc: reagent-physical-desc-mucus-like
+  physicalDesc: reagent-physical-desc-fluffy
   flavor: egg
   color: white
   recognizable: true
@@ -77,7 +93,7 @@
       effects:
       - !type:AdjustReagent
         reagent: Protein
-        amount: 0.5
+        amount: 1
 
 - type: reagent
   id: Blackpepper
@@ -223,3 +239,21 @@
     amount: 2
   - !type:PlantAdjustPests
     amount: 2
+
+- type: reagent
+  id: Butter
+  name: reagent-name-butter
+  group: Foods
+  desc: reagent-desc-butter
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: butter
+  color: yellow
+  meltingPoint: 32.0
+  boilingPoint: 100.0
+  recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.75

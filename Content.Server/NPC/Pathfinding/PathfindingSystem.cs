@@ -5,16 +5,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Destructible;
-using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
+using Content.Shared.Access.Components;
 using Content.Shared.Administration;
+using Content.Shared.Climbing.Components;
+using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
@@ -46,7 +49,9 @@ namespace Content.Server.NPC.Pathfinding
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
+        [Dependency] private readonly SharedMapSystem _maps = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private readonly Dictionary<ICommonSession, PathfindingDebugMode> _subscribedSessions = new();
 
@@ -63,9 +68,26 @@ namespace Content.Server.NPC.Pathfinding
         private int _portalIndex;
         private readonly Dictionary<int, PathPortal> _portals = new();
 
+        private EntityQuery<AccessReaderComponent> _accessQuery;
+        private EntityQuery<DestructibleComponent> _destructibleQuery;
+        private EntityQuery<DoorComponent> _doorQuery;
+        private EntityQuery<ClimbableComponent> _climbableQuery;
+        private EntityQuery<FixturesComponent> _fixturesQuery;
+        private EntityQuery<MapGridComponent> _gridQuery;
+        private EntityQuery<TransformComponent> _xformQuery;
+
         public override void Initialize()
         {
             base.Initialize();
+
+            _accessQuery = GetEntityQuery<AccessReaderComponent>();
+            _destructibleQuery = GetEntityQuery<DestructibleComponent>();
+            _doorQuery = GetEntityQuery<DoorComponent>();
+            _climbableQuery = GetEntityQuery<ClimbableComponent>();
+            _fixturesQuery = GetEntityQuery<FixturesComponent>();
+            _gridQuery = GetEntityQuery<MapGridComponent>();
+            _xformQuery = GetEntityQuery<TransformComponent>();
+
             _playerManager.PlayerStatusChanged += OnPlayerChange;
             InitializeGrid();
             SubscribeNetworkEvent<RequestPathfindingDebugMessage>(OnBreadcrumbs);
@@ -76,6 +98,7 @@ namespace Content.Server.NPC.Pathfinding
             base.Shutdown();
             _subscribedSessions.Clear();
             _playerManager.PlayerStatusChanged -= OnPlayerChange;
+            _transform.OnGlobalMoveEvent -= OnMoveEvent;
         }
 
         public override void Update(float frameTime)
@@ -495,16 +518,16 @@ namespace Content.Server.NPC.Pathfinding
         private DebugPathPoly GetDebugPoly(PathPoly poly)
         {
             // Create fake neighbors for it
-            var neighbors = new List<EntityCoordinates>(poly.Neighbors.Count);
+            var neighbors = new List<NetCoordinates>(poly.Neighbors.Count);
 
             foreach (var neighbor in poly.Neighbors)
             {
-                neighbors.Add(neighbor.Coordinates);
+                neighbors.Add(GetNetCoordinates(neighbor.Coordinates));
             }
 
             return new DebugPathPoly()
             {
-                GraphUid = poly.GraphUid,
+                GraphUid = GetNetEntity(poly.GraphUid),
                 ChunkOrigin = poly.ChunkOrigin,
                 TileIndex = poly.TileIndex,
                 Box = poly.Box,
@@ -529,7 +552,7 @@ namespace Content.Server.NPC.Pathfinding
 
         private void OnBreadcrumbs(RequestPathfindingDebugMessage msg, EntitySessionEventArgs args)
         {
-            var pSession = (IPlayerSession) args.SenderSession;
+            var pSession = args.SenderSession;
 
             if (!_adminManager.HasAdminFlag(pSession, AdminFlags.Debug))
             {
@@ -577,14 +600,17 @@ namespace Content.Server.NPC.Pathfinding
         {
             var msg = new PathBreadcrumbsMessage();
 
-            foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
+            var query = AllEntityQuery<GridPathfindingComponent>();
+            while (query.MoveNext(out var uid, out var comp))
             {
-                msg.Breadcrumbs.Add(comp.Owner, new Dictionary<Vector2i, List<PathfindingBreadcrumb>>(comp.Chunks.Count));
+                var netGrid = GetNetEntity(uid);
+
+                msg.Breadcrumbs.Add(netGrid, new Dictionary<Vector2i, List<PathfindingBreadcrumb>>(comp.Chunks.Count));
 
                 foreach (var chunk in comp.Chunks)
                 {
                     var data = GetCrumbs(chunk.Value);
-                    msg.Breadcrumbs[comp.Owner].Add(chunk.Key, data);
+                    msg.Breadcrumbs[netGrid].Add(chunk.Key, data);
                 }
             }
 
@@ -624,14 +650,17 @@ namespace Content.Server.NPC.Pathfinding
         {
             var msg = new PathPolysMessage();
 
-            foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
+            var query = AllEntityQuery<GridPathfindingComponent>();
+            while (query.MoveNext(out var uid, out var comp))
             {
-                msg.Polys.Add(comp.Owner, new Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>(comp.Chunks.Count));
+                var netGrid = GetNetEntity(uid);
+
+                msg.Polys.Add(netGrid, new Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>(comp.Chunks.Count));
 
                 foreach (var chunk in comp.Chunks)
                 {
                     var data = GetPolys(chunk.Value);
-                    msg.Polys[comp.Owner].Add(chunk.Key, data);
+                    msg.Polys[netGrid].Add(chunk.Key, data);
                 }
             }
 
@@ -646,7 +675,7 @@ namespace Content.Server.NPC.Pathfinding
             var msg = new PathBreadcrumbsRefreshMessage()
             {
                 Origin = chunk.Origin,
-                GridUid = gridUid,
+                GridUid = GetNetEntity(gridUid),
                 Data = GetCrumbs(chunk),
             };
 
@@ -680,7 +709,7 @@ namespace Content.Server.NPC.Pathfinding
             var msg = new PathPolysRefreshMessage()
             {
                 Origin = chunk.Origin,
-                GridUid = gridUid,
+                GridUid = GetNetEntity(gridUid),
                 Polys = data,
             };
 

@@ -115,7 +115,11 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
             for change in entry["changes"]:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
                 message = change['message']
-                content.write(f"{emoji} {message}\n")
+                url = entry.get("url")
+                if url and url.strip():
+                    content.write(f"{emoji} [-]({url}) {message}\n")
+                else:
+                    content.write(f"{emoji} - {message}\n")
 
     body = {
         "content": content.getvalue(),

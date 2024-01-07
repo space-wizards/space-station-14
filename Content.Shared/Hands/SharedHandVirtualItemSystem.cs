@@ -11,6 +11,7 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -58,7 +59,7 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
         {
             if (TryComp(hand.HeldEntity, out HandVirtualItemComponent? virt) && virt.BlockingEntity == matching)
             {
-                Delete(virt, user);
+                Delete((hand.HeldEntity.Value, virt), user);
             }
         }
     }
@@ -80,16 +81,18 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
     /// <summary>
     ///     Queues a deletion for a virtual item and notifies the blocking entity and user.
     /// </summary>
-    public void Delete(HandVirtualItemComponent comp, EntityUid user)
+    public void Delete(Entity<HandVirtualItemComponent> item, EntityUid user)
     {
-        if (_net.IsClient)
+        var userEv = new VirtualItemDeletedEvent(item.Comp.BlockingEntity, user);
+        RaiseLocalEvent(user, userEv);
+        var targEv = new VirtualItemDeletedEvent(item.Comp.BlockingEntity, user);
+        RaiseLocalEvent(item.Comp.BlockingEntity, targEv);
+
+        if (TerminatingOrDeleted(item))
             return;
 
-        var userEv = new VirtualItemDeletedEvent(comp.BlockingEntity, user);
-        RaiseLocalEvent(user, userEv);
-        var targEv = new VirtualItemDeletedEvent(comp.BlockingEntity, user);
-        RaiseLocalEvent(comp.BlockingEntity, targEv);
-
-        QueueDel(comp.Owner);
+        _transform.DetachParentToNull(item, Transform(item));
+        if (_net.IsServer)
+            QueueDel(item);
     }
 }

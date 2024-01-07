@@ -1,13 +1,12 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
-using Content.Server.Maps;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
-using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
@@ -22,28 +21,46 @@ public sealed class EntityAnomalySystem : EntitySystem
     {
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
+        SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
     }
 
     private void OnPulse(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalyPulseEvent args)
     {
+        if (!component.SpawnOnPulse)
+            return;
+
         var range = component.SpawnRange * args.Stability;
         var amount = (int) (component.MaxSpawnAmount * args.Severity + 0.5f);
 
         var xform = Transform(uid);
-        SpawnMonstersOnOpenTiles(component, xform, amount, range, component.Spawns);
+        SpawnEntitesOnOpenTiles(component, xform, amount, range, component.Spawns);
     }
 
     private void OnSupercritical(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
+        if (!component.SpawnOnSuperCritical)
+            return;
+
         var xform = Transform(uid);
-        // A cluster of monsters
-        SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.Spawns);
+        // A cluster of entities
+        SpawnEntitesOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.Spawns);
         // And so much meat (for the meat anomaly at least)
-        Spawn(component.SupercriticalSpawn, xform.Coordinates);
-        SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, new List<string>(){component.SupercriticalSpawn});
+        SpawnEntitesOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.SuperCriticalSpawns);
     }
 
-    private void SpawnMonstersOnOpenTiles(EntitySpawnAnomalyComponent component, TransformComponent xform, int amount, float radius, List<string> spawns)
+    private void OnStabilityChanged(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalyStabilityChangedEvent args)
+    {
+        if (!component.SpawnOnStabilityChanged)
+            return;
+
+        var range = component.SpawnRange * args.Stability;
+        var amount = (int) (component.MaxSpawnAmount * args.Stability + 0.5f);
+
+        var xform = Transform(uid);
+        SpawnEntitesOnOpenTiles(component, xform, amount, range, component.Spawns);
+    }
+
+    private void SpawnEntitesOnOpenTiles(EntitySpawnAnomalyComponent component, TransformComponent xform, int amount, float radius, List<EntProtoId> spawns)
     {
         if (!component.Spawns.Any())
             return;
@@ -68,10 +85,12 @@ public sealed class EntityAnomalySystem : EntitySystem
             {
                 if (!physQuery.TryGetComponent(ent, out var body))
                     continue;
+
                 if (body.BodyType != BodyType.Static ||
                     !body.Hard ||
                     (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
                     continue;
+
                 valid = false;
                 break;
             }

@@ -1,4 +1,3 @@
-using Content.Client.GameTicking.Managers;
 using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
@@ -19,33 +18,28 @@ public sealed class CrewManifestSystem : EntitySystem
         base.Initialize();
 
         BuildDepartmentLookup();
-        _prototypeManager.PrototypesReloaded += OnPrototypesReload;
-    }
-
-    public override void Shutdown()
-    {
-        _prototypeManager.PrototypesReloaded -= OnPrototypesReload;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReload);
     }
 
     /// <summary>
     ///     Requests a crew manifest from the server.
     /// </summary>
-    /// <param name="uid">EntityUid of the entity we're requesting the crew manifest from.</param>
-    public void RequestCrewManifest(EntityUid uid)
+    /// <param name="netEntity">EntityUid of the entity we're requesting the crew manifest from.</param>
+    public void RequestCrewManifest(NetEntity netEntity)
     {
-        RaiseNetworkEvent(new RequestCrewManifestMessage(uid));
+        RaiseNetworkEvent(new RequestCrewManifestMessage(netEntity));
     }
 
-    private void OnPrototypesReload(PrototypesReloadedEventArgs _)
+    private void OnPrototypesReload(PrototypesReloadedEventArgs args)
     {
-        _jobDepartmentLookup.Clear();
-        _departments.Clear();
-
-        BuildDepartmentLookup();
+        if (args.WasModified<DepartmentPrototype>())
+            BuildDepartmentLookup();
     }
 
     private void BuildDepartmentLookup()
     {
+        _jobDepartmentLookup.Clear();
+        _departments.Clear();
         foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
         {
             _departments.Add(department.ID);
