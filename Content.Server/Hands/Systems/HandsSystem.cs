@@ -207,9 +207,12 @@ namespace Content.Server.Hands.Systems
 
             if (_timing.CurTime < hands.LastThrow + hands.TimeToPerfectThrow)
             {
-                Angle maxInaccuracy = hands.InaccuracyAfterThrow - (_timing.CurTime - hands.LastThrow).TotalSeconds * hands.ThrowInaccuracyDecayRate;
-                Angle totalInaccuracy = _random.NextAngle(-maxInaccuracy, maxInaccuracy);
-                direction = (direction.ToAngle() + totalInaccuracy).ToVec() * direction.Length();
+                var timeSinceLast = _timing.CurTime - hands.LastThrow;
+                var inaccuracyModifier = 1 - (timeSinceLast / hands.TimeToPerfectThrow);
+                inaccuracyModifier *= inaccuracyModifier;
+                var maxInaccuracy = hands.InaccuracyAfterThrow * inaccuracyModifier;
+                var totalInaccuracy = _random.NextAngle(-maxInaccuracy, maxInaccuracy);
+                direction = totalInaccuracy.RotateVec(direction);
             }
 
             // Let other systems change the thrown entity (useful for virtual items)
@@ -218,10 +221,7 @@ namespace Content.Server.Hands.Systems
             RaiseLocalEvent(player, ref ev);
 
             if (ev.Cancelled)
-            {
-                hands.LastThrow = _timing.CurTime;
                 return true;
-            }
 
             // This can grief the above event so we raise it afterwards
             if (IsHolding(player, throwEnt, out _, hands) && !TryDrop(player, throwEnt, handsComp: hands))

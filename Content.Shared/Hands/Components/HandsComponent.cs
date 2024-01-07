@@ -59,30 +59,28 @@ public sealed partial class HandsComponent : Component
     public readonly Dictionary<HandLocation, HashSet<string>> RevealedLayers = new();
 
     /// <summary>
-    ///     The last time they threw anything.
+    ///     The last time anything was thrown.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan LastThrow;
 
     /// <summary>
-    ///     The throwing inaccuracy immediately after a throw.
+    ///     The throwing inaccuracy immediately after a throw. Decays quadratically.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public Angle InaccuracyAfterThrow = Angle.FromDegrees(60);
+    public Angle InaccuracyAfterThrow = Angle.FromDegrees(180);
 
     /// <summary>
-    ///     Throwing inaccuracy decay per second.
+    ///     How long it takes for accuracy to become perfect.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public Angle ThrowInaccuracyDecayRate = Angle.FromDegrees(120);
-
-    public TimeSpan TimeToPerfectThrow => TimeSpan.FromSeconds(InaccuracyAfterThrow / ThrowInaccuracyDecayRate);
+    public TimeSpan TimeToPerfectThrow = TimeSpan.FromSeconds(1);
 
     /// <summary>
     ///     The absolute minimum time inbetween throws.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan ThrowCooldown = TimeSpan.FromSeconds(0.125f);
+    public TimeSpan ThrowCooldown = TimeSpan.FromSeconds(0.25f);
 }
 
 [Serializable, NetSerializable]
