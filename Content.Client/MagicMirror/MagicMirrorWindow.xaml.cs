@@ -21,8 +21,6 @@ public sealed partial class MagicMirrorWindow : DefaultWindow
     public Action<int>? OnFacialHairSlotRemoved;
     public Action? OnFacialHairSlotAdded;
 
-    private bool _noHair;
-
     public MagicMirrorWindow()
     {
         RobustXamlLoader.Load(this);
@@ -38,15 +36,14 @@ public sealed partial class MagicMirrorWindow : DefaultWindow
         FacialHairPicker.OnSlotAdd += delegate { OnFacialHairSlotAdded!(); };
     }
 
-    public void UpdateState(MagicMirrorUiData state)
+    public void UpdateState(MagicMirrorUiState state)
     {
         HairPicker.UpdateData(state.Hair, state.Species, state.HairSlotTotal);
         FacialHairPicker.UpdateData(state.FacialHair, state.Species, state.FacialHairSlotTotal);
 
-        if (!HairPicker.Visible && !FacialHairPicker.Visible && !_noHair)
+        if (!HairPicker.Visible && !FacialHairPicker.Visible)
         {
             AddChild(new Label { Text = Loc.GetString("magic-mirror-component-activate-user-has-no-hair") });
-            _noHair = true;
         }
     }
 }
