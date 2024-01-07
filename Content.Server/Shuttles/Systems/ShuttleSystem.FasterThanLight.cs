@@ -9,6 +9,8 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Maps;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -79,6 +81,7 @@ public sealed partial class ShuttleSystem
 
     private HashSet<EntityUid> _lookupEnts = new();
 
+    private EntityQuery<MindContainerComponent> _mindContainerQuery;
     private EntityQuery<BodyComponent> _bodyQuery;
     private EntityQuery<BuckleComponent> _buckleQuery;
     private EntityQuery<GhostComponent> _ghostQuery;
@@ -88,6 +91,7 @@ public sealed partial class ShuttleSystem
 
     private void InitializeFTL()
     {
+        _mindContainerQuery = GetEntityQuery<MindContainerComponent>();
         _bodyQuery = GetEntityQuery<BodyComponent>();
         _buckleQuery = GetEntityQuery<BuckleComponent>();
         _ghostQuery = GetEntityQuery<GhostComponent>();
@@ -735,6 +739,10 @@ public sealed partial class ShuttleSystem
 
                 if (_bodyQuery.TryGetComponent(ent, out var mob))
                 {
+                    if(_mindContainerQuery.TryGetComponent(ent, out var mindContainer) && CompOrNull<MindComponent>(mindContainer.Mind)?.UserId != null)
+                    {
+                        continue;
+                    }
                     var gibs = _bobby.GibBody(ent, body: mob);
                     immune.UnionWith(gibs);
                     continue;
