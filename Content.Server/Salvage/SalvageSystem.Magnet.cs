@@ -390,7 +390,11 @@ public sealed partial class SalvageSystem
             // This doesn't stop it from spawning on top of random things in space
             // Might be better like this, ghosts could stop it before
             if (_mapManager.FindGridsIntersecting(finalCoords.MapId, box2Rot).Any())
+            {
+                // Bump it further and further just in case.
+                minActualDistance += 4f;
                 continue;
+            }
 
             coords = finalCoords;
             return true;
