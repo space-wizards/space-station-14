@@ -36,12 +36,6 @@ public sealed partial class WarDeclaratorWindow : DefaultWindow
 
         var loc = IoCManager.Resolve<ILocalizationManager>();
         MessageEdit.Placeholder = new Rope.Leaf(loc.GetString("war-declarator-message-placeholder"));
-        MessageEdit.OnTextChanged += (_) =>
-        {
-            var messageLength = MessageEdit.TextLength;
-            MessageLengthLabel.Text = $"{messageLength}";
-            MessageLengthLabel.FontColorOverride = messageLength > MaxMessageLength ? Color.Red : null;
-        };
     }
 
     protected override void Draw(DrawingHandleScreen handle)

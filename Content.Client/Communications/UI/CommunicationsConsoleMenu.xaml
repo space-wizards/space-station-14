@@ -4,7 +4,6 @@
     MinSize="400 225">
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="5">
         <TextEdit Name="MessageInput" HorizontalExpand="True" VerticalExpand="True" Margin="0 0 0 5" MinHeight="100" />
-        <Label Name="MessageLengthLabel" Text="0" HorizontalExpand="True" HorizontalAlignment="Right" Access="Public" />
         <Button Name="AnnounceButton" Text="{Loc 'comms-console-menu-announcement-button'}" StyleClasses="OpenLeft" Access="Public" />
 
         <OptionButton Name="AlertLevelButton" StyleClasses="OpenRight" Access="Public" />

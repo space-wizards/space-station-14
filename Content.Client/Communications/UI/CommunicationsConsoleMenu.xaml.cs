@@ -27,12 +27,6 @@ namespace Content.Client.Communications.UI
 
             var loc = IoCManager.Resolve<ILocalizationManager>();
             MessageInput.Placeholder = new Rope.Leaf(loc.GetString("comms-console-menu-announcement-placeholder"));
-            MessageInput.OnTextChanged += (_) =>
-            {
-                var messageLength = MessageInput.TextLength;
-                MessageLengthLabel.Text = $"{messageLength}";
-                MessageLengthLabel.FontColorOverride = messageLength > MaxMessageLength ? Color.Red : null;
-            };
 
             AnnounceButton.OnPressed += (_) =>
             {
