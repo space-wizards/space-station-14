@@ -13,10 +13,14 @@ public sealed partial class ProximityDetectorComponent : Component
     /// <summary>
     /// Whether or not it's on.
     /// </summary>
-    [DataField("enabled"), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public bool Enabled = true;
 
-    [DataField("criteria", required: true), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// The criteria used to filter entities
+    /// Note: RequireAll is only supported for tags, all components are required to count as a match!
+    /// </summary>
+    [DataField( required: true), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public EntityWhitelist Criteria = default!;
 
     /// <summary>
@@ -35,11 +39,11 @@ public sealed partial class ProximityDetectorComponent : Component
     /// <summary>
     /// The farthest distance to search for targets
     /// </summary>
-    [DataField("range"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 Range = 10f;
 
     public float AccumulatedFrameTime;
 
-    [DataField("updateRate"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float UpdateRate = 0.3f;
 }
