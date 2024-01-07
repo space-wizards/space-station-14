@@ -157,10 +157,11 @@
     state: icon
   discipline: Industrial
   tier: 2
-  cost: 5000
+  cost: 7500
   recipeUnlocks:
-  - HolofanProjector
+  - HellfireFreezerMachineCircuitBoard
   - PortableScrubberMachineCircuitBoard
+  - HolofanProjector
 
 - type: technology
   id: AdvancedToolsTechnology
