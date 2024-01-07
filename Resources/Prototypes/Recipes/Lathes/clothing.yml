@@ -876,3 +876,163 @@
   completetime: 3.2
   materials:
     Cloth: 500
+
+- type: latheRecipe
+  id: ClothingHeadHatCaptain
+  result: ClothingHeadHatCaptain
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatCapcap
+  result: ClothingHeadHatCapcap
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatBeretHoS
+  result: ClothingHeadHatBeretHoS
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatHoshat
+  result: ClothingHeadHatHoshat
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatWarden
+  result: ClothingHeadHatWarden
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatBeretWarden
+  result: ClothingHeadHatBeretWarden
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatHopcap
+  result: ClothingHeadHatHopcap
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatQMsoft
+  result: ClothingHeadHatQMsoft
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatBeretRND
+  result: ClothingHeadHatBeretRND
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatBeretEngineering
+  result: ClothingHeadHatBeretEngineering
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatBeretCmo
+  result: ClothingHeadHatBeretCmo
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatBeretBrigmedic
+  result: ClothingHeadHatBeretBrigmedic
+  completetime: 2
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: ClothingHeadHatBeretSecurity
+  result: ClothingHeadHatBeretSecurity
+  completetime: 2
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: ClothingHeadHatBeretSeniorPhysician
+  result: ClothingHeadHatBeretSeniorPhysician
+  completetime: 2
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: ClothingHeadHatCentcom
+  result: ClothingHeadHatCentcom
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatCentcomcap
+  result: ClothingHeadHatCentcomcap
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatSyndie
+  result: ClothingHeadHatSyndie
+  completetime: 2
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: ClothingHeadHatSyndieMAA
+  result: ClothingHeadHatSyndieMAA
+  completetime: 2
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: ClothingHeadPyjamaSyndicateBlack
+  result: ClothingHeadPyjamaSyndicateBlack
+  completetime: 2
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: ClothingHeadPyjamaSyndicatePink
+  result: ClothingHeadPyjamaSyndicatePink
+  completetime: 2
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: ClothingHeadPyjamaSyndicateRed
+  result: ClothingHeadPyjamaSyndicateRed
+  completetime: 2
+  materials:
+    Cloth: 100

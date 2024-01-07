@@ -97,7 +97,7 @@
 - type: entity
   parent: BaseItem
   id: StationBeaconPart
-  name: station beacon assembly
+  name: station beacon flatpack
   description: A flatpack used for constructing a station beacon.
   components:
   - type: Item
@@ -118,8 +118,8 @@
   suffix: Command
   components:
   - type: NavMapBeacon
-    text: command
-    color: "#334E6D"
+    text: Command
+    color: "#FFFF00"
 
 - type: entity
   parent: DefaultStationBeaconCommand
@@ -127,7 +127,7 @@
   suffix: Bridge
   components:
   - type: NavMapBeacon
-    text: bridge
+    text: Bridge
 
 - type: entity
   parent: DefaultStationBeaconCommand
@@ -135,7 +135,7 @@
   suffix: Vault
   components:
   - type: NavMapBeacon
-    text: vault
+    text: Vault
 
 - type: entity
   parent: DefaultStationBeaconCommand
@@ -143,7 +143,7 @@
   suffix: Captain's Quarters
   components:
   - type: NavMapBeacon
-    text: captain's quarters
+    text: Captain
 
 - type: entity
   parent: DefaultStationBeaconCommand
@@ -151,7 +151,7 @@
   suffix: HOP's Office
   components:
   - type: NavMapBeacon
-    text: head of personnel’s office
+    text: HOP
 
 - type: entity
   parent: DefaultStationBeacon
@@ -159,7 +159,7 @@
   suffix: Security
   components:
   - type: NavMapBeacon
-    text: security
+    text: Security
     color: "#DE3A3A"
 
 - type: entity
@@ -168,7 +168,7 @@
   suffix: Brig
   components:
   - type: NavMapBeacon
-    text: brig
+    text: Brig
 
 - type: entity
   parent: DefaultStationBeaconSecurity
@@ -176,7 +176,7 @@
   suffix: Warden's Office
   components:
   - type: NavMapBeacon
-    text: warden's office
+    text: Warden
 
 - type: entity
   parent: DefaultStationBeaconSecurity
@@ -184,7 +184,7 @@
   suffix: HOS’s Room
   components:
   - type: NavMapBeacon
-    text: head of security’s room
+    text: HOS
 
 - type: entity
   parent: DefaultStationBeaconSecurity
@@ -192,7 +192,7 @@
   suffix: Armory
   components:
   - type: NavMapBeacon
-    text: armory
+    text: Armory
 
 - type: entity
   parent: DefaultStationBeaconSecurity
@@ -200,7 +200,7 @@
   suffix: Perma Brig
   components:
   - type: NavMapBeacon
-    text: perma brig
+    text: Perma
 
 - type: entity
   parent: DefaultStationBeaconSecurity
@@ -208,7 +208,7 @@
   suffix: Detective's Room
   components:
   - type: NavMapBeacon
-    text: detective's room
+    text: Detective
 
 - type: entity
   parent: DefaultStationBeaconSecurity
@@ -216,15 +216,23 @@
   suffix: Courtroom
   components:
   - type: NavMapBeacon
-    text: courtroom
+    text: Courtroom
 
 - type: entity
   parent: DefaultStationBeaconSecurity
   id: DefaultStationBeaconLawOffice
   suffix: Law Office
   components:
-    - type: NavMapBeacon
-      text: law office
+  - type: NavMapBeacon
+    text: Law Office
+
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconSecurityCheckpoint
+  suffix: Sec Checkpoint
+  components:
+  - type: NavMapBeacon
+    text: Checkpoint
 
 - type: entity
   parent: DefaultStationBeacon
@@ -232,7 +240,7 @@
   suffix: Medical
   components:
   - type: NavMapBeacon
-    text: medical
+    text: Medical
     color: "#52B4E9"
 
 - type: entity
@@ -241,7 +249,7 @@
   suffix: Medbay
   components:
   - type: NavMapBeacon
-    text: medbay
+    text: Medbay
 
 - type: entity
   parent: DefaultStationBeaconMedical
@@ -249,7 +257,7 @@
   suffix: Chemistry
   components:
   - type: NavMapBeacon
-    text: chemistry
+    text: Chem
 
 - type: entity
   parent: DefaultStationBeaconMedical
@@ -257,7 +265,7 @@
   suffix: Cryonics
   components:
   - type: NavMapBeacon
-    text: cryonics
+    text: Cryo
 
 - type: entity
   parent: DefaultStationBeaconMedical
@@ -265,7 +273,7 @@
   suffix: CMO's room
   components:
   - type: NavMapBeacon
-    text: chief medical officer’s room
+    text: CMO
 
 - type: entity
   parent: DefaultStationBeaconMedical
@@ -273,7 +281,7 @@
   suffix: Morgue
   components:
   - type: NavMapBeacon
-    text: morgue
+    text: Morgue
 
 - type: entity
   parent: DefaultStationBeaconMedical
@@ -281,7 +289,7 @@
   suffix: Surgery
   components:
   - type: NavMapBeacon
-    text: surgery
+    text: Surgery
 
 - type: entity
   parent: DefaultStationBeacon
@@ -289,24 +297,24 @@
   suffix: Science
   components:
   - type: NavMapBeacon
-    text: science
+    text: Science
     color: "#D381C9"
 
 - type: entity
   parent: DefaultStationBeaconScience
   id: DefaultStationBeaconRND
-  suffix: RND
+  suffix: Research and Development
   components:
   - type: NavMapBeacon
-    text: research & development
+    text: Research
 
 - type: entity
   parent: DefaultStationBeaconScience
   id: DefaultStationBeaconServerRoom
-  suffix: Server Room
+  suffix: Research Server Room
   components:
   - type: NavMapBeacon
-    text: server room
+    text: Server
 
 - type: entity
   parent: DefaultStationBeaconScience
@@ -314,7 +322,7 @@
   suffix: RD's Room
   components:
   - type: NavMapBeacon
-    text: research director's room
+    text: RD
 
 - type: entity
   parent: DefaultStationBeaconScience
@@ -322,7 +330,7 @@
   suffix: Robotics
   components:
   - type: NavMapBeacon
-    text: robotics
+    text: Robotics
 
 - type: entity
   parent: DefaultStationBeaconScience
@@ -330,7 +338,7 @@
   suffix: Artifact Lab
   components:
   - type: NavMapBeacon
-    text: artifact lab
+    text: Artifact
 
 - type: entity
   parent: DefaultStationBeaconScience
@@ -338,7 +346,7 @@
   suffix: Anomaly Generator
   components:
   - type: NavMapBeacon
-    text: anomaly generator
+    text: Anomaly
 
 - type: entity
   parent: DefaultStationBeacon
@@ -346,7 +354,7 @@
   suffix: Supply
   components:
   - type: NavMapBeacon
-    text: supply
+    text: Supply
     color: "#A46106"
 
 - type: entity
@@ -355,7 +363,7 @@
   suffix: Cargo Reception
   components:
   - type: NavMapBeacon
-    text: cargo reception
+    text: Cargo
 
 - type: entity
   parent: DefaultStationBeaconSupply
@@ -363,7 +371,7 @@
   suffix: Cargo Bay
   components:
   - type: NavMapBeacon
-    text: cargo bay
+    text: Cargo Bay
 
 - type: entity
   parent: DefaultStationBeaconSupply
@@ -371,7 +379,7 @@
   suffix: QM's Room
   components:
   - type: NavMapBeacon
-    text: quartermaster's room
+    text: QM
 
 - type: entity
   parent: DefaultStationBeaconSupply
@@ -379,7 +387,7 @@
   suffix: Salvage
   components:
   - type: NavMapBeacon
-    text: salvage
+    text: Salvage
 
 - type: entity
   parent: DefaultStationBeacon
@@ -387,7 +395,7 @@
   suffix: Engineering
   components:
   - type: NavMapBeacon
-    text: engineering
+    text: Engineering
     color: "#EFB341"
 
 - type: entity
@@ -396,7 +404,7 @@
   suffix: CE's Room
   components:
   - type: NavMapBeacon
-    text: chief engineer's room
+    text: CE
 
 - type: entity
   parent: DefaultStationBeaconEngineering
@@ -412,7 +420,7 @@
   suffix: Solars
   components:
   - type: NavMapBeacon
-    text: solars
+    text: Solars
 
 - type: entity
   parent: DefaultStationBeaconEngineering
@@ -420,23 +428,23 @@
   suffix: Grav Gen
   components:
   - type: NavMapBeacon
-    text: gravity generator
+    text: Grav
 
 - type: entity
   parent: DefaultStationBeaconEngineering
   id: DefaultStationBeaconSingularity
-  suffix: Singularity
+  suffix: PA Control
   components:
   - type: NavMapBeacon
-    text: singularity engine
+    text: PA Control
 
 - type: entity
   parent: DefaultStationBeaconEngineering
   id: DefaultStationBeaconPowerBank
-  suffix: Power Bank
+  suffix: SMES Power Bank
   components:
   - type: NavMapBeacon
-    text: SMES power bank
+    text: SMES
 
 - type: entity
   parent: DefaultStationBeaconEngineering
@@ -444,7 +452,7 @@
   suffix: Telecoms
   components:
   - type: NavMapBeacon
-    text: telecoms
+    text: Telecoms
 
 - type: entity
   parent: DefaultStationBeaconEngineering
@@ -452,7 +460,7 @@
   suffix: Atmospherics
   components:
   - type: NavMapBeacon
-    text: atmospherics
+    text: Atmos
 
 - type: entity
   parent: DefaultStationBeaconEngineering
@@ -465,10 +473,10 @@
 - type: entity
   parent: DefaultStationBeaconEngineering
   id: DefaultStationBeaconTeslaEngine
-  suffix: Tesla Engine
+  suffix: Tesla Engine (Do Not Map - use PA Control instead)
   components:
   - type: NavMapBeacon
-    text: tesla engine
+    text: Tesla
 
 - type: entity
   parent: DefaultStationBeaconEngineering
@@ -476,7 +484,7 @@
   suffix: Tech Vault
   components:
   - type: NavMapBeacon
-    text: tech vault
+    text: Tech Vault
 
 - type: entity
   parent: DefaultStationBeacon
@@ -484,7 +492,7 @@
   suffix: Service
   components:
   - type: NavMapBeacon
-    text: service
+    text: Service
     color: "#9FED58"
 
 - type: entity
@@ -493,7 +501,7 @@
   suffix: Kitchen
   components:
   - type: NavMapBeacon
-    text: kitchen
+    text: Kitchen
 
 - type: entity
   parent: DefaultStationBeaconService
@@ -501,7 +509,7 @@
   suffix: Bar
   components:
   - type: NavMapBeacon
-    text: bar
+    text: Bar
 
 - type: entity
   parent: DefaultStationBeaconService
@@ -509,7 +517,7 @@
   suffix: Botany
   components:
   - type: NavMapBeacon
-    text: botany
+    text: Botany
 
 - type: entity
   parent: DefaultStationBeaconService
@@ -517,7 +525,7 @@
   suffix: Janitor's Closet
   components:
   - type: NavMapBeacon
-    text: janitor's closet
+    text: Janitor
 
 - type: entity
   parent: DefaultStationBeacon
@@ -533,16 +541,16 @@
   id: DefaultStationBeaconAISatellite
   suffix: AI Satellite
   components:
-    - type: NavMapBeacon
-      text: AI satellite
+  - type: NavMapBeacon
+    text: AI Sat
 
 - type: entity
   parent: DefaultStationBeaconAI
   id: DefaultStationBeaconAICore
   suffix: AI Core
   components:
-    - type: NavMapBeacon
-      text: AI core
+  - type: NavMapBeacon
+    text: AI Core
 
 - type: entity
   parent: DefaultStationBeacon
@@ -550,7 +558,15 @@
   suffix: Arrivals
   components:
   - type: NavMapBeacon
-    text: arrivals
+    text: Arrivals
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEvac
+  suffix: Evac
+  components:
+  - type: NavMapBeacon
+    text: Evac
 
 - type: entity
   parent: DefaultStationBeacon
@@ -558,7 +574,7 @@
   suffix: EVA Storage
   components:
   - type: NavMapBeacon
-    text: EVA storage
+    text: EVA Storage
 
 - type: entity
   parent: DefaultStationBeacon
@@ -566,7 +582,7 @@
   suffix: Chapel
   components:
   - type: NavMapBeacon
-    text: chapel
+    text: Chapel
 
 - type: entity
   parent: DefaultStationBeacon
@@ -574,7 +590,7 @@
   suffix: Library
   components:
   - type: NavMapBeacon
-    text: library
+    text: Library
 
 - type: entity
   parent: DefaultStationBeacon
@@ -582,7 +598,7 @@
   suffix: Theater
   components:
   - type: NavMapBeacon
-    text: theater
+    text: Theater
 
 - type: entity
   parent: DefaultStationBeacon
@@ -590,7 +606,7 @@
   suffix: Dorms
   components:
   - type: NavMapBeacon
-    text: dorms
+    text: Dorms
 
 - type: entity
   parent: DefaultStationBeacon
@@ -598,7 +614,7 @@
   suffix: Tool Room
   components:
   - type: NavMapBeacon
-    text: tool room
+    text: Tools
 
 - type: entity
   parent: DefaultStationBeacon
@@ -606,5 +622,5 @@
   suffix: Disposals
   components:
   - type: NavMapBeacon
-    text: disposals
+    text: Disposals
 

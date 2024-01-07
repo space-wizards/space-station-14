@@ -5,14 +5,3 @@ hostname = "[EN] Wizard's Den Miros [EU West 2]"
 
 [hub]
 tags = "lang:en,region:eu_w,rp:low"
-
-[shuttle]
-auto_call_time = 0
-
-[replay]
-max_compressed_size = 6291456
-max_uncompressed_size = 25165824
-
-# I'm sure this won't cause issues
-[vote]
-restart_enabled = false

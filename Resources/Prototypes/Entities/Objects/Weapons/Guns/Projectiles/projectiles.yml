@@ -95,6 +95,10 @@
   parent: BaseBullet
   noSpawn: true
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: practice
   - type: Projectile
     damage:
       types:
@@ -106,6 +110,10 @@
   parent: BaseBullet
   noSpawn: true
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: rubber
   - type: Projectile
     damage:
       types:
@@ -839,3 +847,36 @@
     soundHit:
       path: "/Audio/Weapons/tap.ogg"
     soundForce: true
+
+- type: entity
+  name: tesla gun lightning
+  id: TeslaGunBullet
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 5
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
+    layers:
+    - state: tesla_projectile
+      shader: unshaded
+  - type: StaminaDamageOnCollide
+    damage: 15
+  - type: EmbeddableProjectile
+  - type: Projectile
+    deleteOnCollide: false
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+  - type: LightningArcShooter
+    arcDepth: 1
+    maxLightningArc: 3
+    shootMinInterval: 2.5
+    shootMaxInterval: 4.5
+    shootRange: 5
+    lightningPrototype: Lightning
+  - type: Electrified
+    requirePower: false
+  - type: Tag
+    tags:
+      - HideContextMenu
