@@ -44,7 +44,7 @@
   parent: BaseComputer
   id: BaseComputerShuttle
   name: shuttle console
-  description: Used to pilot a shuttle.
+  description: Used to pilot a shuttle, can be linked to a pinpointer.
   abstract: true
   components:
   - type: ShuttleConsole
@@ -63,12 +63,14 @@
     color: "#43ccb5"
   - type: Rotatable
     rotateWhileAnchored: true
+  - type: Tag
+    tags:
+    - PinpointerScannable
 
 - type: entity
   parent: BaseComputerShuttle
   id: ComputerShuttle
   name: shuttle console
-  description: Used to pilot a shuttle.
   components:
   - type: Sprite
     layers:
@@ -102,6 +104,7 @@
   - type: Tag
     tags:
       - Syndicate
+      - PinpointerScannable
   - type: RadarConsole
     maxRange: 1536
   - type: WorldLoader
