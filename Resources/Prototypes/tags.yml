@@ -167,6 +167,12 @@
   id: BorgModuleService
 
 - type: Tag
+  id: BorgModuleSyndicate
+
+- type: Tag
+  id: BorgModuleSyndicateAssault
+
+- type: Tag
   id: BorgServiceHead
 
 - type: Tag

@@ -431,6 +431,22 @@
           - NukeOpsUplink
 
 - type: listing
+  id: UplinkReinforcementRadioSyndicateCyborgAssault
+  name:  uplink-reinforcement-radio-cyborg-assault-name
+  description: uplink-reinforcement-radio-cyborg-assault-desc
+  productEntity: ReinforcementRadioSyndicateCyborgAssault
+  icon: { sprite: Mobs/Silicon/chassis.rsi, state: synd_sec }
+  cost:
+    Telecrystal: 65
+  categories:
+    - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
   id: UplinkReinforcementRadioSyndicateMonkey
   name: uplink-reinforcement-radio-monkey-name
   description: uplink-reinforcement-radio-monkey-desc
@@ -526,6 +542,15 @@
   categories:
   - UplinkUtility
 
+- type: listing
+  id: UplinkSyndicateWeaponModule
+  name: uplink-syndicate-weapon-module-name
+  description: uplink-syndicate-weapon-module-desc
+  productEntity: BorgModuleSyndicateWeapon
+  cost:
+    Telecrystal: 5
+  categories:
+    - UplinkUtility
 # Implants
 
 - type: listing

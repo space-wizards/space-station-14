@@ -366,6 +366,7 @@
     - FloorBlueCircuit
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
+      - HellfireFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
@@ -927,6 +928,7 @@
       - ClothingHeadHatWarden
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
+      # Winter outfits
       - ClothingOuterWinterCap
       - ClothingOuterWinterCE
       - ClothingOuterWinterCMO
@@ -961,6 +963,10 @@
       - ClothingOuterWinterSci
       - ClothingOuterWinterRobo
       - ClothingOuterWinterSec
+      # Ties
+      - ClothingNeckTieRed
+      - ClothingNeckTieDet
+      - ClothingNeckTieSci
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - ClothingHeadHatCentcomcap
