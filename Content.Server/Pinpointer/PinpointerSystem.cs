@@ -177,7 +177,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                     : Loc.GetString("targeting-pinpointer-succeeded", ("target", pinpointer.TargetName)), user.Value, user.Value);
         }
 
-        if (!pinpointer.IsActive)
+        if (!pinpointer.IsActive && user != null)
         {
             TogglePinpointer(uid, pinpointer);
         }
@@ -287,7 +287,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             {
                 args.Verbs.Add(new Verb()
                 {
-                    Text = Loc.GetString("target-pinpointer-component", ("targetComponent", targetComponent)),
+                    Text = Loc.GetString(component.ComponentNames[component.Components.IndexOf(targetComponent)]),
                     Act = () => LocateTarget(uid, component, args.User, targetComponent),
                     Priority = 100,
                     Category = VerbCategory.SearchClosest,

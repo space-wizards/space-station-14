@@ -47,7 +47,10 @@
   - type: Pinpointer
     components:
     - NukeDisk
-    targetName: nuclear authentication disk
+    - Nuke
+    componentNames:
+    - name-pinpointer-component-nuke-disk
+    - name-pinpointer-component-nuke
 
 - type: entity
   name: syndicate pinpointer
@@ -63,10 +66,12 @@
   - type: Pinpointer
     components:
     - NukeDisk
-    - Nuke
-    - Airtight
-    targetName: nuclear authentication disk
-    updateTargetName: true
+    - ShuttleConsole
+    - BecomesStation
+    componentNames:
+    - name-pinpointer-component-nuke-disk
+    - name-pinpointer-component-shuttle-console
+    - name-pinpointer-component-station
 
 - type: entity
   name: universal pinpointer
@@ -80,7 +85,6 @@
   - type: Icon
     state: pinpointer-way
   - type: Pinpointer
-    updateTargetName: true
     canRetarget: true
 
 - type: entity
@@ -98,4 +102,5 @@
   - type: Pinpointer
     components:
     - BecomesStation
-    targetName: the station
+    componentNames:
+    - name-pinpointer-component-station
