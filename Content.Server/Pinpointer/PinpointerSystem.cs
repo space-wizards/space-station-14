@@ -51,6 +51,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     {
         TogglePinpointer(uid, component);
 
+        //Only locate a target if there currently isn't a single target stored
         if (component.StoredTargets.Count == 0)
             LocateTarget(uid, component);
     }
@@ -78,7 +79,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// </summary>
     private void LocateTarget(EntityUid uid, PinpointerComponent component, EntityUid? user = null, string? selectedComponent = null)
     {
-        // try to find target from whitelist
+        //Searches the first component in the list if either the pinpointer was turned on or a FTL travel ended.
         var targetedComponent = "";
         if (selectedComponent == null)
         {
@@ -89,6 +90,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             targetedComponent = selectedComponent;
         }
 
+        // try to find target from whitelist
         if (!EntityManager.ComponentFactory.TryGetRegistration(targetedComponent, out var reg))
         {
             Log.Error($"Unable to find component registration for {targetedComponent} for pinpointer!");
@@ -177,6 +179,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                     : Loc.GetString("targeting-pinpointer-succeeded", ("target", pinpointer.TargetName)), user.Value, user.Value);
         }
 
+        //Turns on the pinpointer if the target is changed through the verb menu.
         if (!pinpointer.IsActive && user != null)
         {
             TogglePinpointer(uid, pinpointer);
@@ -272,15 +275,15 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     }
 
     /// <summary>
-    /// Adds the verb that allows the user to select any of the stored targets.
-    /// Additionally adds a verb that allows the user to clear the stored targets.
+    /// Adds a verb that allows the user to search for the closest target containing a certain component, a verb that
+    /// allows the user to select any of the stored targets and a verb that allows the user to clear the stored targets.
     /// </summary>
     private void OnPinpointerVerb(EntityUid uid, PinpointerComponent component, GetVerbsEvent<Verb> args)
     {
         if (!args.CanInteract || args.Hands == null)
             return;
 
-        //Adds the verb if there is at least 1 stored component
+        //Adds the closest target verb if there is at least 1 stored component
         if (component.Components.Count > 0)
         {
             foreach (var targetComponent in component.Components)
@@ -297,7 +300,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         var storedOrder = 0;
 
-        //Adds the verb if there is more than 1 stored target.
+        //Adds the target selection verb if there is more than 1 stored target.
         if (component.StoredTargets.Count > 1)
         {
             foreach (var target in component.StoredTargets)
@@ -320,7 +323,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             }
         }
 
-        //Adds the ver if there is at least 1 stored target
+        //Adds the stored target reset verb if there is at least 1 stored target
         if (component.StoredTargets.Count > 0)
         {
             args.Verbs.Add(new Verb()
