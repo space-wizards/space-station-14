@@ -99,7 +99,7 @@
     - type: StaticPrice
       price: 1000
     - type: AccessReader
-      access: [["Atmospherics"], ["ResearchDirector"]]
+      access: [["Atmospherics"], ["Engineering"], ["Research"]]
     - type: Lock
       locked: false
 
