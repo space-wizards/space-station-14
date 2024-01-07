@@ -249,11 +249,7 @@
         - Syndicate
     - type: Access
     - type: SiliconLawProvider
-      laws:
-        - Syndicate1
-        - Syndicate2
-        - Syndicate3
-        - Syndicate4
+      laws: SyndicateStatic
     - type: IntrinsicRadioTransmitter
       channels:
         - Binary
