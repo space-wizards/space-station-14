@@ -516,7 +516,7 @@
 - type: entity
   id: BorgModuleOperative
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
-  name: Operative cyborg module
+  name: operative cyborg module
   description: A module that comes with a crowbar, a Cobra pistol, an Emag and a pinpointer.
   components:
     - type: Sprite
@@ -533,7 +533,7 @@
 - type: entity
   id: BorgModuleEsword
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
-  name: Energy sword cyborg module
+  name: energy sword cyborg module
   description: A module that comes with an energy sword.
   components:
     - type: Sprite
