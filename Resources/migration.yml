@@ -105,3 +105,25 @@ VendingMachineSmartFridge: SmartFridge
 ReagentContainerMilk: DrinkMilkCarton
 ReagentContainerMilkSoy: DrinkSoyMilkCarton
 ReagentContainerMilkOat: DrinkOatMilkCarton
+
+# 2023-12-20
+MiasmaCanister: AmmoniaCanister
+
+# 2023-12-28
+WarpPointBeaconBar: null
+WarpPointBeaconCargo: null
+WarpPointBeaconCommand: null
+WarpPointBeaconEngineering: null
+WarpPointBeaconMedical: null
+WarpPointBeaconNeutral: null
+WarpPointBeaconScience: null
+WarpPointBeaconSecurity: null
+WarpPointBeaconService: null
+
+# 2023-12-30
+ClothingEyesGlassesCosmeticSunglasses: ClothingEyesGlassesSunglasses
+SpawnPointAssistant: SpawnPointPassenger
+
+# 2024-01-05
+DrinkGoldschlagerBottleFull: DrinkGildlagerBottleFull
+DrinkGoldschlagerGlass: DrinkGildlagerGlass

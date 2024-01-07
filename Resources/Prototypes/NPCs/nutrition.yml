@@ -4,6 +4,9 @@
     # Picks a nearby food, moves into range, then eats it and waits the idle time.
     - tasks:
         - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:HungryPrecondition
+              minHungerState: Starving  # See HungerThreshold enum
           operator: !type:UtilityOperator
             proto: NearbyFood
 
@@ -31,6 +34,9 @@
     # Picks nearby drink then consumes it and waits idle time
     - tasks:
         - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:ThirstyPrecondition
+              minThirstState: Parched  # See ThirstThreshold enum
           operator: !type:UtilityOperator
             proto: NearbyDrink
 

@@ -5,12 +5,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingNeckCloakQm
       - id: BoxFolderQmClipboard
-      - id: ClothingHeadsetCargo
-      - id: ClothingUniformJumpsuitQMTurtleneck
-      - id: ClothingUniformJumpskirtQMTurtleneck
-      - id: ClothingHandsGlovesColorBrown
       - id: CargoRequestComputerCircuitboard
       - id: CargoShuttleComputerCircuitboard
       - id: CargoShuttleConsoleCircuitboard
@@ -34,8 +29,6 @@
       - id: NukeDisk
       - id: PinpointerNuclear
       - id: CaptainIDCard
-      - id: ClothingHeadHatCaptain
-      - id: ClothingNeckCloakCap
       - id: ClothingOuterHardsuitCap
       - id: ClothingMaskGasCaptain
       - id: WeaponDisabler
@@ -48,14 +41,10 @@
         prob: 0.25
       - id: ClothingBeltSheathFilled
       - id: DoorRemoteCommand
-      - id: ClothingNeckCloakCapFormal
-      - id: ClothingUniformJumpsuitCapFormal
-      - id: ClothingUniformJumpskirtCapFormalDress
       - id: RubberStampCaptain
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
-      - id: ClothingHeadHatCapcap
 
 - type: entity
   id: LockerCaptainFilled
@@ -68,9 +57,6 @@
       - id: NukeDisk
       - id: PinpointerNuclear
       - id: CaptainIDCard
-      - id: ClothingHeadHatCaptain
-      - id: ClothingNeckCloakCap
-      - id: ClothingHandsGlovesCaptain
       - id: WeaponDisabler
       - id: CommsComputerCircuitboard
       - id: ClothingHeadsetAltCommand
@@ -81,14 +67,10 @@
         prob: 0.25
       - id: ClothingBeltSheathFilled
       - id: DoorRemoteCommand
-      - id: ClothingNeckCloakCapFormal
-      - id: ClothingUniformJumpsuitCapFormal
-      - id: ClothingUniformJumpskirtCapFormalDress
       - id: RubberStampCaptain
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
-      - id: ClothingHeadHatCapcap
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -97,8 +79,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingNeckCloakHop
-      - id: ClothingHeadHatHopcap
       - id: HoPIDCard
       - id: ClothingHeadsetCommand
       - id: BoxPDA
@@ -106,7 +86,6 @@
       - id: BoxHeadset
       - id: IDComputerCircuitboard
       - id: WeaponDisabler
-      - id: ClothingOuterWinterHoP
       - id: CigarGoldCase
         prob: 0.25
         # Fuck the HoP they don't deserve fucking cigars.
@@ -129,14 +108,10 @@
     contents:
       - id: ClothingOuterHardsuitEngineeringWhite
       - id: ClothingMaskBreath
-      - id: ClothingUniformJumpsuitChiefEngineerTurtle
-      - id: ClothingUniformJumpskirtChiefEngineerTurtle
       - id: OxygenTankFilled
       - id: NitrogenTankFilled
-      - id: ClothingNeckCloakCe
       - id: ClothingEyesGlassesMeson
       - id: ClothingBeltChiefEngineerFilled
-      - id: ClothingHeadHatBeretEngineering
       - id: ClothingShoesBootsMagAdv
       - id: ClothingHandsGlovesColorYellow
       - id: CigarCase
@@ -157,13 +132,9 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingNeckCloakCe
       - id: ClothingEyesGlassesMeson
       - id: ClothingBeltChiefEngineerFilled
-      - id: ClothingHeadHatBeretEngineering
       - id: ClothingHandsGlovesColorYellow
-      - id: ClothingUniformJumpsuitChiefEngineerTurtle
-      - id: ClothingUniformJumpskirtChiefEngineerTurtle
       - id: CigarCase
         prob: 0.15
       - id: DoorRemoteEngineering
@@ -183,7 +154,7 @@
     contents:
       - id: MedkitFilled
       - id: ClothingHandsGlovesNitrile
-      #- name: ClothingEyesHudMedical #Removed until working properly
+      - id: ClothingEyesHudMedical
       - id: ClothingHeadsetAltMedical
       - id: ClothingCloakCmo
       - id: ClothingBackpackDuffelSurgeryFilled
@@ -207,13 +178,10 @@
     contents:
       - id: MedkitFilled
       - id: ClothingHandsGlovesNitrile
-      #- name: ClothingEyesHudMedical #Removed until working properly
+      - id: ClothingEyesHudMedical
       - id: ClothingHeadsetAltMedical
-      - id: ClothingCloakCmo
       - id: ClothingBackpackDuffelSurgeryFilled
-      - id: ClothingOuterCoatLabCmo
       - id: ClothingMaskSterile
-      - id: ClothingHeadHatBeretCmo
       - id: Hypospray
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
@@ -231,16 +199,12 @@
       - id: ResearchComputerCircuitboard
       - id: ProtolatheMachineCircuitboard
       - id: CircuitImprinterMachineCircuitboard
-      - id: ClothingNeckCloakRd
       - id: ClothingHeadsetMedicalScience
       - id: ClothingOuterHardsuitRd
       - id: HandTeleporter
       - id: DoorRemoteResearch
-      - id: ClothingHeadHatBeretRND
-      - id: ClothingHandsGlovesColorPurple
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
-      - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
 
 - type: entity
@@ -253,15 +217,11 @@
       - id: ResearchComputerCircuitboard
       - id: ProtolatheMachineCircuitboard
       - id: CircuitImprinterMachineCircuitboard
-      - id: ClothingNeckCloakRd
       - id: ClothingHeadsetMedicalScience
       - id: HandTeleporter
       - id: DoorRemoteResearch
-      - id: ClothingHeadHatBeretRND
-      - id: ClothingHandsGlovesColorPurple
       - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
-      - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
 
 - type: entity
@@ -273,12 +233,7 @@
     contents:
       - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
-      - id: ClothingHeadHatBeretHoS
-      - id: ClothingHeadHatHoshat
-      - id: ClothingNeckCloakHos
       - id: ClothingOuterCoatHoSTrench
-      - id: ClothingUniformJumpskirtHoSAlt
-      - id: ClothingUniformJumpsuitHoSAlt
       - id: ClothingOuterHardsuitSecurityRed
       - id: ClothingMaskGasSwat
       - id: ClothingBeltSecurityFilled
@@ -288,8 +243,6 @@
       - id: CigarGoldCase
         prob: 0.50
       - id: DoorRemoteSecurity
-      - id: ClothingUniformJumpskirtHosFormal
-      - id: ClothingUniformJumpsuitHosFormal
       - id: RubberStampHos
       - id: SecurityTechFabCircuitboard
       - id: JetpackSecurityFilled
@@ -306,12 +259,7 @@
     contents:
       - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
-      - id: ClothingHeadHatBeretHoS
-      - id: ClothingHeadHatHoshat
-      - id: ClothingNeckCloakHos
       - id: ClothingOuterCoatHoSTrench
-      - id: ClothingUniformJumpskirtHoSAlt
-      - id: ClothingUniformJumpsuitHoSAlt
       - id: ClothingBeltSecurityFilled
       - id: ClothingHeadsetAltSecurity
       - id: ClothingEyesGlassesSunglasses
@@ -319,8 +267,6 @@
       - id: CigarGoldCase
         prob: 0.50
       - id: DoorRemoteSecurity
-      - id: ClothingUniformJumpskirtHosFormal
-      - id: ClothingUniformJumpsuitHosFormal
       - id: RubberStampHos
       - id: SecurityTechFabCircuitboard
       - id: BoxEncryptionKeySecurity

@@ -74,6 +74,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             if (!vehicle.AutoAnimate)
                 continue;
 
+            // Why is this updating appearance data every tick, instead of when it needs to be updated???
+
             if (_mover.GetVelocityInput(mover).Sprinting == Vector2.Zero)
             {
                 UpdateAutoAnimate(uid, false);

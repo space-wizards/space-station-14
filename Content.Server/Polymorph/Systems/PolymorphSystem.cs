@@ -7,6 +7,7 @@ using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Buckle;
 using Content.Shared.Damage;
+using Content.Shared.Destructible;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
@@ -20,6 +21,7 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Polymorph.Systems
@@ -44,6 +46,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -59,6 +62,7 @@ namespace Content.Server.Polymorph.Systems
             SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
             SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
             SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
+            SubscribeLocalEvent<PolymorphedEntityComponent, DestructionEventArgs>(OnDestruction);
 
             InitializeCollide();
             InitializeMap();
@@ -122,6 +126,24 @@ namespace Content.Server.Polymorph.Systems
             }
         }
 
+        /// <summary>
+        /// It is possible to be polymorphed into an entity that can't "die", but is instead
+        /// destroyed. This handler ensures that destruction is treated like death.
+        /// </summary>
+        private void OnDestruction(EntityUid uid, PolymorphedEntityComponent comp, DestructionEventArgs args)
+        {
+            if (!_proto.TryIndex<PolymorphPrototype>(comp.Prototype, out var proto))
+            {
+                _sawmill.Error($"Invalid polymorph prototype {comp.Prototype}");
+                return;
+            }
+
+            if (proto.RevertOnDeath)
+            {
+                Revert(uid, comp);
+            }
+        }
+
         private void OnBeforeFullySliced(EntityUid uid, PolymorphedEntityComponent comp, BeforeFullySlicedEvent args)
         {
             if (!_proto.TryIndex<PolymorphPrototype>(comp.Prototype, out var proto))
@@ -164,6 +186,13 @@ namespace Content.Server.Polymorph.Systems
             if (!proto.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(uid))
                 return null;
 
+            // If this polymorph has a cooldown, check if that amount of time has passed since the
+            // last polymorph ended.
+            if (TryComp<PolymorphableComponent>(uid, out var polymorphableComponent) &&
+                polymorphableComponent.LastPolymorphEnd != null &&
+                _gameTiming.CurTime < polymorphableComponent.LastPolymorphEnd + proto.Cooldown)
+                return null;
+
             // mostly just for vehicles
             _buckle.TryUnbuckle(uid, uid, true);
 
@@ -181,7 +210,7 @@ namespace Content.Server.Polymorph.Systems
             childXform.LocalRotation = targetTransformComp.LocalRotation;
 
             if (_container.TryGetContainingContainer(uid, out var cont))
-                cont.Insert(child);
+                _container.Insert(child, cont);
 
             //Transfers all damage from the original to the new one
             if (proto.TransferDamage &&
@@ -301,6 +330,9 @@ namespace Content.Server.Polymorph.Systems
 
             if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
                 _mindSystem.TransferTo(mindId, parent, mind: mind);
+
+            if (TryComp<PolymorphableComponent>(parent, out var polymorphableComponent))
+                polymorphableComponent.LastPolymorphEnd = _gameTiming.CurTime;
 
             // if an item polymorph was picked up, put it back down after reverting
             Transform(parent).AttachToGridOrMap();

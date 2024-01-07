@@ -11,6 +11,7 @@
     - InstantDoAfters
     - CanPilot
     - BypassInteractionRangeChecks
+    - BypassDropChecks
   - type: Input
     context: "aghost"
   - type: Ghost
@@ -30,6 +31,7 @@
     tags:
     - NuclearOperative
     - SyndicateAgent
+    - CentralCommand
   - type: UserInterface
     interfaces:
       - key: enum.SolarControlConsoleUiKey.Key
