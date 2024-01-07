@@ -68,3 +68,58 @@
   - type: Lube
   - type: TrashOnSolutionEmpty
     solution: drink
+
+
+# Mopwata 
+- type: weightedRandomFillSolution
+  id: RandomFillMopwata
+  fills:
+  - quantity: 40
+    weight: 1
+    reagents:
+    - Water
+  - quantity: 40
+    weight: 2
+    reagents:
+    - Blood
+    - CopperBlood
+    - Slime
+    - Vomit
+  - quantity: 20
+    weight: 3
+    reagents:
+    - Omnizine
+  - quantity: 20
+    weight: 5
+    reagents:
+    - SpaceDrugs
+    - ChloralHydrate
+    - Desoxyephedrine
+    - Ephedrine
+    - Ipecac
+    - Mold
+    - MuteToxin
+    - Nocturine
+    - NorepinephricAcid
+    - Pax
+    - Tricordrazine
+    - SodiumPolyacrylate
+    - Fresium
+
+- type: entity
+  parent: DrinkBottleGlassBaseFull
+  id: DrinkMopwataBottleRandom
+  name: delicious mopwata
+  description: A foggy brown bottle with a faded label depiction a mop. It comes full of murky... vintage.
+  components:
+  - type: Item
+    size: Small
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+  - type: RandomFillSolution
+    solution: drink
+    weightedRandomId: RandomFillMopwata
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mopwata.rsi
