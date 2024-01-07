@@ -33,6 +33,13 @@
     spawned:
     - id: FoodMeat
       amount: 5
+  - type: Bloodstream
+    bloodReagent: CopperBlood
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#162581"
   - type: MothAccent
   - type: Vocal
     sounds:
