@@ -106,6 +106,8 @@
           map: [ "enum.GunVisualLayers.Base" ]
         - state: mag-3
           map: [ "enum.GunVisualLayers.Mag" ]
+    - type: Item
+      size: Huge
     - type: ContainerContainer
       containers:
         ballistic-ammo: !type:Container
