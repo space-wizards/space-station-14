@@ -17,6 +17,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -25,6 +26,7 @@ namespace Content.Server.Hands.Systems
     public sealed class HandsSystem : SharedHandsSystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -68,7 +70,7 @@ namespace Content.Server.Hands.Systems
 
         private void OnUnpaused(Entity<HandsComponent> ent, ref EntityUnpausedEvent args)
         {
-            ent.Comp.NextThrowTime += args.PausedTime;
+            ent.Comp.LastThrow += args.PausedTime;
         }
 
         private void OnExploded(Entity<HandsComponent> ent, ref BeforeExplodeEvent args)
@@ -180,9 +182,8 @@ namespace Content.Server.Hands.Systems
                 !_actionBlockerSystem.CanThrow(player, throwEnt))
                 return false;
 
-            if (_timing.CurTime < hands.NextThrowTime)
+            if (_timing.CurTime < hands.LastThrow + hands.ThrowCooldown)
                 return false;
-            hands.NextThrowTime = _timing.CurTime + hands.ThrowCooldown;
 
             if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
@@ -204,17 +205,29 @@ namespace Content.Server.Hands.Systems
 
             var throwStrength = hands.ThrowForceMultiplier;
 
+            if (_timing.CurTime < hands.LastThrow + hands.TimeToPerfectThrow)
+            {
+                Angle maxInaccuracy = hands.InaccuracyAfterThrow - (_timing.CurTime - hands.LastThrow).TotalSeconds * hands.ThrowInaccuracyDecayRate;
+                Angle totalInaccuracy = _random.NextAngle(-maxInaccuracy, maxInaccuracy);
+                direction = (direction.ToAngle() + totalInaccuracy).ToVec() * direction.Length();
+            }
+
             // Let other systems change the thrown entity (useful for virtual items)
             // or the throw strength.
             var ev = new BeforeThrowEvent(throwEnt, direction, throwStrength, player);
             RaiseLocalEvent(player, ref ev);
 
             if (ev.Cancelled)
+            {
+                hands.LastThrow = _timing.CurTime;
                 return true;
+            }
 
             // This can grief the above event so we raise it afterwards
             if (IsHolding(player, throwEnt, out _, hands) && !TryDrop(player, throwEnt, handsComp: hands))
                 return false;
+
+            hands.LastThrow = _timing.CurTime;
 
             _throwingSystem.TryThrow(ev.ItemUid, ev.Direction, ev.ThrowStrength, ev.PlayerUid);
 
