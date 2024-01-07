@@ -77,6 +77,10 @@ marking-LizardFrillsHood-frills_hood_primary = Outer Hood
 marking-LizardFrillsHood-frills_hood_secondary = Inner Hood
 marking-LizardFrillsHood = Lizard Frills (Hood)
 
+marking-LizardFrillsNeck-frills_neck_primary = Outer Neck Frills
+marking-LizardFrillsNeck-frills_neck_secondary = Inner Neck Frills
+marking-LizardFrillsNeck = Lizard Frills (Neck)
+
 marking-LizardHornsArgali-horns_argali = Lizard Horns (Argali)
 marking-LizardHornsArgali = Lizard Horns (Argali)
 
