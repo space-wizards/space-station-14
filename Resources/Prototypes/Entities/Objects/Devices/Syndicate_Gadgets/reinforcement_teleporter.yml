@@ -39,3 +39,17 @@
     rules: ghost-role-information-syndicate-monkey-reinforcement-rules
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgent
+
+- type: entity
+  parent: ReinforcementRadioSyndicate
+  id: ReinforcementRadioSyndicateCyborgAssault # Reinforcement radio exclusive to nukeops uplink
+  name: syndicate assault cyborg reinforcement radio
+  description: Call in a well armed assault cyborg, instantly!
+  suffix: NukeOps
+  components:
+    - type: GhostRole
+      name: Syndicate Assault Cyborg
+      description: Nuclear operatives needs reinforcements. You, a cold silicon killing machine, will help them.
+      rules: Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+    - type: GhostRoleMobSpawner
+      prototype: PlayerBorgSyndicateAssaultBattery

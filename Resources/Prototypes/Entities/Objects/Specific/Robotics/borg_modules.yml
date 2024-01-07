@@ -82,6 +82,24 @@
     tags:
     - BorgModuleService
 
+- type: entity
+  id: BaseBorgModuleSyndicate
+  parent: BaseBorgModule
+  abstract: true
+  components:
+    - type: Tag
+      tags:
+        - BorgModuleSyndicate
+
+- type: entity
+  id: BaseBorgModuleSyndicateAssault
+  parent: BaseBorgModule
+  abstract: true
+  components:
+    - type: Tag
+      tags:
+        - BorgModuleSyndicateAssault
+
 # generic modules
 - type: entity
   id: BorgModuleCable
@@ -494,3 +512,50 @@
     items:
     - WeaponAdvancedLaser
     - Machete
+
+- type: entity
+  id: BorgModuleOperative
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  name: Operative cyborg module
+  description: A module that comes with a crowbar, a Cobra pistol, an Emag and a pinpointer.
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicate
+        - state: icon-tools
+    - type: ItemBorgModule
+      items:
+        - Crowbar
+        - WeaponPistolCobra
+        - Emag
+        - PinpointerNuclear
+
+- type: entity
+  id: BorgModuleEsword
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  name: Energy sword cyborg module
+  description: A module that comes with an energy sword.
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicate
+        - state: icon-tools
+    - type: ItemBorgModule
+      items:
+        - EnergySword
+        - PinpointerNuclear
+
+- type: entity
+  id: BorgModuleL6C
+  parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule ]
+  name: L6C ROW cyborg module
+  description: A module that comes with a L6C.
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicate
+        - state: icon-tools
+    - type: ItemBorgModule
+      items:
+        - WeaponLightMachineGunL6C
+        - PinpointerNuclear
