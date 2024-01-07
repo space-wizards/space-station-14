@@ -56,8 +56,8 @@ public sealed class WarDeclaratorSystem : EntitySystem
             return;
         }
 
-        var maxMessageLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementMessageLength);
-        var message = SharedChatSystem.SanitizeAnnouncement(args.Message, maxMessageLength);
+        var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
+        var message = SharedChatSystem.SanitizeAnnouncement(args.Message, maxLength);
         if (component.AllowEditingMessage && message != string.Empty)
         {
             component.Message = message;

@@ -66,8 +66,8 @@ namespace Content.Client.Communications.UI
 
         public void AnnounceButtonPressed(string message)
         {
-            var maxMessageLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementMessageLength);
-            var msg = SharedChatSystem.SanitizeAnnouncement(message, maxMessageLength);
+            var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
+            var msg = SharedChatSystem.SanitizeAnnouncement(message, maxLength);
             SendMessage(new CommunicationsConsoleAnnounceMessage(msg));
         }
 

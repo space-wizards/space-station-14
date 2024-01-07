@@ -222,8 +222,8 @@ namespace Content.Server.Communications
         private void OnAnnounceMessage(EntityUid uid, CommunicationsConsoleComponent comp,
             CommunicationsConsoleAnnounceMessage message)
         {
-            var maxMessageLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementMessageLength);
-            var msg = SharedChatSystem.SanitizeAnnouncement(message.Message, maxMessageLength);
+            var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
+            var msg = SharedChatSystem.SanitizeAnnouncement(message.Message, maxLength);
             var author = Loc.GetString("comms-console-announcement-unknown-sender");
             if (message.Session.AttachedEntity is { Valid: true } mob)
             {
