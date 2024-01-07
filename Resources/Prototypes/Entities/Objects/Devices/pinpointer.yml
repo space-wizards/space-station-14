@@ -93,3 +93,13 @@
   - type: Pinpointer
     component: BecomesStation
     targetName: the station
+
+- type: entity
+  parent: PinpointerBase
+  name: order tracker
+  description: A handheld tracking device used to track a cargo order.
+  id: PinpointerCargoOrder
+  components:
+  - type: Pinpointer
+    manualToggle: false
+  - type: CargoTracking

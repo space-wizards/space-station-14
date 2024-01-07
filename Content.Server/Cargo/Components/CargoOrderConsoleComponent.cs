@@ -13,5 +13,8 @@ namespace Content.Server.Cargo.Components
 
         [DataField("soundConfirm")]
         public SoundSpecifier ConfirmSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
+
+        [DataField]
+        public string? CargoInvoicePrototype = "PaperCargoInvoice";
     }
 }

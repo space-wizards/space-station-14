@@ -45,6 +45,9 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
     private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
     {
+        if (!component.ManualToggle)
+            return;
+
         TogglePinpointer(uid, component);
 
         if (!component.CanRetarget)

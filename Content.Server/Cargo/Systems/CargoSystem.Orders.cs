@@ -155,6 +155,12 @@ namespace Content.Server.Cargo.Systems
 
             DeductFunds(bankAccount, cost);
             UpdateOrders(dbUid!.Value, orderDatabase);
+
+            // print invoice (if the CargoOrderConsoleComponent has a prototype for it)
+            if (component.CargoInvoicePrototype is not null)
+            {
+                GenerateInvoice(order, Transform(uid).Coordinates, component.CargoInvoicePrototype);
+            }
         }
 
         private void OnRemoveOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleRemoveOrderMessage args)
@@ -370,6 +376,15 @@ namespace Content.Server.Cargo.Systems
             {
                 // Create the item itself
                 var item = Spawn(order.ProductId, whereToPutIt);
+
+                // add it to order list
+                orderDB.OrderLookup.Add(order.OrderId, item);
+
+                // setup tracked component
+                AddComp(item, new CargoTrackedComponent(order.OrderId));
+
+                // raise the event for the cargo being spawned
+                RaiseLocalEvent(new CargoOrderArrivalEvent(order.OrderId, item));
 
                 if (paperPrototypeToPrint is null)
                     return true; // return early with true because despite not printing the invoice, we still managed to fufill the order

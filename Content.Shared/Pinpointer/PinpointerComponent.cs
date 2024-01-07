@@ -48,6 +48,12 @@ public sealed partial class PinpointerComponent : Component
     [DataField("canRetarget"), ViewVariables(VVAccess.ReadWrite)]
     public bool CanRetarget;
 
+    /// <summary>
+    ///     Whether or not the target can be toggled on or off manually.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool ManualToggle = true;
+
     [ViewVariables]
     public EntityUid? Target = null;
 

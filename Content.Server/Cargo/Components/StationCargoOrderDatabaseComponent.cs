@@ -20,6 +20,12 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     public List<CargoOrderData> Orders = new();
 
     /// <summary>
+    /// The uid's of already spawned orders.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public Dictionary<int, EntityUid> OrderLookup = new();
+
+    /// <summary>
     /// Used to determine unique order IDs
     /// </summary>
     public int NumOrdersCreated;
