@@ -18,6 +18,8 @@ public sealed partial class SalvageSystem
 
     private EntityQuery<SalvageMobRestrictionsComponent> _salvMobQuery;
 
+    private List<(Entity<TransformComponent> Entity, EntityUid MapUid)> _detachEnts = new();
+
     private void InitializeMagnet()
     {
         _salvMobQuery = GetEntityQuery<SalvageMobRestrictionsComponent>();
@@ -134,19 +136,27 @@ public sealed partial class SalvageSystem
 
             // Uhh yeah don't delete mobs or whatever
             var mobQuery = AllEntityQuery<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
+            _detachEnts.Clear();
 
             while (mobQuery.MoveNext(out var mobUid, out _, out _, out var xform))
             {
                 if (xform.GridUid == null || !data.Comp.ActiveEntities.Contains(xform.GridUid.Value) || xform.MapUid == null)
                     continue;
 
-                _transform.SetParent(mobUid, xform.MapUid.Value);
+                // Can't parent directly to map as it runs grid traversal.
+                _detachEnts.Add(((mobUid, xform), xform.MapUid.Value));
+                _transform.DetachParentToNull(mobUid, xform);
             }
 
             // Go and cleanup the active ents.
             foreach (var ent in data.Comp.ActiveEntities)
             {
                 Del(ent);
+            }
+
+            foreach (var entity in _detachEnts)
+            {
+                _transform.SetParent(entity.Entity.Owner, entity.Entity.Comp, entity.MapUid);
             }
 
             data.Comp.ActiveEntities = null;
