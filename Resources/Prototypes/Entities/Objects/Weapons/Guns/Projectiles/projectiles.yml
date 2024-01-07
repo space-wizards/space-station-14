@@ -95,6 +95,10 @@
   parent: BaseBullet
   noSpawn: true
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: practice
   - type: Projectile
     damage:
       types:
@@ -106,6 +110,10 @@
   parent: BaseBullet
   noSpawn: true
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: rubber
   - type: Projectile
     damage:
       types:
