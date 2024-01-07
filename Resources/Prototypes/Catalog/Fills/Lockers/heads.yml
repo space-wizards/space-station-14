@@ -150,7 +150,8 @@
   - type: StorageFill
     contents:
       - id: MedkitFilled
-      #- name: ClothingEyesHudMedical #Removed until working properly
+      - id: ClothingHandsGlovesNitrile
+      - id: ClothingEyesHudMedical
       - id: ClothingHeadsetAltMedical
       - id: ClothingBackpackDuffelSurgeryFilled
       - id: ClothingOuterHardsuitMedical
@@ -169,7 +170,8 @@
   - type: StorageFill
     contents:
       - id: MedkitFilled
-      #- name: ClothingEyesHudMedical #Removed until working properly
+      - id: ClothingHandsGlovesNitrile
+      - id: ClothingEyesHudMedical
       - id: ClothingHeadsetAltMedical
       - id: ClothingBackpackDuffelSurgeryFilled
       - id: ClothingMaskSterile

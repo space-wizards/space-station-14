@@ -29,6 +29,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> RulesHeader =
             CVarDef.Create("server.rules_header", "ui-rules-header", CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        ///     The token used to authenticate with the admin API. Leave empty to disable the admin API. This is a secret! Do not share!
+        /// </summary>
+        public static readonly CVarDef<string> AdminApiToken =
+            CVarDef.Create("server.admin_api_token", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+
         /*
          * Ambience
          */
@@ -363,6 +369,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> RoundRestartTime =
             CVarDef.Create("game.round_restart_time", 120f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// The prototype to use for secret weights.
+        /// </summary>
+        public static readonly CVarDef<string> SecretWeightPrototype =
+            CVarDef.Create("game.secret_weight_prototype", "Secret", CVar.SERVERONLY);
+
         /*
          * Discord
          */
@@ -509,6 +521,9 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> TipFrequencyInRound =
             CVarDef.Create("tips.in_game_frequency", 60f * 60);
+
+        public static readonly CVarDef<string> LoginTipsDataset =
+            CVarDef.Create("tips.login_dataset", "Tips");
 
         /*
          * Console
@@ -819,7 +834,7 @@ namespace Content.Shared.CCVar
 
         /// <summary>
         ///     The threshold of minutes to appear as a "new player" in the ahelp menu
-        ///     If 0, appearing as a new player is disabled. 
+        ///     If 0, appearing as a new player is disabled.
         /// </summary>
         public static readonly CVarDef<int> NewPlayerThreshold =
             CVarDef.Create("admin.new_player_threshold", 0, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);

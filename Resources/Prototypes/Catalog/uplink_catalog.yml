@@ -1123,6 +1123,16 @@
     - ResearchDirector
     - Chef
 
+- type: listing
+  id: UplinkSingarityBeacon
+  name: uplink-singularity-beacon-name
+  description: uplink-singularity-beacon-desc
+  productEntity: SingularityBeacon
+  cost:
+    Telecrystal: 12
+  categories:
+    - UplinkUtility
+
 # Armor
 
 - type: listing
@@ -1376,6 +1386,22 @@
     Telecrystal: 4
   categories:
     - UplinkMisc
+
+- type: listing
+  id: UplinkMobCatMicrobomb
+  name: uplink-mobcat-microbomb-name
+  description: uplink-mobcat-microbomb-desc
+  icon: { sprite: /Textures/Mobs/Pets/cat.rsi, state: syndicat }
+  productEntity: MobCatSyndy
+  cost: 
+    Telecrystal: 10
+  categories:
+    - UplinkMisc
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
 
  # Pointless
 

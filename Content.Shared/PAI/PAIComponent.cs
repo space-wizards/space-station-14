@@ -14,38 +14,43 @@ namespace Content.Shared.PAI;
 ///  and there's not always enough players and ghost roles to justify it.
 /// All logic in PAISystem.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PAIComponent : Component
 {
     /// <summary>
     /// The last person who activated this PAI.
     /// Used for assigning the name.
     /// </summary>
-    [DataField("lastUser"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? LastUser;
 
-    [DataField("midiActionId", serverOnly: true,
-        customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? MidiActionId = "ActionPAIPlayMidi";
+    [DataField(serverOnly: true)]
+    public EntProtoId? MidiActionId = "ActionPAIPlayMidi";
 
-    [DataField("midiAction", serverOnly: true)] // server only, as it uses a server-BUI event !type
+    [DataField(serverOnly: true)] // server only, as it uses a server-BUI event !type
     public EntityUid? MidiAction;
+
+    [DataField]
+    public ProtoId<EntityPrototype> MapActionId = "ActionPAIOpenMap";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? MapAction;
 
     /// <summary>
     /// When microwaved there is this chance to brick the pai, kicking out its player and preventing it from being used again.
     /// </summary>
-    [DataField("brickChance")]
+    [DataField]
     public float BrickChance = 0.5f;
 
     /// <summary>
     /// Locale id for the popup shown when the pai gets bricked.
     /// </summary>
-    [DataField("brickPopup")]
+    [DataField]
     public string BrickPopup = "pai-system-brick-popup";
 
     /// <summary>
     /// Locale id for the popup shown when the pai is microwaved but does not get bricked.
     /// </summary>
-    [DataField("scramblePopup")]
+    [DataField]
     public string ScramblePopup = "pai-system-scramble-popup";
 }

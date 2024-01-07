@@ -890,11 +890,32 @@ public abstract class SharedStorageSystem : EntitySystem
 
         var storageBounding = storageEnt.Comp.Grid.GetBoundingBox();
 
+        Angle startAngle;
+        if (storageEnt.Comp.DefaultStorageOrientation == null)
+        {
+            startAngle = Angle.FromDegrees(-itemEnt.Comp.StoredRotation);
+        }
+        else
+        {
+            if (storageBounding.Width < storageBounding.Height)
+            {
+                startAngle = storageEnt.Comp.DefaultStorageOrientation == StorageDefaultOrientation.Horizontal
+                    ? Angle.Zero
+                    : Angle.FromDegrees(90);
+            }
+            else
+            {
+                startAngle = storageEnt.Comp.DefaultStorageOrientation == StorageDefaultOrientation.Vertical
+                    ? Angle.Zero
+                    : Angle.FromDegrees(90);
+            }
+        }
+
         for (var y = storageBounding.Bottom; y <= storageBounding.Top; y++)
         {
             for (var x = storageBounding.Left; x <= storageBounding.Right; x++)
             {
-                for (var angle = Angle.FromDegrees(-itemEnt.Comp.StoredRotation); angle <= Angle.FromDegrees(360 - itemEnt.Comp.StoredRotation); angle += Math.PI / 2f)
+                for (var angle = startAngle; angle <= Angle.FromDegrees(360 - startAngle); angle += Math.PI / 2f)
                 {
                     var location = new ItemStorageLocation(angle, (x, y));
                     if (ItemFitsInGridLocation(itemEnt, storageEnt, location))

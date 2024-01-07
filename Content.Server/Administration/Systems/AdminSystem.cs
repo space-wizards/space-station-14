@@ -61,7 +61,7 @@ namespace Content.Server.Administration.Systems
         public IReadOnlySet<NetUserId> RoundActivePlayers => _roundActivePlayers;
 
         private readonly HashSet<NetUserId> _roundActivePlayers = new();
-        private readonly PanicBunkerStatus _panicBunker = new();
+        public readonly PanicBunkerStatus PanicBunker = new();
 
         public override void Initialize()
         {
@@ -248,7 +248,7 @@ namespace Content.Server.Administration.Systems
 
         private void OnPanicBunkerChanged(bool enabled)
         {
-            _panicBunker.Enabled = enabled;
+            PanicBunker.Enabled = enabled;
             _chat.SendAdminAlert(Loc.GetString(enabled
                 ? "admin-ui-panic-bunker-enabled-admin-alert"
                 : "admin-ui-panic-bunker-disabled-admin-alert"
@@ -259,52 +259,52 @@ namespace Content.Server.Administration.Systems
 
         private void OnPanicBunkerDisableWithAdminsChanged(bool enabled)
         {
-            _panicBunker.DisableWithAdmins = enabled;
+            PanicBunker.DisableWithAdmins = enabled;
             UpdatePanicBunker();
         }
 
         private void OnPanicBunkerEnableWithoutAdminsChanged(bool enabled)
         {
-            _panicBunker.EnableWithoutAdmins = enabled;
+            PanicBunker.EnableWithoutAdmins = enabled;
             UpdatePanicBunker();
         }
 
         private void OnPanicBunkerCountDeadminnedAdminsChanged(bool enabled)
         {
-            _panicBunker.CountDeadminnedAdmins = enabled;
+            PanicBunker.CountDeadminnedAdmins = enabled;
             UpdatePanicBunker();
         }
 
         private void OnShowReasonChanged(bool enabled)
         {
-            _panicBunker.ShowReason = enabled;
+            PanicBunker.ShowReason = enabled;
             SendPanicBunkerStatusAll();
         }
 
         private void OnPanicBunkerMinAccountAgeChanged(int minutes)
         {
-            _panicBunker.MinAccountAgeHours = minutes / 60;
+            PanicBunker.MinAccountAgeHours = minutes / 60;
             SendPanicBunkerStatusAll();
         }
 
         private void OnPanicBunkerMinOverallHoursChanged(int hours)
         {
-            _panicBunker.MinOverallHours = hours;
+            PanicBunker.MinOverallHours = hours;
             SendPanicBunkerStatusAll();
         }
 
         private void UpdatePanicBunker()
         {
-            var admins = _panicBunker.CountDeadminnedAdmins
+            var admins = PanicBunker.CountDeadminnedAdmins
                 ? _adminManager.AllAdmins
                 : _adminManager.ActiveAdmins;
             var hasAdmins = admins.Any();
 
-            if (hasAdmins && _panicBunker.DisableWithAdmins)
+            if (hasAdmins && PanicBunker.DisableWithAdmins)
             {
                 _config.SetCVar(CCVars.PanicBunkerEnabled, false);
             }
-            else if (!hasAdmins && _panicBunker.EnableWithoutAdmins)
+            else if (!hasAdmins && PanicBunker.EnableWithoutAdmins)
             {
                 _config.SetCVar(CCVars.PanicBunkerEnabled, true);
             }
@@ -314,7 +314,7 @@ namespace Content.Server.Administration.Systems
 
         private void SendPanicBunkerStatusAll()
         {
-            var ev = new PanicBunkerChangedEvent(_panicBunker);
+            var ev = new PanicBunkerChangedEvent(PanicBunker);
             foreach (var admin in _adminManager.AllAdmins)
             {
                 RaiseNetworkEvent(ev, admin);

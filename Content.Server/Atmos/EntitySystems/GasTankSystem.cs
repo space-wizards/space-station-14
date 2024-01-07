@@ -110,6 +110,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnExamined(EntityUid uid, GasTankComponent component, ExaminedEvent args)
         {
+            using(args.PushGroup(nameof(GasTankComponent)));
             if (args.IsInDetailsRange)
                 args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(component.Air?.Pressure ?? 0))));
             if (component.IsConnected)

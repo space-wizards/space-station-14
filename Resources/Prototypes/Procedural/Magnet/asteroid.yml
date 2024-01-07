@@ -1,7 +1,7 @@
 - type: weightedRandom
   id: AsteroidOre
   weights:
-    OreTin: 1.0
+    OreIron: 1.0
     OreQuartz: 1.0
     OreCoal: 1.0
     OreGold: 0.25
@@ -16,7 +16,7 @@
   generator: !type:NoiseDunGen
     tileCap: 1500
     capStd: 32
-    iterations: 1
+    iterations: 3
     layers:
       - tile: FloorAsteroidSand
         threshold: 0.30

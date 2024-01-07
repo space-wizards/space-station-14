@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
+  "copyright": "https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b, syndicat created by Aleksh (discord)",
   "states": [
     {
       "name": "cak",
@@ -413,6 +413,32 @@
     },
     {
       "name": "spacecat_sit",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "syndicat",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "syndicat_dead",
       "delays": [
         [
           1
