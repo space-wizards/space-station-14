@@ -31,9 +31,11 @@
           True: { visible: true }
           False: { visible: false }
   - type: FlatpackCreator
-    baseMaterialCost:
-      Steel: 600
-      Plastic: 200
+    baseMachineCost:
+      Steel: 750
+    baseComputerCost:
+      Steel: 500
+      Glass: 250
   - type: Machine
     board: FlatpackerMachineCircuitboard
   - type: MaterialStorage
@@ -68,6 +70,7 @@
         whitelist:
           components:
           - MachineBoard
+          - ComputerBoard
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
@@ -80,3 +83,13 @@
     - board_slot
   - type: StaticPrice
     price: 2000
+
+- type: entity
+  id: FlatpackerNoBoardEffect
+  categories:
+  - hideSpawnMenu
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/autolathe.rsi
+    state: icon
+    color: "#222222"

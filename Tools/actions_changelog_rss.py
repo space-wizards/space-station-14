@@ -10,16 +10,15 @@
 # $env:CHANGELOG_RSS_KEY=[System.IO.File]::ReadAllText($(gci "key"))
 
 import os
+import pathlib
 import io
-import paramiko
 import base64
 import yaml
-import sys
 import itertools
 import html
 import email.utils
-from typing import Optional, List, Any, Tuple
-import xml.etree.ElementTree as ET
+from typing import  List, Any, Tuple
+from lxml import etree as ET
 from datetime import datetime, timedelta, timezone
 
 MAX_ITEM_AGE = timedelta(days=30)
@@ -33,6 +32,7 @@ SSH_HOST = "centcomm.spacestation14.io"
 SSH_USER = "changelog-rss"
 SSH_PORT = 22
 RSS_FILE = "changelog.xml"
+XSL_FILE = "stylesheet.xsl"
 HOST_KEYS = [
     "AAAAC3NzaC1lZDI1NTE5AAAAIEE8EhnPjb3nIaAPTXAJHbjrwdGGxHoM0f1imCK0SygD"
 ]
@@ -102,10 +102,21 @@ def main():
 
         et = ET.ElementTree(feed)
         with sftp.open(RSS_FILE, "wb") as f:
-            et.write(f, encoding="utf-8", xml_declaration=True)
+            et.write(
+                f,
+                encoding="utf-8",
+                xml_declaration=True,
+                # This ensures our stylesheet is loaded
+                doctype="<?xml-stylesheet type='text/xsl' href='./stylesheet.xsl'?>",
+            )
+
+        # Copy in the stylesheet
+        template_path = pathlib.Path(__file__, 'changelogs', XSL_FILE)
+        with sftp.open(XSL_FILE, "wb") as f, open(template_path) as fh:
+            f.write(fh)
 
 
-def create_feed(changelog: Any, previous_items: List[ET.Element]) -> Tuple[ET.Element, bool]:
+def create_feed(changelog: Any, previous_items: List[Any]) -> Tuple[Any, bool]:
     rss = ET.Element("rss", attrib={"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
 
@@ -128,7 +139,7 @@ def create_feed(changelog: Any, previous_items: List[ET.Element]) -> Tuple[ET.El
 
     return rss, any
 
-def create_new_item_since(changelog: Any, channel: ET.Element, since: int, now: datetime) -> bool:
+def create_new_item_since(changelog: Any, channel: Any, since: int, now: datetime) -> bool:
     entries_for_item = [entry for entry in changelog["Entries"] if entry["id"] > since]
     top_entry_id = max(map(lambda e: e["id"], entries_for_item), default=0)
 
@@ -174,7 +185,7 @@ def generate_description_for_entries(entries: List[Any]) -> str:
 
     return desc.getvalue()
 
-def copy_previous_items(channel: ET.Element, previous: List[ET.Element], now: datetime):
+def copy_previous_items(channel: Any, previous: List[Any], now: datetime):
     # Copy in previous items, if we have them.
     for item in previous:
         date_elem = item.find("./pubDate")
@@ -189,7 +200,7 @@ def copy_previous_items(channel: ET.Element, previous: List[ET.Element], now: da
 
         channel.append(item)
 
-def find_last_changelog_id(items: List[ET.Element]) -> int:
+def find_last_changelog_id(items: List[Any]) -> int:
     return max(map(lambda i: int(i.get(XML_NS_B + "to-id", "0")), items), default=0)
 
 def load_key(key_contents: str) -> paramiko.PKey:
@@ -204,7 +215,7 @@ def load_host_keys(host_keys: paramiko.HostKeys):
         host_keys.add(SSH_HOST, "ssh-ed25519", paramiko.Ed25519Key(data=base64.b64decode(key)))
 
 
-def load_last_feed_items(client: paramiko.SFTPClient) -> List[ET.Element]:
+def load_last_feed_items(client: paramiko.SFTPClient) -> List[Any]:
     try:
         with client.open(RSS_FILE, "rb") as f:
             feed = ET.parse(f)

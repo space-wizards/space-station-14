@@ -67,46 +67,50 @@ namespace Content.Server.Construction
 
         private void HandleConstructionExamined(EntityUid uid, ConstructionComponent component, ExaminedEvent args)
         {
-            if (GetTargetNode(uid, component) is {} target)
+            using (args.PushGroup(nameof(ConstructionComponent)))
             {
-                if (target.Name == component.DeconstructionNode)
+                if (GetTargetNode(uid, component) is {} target)
                 {
-                    args.PushMarkup(Loc.GetString("deconstruction-header-text") + "\n");
+                    if (target.Name == component.DeconstructionNode)
+                    {
+                        args.PushMarkup(Loc.GetString("deconstruction-header-text") + "\n");
+                    }
+                    else
+                    {
+                        args.PushMarkup(Loc.GetString(
+                            "construction-component-to-create-header",
+                            ("targetName", target.Name)) + "\n");
+                    }
                 }
-                else
+
+                if (component.EdgeIndex == null && GetTargetEdge(uid, component) is {} targetEdge)
                 {
-                    args.PushMarkup(Loc.GetString(
-                        "construction-component-to-create-header",
-                        ("targetName", target.Name)) + "\n");
+                    var preventStepExamine = false;
+
+                    foreach (var condition in targetEdge.Conditions)
+                    {
+                        preventStepExamine |= condition.DoExamine(args);
+                    }
+
+                    if (!preventStepExamine)
+                        targetEdge.Steps[0].DoExamine(args);
+                    return;
+                }
+
+                if (GetCurrentEdge(uid, component) is {} edge)
+                {
+                    var preventStepExamine = false;
+
+                    foreach (var condition in edge.Conditions)
+                    {
+                        preventStepExamine |= condition.DoExamine(args);
+                    }
+
+                    if (!preventStepExamine && component.StepIndex < edge.Steps.Count)
+                        edge.Steps[component.StepIndex].DoExamine(args);
                 }
             }
 
-            if (component.EdgeIndex == null && GetTargetEdge(uid, component) is {} targetEdge)
-            {
-                var preventStepExamine = false;
-
-                foreach (var condition in targetEdge.Conditions)
-                {
-                    preventStepExamine |= condition.DoExamine(args);
-                }
-
-                if (!preventStepExamine)
-                    targetEdge.Steps[0].DoExamine(args);
-                return;
-            }
-
-            if (GetCurrentEdge(uid, component) is {} edge)
-            {
-                var preventStepExamine = false;
-
-                foreach (var condition in edge.Conditions)
-                {
-                    preventStepExamine |= condition.DoExamine(args);
-                }
-
-                if (!preventStepExamine && component.StepIndex < edge.Steps.Count)
-                    edge.Steps[component.StepIndex].DoExamine(args);
-            }
         }
 
 

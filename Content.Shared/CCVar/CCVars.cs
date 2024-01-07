@@ -351,6 +351,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> RoundRestartTime =
             CVarDef.Create("game.round_restart_time", 120f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// The prototype to use for secret weights.
+        /// </summary>
+        public static readonly CVarDef<string> SecretWeightPrototype =
+            CVarDef.Create("game.secret_weight_prototype", "Secret", CVar.SERVERONLY);
+
         /*
          * Discord
          */
@@ -497,6 +503,9 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> TipFrequencyInRound =
             CVarDef.Create("tips.in_game_frequency", 60f * 60);
+
+        public static readonly CVarDef<string> LoginTipsDataset =
+            CVarDef.Create("tips.login_dataset", "Tips");
 
         /*
          * Console
@@ -804,6 +813,14 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> AdminAhelpOverrideClientName =
             CVarDef.Create("admin.override_adminname_in_client_ahelp", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The threshold of minutes to appear as a "new player" in the ahelp menu
+        ///     If 0, appearing as a new player is disabled.
+        /// </summary>
+        public static readonly CVarDef<int> NewPlayerThreshold =
+            CVarDef.Create("admin.new_player_threshold", 0, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
         /*
          * Explosions
          */
@@ -1637,12 +1654,6 @@ namespace Content.Shared.CCVar
         /*
          * Salvage
          */
-
-        /// <summary>
-        ///     Forced salvage map prototype name (if empty, randomly selected)
-        /// </summary>
-        public static readonly CVarDef<string>
-            SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
 
         /// <summary>
         /// Duration for missions

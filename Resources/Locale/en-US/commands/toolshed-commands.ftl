@@ -40,6 +40,8 @@ command-description-stations-rename =
     Renames the given station.
 command-description-stations-largestgrid =
     Returns the largest grid the given station has, if any.
+command-description-stations-rerollBounties =
+    Clears all the current bounties for the station and gets a new selection.
 command-description-stationevent-lsprob =
     Lists the probability of different station events occuring out of the entire pool.
 command-description-stationevent-lsprobtime =

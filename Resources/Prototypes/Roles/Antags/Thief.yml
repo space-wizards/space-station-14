@@ -3,4 +3,4 @@
   name: roles-antag-thief-name
   antagonist: true
   setPreference: true
-  objective: roles-antag-space-ninja-objective
+  objective: roles-antag-thief-objective
