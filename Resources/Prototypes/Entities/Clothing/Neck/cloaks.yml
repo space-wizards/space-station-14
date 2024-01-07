@@ -188,7 +188,7 @@
     sprite: Clothing/Neck/Cloaks/void.rsi
   - type: TypingIndicatorClothing
     proto: alien
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakAce
@@ -197,7 +197,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ace.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakAro
@@ -206,7 +206,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/aro.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakBi
@@ -215,7 +215,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/bi.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakIntersex
@@ -224,7 +224,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/intersex.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakLesbian
@@ -233,7 +233,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/les.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakGay
@@ -242,7 +242,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/gay.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakEnby
@@ -251,7 +251,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/enby.rsi
-   
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakPan
@@ -260,4 +260,4 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/pan.rsi
-   
+
