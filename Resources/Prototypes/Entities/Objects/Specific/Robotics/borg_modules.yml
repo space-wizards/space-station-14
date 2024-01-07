@@ -306,7 +306,7 @@
   - type: ItemBorgModule
     items:
     - AdvMopItem
-    - Holoprojector
+    - HoloprojectorBorg
     - SprayBottleSpaceCleaner
 
 # medical modules

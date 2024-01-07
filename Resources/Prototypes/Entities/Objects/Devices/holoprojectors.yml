@@ -25,6 +25,21 @@
 
 - type: entity
   parent: Holoprojector
+  id: HoloprojectorBorg
+  suffix: borg
+  components:
+  - type: HolosignProjector
+    chargeUse: 240
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+        disableEject: true
+        swap: false
+
+- type: entity
+  parent: Holoprojector
   id: HolofanProjector
   name: holofan projector
   description: Stop suicidal passengers from killing everyone during atmos emergencies.
