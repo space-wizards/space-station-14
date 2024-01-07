@@ -51,7 +51,7 @@ internal sealed class UpgradeActionCommand : IConsoleCommand
 
         if (args.Length == 1)
         {
-            if (!actionUpgrade.TryUpgradeAction(uid, actionUpgradeComponent))
+            if (!actionUpgrade.TryUpgradeAction(uid, out _, actionUpgradeComponent))
             {
                 shell.WriteLine(Loc.GetString("upgradeaction-command-cannot-level-up"));
                 return;
@@ -74,7 +74,7 @@ internal sealed class UpgradeActionCommand : IConsoleCommand
                 return;
             }
 
-            if (!actionUpgrade.TryUpgradeAction(uid, actionUpgradeComponent, level))
+            if (!actionUpgrade.TryUpgradeAction(uid, out _, actionUpgradeComponent, level))
                 shell.WriteLine(Loc.GetString("upgradeaction-command-cannot-level-up"));
         }
     }

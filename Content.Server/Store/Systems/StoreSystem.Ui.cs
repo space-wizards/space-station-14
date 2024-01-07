@@ -204,9 +204,14 @@ public sealed partial class StoreSystem
             }
         }
 
+        // TODO: Remove old stored action from BoughtEntities and replace with new
+        // TODO: Check if you need to change anything here, was able to successfully upgrade
         if (listing is { ProductUpgradeID: not null, ProductActionEntity: not null })
         {
-            _actionUpgrade.TryUpgradeAction(listing.ProductActionEntity.Value);
+            if (!_actionUpgrade.TryUpgradeAction(listing.ProductActionEntity.Value, out var upgradeActionId))
+                return;
+
+            listing.ProductActionEntity = upgradeActionId;
         }
 
         //broadcast event

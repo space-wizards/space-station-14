@@ -62,8 +62,9 @@ public sealed class ActionUpgradeSystem : EntitySystem
         _entityManager.DeleteEntity(uid);
     }
 
-    public bool TryUpgradeAction(EntityUid? actionId, ActionUpgradeComponent? actionUpgradeComponent = null, int newLevel = 0)
+    public bool TryUpgradeAction(EntityUid? actionId, out EntityUid? upgradeActionId, ActionUpgradeComponent? actionUpgradeComponent = null, int newLevel = 0)
     {
+        upgradeActionId = null;
         if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
             return false;
 
@@ -77,7 +78,18 @@ public sealed class ActionUpgradeSystem : EntitySystem
         if (!CanLevelUp(newLevel, actionUpgradeComponent.EffectedLevels))
             return false;
 
-        UpgradeAction(actionId, actionUpgradeComp);
+        actionUpgradeComponent.Level = newLevel;
+
+        // If it can level up but can't upgrade, still return true and return current actionId as the upgradeId.
+        if (!CanUpgrade(newLevel, actionUpgradeComponent.EffectedLevels, out var newActionProto))
+        {
+            upgradeActionId = actionId;
+            DebugTools.AssertNotNull(upgradeActionId);
+            return true;
+        }
+
+        upgradeActionId = UpgradeAction(actionId, actionUpgradeComp, newActionProto, newLevel);
+        DebugTools.AssertNotNull(upgradeActionId);
         return true;
     }
 
@@ -128,10 +140,10 @@ public sealed class ActionUpgradeSystem : EntitySystem
     /// <summary>
     ///     Raises a level by one
     /// </summary>
-    public void UpgradeAction(EntityUid? actionId, ActionUpgradeComponent? actionUpgradeComponent = null, int newLevel = 0)
+    public EntityUid? UpgradeAction(EntityUid? actionId, ActionUpgradeComponent? actionUpgradeComponent = null, EntProtoId? newActionProto = null, int newLevel = 0)
     {
         if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
-            return;
+            return null;
 
         actionUpgradeComponent ??= actionUpgradeComp;
         DebugTools.AssertNotNull(actionUpgradeComponent);
@@ -141,7 +153,46 @@ public sealed class ActionUpgradeSystem : EntitySystem
             newLevel = actionUpgradeComponent.Level + 1;
 
         actionUpgradeComponent.Level = newLevel;
-        RaiseActionUpgradeEvent(newLevel, actionId.Value);
+        // RaiseActionUpgradeEvent(newLevel, actionId.Value);
+
+        if (!CanUpgrade(newLevel, actionUpgradeComponent.EffectedLevels, out var newActionPrototype)
+            || !_actions.TryGetActionData(actionId, out var actionComp))
+            return null;
+
+        newActionProto ??= newActionPrototype;
+        DebugTools.AssertNotNull(newActionProto);
+
+        var originalContainer = actionComp.Container;
+        var originalAttachedEntity = actionComp.AttachedEntity;
+
+        _actionContainer.RemoveAction(actionId.Value, actionComp);
+
+        EntityUid? upgradedActionId = null;
+        if (originalContainer != null
+            && TryComp<ActionsContainerComponent>(originalContainer.Value, out var actionContainerComp))
+        {
+            upgradedActionId = _actionContainer.AddAction(originalContainer.Value, newActionProto, actionContainerComp);
+
+            if (originalAttachedEntity != null)
+                _actions.GrantContainedActions(originalAttachedEntity.Value, originalContainer.Value);
+            else
+                _actions.GrantContainedActions(originalContainer.Value, originalContainer.Value);
+        }
+        else if (originalAttachedEntity != null)
+        {
+            upgradedActionId = _actionContainer.AddAction(originalAttachedEntity.Value, newActionProto);
+        }
+
+        if (!TryComp<ActionUpgradeComponent>(upgradedActionId, out var upgradeComp))
+            return null;
+
+        upgradeComp.Level = newLevel;
+
+        // TODO: Preserve ordering of actions
+
+        _entityManager.DeleteEntity(actionId);
+
+        return upgradedActionId.Value;
     }
 
     private void RaiseActionUpgradeEvent(int level, EntityUid actionId)
