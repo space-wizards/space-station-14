@@ -21,7 +21,7 @@
     tags:
     - HighRiskItem
     - PinpointerScannable
-    - Real
+    - RealDisk
   - type: StealTarget
     stealGroup: NukeDisk
 
@@ -40,4 +40,4 @@
   - type: Tag
     tags:
     - PinpointerScannable
-    - Fake
+    - FakeDisk
