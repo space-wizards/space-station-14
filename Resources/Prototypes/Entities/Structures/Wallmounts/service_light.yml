@@ -8,13 +8,17 @@
     sprite: Structures/Wallmounts/service_light.rsi
     drawdepth: WallMountedItems
     layers:
-    - state: off
-      map: ["enum.PoweredLightLayers.Base"]
-    state: off
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: base
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: glow
+      shader: unshaded
+    state: base
   - type: PointLight
-    radius: 1
-    energy: 1
-    softness: 1
+    radius: 1.5
+    energy: 0.45
+    softness: 3
+    offset: "0, 0"
     enabled: false
   - type: PoweredLight
     bulb: Bulb

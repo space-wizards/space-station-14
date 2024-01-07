@@ -145,8 +145,8 @@
   - type: LightBulb
     bulb: Bulb
     color: "#CCFF60"
-    lightEnergy: 1.0
-    lightRadius: 2
+    lightEnergy: 0.45
+    lightRadius: 1.5
     lightSoftness: 3
 
 - type: entity

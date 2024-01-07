@@ -80,7 +80,7 @@ public sealed class CargoTest
                     foreach (var bounty in bounties)
                     {
                         if (cargo.IsBountyComplete(ent, bounty))
-                            Assert.That(proto.PointCost, Is.GreaterThan(bounty.Reward), $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.PointCost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
+                            Assert.That(proto.PointCost, Is.GreaterThanOrEqualTo(bounty.Reward), $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.PointCost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
                     }
 
                     entManager.DeleteEntity(ent);
