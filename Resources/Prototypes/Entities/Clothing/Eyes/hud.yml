@@ -201,5 +201,6 @@
 - type: entity
   parent: ClothingEyesGlassesSunglasses
   id: ClothingEyesGlassesHiddenSecurity
+  suffix: Syndicate
   components:
   - type: ShowSecurityIcons
