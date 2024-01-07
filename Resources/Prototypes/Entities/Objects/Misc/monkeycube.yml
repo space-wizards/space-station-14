@@ -4,11 +4,6 @@
   id: MonkeyCubeBox
   description: Drymate brand monkey cubes. Just add water!
   components:
-  - type: Storage
-    whitelist:
-      tags:
-      - MonkeyCube
-    capacity: 30
   - type: StorageFill
     contents:
       - id: MonkeyCubeWrapped
@@ -24,9 +19,46 @@
   id: MonkeyCubeWrapped
   description: Unwrap this to get a monkey cube.
   components:
+  - type: Item
+    size: Tiny
   - type: SpawnItemsOnUse
     items:
       - id: MonkeyCube
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: wrapper
+  - type: Tag
+    tags:
+    - MonkeyCube
+
+- type: entity
+  parent: BoxCardboard
+  name: kobold cube box
+  id: KoboldCubeBox
+  description: Condensed kobolds in a cube. Just add water!
+  components:
+  - type: StorageFill
+    contents:
+      - id: KoboldCubeWrapped
+        amount: 6
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box
+
+- type: entity
+  parent: BaseItem
+  name: kobold cube
+  suffix: Wrapped
+  id: KoboldCubeWrapped
+  description: Unwrap this to get a kobold cube.
+  components:
+  - type: Item
+    size: Tiny
+  - type: SpawnItemsOnUse
+    items:
+      - id: KoboldCube
     sound:
       path: /Audio/Effects/unwrap.ogg
   - type: Sprite
@@ -47,7 +79,6 @@
     whitelist:
       tags:
       - MonkeyCube
-    capacity: 30
   - type: StorageFill
     contents:
       - id: SyndicateSpongeWrapped
@@ -71,6 +102,8 @@
   - type: Sprite
     sprite: Objects/Misc/monkeycube.rsi
     state: wrapper
+  - type: Item
+    size: Tiny
   - type: Tag
     tags:
     - MonkeyCube

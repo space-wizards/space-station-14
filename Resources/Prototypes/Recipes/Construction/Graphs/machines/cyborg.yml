@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: Cyborg
   start: start
   graph:
@@ -22,13 +22,6 @@
       - assemblyId: generic
         guideString: borg-construction-guide-string
 
-      - component: PowerCell
-        name: power cell
-        store: cell_slot
-        icon:
-          sprite: Objects/Power/power_cells.rsi
-          state: small
-
       - material: Cable
         amount: 1
         doAfter: 1
@@ -43,25 +36,18 @@
 
       - component: Flash
         name: second flash
-        store: part-contaiener
+        store: part-container
         icon:
           sprite: Objects/Weapons/Melee/flash.rsi
           state: flash
 
       - tool: Screwing
         doAfter: 0.5
-
+    
     - to: engineer
       steps:
       - assemblyId: engineer
         guideString: borg-construction-guide-string
-
-      - component: PowerCell
-        name: power cell
-        store: cell_slot
-        icon:
-          sprite: Objects/Power/power_cells.rsi
-          state: small
 
       - material: Cable
         amount: 1
@@ -90,13 +76,6 @@
       - assemblyId: janitor
         guideString: borg-construction-guide-string
 
-      - component: PowerCell
-        name: power cell
-        store: cell_slot
-        icon:
-          sprite: Objects/Power/power_cells.rsi
-          state: small
-
       - material: Cable
         amount: 1
         doAfter: 1
@@ -123,13 +102,6 @@
       steps:
       - assemblyId: medical
         guideString: borg-construction-guide-string
-
-      - component: PowerCell
-        name: power cell
-        store: cell_slot
-        icon:
-          sprite: Objects/Power/power_cells.rsi
-          state: small
 
       - material: Cable
         amount: 1
@@ -158,13 +130,6 @@
       - assemblyId: mining
         guideString: borg-construction-guide-string
 
-      - component: PowerCell
-        name: power cell
-        store: cell_slot
-        icon:
-          sprite: Objects/Power/power_cells.rsi
-          state: small
-
       - material: Cable
         amount: 1
         doAfter: 1
@@ -191,13 +156,6 @@
       steps:
       - assemblyId: service
         guideString: borg-construction-guide-string
-
-      - component: PowerCell
-        name: power cell
-        store: cell_slot
-        icon:
-          sprite: Objects/Power/power_cells.rsi
-          state: small
 
       - material: Cable
         amount: 1

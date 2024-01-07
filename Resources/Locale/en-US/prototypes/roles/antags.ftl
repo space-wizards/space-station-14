@@ -24,3 +24,12 @@ roles-antag-nuclear-operative-objective = Find the nuke disk and blow up the sta
 
 roles-antag-subverted-silicon-name = Subverted silicon
 roles-antag-subverted-silicon-objective = Follow your new laws and do bad unto the station.
+
+roles-antag-space-ninja-name = Space Ninja
+roles-antag-space-ninja-objective = Use your stealth to sabotage the station, nom on electrical wires.
+
+roles-antag-thief-name = Thief
+roles-antag-thief-objective = Add some NT property to your personal collection without using violence.
+
+roles-antag-terminator-name = Terminator
+roles-antag-terminator-objective = Kill the target at all costs, the future depends on it.

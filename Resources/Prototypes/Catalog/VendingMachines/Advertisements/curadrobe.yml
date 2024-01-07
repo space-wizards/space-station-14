@@ -1,0 +1,5 @@
+- type: advertisementsPack
+  id: CuraDrobeAds
+  advertisements:
+    - advertisement-curadrobe-1
+    - advertisement-curadrobe-2

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by PixelTheKermit (github) for SS14",
+  "states": [
+    {
+      "name": "icon",
+      "directions": 4
+    }
+  ]
+}

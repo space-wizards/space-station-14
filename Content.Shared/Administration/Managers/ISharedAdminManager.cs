@@ -1,4 +1,4 @@
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Administration.Managers;
 

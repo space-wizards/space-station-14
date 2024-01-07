@@ -44,8 +44,9 @@ namespace Content.Client.Shuttles.Systems
         {
             if (args.Current is not PilotComponentState state) return;
 
-            var console = state.Console.GetValueOrDefault();
-            if (!console.IsValid())
+            var console = EnsureEntity<PilotComponent>(state.Console, uid);
+
+            if (console == null)
             {
                 component.Console = null;
                 _input.Contexts.SetActiveContext("human");

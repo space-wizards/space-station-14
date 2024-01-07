@@ -11,9 +11,9 @@ namespace Content.Shared.Tabletop.Events
         /// <summary>
         /// The entity UID of the table associated with this tabletop game.
         /// </summary>
-        public EntityUid TableUid;
+        public NetEntity TableUid;
 
-        public TabletopStopPlayingEvent(EntityUid tableUid)
+        public TabletopStopPlayingEvent(NetEntity tableUid)
         {
             TableUid = tableUid;
         }

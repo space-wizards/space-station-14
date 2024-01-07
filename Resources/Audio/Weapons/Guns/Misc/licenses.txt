@@ -1,2 +1,0 @@
-Taken from https://github.com/tgstation/TerraGov-Marine-Corps/blob/0d97ec86c49e2a89409bd3ddf0b7451b3f1c9a0e/sound/weapons/guns/interact/selector.ogg under CC-BY-NC-SA 3.0 
-- selector.ogg

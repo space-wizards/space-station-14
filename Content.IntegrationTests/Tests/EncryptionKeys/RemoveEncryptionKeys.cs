@@ -30,7 +30,7 @@ public sealed class RemoveEncryptionKeys : InteractionTest
             Assert.That(comp.Channels, Has.Count.EqualTo(0));
         });
 
-        // Checkl that the key was ejected and not just deleted or something.
+        // Check that the key was ejected and not just deleted or something.
         await AssertEntityLookup(("EncryptionKeyCommon", 1));
 
         // Re-insert a key.

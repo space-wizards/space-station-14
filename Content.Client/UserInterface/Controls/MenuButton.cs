@@ -3,6 +3,7 @@ using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Graphics;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
 
@@ -13,7 +14,6 @@ public sealed class MenuButton : ContainerButton
     [Dependency] private readonly IInputManager _inputManager = default!;
     public const string StyleClassLabelTopButton = "topButtonLabel";
     public const string StyleClassRedTopButton = "topButtonLabel";
-    private const float CustomTooltipDelay = 0.4f;
 
     private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
     private static readonly Color ColorRedNormal = Color.FromHex("#FEFEFE");
@@ -48,7 +48,6 @@ public sealed class MenuButton : ContainerButton
     public MenuButton()
     {
         IoCManager.InjectDependencies(this);
-        TooltipDelay = CustomTooltipDelay;
         _buttonIcon = new TextureRect()
         {
             TextureScale = new Vector2(0.5f, 0.5f),

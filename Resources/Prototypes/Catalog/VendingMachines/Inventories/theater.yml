@@ -27,6 +27,8 @@
     ClothingHeadHatPumpkin: 2
     ClothingHeadHatShrineMaidenWig: 2
     ClothingOuterSuitShrineMaiden: 2
+    ClothingHeadHatRedRacoon: 2
+    ClothingOuterRedRacoon: 2
     Gohei: 2
     ClothingHeadPaperSack: 2
     ClothingHeadPaperSackSmile: 2
@@ -41,6 +43,8 @@
     ClothingUniformJumpsuitKimono: 1
     ClothingHeadHatCasa: 1
     ClothingHeadHatHairflower: 1
+    ClothingHeadHatGladiator: 1
+    ClothingUniformJumpsuitGladiator: 1
   emaggedInventory:
     ClothingShoesBling: 1
     ClothingOuterDogi: 1

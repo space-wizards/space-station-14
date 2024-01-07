@@ -20,9 +20,11 @@ public sealed partial class MechGrabberUi : UIFragment
             return;
 
         _fragment = new MechGrabberUiFragment();
+
         _fragment.OnEjectAction += e =>
         {
-            userInterface.SendMessage(new MechGrabberEjectMessage(fragmentOwner.Value, e));
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            userInterface.SendMessage(new MechGrabberEjectMessage(entManager.GetNetEntity(fragmentOwner.Value), entManager.GetNetEntity(e)));
         };
     }
 

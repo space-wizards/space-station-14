@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Text;
-using Content.Shared.FixedPoint;
+using Content.Client.Materials;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -20,11 +20,12 @@ public sealed partial class LatheMenu : DefaultWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private readonly SpriteSystem _spriteSystem;
     private readonly LatheSystem _lathe;
+    private readonly MaterialStorageSystem _materialStorage;
 
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
     public event Action<string, int>? RecipeQueueAction;
-    public event Action<string, int>? OnEjectPressed;
-    public List<string> Recipes = new();
+
+    public List<ProtoId<LatheRecipePrototype>> Recipes = new();
 
     public LatheMenu(LatheBoundUserInterface owner)
     {
@@ -33,6 +34,7 @@ public sealed partial class LatheMenu : DefaultWindow
 
         _spriteSystem = _entityManager.System<SpriteSystem>();
         _lathe = _entityManager.System<LatheSystem>();
+        _materialStorage = _entityManager.System<MaterialStorageSystem>();
 
         Title = _entityManager.GetComponent<MetaDataComponent>(owner.Owner).EntityName;
 
@@ -54,58 +56,10 @@ public sealed partial class LatheMenu : DefaultWindow
                 ServerListButton.Visible = false;
             }
         }
+
+        MaterialsList.SetOwner(owner.Owner);
     }
 
-    public void PopulateMaterials(EntityUid lathe)
-    {
-        if (!_entityManager.TryGetComponent<MaterialStorageComponent>(lathe, out var materials))
-            return;
-
-        MaterialsList.DisposeAllChildren();
-
-        foreach (var (materialId, volume) in materials.Storage)
-        {
-            if (volume <= 0)
-                continue;
-
-            if (!_prototypeManager.TryIndex(materialId, out MaterialPrototype? material))
-                continue;
-
-            var name = Loc.GetString(material.Name);
-            var mat = Loc.GetString("lathe-menu-material-display",
-                ("material", name), ("amount", volume / 100));
-            var volumePerSheet = 0;
-            var maxEjectableSheets = 0;
-
-            if (material.StackEntity != null)
-            {
-                var proto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
-
-                if (proto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
-                {
-                    volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == materialId).Value;
-                    maxEjectableSheets = (int) MathF.Floor((float) volume / volumePerSheet);
-                }
-            }
-
-            var row = new LatheMaterialEjector(materialId, OnEjectPressed, volumePerSheet, maxEjectableSheets)
-            {
-                Icon = { Texture = _spriteSystem.Frame0(material.Icon) },
-                ProductName = { Text = mat }
-            };
-
-            MaterialsList.AddChild(row);
-        }
-
-        if (MaterialsList.ChildCount == 0)
-        {
-            var noMaterialsMsg = Loc.GetString("lathe-menu-no-materials-message");
-            var noItemRow = new Label();
-            noItemRow.Text = noMaterialsMsg;
-            noItemRow.Align = Label.AlignMode.Center;
-            MaterialsList.AddChild(noItemRow);
-        }
-    }
     /// <summary>
     /// Populates the list of all the recipes
     /// </summary>
@@ -118,7 +72,7 @@ public sealed partial class LatheMenu : DefaultWindow
         var recipesToShow = new List<LatheRecipePrototype>();
         foreach (var recipe in Recipes)
         {
-            if (!_prototypeManager.TryIndex<LatheRecipePrototype>(recipe, out var proto))
+            if (!_prototypeManager.TryIndex(recipe, out var proto))
                 continue;
 
             if (SearchBar.Text.Trim().Length != 0)
@@ -151,11 +105,18 @@ public sealed partial class LatheMenu : DefaultWindow
                     sb.Append('\n');
 
                 var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, component.MaterialUseMultiplier);
+                var sheetVolume = _materialStorage.GetSheetVolume(proto);
 
-                sb.Append(Loc.GetString("lathe-menu-tooltip-display",
-                    ("amount", MathF.Round(adjustedAmount / 100f, 2)),
-                    ("material", Loc.GetString(proto.Name))));
+                var unit = Loc.GetString(proto.Unit);
+                // rounded in locale not here
+                var sheets = adjustedAmount / (float) sheetVolume;
+                var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", sheets), ("unit", unit));
+                var name = Loc.GetString(proto.Name);
+                sb.Append(Loc.GetString("lathe-menu-tooltip-display", ("material", name), ("amount", amountText)));
             }
+
+            sb.Append('\n');
+            sb.Append(Loc.GetString("lathe-menu-description-display", ("description", prototype.Description)));
 
             var icon = prototype.Icon == null
                 ? _spriteSystem.GetPrototypeIcon(prototype.Result).Default

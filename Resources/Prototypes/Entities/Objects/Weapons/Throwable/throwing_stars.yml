@@ -6,7 +6,19 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Throwable/throwing_star.rsi
-    state: icon
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Appearance
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        base:
+          festive: { state: festive }
   - type: Fixtures
     fixtures:
       fix1:
@@ -24,3 +36,13 @@
       types:
         Slash: 8
         Piercing: 10
+
+- type: entity
+  parent: ThrowingStar
+  id: ThrowingStarNinja
+  name: ninja throwing star
+  components:
+  # prevent ninja crashing server + filling bag with 20 stars to instakill a single person
+  # also limits the crew's use
+  - type: TimedDespawn
+    lifetime: 30

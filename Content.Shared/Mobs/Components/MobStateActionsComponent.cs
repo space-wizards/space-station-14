@@ -18,10 +18,12 @@ public sealed partial class MobStateActionsComponent : Component
     /// <example>
     /// actions:
     ///   Critical:
-    ///   - CritSuccumb
+    ///   - ActionCritSuccumb
     ///   Alive:
-    ///   - AnimalLayEgg
+    ///   - ActionAnimalLayEgg
     /// </example>
     [DataField("actions")]
     public Dictionary<MobState, List<string>> Actions = new();
+
+    [DataField] public List<EntityUid> GrantedActions = new();
 }

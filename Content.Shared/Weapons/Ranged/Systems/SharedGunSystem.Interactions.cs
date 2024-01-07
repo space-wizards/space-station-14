@@ -1,7 +1,6 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
-using Content.Shared.CombatMode;
 using Content.Shared.Examine;
+using Content.Shared.Hands;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Utility;
@@ -15,8 +14,13 @@ public abstract partial class SharedGunSystem
         if (!args.IsInDetailsRange || !component.ShowExamineText)
             return;
 
-        args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", ModeExamineColor), ("mode", GetLocSelector(component.SelectedMode))));
-        args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor), ("fireRate", $"{component.FireRate:0.0}")));
+        using (args.PushGroup(nameof(GunComponent)))
+        {
+            args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", ModeExamineColor),
+                ("mode", GetLocSelector(component.SelectedMode))));
+            args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor),
+                ("fireRate", $"{component.FireRate:0.0}")));
+        }
     }
 
     private string GetLocSelector(SelectiveFire mode)
@@ -104,5 +108,28 @@ public abstract partial class SharedGunSystem
     private void OnCycleMode(EntityUid uid, GunComponent component, CycleModeEvent args)
     {
         SelectFire(uid, component, args.Mode, args.Performer);
+    }
+
+    private void OnGunSelected(EntityUid uid, GunComponent component, HandSelectedEvent args)
+    {
+        var fireDelay = 1f / component.FireRate;
+        if (fireDelay.Equals(0f))
+            return;
+
+        if (!component.ResetOnHandSelected)
+            return;
+
+        if (Paused(uid))
+            return;
+
+        // If someone swaps to this weapon then reset its cd.
+        var curTime = Timing.CurTime;
+        var minimum = curTime + TimeSpan.FromSeconds(fireDelay);
+
+        if (minimum < component.NextFire)
+            return;
+
+        component.NextFire = minimum;
+        Dirty(uid, component);
     }
 }

@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Components;
@@ -8,10 +10,10 @@ using Content.Shared.PDA;
 using Content.Shared.StationRecords;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using Content.Shared.GameTicking;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Access.Systems;
 
@@ -19,8 +21,12 @@ public sealed class AccessReaderSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedGameTicker _gameTicker = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedStationRecordsSystem _recordsSystem = default!;
 
     public override void Initialize()
     {
@@ -36,7 +42,7 @@ public sealed class AccessReaderSystem : EntitySystem
     private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
     {
         args.State = new AccessReaderComponentState(component.Enabled, component.DenyTags, component.AccessLists,
-            component.AccessKeys);
+            _recordsSystem.Convert(component.AccessKeys), component.AccessLog, component.AccessLogLimit);
     }
 
     private void OnHandleState(EntityUid uid, AccessReaderComponent component, ref ComponentHandleState args)
@@ -44,16 +50,27 @@ public sealed class AccessReaderSystem : EntitySystem
         if (args.Current is not AccessReaderComponentState state)
             return;
         component.Enabled = state.Enabled;
-        component.AccessKeys = new(state.AccessKeys);
+        component.AccessKeys.Clear();
+        foreach (var key in state.AccessKeys)
+        {
+            var id = EnsureEntity<AccessReaderComponent>(key.Item1, uid);
+            if (!id.IsValid())
+                continue;
+
+            component.AccessKeys.Add(new StationRecordKey(key.Item2, id));
+        }
+
         component.AccessLists = new(state.AccessLists);
         component.DenyTags = new(state.DenyTags);
+        component.AccessLog = new(state.AccessLog);
+        component.AccessLogLimit = state.AccessLogLimit;
     }
 
     private void OnLinkAttempt(EntityUid uid, AccessReaderComponent component, LinkAttemptEvent args)
     {
         if (args.User == null) // AutoLink (and presumably future external linkers) have no user.
             return;
-        if (!HasComp<EmaggedComponent>(uid) && !IsAllowed(args.User.Value, component))
+        if (!HasComp<EmaggedComponent>(uid) && !IsAllowed(args.User.Value, uid, component))
             args.Cancel();
     }
 
@@ -61,81 +78,73 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         args.Handled = true;
         reader.Enabled = false;
-        Dirty(reader);
-    }
-
-    /// <summary>
-    /// Finds all AccessReaderComponents in the container of the
-    /// required entity.
-    /// </summary>
-    /// <param name="target">The entity to search for a container</param>
-    /// <param name="accessReader"></param>
-    /// <param name="result"></param>
-    private bool FindAccessReadersInContainer(EntityUid target, AccessReaderComponent accessReader, out List<AccessReaderComponent> result)
-    {
-        result = new();
-        if (accessReader.ContainerAccessProvider == null)
-            return false;
-
-        if (!_containerSystem.TryGetContainer(target, accessReader.ContainerAccessProvider, out var container))
-            return false;
-
-        foreach (var entity in container.ContainedEntities)
-        {
-            if (TryComp<AccessReaderComponent>(entity, out var entityAccessReader))
-                result.Add(entityAccessReader);
-        }
-
-        return result.Any();
+        reader.AccessLog.Clear();
+        Dirty(uid, reader);
     }
 
     /// <summary>
     /// Searches the source for access tags
     /// then compares it with the all targets accesses to see if it is allowed.
     /// </summary>
-    /// <param name="source">The entity that wants access.</param>
+    /// <param name="user">The entity that wants access.</param>
     /// <param name="target">The entity to search for an access reader</param>
     /// <param name="reader">Optional reader from the target entity</param>
-    public bool IsAllowed(EntityUid source, EntityUid target, AccessReaderComponent? reader = null)
+    public bool IsAllowed(EntityUid user, EntityUid target, AccessReaderComponent? reader = null)
     {
         if (!Resolve(target, ref reader, false))
             return true;
 
-        if (FindAccessReadersInContainer(target, reader, out var accessReaderList))
-        {
-            foreach (var access in accessReaderList)
-            {
-                if (IsAllowed(source, access))
-                    return true;
-            }
-
-            return false;
-        }
-
-        return IsAllowed(source, reader);
-    }
-    /// <summary>
-    /// Searches the given entity for access tags
-    /// then compares it with the readers access list to see if it is allowed.
-    /// </summary>
-    /// <param name="entity">The entity that wants access.</param>
-    /// <param name="reader">A reader from a different entity</param>
-    public bool IsAllowed(EntityUid entity, AccessReaderComponent reader)
-    {
-        // Access reader is totally disabled, so access is always allowed.
         if (!reader.Enabled)
             return true;
 
-        var allEnts = FindPotentialAccessItems(entity);
+        var accessSources = FindPotentialAccessItems(user);
+        var access = FindAccessTags(user, accessSources);
+        FindStationRecordKeys(user, out var stationKeys, accessSources);
 
-        if (AreAccessTagsAllowed(FindAccessTags(entity, allEnts), reader))
+        if (IsAllowed(access, stationKeys, target, reader))
+        {
+            LogAccess((target, reader), user);
             return true;
-
-        if (FindStationRecordKeys(entity, out var recordKeys, allEnts)
-            && AreStationRecordKeysAllowed(recordKeys, reader))
-            return true;
+        }
 
         return false;
+    }
+
+    /// <summary>
+    /// Check whether the given access permissions satisfy an access reader's requirements.
+    /// </summary>
+    public bool IsAllowed(
+        ICollection<string> access,
+        ICollection<StationRecordKey> stationKeys,
+        EntityUid target,
+        AccessReaderComponent reader)
+    {
+        if (!reader.Enabled)
+            return true;
+
+        if (reader.ContainerAccessProvider == null)
+            return IsAllowedInternal(access, stationKeys, reader);
+
+        if (!_containerSystem.TryGetContainer(target, reader.ContainerAccessProvider, out var container))
+            return false;
+
+        foreach (var entity in container.ContainedEntities)
+        {
+            if (!TryComp(entity, out AccessReaderComponent? containedReader))
+                continue;
+
+            if (IsAllowed(access, stationKeys, entity, containedReader))
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool IsAllowedInternal(ICollection<string> access, ICollection<StationRecordKey> stationKeys, AccessReaderComponent reader)
+    {
+        return !reader.Enabled
+               || AreAccessTagsAllowed(access, reader)
+               || AreStationRecordKeysAllowed(stationKeys, reader);
     }
 
     /// <summary>
@@ -155,7 +164,16 @@ public sealed class AccessReaderSystem : EntitySystem
             return false;
         }
 
-        return reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => a.IsSubsetOf(accessTags));
+        if (reader.AccessLists.Count == 0)
+            return true;
+
+        foreach (var set in reader.AccessLists)
+        {
+            if (set.IsSubsetOf(accessTags))
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -163,7 +181,13 @@ public sealed class AccessReaderSystem : EntitySystem
     /// </summary>
     public bool AreStationRecordKeysAllowed(ICollection<StationRecordKey> keys, AccessReaderComponent reader)
     {
-        return keys.Any() && reader.AccessKeys.Any(keys.Contains);
+        foreach (var key in reader.AccessKeys)
+        {
+            if (keys.Contains(key))
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -173,16 +197,16 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         FindAccessItemsInventory(uid, out var items);
 
-        foreach (var item in new ValueList<EntityUid>(items))
-        {
-            items.UnionWith(FindPotentialAccessItems(item));
-        }
-
         var ev = new GetAdditionalAccessEvent
         {
             Entities = items
         };
         RaiseLocalEvent(uid, ref ev);
+
+        foreach (var item in new ValueList<EntityUid>(items))
+        {
+            items.UnionWith(FindPotentialAccessItems(item));
+        }
         items.Add(uid);
         return items;
     }
@@ -315,5 +339,31 @@ public sealed class AccessReaderSystem : EntitySystem
 
         key = null;
         return false;
+    }
+
+    /// <summary>
+    /// Logs an access
+    /// </summary>
+    /// <param name="ent">The reader to log the access on</param>
+    /// <param name="accessor">The accessor to log</param>
+    private void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor)
+    {
+        if (IsPaused(ent))
+            return;
+
+        if (ent.Comp.AccessLog.Count >= ent.Comp.AccessLogLimit)
+            ent.Comp.AccessLog.Dequeue();
+
+        string? name = null;
+        // TODO pass the ID card on IsAllowed() instead of using this expensive method
+        // Set name if the accessor has a card and that card has a name and allows itself to be recorded
+        if (_idCardSystem.TryFindIdCard(accessor, out var idCard)
+            && idCard.Comp is { BypassLogging: false, FullName: not null })
+            name = idCard.Comp.FullName;
+
+        name ??= Loc.GetString("access-reader-unknown-id");
+
+        var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
+        ent.Comp.AccessLog.Enqueue(new AccessRecord(stationTime, name));
     }
 }

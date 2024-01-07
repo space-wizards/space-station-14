@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 | Moth sprites made by PuroSlavKing (Github)",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 | Moth sprites made by PuroSlavKing (Github) | Spider sprites made by PixelTheKermit (Github)",
     "states": [
         {
             "name": "alien0",
@@ -377,6 +377,23 @@
         },
         {
             "name": "syndibot2"
+        },
+        {
+            "name": "spider0",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "spider1"
+        },
+        {
+            "name": "spider2"
         }
     ]
 }

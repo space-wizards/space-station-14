@@ -1,4 +1,4 @@
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Light;

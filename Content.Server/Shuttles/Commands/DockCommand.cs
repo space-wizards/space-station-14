@@ -22,13 +22,13 @@ public sealed class DockCommand : IConsoleCommand
             return;
         }
 
-        if (!EntityUid.TryParse(args[0], out var airlock1))
+        if (!NetEntity.TryParse(args[0], out var airlock1Net) || !_entManager.TryGetEntity(airlock1Net, out var airlock1))
         {
             shell.WriteError(Loc.GetString("cmd-dock-invalid", ("entity", args[0])));
             return;
         }
 
-        if (!EntityUid.TryParse(args[1], out var airlock2))
+        if (!NetEntity.TryParse(args[1], out var airlock2Net) || !_entManager.TryGetEntity(airlock2Net, out var airlock2))
         {
             shell.WriteError(Loc.GetString("cmd-dock-invalid", ("entity", args[1])));
             return;
@@ -47,7 +47,7 @@ public sealed class DockCommand : IConsoleCommand
         }
 
         var dockSystem = _entManager.System<DockingSystem>();
-        dockSystem.Dock(airlock1, dock1, airlock2, dock2);
+        dockSystem.Dock(airlock1.Value, dock1, airlock2.Value, dock2);
 
         if (dock1.DockedWith == airlock2)
         {

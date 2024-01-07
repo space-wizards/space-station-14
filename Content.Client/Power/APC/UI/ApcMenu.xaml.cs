@@ -47,7 +47,7 @@ namespace Content.Client.Power.APC.UI
 
             if (PowerLabel != null)
             {
-                PowerLabel.Text = castState.Power + "W";
+                PowerLabel.Text = castState.Power + " W";
             }
 
             if (ExternalPowerStateLabel != null)

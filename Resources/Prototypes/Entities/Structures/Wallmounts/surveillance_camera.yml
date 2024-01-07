@@ -23,7 +23,7 @@
   - type: WiresPanel
   - type: Wires
     alwaysRandomize: true
-    LayoutId: SurveillanceCamera
+    layoutId: SurveillanceCamera
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -33,6 +33,7 @@
     layers:
       - map: [ "enum.SurveillanceCameraVisualsKey.Layer" ]
         state: camera
+        cycle: true
   - type: Appearance
   - type: SurveillanceCameraVisuals
     sprites:
@@ -64,6 +65,8 @@
           - !type:PlaySoundBehavior
             sound:
               path: /Audio/Effects/metalbreak.ogg
+              params:
+                volume: -8
   placement:
     mode: SnapgridCenter
     snap:

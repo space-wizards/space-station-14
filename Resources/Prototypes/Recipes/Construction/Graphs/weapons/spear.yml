@@ -89,3 +89,20 @@
               doAfter: 1
     - node: spear
       entity: SpearUranium
+
+- type: constructionGraph
+  id: SpearBone
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: spear
+          steps:
+            - material: Bones
+              amount: 4
+              doAfter: 2
+            - material: WebSilk
+              amount: 1
+              doAfter: 1
+    - node: spear
+      entity: SpearBone

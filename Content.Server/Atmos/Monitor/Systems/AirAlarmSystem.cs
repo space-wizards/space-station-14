@@ -15,11 +15,11 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceLinking;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -322,13 +322,13 @@ public sealed class AirAlarmSystem : EntitySystem
             UpdateUI(uid, component);
         }
     }
-    
+
     private void OnCopyDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmCopyDeviceDataMessage args)
     {
         if (!AccessCheck(uid, args.Session.AttachedEntity, component))
         {
            UpdateUI(uid, component);
-            return;       
+            return;
         }
 
         switch (args.Data)
@@ -339,7 +339,7 @@ public sealed class AirAlarmSystem : EntitySystem
                     SetData(uid, addr, args.Data);
                 }
                 break;
-                
+
             case GasVentScrubberData scrubberData:
                 foreach (string addr in component.ScrubberData.Keys)
                 {
@@ -361,7 +361,7 @@ public sealed class AirAlarmSystem : EntitySystem
         if (user == null)
             return false;
 
-        if (!_access.IsAllowed(user.Value, reader))
+        if (!_access.IsAllowed(user.Value, uid, reader))
         {
             _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, user.Value);
             return false;
@@ -569,7 +569,7 @@ public sealed class AirAlarmSystem : EntitySystem
         _ui.TryCloseAll(uid, SharedAirAlarmInterfaceKey.Key);
     }
 
-    private void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, AtmosDeviceUpdateEvent args)
+    private void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, ref AtmosDeviceUpdateEvent args)
     {
         alarm.CurrentModeUpdater?.Update(uid);
     }

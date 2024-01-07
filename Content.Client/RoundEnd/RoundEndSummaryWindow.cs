@@ -125,17 +125,15 @@ namespace Content.Client.RoundEnd
                     VerticalExpand = true,
                 };
 
-                if (_entityManager.HasComponent<SpriteComponent>(playerInfo.PlayerEntityUid))
+                if (playerInfo.PlayerNetEntity != null)
                 {
-                    var spriteView = new SpriteView
-                    {
-                        OverrideDirection = Direction.South,
-                        VerticalAlignment = VAlignment.Center,
-                        SetSize = new Vector2(32, 32),
-                        VerticalExpand = true,
-                    };
-                    spriteView.SetEntity(playerInfo.PlayerEntityUid);
-                    hBox.AddChild(spriteView);
+                    hBox.AddChild(new SpriteView(playerInfo.PlayerNetEntity.Value, _entityManager)
+                        {
+                            OverrideDirection = Direction.South,
+                            VerticalAlignment = VAlignment.Center,
+                            SetSize = new Vector2(32, 32),
+                            VerticalExpand = true,
+                        });
                 }
 
                 if (playerInfo.PlayerICName != null)

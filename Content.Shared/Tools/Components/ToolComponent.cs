@@ -22,7 +22,8 @@ namespace Content.Shared.Tools.Components
     }
 
     /// <summary>
-    ///     Attempt event called *before* any do afters to see if the tool usage should succeed or not.
+    /// Attempt event called *before* any do afters to see if the tool usage should succeed or not.
+    /// Raised on both the tool and then target.
     /// </summary>
     public sealed class ToolUseAttemptEvent : CancellableEntityEventArgs
     {
