@@ -40,6 +40,13 @@
   - type: Appearance
 
 - type: entity
+  id: MagazineShuttleCannonEmpty
+  name: grenade cartridge
+  parent: BaseMagazineGrenade
+  components:
+  - type: BallisticAmmoProvider
+    
+- type: entity
   id: MagazineShuttleCannonFrag
   name: frag grenade cartridge
   parent: BaseMagazineGrenade

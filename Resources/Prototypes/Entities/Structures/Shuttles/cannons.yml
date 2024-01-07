@@ -137,7 +137,7 @@
     - state: mag-7
   - type: Gun    
     projectileSpeed: 20
-    fireRate: 2.5
+    fireRate: 2
     selectedMode: SemiAuto
     angleDecay: 45
     minAngle: 10
@@ -151,17 +151,17 @@
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 2
     rechargeSound:
-      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+      path: /Audio/Weapons/Guns/Bolt/lmg_bolt_closed.ogg
       params:
         pitch: 1.2
         variation: 0.08
   - type: BasicEntityAmmoProvider
-    proto: BulletKinetic
-    capacity: 10
-    count: 10
+    proto: BulletKineticShuttle
+    capacity: 5
+    count: 5
 
 - type: entity
-  id: ShuttleGunNukeCannon
+  id: ShuttleGunGrenadeLauncher
   parent: ShuttleGunBase
   name: SYND-210EX "Dust"
   description: A stationary rocket launcher. Can be loaded with various grenades.
@@ -194,7 +194,7 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineShuttleCannonBlast
+        startingItem: MagazineShuttleCannonEmpty
         priority: 2
         whitelist:
           tags:

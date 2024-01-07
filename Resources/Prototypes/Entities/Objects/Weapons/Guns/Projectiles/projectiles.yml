@@ -394,6 +394,18 @@
     lifetime: 0.4
 
 - type: entity
+  id: BulletKineticShuttle
+  parent: BulletKinetic
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 1.5
+  - type: PointLight
+    radius: 2.5
+    color: white
+    energy: 0.5
+
+- type: entity
   id: BulletCharge
   name: charge bolt
   parent: BaseBullet
@@ -676,8 +688,9 @@
     layers:
       - state: frag
   - type: EmpOnTrigger
-    range: 10
+    range: 3
     energyConsumption: 50000
+    disableDuration: 5
   - type: Ammo
     muzzleFlash: null
   - type: PointLight
