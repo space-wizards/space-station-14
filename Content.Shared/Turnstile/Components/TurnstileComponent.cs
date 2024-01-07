@@ -19,21 +19,6 @@ public sealed partial class TurnstileComponent : Component
     [Access(typeof(SharedTurnstileSystem))]
     public TurnstileState State = TurnstileState.Idle;
 
-    #region Timing
-    /// <summary>
-    /// Time between each turn of the turnstile. Allows controlling the "flow rate" of mobs through.
-    /// </summary>
-    [DataField]
-    public TimeSpan TurnstileTurnTime = TimeSpan.FromSeconds(0.4f);
-
-    /// <summary>
-    ///     When the turnstile is rotating, this is the time when the state will next update.
-    /// </summary>
-    [AutoNetworkedField]
-    public TimeSpan? NextStateChange;
-
-    #endregion
-
     #region Sounds
     /// <summary>
     /// Sound to play when the turnstile admits a mob through.
