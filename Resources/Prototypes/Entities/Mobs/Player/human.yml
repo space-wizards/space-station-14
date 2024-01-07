@@ -62,6 +62,7 @@
   parent: MobHuman
   id: MobHumanSpaceNinja
   components:
+  - type: UseDelay
   - type: RandomHumanoidAppearance
     randomizeName: false
   - type: Loadout
