@@ -7,6 +7,5 @@ prefix-pinpointer-targets = [{$storedOrder}]
 target-pinpointer-stored = {$target} has been saved
 target-pinpointer-full = Pinpointer tracking storage is full
 name-pinpointer-component-nuke-disk = nuclear authentication disk
-name-pinpointer-component-shuttle-console = shuttle console
 name-pinpointer-component-nuke = nuclear fission explosive
 name-pinpointer-component-station = space station

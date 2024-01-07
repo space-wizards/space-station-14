@@ -69,7 +69,6 @@
     - BecomesStation
     componentNames:
     - name-pinpointer-component-nuke-disk
-    - name-pinpointer-component-shuttle-console
     - name-pinpointer-component-station
 
 - type: entity

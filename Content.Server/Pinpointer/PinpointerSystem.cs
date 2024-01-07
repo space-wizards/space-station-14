@@ -107,7 +107,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         {
             foreach (var storedTarget in component.StoredTargets)
             {
-                if (_tagSystem.HasTag(storedTarget, "Fake") && _tagSystem.HasTag(target.Value, "Real"))
+                if (_tagSystem.HasTag(storedTarget, "FakeDisk") && _tagSystem.HasTag(target.Value, "RealDisk"))
                     target = storedTarget;
             }
         }
