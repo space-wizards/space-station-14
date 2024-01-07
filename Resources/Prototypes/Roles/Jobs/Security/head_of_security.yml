@@ -45,13 +45,13 @@
     back: ClothingBackpackHOSFilled
     shoes: ClothingShoesBootsCombatFilled
     outerClothing: ClothingOuterCoatHoSTrench
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesGlassesSunglasses
     head: ClothingHeadHatBeretHoS
     id: HoSPDA
     gloves: ClothingHandsGlovesCombat
     ears: ClothingHeadsetAltSecurity
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58Nonlethal
-  innerclothingskirt: ClothingUniformJumpskirtHoS
+  innerClothingSkirt: ClothingUniformJumpskirtHoS
   satchel: ClothingBackpackSatchelHOSFilled
   duffelbag: ClothingBackpackDuffelHOSFilled

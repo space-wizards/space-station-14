@@ -59,8 +59,8 @@
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-airalarm
-    LayoutId: AirAlarm
+    boardName: wires-board-name-airalarm
+    layoutId: AirAlarm
   - type: AccessReader
     access: [["Atmospherics"]]
   - type: ContainerFill
@@ -103,6 +103,8 @@
           - !type:PlaySoundBehavior
             sound:
               path: /Audio/Effects/metalbreak.ogg
+              params:
+                volume: -4
 
 - type: entity
   id: AirAlarmAssembly

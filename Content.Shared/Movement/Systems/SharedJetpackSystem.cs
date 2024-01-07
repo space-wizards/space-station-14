@@ -19,6 +19,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     [Dependency] private   readonly SharedMoverController _mover = default!;
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
     [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -32,6 +33,13 @@ public abstract class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackUserComponent, EntParentChangedMessage>(OnJetpackUserEntParentChanged);
 
         SubscribeLocalEvent<GravityChangedEvent>(OnJetpackUserGravityChanged);
+        SubscribeLocalEvent<JetpackComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, JetpackComponent component, MapInitEvent args)
+    {
+        _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
+        Dirty(uid, component);
     }
 
     private void OnJetpackCanWeightlessMove(EntityUid uid, JetpackComponent component, ref CanWeightlessMoveEvent args)

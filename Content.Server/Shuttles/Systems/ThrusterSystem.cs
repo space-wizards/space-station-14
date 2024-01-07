@@ -64,22 +64,26 @@ public sealed class ThrusterSystem : EntitySystem
         // Powered is already handled by other power components
         var enabled = Loc.GetString(component.Enabled ? "thruster-comp-enabled" : "thruster-comp-disabled");
 
-        args.PushMarkup(enabled);
-
-        if (component.Type == ThrusterType.Linear &&
-            EntityManager.TryGetComponent(uid, out TransformComponent? xform) &&
-            xform.Anchored)
+        using (args.PushGroup(nameof(ThrusterComponent)))
         {
-            var nozzleDir = Loc.GetString("thruster-comp-nozzle-direction",
-                ("direction", xform.LocalRotation.Opposite().ToWorldVec().GetDir().ToString().ToLowerInvariant()));
+            args.PushMarkup(enabled);
 
-            args.PushMarkup(nozzleDir);
+            if (component.Type == ThrusterType.Linear &&
+                EntityManager.TryGetComponent(uid, out TransformComponent? xform) &&
+                xform.Anchored)
+            {
+                var nozzleDir = Loc.GetString("thruster-comp-nozzle-direction",
+                    ("direction", xform.LocalRotation.Opposite().ToWorldVec().GetDir().ToString().ToLowerInvariant()));
 
-            var exposed = NozzleExposed(xform);
+                args.PushMarkup(nozzleDir);
 
-            var nozzleText = Loc.GetString(exposed ? "thruster-comp-nozzle-exposed" : "thruster-comp-nozzle-not-exposed");
+                var exposed = NozzleExposed(xform);
 
-            args.PushMarkup(nozzleText);
+                var nozzleText =
+                    Loc.GetString(exposed ? "thruster-comp-nozzle-exposed" : "thruster-comp-nozzle-not-exposed");
+
+                args.PushMarkup(nozzleText);
+            }
         }
     }
 
@@ -130,6 +134,15 @@ public sealed class ThrusterSystem : EntitySystem
     private void OnActivateThruster(EntityUid uid, ThrusterComponent component, ActivateInWorldEvent args)
     {
         component.Enabled ^= true;
+
+        if (!component.Enabled)
+        {
+            DisableThruster(uid, component);
+        }
+        else if (CanEnable(uid, component))
+        {
+            EnableThruster(uid, component);
+        }
     }
 
     /// <summary>

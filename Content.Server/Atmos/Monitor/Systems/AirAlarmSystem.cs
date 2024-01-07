@@ -15,11 +15,11 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceLinking;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -569,7 +569,7 @@ public sealed class AirAlarmSystem : EntitySystem
         _ui.TryCloseAll(uid, SharedAirAlarmInterfaceKey.Key);
     }
 
-    private void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, AtmosDeviceUpdateEvent args)
+    private void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, ref AtmosDeviceUpdateEvent args)
     {
         alarm.CurrentModeUpdater?.Update(uid);
     }

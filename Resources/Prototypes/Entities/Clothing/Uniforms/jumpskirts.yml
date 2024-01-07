@@ -49,9 +49,9 @@
   description: A yellow turtleneck designed specifically for work in conditions of the engineering department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/ceturtleskirt.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/ce_turtle.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/ceturtleskirt.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/ce_turtle.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -539,6 +539,28 @@
 
 - type: entity
   parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtLibrarian
+  name: librarian jumpskirt
+  description: A cosy green jumper fit for a curator of books.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/librarian.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/librarian.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCurator
+  name: sensible skirt
+  description: It's sensible. Too sensible...
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/curator.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/curator.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtPerformer
   name: performer's jumpskirt
   description: Hi, I'm Scott, president of Donk Pizza. Have you heard of [FAMOUS VIRTUAL PERFORMER]?
@@ -813,3 +835,93 @@
   - type: Construction
     graph: WebObjects
     node: jumpskirt
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCasualBlue
+  name: casual blue jumpskirt
+  description: A loose worn blue shirt with a grey skirt, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    layers:
+    - state: icon-jumpskirt
+    - state: icon-shirt
+      color: "#134fc1"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-jumpskirt
+      - state: inhand-left-shirt
+        color: "#134fc1"
+      right:
+      - state: inhand-right-jumpskirt
+      - state: inhand-right-shirt
+        color: "#134fc1"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING-jumpskirt
+      - state: equipped-INNERCLOTHING-shirt
+        color: "#134fc1"
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCasualPurple
+  name: casual purple jumpskirt
+  description: A loose worn purple shirt with a grey skirt, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    layers:
+    - state: icon-jumpskirt
+    - state: icon-shirt
+      color: "#9c0dff"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-jumpskirt
+      - state: inhand-left-shirt
+        color: "#9c0dff"
+      right:
+      - state: inhand-right-jumpskirt
+      - state: inhand-right-shirt
+        color: "#9c0dff"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING-jumpskirt
+      - state: equipped-INNERCLOTHING-shirt
+        color: "#9c0dff"
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCasualRed
+  name: casual red jumpskirt
+  description: A loose worn red shirt with a grey skirt, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    layers:
+    - state: icon-jumpskirt
+    - state: icon-shirt
+      color: "#b30000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-jumpskirt
+      - state: inhand-left-shirt
+        color: "#b30000"
+      right:
+      - state: inhand-right-jumpskirt
+      - state: inhand-right-shirt
+        color: "#b30000"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING-jumpskirt
+      - state: equipped-INNERCLOTHING-shirt
+        color: "#b30000"

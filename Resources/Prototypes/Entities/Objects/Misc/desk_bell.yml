@@ -32,10 +32,10 @@
       params:
           variation: 0.03
           volume: 3
-  - type: ItemCooldown
   - type: UseDelay
     delay: 0.5
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       collection: DeskBell
       params:

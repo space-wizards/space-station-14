@@ -21,12 +21,13 @@
   - type: Body
     prototype: Reptilian
     requiredLegs: 2
-  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeatLizard
       amount: 5
+  - type: Inventory
+    speciesId: reptilian
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
@@ -40,7 +41,6 @@
     damageContainer: Biological
     damageModifierSet: Scale
   - type: MeleeWeapon
-    hidden: true
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     angle: 30
@@ -58,10 +58,7 @@
         Cold : 0.1 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 0.1 #per second, scales with temperature & other constants
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
+        Heat : 1.5 #per second, scales with temperature & other constants
 
 - type: entity
   parent: BaseSpeciesDummy

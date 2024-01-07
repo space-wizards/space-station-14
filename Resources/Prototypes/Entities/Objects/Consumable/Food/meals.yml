@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_meal.yml
 # A bunch of different meals. This stuff doesn't come off their plates because
 # it's assembled on them. Or they just don't have plates.
 
@@ -326,6 +327,8 @@
   id: FoodMealRibs
   description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
   components:
+  - type: Food
+    trash: FoodKebabSkewer
   - type: FlavorProfile
     flavors:
       - meaty
@@ -563,7 +566,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 65
+        maxVol: 65
         reagents:
         - ReagentId: Nutriment
           Quantity: 30
@@ -578,24 +581,6 @@
   - type: Tag
     tags:
     - Fruit
-
-- type: entity
-  name: taco
-  parent: FoodMealBase
-  id: FoodMealTaco
-  description: Take a bite!
-  components:
-  - type: FlavorProfile
-    flavors:
-      - cheesy
-      - tomato
-      - meaty
-      - onion
-  - type: Sprite
-    state: taco
-  - type: Tag
-    tags:
-    - Meat
 
 - type: entity
   name: corn in butter

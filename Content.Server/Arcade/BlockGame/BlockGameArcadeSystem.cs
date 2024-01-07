@@ -2,7 +2,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Arcade;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.Arcade.BlockGame;
 
@@ -30,7 +30,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         }
     }
 
-    private void UpdatePlayerStatus(EntityUid uid, IPlayerSession session, PlayerBoundUserInterface? bui = null, BlockGameArcadeComponent? blockGame = null)
+    private void UpdatePlayerStatus(EntityUid uid, ICommonSession session, PlayerBoundUserInterface? bui = null, BlockGameArcadeComponent? blockGame = null)
     {
         if (!Resolve(uid, ref blockGame))
             return;
@@ -67,7 +67,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
 
     private void OnAfterUiClose(EntityUid uid, BlockGameArcadeComponent component, BoundUIClosedEvent args)
     {
-        if (args.Session is not IPlayerSession session)
+        if (args.Session is not { } session)
             return;
 
         if (component.Player != session)

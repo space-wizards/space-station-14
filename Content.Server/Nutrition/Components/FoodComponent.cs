@@ -1,10 +1,8 @@
 using Content.Server.Body.Components;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Nutrition.Components;
 
@@ -17,8 +15,8 @@ public sealed partial class FoodComponent : Component
     [DataField]
     public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
 
-    [DataField("trash")]
-    public EntProtoId? TrashPrototype;
+    [DataField]
+    public EntProtoId? Trash;
 
     [DataField]
     public FixedPoint2? TransferAmount = FixedPoint2.New(5);
@@ -55,7 +53,7 @@ public sealed partial class FoodComponent : Component
     /// The localization identifier for the eat message. Needs a "food" entity argument passed to it.
     /// </summary>
     [DataField]
-    public string EatMessage = "food-nom";
+    public LocId EatMessage = "food-nom";
 
     /// <summary>
     /// How long it takes to eat the food personally.
@@ -69,4 +67,10 @@ public sealed partial class FoodComponent : Component
     /// </summary>
     [DataField]
     public float ForceFeedDelay = 3;
+
+    /// <summary>
+    /// For mobs that are food, requires killing them before eating.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool RequireDead = true;
 }

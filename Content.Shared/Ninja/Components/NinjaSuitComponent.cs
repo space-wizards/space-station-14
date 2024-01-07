@@ -13,7 +13,7 @@ namespace Content.Shared.Ninja.Components;
 /// Component for ninja suit abilities and power consumption.
 /// As an implementation detail, dashing with katana is a suit action which isn't ideal.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedNinjaSuitSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedNinjaSuitSystem)), AutoGenerateComponentState]
 public sealed partial class NinjaSuitComponent : Component
 {
     /// <summary>
@@ -47,7 +47,7 @@ public sealed partial class NinjaSuitComponent : Component
     [DataField("createThrowingStarAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string CreateThrowingStarAction = "ActionCreateThrowingStar";
 
-    [DataField("createThrowingStarActionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? CreateThrowingStarActionEntity;
 
     /// <summary>
@@ -68,7 +68,7 @@ public sealed partial class NinjaSuitComponent : Component
     [DataField("recallKatanaAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string RecallKatanaAction = "ActionRecallKatana";
 
-    [DataField("recallKatanaActionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? RecallKatanaActionEntity;
 
     /// <summary>
@@ -84,7 +84,7 @@ public sealed partial class NinjaSuitComponent : Component
     [DataField("empAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string EmpAction = "ActionNinjaEmp";
 
-    [DataField("empActionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? EmpActionEntity;
 
     /// <summary>

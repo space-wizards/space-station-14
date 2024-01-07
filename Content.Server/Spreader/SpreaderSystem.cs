@@ -9,7 +9,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Spreader;
@@ -19,12 +18,9 @@ namespace Content.Server.Spreader;
 /// </summary>
 public sealed class SpreaderSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
-    private static readonly TimeSpan SpreadCooldown = TimeSpan.FromSeconds(SpreadCooldownSeconds);
 
     /// <summary>
     /// Cached maximum number of updates per spreader prototype. This is applied per-grid.
@@ -34,9 +30,10 @@ public sealed class SpreaderSystem : EntitySystem
     /// <summary>
     /// Remaining number of updates per grid & prototype.
     /// </summary>
+    // TODO PERFORMANCE Assign each prototype to an index and convert dictionary to array
     private Dictionary<EntityUid, Dictionary<string, int>> _gridUpdates = new();
 
-    private const float SpreadCooldownSeconds = 1;
+    public const float SpreadCooldownSeconds = 1;
 
     [ValidatePrototypeId<TagPrototype>]
     private const string IgnoredTag = "SpreaderIgnore";
@@ -46,26 +43,16 @@ public sealed class SpreaderSystem : EntitySystem
     {
         SubscribeLocalEvent<AirtightChanged>(OnAirtightChanged);
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
-
-        SubscribeLocalEvent<SpreaderGridComponent, EntityUnpausedEvent>(OnGridUnpaused);
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
 
         SubscribeLocalEvent<EdgeSpreaderComponent, EntityTerminatingEvent>(OnTerminating);
         SetupPrototypes();
-        _prototype.PrototypesReloaded += OnPrototypeReload;
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _prototype.PrototypesReloaded -= OnPrototypeReload;
     }
 
     private void OnPrototypeReload(PrototypesReloadedEventArgs obj)
     {
-        if (!obj.ByType.ContainsKey(typeof(EdgeSpreaderPrototype)))
-            return;
-
-        SetupPrototypes();
+        if (obj.WasModified<EdgeSpreaderPrototype>())
+            SetupPrototypes();
     }
 
     private void SetupPrototypes()
@@ -83,13 +70,9 @@ public sealed class SpreaderSystem : EntitySystem
 
         foreach (var neighbor in neighbors)
         {
-            EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
+            if (!TerminatingOrDeleted(neighbor))
+                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
         }
-    }
-
-    private void OnGridUnpaused(EntityUid uid, SpreaderGridComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextUpdate += args.PausedTime;
     }
 
     private void OnGridInit(GridInitializeEvent ev)
@@ -103,26 +86,26 @@ public sealed class SpreaderSystem : EntitySystem
 
         foreach (var neighbor in neighbors)
         {
-            EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
+            if (!TerminatingOrDeleted(neighbor))
+                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
         }
     }
 
     /// <inheritdoc/>
     public override void Update(float frameTime)
     {
-        var curTime = _timing.CurTime;
-
         // Check which grids are valid for spreading
         var spreadGrids = EntityQueryEnumerator<SpreaderGridComponent>();
 
         _gridUpdates.Clear();
         while (spreadGrids.MoveNext(out var uid, out var grid))
         {
-            if (grid.NextUpdate > curTime)
+            grid.UpdateAccumulator -= frameTime;
+            if (grid.UpdateAccumulator > 0)
                 continue;
 
             _gridUpdates[uid] = _prototypeUpdates.ShallowClone();
-            grid.NextUpdate += SpreadCooldown;
+            grid.UpdateAccumulator += SpreadCooldownSeconds;
         }
 
         if (_gridUpdates.Count == 0)
@@ -330,7 +313,7 @@ public sealed class SpreaderSystem : EntitySystem
         if (position == null)
         {
             var transform = Transform(uid);
-            if (!_mapManager.TryGetGrid(transform.GridUid, out grid))
+            if (!_mapManager.TryGetGrid(transform.GridUid, out grid) || TerminatingOrDeleted(transform.GridUid.Value))
                 return neighbors;
             tile = grid.TileIndicesFor(transform.Coordinates);
         }
@@ -355,7 +338,7 @@ public sealed class SpreaderSystem : EntitySystem
             while (directionEnumerator.MoveNext(out var ent))
             {
                 DebugTools.Assert(Transform(ent.Value).Anchored);
-                if (spreaderQuery.HasComponent(ent))
+                if (spreaderQuery.HasComponent(ent) && !TerminatingOrDeleted(ent.Value))
                     neighbors.Add(ent.Value);
             }
         }

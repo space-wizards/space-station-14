@@ -15,8 +15,9 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Storage;
+using Content.Shared.Tag;
 using Robust.Shared.Containers;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Construction
@@ -29,6 +30,8 @@ namespace Content.Server.Construction
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+        [Dependency] private readonly StorageSystem _storageSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -130,14 +133,14 @@ namespace Content.Server.Construction
             {
                 foreach (var entity in container.ContainedEntities.ToArray())
                 {
-                    container.Remove(entity);
+                    _container.Remove(entity, container);
                 }
 
                 foreach (var cont in containers.Values)
                 {
                     foreach (var entity in cont.ContainedEntities.ToArray())
                     {
-                        cont.Remove(entity);
+                        _container.Remove(entity, cont);
                     }
                 }
 
@@ -147,10 +150,10 @@ namespace Content.Server.Construction
 
             void ShutdownContainers()
             {
-                container.Shutdown();
+                _container.ShutdownContainer(container);
                 foreach (var c in containers.Values.ToArray())
                 {
-                    c.Shutdown();
+                    _container.ShutdownContainer(c);
                 }
             }
 
@@ -185,10 +188,10 @@ namespace Content.Server.Construction
 
                             if (string.IsNullOrEmpty(materialStep.Store))
                             {
-                                if (!container.Insert(splitStack.Value))
+                                if (!_container.Insert(splitStack.Value, container))
                                     continue;
                             }
-                            else if (!GetContainer(materialStep.Store).Insert(splitStack.Value))
+                            else if (!_container.Insert(splitStack.Value, GetContainer(materialStep.Store)))
                                 continue;
 
                             handled = true;
@@ -214,10 +217,10 @@ namespace Content.Server.Construction
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
-                                if (!container.Insert(entity))
+                                if (!_container.Insert(entity, container))
                                     continue;
                             }
-                            else if (!GetContainer(arbitraryStep.Store).Insert(entity))
+                            else if (!_container.Insert(entity, GetContainer(arbitraryStep.Store)))
                                 continue;
 
                             handled = true;
@@ -281,8 +284,8 @@ namespace Content.Server.Construction
 
                 foreach (var entity in cont.ContainedEntities.ToArray())
                 {
-                    cont.ForceRemove(entity);
-                    newCont.Insert(entity);
+                    _container.Remove(entity, cont, reparent: false, force: true);
+                    _container.Insert(entity, newCont);
                 }
             }
 
@@ -327,6 +330,12 @@ namespace Content.Server.Construction
             {
                 _sawmill.Error(
                     $"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{prototype}'!");
+                return false;
+            }
+
+            if (constructionPrototype.EntityWhitelist != null && !constructionPrototype.EntityWhitelist.IsValid(user))
+            {
+                _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
                 return false;
             }
 
@@ -383,7 +392,6 @@ namespace Content.Server.Construction
         // LEGACY CODE. See warning at the top of the file!
         private async void HandleStartStructureConstruction(TryStartStructureConstructionMessage ev, EntitySessionEventArgs args)
         {
-
             if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
                 _sawmill.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
@@ -401,6 +409,12 @@ namespace Content.Server.Construction
             if (args.SenderSession.AttachedEntity is not {Valid: true} user)
             {
                 _sawmill.Error($"Client sent {nameof(TryStartStructureConstructionMessage)} with no attached entity!");
+                return;
+            }
+
+            if (constructionPrototype.EntityWhitelist != null && !constructionPrototype.EntityWhitelist.IsValid(user))
+            {
+                _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
                 return;
             }
 

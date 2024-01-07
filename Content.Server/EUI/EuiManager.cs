@@ -2,7 +2,7 @@
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.EUI

@@ -21,6 +21,8 @@
             - tool: Screwing
               doAfter: 5
           conditions:
+            - !type:StorageWelded
+              welded: false
             - !type:Locked
               locked: false
           completed:

@@ -11,6 +11,7 @@
   supervisors: job-supervisors-hop
   access:
   - Service
+  - Lawyer
   - Brig
   - Maintenance
 
@@ -24,7 +25,7 @@
     ears: ClothingHeadsetSecurity
     # TODO add copy of space law
   inhand:
-    right hand: BriefcaseBrownFilled
-  innerclothingskirt: ClothingUniformJumpskirtLawyerBlack
+    - BriefcaseBrownFilled
+  innerClothingSkirt: ClothingUniformJumpskirtLawyerBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
