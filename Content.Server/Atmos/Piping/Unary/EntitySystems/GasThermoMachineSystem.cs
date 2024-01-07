@@ -95,7 +95,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             float dQActual = dQ * scale;
             float dQLeak = dQActual * thermoMachine.EnergyLeakPercentage;
             float dQPipe = dQActual - dQLeak;
-            _atmosphereSystem.AddHeat(inlet.Air, dQActual);
+            _atmosphereSystem.AddHeat(inlet.Air, dQPipe);
 
             if (_atmosphereSystem.GetContainingMixture(uid) is { } containingMixture)
                 _atmosphereSystem.AddHeat(containingMixture, dQLeak);
