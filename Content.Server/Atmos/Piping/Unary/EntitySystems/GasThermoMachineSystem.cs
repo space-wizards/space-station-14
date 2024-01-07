@@ -92,8 +92,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 scale = dQLim / dQ; // reduce power consumption
                 thermoMachine.HysteresisState = false; // turn off
             }
-            float dQActual = dQ * scale * (1 - thermoMachine.EnergyLeakPercentage);
-            var dQLeak = dQ * scale * thermoMachine.EnergyLeakPercentage;
+            float dQActual = dQ * scale;
+            float dQLeak = dQActual * thermoMachine.EnergyLeakPercentage;
+            float dQPipe = dQActual - dQLeak;
             _atmosphereSystem.AddHeat(inlet.Air, dQActual);
 
             if (_atmosphereSystem.GetContainingMixture(uid) is { } containingMixture)
