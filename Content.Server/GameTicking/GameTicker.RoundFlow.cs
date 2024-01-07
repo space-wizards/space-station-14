@@ -393,8 +393,7 @@ namespace Content.Server.GameTicking
 
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
                 listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong));
-                listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong,
-                new SoundCollectionSpecifier("RoundEnd").GetSound()));
+                new SoundCollectionSpecifier("RoundEnd").GetSound();
 
             _replayRoundPlayerInfo = listOfPlayerInfoFinal;
             _replayRoundText = roundEndText;
