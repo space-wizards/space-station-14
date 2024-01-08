@@ -54,7 +54,7 @@ namespace Content.Server.Communications
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleRecallEmergencyShuttleMessage>(OnRecallShuttleMessage);
 
             // On console init, set cooldown
-            SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentStartup>((uid, comp, _) => OnCommunicationsConsoleInit(comp));
+            SubscribeLocalEvent<CommunicationsConsoleComponent, MapInitEvent>(OnCommunicationsConsoleMapInit);
         }
 
         public override void Update(float frameTime)
@@ -82,7 +82,7 @@ namespace Content.Server.Communications
             base.Update(frameTime);
         }
 
-        public static void OnCommunicationsConsoleInit(CommunicationsConsoleComponent comp)
+        public void OnCommunicationsConsoleMapInit(EntityUid uid, CommunicationsConsoleComponent comp, MapInitEvent args)
         {
             comp.AnnouncementCooldownRemaining = comp.InitialDelay;
         }

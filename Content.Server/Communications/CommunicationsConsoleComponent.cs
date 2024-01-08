@@ -13,6 +13,7 @@ namespace Content.Server.Communications
         /// Remaining cooldown between making announcements.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float AnnouncementCooldownRemaining;
 
         /// <summary>
