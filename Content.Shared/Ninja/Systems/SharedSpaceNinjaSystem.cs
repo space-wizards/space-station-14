@@ -87,7 +87,7 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     {
         if (comp.Suit != null && TryComp<StealthClothingComponent>(comp.Suit, out var stealthClothing) && stealthClothing.Enabled)
         {
-            Suit.RevealNinja(comp.Suit.Value, uid, true, null, stealthClothing);
+            Suit.RevealNinja(comp.Suit.Value, uid, false, null, stealthClothing);
         }
     }
 
