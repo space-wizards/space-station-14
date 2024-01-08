@@ -52,7 +52,20 @@
     - type: NukeDisk
     - type: Nuke
       explosionType: Default
-
+      maxIntensity: 100
+      intensitySlope: 5
+      totalIntensity: 5000000
+      diskSlot:
+        name: Disk
+        insertSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        ejectSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        whitelist:
+          components:
+          - NukeDisk
+      alertLevelOnActivate: delta
+      alertLevelOnDeactivate: green
 - type: entity
   name: syndicate pinpointer
   description: Produced specifically for nuclear operative missions, get that disk!
@@ -65,10 +78,10 @@
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
-    componentNames:
+    componentNames: #The names listed in the component verb menu, need one for every tracked component
     - name-pinpointer-component-nuke-disk
     - name-pinpointer-component-station
-    components:
+    components: #Must be in the same order as componentNames
     - type: NukeDisk
     - type: BecomesStation
       id: station
@@ -100,8 +113,8 @@
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
-    componentNames:
+    componentNames: #The names listed in the component verb menu, need one for every tracked component
     - name-pinpointer-component-station
-    components:
+    components: #Must be in the same order as componentNames
     - type: BecomesStation
       id: station
