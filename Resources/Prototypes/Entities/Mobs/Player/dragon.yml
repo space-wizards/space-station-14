@@ -114,6 +114,9 @@
     shouldStoreDevoured: true
     chemical: Ichor
     healRate: 15.0
+    stomachChemicals:
+    - CarpoToxin
+    - Pax
     whitelist:
       components:
       - MobState

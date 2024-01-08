@@ -5,6 +5,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Devour.Components;
 
@@ -60,7 +61,7 @@ public sealed partial class DevourerComponent : Component
     };
 
     /// <summary>
-    /// The chemical ID injected upon devouring
+    /// The chemical ID injected into the dragon upon devouring
     /// </summary>
     [DataField("chemical", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
     public string Chemical = "Ichor";
@@ -70,6 +71,18 @@ public sealed partial class DevourerComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("healRate")]
     public float HealRate = 15f;
+
+    /// <summary>
+    /// The chemical ID's injected into the victim upon being devoured.
+    /// </summary>
+    [DataField("stomachChemicals", customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
+    public List<string> StomachChemicals = new();
+
+    /// <summary>
+    /// The amount of stomach chemicals  injected into the devoured entity.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("damageRate")]
+    public float DamageRate = 50f;
 
     /// <summary>
     /// The favorite food not only feeds you, but also heals
