@@ -10,6 +10,7 @@
 # $env:CHANGELOG_RSS_KEY=[System.IO.File]::ReadAllText($(gci "key"))
 
 import os
+import paramiko
 import pathlib
 import io
 import base64
