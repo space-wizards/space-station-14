@@ -503,7 +503,7 @@
 - type: reaction
   id: Diphenhydramine
   impact: Medium
-  minTemp: 377.59
+  minTemp: 377
   reactants:
     Diethylamine:
       amount: 1
