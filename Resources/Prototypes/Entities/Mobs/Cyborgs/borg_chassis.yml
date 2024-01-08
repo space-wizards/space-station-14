@@ -268,7 +268,7 @@
   id: BorgChassisSyndicateAssault
   parent: BaseBorgChassisSyndicate
   name: syndicate assault cyborg
-  description: A lean, mean killing machine with access to a varity of deadly modules.
+  description: A lean, mean killing machine with access to a variety of deadly modules.
   components:
     - type: Sprite
       layers:

@@ -517,7 +517,7 @@
   id: BorgModuleOperative
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
   name: operative cyborg module
-  description: A module that comes with a crowbar, a Cobra pistol, an Emag and a pinpointer.
+  description: A module that comes with a crowbar, a Cobra pistol, an Emag and a syndicate pinpointer.
   components:
     - type: Sprite
       layers:
@@ -528,7 +528,7 @@
         - Crowbar
         - WeaponPistolCobra
         - Emag
-        - PinpointerNuclear
+        - PinpointerSyndicateNuclear
 
 - type: entity
   id: BorgModuleEsword
@@ -543,7 +543,7 @@
     - type: ItemBorgModule
       items:
         - EnergySword
-        - PinpointerNuclear
+        - PinpointerSyndicateNuclear
 
 - type: entity
   id: BorgModuleL6C
@@ -558,4 +558,4 @@
     - type: ItemBorgModule
       items:
         - WeaponLightMachineGunL6C
-        - PinpointerNuclear
+        - PinpointerSyndicateNuclear
