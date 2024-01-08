@@ -506,9 +506,7 @@
       Wood: 50
   - type: StaticPrice
     price: 25
-  - type: Tool
-    qualities:
-      - Digging
+  - type: Shovel
 
 - type: entity
   parent: BaseItem

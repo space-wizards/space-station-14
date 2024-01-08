@@ -1,9 +1,11 @@
-namespace Content.Shared.Burial;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Burial.Components;
 
 /// <summary>
 /// A component for graves in the process of being dug/filled
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ActiveGraveComponent : Component
 {
     /// <summary>
@@ -12,6 +14,6 @@ public sealed partial class ActiveGraveComponent : Component
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public bool DiggingSelfOut = false;
 
-    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? Stream;
 }

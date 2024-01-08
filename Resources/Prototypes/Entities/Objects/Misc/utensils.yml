@@ -79,10 +79,8 @@
     damage:
       types:
         Blunt: 1
-  - type: Tool
-    qualities:
-      - Digging
-    speed: 0.1 # you can try
+  - type: Shovel
+    speedModifier: 0.1 # you can try
 
 - type: entity
   parent: UtensilBasePlastic
@@ -97,10 +95,8 @@
   - type: Utensil
     types:
     - Spoon
-  - type: Tool
-    qualities:
-      - Digging
-    speed: 0.1 # you can try
+  - type: Shovel
+    speedModifier: 0.1 # you can try
 
 - type: entity
   parent: UtensilBase

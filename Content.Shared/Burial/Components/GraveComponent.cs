@@ -1,8 +1,9 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Shared.Burial;
+namespace Content.Shared.Burial.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class GraveComponent : Component
 {
     /// <summary>
@@ -13,6 +14,7 @@ public sealed partial class GraveComponent : Component
 
     /// <summary>
     /// Modifier if digging yourself out by hand if buried alive
+    /// TODO: Handle digging with bare hands in the tools system
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float DigOutByHandModifier = 0.1f;

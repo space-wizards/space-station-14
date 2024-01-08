@@ -165,7 +165,7 @@ public sealed class RottingSystem : EntitySystem
     /// <returns></returns>
     private float GetRotRate(EntityUid uid)
     {
-        if (_container.TryGetOuterContainer(uid, Transform(uid), out var container) &&
+        if (_container.TryGetContainingContainer(uid, out var container) &&
             TryComp<ProRottingContainerComponent>(container.Owner, out var rotContainer))
         {
             return rotContainer.DecayModifier;
