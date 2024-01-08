@@ -332,7 +332,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             {
                 if (ev.Reason != null && user != null)
                 {
-                    PopupSystem.PopupClient(ev.Reason, gunUid, user.Value);
+                    PopupSystem.PopupCursor(ev.Reason);
                 }
 
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.

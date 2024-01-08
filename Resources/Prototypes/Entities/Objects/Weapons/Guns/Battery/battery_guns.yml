@@ -169,6 +169,35 @@
     startingCharge: 500
 
 - type: entity
+  name: tesla gun
+  parent: BaseWeaponBattery
+  id: WeaponTeslaGun
+  description: The power of the primordial element of lightning in your hands.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/tesla_gun.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Gun
+    projectileSpeed: 10
+    soundGunshot:
+      path: /Audio/Effects/Lightning/lightningshock.ogg
+      params:
+        variation: 0.2
+  - type: ProjectileBatteryAmmoProvider
+    proto: TeslaGunBullet
+    fireCost: 300
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+
+- type: entity
   name: laser rifle
   parent: BaseWeaponBattery
   id: WeaponLaserCarbine
@@ -184,6 +213,8 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+  - type: StaticPrice
+    price: 420
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -201,6 +232,8 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedLaserPractice
     fireCost: 62.5
+  - type: StaticPrice
+    price: 300
 
 - type: entity
   name: pulse pistol
@@ -326,7 +359,7 @@
       walkModifier: 0.6
       sprintModifier: 0.6
     - type: HeldSpeedModifier
-    - type: Sprite 
+    - type: Sprite
       sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
       layers:
         - state: base
@@ -446,6 +479,8 @@
     magState: mag
     steps: 5
     zeroVisible: true
+  - type: StaticPrice
+    price: 260
 
 - type: entity
   name: practice disabler
@@ -466,6 +501,8 @@
       quickEquip: false
       slots:
         - Belt
+    - type: StaticPrice
+      price: 100
     - type: ProjectileBatteryAmmoProvider
       proto: BulletDisablerPractice
       fireCost: 100
@@ -620,6 +657,8 @@
   - type: Construction
     graph: UpgradeWeaponPistolCHIMP
     node: start
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: experimental C.H.I.M.P. handcannon

@@ -168,6 +168,7 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: medicine
   color: "#0091ff"
+  worksOnTheDead: true
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: -5
@@ -198,6 +199,7 @@
   physicalDesc: reagent-physical-desc-bubbling
   flavor: medicine
   color: "#32cd32"
+  worksOnTheDead: true
   metabolisms:
     Medicine:
       effects:
@@ -339,7 +341,7 @@
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
-          reagent: 
+          reagent: HeartbreakerToxin
           min: 1
         reagent: Epinephrine
         amount: -1

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Physics.Controllers;
 
 namespace Content.Server.Physics.Components;
@@ -28,6 +29,18 @@ public sealed partial class RandomWalkComponent : Component
     [DataField("accumulatorRatio")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float AccumulatorRatio = 0.0f;
+
+    /// <summary>
+    /// The vector by which the random walk direction is biased.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public Vector2 BiasVector = new Vector2(0f, 0f);
+
+    /// <summary>
+    /// Whether to set BiasVector to (0, 0) every random walk update.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool ResetBiasOnWalk = true;
 
     /// <summary>
     /// Whether this random walker should take a step immediately when it starts up.

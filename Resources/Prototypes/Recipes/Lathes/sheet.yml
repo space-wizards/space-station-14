@@ -4,14 +4,14 @@
   applyMaterialDiscount: false
   completetime: 2
   materials:
-    Steel: 100
+    RawIron: 100
 
 - type: latheRecipe
   id: SheetSteel30
   result: SheetSteel
   completetime: 2
   materials:
-    Steel: 3000
+    RawIron: 3000
     Coal: 1000
 
 - type: latheRecipe
@@ -20,14 +20,14 @@
   applyMaterialDiscount: false
   completetime: 2
   materials:
-    Glass: 100
+    RawQuartz: 100
 
 - type: latheRecipe
   id: SheetGlass30
   result: SheetGlass
   completetime: 2
   materials:
-    Glass: 3000
+    RawQuartz: 3000
 
 - type: latheRecipe
   id: SheetRGlass
@@ -68,56 +68,56 @@
   result: SheetPlasma
   completetime: 2
   materials:
-    Plasma: 3000
+    RawPlasma: 3000
 
 - type: latheRecipe
   id: SheetUranium30
   result: SheetUranium
   completetime: 2
   materials:
-    Uranium: 3000
+    RawUranium: 3000
 
 - type: latheRecipe
   id: IngotGold30
   result: IngotGold
   completetime: 2
   materials:
-    Gold: 3000
+    RawGold: 3000
 
 - type: latheRecipe
   id: IngotSilver30
   result: IngotSilver
   completetime: 2
   materials:
-    Silver: 3000
+    RawSilver: 3000
 
 - type: latheRecipe
   id: MaterialBananium10
   result: MaterialBananium
   completetime: 2
   materials:
-    Bananium: 3000
+    RawBananium: 3000
 
 - type: latheRecipe
   id: SheetUranium1
   result: SheetUranium1
   completetime: 2
   materials:
-    Uranium: 500
+    RawUranium: 500
 
 - type: latheRecipe
   id: IngotGold1
   result: IngotGold1
   completetime: 2
   materials:
-    Gold: 500
+    RawGold: 500
 
 - type: latheRecipe
   id: IngotSilver1
   result: IngotSilver1
   completetime: 2
   materials:
-    Silver: 500
+    RawSilver: 500
 
 - type: latheRecipe
   id: SheetPlastic
@@ -132,7 +132,7 @@
   result: MaterialBananium1
   completetime: 2
   materials:
-    Bananium: 500
+    RawBananium: 500
 
 - type: latheRecipe
   id: MaterialSheetMeat
