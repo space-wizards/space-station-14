@@ -126,7 +126,7 @@
   id: RedShuttleLaser
   damage:
     types:
-      Heat: 40
+      Heat: 45
       Structural: 10
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi

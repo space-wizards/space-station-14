@@ -90,10 +90,26 @@
           - PotatoBattery
           
 - type: entity
-  parent: BaseItemRecharger
+  parent: [ BaseItemRecharger, ConstructibleMachine ]
   id: PowerCageRecharger
   name: cage recharger
   components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.35,0.25,0.35"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: LitOnPowered
+  - type: PointLight
+    radius: 1.5
+    color: "#03fc4e"
+    energy: 0.7
   - type: Charger
     chargeRate: 50
   - type: Sprite
@@ -108,6 +124,8 @@
         whitelist:
           tags:
           - PowerCage
+  - type: Machine
+    board: PowerCageRechargerCircuitboard
 
 - type: entity
   parent: BaseItemRecharger

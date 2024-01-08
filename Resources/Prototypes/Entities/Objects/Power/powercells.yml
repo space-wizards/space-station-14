@@ -268,7 +268,7 @@
       autoRecharge: true
       autoRechargeRate: 40
 
-# Power cage (big power cell)
+# Power cage (big heavy power cell for big devices)
 
 - type: entity
   id: BasePowerCage

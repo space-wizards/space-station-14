@@ -1231,3 +1231,21 @@
       Steel: 5
       CableHV: 5
       Uranium: 2
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: PowerCageRechargerCircuitboard
+  name: cage recharger machine board
+  description: A machine printed circuit board for a cage recharger.
+  component:
+  - type: MachineBoard
+    prototype: PowerCageRecharger
+    requirements:
+      Capacitor: 6
+      MatterBin: 1
+    materialRequirements:
+      Steel: 5
+      CableMV: 3
+      Glass: 3
+      Uranium: 1
+  

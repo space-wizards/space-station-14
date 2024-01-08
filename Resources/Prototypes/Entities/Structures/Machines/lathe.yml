@@ -279,6 +279,9 @@
       - Igniter
       - PowerCellMicroreactor
       - PowerCellHigh
+      - PowerCageSmall
+      - PowerCageMedium
+      - PowerCageHigh
       - WeaponPistolCHIMP
       - WeaponGauntletGorilla
       - SynthesizerInstrument
@@ -419,6 +422,7 @@
       - WallmountGeneratorElectronics
       - WallmountGeneratorAPUElectronics
       - WallmountSubstationElectronics
+      - PowerCageRechargerCircuitboard
       - EmitterCircuitboard
       - ThrusterMachineCircuitboard
       - GyroscopeMachineCircuitboard

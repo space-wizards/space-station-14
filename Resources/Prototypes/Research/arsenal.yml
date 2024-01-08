@@ -107,6 +107,19 @@
   - MagazineBoxLightRifleUranium
   - MagazineBoxRifleUranium
 
+- type: technology
+  id: BasicShuttleArmament
+  name: research-technology-basic-shuttle-armament
+  icon: 
+    sprite: Structures/Power/cage_recharger.rsi
+    state: full
+  discipline: Arsenal
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - PowerCageRechargerCircuitboard
+  - PowerCageSmall
+
 # Tier 2
 
 - type: technology
