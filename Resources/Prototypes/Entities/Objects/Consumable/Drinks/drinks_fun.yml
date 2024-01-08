@@ -75,12 +75,36 @@
   id: RandomFillMopwata
   fills:
   - quantity: 10
-    weight: 10
+    weight: 5
     reagents:
     - Blood
     - CopperBlood
     - Slime
     - Vomit
+  - quantity: 10
+    weight: 4
+    reagents:
+    - Coffee
+    - Tea
+    - Cola
+    - RootBeer
+    - DrGibb
+    - GrapeSoda
+    - Starkist
+    - SpaceUp
+    - SpaceMountainWind
+    - LemonLime
+    - PwrGame
+  - quantity: 10
+    weight: 3
+    reagents:
+    - Whiskey
+    - Vodka
+    - Beer
+    - Ale
+    - Rum
+    - Tequila
+    - Absinthe
   - quantity: 10
     weight: 1
     reagents:
@@ -90,6 +114,8 @@
     - SpaceGlue
     - SoapyWater
     - SpaceCleaner
+    - MilkSpoiled
+    - FourteenLoko
 
 - type: entity
   parent: DrinkBottleGlassBaseFull

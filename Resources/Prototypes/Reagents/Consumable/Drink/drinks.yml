@@ -432,9 +432,9 @@
   desc: reagent-desc-mopwata
   physicalDesc: reagent-physical-desc-murky
   flavor: mopwata
-  color: "#87ab08"
-    metabolisms:
+  color: "#59502b"
+  metabolisms:
     Drink:
       effects:
       - !type:SatiateThirst
-        factor: 0.8
+        factor: 0.6
