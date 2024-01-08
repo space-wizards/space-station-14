@@ -111,6 +111,32 @@
 
 - type: entity
   parent: BaseItemRecharger
+  id: TurboItemRecharger
+  name: turbo recharger
+  description: An overclocked recharger that's been adapted with a global port.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/turbo_recharger.rsi
+  - type: Machine
+    board: TurboItemRechargerCircuitboard
+  - type: Charger
+    chargeRate: 100
+  - type: ItemSlots
+    slots:
+      charger_slot:
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - HitscanBatteryAmmoProvider
+          - ProjectileBatteryAmmoProvider
+          - Stunbaton
+          - PowerCell
+        blacklist:
+          tags:
+          - PotatoBattery
+
+- type: entity
+  parent: BaseItemRecharger
   id: WallWeaponCapacitorRecharger
   name: wall recharger
   components:
@@ -157,7 +183,7 @@
         map: ["enum.WiresVisualLayers.MaintenancePanel"]
         visible: false
   - type: Charger
-    baseChargeRate: 30
+    chargeRate: 30
     slotId: entity_storage
     whitelist:
       components:

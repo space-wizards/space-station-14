@@ -2,7 +2,7 @@
   id: Cluster
   mapName: 'Cluster'
   mapPath: /Maps/cluster.yml
-  minPlayers: 0
+  minPlayers: 10
   maxPlayers: 35
   stations:
     Cluster:

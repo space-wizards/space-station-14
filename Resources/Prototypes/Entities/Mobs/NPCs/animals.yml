@@ -363,6 +363,17 @@
     whitelistRequired: false
     name: ghost-role-information-mothroach-name
     description: ghost-role-information-mothroach-description
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 120
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: GhostTakeoverAvailable
   - type: Speech
     speechVerb: Moth
@@ -393,8 +404,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      25: Critical
-      45: Dead
+      40: Critical
+      60: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4
@@ -443,6 +454,14 @@
     prototype: Mothroach
   - type: TypingIndicator
     proto: moth
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 60
+      behaviors:
+      - !type:GibBehavior { }
 
 - type: entity
   name: mallard duck #Quack
@@ -2550,7 +2569,7 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
-   
+
 - type: entity
   name: space cat
   id: MobCatSpace

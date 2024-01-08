@@ -69,7 +69,7 @@
             True: {visible: false}
             False: {visible: true}
     - type: StaticPrice
-      price: 200
+      price: 120
 
 - type: entity
   parent: RollerBed
