@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Physics;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Tag;
 using Content.Shared.Turnstile.Components;
 using Robust.Shared.Audio;
@@ -35,6 +36,18 @@ public abstract class SharedTurnstileSystem : EntitySystem
         SubscribeLocalEvent<TurnstileComponent, ComponentRemove>(OnRemove);
 
         SubscribeLocalEvent<TurnstileComponent, StartCollideEvent>(HandleCollide);
+        SubscribeLocalEvent<TurnstileComponent, PreventCollideEvent>(HandlePreventCollide);
+    }
+
+    private void HandlePreventCollide(Entity<TurnstileComponent> ent, ref PreventCollideEvent args)
+    {
+        // If Turnstile is rotating, allow entities the admitted entity is pulling to come through with it.
+        var turnstile = ent.Comp;
+        if (turnstile.State != TurnstileState.Rotating || !TryComp<PreventCollideComponent>(ent, out var preventCollide))
+            return;
+
+        if (TryComp<SharedPullerComponent>(preventCollide.Uid, out var puller))
+            args.Cancelled |= puller.Pulling == args.OtherEntity;
     }
 
     private void OnComponentInit(Entity<TurnstileComponent> ent, ref ComponentInit args)
@@ -127,7 +140,20 @@ public abstract class SharedTurnstileSystem : EntitySystem
         var turnstileAABB = _entityLookupSystem.GetAABBNoContainer(ent, turnstilexform.LocalPosition, turnstilexform.LocalRotation);
         var otherAABB = _entityLookupSystem.GetAABBNoContainer(ent, otherxform.LocalPosition, otherxform.LocalRotation);
 
-        return turnstileAABB.Intersects(otherAABB);
+        bool isColliding = turnstileAABB.Intersects(otherAABB);
+
+        // Is the entity pulling something else through too? If so, the turnstile should still be spinning to allow this object through.
+        if (TryComp<SharedPullerComponent>(ent.Comp2.Uid, out var puller))
+        {
+            if (puller.Pulling != null)
+            {
+                otherxform = _xformQuery.GetComponent(puller.Pulling.Value);
+                otherAABB = _entityLookupSystem.GetAABBNoContainer(ent, otherxform.LocalPosition, otherxform.LocalRotation);
+                isColliding |= turnstileAABB.Intersects(otherAABB);
+            }
+        }
+
+        return isColliding;
     }
 
     /// <summary>
