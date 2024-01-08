@@ -136,6 +136,9 @@
     containers:
     - part-container
     - cell_slot
+  - type: Lock
+    locked: true
+  - type: ActivatableUIRequiresLock
   - type: Flashable
   - type: Damageable
     damageContainer: Silicon
@@ -218,9 +221,6 @@
     enabled: false
     groups:
     - AllAccess
-  - type: Lock
-    locked: true
-  - type: ActivatableUIRequiresLock
   - type: AccessReader
     access: [["Command"], ["Research"]]
   - type: ShowSecurityIcons
@@ -237,9 +237,6 @@
       tags:
        - NuclearOperative
        - SyndicateAgent
-    - type: Lock
-      locked: true
-    - type: ActivatableUIRequiresLock
     - type: AccessReader
       access: [["SyndicateAgent"], ["NuclearOperative"]]
     - type: SiliconLawProvider
