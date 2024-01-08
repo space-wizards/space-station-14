@@ -387,6 +387,7 @@
       - HydroponicsTrayMachineCircuitboard
       - SolarControlComputerCircuitboard
       - SolarTrackerElectronics
+      - TurboItemRechargerCircuitboard
       - PowerComputerCircuitboard
       - AutolatheHyperConvectionMachineCircuitboard
       - ProtolatheHyperConvectionMachineCircuitboard
@@ -751,7 +752,7 @@
           - Sheet
     - type: StealTarget
       stealGroup: AmmoTechFabCircuitboard
-      
+
 - type: entity
   id: MedicalTechFab
   parent: BaseLathe
@@ -822,7 +823,7 @@
     board: MedicalTechFabCircuitboard
   - type: StealTarget
     stealGroup: MedicalTechFabCircuitboard
-    
+
 - type: entity
   parent: BaseLathe
   id: UniformPrinter
