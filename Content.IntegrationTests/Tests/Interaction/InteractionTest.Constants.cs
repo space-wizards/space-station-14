@@ -1,4 +1,3 @@
-
 namespace Content.IntegrationTests.Tests.Interaction;
 
 // This partial class contains various constant prototype IDs common to interaction tests.
@@ -33,4 +32,3 @@ public abstract partial class InteractionTest
     protected const string Battery1 = "PowerCellSmall";
     protected const string Battery4 = "PowerCellHyper";
 }
-
