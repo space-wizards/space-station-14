@@ -111,12 +111,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Files", "Project Fi
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		README.md = README.md
+		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Files", "Project Files", "{A965CB3B-FD31-44AF-8872-85ABA436098D}"
 	ProjectSection(SolutionItems) = preProject
 		RobustToolbox\README.md = RobustToolbox\README.md
 		RobustToolbox\RELEASE-NOTES.md = RobustToolbox\RELEASE-NOTES.md
+		RobustToolbox\Directory.Packages.props = RobustToolbox\Directory.Packages.props
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Replay", "Content.Replay\Content.Replay.csproj", "{A493616C-338D-47B7-8072-A7F14D034D0B}"
