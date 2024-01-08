@@ -183,7 +183,6 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (!configuration.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(uid))
             return null;
 
-        // TODO change signature?
         // If this polymorph has a cooldown, check if that amount of time has passed since the
         // last polymorph ended.
         if (TryComp<PolymorphableComponent>(uid, out var polymorphableComponent) &&
