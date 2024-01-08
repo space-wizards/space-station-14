@@ -90,6 +90,12 @@
         EditNotes = 1 << 14,
 
         /// <summary>
+        ///     PII
+        ///     Personal Identifiable Information, Provides Access to things like HWID IP addresses in logs bans notes ETC.
+        /// </summary>
+        Pii = 1 << 15,
+
+        /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>
         Host = 1u << 31,
