@@ -148,7 +148,6 @@ public sealed partial class PolymorphSystem : EntitySystem
     /// </summary>
     /// <param name="uid">The entity that will be transformed</param>
     /// <param name="protoId">The id of the polymorph prototype</param>
-    /// <param name="targetToCopy">The entity the uid will be transformed into</param>
     public EntityUid? PolymorphEntity(EntityUid uid, ProtoId<PolymorphPrototype> protoId)
     {
         var config = _proto.Index(protoId).Configuration;
@@ -160,7 +159,6 @@ public sealed partial class PolymorphSystem : EntitySystem
     /// </summary>
     /// <param name="uid">The entity that will be transformed</param>
     /// <param name="configuration">Polymorph data</param>
-    /// <param name="targetToCopy">The entity the uid will be transformed into</param>
     /// <returns></returns>
     public EntityUid? PolymorphEntity(EntityUid uid, PolymorphConfiguration configuration)
     {
