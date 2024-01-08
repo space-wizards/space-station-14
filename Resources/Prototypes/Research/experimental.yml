@@ -85,20 +85,6 @@
 # Tier 2
 
 - type: technology
-  id: AdvancedParts
-  name: research-technology-advanced-parts
-  icon:
-    sprite: Objects/Misc/stock_parts.rsi
-    state: advanced_matter_bin
-  discipline: Experimental
-  tier: 2
-  cost: 10000
-  recipeUnlocks:
-  - AdvancedCapacitorStockPart
-  - AdvancedMatterBinStockPart
-  - NanoManipulatorStockPart
-
-- type: technology
   id: AbnormalArtifactManipulation
   name: research-technology-abnormal-artifact-manipulation
   icon:
@@ -153,20 +139,6 @@
   - HoloprojectorField
 
 # Tier 3
-
-- type: technology
-  id: SuperParts
-  name: research-technology-super-parts
-  icon:
-    sprite: Objects/Misc/stock_parts.rsi
-    state: super_matter_bin
-  discipline: Experimental
-  tier: 3
-  cost: 15000
-  recipeUnlocks:
-  - SuperCapacitorStockPart
-  - SuperMatterBinStockPart
-  - PicoManipulatorStockPart
 
 - type: technology
   id: GravityManipulation
