@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
+using Content.Server.IP;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
@@ -196,7 +197,7 @@ namespace Content.Server.Database
             return new ServerBanDef(
                 ban.Id,
                 uid,
-                ban.Address,
+                ban.Address.ToTuple(),
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,
@@ -233,7 +234,7 @@ namespace Content.Server.Database
 
             db.PgDbContext.Ban.Add(new ServerBan
             {
-                Address = serverBan.Address,
+                Address = serverBan.Address.ToNpgsqlInet(),
                 HWId = serverBan.HWId?.ToArray(),
                 Reason = serverBan.Reason,
                 Severity = serverBan.Severity,
@@ -385,7 +386,7 @@ namespace Content.Server.Database
             return new ServerRoleBanDef(
                 ban.Id,
                 uid,
-                ban.Address,
+                ban.Address.ToTuple(),
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,
@@ -423,7 +424,7 @@ namespace Content.Server.Database
 
             var ban = new ServerRoleBan
             {
-                Address = serverRoleBan.Address,
+                Address = serverRoleBan.Address.ToNpgsqlInet(),
                 HWId = serverRoleBan.HWId?.ToArray(),
                 Reason = serverRoleBan.Reason,
                 Severity = serverRoleBan.Severity,
