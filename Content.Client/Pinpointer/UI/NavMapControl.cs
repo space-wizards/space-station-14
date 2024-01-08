@@ -360,17 +360,35 @@ public partial class NavMapControl : MapGridControl
             }
         }
 
-        var airlockBuffer = Vector2.One  * (MinimapScale / 2.25f);
+        var airlockBuffer = Vector2.One * (MinimapScale / 2.25f) * 0.75f;
+        var airlockLines = new ValueList<Vector2>();
+        var foobarVec = new Vector2(1, -1);
         foreach (var airlock in _navMap.Airlocks)
         {
             var position = airlock.Position - offset;
             position = Scale(position with { Y = -position.Y });
+            airlockLines.Clear();
+            airlockLines.Add(position + airlockBuffer);
+            airlockLines.Add(position - airlockBuffer * foobarVec);
 
-            // line down the middle
-            handle.DrawLine(position + airlockBuffer * -Vector2.UnitY, position - airlockBuffer * -Vector2.UnitY, WallColor);
+            airlockLines.Add(position + airlockBuffer);
+            airlockLines.Add(position + airlockBuffer * foobarVec);
 
-            // Box around the outside
-            handle.DrawRect(new UIBox2(position + airlockBuffer, position - airlockBuffer), WallColor, false);
+            airlockLines.Add(position - airlockBuffer);
+            airlockLines.Add(position + airlockBuffer * foobarVec);
+
+            airlockLines.Add(position - airlockBuffer);
+            airlockLines.Add(position - airlockBuffer * foobarVec);
+
+            airlockLines.Add(position + airlockBuffer * -Vector2.UnitY);
+            airlockLines.Add(position - airlockBuffer * -Vector2.UnitY);
+
+            if (!_sRGBLookUp.TryGetValue(WallColor, out var sRGB))
+            {
+                sRGB = Color.ToSrgb(WallColor);
+                _sRGBLookUp[WallColor] = sRGB;
+            }
+            handle.DrawPrimitives(DrawPrimitiveTopology.LineList, airlockLines.Span, sRGB);
         }
 
         if (PostWallDrawingAction != null)
