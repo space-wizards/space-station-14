@@ -321,7 +321,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             // If they're firing an existing clip then don't play anything.
             if (shots > 0)
             {
-                if (ev.Reason != null)
+                if (ev.Reason != null && Timing.IsFirstTimePredicted)
                 {
                     PopupSystem.PopupCursor(ev.Reason);
                 }
