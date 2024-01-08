@@ -42,9 +42,17 @@ public sealed partial class FlatpackCreatorComponent : Component
 
     /// <summary>
     /// A default cost applied to all flatpacks outside of the cost of constructing the machine.
+    /// This one is applied to machines specifically.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<MaterialPrototype>, int> BaseMaterialCost = new();
+    public Dictionary<ProtoId<MaterialPrototype>, int> BaseMachineCost = new();
+
+    /// <summary>
+    /// A default cost applied to all flatpacks outside of the cost of constructing the machine.
+    /// This one is applied to computers specifically.
+    /// </summary>
+    [DataField]
+    public Dictionary<ProtoId<MaterialPrototype>, int> BaseComputerCost = new();
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string SlotId = "board_slot";

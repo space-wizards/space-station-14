@@ -105,6 +105,15 @@
     Gold: 50
 
 - type: latheRecipe
+  id: HellfireFreezerMachineCircuitBoard
+  result: HellfireFreezerMachineCircuitBoard
+  completetime: 4
+  materials:
+    Steel: 150
+    Glass: 900
+    Gold: 50
+
+- type: latheRecipe
   id: CondenserMachineCircuitBoard
   result: CondenserMachineCircuitBoard
   completetime: 4

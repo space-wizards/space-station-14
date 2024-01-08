@@ -7,6 +7,7 @@ using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Buckle;
 using Content.Shared.Damage;
+using Content.Shared.Destructible;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
@@ -19,6 +20,7 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Polymorph.Systems;
@@ -28,7 +30,9 @@ public sealed partial class PolymorphSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly SharedBuckleSystem _buckle = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
@@ -55,6 +59,7 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
         SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
+        SubscribeLocalEvent<PolymorphedEntityComponent, DestructionEventArgs>(OnDestruction);
 
         InitializeCollide();
         InitializeMap();
@@ -144,6 +149,18 @@ public sealed partial class PolymorphSystem : EntitySystem
     }
 
     /// <summary>
+    /// It is possible to be polymorphed into an entity that can't "die", but is instead
+    /// destroyed. This handler ensures that destruction is treated like death.
+    /// </summary>
+    private void OnDestruction(Entity<PolymorphedEntityComponent> ent, ref DestructionEventArgs args)
+    {
+        if (ent.Comp.Configuration.RevertOnDeath)
+        {
+            Revert((ent, ent));
+        }
+    }
+
+    /// <summary>
     /// Polymorphs the target entity into the specific polymorph prototype
     /// </summary>
     /// <param name="uid">The entity that will be transformed</param>
@@ -164,6 +181,14 @@ public sealed partial class PolymorphSystem : EntitySystem
     {
         // if it's already morphed, don't allow it again with this condition active.
         if (!configuration.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(uid))
+            return null;
+
+        // TODO change signature?
+        // If this polymorph has a cooldown, check if that amount of time has passed since the
+        // last polymorph ended.
+        if (TryComp<PolymorphableComponent>(uid, out var polymorphableComponent) &&
+            polymorphableComponent.LastPolymorphEnd != null &&
+            _gameTiming.CurTime < polymorphableComponent.LastPolymorphEnd + configuration.Cooldown)
             return null;
 
         // mostly just for vehicles
@@ -298,6 +323,9 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
             _mindSystem.TransferTo(mindId, parent, mind: mind);
+
+        if (TryComp<PolymorphableComponent>(parent, out var polymorphableComponent))
+            polymorphableComponent.LastPolymorphEnd = _gameTiming.CurTime;
 
         // if an item polymorph was picked up, put it back down after reverting
         _transform.AttachToGridOrMap(parent, parentXform);

@@ -199,6 +199,19 @@
     sprite: Objects/Tanks/emergency_double_red.rsi
 
 - type: entity
+  parent: EmergencyOxygenTank
+  id: EmergencyFunnyOxygenTank
+  name: funny emergency oxygen tank
+  description: An easily portable tank for emergencies. Contains very little oxygen with an extra of funny gas, rated for survival use only.
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/emergency_clown.rsi
+  - type: Item
+    sprite: Objects/Tanks/emergency_clown.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/emergency_clown.rsi
+
+- type: entity
   parent: GasTankRoundBase
   id: AirTank
   name: air tank

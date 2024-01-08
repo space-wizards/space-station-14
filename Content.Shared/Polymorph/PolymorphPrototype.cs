@@ -107,6 +107,14 @@ public sealed partial record PolymorphConfiguration
     /// </summary>
     [DataField(serverOnly: true)]
     public bool AllowRepeatedMorphs;
+
+    /// <summary>
+    /// The amount of time that should pass after this polymorph has ended, before a new one
+    /// can occur.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan Cooldown = TimeSpan.Zero;
 }
 
 public enum PolymorphInventoryChange : byte

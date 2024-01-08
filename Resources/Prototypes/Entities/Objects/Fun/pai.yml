@@ -15,6 +15,8 @@
     interfaces:
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
+    - key: enum.StationMapUiKey.Key
+      type: UntrackedStationMapBoundUserInterface
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
     layers:
@@ -67,6 +69,7 @@
           Off: { state: pai-off-overlay }
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
+  - type: StationMap
 
 - type: entity
   parent: PersonalAI
@@ -138,3 +141,15 @@
     icon: Interface/Actions/pai-midi.png
     event: !type:OpenUiActionEvent
       key: enum.InstrumentUiKey.Key
+
+- type: entity
+  id: ActionPAIOpenMap
+  name: Open Map
+  description: Open your map interface and guide your owner.
+  noSpawn: true
+  components:
+    - type: InstantAction
+      checkCanInteract: false
+      icon: Interface/home.png
+      event: !type:OpenUiActionEvent
+        key: enum.StationMapUiKey.Key
