@@ -43,6 +43,7 @@
 - type: entity
   parent: ReinforcementRadioSyndicateMonkey
   id: ReinforcementRadioSyndicateMonkeyNukeops # Reinforcement radio exclusive to nukeops uplink
+  suffix: NukeOps
   components:
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgentNukeops
