@@ -33,6 +33,8 @@
         !type:DamageTrigger
         damage: 300
       behaviors:
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
         - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Transform
@@ -91,6 +93,8 @@
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
+  - type: Machine
+    board: ShuttleGunLSESvalinnMachineGunCircuitboard
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -135,11 +139,13 @@
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
+  - type: Machine
+    board: ShuttleGunLSEPerforatorCircuitboard
   - type: ItemSlots
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: PowerCageSmallEmpty
+        startingItem: PowerCageSmall
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:
@@ -148,12 +154,22 @@
   - type: MagazineAmmoProvider
   - type: Appearance
 
+# ---- Other weapon ----
+
 - type: entity
   id: ShuttleGunPirateCannon
   parent: ShuttleGunBase
   name: pirate ship cannon
   description: Kaboom!
-  components: 
+  components:   
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors: # no deconstruction into machine frame
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Sprite
     sprite: Structures/Shuttles/Guns/pirate_cannon.rsi
     layers:
@@ -175,7 +191,7 @@
   id: ShuttleGunKineticCannon
   parent: ShuttleGunBase
   name: PTK-800 "Matter Dematerializer"
-  description: A powerful shuttle drill that allows for efficient asteroid digging.
+  description: Utilizer stationary mining turret. Gradually accumulates charges on its own, extremely effective for asteroid excavation.
   components:
   - type: Sprite
     sprite: Structures/Shuttles/Guns/kinetic_cannon.rsi
@@ -206,6 +222,8 @@
     proto: BulletKineticShuttle
     capacity: 5
     count: 5
+  - type: Machine
+    board: ShuttleGunKineticCannonCircuitboard
 
 - type: entity
   id: ShuttleGunGrenadeLauncher

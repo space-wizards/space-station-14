@@ -1254,3 +1254,54 @@
       Steel: 5
       CableHV: 5
       Uranium: 2
+
+- type: entity
+  id: ShuttleGunLSESvalinnMachineGunCircuitboard
+  parent: BaseMachineCircuitboard
+  name: LSE-400c "Svalinn machine gun" circuit board
+  description: A machine printed circuit board for an LSE-400c "Svalinn machine gun"
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunLSESvalinnMachineGun
+    requirements:
+      MatterBin: 2
+      Manipulator: 4
+    materialRequirements:
+      Steel: 5
+      CableHV: 5
+      
+- type: entity
+  id: ShuttleGunLSEPerforatorCircuitboard
+  parent: BaseMachineCircuitboard
+  name: LSE-1200c "Perforator" circuit board
+  description: A machine printed circuit board for an LSE-1200c "Perforator"
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunLSEPerforator
+    requirements:
+      MatterBin: 4
+      Manipulator: 6
+    materialRequirements:
+      Steel: 10
+      CableHV: 5
+      
+- type: entity
+  id: ShuttleGunKineticCannonCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PTK-800 "Matter Dematerializer" circuit board
+  description: A machine printed circuit board for an PTK-800 "Matter Dematerializer"
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunKineticCannon
+    requirements:
+      MatterBin: 2
+      Manipulator: 3
+    materialRequirements:
+      Steel: 5
+      CableHV: 2

@@ -427,6 +427,9 @@
       - ThrusterMachineCircuitboard
       - GyroscopeMachineCircuitboard
       - MiniGravityGeneratorCircuitboard
+      - ShuttleGunKineticCannonCircuitboard
+      - ShuttleGunLSESvalinnMachineGunCircuitboard
+      - ShuttleGunLSEPerforatorCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
