@@ -45,12 +45,13 @@
   parent: PinpointerBase
   components:
   - type: Pinpointer
-    components:
-    - NukeDisk
-    - Nuke
     componentNames:
     - name-pinpointer-component-nuke-disk
     - name-pinpointer-component-nuke
+    components:
+    - type: NukeDisk
+    - type: Nuke
+      explosionType: Default
 
 - type: entity
   name: syndicate pinpointer
@@ -64,12 +65,13 @@
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
-    components:
-    - NukeDisk
-    - BecomesStation
     componentNames:
     - name-pinpointer-component-nuke-disk
     - name-pinpointer-component-station
+    components:
+    - type: NukeDisk
+    - type: BecomesStation
+      id: station
 
 - type: entity
   name: universal pinpointer
@@ -98,7 +100,8 @@
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
-    components:
-    - BecomesStation
     componentNames:
     - name-pinpointer-component-station
+    components:
+    - type: BecomesStation
+      id: station

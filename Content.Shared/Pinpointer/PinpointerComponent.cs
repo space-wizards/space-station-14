@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Pinpointer;
@@ -17,7 +18,7 @@ public sealed partial class PinpointerComponent : Component
     ///     The closest entities found with one of the components in this list will be added to the StoredTargets.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public List<string> Components = new();
+    public ComponentRegistry Components = new();
 
     /// <summary>
     ///     A list of entities that are stored on the pinpointer

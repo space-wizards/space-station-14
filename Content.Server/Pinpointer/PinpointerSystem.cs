@@ -3,13 +3,10 @@ using Content.Shared.Pinpointer;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Popups;
-using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Nuke;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
-
 namespace Content.Server.Pinpointer;
 
 public sealed class PinpointerSystem : SharedPinpointerSystem
@@ -79,28 +76,24 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// <summary>
     ///     Searches the closest object that has a specific component, this entity is then added to the stored targets.
     /// </summary>
-    private void LocateTarget(EntityUid uid, PinpointerComponent component, EntityUid? user = null, string? selectedComponent = null)
+    private void LocateTarget(EntityUid uid, PinpointerComponent component, EntityUid? user = null, IComponent? selectedComponent = null)
     {
         //Searches the first component in the list if either the pinpointer was turned on or a FTL travel ended.
-        var targetedComponent = "";
         if (selectedComponent == null)
         {
-            targetedComponent = component.Components[0];
+            //targetedComponent = component.Components.
         }
         else
         {
-            targetedComponent = selectedComponent;
+            //targetedComponent = selectedComponent;
         }
 
         // try to find target from whitelist
-        if (!EntityManager.ComponentFactory.TryGetRegistration(targetedComponent, out var reg))
-        {
-            Log.Error($"Unable to find component registration for {targetedComponent} for pinpointer!");
-            DebugTools.Assert(false);
-            return;
-        }
 
-        var target = FindTargetFromComponent(uid, reg.Type);
+        if (selectedComponent == null)
+            return;
+
+        var target = FindTargetFromComponent(uid, selectedComponent.GetType());
 
         //Don't track or store the target if a fake variant is in the list of tracked targets.
         if (target != null)
@@ -305,14 +298,14 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         {
             foreach (var targetComponent in component.Components)
             {
-                storedOrder++;
                 args.Verbs.Add(new Verb()
                 {
                     Text = Loc.GetString(component.ComponentNames[storedOrder]),
-                    Act = () => LocateTarget(uid, component, args.User, targetComponent),
+                    Act = () => LocateTarget(uid, component, args.User, targetComponent.Value.Component),
                     Priority = 100,
                     Category = VerbCategory.SearchClosest,
                 });
+                storedOrder++;
             }
         }
 
@@ -333,7 +326,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
                 args.Verbs.Add(new Verb()
                 {
-                    Text = Loc.GetString(storedPrefix + Identity.Name(target, EntityManager) ),
+                    Text = storedPrefix + Identity.Name(target, EntityManager),
                     Act = () => SetTarget(uid, target, component, args.User),
                     Priority = 50,
                     Category = VerbCategory.SelectTarget
@@ -346,7 +339,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         {
             args.Verbs.Add(new Verb()
             {
-                Text = Loc.GetString("Reset-pinpointer-targets"),
+                Text = Loc.GetString("reset-pinpointer-targets"),
                 Act = () => DeleteStoredTargets(uid, component, args.User),
                 Category = null,
                 Priority = 25
