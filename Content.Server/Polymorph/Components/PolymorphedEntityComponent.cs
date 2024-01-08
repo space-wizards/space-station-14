@@ -12,7 +12,7 @@ public sealed partial class PolymorphedEntityComponent : Component
     /// about the polymorph
     /// </summary>
     [DataField(required: true)]
-    public PolymorphConfiguration Configuration;
+    public PolymorphConfiguration Configuration = new();
 
     /// <summary>
     /// The original entity that the player will revert back into
