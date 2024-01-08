@@ -188,7 +188,7 @@ public partial class NavMapControl : MapGridControl
         if (TrackedEntitySelectedAction == null)
             return;
 
-        if (args.Function == EngineKeyFunctions.Use)
+        if (args.Function == EngineKeyFunctions.UIClick)
         {
             if (_xform == null || _physics == null || TrackedEntities.Count == 0)
                 return;
@@ -231,7 +231,7 @@ public partial class NavMapControl : MapGridControl
             TrackedEntitySelectedAction.Invoke(closestEntity);
         }
 
-        else if (args.Function == EngineKeyFunctions.UseSecondary)
+        else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
 
             // Clear current selection with right click
@@ -376,7 +376,6 @@ public partial class NavMapControl : MapGridControl
 
             var cache = IoCManager.Resolve<IResourceCache>();
             var zl = (WorldRange / WorldMaxRange * 100f);
-            //var fontSize = (int) Math.Round((1000 / (zl+50)), 0);
             var fontSize = (int) Math.Round((100 - zl) / 5, 0);
             _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), fontSize);
 
