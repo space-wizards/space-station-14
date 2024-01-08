@@ -359,7 +359,7 @@
       walkModifier: 0.6
       sprintModifier: 0.6
     - type: HeldSpeedModifier
-    - type: Sprite 
+    - type: Sprite
       sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
       layers:
         - state: base
