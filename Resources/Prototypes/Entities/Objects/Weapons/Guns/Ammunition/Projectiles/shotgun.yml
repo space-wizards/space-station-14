@@ -181,7 +181,7 @@
 
 - type: entity
   id: PelletGrapeshot #tally fucking ho
-  name: pellet (grapeshot)
+  name: grapeshot pellet
   noSpawn: true
   parent: BaseBullet
   components:
@@ -199,7 +199,7 @@
 
 - type: entity
   id: PelletGlass
-  name: shard (glass)
+  name: glass shard
   parent: BaseBullet
   noSpawn: true
   components:
