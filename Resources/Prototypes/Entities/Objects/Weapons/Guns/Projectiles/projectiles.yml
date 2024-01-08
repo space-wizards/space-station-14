@@ -139,7 +139,7 @@
     radius: 2.0
     energy: 7.0
   - type: IgniteOnCollide
-    fireStacks: 1
+    fireStacks: 0.25
 
 - type: entity
   id: BaseBulletAP
