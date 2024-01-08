@@ -1,0 +1,11 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBoaterhat
+  name: boater hat
+  description: A boater hat, for a lazy day on the river.
+  components:
+  - type: Sprite
+    sprite: _CD/Clothing/Head/Hats/boaterhat.rsi
+  - type: Clothing
+    sprite: _CD/Clothing/Head/Hats/boaterhat.rsi
+    
