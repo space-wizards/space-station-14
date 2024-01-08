@@ -167,6 +167,12 @@
   id: BorgModuleService
 
 - type: Tag
+  id: BorgModuleSyndicate
+
+- type: Tag
+  id: BorgModuleSyndicateAssault
+
+- type: Tag
   id: BorgServiceHead
 
 - type: Tag
@@ -490,9 +496,6 @@
 
 - type: Tag
   id: Flesh
-
-- type: Tag
-  id: WhitelistChameleon
 
 - type: Tag
   id: FirelockElectronics
@@ -1134,9 +1137,6 @@
   id: Wall
 
 - type: Tag
-  id: WetFloorSign
-
-- type: Tag
   id: WallmountGeneratorAPUElectronics
 
 - type: Tag
@@ -1150,6 +1150,12 @@
 
 - type: Tag
   id: WeaponShotgunKammerer
+
+- type: Tag
+  id: WetFloorSign
+
+- type: Tag
+  id: WhitelistChameleon
 
 - type: Tag
   id: Window

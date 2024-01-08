@@ -49,8 +49,9 @@
     deleteOnCollide: false
     canPenetrate: true
     damage:
-      groups:
-        Burn: 4
+      types:
+        Blunt: 1
+        Heat: 2
   - type: IgniteOnCollide
     fireStacks: 3
     count: 10
