@@ -14,12 +14,13 @@ namespace Content.Shared.Nuke
         /// station as the paper, or if it will get a random code from all
         /// possible nukes.
         /// </summary>
-        [DataField("allNukesAvailable")]
+        [DataField]
         public bool AllNukesAvailable;
 
         /// <summary>
         /// The nuke that will get primed using the code on the paper.
         /// </summary>
+        [DataField]
         public EntityUid? Nuke;
     }
 }

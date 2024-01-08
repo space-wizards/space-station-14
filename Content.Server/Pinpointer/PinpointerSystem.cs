@@ -298,14 +298,17 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (!args.CanInteract || args.Hands == null)
             return;
 
+        var storedOrder = 0;
+
         //Adds the closest target verb if there is at least 1 stored component.
         if (component.Components.Count > 0)
         {
             foreach (var targetComponent in component.Components)
             {
+                storedOrder++;
                 args.Verbs.Add(new Verb()
                 {
-                    Text = Loc.GetString(component.ComponentNames[component.Components.IndexOf(targetComponent)]),
+                    Text = Loc.GetString(component.ComponentNames[storedOrder]),
                     Act = () => LocateTarget(uid, component, args.User, targetComponent),
                     Priority = 100,
                     Category = VerbCategory.SearchClosest,
@@ -313,7 +316,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             }
         }
 
-        var storedOrder = 0;
+        storedOrder = 0;
 
         //Adds the target selection verb if there is more than 1 stored target.
         if (component.StoredTargets.Count > 1)
@@ -343,7 +346,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         {
             args.Verbs.Add(new Verb()
             {
-                Text = Loc.GetString("Reset targets"),
+                Text = Loc.GetString("Reset-pinpointer-targets"),
                 Act = () => DeleteStoredTargets(uid, component, args.User),
                 Category = null,
                 Priority = 25

@@ -4,6 +4,7 @@ targeting-pinpointer-failed = Target not detected
 targeting-pinpointer-already-tracked = Already tracking selected target
 cycle-pinpointer-target = Change target
 prefix-pinpointer-targets = [{$storedOrder}]
+reset-pinpointer-targets = Reset targets
 target-pinpointer-stored = {$target} has been saved
 target-pinpointer-full = Pinpointer tracking storage is full
 name-pinpointer-component-nuke-disk = nuclear authentication disk
