@@ -80,7 +80,7 @@ public sealed partial class HandsComponent : Component
     ///     The absolute minimum time inbetween throws.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan ThrowCooldown = TimeSpan.FromSeconds(0.25f);
+    public TimeSpan ThrowCooldown = TimeSpan.FromSeconds(0.5f);
 }
 
 [Serializable, NetSerializable]
