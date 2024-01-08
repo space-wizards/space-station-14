@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Client.Hands.Systems;
 using Content.Shared.Weapons.Ranged.Components;
-using FastAccessors;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
