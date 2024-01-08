@@ -114,7 +114,7 @@
     foodPreference: Humanoid
     shouldStoreDevoured: true
     chemical: Ichor
-    healRate: 15.0
+    healSolutionSize: 15.0
     stomachChemicals:
     - CarpoToxin
     - Pax
