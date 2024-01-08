@@ -248,6 +248,14 @@
       factions:
         - Syndicate
     - type: Access
+      enabled: false
+      groups:
+      - Syndicate
+    - type: Lock
+      locked: true
+    - type: ActivatableUIRequiresLock
+    - type: AccessReader
+      access: ["Syndicate"]
     - type: SiliconLawProvider
       laws: SyndicateStatic
     - type: IntrinsicRadioTransmitter
@@ -257,5 +265,4 @@
     - type: ActiveRadio
       channels:
         - Syndicate
-    - type: NoSlip
-    - type: MovementAlwaysTouching
+    - type: ShowSyndicateIcons
