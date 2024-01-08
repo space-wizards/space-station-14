@@ -3,7 +3,7 @@
   mapName: 'Reach'
   mapPath: /Maps/reach.yml
   minPlayers: 0
-  maxPlayers: 10
+  maxPlayers: 5
   stations:
     Reach:
       stationProto: StandardNanotrasenStation
