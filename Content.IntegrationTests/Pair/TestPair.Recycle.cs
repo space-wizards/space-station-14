@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.IO;
 using System.Linq;
 using Content.Server.GameTicking;
@@ -203,17 +203,17 @@ public sealed partial class TestPair : IAsyncDisposable
 
         if (settings.InLobby)
         {
-            Assert.Null(session.AttachedEntity);
+            Assert.That(session.AttachedEntity, Is.Null);
             return;
         }
 
-        Assert.NotNull(session.AttachedEntity);
+        Assert.That(session.AttachedEntity, Is.Not.Null);
         Assert.That(entMan.EntityExists(session.AttachedEntity));
         Assert.That(entMan.HasComponent<MindContainerComponent>(session.AttachedEntity));
         var mindCont = entMan.GetComponent<MindContainerComponent>(session.AttachedEntity!.Value);
-        Assert.NotNull(mindCont.Mind);
-        Assert.True(entMan.TryGetComponent(mindCont.Mind, out MindComponent? mind));
-        Assert.Null(mind!.VisitingEntity);
+        Assert.That(mindCont.Mind, Is.Not.Null);
+        Assert.That(entMan.TryGetComponent(mindCont.Mind, out MindComponent? mind));
+        Assert.That(mind!.VisitingEntity, Is.Null);
         Assert.That(mind.OwnedEntity, Is.EqualTo(session.AttachedEntity!.Value));
         Assert.That(mind.UserId, Is.EqualTo(session.UserId));
     }

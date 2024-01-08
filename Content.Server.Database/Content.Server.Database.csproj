@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
     <TargetFramework>$(TargetFramework)</TargetFramework>
@@ -20,7 +20,7 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
 
     <!-- Necessary at design time -->
-    <PackageReference Include="SQLitePCLRaw.provider.e_sqlite3" Condition="'$(UseSystemSqlite)' != 'True' and '$(Configuration)' != 'Release'" />
+    <PackageReference Include="SQLitePCLRaw.provider.sqlite3" Condition="'$(UseSystemSqlite)' == 'True' and '$(Configuration)' != 'Release'" />
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Condition="'$(UseSystemSqlite)' != 'True' and '$(Configuration)' != 'Release'" />
   </ItemGroup>
 

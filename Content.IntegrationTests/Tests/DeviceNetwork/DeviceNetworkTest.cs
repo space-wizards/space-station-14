@@ -103,7 +103,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
             await server.WaitAssertion(() =>
             {
-                CollectionAssert.AreEquivalent(deviceNetTestSystem.LastPayload, payload);
+                Assert.That(payload, Is.EquivalentTo(deviceNetTestSystem.LastPayload));
             });
             await pair.CleanReturnAsync();
         }
@@ -170,7 +170,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
             await server.WaitAssertion(() =>
             {
-                CollectionAssert.AreEqual(deviceNetTestSystem.LastPayload, payload);
+                Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload).AsCollection);
 
                 payload = new NetworkPayload
                 {
@@ -187,7 +187,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
             await server.WaitAssertion(() =>
             {
-                CollectionAssert.AreNotEqual(deviceNetTestSystem.LastPayload, payload);
+                Assert.That(payload, Is.Not.EqualTo(deviceNetTestSystem.LastPayload).AsCollection);
             });
 
             await pair.CleanReturnAsync();
@@ -270,7 +270,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
             await server.WaitAssertion(() =>
             {
-                CollectionAssert.AreEqual(deviceNetTestSystem.LastPayload, payload);
+                Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload).AsCollection);
             });
 
             await pair.CleanReturnAsync();
