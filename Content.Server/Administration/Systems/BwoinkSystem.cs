@@ -56,6 +56,7 @@ namespace Content.Server.Administration.Systems
         private readonly HashSet<NetUserId> _processingChannels = new();
         private readonly Dictionary<NetUserId, (RestThreadChannel channel, GameRunLevel lastRunLevel)> _relayMessages = new();
         private ulong _channelId = 0;
+        private string _prefix = "!";
 
         public override void Initialize()
         {
@@ -66,6 +67,7 @@ namespace Content.Server.Administration.Systems
             _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
             _config.OnValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
             _config.OnValueChanged(CCVars.AdminAhelpRelayChannelId, OnChannelIdChanged, true);
+            _config.OnValueChanged(CCVars.DiscordPrefix, OnDiscordPrefixChanged, true);
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             if (_discord.Client is not null)
             {
@@ -77,12 +79,22 @@ namespace Content.Server.Administration.Systems
             SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
         }
 
+        private void OnDiscordPrefixChanged(string obj)
+        {
+            if (obj == string.Empty)
+            {
+                _sawmill.Warning("Discord prefix is empty. Setting to default.");
+                obj = "!";
+            }
+            _prefix = obj;
+        }
+
         private async Task<Task> OnReceiveNewRelay(SocketMessage arg)
         {
             if (arg.Author.IsBot)
                 return Task.CompletedTask;
 
-            if (!arg.Content.StartsWith("!ahelp")) // Not an ahelp request
+            if (!arg.Content.StartsWith(_prefix + "ahelp")) // Not an ahelp request
                 return Task.CompletedTask;
 
             // Check if args are valid
@@ -176,11 +188,12 @@ namespace Content.Server.Administration.Systems
                     continue; // That is a comment for breadmemes to discuss within the thread
 
                 // Command handling
-                if (arg.Content.StartsWith("!"))
+                if (arg.Content.StartsWith(_prefix))
                 {
-                    switch (arg.Content)
+                    var contentWithoutPrefix = arg.Content.Remove(0, _prefix.Length);
+                    switch (contentWithoutPrefix)
                     {
-                        case "!status":
+                        case "status":
                             var embed = GenerateEmbed(session);
                             arg.Channel.SendMessageAsync(embed: embed.Build());
                             break;
@@ -304,9 +317,14 @@ namespace Content.Server.Administration.Systems
             _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
             _config.UnsubValueChanged(CCVars.AdminAhelpOverrideClientName, OnOverrideChanged);
             _config.UnsubValueChanged(CCVars.AdminAhelpRelayChannelId, OnChannelIdChanged);
+            _config.UnsubValueChanged(CCVars.DiscordPrefix, OnDiscordPrefixChanged);
+
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
             if (_discord.Client is not null)
+            {
                 _discord.Client.MessageReceived -= OnDiscordMessageReceived;
+                _discord.Client.MessageReceived -= OnReceiveNewRelay;
+            }
 
             _relayMessages.Clear(); // Just in case.
         }
@@ -387,7 +405,7 @@ namespace Content.Server.Administration.Systems
             // If the relay is not null, give a list of available commands for the admins to use.
             if (relay is not null)
             {
-                await relay.SendMessageAsync("Use `!status` to get regenerate the status embed as seen above. `-` in the beginning of a message will be cause the message to not be relayed to the player.");
+                await relay.SendMessageAsync($"Use `{_prefix}status` to regenerate the status embed as seen above. `-` in the beginning of a message will be cause the message to not be relayed to the player.");
             }
 
             return relay;

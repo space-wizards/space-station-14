@@ -392,6 +392,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> DiscordGuildId =
             CVarDef.Create("discord.guild_id", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Prefix for the Discord bot.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordPrefix =
+            CVarDef.Create("discord.prefix", "!", CVar.SERVERONLY);
         /*
          * Suspicion
          */
@@ -819,7 +825,7 @@ namespace Content.Shared.CCVar
 
         /// <summary>
         ///     The threshold of minutes to appear as a "new player" in the ahelp menu
-        ///     If 0, appearing as a new player is disabled. 
+        ///     If 0, appearing as a new player is disabled.
         /// </summary>
         public static readonly CVarDef<int> NewPlayerThreshold =
             CVarDef.Create("admin.new_player_threshold", 0, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
