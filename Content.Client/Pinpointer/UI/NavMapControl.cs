@@ -48,6 +48,9 @@ public partial class NavMapControl : MapGridControl
     protected float MaxSelectableDistance = 10f;
     protected float RecenterMinimum = 0.05f;
     protected float MinDragDistance = 5f;
+    protected static float MinDisplayedRange = 8f;
+    protected static float MaxDisplayedRange = 128f;
+    protected static float DefaultDisplayedRange = 48f;
 
     // Local variables
     private Vector2 _offset;
@@ -58,6 +61,10 @@ public partial class NavMapControl : MapGridControl
     private float _updateTimer = 0.25f;
     private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
     private Color _beaconColor;
+
+    // TODO: Make this changeable by the player
+    private int _targetFontsize = 10;
+
 
     // Components
     private NavMapComponent? _navMap;
@@ -91,14 +98,14 @@ public partial class NavMapControl : MapGridControl
         Pressed = false,
     };
 
-    public NavMapControl() : base(8f, 128f, 48f)
+    public NavMapControl() : base(MinDisplayedRange, MaxDisplayedRange, DefaultDisplayedRange)
     {
         IoCManager.InjectDependencies(this);
         var cache = IoCManager.Resolve<IResourceCache>();
 
         _transformSystem = _entManager.System<SharedTransformSystem>();
         _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 12);
-        _beaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
+        _beaconColor = Color.FromSrgb(TileColor.WithAlpha(0.9f));
 
         RectClipContent = true;
         HorizontalExpand = true;
@@ -291,7 +298,7 @@ public partial class NavMapControl : MapGridControl
             }
         }
 
-        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(WorldRange / WorldMaxRange * 100f):0.00}"));
+        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(DefaultDisplayedRange / WorldRange ):0.0}"));
 
         if (_navMap == null || _xform == null)
             return;
@@ -373,14 +380,14 @@ public partial class NavMapControl : MapGridControl
         if (_beacons.Pressed)
         {
             var rectBuffer = new Vector2(5f, 3f);
-
             var cache = IoCManager.Resolve<IResourceCache>();
-            var zl = (WorldRange / WorldMaxRange * 100f);
-            var fontSize = (int) Math.Round((100 - zl) / 5, 0);
-            _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), fontSize);
 
             foreach (var beacon in _navMap.Beacons)
             {
+                // Calculate font size for current zoom level
+                var fontSize = (int) Math.Round(1 / WorldRange * DefaultDisplayedRange * _targetFontsize, 0);
+                _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), fontSize);
+
                 var position = beacon.Position - offset;
                 position = Scale(position with { Y = -position.Y });
 
