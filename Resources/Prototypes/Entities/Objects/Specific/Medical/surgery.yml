@@ -7,7 +7,7 @@
   components:
   - type: Sprite
   - type: StaticPrice
-    price: 60
+    price: 20
 
 # Cautery
 
@@ -48,6 +48,8 @@
         Piercing: 10
     soundHit:
       path: /Audio/Items/drill_hit.ogg
+  - type: StaticPrice
+    price: 40
 
 # Scalpel
 
