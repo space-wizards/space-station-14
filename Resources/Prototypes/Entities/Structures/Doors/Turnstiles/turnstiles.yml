@@ -15,8 +15,6 @@
     noRot: true
     drawdepth: Mobs
     state: idle
-  - type: AnimationPlayer
-  - type: Physics
   - type: Rotatable
   - type: Transform
     noRot: false
@@ -25,7 +23,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+          bounds: "-0.49,-0.49,0.49,0.49" # same dimensions as a door for tall turnstile, prevents objects being thrown through
         density: 100
         mask:
         - FullTileMask
@@ -51,10 +49,6 @@
   - type: Construction
     graph: Turnstile
     node: turnstile
-  - type: StaticPrice
-    price: 50
-  - type: LightningTarget
-    priority: 1
   placement:
     mode: SnapgridCenter
 
@@ -76,3 +70,15 @@
     graph: TurnstileShort
     node: turnstileshort
   - type: Anchorable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.05" # short turnstile has smaller bounds and acts more like machinery-sized object, allows thrown objects
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
