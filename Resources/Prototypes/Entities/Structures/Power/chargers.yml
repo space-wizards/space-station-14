@@ -94,6 +94,8 @@
   id: PowerCageRecharger
   name: cage recharger
   components:
+  - type: Charger
+    chargeRate: 50
   - type: Sprite
     sprite: Structures/Power/cage_recharger.rsi
   - type: PowerCellSlot

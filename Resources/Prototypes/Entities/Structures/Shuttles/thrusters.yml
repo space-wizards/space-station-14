@@ -41,12 +41,12 @@
     - type: ExtensionCableReceiver
     - type: Damageable
       damageContainer: Inorganic
-      damageModifierSet: Metallic
+      damageModifierSet: Electronic
     - type: Destructible
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 300  # Considering we need a lot of thrusters didn't want to make an individual one too tanky
+          damage: 100  # Considering we need a lot of thrusters didn't want to make an individual one too tanky
         behaviors:
           - !type:DoActsBehavior
             acts: ["Destruction"]
@@ -155,6 +155,9 @@
   - type: UpgradePowerDraw
     powerDrawMultiplier: 0.75
     scaling: Exponential
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Electronic
   - type: StaticPrice
     price: 2000
 

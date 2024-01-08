@@ -300,7 +300,7 @@
       - PowerCage
   - type: HitscanBatteryAmmoProvider
     proto: RedShuttleLaser
-    fireCost: 100
+    fireCost: 150
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
@@ -313,8 +313,26 @@
   description: A rechargeable power cage for big devices. This is the cheapest kind you can find.
   components:
   - type: Battery
-    maxCharge: 1000
-    startingCharge: 1000
+    maxCharge: 1500
+    startingCharge: 1500
+    
+- type: entity
+  id: PowerCageSmallEmpty
+  parent: PowerCageSmall
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+      visible: false
+  - type: Battery
+    maxCharge: 1500
+    startingCharge: 0
     
 - type: entity
   id: PowerCageMedium
@@ -323,8 +341,8 @@
   description: A rechargeable power cage for big devices. The gold standard of capacity and cost.
   components:
   - type: Battery
-    maxCharge: 2000
-    startingCharge: 2000
+    maxCharge: 3000
+    startingCharge: 3000
     
 - type: entity
   id: PowerCageHigh
@@ -333,5 +351,5 @@
   description: A rechargeable power cage for big devices. Increased capacity for increased power levels.
   components:
   - type: Battery
-    maxCharge: 3000
-    startingCharge: 3000
+    maxCharge: 6000
+    startingCharge: 6000
