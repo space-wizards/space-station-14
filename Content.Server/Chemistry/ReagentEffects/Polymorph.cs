@@ -18,7 +18,7 @@ public sealed partial class Polymorph : ReagentEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     => Loc.GetString("reagent-effect-guidebook-make-polymorph",
             ("chance", Probability), ("entityname",
-                prototype.Index<EntityPrototype>(prototype.Index<PolymorphPrototype>(PolymorphPrototype).Entity).Name));
+                prototype.Index<EntityPrototype>(prototype.Index<PolymorphPrototype>(PolymorphPrototype).Configuration.Entity).Name));
 
     public override void Effect(ReagentEffectArgs args)
     {

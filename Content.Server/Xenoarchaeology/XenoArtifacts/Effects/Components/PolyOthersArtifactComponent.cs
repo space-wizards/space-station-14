@@ -1,3 +1,4 @@
+using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 using Robust.Shared.Audio;
 using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
@@ -8,7 +9,8 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 /// Artifact polymorphs surrounding entities when triggered.
 /// </summary>
 [RegisterComponent]
-public sealed partial class PolyArtifactComponent : Component
+[Access(typeof(PolyOthersArtifactSystem))]
+public sealed partial class PolyOthersArtifactComponent : Component
 {
     /// <summary>
     /// The polymorph effect to trigger.
