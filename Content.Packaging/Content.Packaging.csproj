@@ -7,9 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NVorbis" PrivateAssets="compile" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\RobustToolbox\Robust.Packaging\Robust.Packaging.csproj" />
   </ItemGroup>
 
