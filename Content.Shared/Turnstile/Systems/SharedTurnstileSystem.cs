@@ -85,7 +85,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
                 comp.Uid = args.OtherEntity;
 
                 // Play sound of turning
-                _audio.PlayPvs(turnstile.TurnSound, ent, AudioParams.Default.WithVolume(-3));
+                _audio.PlayPredicted(turnstile.TurnSound, ent, args.OtherEntity, AudioParams.Default.WithVolume(-3));
 
                 // We have to set collidable to false for one frame, otherwise the client does not
                 // predict the removal of the contacts properly, and instead thinks the mob is colliding when it isn't.
@@ -95,13 +95,13 @@ public abstract class SharedTurnstileSystem : EntitySystem
             else
             {
                 // Reject the entity, play sound
-                _audio.PlayPvs(turnstile.BumpSound, ent, AudioParams.Default.WithVolume(-3));
+                _audio.PlayPredicted(turnstile.BumpSound, ent, args.OtherEntity, AudioParams.Default.WithVolume(-3));
             }
         }
         else
         {
             // Reject the entity, play sound
-            _audio.PlayPvs(turnstile.BumpSound, ent, AudioParams.Default.WithVolume(-3));
+            _audio.PlayPredicted(turnstile.BumpSound, ent, args.OtherEntity, AudioParams.Default.WithVolume(-3));
         }
     }
 
