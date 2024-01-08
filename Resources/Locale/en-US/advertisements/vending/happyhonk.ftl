@@ -7,3 +7,6 @@ advertisement-happyhonk-6 = How many security officers does it take to arrest yo
 advertisement-happyhonk-7 = Happy Honk is not responsible for the quality of the food placed within our Happy Honk meal boxes.
 advertisement-happyhonk-8 = Why not ask for our limited edition Mime Happy Honk Meal?
 advertisement-happyhonk-9 = Happy Honk is a trademark of Honk! co. and is far superior to Robust Nukie Food corp.
+thankyou-happyhonk-1 = Honk!
+thankyou-happyhonk-2 = Honk honk!
+thankyou-happyhonk-3 = Go share the fun! Honk!

@@ -5,3 +5,5 @@ advertisement-cola-4 = Thirsty? Why not cola?
 advertisement-cola-5 = Please, have a drink!
 advertisement-cola-6 = Drink up!
 advertisement-cola-7 = The best drinks in the galaxy!
+thankyou-cola-1 = Pop open that can and enjoy!
+thankyou-cola-2 = Pow! Take that, thirst!

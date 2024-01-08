@@ -37,7 +37,7 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly ChatSystem _chat = default!;
+        [Dependency] private readonly AdvertiseSystem _advertise = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -390,7 +390,7 @@ namespace Content.Server.VendingMachines
             // Only vendors that advertise will send message after dispensing
             if (TryComp<AdvertiseComponent>(uid, out var advertise))
             {
-                _chat.TrySendInGameICMessage(uid, Loc.GetString("vending-machine-thanks", ("name", Name(uid))), InGameICChatType.Speak, true);
+                _advertise.SayThankYou(uid, advertise);
             }
 
             vendComponent.NextItemToEject = null;
