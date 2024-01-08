@@ -248,14 +248,14 @@
       factions:
         - Syndicate
     - type: Access
-      enabled: false
-      groups:
-      - Syndicate
+      tags:
+       - NuclearOperative
+       - SyndicateAgent
     - type: Lock
       locked: true
     - type: ActivatableUIRequiresLock
     - type: AccessReader
-      access: ["Syndicate"]
+      access: [["SyndicateAgent"], ["NuclearOperative"]]
     - type: SiliconLawProvider
       laws: SyndicateStatic
     - type: IntrinsicRadioTransmitter
