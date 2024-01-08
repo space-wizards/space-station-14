@@ -266,3 +266,4 @@
       channels:
         - Syndicate
     - type: ShowSyndicateIcons
+    - type: MovementAlwaysTouching
