@@ -16,7 +16,7 @@
   generator: !type:NoiseDunGen
     tileCap: 1500
     capStd: 32
-    iterations: 1
+    iterations: 3
     layers:
       - tile: FloorAsteroidSand
         threshold: 0.30
