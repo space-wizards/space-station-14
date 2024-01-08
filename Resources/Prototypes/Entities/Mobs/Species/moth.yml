@@ -34,12 +34,12 @@
     - id: FoodMeat
       amount: 5
   - type: Bloodstream
-    bloodReagent: CopperBlood
+    bloodReagent: InsectBlood
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
-        color: "#162581"
+        color: "#50683C"
   - type: MothAccent
   - type: Vocal
     sounds:
