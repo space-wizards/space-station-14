@@ -2,17 +2,9 @@
 
 [game]
 hostname = "[EN] Wizard's Den Vulture [US East 2]"
-soft_max_players = 80
 
 [hub]
 tags = "lang:en,region:am_n_e,rp:low"
 
 [worldgen]
 enabled = true
-
-[shuttle]
-auto_call_time = 0
-
-[replay]
-max_compressed_size = 6291456
-max_uncompressed_size = 25165824

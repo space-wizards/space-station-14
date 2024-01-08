@@ -21,12 +21,13 @@
   - type: Body
     prototype: Reptilian
     requiredLegs: 2
-  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeatLizard
       amount: 5
+  - type: Inventory
+    speciesId: reptilian
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
@@ -57,7 +58,7 @@
         Cold : 0.1 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 0.1 #per second, scales with temperature & other constants
+        Heat : 1.5 #per second, scales with temperature & other constants
 
 - type: entity
   parent: BaseSpeciesDummy

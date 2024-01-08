@@ -81,6 +81,8 @@
   - type: Tag
     tags:
     - KeyedInstrument
+  - type: StaticPrice
+    price: 90
 
 - type: entity
   parent: BaseHandheldInstrument

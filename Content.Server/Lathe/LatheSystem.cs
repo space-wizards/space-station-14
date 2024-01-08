@@ -59,42 +59,6 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
             SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
             SubscribeLocalEvent<LatheHeatProducingComponent, LatheStartPrintingEvent>(OnHeatStartPrinting);
-
-            SubscribeLocalEvent<LatheComponent, LatheEjectMaterialMessage>(OnLatheEjectMessage);
-        }
-
-        private void OnLatheEjectMessage(EntityUid uid, LatheComponent lathe, LatheEjectMaterialMessage message)
-        {
-            if (!lathe.CanEjectStoredMaterials)
-                return;
-
-            if (!_proto.TryIndex<MaterialPrototype>(message.Material, out var material))
-                return;
-
-            var volume = 0;
-
-            if (material.StackEntity != null)
-            {
-                var entProto = _proto.Index<EntityPrototype>(material.StackEntity);
-                if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
-                    return;
-
-                var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == message.Material).Value;
-                var sheetsToExtract = Math.Min(message.SheetsToExtract, _stack.GetMaxCount(material.StackEntity));
-
-                volume = sheetsToExtract * volumePerSheet;
-            }
-
-            if (volume > 0 && _materialStorage.TryChangeMaterialAmount(uid, message.Material, -volume))
-            {
-                var mats = _materialStorage.SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out _);
-                foreach (var mat in mats)
-                {
-                    if (TerminatingOrDeleted(mat))
-                        continue;
-                    _stack.TryMergeToContacts(mat);
-                }
-            }
         }
 
         public override void Update(float frameTime)
@@ -116,7 +80,7 @@ namespace Content.Server.Lathe
                     continue;
                 heatComp.NextSecond += TimeSpan.FromSeconds(1);
 
-                var position = _transform.GetGridTilePositionOrDefault((uid,xform));
+                var position = _transform.GetGridTilePositionOrDefault((uid, xform));
                 _environments.Clear();
 
                 if (_atmosphere.GetTileMixture(xform.GridUid, xform.MapUid, position, true) is { } tileMix)
@@ -143,7 +107,7 @@ namespace Content.Server.Lathe
             if (args.Storage != uid)
                 return;
             var materialWhitelist = new List<ProtoId<MaterialPrototype>>();
-            var recipes = GetAllBaseRecipes(component);
+            var recipes = GetAvailableRecipes(uid, component, true);
             foreach (var id in recipes)
             {
                 if (!_proto.TryIndex(id, out var proto))
@@ -162,18 +126,18 @@ namespace Content.Server.Lathe
         }
 
         [PublicAPI]
-        public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<ProtoId<LatheRecipePrototype>>? recipes, [NotNullWhen(true)] LatheComponent? component = null)
+        public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<ProtoId<LatheRecipePrototype>>? recipes, [NotNullWhen(true)] LatheComponent? component = null, bool getUnavailable = false)
         {
             recipes = null;
             if (!Resolve(uid, ref component))
                 return false;
-            recipes = GetAvailableRecipes(uid, component);
+            recipes = GetAvailableRecipes(uid, component, getUnavailable);
             return true;
         }
 
-        public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component)
+        public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component, bool getUnavailable = false)
         {
-            var ev = new LatheGetRecipesEvent(uid)
+            var ev = new LatheGetRecipesEvent(uid, getUnavailable)
             {
                 Recipes = new List<ProtoId<LatheRecipePrototype>>(component.StaticRecipes)
             };
@@ -272,7 +236,7 @@ namespace Content.Server.Lathe
 
             foreach (var recipe in latheComponent.DynamicRecipes)
             {
-                if (!component.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
+                if (!(args.getUnavailable || component.UnlockedRecipes.Contains(recipe)) || args.Recipes.Contains(recipe))
                     continue;
                 args.Recipes.Add(recipe);
             }
@@ -282,11 +246,11 @@ namespace Content.Server.Lathe
         {
             if (uid != args.Lathe || !TryComp<TechnologyDatabaseComponent>(uid, out var technologyDatabase))
                 return;
-            if (!HasComp<EmaggedComponent>(uid))
+            if (!args.getUnavailable && !HasComp<EmaggedComponent>(uid))
                 return;
             foreach (var recipe in component.EmagDynamicRecipes)
             {
-                if (!technologyDatabase.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
+                if (!(args.getUnavailable || technologyDatabase.UnlockedRecipes.Contains(recipe)) || args.Recipes.Contains(recipe))
                     continue;
                 args.Recipes.Add(recipe);
             }

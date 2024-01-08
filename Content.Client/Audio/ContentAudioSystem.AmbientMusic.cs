@@ -26,7 +26,6 @@ public sealed partial class ContentAudioSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IResourceCache _resource = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly RulesSystem _rules = default!;
@@ -153,8 +152,7 @@ public sealed partial class ContentAudioSystem
         // Update still runs in lobby so just ignore it.
         if (_state.CurrentState is not GameplayState)
         {
-            Audio.Stop(_ambientMusicStream);
-            _ambientMusicStream = null;
+            _ambientMusicStream = Audio.Stop(_ambientMusicStream);
             _musicProto = null;
             return;
         }

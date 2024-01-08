@@ -30,6 +30,7 @@ petting-success-hamster = You pet {THE($target)} on {POSS-ADJ($target)} fluffy l
 petting-success-bear = You reluctantly pet {THE($target)} on {POSS-ADJ($target)} mystical head.
 petting-success-slimes = You pet {THE($target)} on {POSS-ADJ($target)} mucous surface.
 petting-success-snake = You pet {THE($target)} on {POSS-ADJ($target)} scaly large head.
+petting-success-monkey = You pet {THE($target)} on {POSS-ADJ($target)} mischevious little head.
 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
 
@@ -49,6 +50,7 @@ petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($targe
 petting-failure-dragon = You raise your hand, but as {THE($target)} roars, you decide you'd rather not be toasty carp food.
 petting-failure-hamster = You reach out to pet {THE($target)}, but {SUBJECT($target)} attempts to bite your finger and only your quick reflexes save you from an almost fatal injury.
 petting-failure-bear = You reach out to pet {THE($target)}, but {SUBJECT($target)} growls, making you think twice.
+petting-failure-monkey = You reach out to pet {THE($target)}, but {SUBJECT($target)} almost bites your fingers!
 
 ## Petting silicons
 
@@ -77,3 +79,9 @@ fence-rattle-success = *rattle*
 hugging-success-generic = You hug {THE($target)}.
 hugging-success-generic-others = { CAPITALIZE(THE($user)) } hugs {THE($target)}.
 hugging-success-generic-target = { CAPITALIZE(THE($user)) } hugs you.
+
+## Other
+
+petting-success-tesla = You pet {THE($target)}, violating the laws of nature and physics.
+
+petting-failure-tesla = You reach out towards {THE($target)}, but it zaps your hand away.

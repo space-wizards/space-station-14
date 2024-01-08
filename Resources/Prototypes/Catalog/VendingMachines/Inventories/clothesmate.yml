@@ -15,6 +15,8 @@
     ClothingUniformJumpskirtColorGrey: 8
     ClothingUniformJumpsuitColorWhite: 3
     ClothingUniformJumpskirtColorWhite: 3
+    ClothingUniformJumpsuitColorBlack: 3
+    ClothingUniformJumpskirtColorBlack: 3
     ClothingUniformJumpsuitColorBlue: 2
     ClothingUniformJumpskirtColorBlue: 2
     ClothingUniformJumpsuitColorYellow: 2
@@ -68,8 +70,16 @@
     ClothingHeadRastaHat: 2
     ClothingBeltStorageWaistbag: 3
     ClothingEyesGlasses: 6
-    ClothingEyesGlassesCosmeticSunglasses: 6
+    ClothingEyesGlassesSunglasses: 2
     ClothingHandsGlovesColorBlack: 4
+    ClothingHandsGlovesColorGray: 4
+    ClothingHandsGlovesColorBrown: 2
+    ClothingHandsGlovesColorWhite: 2
+    ClothingHandsGlovesColorRed: 2
+    ClothingHandsGlovesColorBlue: 2
+    ClothingHandsGlovesColorGreen: 2
+    ClothingHandsGlovesColorOrange: 2
+    ClothingHandsGlovesColorPurple: 2
   contrabandInventory:
     ClothingUniformJumpsuitTacticool: 1
     ClothingUniformJumpskirtTacticool: 1

@@ -4,6 +4,8 @@
   id: Lighter
   description: "A simple plastic cigarette lighter."
   components:
+  - type: IgnitionSource
+    ignited: false
   - type: ItemToggle
     predictable: false
     soundActivate:
@@ -33,25 +35,15 @@
     available:
       - skin:
           basic_icon_base-1: ""
-      - skin:
           basic_icon_base-2: ""
-      - skin:
           basic_icon_base-3: ""
-      - skin:
           basic_icon_base-4: ""
-      - skin:
           basic_icon_base-5: ""
-      - skin:
           basic_icon_base-6: ""
-      - skin:
           basic_icon_base-7: ""
-      - skin:
           basic_icon_base-8: ""
-      - skin:
           basic_icon_base-9: ""
-      - skin:
           basic_icon_base-10: ""
-      - skin:
           basic_icon_base-11: ""
   - type: GenericVisualizer
     visuals:
@@ -71,7 +63,7 @@
   - type: Item
     size: Tiny
     sprite: Objects/Tools/lighters.rsi
-  - type: ItemCooldown
+  - type: UseDelay
   - type: RefillableSolution
     solution: Welder
   - type: SolutionContainerManager

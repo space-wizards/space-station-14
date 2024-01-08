@@ -786,8 +786,8 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkGoldschlagerGlass
-  name: goldschlager glass
+  id: DrinkGildlagerGlass
+  name: gildlager glass
   description: 100 proof that teen girls will drink anything with gold in it.
   components:
   - type: SolutionContainerManager
@@ -795,11 +795,11 @@
       drink:
         maxVol: 30
         reagents:
-        - ReagentId: Goldschlager
+        - ReagentId: Gildlager
           Quantity: 30
   - type: Drink
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/goldschlagerglass.rsi
+    sprite: Objects/Consumable/Drinks/gildlagerglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -2166,10 +2166,12 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 30
+        maxVol: 40 #big cup
         reagents:
         - ReagentId: DryRamen
-          Quantity: 30
+          Quantity: 25
+        - ReagentId: Soysauce
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ramen.rsi
   - type: Tag
@@ -2186,10 +2188,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 30
+        maxVol: 40
         reagents:
         - ReagentId: DryRamen
-          Quantity: 30
+          Quantity: 25
         - ReagentId: CapsaicinOil
           Quantity: 5
 
