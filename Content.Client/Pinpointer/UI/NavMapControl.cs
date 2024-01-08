@@ -231,12 +231,23 @@ public partial class NavMapControl : MapGridControl
             TrackedEntitySelectedAction.Invoke(closestEntity);
         }
 
-        else if (args.Function == EngineKeyFunctions.UIRightClick)
+        else if (args.Function == EngineKeyFunctions.UseSecondary)
         {
+
             // Clear current selection with right click
             if (TrackedEntitySelectedAction != null)
                 TrackedEntitySelectedAction.Invoke(null);
+
+            // Toggle beacon labels
+            if (_beacons.Pressed)
+                _beacons.Pressed = false;
+            else
+            {
+                _beacons.Pressed = true;
+            }
+
         }
+
     }
 
     protected override void MouseMove(GUIMouseMoveEventArgs args)
@@ -285,12 +296,7 @@ public partial class NavMapControl : MapGridControl
             }
         }
 
-        //_zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(WorldRange / WorldMaxRange * 100f):0.00}"));
-
-        //var zl = (WorldRange / WorldMaxRange * 100f);
-        //var fontSize = (int) Math.Round((1000 / (zl+50)), 0);
-        //var fontSize = (int) Math.Round((100 - (WorldRange / WorldMaxRange * 100f)) / 5, 0);
-        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(int) Math.Round((100 - (WorldRange / WorldMaxRange * 100f)) / 5, 0):0}"));
+        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(WorldRange / WorldMaxRange * 100f):0.00}"));
 
         if (_navMap == null || _xform == null)
             return;
