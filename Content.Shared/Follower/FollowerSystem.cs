@@ -39,10 +39,10 @@ public sealed class FollowerSystem : EntitySystem
         SubscribeLocalEvent<FollowedComponent, EntityTerminatingEvent>(OnFollowedTerminating);
         SubscribeLocalEvent<BeforeSaveEvent>(OnBeforeSave);
 
-        SubscribeLocalEvent<DenyFollowComponent, ComponentInit>(OnDenyAdd);
+        SubscribeLocalEvent<DenyFollowComponent, MapInitEvent>(OnDenyAdd);
     }
 
-    private void OnDenyAdd(EntityUid uid, DenyFollowComponent component, ComponentInit args)
+    private void OnDenyAdd(EntityUid uid, DenyFollowComponent component, MapInitEvent args)
     {
         if (!TryComp(uid, out FollowedComponent? follower))
             return;

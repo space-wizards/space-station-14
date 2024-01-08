@@ -6,7 +6,6 @@
   components:
   - type: Eye
     visMask:
-      - AdminObserver
       - Ghost
       - Normal
   - type: ContentEye
