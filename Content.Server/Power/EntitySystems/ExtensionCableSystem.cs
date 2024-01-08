@@ -11,6 +11,9 @@ namespace Content.Server.Power.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
+        private readonly Queue<EntityUid> _providersStartupQueue = new();
+        private readonly Queue<EntityUid> _receiversStartupQueue = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -29,6 +32,26 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ExtensionCableProviderComponent, ReAnchorEvent>(OnProviderReAnchor);
         }
 
+        public override void Update(float frameTime)
+        {
+            // When multiple entities containing providers and receivers initialize at once, e.g., during a map init,
+            // the entity initialization order dictates how things would end up connected, resulting in confusing
+            // connection when a receiver may get connected to a provider 3 tiles away behind a wall, instead of a
+            // provider that lies directly under that receiver. To avoid it we connect things next tick.
+            while (_receiversStartupQueue.TryDequeue(out var uid))
+            {
+                if (!TryComp<ExtensionCableReceiverComponent>(uid, out var receiver))
+                    continue;
+                TryFindAndSetProvider(receiver);
+            }
+            while (_providersStartupQueue.TryDequeue(out var uid))
+            {
+                if (!TryComp<ExtensionCableProviderComponent>(uid, out var provider))
+                    continue;
+                Connect(uid, provider);
+            }
+        }
+
         #region Provider
 
         public void SetProviderTransferRange(EntityUid uid, int range, ExtensionCableProviderComponent? provider = null)
@@ -42,7 +65,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnProviderStarted(EntityUid uid, ExtensionCableProviderComponent provider, ComponentStartup args)
         {
-            Connect(uid, provider);
+            _providersStartupQueue.Enqueue(uid);
         }
 
         private void OnProviderShutdown(EntityUid uid, ExtensionCableProviderComponent provider, ComponentShutdown args)
@@ -182,7 +205,7 @@ namespace Content.Server.Power.EntitySystems
 
             if (receiver.Provider == null)
             {
-                TryFindAndSetProvider(receiver);
+                _receiversStartupQueue.Enqueue(uid);
             }
         }
 
