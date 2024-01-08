@@ -430,6 +430,7 @@
       - ShuttleGunKineticCannonCircuitboard
       - ShuttleGunLSESvalinnMachineGunCircuitboard
       - ShuttleGunLSEPerforatorCircuitboard
+      - ShuttleGunLauncherDusterCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
@@ -695,6 +696,8 @@
       - MagazineBoxMagnumRubber
       - MagazineBoxPistolRubber
       - MagazineBoxRifleRubber
+      - MagazineGrenadeEMP
+      - MagazineGrenadeFlash
       - ShellShotgunBeanbag
       - ShellShotgunIncendiary
       - ShellShotgunUranium
@@ -710,6 +713,9 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+  - type: EmagLatheRecipes
+    emagStaticRecipes:
+      - MagazineGrenadeBlast
   - type: MaterialStorage
     whitelist:
       tags:

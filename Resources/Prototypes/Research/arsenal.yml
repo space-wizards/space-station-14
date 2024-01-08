@@ -194,3 +194,19 @@
   cost: 15000
   recipeUnlocks:
   - WeaponLaserSvalinn
+  
+- type: technology
+  id: MassDestructionWeapon
+  name: research-technology-mass-destruction-weapon
+  icon: 
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Grenade/grenade_cartridge.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - MagazineGrenadeEMP
+  - MagazineGrenadeFlash
+  - ShuttleGunLauncherDusterCircuitboard
+  technologyPrerequisites:
+  - BasicShuttleArmament

@@ -27,7 +27,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ShuttleGuns/grenade_cartridge.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Grenade/grenade_cartridge.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -40,14 +40,14 @@
   - type: Appearance
 
 - type: entity
-  id: MagazineShuttleCannonEmpty
+  id: MagazineGrenadeEmpty
   name: grenade cartridge
   parent: BaseMagazineGrenade
   components:
   - type: BallisticAmmoProvider
     
 - type: entity
-  id: MagazineShuttleCannonFrag
+  id: MagazineGrenadeFrag
   name: frag grenade cartridge
   parent: BaseMagazineGrenade
   components:
@@ -55,7 +55,7 @@
     proto: GrenadeFrag
 
 - type: entity
-  id: MagazineShuttleCannonEMP
+  id: MagazineGrenadeEMP
   name: EMP grenade cartridge
   parent: BaseMagazineGrenade
   components:
@@ -63,7 +63,7 @@
     proto: GrenadeEMP
 
 - type: entity
-  id: MagazineShuttleCannonFlash
+  id: MagazineGrenadeFlash
   name: flash grenade cartridge
   parent: BaseMagazineGrenade
   components:
@@ -71,7 +71,7 @@
     proto: GrenadeFlash
 
 - type: entity
-  id: MagazineShuttleCannonBlast
+  id: MagazineGrenadeBlast
   name: blast grenade cartridge
   parent: BaseMagazineGrenade
   components:
@@ -79,7 +79,7 @@
     proto: GrenadeBlast
 
 - type: entity
-  id: MagazineShuttleCannonBaton
+  id: MagazineGrenadeBaton
   name: baton grenade cartridge
   parent: BaseMagazineGrenade
   components:

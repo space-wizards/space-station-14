@@ -544,3 +544,30 @@
     Steel: 1000
     Glass: 500
     Plastic: 500
+     
+- type: latheRecipe
+  id: MagazineGrenadeEMP
+  result: MagazineGrenadeEMP
+  completetime: 3
+  materials:
+     Steel: 900
+     Plastic: 950
+     Glass: 200
+     
+- type: latheRecipe
+  id: MagazineGrenadeFlash
+  result: MagazineGrenadeFlash
+  completetime: 3
+  materials:
+     Steel: 500
+     Plastic: 550
+     Glass: 100
+     
+- type: latheRecipe
+  id: MagazineGrenadeBlast
+  result: MagazineGrenadeBlast
+  completetime: 3
+  materials:
+     Steel: 900
+     Plastic: 950
+     Glass: 600

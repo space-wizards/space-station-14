@@ -46,6 +46,7 @@ research-technology-advanced-riot-control = Advanced Riot Control
 research-technology-portable-microfusion-weaponry = Portable Microfusion Weaponry
 research-technology-experimental-battery-ammo = Experimental Battery Ammo
 research-technology-basic-shuttle-armament = Shuttle basic armament
+research-technology-mass-destruction-weapon = Mass destruction shuttle weapon
 
 research-technology-basic-robotics = Basic Robotics
 research-technology-basic-anomalous-research = Basic Anomalous Research

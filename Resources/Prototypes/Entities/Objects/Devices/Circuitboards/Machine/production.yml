@@ -1305,3 +1305,21 @@
     materialRequirements:
       Steel: 5
       CableHV: 2
+      
+- type: entity
+  id: ShuttleGunLauncherDusterCircuitboard
+  parent: BaseMachineCircuitboard
+  name: EXP-2100g "Duster" circuit board
+  description: A machine printed circuit board for an EXP-2100g "Duster"
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunLauncherDuster
+    requirements:
+      MatterBin: 6
+      Manipulator: 4
+    materialRequirements:
+      Steel: 10
+      CableHV: 5
+      Uranium: 2

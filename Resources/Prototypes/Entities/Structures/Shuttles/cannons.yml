@@ -194,9 +194,9 @@
   description: Utilizer stationary mining turret. Gradually accumulates charges on its own, extremely effective for asteroid excavation.
   components:
   - type: Sprite
-    sprite: Structures/Shuttles/Guns/kinetic_cannon.rsi
+    sprite: Structures/Shuttles/Guns/kinetic.rsi
     layers:
-    - state: base
+    - state: ptk-800
     - state: mag-7
   - type: Gun    
     projectileSpeed: 20
@@ -226,17 +226,17 @@
     board: ShuttleGunKineticCannonCircuitboard
 
 - type: entity
-  id: ShuttleGunGrenadeLauncher
+  id: ShuttleGunLauncherDuster
   parent: ShuttleGunBase
-  name: SYND-210EX "Dust"
-  description: A stationary rocket launcher. Can be loaded with various grenades.
+  name: EXP-2100g "Duster"
+  description: A powerful stationary grenade launcher. A cartridge is required for use. 
   components:
   - type: Appearance
   - type: Sprite
-    sprite: Structures/Shuttles/Guns/grenade_cannon.rsi
+    sprite: Structures/Shuttles/Guns/launcher.rsi
     layers:
-    - state: base
-    - state: mag-3
+    - state: exp-2100g
+    - state: mag-7
       map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     projectileSpeed: 40
@@ -250,16 +250,18 @@
         pitch: 0.8
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: Machine
+    board: ShuttleGunLauncherDusterCircuitboard
   - type: MagazineAmmoProvider
   - type: MagazineVisuals
     magState: mag
-    steps: 4
+    steps: 8
     zeroVisible: false
   - type: ItemSlots
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineShuttleCannonEmpty
+        startingItem: MagazineGrenadeEmpty
         priority: 2
         whitelist:
           tags:
