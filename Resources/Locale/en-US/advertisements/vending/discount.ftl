@@ -11,5 +11,5 @@ thankyou-discount-2 = Remember: no refunds!
 thankyou-discount-3 = It's your problem now!
 thankyou-discount-4 = We are legally obligated to remind you not to eat that.
 thankyou-discount-5 = Please don't sue us!
-thankyou-discount-6 = It looked like that when we stocked it!
+thankyou-discount-6 = We swear it looked like that when we stocked it!
 thankyou-discount-7 = Yeah, good luck with that.
