@@ -1233,19 +1233,24 @@
       Uranium: 2
 
 - type: entity
-  parent: BaseMachineCircuitboard
   id: PowerCageRechargerCircuitboard
+  parent: BaseMachineCircuitboard
   name: cage recharger machine board
-  description: A machine printed circuit board for a cage recharger.
-  component:
-  - type: MachineBoard
-    prototype: PowerCageRecharger
-    requirements:
-      Capacitor: 6
-      MatterBin: 1
-    materialRequirements:
-      Steel: 5
-      CableMV: 3
-      Glass: 3
-      Uranium: 1
-  
+  description: A machine printed circuit board for a energy cage recharger.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+    - type: MachineBoard
+      prototype: PowerCageRecharger
+      requirements:
+        Capacitor: 4
+      materialRequirements:
+        Steel: 5
+        Cable: 10
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 30
+        Plastic: 30
+    - type: StaticPrice
+      price: 15
