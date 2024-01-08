@@ -313,8 +313,28 @@
   description: A rechargeable power cage for big devices. This is the cheapest kind you can find.
   components:
   - type: Battery
-    maxCharge: 1500
-    startingCharge: 1500
+    maxCharge: 1400
+    startingCharge: 1400
+    
+- type: entity
+  id: PowerCageMedium
+  parent: BasePowerCage
+  name: medium-capacity power cage
+  description: A rechargeable power cage for big devices. The gold standard of capacity and cost.
+  components:
+  - type: Battery
+    maxCharge: 2700
+    startingCharge: 2700
+    
+- type: entity
+  id: PowerCageHigh
+  parent: BasePowerCage
+  name: high-capacity power cage
+  description: A rechargeable power cage for big devices. Increased capacity for increased power levels.
+  components:
+  - type: Battery
+    maxCharge: 6200
+    startingCharge: 6200
     
 - type: entity
   id: PowerCageSmallEmpty
@@ -331,25 +351,39 @@
       shader: unshaded
       visible: false
   - type: Battery
-    maxCharge: 1500
+    maxCharge: 1400
     startingCharge: 0
     
 - type: entity
-  id: PowerCageMedium
-  parent: BasePowerCage
-  name: medium-capacity power cage
-  description: A rechargeable power cage for big devices. The gold standard of capacity and cost.
+  id: PowerCageMediumEmpty
+  parent: PowerCageMedium
+  suffix: Empty
   components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+      visible: false
   - type: Battery
-    maxCharge: 3000
-    startingCharge: 3000
+    startingCharge: 0
     
 - type: entity
-  id: PowerCageHigh
-  parent: BasePowerCage
-  name: high-capacity power cage
-  description: A rechargeable power cage for big devices. Increased capacity for increased power levels.
+  id: PowerCageHighEmpty
+  parent: PowerCageHigh
+  suffix: Empty
   components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+      visible: false
   - type: Battery
-    maxCharge: 6000
-    startingCharge: 6000
+    startingCharge: 0

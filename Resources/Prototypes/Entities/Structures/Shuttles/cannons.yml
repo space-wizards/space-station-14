@@ -56,17 +56,66 @@
   - type: AmmoCounter
   - type: StaticPrice
     price: 1500
-    
+
+# ---- Laser weapon branch ----
+# naming: LSE (Laser) + conventional power + suffix (c for PowerCage, e for wired energy) + Name
+# example: LSE-100e "Clown destroyer" (powered by the wiring, very weak)
+
 - type: entity
-  id: ShuttleGunHeavyLaser
+  id: ShuttleGunLSEBigSvalinn
   parent: ShuttleGunBase
-  name: LSE-2400p "Perforator"
-  description: A powerful shuttle laser launcher capable of punching through thick walls. Ideal for disabling key components of enemy shuttles.
+  name: LSE-400c "Big Svalinn"
+  description: Basic stationary laser unit. Effective against live targets and electronics.
   components:
   - type: Sprite
-    sprite: Structures/Shuttles/Guns/heavy_laser.rsi
+    sprite: Structures/Shuttles/Guns/laser.rsi
     layers:
-    - state: base
+    - state: lse-400c
+    - state: mag-unshaded-9
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Gun
+    fireRate: 2
+    useKey: false
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot: 
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      params: 
+        variation: 0.05
+  - type: MagazineVisuals
+    magState: mag
+    steps: 10
+    zeroVisible: true
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: PowerCellSmall
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+            - PowerCell
+            - PowerCellSmall
+  - type: MagazineAmmoProvider
+  - type: Appearance
+
+
+- type: entity
+  id: ShuttleGunLSEPerforator
+  parent: ShuttleGunBase
+  name: LSE-1200c "Perforator"
+  description: Advanced stationary laser unit. Annihilates electronics and is extremely dangerous to health!
+  components:
+  - type: Sprite
+    sprite: Structures/Shuttles/Guns/laser.rsi
+    layers:
+    - state: lse-1200c
     - state: mag-unshaded-9
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded

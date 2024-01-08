@@ -126,6 +126,8 @@
           - PowerCage
   - type: Machine
     board: PowerCageRechargerCircuitboard
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: BaseItemRecharger
