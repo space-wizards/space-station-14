@@ -21,12 +21,12 @@
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 250
         mask:
-        - TableMask
+        - MachineMask
         layer:
-        - TableLayer
+        - MachineLayer
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageModifierSet: Electronic
   - type: Destructible
     thresholds:
     - trigger:
@@ -62,10 +62,10 @@
 # example: LSE-100e "Clown destroyer" (powered by the wiring, very weak)
 
 - type: entity
-  id: ShuttleGunLSEBigSvalinn
+  id: ShuttleGunLSESvalinnMachineGun
   parent: ShuttleGunBase
-  name: LSE-400c "Big Svalinn"
-  description: Basic stationary laser unit. Effective against live targets and electronics.
+  name: LSE-400c "Svalinn machine gun"
+  description: Basic stationary laser unit. Effective against live targets and electronics. Uses regular power cells to fire, and has an extremely high rate of fire
   components:
   - type: Sprite
     sprite: Structures/Shuttles/Guns/laser.rsi
@@ -75,7 +75,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Gun
-    fireRate: 2
+    fireRate: 5
     useKey: false
     selectedMode: SemiAuto
     availableModes:
@@ -105,12 +105,11 @@
   - type: MagazineAmmoProvider
   - type: Appearance
 
-
 - type: entity
   id: ShuttleGunLSEPerforator
   parent: ShuttleGunBase
   name: LSE-1200c "Perforator"
-  description: Advanced stationary laser unit. Annihilates electronics and is extremely dangerous to health!
+  description: Advanced stationary laser unit. Annihilates electronics and is extremely dangerous to health! Uses the power cage to fire.
   components:
   - type: Sprite
     sprite: Structures/Shuttles/Guns/laser.rsi

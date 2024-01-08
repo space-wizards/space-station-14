@@ -8,6 +8,9 @@
     "copyright": "Created by TheShuEd (github) for Space Station 14",
     "states": [
         {
+            "name": "light-off"
+        },
+        {
             "name": "empty"
         },
         {
