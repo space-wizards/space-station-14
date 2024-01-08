@@ -7,3 +7,4 @@ advertisement-cola-6 = Drink up!
 advertisement-cola-7 = The best drinks in the galaxy!
 thankyou-cola-1 = Pop open that can and enjoy!
 thankyou-cola-2 = Pow! Take that, thirst!
+thankyou-cola-3 = I hope you like flavor!

@@ -31,3 +31,4 @@ advertisement-syndiedrobe-30 = What could be better than the smell of our unifor
 advertisement-syndiedrobe-31 = You can leave feedback about the convenience of the form by sending a request to our Taipan hotline, the main thing is not to the wrong number!
 thankyou-syndiedrobe-1 = Put it to good use!
 thankyou-syndiedrobe-2 = Death to NT!
+thankyou-syndiedrobe-3 = Show them the power of style.
