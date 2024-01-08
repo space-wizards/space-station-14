@@ -117,7 +117,7 @@
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # CO2
-          - 0 # Plasma
+          - 0 # Phoron
           - 0 # Tritium
           - 0 # Water vapor
           - 0 # Ammonia
@@ -348,7 +348,7 @@
 
 - type: entity
   parent: GasCanister
-  id: PlasmaCanister
+  id: PhoronCanister
   components:
     - type: Sprite
       layers:
@@ -360,7 +360,7 @@
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # carbon dioxide
-          - 1871.71051 # plasma
+          - 1871.71051 # phoron
         temperature: 293.15
     - type: Destructible
       thresholds:
@@ -379,7 +379,7 @@
             path: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
           spawn:
-            PlasmaCanisterBroken:
+            PhoronCanisterBroken:
               min: 1
               max: 1
         - !type:DoActsBehavior
@@ -402,7 +402,7 @@
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # CO2
-          - 0 # Plasma
+          - 0 # Phoron
           - 1871.71051 # Tritium
         temperature: 293.15
     - type: Destructible
@@ -445,7 +445,7 @@
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # CO2
-          - 0 # Plasma
+          - 0 # Phoron
           - 0 # Tritium
           - 1871.71051 # Water vapor
         temperature: 293.15
@@ -487,7 +487,7 @@
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # CO2
-          - 0 # Plasma
+          - 0 # Phoron
           - 0 # Tritium
           - 0 #  Water vapor
           - 1871.71051 # Ammonia
@@ -532,7 +532,7 @@
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # CO2
-          - 0 # Plasma
+          - 0 # Phoron
           - 0 # Tritium
           - 0 #  Water vapor
           - 0 # Ammonia
@@ -576,7 +576,7 @@
       - 0 # oxygen
       - 0 # nitrogen
       - 0 # CO2
-      - 0 # Plasma
+      - 0 # Phoron
       - 0 # Tritium
       - 0 # Water vapor
       - 0 # Ammonia
@@ -705,7 +705,7 @@
 
 - type: entity
   parent: GasCanisterBrokenBase
-  id: PlasmaCanisterBroken
+  id: PhoronCanisterBroken
   noSpawn: true
   components:
     - type: Sprite

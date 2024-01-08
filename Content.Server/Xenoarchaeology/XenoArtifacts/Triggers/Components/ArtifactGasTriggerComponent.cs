@@ -15,7 +15,7 @@ public sealed partial class ArtifactGasTriggerComponent : Component
     public List<Gas> PossibleGases = new()
     {
         Gas.Oxygen,
-        Gas.Plasma,
+        Gas.Phoron,
         Gas.Nitrogen,
         Gas.CarbonDioxide,
         Gas.Ammonia,

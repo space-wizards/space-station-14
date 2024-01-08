@@ -20,7 +20,7 @@
           steps:
             - material: Glass
               amount: 1
-            - material: Plasma
+            - material: Phoron
               amount: 1
         - to: SheetRPGlass
           completed:
@@ -29,7 +29,7 @@
           steps:
             - material: Glass
               amount: 1
-            - material: Plasma
+            - material: Phoron
               amount: 1
             - material: MetalRod
               amount: 1

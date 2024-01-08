@@ -51,7 +51,7 @@
   materials:
     Steel: 500
     Plastic: 500
-    Plasma: 150
+    Phoron: 150
     Silver: 50
 
 - type: latheRecipe
@@ -62,7 +62,7 @@
     Steel: 100
     Plastic: 150
     Glass: 250
-    Plasma: 100
+    Phoron: 100
     Silver: 50
 
 - type: latheRecipe

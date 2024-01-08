@@ -51,7 +51,7 @@
           state: blue
     - type: RandomSpawner
       rarePrototypes:
-        - PlasmaCanister
+        - PhoronCanister
       rareChance: 0.03
       prototypes:
         - AirCanister

@@ -107,7 +107,7 @@
   reactants:
     Oxygen:
       amount: 2
-    Plasma:
+    Phoron:
       amount: 1
       catalyst: true
   products:
@@ -188,7 +188,7 @@
       amount: 1
     Fersilicite:
       amount: 1
-    Plasma:
+    Phoron:
       amount: 1
       catalyst: true
   products:
@@ -280,7 +280,7 @@
   reactants:
     HeartbreakerToxin:
       amount: 1
-    Plasma:
+    Phoron:
       amount: 1
     Vestine:
       amount: 1
@@ -329,7 +329,7 @@
   reactants:
     Histamine:
       amount: 2
-    Plasma:
+    Phoron:
       amount: 1
       catalyst: true
   products:

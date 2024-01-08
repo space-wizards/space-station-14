@@ -7212,7 +7212,7 @@ entities:
     - pos: 5.5,47.5
       parent: 1653
       type: Transform
-- proto: GeneratorPlasma
+- proto: GeneratorPhoron
   entities:
   - uid: 1528
     components:
@@ -7713,14 +7713,14 @@ entities:
     - pos: 24.34895,16.173763
       parent: 1653
       type: Transform
-- proto: PlasmaCanister
+- proto: PhoronCanister
   entities:
   - uid: 833
     components:
     - pos: 16.5,27.5
       parent: 1653
       type: Transform
-- proto: PlasmaReinforcedWindowDirectional
+- proto: PhoronReinforcedWindowDirectional
   entities:
   - uid: 645
     components:
@@ -7768,7 +7768,7 @@ entities:
     - pos: 34.5,36.5
       parent: 1653
       type: Transform
-- proto: PlasmaTankFilled
+- proto: PhoronTankFilled
   entities:
   - uid: 1473
     components:

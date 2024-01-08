@@ -1,1 +1,1 @@
-﻿phlogiston-plasma-created = The mixture bubbles, and plasma rises from it!
+﻿phlogiston-phoron-created = The mixture bubbles, and phoron rises from it!

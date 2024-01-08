@@ -16,7 +16,7 @@ Scanners, vessels, and A.P.E.s are all used in the containment and observation o
 <GuideEntityEmbed Entity="MachineAnomalyGenerator"/>
 </Box>
 
-The anomaly generator can produce a random anomaly somewhere on the station at the cost of plasma.
+The anomaly generator can produce a random anomaly somewhere on the station at the cost of phoron.
 
 ## Anomalies
 Anomalies are static objects that appear on the station. They cannot be moved, and must be worked around, no matter their location.

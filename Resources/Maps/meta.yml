@@ -14813,7 +14813,7 @@ entities:
     - type: Transform
       pos: 57.5,-30.5
       parent: 5350
-- proto: AtmosFixPlasmaMarker
+- proto: AtmosFixPhoronMarker
   entities:
   - uid: 11600
     components:
@@ -120885,7 +120885,7 @@ entities:
       materialWhiteList:
       - Steel
       - Glass
-      - Plasma
+      - Phoron
       - Uranium
       - Gold
       - Silver
@@ -121743,7 +121743,7 @@ entities:
     - type: Transform
       pos: 31.502409,-15.384094
       parent: 5350
-- proto: PlasmaCanister
+- proto: PhoronCanister
   entities:
   - uid: 9183
     components:
@@ -121766,7 +121766,7 @@ entities:
       parent: 5350
     - type: AtmosDevice
       joinedGrid: 5350
-- proto: PlasmaReinforcedWindowDirectional
+- proto: PhoronReinforcedWindowDirectional
   entities:
   - uid: 19347
     components:
@@ -121816,7 +121816,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 23.5,-28.5
       parent: 5350
-- proto: PlasmaTank
+- proto: PhoronTank
   entities:
   - uid: 23586
     components:
@@ -130194,7 +130194,7 @@ entities:
     - type: DeviceLinkSink
       links:
       - 9421
-- proto: ReinforcedPlasmaWindow
+- proto: ReinforcedPhoronWindow
   entities:
   - uid: 11288
     components:
@@ -134308,7 +134308,7 @@ entities:
     - type: Transform
       pos: 108.52579,-0.4561236
       parent: 5350
-- proto: SheetPlasma
+- proto: SheetPhoron
   entities:
   - uid: 9204
     components:
@@ -134333,7 +134333,7 @@ entities:
     - type: Transform
       pos: 108.52579,-0.4873736
       parent: 5350
-- proto: SheetPlasma1
+- proto: SheetPhoron1
   entities:
   - uid: 16479
     components:
@@ -144174,7 +144174,7 @@ entities:
     - type: Transform
       pos: 104.5,-10.5
       parent: 5350
-- proto: TablePlasmaGlass
+- proto: TablePhoronGlass
   entities:
   - uid: 22379
     components:
@@ -171428,7 +171428,7 @@ entities:
     - type: Transform
       pos: 54.5,-27.5
       parent: 5350
-- proto: WarningPlasma
+- proto: WarningPhoron
   entities:
   - uid: 11641
     components:

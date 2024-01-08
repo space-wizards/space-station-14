@@ -4,9 +4,9 @@
   graph:
     - node: start
       edges:
-        - to: plasmaWindowDiagonal
+        - to: phoronWindowDiagonal
           steps:
-            - material: PlasmaGlass
+            - material: PhoronGlass
               amount: 2
               doAfter: 2
 
@@ -16,9 +16,9 @@
               amount: 2
               doAfter: 2
 
-        - to: reinforcedPlasmaWindowDiagonal
+        - to: reinforcedPhoronWindowDiagonal
           steps:
-            - material: ReinforcedPlasmaGlass
+            - material: ReinforcedPhoronGlass
               amount: 2
               doAfter: 3
 
@@ -78,8 +78,8 @@
             - tool: Anchoring
               doAfter: 2
 
-    - node: plasmaWindowDiagonal
-      entity: PlasmaWindowDiagonal
+    - node: phoronWindowDiagonal
+      entity: PhoronWindowDiagonal
       edges:
         - to: start
           completed:
@@ -97,8 +97,8 @@
             - tool: Anchoring
               doAfter: 3
 
-    - node: reinforcedPlasmaWindowDiagonal
-      entity: ReinforcedPlasmaWindowDiagonal
+    - node: reinforcedPhoronWindowDiagonal
+      entity: ReinforcedPhoronWindowDiagonal
       edges:
         - to: start
           completed:

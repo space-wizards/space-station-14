@@ -97,14 +97,14 @@
               amount: 2
               doAfter: 2
 
-        - to: plasmaWall
+        - to: phoronWall
           completed:
             - !type:SnapToGrid
               southRotation: true
           conditions:
             - !type:EntityAnchored {}
           steps:
-            - material: Plasma
+            - material: Phoron
               amount: 2
             - tool: Welding
               doAfter: 20
@@ -225,13 +225,13 @@
             - tool: Prying
               doAfter: 10
 
-    - node: plasmaWall
-      entity: WallPlasma
+    - node: phoronWall
+      entity: WallPhoron
       edges:
         - to: girder
           completed:
             - !type:GivePrototype
-              prototype: SheetPlasma1
+              prototype: SheetPhoron1
               amount: 2
           steps:
             - tool: Welding

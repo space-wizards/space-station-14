@@ -751,7 +751,7 @@
           - Sheet
     - type: StealTarget
       stealGroup: AmmoTechFabCircuitboard
-      
+
 - type: entity
   id: MedicalTechFab
   parent: BaseLathe
@@ -822,7 +822,7 @@
     board: MedicalTechFabCircuitboard
   - type: StealTarget
     stealGroup: MedicalTechFabCircuitboard
-    
+
 - type: entity
   parent: BaseLathe
   id: UniformPrinter
@@ -1025,7 +1025,7 @@
         - SheetSteel30
         - SheetGlass30
         - SheetRGlass30
-        - SheetPlasma30
+        - SheetPhoron30
         - SheetPGlass30
         - SheetRPGlass30
         - SheetUranium30

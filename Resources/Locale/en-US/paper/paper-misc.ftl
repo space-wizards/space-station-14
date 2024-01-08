@@ -1,4 +1,4 @@
-book-text-plasma-trap = Heheheheh, no way in hell they're going to get at our stash NOW, is there?
+book-text-phoron-trap = Heheheheh, no way in hell they're going to get at our stash NOW, is there?
       I rigged the area where our stuff's at to be a toasty thousand K.
       You know how to drain it when we need it out.
        - J.

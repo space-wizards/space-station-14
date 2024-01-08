@@ -28,7 +28,7 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelAtmospherics
   name: atmospherics duffel bag
-  description: A large duffel bag made of fire resistant fibers. Smells like plasma.
+  description: A large duffel bag made of fire resistant fibers. Smells like phoron.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/atmospherics.rsi

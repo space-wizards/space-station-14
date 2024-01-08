@@ -92,7 +92,7 @@
     - id: OxygenCanister
       prob: 0.001
       orGroup: Canister
-    - id: PlasmaCanister
+    - id: PhoronCanister
       prob: 0.001
       orGroup: Canister
     - id: TritiumCanister
@@ -149,7 +149,7 @@
       orGroup: Weapons
     - id: Shovel
       prob: 0.01
-      orGroup: Weapons  
+      orGroup: Weapons
     - id: WeaponWaterPistol
       prob: 0.01
       orGroup: Weapons
@@ -256,10 +256,10 @@
       orGroup: Swag
     - id: ClothingEyesGlassesGarGiga
       prob: 0.01
-      orGroup: Swag   
+      orGroup: Swag
     - id: ClothingEyesGlassesGarOrange
       prob: 0.01
-      orGroup: Swag      
+      orGroup: Swag
     - id: ClothingHeadHatChameleon
       prob: 0.01
       orGroup: Swag
@@ -385,4 +385,4 @@
       orGroup: NotUseful
     - id: WeakKudzu
       prob: 0.01
-      orGroup: NotUseful   
+      orGroup: NotUseful

@@ -191,7 +191,7 @@
   completetime: 6
   materials:
     Steel: 800
-    Plasma: 200
+    Phoron: 200
 
 - type: latheRecipe
   id: JawsOfLife
@@ -200,23 +200,23 @@
   materials:
     Steel: 1000
     Glass: 500
-    Plasma: 300
+    Phoron: 300
     Gold: 50
-    
+
 - type: latheRecipe
   id: HoloprojectorField
   result: HoloprojectorField
   completetime: 3
   materials:
     Steel: 500
-    Plasma: 300
+    Phoron: 300
     Glass: 100
-    
+
 - type: latheRecipe
   id: WeaponParticleDecelerator
   result: WeaponParticleDecelerator
   completetime: 6
   materials:
     Steel: 750
-    Plasma: 150
+    Phoron: 150
     Uranium: 150

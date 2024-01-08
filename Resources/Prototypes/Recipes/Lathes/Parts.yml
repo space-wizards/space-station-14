@@ -31,7 +31,7 @@
   materials:
     Steel: 80
     Plastic: 80
-    Plasma: 75
+    Phoron: 75
 
 - type: latheRecipe
   id: AdvancedMatterBinStockPart
@@ -40,7 +40,7 @@
   materials:
     Steel: 80
     Plastic: 80
-    Plasma: 75
+    Phoron: 75
 
 - type: latheRecipe
   id: NanoManipulatorStockPart
@@ -49,7 +49,7 @@
   materials:
     Steel: 80
     Plastic: 80
-    Plasma: 75
+    Phoron: 75
 
 #Rating 3
 - type: latheRecipe
@@ -59,7 +59,7 @@
   materials:
     Steel: 150
     Plastic: 150
-    Plasma: 75
+    Phoron: 75
     Gold: 75
 
 - type: latheRecipe
@@ -69,7 +69,7 @@
   materials:
     Steel: 150
     Plastic: 150
-    Plasma: 75
+    Phoron: 75
     Gold: 75
 
 - type: latheRecipe
@@ -79,5 +79,5 @@
   materials:
     Steel: 150
     Plastic: 150
-    Plasma: 75
+    Phoron: 75
     Gold: 75

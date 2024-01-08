@@ -3407,7 +3407,7 @@ entities:
     - pos: -2.461,-5.256098
       parent: 2
       type: Transform
-- proto: PlasmaReinforcedWindowDirectional
+- proto: PhoronReinforcedWindowDirectional
   entities:
   - uid: 345
     components:

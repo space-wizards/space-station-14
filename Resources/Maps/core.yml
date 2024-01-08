@@ -19278,7 +19278,7 @@ entities:
     - pos: 16.5,-4.5
       parent: 2
       type: Transform
-- proto: AtmosFixPlasmaMarker
+- proto: AtmosFixPhoronMarker
   entities:
   - uid: 124
     components:
@@ -98951,11 +98951,11 @@ entities:
 
         --------------------------------------------------------------------------------------
 
-        [bold]1.[/bold] Limited external forces from the containments power. 
+        [bold]1.[/bold] Limited external forces from the containments power.
 
-        [bold]2.[/bold] An "early warning" system, if you see JUST the PA room run out of power, you know there is an issue. 
+        [bold]2.[/bold] An "early warning" system, if you see JUST the PA room run out of power, you know there is an issue.
 
-        [bold]3.[/bold] Due to being on its own small loop, its much easier to spot faults in the system. 
+        [bold]3.[/bold] Due to being on its own small loop, its much easier to spot faults in the system.
 
 
         While we have listed the upsides we also acknowledge the downside, for it being on its own loop you will need an external force if the system "runs out of juice". Our recommendation for this is simply attaching a generator to said SMES and letting it get to full charge before continuing operations but as said from another of our technicians... "just attach it to the main grid for like, a hot moment, and kickstart the thing!"
@@ -98980,7 +98980,7 @@ entities:
         Dear [bold]engineering team[/bold],
 
 
-        During the production of this station we have overlooked this substation, and as a result does not power any APCs. Please pretend that this was not an oversight, but instead an intended decision. 
+        During the production of this station we have overlooked this substation, and as a result does not power any APCs. Please pretend that this was not an oversight, but instead an intended decision.
 
 
         [italics]It is now a spare substation for any case where one becomes damaged or wear out over time.[/italics]
@@ -99406,7 +99406,7 @@ entities:
     - pos: 16.5,-14.5
       parent: 2
       type: Transform
-- proto: PlasmaCanister
+- proto: PhoronCanister
   entities:
   - uid: 1550
     components:
@@ -99422,7 +99422,7 @@ entities:
       type: Transform
     - joinedGrid: 2
       type: AtmosDevice
-- proto: PlasmaReinforcedWindowDirectional
+- proto: PhoronReinforcedWindowDirectional
   entities:
   - uid: 5901
     components:
@@ -106450,7 +106450,7 @@ entities:
     - pos: -40.5,26.5
       parent: 2
       type: Transform
-- proto: ReinforcedPlasmaWindow
+- proto: ReinforcedPhoronWindow
   entities:
   - uid: 1942
     components:
@@ -109101,7 +109101,7 @@ entities:
     - pos: -33.249187,38.611046
       parent: 2
       type: Transform
-- proto: SheetPlasma
+- proto: SheetPhoron
   entities:
   - uid: 2055
     components:
@@ -142336,7 +142336,7 @@ entities:
       pos: 16.5,-1.5
       parent: 2
       type: Transform
-- proto: WarningPlasma
+- proto: WarningPhoron
   entities:
   - uid: 3468
     components:

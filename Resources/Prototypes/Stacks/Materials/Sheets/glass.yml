@@ -15,16 +15,16 @@
   itemSize: 1
 
 - type: stack
-  id: PlasmaGlass
-  name: plasma glass
+  id: PhoronGlass
+  name: phoron glass
   icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: pglass }
   spawn: SheetPGlass1
   maxCount: 30
   itemSize: 1
 
 - type: stack
-  id: ReinforcedPlasmaGlass
-  name: reinforced plasma glass
+  id: ReinforcedPhoronGlass
+  name: reinforced phoron glass
   icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: rpglass }
   spawn: SheetRPGlass1
   maxCount: 30

@@ -143,15 +143,15 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: plasma wall
-  id: PlasmaWall
+  name: phoron wall
+  id: PhoronWall
   graph: Girder
   startNode: start
-  targetNode: plasmaWall
+  targetNode: phoronWall
   category: construction-category-structures
   description: Keeps the air in and the greytide out.
   icon:
-    sprite: Structures/Walls/plasma.rsi
+    sprite: Structures/Walls/phoron.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -398,11 +398,11 @@
   canRotate: false
 
 - type: construction
-  name: plasma window
-  id: PlasmaWindow
+  name: phoron window
+  id: PhoronWindow
   graph: Window
   startNode: start
-  targetNode: plasmaWindow
+  targetNode: phoronWindow
   category: construction-category-structures
   canBuildInImpassable: true
   description: Clear and even tougher, with a purple tint.
@@ -410,18 +410,18 @@
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
   icon:
-    sprite: Structures/Windows/plasma_window.rsi
+    sprite: Structures/Windows/phoron_window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
 
 - type: construction
-  name: reinforced plasma window
-  id: ReinforcedPlasmaWindow
+  name: reinforced phoron window
+  id: ReinforcedPhoronWindow
   graph: Window
   startNode: start
-  targetNode: reinforcedPlasmaWindow
+  targetNode: reinforcedPhoronWindow
   category: construction-category-structures
   canBuildInImpassable: true
   description: Fire resistant and even tougher, with a purple tint.
@@ -429,7 +429,7 @@
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
   icon:
-    sprite: Structures/Windows/reinforced_plasma_window.rsi
+    sprite: Structures/Windows/reinforced_phoron_window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -455,11 +455,11 @@
   canRotate: false
 
 - type: construction
-  name: diagonal plasma window
-  id: PlasmaWindowDiagonal
+  name: diagonal phoron window
+  id: PhoronWindowDiagonal
   graph: WindowDiagonal
   startNode: start
-  targetNode: plasmaWindowDiagonal
+  targetNode: phoronWindowDiagonal
   category: construction-category-structures
   canBuildInImpassable: true
   description: Clear and even tougher, with a purple tint.
@@ -467,17 +467,17 @@
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
   icon:
-    sprite: Structures/Windows/plasma_diagonal.rsi
+    sprite: Structures/Windows/phoron_diagonal.rsi
     state: state1
   objectType: Structure
   placementMode: SnapgridCenter
 
 - type: construction
-  name: diagonal reinforced plasma window
-  id: ReinforcedPlasmaWindowDiagonal
+  name: diagonal reinforced phoron window
+  id: ReinforcedPhoronWindowDiagonal
   graph: WindowDiagonal
   startNode: start
-  targetNode: reinforcedPlasmaWindowDiagonal
+  targetNode: reinforcedPhoronWindowDiagonal
   category: construction-category-structures
   canBuildInImpassable: true
   description: Fire resistant and even tougher, with a purple tint.
@@ -485,7 +485,7 @@
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
   icon:
-    sprite: Structures/Windows/reinforced_plasma_diagonal.rsi
+    sprite: Structures/Windows/reinforced_phoron_diagonal.rsi
     state: state1
   objectType: Structure
   placementMode: SnapgridCenter
@@ -527,11 +527,11 @@
   placementMode: SnapgridCenter
 
 - type: construction
-  name: directional plasma window
-  id: PlasmaWindowDirectional
+  name: directional phoron window
+  id: PhoronWindowDirectional
   graph: WindowDirectional
   startNode: start
-  targetNode: plasmaWindowDirectional
+  targetNode: phoronWindowDirectional
   category: construction-category-structures
   canBuildInImpassable: true
   description: Clear and even tougher, with a purple tint.
@@ -540,16 +540,16 @@
     - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/directional.rsi
-    state: plasma_window
+    state: phoron_window
   objectType: Structure
   placementMode: SnapgridCenter
 
 - type: construction
-  name: directional reinforced plasma window
-  id: PlasmaReinforcedWindowDirectional
+  name: directional reinforced phoron window
+  id: PhoronReinforcedWindowDirectional
   graph: WindowDirectional
   startNode: start
-  targetNode: plasmaReinforcedWindowDirectional
+  targetNode: phoronReinforcedWindowDirectional
   category: construction-category-structures
   canBuildInImpassable: true
   description: Fire resistant and even tougher, with a purple tint.
@@ -558,7 +558,7 @@
     - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/directional.rsi
-    state: plasma_reinforced_window
+    state: phoron_reinforced_window
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -1145,18 +1145,18 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: plasma door
-  id: PlasmaDoor
+  name: phoron door
+  id: PhoronDoor
   graph: DoorGraph
   startNode: start
-  targetNode: plasmaDoor
+  targetNode: phoronDoor
   category: construction-category-structures
   description: A primitive door with manual operation like the cavemen used.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/MineralDoors/plasma_door.rsi
+    sprite: Structures/Doors/MineralDoors/phoron_door.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked

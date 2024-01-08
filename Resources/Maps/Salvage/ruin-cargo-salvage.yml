@@ -1684,7 +1684,7 @@ entities:
     - pos: -1.5,-3.5
       parent: 16
       type: Transform
-- proto: AtmosFixPlasmaMarker
+- proto: AtmosFixPhoronMarker
   entities:
   - uid: 55
     components:

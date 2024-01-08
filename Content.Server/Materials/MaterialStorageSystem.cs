@@ -118,7 +118,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     ///     Spawn an amount of a material in stack entities.
     ///     Note the 'amount' is material dependent.
     ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
+    ///     but 100 phoron = 1 sheet of phoron, etc.
     /// </summary>
     public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
     {
@@ -129,7 +129,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     ///     Spawn an amount of a material in stack entities.
     ///     Note the 'amount' is material dependent.
     ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
+    ///     but 100 phoron = 1 sheet of phoron, etc.
     /// </summary>
     public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates, out int overflowMaterial)
     {
@@ -147,7 +147,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     ///     Spawn an amount of a material in stack entities.
     ///     Note the 'amount' is material dependent.
     ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
+    ///     but 100 phoron = 1 sheet of phoron, etc.
     /// </summary>
     [PublicAPI]
     public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates)
@@ -159,7 +159,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     ///     Spawn an amount of a material in stack entities.
     ///     Note the 'amount' is material dependent.
     ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
+    ///     but 100 phoron = 1 sheet of phoron, etc.
     /// </summary>
     public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates, out int overflowMaterial)
     {

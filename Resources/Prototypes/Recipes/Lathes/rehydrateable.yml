@@ -55,7 +55,7 @@
   completetime: 30
   materials:
     Biomass: 24
-    Plasma: 600
+    Phoron: 600
 
 - type: latheRecipe
   id: SpaceTickCube
@@ -63,7 +63,7 @@
   completetime: 15
   materials:
     Biomass: 8
-    Plasma: 300 # less biomass but more plasma
+    Phoron: 300 # less biomass but more phoron
 
 - type: latheRecipe
   id: AbominationCube
@@ -71,4 +71,4 @@
   completetime: 30
   materials: # abominations are slow and essentially worse than even carp
     Biomass: 28
-    Plasma: 500 # more biomass but less plasma
+    Phoron: 500 # more biomass but less phoron

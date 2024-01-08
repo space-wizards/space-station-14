@@ -695,7 +695,7 @@
   parent: BasePDA
   id: AtmosPDA
   name: atmos PDA
-  description: Still smells like plasma.
+  description: Still smells like phoron.
   components:
   - type: Pda
     id: AtmosIDCard

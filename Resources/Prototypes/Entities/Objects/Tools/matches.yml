@@ -57,7 +57,7 @@
   name: match box
   parent: [ SmallboxItem, BaseBagOpenClose ]
   id: Matchbox
-  description: A small box of Almost But Not Quite Plasma Premium Matches.
+  description: A small box of Almost But Not Quite Phoron Premium Matches.
   components:
   - type: EmitSoundOnLand
     sound:

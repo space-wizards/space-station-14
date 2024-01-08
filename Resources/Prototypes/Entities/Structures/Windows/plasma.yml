@@ -1,13 +1,13 @@
 - type: entity
-  id: PlasmaWindow
-  name: plasma window
+  id: PhoronWindow
+  name: phoron window
   parent: Window
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/plasma_window.rsi
+    sprite: Structures/Windows/phoron_window.rsi
   - type: Icon
-    sprite: Structures/Windows/plasma_window.rsi
+    sprite: Structures/Windows/phoron_window.rsi
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: RGlass
@@ -28,7 +28,7 @@
           collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlassPlasma:
+          ShardGlassPhoron:
             min: 1
             max: 2
       - !type:DoActsBehavior
@@ -37,7 +37,7 @@
     base: pwindow
   - type: Construction
     graph: Window
-    node: plasmaWindow
+    node: phoronWindow
   - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
@@ -51,9 +51,9 @@
     resistance: 2
 
 - type: entity
-  id: PlasmaWindowDirectional
+  id: PhoronWindowDirectional
   parent: WindowDirectional
-  name: directional plasma window
+  name: directional phoron window
   description: Don't smudge up the glass down there.
   placement:
     mode: SnapgridCenter
@@ -62,13 +62,13 @@
   components:
   - type: Sprite
     sprite: Structures/Windows/directional.rsi
-    state: plasma_window
+    state: phoron_window
   - type: Icon
     sprite: Structures/Windows/directional.rsi
-    state: plasma_window
+    state: phoron_window
   - type: Construction
     graph: WindowDirectional
-    node: plasmaWindowDirectional
+    node: phoronWindowDirectional
   - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
@@ -87,7 +87,7 @@
           collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlassPlasma:
+          ShardGlassPhoron:
             min: 1
             max: 2
       - !type:DoActsBehavior
@@ -96,8 +96,8 @@
     price: 30
 
 - type: entity
-  parent: PlasmaWindow
-  id: PlasmaWindowDiagonal
+  parent: PhoronWindow
+  id: PhoronWindowDiagonal
   suffix: diagonal
   placement:
     mode: SnapgridCenter
@@ -106,14 +106,14 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/plasma_diagonal.rsi
+    sprite: Structures/Windows/phoron_diagonal.rsi
     state: state0
   - type: IconSmooth
     mode: Diagonal
     key: windows
     base: state
   - type: Icon
-    sprite: Structures/Windows/plasma_diagonal.rsi
+    sprite: Structures/Windows/phoron_diagonal.rsi
     state: state0
   - type: Fixtures
     fixtures:
@@ -133,4 +133,4 @@
       sprite: Structures/Windows/cracks_diagonal.rsi
   - type: Construction
     graph: WindowDiagonal
-    node: plasmaWindowDiagonal
+    node: phoronWindowDiagonal

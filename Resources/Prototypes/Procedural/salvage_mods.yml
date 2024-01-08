@@ -180,14 +180,14 @@
     - Lava
 
 - type: salvageAirMod
-  id: Plasma
+  id: Phoron
   cost: 4
   desc: Toxic atmosphere
   gases:
     - 0
     - 0
     - 0
-    - 103.927899 # plasma
+    - 103.927899 # phoron
   biomes:
     - Caves
     - Lava
@@ -200,7 +200,7 @@
     - 21.824779 # oxygen
     - 0
     - 0
-    - 82.10312 # plasma
+    - 82.10312 # phoron
   biomes:
     - Caves
     - Lava

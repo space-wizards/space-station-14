@@ -108,13 +108,13 @@
     state: oakworm
 
 - type: marking
-  id: MothAntennasPlasmafire
+  id: MothAntennasPhoronfire
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_antennas.rsi
-    state: plasmafire
+    state: phoronfire
 
 - type: marking
   id: MothAntennasMaple
@@ -308,15 +308,15 @@
     state: oakworm
 
 - type: marking
-  id: MothWingsPlasmafire
+  id: MothWingsPhoronfire
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: plasmafire_primary
+    state: phoronfire_primary
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: plasmafire_secondary
+    state: phoronfire_secondary
 
 - type: marking
   id: MothWingsPointy

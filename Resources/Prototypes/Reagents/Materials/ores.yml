@@ -34,11 +34,11 @@
   price: 0.15
 
 - type: material
-  id: RawPlasma
-  stackEntity: PlasmaOre1
-  name: materials-raw-plasma
+  id: RawPhoron
+  stackEntity: PhoronOre1
+  name: materials-raw-phoron
   unit: materials-unit-chunk
-  icon: { sprite: Objects/Materials/ore.rsi, state: plasma }
+  icon: { sprite: Objects/Materials/ore.rsi, state: phoron }
   color: "#7e009e"
   price: 0.2
 

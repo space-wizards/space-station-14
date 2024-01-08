@@ -1726,7 +1726,7 @@ entities:
     - pos: -6.5,-6.5
       parent: 1
       type: Transform
-- proto: PlasmaCanister
+- proto: PhoronCanister
   entities:
   - uid: 1031
     components:
@@ -1867,7 +1867,7 @@ entities:
     - pos: -4.5,-6.5
       parent: 1
       type: Transform
-- proto: ReinforcedPlasmaWindow
+- proto: ReinforcedPhoronWindow
   entities:
   - uid: 423
     components:
@@ -2081,7 +2081,7 @@ entities:
     - pos: 6.5,-18.5
       parent: 1
       type: Transform
-- proto: SheetPlasma
+- proto: SheetPhoron
   entities:
   - uid: 65
     components:
@@ -3290,7 +3290,7 @@ entities:
     - pos: -10.5,-2.5
       parent: 1
       type: Transform
-- proto: WallRockPlasma
+- proto: WallRockPhoron
   entities:
   - uid: 232
     components:

@@ -17,5 +17,5 @@ ent-double-emergency-oxygen-tank = double emergency oxygen tank
 ent-air-tank = air tank
     .desc = Mixed anyone?
 
-ent-plasma-tank = plasma tank
-    .desc = Contains dangerous plasma. Do not inhale. Warning: extremely flammable.
+ent-phoron-tank = phoron tank
+    .desc = Contains dangerous phoron. Do not inhale. Warning: extremely flammable.

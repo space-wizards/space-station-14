@@ -83,18 +83,18 @@
 
 - type: entity
   parent: OreBase
-  id: PlasmaOre
-  name: plasma ore
+  id: PhoronOre
+  name: phoron ore
   suffix: Full
   components:
   - type: Stack
-    stackType: PlasmaOre
+    stackType: PhoronOre
   - type: Sprite
-    state: plasma
+    state: phoron
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      RawPlasma: 500
+      RawPhoron: 500
   - type: PointLight
     radius: 1.2
     energy: 0.6
@@ -102,8 +102,8 @@
     color: "#e592e7"
 
 - type: entity
-  parent: PlasmaOre
-  id: PlasmaOre1
+  parent: PhoronOre
+  id: PhoronOre1
   suffix: Single
   components:
     - type: Stack

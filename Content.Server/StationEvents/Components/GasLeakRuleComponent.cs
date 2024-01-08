@@ -10,7 +10,7 @@ public sealed partial class GasLeakRuleComponent : Component
     public readonly Gas[] LeakableGases =
     {
         Gas.Ammonia,
-        Gas.Plasma,
+        Gas.Phoron,
         Gas.Tritium,
         Gas.Frezon,
     };

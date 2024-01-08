@@ -237,13 +237,13 @@
 
 - type: entity
   parent: CrateBaseSecure
-  id: CratePlasma
-  name: plasma crate
+  id: CratePhoron
+  name: phoron crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/plasma.rsi
+    sprite: Structures/Storage/Crates/phoron.rsi
   - type: Sprite
-    sprite: Structures/Storage/Crates/plasma.rsi
+    sprite: Structures/Storage/Crates/phoron.rsi
   - type: AccessReader
     access: [["Engineering"], ["Research"], ["Chemistry"]]
 

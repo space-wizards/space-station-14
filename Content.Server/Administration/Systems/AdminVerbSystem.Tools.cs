@@ -262,20 +262,20 @@ public sealed partial class AdminVerbSystem
                 };
                 args.Verbs.Add(refillInternalsN2);
 
-                Verb refillInternalsPlasma = new()
+                Verb refillInternalsPhoron = new()
                 {
-                    Text = "Refill Internals Plasma",
+                    Text = "Refill Internals Phoron",
                     Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/plasma.rsi"), "icon"),
+                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/phoron.rsi"), "icon"),
                     Act = () =>
                     {
-                        RefillGasTank(args.Target, Gas.Plasma, tank);
+                        RefillGasTank(args.Target, Gas.Phoron, tank);
                     },
                     Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-internals-refill-plasma-description"),
-                    Priority = (int) TricksVerbPriorities.RefillPlasma,
+                    Message = Loc.GetString("admin-trick-internals-refill-phoron-description"),
+                    Priority = (int) TricksVerbPriorities.RefillPhoron,
                 };
-                args.Verbs.Add(refillInternalsPlasma);
+                args.Verbs.Add(refillInternalsPhoron);
             }
 
             if (HasComp<InventoryComponent>(args.Target))
@@ -304,17 +304,17 @@ public sealed partial class AdminVerbSystem
                 };
                 args.Verbs.Add(refillInternalsN2);
 
-                Verb refillInternalsPlasma = new()
+                Verb refillInternalsPhoron = new()
                 {
-                    Text = "Refill Internals Plasma",
+                    Text = "Refill Internals Phoron",
                     Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/plasma.rsi"), "icon"),
-                    Act = () => RefillEquippedTanks(args.User, Gas.Plasma),
+                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/phoron.rsi"), "icon"),
+                    Act = () => RefillEquippedTanks(args.User, Gas.Phoron),
                     Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-internals-refill-plasma-description"),
-                    Priority = (int) TricksVerbPriorities.RefillPlasma,
+                    Message = Loc.GetString("admin-trick-internals-refill-phoron-description"),
+                    Priority = (int) TricksVerbPriorities.RefillPhoron,
                 };
-                args.Verbs.Add(refillInternalsPlasma);
+                args.Verbs.Add(refillInternalsPhoron);
             }
 
             Verb sendToTestArena = new()
@@ -732,11 +732,11 @@ public sealed partial class AdminVerbSystem
         }
     }
 
-    private void RefillEquippedTanks(EntityUid target, Gas plasma)
+    private void RefillEquippedTanks(EntityUid target, Gas phoron)
     {
         foreach (var held in _inventorySystem.GetHandOrInventoryEntities(target))
         {
-            RefillGasTank(held, Gas.Plasma);
+            RefillGasTank(held, Gas.Phoron);
         }
     }
 
@@ -856,7 +856,7 @@ public sealed partial class AdminVerbSystem
         DrainBattery = -8,
         RefillOxygen = -9,
         RefillNitrogen = -10,
-        RefillPlasma = -11,
+        RefillPhoron = -11,
         SendToTestArena = -12,
         GrantAllAccess = -13,
         RevokeAllAccess = -14,

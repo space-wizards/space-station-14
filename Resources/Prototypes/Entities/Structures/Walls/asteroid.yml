@@ -105,14 +105,14 @@
         - state: rock_gold
 
 - type: entity
-  id: AsteroidRockPlasma
+  id: AsteroidRockPhoron
   parent: AsteroidRock
-  description: An ore vein rich with plasma.
-  suffix: Plasma
+  description: An ore vein rich with phoron.
+  suffix: Phoron
   components:
     - type: OreVein
       oreChance: 1.0
-      currentOre: OrePlasma
+      currentOre: OrePhoron
     - type: Sprite
       layers:
         - state: rock_asteroid
@@ -450,14 +450,14 @@
         - state: rock_gold
 
 - type: entity
-  id: WallRockPlasma
+  id: WallRockPhoron
   parent: WallRock
-  description: An ore vein rich with plasma.
-  suffix: Plasma
+  description: An ore vein rich with phoron.
+  suffix: Phoron
   components:
     - type: OreVein
       oreChance: 1.0
-      currentOre: OrePlasma
+      currentOre: OrePhoron
     - type: Sprite
       layers:
         - state: rock
@@ -669,14 +669,14 @@
         - state: rock_gold
 
 - type: entity
-  id: WallRockBasaltPlasma
+  id: WallRockBasaltPhoron
   parent: WallRockBasalt
-  description: An ore vein rich with plasma.
-  suffix: Plasma
+  description: An ore vein rich with phoron.
+  suffix: Phoron
   components:
     - type: OreVein
       oreChance: 1.0
-      currentOre: OrePlasma
+      currentOre: OrePhoron
     - type: Sprite
       layers:
         - state: rock_wall
@@ -887,14 +887,14 @@
         - state: rock_gold
 
 - type: entity
-  id: WallRockSnowPlasma
+  id: WallRockSnowPhoron
   parent: WallRockSnow
-  description: An ore vein rich with plasma.
-  suffix: Plasma
+  description: An ore vein rich with phoron.
+  suffix: Phoron
   components:
     - type: OreVein
       oreChance: 1.0
-      currentOre: OrePlasma
+      currentOre: OrePhoron
     - type: Sprite
       layers:
         - state: rock_snow
@@ -1106,14 +1106,14 @@
         - state: rock_gold
 
 - type: entity
-  id: WallRockSandPlasma
+  id: WallRockSandPhoron
   parent: WallRockSand
-  description: An ore vein rich with plasma.
-  suffix: Plasma
+  description: An ore vein rich with phoron.
+  suffix: Phoron
   components:
     - type: OreVein
       oreChance: 1.0
-      currentOre: OrePlasma
+      currentOre: OrePhoron
     - type: Sprite
       layers:
         - state: rock_sand
@@ -1324,14 +1324,14 @@
         - state: rock_gold
 
 - type: entity
-  id: WallRockChromitePlasma
+  id: WallRockChromitePhoron
   parent: WallRockChromite
-  description: An ore vein rich with plasma.
-  suffix: Plasma
+  description: An ore vein rich with phoron.
+  suffix: Phoron
   components:
     - type: OreVein
       oreChance: 1.0
-      currentOre: OrePlasma
+      currentOre: OrePhoron
     - type: Sprite
       layers:
         - state: rock_chromite
@@ -1542,14 +1542,14 @@
         - state: rock_gold
 
 - type: entity
-  id: WallRockAndesitePlasma
+  id: WallRockAndesitePhoron
   parent: WallRockAndesite
-  description: An ore vein rich with plasma.
-  suffix: Plasma
+  description: An ore vein rich with phoron.
+  suffix: Phoron
   components:
     - type: OreVein
       oreChance: 1.0
-      currentOre: OrePlasma
+      currentOre: OrePhoron
     - type: Sprite
       layers:
         - state: rock_andesite

@@ -17,7 +17,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         public static HashSet<Gas> DefaultFilterGases = new()
         {
             Gas.CarbonDioxide,
-            Gas.Plasma,
+            Gas.Phoron,
             Gas.Tritium,
             Gas.WaterVapor,
             Gas.Ammonia,

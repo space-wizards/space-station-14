@@ -15,20 +15,20 @@
   price: 0.16 # 1-0.5 mix of glass and metal.
 
 - type: material
-  id: PlasmaGlass
+  id: PhoronGlass
   stackEntity: SheetPGlass1
-  name: materials-plasma-glass
+  name: materials-phoron-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: pglass }
   color: "#b35989"
-  price: 0.30 # 1-1 mix of plasma and glass.
+  price: 0.30 # 1-1 mix of phoron and glass.
 
 - type: material
-  id: ReinforcedPlasmaGlass
+  id: ReinforcedPhoronGlass
   stackEntity: SheetRPGlass1
-  name: materials-reinforced-plasma-glass
+  name: materials-reinforced-phoron-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: rpglass }
   color: "#8c4069"
-  price: 0.40 # 1-1-0.5 mix of plasma, glass, and metal.
+  price: 0.40 # 1-1-0.5 mix of phoron, glass, and metal.
 
 - type: material
   id: UraniumGlass

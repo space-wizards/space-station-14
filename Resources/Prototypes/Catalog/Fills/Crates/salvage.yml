@@ -33,13 +33,13 @@
         # Normal (10%)
       - id: OxygenTankFilled
         prob: 0.1
-      - id: SheetPlasma
+      - id: SheetPhoron
         prob: 0.1
       - id: IngotGold
         prob: 0.1
       - id: IngotSilver
         prob: 0.1
-      - id: SheetPlasma
+      - id: SheetPhoron
         prob: 0.1
       - id: WelderIndustrialAdvanced
         prob: 0.1

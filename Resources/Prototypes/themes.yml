@@ -13,8 +13,8 @@
     dangerousRedFore: "#BB3232"
     disabledFore: "#5A5A5A"
 - type: uiTheme
-  id: SS14PlasmafireTheme
-  path: /Textures/Interface/Plasmafire/
+  id: SS14PhoronfireTheme
+  path: /Textures/Interface/Phoronfire/
   colors:
     whiteText: "#FFF5EE"
     slotSelectedGold: "#FFF5EE"

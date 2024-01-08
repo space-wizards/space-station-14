@@ -132,13 +132,13 @@
     graph: SpearReinforced
 
 - type: entity
-  name: plasma spear
+  name: phoron spear
   parent: Spear
-  id: SpearPlasma
-  description: A spear with a plasma shard as a tip.
+  id: SpearPhoron
+  description: A spear with a phoron shard as a tip.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Melee/plasma_spear.rsi
+    sprite: Objects/Weapons/Melee/phoron_spear.rsi
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -149,7 +149,7 @@
       types:
         Piercing: 21
   - type: Construction
-    graph: SpearPlasma
+    graph: SpearPhoron
 
 - type: entity
   name: uranium spear

@@ -53,12 +53,12 @@
         amount: 3
 
 - type: entity
-  id: CrateMaterialPlasma
-  parent: CratePlasma
+  id: CrateMaterialPhoron
+  parent: CratePhoron
   components:
   - type: StorageFill
     contents:
-      - id: SheetPlasma
+      - id: SheetPhoron
         amount: 3
 
 - type: entity

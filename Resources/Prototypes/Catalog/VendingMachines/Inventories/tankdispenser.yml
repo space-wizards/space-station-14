@@ -7,5 +7,5 @@
 - type: vendingMachineInventory
   id: TankDispenserEngineeringInventory
   startingInventory:
-    PlasmaTankFilled: 10
+    PhoronTankFilled: 10
     OxygenTankFilled: 10

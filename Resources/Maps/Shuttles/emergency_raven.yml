@@ -12921,7 +12921,7 @@ entities:
     - pos: 14.5,9.5
       parent: 1
       type: Transform
-- proto: SheetPlasma1
+- proto: SheetPhoron1
   entities:
   - uid: 2050
     components:

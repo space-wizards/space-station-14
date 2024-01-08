@@ -101,14 +101,14 @@
       spawnGas: CarbonDioxide
 
 - type: entity
-  name: Plasma gas miner
+  name: Phoron gas miner
   parent: GasMinerBase
-  id: GasMinerPlasma
+  id: GasMinerPhoron
   placement:
     mode: SnapgridCenter
   components:
     - type: GasMiner
-      spawnGas: Plasma
+      spawnGas: Phoron
 
 - type: entity
   name: Tritium gas miner

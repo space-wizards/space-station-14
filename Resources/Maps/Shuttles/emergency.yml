@@ -2105,7 +2105,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-- proto: PlasmaReinforcedWindowDirectional
+- proto: PhoronReinforcedWindowDirectional
   entities:
   - uid: 88
     components:

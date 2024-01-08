@@ -2,7 +2,7 @@
   id: RadiationCollector
   name: radiation collector
   suffix: Empty tank
-  description: A machine that collects radiation and turns it into power. Requires plasma gas to function.
+  description: A machine that collects radiation and turns it into power. Requires phoron gas to function.
   placement:
     mode: SnapgridCenter
   components:
@@ -59,7 +59,7 @@
   - type: RadiationCollector
     chargeModifier: 7500
     radiationReactiveGases:
-      - reactantPrototype: Plasma
+      - reactantPrototype: Phoron
         powerGenerationEfficiency: 1
         reactantBreakdownRate: 0.0001
     # Note that this doesn't matter too much (see next comment)
@@ -85,7 +85,7 @@
   - type: ItemSlots
     slots:
       gas_tank:
-        startingItem: PlasmaTank
+        startingItem: PhoronTank
         whitelist:
           components:
           - GasTank
@@ -112,7 +112,7 @@
   - type: ItemSlots
     slots:
       gas_tank:
-        startingItem: PlasmaTankFilled
+        startingItem: PhoronTankFilled
         whitelist:
           components:
           - GasTank

@@ -13,8 +13,8 @@ ent-MaterialPlastic = { ent-CrateMaterialPlastic }
 ent-MaterialPlasteel = { ent-CrateMaterialPlasteel }
     .desc = { ent-CrateMaterialPlasteel.desc }
 
-ent-MaterialPlasma = { ent-CrateMaterialPlasma }
-    .desc = { ent-CrateMaterialPlasma.desc }
+ent-MaterialPhoron = { ent-CrateMaterialPhoron }
+    .desc = { ent-CrateMaterialPhoron.desc }
 
 ent-CardboardMaterial = { ent-CrateMaterialCardboard }
     .desc = { ent-CrateMaterialCardboard.desc }

@@ -12,7 +12,7 @@ salvage-magnet-resources = {$resource ->
     [OreQuartz] Quartz
     [OreGold] Gold
     [OreSilver] Silver
-    [OrePlasma] Plasma
+    [OrePhoron] Phoron
     [OreUranium] Uranium
     *[other] {$resource}
 }
@@ -38,8 +38,8 @@ salvage-map-proto-Small4 = Bar Salvage
 salvage-map-proto-SmallShip1 = Pill
 salvage-map-proto-SmallAISurveyDrone = AI Survey Drone
 
-salvage-map-proto-SmallA1 = Asteroid Plasmafire
-salvage-map-proto-Medium1 = Plasma-Trapped Cache
+salvage-map-proto-SmallA1 = Asteroid Phoronfire
+salvage-map-proto-Medium1 = Phoron-Trapped Cache
 salvage-map-proto-MediumVault1 = Vault
 salvage-map-proto-MediumOrchestra = Silent Orchestra
 salvage-map-proto-MediumLibraryWreck = Abandoned Library

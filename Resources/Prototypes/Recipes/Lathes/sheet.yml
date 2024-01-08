@@ -52,7 +52,7 @@
   completetime: 2
   materials:
     Glass: 3000
-    Plasma: 3000
+    Phoron: 3000
 
 - type: latheRecipe
   id: SheetRPGlass30
@@ -60,15 +60,15 @@
   completetime: 2
   materials:
     Glass: 3000
-    Plasma: 3000
+    Phoron: 3000
     Steel: 1500
 
 - type: latheRecipe
-  id: SheetPlasma30
-  result: SheetPlasma
+  id: SheetPhoron30
+  result: SheetPhoron
   completetime: 2
   materials:
-    RawPlasma: 3000
+    RawPhoron: 3000
 
 - type: latheRecipe
   id: SheetUranium30

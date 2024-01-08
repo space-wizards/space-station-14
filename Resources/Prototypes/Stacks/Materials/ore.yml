@@ -15,10 +15,10 @@
   itemSize: 2
 
 - type: stack
-  id: PlasmaOre
-  name: plasma ore
-  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: plasma }
-  spawn: PlasmaOre1
+  id: PhoronOre
+  name: phoron ore
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: phoron }
+  spawn: PhoronOre1
   maxCount: 30
   itemSize: 2
 

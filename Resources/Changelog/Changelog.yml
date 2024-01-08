@@ -71,7 +71,7 @@ Entries:
   time: '2023-10-20T05:46:33.0000000+00:00'
 - author: deltanedas
   changes:
-  - message: Meats now cook based on internal temperature. Don't make steak in a plasma
+  - message: Meats now cook based on internal temperature. Don't make steak in a phoron
       fire unless you want to scorch the outside before the inside can even cook.
     type: Tweak
   id: 5030
@@ -2076,7 +2076,7 @@ Entries:
   time: '2023-12-11T09:27:36.0000000+00:00'
 - author: Flareguy
   changes:
-  - message: 'Added 4 new HUD themes: Plasmafire, Slimecore, Clockwork, and Retro.'
+  - message: 'Added 4 new HUD themes: Phoronfire, Slimecore, Clockwork, and Retro.'
     type: Add
   - message: The default HUD theme is now Classic. The old default HUD theme still
       exists under the name "Minimalist."
@@ -2158,7 +2158,7 @@ Entries:
   time: '2023-12-11T23:15:47.0000000+00:00'
 - author: notafet
   changes:
-  - message: Stations no longer produce limitless plasma. Plasma refills can now be
+  - message: Stations no longer produce limitless phoron. Phoron refills can now be
       ordered at cargo.
     type: Tweak
   id: 5329
@@ -2337,7 +2337,7 @@ Entries:
   time: '2023-12-13T21:34:28.0000000+00:00'
 - author: notafet
   changes:
-  - message: Plasma and tritium fires spread more slowly and are now more survivable.
+  - message: Phoron and tritium fires spread more slowly and are now more survivable.
     type: Tweak
   id: 5357
   time: '2023-12-14T02:39:38.0000000+00:00'

@@ -88,7 +88,7 @@ public sealed partial class GasAnalyzerComponent : Component
 
         public override string ToString()
         {
-            // e.g. "Plasma: 2000 mol"
+            // e.g. "Phoron: 2000 mol"
             return Loc.GetString(
                 "gas-entry-info",
                  ("gasName", Name),

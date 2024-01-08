@@ -159,11 +159,11 @@
 
 # - High value
 - type: salvageLoot
-  id: OrePlasma
+  id: OrePhoron
   guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
-      proto: OrePlasma
+      proto: OrePhoron
 
 - type: salvageLoot
   id: OreUranium

@@ -91,11 +91,11 @@
 #  group: market
 
 - type: cargoProduct
-  id: AtmosphericsPlasma
+  id: AtmosphericsPhoron
   icon:
     sprite: Structures/Storage/canister.rsi
     state: orange
-  product: PlasmaCanister
+  product: PhoronCanister
   cost: 4000
   category: Atmospherics
   group: market

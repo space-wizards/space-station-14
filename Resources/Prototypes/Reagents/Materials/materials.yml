@@ -43,10 +43,10 @@
   price: 0.05 #same as wood
 
 - type: material
-  id: Plasma
-  stackEntity: SheetPlasma1
-  name: materials-plasma
-  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: plasma }
+  id: Phoron
+  stackEntity: SheetPhoron1
+  name: materials-phoron
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: phoron }
   color: "#7e009e"
   price: 0.2
 

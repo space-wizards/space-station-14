@@ -25,7 +25,7 @@ namespace Content.Server.Atmos.Portable
         public HashSet<Gas> FilterGases = new()
         {
             Gas.CarbonDioxide,
-            Gas.Plasma,
+            Gas.Phoron,
             Gas.Tritium,
             Gas.WaterVapor,
             Gas.Ammonia,

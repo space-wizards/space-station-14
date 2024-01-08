@@ -5,9 +5,9 @@
   order: -1
 
 - type: hudTheme
-  id: SS14PlasmafireTheme
-  name: ui-options-hud-theme-plasmafire
-  path: Plasmafire
+  id: SS14PhoronfireTheme
+  name: ui-options-hud-theme-phoronfire
+  path: Phoronfire
   order: 3
 
 - type: hudTheme

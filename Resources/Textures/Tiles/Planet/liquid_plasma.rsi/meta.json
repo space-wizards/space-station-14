@@ -11,7 +11,7 @@
       "name": "full"
     },
     {
-      "name": "plasma0",
+      "name": "phoron0",
       "directions": 4,
       "delays": [
         [
@@ -41,7 +41,7 @@
       ]
     },
     {
-      "name": "plasma1",
+      "name": "phoron1",
       "directions": 4,
       "delays": [
         [
@@ -71,7 +71,7 @@
       ]
     },
     {
-      "name": "plasma2",
+      "name": "phoron2",
       "directions": 4,
       "delays": [
         [
@@ -101,7 +101,7 @@
       ]
     },
     {
-      "name": "plasma3",
+      "name": "phoron3",
       "directions": 4,
       "delays": [
         [
@@ -131,7 +131,7 @@
       ]
     },
     {
-      "name": "plasma4",
+      "name": "phoron4",
       "directions": 4,
       "delays": [
         [
@@ -161,7 +161,7 @@
       ]
     },
     {
-      "name": "plasma5",
+      "name": "phoron5",
       "directions": 4,
       "delays": [
         [
@@ -191,7 +191,7 @@
       ]
     },
     {
-      "name": "plasma6",
+      "name": "phoron6",
       "directions": 4,
       "delays": [
         [
@@ -221,7 +221,7 @@
       ]
     },
     {
-      "name": "plasma7",
+      "name": "phoron7",
       "directions": 4,
       "delays": [
         [
@@ -251,7 +251,7 @@
       ]
     },
     {
-      "name": "plasma",
+      "name": "phoron",
       "delays": [
         [
           2,

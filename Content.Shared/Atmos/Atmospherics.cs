@@ -50,7 +50,7 @@ namespace Content.Shared.Atmos
         ///     to have very small heat capacity (e.g. room that was just unspaced) and for large amounts of
         ///     energy to be transferred to it, even for a brief moment. However, this messes up subsequent
         ///     calculations and so cap it here. The physical interpretation is that at this temperature, any
-        ///     gas that you would have transforms into plasma.
+        ///     gas that you would have transforms into phoron.
         /// </summary>
         public const float Tmax = 200e3f;
 
@@ -192,17 +192,17 @@ namespace Content.Shared.Atmos
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
-        public const float FirePlasmaEnergyReleased = 160e3f; // methane is 16 kJ/mol, plus plasma's spark of magic
+        public const float FirePhoronEnergyReleased = 160e3f; // methane is 16 kJ/mol, plus phoron's spark of magic
         public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;
         public const float SuperSaturationEnds = SuperSaturationThreshold / 3;
 
         public const float OxygenBurnRateBase = 1.4f;
-        public const float PlasmaMinimumBurnTemperature = (100f+T0C);
-        public const float PlasmaUpperTemperature = (1370f+T0C);
-        public const float PlasmaOxygenFullburn = 10f;
-        public const float PlasmaBurnRateDelta = 9f;
+        public const float PhoronMinimumBurnTemperature = (100f+T0C);
+        public const float PhoronUpperTemperature = (1370f+T0C);
+        public const float PhoronOxygenFullburn = 10f;
+        public const float PhoronBurnRateDelta = 9f;
 
         /// <summary>
         ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
@@ -335,7 +335,7 @@ namespace Content.Shared.Atmos
         Oxygen = 0,
         Nitrogen = 1,
         CarbonDioxide = 2,
-        Plasma = 3,
+        Phoron = 3,
         Tritium = 4,
         WaterVapor = 5,
         Ammonia = 6,

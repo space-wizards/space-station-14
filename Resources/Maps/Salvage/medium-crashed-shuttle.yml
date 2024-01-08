@@ -560,7 +560,7 @@ entities:
     - pos: 2.5,-1.5
       parent: 166
       type: Transform
-- proto: AtmosFixPlasmaMarker
+- proto: AtmosFixPhoronMarker
   entities:
   - uid: 35
     components:

@@ -3182,7 +3182,7 @@ entities:
     - pos: 1.5621729,-0.9631119
       parent: 768
       type: Transform
-- proto: PlasmaDoor
+- proto: PhoronDoor
   entities:
   - uid: 7
     components:
@@ -3239,7 +3239,7 @@ entities:
     - pos: -5.5,-4.5
       parent: 768
       type: Transform
-- proto: PlasmaReinforcedWindowDirectional
+- proto: PhoronReinforcedWindowDirectional
   entities:
   - uid: 240
     components:
@@ -3730,7 +3730,7 @@ entities:
     - pos: -4.5,-13.5
       parent: 768
       type: Transform
-- proto: ReinforcedPlasmaWindow
+- proto: ReinforcedPhoronWindow
   entities:
   - uid: 5
     components:

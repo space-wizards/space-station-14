@@ -1950,7 +1950,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineTankDispenserEngineering
-  suffix: ENG [O2, Plasma]
+  suffix: ENG [O2, Phoron]
   name: Gas Tank Dispenser
   description: A vendor for dispensing gas tanks. This one has an engineering livery.
   components:

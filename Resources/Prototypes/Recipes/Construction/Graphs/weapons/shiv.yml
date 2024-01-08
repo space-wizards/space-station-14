@@ -29,11 +29,11 @@
     entity: ReinforcedShiv
 
 - type: constructionGraph
-  id: PlasmaShiv
+  id: PhoronShiv
   start: start
   graph:
   - node: start
-    entity: ShardGlassPlasma
+    entity: ShardGlassPhoron
     edges:
     - to: icon
       steps:
@@ -41,7 +41,7 @@
         amount: 1
         doAfter: 1
   - node: icon
-    entity: PlasmaShiv
+    entity: PhoronShiv
 
 - type: constructionGraph
   id: UraniumShiv

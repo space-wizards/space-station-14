@@ -6,7 +6,7 @@ namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class PlasmaFireReaction : IGasReactionEffect
+    public sealed partial class PhoronFireReaction : IGasReactionEffect
     {
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
         {
@@ -16,50 +16,50 @@ namespace Content.Server.Atmos.Reactions
             var location = holder as TileAtmosphere;
             mixture.ReactionResults[GasReaction.Fire] = 0;
 
-            // More plasma released at higher temperatures.
+            // More phoron released at higher temperatures.
             var temperatureScale = 0f;
 
-            if (temperature > Atmospherics.PlasmaUpperTemperature)
+            if (temperature > Atmospherics.PhoronUpperTemperature)
                 temperatureScale = 1f;
             else
             {
-                temperatureScale = (temperature - Atmospherics.PlasmaMinimumBurnTemperature) /
-                                   (Atmospherics.PlasmaUpperTemperature - Atmospherics.PlasmaMinimumBurnTemperature);
+                temperatureScale = (temperature - Atmospherics.PhoronMinimumBurnTemperature) /
+                                   (Atmospherics.PhoronUpperTemperature - Atmospherics.PhoronMinimumBurnTemperature);
             }
 
             if (temperatureScale > 0)
             {
                 var oxygenBurnRate = Atmospherics.OxygenBurnRateBase - temperatureScale;
-                var plasmaBurnRate = 0f;
+                var phoronBurnRate = 0f;
 
                 var initialOxygenMoles = mixture.GetMoles(Gas.Oxygen);
-                var initialPlasmaMoles = mixture.GetMoles(Gas.Plasma);
+                var initialPhoronMoles = mixture.GetMoles(Gas.Phoron);
 
                 // Supersaturation makes tritium.
-                var oxyRatio = initialOxygenMoles / initialPlasmaMoles;
-                // Efficiency of reaction decreases from 1% Plasma to 3% plasma:
+                var oxyRatio = initialOxygenMoles / initialPhoronMoles;
+                // Efficiency of reaction decreases from 1% Phoron to 3% phoron:
                 var supersaturation = Math.Clamp((oxyRatio - Atmospherics.SuperSaturationEnds) /
                                                  (Atmospherics.SuperSaturationThreshold -
                                                   Atmospherics.SuperSaturationEnds), 0.0f, 1.0f);
 
-                if (initialOxygenMoles > initialPlasmaMoles * Atmospherics.PlasmaOxygenFullburn)
-                    plasmaBurnRate = initialPlasmaMoles * temperatureScale / Atmospherics.PlasmaBurnRateDelta;
+                if (initialOxygenMoles > initialPhoronMoles * Atmospherics.PhoronOxygenFullburn)
+                    phoronBurnRate = initialPhoronMoles * temperatureScale / Atmospherics.PhoronBurnRateDelta;
                 else
-                    plasmaBurnRate = temperatureScale * (initialOxygenMoles / Atmospherics.PlasmaOxygenFullburn) / Atmospherics.PlasmaBurnRateDelta;
+                    phoronBurnRate = temperatureScale * (initialOxygenMoles / Atmospherics.PhoronOxygenFullburn) / Atmospherics.PhoronBurnRateDelta;
 
-                if (plasmaBurnRate > Atmospherics.MinimumHeatCapacity)
+                if (phoronBurnRate > Atmospherics.MinimumHeatCapacity)
                 {
-                    plasmaBurnRate = MathF.Min(plasmaBurnRate, MathF.Min(initialPlasmaMoles, initialOxygenMoles / oxygenBurnRate));
-                    mixture.SetMoles(Gas.Plasma, initialPlasmaMoles - plasmaBurnRate);
-                    mixture.SetMoles(Gas.Oxygen, initialOxygenMoles - plasmaBurnRate * oxygenBurnRate);
+                    phoronBurnRate = MathF.Min(phoronBurnRate, MathF.Min(initialPhoronMoles, initialOxygenMoles / oxygenBurnRate));
+                    mixture.SetMoles(Gas.Phoron, initialPhoronMoles - phoronBurnRate);
+                    mixture.SetMoles(Gas.Oxygen, initialOxygenMoles - phoronBurnRate * oxygenBurnRate);
 
                     // supersaturation adjusts the ratio of produced tritium to unwanted CO2
-                    mixture.AdjustMoles(Gas.Tritium, plasmaBurnRate * supersaturation);
-                    mixture.AdjustMoles(Gas.CarbonDioxide, plasmaBurnRate * (1.0f - supersaturation));
+                    mixture.AdjustMoles(Gas.Tritium, phoronBurnRate * supersaturation);
+                    mixture.AdjustMoles(Gas.CarbonDioxide, phoronBurnRate * (1.0f - supersaturation));
 
-                    energyReleased += Atmospherics.FirePlasmaEnergyReleased * plasmaBurnRate;
+                    energyReleased += Atmospherics.FirePhoronEnergyReleased * phoronBurnRate;
                     energyReleased /= heatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise
-                    mixture.ReactionResults[GasReaction.Fire] += plasmaBurnRate * (1 + oxygenBurnRate);
+                    mixture.ReactionResults[GasReaction.Fire] += phoronBurnRate * (1 + oxygenBurnRate);
                 }
             }
 

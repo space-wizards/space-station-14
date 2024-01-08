@@ -238,15 +238,15 @@
 - type: entity
   # it's a square so no rolling dough
   parent: GasTankBase
-  id: PlasmaTank
-  name: plasma tank
-  description: Contains dangerous plasma. Do not inhale. Extremely flammable.
+  id: PhoronTank
+  name: phoron tank
+  description: Contains dangerous phoron. Do not inhale. Extremely flammable.
   components:
   - type: Sprite
-    sprite: Objects/Tanks/plasma.rsi
+    sprite: Objects/Tanks/phoron.rsi
   - type: Item
-    sprite: Objects/Tanks/plasma.rsi
+    sprite: Objects/Tanks/phoron.rsi
   - type: GasTank
     outputPressure: 101.3
   - type: Clothing
-    sprite: Objects/Tanks/plasma.rsi
+    sprite: Objects/Tanks/phoron.rsi

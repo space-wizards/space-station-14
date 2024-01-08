@@ -10,7 +10,7 @@
     # everything except oxygen and nitrogen
     gases:
     - CarbonDioxide
-    - Plasma
+    - Phoron
     - Tritium
     - WaterVapor
     - Ammonia
@@ -21,7 +21,7 @@
     overflowGases:
     - Nitrogen
     - CarbonDioxide
-    - Plasma
+    - Phoron
     - Tritium
     - WaterVapor
     - Ammonia

@@ -43,6 +43,6 @@ Now [color=green]Tier 3[/color] is where it gets interesting. If you research a 
 <GuideEntityEmbed Entity="MedicalTechFab"/>
 <GuideEntityEmbed Entity="SecurityTechFab"/>
 </Box>
-At a lathe, you can choose a server to allow it print whatever recipes you have unlocked. Recipes require various materials (steel, glass, plastic, gold, plasma) which can be acquired at Cargo or Salvage.
+At a lathe, you can choose a server to allow it print whatever recipes you have unlocked. Recipes require various materials (steel, glass, plastic, gold, phoron) which can be acquired at Cargo or Salvage.
 
 </Document>

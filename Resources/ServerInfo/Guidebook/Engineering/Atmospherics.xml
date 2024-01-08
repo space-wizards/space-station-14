@@ -10,9 +10,9 @@ Breathing pure O2 or pure N2 is generally bad for the health of your crew, and i
 <GuideEntityEmbed Entity="NitrogenCanister"/>
 <GuideEntityEmbed Entity="AirCanister"/>
 </Box>
-Variations on this mix may be necessary for the long-term comfort of atypical crew, for example crew who require a plasma gas mix to survive. For atypical crew, it is recommended to try and give them their own personal space, isolated by either airlock or disposals section. Keep in mind both methods are leaky and you will need scrubbers on both sides of the lock to clean up any leaked gasses.
+Variations on this mix may be necessary for the long-term comfort of atypical crew, for example crew who require a phoron gas mix to survive. For atypical crew, it is recommended to try and give them their own personal space, isolated by either airlock or disposals section. Keep in mind both methods are leaky and you will need scrubbers on both sides of the lock to clean up any leaked gasses.
 <Box>
-<GuideEntityEmbed Entity="PlasmaCanister"/>
+<GuideEntityEmbed Entity="PhoronCanister"/>
 <GuideEntityEmbed Entity="StorageCanister"/>
 </Box>
 ## Vents and Scrubbers
@@ -33,10 +33,10 @@ In the event you finish all the tasks at hand, you can make some extra power or 
 
 ##Tritium
 Tritium is a clear, green gas that is highly flammable, radioactive, and combusts when in contact with oxygen making it very helpful when running the [color=#a4885c]TEG.[/color]
-It can be made by burning 1% Plasma and 96% or more Oxygen in the Burn Chamber. You can extract this gas through scrubbers.
+It can be made by burning 1% Phoron and 96% or more Oxygen in the Burn Chamber. You can extract this gas through scrubbers.
 
 <Box>
-<GuideEntityEmbed Entity="PlasmaCanister" />
+<GuideEntityEmbed Entity="PhoronCanister" />
 <GuideEntityEmbed Entity="OxygenCanister" />
 <GuideEntityEmbed Entity="GasVentScrubber"/>
 <GuideEntityEmbed Entity="TritiumCanister" />

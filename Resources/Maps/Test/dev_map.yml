@@ -4310,7 +4310,7 @@ entities:
     - pos: -6.337244,8.838643
       parent: 179
       type: Transform
-- proto: PlasmaCanister
+- proto: PhoronCanister
   entities:
   - uid: 461
     components:
@@ -4882,7 +4882,7 @@ entities:
     - pos: -0.5,8.5
       parent: 179
       type: Transform
-- proto: SheetPlasma
+- proto: SheetPhoron
   entities:
   - uid: 1077
     components:

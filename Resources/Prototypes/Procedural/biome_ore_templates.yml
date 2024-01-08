@@ -72,16 +72,16 @@
   radius: 4
 
 # High value
-# Plasma
+# Phoron
 - type: biomeMarkerLayer
-  id: OrePlasma
+  id: OrePhoron
   entityMask:
-    AsteroidRock: AsteroidRockPlasma
-    WallRock: WallRockPlasma
-    WallRockBasalt: WallRockBasaltPlasma
-    WallRockChromite: WallRockChromitePlasma
-    WallRockSand: WallRockSandPlasma
-    WallRockSnow: WallRockSnowPlasma
+    AsteroidRock: AsteroidRockPhoron
+    WallRock: WallRockPhoron
+    WallRockBasalt: WallRockBasaltPhoron
+    WallRockChromite: WallRockChromitePhoron
+    WallRockSand: WallRockSandPhoron
+    WallRockSnow: WallRockSnowPhoron
   maxCount: 12
   minGroupSize: 5
   maxGroupSize: 10

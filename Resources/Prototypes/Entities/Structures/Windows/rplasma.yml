@@ -1,13 +1,13 @@
 - type: entity
-  id: ReinforcedPlasmaWindow
-  name: reinforced plasma window
+  id: ReinforcedPhoronWindow
+  name: reinforced phoron window
   parent: Window
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/reinforced_plasma_window.rsi
+    sprite: Structures/Windows/reinforced_phoron_window.rsi
   - type: Icon
-    sprite: Structures/Windows/reinforced_plasma_window.rsi
+    sprite: Structures/Windows/reinforced_phoron_window.rsi
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: RGlass
@@ -30,7 +30,7 @@
           collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlassPlasma:
+          ShardGlassPhoron:
             min: 1
             max: 2
           PartRodMetal:
@@ -42,7 +42,7 @@
     base: rpwindow
   - type: Construction
     graph: Window
-    node: reinforcedPlasmaWindow
+    node: reinforcedPhoronWindow
   - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
@@ -54,9 +54,9 @@
     price: 132
 
 - type: entity
-  id: PlasmaReinforcedWindowDirectional
+  id: PhoronReinforcedWindowDirectional
   parent: WindowDirectional
-  name: directional reinforced plasma window
+  name: directional reinforced phoron window
   description: Don't smudge up the glass down there.
   placement:
     mode: SnapgridCenter
@@ -65,13 +65,13 @@
   components:
   - type: Sprite
     sprite: Structures/Windows/directional.rsi
-    state: plasma_reinforced_window
+    state: phoron_reinforced_window
   - type: Icon
     sprite: Structures/Windows/directional.rsi
-    state: plasma_reinforced_window
+    state: phoron_reinforced_window
   - type: Construction
     graph: WindowDirectional
-    node: plasmaReinforcedWindowDirectional
+    node: phoronReinforcedWindowDirectional
   - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
@@ -96,7 +96,7 @@
           collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlassPlasma:
+          ShardGlassPhoron:
             min: 1
             max: 2
           PartRodMetal:
@@ -108,8 +108,8 @@
     price: 66
 
 - type: entity
-  parent: ReinforcedPlasmaWindow
-  id: ReinforcedPlasmaWindowDiagonal
+  parent: ReinforcedPhoronWindow
+  id: ReinforcedPhoronWindowDiagonal
   suffix: diagonal
   placement:
     mode: SnapgridCenter
@@ -118,14 +118,14 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/reinforced_plasma_diagonal.rsi
+    sprite: Structures/Windows/reinforced_phoron_diagonal.rsi
     state: state0
   - type: IconSmooth
     mode: Diagonal
     key: windows
     base: state
   - type: Icon
-    sprite: Structures/Windows/reinforced_plasma_diagonal.rsi
+    sprite: Structures/Windows/reinforced_phoron_diagonal.rsi
     state: state0
   - type: Fixtures
     fixtures:
@@ -145,4 +145,4 @@
       sprite: Structures/Windows/cracks_diagonal.rsi
   - type: Construction
     graph: WindowDiagonal
-    node: reinforcedPlasmaWindowDiagonal
+    node: reinforcedPhoronWindowDiagonal

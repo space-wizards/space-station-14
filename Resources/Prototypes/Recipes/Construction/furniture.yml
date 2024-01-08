@@ -273,15 +273,15 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: plasma glass table
-  id: TablePlasmaGlass
+  name: phoron glass table
+  id: TablePhoronGlass
   graph: Table
   startNode: start
-  targetNode: TablePlasmaGlass
+  targetNode: TablePhoronGlass
   category: construction-category-furniture
-  description: A square piece of plasma glass, standing on four metal legs. Pretty!
+  description: A square piece of phoron glass, standing on four metal legs. Pretty!
   icon:
-    sprite: Structures/Furniture/Tables/plasma.rsi
+    sprite: Structures/Furniture/Tables/phoron.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter

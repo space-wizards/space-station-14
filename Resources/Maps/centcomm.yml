@@ -31417,7 +31417,7 @@ entities:
     - links:
       - 5907
       type: DeviceLinkSink
-- proto: ReinforcedPlasmaWindow
+- proto: ReinforcedPhoronWindow
   entities:
   - uid: 2791
     components:

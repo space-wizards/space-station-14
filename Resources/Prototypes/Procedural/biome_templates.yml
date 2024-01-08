@@ -430,7 +430,7 @@
         octaves: 5
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
-    # Liquid plasma rivers. Ice moon baby
+    # Liquid phoron rivers. Ice moon baby
     - !type:BiomeEntityLayer
       allowedTiles:
       - FloorSnow
@@ -444,7 +444,7 @@
         fractalType: Ridged
         octaves: 1
       entities:
-      - FloorLiquidPlasmaEntity
+      - FloorLiquidPhoronEntity
     - !type:BiomeDummyLayer
       id: Loot
     - !type:BiomeTileLayer

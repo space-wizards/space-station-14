@@ -68,7 +68,7 @@ public sealed partial class TemperatureComponent : Component
     /// Temperature won't do more than this amount of damage per second.
     /// </summary>
     /// <remarks>
-    /// Okay it genuinely reaches this basically immediately for a plasma fire.
+    /// Okay it genuinely reaches this basically immediately for a phoron fire.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 DamageCap = FixedPoint2.New(8);

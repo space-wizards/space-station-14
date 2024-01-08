@@ -8735,7 +8735,7 @@ entities:
     - pos: 8.452288,42.514927
       parent: 588
       type: Transform
-- proto: GeneratorPlasma
+- proto: GeneratorPhoron
   entities:
   - uid: 967
     components:

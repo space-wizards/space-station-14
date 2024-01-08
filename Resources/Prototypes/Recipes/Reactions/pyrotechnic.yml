@@ -17,14 +17,14 @@
       amount: 1
     SulfuricAcid:
       amount: 1
-    Plasma:
+    Phoron:
       amount: 1
   effects:
   - !type:CreateGas
-    gas: Plasma
+    gas: Phoron
   - !type:PopupMessage
     visualType: LargeCaution
-    messages: [ "phlogiston-plasma-created" ]
+    messages: [ "phlogiston-phoron-created" ]
     type: Pvs
   products:
     Phlogiston: 3

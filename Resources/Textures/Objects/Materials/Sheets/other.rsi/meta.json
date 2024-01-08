@@ -53,20 +53,20 @@
       "directions": 4
     },
     {
-      "name": "plasma"
+      "name": "phoron"
     },
     {
-      "name": "plasma_2"
+      "name": "phoron_2"
     },
     {
-      "name": "plasma_3"
+      "name": "phoron_3"
     },
     {
-      "name": "plasma-inhand-left",
+      "name": "phoron-inhand-left",
       "directions": 4
     },
     {
-      "name": "plasma-inhand-right",
+      "name": "phoron-inhand-right",
       "directions": 4
     },
     {

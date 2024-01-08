@@ -24,7 +24,7 @@ public sealed partial class SolidFuelGeneratorAdapterComponent : Component
     /// </summary>
     [DataField("fuelMaterial", customTypeSerializer: typeof(PrototypeIdSerializer<MaterialPrototype>))]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string FuelMaterial = "Plasma";
+    public string FuelMaterial = "Phoron";
 
     /// <summary>
     /// How much material (can be fractional) is left in the generator.

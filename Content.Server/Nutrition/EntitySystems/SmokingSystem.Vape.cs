@@ -74,7 +74,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 // All vapes explode if they contain anything other than pure water???
                 // WTF is this? Why is this? Am I going insane?
                 // Who the fuck vapes pure water?
-                // If this isn't how this is meant to work and this is meant to be for vapes with plasma or something,
+                // If this isn't how this is meant to work and this is meant to be for vapes with phoron or something,
                 // just re-use the existing RiggableSystem.
                 foreach (var name in solution.Contents)
                 {

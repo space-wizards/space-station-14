@@ -135,7 +135,7 @@ public sealed class GasCanisterSystem : EntitySystem
     private void OnCanisterChangeReleaseValve(EntityUid uid, GasCanisterComponent canister, GasCanisterChangeReleaseValveMessage args)
     {
         var impact = LogImpact.High;
-        // filling a jetpack with plasma is less important than filling a room with it
+        // filling a jetpack with phoron is less important than filling a room with it
         impact = canister.GasTankSlot.HasItem ? LogImpact.Medium : LogImpact.High;
 
         var containedGasDict = new Dictionary<Gas, float>();

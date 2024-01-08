@@ -337,15 +337,15 @@
     node: TableReinforcedGlass
 
 - type: entity
-  id: TablePlasmaGlass
+  id: TablePhoronGlass
   parent: TableBase
-  name: plasma glass table
-  description: A square piece of plasma glass, standing on four metal legs. Pretty!
+  name: phoron glass table
+  description: A square piece of phoron glass, standing on four metal legs. Pretty!
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/plasma.rsi
+    sprite: Structures/Furniture/Tables/phoron.rsi
   - type: Icon
-    sprite: Structures/Furniture/Tables/plasma.rsi
+    sprite: Structures/Furniture/Tables/phoron.rsi
   - type: GlassTable
     climberDamage:
       types:
@@ -373,7 +373,7 @@
         node: TableFrame
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlassPlasma:
+          ShardGlassPhoron:
             min: 1
             max: 1
           PartRodMetal1:
@@ -383,7 +383,7 @@
         acts: [ "Destruction" ]
   - type: Construction
     graph: Table
-    node: TablePlasmaGlass
+    node: TablePhoronGlass
 
 - type: entity
   id: TableWood

@@ -316,7 +316,7 @@
     Plastic: 500
     Gold: 100
     Silver: 100
-    Plasma: 1000
+    Phoron: 1000
 
 - type: latheRecipe
   id: BorgModuleCable

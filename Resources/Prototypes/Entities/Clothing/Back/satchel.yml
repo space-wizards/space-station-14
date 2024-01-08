@@ -29,7 +29,7 @@
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelAtmospherics
   name: atmospherics satchel
-  description: A tough satchel made of fire resistant fibers. Smells like plasma.
+  description: A tough satchel made of fire resistant fibers. Smells like phoron.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/atmospherics.rsi

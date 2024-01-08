@@ -3404,7 +3404,7 @@ entities:
     - pos: -1.5,8.5
       parent: 1
       type: Transform
-- proto: ReinforcedPlasmaWindow
+- proto: ReinforcedPhoronWindow
   entities:
   - uid: 513
     components:
@@ -3565,7 +3565,7 @@ entities:
     - pos: 8.5,1.5
       parent: 1
       type: Transform
-- proto: ReinforcedPlasmaWindowDiagonal
+- proto: ReinforcedPhoronWindowDiagonal
   entities:
   - uid: 540
     components:

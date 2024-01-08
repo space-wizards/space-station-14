@@ -49,11 +49,11 @@
   group: market
 
 - type: cargoProduct
-  id: MaterialPlasma
+  id: MaterialPhoron
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
-    state: plasma_3
-  product: CrateMaterialPlasma
+    state: phoron_3
+  product: CrateMaterialPhoron
   cost: 2000
   category: Materials
   group: market
@@ -87,7 +87,7 @@
   cost: 1500
   category: Materials
   group: market
-  
+
 - type: cargoProduct
   id: MaterialWaterTank
   icon:

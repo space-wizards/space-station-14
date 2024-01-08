@@ -25,8 +25,8 @@ ent-CarbonDioxideCanister = Carbon dioxide canister
 ent-LiquidCarbonDioxideCanister = Liquid carbon dioxide canister
     .desc = A canister that can contain any type of gas. This one is supposed to contain liquid carbon dioxide. It can be attached to connector ports using a wrench.
 
-ent-PlasmaCanister = Plasma canister
-    .desc = A canister that can contain any type of gas. This one is supposed to contain plasma. It can be attached to connector ports using a wrench.
+ent-PhoronCanister = Phoron canister
+    .desc = A canister that can contain any type of gas. This one is supposed to contain phoron. It can be attached to connector ports using a wrench.
 
 ent-TritiumCanister = Tritium canister
     .desc = A canister that can contain any type of gas. This one is supposed to contain tritium. It can be attached to connector ports using a wrench.
@@ -61,7 +61,7 @@ ent-NitrogenCanisterBroken = { ent-GasCanisterBrokenBase }
 ent-CarbonDioxideCanisterBroken = { ent-GasCanisterBrokenBase }
     .desc = { ent-GasCanisterBrokenBase.desc }
 
-ent-PlasmaCanisterBroken = { ent-GasCanisterBrokenBase }
+ent-PhoronCanisterBroken = { ent-GasCanisterBrokenBase }
     .desc = { ent-GasCanisterBrokenBase.desc }
 
 ent-TritiumCanisterBroken = { ent-GasCanisterBrokenBase }

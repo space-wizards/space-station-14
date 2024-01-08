@@ -1,7 +1,7 @@
 ﻿<Document>
   # Thermo-electric Engine (TEG)
 
-  The TEG generates power by exchanging heat between hot and cold gases. On station, hot gas is usually created by burning plasma, and an array of heat-exchanging pipes in space radiates away heat to make a cold side.
+  The TEG generates power by exchanging heat between hot and cold gases. On station, hot gas is usually created by burning phoron, and an array of heat-exchanging pipes in space radiates away heat to make a cold side.
 
   The TEG relies heavily on atmospherics piping. The only truly special component about it is the generator core, the rest is all off-the-shelf atmospherics equipment. Note that while the exact layout may vary significantly depending on station, the general components and setup are usually the same.
 

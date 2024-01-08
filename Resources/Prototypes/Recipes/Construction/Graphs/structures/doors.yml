@@ -20,11 +20,11 @@
             - material: WoodPlank
               amount: 20
               doAfter: 15
-        - to: plasmaDoor
+        - to: phoronDoor
           completed:
             - !type:SnapToGrid { }
           steps:
-            - material: Plasma
+            - material: Phoron
               amount: 20
               doAfter: 15
         - to: goldDoor
@@ -77,13 +77,13 @@
           steps:
             - tool: Anchoring
               doAfter: 15
-    - node: plasmaDoor
-      entity: PlasmaDoor
+    - node: phoronDoor
+      entity: PhoronDoor
       edges:
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: SheetPlasma
+              prototype: SheetPhoron
               amount: 20
           steps:
             - tool: Anchoring

@@ -25,7 +25,7 @@
 
   <Box>
     <GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="P.A.C.M.A.N." />
-    <GuideEntityEmbed Entity="SheetPlasma" />
+    <GuideEntityEmbed Entity="SheetPhoron" />
   </Box>
 
   <Box>

@@ -57,7 +57,7 @@
     Steel: 100
     Plastic: 100
     Glass: 50
-    Plasma: 50
+    Phoron: 50
     Silver: 50
 
 - type: latheRecipe
@@ -109,7 +109,7 @@
     Steel: 1500
     Plastic: 300
     Glass: 500
-    Plasma: 500
+    Phoron: 500
     Silver: 250
 
 - type: latheRecipe
@@ -119,7 +119,7 @@
   materials:
     Steel: 2000
     Silver: 750
-    Plasma: 1500
+    Phoron: 1500
     Uranium: 150
 
 - type: latheRecipe
@@ -129,7 +129,7 @@
   materials:
     Steel: 2000
     Silver: 750
-    Plasma: 1500
+    Phoron: 1500
     Uranium: 150
 
 - type: latheRecipe
@@ -139,7 +139,7 @@
   materials:
     Steel: 2000
     Silver: 750
-    Plasma: 1500
+    Phoron: 1500
     Uranium: 150
 
 - type: latheRecipe
@@ -149,7 +149,7 @@
   materials:
     Steel: 2000
     Silver: 750
-    Plasma: 1500
+    Phoron: 1500
     Uranium: 150
 
 - type: latheRecipe

@@ -1,6 +1,6 @@
 ﻿- type: entity
-  id: FloorLiquidPlasmaEntity
-  name: liquid plasma
+  id: FloorLiquidPhoronEntity
+  name: liquid phoron
   description: Sweet, expensive nectar. Don't consume.
   placement:
     mode: SnapgridCenter
@@ -19,17 +19,17 @@
   - type: SyncSprite
   - type: Clickable
   - type: Sprite
-    sprite: Tiles/Planet/liquid_plasma.rsi
+    sprite: Tiles/Planet/liquid_phoron.rsi
     drawdepth: BelowFloor
     layers:
-    - state: plasma
+    - state: phoron
       shader: unshaded
   - type: Icon
-    sprite: Tiles/Planet/liquid_plasma.rsi
+    sprite: Tiles/Planet/liquid_phoron.rsi
     state: full
   - type: IconSmooth
     key: floor
-    base: plasma
+    base: phoron
   - type: Physics
     bodyType: Static
   - type: Fixtures

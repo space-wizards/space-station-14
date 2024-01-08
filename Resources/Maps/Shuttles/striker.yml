@@ -1598,7 +1598,7 @@ entities:
       parent: 325
     - type: Physics
       canCollide: False
-- proto: PlasmaReinforcedWindowDirectional
+- proto: PhoronReinforcedWindowDirectional
   entities:
   - uid: 104
     components:
@@ -1736,7 +1736,7 @@ entities:
     - type: Transform
       pos: 1.5,-2.5
       parent: 325
-- proto: ReinforcedPlasmaWindow
+- proto: ReinforcedPhoronWindow
   entities:
   - uid: 14
     components:
