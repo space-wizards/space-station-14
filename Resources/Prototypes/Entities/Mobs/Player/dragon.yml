@@ -31,6 +31,7 @@
   - type: CombatMode
   - type: MobMover
   - type: InputMover
+  - type: AntiRottingContainer
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 5
