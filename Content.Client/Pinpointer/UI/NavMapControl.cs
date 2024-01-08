@@ -239,12 +239,7 @@ public partial class NavMapControl : MapGridControl
                 TrackedEntitySelectedAction.Invoke(null);
 
             // Toggle beacon labels
-            if (_beacons.Pressed)
-                _beacons.Pressed = false;
-            else
-            {
-                _beacons.Pressed = true;
-            }
+            _beacons.Pressed = !_beacons.Pressed;
 
         }
 
