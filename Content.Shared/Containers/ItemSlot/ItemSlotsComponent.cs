@@ -71,6 +71,9 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
 
+        [DataField("blacklist")]
+        public EntityWhitelist? Blacklist;
+
         [DataField("insertSound")]
         public SoundSpecifier InsertSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
 
@@ -111,6 +114,15 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("locked", readOnly: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Locked = false;
+
+        /// <summary>
+        /// Prevents adding the eject alt-verb, but still lets you swap items.
+        /// </summary>
+        /// <remarks>
+        ///     This does not affect EjectOnInteract, since if you do that you probably want ejecting to work.
+        /// </remarks>
+        [DataField("disableEject"), ViewVariables(VVAccess.ReadWrite)]
+        public bool DisableEject = false;
 
         /// <summary>
         ///     Whether the item slots system will attempt to insert item from the user's hands into this slot when interacted with.

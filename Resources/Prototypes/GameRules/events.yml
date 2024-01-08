@@ -56,17 +56,54 @@
   - type: BureaucraticErrorRule
 
 - type: entity
+  id: ClericalError
   parent: BaseGameRule
-  id: Dragon
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-clerical-error-announcement
+    minimumPlayers: 15
+    weight: 5
+    duration: 1
+  - type: ClericalErrorRule
+
+- type: entity
+  parent: BaseGameRule
+  id: ClosetSkeleton
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    duration: 1
+  - type: RandomEntityStorageSpawnRule
+    prototype: MobSkeletonCloset
+
+- type: entity
+  parent: BaseGameRule
+  id: DragonSpawn
   noSpawn: true
   components:
   - type: StationEvent
     weight: 5
     duration: 1
     earliestStart: 45
+    reoccurrenceDelay: 60
     minimumPlayers: 20
   - type: RandomSpawnRule
     prototype: SpawnPointGhostDragon
+
+- type: entity
+  parent: BaseGameRule
+  id: NinjaSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    duration: 1
+    earliestStart: 30
+    reoccurrenceDelay: 60
+    minimumPlayers: 40
+  - type: NinjaSpawnRule
 
 - type: entity
   parent: BaseGameRule
@@ -103,7 +140,7 @@
     endAnnouncement: station-event-gas-leak-end-announcement
     earliestStart: 10
     minimumPlayers: 5
-    weight: 5
+    weight: 10
     startDelay: 20
   - type: GasLeakRule
 
@@ -152,16 +189,29 @@
   - type: VentCrittersRule
     entries:
     - id: MobMouse
-      prob: 0.015
+      prob: 0.02
     - id: MobMouse1
-      prob: 0.015
+      prob: 0.02
     - id: MobMouse2
-      prob: 0.015
-    - id: MobRatServant
-      prob: 0.015
+      prob: 0.02
     specialEntries:
     - id: SpawnPointGhostRatKing
       prob: 0.005
+
+- type: entity
+  id: CockroachMigration
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 5
+    duration: 50
+  - type: VentCrittersRule
+    entries:
+    - id: MobCockroach
+      prob: 0.03
+    - id: MobMothroach
+      prob: 0.008
 
 - type: entity
   id: PowerGridCheck
@@ -221,6 +271,19 @@
     extraCount: 2
     lightBreakChancePerSecond: 0.0003
     doorToggleChancePerSecond: 0.001
+
+- type: entity
+  parent: BaseGameRule
+  id: TerminatorSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 8
+    duration: 1
+    earliestStart: 30
+    minimumPlayers: 20
+  - type: RandomSpawnRule
+    prototype: SpawnPointGhostTerminator
 
 - type: entity
   id: VentClog
@@ -366,3 +429,15 @@
     earliestStart: 45
     minimumPlayers: 20
   - type: ImmovableRodRule
+
+- type: entity
+  noSpawn: true
+  parent: BaseGameRule
+  id: IonStorm
+  components:
+  - type: StationEvent
+    weight: 5
+    earliestStart: 20
+    reoccurrenceDelay: 60
+    duration: 1
+  - type: IonStormRule

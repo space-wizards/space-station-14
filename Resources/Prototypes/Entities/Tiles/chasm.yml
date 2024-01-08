@@ -18,12 +18,12 @@
     anchored: true
   - type: Clickable
   - type: Sprite
-    sprite: Tiles/Planet/chasm.rsi
+    sprite: Tiles/Planet/Chasms/basalt_chasm.rsi
     drawdepth: BelowFloor
     layers:
     - state: chasm
   - type: Icon
-    sprite: Tiles/Planet/chasm.rsi
+    sprite: Tiles/Planet/Chasms/basalt_chasm.rsi
     state: full
   - type: IconSmooth
     key: chasm
@@ -45,3 +45,33 @@
   - type: Tag
     tags:
     - HideContextMenu
+
+- type: entity
+  parent: FloorChasmEntity
+  id: FloorChromiteChasm
+  suffix: Chromite
+  components:
+  - type: Sprite
+    sprite: Tiles/Planet/Chasms/chromite_chasm.rsi
+  - type: Icon
+    sprite: Tiles/Planet/Chasms/chromite_chasm.rsi
+    
+- type: entity
+  parent: FloorChasmEntity
+  id: FloorDesertChasm
+  suffix: Desert
+  components:
+  - type: Sprite
+    sprite: Tiles/Planet/Chasms/desert_chasm.rsi
+  - type: Icon
+    sprite: Tiles/Planet/Chasms/desert_chasm.rsi
+    
+- type: entity
+  parent: FloorChasmEntity
+  id: FloorSnowChasm
+  suffix: Snow
+  components:
+  - type: Sprite
+    sprite: Tiles/Planet/Chasms/snow_chasm.rsi
+  - type: Icon
+    sprite: Tiles/Planet/Chasms/snow_chasm.rsi

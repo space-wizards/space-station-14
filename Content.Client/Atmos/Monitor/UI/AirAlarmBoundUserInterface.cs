@@ -48,7 +48,7 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
     {
         SendMessage(new AirAlarmUpdateDeviceDataMessage(address, data));
     }
-	
+
 	private void OnDeviceDataCopied(IAtmosDeviceData data)
     {
         SendMessage(new AirAlarmCopyDeviceDataMessage(data));

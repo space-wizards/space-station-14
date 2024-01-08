@@ -19,7 +19,7 @@
   id: ClothingHeadHatHoodBioCmo
   name: bio hood
   suffix: CMO
-  description: An advanced hood for chief medical officer that protects the head and face from biological contaminants.
+  description: An advanced hood for chief medical officers that protects the head and face from biological contaminants.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
@@ -77,7 +77,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodChaplainHood
-  name: chaplain hood
+  noSpawn: true
+  name: chaplain's hood
   description: Maximum piety in this star system.
   components:
   - type: Sprite

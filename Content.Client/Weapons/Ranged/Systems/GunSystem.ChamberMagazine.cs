@@ -47,7 +47,7 @@ public sealed partial class GunSystem
 
         // This is dirty af. Prediction moment.
         // We may be predicting spawning entities and the engine just removes them from the container so we'll just delete them.
-        if (removedArgs.Entity.IsClientSide())
+        if (IsClientSide(removedArgs.Entity))
             QueueDel(args.Entity);
 
         // AFAIK the only main alternative is having some client-specific handling via a bool or otherwise for the state.

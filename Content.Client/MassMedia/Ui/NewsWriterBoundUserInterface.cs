@@ -24,7 +24,7 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
 
     protected override void Open()
     {
-        _menu = new NewsWriterMenu(_gameTiming);
+        _menu = new NewsWriterMenu();
 
         _menu.OpenCentered();
         _menu.OnClose += Close;

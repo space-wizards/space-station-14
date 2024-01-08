@@ -1,0 +1,21 @@
+﻿ <cartridges:LogProbeUiFragment xmlns="https://spacestation14.io"
+                                xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                                Orientation="Vertical"
+                                VerticalExpand="True">
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#000000FF"
+                              BorderColor="#5a5a5a"
+                              BorderThickness="0 0 0 1"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Horizontal" Align="Center" Margin="8">
+            <Label HorizontalExpand="True" Text="{Loc 'log-probe-label-number'}"/>
+            <Label HorizontalExpand="True" Text="{Loc 'log-probe-label-time'}"/>
+            <Label HorizontalExpand="True" Text="{Loc 'log-probe-label-accessor'}"/>
+        </BoxContainer>
+    </PanelContainer>
+    <ScrollContainer VerticalExpand="True" HScrollEnabled="True">
+        <BoxContainer Orientation="Vertical" Name="ProbedDeviceContainer"/>
+    </ScrollContainer>
+</cartridges:LogProbeUiFragment>

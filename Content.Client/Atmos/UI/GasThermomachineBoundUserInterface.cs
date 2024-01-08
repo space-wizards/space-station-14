@@ -19,7 +19,7 @@ namespace Content.Client.Atmos.UI
 
         [ViewVariables]
         private float _maxTemp = 0.0f;
-        
+
         [ViewVariables]
         private bool _isHeater = true;
 

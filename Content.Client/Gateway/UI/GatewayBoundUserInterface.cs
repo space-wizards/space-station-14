@@ -17,7 +17,8 @@ public sealed class GatewayBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = new GatewayWindow();
+        _window = new GatewayWindow(EntMan.GetNetEntity(Owner));
+
         _window.OpenPortal += destination =>
         {
             SendMessage(new GatewayOpenPortalMessage(destination));
@@ -29,8 +30,11 @@ public sealed class GatewayBoundUserInterface : BoundUserInterface
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        _window?.Dispose();
-        _window = null;
+        if (disposing)
+        {
+            _window?.Dispose();
+            _window = null;
+        }
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

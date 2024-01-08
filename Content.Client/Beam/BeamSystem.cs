@@ -17,7 +17,9 @@ public sealed class BeamSystem : SharedBeamSystem
     //TODO: Sometime in the future this needs to be replaced with tiled sprites
     private void BeamVisualizerMessage(BeamVisualizerEvent args)
     {
-        if (TryComp<SpriteComponent>(args.Beam, out var sprites))
+        var beam = GetEntity(args.Beam);
+
+        if (TryComp<SpriteComponent>(beam, out var sprites))
         {
             sprites.Rotation = args.UserAngle;
 

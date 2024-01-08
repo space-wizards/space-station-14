@@ -4,8 +4,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: BananaSeeds
-        amount: 2
       - id: EggySeeds
         amount: 2
       - id: TowercapSeeds
@@ -18,7 +16,7 @@
         amount: 2
       - id: FlyAmanitaSeeds
         amount: 2
-      - id: PineappleSeeds
+      - id: BungoSeeds
         amount: 2
 
 - type: entity
@@ -80,3 +78,4 @@
       - id: SoybeanSeeds
       - id: GrapeSeeds
       - id: WatermelonSeeds
+      - id: PeaSeeds

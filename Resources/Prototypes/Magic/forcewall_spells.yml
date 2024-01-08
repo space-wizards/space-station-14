@@ -1,15 +1,18 @@
-﻿- type: instantAction
-  id: ForceWall
-  name: action-name-spell-forcewall
-  description: action-description-spell-forcewall
-  useDelay: 10
-  itemIconStyle: BigAction
-  sound: !type:SoundPathSpecifier
-    path: /Audio/Magic/forcewall.ogg
-  icon:
-    sprite: Objects/Magic/magicactions.rsi
-    state: shield
-  serverEvent: !type:InstantSpawnSpellEvent
-    prototype: WallForce
-    posData: !type:TargetInFront
-    speech: action-speech-spell-forcewall
+﻿- type: entity
+  id: ActionForceWall
+  name: Forcewall
+  description: Creates a magical barrier.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 10
+    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: shield
+    event: !type:InstantSpawnSpellEvent
+      prototype: WallForce
+      posData: !type:TargetInFront
+      speech: action-speech-spell-forcewall

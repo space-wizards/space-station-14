@@ -47,7 +47,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     {
         if (_overlay == null) return;
 
-        _overlay.StationUid = ev.StationUid;
+        _overlay.StationUid = GetEntity(ev.StationUid);
         _overlay.Position = ev.Position;
     }
 }

@@ -1,0 +1,74 @@
+<Document>
+# Space Ninja
+
+The Space Ninja is a ghost role randomly available mid-late game. If you pick it you will be given your gear, your objectives and the greeting.
+
+You are a ninja, but in space. The Spider Clan has sent you to the station to wreak all kinds of havoc, from bolting the armory open and killing the entire station to engaging in a slipping war with the clown and fighting in rage cages.
+
+# Equipment
+
+You start with a microbomb implant, so if you get KIA or seppuku you will leave behind a nice crater and all your precious equipment is kept out of enemy hands.
+
+Your bag is full of tools for more subtle sabotage, along with a survival box if you need a snack.
+
+You have a jetpack and pinpointer that will let you find the station.
+
+<GuideEntityEmbed Entity="PinpointerStation" Caption="station pinpointer"/>
+
+## Ninja Suit
+
+<GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja" Captain="ninja suit"/>
+
+Your single most important item is your suit, without it none of your abilities would work.
+Your suit requires power to function, its internal battery can be replaced by clicking on it **with a better one**.
+You can see the current charge by examining the suit or in a sweet battery alert at the top right of your screen.
+
+If you run out of power and need to recharge your battery, just use your gloves to drain an APC, substation or a SMES.
+
+## Ninja Gloves
+
+<GuideEntityEmbed Entity="ClothingHandsGlovesSpaceNinja" Caption="ninja gloves"/>
+
+These bad boys are your bread and butter.
+
+They are insulated so you can nom on wires in peace. Obviously they block your fingerprints from being left on things you touch.
+
+You have an action to toggle gloves. When the gloves are turned on, they allow you to use special abilities, which are triggered by interacting with things with an empty hand and with combat mode disabled.
+
+Your glove abilities include:
+- Emagging an unlimited number of doors.
+- Draining power from transformers such as APCs, substations or SMESes. The higher the voltage, the more efficient the draining is.
+- You can shock any mob, stunning and slightly damaging them.
+- You can download technologies from a R&D server for one of your objectives.
+- You can hack a communications console to call in a threat.
+
+## Energy Katana
+
+<GuideEntityEmbed Entity="EnergyKatana" Captain="energy katana"/>
+
+Deals a lot of damage and can be recalled at will, costing suit power proportional to the distance teleported.
+While in hand you can teleport to anywhere that you can see, meaning most doors and windows, but not past solid walls.
+This has a limited number of charges which regenerate slowly, so keep a charge or two spare incase you need a quick getaway.
+
+## Spider Clan Charge
+
+<GuideEntityEmbed Entity="SpiderCharge" Caption="spider clan charge"/>
+
+A modified C-4 explosive, you start with this in your pocket. Creates a large explosion but must be armed in your target area.
+A random area on the map is selected for you to blow up, which is one of your objectives. It can't be activated manually, simply plant it on a wall or something.
+Can't be unstuck once planted.
+
+## Ninja Shoes
+
+Special noslips that make you go really fast.
+Energy not required.
+
+# Objectives
+
+- Download X research nodes: Use your gloves on an R&D server with a number of unlocked technologies
+- Doorjack X doors on the station: Use your gloves to emag a number of doors.
+- Detonate the spider clan charge: Plant your spider clan charge at a random location and watch it go boom.
+- Call in a threat: Use your gloves on a communications console.
+- Survive: Don't die.
+
+</Document>

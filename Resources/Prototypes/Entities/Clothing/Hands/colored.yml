@@ -1,5 +1,15 @@
+# gloves that cover the fingertips and have synthetic fibers
 - type: entity
+  abstract: true
   parent: ClothingHandsBase
+  id: ClothingHandsGlovesSyntheticBase
+  components:
+  - type: Fiber
+    fiberMaterial: fibers-synthetic
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesColorPurple
   name: purple gloves
   description: Regular purple gloves that do not keep you from frying.
@@ -9,12 +19,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/purple.rsi
   - type: Fiber
-    fiberMaterial: fibers-synthetic
     fiberColor: fibers-purple
-  - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesColorRed
   name: red gloves
   description: Regular red gloves that do not keep you from frying.
@@ -24,12 +32,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/red.rsi
   - type: Fiber
-    fiberMaterial: fibers-synthetic
     fiberColor: fibers-red
-  - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesColorBlack
   name: black gloves
   description: Regular black gloves that do not keep you from frying.
@@ -40,13 +46,15 @@
     sprite: Clothing/Hands/Gloves/Color/black.rsi
   - type: GloveHeatResistance
     heatResistance: 1400
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingHandsGlovesFingerless
   - type: Fiber
-    fiberMaterial: fibers-synthetic
     fiberColor: fibers-black
-  - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesColorBlue
   name: blue gloves
   description: Regular blue gloves that do not keep you from frying.
@@ -56,12 +64,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/blue.rsi
   - type: Fiber
-    fiberMaterial: fibers-synthetic
     fiberColor: fibers-blue
-  - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesColorBrown
   name: brown gloves
   description: Regular brown gloves that do not keep you from frying.
@@ -71,12 +77,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/brown.rsi
   - type: Fiber
-    fiberMaterial: fibers-synthetic
     fiberColor: fibers-brown
-  - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesColorGray
   name: grey gloves
   description: Regular grey gloves that do not keep you from frying.
@@ -86,12 +90,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/gray.rsi
   - type: Fiber
-    fiberMaterial: fibers-synthetic
     fiberColor: fibers-grey
-  - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesColorGreen
   name: green gloves
   description: Regular green gloves that do not keep you from frying.
@@ -101,12 +103,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/green.rsi
   - type: Fiber
-    fiberMaterial: fibers-synthetic
     fiberColor: fibers-green
-  - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesColorLightBrown
   name: light brown gloves
   description: Regular light brown gloves that do not keep you from frying.
@@ -116,12 +116,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/lightbrown.rsi
   - type: Fiber
-    fiberMaterial: fibers-synthetic
     fiberColor: fibers-brown
-  - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesColorOrange
   name: orange gloves
   description: Regular orange gloves that do not keep you from frying.
@@ -131,12 +129,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/orange.rsi
   - type: Fiber
-    fiberMaterial: fibers-synthetic
     fiberColor: fibers-orange
-  - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesColorWhite
   name: white gloves
   description: Those gloves look fancy.
@@ -146,12 +142,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/white.rsi
   - type: Fiber
-    fiberMaterial: fibers-synthetic
     fiberColor: fibers-white
-  - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesColorYellow
   name: insulated gloves
   description: These gloves will protect the wearer from electric shocks.
@@ -162,11 +156,14 @@
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
   - type: GloveHeatResistance
     heatResistance: 1400
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingHandsGlovesFingerlessInsulated
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative
     fiberColor: fibers-yellow
-  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsGlovesColorYellow
@@ -174,27 +171,22 @@
   name: budget insulated gloves
   description: These gloves are cheap knockoffs of the coveted ones - no way this can end badly.
   components:
-    - type: Clothing
-    - type: GloveHeatResistance
-      heatResistance: 0
-    - type: Insulated
-    - type: Fiber
-      fiberMaterial: fibers-insulative
-      fiberColor: fibers-yellow
-    - type: FingerprintMask
-    - type: RandomInsulation
-      # Why repeated numbers? So some numbers are more common, of course!
-      list:
-        - 0
-        - 0
-        - 0
-        - 0.5
-        - 0.5
-        - 0.5
-        - 0.75
-        - 1.25
-        - 1.25
-        - 1.5
-        - 1.5
-        - 1.5
-        - 1.5
+  - type: GloveHeatResistance
+    # can't take out lights using budgets
+    heatResistance: 0
+  - type: RandomInsulation
+    # Why repeated numbers? So some numbers are more common, of course!
+    list:
+      - 0
+      - 0
+      - 0
+      - 0.5
+      - 0.5
+      - 0.5
+      - 0.75
+      - 1.25
+      - 1.25
+      - 1.5
+      - 1.5
+      - 1.5
+      - 1.5

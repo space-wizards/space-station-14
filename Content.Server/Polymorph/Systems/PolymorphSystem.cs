@@ -5,7 +5,6 @@ using Content.Server.Mind.Commands;
 using Content.Server.Nutrition;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Buckle;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
@@ -16,6 +15,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
+using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -30,6 +30,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly ActionsSystem _actions = default!;
+        [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly SharedBuckleSystem _buckle = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
@@ -46,13 +47,15 @@ namespace Content.Server.Polymorph.Systems
 
         private ISawmill _sawmill = default!;
 
+        private const string RevertPolymorphId = "ActionRevertPolymorph";
+
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<PolymorphableComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<PolymorphableComponent, PolymorphActionEvent>(OnPolymorphActionEvent);
-            SubscribeLocalEvent<PolymorphedEntityComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<PolymorphedEntityComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
             SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
             SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
@@ -84,7 +87,7 @@ namespace Content.Server.Polymorph.Systems
             Revert(uid, component);
         }
 
-        public void OnStartup(EntityUid uid, PolymorphedEntityComponent component, ComponentStartup args)
+        private void OnMapInit(EntityUid uid, PolymorphedEntityComponent component, MapInitEvent args)
         {
             if (!_proto.TryIndex(component.Prototype, out PolymorphPrototype? proto))
             {
@@ -97,23 +100,18 @@ namespace Content.Server.Polymorph.Systems
             if (proto.Forced)
                 return;
 
-            var act = new InstantAction
+            if (_actions.AddAction(uid, ref component.Action, out var action, RevertPolymorphId))
             {
-                Event = new RevertPolymorphActionEvent(),
-                EntityIcon = component.Parent,
-                DisplayName = Loc.GetString("polymorph-revert-action-name"),
-                Description = Loc.GetString("polymorph-revert-action-description"),
-                UseDelay = TimeSpan.FromSeconds(proto.Delay),
-            };
-
-            _actions.AddAction(uid, act, null);
+                action.EntityIcon = component.Parent;
+                action.UseDelay = TimeSpan.FromSeconds(proto.Delay);
+            }
         }
 
         private void OnBeforeFullyEaten(EntityUid uid, PolymorphedEntityComponent comp, BeforeFullyEatenEvent args)
         {
             if (!_proto.TryIndex<PolymorphPrototype>(comp.Prototype, out var proto))
             {
-                _sawmill.Error("Invalid polymorph prototype {comp.Prototype}");
+                _sawmill.Error($"Invalid polymorph prototype {comp.Prototype}");
                 return;
             }
 
@@ -175,16 +173,15 @@ namespace Content.Server.Polymorph.Systems
             MakeSentientCommand.MakeSentient(child, EntityManager);
 
             var comp = _compFact.GetComponent<PolymorphedEntityComponent>();
-            comp.Owner = child;
             comp.Parent = uid;
             comp.Prototype = proto.ID;
-            EntityManager.AddComponent(child, comp);
+            AddComp(child, comp);
 
             var childXform = Transform(child);
             childXform.LocalRotation = targetTransformComp.LocalRotation;
 
             if (_container.TryGetContainingContainer(uid, out var cont))
-                cont.Insert(child);
+                _container.Insert(child, cont);
 
             //Transfers all damage from the original to the new one
             if (proto.TransferDamage &&
@@ -333,24 +330,26 @@ namespace Content.Server.Polymorph.Systems
             if (!TryComp<PolymorphableComponent>(target, out var polycomp))
                 return;
 
+            polycomp.PolymorphActions ??= new Dictionary<string, EntityUid>();
+            if (polycomp.PolymorphActions.ContainsKey(id))
+                return;
+
             var entproto = _proto.Index<EntityPrototype>(polyproto.Entity);
 
-            var act = new InstantAction
-            {
-                Event = new PolymorphActionEvent
-                {
-                    Prototype = polyproto,
-                },
-                DisplayName = Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)),
-                Description = Loc.GetString("polymorph-self-action-description", ("target", entproto.Name)),
-                Icon = new SpriteSpecifier.EntityPrototype(polyproto.Entity),
-                ItemIconStyle = ItemActionIconStyle.NoItem,
-            };
+            EntityUid? actionId = default!;
+            if (!_actions.AddAction(target, ref actionId, RevertPolymorphId, target))
+                return;
 
-            polycomp.PolymorphActions ??= new();
+            polycomp.PolymorphActions.Add(id, actionId.Value);
+            _metaData.SetEntityName(actionId.Value, Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)));
+            _metaData.SetEntityDescription(actionId.Value, Loc.GetString("polymorph-self-action-description", ("target", entproto.Name)));
 
-            polycomp.PolymorphActions.Add(id, act);
-            _actions.AddAction(target, act, target);
+            if (!_actions.TryGetActionData(actionId, out var baseAction))
+                return;
+
+            baseAction.Icon = new SpriteSpecifier.EntityPrototype(polyproto.Entity);
+            if (baseAction is InstantActionComponent action)
+                action.Event = new PolymorphActionEvent { Prototype = polyproto };
         }
 
         [PublicAPI]
@@ -398,19 +397,5 @@ namespace Content.Server.Polymorph.Systems
 
             UpdateCollide();
         }
-    }
-
-    public sealed partial class PolymorphActionEvent : InstantActionEvent
-    {
-        /// <summary>
-        /// The polymorph prototype containing all the information about
-        /// the specific polymorph.
-        /// </summary>
-        public PolymorphPrototype Prototype = default!;
-    }
-
-    public sealed partial class RevertPolymorphActionEvent : InstantActionEvent
-    {
-
     }
 }

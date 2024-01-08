@@ -11,6 +11,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Tools.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -20,6 +21,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
@@ -91,12 +93,12 @@ public sealed class BluespaceLockerSystem : EntitySystem
                         if (!component.BehaviorProperties.TransportSentient)
                             continue;
 
-                        entityStorageComponent.Contents.Insert(entity, EntityManager);
+                        _containerSystem.Insert(entity, entityStorageComponent.Contents);
                         transportedEntities++;
                     }
                     else if (component.BehaviorProperties.TransportEntities)
                     {
-                        entityStorageComponent.Contents.Insert(entity, EntityManager);
+                        _containerSystem.Insert(entity, entityStorageComponent.Contents);
                         transportedEntities++;
                     }
                 }
@@ -196,7 +198,13 @@ public sealed class BluespaceLockerSystem : EntitySystem
             if (component.BluespaceLinks.Count < component.MinBluespaceLinks)
             {
                 // Get an shuffle the list of all EntityStorages
-                var storages = EntityQuery<EntityStorageComponent>().ToArray();
+                var storages = new List<Entity<EntityStorageComponent>>();
+                var query = EntityQueryEnumerator<EntityStorageComponent>();
+                while (query.MoveNext(out var uid, out var storage))
+                {
+                    storages.Add((uid, storage));
+                }
+
                 _robustRandom.Shuffle(storages);
 
                 // Add valid candidates till MinBluespaceLinks is met
@@ -284,7 +292,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         {
             EnsureComp<DoAfterComponent>(uid);
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.BehaviorProperties.Delay, new BluespaceLockerDoAfterEvent(), uid));
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.BehaviorProperties.Delay, new BluespaceLockerDoAfterEvent(), uid));
             return;
         }
 
@@ -302,12 +310,12 @@ public sealed class BluespaceLockerSystem : EntitySystem
                     if (!component.BehaviorProperties.TransportSentient)
                         continue;
 
-                    target.Value.storageComponent.Contents.Insert(entity, EntityManager);
+                    _containerSystem.Insert(entity, target.Value.storageComponent.Contents);
                     transportedEntities++;
                 }
                 else if (component.BehaviorProperties.TransportEntities)
                 {
-                    target.Value.storageComponent.Contents.Insert(entity, EntityManager);
+                    _containerSystem.Insert(entity, target.Value.storageComponent.Contents);
                     transportedEntities++;
                 }
             }

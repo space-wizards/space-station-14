@@ -11,15 +11,16 @@ namespace Content.Client.MassMedia.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class NewsWriterMenu : FancyWindow
 {
-    private readonly IGameTiming _gameTiming;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private TimeSpan? _nextPublish;
 
     public event Action<int>? DeleteButtonPressed;
 
-    public NewsWriterMenu(IGameTiming gameTiming)
+    public NewsWriterMenu()
     {
-        _gameTiming = gameTiming;
+        IoCManager.InjectDependencies(this);
+
         RobustXamlLoader.Load(this);
 
         ContentsContainer.RectClipContent = false;

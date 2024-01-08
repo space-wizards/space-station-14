@@ -243,6 +243,37 @@
   mirror: DisposalRouter
 
 - type: construction
+  name: disposal signal router
+  description: A signal-controlled three-way router.
+  id: DisposalSignalRouter
+  graph: DisposalPipe
+  startNode: start
+  targetNode: signal_router
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: signal-router-free
+  mirror: DisposalSignalRouterFlipped
+
+- type: construction
+  hide: true
+  name: disposal signal router
+  description: A signal-controlled three-way router.
+  id: DisposalSignalRouterFlipped
+  graph: DisposalPipe
+  startNode: start
+  targetNode: signal_router_flipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: signal-router-flipped-free
+  mirror: DisposalSignalRouter
+
+- type: construction
   name: disposal junction
   description: A three-way junction. The arrow indicates where items exit.
   id: DisposalJunction
@@ -445,6 +476,7 @@
     state: vent_off
   conditions:
     - !type:TileNotBlocked {}
+    - !type:NoUnstackableInTile
 
 - type: construction
   name: passive vent
@@ -466,6 +498,7 @@
     state: vent_off
   conditions:
     - !type:TileNotBlocked {}
+    - !type:NoUnstackableInTile
 
 - type: construction
   name: air scrubber
@@ -487,6 +520,7 @@
     state: scrub_off
   conditions:
     - !type:TileNotBlocked {}
+    - !type:NoUnstackableInTile
 
 - type: construction
   name: air injector
@@ -508,6 +542,7 @@
     state: injector
   conditions:
     - !type:TileNotBlocked {}
+    - !type:NoUnstackableInTile
 
 # ATMOS BINARY
 - type: construction
@@ -817,8 +852,8 @@
   category: construction-category-utilities
   description: "A wallmounted timer for sending timed signals to things. This one has a screen for displaying text."
   icon:
-    sprite: Structures/Wallmounts/textscreen.rsi
-    state: textscreen
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
   objectType: Structure
   canRotate: false
   placementMode: SnapgridCenter
@@ -835,8 +870,8 @@
   category: construction-category-utilities
   description: "A wallmounted timer for sending timed signals to things. This one has a screen for displaying text and requires security access to use."
   icon:
-    sprite: Structures/Wallmounts/textscreen.rsi
-    state: textscreen
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
   objectType: Structure
   canRotate: false
   placementMode: SnapgridCenter

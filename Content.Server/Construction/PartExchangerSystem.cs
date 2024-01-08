@@ -1,15 +1,17 @@
 using System.Linq;
 using Content.Server.Construction.Components;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Construction.Components;
 using Content.Shared.Exchanger;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 using Content.Shared.Wires;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Collections;
 
 namespace Content.Server.Construction;
@@ -34,20 +36,20 @@ public sealed class PartExchangerSystem : EntitySystem
     {
         if (args.Cancelled)
         {
-            component.AudioStream?.Stop();
+            component.AudioStream = _audio.Stop(component.AudioStream);
             return;
         }
 
         if (args.Handled || args.Args.Target == null)
             return;
 
-        if (!TryComp<ServerStorageComponent>(uid, out var storage) || storage.Storage == null)
+        if (!TryComp<StorageComponent>(uid, out var storage) || storage.Container == null)
             return; //the parts are stored in here
 
         var machinePartQuery = GetEntityQuery<MachinePartComponent>();
         var machineParts = new List<(EntityUid, MachinePartComponent)>();
 
-        foreach (var item in storage.Storage.ContainedEntities) //get parts in RPED
+        foreach (var item in storage.Container.ContainedEntities) //get parts in RPED
         {
             if (machinePartQuery.TryGetComponent(item, out var part))
                 machineParts.Add((item, part));
@@ -89,14 +91,14 @@ public sealed class PartExchangerSystem : EntitySystem
         }
         foreach (var part in updatedParts)
         {
-            machine.PartContainer.Insert(part.part, EntityManager);
+            _container.Insert(part.part, machine.PartContainer);
             machineParts.Remove(part);
         }
 
         //put the unused parts back into rped. (this also does the "swapping")
         foreach (var (unused, _) in machineParts)
         {
-            _storage.Insert(storageUid, unused, null, false);
+            _storage.Insert(storageUid, unused, out _, playSound: false);
         }
         _construction.RefreshParts(uid, machine);
     }
@@ -138,7 +140,7 @@ public sealed class PartExchangerSystem : EntitySystem
             if (!machine.Requirements.ContainsKey(part.PartType))
                 continue;
 
-            machine.PartContainer.Insert(partEnt, EntityManager);
+            _container.Insert(partEnt, machine.PartContainer);
             machine.Progress[part.PartType]++;
             machineParts.Remove(pair);
         }
@@ -146,7 +148,7 @@ public sealed class PartExchangerSystem : EntitySystem
         //put the unused parts back into rped. (this also does the "swapping")
         foreach (var (unused, _) in machineParts)
         {
-            _storage.Insert(storageEnt, unused, null, false);
+            _storage.Insert(storageEnt, unused, out _, playSound: false);
         }
     }
 
@@ -168,9 +170,9 @@ public sealed class PartExchangerSystem : EntitySystem
             return;
         }
 
-        component.AudioStream = _audio.PlayPvs(component.ExchangeSound, uid);
+        component.AudioStream = _audio.PlayPvs(component.ExchangeSound, uid).Value.Entity;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.ExchangeDuration, new ExchangerDoAfterEvent(), uid, target: args.Target, used: uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ExchangeDuration, new ExchangerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true

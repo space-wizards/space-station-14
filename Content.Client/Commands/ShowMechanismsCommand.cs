@@ -17,14 +17,11 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var organs = entityManager.EntityQuery<OrganComponent>(true);
+            var query = entityManager.AllEntityQueryEnumerator<OrganComponent, SpriteComponent>();
 
-            foreach (var mechanism in organs)
+            while (query.MoveNext(out _, out var sprite))
             {
-                if (entityManager.TryGetComponent(mechanism.Owner, out SpriteComponent? sprite))
-                {
-                    sprite.ContainerOccluded = false;
-                }
+                sprite.ContainerOccluded = false;
             }
 
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("showcontainedcontext");

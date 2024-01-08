@@ -11,7 +11,7 @@ using Content.Shared.Database;
 using Content.Shared.Players.PlayTimeTracking;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Notes;
 

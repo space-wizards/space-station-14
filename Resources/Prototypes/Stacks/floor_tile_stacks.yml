@@ -97,6 +97,13 @@
   itemSize: 5
 
 - type: stack
+  id: FloorTileLime
+  name: lime tile
+  spawn: FloorTileItemLime
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileDirty
   name: dirty tile
   spawn: FloorTileItemDirty
@@ -272,6 +279,27 @@
   itemSize: 5
 
 - type: stack
+  id: FloorTileMining
+  name: mining floor tile
+  spawn: FloorTileItemMining
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileMiningDark
+  name: dark mining floor tile
+  spawn: FloorTileItemMiningDark
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileMiningLight
+  name: light mining floor tile
+  spawn: FloorTileItemMiningLight
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileBar
   name: item bar floor tile
   spawn: FloorTileItemBar
@@ -394,5 +422,20 @@
   id: FloorTileWeb
   name: web tile
   spawn: FloorTileItemWeb
+  maxCount: 30
+  itemSize: 5
+
+# Faux science tiles
+- type: stack
+  id: FloorTileAstroGrass
+  name: astro-grass floor
+  spawn: FloorTileItemAstroGrass
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileAstroIce
+  name: astro-ice floor
+  spawn: FloorTileItemAstroIce
   maxCount: 30
   itemSize: 5

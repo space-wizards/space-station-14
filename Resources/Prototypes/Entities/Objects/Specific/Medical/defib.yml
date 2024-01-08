@@ -28,7 +28,7 @@
             True: { visible: true }
             False: { visible: false }
     - type: Item
-      size: 50
+      size: Large
     - type: ItemCooldown
     - type: Speech
       speechVerb: Robotic

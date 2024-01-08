@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Rounding;
 using Robust.Client.GameObjects;
@@ -41,7 +42,7 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         if (args.Sprite == null)
             return;
 
-        if (!args.Sprite.LayerMapTryGet(component.FillLayer, out var fillLayer))
+        if (!args.Sprite.LayerMapTryGet(component.Layer, out var fillLayer))
             return;
 
         // Currently some solution methods such as overflowing will try to update appearance with a

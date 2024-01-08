@@ -8,5 +8,5 @@ namespace Content.Shared.Shuttles.Events;
 [Serializable, NetSerializable]
 public sealed class ShuttleConsoleFTLRequestMessage : BoundUserInterfaceMessage
 {
-    public EntityUid Destination;
+    public NetEntity Destination;
 }

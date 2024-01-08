@@ -4,7 +4,6 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -18,6 +17,7 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<OnUseTimerTriggerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, EntityStuckEvent>(OnStuck);
+        SubscribeLocalEvent<RandomTimerTriggerComponent, MapInitEvent>(OnRandomTimerTriggerMapInit);
     }
 
     private void OnStuck(EntityUid uid, OnUseTimerTriggerComponent component, EntityStuckEvent args)
@@ -45,8 +45,34 @@ public sealed partial class TriggerSystem
     /// </summary>
     private void OnGetAltVerbs(EntityUid uid, OnUseTimerTriggerComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract || !args.CanAccess || args.Hands == null)
             return;
+
+        if (component.UseVerbInstead)
+        {
+            args.Verbs.Add(new AlternativeVerb()
+            {
+                Text = Loc.GetString("verb-start-detonation"),
+                Act = () => HandleTimerTrigger(
+                    uid,
+                    args.User,
+                    component.Delay,
+                    component.BeepInterval,
+                    component.InitialBeepDelay,
+                    component.BeepSound
+                ),
+                Priority = 2
+            });
+        }
+
+        if (component.AllowToggleStartOnStick)
+        {
+            args.Verbs.Add(new AlternativeVerb()
+            {
+                Text = Loc.GetString("verb-toggle-start-on-stick"),
+                Act = () => ToggleStartOnStick(uid, args.User, component)
+            });
+        }
 
         if (component.DelayOptions == null || component.DelayOptions.Count == 1)
             return;
@@ -86,15 +112,16 @@ public sealed partial class TriggerSystem
                 },
             });
         }
+    }
 
-        if (component.AllowToggleStartOnStick)
-        {
-            args.Verbs.Add(new AlternativeVerb()
-            {
-                Text = Loc.GetString("verb-toggle-start-on-stick"),
-                Act = () => ToggleStartOnStick(uid, args.User, component)
-            });
-        }
+    private void OnRandomTimerTriggerMapInit(Entity<RandomTimerTriggerComponent> ent, ref MapInitEvent args)
+    {
+        var (_, comp) = ent;
+
+        if (!TryComp<OnUseTimerTriggerComponent>(ent, out var timerTriggerComp))
+            return;
+
+        timerTriggerComp.Delay = _random.NextFloat(comp.Min, comp.Max);
     }
 
     private void CycleDelay(OnUseTimerTriggerComponent component, EntityUid user)
@@ -140,7 +167,7 @@ public sealed partial class TriggerSystem
 
     private void OnTimerUse(EntityUid uid, OnUseTimerTriggerComponent component, UseInHandEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || HasComp<AutomatedTimerComponent>(uid) || component.UseVerbInstead)
             return;
 
         HandleTimerTrigger(

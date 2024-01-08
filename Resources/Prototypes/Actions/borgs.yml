@@ -1,10 +1,13 @@
-﻿- type: instantAction
-  id: ViewLaws
-  name: action-name-view-laws
-  description: action-description-view-laws
-  itemIconStyle: NoItem
-  icon:
-    sprite: Interface/Actions/actions_borg.rsi
-    state: state-laws
-  event: !type:ToggleLawsScreenEvent
-  useDelay: 0.5
+﻿- type: entity
+  id: ActionViewLaws
+  name: View Laws
+  description: View the laws that you must follow.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: state-laws
+    event: !type:ToggleLawsScreenEvent
+    useDelay: 0.5

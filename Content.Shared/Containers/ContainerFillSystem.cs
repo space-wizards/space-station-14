@@ -17,10 +17,7 @@ public sealed class ContainerFillSystem : EntitySystem
     private void OnMapInit(EntityUid uid, ContainerFillComponent component, MapInitEvent args)
     {
         if (!TryComp(uid, out ContainerManagerComponent? containerComp))
-        {
-            Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} has no {nameof(ContainerManagerComponent)}.");
             return;
-        }
 
         var xform = Transform(uid);
         var coords = new EntityCoordinates(uid, Vector2.Zero);
@@ -36,7 +33,7 @@ public sealed class ContainerFillSystem : EntitySystem
             foreach (var proto in prototypes)
             {
                 var ent = Spawn(proto, coords);
-                if (!container.Insert(ent, EntityManager, null, xform))
+                if (!_containerSystem.Insert(ent, container, containerXform: xform))
                 {
                     Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} failed to insert an entity: {ToPrettyString(ent)}.");
                     Transform(ent).AttachToGridOrMap();

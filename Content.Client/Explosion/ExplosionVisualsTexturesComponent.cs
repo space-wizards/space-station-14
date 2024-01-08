@@ -1,4 +1,5 @@
 using Robust.Client.Graphics;
+using Robust.Shared.Graphics;
 
 namespace Content.Client.Explosion;
 

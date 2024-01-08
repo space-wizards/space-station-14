@@ -1,0 +1,33 @@
+- type: entity
+  parent: BaseItem
+  id: BaseFlatpack
+  name: base flatpack
+  description: A flatpack used for constructing something.
+  categories:
+  - hideSpawnMenu
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: Objects/Devices/flatpack.rsi
+    layers:
+    - state: base
+    - state: overlay
+      color: "#cec8ac"
+      map: ["enum.FlatpackVisualLayers.Overlay"]
+    - state: icon-default
+  - type: Appearance
+  - type: Flatpack
+    boardColors:
+      command: "#334E6D"
+      medical: "#52B4E9"
+      service: "#9FED58"
+      engineering: "#EFB341"
+      security: "#DE3A3A"
+      science: "#D381C9"
+      supply: "#A46106"
+  - type: StaticPrice
+    price: 500
+  - type: Tag
+    tags:
+    - DroneUsable
