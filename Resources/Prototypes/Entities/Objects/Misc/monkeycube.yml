@@ -8,6 +8,9 @@
     contents:
       - id: MonkeyCubeWrapped
         amount: 6
+  - type: Storage
+    grid:
+    - 0,0,2,1
   - type: Sprite
     sprite: Objects/Misc/monkeycube.rsi
     state: box
@@ -34,7 +37,53 @@
     - MonkeyCube
 
 - type: entity
-  parent: BoxCardboard
+  parent: MonkeyCubeBox
+  name: kobold cube box
+  id: KoboldCubeBox
+  description: Condensed kobolds in a cube. Just add water!
+  components:
+  - type: StorageFill
+    contents:
+      - id: KoboldCubeWrapped
+        amount: 6
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box_kobold
+
+- type: entity
+  parent: MonkeyCubeBox
+  name: variant cube box
+  id: VariantCubeBox
+  description: Both kobold cubes and monkey cubes. Just add water!
+  components:
+  - type: StorageFill
+    contents:
+      - id: KoboldCubeWrapped
+        amount: 3
+      - id: MonkeyCubeWrapped
+        amount: 3
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box_variant
+
+- type: entity
+  parent: MonkeyCubeWrapped
+  name: kobold cube
+  suffix: Wrapped
+  id: KoboldCubeWrapped
+  description: Unwrap this to get a kobold cube.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: KoboldCube
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: wrapper_kobold
+
+- type: entity
+  parent: MonkeyCubeBox
   name: monkey cube box
   suffix: Syndicate
   id: SyndicateSpongeBox
@@ -53,7 +102,7 @@
     state: box
 
 - type: entity
-  parent: BaseItem
+  parent: MonkeyCubeWrapped
   name: monkey cube
   suffix: Wrapped, Syndicate
   id: SyndicateSpongeWrapped

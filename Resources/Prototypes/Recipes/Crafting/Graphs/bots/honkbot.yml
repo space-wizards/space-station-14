@@ -13,7 +13,7 @@
         name: box of hugs
       - tag: ClownRubberStamp
         icon:
-          sprite: Objects/Misc/bureaucracy.rsi
+          sprite: Objects/Misc/stamps.rsi
           state: stamp-clown
         name: clown's rubber stamp
         doAfter: 2
@@ -52,7 +52,7 @@
         name: happy honk meal
       - tag: ClownRubberStamp
         icon:
-          sprite: Objects/Misc/bureaucracy.rsi
+          sprite: Objects/Misc/stamps.rsi
           state: stamp-clown
         name: clown's rubber stamp
         doAfter: 2

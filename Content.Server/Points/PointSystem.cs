@@ -25,7 +25,7 @@ public sealed class PointSystem : SharedPointSystem
 
     private void OnStartup(EntityUid uid, PointManagerComponent component, ComponentStartup args)
     {
-        _pvsOverride.AddGlobalOverride(uid);
+        _pvsOverride.AddGlobalOverride(GetNetEntity(uid));
     }
 
     /// <summary>

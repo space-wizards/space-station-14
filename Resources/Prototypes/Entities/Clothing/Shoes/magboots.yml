@@ -53,6 +53,19 @@
     - HighRiskItem
   - type: StaticPrice
     price: 750
+  - type: StealTarget
+    stealGroup: ClothingShoesBootsMagAdv
+
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagSci
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/magboots-science.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/magboots-science.rsi
+  - type: Magboots
+    toggleAction: ActionToggleMagbootsSci
 
 - type: entity
   parent: ClothingShoesBootsMag
@@ -142,6 +155,15 @@
   - type: InstantAction
     icon: { sprite: Clothing/Shoes/Boots/magboots-advanced.rsi, state: icon }
     iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
+
+- type: entity
+  id: ActionToggleMagbootsSci
+  parent: ActionBaseToggleMagboots
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Shoes/Boots/magboots-science.rsi, state: icon }
+    iconOn: Clothing/Shoes/Boots/magboots-science.rsi/icon-on.png
 
 - type: entity
   id: ActionToggleMagbootsSyndie

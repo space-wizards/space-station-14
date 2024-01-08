@@ -189,6 +189,14 @@
       implant: EmpImplant
 
 - type: entity
+  id: ScramImplanter
+  name: scram implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: ScramImplant
+
+- type: entity
   id: DnaScramblerImplanter
   name: DNA scrambler implanter
   parent: BaseImplantOnlyImplanterSyndi
@@ -221,6 +229,14 @@
   components:
     - type: Implanter
       implant: DeathRattleImplant
+
+- type: entity
+  id: DeathAcidifierImplanter
+  name: death acidifier implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: DeathAcidifierImplant
 
 # Security and Command implanters
 

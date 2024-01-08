@@ -3,9 +3,11 @@ wires-board-name-default = Wires
 wires-board-name-booze = BoozeDispenser
 wires-board-name-soda = SodaDispenser
 wires-board-name-thermomachine = Thermomachine
+wires-board-name-condenser = Condenser
 wires-board-name-pa = Mk2 Particle Accelerator
 wires-board-name-highsec = HighSec Control
 wires-board-name-vessel = Vessel
+wires-board-name-crusher = Crusher
 wires-board-name-smes = SMES
 wires-board-name-substation = Substation
 wires-board-name-apc = APC
@@ -34,6 +36,7 @@ wires-board-name-firelock = Firelock Control
 wires-board-name-windoor = Windoor Control
 wires-board-name-mech = Mech
 wires-board-name-fatextractor = FatExtractor
+wires-board-name-flatpacker = Flatpacker
 
 # names that get displayed in the wire hacking hud & admin logs.
 

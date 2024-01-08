@@ -62,8 +62,26 @@ public sealed partial class ExplosionPrototype : IPrototype
     [DataField("fireColor")]
     public Color? FireColor;
 
-    [DataField("Sound")]
-    public SoundSpecifier Sound = new SoundCollectionSpecifier("explosion");
+    /// <summary>
+    ///     If an explosion finishes in less than this many iterations, play a small sound instead.
+    /// </summary>
+    /// <remarks>
+    ///     This value is tuned such that a minibomb is considered small, but just about anything larger is normal
+    /// </remarks>
+    [DataField("smallSoundIterationThreshold")]
+    public int SmallSoundIterationThreshold = 6;
+
+    [DataField("sound")]
+    public SoundSpecifier Sound = new SoundCollectionSpecifier("Explosion");
+
+    [DataField("smallSound")]
+    public SoundSpecifier SmallSound = new SoundCollectionSpecifier("ExplosionSmall");
+
+    [DataField("soundFar")]
+    public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar", AudioParams.Default.WithVolume(2f));
+
+    [DataField("smallSoundFar")]
+    public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar", AudioParams.Default.WithVolume(2f));
 
     [DataField("texturePath")]
     public ResPath TexturePath = new("/Textures/Effects/fire.rsi");

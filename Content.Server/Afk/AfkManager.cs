@@ -4,7 +4,6 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.Input;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -33,9 +32,8 @@ namespace Content.Server.Afk
     }
 
     [UsedImplicitly]
-    public sealed class AfkManager : IAfkManager, IEntityEventSubscriber
+    public sealed class AfkManager : IAfkManager
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -49,11 +47,6 @@ namespace Content.Server.Afk
 
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
             _consoleHost.AnyCommandExecuted += ConsoleHostOnAnyCommandExecuted;
-
-            _entityManager.EventBus.SubscribeSessionEvent<FullInputCmdMessage>(
-                EventSource.Network,
-                this,
-                HandleInputCmd);
         }
 
         public void PlayerDidAction(ICommonSession player)
@@ -90,11 +83,6 @@ namespace Content.Server.Afk
         {
             if (shell.Player is { } player)
                 PlayerDidAction(player);
-        }
-
-        private void HandleInputCmd(FullInputCmdMessage msg, EntitySessionEventArgs args)
-        {
-            PlayerDidAction(args.SenderSession);
         }
     }
 }

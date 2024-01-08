@@ -191,6 +191,12 @@ public sealed class ActionButton : Control, IEntityControl
         var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityName));
         var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityDescription));
 
+        if (_action is { Charges: not null })
+        {
+            var charges = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {_action.Charges.Value.ToString()}/{_action.MaxCharges.ToString()}"));
+            return new ActionAlertTooltip(name, decr, charges: charges);
+        }
+
         return new ActionAlertTooltip(name, decr);
     }
 
@@ -283,13 +289,15 @@ public sealed class ActionButton : Control, IEntityControl
 
     public void UpdateBackground()
     {
-        if (_action == null)
+        _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
+        if (_action != null ||
+            _controller.IsDragging && GetPositionInParent() == Parent?.ChildCount - 1)
         {
-            Button.Texture = null;
+            Button.Texture = _buttonBackgroundTexture;
         }
         else
         {
-            Button.Texture = _buttonBackgroundTexture;
+            Button.Texture = null;
         }
     }
 
@@ -326,6 +334,8 @@ public sealed class ActionButton : Control, IEntityControl
     {
         base.FrameUpdate(args);
 
+        UpdateBackground();
+
         Cooldown.Visible = _action != null && _action.Cooldown != null;
         if (_action == null)
             return;
@@ -345,6 +355,7 @@ public sealed class ActionButton : Control, IEntityControl
     {
         base.MouseEntered();
 
+        UserInterfaceManager.HoverSound();
         _beingHovered = true;
         DrawModeChanged();
     }
@@ -397,7 +408,7 @@ public sealed class ActionButton : Control, IEntityControl
 
         // it's only depress-able if it's usable, so if we're depressed
         // show the depressed style
-        if (_depressed)
+        if (_depressed && !_beingHovered)
         {
             HighlightRect.Visible = false;
             SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassPressed);

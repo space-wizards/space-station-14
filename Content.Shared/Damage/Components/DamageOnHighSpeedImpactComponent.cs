@@ -32,7 +32,7 @@ public sealed partial class DamageOnHighSpeedImpactComponent : Component
     public float DamageCooldown = 2f;
 
     [DataField("lastHit", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan LastHit = TimeSpan.Zero;
+    public TimeSpan? LastHit;
 
     [DataField("damage", required: true), ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = default!;

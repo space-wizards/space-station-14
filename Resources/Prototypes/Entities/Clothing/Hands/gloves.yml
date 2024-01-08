@@ -83,9 +83,9 @@
   suffix: Rigged
   components:
   - type: StaminaDamageOnHit
-    damage: 30
+    damage: 16 # actually 24 because of blunt > stamina damage conversion
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1.2
     damage:
       types:
         Blunt: 8
@@ -108,9 +108,28 @@
     fiberColor: fibers-regal-blue
   - type: FingerprintMask
 
-#### Medical
 - type: entity
   parent: ClothingHandsBase
+  id: ClothingHandsGlovesHop
+  name: papercut-proof gloves
+  description: Perfect for dealing with paperwork and matters with bureaucracy.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/hop.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/hop.rsi
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-black
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+  - type: FingerprintMask
+
+#### Medical
+- type: entity
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesLatex
   name: latex gloves
   description: Thin sterile latex gloves. Basic PPE for any doctor.
@@ -124,7 +143,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesNitrile
   name: nitrile gloves
   description: High-quality nitrile gloves. Expensive medical PPE.
@@ -138,7 +157,7 @@
   - type: FingerprintMask
 ####
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesLeather
   name: botanist's leather gloves
   description: These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They're also quite warm.
@@ -169,7 +188,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesRobohands
   name: robohands gloves
   description: Beep boop borp!
@@ -260,7 +279,7 @@
     fiberColor: fibers-olive
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesFingerless
   name: fingerless gloves
   description: Plain black gloves without fingertips for the hard working.
@@ -288,7 +307,7 @@
     fiberColor: fibers-yellow
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesMercFingerless
   name: mercenary fingerless gloves
   description: Gloves that may not protect you from finger burns, but will make you cooler.
@@ -303,7 +322,7 @@
 
 - type: entity
   # Intentionally named after regular gloves, they're meant to be sneaky.
-  # This means they can also be butchered if you need to look unsus before a very thorough search...
+  # This means they can also be butchered if you need to look un-sus before a very thorough search...
   parent: ClothingHandsGlovesColorBlack
   id: ThievingGloves
   suffix: Thieving
@@ -324,7 +343,7 @@
   - type: Unremoveable
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsButcherable
   id: ClothingHandsGlovesNorthStar
   name: gloves of the north star
   description: These gloves allow you to punch incredibly fast.
@@ -371,4 +390,20 @@
   - type: FingerprintMask
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics
+
+# TODO Make lubed items not slip in hands
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesJanitor
+  name: rubber gloves
+  description: High-quality rubber gloves, squeaky to do some cleaning!
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/janitor.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/janitor.rsi
+  - type: Fiber
+    fiberMaterial: fibers-rubber
+    fiberColor: fibers-yellow
+  - type: FingerprintMask

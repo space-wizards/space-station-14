@@ -68,19 +68,33 @@ namespace Content.Server.GameTicking
 
             if (!foundOne)
             {
-                stationNames.Append(Loc.GetString("game-ticker-no-map-selected"));
+                stationNames.Append(_gameMapManager.GetSelectedMap()?.MapName ??
+                                    Loc.GetString("game-ticker-no-map-selected"));
             }
 
             var gmTitle = Loc.GetString(preset.ModeTitle);
             var desc = Loc.GetString(preset.Description);
-            return Loc.GetString(RunLevel == GameRunLevel.PreRoundLobby ? "game-ticker-get-info-preround-text" : "game-ticker-get-info-text",
-                ("roundId", RoundId), ("playerCount", playerCount), ("readyCount", readyCount), ("mapName", stationNames.ToString()),("gmTitle", gmTitle),("desc", desc));
+            return Loc.GetString(
+                RunLevel == GameRunLevel.PreRoundLobby
+                    ? "game-ticker-get-info-preround-text"
+                    : "game-ticker-get-info-text",
+                ("roundId", RoundId),
+                ("playerCount", playerCount),
+                ("readyCount", readyCount),
+                ("mapName", stationNames.ToString()),
+                ("gmTitle", gmTitle),
+                ("desc", desc));
+        }
+
+        private TickerConnectionStatusEvent GetConnectionStatusMsg()
+        {
+            return new TickerConnectionStatusEvent(RoundStartTimeSpan);
         }
 
         private TickerLobbyStatusEvent GetStatusMsg(ICommonSession session)
         {
             _playerGameStatuses.TryGetValue(session.UserId, out var status);
-            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, LobbyBackground,status == PlayerGameStatus.ReadyToPlay, _roundStartTime, RoundPreloadTime, _roundStartTimeSpan, Paused);
+            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, LobbyBackground, status == PlayerGameStatus.ReadyToPlay, _roundStartTime, RoundPreloadTime, RoundStartTimeSpan, Paused);
         }
 
         private void SendStatusToAll()

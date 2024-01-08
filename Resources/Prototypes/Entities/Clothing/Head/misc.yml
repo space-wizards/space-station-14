@@ -183,6 +183,23 @@
     sprite: Clothing/Head/Hats/catears.rsi
   - type: AddAccentClothing
     accent: OwOAccent
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatDogEars
+  name: doggy ears
+  description: Only for good boys.
+  suffix: DO NOT MAP
+  components:
+  - type: Tag
+    tags:
+      - DroneUsable
+  - type: Sprite
+    sprite: Clothing/Head/Hats/dogears.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/dogears.rsi
+  - type: AddAccentClothing
+    accent: BarkAccent
 
 - type: entity
   parent: ClothingHeadBase
@@ -196,3 +213,14 @@
     sprite: Clothing/Head/Misc/squiddy.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRedRacoon
+  name: red racoon hat
+  description: Fluffy hat of red racoon!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/red_racoon.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/red_racoon.rsi

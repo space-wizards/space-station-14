@@ -1,3 +1,4 @@
+# When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_soda.yml
 - type: entity
   parent: BaseItem
   id: DrinkCanBaseFull
@@ -52,7 +53,6 @@
     qualities:
     - Rolling
     speed: 0.25 # its small so takes longer to roll the entire dough flat
-  - type: ItemCooldown
   - type: SpaceGarbage
   - type: TrashOnSolutionEmpty
     solution: drink
@@ -402,7 +402,8 @@
   - type: Item
     size: Normal
   - type: Storage
-    maxSlots: 6
+    grid:
+    - 0,0,2,3
     whitelist:
       tags:
         - Cola

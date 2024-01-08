@@ -20,6 +20,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -322,7 +323,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             {
                 if (ev.Reason != null)
                 {
-                    PopupSystem.PopupClient(ev.Reason, gunUid, user);
+                    PopupSystem.PopupCursor(ev.Reason);
                 }
 
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.

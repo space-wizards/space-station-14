@@ -8,12 +8,11 @@
     sound:
       path: /Audio/Items/toolbox_drop.ogg
   - type: Storage
-    maxSlots: 7
     maxItemSize: Normal
-    maxTotalWeight: 14
+    grid:
+    - 0,0,6,3
   - type: Item
     size: Ginormous
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
@@ -117,8 +116,8 @@
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
   - type: Storage
     maxItemSize: Huge
-    maxSlots: 8
-    maxTotalWeight: 32
+    grid:
+    - 0,0,7,3
   - type: MeleeWeapon
     damage:
       types:
@@ -135,3 +134,30 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
+
+- type: entity
+  id: ToolboxThief
+  name: thief undetermined toolbox
+  description: This is where your favorite thief's supplies lie. Try to remember which ones.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_thief.rsi
+    state: icon
+  - type: ThiefUndeterminedBackpack
+    transformAfterSelect: AlwaysPoweredWallLight
+    possibleSets:
+    # - TO DO Thief pinpointer needed
+    - ChemistrySet
+    - ToolsSet
+    - ChameleonSet # - TO DO Chameleon stump PR needed
+    - SyndieSet
+    - SleeperSet
+    - CommunicatorSet
+    - SmugglerSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.ThiefBackpackUIKey.Key
+        type: ThiefBackpackBoundUserInterface

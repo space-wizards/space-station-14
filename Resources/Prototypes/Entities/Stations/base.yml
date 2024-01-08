@@ -74,6 +74,12 @@
     - type: SalvageExpeditionData
 
 - type: entity
+  id: BaseStationMagnet
+  abstract: true
+  components:
+    - type: SalvageMagnetData
+
+- type: entity
   id: BaseStationSiliconLawCrewsimov
   abstract: true
   components:

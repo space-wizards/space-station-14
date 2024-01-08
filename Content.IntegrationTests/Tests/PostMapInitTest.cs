@@ -60,8 +60,10 @@ namespace Content.IntegrationTests.Tests
             "Saltern",
             "Core",
             "Marathon",
-            "Kettle",
-            "MeteorArena"
+            "Gemini",
+            "MeteorArena",
+            "Atlas",
+            "Reach"    
         };
 
         /// <summary>
