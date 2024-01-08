@@ -341,5 +341,8 @@ resharper_keep_existing_attribute_arrangement = true
 [*.{csproj,xml,yml,yaml,dll.config,msbuildproj,targets,props}]
 indent_size = 2
 
+[nuget.config]
+indent_size = 2
+
 [{*.yaml,*.yml}]
 ij_yaml_indent_sequence_value = false
