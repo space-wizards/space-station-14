@@ -6,6 +6,7 @@ using Content.Shared.Emag.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Tag;
 
 namespace Content.Shared.Emag.Systems;
@@ -81,6 +82,13 @@ public sealed class EmagSystem : EntitySystem
 
         var emaggedEvent = new GotEmaggedEvent(user);
         RaiseLocalEvent(target, ref emaggedEvent);
+
+        //Don't add EmaggedComponent to the borg if only the lock, and not the borg itself, has been emagged.
+        if (TryComp<EmagSiliconLawComponent>(target, out var emagSiliconLawComponent))
+        {
+            if(emagSiliconLawComponent.OwnerName == null)
+                return emaggedEvent.Handled;
+        }
 
         if (emaggedEvent.Handled && !emaggedEvent.Repeatable)
             EnsureComp<EmaggedComponent>(target);
