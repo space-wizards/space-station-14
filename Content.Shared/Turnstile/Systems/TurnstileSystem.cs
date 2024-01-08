@@ -59,35 +59,27 @@ public sealed class TurnstileSystem : EntitySystem
         // For simplicity, we always want a mob to pass from the "back" to the "front" of the turnstile.
         // That allows unanchored turnstiles to be dragged and rotated as needed, and will admit passage in the
         // direction that they are pulled in.
-        if (ent.Comp.State == TurnstileState.Idle)
-        {
-            var facingDirection = xform.LocalRotation.GetDir();
-            var directionOfContact = GetDirectionOfContact(xform, args.OtherEntity);
-            if (facingDirection == directionOfContact)
-            {
-                // Admit the entity.
-                var comp = EnsureComp<PreventCollideComponent>(ent);
-                comp.Uid = args.OtherEntity;
+        var facingDirection = xform.LocalRotation.GetDir();
+        var directionOfContact = GetDirectionOfContact(xform, args.OtherEntity);
 
-                // Play sound of turning
-                _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity, AudioParams.Default.WithVolume(-3));
-
-                // We have to set collidable to false for one frame, otherwise the client does not
-                // predict the removal of the contacts properly, and instead thinks the mob is colliding when it isn't.
-                SetCollidable((ent, ent.Comp, null), false);
-                SetState((ent, ent.Comp), TurnstileState.Rotating);
-            }
-            else
-            {
-                // Reject the entity, play sound
-                _audio.PlayPredicted(ent.Comp.BumpSound, ent, args.OtherEntity, AudioParams.Default.WithVolume(-3));
-            }
-        }
-        else
+        if (ent.Comp.State == TurnstileState.Rotating || facingDirection != directionOfContact)
         {
             // Reject the entity, play sound
             _audio.PlayPredicted(ent.Comp.BumpSound, ent, args.OtherEntity, AudioParams.Default.WithVolume(-3));
+            return;
         }
+
+        // Admit the entity.
+        var comp = EnsureComp<PreventCollideComponent>(ent);
+        comp.Uid = args.OtherEntity;
+
+        // Play sound of turning
+        _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity, AudioParams.Default.WithVolume(-3));
+
+        // We have to set collidable to false for one frame, otherwise the client does not
+        // predict the removal of the contacts properly, and instead thinks the mob is colliding when it isn't.
+        SetCollidable((ent, ent.Comp, null), false);
+        SetState((ent, ent.Comp), TurnstileState.Rotating);
     }
 
     /// <summary>
