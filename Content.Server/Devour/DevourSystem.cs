@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Chemistry.Components;
@@ -27,13 +26,17 @@ public sealed class DevourSystem : SharedDevourSystem
         if (args.Handled || args.Cancelled)
             return;
 
-        var ichorInjection = new Solution(component.Chemical, component.HealRate);
+        var ichorInjection = new Solution(component.Chemical, component.HealSolutionSize);
 
-        //Inject stomach chemicals into the devoured entity
-        foreach (var solution in component.StomachChemicals)
+        //Inject stomach chemicals into the devoured entity so the dragon can't be attacked from the inside.
+        foreach (var chemical in component.StomachChemicals)
         {
             if (args.Args.Target != null)
-                _bloodstreamSystem.TryAddToChemicals(args.Args.Target.Value, new Solution(solution, component.DamageRate));
+            {
+                _bloodstreamSystem.TryAddToChemicals(args.Args.Target.Value,
+                    new Solution(chemical, component.StomachSolutionSize / component.StomachChemicals.Count));
+            }
+
         }
 
         if (component.FoodPreference == FoodPreference.All ||
@@ -45,8 +48,9 @@ public sealed class DevourSystem : SharedDevourSystem
             {
                 ContainerSystem.Insert(args.Args.Target.Value, component.Stomach);
 
-                //Stops the bleeding of the devoured target so the dragon doesn't leave a trail of random blood puddles behind
-                _bloodstreamSystem.TryModifyBleedAmount(args.Args.Target.Value, -100);
+                var ev = new DevouredEvent(args.Args.Target.Value, uid);
+                RaiseLocalEvent(args.Args.Target.Value, ev);
+
             }
             _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);
         }
@@ -61,18 +65,8 @@ public sealed class DevourSystem : SharedDevourSystem
         _audioSystem.PlayPvs(component.SoundDevour, uid);
     }
 
-    private void EmptyStomach(EntityUid uid, DevourerComponent component)
-    {
-        //Remove entities from the stomach before deletion.
-        foreach (var entity in component.Stomach.ContainedEntities.ToArray())
-        {
-            _containerSystem.Remove(entity, component.Stomach);
-        }
-    }
-
     private void OnBeingGibbed(EntityUid uid, DevourerComponent component, BeingGibbedEvent args)
     {
-        EmptyStomach(uid, component);
+        _containerSystem.EmptyContainer(component.Stomach);
     }
 }
-

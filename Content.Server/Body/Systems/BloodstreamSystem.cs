@@ -11,6 +11,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Devour;
 using Content.Shared.Drunk;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
@@ -51,6 +52,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<BloodstreamComponent, DevouredEvent>(OnDevoured);
     }
 
     private void OnReactionAttempt(Entity<BloodstreamComponent> entity, ref ReactionAttemptEvent args)
@@ -451,5 +453,16 @@ public sealed class BloodstreamSystem : EntitySystem
 
         if (currentVolume > 0)
             _solutionContainerSystem.TryAddReagent(component.BloodSolution.Value, component.BloodReagent, currentVolume, out _);
+    }
+
+    /// <summary>
+    ///     Stops the bleeding of the devoured target so the dragon doesn't leave a trail of random blood puddles behind
+    /// </summary>
+    private void OnDevoured(EntityUid uid, BloodstreamComponent component, DevouredEvent args)
+    {
+        if (component.BleedAmount > 0)
+        {
+            component.BleedAmount = 0;
+        }
     }
 }

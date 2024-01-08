@@ -87,6 +87,22 @@ public sealed partial class DevourActionEvent : EntityTargetActionEvent { }
 [Serializable, NetSerializable]
 public sealed partial class DevourDoAfterEvent : SimpleDoAfterEvent { }
 
+/// <summary>
+/// Raised after an entity is devoured.
+/// </summary>
+public sealed partial class DevouredEvent : EntityEventArgs
+{
+    public EntityUid Devoured { get; }
+
+    public EntityUid Devourer { get; }
+
+    public DevouredEvent(EntityUid devoured, EntityUid devourer)
+    {
+        Devoured = devoured;
+        Devourer = devourer;
+    }
+}
+
 [Serializable, NetSerializable]
 public enum FoodPreference : byte
 {
