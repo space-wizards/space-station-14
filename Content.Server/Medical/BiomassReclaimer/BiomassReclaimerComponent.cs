@@ -59,7 +59,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// How many seconds to take to insert an entity per unit of its mass.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public float BaseInsertionDelay = 0.4f;
+        public float BaseInsertionDelay = 0.1f;
 
         /// <summary>
         /// How much to multiply biomass yield from botany produce.
