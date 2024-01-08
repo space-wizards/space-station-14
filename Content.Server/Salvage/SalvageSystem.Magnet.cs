@@ -18,6 +18,8 @@ public sealed partial class SalvageSystem
 
     private EntityQuery<SalvageMobRestrictionsComponent> _salvMobQuery;
 
+    private List<(Entity<TransformComponent> Entity, EntityUid MapUid, Vector2 LocalPosition)> _detachEnts = new();
+
     private void InitializeMagnet()
     {
         _salvMobQuery = GetEntityQuery<SalvageMobRestrictionsComponent>();
@@ -134,19 +136,27 @@ public sealed partial class SalvageSystem
 
             // Uhh yeah don't delete mobs or whatever
             var mobQuery = AllEntityQuery<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
+            _detachEnts.Clear();
 
             while (mobQuery.MoveNext(out var mobUid, out _, out _, out var xform))
             {
                 if (xform.GridUid == null || !data.Comp.ActiveEntities.Contains(xform.GridUid.Value) || xform.MapUid == null)
                     continue;
 
-                _transform.SetParent(mobUid, xform.MapUid.Value);
+                // Can't parent directly to map as it runs grid traversal.
+                _detachEnts.Add(((mobUid, xform), xform.MapUid.Value, _transform.GetWorldPosition(xform)));
+                _transform.DetachParentToNull(mobUid, xform);
             }
 
             // Go and cleanup the active ents.
             foreach (var ent in data.Comp.ActiveEntities)
             {
                 Del(ent);
+            }
+
+            foreach (var entity in _detachEnts)
+            {
+                _transform.SetCoordinates(entity.Entity.Owner, new EntityCoordinates(entity.MapUid, entity.LocalPosition));
             }
 
             data.Comp.ActiveEntities = null;
@@ -167,10 +177,12 @@ public sealed partial class SalvageSystem
             // Fuck with the seed to mix wrecks and asteroids.
             seed = (int) (seed / 10f) * 10;
 
+            /* Asteroid only for now chump.
             if (i >= data.Comp.OfferCount / 2)
             {
                 seed++;
             }
+            */
 
             data.Comp.Offered.Add(seed);
         }
@@ -390,7 +402,11 @@ public sealed partial class SalvageSystem
             // This doesn't stop it from spawning on top of random things in space
             // Might be better like this, ghosts could stop it before
             if (_mapManager.FindGridsIntersecting(finalCoords.MapId, box2Rot).Any())
+            {
+                // Bump it further and further just in case.
+                minActualDistance += 4f;
                 continue;
+            }
 
             coords = finalCoords;
             return true;
