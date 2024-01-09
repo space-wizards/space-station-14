@@ -962,7 +962,7 @@
       mode: SensorOff
 
 - type: entity
-  parent: UnsensoredClothingUniformBase
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMercenary
   name: mercenary jumpsuit
   description: Clothing for real mercenaries who have gone through fire, water and the jungle of planets flooded with dangerous monsters or targets for which a reward has been assigned.
