@@ -4,6 +4,7 @@ using Content.Server.Station.Events;
 using Content.Shared.Cargo.Components;
 using Content.Shared.CCVar;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -59,14 +60,30 @@ public sealed partial class ShuttleSystem
         // Spawn on a dummy map and try to FTL if possible, otherwise dump it.
         var mapId = _mapManager.CreateMap();
         var valid = true;
+        var paths = new List<ResPath>();
 
         foreach (var group in component.Groups.Values)
         {
+            if (group.Paths.Count == 0)
+            {
+                Log.Error($"Found no paths for GridSpawn");
+                continue;
+            }
+
             var count = _random.Next(group.MinCount, group.MaxCount);
+            paths.Clear();
 
             for (var i = 0; i < count; i++)
             {
-                var path = _random.Pick(group.Paths);
+                // Round-robin so we try to avoid dupes where possible.
+                if (paths.Count == 0)
+                {
+                    paths.AddRange(group.Paths);
+                    _random.Shuffle(paths);
+                }
+
+                var path = paths[^1];
+                paths.RemoveAt(paths.Count - 1);
 
                 if (_loader.TryLoad(mapId, path.ToString(), out var ent) && ent.Count == 1)
                 {
