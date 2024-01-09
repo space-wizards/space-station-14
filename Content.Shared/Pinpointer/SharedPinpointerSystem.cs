@@ -41,17 +41,13 @@ public abstract class SharedPinpointerSystem : EntitySystem
         {
             component.Target = args.Target;
         }
-
-        else if (TryComp<NukeCodePaperComponent>(args.Target, out var nukeCodePaperComponent))
-        {
-            if (nukeCodePaperComponent.Nuke == null)
-                return;
-
-            component.Target = nukeCodePaperComponent.Nuke;
-        }
         else
         {
-            return;
+            var pinpointerScanEvent = new GotPinpointerScannedEvent(uid);
+            RaiseLocalEvent(args.Target.Value, ref pinpointerScanEvent);
+
+            if (component.Target == null)
+                return;
         }
 
         if(component.StoredTargets.Contains(component.Target.Value))
@@ -179,3 +175,6 @@ public abstract class SharedPinpointerSystem : EntitySystem
         component.CanRetarget = true;
     }
 }
+
+[ByRefEvent]
+public record struct GotPinpointerScannedEvent(EntityUid Pinpointer);

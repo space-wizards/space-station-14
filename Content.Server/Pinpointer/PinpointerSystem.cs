@@ -89,7 +89,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
 
         // try to find target from whitelist
-
         if (selectedComponent == null)
             return;
 
@@ -314,10 +313,13 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         //Adds the target selection verb if there is more than 1 stored target.
         if (component.StoredTargets.Count > 1)
         {
+            List<EntityUid> toBeRemoved = new();
+
             foreach (var target in component.StoredTargets)
             {
                 if (Deleted(target))
                 {
+                    toBeRemoved.Add(target);
                     continue;
                 }
                 // Adds a number in front of a name to order the list based on order added
@@ -331,6 +333,11 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                     Priority = 50,
                     Category = VerbCategory.SelectTarget
                 });
+            }
+
+            foreach (var entity in toBeRemoved)
+            {
+                component.StoredTargets.Remove(entity);
             }
         }
 
