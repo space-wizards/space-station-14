@@ -2022,6 +2022,8 @@
       Male: UnisexArachnid
       Female: UnisexArachnid
       Unsexed: UnisexArachnid
+  - type: TypingIndicator
+    proto: spider
   - type: Tag
     tags:
     - DoorBumpOpener
