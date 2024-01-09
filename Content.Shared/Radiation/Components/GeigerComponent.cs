@@ -20,7 +20,7 @@ public sealed partial class GeigerComponent : Component
     public bool AttachedToSuit;
 
     /// <summary>
-    ///     Is Geiger counter currently active?
+    ///     Is geiger counter currently active?
     ///     If false attached entity will ignore any radiation rays.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -65,8 +65,8 @@ public sealed partial class GeigerComponent : Component
     public GeigerDangerLevel DangerLevel = GeigerDangerLevel.None;
 
     /// <summary>
-    ///     Current player that equipped Geiger counter.
-    ///     Because sound is annoying, Geiger counter clicks will play
+    ///     Current player that equipped geiger counter.
+    ///     Because sound is annoying, geiger counter clicks will play
     ///     only for player that equipped it.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
@@ -79,7 +79,7 @@ public sealed partial class GeigerComponent : Component
     public bool UiUpdateNeeded;
 
     /// <summary>
-    ///     Current stream of Geiger counter audio.
+    ///     Current stream of geiger counter audio.
     ///     Played only for current user.
     /// </summary>
     public EntityUid? Stream;
