@@ -177,12 +177,12 @@ public sealed partial class SalvageSystem
             // Fuck with the seed to mix wrecks and asteroids.
             seed = (int) (seed / 10f) * 10;
 
-            /* Asteroid only for now chump.
+            
             if (i >= data.Comp.OfferCount / 2)
             {
                 seed++;
             }
-            */
+            
 
             data.Comp.Offered.Add(seed);
         }
