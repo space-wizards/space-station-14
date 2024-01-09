@@ -100,7 +100,7 @@
     ports:
     - Trigger
   - type: Explosive
-    explosionType: MiningCharge
+    explosionType: Cryo
     totalIntensity: 120
     intensitySlope: 2
     maxIntensity: 30
