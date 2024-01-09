@@ -104,12 +104,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             }
         }
 
-        //Adds the target to the stored targets if it's not already in there.
-        if(target != null && !component.StoredTargets.Contains(target.Value))
-        {
-            component.StoredTargets.Add(target.Value);
-        }
-
+        StoreTarget(target, uid, component);
         SetTarget(uid, target, component, user);
 
     }
@@ -271,14 +266,21 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// <summary>
     ///     Clears the list with stored targets and turns off the pinpointer.
     /// </summary>
-    private void DeleteStoredTargets(EntityUid uid, PinpointerComponent component, EntityUid? user)
+    private void RemoveAllStoredTargets(EntityUid uid, PinpointerComponent component, EntityUid? user)
     {
         component.StoredTargets.Clear();
         if (component.IsActive)
         {
             TogglePinpointer(uid, component);
         }
+    }
 
+    /// <summary>
+    /// Removes a target from the target list if the Trackable component is removed.
+    /// </summary>
+    public void RemoveDeletedTargets(EntityUid uid, PinpointerComponent component)
+    {
+        component.StoredTargets.Remove(uid);
     }
 
     /// <summary>
@@ -292,7 +294,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         var storedOrder = 0;
 
-        //Adds the closest target verb if there is at least 1 stored component.
+        //Adds the closest target verb if there is at least 1 stored component, there is no need to show an empty list.
         if (component.Components.Count > 0)
         {
             foreach (var targetComponent in component.Components)
@@ -310,18 +312,12 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         storedOrder = 0;
 
-        //Adds the target selection verb if there is more than 1 stored target.
+        //Adds the target selection verb if there is more than 1 stored target, no need to show a list with only 1 target
+        //because it will be targeted by default
         if (component.StoredTargets.Count > 1)
         {
-            List<EntityUid> toBeRemoved = new();
-
             foreach (var target in component.StoredTargets)
             {
-                if (Deleted(target))
-                {
-                    toBeRemoved.Add(target);
-                    continue;
-                }
                 // Adds a number in front of a name to order the list based on order added
                 var storedPrefix = Loc.GetString("prefix-pinpointer-targets", ("storedOrder", storedOrder));
                 storedOrder++;
@@ -334,20 +330,16 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                     Category = VerbCategory.SelectTarget
                 });
             }
-
-            foreach (var entity in toBeRemoved)
-            {
-                component.StoredTargets.Remove(entity);
-            }
         }
 
-        //Adds the stored target reset verb if there is at least 1 stored target.
+        //Adds the stored target reset verb if there is at least 1 stored target,
+        //no need to reset if there is no stored targets.
         if (component.StoredTargets.Count > 0)
         {
             args.Verbs.Add(new Verb()
             {
                 Text = Loc.GetString("reset-pinpointer-targets"),
-                Act = () => DeleteStoredTargets(uid, component, args.User),
+                Act = () => RemoveAllStoredTargets(uid, component, args.User),
                 Category = null,
                 Priority = 25
             });

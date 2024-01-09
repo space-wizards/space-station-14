@@ -62,7 +62,8 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return;
         }
 
-        component.StoredTargets.Add(component.Target.Value);
+        StoreTarget(component.Target.Value, uid, component);
+
         if (_net.IsServer)
         {
             _popup.PopupEntity(Loc.GetString("target-pinpointer-stored", ("target", component.Target.Value)), args.User, args.User);
@@ -119,6 +120,20 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
         pinpointer.DistanceToTarget = distance;
         Dirty(pinpointer);
+    }
+
+    /// <summary>
+    /// Stores the located target on the pinpointer if it's not already stored.
+    /// Adds the Trackable component to the target so it can keep track of all the pinpointers tracking it.
+    /// </summary>
+    public void StoreTarget(EntityUid? target, EntityUid pinpointer, PinpointerComponent component, EntityUid? user = null)
+    {
+        if (target == null || component.StoredTargets.Contains(target.Value))
+            return;
+
+        component.StoredTargets.Add(target.Value);
+        EnsureComp<TrackableComponent>(target.Value, out var trackable);
+        trackable.TrackedBy.Add(pinpointer);
     }
 
     /// <summary>
