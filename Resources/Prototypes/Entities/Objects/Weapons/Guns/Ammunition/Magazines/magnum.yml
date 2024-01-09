@@ -81,7 +81,7 @@
   parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeMagnum
+    proto: CartridgeMagnumRubber
   - type: Sprite
     layers:
     - state: rubber
