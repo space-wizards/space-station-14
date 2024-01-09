@@ -79,3 +79,39 @@
     steps: 4
     zeroVisible: true
   - type: Appearance
+
+- type: entity
+  name: L6C ROW
+  id: WeaponLightMachineGunL6C
+  parent: BaseItem
+  description: A L6 SAW modified for cyborg use. Feeds .30 rifle ammo from an internal 100 round magazine.
+  components:
+    - type: Gun
+      minAngle: 4
+      maxAngle: 25
+      angleIncrease: 4
+      angleDecay: 16
+      fireRate: 8
+      selectedMode: FullAuto
+      availableModes:
+        - FullAuto
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+      soundEmpty:
+        path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+      layers:
+        - state: base
+          map: [ "enum.GunVisualLayers.Base" ]
+        - state: mag-3
+          map: [ "enum.GunVisualLayers.Mag" ]
+    - type: Item
+      size: Huge
+    - type: ContainerContainer
+      containers:
+        ballistic-ammo: !type:Container
+    - type: BallisticAmmoProvider
+      proto: CartridgeLightRifle
+      capacity: 100
+    - type: AmmoCounter
