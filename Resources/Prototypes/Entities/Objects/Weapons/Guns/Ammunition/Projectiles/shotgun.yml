@@ -194,8 +194,8 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 15 
-        Structural: 5 
+        Piercing: 25
+        Structural: 5
 
 - type: entity
   id: PelletGlass
