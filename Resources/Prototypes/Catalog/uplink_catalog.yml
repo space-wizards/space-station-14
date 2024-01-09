@@ -1133,6 +1133,21 @@
   categories:
     - UplinkUtility
 
+- type: listing
+  id: UplinkDiceBagBomb
+  name: uplink-dice-bag-bomb-name
+  description: uplink-dice-bag-bomb-desc
+  productEntity: DiceBagBomb
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Passenger
+    - Librarian
+
 # Armor
 
 - type: listing
@@ -1393,7 +1408,7 @@
   description: uplink-mobcat-microbomb-desc
   icon: { sprite: /Textures/Mobs/Pets/cat.rsi, state: syndicat }
   productEntity: MobCatSyndy
-  cost: 
+  cost:
     Telecrystal: 10
   categories:
     - UplinkMisc

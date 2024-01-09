@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: BaseDiceBomb
-  suffix: Bomb
+  suffix: Dice-Bomb
   abstract: true
   components:
   - type: Dice
@@ -35,3 +35,17 @@
 - type: entity
   parent: [ d4Dice, BaseDiceBomb ]
   id: d4DiceBomb
+
+- type: entity
+  parent: DiceBag
+  id: DiceBagBomb
+  suffix: Dice-Bomb
+  components:
+  - type: StorageFill
+    contents:
+      - id: d4DiceBomb
+      - id: d6DiceBomb
+      - id: d8DiceBomb
+      - id: d10DiceBomb
+      - id: d12DiceBomb
+      - id: d20DiceBomb

@@ -145,6 +145,9 @@ uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio co
 uplink-singularity-beacon-name = Singularity Beacon
 uplink-singularity-beacon-desc = A device that attracts singularities. Has to be anchored and powered. Causes singularities to grow when consumed.
 
+uplink-dice-bag-bomb-name = Bag of Dice Bombs
+uplink-dice-bag-bomb-desc = Bag contains 6 dice-bombs. To activate just roll, the value on dice its a amount of seconds to kaboom, and kaboom power. Be aware of critical failure!
+
 # Implants
 uplink-storage-implanter-name = Storage Implanter
 uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!
