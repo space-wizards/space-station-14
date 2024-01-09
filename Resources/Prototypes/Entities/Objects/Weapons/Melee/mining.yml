@@ -46,15 +46,15 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 8
-        Slash: 2
+        Blunt: 10
+        Slash: 5
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
         Blunt: 2.5
         Slash: 2.5
-        Structural: 10
+        Structural: 30
   - type: GunRequiresWield
   - type: Item
     size: Ginormous
@@ -78,7 +78,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 12
+        Slash: 15
   - type: Tag
     tags:
     - Knife
@@ -97,7 +97,7 @@
   - type: LeechOnMarker
     leech:
       groups:
-        Brute: -15
+        Brute: -30
   - type: MeleeWeapon
     attackRate: 1.25
   - type: Tag
