@@ -105,11 +105,11 @@ namespace Content.Server.Kitchen.EntitySystems
         /// <param name="time">The time on the microwave, in seconds.</param>
         private void AddTemperature(MicrowaveComponent component, float time)
         {
-            var heatToAdd = time * 100;
+            var heatToAdd = time * component.BaseHeatMultiplier;
             foreach (var entity in component.Storage.ContainedEntities)
             {
                 if (TryComp<TemperatureComponent>(entity, out var tempComp))
-                    _temperature.ChangeHeat(entity, heatToAdd, false, tempComp);
+                    _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
 
                 if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
                     continue;
@@ -482,10 +482,13 @@ namespace Content.Server.Kitchen.EntitySystems
                 //check if there's still cook time left
                 active.CookTimeRemaining -= frameTime;
                 if (active.CookTimeRemaining > 0)
+                {
+                    AddTemperature(microwave, frameTime);
                     continue;
+                }
 
                 //this means the microwave has finished cooking.
-                AddTemperature(microwave, active.TotalTime);
+                AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0)); //Though there's still a little bit more heat to pump out
 
                 if (active.PortionedRecipe.Item1 != null)
                 {

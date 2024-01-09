@@ -233,7 +233,7 @@ reagent-name-toxins-special = toxins special
 reagent-desc-toxins-special = This thing is ON FIRE! CALL THE DAMN SHUTTLE!
 
 reagent-name-vodka-martini = vodka martini
-reagent-desc-vodka-martini = Vodka with Gin. Not quite how 007 enjoyed it, but still delicious.
+reagent-desc-vodka-martini = Vodka instead of Gin. Not quite how 007 enjoyed it, but still delicious.
 
 reagent-name-vodka-tonic = vodka tonic
 reagent-desc-vodka-tonic = For when a gin and tonic isn't russian enough.

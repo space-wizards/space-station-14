@@ -11,11 +11,6 @@
   components:
   - type: PlacementReplacement
     key: walls
-  - type: SoundOnGather
-  - type: Gatherable
-    whitelist:
-      tags:
-        - Pickaxe
   - type: IconSmooth
     key: walls
     mode: NoSprite
@@ -34,15 +29,20 @@
         state: rock_asteroid_west
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
+    damageModifierSet: Rock
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 120
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
   - type: Occluder
   - type: Airtight
   - type: Fixtures

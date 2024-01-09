@@ -199,13 +199,8 @@
   - type: ShowSecurityIcons
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesSunglasses
   id: ClothingEyesGlassesHiddenSecurity
-  name: sun glasses
-  description: A pair of black sunglasses.
+  suffix: Syndicate
   components:
-  - type: Sprite
-    sprite: Clothing/Eyes/Glasses/secglasses.rsi
-  - type: Clothing
-    sprite: Clothing/Eyes/Glasses/secglasses.rsi
   - type: ShowSecurityIcons

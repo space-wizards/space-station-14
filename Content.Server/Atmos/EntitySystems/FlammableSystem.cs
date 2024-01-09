@@ -13,6 +13,7 @@ using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Content.Shared.Throwing;
@@ -101,6 +102,12 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (!EntityManager.TryGetComponent(otherEnt, out FlammableComponent? flammable))
                 return;
+
+            //Only ignite when the colliding fixture is projectile or ignition.
+            if (args.OurFixtureId != component.FixtureId && args.OurFixtureId != SharedProjectileSystem.ProjectileFixture)
+            {
+                return;
+            }
 
             flammable.FireStacks += component.FireStacks;
             Ignite(otherEnt, uid, flammable);
