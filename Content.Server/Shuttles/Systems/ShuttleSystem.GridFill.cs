@@ -3,6 +3,8 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Shared.Cargo.Components;
 using Content.Shared.CCVar;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -58,29 +60,52 @@ public sealed partial class ShuttleSystem
         // Spawn on a dummy map and try to FTL if possible, otherwise dump it.
         var mapId = _mapManager.CreateMap();
         var valid = true;
+        var paths = new List<ResPath>();
 
-        foreach (var path in component.Paths)
+        foreach (var group in component.Groups.Values)
         {
-            if (_loader.TryLoad(mapId, path.ToString(), out var ent) && ent.Count == 1)
+            if (group.Paths.Count == 0)
             {
-                if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
+                Log.Error($"Found no paths for GridSpawn");
+                continue;
+            }
+
+            var count = _random.Next(group.MinCount, group.MaxCount);
+            paths.Clear();
+
+            for (var i = 0; i < count; i++)
+            {
+                // Round-robin so we try to avoid dupes where possible.
+                if (paths.Count == 0)
                 {
-                    TryFTLProximity(ent[0], shuttle, targetGrid.Value);
-                    _station.AddGridToStation(uid, ent[0]);
+                    paths.AddRange(group.Paths);
+                    _random.Shuffle(paths);
+                }
+
+                var path = paths[^1];
+                paths.RemoveAt(paths.Count - 1);
+
+                if (_loader.TryLoad(mapId, path.ToString(), out var ent) && ent.Count == 1)
+                {
+                    if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
+                    {
+                        TryFTLProximity(ent[0], shuttle, targetGrid.Value);
+                        _station.AddGridToStation(uid, ent[0]);
+                    }
+                    else
+                    {
+                        valid = false;
+                    }
                 }
                 else
                 {
                     valid = false;
                 }
-            }
-            else
-            {
-                valid = false;
-            }
 
-            if (!valid)
-            {
-                Log.Error($"Error loading gridspawn for {ToPrettyString(uid)} / {path}");
+                if (!valid)
+                {
+                    Log.Error($"Error loading gridspawn for {ToPrettyString(uid)} / {path}");
+                }
             }
         }
 
