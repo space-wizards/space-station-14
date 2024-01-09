@@ -26,18 +26,29 @@ public sealed class DiceSystem : SharedDiceSystem
         var roll = _random.Next(1, die.Sides + 1);
         SetCurrentSide(uid, roll, die);
 
-        _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land", ("die", uid), ("currentSide", die.CurrentValue)), uid);
         _audio.PlayPvs(die.Sound, uid);
 
         if (die.DiceBomb && !TryComp<ExplodeOnTriggerComponent>(uid, out var explodeTrigger)) // True only on first roll, so cannot be activated twice
         {
             DiceBombExplode(uid, die);
         }
+        else
+        {
+            _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land", ("die", uid), ("currentSide", die.CurrentValue)), uid); // So to make other popup if critical failure
+        }
     }
     public void DiceBombExplode(EntityUid uid, DiceComponent dice)
     {
         if (!TryComp<TwoStageTriggerComponent>(uid, out var twoStage) || !TryComp<ExplosiveComponent>(uid, out var explosive))
             return;
+        if (dice.CurrentValue == 1 || dice.CurrentValue == 2)
+        {
+            _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land-crititcal-failure", ("die", uid), ("currentSide", dice.CurrentValue)), uid, PopupType.LargeCaution);
+        }
+        else
+        {
+            _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land", ("die", uid), ("currentSide", dice.CurrentValue)), uid);
+        }
         explosive.MaxIntensity = (dice.CurrentValue/3*2); // Makes 1 value on dice making 10 damag at boom center
         explosive.IntensitySlope = (dice.CurrentValue/3);
         explosive.TotalIntensity = (dice.CurrentValue/3*8);
