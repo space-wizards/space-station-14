@@ -192,7 +192,7 @@
       sprite: Clothing/Back/Backpacks/merc.rsi
     - type: Storage
       grid:
-      - 0,0,8,3
+      - 0,0,7,3
 
 #ERT
 - type: entity
