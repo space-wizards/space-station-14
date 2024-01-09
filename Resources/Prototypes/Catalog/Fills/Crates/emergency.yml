@@ -33,7 +33,7 @@
 - type: entity
   id: CrateEmergencyInternals
   parent: CrateInternals
-  name: Emergency Suits
+  name: Emergency suits
   components:
   - type: StorageFill
     contents:
@@ -51,7 +51,7 @@
 - type: entity
   id: CrateEmergencyInternalsLarge
   parent: CrateInternals
-  name: Emergency Suits (Large)
+  name: Emergency suits (Large)
   components:
     - type: StorageFill
       contents:

@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: SprayPainter
-  name: Spray painter
+  name: spray painter
   description: A spray painter for painting airlocks and pipes.
   components:
     - type: Sprite

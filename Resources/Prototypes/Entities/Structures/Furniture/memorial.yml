@@ -32,7 +32,7 @@
 - type: entity
   id: SS13Memorial
   parent: BaseStructure
-  name: Tomb of the Unknown Employee
+  name: tomb of the unknown employee
   description: |
     Here rests an unknown employee
     Unknown by name or rank

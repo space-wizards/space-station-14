@@ -535,7 +535,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeHawaiianPizza
-  name: Hawaiian pizza recipe
+  name: hawaiian pizza recipe
   result: FoodPizzaPineapple
   time: 30
   solids:
@@ -1059,9 +1059,9 @@
     FoodMeatFish: 2
 
 - type: microwaveMealRecipe
-  id: RecipeSashimi
-  name: sashimi recipe
-  result: FoodMealSashimi
+  id: Recipe
+  name:  recipe
+  result: FoodMeal
   time: 15
   reagents:
     TableSalt: 1
@@ -1753,7 +1753,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeHawaiianKebab
-  name: Hawaiian kebab recipe
+  name: hawaiian kebab recipe
   result: FoodMeatHawaiianKebab
   time: 5
   solids:

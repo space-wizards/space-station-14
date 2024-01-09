@@ -418,7 +418,7 @@
 - type: entity
   id: VehicleWheelchair
   parent: [BaseVehicleRideable, BaseFoldable, BaseItem]
-  name: Wheelchair
+  name: wheelchair
   description: A chair with big wheels. It looks like you can move in these on your own.
   components:
     - type: Vehicle

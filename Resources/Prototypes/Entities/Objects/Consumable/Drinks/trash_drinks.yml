@@ -312,7 +312,7 @@
 
 
 - type: entity
-  name: Milk Cream carton
+  name: milk cream carton
   parent: DrinkCartonBaseEmpty
   id: DrinkCartonCream
   components:
