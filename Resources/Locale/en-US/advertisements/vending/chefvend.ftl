@@ -5,3 +5,6 @@ advertisement-chefvend-4 = Are you worth your salt? We are.
 advertisement-chefvend-5 = Mmm, meat.
 advertisement-chefvend-6 = Harness the power of flour.
 advertisement-chefvend-7 = Show your customers who's the best chef around with our galaxy famous, award winning BBQ sauce.
+thankyou-chefvend-1 = Time to get cooking!
+thankyou-chefvend-2 = Thanks for trusting our quality ingredients!
+thankyou-chefvend-3 = That should give them what they're craving!

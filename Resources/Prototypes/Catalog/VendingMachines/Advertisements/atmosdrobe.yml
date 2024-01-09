@@ -2,3 +2,5 @@
   id: AtmosDrobeAds
   advertisements:
     - advertisement-atmosdrobe-1
+  thankyous:
+    - vending-machine-thanks

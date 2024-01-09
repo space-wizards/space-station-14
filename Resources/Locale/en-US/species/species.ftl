@@ -8,3 +8,4 @@ species-name-diona = Diona
 species-name-arachnid = Arachnid
 species-name-moth = Moth Person
 species-name-anuran = Anuran
+species-name-skeleton = Skeleton

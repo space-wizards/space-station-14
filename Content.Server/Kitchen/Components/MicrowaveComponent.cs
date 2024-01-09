@@ -16,6 +16,10 @@ namespace Content.Server.Kitchen.Components
         public string MachinePartCookTimeMultiplier = "Capacitor";
         [DataField("cookTimeScalingConstant")]
         public float CookTimeScalingConstant = 0.5f;
+        [DataField("baseHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+        public float BaseHeatMultiplier = 100;
+        [DataField("objectHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+        public float ObjectHeatMultiplier = 100;
 
         [DataField("failureResult", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string BadRecipeEntityId = "FoodBadRecipe";
