@@ -7,5 +7,5 @@ namespace Content.Shared.Damage.Components;
 public sealed partial class StaminaDamageOnEmbedComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("damage")]
-    public float Damage = 10;
+    public float Damage = 10f;
 }
