@@ -1,11 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed spectating a player in a replay not following the spectated player
-      when they become a ghost.
-    type: Fix
-  id: 5150
-  time: '2023-11-11T06:45:47.0000000+00:00'
 - author: Brandon_H
   changes:
   - message: Plants can no longer grow without sufficient water and nutrients.
@@ -3703,3 +3696,10 @@ Entries:
   id: 5650
   time: '2024-01-09T18:05:17.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23811
+- author: ItsMeThom
+  changes:
+  - message: You can now draw chemical mixtures directly from puddles and spills!
+    type: Tweak
+  id: 5651
+  time: '2024-01-09T18:10:34.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23804
