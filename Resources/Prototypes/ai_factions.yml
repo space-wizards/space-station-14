@@ -75,6 +75,7 @@
   - Passive
   - PetsNT
   - Revolutionary
+  - AntiZombieTurret
 
 - type: npcFaction
   id: Revolutionary
@@ -83,3 +84,8 @@
   - Zombie
   - SimpleHostile
   - Dragon
+
+- type: npcFaction
+  id: AntiZombieTurret
+  hostile:
+    - Zombie

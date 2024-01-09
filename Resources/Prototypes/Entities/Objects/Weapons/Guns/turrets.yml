@@ -130,6 +130,15 @@
 
 - type: entity
   parent: BaseWeaponTurret
+  id: WeaponTurretAntiZombie
+  suffix: AntiZombie
+  components:
+    - type: NpcFactionMember
+      factions:
+        - AntiZombieTurret
+
+- type: entity
+  parent: BaseWeaponTurret
   name: disposable ballistic turret
   id: WeaponTurretSyndicateDisposable
   suffix: Syndicate, Disposable
