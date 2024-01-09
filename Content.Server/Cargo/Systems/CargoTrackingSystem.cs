@@ -23,7 +23,7 @@ public sealed class CargoTrackingSystem : EntitySystem
         SubscribeLocalEvent<CargoTrackingComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<CargoTrackingComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<CargoTrackingComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<CargoTrackedComponent, EntityTerminatingEvent>(OnComponentRemove);
+        SubscribeLocalEvent<CargoTrackedComponent, EntityTerminatingEvent>(OnEntityTerminating);
         SubscribeLocalEvent<CargoOrderArrivalEvent>(OnCargoOrderArrival);
         SubscribeLocalEvent<CargoOrderDeletionEvent>(OnCargoOrderDeletion);
     }
@@ -134,7 +134,7 @@ public sealed class CargoTrackingSystem : EntitySystem
         StopWaiting(uid, component);
     }
 
-    private void OnComponentRemove(EntityUid uid, CargoTrackedComponent component, EntityTerminatingEvent args)
+    private void OnEntityTerminating(EntityUid uid, CargoTrackedComponent component, EntityTerminatingEvent args)
     {
         var station = _stationSystem.GetOwningStation(uid);
         if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var cargoOrderDatabaseComponent))
