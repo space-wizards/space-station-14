@@ -31,6 +31,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Linq;
+using Content.Shared.Access.Components;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -61,6 +62,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
             SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<MicrowaveComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<MicrowaveComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<MicrowaveComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<MicrowaveComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<MicrowaveComponent, UpgradeExamineEvent>(OnUpgradeExamine);
@@ -103,11 +105,11 @@ namespace Content.Server.Kitchen.EntitySystems
         /// <param name="time">The time on the microwave, in seconds.</param>
         private void AddTemperature(MicrowaveComponent component, float time)
         {
-            var heatToAdd = time * 100;
+            var heatToAdd = time * component.BaseHeatMultiplier;
             foreach (var entity in component.Storage.ContainedEntities)
             {
                 if (TryComp<TemperatureComponent>(entity, out var tempComp))
-                    _temperature.ChangeHeat(entity, heatToAdd, false, tempComp);
+                    _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
 
                 if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
                     continue;
@@ -259,6 +261,12 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             }
 
+            if (ent.Comp.Storage.Count >= ent.Comp.Capacity)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-full"), ent, args.User);
+                return;
+            }
+
             args.Handled = true;
             _handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Storage);
             UpdateUserInterfaceState(ent, ent.Comp);
@@ -279,9 +287,14 @@ namespace Content.Server.Kitchen.EntitySystems
             {
                 SetAppearance(ent, MicrowaveVisualState.Idle, ent.Comp);
                 RemComp<ActiveMicrowaveComponent>(ent);
-                _sharedContainer.EmptyContainer(ent.Comp.Storage);
             }
             UpdateUserInterfaceState(ent, ent.Comp);
+        }
+
+        private void OnAnchorChanged(EntityUid uid, MicrowaveComponent component, ref AnchorStateChangedEvent args)
+        {
+            if(!args.Anchored)
+                _sharedContainer.EmptyContainer(component.Storage);
         }
 
         private void OnRefreshParts(Entity<MicrowaveComponent> ent, ref RefreshPartsEvent args)
@@ -342,7 +355,7 @@ namespace Content.Server.Kitchen.EntitySystems
         /// </remarks>
         public void Wzhzhzh(EntityUid uid, MicrowaveComponent component, EntityUid? user)
         {
-            if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid))
+            if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid) || !(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
                 return;
 
             var solidsDict = new Dictionary<string, int>();
@@ -469,10 +482,13 @@ namespace Content.Server.Kitchen.EntitySystems
                 //check if there's still cook time left
                 active.CookTimeRemaining -= frameTime;
                 if (active.CookTimeRemaining > 0)
+                {
+                    AddTemperature(microwave, frameTime);
                     continue;
+                }
 
                 //this means the microwave has finished cooking.
-                AddTemperature(microwave, active.TotalTime);
+                AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0)); //Though there's still a little bit more heat to pump out
 
                 if (active.PortionedRecipe.Item1 != null)
                 {
