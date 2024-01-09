@@ -125,10 +125,10 @@
   - type: Sprite
     sprite: Objects/Tools/lighters.rsi
     layers:
-    - state: zippo_top
-      map: ["top"]
     - state: zippo_icon_base
       map: ["base"]
+    - state: zippo_top
+      map: ["top"]
     - state: zippo_open
       map: ["open"]
       visible: false
@@ -201,10 +201,10 @@
   - type: Sprite
     sprite: Objects/Tools/lighters.rsi
     layers:
-    - state: zippo_top
-      map: ["top"]
     - state: zippo_engraved_icon_base
       map: ["base"]
+    - state: zippo_top
+      map: ["top"]
     - state: zippo_engraved_open
       map: ["open"]
       visible: false
