@@ -135,3 +135,33 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     state: ball
+
+- type: entity
+  id: Grapeshot
+  name: grapeshot
+  suffix: Pirate
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: PelletGrapeshot
+    count: 15
+    spread: 40
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: grapeshot
+
+- type: entity
+  id: Glassshot
+  name: glassshot
+  suffix: Pirate
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: PelletGlass
+    count: 5
+    spread: 10
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: glassshot
