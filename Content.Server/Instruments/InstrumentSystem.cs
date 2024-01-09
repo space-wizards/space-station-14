@@ -50,9 +50,12 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         SubscribeNetworkEvent<InstrumentSetMasterEvent>(OnMidiSetMaster);
         SubscribeNetworkEvent<InstrumentSetFilteredChannelEvent>(OnMidiSetFilteredChannel);
 
-        SubscribeLocalEvent<InstrumentComponent, BoundUIClosedEvent>(OnBoundUIClosed);
-        SubscribeLocalEvent<InstrumentComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
-        SubscribeLocalEvent<InstrumentComponent, InstrumentBandRequestBuiMessage>(OnBoundUIRequestBands);
+        Subs.BuiEvents<InstrumentComponent>(InstrumentUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIClosedEvent>(OnBoundUIClosed);
+            subs.Event<BoundUIOpenedEvent>(OnBoundUIOpened);
+            subs.Event<InstrumentBandRequestBuiMessage>(OnBoundUIRequestBands);
+        });
 
         SubscribeLocalEvent<InstrumentComponent, ComponentGetState>(OnStrumentGetState);
 
@@ -197,9 +200,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
     private void OnBoundUIClosed(EntityUid uid, InstrumentComponent component, BoundUIClosedEvent args)
     {
-        if (args.UiKey is not InstrumentUiKey)
-            return;
-
         if (HasComp<ActiveInstrumentComponent>(uid)
             && _bui.TryGetUi(uid, args.UiKey, out var bui)
             && bui.SubscribedSessions.Count == 0)
@@ -212,9 +212,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
     private void OnBoundUIOpened(EntityUid uid, InstrumentComponent component, BoundUIOpenedEvent args)
     {
-        if (args.UiKey is not InstrumentUiKey)
-            return;
-
         EnsureComp<ActiveInstrumentComponent>(uid);
         Clean(uid, component);
     }
