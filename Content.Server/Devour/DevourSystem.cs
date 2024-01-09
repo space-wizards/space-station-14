@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Devour;
 using Content.Shared.Devour.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Devour;
@@ -36,27 +37,24 @@ public sealed class DevourSystem : SharedDevourSystem
                 _bloodstreamSystem.TryAddToChemicals(args.Args.Target.Value,
                     new Solution(chemical, component.StomachSolutionSize / component.StomachChemicals.Count));
             }
-
         }
 
         if (component.FoodPreference == FoodPreference.All ||
-            (component.FoodPreference == FoodPreference.Humanoid && HasComp<HumanoidAppearanceComponent>(args.Args.Target)))
+            (component.FoodPreference == FoodPreference.Humanoid &&
+             HasComp<HumanoidAppearanceComponent>(args.Args.Target)))
         {
-            ichorInjection.ScaleSolution(0.5f);
-
-            if (component.ShouldStoreDevoured && args.Args.Target is not null)
-            {
-                ContainerSystem.Insert(args.Args.Target.Value, component.Stomach);
-
-                var ev = new DevouredEvent(args.Args.Target.Value, uid);
-                RaiseLocalEvent(args.Args.Target.Value, ev);
-
-            }
             _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);
         }
 
+        if (component.ShouldStoreDevoured && HasComp<MobStateComponent>(args.Args.Target))
+        {
+            _containerSystem.Insert(args.Args.Target.Value, component.Stomach);
+
+            var ev = new OnDevouredEvent(args.Args.Target.Value);
+            RaiseLocalEvent(args.Args.Target.Value, ref ev);
+        }
         //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
-        //If it's not human, it must be a structure
+        //If it does not have a mobState, it must be a structure
         else if (args.Args.Target != null)
         {
             QueueDel(args.Args.Target.Value);
