@@ -91,9 +91,6 @@ public sealed class CargoTrackingSystem : EntitySystem
         if (!TryComp<CargoInvoiceComponent>(args.Target, out var cargoInvoiceComponent))
             return;
 
-        if (cargoInvoiceComponent.OrderId is null || cargoInvoiceComponent.OrderName is null)
-            return;
-
         component.TrackedOrderId = cargoInvoiceComponent.OrderId;
         component.TrackedOrderName = cargoInvoiceComponent.OrderName;
 
