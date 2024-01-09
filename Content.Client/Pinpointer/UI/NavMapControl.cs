@@ -238,16 +238,13 @@ public partial class NavMapControl : MapGridControl
 
         else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
-
             // Clear current selection with right click
             if (TrackedEntitySelectedAction != null)
                 TrackedEntitySelectedAction.Invoke(null);
 
             // Toggle beacon labels
             _beacons.Pressed = !_beacons.Pressed;
-
         }
-
     }
 
     protected override void MouseMove(GUIMouseMoveEventArgs args)
