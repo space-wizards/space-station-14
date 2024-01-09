@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1d495c3faf4642b6ec1c4be8acc7cd5bc51d785/icons/obj/ammo.dmi, ball Made by Alekshhh (Github) for ss14",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1d495c3faf4642b6ec1c4be8acc7cd5bc51d785/icons/obj/ammo.dmi, ball, glassshot and grapeshot Made by Alekshhh (Github) for ss14",
     "states": [
         {
             "name": "baton"
@@ -24,6 +24,12 @@
         },
         {
             "name": "ball"
+        },
+        {
+            "name": "grapeshot"
+        },
+        {
+            "name": "glassshot"
         },
         {
             "name": "spent"

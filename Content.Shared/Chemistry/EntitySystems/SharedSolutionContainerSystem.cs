@@ -742,61 +742,65 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
         var messageString = "shared-solution-container-component-on-examine-main-text";
 
-        args.PushMarkup(Loc.GetString(messageString,
-            ("color", colorHex),
-            ("wordedAmount", Loc.GetString(solution.Contents.Count == 1
-                ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
-                : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-            ("desc", primary.LocalizedPhysicalDescription)));
-
-        var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
-
-        // Sort the reagents by amount, descending then alphabetically
-        var sortedReagentPrototypes = reagentPrototypes
-            .OrderByDescending(pair => pair.Value.Value)
-            .ThenBy(pair => pair.Key.LocalizedName);
-
-        // Add descriptions of immediately recognizable reagents, like water or beer
-        var recognized = new List<ReagentPrototype>();
-        foreach (var keyValuePair in sortedReagentPrototypes)
+        using (args.PushGroup(nameof(ExaminableSolutionComponent)))
         {
-            var proto = keyValuePair.Key;
-            if (!proto.Recognizable)
+            args.PushMarkup(Loc.GetString(messageString,
+                ("color", colorHex),
+                ("wordedAmount", Loc.GetString(solution.Contents.Count == 1
+                    ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
+                    : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
+                ("desc", primary.LocalizedPhysicalDescription)));
+
+            var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
+
+            // Sort the reagents by amount, descending then alphabetically
+            var sortedReagentPrototypes = reagentPrototypes
+                .OrderByDescending(pair => pair.Value.Value)
+                .ThenBy(pair => pair.Key.LocalizedName);
+
+            // Add descriptions of immediately recognizable reagents, like water or beer
+            var recognized = new List<ReagentPrototype>();
+            foreach (var keyValuePair in sortedReagentPrototypes)
             {
-                continue;
+                var proto = keyValuePair.Key;
+                if (!proto.Recognizable)
+                {
+                    continue;
+                }
+
+                recognized.Add(proto);
             }
 
-            recognized.Add(proto);
+            // Skip if there's nothing recognizable
+            if (recognized.Count == 0)
+                return;
+
+            var msg = new StringBuilder();
+            foreach (var reagent in recognized)
+            {
+                string part;
+                if (reagent == recognized[0])
+                {
+                    part = "examinable-solution-recognized-first";
+                }
+                else if (reagent == recognized[^1])
+                {
+                    // this loc specifically  requires space to be appended, fluent doesnt support whitespace
+                    msg.Append(' ');
+                    part = "examinable-solution-recognized-last";
+                }
+                else
+                {
+                    part = "examinable-solution-recognized-next";
+                }
+
+                msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
+                    ("chemical", reagent.LocalizedName)));
+            }
+
+            args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals",
+                ("recognizedString", msg.ToString())));
         }
-
-        // Skip if there's nothing recognizable
-        if (recognized.Count == 0)
-            return;
-
-        var msg = new StringBuilder();
-        foreach (var reagent in recognized)
-        {
-            string part;
-            if (reagent == recognized[0])
-            {
-                part = "examinable-solution-recognized-first";
-            }
-            else if (reagent == recognized[^1])
-            {
-                // this loc specifically  requires space to be appended, fluent doesnt support whitespace
-                msg.Append(' ');
-                part = "examinable-solution-recognized-last";
-            }
-            else
-            {
-                part = "examinable-solution-recognized-next";
-            }
-
-            msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
-                ("chemical", reagent.LocalizedName)));
-        }
-
-        args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals", ("recognizedString", msg.ToString())));
     }
 
     private void OnSolutionExaminableVerb(Entity<ExaminableSolutionComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
