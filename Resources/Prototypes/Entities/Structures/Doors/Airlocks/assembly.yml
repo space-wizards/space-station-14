@@ -11,7 +11,7 @@
 
 - type: entity
   parent: AirlockAssembly
-  id: AirlockAssemblyAtmospherics
+  id: AirlockAssemblyAtmosphericsGlass
   name: airlock assembly
   suffix: Atmospherics, Glass
   components:
@@ -32,7 +32,7 @@
 
 - type: entity
   parent: AirlockAssembly
-  id: AirlockAssemblyCargo
+  id: AirlockAssemblyCargoGlass
   name: airlock assembly
   suffix: Cargo, Glass
   components:
@@ -53,7 +53,7 @@
 
 - type: entity
   parent: AirlockAssembly
-  id: AirlockAssemblyCommand
+  id: AirlockAssemblyCommandGlass
   name: airlock assembly
   suffix: Command, Glass
   components:
@@ -74,7 +74,7 @@
 
 - type: entity
   parent: AirlockAssembly
-  id: AirlockAssemblyEngineering
+  id: AirlockAssemblyEngineeringGlass
   name: airlock assembly
   suffix: Engineering, Glass
   components:
