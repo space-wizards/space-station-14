@@ -1059,8 +1059,8 @@
     FoodMeatFish: 2
 
 - type: microwaveMealRecipe
-  id: Recipe
-  name:  recipe
+  id: RecipeSashimi
+  name: sashimi recipe
   result: FoodMeal
   time: 15
   reagents:
