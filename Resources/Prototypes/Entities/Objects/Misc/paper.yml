@@ -274,7 +274,7 @@
     heldPrefix: luxury_pen
 
 - type: entity
-  name: cybersun pen
+  name: Cybersun pen
   parent: Pen
   id: CyberPen
   description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write.

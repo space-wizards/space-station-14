@@ -702,7 +702,7 @@
 - type: entity
   parent: DrinkGlassBase
   id: DrinkFourteenLokoGlass
-  name: fourteen loko glass
+  name: Fourteen Loko glass
   description: This is a container of Fourteen Loko, it appears to be of the highest quality. The drink, not the container.
   components:
   - type: SolutionContainerManager

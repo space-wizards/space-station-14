@@ -394,7 +394,7 @@
 # Tastes like crust, tomato, cheese, sausage, sass.
 
 - type: entity
-  name: hawaiian pizza
+  name: Hawaiian pizza
   parent: FoodPizzaBase
   id: FoodPizzaPineapple
   description: Makes people burst into tears. Tears of joy or sadness depends on the persons fondness for pineapple.

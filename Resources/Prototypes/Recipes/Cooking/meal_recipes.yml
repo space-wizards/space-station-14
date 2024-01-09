@@ -535,7 +535,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeHawaiianPizza
-  name: hawaiian pizza recipe
+  name: Hawaiian pizza recipe
   result: FoodPizzaPineapple
   time: 30
   solids:
@@ -1049,7 +1049,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeCubanCarp
-  name: cuban carp recipe
+  name: Cuban carp recipe
   result: FoodMealCubancarp
   time: 15
   solids:
@@ -1753,7 +1753,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeHawaiianKebab
-  name: hawaiian kebab recipe
+  name: Hawaiian kebab recipe
   result: FoodMeatHawaiianKebab
   time: 5
   solids:
