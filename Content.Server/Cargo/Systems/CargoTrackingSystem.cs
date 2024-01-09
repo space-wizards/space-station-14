@@ -23,7 +23,7 @@ public sealed class CargoTrackingSystem : EntitySystem
         SubscribeLocalEvent<CargoTrackingComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<CargoTrackingComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<CargoTrackingComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<CargoTrackedComponent, ComponentRemove>(OnComponentRemove);
+        SubscribeLocalEvent<CargoTrackedComponent, EntityTerminatingEvent>(OnComponentRemove);
         SubscribeLocalEvent<CargoOrderArrivalEvent>(OnCargoOrderArrival);
         SubscribeLocalEvent<CargoOrderDeletionEvent>(OnCargoOrderDeletion);
     }
@@ -67,8 +67,8 @@ public sealed class CargoTrackingSystem : EntitySystem
         if (comp.Waiting)
         {
             args.PushMarkup(Loc.GetString("cargo-tracker-examine-waiting"));
-            if (comp.TrackedOrderName is not null)
-                args.PushMarkup(Loc.GetString("cargo-tracker-examine-order-name", ("name", comp.TrackedOrderName)));
+            if (comp.TrackedOrderName is not null && comp.TrackedOrderId is not null)
+                args.PushMarkup(Loc.GetString("cargo-tracker-examine-order-name", ("name", comp.TrackedOrderName), ("id", comp.TrackedOrderId)));
             return;
         }
 
@@ -76,7 +76,7 @@ public sealed class CargoTrackingSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString("cargo-tracker-examine-tracking"));
             if (comp.TrackedOrderName is not null)
-                args.PushMarkup(Loc.GetString("cargo-tracker-examine-order-name", ("name", comp.TrackedOrderName)));
+                args.PushMarkup(Loc.GetString("cargo-tracker-examine-order-name", ("name", comp.TrackedOrderName), ("id", comp.TrackedOrderId)));
             return;
         }
 
@@ -134,7 +134,7 @@ public sealed class CargoTrackingSystem : EntitySystem
         StopWaiting(uid, component);
     }
 
-    private void OnComponentRemove(EntityUid uid, CargoTrackedComponent component, ComponentRemove args)
+    private void OnComponentRemove(EntityUid uid, CargoTrackedComponent component, EntityTerminatingEvent args)
     {
         var station = _stationSystem.GetOwningStation(uid);
         if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var cargoOrderDatabaseComponent))

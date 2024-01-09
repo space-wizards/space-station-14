@@ -12,3 +12,11 @@
   completetime: 4
   materials:
     Steel: 500
+
+- type: latheRecipe
+  id: CargoOrderTracker
+  result: CargoOrderTracker
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 100

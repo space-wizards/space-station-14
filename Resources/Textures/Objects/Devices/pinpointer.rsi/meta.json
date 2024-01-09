@@ -160,6 +160,9 @@
             "name": "pinwait"
         },
         {
+            "name": "cargotracker"
+        },
+        {
             "name": "inhand-left",
             "directions": 4
         },

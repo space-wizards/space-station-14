@@ -17,6 +17,8 @@
       - id: RubberStampQm
       - id: ClothingHeadsetAltCargo
       - id: BoxEncryptionKeyCargo
+      - id: CargoOrderTracker
+        amount: 3
 
 - type: entity
   id: LockerCaptainFilledHardsuit
