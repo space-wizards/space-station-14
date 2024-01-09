@@ -80,15 +80,15 @@ public sealed class EmagSystem : EntitySystem
         if (HasComp<EmaggedComponent>(target))
             return false;
 
+        var onAttemptEmagEvent = new OnAttemptEmagEvent(user);
+        RaiseLocalEvent(target, ref onAttemptEmagEvent);
+
+        // prevent emagging if attempt fails
+        if (!onAttemptEmagEvent.Handled)
+            return false;
+
         var emaggedEvent = new GotEmaggedEvent(user);
         RaiseLocalEvent(target, ref emaggedEvent);
-
-        //Don't add EmaggedComponent to the borg if only the lock, and not the borg itself, has been emagged.
-        if (TryComp<EmagSiliconLawComponent>(target, out var emagSiliconLawComponent))
-        {
-            if(emagSiliconLawComponent.OwnerName == null)
-                return emaggedEvent.Handled;
-        }
 
         if (emaggedEvent.Handled && !emaggedEvent.Repeatable)
             EnsureComp<EmaggedComponent>(target);
@@ -98,3 +98,6 @@ public sealed class EmagSystem : EntitySystem
 
 [ByRefEvent]
 public record struct GotEmaggedEvent(EntityUid UserUid, bool Handled = false, bool Repeatable = false);
+
+[ByRefEvent]
+public record struct OnAttemptEmagEvent(EntityUid UserUid, bool Handled = false);
