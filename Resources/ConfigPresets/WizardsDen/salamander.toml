@@ -4,7 +4,7 @@
 desc = "Official English Space Station 14 servers. Roleplay required, you must be whitelisted through Discord to play if there are more than 15 online players."
 hostname = "[EN] Wizard's Den Salamander [US West RP]"
 soft_max_players = 130
-secret_weight_prototype = 'Secret_MRP'
+secret_weight_prototype = "Secret_MRP"
 
 [server]
 rules_file = "RP_Rules.txt"
