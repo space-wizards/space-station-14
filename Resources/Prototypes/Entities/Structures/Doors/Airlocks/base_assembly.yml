@@ -1,0 +1,45 @@
+#Base
+- type: entity
+  id: AirlockAssembly
+  name: airlock assembly
+  description: It opens, it closes, and maybe crushes you.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    state: "assembly"
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 110
+        mask:
+        - FullTileMask
+        layer:
+        - HumanoidBlockLayer
+  - type: Anchorable
+    delay: 2
+  - type: Pullable
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Construction
+    graph: Airlock
+    node: assembly
+  placement:
+    mode: SnapgridCenter
