@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Toilet;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Hands.Components;
@@ -124,7 +125,12 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (TryComp<MobStateComponent>(entity, out var damageState) && !component.MobsCanEnter)
             return false;
 
+        // if humanoids cant enter then only items can.
         if (!HasComp<ItemComponent>(entity) && !component.HumanoidCanEnter)
+            return false;
+
+        // if humanoids cant enter then neither can plungers.
+        if (HasComp<PlungerComponent>(entity) && !component.HumanoidCanEnter)
             return false;
 
         if (TryComp<PhysicsComponent>(entity, out var physics) && (physics.CanCollide || storable))

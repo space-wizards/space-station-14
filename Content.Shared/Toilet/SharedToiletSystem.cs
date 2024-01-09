@@ -47,6 +47,16 @@ namespace Content.Shared.Toilet
         }
         private void OnComponentStartup(EntityUid uid, ToiletComponent component, ComponentStartup args)
         {
+            if (_random.Prob(0.5f) == true)
+            {
+                component.ToggleSeat = true;
+            }
+
+            if (_random.Prob(0.3f) == true)
+            {
+                EnsureComp<PlungerUseComponent>(uid);
+            }
+
             UpdateAppearance(uid, component);
             Dirty(uid, component);
         }

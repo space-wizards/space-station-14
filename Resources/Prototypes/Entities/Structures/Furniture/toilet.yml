@@ -47,12 +47,6 @@
     containers:
       stash: !type:ContainerSlot {}
       disposals: !type:Container
-  - type: SolutionContainerManager
-    solutions:
-      drainBuffer:
-        maxVol: 500
-      toilet:
-        maxVol: 250
   - type: Physics
     bodyType: Static
   - type: Construction
@@ -70,6 +64,23 @@
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
   - type: RatKingRummageable
+  - type: SolutionContainerManager
+    solutions:
+      drainBuffer:
+        maxVol: 100
+      tank:
+        maxVol: 500
+  - type: SolutionRegeneration
+    solution: tank
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 1
+  - type: DrainableSolution
+    solution: tank
+  - type: ReagentTank
+  - type: DumpableSolution
+    solution: drainBuffer
 
 - type: entity
   id: ToiletDirtyWater
