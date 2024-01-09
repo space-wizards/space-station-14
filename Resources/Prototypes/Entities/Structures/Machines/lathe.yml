@@ -273,9 +273,6 @@
       - Igniter
       - PowerCellMicroreactor
       - PowerCellHigh
-      - PowerCageSmall
-      - PowerCageMedium
-      - PowerCageHigh
       - WeaponPistolCHIMP
       - WeaponGauntletGorilla
       - SynthesizerInstrument
@@ -705,6 +702,9 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - PowerCageSmall
+      - PowerCageMedium
+      - PowerCageHigh
       - ShuttleGunLSESvalinnMachineGunCircuitboard
       - ShuttleGunLSEPerforatorCircuitboard
       - ShuttleGunLauncherFriendshipCircuitboard

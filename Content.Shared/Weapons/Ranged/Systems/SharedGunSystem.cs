@@ -100,15 +100,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnActivateInWorld(Entity<GunComponent> gun, ref ActivateInWorldEvent args)
-    {
-        if (!gun.Comp.ActivateInWorldShoot)
-            return;
-
-        var targetPos = new EntityCoordinates(gun, new Vector2(0, -1));
-        AttemptShoot(null, gun, gun, targetPos, false);
-    }
-
     private void OnMapInit(EntityUid uid, GunComponent component, MapInitEvent args)
     {
         if (component.NextFire > Timing.CurTime)
@@ -133,6 +124,15 @@ public abstract partial class SharedGunSystem : EntitySystem
     private void OnGunUnpaused(EntityUid uid, GunComponent component, ref EntityUnpausedEvent args)
     {
         component.NextFire += args.PausedTime;
+    }
+
+    private void OnActivateInWorld(Entity<GunComponent> gun, ref ActivateInWorldEvent args)
+    {
+        if (!gun.Comp.ActivateInWorldShoot)
+            return;
+
+        var targetPos = new EntityCoordinates(gun, new Vector2(0, -1));
+        AttemptShoot(null, gun, gun, targetPos, false);
     }
 
     private void OnShootRequest(RequestShootEvent msg, EntitySessionEventArgs args)
