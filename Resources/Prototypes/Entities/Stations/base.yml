@@ -44,9 +44,39 @@
   abstract: true
   components:
     - type: GridSpawn
-      paths:
-        - /Maps/Shuttles/cargo.yml
-        - /Maps/Shuttles/mining.yml
+      groups:
+        cargo:
+          paths:
+          - /Maps/Shuttles/cargo.yml
+        mining:
+          paths:
+          - /Maps/Shuttles/mining.yml
+        ruins:
+          paths:
+          - /Maps/Ruins/derelict.yml
+          - /Maps/Ruins/djstation.yml
+          - /Maps/Ruins/relaystation.yml
+          - /Maps/Ruins/whiteship.yml
+
+
+- type: entity
+  id: BaseStationShuttlesCore
+  abstract: true
+  components:
+    - type: GridSpawn
+      groups:
+        cargo:
+          paths:
+          - /Maps/Shuttles/cargo_core.yml
+        mining:
+          paths:
+          - /Maps/Shuttles/mining.yml
+        ruins:
+          paths:
+            - /Maps/Ruins/derelict.yml
+            - /Maps/Ruins/djstation.yml
+            - /Maps/Ruins/relaystation.yml
+            - /Maps/Ruins/whiteship.yml
 
 - type: entity
   id: BaseStationCentcomm

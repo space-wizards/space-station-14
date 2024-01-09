@@ -3,6 +3,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Shared.Cargo.Components;
 using Content.Shared.CCVar;
+using Robust.Shared.Random;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -59,28 +60,35 @@ public sealed partial class ShuttleSystem
         var mapId = _mapManager.CreateMap();
         var valid = true;
 
-        foreach (var path in component.Paths)
+        foreach (var group in component.Groups.Values)
         {
-            if (_loader.TryLoad(mapId, path.ToString(), out var ent) && ent.Count == 1)
+            var count = _random.Next(group.MinCount, group.MaxCount);
+
+            for (var i = 0; i < count; i++)
             {
-                if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
+                var path = _random.Pick(group.Paths);
+
+                if (_loader.TryLoad(mapId, path.ToString(), out var ent) && ent.Count == 1)
                 {
-                    TryFTLProximity(ent[0], shuttle, targetGrid.Value);
-                    _station.AddGridToStation(uid, ent[0]);
+                    if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
+                    {
+                        TryFTLProximity(ent[0], shuttle, targetGrid.Value);
+                        _station.AddGridToStation(uid, ent[0]);
+                    }
+                    else
+                    {
+                        valid = false;
+                    }
                 }
                 else
                 {
                     valid = false;
                 }
-            }
-            else
-            {
-                valid = false;
-            }
 
-            if (!valid)
-            {
-                Log.Error($"Error loading gridspawn for {ToPrettyString(uid)} / {path}");
+                if (!valid)
+                {
+                    Log.Error($"Error loading gridspawn for {ToPrettyString(uid)} / {path}");
+                }
             }
         }
 
