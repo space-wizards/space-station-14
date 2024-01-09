@@ -1256,7 +1256,7 @@
       Uranium: 2
 
 - type: entity
-  id: ShuttleGunLSESvalinnMachineGunCircuitboard
+  id: ShuttleGunSvalinnMachineGunCircuitboard
   parent: BaseMachineCircuitboard
   name: LSE-400c "Svalinn machine gun" circuit board
   description: A machine printed circuit board for an LSE-400c "Svalinn machine gun"
@@ -1273,7 +1273,7 @@
       CableHV: 5
       
 - type: entity
-  id: ShuttleGunLSEPerforatorCircuitboard
+  id: ShuttleGunPerforatorCircuitboard
   parent: BaseMachineCircuitboard
   name: LSE-1200c "Perforator" circuit board
   description: A machine printed circuit board for an LSE-1200c "Perforator"
@@ -1290,7 +1290,7 @@
       CableHV: 5
       
 - type: entity
-  id: ShuttleGunKineticCannonCircuitboard
+  id: ShuttleGunKineticCircuitboard
   parent: BaseMachineCircuitboard
   name: PTK-800 "Matter Dematerializer" circuit board
   description: A machine printed circuit board for an PTK-800 "Matter Dematerializer"
@@ -1307,7 +1307,7 @@
       CableHV: 2
       
 - type: entity
-  id: ShuttleGunLauncherFriendshipCircuitboard
+  id: ShuttleGunFriendshipCircuitboard
   parent: BaseMachineCircuitboard
   name: EXP-320g "Friendship" circuit board
   description: A machine printed circuit board for an EXP-320g "Friendship"
@@ -1324,7 +1324,7 @@
       CableHV: 5  
       
 - type: entity
-  id: ShuttleGunLauncherDusterCircuitboard
+  id: ShuttleGunDusterCircuitboard
   parent: BaseMachineCircuitboard
   name: EXP-2100g "Duster" circuit board
   description: A machine printed circuit board for an EXP-2100g "Duster"
