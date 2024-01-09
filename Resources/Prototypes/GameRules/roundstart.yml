@@ -111,14 +111,14 @@
 
 # event schedulers
 - type: entity
-  id: BasicStationEventScheduler #this is "extended"
+  id: BasicStationEventScheduler
   parent: BaseGameRule
   noSpawn: true
   components:
   - type: BasicStationEventScheduler
 
 - type: entity
-  id: RampingStationEventScheduler #this is what we call "survival"
+  id: RampingStationEventScheduler
   parent: BaseGameRule
   noSpawn: true
   components:
