@@ -84,7 +84,7 @@
   name: L6C ROW
   id: WeaponLightMachineGunL6C
   parent: BaseItem
-  description: A L6 SAW modified for cyborg use. Feeds .30 rifle ammo from an internal 100 round magazine.
+  description: A L6 SAW for use by cyborgs. Creates .30 rifle ammo on the fly from an internal ammo fabricator, which slowly self-charges.
   components:
     - type: Gun
       minAngle: 4
@@ -111,7 +111,13 @@
     - type: ContainerContainer
       containers:
         ballistic-ammo: !type:Container
-    - type: BallisticAmmoProvider
+    - type: ProjectileBatteryAmmoProvider
       proto: CartridgeLightRifle
-      capacity: 100
+      fireCost: 100
+    - type: Battery
+      maxCharge: 10000
+      startingCharge: 10000
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 25
     - type: AmmoCounter
