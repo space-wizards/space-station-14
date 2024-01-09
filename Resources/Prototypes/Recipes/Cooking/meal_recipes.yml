@@ -1049,7 +1049,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeCubanCarp
-  name: cuban carp recipe
+  name: Cuban carp recipe
   result: FoodMealCubancarp
   time: 15
   solids:

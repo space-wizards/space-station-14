@@ -86,7 +86,7 @@
 
 - type: entity
   id: PuddleSparkle
-  name: Sparkle
+  name: sparkle
   placement:
     mode: SnapgridCenter
   components:

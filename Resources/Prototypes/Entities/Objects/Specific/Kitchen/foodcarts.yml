@@ -67,7 +67,7 @@
     #      startingItem: PowerCellMedium
 
 - type: entity
-  name: Hot Food Cart
+  name: hot food cart
   id: FoodCartHot
   parent: FoodCartBase
   description: Get out there and slang some dogs.
@@ -148,7 +148,7 @@
         ketchup_slot: !type:ContainerSlot {}
 
 - type: entity
-  name: Cold Food Cart
+  name: cold food cart
   id: FoodCartCold
   parent: FoodCartBase
   description: It's the Ice Cream Man! It's the Ice Cream Man!
