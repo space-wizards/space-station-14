@@ -27,7 +27,7 @@ public sealed class LandMineSystem : EntitySystem
 
     private void HandleStepOffTriggered(EntityUid uid, LandMineComponent component, ref StepOffTriggeredEvent args)
     {
-        if (component.ExplodeImmediately)
+        if (component.TriggerImmediately)
         {
             return;
         }
@@ -40,7 +40,7 @@ public sealed class LandMineSystem : EntitySystem
         ShowLandminePopup(uid, args.Tripper);
         PlayLandmineActivatedSound(uid, component);
 
-        if (!component.ExplodeImmediately)
+        if (!component.TriggerImmediately)
         {
             return;
         }
@@ -59,13 +59,7 @@ public sealed class LandMineSystem : EntitySystem
 
     private void PlayLandmineActivatedSound(EntityUid uid, LandMineComponent component)
     {
-        var xform = _entityManager.GetComponent<TransformComponent>(uid);
-        var landmineMapCoords = _transformSystem.GetMapCoordinates(xform);
-
-        var filter = Filter.Pvs(landmineMapCoords).AddInRange(landmineMapCoords, component.TriggerAudioRange);
-        var landmineEntityCoords = EntityCoordinates.FromMap(_mapManager, landmineMapCoords);
-
-        _audioSystem.PlayStatic(component.MineBeepAudioPath, filter, landmineEntityCoords, true);
+        _audioSystem.PlayPvs(component.TriggerSound, uid);
     }
 
     private static void HandleStepTriggerAttempt(EntityUid uid, LandMineComponent component, ref StepTriggerAttemptEvent args)

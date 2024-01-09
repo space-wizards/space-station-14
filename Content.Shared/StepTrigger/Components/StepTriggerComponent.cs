@@ -24,7 +24,7 @@ public sealed partial class StepTriggerComponent : Component
     /// <summary>
     ///     List of entities that left collision this frame.
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField, ViewVariables, AutoNetworkedField]
     public HashSet<EntityUid> StoppedColliding = new();
 
     /// <summary>

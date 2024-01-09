@@ -35,6 +35,10 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: LandMine
+    sound:
+        path: /Audio/Effects/beep_landmine.ogg
+        params:
+            maxDistance: 10
   - type: StepTrigger
     requiredTriggeredSpeed: 0
 

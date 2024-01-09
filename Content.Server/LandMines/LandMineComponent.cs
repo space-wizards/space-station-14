@@ -1,3 +1,5 @@
+using Robust.Shared.Audio;
+
 namespace Content.Server.LandMines;
 
 [RegisterComponent]
@@ -8,16 +10,11 @@ public sealed partial class LandMineComponent : Component
     /// True - StepTrigger, False - StepOffTrigger
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool ExplodeImmediately = false;
+    public bool TriggerImmediately = false;
 
     /// <summary>
-    /// Distance at which landmine beep sound can be heard by players
+    /// Trigger sound effect when stepping onto landmine
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public readonly float TriggerAudioRange = 10f;
-
-    /// <summary>
-    /// Landmine beep SFX path in Resources folder
-    /// </summary>
-    public readonly string MineBeepAudioPath = "/Audio/Effects/beep_landmine.ogg";
+    [DataField("sound")]
+    public SoundSpecifier TriggerSound;
 }

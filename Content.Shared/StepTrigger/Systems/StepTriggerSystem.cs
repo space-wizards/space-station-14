@@ -86,7 +86,7 @@ public sealed class StepTriggerSystem : EntitySystem
         foreach (var otherUid in component.StoppedColliding)
         {
             var evStepOff = new StepOffTriggeredEvent { Source = uid, Tripper = otherUid };
-            RaiseLocalEvent(uid, ref evStepOff, true);
+            RaiseLocalEvent(uid, ref evStepOff);
         }
 
         component.StoppedColliding.Clear();
@@ -254,8 +254,8 @@ public struct StepTriggeredEvent
 }
 
 [ByRefEvent]
-public struct StepOffTriggeredEvent
+public readonly struct StepOffTriggeredEvent
 {
-    public EntityUid Source;
-    public EntityUid Tripper;
+    public readonly EntityUid Source { get; init; }
+    public readonly EntityUid Tripper { get; init; }
 }
