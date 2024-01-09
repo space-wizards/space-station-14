@@ -517,7 +517,7 @@
   - type: ItemSlots
     slots:
       pen_slot:
-        name: Pen
+        name: clipboard-slot-component-slot-name-pen
         whitelist:
           tags:
             - Write
@@ -601,7 +601,7 @@
   - type: ItemSlots
     slots:
       pen_slot:
-        name: Pen
+        name: clipboard-slot-component-slot-name-pen
         whitelist:
           tags:
             - Write

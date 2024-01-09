@@ -989,7 +989,7 @@
   description: uplink-rigged-boxing-gloves-desc
   productEntity: ClothingHandsGlovesBoxingRigged
   cost:
-    Telecrystal: 8
+    Telecrystal: 6
   categories:
     - UplinkJob
   conditions:
@@ -1003,7 +1003,7 @@
   description: uplink-rigged-boxing-gloves-desc
   productEntity: ClothingHandsGlovesBoxingRigged
   cost:
-    Telecrystal: 5
+    Telecrystal: 4
   categories:
     - UplinkJob
   conditions:
