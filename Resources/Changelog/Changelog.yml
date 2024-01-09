@@ -1,11 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed FOV & light rendering not being re-enabled when players stop spectating
-      as a ghost.
-    type: Fix
-  id: 5154
-  time: '2023-11-12T18:36:00.0000000+00:00'
 - author: eddiedd
   changes:
   - message: Fresh harvested corn can actually be ground for cornmeal now.
@@ -3707,3 +3700,10 @@ Entries:
   id: 5654
   time: '2024-01-09T22:06:28.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23806
+- author: metalgearsloth
+  changes:
+  - message: Add artifact fragments to salvage magnet.
+    type: Add
+  id: 5655
+  time: '2024-01-09T22:14:05.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23791
