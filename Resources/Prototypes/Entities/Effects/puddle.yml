@@ -161,5 +161,7 @@
     examinable: false
   - type: ExaminableSolution
     solution: puddle
+  - type: DrawableSolution
+    solution: puddle
   - type: BadDrink
   - type: IgnoresFingerprints
