@@ -30,6 +30,19 @@
   fireStates: 3
 
 - type: explosion
+  id: MiningCharge
+  damagePerIntensity:
+    types:
+      Cold: 1
+      Blunt: 1
+      Piercing: 1
+      Structural: 20
+  tileBreakChance: [ 0 ]
+  tileBreakIntensity: [ 0 ]
+  texturePath: /Textures/Effects/fire_greyscale.rsi
+  fireStates: 3
+
+- type: explosion
   id: MicroBomb
   damagePerIntensity:
     types:
