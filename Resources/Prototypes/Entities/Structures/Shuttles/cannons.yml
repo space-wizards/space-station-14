@@ -64,7 +64,7 @@
 # example: LSE-100e "Clown destroyer" (powered by the wiring, very weak)
 
 - type: entity
-  id: ShuttleGunLSESvalinnMachineGun
+  id: ShuttleGunSvalinnMachineGun
   parent: ShuttleGunBase
   name: LSE-400c "Svalinn machine gun"
   description: Basic stationary laser unit. Effective against live targets and electronics. Uses regular power cells to fire, and has an extremely high rate of fire
@@ -110,7 +110,7 @@
   - type: Appearance
 
 - type: entity
-  id: ShuttleGunLSEPerforator
+  id: ShuttleGunPerforator
   parent: ShuttleGunBase
   name: LSE-1200c "Perforator"
   description: Advanced stationary laser unit. Annihilates electronics and is extremely dangerous to health! Uses the power cage to fire.
@@ -154,76 +154,51 @@
   - type: MagazineAmmoProvider
   - type: Appearance
 
-# ---- Other weapon ----
+# ---- Launchers ----
+# naming: EXP (Explosion) + conventional power + suffix (g for Grenade, c for RPG Cartridge) + Name
+# example: EXP-100c "Poppy"
 
 - type: entity
-  id: ShuttleGunPirateCannon
+  id: ShuttleGunLauncherFriendship
   parent: ShuttleGunBase
-  name: pirate ship cannon
-  description: Kaboom!
-  components:   
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors: # no deconstruction into machine frame
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+  name: EXP-320g "Friendship"
+  description: A small stationary grenade launcher that holds 2 grenades.
+  components:
+  - type: Appearance
   - type: Sprite
-    sprite: Structures/Shuttles/Guns/pirate_cannon.rsi
+    sprite: Structures/Shuttles/Guns/launcher.rsi
     layers:
-    - state: base
+    - state: exp-320g
+    - state: mag-7
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
-    fireRate: 1
+    projectileSpeed: 80
+    fireRate: 4
+    angleDecay: 45
+    minAngle: 0
+    maxAngle: 15
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
+      path: /Audio/Items/Mining/fultext_launch.ogg
+      params: 
+        pitch: 0.8
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CannonBall
-    capacity: 1
-    proto: CannonBall
+        - Grenade
+    capacity: 2
     soundInsert:
-      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
-
-- type: entity
-  id: ShuttleGunKineticCannon
-  parent: ShuttleGunBase
-  name: PTK-800 "Matter Dematerializer"
-  description: Salvage stationary mining turret. Gradually accumulates charges on its own, extremely effective for asteroid excavation.
-  components:
-  - type: Sprite
-    sprite: Structures/Shuttles/Guns/kinetic.rsi
-    layers:
-    - state: ptk-800
-    - state: mag-7
-  - type: Gun    
-    projectileSpeed: 20
-    fireRate: 2
-    selectedMode: SemiAuto
-    angleDecay: 45
-    minAngle: 10
-    maxAngle: 15
-    availableModes:
-    - SemiAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
-      params:
-        variation: 0.12
-  - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 2
-    rechargeSound:
-      path: /Audio/Weapons/Guns/Bolt/lmg_bolt_closed.ogg
-      params:
-        pitch: 1.2
-        variation: 0.08
-  - type: BasicEntityAmmoProvider
-    proto: BulletKineticShuttle
-    capacity: 5
-    count: 5
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: Machine
-    board: ShuttleGunKineticCannonCircuitboard
+    board: ShuttleGunLauncherFriendshipCircuitboard
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
 
 - type: entity
   id: ShuttleGunLauncherDuster
@@ -271,3 +246,78 @@
           params:
             pitch: 2
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+
+# ---- Other weapon ----
+
+- type: entity
+  id: ShuttleGunPirateCannon
+  parent: ShuttleGunBase
+  name: pirate ship cannon
+  description: Kaboom!
+  components:   
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors: # no deconstruction into machine frame
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+  - type: Sprite
+    sprite: Structures/Shuttles/Guns/pirate_cannon.rsi
+    layers:
+    - state: base
+  - type: Gun
+    fireRate: 1
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CannonBall
+    capacity: 1
+    proto: CannonBall
+    soundInsert:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+
+- type: entity
+  id: ShuttleGunKineticCannon
+  parent: ShuttleGunBase
+  name: PTK-800 "Matter Dematerializer"
+  description: Salvage stationary mining turret. Gradually accumulates charges on its own, extremely effective for asteroid excavation.
+  components:
+  - type: Sprite
+    sprite: Structures/Shuttles/Guns/kinetic.rsi
+    layers:
+    - state: ptk-800
+    - state: mag-7
+  - type: Gun    
+    projectileSpeed: 20
+    fireRate: 2
+    selectedMode: SemiAuto
+    angleDecay: 45
+    minAngle: 5
+    maxAngle: 15
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+      params:
+        variation: 0.12
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 2
+    rechargeSound:
+      path: /Audio/Weapons/Guns/Bolt/lmg_bolt_closed.ogg
+      params:
+        pitch: 1.2
+        variation: 0.08
+  - type: BasicEntityAmmoProvider
+    proto: BulletKineticShuttle
+    capacity: 5
+    count: 5
+  - type: Machine
+    board: ShuttleGunKineticCannonCircuitboard
+

@@ -403,9 +403,21 @@
 
 - type: entity
   id: BulletKineticShuttle
-  parent: BulletKinetic
+  parent: BaseBullet
   noSpawn: true
   components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: chronobolt
+      shader: unshaded
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Blunt: 30
+        Structural: 35
   - type: Ammo
     muzzleFlash: HitscanEffect
   - type: TimedDespawn
@@ -698,9 +710,9 @@
     layers:
       - state: frag
   - type: EmpOnTrigger
-    range: 3
+    range: 5
     energyConsumption: 50000
-    disableDuration: 5
+    disableDuration: 10
   - type: Ammo
     muzzleFlash: null
   - type: PointLight

@@ -834,6 +834,15 @@
      Glass: 900
      
 - type: latheRecipe
+  id: ShuttleGunLauncherFriendshipCircuitboard
+  result: ShuttleGunLauncherFriendshipCircuitboard
+  completetime: 8
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 50
+     
+- type: latheRecipe
   id: ShuttleGunLauncherDusterCircuitboard
   result: ShuttleGunLauncherDusterCircuitboard
   completetime: 12

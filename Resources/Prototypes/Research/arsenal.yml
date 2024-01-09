@@ -163,8 +163,10 @@
   - PowerCageRechargerCircuitboard
   - PowerCageSmall
   - PowerCageMedium
+  - MagazineGrenadeFlash
   - ShuttleGunLSESvalinnMachineGunCircuitboard
   - ShuttleGunLSEPerforatorCircuitboard
+  - ShuttleGunLauncherFriendshipCircuitboard
   technologyPrerequisites:
   - SalvageWeapons
 
@@ -205,7 +207,6 @@
   cost: 15000
   recipeUnlocks:
   - MagazineGrenadeEMP
-  - MagazineGrenadeFlash
   - ShuttleGunLauncherDusterCircuitboard
   technologyPrerequisites:
   - BasicShuttleArmament

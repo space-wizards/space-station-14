@@ -425,6 +425,7 @@
       - ShuttleGunKineticCannonCircuitboard
       - ShuttleGunLSESvalinnMachineGunCircuitboard
       - ShuttleGunLSEPerforatorCircuitboard
+      - ShuttleGunLauncherFriendshipCircuitboard
       - ShuttleGunLauncherDusterCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard

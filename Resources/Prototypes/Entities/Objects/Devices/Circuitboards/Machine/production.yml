@@ -1307,6 +1307,23 @@
       CableHV: 2
       
 - type: entity
+  id: ShuttleGunLauncherFriendshipCircuitboard
+  parent: BaseMachineCircuitboard
+  name: EXP-320g "Friendship" circuit board
+  description: A machine printed circuit board for an EXP-320g "Friendship"
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunLauncherFriendship
+    requirements:
+      MatterBin: 3
+      Manipulator: 2
+    materialRequirements:
+      Steel: 7
+      CableHV: 5  
+      
+- type: entity
   id: ShuttleGunLauncherDusterCircuitboard
   parent: BaseMachineCircuitboard
   name: EXP-2100g "Duster" circuit board
