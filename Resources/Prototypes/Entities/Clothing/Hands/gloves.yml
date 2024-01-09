@@ -353,6 +353,7 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/northstar.rsi
   - type: MeleeWeapon
+    autoAttack: true
     attackRate: 4
     damage:
       types:
