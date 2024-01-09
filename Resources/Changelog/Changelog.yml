@@ -1,10 +1,4 @@
 Entries:
-- author: Brandon_H
-  changes:
-  - message: Plants can no longer grow without sufficient water and nutrients.
-    type: Fix
-  id: 5151
-  time: '2023-11-11T19:12:13.0000000+00:00'
 - author: Vasilis
   changes:
   - message: Bees can no longer turn into zombies.
@@ -3703,3 +3697,10 @@ Entries:
   id: 5651
   time: '2024-01-09T18:10:34.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23804
+- author: themias
+  changes:
+  - message: Mice can eat again
+    type: Fix
+  id: 5652
+  time: '2024-01-09T18:17:04.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23801
