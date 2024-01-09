@@ -55,6 +55,15 @@
     - type: GridSpawn
       paths:
         - /Maps/Shuttles/cargo_core.yml
+        - /Maps/Shuttles/mining.yml 
+
+- type: entity
+  id: BaseStationShuttlesFland
+  abstract: true
+  components:
+    - type: GridSpawn
+      paths:
+        - /Maps/Shuttles/cargo_fland.yml
         - /Maps/Shuttles/mining.yml
 
 - type: entity

@@ -51,6 +51,28 @@
     - type: Transform
 
 - type: entity
+  id: FlandNanotrasenStation
+  parent:
+    - BaseStation
+    - BaseStationCargo
+    - BaseStationJobsSpawning
+    - BaseStationRecords
+    - BaseStationArrivals
+    - BaseStationGateway
+    - BaseStationShuttlesFland
+    - BaseStationCentcomm
+    - BaseStationEvacuation
+    - BaseStationAlertLevels
+    - BaseStationMagnet
+    - BaseStationExpeditions
+    - BaseStationSiliconLawCrewsimov
+    - BaseStationAllEventsEligible
+    - BaseStationNanotrasen
+  noSpawn: true
+  components:
+    - type: Transform
+
+- type: entity
   id: NanotrasenCentralCommand
   parent:
     - BaseStation
