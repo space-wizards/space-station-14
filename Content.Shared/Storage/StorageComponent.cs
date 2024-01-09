@@ -30,7 +30,7 @@ namespace Content.Shared.Storage
         /// A dictionary storing each entity to its position within the storage grid.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public Dictionary<NetEntity, ItemStorageLocation> StoredItems = new();
+        public Dictionary<EntityUid, ItemStorageLocation> StoredItems = new();
 
         /// <summary>
         /// A list of boxes that comprise a combined grid that determines the location that items can be stored.

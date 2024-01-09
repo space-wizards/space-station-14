@@ -497,7 +497,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Container.ID != StorageComponent.ContainerId)
             return;
 
-        if (!entity.Comp.StoredItems.ContainsKey(GetNetEntity(args.Entity)))
+        if (!entity.Comp.StoredItems.ContainsKey(args.Entity))
         {
             if (!TryGetAvailableGridSpace((entity.Owner, entity.Comp), (args.Entity, null), out var location))
             {
@@ -505,7 +505,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 return;
             }
 
-            entity.Comp.StoredItems[GetNetEntity(args.Entity)] = location.Value;
+            entity.Comp.StoredItems[args.Entity] = location.Value;
             Dirty(entity, entity.Comp);
         }
 
@@ -522,7 +522,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Container.ID != StorageComponent.ContainerId)
             return;
 
-        entity.Comp.StoredItems.Remove(GetNetEntity(args.Entity));
+        entity.Comp.StoredItems.Remove(args.Entity);
         Dirty(entity, entity.Comp);
 
         UpdateAppearance((entity, entity.Comp, null));
@@ -655,7 +655,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
         }
 
-        if (!ignoreLocation && !storageComp.StoredItems.ContainsKey(GetNetEntity(insertEnt)))
+        if (!ignoreLocation && !storageComp.StoredItems.ContainsKey(insertEnt))
         {
             if (!TryGetAvailableGridSpace((uid, storageComp), (insertEnt, item), out _))
             {
@@ -698,7 +698,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!ItemFitsInGridLocation(insertEnt, uid, location))
             return false;
 
-        uid.Comp.StoredItems[GetNetEntity(insertEnt)] = location;
+        uid.Comp.StoredItems[insertEnt] = location;
         Dirty(uid, uid.Comp);
 
         if (Insert(uid,
@@ -713,7 +713,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return true;
         }
 
-        uid.Comp.StoredItems.Remove(GetNetEntity(insertEnt));
+        uid.Comp.StoredItems.Remove(insertEnt);
         return false;
     }
 
@@ -869,7 +869,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!ItemFitsInGridLocation(itemEnt, storageEnt, location.Position, location.Rotation))
             return false;
 
-        storageEnt.Comp.StoredItems[GetNetEntity(itemEnt)] = location;
+        storageEnt.Comp.StoredItems[itemEnt] = location;
         Dirty(storageEnt, storageEnt.Comp);
         return true;
     }
@@ -997,10 +997,8 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!validGrid)
             return false;
 
-        foreach (var (netEnt, storedItem) in storageEnt.Comp.StoredItems)
+        foreach (var (ent, storedItem) in storageEnt.Comp.StoredItems)
         {
-            var ent = GetEntity(netEnt);
-
             if (ent == itemEnt.Owner)
                 continue;
 
