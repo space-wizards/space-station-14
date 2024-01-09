@@ -88,6 +88,8 @@
     stateBaseClosed: generic
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
+  - type: StaticPrice
+    price: 50
 
 # steel closet base (that can be constructed/deconstructed)
 - type: entity
