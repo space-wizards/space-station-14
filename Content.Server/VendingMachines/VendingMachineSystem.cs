@@ -114,6 +114,9 @@ namespace Content.Server.VendingMachines
 
         private void OnBoundUIClosed(EntityUid uid, VendingMachineComponent component, BoundUIClosedEvent args)
         {
+            if (args.UiKey is not VendingMachineUiKey)
+                return;
+
             if ((VendingMachineUiKey) args.UiKey != VendingMachineUiKey.Key)
                 return;
 
