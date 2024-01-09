@@ -39,7 +39,10 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/break_stone.ogg
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
   - type: Occluder
   - type: Airtight
   - type: Fixtures
