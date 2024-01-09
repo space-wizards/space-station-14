@@ -1,0 +1,13 @@
+- type: entity
+  id: ActionToggleFangs
+  name: Toggle Fangs
+  description: Extend or retract your fangs.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: drainbloood
+    event: !type:VampireUsePowerEvent
+    Type: ToggleFangs
