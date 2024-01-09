@@ -4,3 +4,6 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-syndicate-agent-objective
+  requirements: ## By Imperial Space
+  - !type:OverallPlaytimeRequirement
+    time: 7200 # 2h
