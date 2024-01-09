@@ -1198,10 +1198,10 @@
 
 - type: entity
   name: monkey
-  id: MobMonkeySyndicateAgent
+  id: MobBaseSyndicateMonkey
   parent: MobBaseAncestor
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
-  suffix: syndicate
+  suffix: syndicate base
   components:
   - type: NameIdentifier
     group: Monkey
@@ -1222,10 +1222,23 @@
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SyndicateOperativeGearMonkey]
-  # make the player a traitor once its taken
+  
+- type: entity
+  id: MobMonkeySyndicateAgent
+  parent: MobBaseSyndicateMonkey
+  suffix: syndicate agent
+  components:
+    # make the player a traitor once its taken
   - type: AutoTraitor
     giveUplink: false
     giveObjectives: false
+
+- type: entity
+  id: MobMonkeySyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
+  parent: MobBaseSyndicateMonkey
+  suffix: NukeOps
+  components:
+  - type: NukeOperative
 
 - type: entity
   name: kobold

@@ -178,3 +178,41 @@
       types:
         Radiation: 5
         Piercing: 5
+
+- type: entity
+  id: PelletGrapeshot #tally fucking ho
+  name: grapeshot pellet
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: grapeshot
+      shader: unshaded
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 15 
+        Structural: 5 
+
+- type: entity
+  id: PelletGlass
+  name: glass shard
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: shard
+      shader: unshaded
+  - type: EmbeddableProjectile
+    deleteOnRemove: true
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Slash: 25

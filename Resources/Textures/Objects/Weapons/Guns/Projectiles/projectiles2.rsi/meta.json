@@ -72,6 +72,12 @@
           0.05
         ]
       ]
+    },
+    { 
+      "name": "grapeshot"
+    },
+    { 
+      "name": "shard"
     }
   ]
 }

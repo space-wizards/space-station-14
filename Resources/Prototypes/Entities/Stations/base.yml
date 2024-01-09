@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseStation
   abstract: true
   components:
@@ -46,6 +46,15 @@
     - type: GridSpawn
       paths:
         - /Maps/Shuttles/cargo.yml
+        - /Maps/Shuttles/mining.yml
+
+- type: entity
+  id: BaseStationShuttlesCore
+  abstract: true
+  components:
+    - type: GridSpawn
+      paths:
+        - /Maps/Shuttles/cargo_core.yml
         - /Maps/Shuttles/mining.yml
 
 - type: entity

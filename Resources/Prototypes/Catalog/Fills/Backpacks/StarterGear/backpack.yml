@@ -252,7 +252,7 @@
         - id: RegenerativeMesh
         - id: BoxZiptie
         - id: CrowbarRed
-        - id: MagazinePistol
+        - id: MagazineMagnum
 
 - type: entity
   noSpawn: true
