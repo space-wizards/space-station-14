@@ -26,6 +26,8 @@
     spawned:
     - id: FoodMeatLizard
       amount: 5
+  - type: Inventory
+    speciesId: reptilian
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard

@@ -1,0 +1,77 @@
+// This is a shader simulation of cataracts. Not exactly a realistic/faithful one (the faithful route would be bloom and blur strong enough to make anyone's eyes bleed), but rather, a stylized one!
+// This description and explainer here is mostly for the sake of future reference, and to make sure the artistic intent doesn't end up lost throughout the years to come.
+// The effects this goes for are based largely off reports from blind friends and colleagues alike. Mostly reported experiences of cataracts, but also other forms of blindness, such as neuro-opthalmic injuries.
+// The distortion here does the bulk of the work. This simulates the most common thing that those with the condition report: of everything being an amorphous blur, of seeing double even out of one eye, and more.
+// Of course, it'd be incredibly straight-forward to go for blur. However, this runs into a notable issue: making a blur strong enough to actually be debilitating would be pretty intense on GPU performance.
+// There's additional issues with blur as well, but the main sour point is that it *really* doesn't work well in 2D, where everything has the same effective focal point.
+// However, distortion is surprisingly suitable for the purpose of making everything amorphous, even if it's less a blur and more a haze.
+// This distortion also moves a bit. This definitely leans far more towards simulating neuro-opthalmic injuries than cataracts specifically (this is effectively oscillopsia), but it does make sure you can't negate the effect by memorizing what part of the screen correlates to exactly where.
+// As a bonus: this also simulates less-talked-about experiences, such as always seeing multiple, and attempts to rely on far-sighted vision being immensely disorienting.
+// But being unable to make out what's happening in your vision is far from the only pain that blind folks have to put up with.
+// Notably: another very common report is that it can be hard (but not impossible) to make out color, and that every light source is incredibly *bright* to the point of causing pain.
+// This, too, would be far more straight-forward to implement by slapping a heavy bloom filter on the effect.
+// ... However, this is a bad idea for a pretty obvious reason: heavy bloom almost always causes eyestrain. The idea here is to simulate blindness, not *cause* blindness!
+// So instead, this takes a slightly more creative route: aggressively tonemapping the distorted output, and pulling in a distorted lightmap to blend on top.
+// These two steps combined create a foggy and surprisingly blurry image. The result is deliberately muted a bit to reduce eyestrain, but it does lead to any amount of light overpowering everything else, which lines up with reported experiences.
+// All of this in combination manages to achieve an experience that hits the same notes of what's common for blind folks to report, but in a *very* stylized manner.
+// And of course, more importantly: the combination ensures that if your character is blind, then you simply can't see shit. You can certainly *try*, just as blind folks IRL are able to, but that'll be fruitless!
+// Oh. God. We're already at 18 lines of header comments. We rambled, huh? Anyway, thank you for coming to our TED talk. - Bhijn & Myr
+
+// Boilerplate vars
+uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D LIGHT_TEXTURE;
+uniform highp float Zoom;
+
+// Base distortion
+uniform highp float DistortionScalar; // Scales the total distortion applied to the final image.
+const highp float DistortionCoordScalar = 0.1125; //Scales the coordinates for the distortion texture
+const highp float DistortionCenterRadius = 200.0; // radius of the gradient used to tone down the distortion effect
+const highp float DistortionCenterMinDist = 0.25; // minimum distance from the center of the screen for the distortion to appear at all
+const highp float DistortionCenterPow = 1.1; // the exponent used for the distortion center
+const highp float DistortionGradientMax = 8.0; // Maximum value for the gradient used for the distortion
+const highp float DistortionZoomPow = 0.5; // exponent for the zoom uniform when applied to distortion. The math is funky
+const highp float NoiseScalar = 10.0; // Multiplies the size of the FBM noise
+
+// Base cloudiness
+uniform highp float CloudinessScalar;
+const highp float CloudinessCenterRadius = 125.0; // radius of the gradient used to tone down the cloudiness
+const highp float CloudinessCenterMinDist = 0.2; // minimum distance from the center of the screen for cloudiness to appear at all
+const highp float CloudinessCenterPow = 2.0; // the exponent used for the distortion center
+const highp float CloudinessGradientMax = 8.0; // Maximum value for the gradient used for cloudiness
+const highp float CloudinessGrayscaleMax = 0.8; // maximum desaturation for the cloudiness effect
+const highp float CloudinessGrayscaleMult = 0.15; // multiplier applied to the gradient for the desaturation scalar
+const highp float CloudinessZoomPow = 0.85; // exponent for the zoom uniform when applied to cloudiness
+
+// Additional lightmap pass for the cloudiness
+const highp float CloudyLightDistortionMult = 0.5; // multiplier applied to the total amount of distortion added to the lightmap during the lightmap pass
+const highp float CloudyLightMult = 0.05; // multiplier for scaling the lightmap's brightness
+const highp float CloudyLightGrayscaleMax = 0.25; // maximum amount of grayscale effect for the lightmap
+const highp float CloudyLightGrayscaleMult = 0.15; // multiplier used to scale the grayscale effect
+
+const highp float TimeScale = 0.25;
+
+
+void fragment() {
+    highp vec2 aspect = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
+
+    highp float timesin = (sin(TIME * TimeScale) + 0.5) * 0.2;
+    highp float timecos = (cos(TIME * TimeScale) + 0.5) * 0.2;
+
+    highp float distortionZoom = pow(Zoom, DistortionZoomPow);
+
+    highp float centergradient = zCircleGradient(aspect, FRAGCOORD.xy, DistortionGradientMax, DistortionCenterRadius / distortionZoom, DistortionCenterMinDist / distortionZoom, DistortionCenterPow);
+    highp vec2 coord = (FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy) * centergradient * DistortionCoordScalar;
+    highp vec2 offset = vec2((zFBM(coord * NoiseScalar + timesin) - 0.5) * centergradient, (zFBM(coord * NoiseScalar + timecos) - 0.5) * centergradient);
+    COLOR = zTextureSpec(SCREEN_TEXTURE, Pos + (offset * DistortionScalar));
+
+    highp float cloudyZoom = pow(Zoom, CloudinessZoomPow);
+
+    highp float cloudygradient = zCircleGradient(aspect, FRAGCOORD.xy, CloudinessGradientMax, CloudinessCenterRadius / cloudyZoom, CloudinessCenterMinDist / cloudyZoom, CloudinessCenterPow) * CloudinessScalar;
+    COLOR.rgb = mix(COLOR.rgb, vec3(zGrayscale(COLOR.rgb)), min(cloudygradient * CloudinessGrayscaleMult, CloudinessGrayscaleMax));
+    COLOR.rgb = pow(COLOR.rgb, vec3((cloudygradient * CloudinessScalar + 1.0)));
+
+    //technically the highp makes this higher-quality than the actual default frag shader's lightmap sampling but shushhhhhh it looks prettier without as much banding
+    highp vec3 lightsample = (texture2D(LIGHT_TEXTURE, Pos + (offset * DistortionScalar * CloudyLightDistortionMult)).rgb * pow(cloudygradient, 1.0 / CloudinessCenterPow) * CloudyLightMult);
+    lightsample = mix(lightsample, vec3(zGrayscale(lightsample)), min(cloudygradient * CloudyLightGrayscaleMult, CloudyLightGrayscaleMax));
+    COLOR.rgb = COLOR.rgb + lightsample;
+}

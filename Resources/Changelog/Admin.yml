@@ -81,3 +81,8 @@ Entries:
   - {message: 'Fixed not being able to right click in AHelps and the players and objects tabs.', type: Fix}
   id: 13
   time: '2023-12-21T06:34:00.0000000+00:00'
+- author: Geekyhobo
+  changes:
+    - {message: 'Fixed AGhosts not being able to drop items past the default range.', type: Fix}
+  id: 14
+  time: '2024-1-4T01:30:00.0000000+00:00'

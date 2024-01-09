@@ -66,8 +66,6 @@
     sprite: Clothing/Shoes/Boots/magboots-science.rsi
   - type: Magboots
     toggleAction: ActionToggleMagbootsSci
-  - type: StaticPrice
-    price: 400
 
 - type: entity
   parent: ClothingShoesBootsMag

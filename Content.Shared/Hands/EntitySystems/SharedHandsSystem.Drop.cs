@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
@@ -8,6 +9,7 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem
 {
+    [Dependency] private readonly TagSystem _tagSystem = default!;
     private void InitializeDrop()
     {
         SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
@@ -28,6 +30,12 @@ public abstract partial class SharedHandsSystem
 
         if (TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
             _virtualSystem.Delete((args.Entity, @virtual), uid);
+    }
+
+    private bool ShouldIgnoreRestrictions(EntityUid user)
+    {
+        //Checks if the Entity is something that shouldn't care about drop distance or walls ie Aghost
+        return !_tagSystem.HasTag(user, "BypassDropChecks");
     }
 
     /// <summary>
@@ -153,20 +161,24 @@ public abstract partial class SharedHandsSystem
     }
 
     /// <summary>
-    ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path.
+    ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path, Does a check to see if a user should bypass those checks as well.
     /// </summary>
     private Vector2 GetFinalDropCoordinates(EntityUid user, MapCoordinates origin, MapCoordinates target)
     {
         var dropVector = target.Position - origin.Position;
         var requestedDropDistance = dropVector.Length();
+        var dropLength = dropVector.Length();
 
-        if (dropVector.Length() > SharedInteractionSystem.InteractionRange)
+        if (ShouldIgnoreRestrictions(user))
         {
-            dropVector = dropVector.Normalized() * SharedInteractionSystem.InteractionRange;
-            target = new MapCoordinates(origin.Position + dropVector, target.MapId);
-        }
+            if (dropVector.Length() > SharedInteractionSystem.InteractionRange)
+            {
+                dropVector = dropVector.Normalized() * SharedInteractionSystem.InteractionRange;
+                target = new MapCoordinates(origin.Position + dropVector, target.MapId);
+            }
 
-        var dropLength = _interactionSystem.UnobstructedDistance(origin, target, predicate: e => e == user);
+            dropLength = _interactionSystem.UnobstructedDistance(origin, target, predicate: e => e == user);
+        }
 
         if (dropLength < requestedDropDistance)
             return origin.Position + dropVector.Normalized() * dropLength;
