@@ -1,5 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -10,7 +11,8 @@ public sealed partial class GrapplingGunComponent : Component
     [DataField("jointId"), AutoNetworkedField]
     public string Joint = string.Empty;
 
-    [DataField("projectile")] public EntityUid? Projectile;
+    [DataField, AutoNetworkedField]
+    public EntityUid? Projectile;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("reeling"), AutoNetworkedField]
     public bool Reeling;
@@ -23,6 +25,10 @@ public sealed partial class GrapplingGunComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("cycleSound"), AutoNetworkedField]
     public SoundSpecifier? CycleSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/kinetic_reload.ogg");
+
+    [DataField, ViewVariables]
+    public SpriteSpecifier RopeSprite =
+        new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
 
     public EntityUid? Stream;
 }

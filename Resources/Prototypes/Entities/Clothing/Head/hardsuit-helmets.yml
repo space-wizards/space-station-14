@@ -130,6 +130,29 @@
     radius: 7
     energy: 3
 
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitMaxim
+  noSpawn: true
+  name: salvager maxim helmet
+  description: A predication of decay washes over your mind.
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/maxim.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/maxim.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
 #Security Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -714,4 +737,4 @@
   - type: PointLight
     color: "#f4ffad"
     radius: 5
-    energy: 2  
+    energy: 2

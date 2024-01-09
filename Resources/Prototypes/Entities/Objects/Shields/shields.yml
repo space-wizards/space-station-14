@@ -68,7 +68,7 @@
   description: A large tower shield. Good for controlling crowds.
   components:
     - type: StaticPrice
-      price: 100
+      price: 90
 
 - type: entity
   name: riot laser shield
