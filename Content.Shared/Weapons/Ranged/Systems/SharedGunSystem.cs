@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -10,6 +11,7 @@ using Content.Shared.Examine;
 using Content.Shared.Gravity;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
@@ -92,9 +94,19 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
         SubscribeLocalEvent<GunComponent, HandSelectedEvent>(OnGunSelected);
         SubscribeLocalEvent<GunComponent, EntityUnpausedEvent>(OnGunUnpaused);
+        SubscribeLocalEvent<GunComponent, ActivateInWorldEvent>(OnActivateInWorld);
 
 #if DEBUG
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnActivateInWorld(Entity<GunComponent> gun, ref ActivateInWorldEvent args)
+    {
+        if (!gun.Comp.ActivateInWorldShoot)
+            return;
+
+        var targetPos = new EntityCoordinates(gun, new Vector2(0, -1));
+        AttemptShoot(null, gun, gun, targetPos, false);
     }
 
     private void OnMapInit(EntityUid uid, GunComponent component, MapInitEvent args)

@@ -30,6 +30,8 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Electronic
+  - type: Gun
+    activateInWorldShoot: true
   - type: Destructible
     thresholds:
     - trigger:

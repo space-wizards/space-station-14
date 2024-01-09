@@ -63,7 +63,8 @@ public sealed partial class GunSignalControlSystem : EntitySystem
         var query = EntityQueryEnumerator<GunSignalControlComponent, GunComponent>();
         while (query.MoveNext(out var uid, out var gunControl, out var gun))
         {
-            if (!gunControl.Enabled) continue;
+            if (!gunControl.Enabled)
+                continue;
 
             gunControl.AccumulatedFrame += frameTime;
 

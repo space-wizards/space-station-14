@@ -89,6 +89,12 @@ public partial class GunComponent : Component
     public bool UseKey = true;
 
     /// <summary>
+    /// if true, clicking on an object in the world activates a single shot with user = null. This is necessary to manually activate the ship's cannons, e.g.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public bool ActivateInWorldShoot = false;
+
+    /// <summary>
     /// Where the gun is being requested to shoot.
     /// </summary>
     [ViewVariables]
