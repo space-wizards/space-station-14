@@ -156,11 +156,8 @@ namespace Content.Server.Cargo.Systems
             DeductFunds(bankAccount, cost);
             UpdateOrders(dbUid!.Value, orderDatabase);
 
-            // print invoice (if the CargoOrderConsoleComponent has a prototype for it)
-            if (component.CargoInvoicePrototype is not null)
-            {
-                GenerateInvoice(order, Transform(uid).Coordinates, component.CargoInvoicePrototype);
-            }
+            // print invoice
+            GenerateInvoice(order, Transform(uid).Coordinates, component.CargoInvoicePrototype);
         }
 
         private void OnRemoveOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleRemoveOrderMessage args)

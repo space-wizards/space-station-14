@@ -1,4 +1,5 @@
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cargo.Components
 {
@@ -15,6 +16,6 @@ namespace Content.Server.Cargo.Components
         public SoundSpecifier ConfirmSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
 
         [DataField]
-        public string? CargoInvoicePrototype = "PaperCargoInvoice";
+        public EntProtoId CargoInvoicePrototype = "PaperCargoInvoice";
     }
 }
