@@ -143,14 +143,24 @@
 # Cannon Balls
 
 - type: entity
-  id: CannonBall
-  name: cannonball
-  suffix: Pirate
-  parent: BaseGrenade
+  id: BaseCannonBall
+  name: base cannon ball
+  parent: BaseItem
+  abstract: true
   components:
   - type: Tag
     tags:
     - CannonBall
+  - type: Item
+    size: Small
+  - type: Sprite
+  
+- type: entity
+  id: CannonBall
+  name: cannonball
+  suffix: Pirate
+  parent: BaseCannonBall
+  components:
   - type: CartridgeAmmo
     proto: BulletCannonBall
     deleteOnSpawn: true
@@ -159,10 +169,10 @@
     state: ball
 
 - type: entity
-  id: Grapeshot
+  id: CannonBallGrapeshot
   name: grapeshot
   suffix: Pirate
-  parent: BaseGrenade
+  parent: BaseCannonBall
   components:
   - type: CartridgeAmmo
     proto: PelletGrapeshot
@@ -174,10 +184,10 @@
     state: grapeshot
 
 - type: entity
-  id: Glassshot
+  id: CannonBallGlassshot
   name: glassshot
   suffix: Pirate
-  parent: BaseGrenade
+  parent: BaseCannonBall
   components:
   - type: CartridgeAmmo
     proto: PelletGlass
