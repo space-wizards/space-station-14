@@ -2,6 +2,7 @@ using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage.Magnet;
+using Content.Shared.Store;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -27,7 +28,6 @@ public abstract partial class SharedSalvageSystem
         if (seed % 2 == 0)
         {
             var config = _asteroidConfigs[rand.Next(_asteroidConfigs.Count)];
-            var layerRand = new System.Random(seed);
             var configProto = _proto.Index(config);
             var layers = new Dictionary<string, int>();
 
@@ -36,10 +36,13 @@ public abstract partial class SharedSalvageSystem
             {
                 switch (layer)
                 {
+                    case BiomePostGen:
+                        rand.Next();
+                        break;
                     case BiomeMarkerLayerPostGen marker:
                         for (var i = 0; i < marker.Count; i++)
                         {
-                            var proto = _proto.Index(marker.MarkerTemplate).Pick(layerRand);
+                            var proto = _proto.Index(marker.MarkerTemplate).Pick(rand);
                             var layerCount = layers.GetOrNew(proto);
                             layerCount++;
                             layers[proto] = layerCount;
@@ -58,6 +61,7 @@ public abstract partial class SharedSalvageSystem
         // Salvage map seed
         _salvageMaps.Clear();
         _salvageMaps.AddRange(_proto.EnumeratePrototypes<SalvageMapPrototype>());
+        _salvageMaps.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         var mapIndex = rand.Next(_salvageMaps.Count);
         var map = _salvageMaps[mapIndex];
 

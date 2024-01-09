@@ -20,6 +20,7 @@ reagent-physical-desc-chalky = chalky
 reagent-physical-desc-roaring = roaring
 reagent-physical-desc-robust = robust
 reagent-physical-desc-sickly = sickly
+reagent-physical-desc-murky = murky
 reagent-physical-desc-bubbling = bubbling
 reagent-physical-desc-wormy = wormy
 reagent-physical-desc-frosty = frosty
