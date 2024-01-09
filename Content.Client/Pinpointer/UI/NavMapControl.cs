@@ -59,7 +59,8 @@ public partial class NavMapControl : MapGridControl
     private bool _recentering = false;
     private float _updateTimer = 0.25f;
     private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
-    private Color _beaconBackground;
+    public Color _backgroundColor;
+    public float _backgroundOpacity = 0.9f;
 
     // TODO: Make this changeable by the player
     private int _targetFontsize = 10;
@@ -103,7 +104,7 @@ public partial class NavMapControl : MapGridControl
         var cache = IoCManager.Resolve<IResourceCache>();
 
         _transformSystem = _entManager.System<SharedTransformSystem>();
-        _beaconBackground = Color.FromSrgb(TileColor.WithAlpha(0.9f));
+        _backgroundColor = Color.FromSrgb(TileColor.WithAlpha(_backgroundOpacity));
 
         RectClipContent = true;
         HorizontalExpand = true;
@@ -388,7 +389,7 @@ public partial class NavMapControl : MapGridControl
                 position = Scale(position with { Y = -position.Y });
 
                 var textDimensions = handle.GetDimensions(font, beacon.Text, 1f);
-                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), _beaconBackground);
+                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), _backgroundColor);
                 handle.DrawString(font, position - textDimensions / 2, beacon.Text, beacon.Color);
             }
         }
