@@ -1,18 +1,12 @@
 {
   "version": 1,
   "license": "CC-BY-NC-SA-3.0",
-  "copyright": "Taken from goonstation at commit https://github.com/goonstation/goonstation/pull/210/commits/d188de4d110a4f433ce3d30211be30d8257dc4c3 modified by HoofedEar, bananium made by brainfood1183 (github) for ss14, uranium edited by Alekshhh",
+  "copyright": "silver, plasma taken from https://github.com/vgstation-coders/vgstation13 at commit f2ef221849675915a78fd92fe622c32ab740e085, spacequartz taken from https://github.com/goonstation/goonstation at commit b51daf824df46a3a1426475f982c09479818e522 and reshaded by Alekshhh, bananium; uranium; iron; gold; coal by Alekshhh",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-    {
-      "name": "adamantine"
-    },
-    {
-      "name": "ammonia"
-    },
     {
       "name": "bananium"
     },
@@ -33,9 +27,6 @@
     },
     {
       "name": "silver"
-    },
-    {
-      "name": "copper"
     },
     {
       "name": "coal"

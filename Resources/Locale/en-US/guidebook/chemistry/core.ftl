@@ -18,11 +18,11 @@ guidebook-reagent-effects-metabolism-group-rate = [bold]{$group}[/bold] [color=g
 guidebook-reagent-physical-description = [italic]Seems to be {$description}.[/italic]
 guidebook-reagent-recipes-mix-info = {$minTemp ->
     [0] {$hasMax ->
-            [true] {CAPITALIZE($verb)} below {$maxTemp}K
+            [true] {CAPITALIZE($verb)} below {NATURALFIXED($maxTemp, 2)}K
             *[false] {CAPITALIZE($verb)}
         }
     *[other] {CAPITALIZE($verb)} {$hasMax ->
-            [true] between {$minTemp}K and {$maxTemp}K
-            *[false] above {$minTemp}K
+            [true] between {NATURALFIXED($minTemp, 2)}K and {NATURALFIXED($maxTemp, 2)}K
+            *[false] above {NATURALFIXED($minTemp, 2)}K
         }
 }
