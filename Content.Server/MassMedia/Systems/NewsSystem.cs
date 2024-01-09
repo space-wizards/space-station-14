@@ -57,7 +57,12 @@ public sealed class NewsSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, NewsWriterComponent component, MapInitEvent args)
     {
-        throw new NotImplementedException();
+        var station = _station.GetOwningStation(uid);
+        if (!station.HasValue)
+            return;
+
+        if (!HasComp<StationNewsComponent>(station.Value))
+            AddComp<StationNewsComponent>(station.Value);
     }
 
     private void OnAdded(EntityUid uid, NewsReaderCartridgeComponent component, CartridgeAddedEvent args)

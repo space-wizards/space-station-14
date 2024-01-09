@@ -966,7 +966,7 @@
 - type: entity
   parent: BaseComputer
   id: ComputerMassMedia
-  name: mass-media console
+  name: news manager console
   description: Write your message to the world!
   components:
   - type: Sprite

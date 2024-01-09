@@ -37,7 +37,7 @@
                 </PanelContainer.PanelOverride>
             </PanelContainer>
             <ScrollContainer HScrollEnabled="True">
-                <RichTextLabel Name="PreviewLabel" Margin="9 3" MaxWidth="360"/>
+                <RichTextLabel Name="PreviewLabel" VerticalAlignment="Top" Margin="9 3" MaxWidth="360"/>
             </ScrollContainer>
         </Control>
         <BoxContainer Orientation="Horizontal" Margin="12 5 12 8">
