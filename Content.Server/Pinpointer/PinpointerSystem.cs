@@ -24,7 +24,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
         SubscribeLocalEvent<PinpointerComponent, GetVerbsEvent<Verb>>(OnPinpointerVerb);
     }
 
@@ -50,48 +49,13 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
     {
         TogglePinpointer(uid, component);
-
-        //Only locate a target if there currently isn't a single target stored
-        if (component.StoredTargets.Count == 0)
-            LocateTarget(uid, component);
-    }
-
-    private void OnLocateTarget(ref FTLCompletedEvent ev)
-    {
-        // This feels kind of expensive, but it only happens once per hyperspace jump
-
-        // todo: ideally, you would need to raise this event only on jumped entities
-        // this code update ALL pinpointers in game
-        var query = EntityQueryEnumerator<PinpointerComponent>();
-
-        while (query.MoveNext(out var uid, out var pinpointer))
-        {
-            if (pinpointer.CanRetarget)
-                continue;
-
-            LocateTarget(uid, pinpointer);
-        }
     }
 
     /// <summary>
     ///     Searches the closest object that has a specific component, this entity is then added to the stored targets.
     /// </summary>
-    private void LocateTarget(EntityUid uid, PinpointerComponent component, EntityUid? user = null, IComponent? selectedComponent = null)
+    private void LocateTarget(EntityUid uid, PinpointerComponent component,  IComponent selectedComponent,EntityUid? user = null)
     {
-        //Searches the first component in the list if either the pinpointer was turned on or a FTL travel ended.
-        if (selectedComponent == null)
-        {
-            //targetedComponent = component.Components.
-        }
-        else
-        {
-            //targetedComponent = selectedComponent;
-        }
-
-        // try to find target from whitelist
-        if (selectedComponent == null)
-            return;
-
         var target = FindTargetFromComponent(uid, selectedComponent.GetType());
 
         //Don't track or store the target if a fake variant is in the list of tracked targets.
@@ -302,7 +266,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                 args.Verbs.Add(new Verb()
                 {
                     Text = Loc.GetString(component.ComponentNames[storedOrder]),
-                    Act = () => LocateTarget(uid, component, args.User, targetComponent.Value.Component),
+                    Act = () => LocateTarget(uid, component, targetComponent.Value.Component,args.User),
                     Priority = 100,
                     Category = VerbCategory.SearchClosest,
                 });
