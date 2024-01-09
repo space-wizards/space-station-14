@@ -36,14 +36,4 @@ public sealed partial class DiceComponent : Component
 
     [DataField("diceBomb")]
     public bool DiceBomb;
-
-    [Serializable, NetSerializable]
-    public sealed class DiceState : ComponentState
-    {
-        public readonly int CurrentValue;
-        public DiceState(int value)
-        {
-            CurrentValue = value;
-        }
-    }
 }
