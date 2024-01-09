@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.DoAfter;
@@ -24,6 +25,7 @@ using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.Audio;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
@@ -99,6 +101,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     private void OnPuddleSpread(Entity<PuddleComponent> entity, ref SpreadNeighborsEvent args)
     {
+        // Overflow is the source of the overflowing liquid. This contains the excess fluid above overflow limit (20u)
         var overflow = GetOverflowSolution(entity.Owner, entity.Comp);
 
         if (overflow.Volume == FixedPoint2.Zero)
@@ -111,46 +114,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         // For overflows, we never go to a fully evaporative tile just to avoid continuously having to mop it.
 
-        // First we overflow to neighbors with overflow capacity
-        if (args.Neighbors.Count > 0)
-        {
-            _random.Shuffle(args.Neighbors);
-
-            // Overflow to neighbors with remaining space.
-            foreach (var neighbor in args.Neighbors)
-            {
-                if (!puddleQuery.TryGetComponent(neighbor, out var puddle) ||
-                    !_solutionContainerSystem.ResolveSolution(neighbor, puddle.SolutionName, ref puddle.Solution, out var neighborSolution) ||
-                    CanFullyEvaporate(neighborSolution))
-                {
-                    continue;
-                }
-
-                var remaining = puddle.OverflowVolume - neighborSolution.Volume;
-
-                if (remaining <= FixedPoint2.Zero)
-                    continue;
-
-                var split = overflow.SplitSolution(remaining);
-
-                if (!_solutionContainerSystem.TryAddSolution(puddle.Solution.Value, split))
-                    continue;
-
-                args.Updates--;
-                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
-
-                if (args.Updates <= 0)
-                    break;
-            }
-
-            if (overflow.Volume == FixedPoint2.Zero)
-            {
-                RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
-                return;
-            }
-        }
-
-        // Then we go to free tiles.
+        // First we go to free tiles.
         // Need to go even if we have a little remainder to avoid solution sploshing around internally
         // for ages.
         if (args.NeighborFreeTiles.Count > 0 && args.Updates > 0)
@@ -172,26 +136,137 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return;
         }
 
-        // Then we go to anything else.
-        if (overflow.Volume > FixedPoint2.Zero && args.Neighbors.Count > 0 && args.Updates > 0)
+        // Then we overflow to neighbors with overflow capacity
+        if (args.Neighbors.Count > 0)
         {
-            var spillPerNeighbor = overflow.Volume / args.Neighbors.Count;
 
+
+            var resolvedNeighbourSolutions = new ValueList<Tuple<Solution, PuddleComponent, EntityUid>>();
+
+            // Resolve all our neighbours first, so we can use their properties to decide who to operate on first.
             foreach (var neighbor in args.Neighbors)
             {
-                // Overflow to neighbours (unless it's pure water)
                 if (!puddleQuery.TryGetComponent(neighbor, out var puddle) ||
-                    !_solutionContainerSystem.ResolveSolution(neighbor, puddle.SolutionName, ref puddle.Solution, out var neighborSolution) ||
+                    !_solutionContainerSystem.ResolveSolution(neighbor, puddle.SolutionName, ref puddle.Solution,
+                        out var neighborSolution) ||
                     CanFullyEvaporate(neighborSolution))
                 {
                     continue;
                 }
 
-                var split = overflow.SplitSolution(spillPerNeighbor);
+                resolvedNeighbourSolutions.Add(new Tuple<Solution, PuddleComponent, EntityUid>(neighborSolution, puddle, neighbor));
+            }
 
-                if (!_solutionContainerSystem.TryAddSolution(puddle.Solution.Value, split))
+            // We want to deal with our neighbours by lowest current volume to highest, as this allows us to fill up our low points quickly.
+            resolvedNeighbourSolutions = ValueList<Tuple<Solution, PuddleComponent, EntityUid>>.OwningArray(resolvedNeighbourSolutions.OrderBy(blah => blah.Item1.Volume).ToArray());
+
+            // Overflow to neighbors with remaining space.
+            foreach (var (neighborSolution, puddle, neighbor) in resolvedNeighbourSolutions)
+            {
+
+
+                // Water doesn't flow uphill
+                if (neighborSolution.Volume >= (overflow.Volume + puddle.OverflowVolume))
+                {
+                    continue;
+                }
+
+                // Work out how much we could send into this neighbour without overflowing it, and send up to that much
+                var remaining = puddle.OverflowVolume - neighborSolution.Volume;
+
+                // If we can't send anything, then skip this neighbour
+                if (remaining <= FixedPoint2.Zero)
                     continue;
 
+                // We don't want to spill over to make high points either.
+                if (neighborSolution.Volume + remaining >= (overflow.Volume + puddle.OverflowVolume))
+                {
+                    continue;
+                }
+
+                var split = overflow.SplitSolution(remaining);
+
+                if (puddle.Solution != null && !_solutionContainerSystem.TryAddSolution(puddle.Solution.Value, split))
+                    continue;
+
+                args.Updates--;
+                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
+
+                if (args.Updates <= 0)
+                    break;
+            }
+
+            // If there is nothing left to overflow from our tile, then we'll stop this tile being a active spreader
+            if (overflow.Volume == FixedPoint2.Zero)
+            {
+                RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
+                return;
+            }
+        }
+
+        // Then we go to anything else.
+        if (overflow.Volume > FixedPoint2.Zero && args.Neighbors.Count > 0 && args.Updates > 0)
+        {
+
+            var resolvedNeighbourSolutions = new ValueList<Tuple<Solution, PuddleComponent, EntityUid>>();
+
+            // Keep track of the total volume in the area
+            FixedPoint2 totalVolume = 0;
+
+            // Resolve all our neighbours so that we can use their properties to decide who to act on first
+            foreach (var neighbor in args.Neighbors)
+            {
+                if (!puddleQuery.TryGetComponent(neighbor, out var puddle) ||
+                    !_solutionContainerSystem.ResolveSolution(neighbor, puddle.SolutionName, ref puddle.Solution,
+                        out var neighborSolution) ||
+                    CanFullyEvaporate(neighborSolution))
+                {
+                    continue;
+                }
+
+                resolvedNeighbourSolutions.Add(new Tuple<Solution, PuddleComponent, EntityUid>(neighborSolution, puddle, neighbor));
+                totalVolume += neighborSolution.Volume;
+            }
+
+            // We should act on neighbours by their total volume.
+            resolvedNeighbourSolutions = ValueList<Tuple<Solution, PuddleComponent, EntityUid>>.OwningArray(resolvedNeighbourSolutions.OrderBy(blah => blah.Item1.Volume).ToArray());
+
+            // Overflow to neighbors with remaining total allowed space (1000u) above the overflow volume (20u).
+            foreach (var (neighborSolution, puddle, neighbor) in resolvedNeighbourSolutions)
+            {
+                // What the source tiles current volume is.
+                FixedPoint2 sourceCurrentVolume = overflow.Volume + puddle.OverflowVolume;
+
+                // Water doesn't flow uphill
+                if (neighborSolution.Volume >= sourceCurrentVolume)
+                {
+                    continue;
+                }
+
+                // We're in the low point in this area, let the neighbour tiles have a chance to spread to us first.
+                FixedPoint2 idealAverageVolume = (totalVolume + overflow.Volume + puddle.OverflowVolume) / (args.Neighbors.Count + 1);
+                if (idealAverageVolume > sourceCurrentVolume)
+                {
+                    continue;
+                }
+
+                // Work our how far off the ideal average this neighbour is.
+                FixedPoint2 spillThisNeighbor = idealAverageVolume - neighborSolution.Volume;
+
+                // Skip if we want to spill negative amounts of fluid to this neighbour
+                if (spillThisNeighbor < FixedPoint2.Zero)
+                {
+                    continue;
+                }
+
+                // Try to send them as much towards the average ideal as we can
+                var split = overflow.SplitSolution(spillThisNeighbor);
+
+                // If we can't do it, move on.
+                if (puddle.Solution != null && !_solutionContainerSystem.TryAddSolution(puddle.Solution.Value, split))
+                    continue;
+
+                // If we succeed, then ensure that this neighbour is also able to spread it's overflow onwards
                 EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
                 args.Updates--;
 
