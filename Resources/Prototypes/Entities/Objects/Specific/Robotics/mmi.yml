@@ -37,7 +37,7 @@
   - type: ItemSlots
     slots:
       brain_slot:
-        name: positronic-brain-slot-name-brain
+        name: positronic-brain-slot-component-slot-name-brain
         whitelist:
           components:
           - Brain

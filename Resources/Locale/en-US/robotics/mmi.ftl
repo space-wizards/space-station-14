@@ -12,4 +12,4 @@ positronic-brain-wiped-device = The neural activity was terminated.
 positronic-brain-stop-searching-verb-text = Stop searching
 positronic-brain-stopped-searching = Neuron descrambling halted.
 
-positronic-brain-slot-name-brain = Brain
+positronic-brain-slot-component-slot-name-brain = Brain
