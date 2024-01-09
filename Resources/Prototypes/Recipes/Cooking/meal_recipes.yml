@@ -1061,7 +1061,7 @@
 - type: microwaveMealRecipe
   id: RecipeSashimi
   name: sashimi recipe
-  result: FoodMeal
+  result: FoodMealSashimi
   time: 15
   reagents:
     TableSalt: 1
