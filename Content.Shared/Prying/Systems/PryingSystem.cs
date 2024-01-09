@@ -167,8 +167,6 @@ public sealed class PryingSystem : EntitySystem
             return;
         }
 
-        // PryingComponent? comp = null;
-
         // TODO: When we get airlock prediction make this predicted.
         // When that happens also fix the checking function in the Client AirlockSystem.
         if (args.Used != null && comp != null)
