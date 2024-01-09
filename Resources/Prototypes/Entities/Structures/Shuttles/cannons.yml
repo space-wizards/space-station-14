@@ -191,7 +191,7 @@
   id: ShuttleGunKineticCannon
   parent: ShuttleGunBase
   name: PTK-800 "Matter Dematerializer"
-  description: Utilizer stationary mining turret. Gradually accumulates charges on its own, extremely effective for asteroid excavation.
+  description: Salvage stationary mining turret. Gradually accumulates charges on its own, extremely effective for asteroid excavation.
   components:
   - type: Sprite
     sprite: Structures/Shuttles/Guns/kinetic.rsi

@@ -11,6 +11,12 @@
             "name": "small"
         },
         {
+            "name": "medium"
+        },
+        {
+            "name": "high"
+        },
+        {
             "name": "inhand-left",
             "directions": 4
         },

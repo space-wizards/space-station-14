@@ -163,7 +163,6 @@
   - PowerCageRechargerCircuitboard
   - PowerCageSmall
   - PowerCageMedium
-  - PowerCageHigh
   - ShuttleGunLSESvalinnMachineGunCircuitboard
   - ShuttleGunLSEPerforatorCircuitboard
   technologyPrerequisites:
@@ -196,8 +195,8 @@
   - WeaponLaserSvalinn
   
 - type: technology
-  id: MassDestructionWeapon
-  name: research-technology-mass-destruction-weapon
+  id: ExplosiveShuttleWeapon
+  name: research-technology-explosive-shuttle-weapon
   icon: 
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Grenade/grenade_cartridge.rsi
     state: icon

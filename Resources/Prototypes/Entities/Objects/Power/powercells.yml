@@ -275,14 +275,6 @@
   abstract: true
   parent: BasePowerCell
   components:
-  - type: Sprite
-    sprite: Objects/Power/power_cages.rsi
-    layers:
-    - map: [ "enum.PowerCellVisualLayers.Base" ]
-      state: small
-    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
-      state: o2
-      shader: unshaded
   - type: Item
     size: Ginormous
   - type: MultiHandedItem
@@ -312,6 +304,14 @@
   name: small-capacity power cage
   description: A rechargeable power cage for big devices. This is the cheapest kind you can find.
   components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
   - type: Battery
     maxCharge: 1400
     startingCharge: 1400
@@ -322,6 +322,14 @@
   name: medium-capacity power cage
   description: A rechargeable power cage for big devices. The gold standard of capacity and cost.
   components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: medium
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
   - type: Battery
     maxCharge: 2700
     startingCharge: 2700
@@ -332,6 +340,14 @@
   name: high-capacity power cage
   description: A rechargeable power cage for big devices. Increased capacity for increased power levels.
   components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: high
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
   - type: Battery
     maxCharge: 6200
     startingCharge: 6200
