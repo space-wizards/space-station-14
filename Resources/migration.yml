@@ -131,3 +131,25 @@ DrinkGoldschlagerGlass: DrinkGildlagerGlass
 # 2024-01-07
 MonkeyCubeBox: VariantCubeBox
 
+# 2024-01-08
+SalvagePartsT4Spawner: SalvageLootSpawner
+SalvagePartsT3Spawner: SalvageLootSpawner
+SalvagePartsT3T4Spawner: SalvageLootSpawner
+SalvagePartsT2Spawner: SalvageLootSpawner
+AdvancedCapacitorStockPart: CapacitorStockPart
+SuperCapacitorStockPart: CapacitorStockPart
+QuadraticCapacitorStockPart: CapacitorStockPart
+NanoManipulatorStockPart: MicroManipulatorStockPart
+PicoManipulatorStockPart: MicroManipulatorStockPart
+FemtoManipulatorStockPart: MicroManipulatorStockPart
+AdvancedMatterBinStockPart: MatterBinStockPart
+SuperMatterBinStockPart: MatterBinStockPart
+BluespaceMatterBinStockPart: MatterBinStockPart
+AnsibleSubspaceStockPart: null
+FilterSubspaceStockPart: null
+AmplifierSubspaceStockPart: null
+TreatmentSubspaceStockPart: null
+AnalyzerSubspaceStockPart: null
+CrystalSubspaceStockPart: null
+TransmitterSubspaceStockPart: null
+
