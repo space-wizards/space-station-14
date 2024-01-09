@@ -26,9 +26,9 @@ public abstract class SharedSiliconLawSystem : EntitySystem
             !panel.Open)
         {
             _popup.PopupClient(Loc.GetString("law-emag-require-panel"), uid, args.UserUid);
-            return;
+            args.Handled = true;
         }
-        args.Handled = true;
+
     }
 
     protected virtual void OnGotEmagged(EntityUid uid, EmagSiliconLawComponent component, ref GotEmaggedEvent args)

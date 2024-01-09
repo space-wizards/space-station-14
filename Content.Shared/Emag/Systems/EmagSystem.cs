@@ -84,7 +84,7 @@ public sealed class EmagSystem : EntitySystem
         RaiseLocalEvent(target, ref onAttemptEmagEvent);
 
         // prevent emagging if attempt fails
-        if (!onAttemptEmagEvent.Handled)
+        if (onAttemptEmagEvent.Handled)
             return false;
 
         var emaggedEvent = new GotEmaggedEvent(user);
