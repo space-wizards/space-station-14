@@ -11,12 +11,6 @@ namespace Content.Shared.Projectiles;
 public sealed partial class EmbeddableProjectileComponent : Component
 {
     /// <summary>
-    /// Entity in which the projectile is embedded.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public EntityUid? Embedded;
-
-    /// <summary>
     /// Minimum speed of the projectile to embed.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]

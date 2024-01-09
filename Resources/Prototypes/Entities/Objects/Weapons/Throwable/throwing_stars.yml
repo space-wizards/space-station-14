@@ -38,8 +38,8 @@
         Piercing: 10
   - type: StaminaDamageOnCollide
     damage: 45
-  - type: StaminaTresholdDamageOnEmbed
-    modifier: 0.8
+  - type: StaminaDamageOnEmbed
+    damage: 10
 
 - type: entity
   parent: ThrowingStar

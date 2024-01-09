@@ -56,9 +56,7 @@ public sealed partial class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
 
-        SubscribeLocalEvent<StaminaTresholdDamageOnEmbedComponent, TimedDespawnEvent>(OnEmbeddedProjectileDespawn);
-        SubscribeLocalEvent<StaminaTresholdDamageOnEmbedComponent, ProjectileEmbedEvent>(OnProjectileEmbed);
-        SubscribeLocalEvent<StaminaTresholdDamageOnEmbedComponent, EmbeddedProjectileRemovedEvent>(OnEmbedProjectileRemoved);
+        SubscribeLocalEvent<StaminaDamageOnEmbedComponent, ProjectileEmbedEvent>(OnProjectileEmbed);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
@@ -196,40 +194,12 @@ public sealed partial class StaminaSystem : EntitySystem
         OnCollide(uid, component, args.Target);
     }
 
-    private void OnProjectileEmbed(EntityUid uid, StaminaTresholdDamageOnEmbedComponent component, ref ProjectileEmbedEvent args)
+    private void OnProjectileEmbed(EntityUid uid, StaminaDamageOnEmbedComponent component, ref ProjectileEmbedEvent args)
     {
         if (!TryComp<StaminaComponent>(args.Embedded, out var stamina))
             return;
 
-        stamina.CritThreshold *= component.Modifier;
-    }
-
-    /// <summary>
-    /// Tries to take back stamina treshold on some projectiles despawn ( i.e ninja throwing star ).
-    /// </summary>
-    private void OnEmbeddedProjectileDespawn(EntityUid uid, StaminaTresholdDamageOnEmbedComponent component, ref TimedDespawnEvent args)
-    {
-        if (!TryComp<EmbeddableProjectileComponent>(uid, out var projectile))
-            return;
-
-        if (!TryComp<StaminaComponent>(projectile.Embedded, out var stamina))
-            return;
-
-        stamina.CritThreshold /= component.Modifier;
-
-        EnsureComp<ActiveStaminaComponent>(projectile.Embedded.Value);
-        Dirty(stamina);
-    }
-
-    private void OnEmbedProjectileRemoved(EntityUid uid, StaminaTresholdDamageOnEmbedComponent component, ref EmbeddedProjectileRemovedEvent args)
-    {
-        if (!TryComp<StaminaComponent>(args.Target, out var stamina))
-            return;
-
-        stamina.CritThreshold /= component.Modifier;
-
-        EnsureComp<ActiveStaminaComponent>(args.Target);
-        Dirty(stamina);
+        TakeStaminaDamage(args.Embedded, component.Damage, source: uid);
     }
 
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
