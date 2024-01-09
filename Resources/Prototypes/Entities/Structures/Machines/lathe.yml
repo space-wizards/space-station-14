@@ -186,6 +186,12 @@
       - MagazineBoxMagnumUranium
       - MagazineBoxLightRifleUranium
       - MagazineBoxRifleUranium
+      - PowerCageSmall
+      - PowerCageMedium
+      - PowerCageHigh
+      - MagazineGrenadeBlast
+      - MagazineGrenadeEMP
+      - MagazineGrenadeFlash
 
 - type: entity
   id: AutolatheHyperConvection
@@ -419,7 +425,7 @@
       - ThrusterMachineCircuitboard
       - GyroscopeMachineCircuitboard
       - MiniGravityGeneratorCircuitboard
-      - ShuttleGunKineticCannonCircuitboard
+      - ShuttleGunKineticCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
@@ -705,13 +711,10 @@
       - PowerCageSmall
       - PowerCageMedium
       - PowerCageHigh
-      - ShuttleGunLSESvalinnMachineGunCircuitboard
-      - ShuttleGunLSEPerforatorCircuitboard
-      - ShuttleGunLauncherFriendshipCircuitboard
-      - ShuttleGunLauncherDusterCircuitboard
-  - type: EmagLatheRecipes
-    emagStaticRecipes:
-      - MagazineGrenadeBlast
+      - ShuttleGunSvalinnMachineGunCircuitboard
+      - ShuttleGunPerforatorCircuitboard
+      - ShuttleGunFriendshipCircuitboard
+      - ShuttleGunDusterCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:

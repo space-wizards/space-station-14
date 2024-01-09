@@ -11,7 +11,7 @@
   cost: 5000
   recipeUnlocks:
   - WeaponProtoKineticAccelerator
-  - ShuttleGunKineticCannonCircuitboard
+  - ShuttleGunKineticCircuitboard
   # These are roundstart but not replenishable for salvage
   - WeaponCrusher
   - WeaponCrusherDagger
@@ -164,9 +164,9 @@
   - PowerCageSmall
   - PowerCageMedium
   - MagazineGrenadeFlash
-  - ShuttleGunLSESvalinnMachineGunCircuitboard
-  - ShuttleGunLSEPerforatorCircuitboard
-  - ShuttleGunLauncherFriendshipCircuitboard
+  - ShuttleGunSvalinnMachineGunCircuitboard
+  - ShuttleGunPerforatorCircuitboard
+  - ShuttleGunFriendshipCircuitboard
   technologyPrerequisites:
   - SalvageWeapons
 
@@ -208,6 +208,6 @@
   recipeUnlocks:
   - MagazineGrenadeEMP
   - PowerCageHigh
-  - ShuttleGunLauncherDusterCircuitboard
+  - ShuttleGunDusterCircuitboard
   technologyPrerequisites:
   - BasicShuttleArmament

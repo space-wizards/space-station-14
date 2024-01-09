@@ -13,9 +13,7 @@
           mask:
           - MachineMask
           layer:
-          - MidImpassable
-          - LowImpassable
-          - Opaque
+          - MachineLayer
     - type: AmbientSound
       enabled: false
       range: 4

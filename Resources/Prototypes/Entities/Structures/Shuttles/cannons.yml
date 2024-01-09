@@ -1,7 +1,6 @@
 - type: entity
   id: ShuttleGunBase
   name: shittle gun
-  parent: ConstructibleMachine
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -37,8 +36,6 @@
         !type:DamageTrigger
         damage: 300
       behaviors:
-        - !type:ChangeConstructionNodeBehavior
-          node: machineFrame
         - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Transform
@@ -69,7 +66,7 @@
 
 - type: entity
   id: ShuttleGunSvalinnMachineGun
-  parent: ShuttleGunBase
+  parent: [ ShuttleGunBase, ConstructibleMachine]
   name: LSE-400c "Svalinn machine gun"
   description: Basic stationary laser unit. Effective against live targets and electronics. Uses regular power cells to fire, and has an extremely high rate of fire
   components:
@@ -79,7 +76,17 @@
     - state: lse-400c
     - state: mag-unshaded-9
       map: ["enum.GunVisualLayers.MagUnshaded"]
-      shader: unshaded
+      shader: unshaded  
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Gun
     fireRate: 5
     useKey: false
@@ -95,7 +102,7 @@
     steps: 10
     zeroVisible: true
   - type: Machine
-    board: ShuttleGunLSESvalinnMachineGunCircuitboard
+    board: ShuttleGunSvalinnMachineGunCircuitboard
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -112,7 +119,7 @@
 
 - type: entity
   id: ShuttleGunPerforator
-  parent: ShuttleGunBase
+  parent: [ ShuttleGunBase, ConstructibleMachine]
   name: LSE-1200c "Perforator"
   description: Advanced stationary laser unit. Annihilates electronics and is extremely dangerous to health! Uses the power cage to fire.
   components:
@@ -123,6 +130,16 @@
     - state: mag-unshaded-9
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Gun
     fireRate: 1
     useKey: false
@@ -138,7 +155,7 @@
     steps: 10
     zeroVisible: true
   - type: Machine
-    board: ShuttleGunLSEPerforatorCircuitboard
+    board: ShuttleGunPerforatorCircuitboard
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -158,7 +175,7 @@
 
 - type: entity
   id: ShuttleGunLauncherFriendship
-  parent: ShuttleGunBase
+  parent: [ShuttleGunBase, ConstructibleMachine]
   name: EXP-320g "Friendship"
   description: A small stationary grenade launcher that holds 2 grenades.
   components:
@@ -169,6 +186,16 @@
     - state: exp-320g
     - state: mag-7
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Gun
     activateInWorldShoot: true
     projectileSpeed: 80
@@ -193,7 +220,7 @@
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: Machine
-    board: ShuttleGunLauncherFriendshipCircuitboard
+    board: ShuttleGunFriendshipCircuitboard
   - type: MagazineVisuals
     magState: mag
     steps: 8
@@ -201,7 +228,7 @@
 
 - type: entity
   id: ShuttleGunLauncherDuster
-  parent: ShuttleGunBase
+  parent: [ShuttleGunBase, ConstructibleMachine]
   name: EXP-2100g "Duster"
   description: A powerful stationary grenade launcher. A cartridge is required for use. 
   components:
@@ -212,6 +239,16 @@
     - state: exp-2100g
     - state: mag-7
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 350
+      behaviors:
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Gun
     projectileSpeed: 40
     fireRate: 0.3
@@ -225,7 +262,7 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: Machine
-    board: ShuttleGunLauncherDusterCircuitboard
+    board: ShuttleGunDusterCircuitboard
   - type: MagazineAmmoProvider
   - type: MagazineVisuals
     magState: mag
@@ -262,7 +299,7 @@
     - trigger:
         !type:DamageTrigger
         damage: 300
-      behaviors: # no deconstruction into machine frame
+      behaviors:
         - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Sprite
@@ -285,7 +322,7 @@
 
 - type: entity
   id: ShuttleGunKineticCannon
-  parent: ShuttleGunBase
+  #parent: ShuttleGunBase are not inherited because a pirate cannon can't be assembled from a circuit board.
   name: PTK-800 "Matter Dematerializer"
   description: Salvage stationary mining turret. Gradually accumulates charges on its own, extremely effective for asteroid excavation.
   components:
@@ -294,6 +331,16 @@
     layers:
     - state: ptk-800
     - state: mag-7
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: Gun    
     projectileSpeed: 20
     fireRate: 2
@@ -319,5 +366,4 @@
     capacity: 5
     count: 5
   - type: Machine
-    board: ShuttleGunKineticCannonCircuitboard
-
+    board: ShuttleGunKineticCircuitboard
