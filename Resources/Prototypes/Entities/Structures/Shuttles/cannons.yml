@@ -13,6 +13,7 @@
   - type: Rotatable
   - type: Physics
     bodyType: Static
+  - type: ContainerContainer
   - type: Fixtures
     fixtures:
       fix1:

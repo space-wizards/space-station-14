@@ -197,8 +197,8 @@
   - WeaponLaserSvalinn
   
 - type: technology
-  id: ExplosiveShuttleWeapon
-  name: research-technology-explosive-shuttle-weapon
+  id: AdvancedShuttleWeapon
+  name: research-technology-advanced-shuttle-weapon
   icon: 
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Grenade/grenade_cartridge.rsi
     state: icon
@@ -207,6 +207,7 @@
   cost: 15000
   recipeUnlocks:
   - MagazineGrenadeEMP
+  - PowerCageHigh
   - ShuttleGunLauncherDusterCircuitboard
   technologyPrerequisites:
   - BasicShuttleArmament

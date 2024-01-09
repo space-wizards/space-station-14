@@ -423,10 +423,6 @@
       - GyroscopeMachineCircuitboard
       - MiniGravityGeneratorCircuitboard
       - ShuttleGunKineticCannonCircuitboard
-      - ShuttleGunLSESvalinnMachineGunCircuitboard
-      - ShuttleGunLSEPerforatorCircuitboard
-      - ShuttleGunLauncherFriendshipCircuitboard
-      - ShuttleGunLauncherDusterCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
@@ -709,6 +705,10 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - ShuttleGunLSESvalinnMachineGunCircuitboard
+      - ShuttleGunLSEPerforatorCircuitboard
+      - ShuttleGunLauncherFriendshipCircuitboard
+      - ShuttleGunLauncherDusterCircuitboard
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - MagazineGrenadeBlast
