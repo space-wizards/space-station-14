@@ -14,6 +14,8 @@
   - type: Physics
     bodyType: Static
   - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
   - type: Fixtures
     fixtures:
       fix1:
@@ -91,9 +93,6 @@
     magState: mag
     steps: 10
     zeroVisible: true
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
   - type: Machine
     board: ShuttleGunLSESvalinnMachineGunCircuitboard
   - type: ItemSlots
@@ -137,9 +136,6 @@
     magState: mag
     steps: 10
     zeroVisible: true
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
   - type: Machine
     board: ShuttleGunLSEPerforatorCircuitboard
   - type: ItemSlots
