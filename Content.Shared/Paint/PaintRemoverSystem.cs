@@ -35,13 +35,19 @@ public sealed class PaintRemoverSystem : SharedPaintSystem
         if (!args.CanReach || args.Target is not { Valid: true } target || !HasComp<PaintedComponent>(target))
             return;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.CleanDelay, new PaintRemoverDoAfterEvent(), uid, target: args.Target, used: uid));
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.CleanDelay, new PaintRemoverDoAfterEvent(), uid, args.Target, uid)
+        {
+            BreakOnUserMove = true,
+            BreakOnDamage = true,
+            BreakOnTargetMove = true,
+            MovementThreshold = 1.0f,
+        });
         args.Handled = true;
     }
 
     private void OnDoAfter(EntityUid uid, PaintRemoverComponent component, DoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled)
+        if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
         if (args.Target is not { Valid: true } target)

@@ -1,11 +1,14 @@
 using Content.Shared.Popups;
+using System.Linq;
+using System.Numerics;
 using Content.Shared.Paint;
 using Content.Shared.Interaction;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Humanoid;
-using Content.Shared.Decals;
+using Content.Server.Decals;
+using Content.Shared.SubFloor;
 
 namespace Content.Server.Paint;
 
@@ -17,7 +20,8 @@ public sealed class PaintSystem : SharedPaintSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedDecalSystem _decal = default!;
+    [Dependency] private readonly DecalSystem _decal = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
 
     public override void Initialize()
@@ -42,8 +46,9 @@ public sealed class PaintSystem : SharedPaintSystem
         }
 
 
-        if (TryPaint(entity, target, args.User) && component.Painter == true)
+        if (TryPaint(entity, target, args.User, args.Used) && component.Painter == true)
         {
+
             if (HasComp<AppearanceComponent>(target))
             {
                 RemComp<AppearanceComponent>(target);
@@ -71,17 +76,17 @@ public sealed class PaintSystem : SharedPaintSystem
 
     }
 
-    private bool TryPaint(Entity<PaintComponent> reagent, EntityUid target, EntityUid actor)
+    private bool TryPaint(Entity<PaintComponent> reagent, EntityUid target, EntityUid actor, EntityUid used)
     {
         if (HasComp<PaintedComponent>(target))
         {
-            _popup.PopupClient(Loc.GetString("paint-failure-painted", ("target", target)), actor, actor, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("paint-failure-painted", ("target", target)), actor, actor, PopupType.Medium);
             return false;
         }
 
-        if (HasComp<HumanoidAppearanceComponent>(target))
+        if (HasComp<HumanoidAppearanceComponent>(target) || HasComp<SubFloorHideComponent>(target))
         {
-            _popup.PopupClient(Loc.GetString("paint-failure", ("target", target)), actor, actor, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("paint-failure", ("target", target)), actor, actor, PopupType.Medium);
             return false;
         }
 
@@ -90,8 +95,14 @@ public sealed class PaintSystem : SharedPaintSystem
             var quantity = solution.RemoveReagent(reagent.Comp.Reagent, reagent.Comp.ConsumptionUnit);
             if (quantity > 0)// checks quantity of solution is more than 0.
             {
-                _popup.PopupClient(Loc.GetString("paint-success", ("target", target)), actor, actor, PopupType.Medium);
+                _popup.PopupEntity(Loc.GetString("paint-success", ("target", target)), actor, actor, PopupType.Medium);
                 return true;
+            }
+
+            if (quantity < 1)// checks quantity of solution is more than 0.
+            {
+                _popup.PopupEntity(Loc.GetString("paint-empty", ("used", used)), actor, actor, PopupType.Medium);
+                return false;
             }
         }
 
