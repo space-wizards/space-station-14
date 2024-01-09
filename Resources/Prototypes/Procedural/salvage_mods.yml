@@ -231,3 +231,9 @@
   proto: LavaBrig
   biomes:
     - Lava
+
+- type: salvageDungeonMod
+  id: Haunted
+  proto: Haunted
+  biomes:
+    - Caves
