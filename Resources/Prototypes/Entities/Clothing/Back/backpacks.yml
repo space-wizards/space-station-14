@@ -181,7 +181,6 @@
     - type: Sprite
       sprite: Clothing/Back/Backpacks/salvage.rsi
 
-#Merc
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackMerc
@@ -190,9 +189,6 @@
   components:
     - type: Sprite
       sprite: Clothing/Back/Backpacks/merc.rsi
-    - type: Storage
-      grid:
-      - 0,0,7,3
 
 #ERT
 - type: entity
