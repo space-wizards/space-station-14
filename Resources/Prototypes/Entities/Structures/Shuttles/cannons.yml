@@ -181,7 +181,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - Grenade
+        - CannonBall
     capacity: 1
     proto: CannonBall
     soundInsert:

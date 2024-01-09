@@ -140,12 +140,17 @@
     state: frag
     suffix: false
 
+# Cannon Balls
+
 - type: entity
   id: CannonBall
   name: cannonball
   suffix: Pirate
   parent: BaseGrenade
   components:
+  - type: Tag
+    tags:
+    - CannonBall
   - type: CartridgeAmmo
     proto: BulletCannonBall
     deleteOnSpawn: true
