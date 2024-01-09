@@ -1,6 +1,51 @@
 # Implanters
 
 - type: entity
+  name: Implant-O-Matic
+  parent: BaseItem
+  id: ImplantOMatic
+  description: An experimental portable device that can charge empty implanters with mostly-safe temporary implants.
+  components:
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Items/welder_drop.ogg
+    - type: Sprite
+      sprite: Objects/Tools/welder.rsi
+      state: icon
+    - type: RefillableSolution
+      solution: implantloader
+    - type: ExaminableSolution
+      solution: implantloader
+    - type: DrainableSolution
+      solution: implantloader
+    - type: SolutionContainerManager
+      solutions:
+        implantloader:
+          maxVol: 100
+    - type: SolutionTransfer
+      transferAmount: 100
+      maxTransferAmount: 100
+      minTransferAmount: 10
+      canChangeTransferAmount: false
+    - type: ImplantLoader
+      solutionName: implantloader
+      recipes:
+        - LightImplant
+        - BikeHornImplant
+
+- type: implantRecipe
+  id: LightImplant
+  product: LightImplant
+  reagent: WeldingFuel
+  cost: 100 # Welding fuel is incredibly plentiful
+
+- type: implantRecipe
+  id: BikeHornImplant
+  product: BikeHornImplant
+  reagent: BananaHonk
+  cost: 30 # Banana Honk glasses contain 30u
+
+- type: entity
   name: implanter
   description: A syringe exclusively designed for the injection and extraction of subdermal implants.
   id: BaseImplanter
@@ -10,14 +55,14 @@
     - type: ItemSlots
     - type: ContainerContainer
       containers:
-        implanter_slot: !type:ContainerSlot { }
+        implanter_slot: !type:ContainerSlot {}
     - type: Implanter
       whitelist:
         components:
-        - Body # no chair microbomb
+          - Body # no chair microbomb
       blacklist:
         components:
-        - Guardian # no holoparasite macrobomb wombo combo
+          - Guardian # no holoparasite macrobomb wombo combo
       currentMode: Draw
       implanterSlot:
         name: Implant
@@ -31,10 +76,10 @@
       state: implanter0
       layers:
         - state: implanter0
-          map: [ "implantOnly" ]
+          map: ["implantOnly"]
           visible: true
         - state: implanter1
-          map: [ "implantFull" ]
+          map: ["implantFull"]
           visible: false
     - type: Item
       sprite: Objects/Specific/Medical/implanter.rsi
@@ -45,12 +90,12 @@
       visuals:
         enum.ImplanterVisuals.Full:
           implantFull:
-            True: {visible: true}
-            False: {visible: false}
+            True: { visible: true }
+            False: { visible: false }
         enum.ImplanterImplantOnlyVisuals.ImplantOnly:
           implantOnly:
-            True: {state: broken}
-            False: {state: implanter0}
+            True: { state: broken }
+            False: { state: implanter0 }
 
 - type: entity
   id: Implanter
@@ -66,10 +111,10 @@
   id: ImplanterAdmeme
   suffix: Admeme
   components:
-  - type: Implanter
-    # go wild with sentient chairs with macrobombs
-    whitelist: null
-    blacklist: null
+    - type: Implanter
+      # go wild with sentient chairs with macrobombs
+      whitelist: null
+      blacklist: null
 
 - type: entity
   id: BaseImplantOnlyImplanter
@@ -82,10 +127,10 @@
       state: implanter0
       layers:
         - state: implanter1
-          map: [ "implantFull" ]
+          map: ["implantFull"]
           visible: true
         - state: implanter0
-          map: [ "implantOnly" ]
+          map: ["implantOnly"]
     - type: Implanter
       currentMode: Inject
       implantOnly: true
@@ -103,20 +148,20 @@
       state: implanter1
       layers:
         - state: implanter0
-          map: [ "implantFull" ]
+          map: ["implantFull"]
           visible: true
         - state: implanter1
-          map: [ "implantOnly" ]
+          map: ["implantOnly"]
     - type: GenericVisualizer
       visuals:
         enum.ImplanterVisuals.Full:
           implantFull:
-            True: {visible: true}
-            False: {visible: false}
+            True: { visible: true }
+            False: { visible: false }
         enum.ImplanterImplantOnlyVisuals.ImplantOnly:
           implantOnly:
-            True: {state: broken}
-            False: {state: implanter1}
+            True: { state: broken }
+            False: { state: implanter1 }
 
 #Fun implanters
 
@@ -177,8 +222,8 @@
   name: uplink implanter
   parent: BaseImplantOnlyImplanterSyndi
   components:
-  - type: Implanter
-    implant: UplinkImplant
+    - type: Implanter
+      implant: UplinkImplant
 
 - type: entity
   id: EmpImplanter
@@ -235,8 +280,8 @@
   name: death acidifier implanter
   parent: BaseImplantOnlyImplanterSyndi
   components:
-  - type: Implanter
-    implant: DeathAcidifierImplant
+    - type: Implanter
+      implant: DeathAcidifierImplant
 
 # Security and Command implanters
 

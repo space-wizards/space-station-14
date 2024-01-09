@@ -218,7 +218,7 @@
   materials:
     Steel: 500
     Plastic: 300
-    
+
 - type: latheRecipe
   id: RollerBedSpawnFolded
   result: RollerBedSpawnFolded
@@ -243,3 +243,10 @@
     Steel: 600
     Plastic: 300
 
+- type: latheRecipe
+  id: ImplantOMatic
+  result: ImplantOMatic
+  completetime: 1
+  materials:
+    Steel: 1000
+    Glass: 500

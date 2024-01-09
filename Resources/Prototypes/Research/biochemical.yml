@@ -16,6 +16,7 @@
   - ChemicalPayload
   - ClothingEyesGlassesChemical
   - Jug
+  - ImplantOMatic
 
 - type: technology
   id: SurgicalTools

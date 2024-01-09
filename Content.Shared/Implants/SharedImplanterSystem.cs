@@ -72,7 +72,7 @@ public abstract class SharedImplanterSystem : EntitySystem
         if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
             DrawMode(implanter, component);
         else
-            ImplantMode(implanter, component);
+            SetToImplantMode(implanter, component);
 
         var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
         RaiseLocalEvent(target, ref ev);
@@ -120,47 +120,67 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         var permanentFound = false;
 
-        if (_container.TryGetContainer(target, ImplanterComponent.ImplantSlotId, out var implantContainer))
+        if (!_container.TryGetContainer(target, ImplanterComponent.ImplantSlotId, out var implantContainer))
+            return;
+
+        var implantCompQuery = GetEntityQuery<SubdermalImplantComponent>();
+
+        foreach (var implant in implantContainer.ContainedEntities)
         {
-            var implantCompQuery = GetEntityQuery<SubdermalImplantComponent>();
+            if (!implantCompQuery.TryGetComponent(implant, out var implantComp))
+                continue;
 
-            foreach (var implant in implantContainer.ContainedEntities)
+            //Don't remove a permanent implant and look for the next that can be drawn
+            if (!_container.CanRemove(implant, implantContainer))
             {
-                if (!implantCompQuery.TryGetComponent(implant, out var implantComp))
-                    continue;
-
-                //Don't remove a permanent implant and look for the next that can be drawn
-                if (!_container.CanRemove(implant, implantContainer))
-                {
-                    var implantName = Identity.Entity(implant, EntityManager);
-                    var targetName = Identity.Entity(target, EntityManager);
-                    var failedPermanentMessage = Loc.GetString("implanter-draw-failed-permanent",
-                        ("implant", implantName), ("target", targetName));
-                    _popup.PopupEntity(failedPermanentMessage, target, user);
-                    permanentFound = implantComp.Permanent;
-                    continue;
-                }
-
-                _container.Remove(implant, implantContainer);
-                implantComp.ImplantedEntity = null;
-                _container.Insert(implant, implanterContainer);
+                var implantName = Identity.Entity(implant, EntityManager);
+                var targetName = Identity.Entity(target, EntityManager);
+                var failedPermanentMessage = Loc.GetString("implanter-draw-failed-permanent",
+                    ("implant", implantName), ("target", targetName));
+                _popup.PopupEntity(failedPermanentMessage, target, user);
                 permanentFound = implantComp.Permanent;
-
-                var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
-                RaiseLocalEvent(target, ref ev);
-
-                //Break so only one implant is drawn
-                break;
+                continue;
             }
 
-            if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly && !permanentFound)
-                ImplantMode(implanter, component);
+            _container.Remove(implant, implantContainer);
+            implantComp.ImplantedEntity = null;
+            _container.Insert(implant, implanterContainer);
+            permanentFound = implantComp.Permanent;
 
-            Dirty(component);
+            var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
+            RaiseLocalEvent(target, ref ev);
+
+            //Break so only one implant is drawn
+            break;
         }
+
+        if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly && !permanentFound)
+            SetToImplantMode(implanter, component);
+
+        Dirty(component);
     }
 
-    private void ImplantMode(EntityUid uid, ImplanterComponent component)
+    public bool IsImplanterEmpty(EntityUid uid, ImplanterComponent component)
+    {
+        var implanterContainer = component.ImplanterSlot.ContainerSlot;
+
+        return implanterContainer is null || implanterContainer.Count <= 0;
+    }
+
+    public bool LoadImplant(EntityUid uid, ImplanterComponent component, EntityUid implantUid)
+    {
+        if (component.ImplanterSlot.ContainerSlot is null)
+        {
+            return false;
+        }
+
+        _container.Insert(implantUid, component.ImplanterSlot.ContainerSlot);
+        SetToImplantMode(uid, component);
+
+        return true;
+    }
+
+    private void SetToImplantMode(EntityUid uid, ImplanterComponent component)
     {
         component.CurrentMode = ImplanterToggleMode.Inject;
         ChangeOnImplantVisualizer(uid, component);
@@ -177,26 +197,23 @@ public abstract class SharedImplanterSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
-        bool implantFound;
+        var implantFound = component.ImplanterSlot.HasItem;
 
-        if (component.ImplanterSlot.HasItem)
-            implantFound = true;
-
-        else
-            implantFound = false;
-
-        if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
-            _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance);
-
-        else if (component.CurrentMode == ImplanterToggleMode.Inject && component.ImplantOnly)
+        switch (component.CurrentMode)
         {
-            _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance);
-            _appearance.SetData(uid, ImplanterImplantOnlyVisuals.ImplantOnly, component.ImplantOnly,
-                appearance);
+            case ImplanterToggleMode.Inject when !component.ImplantOnly:
+                _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance);
+                break;
+            case ImplanterToggleMode.Inject when component.ImplantOnly:
+                _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance);
+                _appearance.SetData(uid, ImplanterImplantOnlyVisuals.ImplantOnly, component.ImplantOnly,
+                    appearance);
+                break;
+            case ImplanterToggleMode.Draw:
+            default:
+                _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance);
+                break;
         }
-
-        else
-            _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance);
     }
 }
 

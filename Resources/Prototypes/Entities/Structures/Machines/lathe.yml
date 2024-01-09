@@ -822,6 +822,7 @@
       - SyringeBluespace
       - Jug
       - SyringeCryostasis
+      - ImplantOMatic
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget
