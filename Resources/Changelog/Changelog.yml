@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - message: Fixed radiation interrupting actions.
-    type: Fix
-  id: 5153
-  time: '2023-11-12T18:02:39.0000000+00:00'
 - author: ElectroJr
   changes:
   - message: Fixed FOV & light rendering not being re-enabled when players stop spectating
@@ -3706,3 +3700,10 @@ Entries:
   id: 5653
   time: '2024-01-09T22:05:02.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23818
+- author: themias
+  changes:
+  - message: Wheelchair users can bump open doors
+    type: Fix
+  id: 5654
+  time: '2024-01-09T22:06:28.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23806
