@@ -16,15 +16,18 @@ public sealed partial class CriminalRecordsConsoleComponent : Component
     /// Currently active station record key.
     /// There is no station parameter as the console uses the current station.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public uint? ActiveKey;
 
     /// <summary>
-    /// Currently applied filter
+    /// Currently applied filter.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public GeneralStationRecordsFilter? Filter;
+    [DataField]
+    public StationRecordsFilter? Filter;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Channel to send messages to when someone's status gets changed.
+    /// </summary>
+    [DataField]
     public ProtoId<RadioChannelPrototype> SecurityChannel = "Security";
 }

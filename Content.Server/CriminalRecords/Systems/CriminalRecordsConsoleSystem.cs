@@ -21,6 +21,7 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
     [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
+    [Dependency] private readonly RecordsConsoleSystem _recordsConsole = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -31,8 +32,8 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
 
-        SubscribeLocalEvent<CriminalRecordsConsoleComponent, SelectCriminalRecords>(OnKeySelected);
-        SubscribeLocalEvent<CriminalRecordsConsoleComponent, GeneralStationRecordsFilterMsg>(OnFiltersChanged);
+        SubscribeLocalEvent<CriminalRecordsConsoleComponent, SelectStationRecord>(OnKeySelected);
+        SubscribeLocalEvent<CriminalRecordsConsoleComponent, SetStationRecordFilter>(OnFiltersChanged);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalRecordArrestButtonPressed>(OnButtonPressed);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalStatusOptionButtonSelected>(OnStatusSelected);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalRecordAddHistory>(OnAddHistory);
@@ -45,19 +46,19 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         UpdateUserInterface(ent);
     }
 
-    private void OnKeySelected(Entity<CriminalRecordsConsoleComponent> ent, ref SelectCriminalRecords msg)
+    private void OnKeySelected(Entity<CriminalRecordsConsoleComponent> ent, ref SelectStationRecord msg)
     {
         // no concern of sus client since record retrieval will fail if invalid id is given
         ent.Comp.ActiveKey = msg.SelectedKey;
         UpdateUserInterface(ent);
     }
 
-    private void OnFiltersChanged(Entity<CriminalRecordsConsoleComponent> ent, ref GeneralStationRecordsFilterMsg msg)
+    private void OnFiltersChanged(Entity<CriminalRecordsConsoleComponent> ent, ref SetStationRecordFilter msg)
     {
         if (ent.Comp.Filter == null ||
             ent.Comp.Filter.Type != msg.Type || ent.Comp.Filter.Value != msg.Value)
         {
-            ent.Comp.Filter = new GeneralStationRecordsFilter(msg.Type, msg.Value);
+            ent.Comp.Filter = new StationRecordsFilter(msg.Type, msg.Value);
             UpdateUserInterface(ent);
         }
     }
@@ -149,10 +150,8 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         var listing = new Dictionary<uint, string>();
         foreach (var pair in consoleRecords)
         {
-            if (console.Filter != null && IsSkippedRecord(console.Filter, pair.Item2))
-            {
+            if (_recordsConsole.IsSkipped(console.Filter, pair.Item2))
                 continue;
-            }
 
             listing.Add(pair.Item1, pair.Item2.Name);
         }
@@ -210,31 +209,5 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         key = new StationRecordKey(id, station);
         mob = user;
         return true;
-    }
-
-    private bool IsSkippedRecord(GeneralStationRecordsFilter filter,
-        GeneralStationRecord someRecord)
-    {
-        var isFilter = filter.Value.Length > 0;
-
-        if (!isFilter)
-            return false;
-
-        var filterLowerCaseValue = filter.Value.ToLower();
-
-        return filter.Type switch
-        {
-            GeneralStationRecordFilterType.Name =>
-                !someRecord.Name.ToLower().Contains(filterLowerCaseValue),
-            GeneralStationRecordFilterType.Prints => someRecord.Fingerprint != null
-                                                     && IsFilterWithSomeCodeValue(someRecord.Fingerprint, filterLowerCaseValue),
-            GeneralStationRecordFilterType.DNA => someRecord.DNA != null
-                                                  && IsFilterWithSomeCodeValue(someRecord.DNA, filterLowerCaseValue),
-        };
-    }
-
-    private bool IsFilterWithSomeCodeValue(string value, string filter)
-    {
-        return !value.ToLower().StartsWith(filter);
     }
 }

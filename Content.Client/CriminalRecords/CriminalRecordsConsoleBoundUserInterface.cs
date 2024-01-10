@@ -27,16 +27,17 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
         _window.OnDeleteHistoryPressed += (_, index) => SendMessage(new CriminalRecordDeleteHistory(index));
     }
 
+    // TODO: this can easily be shared with a client records console system
+    // same with adding the ui elements themselves
     private void OnKeySelected(uint? key)
     {
-        SendMessage(new SelectCriminalRecords(key));
+        SendMessage(new SelectStationRecord(key));
     }
 
     private void OnFiltersChanged(
-        GeneralStationRecordFilterType type, string filterValue)
+        StationRecordFilterType type, string filterValue)
     {
-        GeneralStationRecordsFilterMsg msg = new(type, filterValue);
-        SendMessage(msg);
+        SendMessage(new SetStationRecordFilter(type, filterValue));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

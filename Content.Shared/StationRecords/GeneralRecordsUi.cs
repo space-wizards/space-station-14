@@ -36,10 +36,10 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
     public readonly uint? SelectedKey;
     public readonly GeneralStationRecord? Record;
     public readonly Dictionary<uint, string>? RecordListing;
-    public readonly GeneralStationRecordsFilter? Filter;
+    public readonly StationRecordsFilter? Filter;
 
     public GeneralStationRecordConsoleState(uint? key, GeneralStationRecord? record,
-        Dictionary<uint, string>? recordListing, GeneralStationRecordsFilter? newFilter)
+        Dictionary<uint, string>? recordListing, StationRecordsFilter? newFilter)
     {
         SelectedKey = key;
         Record = record;
@@ -55,12 +55,16 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
         && Record == null && RecordListing == null;
 }
 
+/// <summary>
+/// Select a specific crewmember's record, or deselect.
+/// Used by any kind of records console including general and criminal.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class SelectGeneralStationRecord : BoundUserInterfaceMessage
+public sealed class SelectStationRecord : BoundUserInterfaceMessage
 {
     public readonly uint? SelectedKey;
 
-    public SelectGeneralStationRecord(uint? selectedKey)
+    public SelectStationRecord(uint? selectedKey)
     {
         SelectedKey = selectedKey;
     }

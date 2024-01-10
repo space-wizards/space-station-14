@@ -12,6 +12,7 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.CriminalRecords;
 
+// TODO: dedupe shitcode from general records theres a lot
 [GenerateTypedNameReferences]
 public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 {
@@ -22,7 +23,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     public readonly EntityUid Console;
 
     public Action<uint?>? OnKeySelected;
-    public Action<GeneralStationRecordFilterType, string>? OnFiltersChanged;
+    public Action<StationRecordFilterType, string>? OnFiltersChanged;
     public Action<BaseButton.ButtonEventArgs, string, string>? OnArrestButtonPressed;
     public Action<OptionButton.ItemSelectedEventArgs, SecurityStatus, string, string>? OnStatusOptionButtonSelected;
     public Action<BaseButton.ButtonEventArgs, string>? OnAddHistoryPressed;
@@ -32,7 +33,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     private string _recordName = string.Empty;
     private uint? _historyIndex;
 
-    private GeneralStationRecordFilterType _currentFilterType;
+    private StationRecordFilterType _currentFilterType;
 
     public CriminalRecordsConsoleWindow(EntityUid console)
     {
@@ -42,9 +43,9 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         _accessReader = _entity.System<AccessReaderSystem>();
         Console = console;
 
-        _currentFilterType = GeneralStationRecordFilterType.Name;
+        _currentFilterType = StationRecordFilterType.Name;
 
-        foreach (var item in Enum.GetValues<GeneralStationRecordFilterType>())
+        foreach (var item in Enum.GetValues<StationRecordFilterType>())
         {
             StationRecordsFilterType.AddItem(GetTypeFilterLocals(item), (int)item);
         }
@@ -65,7 +66,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
         StationRecordsFilterType.OnItemSelected += eventArgs =>
         {
-            var type = (GeneralStationRecordFilterType)eventArgs.Id;
+            var type = (StationRecordFilterType)eventArgs.Id;
 
             if (_currentFilterType != type)
             {
@@ -292,7 +293,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         }
     }
 
-    private string GetTypeFilterLocals(GeneralStationRecordFilterType type)
+    private string GetTypeFilterLocals(StationRecordFilterType type)
     {
         return Loc.GetString($"criminal-records-{type.ToString().ToLower()}-filter");
     }

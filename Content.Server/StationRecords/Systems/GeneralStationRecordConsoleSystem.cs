@@ -9,6 +9,7 @@ namespace Content.Server.StationRecords.Systems;
 public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly RecordsConsoleSystem _recordsConsole = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
 
@@ -19,8 +20,8 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, RecordRemovedEvent>(UpdateUserInterface);
 
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, SelectGeneralStationRecord>(OnKeySelected);
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, GeneralStationRecordsFilterMsg>(OnFiltersChanged);
+        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, SelectStationRecord>(OnKeySelected);
+        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, SetStationRecordFilter>(OnFiltersChanged);
     }
 
     private void UpdateUserInterface<T>(Entity<GeneralStationRecordConsoleComponent> ent, ref T args)
@@ -28,18 +29,21 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         UpdateUserInterface(ent);
     }
 
-    private void OnKeySelected(Entity<GeneralStationRecordConsoleComponent> ent, ref SelectGeneralStationRecord msg)
+    // TODO: instead of copy paste shitcode for each record console, have a shared records console comp they all use
+    // then have this somehow play nicely with creating ui state
+    // if that gets done put it in RecordsConsoleSystem :)
+    private void OnKeySelected(Entity<GeneralStationRecordConsoleComponent> ent, ref SelectStationRecord msg)
     {
         ent.Comp.ActiveKey = msg.SelectedKey;
         UpdateUserInterface(ent);
     }
 
-    private void OnFiltersChanged(Entity<GeneralStationRecordConsoleComponent> ent, ref GeneralStationRecordsFilterMsg msg)
+    private void OnFiltersChanged(Entity<GeneralStationRecordConsoleComponent> ent, ref SetStationRecordFilter msg)
     {
         if (ent.Comp.Filter == null ||
             ent.Comp.Filter.Type != msg.Type || ent.Comp.Filter.Value != msg.Value)
         {
-            ent.Comp.Filter = new GeneralStationRecordsFilter(msg.Type, msg.Value);
+            ent.Comp.Filter = new StationRecordsFilter(msg.Type, msg.Value);
             UpdateUserInterface(ent);
         }
     }
@@ -62,10 +66,8 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         foreach (var pair in consoleRecords)
         {
-            if (console.Filter != null && IsSkippedRecord(console.Filter, pair.Item2))
-            {
+            if (_recordsConsole.IsSkipped(console.Filter, pair.Item2))
                 continue;
-            }
 
             listing.Add(pair.Item1, pair.Item2.Name);
         }
@@ -88,31 +90,5 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         GeneralStationRecordConsoleState newState = new(id, record, listing, console.Filter);
         _ui.TrySetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
-    }
-
-    private bool IsSkippedRecord(GeneralStationRecordsFilter filter,
-        GeneralStationRecord someRecord)
-    {
-        var isFilter = filter.Value.Length > 0;
-
-        if (!isFilter)
-            return false;
-
-        var filterLowerCaseValue = filter.Value.ToLower();
-
-        return filter.Type switch
-        {
-            GeneralStationRecordFilterType.Name =>
-                !someRecord.Name.ToLower().Contains(filterLowerCaseValue),
-            GeneralStationRecordFilterType.Prints => someRecord.Fingerprint != null
-                && IsFilterWithSomeCodeValue(someRecord.Fingerprint, filterLowerCaseValue),
-            GeneralStationRecordFilterType.DNA => someRecord.DNA != null
-                && IsFilterWithSomeCodeValue(someRecord.DNA, filterLowerCaseValue),
-        };
-    }
-
-    private bool IsFilterWithSomeCodeValue(string value, string filter)
-    {
-        return !value.ToLower().StartsWith(filter);
     }
 }

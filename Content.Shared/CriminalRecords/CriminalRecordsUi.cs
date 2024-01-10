@@ -39,9 +39,9 @@ public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
     public readonly CriminalRecord? CriminalRecord;
     public readonly GeneralStationRecord? StationRecord;
     public readonly Dictionary<uint, string>? RecordListing;
-    public readonly GeneralStationRecordsFilter? Filter;
+    public readonly StationRecordsFilter? Filter;
 
-    public CriminalRecordsConsoleState(uint? key, GeneralStationRecord? stationRecord, CriminalRecord? criminalRecord, Dictionary<uint, string>? recordListing, GeneralStationRecordsFilter? newFilter)
+    public CriminalRecordsConsoleState(uint? key, GeneralStationRecord? stationRecord, CriminalRecord? criminalRecord, Dictionary<uint, string>? recordListing, StationRecordsFilter? newFilter)
     {
         SelectedKey = key;
         StationRecord = stationRecord;
@@ -58,17 +58,6 @@ public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
     }
 
     public bool IsEmpty() => SelectedKey == null && StationRecord == null && CriminalRecord == null && RecordListing == null;
-}
-
-[Serializable, NetSerializable]
-public sealed class SelectCriminalRecords : BoundUserInterfaceMessage
-{
-    public readonly uint? SelectedKey;
-
-    public SelectCriminalRecords(uint? selectedKey)
-    {
-        SelectedKey = selectedKey;
-    }
 }
 
 [Serializable, NetSerializable]

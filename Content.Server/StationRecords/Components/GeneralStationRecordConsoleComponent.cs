@@ -10,12 +10,12 @@ public sealed partial class GeneralStationRecordConsoleComponent : Component
     /// Selected crewmember record id.
     /// Station always uses the station that owns the console.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public uint? ActiveKey;
 
     /// <summary>
     /// Qualities to filter a search by.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public GeneralStationRecordsFilter? Filter;
+    [DataField]
+    public StationRecordsFilter? Filter;
 }

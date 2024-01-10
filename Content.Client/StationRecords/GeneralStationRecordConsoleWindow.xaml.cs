@@ -12,19 +12,19 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 {
     public Action<uint?>? OnKeySelected;
 
-    public Action<GeneralStationRecordFilterType, string>? OnFiltersChanged;
+    public Action<StationRecordFilterType, string>? OnFiltersChanged;
 
     private bool _isPopulating;
 
-    private GeneralStationRecordFilterType _currentFilterType;
+    private StationRecordFilterType _currentFilterType;
 
     public GeneralStationRecordConsoleWindow()
     {
         RobustXamlLoader.Load(this);
 
-        _currentFilterType = GeneralStationRecordFilterType.Name;
+        _currentFilterType = StationRecordFilterType.Name;
 
-        foreach (var item in Enum.GetValues<GeneralStationRecordFilterType>())
+        foreach (var item in Enum.GetValues<StationRecordFilterType>())
         {
             StationRecordsFilterType.AddItem(GetTypeFilterLocals(item), (int)item);
         }
@@ -45,7 +45,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
         StationRecordsFilterType.OnItemSelected += eventArgs =>
         {
-            var type = (GeneralStationRecordFilterType) eventArgs.Id;
+            var type = (StationRecordFilterType) eventArgs.Id;
 
             if (_currentFilterType != type)
             {
@@ -191,7 +191,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         }
     }
 
-    private string GetTypeFilterLocals(GeneralStationRecordFilterType type)
+    private string GetTypeFilterLocals(StationRecordFilterType type)
     {
         return Loc.GetString($"general-station-record-{type.ToString().ToLower()}-filter");
     }
