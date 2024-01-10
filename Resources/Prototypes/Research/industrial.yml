@@ -14,6 +14,8 @@
   - BorgModuleMining
   - OreProcessorIndustrialMachineCircuitboard
   - OreBagOfHolding
+  radioChannels:
+    - Supply
 
 - type: technology
   id: AdvancedPowercells
@@ -27,6 +29,9 @@
   recipeUnlocks:
   - PowerCellHigh
   - TurboItemRechargerCircuitboard
+  radioChannels:
+    - Supply
+    - Engineering
 
 - type: technology
   id: MechanicalCompression
@@ -39,6 +44,9 @@
   cost: 10000
   recipeUnlocks:
   - FlatpackerMachineCircuitboard
+  radioChannels:
+    - Supply
+    - Engineering
 
 - type: technology
   id: CompactPower
@@ -53,6 +61,8 @@
   - WallmountSubstationElectronics
   - WallmountGeneratorElectronics
   - WallmountGeneratorAPUElectronics
+  radioChannels:
+    - Engineering
 
 - type: technology
   id: IndustrialEngineering
@@ -67,6 +77,9 @@
   - AutolatheHyperConvectionMachineCircuitboard
   - ProtolatheHyperConvectionMachineCircuitboard
   - SheetifierMachineCircuitboard
+  radioChannels:
+    - Engineering
+    - Supply
 
 - type: technology
   id: PowerGeneration
@@ -85,6 +98,8 @@
   - SolarControlComputerCircuitboard
   - SolarTrackerElectronics
   - EmitterCircuitboard
+  radioChannels:
+    - Engineering
 
 - type: technology
   id: AtmosphericTech
@@ -99,6 +114,8 @@
   - BorgModuleGasAnalyzer
   - ThermomachineFreezerMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
+  radioChannels:
+    - Engineering
 
 - type: technology
   id: RipleyAPLU
@@ -118,6 +135,9 @@
   - RipleyCentralElectronics
   - RipleyPeripheralsElectronics
   - MechEquipmentGrabber
+  radioChannels:
+    - Engineering
+    - Supply
 
 # Tier 2
 
@@ -133,6 +153,11 @@
   recipeUnlocks:
   - WeaponGrapplingGun
   - BorgModuleGrapplingGun
+  radioChannels:
+    - Supply
+    - Engineering
+    - Binary
+
 
 - type: technology
   id: Shuttlecraft
@@ -149,6 +174,9 @@
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
   - MiniGravityGeneratorCircuitboard
+  radioChannels:
+    - Supply
+    - Engineering
 
 - type: technology
   id: AdvancedAtmospherics
@@ -163,6 +191,8 @@
   - HellfireFreezerMachineCircuitBoard
   - PortableScrubberMachineCircuitBoard
   - HolofanProjector
+  radioChannels:
+    - Engineering
 
 - type: technology
   id: AdvancedToolsTechnology
@@ -179,6 +209,9 @@
     - JawsOfLife
     - BorgModuleAdvancedTool
     - BorgModuleRCD
+  radioChannels:
+    - Engineering
+    - Binary
 
 # Tier 3
 
@@ -195,6 +228,8 @@
   - ClothingBackpackHolding
   - ClothingBackpackSatchelHolding
   - ClothingBackpackDuffelHolding
+  radioChannels:
+    - Supply
 
 - type: technology
   id: PortableFission
@@ -209,3 +244,5 @@
   - PowerCellMicroreactor
   technologyPrerequisites:
   - AdvancedPowercells
+  radioChannels:
+    - Engineering

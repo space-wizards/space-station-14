@@ -16,6 +16,8 @@
   - WeaponCrusherDagger
   # This is not roundstart since its a direct upgrade
   - WeaponCrusherGlaive
+  radioChannels:
+    - Security
 
 - type: technology
   id: DraconicMunitions
@@ -36,6 +38,8 @@
   - MagazineBoxMagnumIncendiary
   - MagazineBoxLightRifleIncendiary
   - MagazineBoxRifleIncendiary
+  radioChannels:
+    - Security
 
 - type: technology
   id: ExplosiveTechnology
@@ -54,6 +58,8 @@
   - FlashPayload
   - ExplosivePayload
   - Igniter
+  radioChannels:
+    - Security
 
 - type: technology
   id: WeaponizedLaserManipulation
@@ -66,6 +72,8 @@
   cost: 7500
   recipeUnlocks:
   - WeaponLaserCarbine
+  radioChannels:
+    - Security
 
 - type: technology
   id: NonlethalAmmunition
@@ -86,6 +94,8 @@
   - MagazineBoxMagnumRubber
   - MagazineBoxLightRifleRubber
   - MagazineBoxRifleRubber
+  radioChannels:
+    - Security
 
 - type: technology
   id: UraniumMunitions
@@ -106,6 +116,8 @@
   - MagazineBoxMagnumUranium
   - MagazineBoxLightRifleUranium
   - MagazineBoxRifleUranium
+  radioChannels:
+    - Security
 
 # Tier 2
 
@@ -120,6 +132,8 @@
   cost: 10000
   recipeUnlocks:
   - WeaponLaserCannon
+  radioChannels:
+    - Security
 
 - type: technology
   id: WaveParticleHarnessing
@@ -132,6 +146,8 @@
   cost: 10000
   recipeUnlocks:
   - WeaponXrayCannon
+  radioChannels:
+    - Security
 
 - type: technology
   id: AdvancedRiotControl
@@ -148,6 +164,8 @@
   - TelescopicShield
   - HoloprojectorSecurity
   - WeaponDisablerSMG
+  radioChannels:
+    - Security
 
 # Tier 3
 
@@ -162,6 +180,8 @@
   cost: 15000
   recipeUnlocks:
   - WeaponAdvancedLaser
+  radioChannels:
+    - Security
 
 - type: technology
   id: ExperimentalBatteryAmmo
@@ -174,3 +194,5 @@
   cost: 15000
   recipeUnlocks:
   - WeaponLaserSvalinn
+  radioChannels:
+    - Security

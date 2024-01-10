@@ -14,6 +14,9 @@
   - BorgModuleHarvesting
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
+  radioChannels:
+    - Service
+    - Binary
 
 - type: technology
   id: CritterMechs
@@ -34,6 +37,9 @@
   - HamtrPeripheralsElectronics
   - MechEquipmentGrabberSmall
   - VimHarness
+  radioChannels:
+    - Command
+
 
 - type: technology
   id: FoodService
@@ -68,6 +74,8 @@
   - SurveillanceCameraMonitorCircuitboard
   - SurveillanceWirelessCameraMonitorCircuitboard
   - TelecomServerCircuitboard
+  radioChannels:
+    - Service
 
 - type: technology
   id: AdvancedEntertainment
@@ -85,6 +93,9 @@
     - BorgModuleClowning
     - DawInstrumentMachineCircuitboard
     - MassMediaCircuitboard
+  radioChannels:
+    - Service
+    - Binary
 
 - type: technology
   id: RoboticCleanliness
@@ -98,6 +109,9 @@
   recipeUnlocks:
   - BorgModuleLightReplacer
   - BorgModuleAdvancedCleaning
+  radioChannels:
+    - Service
+    - Binary
 
 - type: technology
   id: MeatManipulation
@@ -110,6 +124,8 @@
   cost: 5000
   recipeUnlocks:
   - FatExtractorMachineCircuitboard
+  radioChannels:
+    - Service
 
 # Tier 2
 
@@ -125,6 +141,8 @@
   recipeUnlocks:
   - FauxTileAstroGrass
   - FauxTileAstroIce
+  radioChannels:
+    - Service
 
 - type: technology
   id: AdvancedCleaning
@@ -138,6 +156,8 @@
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
+  radioChannels:
+    - Service
 
 - type: technology
   id: HONKMech
@@ -158,6 +178,8 @@
   - HonkerPeripheralsElectronics
   - HonkerTargetingElectronics
   - MechEquipmentHorn
+  radioChannels:
+    - Service
 
 - type: technology
   id: AdvancedSpray
@@ -171,6 +193,8 @@
   recipeUnlocks:
   - WeaponSprayNozzle
   - ClothingBackpackWaterTank
+  radioChannels:
+    - Service
 
 # Tier 3
 
@@ -185,6 +209,8 @@
   cost: 15000
   recipeUnlocks:
   - CargoTelepadMachineCircuitboard
+  radioChannels:
+    - Supply
 
 - type: technology
   id: QuantumFiberWeaving
@@ -197,3 +223,5 @@
   cost: 10000
   recipeUnlocks:
   - ClothingShoesBootsSpeed
+  radioChannels:
+    - Common

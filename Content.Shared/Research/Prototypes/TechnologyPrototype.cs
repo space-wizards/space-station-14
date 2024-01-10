@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Radio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Research.Prototypes;
@@ -69,6 +71,14 @@ public sealed partial class TechnologyPrototype : IPrototype
     /// </summary>
     [DataField]
     public IReadOnlyList<GenericUnlock> GenericUnlocks = new List<GenericUnlock>();
+
+
+    /// <summary>
+    ///     The channels that this radio is listening on.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
+    public HashSet<string> RadioChannels = new();
+
 }
 
 [DataDefinition]

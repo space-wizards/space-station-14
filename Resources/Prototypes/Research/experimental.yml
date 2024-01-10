@@ -13,6 +13,7 @@
   - ProximitySensor
   - Drone
   - ExosuitFabricatorMachineCircuitboard
+  radioChannels: []
 
 - type: technology
   id: BasicAnomalousResearch
@@ -30,6 +31,7 @@
   - BorgModuleAnomaly
   - APECircuitboard
   - AnomalyVesselCircuitboard
+  radioChannels: []
 
 - type: technology
   id: BasicXenoArcheology
@@ -45,6 +47,8 @@
   - BorgModuleArtifact
   - AnalysisComputerCircuitboard
   - ArtifactAnalyzerMachineCircuitboard
+  radioChannels:
+    - Binary
 
 - type: technology
   id: AlternativeResearch
@@ -57,6 +61,7 @@
   cost: 5000
   recipeUnlocks:
   - TechDiskComputerCircuitboard
+  radioChannels: []
 
 - type: technology
   id: MagnetsTech
@@ -69,6 +74,7 @@
   cost: 7500
   recipeUnlocks:
   - ClothingShoesBootsMagSci
+  radioChannels: []
 
 - type: technology
   id: AnomalyCoreHarnessing
@@ -81,6 +87,7 @@
   cost: 10000
   recipeUnlocks:
   - WeaponGauntletGorilla
+  radioChannels: []
 
 # Tier 2
 
@@ -96,6 +103,7 @@
   recipeUnlocks:
   - TraversalDistorterMachineCircuitboard
   - ArtifactCrusherMachineCircuitboard
+  radioChannels: []
 
 - type: technology
   id: AdvancedAnomalyResearch
@@ -112,6 +120,7 @@
   - AnomalyVesselExperimentalCircuitboard
   technologyPrerequisites:
   - BasicAnomalousResearch
+  radioChannels: []
 
 - type: technology
   id: RapidPartExchange
@@ -124,6 +133,7 @@
   cost: 7500
   recipeUnlocks:
   - RPED
+  radioChannels: []
 
 - type: technology
   id: DeterrenceTechnologies
@@ -137,6 +147,9 @@
   recipeUnlocks:
   - WeaponParticleDecelerator
   - HoloprojectorField
+  radioChannels:
+    - Security
+    - Command
 
 # Tier 3
 
@@ -152,6 +165,7 @@
   recipeUnlocks:
     - WeaponForceGun
     - WeaponTetherGun
+  radioChannels: []
 
 - type: technology
   id: QuantumLeaping
@@ -164,3 +178,4 @@
   cost: 10000
   recipeUnlocks:
   - DeviceQuantumSpinInverter
+  radioChannels: []
