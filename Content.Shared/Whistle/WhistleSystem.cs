@@ -2,7 +2,6 @@ using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Stealth.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Whistle;
@@ -10,7 +9,6 @@ namespace Content.Shared.Whistle;
 public sealed class WhistleSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
@@ -27,7 +25,7 @@ public sealed class WhistleSystem : EntitySystem
 
     public void OnUseInHand(EntityUid uid, WhistleComponent component, UseInHandEvent args)
     {
-        if (_netManager.IsClient && !_timing.IsFirstTimePredicted)
+        if (!_timing.IsFirstTimePredicted)
             return;
 
         TryMakeLoudWhistle(uid, args.User, component);
