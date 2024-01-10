@@ -3,7 +3,6 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Inventory;
-using static Content.Shared.Projectiles.SharedProjectileSystem;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Events;
 
@@ -27,7 +26,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
         var target = args.OtherEntity;
 
         if (!args.OtherBody.Hard ||
-            args.OurFixtureId != ProjectileFixture ||
+            args.OurFixtureId != ent.Comp.FixtureId ||
             !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) ||
             !_solutionContainersSystem.TryGetInjectableSolution(ent.Owner, out var solution, out _))
         {
