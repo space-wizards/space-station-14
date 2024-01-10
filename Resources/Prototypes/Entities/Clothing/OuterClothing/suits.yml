@@ -117,7 +117,10 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodRad
     slot: head
-    
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+      
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterSuitSpaceNinja
