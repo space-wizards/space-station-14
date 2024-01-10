@@ -3,7 +3,6 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Inventory;
-using Content.Shared.Weapons.Ranged.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Events;
 using static Content.Shared.Weapons.Ranged.Systems.SharedFlyBySoundSystem;
