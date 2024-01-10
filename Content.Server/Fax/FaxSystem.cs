@@ -50,6 +50,8 @@ public sealed class FaxSystem : EntitySystem
     /// </summary>
     [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultPaperPrototypeId = "Paper";
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string OfficePaperPrototypeId = "PaperOffice";
 
     public override void Initialize()
     {
@@ -400,11 +402,11 @@ public sealed class FaxSystem : EntitySystem
     {
         string prototype;
         if(args.OfficePaper)
-            prototype = "PaperOffice";
+            prototype = OfficePaperPrototypeId;
         else
-            prototype = "Paper";
-        var printout = new FaxPrintout(args.Content, args.Name, prototype);
+            prototype = DefaultPaperPrototypeId;
 
+        var printout = new FaxPrintout(args.Content, args.Name, prototype);
         component.PrintingQueue.Enqueue(printout);
         component.SendTimeoutRemaining += component.SendTimeout;
 

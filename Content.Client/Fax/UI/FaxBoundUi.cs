@@ -1,3 +1,5 @@
+using System.IO;
+using System.Threading.Tasks;
 using Content.Shared.Fax;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -9,7 +11,7 @@ namespace Content.Client.Fax.UI;
 public sealed class FaxBoundUi : BoundUserInterface
 {
     
-    [Dependency] public readonly IFileDialogManager FileDialogManager = default!;
+    [Dependency] private readonly IFileDialogManager _fileDialogManager = default!;
 
     [ViewVariables]
     private FaxWindow? _window;
@@ -22,19 +24,59 @@ public sealed class FaxBoundUi : BoundUserInterface
     {
         base.Open();
 
-        _window = new FaxWindow(this);
+        _window = new FaxWindow();
         _window.OpenCentered();
 
         _window.OnClose += Close;
+        _window.FileButtonPressed += OnFileButtonPressed;
         _window.CopyButtonPressed += OnCopyButtonPressed;
         _window.SendButtonPressed += OnSendButtonPressed;
         _window.RefreshButtonPressed += OnRefreshButtonPressed;
         _window.PeerSelected += OnPeerSelected;
     }
 
-    public void PrintFile(string content, string name, bool officePaper)
+    public async Task PrintFile()
     {
-        SendMessage(new FaxFileMessage(content, name, officePaper));
+        //Open file select dialog
+        Stream? file;
+        var filters = new FileDialogFilters(new FileDialogFilters.Group("txt"));
+        try
+        {
+            file = await _fileDialogManager.OpenFile(filters);            
+        }
+        catch(IOException)
+        {
+            return;
+        }
+
+        //If UI gets closed of file is null return.
+        if(_window == null)
+            return;
+        if (_window.Disposed)
+            return;
+        if(file == null)
+            return;
+
+        //Read the file contents and raise event.
+        string content;
+        try
+        {
+            StreamReader reader = new StreamReader(file);
+            content = reader.ReadToEnd();
+            reader.Close();
+            file.Close();
+        }
+        catch(IOException)
+        {
+            return;
+        }
+
+        SendMessage(new FaxFileMessage(content.Substring(0, Math.Min(content.Length, 10000)), "printed paper", _window.OfficePaper));
+    }
+
+    private void OnFileButtonPressed()
+    {
+        PrintFile();
     }
 
     private void OnSendButtonPressed()
