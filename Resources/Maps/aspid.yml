@@ -8763,25 +8763,6 @@ entities:
     - type: Transform
       pos: 6.605979,-25.237396
       parent: 1
-- proto: AdvancedCapacitorStockPart
-  entities:
-  - uid: 6544
-    components:
-    - type: Transform
-      pos: 22.399736,-23.44135
-      parent: 1
-  - uid: 13453
-    components:
-    - type: Transform
-      pos: -46.782776,46.69757
-      parent: 1
-- proto: AdvancedMatterBinStockPart
-  entities:
-  - uid: 13454
-    components:
-    - type: Transform
-      pos: -46.41361,46.78272
-      parent: 1
 - proto: AirAlarm
   entities:
   - uid: 8754
@@ -40862,6 +40843,18 @@ entities:
     - type: Transform
       pos: 36.56873,-16.396769
       parent: 1
+- proto: CapacitorStockPart
+  entities:
+  - uid: 6544
+    components:
+    - type: Transform
+      pos: 22.399736,-23.44135
+      parent: 1
+  - uid: 13453
+    components:
+    - type: Transform
+      pos: -46.782776,46.69757
+      parent: 1
 - proto: CaptainIDCard
   entities:
   - uid: 9149
@@ -49449,13 +49442,6 @@ entities:
     - type: Transform
       pos: 24.589664,11.557829
       parent: 1
-- proto: ClothingEyesGlassesMercenary
-  entities:
-  - uid: 7806
-    components:
-    - type: Transform
-      pos: -0.6837692,2.6104674
-      parent: 8756
 - proto: ClothingEyesGlassesMeson
   entities:
   - uid: 8082
@@ -50041,13 +50027,6 @@ entities:
     - type: Transform
       pos: -28.181301,52.660778
       parent: 1
-- proto: ClothingUniformJumpsuitMercenary
-  entities:
-  - uid: 7807
-    components:
-    - type: Transform
-      pos: -0.5118942,2.4542174
-      parent: 8756
 - proto: ClothingUniformJumpsuitSecBlue
   entities:
   - uid: 8150
@@ -50428,13 +50407,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -42.5,25.5
       parent: 1
-- proto: ComputerShuttle
-  entities:
-  - uid: 8887
-    components:
-    - type: Transform
-      pos: -0.5,3.5
-      parent: 8756
 - proto: ComputerShuttleCargo
   entities:
   - uid: 4154
@@ -50500,12 +50472,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -14.5,49.5
       parent: 1
-  - uid: 8888
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 0.5,2.5
-      parent: 8756
   - uid: 18502
     components:
     - type: Transform
@@ -86614,14 +86580,6 @@ entities:
     - type: Transform
       pos: -6.5,64.5
       parent: 1
-- proto: Gyroscope
-  entities:
-  - uid: 8820
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -1.5,-5.5
-      parent: 8756
 - proto: Handcuffs
   entities:
   - uid: 8071
@@ -88505,6 +88463,11 @@ entities:
     - type: Transform
       pos: -37.5,30.5
       parent: 1
+  - uid: 1777
+    components:
+    - type: Transform
+      pos: -39.5,30.5
+      parent: 1
   - uid: 7825
     components:
     - type: Transform
@@ -89378,6 +89341,13 @@ entities:
     - type: Transform
       pos: -32.693626,54.607662
       parent: 1
+- proto: MatterBinStockPart
+  entities:
+  - uid: 13454
+    components:
+    - type: Transform
+      pos: -46.41361,46.78272
+      parent: 1
 - proto: MedicalBed
   entities:
   - uid: 6383
@@ -89512,13 +89482,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,70.5
-      parent: 1
-- proto: MonkeyCubeBox
-  entities:
-  - uid: 7121
-    components:
-    - type: Transform
-      pos: -13.5745945,28.466234
       parent: 1
 - proto: MopBucket
   entities:
@@ -90777,13 +90740,6 @@ entities:
     - type: Transform
       pos: 9.5,-25.5
       parent: 1
-- proto: PortableGeneratorSuperPacman
-  entities:
-  - uid: 8804
-    components:
-    - type: Transform
-      pos: 0.5,-5.5
-      parent: 8756
 - proto: PortableScrubber
   entities:
   - uid: 4393
@@ -107537,31 +107493,6 @@ entities:
           showEnts: False
           occludes: True
           ents: []
-- proto: Thruster
-  entities:
-  - uid: 8881
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -3.5,-6.5
-      parent: 8756
-  - uid: 8882
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 2.5,-6.5
-      parent: 8756
-  - uid: 8883
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -3.5,2.5
-      parent: 8756
-  - uid: 8884
-    components:
-    - type: Transform
-      pos: 2.5,2.5
-      parent: 8756
 - proto: TintedWindow
   entities:
   - uid: 536
@@ -108104,6 +108035,13 @@ entities:
     components:
     - type: Transform
       pos: 5.5,34.5
+      parent: 1
+- proto: VariantCubeBox
+  entities:
+  - uid: 7121
+    components:
+    - type: Transform
+      pos: -13.5745945,28.466234
       parent: 1
 - proto: VehicleJanicartDestroyed
   entities:
@@ -108685,12 +108623,10 @@ entities:
     - type: Transform
       pos: -8.5,-11.5
       parent: 1
-  - uid: 7810
+  - uid: 7806
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
-      pos: -39.5,30.5
+      pos: -40.5,28.5
       parent: 1
   - uid: 8740
     components:
@@ -124297,13 +124233,6 @@ entities:
     components:
     - type: Transform
       pos: -11.5,60.5
-      parent: 1
-- proto: WeaponCrusherGlaive
-  entities:
-  - uid: 1777
-    components:
-    - type: Transform
-      pos: -41.696693,21.56326
       parent: 1
 - proto: WeaponDisabler
   entities:
