@@ -8,6 +8,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Toggleable;
 using Robust.Shared.Timing;
 
@@ -57,11 +58,13 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         Appearance.SetData(uid, ToggleVisuals.Toggled, false);
         Popup.PopupClient(Loc.GetString("ninja-gloves-off"), user, user);
 
+        // TODO: comp registry for this shit
         RemComp<BatteryDrainerComponent>(user);
         RemComp<EmagProviderComponent>(user);
         RemComp<StunProviderComponent>(user);
         RemComp<ResearchStealerComponent>(user);
         RemComp<CommsHackerComponent>(user);
+        RemComp<BorgConverterComponent>(user);
     }
 
     /// <summary>

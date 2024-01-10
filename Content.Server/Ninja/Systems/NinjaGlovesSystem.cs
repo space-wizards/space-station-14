@@ -6,6 +6,7 @@ using Content.Shared.Communications;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Research.Components;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Toggleable;
 
 namespace Content.Server.Ninja.Systems;
@@ -74,6 +75,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         Dirty(uid, comp);
         _ninja.AssignGloves(user, uid, ninja);
 
+        // TODO: compreg for all this shit and define it in gloves yaml
         var drainer = EnsureComp<BatteryDrainerComponent>(user);
         var stun = EnsureComp<StunProviderComponent>(user);
         _stunProvider.SetNoPowerPopup(user, "ninja-no-power", stun);
@@ -94,6 +96,12 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
             var rule = _ninja.NinjaRule(user);
             if (rule != null)
                 _commsHacker.SetThreats(user, rule.Threats, hacker);
+        }
+
+        // same for conversion
+        if (_mind.TryGetObjectiveComp<BorgConversionConditionComponent>(user, out var conv) && !conv.Converted)
+        {
+            EnsureComp<BorgConverterComponent>(user);
         }
     }
 }
