@@ -11032,11 +11032,25 @@ entities:
     - type: Transform
       pos: 12.5,-42.5
       parent: 1
+    - type: DeviceLinkSink
+      links:
+      - 7151
+    - type: DeviceLinkSource
+      linkedPorts:
+        7151:
+        - DoorStatus: DoorBolt
   - uid: 7151
     components:
     - type: Transform
       pos: 12.5,-38.5
       parent: 1
+    - type: DeviceLinkSink
+      links:
+      - 7150
+    - type: DeviceLinkSource
+      linkedPorts:
+        7150:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassLocked
   entities:
   - uid: 932
@@ -11051,8 +11065,6 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         10149:
-        - DoorStatus: Close
-        - DoorStatus: AutoClose
         - DoorStatus: DoorBolt
   - uid: 2250
     components:
@@ -11071,21 +11083,33 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         932:
-        - DoorStatus: AutoClose
         - DoorStatus: DoorBolt
-        - DoorStatus: Close
   - uid: 10150
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -38.5,56.5
       parent: 1
+    - type: DeviceLinkSink
+      links:
+      - 10151
+    - type: DeviceLinkSource
+      linkedPorts:
+        10151:
+        - DoorStatus: DoorBolt
   - uid: 10151
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -38.5,53.5
       parent: 1
+    - type: DeviceLinkSink
+      links:
+      - 10150
+    - type: DeviceLinkSource
+      linkedPorts:
+        10150:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassShuttleArrivals
   entities:
   - uid: 2061
@@ -11262,8 +11286,6 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1694:
-        - DoorStatus: Close
-        - DoorStatus: AutoClose
         - DoorStatus: DoorBolt
 - proto: AirlockFreezerKitchenHydroLocked
   entities:
@@ -11751,8 +11773,6 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         6359:
-        - DoorStatus: Close
-        - DoorStatus: AutoClose
         - DoorStatus: DoorBolt
 - proto: AirlockMaintCargoLocked
   entities:
@@ -124088,11 +124108,6 @@ entities:
     - type: Transform
       pos: -30.5,49.5
       parent: 1
-  - uid: 8551
-    components:
-    - type: Transform
-      pos: 19.5,-3.5
-      parent: 1
   - uid: 8703
     components:
     - type: Transform
@@ -124155,6 +124170,11 @@ entities:
       parent: 1
 - proto: WaterTankHighCapacity
   entities:
+  - uid: 7807
+    components:
+    - type: Transform
+      pos: 19.5,-3.5
+      parent: 1
   - uid: 10114
     components:
     - type: Transform
