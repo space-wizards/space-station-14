@@ -1,0 +1,10 @@
+admin-ui-atmos-add-atmos = Add Atmos
+admin-ui-atmos-add-gas = Add Gas
+admin-ui-atmos-fill-gas = Fill Gas
+admin-ui-atmos-set-tempertature = Set Temperature
+admin-ui-atmos-grid = Grid
+admin-ui-atmos-tile-x = TileX
+admin-ui-atmos-tile-y = TileY
+admin-ui-atmos-gas = Gas
+admin-ui-atmos-amount = Amount
+admin-ui-atmos-temperature = Temperature

@@ -10,6 +10,7 @@ namespace Content.Client.Administration.UI.Tabs.ObjectsTab;
 public sealed partial class ObjectsTab : Control
 {
     [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private readonly ILocalizationManager _localization = default!;
 
     private readonly List<ObjectsTabEntry> _objects = new();
     private List<ObjectsTabSelection> _selections = new();
@@ -30,7 +31,7 @@ public sealed partial class ObjectsTab : Control
         foreach (var type in Enum.GetValues(typeof(ObjectsTabSelection)))
         {
             _selections.Add((ObjectsTabSelection)type!);
-            ObjectTypeOptions.AddItem(Enum.GetName((ObjectsTabSelection)type)!);
+            ObjectTypeOptions.AddItem(_localization.GetString($"admin-ui-objects-tab-selection-{Enum.GetName((ObjectsTabSelection)type)}")!);
         }
 
         RefreshObjectList(_selections[ObjectTypeOptions.SelectedId]);
