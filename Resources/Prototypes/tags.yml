@@ -556,7 +556,10 @@
 
 - type: Tag
   id: Goat
-
+  
+- type: Tag
+  id: GPS
+  
 - type: Tag
   id: Grenade
 

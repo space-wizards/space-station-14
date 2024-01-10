@@ -30,6 +30,7 @@
         - Multitool
         - AppraisalTool
         - JawsOfLife
+        - GPS
       components:
         - SprayPainter
         - NetworkConfigurator
