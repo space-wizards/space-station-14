@@ -78,7 +78,7 @@ public sealed partial class ObjectsTab : Control
         {
             // TODO the server eitehr needs to send the entity's name, or it needs to ensure the client knows about the entity.
             var name = _entityManager.GetComponentOrNull<MetaDataComponent>(entity)?.EntityName ?? "Unknown Entity"; // this should be fixed, so I CBF localizing.
-            var ctrl = new ObjectsTabEntry(name, entity);
+            var ctrl = new ObjectsTabEntry(name, _entityManager.GetNetEntity(entity));
             _objects.Add(ctrl);
             ObjectList.AddChild(ctrl);
             ctrl.OnKeyBindDown += args => OnEntryKeyBindDown?.Invoke(ctrl, args);
