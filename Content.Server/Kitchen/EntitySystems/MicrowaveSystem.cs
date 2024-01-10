@@ -380,7 +380,6 @@ namespace Content.Server.Kitchen.EntitySystems
                 // destroy microwave
                 if (_tag.HasTag(item, "MicrowaveMachineUnsafe") || _tag.HasTag(item, "Metal"))
                 {
-                    _destruction.BreakEntity(uid);
                     if (_tag.HasTag(item, "Metal"))
                     {
                         _explosionSystem.QueueExplosion(uid, "Default", 10, 0.5f, 1, canCreateVacuum: false);
@@ -389,6 +388,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     {
                         _audio.PlayPvs(component.ItemBreakSound, uid);
                     }
+                    _destruction.BreakEntity(uid);
                     return;
                 }
 
