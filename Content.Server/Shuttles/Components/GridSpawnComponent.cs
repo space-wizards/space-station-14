@@ -23,6 +23,16 @@ public record struct GridSpawnGroup
     public int MinCount = 1;
     public int MaxCount = 1;
 
+    /// <summary>
+    /// Hide the IFF of the grid.
+    /// </summary>
+    public bool Hide = false;
+
+    /// <summary>
+    /// Should we set the metadata name of a grid. Useful for admin purposes.
+    /// </summary>
+    public bool NameGrid = false;
+
     public GridSpawnGroup()
     {
     }
