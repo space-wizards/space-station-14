@@ -2041,6 +2041,48 @@ entities:
     - type: Transform
       pos: 5.5,-0.5
       parent: 179
+- proto: SalvageMobSpawner75
+  entities:
+  - uid: 693
+    components:
+    - type: Transform
+      pos: 2.5,4.5
+      parent: 179
+  - uid: 694
+    components:
+    - type: Transform
+      pos: -6.5,2.5
+      parent: 179
+  - uid: 695
+    components:
+    - type: Transform
+      pos: 7.5,13.5
+      parent: 179
+  - uid: 696
+    components:
+    - type: Transform
+      pos: 17.5,13.5
+      parent: 179
+  - uid: 697
+    components:
+    - type: Transform
+      pos: 16.5,5.5
+      parent: 179
+  - uid: 698
+    components:
+    - type: Transform
+      pos: 27.5,2.5
+      parent: 179
+  - uid: 699
+    components:
+    - type: Transform
+      pos: 16.5,-3.5
+      parent: 179
+  - uid: 700
+    components:
+    - type: Transform
+      pos: -3.5,-8.5
+      parent: 179
 - proto: SciFlash
   entities:
   - uid: 675
@@ -2204,6 +2246,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 15.5,16.5
+      parent: 179
+- proto: SpawnMobBearSalvage
+  entities:
+  - uid: 692
+    components:
+    - type: Transform
+      pos: -1.5,3.5
       parent: 179
 - proto: SpearReinforced
   entities:
