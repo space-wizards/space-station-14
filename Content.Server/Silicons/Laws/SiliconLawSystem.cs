@@ -130,8 +130,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         NotifyLawsChanged(uid);
 
         // new laws may allow antagonist behaviour so make it clear for admins
-        if (TryComp<EmagSiliconLawComponent>(uid, out var emag))
-            EnsureEmaggedRole(uid, emag);
+        EnsureEmaggedRole(uid);
     }
 
     private void OnDirectedEmagGetLaws(EntityUid uid, EmagSiliconLawComponent component, ref GetSiliconLawsEvent args)
@@ -209,8 +208,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         _roles.MindTryRemoveRole<SubvertedSiliconRoleComponent>(args.Mind);
     }
 
-    private void EnsureEmaggedRole(EntityUid uid, EmagSiliconLawComponent component)
+    public void EnsureEmaggedRole(EntityUid uid, EmagSiliconLawComponent? component = null)
     {
+        if (!Resolve(uid, ref component, false))
+            return;
+
         if (component.AntagonistRole == null || !_mind.TryGetMind(uid, out var mindId, out _))
             return;
 
