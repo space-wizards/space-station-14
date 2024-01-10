@@ -35,6 +35,9 @@
     bonkSound: !type:SoundCollectionSpecifier
       collection: TrayHit
   - type: Clickable
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHull
 
 - type: entity
   id: CounterBase

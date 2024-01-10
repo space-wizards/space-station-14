@@ -12,19 +12,23 @@
 - type: damageModifierSet
   id: StructuralMetallicStrong
   coefficients:
+    Blunt: 0.5
+    Slash: 0.5
+    Piercing: 0.5
     Shock: 1.2
-    Structural: 0.5
+    Structural: 0.25
   flatReductions:
-    Blunt: 20
-    Slash: 20
-    Piercing: 20
-    Heat: 20
-    Structural: 15
+    Blunt: 10
+    Slash: 10
+    Piercing: 10
+    Heat: 10
+    Structural: 10
 
 - type: damageModifierSet
   id: StructuralMetallic
   coefficients:
     Shock: 1.2
+    Heat: 1.2
     Structural: 0.5
   flatReductions:
     Blunt: 10
@@ -32,6 +36,17 @@
     Piercing: 10
     Heat: 10
     Structural: 10
+
+- type: damageModifierSet
+  id: Rock
+  coefficients:
+    Structural: 4
+    Blunt: 0.5
+    Slash: 0.25
+    Piercing: 0.75
+    Heat: 0.9
+  flatReductions:
+    Blunt: 5
 
 - type: damageModifierSet
   id: PerforatedMetallic
@@ -63,9 +78,9 @@
     Piercing: 0.7
     Shock: 1.2
   flatReductions:
-    Blunt: 14
-    Slash: 15
-    Piercing: 15
+    Blunt: 10
+    Slash: 10
+    Piercing: 10
     Shock: 10
     Heat: 10
 
