@@ -28,7 +28,6 @@ namespace Content.Shared.Toilet
         [DataField, AutoNetworkedField]
         public bool ToggleLid;
 
-
         /// <summary>
         /// Prying the lid.
         /// </summary>
