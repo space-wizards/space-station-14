@@ -263,7 +263,7 @@ public sealed class NewsSystem : EntitySystem
         if (!TryGetArticles(uid, out var articles))
             return;
 
-        if (msg.ArticleNum > articles.Count)
+        if (msg.ArticleNum >= articles.Count)
             return;
 
         var article = articles[msg.ArticleNum];

@@ -3,6 +3,17 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Controls;
 
+/// <summary>
+/// A Button that requires a second click to actually invoke its OnPressed action. <br/>
+/// When clicked once it will change rendering modes to be prefixed by <see cref="ConfirmPrefix"/>
+/// and displays <see cref="ConfirmationText"/> on the button instead of <see cref="Text"/>.<br/>
+/// <br/>
+/// After the first click <see cref="CooldownTime"/> needs to elapse before it can be clicked again to confirm.<br/>
+/// When the button doesn't get clicked a second time before <see cref="ResetTime"/> passes it changes back to its normal state.<br/>
+/// </summary>
+/// <remarks>
+/// Colors for the different states need to be set in the stylesheet
+/// </remarks>
 public sealed class ConfirmButton : Button
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -35,7 +46,7 @@ public sealed class ConfirmButton : Button
     }
 
     /// <summary>
-    ///
+    /// The text displayed on the button when waiting for a second click
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public string ConfirmationText
@@ -45,20 +56,17 @@ public sealed class ConfirmButton : Button
     }
 
     /// <summary>
-    ///
+    /// The time until the button reverts to normal
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan ResetTime { get; set; } = TimeSpan.FromSeconds(2);
 
     /// <summary>
-    ///
+    /// The time until the button accepts a second click. This is to prevent accidentally confirming the button
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan CooldownTime { get; set; } = TimeSpan.FromSeconds(.5);
 
-    /// <summary>
-    ///
-    /// </summary>
     [ViewVariables]
     public bool IsConfirming = false;
 

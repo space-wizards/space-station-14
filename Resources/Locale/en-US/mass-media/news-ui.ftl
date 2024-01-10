@@ -1,5 +1,7 @@
-news-read-ui-next-text = Next
-news-read-ui-past-text = Past
+news-read-ui-next-text = ▶
+news-read-ui-prev-text = ◀
+news-read-ui-next-tooltip = Next
+news-read-ui-prev-tooltip = Prev
 news-read-ui-default-title = Station News
 news-read-ui-not-found-text = No articles found
 news-read-ui-time-prefix-text = Publication time:

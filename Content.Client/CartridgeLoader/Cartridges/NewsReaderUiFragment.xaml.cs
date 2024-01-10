@@ -44,6 +44,9 @@ public sealed partial class NewsReaderUiFragment : BoxContainer
         ShareTime.SetMarkup(Loc.GetString("news-read-ui-time-prefix-text") + " " + shareTime);
 
         Author.SetMarkup(Loc.GetString("news-read-ui-author-prefix") + " " + (article.Author != null ? article.Author : Loc.GetString("news-read-ui-no-author")));
+
+        Prev.Disabled = targetNum <= 1;
+        Next.Disabled = targetNum >= totalNum;
     }
 
     public void UpdateEmptyState(bool notificationOn)

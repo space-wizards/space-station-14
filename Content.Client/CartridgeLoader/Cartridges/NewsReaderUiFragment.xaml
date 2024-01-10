@@ -7,15 +7,19 @@
         <Button
             Name="Prev"
             MinWidth="64"
+            Disabled="True"
             HorizontalAlignment="Left"
-            Text="{Loc 'news-read-ui-past-text'}"
+            Text="{Loc 'news-read-ui-prev-text'}"
+            ToolTip="{Loc 'news-read-ui-prev-tooltip'}"
             Access="Public"
             HorizontalExpand="True"/>
         <Button
             Name="Next"
             MinWidth="64"
+            Disabled="True"
             HorizontalAlignment="Right"
-            Text="{Loc 'news-read-ui-next-text'}" />
+            Text="{Loc 'news-read-ui-next-text'}"
+            ToolTip="{Loc 'news-read-ui-next-tooltip'}"/>
     </BoxContainer>
     <controls:StripeBack Name="АrticleNameContainer">
         <PanelContainer>
