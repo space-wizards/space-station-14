@@ -13,10 +13,6 @@
   - type: Physics
     bodyType: Static
   - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      machine_board: !type:ContainerSlot
-      machine_parts: !type:ContainerSlot
   - type: Fixtures
     fixtures:
       fix1:
@@ -31,7 +27,6 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Electronic
-  - type: Gun
   - type: Destructible
     thresholds:
     - trigger:
@@ -79,6 +74,16 @@
     - state: mag-unshaded-9
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded  
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+      machine_parts: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
   - type: Destructible
     thresholds:
     - trigger:
@@ -132,6 +137,16 @@
     - state: mag-unshaded-9
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+      machine_parts: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
   - type: Destructible
     thresholds:
     - trigger:
@@ -188,6 +203,16 @@
     - state: exp-320g
     - state: mag-7
       map: ["enum.GunVisualLayers.Mag"]
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+      machine_parts: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
   - type: Destructible
     thresholds:
     - trigger:
@@ -241,6 +266,16 @@
     - state: exp-2100g
     - state: mag-7
       map: ["enum.GunVisualLayers.Mag"]
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+      machine_parts: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
   - type: Destructible
     thresholds:
     - trigger:
@@ -324,7 +359,7 @@
 
 - type: entity
   id: ShuttleGunKineticCannon
-  #parent: ShuttleGunBase are not inherited because a pirate cannon can't be assembled from a circuit board.
+  parent: [ ShuttleGunBase, ConstructibleMachine]
   name: PTK-800 "Matter Dematerializer"
   description: Salvage stationary mining turret. Gradually accumulates charges on its own, extremely effective for asteroid excavation.
   components:
@@ -333,6 +368,16 @@
     layers:
     - state: ptk-800
     - state: mag-7
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+      machine_parts: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
   - type: Destructible
     thresholds:
     - trigger:

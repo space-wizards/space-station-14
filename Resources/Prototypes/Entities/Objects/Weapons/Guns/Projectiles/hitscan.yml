@@ -124,6 +124,7 @@
 
 - type: hitscan
   id: RedShuttleLaser
+  maxLength: 60
   damage:
     types:
       Heat: 45
