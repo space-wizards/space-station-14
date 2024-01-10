@@ -46,7 +46,7 @@
   group: Biological
   desc: reagent-desc-insect-blood
   flavor: horrible
-  color: "#50683C"
+  color: "#808A51"
   recognizable: true
   physicalDesc: reagent-physical-desc-slimy
   slippery: false
