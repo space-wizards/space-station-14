@@ -11,13 +11,24 @@ tilemap:
 entities:
 - proto: ""
   entities:
+  - uid: 1
+    components:
+    - type: MetaData
+      name: map 21
+    - type: Transform
+    - type: Map
+    - type: PhysicsMap
+    - type: GridTree
+    - type: MovedGrids
+    - type: Broadphase
+    - type: OccluderTree
   - uid: 2
     components:
     - type: MetaData
       name: Cargo shuttle
     - type: Transform
       pos: -1.828125,2.078125
-      parent: invalid
+      parent: 1
     - type: MapGrid
       chunks:
         0,0:
@@ -184,6 +195,28 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-7.5
+      parent: 2
+- proto: AtmosDeviceFanTiny
+  entities:
+  - uid: 139
+    components:
+    - type: Transform
+      pos: -0.5,-2.5
+      parent: 2
+  - uid: 140
+    components:
+    - type: Transform
+      pos: -0.5,-1.5
+      parent: 2
+  - uid: 141
+    components:
+    - type: Transform
+      pos: -0.5,-4.5
+      parent: 2
+  - uid: 142
+    components:
+    - type: Transform
+      pos: -0.5,-5.5
       parent: 2
 - proto: BlastDoor
   entities:
