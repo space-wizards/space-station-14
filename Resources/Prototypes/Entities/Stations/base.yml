@@ -77,8 +77,9 @@
             - /Maps/Ruins/derelict.yml
             - /Maps/Ruins/djstation.yml
             - /Maps/Ruins/relaystation.yml
-            - /Maps/Ruins/whiteship.yml
+            - /Maps/Ruins/whiteship_old.yml
             - /Maps/Ruins/old_ai_sat.yml
+            - /Maps/Ruins/whiteship_bluespacejumper.yml
 
 - type: entity
   id: BaseStationCentcomm
