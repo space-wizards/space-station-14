@@ -60,6 +60,8 @@
     interfaces:
       - key: enum.IntercomUiKey.Key
         type: IntercomBoundUserInterface
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
   - type: Construction
     graph: Intercom
     node: intercom
