@@ -12,16 +12,11 @@ public sealed class ImplanterSystem : SharedImplanterSystem
         base.Initialize();
 
         SubscribeLocalEvent<ImplanterComponent, AfterAutoHandleStateEvent>(OnHandleImplanterState);
-        SubscribeLocalEvent<ImplanterComponent, ItemStatusCollectMessage>(OnItemImplanterStatus);
+        Subs.ItemStatus<ImplanterComponent>(ent => new ImplanterStatusControl(ent));
     }
 
     private void OnHandleImplanterState(EntityUid uid, ImplanterComponent component, ref AfterAutoHandleStateEvent args)
     {
         component.UiUpdateNeeded = true;
-    }
-
-    private void OnItemImplanterStatus(EntityUid uid, ImplanterComponent component, ItemStatusCollectMessage args)
-    {
-        args.Controls.Add(new ImplanterStatusControl(component));
     }
 }

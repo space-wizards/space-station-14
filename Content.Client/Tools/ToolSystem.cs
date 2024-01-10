@@ -16,8 +16,8 @@ namespace Content.Client.Tools
             base.Initialize();
 
             SubscribeLocalEvent<WelderComponent, ComponentHandleState>(OnWelderHandleState);
-            SubscribeLocalEvent<WelderComponent, ItemStatusCollectMessage>(OnWelderGetStatusMessage);
-            SubscribeLocalEvent<MultipleToolComponent, ItemStatusCollectMessage>(OnGetStatusMessage);
+            Subs.ItemStatus<WelderComponent>(ent => new WelderStatusControl(ent));
+            Subs.ItemStatus<MultipleToolComponent>(ent => new MultipleToolStatusControl(ent));
         }
 
         public override void SetMultipleTool(EntityUid uid,
@@ -41,16 +41,6 @@ namespace Content.Client.Tools
                 if (current.Sprite != null)
                     sprite.LayerSetSprite(0, current.Sprite);
             }
-        }
-
-        private void OnGetStatusMessage(EntityUid uid, MultipleToolComponent welder, ItemStatusCollectMessage args)
-        {
-            args.Controls.Add(new MultipleToolStatusControl(welder));
-        }
-
-        private void OnWelderGetStatusMessage(EntityUid uid, WelderComponent component, ItemStatusCollectMessage args)
-        {
-            args.Controls.Add(new WelderStatusControl(component, uid));
         }
 
         private void OnWelderHandleState(EntityUid uid, WelderComponent welder, ref ComponentHandleState args)
