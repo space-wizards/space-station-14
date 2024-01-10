@@ -1,4 +1,5 @@
 ﻿using Content.Server.Power.EntitySystems;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Power.Components
 {
@@ -7,7 +8,7 @@ namespace Content.Server.Power.Components
     public sealed partial class ExtensionCableReceiverComponent : Component
     {
         [ViewVariables]
-        public ExtensionCableProviderComponent? Provider { get; set; }
+        public Entity<ExtensionCableProviderComponent>? Provider { get; set; }
 
         [ViewVariables]
         public bool Connectable = false;
@@ -18,5 +19,8 @@ namespace Content.Server.Power.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("receptionRange")]
         public int ReceptionRange { get; set; } = 3;
+
+        [ViewVariables]
+        public GameTick ProviderConnectedTick { get; set; } = GameTick.Zero;
     }
 }
