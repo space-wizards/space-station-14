@@ -53,6 +53,7 @@
           - /Maps/Shuttles/mining.yml
         ruins:
           hide: true
+          nameGrid: true
           minCount: 2
           maxCount: 2
           paths:
@@ -79,6 +80,7 @@
           - /Maps/Shuttles/mining.yml
         ruins:
           hide: true
+          nameGrid: true
           minCount: 2
           maxCount: 2
           paths:

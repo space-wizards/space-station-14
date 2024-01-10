@@ -28,6 +28,11 @@ public record struct GridSpawnGroup
     /// </summary>
     public bool Hide = false;
 
+    /// <summary>
+    /// Should we set the metadata name of a grid. Useful for admin purposes.
+    /// </summary>
+    public bool NameGrid = false;
+
     public GridSpawnGroup()
     {
     }

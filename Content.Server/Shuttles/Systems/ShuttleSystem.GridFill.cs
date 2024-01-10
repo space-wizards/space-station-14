@@ -104,6 +104,12 @@ public sealed partial class ShuttleSystem
                     {
                         valid = false;
                     }
+
+                    if (group.NameGrid)
+                    {
+                        var name = path.FilenameWithoutExtension;
+                        _metadata.SetEntityName(ent[0], name);
+                    }
                 }
                 else
                 {
