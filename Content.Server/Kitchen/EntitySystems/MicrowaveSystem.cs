@@ -1,6 +1,7 @@
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Construction;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Hands.Systems;
@@ -45,6 +46,8 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly RecipeManager _recipeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedDestructibleSystem _destruction = default!;
+        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
         [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly TagSystem _tag = default!;
@@ -69,7 +72,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             SubscribeLocalEvent<MicrowaveComponent, SignalReceivedEvent>(OnSignalReceived);
 
-            SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u, c, m) => Wzhzhzh(u, c, m.Session.AttachedEntity));
+            SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u, c, m) => StartCooking(u, c, m.Session.AttachedEntity));
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectMessage);
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectSolidIndexedMessage>(OnEjectIndex);
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveSelectCookTimeMessage>(OnSelectTime);
@@ -230,7 +233,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             _audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVolume(-2));
             ent.Comp.CurrentCookTimerTime = 10;
-            Wzhzhzh(ent.Owner, ent.Comp, args.Victim);
+            StartCooking(ent.Owner, ent.Comp, args.Victim);
             UpdateUserInterfaceState(ent.Owner, ent.Comp);
         }
 
@@ -293,7 +296,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnAnchorChanged(EntityUid uid, MicrowaveComponent component, ref AnchorStateChangedEvent args)
         {
-            if(!args.Anchored)
+            if (!args.Anchored)
                 _sharedContainer.EmptyContainer(component.Storage);
         }
 
@@ -316,7 +319,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (ent.Comp.Broken || !_power.IsPowered(ent))
                 return;
 
-            Wzhzhzh(ent.Owner, ent.Comp, null);
+            StartCooking(ent.Owner, ent.Comp, null);
         }
 
         public void UpdateUserInterfaceState(EntityUid uid, MicrowaveComponent component)
@@ -353,7 +356,7 @@ namespace Content.Server.Kitchen.EntitySystems
         /// It does not make a "wzhzhzh" sound, it makes a "mmmmmmmm" sound!
         /// -emo
         /// </remarks>
-        public void Wzhzhzh(EntityUid uid, MicrowaveComponent component, EntityUid? user)
+        public void StartCooking(EntityUid uid, MicrowaveComponent component, EntityUid? user)
         {
             if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid) || !(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
                 return;
@@ -377,9 +380,15 @@ namespace Content.Server.Kitchen.EntitySystems
                 // destroy microwave
                 if (_tag.HasTag(item, "MicrowaveMachineUnsafe") || _tag.HasTag(item, "Metal"))
                 {
-                    component.Broken = true;
-                    SetAppearance(uid, MicrowaveVisualState.Broken, component);
-                    _audio.PlayPvs(component.ItemBreakSound, uid);
+                    _destruction.BreakEntity(uid);
+                    if (_tag.HasTag(item, "Metal"))
+                    {
+                        _explosionSystem.QueueExplosion(uid, "Default", 10, 0.5f, 1, canCreateVacuum: false);
+                    }
+                    else
+                    {
+                        _audio.PlayPvs(component.ItemBreakSound, uid);
+                    }
                     return;
                 }
 
