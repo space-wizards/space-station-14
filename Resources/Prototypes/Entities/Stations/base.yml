@@ -53,6 +53,8 @@
           - /Maps/Shuttles/mining.yml
         ruins:
           hide: true
+          minCount: 2
+          maxCount: 2
           paths:
           - /Maps/Ruins/derelict.yml
           - /Maps/Ruins/djstation.yml
@@ -77,6 +79,8 @@
           - /Maps/Shuttles/mining.yml
         ruins:
           hide: true
+          minCount: 2
+          maxCount: 2
           paths:
           - /Maps/Ruins/derelict.yml
           - /Maps/Ruins/djstation.yml
