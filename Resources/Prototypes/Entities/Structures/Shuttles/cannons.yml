@@ -5,6 +5,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Appearance
   - type: Clickable
   - type: InteractionOutline
   - type: Anchorable
@@ -27,20 +28,8 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Electronic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
   - type: Transform
     anchored: true
-  - type: Sprite
-    sprite: Structures/Power/Generation/Singularity/emitter.rsi
-    layers:
-    - state: emitter1
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -53,7 +42,6 @@
     - On
     - Off
   - type: GunSignalControl
-  - type: AmmoCounter
   - type: StaticPrice
     price: 1500
 
@@ -109,7 +97,6 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: PowerCellSmall
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:
@@ -117,7 +104,6 @@
             - PowerCell
             - PowerCellSmall
   - type: MagazineAmmoProvider
-  - type: Appearance
 
 - type: entity
   id: ShuttleGunPerforator
@@ -167,26 +153,23 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: PowerCageSmall
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:
           tags:
             - PowerCage
   - type: MagazineAmmoProvider
-  - type: Appearance
 
 # ---- Launchers ----
 # naming: EXP (Explosion) + conventional power + suffix (g for Grenade, c for RPG Cartridge) + Name
 # example: EXP-100c "Poppy"
 
 - type: entity
-  id: ShuttleGunLauncherFriendship
+  id: ShuttleGunFriendship
   parent: [ShuttleGunBase, ConstructibleMachine]
   name: EXP-320g "Friendship"
   description: A small stationary grenade launcher that holds 2 grenades.
   components:
-  - type: Appearance
   - type: Sprite
     sprite: Structures/Shuttles/Guns/launcher.rsi
     layers:
@@ -239,12 +222,11 @@
     zeroVisible: false
 
 - type: entity
-  id: ShuttleGunLauncherDuster
+  id: ShuttleGunDuster
   parent: [ShuttleGunBase, ConstructibleMachine]
   name: EXP-2100g "Duster"
   description: A powerful stationary grenade launcher. A cartridge is required for use. 
   components:
-  - type: Appearance
   - type: Sprite
     sprite: Structures/Shuttles/Guns/launcher.rsi
     layers:
@@ -275,6 +257,7 @@
     soundGunshot:
       path: /Audio/Items/Mining/fultext_launch.ogg
       params: 
+        variation: 0.05
         pitch: 0.8
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
@@ -289,7 +272,6 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineGrenadeEmpty
         priority: 2
         whitelist:
           tags:
@@ -341,7 +323,7 @@
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
 
 - type: entity
-  id: ShuttleGunKineticCannon
+  id: ShuttleGunKinetic
   parent: [ ShuttleGunBase, ConstructibleMachine]
   name: PTK-800 "Matter Dematerializer"
   description: Salvage stationary mining turret. Gradually accumulates charges on its own, extremely effective for asteroid excavation.

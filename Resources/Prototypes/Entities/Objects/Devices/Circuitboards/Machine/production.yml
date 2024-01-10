@@ -1258,13 +1258,13 @@
 - type: entity
   id: ShuttleGunSvalinnMachineGunCircuitboard
   parent: BaseMachineCircuitboard
-  name: LSE-400c "Svalinn machine gun" circuit board
+  name: LSE-400c "Svalinn machine gun" machine board
   description: A machine printed circuit board for an LSE-400c "Svalinn machine gun"
   components:
   - type: Sprite
     state: security
   - type: MachineBoard
-    prototype: ShuttleGunLSESvalinnMachineGun
+    prototype: ShuttleGunSvalinnMachineGun
     requirements:
       MatterBin: 2
       Manipulator: 4
@@ -1275,13 +1275,13 @@
 - type: entity
   id: ShuttleGunPerforatorCircuitboard
   parent: BaseMachineCircuitboard
-  name: LSE-1200c "Perforator" circuit board
+  name: LSE-1200c "Perforator" machine board
   description: A machine printed circuit board for an LSE-1200c "Perforator"
   components:
   - type: Sprite
     state: security
   - type: MachineBoard
-    prototype: ShuttleGunLSEPerforator
+    prototype: ShuttleGunPerforator
     requirements:
       MatterBin: 4
       Manipulator: 6
@@ -1290,32 +1290,15 @@
       CableHV: 5
       
 - type: entity
-  id: ShuttleGunKineticCircuitboard
-  parent: BaseMachineCircuitboard
-  name: PTK-800 "Matter Dematerializer" circuit board
-  description: A machine printed circuit board for an PTK-800 "Matter Dematerializer"
-  components:
-  - type: Sprite
-    state: security
-  - type: MachineBoard
-    prototype: ShuttleGunKineticCannon
-    requirements:
-      MatterBin: 2
-      Manipulator: 3
-    materialRequirements:
-      Steel: 5
-      CableHV: 2
-      
-- type: entity
   id: ShuttleGunFriendshipCircuitboard
   parent: BaseMachineCircuitboard
-  name: EXP-320g "Friendship" circuit board
+  name: EXP-320g "Friendship" machine board
   description: A machine printed circuit board for an EXP-320g "Friendship"
   components:
   - type: Sprite
     state: security
   - type: MachineBoard
-    prototype: ShuttleGunLauncherFriendship
+    prototype: ShuttleGunFriendship
     requirements:
       MatterBin: 3
       Manipulator: 2
@@ -1326,13 +1309,13 @@
 - type: entity
   id: ShuttleGunDusterCircuitboard
   parent: BaseMachineCircuitboard
-  name: EXP-2100g "Duster" circuit board
+  name: EXP-2100g "Duster" machine board
   description: A machine printed circuit board for an EXP-2100g "Duster"
   components:
   - type: Sprite
     state: security
   - type: MachineBoard
-    prototype: ShuttleGunLauncherDuster
+    prototype: ShuttleGunDuster
     requirements:
       MatterBin: 6
       Manipulator: 4
@@ -1340,3 +1323,21 @@
       Steel: 10
       CableHV: 5
       Uranium: 2
+      
+- type: entity
+  id: ShuttleGunKineticCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PTK-800 "Matter Dematerializer" machine board
+  description: A machine printed circuit board for an PTK-800 "Matter Dematerializer"
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunKinetic
+    requirements:
+      MatterBin: 2
+      Manipulator: 3
+    materialRequirements:
+      Steel: 5
+      CableHV: 2
+      
