@@ -125,6 +125,10 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 else:
                     content.write(f"{emoji} - {message}\n")
     
+    if count == 0:
+        print("Skipping discord push as no changelog entries found")
+        return
+
     print(f"Posting {count} changelog entries to discord webhook")
 
     body = {
