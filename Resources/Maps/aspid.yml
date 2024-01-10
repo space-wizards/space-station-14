@@ -88463,7 +88463,7 @@ entities:
     - type: Transform
       pos: -37.5,30.5
       parent: 1
-  - uid: 7806
+  - uid: 1777
     components:
     - type: Transform
       pos: -39.5,30.5
@@ -108623,7 +108623,7 @@ entities:
     - type: Transform
       pos: -8.5,-11.5
       parent: 1
-  - uid: 7807
+  - uid: 7806
     components:
     - type: Transform
       pos: -40.5,28.5
@@ -124233,13 +124233,6 @@ entities:
     components:
     - type: Transform
       pos: -11.5,60.5
-      parent: 1
-- proto: WeaponCrusherGlaive
-  entities:
-  - uid: 1777
-    components:
-    - type: Transform
-      pos: -41.696693,21.56326
       parent: 1
 - proto: WeaponDisabler
   entities:
