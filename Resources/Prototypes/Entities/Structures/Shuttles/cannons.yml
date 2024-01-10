@@ -147,6 +147,10 @@
         showEnts: False
         occludes: True
         ents: []
+      gun_magazine: !type:Container
+        showEnts: False
+        occludes: True
+        ent: null
   - type: Destructible
     thresholds:
     - trigger:
@@ -213,6 +217,10 @@
         showEnts: False
         occludes: True
         ents: []
+      ballistic-ammo: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
   - type: Destructible
     thresholds:
     - trigger:
@@ -276,6 +284,10 @@
         showEnts: False
         occludes: True
         ents: []
+      gun_magazine: !type:Container
+        showEnts: False
+        occludes: True
+        ent: null
   - type: Destructible
     thresholds:
     - trigger:
@@ -328,6 +340,12 @@
   name: pirate ship cannon
   description: Kaboom!
   components:   
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
