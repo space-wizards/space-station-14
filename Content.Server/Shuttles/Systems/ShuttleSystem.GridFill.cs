@@ -88,6 +88,15 @@ public sealed partial class ShuttleSystem
 
                 if (_loader.TryLoad(mapId, path.ToString(), out var ent) && ent.Count == 1)
                 {
+                    if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
+                    {
+                        TryFTLProximity(ent[0], shuttle, targetGrid.Value);
+                    }
+                    else
+                    {
+                        valid = false;
+                    }
+
                     if (group.Hide)
                     {
                         var iffComp = EnsureComp<IFFComponent>(ent[0]);
@@ -95,14 +104,9 @@ public sealed partial class ShuttleSystem
                         Dirty(ent[0], iffComp);
                     }
 
-                    if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
+                    if (group.StationGrid)
                     {
-                        TryFTLProximity(ent[0], shuttle, targetGrid.Value);
                         _station.AddGridToStation(uid, ent[0]);
-                    }
-                    else
-                    {
-                        valid = false;
                     }
 
                     if (group.NameGrid)

@@ -56,6 +56,7 @@
           nameGrid: true
           minCount: 2
           maxCount: 2
+          stationGrid: false
           paths:
           - /Maps/Ruins/derelict.yml
           - /Maps/Ruins/djstation.yml
@@ -83,6 +84,7 @@
           nameGrid: true
           minCount: 2
           maxCount: 2
+          stationGrid: false
           paths:
           - /Maps/Ruins/derelict.yml
           - /Maps/Ruins/djstation.yml
