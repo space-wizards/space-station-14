@@ -2,10 +2,11 @@
   id: StasisBed
   name: stasis bed
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  description: A bed that massively slows down the patient's metabolism, allowing more time to administer a proper treatment for stabilization.
+  description: A bed that massively slows down the patient's metabolism and prevents bodily decay, allowing more time to administer a proper treatment for stabilization.
   components:
   - type: StasisBed
     baseMultiplier: 10
+  - type: AntiRotOnBuckle
   - type: Sprite
     sprite: Structures/Machines/stasis_bed.rsi
     noRot: true

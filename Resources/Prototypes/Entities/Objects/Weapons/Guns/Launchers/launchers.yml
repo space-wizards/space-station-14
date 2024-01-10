@@ -240,7 +240,6 @@
     - type: Gun
       soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
       fireRate: 0.5
-    - type: RechargeCycleAmmo
     - type: BasicEntityAmmoProvider
       proto: GrapplingHook
       capacity: 1

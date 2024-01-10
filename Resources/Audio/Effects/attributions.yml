@@ -193,9 +193,9 @@
   source: https://github.com/vgstation-coders/vgstation13/tree/c5edbfd7179288080f081e2b8ac2496b7e4455db/sound/effects
 
 - files: [Smoke-grenade.ogg]
-  copyright: 'Sound effects from https://quicksounds.com"'
+  copyright: Bhijn and Myr (github username deathride58)
   license: CC0-1.0
-  source: https://quicksounds.com/library/sounds/grenade
+  source: https://github.com/space-wizards/space-station-14/pull/23476
 
 - files: ["eye_open.ogg", "eye_close.ogg"]
   copyright: Bhijn and Myr (github username deathride58)

@@ -1,0 +1,40 @@
+﻿- type: entity
+  id: WallSpawnAsteroid
+  components:
+  - type: Transform
+    anchored: True
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: /Textures/Effects/rockspawn.rsi
+    state: asteroid
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
+  - type: TimedDespawn
+    lifetime: 2.4
+  - type: SpawnOnDespawn
+    prototype: AsteroidRock
+
+- type: entity
+  id: WallSpawnAsteroidCrab
+  parent: WallSpawnAsteroid
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockCrab
+
+- type: entity
+  id: WallSpawnAsteroidCrab1
+  parent: WallSpawnAsteroid
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockCrab1

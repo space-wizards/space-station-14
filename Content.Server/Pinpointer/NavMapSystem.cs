@@ -154,6 +154,9 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
     private void OnNavMapSplit(ref GridSplitEvent args)
     {
+        if (!TryComp(args.Grid, out NavMapComponent? comp))
+            return;
+
         var gridQuery = GetEntityQuery<MapGridComponent>();
 
         foreach (var grid in args.NewGrids)
@@ -162,7 +165,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
             RefreshGrid(newComp, gridQuery.GetComponent(grid));
         }
 
-        RefreshGrid(Comp<NavMapComponent>(args.Grid), gridQuery.GetComponent(args.Grid));
+        RefreshGrid(comp, gridQuery.GetComponent(args.Grid));
     }
 
     private void RefreshGrid(NavMapComponent component, MapGridComponent grid)

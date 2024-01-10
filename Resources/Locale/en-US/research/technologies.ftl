@@ -56,9 +56,11 @@ research-technology-anomaly-harnessing = Anomaly Core Harnessing
 research-technology-grappling = Grappling
 research-technology-abnormal-artifact-manipulation = Abnormal Artifact Manipulation
 research-technology-gravity-manipulation = Gravity Manipulation
+research-technology-quantum-leaping = Quantum Leaping
 research-technology-advanced-anomaly-research = Advanced Anomaly Research
 research-technology-rped = Rapid Part Exchange
 research-technology-super-parts = Super Parts
+research-technology-deterrence = Deterrence Technologies
 
 research-technology-janitorial-equipment = Janitorial Equipment
 research-technology-laundry-tech = Laundry Tech

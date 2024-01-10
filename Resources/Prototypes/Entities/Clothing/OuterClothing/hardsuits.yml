@@ -156,6 +156,37 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
 
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitMaxim
+  name: salvager maxim hardsuit
+  description: Fire. Heat. These things forge great weapons, they also forge great salvagers.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/maxim.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/maxim.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.5
+        Heat: 0.3
+        Radiation: 0.1
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMaxim
+
 #Security Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase

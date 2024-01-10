@@ -339,7 +339,7 @@
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
-          reagent: 
+          reagent: HeartbreakerToxin
           min: 1
         reagent: Epinephrine
         amount: -1
