@@ -17,15 +17,23 @@ public sealed partial class StationRecordSet
     [DataField("currentRecordId")]
     private uint _currentRecordId;
 
-    // TODO add custom type serializer so that keys don't have to be written twice.
-    // might not be needed anymore???
-    [DataField("keys")]
+    /// <summary>
+    /// Every key id that has a record(s) stored.
+    /// Presumably this is faster than iterating the dictionary to check if any tables have a key.
+    /// </summary>
+    [DataField]
     public HashSet<uint> Keys = new();
 
-    [DataField("recentlyAccessed")]
+    /// <summary>
+    /// Recently accessed key ids which are used to synchronize them efficiently.
+    /// </summary>
+    [DataField]
     private HashSet<uint> _recentlyAccessed = new();
 
-    [DataField("tables")] // TODO ensure all of this data is serializable.
+    /// <summary>
+    /// Dictionary between a record's type and then each record indexed by id.
+    /// </summary>
+    [DataField]
     private Dictionary<Type, Dictionary<uint, object>> _tables = new();
 
     /// <summary>
@@ -54,7 +62,8 @@ public sealed partial class StationRecordSet
     }
 
     /// <summary>
-    ///     Create a new record with an entry.
+    /// Create a new record with an entry.
+    /// Returns an id that can only be used to access the record for this station.
     /// </summary>
     /// <param name="entry">Entry to add.</param>
     /// <typeparam name="T">Type of the entry that's being added.</typeparam>
@@ -71,7 +80,7 @@ public sealed partial class StationRecordSet
     /// <summary>
     ///     Add an entry into an existing record.
     /// </summary>
-    /// <param name="key">Key for the record.</param>
+    /// <param name="key">Key id for the record.</param>
     /// <param name="entry">Entry to add.</param>
     /// <typeparam name="T">Type of the entry that's being added.</typeparam>
     public void AddRecordEntry<T>(uint key, T entry)
