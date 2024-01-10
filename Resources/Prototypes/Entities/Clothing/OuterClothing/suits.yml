@@ -114,7 +114,10 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
   - type: GroupExamine
-
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodRad
+    slot: head
+    
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterSuitSpaceNinja
