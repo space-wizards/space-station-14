@@ -57,6 +57,7 @@
           - /Maps/Ruins/djstation.yml
           - /Maps/Ruins/relaystation.yml
           - /Maps/Ruins/whiteship.yml
+          - /Maps/Ruins/old_ai_sat.yml
 
 
 - type: entity
@@ -77,6 +78,7 @@
             - /Maps/Ruins/djstation.yml
             - /Maps/Ruins/relaystation.yml
             - /Maps/Ruins/whiteship.yml
+            - /Maps/Ruins/old_ai_sat.yml
 
 - type: entity
   id: BaseStationCentcomm
