@@ -138,10 +138,10 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
             }
 
         # Post per group to try to avoid discord character limits
+        print(f"Posting {count} changelog entries to discord webhook")
+
         response = requests.post(DISCORD_WEBHOOK_URL, json=body)
         response.raise_for_status()
     
-        print(f"Posting {count} changelog entries to discord webhook")
-
 
 main()
