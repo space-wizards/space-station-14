@@ -136,9 +136,6 @@ public sealed class TurnstileSystem : EntitySystem
         var query = EntityQueryEnumerator<TurnstileComponent, ActiveTurnstileMarkerComponent>();
         while (query.MoveNext(out var uid, out var turnstile, out _))
         {
-            if (Paused(uid))
-                continue;
-
             SetCollidable(uid, true);
             StopRotatingIfEntityPassed((uid, turnstile));
         }
