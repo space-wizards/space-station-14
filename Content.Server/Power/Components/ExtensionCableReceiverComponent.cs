@@ -20,7 +20,7 @@ namespace Content.Server.Power.Components
         [DataField("receptionRange")]
         public int ReceptionRange { get; set; } = 3;
 
-        [ViewVariables]
-        public GameTick ProviderConnectedTick { get; set; } = GameTick.Zero;
+        [NonSerialized]
+        public GameTick ProviderConnectedTick = GameTick.Zero;
     }
 }
