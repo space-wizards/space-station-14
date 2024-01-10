@@ -10453,21 +10453,11 @@ entities:
       parent: 30
 - proto: AirlockExternalGlassShuttleEscape
   entities:
-  - uid: 1083
-    components:
-    - type: Transform
-      pos: -52.5,-10.5
-      parent: 30
   - uid: 3701
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 25.5,43.5
-      parent: 30
-  - uid: 9041
-    components:
-    - type: Transform
-      pos: -59.5,-10.5
       parent: 30
 - proto: AirlockExternalGlassShuttleLocked
   entities:
@@ -13906,20 +13896,10 @@ entities:
     - type: Transform
       pos: -59.5,-7.5
       parent: 30
-  - uid: 868
-    components:
-    - type: Transform
-      pos: -59.5,-10.5
-      parent: 30
   - uid: 3707
     components:
     - type: Transform
       pos: 25.5,43.5
-      parent: 30
-  - uid: 4353
-    components:
-    - type: Transform
-      pos: -52.5,-10.5
       parent: 30
   - uid: 9121
     components:
@@ -128550,6 +128530,13 @@ entities:
     - type: Transform
       pos: -50.5,11.5
       parent: 30
+  - uid: 868
+    components:
+    - type: MetaData
+      flags: PvsPriority
+    - type: Transform
+      pos: -59.5,-10.5
+      parent: 30
   - uid: 882
     components:
     - type: MetaData
@@ -128697,6 +128684,13 @@ entities:
       flags: PvsPriority
     - type: Transform
       pos: -61.5,-10.5
+      parent: 30
+  - uid: 1083
+    components:
+    - type: MetaData
+      flags: PvsPriority
+    - type: Transform
+      pos: -52.5,-10.5
       parent: 30
   - uid: 1140
     components:
