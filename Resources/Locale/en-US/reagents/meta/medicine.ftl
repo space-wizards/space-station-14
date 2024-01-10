@@ -117,3 +117,6 @@ reagent-desc-bruizine = Originally developed as a cough medicine, it turns out t
 
 reagent-name-holywater = holy water
 reagent-desc-holywater = The cleanest and purest of waters straight from the hands of god, is known to magically heal wounds.
+
+reagent-name-aloxadone = aloxadone
+reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe third degree burns via regeneration of the burnt tissue. Works regardless of the patient being alive or dead.
