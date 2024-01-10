@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Whistle;
 
-public abstract class SharedWhistleSystem : EntitySystem
+public sealed class WhistleSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly INetManager _netManager = default!;
@@ -16,6 +16,8 @@ public abstract class SharedWhistleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<WhistleComponent, UseInHandEvent>(OnUseInHand);
     }
 
     private void ExclamateTarget(EntityUid target, WhistleComponent component)
