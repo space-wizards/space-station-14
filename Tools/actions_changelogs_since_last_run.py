@@ -41,7 +41,7 @@ def main():
 
     most_recent = get_most_recent_workflow(session)
     last_sha = most_recent['head_commit']['id']
-    print(f"Last successsful publish job was {most_recent['id']}: {last_sha}")
+    print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
     last_changelog = yaml.safe_load(get_last_changelog(session, last_sha))
     with open(CHANGELOG_FILE, "r") as f:
         cur_changelog = yaml.safe_load(f)
@@ -106,9 +106,12 @@ def diff_changelog(old: dict[str, Any], cur: dict[str, Any]) -> Iterable[Changel
 
 def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
     if not DISCORD_WEBHOOK_URL:
+        print(f"No discord webhook URL found, skipping discord send")
         return
 
     content = io.StringIO()
+    count: int = 0
+
     for name, group in itertools.groupby(entries, lambda x: x["author"]):
         content.write(f"**{name}** updated:\n")
         for entry in group:
@@ -116,10 +119,13 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
                 message = change['message']
                 url = entry.get("url")
+                count += 1
                 if url and url.strip():
                     content.write(f"{emoji} [-]({url}) {message}\n")
                 else:
                     content.write(f"{emoji} - {message}\n")
+    
+    print(f"Posting {count} changelog entries to discord webhook")
 
     body = {
         "content": content.getvalue(),
@@ -131,7 +137,8 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
         "flags": 1 << 2
     }
 
-    requests.post(DISCORD_WEBHOOK_URL, json=body)
+    response = requests.post(DISCORD_WEBHOOK_URL, json=body)
+    response.raise_for_status()
 
 
 main()
