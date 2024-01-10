@@ -33,6 +33,11 @@ public record struct GridSpawnGroup
     /// </summary>
     public bool NameGrid = false;
 
+    /// <summary>
+    /// Should we add this to the station's grids (if possible / relevant).
+    /// </summary>
+    public bool StationGrid = true;
+
     public GridSpawnGroup()
     {
     }
