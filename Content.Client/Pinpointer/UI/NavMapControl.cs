@@ -62,9 +62,7 @@ public partial class NavMapControl : MapGridControl
     public Color _backgroundColor;
     public float _backgroundOpacity = 0.9f;
 
-    // TODO: Make this changeable by the player
     private int _targetFontsize = 10;
-
 
     // Components
     private NavMapComponent? _navMap;
@@ -89,24 +87,6 @@ public partial class NavMapControl : MapGridControl
         Disabled = true,
     };
 
-    private readonly Button _fontSizeInc = new()
-    {
-        Text = "+",
-        VerticalAlignment = VAlignment.Bottom,
-        HorizontalAlignment = HAlignment.Right,
-        Margin = new Thickness(8f, 4f),
-        Disabled = false,
-    };
-
-    private readonly Button _fontSizeDec = new()
-    {
-        Text = "-",
-        VerticalAlignment = VAlignment.Bottom,
-        HorizontalAlignment = HAlignment.Center,
-        Margin = new Thickness(8f, 4f),
-        Disabled = false,
-    };
-
     private readonly CheckBox _beacons = new()
     {
         Text = Loc.GetString("navmap-toggle-beacons"),
@@ -114,15 +94,6 @@ public partial class NavMapControl : MapGridControl
         VerticalAlignment = VAlignment.Center,
         HorizontalAlignment = HAlignment.Center,
         Pressed = false,
-    };
-
-    private readonly CheckBox _fontBold = new()
-    {
-        Text = "B",
-        Margin = new Thickness(4f, 0f),
-        VerticalAlignment = VAlignment.Center,
-        HorizontalAlignment = HAlignment.Center,
-        Pressed = true,
     };
 
     public NavMapControl() : base(MinDisplayedRange, MaxDisplayedRange, DefaultDisplayedRange)
@@ -149,12 +120,6 @@ public partial class NavMapControl : MapGridControl
             {
                 _zoom,
                 _beacons,
-
-                // Put these somewhere...
-                //_fontBold,
-                //_fontSizeInc,
-                //_fontSizeDec,
-
                 _recenter,
             }
         };
@@ -180,16 +145,6 @@ public partial class NavMapControl : MapGridControl
         _recenter.OnPressed += args =>
         {
             _recentering = true;
-        };
-
-        _fontSizeDec.OnPressed += args =>
-        {
-            _targetFontsize = _targetFontsize - 1;
-        };
-
-        _fontSizeInc.OnPressed += args =>
-        {
-            _targetFontsize = _targetFontsize + 1;
         };
 
         ForceNavMapUpdate();
@@ -423,15 +378,8 @@ public partial class NavMapControl : MapGridControl
             Font font;
 
             // Calculate font size for current zoom level
-            var fontSize = (int) Math.Round(1 / WorldRange * DefaultDisplayedRange * _targetFontsize , 0);
-            if (_fontBold.Pressed)
-            {
-                font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), fontSize);
-            }
-            else
-            {
-                font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), fontSize);
-            }
+            var fontSize = (int) Math.Round(1 / WorldRange * DefaultDisplayedRange * UIScale * _targetFontsize , 0);
+            font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), fontSize);
 
             foreach (var beacon in _navMap.Beacons)
             {
