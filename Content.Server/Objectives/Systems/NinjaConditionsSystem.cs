@@ -24,6 +24,8 @@ public sealed class NinjaConditionsSystem : EntitySystem
         SubscribeLocalEvent<StealResearchConditionComponent, ObjectiveGetProgressEvent>(OnStealResearchGetProgress);
 
         SubscribeLocalEvent<TerrorConditionComponent, ObjectiveGetProgressEvent>(OnTerrorGetProgress);
+
+        SubscribeLocalEvent<BorgConversionConditionComponent, ObjectiveGetProgressEvent>(OnBorgGetProgress);
     }
 
     // doorjack
@@ -83,8 +85,17 @@ public sealed class NinjaConditionsSystem : EntitySystem
         return MathF.Min(comp.DownloadedNodes.Count / (float) target, 1f);
     }
 
+    // terror
+
     private void OnTerrorGetProgress(EntityUid uid, TerrorConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = comp.CalledInThreat ? 1f : 0f;
+    }
+
+    // borg conversion
+
+    private void OnBorgGetProgress(Entity<BorgConversionConditionComponent> ent, ref ObjectiveGetProgressEvent args)
+    {
+        args.Progress = ent.Comp.Converted ? 1f : 0f;
     }
 }

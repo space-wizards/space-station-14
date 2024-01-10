@@ -17,6 +17,7 @@ using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
+using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Objectives.Components;
@@ -51,6 +52,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
         SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
         SubscribeLocalEvent<SpaceNinjaComponent, ThreatCalledInEvent>(OnThreatCalledIn);
+        SubscribeLocalEvent<SpaceNinjaComponent, BorgConvertedEvent>(OnBorgConverted);
     }
 
     public override void Update(float frameTime)
@@ -229,6 +231,14 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         if (_mind.TryGetObjectiveComp<TerrorConditionComponent>(uid, out var obj))
         {
             obj.CalledInThreat = true;
+        }
+    }
+
+    private void OnBorgConverted(Entity<SpaceNinjaComponent> ent, ref BorgConvertedEvent args)
+    {
+        if (_mind.TryGetObjectiveComp<BorgConversionConditionComponent>(ent, out var obj))
+        {
+            obj.Converted = true;
         }
     }
 }

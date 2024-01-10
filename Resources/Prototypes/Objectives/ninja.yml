@@ -81,3 +81,18 @@
       sprite: Objects/Fun/Instruments/otherinstruments.rsi
       state: red_phone
   - type: TerrorCondition
+
+- type: entity
+  noSpawn: true
+  parent: BaseNinjaObjective
+  id: BorgConversionObjective
+  name: Convert a cyborg
+  description: Use your gloves on a cyborg to convert it into a random Syndiborg model. Your EMP will come in handy for this.
+  components:
+  - type: Objective
+    icon:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: synd_engi_icon
+  - type: BorgConversionCondition
+
+# TODO: criminal records hack obj

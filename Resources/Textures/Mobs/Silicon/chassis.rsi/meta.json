@@ -314,7 +314,9 @@
     {
       "name": "synd_engi_l",
       "directions": 4
+    },
+    {
+      "name": "synd_engi_icon"
     }
-
   ]
 }

@@ -13,6 +13,7 @@
     - SpiderChargeObjective
     - TerrorObjective
     - NinjaSurviveObjective
+    - BorgConversionObjective
   - type: NinjaRule
     threats: NinjaThreats
 
