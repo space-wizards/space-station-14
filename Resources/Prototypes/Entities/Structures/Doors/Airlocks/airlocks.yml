@@ -83,7 +83,7 @@
 - type: entity
   parent: Airlock
   id: AirlockMaint
-  name: maintenance hatch
+  name: maintenance access
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -114,6 +114,22 @@
   - type: WiresPanelSecurity
     securityLevel: medSecurity
 
+- type: entity
+  parent: Airlock
+  id: AirlockHatch
+  name: airtight hatch
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/hatch.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockHatchMaintenance
+  name: maintenance hatch
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/hatch_maint.rsi
+ 
 # Glass
 
 - type: entity
@@ -287,3 +303,4 @@
     sprite: Structures/Doors/Airlocks/Glass/centcomm.rsi
   - type: WiresPanelSecurity
     securityLevel: medSecurity
+

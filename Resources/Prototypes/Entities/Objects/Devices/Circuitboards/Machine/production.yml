@@ -940,7 +940,7 @@
 - type: entity
   id: StasisBedMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Stasis Bed (Machine Board)
+  name: stasis bed machine board
   components:
     - type: Sprite
       state: medical

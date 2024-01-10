@@ -26,7 +26,7 @@
 
 - type: entity
   id: CrateVendingMachineRestockCondimentStationFilled
-  name: Condiment Station restock crate
+  name: condiment station restock crate
   parent: CratePlastic
   components:
   - type: StorageFill

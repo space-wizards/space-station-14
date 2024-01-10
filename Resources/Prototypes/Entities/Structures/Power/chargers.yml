@@ -81,7 +81,7 @@
     slots:
       charger_slot:
         ejectOnInteract: true
-        name: Power cell
+        name: power-cell-slot-component-slot-name-default
         whitelist:
           components:
           - PowerCell

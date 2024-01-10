@@ -85,7 +85,7 @@ public sealed class StationSystem : EntitySystem
     {
         if (e.NewStatus == SessionStatus.Connected)
         {
-            RaiseNetworkEvent(new StationsUpdatedEvent(GetNetEntitySet(GetStationsSet())), e.Session);
+            RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), e.Session);
         }
     }
 
@@ -93,7 +93,7 @@ public sealed class StationSystem : EntitySystem
 
     private void OnStationAdd(EntityUid uid, StationDataComponent component, ComponentStartup args)
     {
-        RaiseNetworkEvent(new StationsUpdatedEvent(GetNetEntitySet(GetStationsSet())), Filter.Broadcast());
+        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), Filter.Broadcast());
 
         var metaData = MetaData(uid);
         RaiseLocalEvent(new StationInitializedEvent(uid));
@@ -108,7 +108,7 @@ public sealed class StationSystem : EntitySystem
             RemComp<StationMemberComponent>(grid);
         }
 
-        RaiseNetworkEvent(new StationsUpdatedEvent(GetNetEntitySet(GetStationsSet())), Filter.Broadcast());
+        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), Filter.Broadcast());
     }
 
     private void OnPreGameMapLoad(PreGameMapLoad ev)
@@ -466,6 +466,19 @@ public sealed class StationSystem : EntitySystem
         }
 
         return stations;
+    }
+
+    public List<(string Name, NetEntity Entity)> GetStationNames()
+    {
+        var stations = GetStationsSet();
+        var stats = new List<(string Name, NetEntity Station)>();
+
+        foreach (var weh in stations)
+        {
+            stats.Add((MetaData(weh).EntityName, GetNetEntity(weh)));
+        }
+
+        return stats;
     }
 
     /// <summary>
