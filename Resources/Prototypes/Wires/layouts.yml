@@ -39,6 +39,7 @@
   - !type:AccessWireAction
   - !type:VendingMachineContrabandWireAction
   - !type:VendingMachineEjectItemWireAction
+  - !type:SpeechWireAction
 
 - type: wireLayout
   id: AirAlarm
