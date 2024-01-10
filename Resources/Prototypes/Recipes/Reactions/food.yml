@@ -310,6 +310,18 @@
     Sugar: 9
     Potassium: 1
 
+- type: reaction
+  id: OilBreakdown
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Oil:
+      amount: 10
+  products:
+    Fat: 6
+    Water: 3
+    Protein: 1 #water & protein represent aqueous proteins
+
 #- type: reaction
 #  id: SugarBreakdown
 #  source: true

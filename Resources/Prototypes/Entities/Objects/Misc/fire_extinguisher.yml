@@ -24,7 +24,7 @@
   - type: DrainableSolution
     solution: spray
   - type: SolutionTransfer
-  - type: ItemCooldown
+  - type: UseDelay
   - type: Spray
     transferAmount: 10
     pushbackAmount: 60

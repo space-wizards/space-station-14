@@ -6,48 +6,47 @@ using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Events;
 
-namespace Content.Server.Chemistry.EntitySystems
+namespace Content.Server.Chemistry.EntitySystems;
+
+public sealed class SolutionInjectOnCollideSystem : EntitySystem
 {
-    [UsedImplicitly]
-    internal sealed class SolutionInjectOnCollideSystem : EntitySystem
+    [Dependency] private readonly SolutionContainerSystem _solutionContainersSystem = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionContainersSystem = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        base.Initialize();
+        SubscribeLocalEvent<SolutionInjectOnCollideComponent, StartCollideEvent>(HandleInjection);
+    }
 
-        public override void Initialize()
+    private void HandleInjection(Entity<SolutionInjectOnCollideComponent> ent, ref StartCollideEvent args)
+    {
+        var component = ent.Comp;
+        var target = args.OtherEntity;
+
+        if (!args.OtherBody.Hard ||
+            !args.OurBody.Hard ||
+            !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) ||
+            !_solutionContainersSystem.TryGetInjectableSolution(ent.Owner, out var solution, out _))
         {
-            base.Initialize();
-            SubscribeLocalEvent<SolutionInjectOnCollideComponent, StartCollideEvent>(HandleInjection);
+            return;
         }
 
-        private void HandleInjection(Entity<SolutionInjectOnCollideComponent> ent, ref StartCollideEvent args)
+        if (component.BlockSlots != 0x0)
         {
-            var component = ent.Comp;
-            var target = args.OtherEntity;
+            var containerEnumerator = _inventorySystem.GetSlotEnumerator(target, component.BlockSlots);
 
-            if (!args.OtherBody.Hard ||
-                !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) ||
-                !_solutionContainersSystem.TryGetInjectableSolution(ent.Owner, out var solution, out _))
-            {
+            // TODO add a helper method for this?
+            if (containerEnumerator.MoveNext(out _))
                 return;
-            }
-
-            if (component.BlockSlots != 0x0)
-            {
-                var containerEnumerator = _inventorySystem.GetSlotEnumerator(target, component.BlockSlots);
-
-                // TODO add a helper method for this?
-                if (containerEnumerator.MoveNext(out _))
-                    return;
-            }
-
-            var solRemoved = _solutionContainersSystem.SplitSolution(solution.Value, component.TransferAmount);
-            var solRemovedVol = solRemoved.Volume;
-
-            var solToInject = solRemoved.SplitSolution(solRemovedVol * component.TransferEfficiency);
-
-            _bloodstreamSystem.TryAddToChemicals(target, solToInject, bloodstream);
         }
+
+        var solRemoved = _solutionContainersSystem.SplitSolution(solution.Value, component.TransferAmount);
+        var solRemovedVol = solRemoved.Volume;
+
+        var solToInject = solRemoved.SplitSolution(solRemovedVol * component.TransferEfficiency);
+
+        _bloodstreamSystem.TryAddToChemicals(target, solToInject, bloodstream);
     }
 }

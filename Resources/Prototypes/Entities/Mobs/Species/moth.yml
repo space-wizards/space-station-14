@@ -28,12 +28,18 @@
     speechVerb: Moth
   - type: TypingIndicator
     proto: moth
-  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeat
       amount: 5
+  - type: Bloodstream
+    bloodReagent: InsectBlood
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#808A51"
   - type: MothAccent
   - type: Vocal
     sounds:

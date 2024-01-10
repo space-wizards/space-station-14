@@ -43,6 +43,30 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: Construction
+    graph: FilingCabinet
+    node: filingCabinet
+  - type: StaticPrice
+    price: 20
 
 - type: entity
   name: tall cabinet
@@ -58,6 +82,9 @@
     - state: tallcabinet-open
       map: ["openLayer"]
   - type: Appearance
+  - type: Construction
+    graph: FilingCabinet
+    node: tallCabinet
 
 - type: entity
   name: chest drawer
@@ -105,6 +132,30 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: Construction
+    graph: FilingCabinet
+    node: chestDrawer
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   abstract: true
