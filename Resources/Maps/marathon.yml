@@ -10453,21 +10453,11 @@ entities:
       parent: 30
 - proto: AirlockExternalGlassShuttleEscape
   entities:
-  - uid: 1083
-    components:
-    - type: Transform
-      pos: -52.5,-10.5
-      parent: 30
   - uid: 3701
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 25.5,43.5
-      parent: 30
-  - uid: 9041
-    components:
-    - type: Transform
-      pos: -59.5,-10.5
       parent: 30
 - proto: AirlockExternalGlassShuttleLocked
   entities:
@@ -12536,13 +12526,6 @@ entities:
     - type: Transform
       pos: -11.5,-27.5
       parent: 30
-- proto: AmeJar
-  entities:
-  - uid: 801
-    components:
-    - type: Transform
-      pos: -17.490644,-32.439728
-      parent: 30
 - proto: AnomalyScanner
   entities:
   - uid: 21723
@@ -13906,20 +13889,10 @@ entities:
     - type: Transform
       pos: -59.5,-7.5
       parent: 30
-  - uid: 868
-    components:
-    - type: Transform
-      pos: -59.5,-10.5
-      parent: 30
   - uid: 3707
     components:
     - type: Transform
       pos: 25.5,43.5
-      parent: 30
-  - uid: 4353
-    components:
-    - type: Transform
-      pos: -52.5,-10.5
       parent: 30
   - uid: 9121
     components:
@@ -15629,7 +15602,7 @@ entities:
   - uid: 2002
     components:
     - type: Transform
-      pos: -37.719124,55.411057
+      pos: -41.658577,55.804134
       parent: 30
   - uid: 2110
     components:
@@ -53053,7 +53026,7 @@ entities:
   - uid: 2033
     components:
     - type: Transform
-      pos: -44.77555,47.437355
+      pos: -44.48352,46.8257
       parent: 30
 - proto: ClothingHeadHatBowlerHat
   entities:
@@ -53263,13 +53236,6 @@ entities:
     components:
     - type: Transform
       pos: -21.586058,-27.491894
-      parent: 30
-- proto: ClothingHeadHatWarden
-  entities:
-  - uid: 865
-    components:
-    - type: Transform
-      pos: -44.478676,46.781105
       parent: 30
 - proto: ClothingHeadHatWelding
   entities:
@@ -55775,6 +55741,13 @@ entities:
     - type: Transform
       pos: 17.5,18.5
       parent: 30
+- proto: CrateMindShieldImplants
+  entities:
+  - uid: 8278
+    components:
+    - type: Transform
+      pos: -41.5,56.5
+      parent: 30
 - proto: CrateNPCCow
   entities:
   - uid: 494
@@ -55813,13 +55786,6 @@ entities:
     components:
     - type: Transform
       pos: 34.5,-9.5
-      parent: 30
-- proto: CrateSecurityTrackingMindshieldImplants
-  entities:
-  - uid: 682
-    components:
-    - type: Transform
-      pos: -41.5,56.5
       parent: 30
 - proto: CrateServiceJanitorialSupplies
   entities:
@@ -98839,13 +98805,6 @@ entities:
     - type: Transform
       pos: -34.5,-46.5
       parent: 30
-- proto: GunSafeDisabler
-  entities:
-  - uid: 726
-    components:
-    - type: Transform
-      pos: -41.5,55.5
-      parent: 30
 - proto: GunSafeLaserCarbine
   entities:
   - uid: 1942
@@ -111491,6 +111450,11 @@ entities:
     components:
     - type: Transform
       pos: -32.5,29.5
+      parent: 30
+  - uid: 1938
+    components:
+    - type: Transform
+      pos: -41.5,55.5
       parent: 30
   - uid: 1939
     components:
@@ -128417,6 +128381,13 @@ entities:
     - type: Transform
       pos: -6.5,-16.5
       parent: 30
+  - uid: 801
+    components:
+    - type: MetaData
+      flags: PvsPriority
+    - type: Transform
+      pos: -52.5,-10.5
+      parent: 30
   - uid: 837
     components:
     - type: MetaData
@@ -128549,6 +128520,13 @@ entities:
       flags: PvsPriority
     - type: Transform
       pos: -50.5,11.5
+      parent: 30
+  - uid: 865
+    components:
+    - type: MetaData
+      flags: PvsPriority
+    - type: Transform
+      pos: -59.5,-10.5
       parent: 30
   - uid: 882
     components:
@@ -149123,6 +149101,16 @@ entities:
       canCollide: False
 - proto: WeaponDisabler
   entities:
+  - uid: 682
+    components:
+    - type: Transform
+      pos: -41.44297,55.4585
+      parent: 30
+  - uid: 726
+    components:
+    - type: Transform
+      pos: -41.427345,55.317875
+      parent: 30
   - uid: 1563
     components:
     - type: Transform
