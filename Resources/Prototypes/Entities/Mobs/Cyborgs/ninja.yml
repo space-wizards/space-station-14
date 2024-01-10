@@ -1,0 +1,38 @@
+# assault focuses on dealing damage with honor (katana and not l6)
+- type: entity
+  parent: BorgChassisSyndicateAssault
+  id: BorgChassisSyndicateAssaultNinja
+  suffix: Module, Ninja
+  components:
+  - type: ContainerFill
+    containers:
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleEnergyKatana
+      - BorgModuleThrowingStars
+
+# medical heals non-dead ninja (acidifier means defib is useless) and sleeps validhunters to keep ninja safe
+- type: entity
+  parent: BorgChassisSyndicateMedical
+  id: BorgChassisSyndicateMedicalNinja
+  suffix: Module, Ninja
+  components:
+  - type: ContainerFill
+    containers:
+      borg_module:
+      - BorgModuleToxins
+      - BorgModuleDiagnosis
+      - BorgModuleTreatment
+
+# saboteur blows holes in places willy nilly
+- type: entity
+  parent: BorgChassisSyndicateSaboteur
+  id: BorgChassisSyndicateSaboteurNinja
+  suffix: Module, Ninja
+  components:
+  - type: ContainerFill
+    containers:
+      borg_module:
+      - BorgModuleAdvancedTool
+      - BorgModuleDemolition
+      - BorgModuleRCD

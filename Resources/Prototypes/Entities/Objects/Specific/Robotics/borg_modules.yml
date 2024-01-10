@@ -100,6 +100,15 @@
       tags:
         - BorgModuleSyndicateAssault
 
+- type: entity
+  id: BaseBorgModuleSyndicateSaboteur
+  parent: BaseBorgModule
+  abstract: true
+  components:
+    - type: Tag
+      tags:
+        - BorgModuleSyndicateSaboteur
+
 # generic modules
 - type: entity
   id: BorgModuleCable
@@ -558,3 +567,71 @@
       items:
         - WeaponLightMachineGunL6C
         - PinpointerSyndicateNuclear
+
+# ninja borg modules
+# less guns more cool ninja
+- type: entity
+  abstract: true
+  id: BaseBorgModuleNinja
+  parent: BaseProviderBorgModule
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: icon-tools
+
+- type: entity
+  parent: [ BaseBorgModuleSyndicateAssault, BaseBorgModuleNinja ]
+  id: BorgModuleEnergyKatana
+  name: energy katana cyborg module
+  components:
+  - type: ItemBorgModule
+    items:
+    - EnergyKatana
+
+- type: entity
+  parent: [ BaseBorgModuleSyndicateAssault, BaseBorgModuleNinja ]
+  id: BorgModuleThrowingStars
+  name: throwing stars cyborg module
+  description: A module that comes with 8 non-replaceable throwing stars.
+  components:
+  - type: ItemBorgModule
+    items:
+    - ThrowingStarNinja
+    - ThrowingStarNinja
+    - ThrowingStarNinja
+    - ThrowingStarNinja
+    - ThrowingStarNinja
+    - ThrowingStarNinja
+    - ThrowingStarNinja
+    - ThrowingStarNinja
+
+- type: entity
+  id: BorgModuleToxins
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  name: toxins cyborg module
+  description: A module that comes with self-filling toxin vials.
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: icon-chemist
+  - type: ItemBorgModule
+    items:
+    - NocturineInfiniteVial
+    - SulfuricAcidInfiniteVial
+    - BorgDropper
+    - BorgHypo
+
+- type: entity
+  parent: [ BaseBorgModuleSyndicate, BaseBorgModuleNinja ]
+  id: BorgModuleDemolition
+  name: demolition cyborg module
+  description: A module that comes with 4 non-replaceable bricks of C-4.
+  components:
+  - type: ItemBorgModule
+    items:
+    - BorgC4
+    - BorgC4
+    - BorgC4
+    - BorgC4

@@ -111,3 +111,36 @@
               Quantity: 30
     - type: Tag
       tags: []
+
+# for ninja converted mediborgs do NOT give to syndies
+- type: entity
+  abstract: true
+  parent: BaseChemistryEmptyVial
+  id: BaseInfiniteVial
+  suffix: Infinite
+  description: Slowly regenerates with top secret spider clan technology.
+  components:
+  - type: SolutionRegeneration
+    solution: beaker
+
+- type: entity
+  parent: BaseInfiniteVial
+  id: NocturineInfiniteVial
+  name: nocturine vial
+  components:
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Nocturine
+        Quantity: 1
+
+- type: entity
+  parent: BaseInfiniteVial
+  id: SulfuricAcidInfiniteVial
+  name: sulfuric acid vial
+  components:
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: SulfuricAcid
+        Quantity: 1

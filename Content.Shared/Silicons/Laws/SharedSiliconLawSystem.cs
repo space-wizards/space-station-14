@@ -31,4 +31,17 @@ public abstract class SharedSiliconLawSystem : EntitySystem
         component.OwnerName = Name(args.UserUid);
         args.Handled = true;
     }
+
+    /// <summary>
+    /// Changes the lawset of a silicon.
+    /// </summary>
+    /// <remarks>
+    /// There is no sound popup or anything so do that yourself.
+    /// </remarks>
+    public void ChangeLawset(EntityUid uid, string lawset)
+    {
+        var provider = EnsureComp<SiliconLawProviderComponent>(uid);
+        provider.Laws = lawset;
+        provider.Lawset = null; // clear law cache for ui
+    }
 }
