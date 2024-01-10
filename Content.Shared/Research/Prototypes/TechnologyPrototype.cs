@@ -74,7 +74,7 @@ public sealed partial class TechnologyPrototype : IPrototype
 
 
     /// <summary>
-    ///     The channels that this radio is listening on.
+    ///  The additional channels on which unlocking this technology will be announced.
     /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public HashSet<string> RadioChannels = new();
