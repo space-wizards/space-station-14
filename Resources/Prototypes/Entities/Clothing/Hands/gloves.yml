@@ -83,12 +83,13 @@
   suffix: Rigged
   components:
   - type: StaminaDamageOnHit
-    damage: 16 # actually 24 because of blunt > stamina damage conversion
+    damage: 25
   - type: MeleeWeapon
-    attackRate: 1.2
+    attackRate: 1.4
     damage:
       types:
         Blunt: 8
+    bluntStaminaDamageFactor: 0.0 # so blunt doesn't deal stamina damage at all
 
 - type: entity
   parent: ClothingHandsBase
