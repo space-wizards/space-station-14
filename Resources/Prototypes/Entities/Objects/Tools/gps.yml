@@ -12,3 +12,6 @@
   - type: Item
     sprite: Objects/Devices/gps.rsi
   - type: HandheldGPS
+  - type: Tag
+    tags:
+    - GPS
