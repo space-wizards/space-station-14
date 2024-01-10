@@ -535,6 +535,11 @@
   description: flavor-complex-water
 
 - type: flavor
+  id: mopwata
+  flavorType: Complex
+  description: flavor-complex-mopwata
+
+- type: flavor
   id: beer
   flavorType: Complex
   description: flavor-complex-beer
@@ -873,3 +878,8 @@
   id: holy
   flavorType: Base
   description: flavor-base-holy
+
+- type: flavor
+  id: horrible
+  flavorType: Base
+  description: flavor-base-horrible

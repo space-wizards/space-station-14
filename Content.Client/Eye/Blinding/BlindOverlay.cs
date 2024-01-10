@@ -85,7 +85,6 @@ namespace Content.Client.Eye.Blinding
                 _circleMaskShader?.SetParameter("Zoom", content.Zoom.X);
             }
 
-            _circleMaskShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
             _greyscaleShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
             var worldHandle = args.WorldHandle;

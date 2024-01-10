@@ -13,7 +13,7 @@
 
 - type: entity
   id: MobPathfindDummy
-  name: Pathfind dummy
+  name: pathfind dummy
   suffix: NPC
   parent: MobXenoRouny
   components:

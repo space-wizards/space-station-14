@@ -184,11 +184,8 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           tendie: ""
-      - enum.DamageStateVisualLayers.Base:
           lizard: ""
-      - enum.DamageStateVisualLayers.Base:
           star: ""
-      - enum.DamageStateVisualLayers.Base:
           corgi: ""
   - type: SolutionContainerManager
     solutions:
@@ -604,7 +601,7 @@
     - type: SolutionContainerManager
       solutions:
         food:
-          maxVol: 1
+          maxVol: 4
           reagents:
           - ReagentId: Nutriment
             Quantity: 1

@@ -8,7 +8,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanSyndicateAgent
-  name: Syndicate Agent
+  name: syndicate agent
   suffix: Human
   components:
     - type: Loadout

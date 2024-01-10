@@ -2,7 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.Construction;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
@@ -15,6 +14,7 @@ using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Content.Server.Power.EntitySystems;
+using Content.Server.UserInterface;
 using Content.Shared.Examine;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
@@ -28,22 +28,25 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
 
-
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
-            SubscribeLocalEvent<GasThermoMachineComponent, RefreshPartsEvent>(OnGasThermoRefreshParts);
-            SubscribeLocalEvent<GasThermoMachineComponent, UpgradeExamineEvent>(OnGasThermoUpgradeExamine);
             SubscribeLocalEvent<GasThermoMachineComponent, ExaminedEvent>(OnExamined);
 
             // UI events
+            SubscribeLocalEvent<GasThermoMachineComponent, BeforeActivatableUIOpenEvent>(OnBeforeOpened);
             SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineToggleMessage>(OnToggleMessage);
             SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineChangeTemperatureMessage>(OnChangeTemperature);
 
             // Device network
             SubscribeLocalEvent<GasThermoMachineComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
+        }
+
+        private void OnBeforeOpened(Entity<GasThermoMachineComponent> ent, ref BeforeActivatableUIOpenEvent args)
+        {
+            DirtyUI(ent, ent.Comp);
         }
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, ref AtmosDeviceUpdateEvent args)
@@ -90,48 +93,19 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 thermoMachine.HysteresisState = false; // turn off
             }
             float dQActual = dQ * scale;
-            _atmosphereSystem.AddHeat(inlet.Air, dQActual);
+            float dQLeak = dQActual * thermoMachine.EnergyLeakPercentage;
+            float dQPipe = dQActual - dQLeak;
+            _atmosphereSystem.AddHeat(inlet.Air, dQPipe);
+
+            if (_atmosphereSystem.GetContainingMixture(uid) is { } containingMixture)
+                _atmosphereSystem.AddHeat(containingMixture, dQLeak);
+
             receiver.Load = thermoMachine.HeatCapacity;// * scale; // we're not ready for dynamic load yet, see note above
         }
 
         private bool IsHeater(GasThermoMachineComponent comp)
         {
             return comp.Cp >= 0;
-        }
-
-        private void OnGasThermoRefreshParts(EntityUid uid, GasThermoMachineComponent thermoMachine, RefreshPartsEvent args)
-        {
-            var heatCapacityPartRating = args.PartRatings[thermoMachine.MachinePartHeatCapacity];
-            thermoMachine.HeatCapacity = thermoMachine.BaseHeatCapacity * MathF.Pow(heatCapacityPartRating, 2);
-
-            var temperatureRangePartRating = args.PartRatings[thermoMachine.MachinePartTemperature];
-            if (IsHeater(thermoMachine))
-            {
-                // 593.15K with stock parts.
-                thermoMachine.MaxTemperature = thermoMachine.BaseMaxTemperature + thermoMachine.MaxTemperatureDelta * temperatureRangePartRating;
-                thermoMachine.MinTemperature = Atmospherics.T20C;
-            }
-            else {
-                // 73.15K with stock parts.
-                thermoMachine.MinTemperature = MathF.Max(
-                    thermoMachine.BaseMinTemperature - thermoMachine.MinTemperatureDelta * temperatureRangePartRating, Atmospherics.TCMB);
-                thermoMachine.MaxTemperature = Atmospherics.T20C;
-            }
-
-            DirtyUI(uid, thermoMachine);
-        }
-
-        private void OnGasThermoUpgradeExamine(EntityUid uid, GasThermoMachineComponent thermoMachine, UpgradeExamineEvent args)
-        {
-            if (IsHeater(thermoMachine))
-            {
-                args.AddPercentageUpgrade("gas-thermo-component-upgrade-heating", thermoMachine.MaxTemperature / (thermoMachine.BaseMaxTemperature + thermoMachine.MaxTemperatureDelta));
-            }
-            else
-            {
-                args.AddPercentageUpgrade("gas-thermo-component-upgrade-cooling", thermoMachine.MinTemperature / (thermoMachine.BaseMinTemperature - thermoMachine.MinTemperatureDelta));
-            }
-            args.AddPercentageUpgrade("gas-thermo-component-upgrade-heat-capacity", thermoMachine.HeatCapacity / thermoMachine.BaseHeatCapacity);
         }
 
         private void OnToggleMessage(EntityUid uid, GasThermoMachineComponent thermoMachine, GasThermomachineToggleMessage args)

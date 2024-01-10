@@ -349,4 +349,7 @@
   - type: Rotatable
   - type: Sprite
     state: steel-bench
+  - type: Construction
+    graph: Seat
+    node: chairSteelBench
 
