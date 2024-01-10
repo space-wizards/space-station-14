@@ -1296,8 +1296,10 @@ namespace Content.IntegrationTests.Tests.Power
                 var battery = entityManager.GetComponent<BatteryComponent>(apcEnt);
                 apcNetBattery = entityManager.GetComponent<PowerNetworkBatteryComponent>(apcEnt);
 
-                extensionCableSystem.SetProviderTransferRange(apcExtensionEnt!, range);
-                extensionCableSystem.SetReceiverReceptionRange(powerReceiverEnt!, range);
+                var providerComponent = entityManager.GetComponent<ExtensionCableProviderComponent>(apcExtensionEnt);
+                extensionCableSystem.SetProviderTransferRange( (apcExtensionEnt, providerComponent), range);
+                var receiverComponent = entityManager.GetComponent<ExtensionCableReceiverComponent>(powerReceiverEnt);
+                extensionCableSystem.SetReceiverReceptionRange( (powerReceiverEnt, receiverComponent), range);
 
                 batterySys.SetMaxCharge(apcEnt, 10000, battery);  //arbitrary nonzero amount of charge
                 batterySys.SetCharge(apcEnt, battery.MaxCharge, battery); //fill battery
