@@ -124,7 +124,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private bool InteractUI(EntityUid user, EntityUid uiEntity, ActivatableUIComponent aui)
     {
-        if (!EntityManager.TryGetComponent(user, out ActorComponent? actor))
+        if (!TryComp(user, out ActorComponent? actor))
             return false;
 
         if (aui.Key == null)
