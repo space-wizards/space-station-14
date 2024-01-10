@@ -175,7 +175,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkHotCoco
-  name: Hot chocolate
+  name: hot chocolate
   description: A heated drink consisting melted chocolate and heated milk.
   components:
   - type: SolutionContainerManager
@@ -200,7 +200,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkHotCoffee
-  name: Coffee
+  name: coffee
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
   components:
   - type: SolutionContainerManager
@@ -225,7 +225,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkCafeLatte
-  name: Cafe latte
+  name: cafe latte
   description: A nice, strong and tasty beverage while you are reading.
   components:
   - type: SolutionContainerManager
@@ -243,7 +243,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkTeacup
-  name: Teacup
+  name: teacup
   description: A plain white porcelain teacup.
   components:
   - type: SolutionContainerManager
@@ -268,7 +268,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkGreenTea
-  name: Green tea
+  name: green tea
   description: A plain white porcelain teacup.
   components:
   - type: SolutionContainerManager
@@ -293,7 +293,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkLean
-  name: Grape Juice
+  name: grape Juice
   description: Damn, no fun allowed.
   components:
   - type: SolutionContainerManager

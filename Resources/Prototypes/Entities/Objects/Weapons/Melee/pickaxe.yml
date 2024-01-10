@@ -49,6 +49,8 @@
     sprite: Objects/Tools/handdrill.rsi
     state: handdrill
   - type: MeleeWeapon
+    autoAttack: true
+    angle: 0
     wideAnimationRotation: -90
     soundHit:
       path: "/Audio/Items/drill_hit.ogg"
