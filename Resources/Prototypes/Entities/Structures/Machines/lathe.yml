@@ -158,6 +158,7 @@
        - MagazineBoxMagnum
        - MagazineBoxRifle
        - MagazineBoxLightRifle
+       - GrenadeBlast
     emagDynamicRecipes:
       - CartridgePistolRubber
       - CartridgeMagnumRubber
@@ -189,9 +190,9 @@
       - PowerCageSmall
       - PowerCageMedium
       - PowerCageHigh
-      - MagazineGrenadeBlast
-      - MagazineGrenadeEMP
-      - MagazineGrenadeFlash
+      - MagazineGrenadeEmpty
+      - GrenadeEMP
+      - GrenadeFlash
 
 - type: entity
   id: AutolatheHyperConvection
@@ -691,8 +692,9 @@
       - MagazineBoxMagnumRubber
       - MagazineBoxPistolRubber
       - MagazineBoxRifleRubber
-      - MagazineGrenadeEMP
-      - MagazineGrenadeFlash
+      - MagazineGrenadeEmpty
+      - GrenadeEMP
+      - GrenadeFlash
       - ShellShotgunBeanbag
       - ShellShotgunIncendiary
       - ShellShotgunUranium
