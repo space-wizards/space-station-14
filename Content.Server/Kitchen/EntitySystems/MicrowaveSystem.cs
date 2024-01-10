@@ -76,6 +76,8 @@ namespace Content.Server.Kitchen.EntitySystems
 
             SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentStartup>(OnCookStart);
             SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookStop);
+
+            SubscribeLocalEvent<ActivelyMicrowavedComponent, OnConstructionTemperatureEvent>(OnConstructionTemp);
         }
 
         private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
@@ -95,6 +97,12 @@ namespace Content.Server.Kitchen.EntitySystems
             SetAppearance(ent.Owner, MicrowaveVisualState.Idle, microwaveComponent);
 
             microwaveComponent.PlayingStream = _audio.Stop(microwaveComponent.PlayingStream);
+        }
+
+        private void OnConstructionTemp(Entity<ActivelyMicrowavedComponent> ent, ref OnConstructionTemperatureEvent args)
+        {
+            args.Result = HandleResult.False;
+            return;
         }
 
         /// <summary>
@@ -390,6 +398,8 @@ namespace Content.Server.Kitchen.EntitySystems
                     QueueDel(item);
                 }
 
+                AddComp<ActivelyMicrowavedComponent>(item);
+
                 var metaData = MetaData(item); //this simply begs for cooking refactor
                 if (metaData.EntityPrototype == null)
                     continue;
@@ -489,6 +499,9 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 //this means the microwave has finished cooking.
                 AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0)); //Though there's still a little bit more heat to pump out
+
+                foreach (var solid in microwave.Storage.ContainedEntities)
+                    EntityManager.RemoveComponentDeferred<ActivelyMicrowavedComponent>(solid);
 
                 if (active.PortionedRecipe.Item1 != null)
                 {
