@@ -72,19 +72,39 @@ entities:
       data:
         tiles:
           -1,-1:
-            0: 52224
+            0: 65535
           -1,0:
-            0: 12
+            0: 65535
           0,0:
-            0: 1
+            0: 65535
           0,-1:
-            0: 4352
+            0: 65527
+          -2,-1:
+            0: 34944
+          -1,-2:
+            0: 65514
+          -1,-3:
+            0: 32768
+          -2,0:
+            0: 34952
+          -2,1:
+            0: 8
+          -1,1:
+            0: 18090
+          -1,2:
+            0: 34956
+          0,1:
+            0: 4906
+          0,2:
+            0: 1
+          0,-2:
+            0: 30514
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
-          - 0
+          - 21.824879
+          - 82.10312
           - 0
           - 0
           - 0
@@ -351,6 +371,15 @@ entities:
       parent: 83
     - type: Physics
       canCollide: False
+- proto: FaxMachineBase
+  entities:
+  - uid: 99
+    components:
+    - type: Transform
+      pos: -1.5,2.5
+      parent: 2
+    - type: FaxMachine
+      name: Relay Station
 - proto: GeneratorBasic
   entities:
   - uid: 45
@@ -393,6 +422,13 @@ entities:
     components:
     - type: Transform
       pos: -2.5,0.5
+      parent: 2
+- proto: PowerDrill
+  entities:
+  - uid: 100
+    components:
+    - type: Transform
+      pos: 0.53125,2.5
       parent: 2
 - proto: Poweredlight
   entities:
