@@ -62,7 +62,7 @@ public partial class NavMapControl : MapGridControl
     public Color _backgroundColor;
     public float _backgroundOpacity = 0.9f;
 
-    private int _targetFontsize = 10;
+    private int _targetFontsize = 8;
 
     // Components
     private NavMapComponent? _navMap;
