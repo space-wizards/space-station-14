@@ -37,7 +37,7 @@ public sealed class ClericalErrorRule : StationEventSystem<ClericalErrorRuleComp
 
         foreach (var id in keys)
         {
-            var key = new StationRecordKey(chosenStation.Value, id);
+            var key = new StationRecordKey(id, chosenStation.Value);
             _stationRecords.RemoveRecord(key, stationRecords);
         }
     }
