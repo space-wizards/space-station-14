@@ -431,6 +431,16 @@
   - type: ImmovableRodRule
 
 - type: entity
+  id: CommunicationInterception
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    earliestStart: 5
+  - type: CommunicationInterceptionRule
+
+- type: entity
   noSpawn: true
   parent: BaseGameRule
   id: IonStorm
