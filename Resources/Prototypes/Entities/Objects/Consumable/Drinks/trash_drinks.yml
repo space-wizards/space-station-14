@@ -124,7 +124,7 @@
 
 # Containers
 - type: entity
-  name: jailbreaker verte bottle
+  name: Jailbreaker Verte bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleAbsinthe
   components:
@@ -177,7 +177,7 @@
 
 
 - type: entity
-  name: griffeater gin bottle
+  name: Griffeater gin bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleGin
   components:
@@ -312,7 +312,7 @@
 
 
 - type: entity
-  name: Milk Cream carton
+  name: milk cream carton
   parent: DrinkCartonBaseEmpty
   id: DrinkCartonCream
   components:

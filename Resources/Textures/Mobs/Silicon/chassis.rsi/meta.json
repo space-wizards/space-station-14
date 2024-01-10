@@ -234,6 +234,87 @@
     {
       "name": "service_l",
       "directions": 4
+    },
+	{
+      "name": "synd_sec",
+      "directions": 4
+    },
+    {
+      "name": "synd_sec_e",
+      "directions": 4
+    },
+    {
+      "name": "synd_sec_l",
+      "directions": 4
+    },
+	{
+      "name": "synd_medical",
+      "directions": 4
+    },
+    {
+      "name": "synd_medical_l",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "synd_medical_e",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+          "name": "synd_engi",
+          "directions": 4
+    },
+	{
+      "name": "synd_engi_e",
+      "directions": 4
+    },
+    {
+      "name": "synd_engi_l",
+      "directions": 4
     }
+
   ]
 }

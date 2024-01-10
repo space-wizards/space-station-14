@@ -31,6 +31,7 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
     {
         base.Open();
         _window = new OfferingWindow();
+        _window.Title = Loc.GetString("salvage-expedition-window-title");
         _window.OnClose += Close;
         _window?.OpenCenteredLeft();
     }

@@ -17,3 +17,4 @@ advertisement-boozeomat-16 = Award-winning wine!
 advertisement-boozeomat-17 = Maximum alcohol!
 advertisement-boozeomat-18 = Man loves beer.
 advertisement-boozeomat-19 = A toast for progress!
+thankyou-boozeomat-1 = Please drink responsibly!

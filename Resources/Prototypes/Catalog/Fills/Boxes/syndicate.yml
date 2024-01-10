@@ -35,7 +35,7 @@
 - type: entity
   id: Observationskit
   parent: BoxCardboard
-  name: Observations kit
+  name: observations kit
   suffix: Filled
   components:
     - type: StorageFill

@@ -213,7 +213,7 @@
         shader: unshaded
 
 - type: entity
-  name: Double Bladed Energy Sword
+  name: double-bladed energy sword
   parent: EnergySword
   id: EnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
