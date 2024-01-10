@@ -234,11 +234,11 @@ public partial class NavMapControl : MapGridControl
         if (args.Function == EngineKeyFunctions.Use)
             _draggin = false;
 
-        if (TrackedEntitySelectedAction == null)
-            return;
-
         if (args.Function == EngineKeyFunctions.UIClick)
         {
+            if (TrackedEntitySelectedAction == null)
+                return;
+
             if (_xform == null || _physics == null || TrackedEntities.Count == 0)
                 return;
 
