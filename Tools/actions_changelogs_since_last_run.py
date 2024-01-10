@@ -109,11 +109,13 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
         print(f"No discord webhook URL found, skipping discord send")
         return
 
-    content = io.StringIO()
     count: int = 0
 
     for name, group in itertools.groupby(entries, lambda x: x["author"]):
+        count = 0
+        content = io.StringIO()
         content.write(f"**{name}** updated:\n")
+
         for entry in group:
             for change in entry["changes"]:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
@@ -124,21 +126,22 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                     content.write(f"{emoji} [-]({url}) {message}\n")
                 else:
                     content.write(f"{emoji} - {message}\n")
+
+            body = {
+                "content": content.getvalue(),
+                # Do not allow any mentions.
+                "allowed_mentions": {
+                    "parse": []
+                },
+                # SUPPRESS_EMBEDS
+                "flags": 1 << 2
+            }
+
+        # Post per group to try to avoid discord character limits
+        response = requests.post(DISCORD_WEBHOOK_URL, json=body)
+        response.raise_for_status()
     
-    print(f"Posting {count} changelog entries to discord webhook")
-
-    body = {
-        "content": content.getvalue(),
-        # Do not allow any mentions.
-        "allowed_mentions": {
-            "parse": []
-        },
-        # SUPPRESS_EMBEDS
-        "flags": 1 << 2
-    }
-
-    response = requests.post(DISCORD_WEBHOOK_URL, json=body)
-    response.raise_for_status()
+        print(f"Posting {count} changelog entries to discord webhook")
 
 
 main()
