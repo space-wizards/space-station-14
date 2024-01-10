@@ -35,7 +35,7 @@
         tags:
         - Write
     idSlot:
-      name: ID Card
+      name: access-id-card-component-default
       ejectSound: /Audio/Machines/id_swipe.ogg
       insertSound: /Audio/Machines/id_insert.ogg
       whitelist:
@@ -77,7 +77,7 @@
       - NewsReadCartridge
     cartridgeSlot:
       priority: -1
-      name: Cartridge
+      name: device-pda-slot-component-slot-name-cartridge
       ejectSound: /Audio/Machines/id_swipe.ogg
       insertSound: /Audio/Machines/id_insert.ogg
       whitelist:

@@ -186,7 +186,7 @@
 - type: entity
   parent: DrinkBottleGlassBaseFull
   id: DrinkGinBottleFull
-  name: Griffeater Gin
+  name: Griffeater gin
   description: A bottle of high quality gin, produced in the New London Space Station.
   components:
   - type: SolutionContainerManager
