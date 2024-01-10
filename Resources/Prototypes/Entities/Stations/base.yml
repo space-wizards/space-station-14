@@ -55,9 +55,11 @@
           paths:
           - /Maps/Ruins/derelict.yml
           - /Maps/Ruins/djstation.yml
-          - /Maps/Ruins/relaystation.yml
-          - /Maps/Ruins/whiteship.yml
           - /Maps/Ruins/old_ai_sat.yml
+          - /Maps/Ruins/relaystation.yml
+          - /Maps/Ruins/whiteship_ancient.yml
+          - /Maps/Ruins/whiteship_bluespacejumper.yml
+          
 
 
 - type: entity
@@ -74,11 +76,12 @@
           - /Maps/Shuttles/mining.yml
         ruins:
           paths:
-            - /Maps/Ruins/derelict.yml
-            - /Maps/Ruins/djstation.yml
-            - /Maps/Ruins/relaystation.yml
-            - /Maps/Ruins/whiteship.yml
-            - /Maps/Ruins/old_ai_sat.yml
+          - /Maps/Ruins/derelict.yml
+          - /Maps/Ruins/djstation.yml
+          - /Maps/Ruins/old_ai_sat.yml
+          - /Maps/Ruins/relaystation.yml
+          - /Maps/Ruins/whiteship_ancient.yml
+          - /Maps/Ruins/whiteship_bluespacejumper.yml
 
 - type: entity
   id: BaseStationCentcomm
