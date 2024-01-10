@@ -430,24 +430,6 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: GridPathfinding
-- proto: AirAlarm
-  entities:
-  - uid: 3
-    components:
-    - type: Transform
-      pos: 12.5,-6.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 198
-      - 200
-      - 558
-      - 557
-      - 204
-      - 197
-      - 203
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: AirCanister
   entities:
   - uid: 4
@@ -1967,24 +1949,6 @@ entities:
     - type: Transform
       pos: 8.5,-19.5
       parent: 2
-- proto: FireAlarm
-  entities:
-  - uid: 196
-    components:
-    - type: Transform
-      pos: 4.5,-6.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 197
-      - 204
-      - 557
-      - 558
-      - 198
-      - 200
-      - 203
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: FireAxeCabinetFilled
   entities:
   - uid: 605
@@ -1992,85 +1956,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,-2.5
-      parent: 2
-- proto: Firelock
-  entities:
-  - uid: 197
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 5.5,-6.5
-      parent: 2
-  - uid: 198
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 13.5,-6.5
-      parent: 2
-  - uid: 199
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 8.5,-18.5
-      parent: 2
-  - uid: 200
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 10.5,-10.5
-      parent: 2
-  - uid: 201
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 5.5,-2.5
-      parent: 2
-  - uid: 202
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 13.5,-2.5
-      parent: 2
-  - uid: 203
-    components:
-    - type: Transform
-      pos: 9.5,-6.5
-      parent: 2
-- proto: FirelockGlass
-  entities:
-  - uid: 204
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 5.5,-10.5
-      parent: 2
-  - uid: 205
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 7.5,-16.5
-      parent: 2
-  - uid: 206
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 6.5,-16.5
-      parent: 2
-  - uid: 207
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 5.5,-16.5
-      parent: 2
-  - uid: 557
-    components:
-    - type: Transform
-      pos: 6.5,-10.5
-      parent: 2
-  - uid: 558
-    components:
-    - type: Transform
-      pos: 7.5,-10.5
       parent: 2
 - proto: Flash
   entities:
@@ -3296,11 +3181,6 @@ entities:
       pos: 14.5,-3.5
       parent: 2
   - uid: 390
-    components:
-    - type: Transform
-      pos: 4.5,-3.5
-      parent: 2
-  - uid: 391
     components:
     - type: Transform
       pos: 4.5,-3.5
