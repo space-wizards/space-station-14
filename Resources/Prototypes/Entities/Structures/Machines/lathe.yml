@@ -301,7 +301,7 @@
       - FauxTileAstroIce
       - OreBagOfHolding
       - DeviceQuantumSpinInverter
-      - DeviceQuantumSpinInverter
+      - EnergyDomeDirectionalReinhardt
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload
