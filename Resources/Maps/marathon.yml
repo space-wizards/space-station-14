@@ -688,6 +688,11 @@ entities:
             2450: -12,-38
             2451: -14,-38
             2736: 39,9
+            3111: -5,-50
+            3112: -12,-56
+            3113: -10,-56
+            3114: -6,-56
+            3115: -4,-56
         - node:
             color: '#FFFFFFFF'
             id: BoxGreyscale
@@ -1954,6 +1959,7 @@ entities:
             2904: -17,-11
             2905: -17,-10
             2906: -17,-9
+            3110: -8,-49
         - node:
             color: '#FFFFFFFF'
             id: DiagonalCheckerAOverlay
@@ -7663,13 +7669,6 @@ entities:
       parent: 5704
     - type: InstantAction
       container: 5704
-- proto: AdvancedCapacitorStockPart
-  entities:
-  - uid: 20974
-    components:
-    - type: Transform
-      pos: 2.2878256,21.230333
-      parent: 30
 - proto: AirAlarm
   entities:
   - uid: 6224
@@ -10460,21 +10459,11 @@ entities:
       parent: 30
 - proto: AirlockExternalGlassShuttleEscape
   entities:
-  - uid: 1083
-    components:
-    - type: Transform
-      pos: -52.5,-10.5
-      parent: 30
   - uid: 3701
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 25.5,43.5
-      parent: 30
-  - uid: 9041
-    components:
-    - type: Transform
-      pos: -59.5,-10.5
       parent: 30
 - proto: AirlockExternalGlassShuttleLocked
   entities:
@@ -12543,12 +12532,12 @@ entities:
     - type: Transform
       pos: -11.5,-27.5
       parent: 30
-- proto: AmplifierSubspaceStockPart
+- proto: AmeJar
   entities:
   - uid: 801
     components:
     - type: Transform
-      pos: 2.874536,20.634825
+      pos: -17.490644,-32.439728
       parent: 30
 - proto: AnomalyScanner
   entities:
@@ -13913,20 +13902,10 @@ entities:
     - type: Transform
       pos: -59.5,-7.5
       parent: 30
-  - uid: 868
-    components:
-    - type: Transform
-      pos: -59.5,-10.5
-      parent: 30
   - uid: 3707
     components:
     - type: Transform
       pos: 25.5,43.5
-      parent: 30
-  - uid: 4353
-    components:
-    - type: Transform
-      pos: -52.5,-10.5
       parent: 30
   - uid: 9121
     components:
@@ -15636,7 +15615,7 @@ entities:
   - uid: 2002
     components:
     - type: Transform
-      pos: -41.658577,55.804134
+      pos: -37.719124,55.411057
       parent: 30
   - uid: 2110
     components:
@@ -21242,6 +21221,11 @@ entities:
     - type: Transform
       pos: -41.5,-10.5
       parent: 30
+  - uid: 7225
+    components:
+    - type: Transform
+      pos: -10.5,-33.5
+      parent: 30
   - uid: 7236
     components:
     - type: Transform
@@ -22826,6 +22810,11 @@ entities:
     components:
     - type: Transform
       pos: 6.5,2.5
+      parent: 30
+  - uid: 8253
+    components:
+    - type: Transform
+      pos: -11.5,-33.5
       parent: 30
   - uid: 8357
     components:
@@ -44128,6 +44117,11 @@ entities:
     - type: Transform
       pos: 2.4657774,20.884964
       parent: 30
+  - uid: 20974
+    components:
+    - type: Transform
+      pos: 2.2878256,21.230333
+      parent: 30
   - uid: 20982
     components:
     - type: Transform
@@ -53055,7 +53049,7 @@ entities:
   - uid: 2033
     components:
     - type: Transform
-      pos: -44.48352,46.8257
+      pos: -44.77555,47.437355
       parent: 30
 - proto: ClothingHeadHatBowlerHat
   entities:
@@ -53265,6 +53259,13 @@ entities:
     components:
     - type: Transform
       pos: -21.586058,-27.491894
+      parent: 30
+- proto: ClothingHeadHatWarden
+  entities:
+  - uid: 865
+    components:
+    - type: Transform
+      pos: -44.478676,46.781105
       parent: 30
 - proto: ClothingHeadHatWelding
   entities:
@@ -55770,13 +55771,6 @@ entities:
     - type: Transform
       pos: 17.5,18.5
       parent: 30
-- proto: CrateMindShieldImplants
-  entities:
-  - uid: 8278
-    components:
-    - type: Transform
-      pos: -41.5,56.5
-      parent: 30
 - proto: CrateNPCCow
   entities:
   - uid: 494
@@ -55815,6 +55809,13 @@ entities:
     components:
     - type: Transform
       pos: 34.5,-9.5
+      parent: 30
+- proto: CrateSecurityTrackingMindshieldImplants
+  entities:
+  - uid: 682
+    components:
+    - type: Transform
+      pos: -41.5,56.5
       parent: 30
 - proto: CrateServiceJanitorialSupplies
   entities:
@@ -62261,6 +62262,13 @@ entities:
     - type: Transform
       pos: -0.6569953,-8.6031685
       parent: 30
+- proto: DrinkGildlagerBottleFull
+  entities:
+  - uid: 22265
+    components:
+    - type: Transform
+      pos: 7.564439,42.814713
+      parent: 30
 - proto: DrinkGlass
   entities:
   - uid: 703
@@ -62299,13 +62307,6 @@ entities:
     components:
     - type: Transform
       pos: 7.5231714,44.698692
-      parent: 30
-- proto: DrinkGoldschlagerBottleFull
-  entities:
-  - uid: 22265
-    components:
-    - type: Transform
-      pos: 7.564439,42.814713
       parent: 30
 - proto: DrinkGrapeCan
   entities:
@@ -67476,15 +67477,7 @@ entities:
   - uid: 7224
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -4.5,-49.5
-      parent: 30
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
-  - uid: 7225
-    components:
-    - type: Transform
-      pos: -4.5,-48.5
+      pos: -3.5,-48.5
       parent: 30
     - type: AtmosPipeColor
       color: '#03FCD3FF'
@@ -67615,13 +67608,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -6.5,-49.5
-      parent: 30
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
-  - uid: 8253
-    components:
-    - type: Transform
-      pos: -5.5,-49.5
       parent: 30
     - type: AtmosPipeColor
       color: '#03FCD3FF'
@@ -74289,6 +74275,14 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#FF1212FF'
+  - uid: 4353
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.5,-48.5
+      parent: 30
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 5006
     components:
     - type: Transform
@@ -75308,14 +75302,6 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#FF1212FF'
-  - uid: 7223
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -3.5,-49.5
-      parent: 30
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
   - uid: 7226
     components:
     - type: Transform
@@ -85414,6 +85400,13 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -45.5,-9.5
       parent: 30
+  - uid: 1938
+    components:
+    - type: Transform
+      pos: -5.5,-49.5
+      parent: 30
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 2431
     components:
     - type: Transform
@@ -86681,6 +86674,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: -22.5,-9.5
       parent: 30
+  - uid: 7223
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-49.5
+      parent: 30
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 7228
     components:
     - type: Transform
@@ -88614,9 +88615,25 @@ entities:
       color: '#FF1212FF'
   - uid: 7222
     components:
+    - type: MetaData
+      name: Emergency Dump Valve
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,-48.5
+      parent: 30
+    - type: GasValve
+      open: False
+    - type: AtmosDevice
+      joinedGrid: 30
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
+  - uid: 8278
+    components:
+    - type: MetaData
+      name: Cold Loop Valve
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.5,-49.5
       parent: 30
     - type: GasValve
       open: False
@@ -98834,6 +98851,13 @@ entities:
     - type: Transform
       pos: -34.5,-46.5
       parent: 30
+- proto: GunSafeDisabler
+  entities:
+  - uid: 726
+    components:
+    - type: Transform
+      pos: -41.5,55.5
+      parent: 30
 - proto: GunSafeLaserCarbine
   entities:
   - uid: 1942
@@ -103835,6 +103859,18 @@ entities:
     - type: Transform
       pos: -22.465681,-16.499807
       parent: 30
+- proto: MicroManipulatorStockPart
+  entities:
+  - uid: 20970
+    components:
+    - type: Transform
+      pos: 2.559926,21.402208
+      parent: 30
+  - uid: 22099
+    components:
+    - type: Transform
+      pos: 2.731801,21.495958
+      parent: 30
 - proto: MinimoogInstrument
   entities:
   - uid: 19793
@@ -104264,18 +104300,6 @@ entities:
     components:
     - type: Transform
       pos: -75.24839,-66.594925
-      parent: 30
-- proto: NanoManipulatorStockPart
-  entities:
-  - uid: 20970
-    components:
-    - type: Transform
-      pos: 2.559926,21.402208
-      parent: 30
-  - uid: 22099
-    components:
-    - type: Transform
-      pos: 2.731801,21.495958
       parent: 30
 - proto: NitrogenCanister
   entities:
@@ -111479,11 +111503,6 @@ entities:
     components:
     - type: Transform
       pos: -32.5,29.5
-      parent: 30
-  - uid: 1938
-    components:
-    - type: Transform
-      pos: -41.5,55.5
       parent: 30
   - uid: 1939
     components:
@@ -127066,13 +127085,6 @@ entities:
     - type: Transform
       pos: 13.5,6.5
       parent: 30
-- proto: TransmitterSubspaceStockPart
-  entities:
-  - uid: 20979
-    components:
-    - type: Transform
-      pos: 3.468286,20.58795
-      parent: 30
 - proto: TrashBag
   entities:
   - uid: 10248
@@ -127118,13 +127130,6 @@ entities:
     components:
     - type: Transform
       pos: 6.5776615,21.697325
-      parent: 30
-- proto: TreatmentSubspaceStockPart
-  entities:
-  - uid: 21164
-    components:
-    - type: Transform
-      pos: 3.483911,20.71295
       parent: 30
 - proto: TwoWayLever
   entities:
@@ -128557,6 +128562,13 @@ entities:
     - type: Transform
       pos: -50.5,11.5
       parent: 30
+  - uid: 868
+    components:
+    - type: MetaData
+      flags: PvsPriority
+    - type: Transform
+      pos: -59.5,-10.5
+      parent: 30
   - uid: 882
     components:
     - type: MetaData
@@ -128704,6 +128716,13 @@ entities:
       flags: PvsPriority
     - type: Transform
       pos: -61.5,-10.5
+      parent: 30
+  - uid: 1083
+    components:
+    - type: MetaData
+      flags: PvsPriority
+    - type: Transform
+      pos: -52.5,-10.5
       parent: 30
   - uid: 1140
     components:
@@ -149130,16 +149149,6 @@ entities:
       canCollide: False
 - proto: WeaponDisabler
   entities:
-  - uid: 682
-    components:
-    - type: Transform
-      pos: -41.44297,55.4585
-      parent: 30
-  - uid: 726
-    components:
-    - type: Transform
-      pos: -41.427345,55.317875
-      parent: 30
   - uid: 1563
     components:
     - type: Transform

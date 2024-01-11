@@ -426,7 +426,7 @@ public sealed class FoodSystem : EntitySystem
             return true;
 
         if (!Resolve(user, ref hands, false))
-            return false;
+            return true; //mice
 
         var usedTypes = UtensilType.None;
 
