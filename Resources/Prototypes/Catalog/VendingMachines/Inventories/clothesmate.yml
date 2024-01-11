@@ -64,6 +64,7 @@
     ClothingHeadHatGreensoft: 2
     ClothingHeadHatOrangesoft: 2
     ClothingHeadHatRedsoft: 2
+    ClothingHeadHatBlacksoft: 2
     ClothingHeadHatPurplesoft: 2
     ClothingHeadHatCorpsoft: 2
     ClothingHeadFishCap: 2
@@ -81,5 +82,6 @@
     ClothingHandsGlovesColorOrange: 2
     ClothingHandsGlovesColorPurple: 2
   contrabandInventory:
+    ClothingMaskNeckGaiter: 2
     ClothingUniformJumpsuitTacticool: 1
     ClothingUniformJumpskirtTacticool: 1
