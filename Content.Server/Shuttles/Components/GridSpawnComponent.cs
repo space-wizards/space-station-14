@@ -24,7 +24,7 @@ public record struct GridSpawnGroup
     public int MaxCount = 1;
 
     /// <summary>
-    /// Hide the IFF of the grid.
+    /// Hide the IFF label of the grid.
     /// </summary>
     public bool Hide = false;
 
