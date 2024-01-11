@@ -4,11 +4,11 @@ using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
@@ -20,7 +20,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
@@ -90,7 +90,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
     {
         if (args.Ejected || !_powerCell.HasDrawCharge(generator))
         {
-            TurnOff(generator, false);
+            TurnOff(generator, true);
         }
     }
 
@@ -132,14 +132,16 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             if (_powerCell.TryGetBatteryFromSlot(generatorUid, out var battery))
                 _battery.UseCharge(battery.Owner, energyLeak); //Force set Charge to 0%
 
-
             TurnOff(new Entity<EnergyDomeGeneratorComponent>(generatorUid, generatorComp), true);
         }
     }
 
     public bool AttemptUse(Entity<EnergyDomeGeneratorComponent> generator, EntityUid user)
     {
-        if (TryComp(generator, out LockComponent? lockComp) && lockComp.Locked)
+        if (TryComp<UseDelayComponent>(generator, out var useDelay) && _useDelay.IsDelayed(new Entity<UseDelayComponent>(generator, useDelay)))
+            return false;
+
+        if (TryComp<LockComponent>(generator, out var lockComp) && lockComp.Locked)
         {
             _audio.PlayPvs(generator.Comp.AccessDeniedSound, generator);
             _popup.PopupEntity(
@@ -149,35 +151,41 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             return false;
         }
 
-        if (!_powerCell.TryGetBatteryFromSlot(generator, out var battery) && !TryComp(generator, out battery))
+        if (TryComp<PowerCellSlotComponent>(generator, out var _))
         {
-            _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
-            _popup.PopupEntity(
-                Loc.GetString("energy-dome-no-cell"),
-                generator,
-                user);
-            return false;
+            if (!_powerCell.TryGetBatteryFromSlot(generator, out var battery) && !TryComp(generator, out battery))
+            {
+                _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
+                _popup.PopupEntity(
+                    Loc.GetString("energy-dome-no-cell"),
+                    generator,
+                    user);
+                return false;
+            }
+
+            if (!_powerCell.HasDrawCharge(generator))
+            {
+                _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
+                _popup.PopupEntity(
+                    Loc.GetString("energy-dome-no-power"),
+                    generator,
+                    user);
+                return false;
+            }
         }
 
-        if (generator.Comp.NextActivation > _gameTiming.CurTime)
-        {
-            _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
-            _popup.PopupEntity(
-                Loc.GetString("energy-dome-recharging"),
-                generator,
-                user);
-            return false;
-        }
 
-        if (!_powerCell.HasDrawCharge(generator))/*battery.Charge < generator.Comp.Wattage*/
-        {
-            _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
-            _popup.PopupEntity(
-                Loc.GetString("energy-dome-no-power"),
-                generator,
-                user);
-            return false;
-        }
+        //if (generator.Comp.NextActivation > _gameTiming.CurTime)
+        //{
+        //    _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
+        //    _popup.PopupEntity(
+        //        Loc.GetString("energy-dome-recharging"),
+        //        generator,
+        //        user);
+        //    return false;
+        //}
+
+
 
         Toggle(generator);
         return true;
@@ -227,8 +235,11 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
         if (startReloading)
         {
-            generator.Comp.NextActivation = _gameTiming.CurTime + TimeSpan.FromSeconds(generator.Comp.ReloadSecond);
             _audio.PlayPvs(generator.Comp.EnergyOutSound, generator);
+            if (TryComp<UseDelayComponent>(generator, out var useDelay))
+            {
+                _useDelay.TryResetDelay(new Entity<UseDelayComponent>(generator, useDelay));
+            }
         }
     }
 

@@ -16,15 +16,6 @@ public sealed partial class EnergyDomeGeneratorComponent : Component
     public float DamageEnergyDraw = 50f;
 
     /// <summary>
-    /// After an emergency shutdown, the dome goes to recharge, during which time it cannot be turned back on
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public double ReloadSecond = 10;
-
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan NextActivation;
-
-    /// <summary>
     /// Whether or not the light can be toggled via standard interactions
     /// (alt verbs, using in hand, etc)
     /// </summary>

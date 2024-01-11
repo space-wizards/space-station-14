@@ -34,6 +34,8 @@
   - type: PowerCellDraw
     drawRate: 10
     useRate: 0
+  - type: UseDelay
+    delay: 10.0
 
 # frozen
 
