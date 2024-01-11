@@ -10392,6 +10392,11 @@ entities:
     - type: Transform
       pos: 7.5,-3.5
       parent: 407
+  - uid: 2274
+    components:
+    - type: Transform
+      pos: -0.5,10.5
+      parent: 407
 - proto: Poweredlight
   entities:
   - uid: 206
@@ -14988,6 +14993,13 @@ entities:
     components:
     - type: Transform
       pos: 25.5,2.5
+      parent: 407
+- proto: WeaponPistolCHIMP
+  entities:
+  - uid: 2275
+    components:
+    - type: Transform
+      pos: -4.330495,7.357918
       parent: 407
 - proto: WelderIndustrialAdvanced
   entities:
