@@ -11,9 +11,9 @@
     slots:
     - Belt
   - type: Sprite
-    sprite: Objects/Tools/energy_dome.rsi
+    sprite: Objects/Tools/EnergyDome/syndie.rsi
     layers:
-      - state: syndie
+      - state: icon
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
@@ -23,26 +23,26 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
+        startingItem: PowerCellSmall
         whitelist:
         tags:
           - PowerCell
           - PowerCellSmall
   - type: EnergyDomeGenerator
-    wattage: 20
-    energyLessForDamage: 10
+    wattage: 10
+    energyLessForDamage: 5
     domePrototype: EnergyDomeSmallCircleSyndie
 
 - type: entity
-  name: Heavy directional energy shield generator
-  description: A two-handed and heavy energy barrier capable of absorbing large amounts of damage. Can be placed pointed in a certain direction.
+  name: energy shield generator "Reinhardt"
+  description: A two-handed and heavy directed energy barrier capable of absorbing large amounts of damage. Uses a power cell.
   id: EnergyDomeDirectionalReinhardt
-  parent: BaseStructureDynamic
+  parent: BaseItem
   components:
   - type: Sprite
-    sprite: Objects/Tools/energy_dome.rsi
+    sprite: Objects/Tools/EnergyDome/reinhardt.rsi
     layers:
-    - state: reinhardt
+    - state: icon
   - type: InteractionOutline
   - type: MultiHandedItem
   - type: Fixtures
@@ -58,11 +58,6 @@
         friction: 0.2
   - type: Item
     size: Ginormous
-    inhandVisuals:
-      left:
-      - state: reinhardt-inhand-left
-      right:
-      - state: reinhardt-inhand-right
   - type: HeldSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
@@ -75,12 +70,11 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
         whitelist:
         tags:
           - PowerCell
           - PowerCellSmall
   - type: EnergyDomeGenerator
-    wattage: 15
-    energyLessForDamage: 7
+    wattage: 2
+    energyLessForDamage: 3
     domePrototype: EnergyDomeSmallDirectedNT

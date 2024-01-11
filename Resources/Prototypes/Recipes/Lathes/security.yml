@@ -544,3 +544,12 @@
     Steel: 1000
     Glass: 500
     Plastic: 500
+
+- type: latheRecipe
+  id: EnergyDomeDirectionalReinhardt
+  result: EnergyDomeDirectionalReinhardt
+  completetime: 12
+  materials:
+    Steel: 1000
+    Glass: 300
+    Plastic: 500

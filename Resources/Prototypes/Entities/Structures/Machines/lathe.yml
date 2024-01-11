@@ -306,6 +306,7 @@
       - FauxTileAstroGrass
       - FauxTileAstroIce
       - OreBagOfHolding
+      - EnergyDomeDirectionalReinhardt
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload
