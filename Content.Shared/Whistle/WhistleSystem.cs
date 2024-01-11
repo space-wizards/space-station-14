@@ -10,6 +10,7 @@ public sealed class WhistleSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -44,7 +45,7 @@ public sealed class WhistleSystem : EntitySystem
     private void MakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
     {
         foreach (var iterator in
-            _entityLookup.GetComponentsInRange<HumanoidAppearanceComponent>(Transform(uid).Coordinates, component.Distance))
+            _entityLookup.GetComponentsInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), component.Distance))
         {
             if (HasComp<StealthComponent>(iterator.Owner))
                 continue;
