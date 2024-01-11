@@ -74,8 +74,9 @@
     sprite: Objects/Weapons/Melee/crusher_dagger.rsi
     state: icon
   - type: MeleeWeapon
+    autoAttack: true
     wideAnimationRotation: -135
-    attackRate: 1.5
+    attackRate: 2
     damage:
       types:
         Slash: 15
@@ -97,7 +98,7 @@
   - type: LeechOnMarker
     leech:
       groups:
-        Brute: -30
+        Brute: -25
   - type: MeleeWeapon
     attackRate: 1.25
   - type: Tag
