@@ -103,11 +103,22 @@ namespace Content.Server.Kitchen.EntitySystems
         /// </summary>
         /// <param name="component">The microwave that is heating up.</param>
         /// <param name="time">The time on the microwave, in seconds.</param>
-        private void AddTemperature(MicrowaveComponent component, float time)
+        private void AddTemperature(MicrowaveComponent component, float time, FoodRecipePrototype recipe)
         {
             var heatToAdd = time * component.BaseHeatMultiplier;
             foreach (var entity in component.Storage.ContainedEntities)
             {
+                // we don't cook active ingredients to prevent duplication. Raw food that isn't in a recipe still gets cooked.
+                if (recipe != null)
+                {
+                    var metaData = MetaData(entity);
+                    var keyValue = metaData?.EntityPrototype?.ID;
+                    if (keyValue != null && recipe.IngredientsSolids.ContainsKey(keyValue))
+                    {
+                        continue;
+                    }
+                }
+
                 if (TryComp<TemperatureComponent>(entity, out var tempComp))
                     _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
 
@@ -483,14 +494,14 @@ namespace Content.Server.Kitchen.EntitySystems
                 active.CookTimeRemaining -= frameTime;
                 if (active.CookTimeRemaining > 0)
                 {
-                    AddTemperature(microwave, frameTime);
+                    AddTemperature(microwave, frameTime, active?.PortionedRecipe.Item1!);
                     continue;
                 }
 
                 //this means the microwave has finished cooking.
-                AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0)); //Though there's still a little bit more heat to pump out
+                AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0), active?.PortionedRecipe.Item1!); //Though there's still a little bit more heat to pump out
 
-                if (active.PortionedRecipe.Item1 != null)
+                if (active?.PortionedRecipe.Item1 != null)
                 {
                     var coords = Transform(uid).Coordinates;
                     for (var i = 0; i < active.PortionedRecipe.Item2; i++)
