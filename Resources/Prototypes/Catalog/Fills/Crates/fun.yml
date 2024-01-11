@@ -34,6 +34,8 @@
     contents:
       - id: PlushieLizard
         amount: 3
+      - id: PlushieSpaceLizard
+        amount: 2
 
 - type: entity
   id: CrateFunInstrumentsVariety

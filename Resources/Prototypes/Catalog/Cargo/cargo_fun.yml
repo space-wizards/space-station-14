@@ -102,7 +102,7 @@
   id: FunLizardPlushies
   icon:
     sprite: Objects/Fun/toys.rsi
-    state: plushie_h
+    state: plushie_lizard
   product: CrateFunLizardPlushieBulk
   cost: 2500
   category: Fun
