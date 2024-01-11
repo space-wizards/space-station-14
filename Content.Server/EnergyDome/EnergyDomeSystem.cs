@@ -123,7 +123,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             return;
 
         float totalDamage = args.DamageDelta.GetTotal().Float();
-        var energyLeak = totalDamage * generatorComp.EnergyLessForDamage;
+        var energyLeak = totalDamage * generatorComp.DamageEnergyDraw;
 
         _audio.PlayPvs(generatorComp.ParrySound, dome);
 
@@ -169,9 +169,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             return false;
         }
 
-
-
-        if (battery.Charge < generator.Comp.Wattage)
+        if (!_powerCell.HasDrawCharge(generator))/*battery.Charge < generator.Comp.Wattage*/
         {
             _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
             _popup.PopupEntity(
@@ -210,6 +208,8 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             domeComp.Generator = generator;
         }
 
+        _powerCell.SetPowerCellDrawEnabled(generator, true);
+
         generator.Comp.SpawnedDome = newDome;
         _audio.PlayPvs(generator.Comp.TurnOnSound, generator);
     }
@@ -221,6 +221,8 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 
         generator.Comp.Enabled = false;
         QueueDel(generator.Comp.SpawnedDome);
+
+        _powerCell.SetPowerCellDrawEnabled(generator, false);
 
         _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
         if (startReloading)
@@ -242,12 +244,6 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 
             if (generator.SpawnedDome == null)
                 continue;
-
-            if (!_powerCell.TryUseCharge(uid, generator.Wattage * frameTime))
-            {
-                TurnOff(new Entity<EnergyDomeGeneratorComponent>(uid, generator), true);
-                continue;
-            };
 
             _transform.SetCoordinates(generator.SpawnedDome.Value, Transform(uid).Coordinates);
         }
