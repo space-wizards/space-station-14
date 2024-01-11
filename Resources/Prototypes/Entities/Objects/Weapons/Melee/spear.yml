@@ -55,7 +55,6 @@
   - type: Construction
     graph: Spear
     node: spear
-  - type: ItemCooldown
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -68,6 +67,7 @@
     solution: melee
   - type: SolutionInjectOnCollide
     transferAmount: 2
+    fixtureId: "throw-fixture"
     blockSlots: NONE
   - type: SolutionTransfer
     maxTransferAmount: 2
@@ -107,7 +107,6 @@
       types:
         Blunt: 5
   - type: UseDelay
-    delay: 1
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1

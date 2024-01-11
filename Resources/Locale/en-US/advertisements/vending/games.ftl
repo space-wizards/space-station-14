@@ -6,3 +6,6 @@ advertisement-goodcleanfun-5 = Elves and dwarves!
 advertisement-goodcleanfun-6 = Paranoid computers!
 advertisement-goodcleanfun-7 = Totally not satanic!
 advertisement-goodcleanfun-8 = Fun times forever!
+thankyou-goodcleanfun-1 = Have fun!
+thankyou-goodcleanfun-2 = Now you're playing with power!
+thankyou-goodcleanfun-3 = Go get your game on!

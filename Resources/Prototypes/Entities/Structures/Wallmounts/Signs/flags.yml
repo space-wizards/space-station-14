@@ -30,7 +30,7 @@
 - type: entity
   parent: BaseFlag
   id: SyndieFlag
-  name: Syndicate flag
+  name: syndicate flag
   description: "Smells bloody. Death to NT!"
   components:
   - type: Sprite
@@ -48,7 +48,7 @@
 - type: entity
   parent: BaseFlag
   id: PirateFlag
-  name: Pirate flag
+  name: pirate flag
   description: "Raise the jolly roger, scallywags!"
   components:
   - type: Sprite

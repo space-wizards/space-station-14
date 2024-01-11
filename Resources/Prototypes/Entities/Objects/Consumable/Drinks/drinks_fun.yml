@@ -68,3 +68,72 @@
   - type: Lube
   - type: TrashOnSolutionEmpty
     solution: drink
+
+
+# Mopwata 
+- type: weightedRandomFillSolution
+  id: RandomFillMopwata
+  fills:
+  - quantity: 10
+    weight: 5
+    reagents:
+    - Blood
+    - CopperBlood
+    - Slime
+    - Vomit
+  - quantity: 10
+    weight: 4
+    reagents:
+    - Coffee
+    - Tea
+    - Cola
+    - RootBeer
+    - DrGibb
+    - GrapeSoda
+    - Starkist
+    - SpaceUp
+    - SpaceMountainWind
+    - LemonLime
+    - PwrGame
+  - quantity: 10
+    weight: 3
+    reagents:
+    - Whiskey
+    - Vodka
+    - Beer
+    - Ale
+    - Rum
+    - Tequila
+    - Absinthe
+  - quantity: 10
+    weight: 1
+    reagents:
+    - SpaceDrugs
+    - Mold
+    - SpaceLube
+    - SpaceGlue
+    - SoapyWater
+    - SpaceCleaner
+    - MilkSpoiled
+    - FourteenLoko
+
+- type: entity
+  parent: DrinkBottleGlassBaseFull
+  id: DrinkMopwataBottleRandom
+  name: delicious mopwata
+  description: A foggy brown bottle with a faded label depicting a mop. It comes full of murky... vintage.
+  components:
+  - type: Item
+    size: Small
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Mopwata
+          Quantity: 40
+  - type: RandomFillSolution
+    solution: drink
+    weightedRandomId: RandomFillMopwata
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mopwata.rsi
