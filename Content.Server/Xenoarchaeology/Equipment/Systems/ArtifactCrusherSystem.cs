@@ -34,7 +34,6 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
 
         SubscribeLocalEvent<ArtifactCrusherComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<ArtifactCrusherComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<ArtifactCrusherComponent, OnAttemptEmagEvent>(OnAttemptEmag);
         SubscribeLocalEvent<ArtifactCrusherComponent, GotEmaggedEvent>(OnEmagged);
     }
 
@@ -71,7 +70,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         args.Handled = true;
     }
 
-public void StartCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent)
+    public void StartCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent)
     {
         var (uid, crusher, _) = ent;
 
@@ -79,7 +78,7 @@ public void StartCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponen
             return;
 
         if (crusher.AutoLock)
-            _popup.PopupEntity(Loc.GetString("artifact-crusher-autolock-enable"), uid);
+            _popup.PopupEntity(Loc.GetString("artifact-crusher-autolocks-enable"), uid);
 
         crusher.Crushing = true;
         crusher.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
