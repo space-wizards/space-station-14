@@ -36,3 +36,16 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: ChangelingEMP
+  name: Activate Dissonant Shriek	
+  description: You release a high-frequency sound which disables technology in the surrounding area, including radio headsets. Costs 20 chemicals on activation.
+  productAction: ActionLingEMP
+  cost:
+    EvolutionPoints: 1
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
