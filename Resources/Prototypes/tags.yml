@@ -561,6 +561,11 @@
   id: Grenade
 
 - type: Tag
+  id: HudMedical
+
+- type: Tag
+  id: HudSecurity
+- type: Tag
   id: GuideEmbeded
 
 - type: Tag
