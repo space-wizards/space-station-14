@@ -97,25 +97,24 @@ namespace Content.Server.Chemistry.EntitySystems
                 var storageSlotId = ReagentDispenserComponent.BaseStorageSlotId + i;
                 var storedContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, storageSlotId);
 
+                // Set label from manually-applied label, or metadata if unavailable
+                string reagentLabel;
+                if (EntityManager.TryGetComponent<LabelComponent?>(storedContainer, out var label) && label.CurrentLabel != null)
+                    reagentLabel = label.CurrentLabel;
+                else if (EntityManager.TryGetComponent<MetaDataComponent?>(storedContainer, out var metadata))
+                    reagentLabel = metadata.EntityName;
+                else
+                    continue;
+
                 // Add volume remaining label
                 FixedPoint2 quantity = 0f;
                 if (storedContainer != null && _solutionContainerSystem.TryGetDrainableSolution(storedContainer.Value, out _, out var sol))
                 {
                     quantity = sol.Volume;
                 }
-                var storedAmount = quantity + "u";
+                var storedAmount = $"({quantity}u)";
 
-                if (EntityManager.TryGetComponent<LabelComponent?>(storedContainer, out var label))
-                {
-                    if (label.CurrentLabel != null)
-                        inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(label.CurrentLabel, storedAmount)));
-                    else
-                        if (EntityManager.TryGetComponent<MetaDataComponent?>(storedContainer, out var metadata))
-                            inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(metadata.EntityName, storedAmount)));
-                }
-                else
-                    if (EntityManager.TryGetComponent<MetaDataComponent?>(storedContainer, out var metadata))
-                        inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(metadata.EntityName, storedAmount)));
+                inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(reagentLabel, storedAmount)));
             }
 
             return inventory;
