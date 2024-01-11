@@ -1,12 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Cargo.Components;
-using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
 using Content.Shared.Interaction.Events;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -17,6 +16,8 @@ public sealed class CargoTrackingSystem : EntitySystem
     [Dependency] private readonly SharedPinpointerSystem _pinpointerSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
+    private Dictionary<int, List<EntityUid>> _orderTracking = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -26,6 +27,48 @@ public sealed class CargoTrackingSystem : EntitySystem
         SubscribeLocalEvent<CargoTrackedComponent, EntityTerminatingEvent>(OnEntityTerminating);
         SubscribeLocalEvent<CargoOrderArrivalEvent>(OnCargoOrderArrival);
         SubscribeLocalEvent<CargoOrderDeletionEvent>(OnCargoOrderDeletion);
+    }
+
+    private void TrackOrder(EntityUid tracker, int orderId)
+    {
+        if (_orderTracking.TryGetValue(orderId, out var entry))
+        {
+            if (!entry.Contains(tracker))
+                entry.Add(tracker);
+        }
+        else
+        {
+            _orderTracking.Add(orderId, new List<EntityUid>() { tracker });
+        }
+    }
+
+    private bool UntrackOrder(EntityUid tracker, int orderId)
+    {
+        if (!_orderTracking.TryGetValue(orderId, out var entry) || !entry.Contains(tracker))
+            return false;
+
+        entry.Remove(tracker);
+        if (entry.Count == 0)
+            _orderTracking.Remove(orderId);
+
+        return true;
+    }
+
+    private bool UntrackAllOrder(int orderId)
+    {
+        return _orderTracking.Remove(orderId);
+    }
+
+    private bool GetAllTracked(int order, [NotNullWhen(true)] out List<EntityUid>? result)
+    {
+        if (_orderTracking.TryGetValue(order, out var entry))
+        {
+            result = entry;
+            return true;
+        }
+
+        result = null;
+        return false;
     }
 
     private void StartWaiting(EntityUid uid, CargoTrackingComponent comp)
@@ -93,6 +136,7 @@ public sealed class CargoTrackingSystem : EntitySystem
 
         component.TrackedOrderId = cargoInvoiceComponent.OrderId;
         component.TrackedOrderName = cargoInvoiceComponent.OrderName;
+        TrackOrder(uid, cargoInvoiceComponent.OrderId);
 
         var station = _stationSystem.GetOwningStation(uid);
         if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var cargoOrderDatabaseComponent))
@@ -143,27 +187,27 @@ public sealed class CargoTrackingSystem : EntitySystem
 
     private void OnCargoOrderArrival(CargoOrderArrivalEvent args)
     {
-        // iterating over every order tracker (this is costly, but it doesn't matter because this event is raised so infrequently
-        var query = EntityQueryEnumerator<CargoTrackingComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        if (!GetAllTracked(args.OrderId, out var entities))
+            return;
+
+        foreach (var entity in entities)
         {
-            if (comp.TrackedOrderId == args.OrderId)
+            if (TryComp<CargoTrackingComponent>(entity, out var comp))
             {
-                StartTrackingArrival(uid, args.OrderEntity, comp);
+                StartTrackingArrival(entity, args.OrderEntity, comp);
             }
         }
     }
 
     private void OnCargoOrderDeletion(CargoOrderDeletionEvent args)
     {
-        // iterating over every order tracker (this is costly, but it doesn't matter because this event is raised so infrequently
-        var query = EntityQueryEnumerator<CargoTrackingComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        if (!GetAllTracked(args.OrderId, out var entities))
+            return;
+
+        foreach (var entity in entities)
         {
-            if (comp.TrackedOrderId == args.OrderId)
-            {
-                StopTrackingArrival(uid);
-            }
+            StopTrackingArrival(entity);
+            UntrackAllOrder(args.OrderId);
         }
     }
 }
