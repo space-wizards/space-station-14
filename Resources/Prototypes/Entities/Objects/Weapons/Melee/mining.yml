@@ -101,7 +101,6 @@
       groups:
         Brute: -21
   - type: MeleeWeapon
-    attackRate: 1.2
   - type: Tag
     tags:
       - Pickaxe
