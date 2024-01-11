@@ -68,7 +68,7 @@
   parent: BaseWeaponCrusher
   id: WeaponCrusherDagger
   name: crusher dagger
-  description: A scaled down version of a proto-kinetic crusher, usually used in a last ditch scenario.
+  description: A scaled down version of a proto-kinetic crusher. Uses kinetic energy to vibrate the blade at high speeds.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_dagger.rsi
