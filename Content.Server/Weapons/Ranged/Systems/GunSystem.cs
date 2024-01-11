@@ -12,6 +12,7 @@ using Content.Shared.Database;
 using Content.Shared.Effects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
@@ -24,6 +25,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -42,6 +44,8 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly FixtureSystem _fixture = default!;
 
     public const float DamagePitchVariation = SharedMeleeWeaponSystem.DamagePitchVariation;
     public const float GunClumsyChance = 0.5f;
@@ -206,7 +210,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 case HitscanPrototype hitscan:
 
-                    EntityUid? lastHit = null;
+                    List<RayCastResults>? hitList = null;
 
                     var from = fromMap;
                     // can't use map coords above because funny FireEffects
@@ -219,66 +223,87 @@ public sealed partial class GunSystem : SharedGunSystem
                         for (var reflectAttempt = 0; reflectAttempt < 3; reflectAttempt++)
                         {
                             var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
-                            var rayCastResults =
+                            hitList =
                                 Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
-                            if (!rayCastResults.Any())
+                            if (hitList.Count == 0)
                                 break;
 
-                            var result = rayCastResults[0];
-                            var hit = result.HitEntity;
-                            lastHit = hit;
+                            var result = hitList[0].Distance;
+                            var hit = hitList[0].HitEntity;
 
-                            FireEffects(fromEffect, result.Distance, dir.Normalized().ToAngle(), hitscan, hit);
+                            //Set the distance to the first target it can't penetrate.
+                            if (hitscan.CanPenetrateMobs)
+                            {
+                                foreach (var target in hitList)
+                                {
+                                    if (!HasComp<MobStateComponent>(target.HitEntity) && !hitscan.CanPenetrateWall)
+                                    {
+                                        result = target.Distance;
+                                        break;
+                                    }
+                                    result = hitscan.MaxLength;
+                                }
+                            }
 
                             var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false);
                             RaiseLocalEvent(hit, ref ev);
 
                             if (!ev.Reflected)
+                            {
+                                FireEffects(fromEffect, result, dir.Normalized().ToAngle(), hitscan, hit);
                                 break;
+                            }
 
                             fromEffect = Transform(hit).Coordinates;
                             from = fromEffect.ToMap(EntityManager, _transform);
                             dir = ev.Direction;
                             lastUser = hit;
+                            FireEffects(fromEffect, result, dir.Normalized().ToAngle(), hitscan, hit);
                         }
                     }
 
-                    if (lastHit != null)
+                    if (hitList != null && hitList.Count != 0)
                     {
-                        var hitEntity = lastHit.Value;
-                        if (hitscan.StaminaDamage > 0f)
-                            _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: user);
-
-                        var dmg = hitscan.Damage;
-
-                        var hitName = ToPrettyString(hitEntity);
-                        if (dmg != null)
-                            dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
-
-                        // check null again, as TryChangeDamage returns modified damage values
-                        if (dmg != null)
+                        foreach (var laserHit in hitList)
                         {
-                            if (!Deleted(hitEntity))
+                            var hitEntity = laserHit.HitEntity;
+                            if (hitscan.StaminaDamage > 0f)
+                                _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: user);
+
+                            var dmg = hitscan.Damage;
+
+                            var hitName = ToPrettyString(hitEntity);
+                            if (dmg != null)
+                                dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
+
+                            // check null again, as TryChangeDamage returns modified damage values
+                            if (dmg != null)
                             {
-                                if (dmg.Any())
+                                if (!Deleted(hitEntity))
                                 {
-                                    _color.RaiseEffect(Color.Red, new List<EntityUid>() { hitEntity }, Filter.Pvs(hitEntity, entityManager: EntityManager));
+                                    if (dmg.Any())
+                                    {
+                                        _color.RaiseEffect(Color.Red, new List<EntityUid>() { hitEntity },
+                                            Filter.Pvs(hitEntity, entityManager: EntityManager));
+                                    }
+
+                                    // TODO get fallback position for playing hit sound.
+                                    PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
                                 }
 
-                                // TODO get fallback position for playing hit sound.
-                                PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+                                if (user != null)
+                                {
+                                    Logs.Add(LogType.HitScanHit,
+                                        $"{ToPrettyString(user.Value):user} hit {hitName:target} using hitscan and dealt {dmg.Total:damage} damage");
+                                }
+                                else
+                                {
+                                    Logs.Add(LogType.HitScanHit,
+                                        $"{hitName:target} hit by hitscan dealing {dmg.Total:damage} damage");
+                                }
                             }
-
-                            if (user != null)
-                            {
-                                Logs.Add(LogType.HitScanHit,
-                                    $"{ToPrettyString(user.Value):user} hit {hitName:target} using hitscan and dealt {dmg.Total:damage} damage");
-                            }
-                            else
-                            {
-                                Logs.Add(LogType.HitScanHit,
-                                    $"{hitName:target} hit by hitscan dealing {dmg.Total:damage} damage");
-                            }
+                            if (!hitscan.CanPenetrateMobs || !HasComp<MobStateComponent>(laserHit.HitEntity) && !hitscan.CanPenetrateWall)
+                                break;
                         }
                     }
                     else
