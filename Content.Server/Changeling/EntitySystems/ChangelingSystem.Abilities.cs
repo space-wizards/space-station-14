@@ -56,12 +56,12 @@ public sealed partial class ChangelingSystem
         {
             if (!TryUseAbility(uid, component, component.RegenerateChemicalsCost))
                 return;
-            var damage_brute = new DamageSpecifier(_proto.Index(BruteDamageGroup), -175f);
-            var damage_burn = new DamageSpecifier(_proto.Index(BurnDamageGroup), -125f);
+            var damage_brute = new DamageSpecifier(_proto.Index(BruteDamageGroup), component.RegenerateBruteHealAmount);
+            var damage_burn = new DamageSpecifier(_proto.Index(BurnDamageGroup), component.RegenerateBurnHealAmount);
             _damageableSystem.TryChangeDamage(uid, damage_brute);
             _damageableSystem.TryChangeDamage(uid, damage_burn);
-            _bloodstreamSystem.TryModifyBloodLevel(uid, 1000f); // give back blood and remove bleeding
-            _bloodstreamSystem.TryModifyBleedAmount(uid, -1000f);
+            _bloodstreamSystem.TryModifyBloodLevel(uid, component.RegenerateBloodVolumeHealAmount); // give back blood and remove bleeding
+            _bloodstreamSystem.TryModifyBleedAmount(uid, component.RegenerateBleedReduceAmount);
             _audioSystem.PlayPvs(component.SoundRegenerate, uid);
 
             var othersMessage = Loc.GetString("changeling-regenerate-others-success", ("user", Identity.Entity(uid, EntityManager)));

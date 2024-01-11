@@ -30,7 +30,32 @@ public sealed partial class ChangelingComponent : Component
     /// <summary>
     /// The amount of chemicals that is needed to use the regenerate ability.
     /// </summary>
+    [DataField]
     public float RegenerateChemicalsCost = -10f;
+
+    /// <summary>
+    /// The amount of burn damage is healed when the regenerate ability is sucesssfully used.
+    /// </summary>
+    [DataField]
+    public float RegenerateBurnHealAmount = -100f;
+
+    /// <summary>
+    /// The amount of brute damage is healed when the regenerate ability is sucesssfully used.
+    /// </summary>
+    [DataField]
+    public float RegenerateBruteHealAmount = -125f;
+
+    /// <summary>
+    /// The amount of blood volume that is gained when the regenerate ability is sucesssfully used.
+    /// </summary>
+    [DataField]
+    public float RegenerateBloodVolumeHealAmount = 1000f;
+
+    /// <summary>
+    /// The amount of bleeding that is reduced when the regenerate ability is sucesssfully used.
+    /// </summary>
+    [DataField]
+    public float RegenerateBleedReduceAmount = -1000f;
 
     /// <summary>
     /// Sound that plays when the ling uses the regenerate ability.
