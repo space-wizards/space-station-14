@@ -556,7 +556,10 @@
 
 - type: Tag
   id: Goat
-
+  
+- type: Tag
+  id: GPS
+  
 - type: Tag
   id: Grenade
 
@@ -930,6 +933,9 @@
 
 - type: Tag
   id: ProximitySensor
+
+- type: Tag
+  id: QuantumSpinInverter
 
 - type: Tag
   id: Radio

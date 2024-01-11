@@ -274,7 +274,7 @@
     maxRange: 3
     baseRadialAcceleration: 1
     baseTangentialAcceleration: 3
-  
+
 - type: artifactEffect
   id: EffectAntiMagnet
   targetDepth: 1
@@ -388,8 +388,8 @@
       orGroup: fauna
       maxAmount: 1
       prob: 0.03
-    - id: MobMouse 
-      orGroup: fauna 
+    - id: MobMouse
+      orGroup: fauna
     - id: MobParrot
       orGroup: fauna
       maxAmount: 1
@@ -582,24 +582,6 @@
     range: 7.5
     messages:
     - shuffle-artifact-popup
-
-- type: artifactEffect
-  id: EffectT4PartsSpawn
-  targetDepth: 3
-  effectHint: artifact-effect-hint-creation
-  components:
-  - type: SpawnArtifact
-    maxSpawns: 10
-    spawns:
-    - id: QuadraticCapacitorStockPart
-      prob: 0.5
-      maxAmount: 3
-    - id: FemtoManipulatorStockPart
-      prob: 0.5
-      maxAmount: 3
-    - id: BluespaceMatterBinStockPart
-      prob: 0.5
-      maxAmount: 3
 
 - type: artifactEffect
   id: EffectFoamDangerous

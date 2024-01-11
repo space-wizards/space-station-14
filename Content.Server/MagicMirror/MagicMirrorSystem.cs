@@ -78,6 +78,9 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (component.Target is not { } target || message.Session.AttachedEntity is not { } user)
             return;
 
+        _doAfterSystem.Cancel(component.DoAfter);
+        component.DoAfter = null;
+
         var doAfter = new MagicMirrorSelectDoAfterEvent()
         {
             Category = message.Category,
@@ -94,8 +97,9 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnUserMove = true,
             BreakOnWeightlessMove = false,
             NeedHand = true
-        });
+        }, out var doAfterId);
 
+        component.DoAfter = doAfterId;
         _audio.PlayPvs(component.ChangeHairSound, uid);
     }
 
@@ -131,6 +135,9 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (component.Target is not { } target || message.Session.AttachedEntity is not { } user)
             return;
 
+        _doAfterSystem.Cancel(component.DoAfter);
+        component.DoAfter = null;
+
         var doAfter = new MagicMirrorChangeColorDoAfterEvent()
         {
             Category = message.Category,
@@ -146,7 +153,9 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnUserMove = true,
             BreakOnWeightlessMove = false,
             NeedHand = true
-        });
+        }, out var doAfterId);
+
+        component.DoAfter = doAfterId;
     }
     private void OnChangeColorDoAfter(EntityUid uid, MagicMirrorComponent component, MagicMirrorChangeColorDoAfterEvent args)
     {
@@ -181,6 +190,9 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (component.Target is not { } target || message.Session.AttachedEntity is not { } user)
             return;
 
+        _doAfterSystem.Cancel(component.DoAfter);
+        component.DoAfter = null;
+
         var doAfter = new MagicMirrorRemoveSlotDoAfterEvent()
         {
             Category = message.Category,
@@ -196,8 +208,9 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnUserMove = true,
             BreakOnWeightlessMove = false,
             NeedHand = true
-        });
+        }, out var doAfterId);
 
+        component.DoAfter = doAfterId;
         _audio.PlayPvs(component.ChangeHairSound, uid);
     }
 
@@ -236,6 +249,9 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (message.Session.AttachedEntity == null)
             return;
 
+        _doAfterSystem.Cancel(component.DoAfter);
+        component.DoAfter = null;
+
         var doAfter = new MagicMirrorAddSlotDoAfterEvent()
         {
             Category = message.Category,
@@ -249,8 +265,9 @@ public sealed class MagicMirrorSystem : EntitySystem
             BreakOnUserMove = true,
             BreakOnWeightlessMove = false,
             NeedHand = true
-        });
+        }, out var doAfterId);
 
+        component.DoAfter = doAfterId;
         _audio.PlayPvs(component.ChangeHairSound, uid);
     }
     private void OnAddSlotDoAfter(EntityUid uid, MagicMirrorComponent component, MagicMirrorAddSlotDoAfterEvent args)

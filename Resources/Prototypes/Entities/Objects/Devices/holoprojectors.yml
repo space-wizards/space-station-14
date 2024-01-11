@@ -72,7 +72,7 @@
       tags:
         - HolofanProjector
     - type: StaticPrice
-      price: 250
+      price: 130
 
 - type: entity
   parent: Holoprojector
@@ -90,7 +90,7 @@
       tags:
         - HolofanProjector
     - type: StaticPrice
-      price: 80
+      price: 50
 
 - type: entity
   parent: HoloprojectorSecurity
