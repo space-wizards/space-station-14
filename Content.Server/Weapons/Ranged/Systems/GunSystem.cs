@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
 using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Radiation.Components;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Damage;
@@ -236,11 +237,24 @@ public sealed partial class GunSystem : SharedGunSystem
                             {
                                 foreach (var target in hitList)
                                 {
+                                    if (TryComp<RadiationBlockerComponent>(target.HitEntity, out var radiation) &&
+                                        hitscan.CanPenetrateWall)
+                                    {
+                                        //Don't penetrate if the targets radiation resistance is higher
+                                        //than the hitscan's penetration power.
+                                        if (radiation.RadResistance > hitscan.PenetrationPower)
+                                        {
+                                            result = target.Distance;
+                                            break;
+                                        }
+                                    }
+                                    //Don't penetrate if target doesn't have a Mob state.
                                     if (!HasComp<MobStateComponent>(target.HitEntity) && !hitscan.CanPenetrateWall)
                                     {
                                         result = target.Distance;
                                         break;
                                     }
+                                    //If nothing blocked it, laser length is max length.
                                     result = hitscan.MaxLength;
                                 }
                             }
