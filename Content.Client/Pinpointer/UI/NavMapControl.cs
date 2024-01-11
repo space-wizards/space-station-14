@@ -362,8 +362,6 @@ public partial class NavMapControl : MapGridControl
 
         var airlockBuffer = Vector2.One * (MinimapScale / 2.25f) * 0.75f;
         var airlockLines = new ValueList<Vector2>();
-        var foobarVec = new Vector2(1, -1);
-        airlockLines.Clear();
         foreach (var airlock in _navMap.Airlocks)
         {
             var position = airlock.Position - offset;
