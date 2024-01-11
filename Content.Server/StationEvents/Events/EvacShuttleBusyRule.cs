@@ -22,7 +22,7 @@ namespace Content.Server.StationEvents.Events
             int time;
             string units;
             const string text = "evac-shuttle-busy-starting-announcement";
-            var countdownTime = TimeSpan.FromMinutes(60);
+            var countdownTime = TimeSpan.FromMinutes(99999999); // Obviously placeholder
             const string name = "Centcom";
 
             if (countdownTime.TotalSeconds < 60)
