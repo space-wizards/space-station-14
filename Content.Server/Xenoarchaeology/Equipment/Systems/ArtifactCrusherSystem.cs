@@ -34,6 +34,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
 
         SubscribeLocalEvent<ArtifactCrusherComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<ArtifactCrusherComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<ArtifactCrusherComponent, OnAttemptEmagEvent>(OnAttemptEmag);
         SubscribeLocalEvent<ArtifactCrusherComponent, GotEmaggedEvent>(OnEmagged);
     }
 

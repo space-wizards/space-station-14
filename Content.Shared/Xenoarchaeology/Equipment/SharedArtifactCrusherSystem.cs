@@ -21,6 +21,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
         SubscribeLocalEvent<ArtifactCrusherComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ArtifactCrusherComponent, StorageAfterOpenEvent>(OnStorageAfterOpen);
+        SubscribeLocalEvent<ArtifactCrusherComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
         SubscribeLocalEvent<ArtifactCrusherComponent, ExaminedEvent>(OnExamine);
     }
 
@@ -31,11 +32,14 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
     private void OnStorageAfterOpen(Entity<ArtifactCrusherComponent> ent, ref StorageAfterOpenEvent args)
     {
-        if (ent.Comp.AutoLock)
-            return;
-
         StopCrushing(ent);
         ContainerSystem.EmptyContainer(ent.Comp.OutputContainer);
+    }
+
+    private void OnStorageOpenAttempt(Entity<ArtifactCrusherComponent> ent, ref StorageOpenAttemptEvent args)
+    {
+        if (ent.Comp.AutoLock && ent.Comp.Crushing)
+            args.Cancelled = true;
     }
 
     private void OnExamine(Entity<ArtifactCrusherComponent> ent, ref ExaminedEvent args)
