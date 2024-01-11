@@ -72,7 +72,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             SubscribeLocalEvent<MicrowaveComponent, SignalReceivedEvent>(OnSignalReceived);
 
-            SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u, c, m) => StartCooking(u, c, m.Session.AttachedEntity));
+            SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u, c, m) => Wzhzhzh(u, c, m.Session.AttachedEntity));
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectMessage);
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectSolidIndexedMessage>(OnEjectIndex);
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveSelectCookTimeMessage>(OnSelectTime);
@@ -233,7 +233,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             _audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVolume(-2));
             ent.Comp.CurrentCookTimerTime = 10;
-            StartCooking(ent.Owner, ent.Comp, args.Victim);
+            Wzhzhzh(ent.Owner, ent.Comp, args.Victim);
             UpdateUserInterfaceState(ent.Owner, ent.Comp);
         }
 
@@ -319,7 +319,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (ent.Comp.Broken || !_power.IsPowered(ent))
                 return;
 
-            StartCooking(ent.Owner, ent.Comp, null);
+            Wzhzhzh(ent.Owner, ent.Comp, null);
         }
 
         public void UpdateUserInterfaceState(EntityUid uid, MicrowaveComponent component)
@@ -356,7 +356,7 @@ namespace Content.Server.Kitchen.EntitySystems
         /// It does not make a "wzhzhzh" sound, it makes a "mmmmmmmm" sound!
         /// -emo
         /// </remarks>
-        public void StartCooking(EntityUid uid, MicrowaveComponent component, EntityUid? user)
+        public void Wzhzhzh(EntityUid uid, MicrowaveComponent component, EntityUid? user)
         {
             if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid) || !(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
                 return;
