@@ -131,6 +131,10 @@
       coefficients:
         Heat: 0.95
         Radiation: 0.65
+  - type: BreathMask
+  - type: Tag
+    tags:
+    - HidesHair
 
 - type: entity
   parent: ClothingHeadBase

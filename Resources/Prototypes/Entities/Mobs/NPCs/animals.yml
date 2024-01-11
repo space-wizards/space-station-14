@@ -284,6 +284,9 @@
         Base: cockroach
       Dead:
         Base: cockroach_dead
+  - type: Bloodstream
+    bloodReagent: InsectBlood
+    bloodMaxVolume: 20
   - type: Food
   - type: Hunger
     baseDecayRate: 0.25
@@ -301,9 +304,6 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Cockroach
-  - type: Bloodstream
-    bloodReagent: Slime
-    bloodMaxVolume: 20
   - type: Tag
     tags:
     - Trash
@@ -415,6 +415,8 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Moth
+  - type: Bloodstream
+    bloodReagent: InsectBlood
   - type: Respirator
     damage:
       types:
@@ -1198,10 +1200,10 @@
 
 - type: entity
   name: monkey
-  id: MobMonkeySyndicateAgent
+  id: MobBaseSyndicateMonkey
   parent: MobBaseAncestor
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
-  suffix: syndicate
+  suffix: syndicate base
   components:
   - type: NameIdentifier
     group: Monkey
@@ -1222,10 +1224,23 @@
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SyndicateOperativeGearMonkey]
-  # make the player a traitor once its taken
+  
+- type: entity
+  id: MobMonkeySyndicateAgent
+  parent: MobBaseSyndicateMonkey
+  suffix: syndicate agent
+  components:
+    # make the player a traitor once its taken
   - type: AutoTraitor
     giveUplink: false
     giveObjectives: false
+
+- type: entity
+  id: MobMonkeySyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
+  parent: MobBaseSyndicateMonkey
+  suffix: NukeOps
+  components:
+  - type: NukeOperative
 
 - type: entity
   name: kobold
@@ -2022,6 +2037,8 @@
       Male: UnisexArachnid
       Female: UnisexArachnid
       Unsexed: UnisexArachnid
+  - type: TypingIndicator
+    proto: spider
   - type: Tag
     tags:
     - DoorBumpOpener

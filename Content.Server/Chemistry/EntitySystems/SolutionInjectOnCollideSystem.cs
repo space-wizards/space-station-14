@@ -26,7 +26,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
         var target = args.OtherEntity;
 
         if (!args.OtherBody.Hard ||
-            !args.OurBody.Hard ||
+            args.OurFixtureId != ent.Comp.FixtureId ||
             !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) ||
             !_solutionContainersSystem.TryGetInjectableSolution(ent.Owner, out var solution, out _))
         {

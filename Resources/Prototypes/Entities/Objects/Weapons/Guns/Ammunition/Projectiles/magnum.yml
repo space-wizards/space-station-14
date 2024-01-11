@@ -60,7 +60,7 @@
 - type: entity
   id: BulletMagnumUranium
   name: bullet (.45 magnum uranium)
-  parent: BaseBullet
+  parent: BaseBulletUranium
   noSpawn: true
   components:
   - type: Projectile
