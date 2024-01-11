@@ -336,11 +336,11 @@ namespace Content.Server.RoundEnd
             _gameTicker.RestartRound();
         }
 
-        private void ActivateCooldown()
+        public void ActivateCooldown(TimeSpan? cooldownDuration = null)
         {
             _cooldownTokenSource?.Cancel();
             _cooldownTokenSource = new();
-            Timer.Spawn(DefaultCooldownDuration, () =>
+            Timer.Spawn(cooldownDuration.GetValueOrDefault(DefaultCooldownDuration), () =>
             {
                 _cooldownTokenSource.Cancel();
                 _cooldownTokenSource = null;
