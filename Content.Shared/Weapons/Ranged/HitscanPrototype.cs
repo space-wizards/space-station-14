@@ -65,10 +65,11 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable
     /// Decides if the hitscan can penetrate walls.
     /// </summary>
     [DataField]
-    public bool CanPenetrateWall;
+    public bool CanPenetrateStructures;
 
     /// <summary>
-    /// Decides how high of a radiation resistance can be penetrated,
+    /// Decides how many mobs can be penetrated for canPenetrateMobs.
+    /// Decides how high of a radiation resistance can be penetrated for canPenetrateStructures.
     /// </summary>
     [DataField]
     public int PenetrationPower = 5;
