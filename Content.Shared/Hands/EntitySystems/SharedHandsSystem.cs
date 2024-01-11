@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Containers;
@@ -20,7 +21,7 @@ public abstract partial class SharedHandsSystem
     [Dependency] private readonly SharedItemSystem _items = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
-    [Dependency] private readonly SharedHandVirtualItemSystem _virtualSystem = default!;
+    [Dependency] private readonly SharedVirtualItemSystem _virtualSystem = default!;
 
     protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
 
@@ -31,7 +32,6 @@ public abstract partial class SharedHandsSystem
         InitializeInteractions();
         InitializeDrop();
         InitializePickup();
-        InitializeVirtual();
         InitializeRelay();
     }
 
