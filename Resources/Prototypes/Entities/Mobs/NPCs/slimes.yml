@@ -25,9 +25,9 @@
           radius: 0.30
         density: 80
         mask:
-        - MobMask
+        - SmallMobMask
         layer:
-        - MobLayer
+        - SmallMobLayer
   - type: MobThresholds
     thresholds:
       0: Alive
