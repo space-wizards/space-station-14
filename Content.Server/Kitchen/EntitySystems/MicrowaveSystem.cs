@@ -501,7 +501,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 //this means the microwave has finished cooking.
                 AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0), active?.PortionedRecipe.Item1!); //Though there's still a little bit more heat to pump out
 
-                if (active?.PortionedRecipe.Item1 != null)
+                if (active != null && active.PortionedRecipe.Item1 != null)
                 {
                     var coords = Transform(uid).Coordinates;
                     for (var i = 0; i < active.PortionedRecipe.Item2; i++)
