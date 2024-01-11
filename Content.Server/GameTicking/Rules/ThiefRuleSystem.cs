@@ -51,7 +51,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
                 continue;
 
             //Get all players eligible for this role
-            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.ThiefPrototypeId);
+            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.ThiefPrototypeId, allowMultipleAntagRoles: true);
 
             //Abort if there are none
             if (eligiblePlayers.Count == 0)
