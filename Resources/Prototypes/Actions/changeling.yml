@@ -56,13 +56,10 @@
 - type: entity
   id: ActionLingEMP
   name: Dissonant Shriek
-  description: You shift our vocal cords to release a high-frequency sound that overloads nearby electronics. Costs 20 chemicals.
+  description: You shift your vocal cords to release a high-frequency sound that overloads nearby electronics. Costs 20 chemicals.
   noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: /Textures/Interface/Actions/actions_ling.rsi, state: emp }
-    useDelay: 60
-  - type: EmpOnTrigger
-    range: 2.35
-    energyConsumption: 50000
-    disableDuration: 12
+    useDelay: 15
+    event: !type:LingEMPActionEvent

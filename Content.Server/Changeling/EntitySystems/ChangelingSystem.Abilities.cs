@@ -13,6 +13,7 @@ using Robust.Shared.Player;
 using Content.Shared.IdentityManagement;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Stealth.Components;
+using Content.Server.Emp;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -24,6 +25,8 @@ public sealed partial class ChangelingSystem
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly EmpSystem _emp = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private void InitializeLingAbilities()
     {
@@ -31,6 +34,7 @@ public sealed partial class ChangelingSystem
         SubscribeLocalEvent<ChangelingComponent, ArmBladeActionEvent>(OnArmBladeAction);
         SubscribeLocalEvent<ChangelingComponent, LingArmorActionEvent>(OnLingArmorAction);
         SubscribeLocalEvent<ChangelingComponent, LingInvisibleActionEvent>(OnLingInvisible);
+        SubscribeLocalEvent<ChangelingComponent, LingEMPActionEvent>(OnLingEmp);
     }
 
     public ProtoId<DamageGroupPrototype> BruteDamageGroup = "Brute";
@@ -216,5 +220,19 @@ public sealed partial class ChangelingSystem
         }
 
         component.ChameleonSkinActive = !component.ChameleonSkinActive;
+    }
+
+    private void OnLingEmp(EntityUid uid, ChangelingComponent component, LingEMPActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+
+        if (!TryUseAbility(uid, component, component.DissonantShriekChemicalsCost))
+            return;
+
+        var coords = _transform.GetMapCoordinates(uid);
+        _emp.EmpPulse(coords, component.DissonantShriekEmpRange, component.DissonantShriekEmpConsumption, component.DissonantShriekEmpDuration);
     }
 }

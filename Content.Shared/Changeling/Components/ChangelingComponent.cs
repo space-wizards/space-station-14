@@ -102,6 +102,32 @@ public sealed partial class ChangelingComponent : Component
     public float ChameleonSkinMovementVisibilityRate = 0.10f;
     #endregion
 
+    #region Dissonant Shriek Ability
+    /// <summary>
+    /// The amount of chemicals that is needed to activate the changeling's Dissonant Shriek.
+    /// </summary>
+    [DataField]
+    public float DissonantShriekChemicalsCost = -20f;
+
+    /// <summary>
+    /// Range of the Dissonant Shriek's EMP in tiles.
+    /// </summary>
+    [DataField]
+    public float DissonantShriekEmpRange = 2.75f;
+
+    /// <summary>
+    /// Power consumed from batteries by the Dissonant Shriek's EMP
+    /// </summary>
+    [DataField]
+    public float DissonantShriekEmpConsumption = 50000f;
+
+    /// <summary>
+    /// How long the Dissonant Shriek's EMP effects last for
+    /// </summary>
+    [DataField]
+    public float DissonantShriekEmpDuration = 12f;
+    #endregion
+
     [DataField]
     public EntityUid? ShopAction;
 

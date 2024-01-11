@@ -20,3 +20,7 @@ public sealed partial class LingArmorActionEvent : InstantActionEvent
 public sealed partial class LingInvisibleActionEvent : InstantActionEvent
 {
 }
+
+public sealed partial class LingEMPActionEvent : InstantActionEvent
+{
+}
