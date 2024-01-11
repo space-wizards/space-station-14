@@ -1,12 +1,16 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
+using Content.Shared.Actions;
 using Content.Shared.Damage;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Toggleable;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
@@ -29,6 +33,12 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, ActivateInWorldEvent>(OnActivatedInWorld);
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, AfterInteractEvent>(OnAfterInteract);
 
+        SubscribeLocalEvent<EnergyDomeGeneratorComponent, GetItemActionsEvent>(OnGetActions);
+        SubscribeLocalEvent<EnergyDomeGeneratorComponent, ToggleActionEvent>(OnToggleAction);
+
+        SubscribeLocalEvent<EnergyDomeGeneratorComponent, GetVerbsEvent<ActivationVerb>>(AddToggleDomeVerb);
+        SubscribeLocalEvent<EnergyDomeGeneratorComponent, ExaminedEvent>(OnExamine);
+
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
 
@@ -37,6 +47,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         //Dome events
         SubscribeLocalEvent<EnergyDomeComponent, DamageChangedEvent>(OnDomeDamaged);
     }
+
     private void OnAfterInteract(Entity<EnergyDomeGeneratorComponent> generator, ref AfterInteractEvent args)
     {
         AttemptUse(generator, args.User);
@@ -46,6 +57,29 @@ public sealed partial class EnergyDomeSystem : EntitySystem
     {
         AttemptUse(generator, args.User);
     }
+
+    private void OnExamine(Entity<EnergyDomeGeneratorComponent> generator, ref ExaminedEvent args)
+    {
+        args.PushMarkup(generator.Comp.Enabled
+            ? Loc.GetString("energy-dome-on-examine-is-on-message")
+            : Loc.GetString("energy-dome-on-examine-is-off-message"));
+    }
+
+    private void AddToggleDomeVerb(Entity<EnergyDomeGeneratorComponent> generator, ref GetVerbsEvent<ActivationVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || !generator.Comp.ToggleOnInteract)
+            return;
+
+        var @event = args;
+        ActivationVerb verb = new()
+        {
+            Text = Loc.GetString("energy-dome-verb-toggle"),
+            Act = () => AttemptUse(generator, @event.User)
+        };
+
+        args.Verbs.Add(verb);
+    }
+
 
     private void OnPowerCellSlotEmpty(Entity<EnergyDomeGeneratorComponent> generator, ref PowerCellSlotEmptyEvent args)
     {
@@ -58,6 +92,21 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         {
             TurnOff(generator, false);
         }
+    }
+
+    private void OnGetActions(Entity<EnergyDomeGeneratorComponent> generator, ref GetItemActionsEvent args)
+    {
+        args.AddAction(ref generator.Comp.ToggleActionEntity, generator.Comp.ToggleAction);
+    }
+
+    private void OnToggleAction(Entity<EnergyDomeGeneratorComponent> generator, ref ToggleActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        AttemptUse(generator, args.Performer);
+
+        args.Handled = true;
     }
 
     private void OnDomeDamaged(Entity<EnergyDomeComponent> dome, ref DamageChangedEvent args)
@@ -74,9 +123,9 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             return;
 
         float totalDamage = args.DamageDelta.GetTotal().Float();
-        var energyLeak = totalDamage * dome.Comp.EnergyLessForDamage;
+        var energyLeak = totalDamage * generatorComp.EnergyLessForDamage;
 
-        _audio.PlayPvs(dome.Comp.ParrySound, dome);
+        _audio.PlayPvs(generatorComp.ParrySound, dome);
 
         if (!_powerCell.TryUseCharge(generatorUid, energyLeak))
         {
@@ -88,7 +137,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         }
     }
 
-    public void AttemptUse(Entity<EnergyDomeGeneratorComponent> generator, EntityUid user)
+    public bool AttemptUse(Entity<EnergyDomeGeneratorComponent> generator, EntityUid user)
     {
         if (TryComp(generator, out LockComponent? lockComp) && lockComp.Locked)
         {
@@ -97,40 +146,43 @@ public sealed partial class EnergyDomeSystem : EntitySystem
                 Loc.GetString("energy-dome-access-denied"),
                 generator,
                 user);
-            return;
-        }
-
-        if (generator.Comp.NextActivation > _gameTiming.CurTime)
-        {
-            _audio.PlayPvs(generator.Comp.NoPowerSound, generator);
-            _popup.PopupEntity(
-                Loc.GetString("energy-dome-recharging"),
-                generator,
-                user);
-            return;
+            return false;
         }
 
         if (!_powerCell.TryGetBatteryFromSlot(generator, out var battery) && !TryComp(generator, out battery))
         {
-            _audio.PlayPvs(generator.Comp.NoPowerSound, generator);
+            _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
             _popup.PopupEntity(
                 Loc.GetString("energy-dome-no-cell"),
                 generator,
                 user);
-            return;
+            return false;
         }
+
+        if (generator.Comp.NextActivation > _gameTiming.CurTime)
+        {
+            _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
+            _popup.PopupEntity(
+                Loc.GetString("energy-dome-recharging"),
+                generator,
+                user);
+            return false;
+        }
+
+
 
         if (battery.Charge < generator.Comp.Wattage)
         {
-            _audio.PlayPvs(generator.Comp.NoPowerSound, generator);
+            _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
             _popup.PopupEntity(
                 Loc.GetString("energy-dome-no-power"),
                 generator,
                 user);
-            return;
+            return false;
         }
 
         Toggle(generator);
+        return true;
     }
 
     public void Toggle(Entity<EnergyDomeGeneratorComponent> generator)
@@ -161,6 +213,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         generator.Comp.SpawnedDome = newDome;
         _audio.PlayPvs(generator.Comp.TurnOnSound, generator);
     }
+
     public void TurnOff(Entity<EnergyDomeGeneratorComponent> generator, bool startReloading)
     {
         if (!generator.Comp.Enabled)
@@ -169,11 +222,12 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         generator.Comp.Enabled = false;
         QueueDel(generator.Comp.SpawnedDome);
 
+        _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
         if (startReloading)
         {
             generator.Comp.NextActivation = _gameTiming.CurTime + TimeSpan.FromSeconds(generator.Comp.ReloadSecond);
+            _audio.PlayPvs(generator.Comp.EnergyOutSound, generator);
         }
-        _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
     }
 
     public override void Update(float frameTime)

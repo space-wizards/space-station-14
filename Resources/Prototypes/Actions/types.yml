@@ -33,6 +33,16 @@
     event: !type:ToggleActionEvent
 
 - type: entity
+  id: ActionToggleDome
+  name: Toggle energy dome
+  description: Turn the energy barrier on or off.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Objects/Weapons/Melee/e_shield.rsi, state: eshield-on }
+    event: !type:ToggleActionEvent
+
+- type: entity
   id: ActionOpenStorageImplant
   name: Open Storage Implant
   description: Opens the storage implant embedded under your skin

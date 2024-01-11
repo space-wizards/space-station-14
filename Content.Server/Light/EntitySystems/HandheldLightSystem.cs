@@ -270,7 +270,7 @@ namespace Content.Server.Light.EntitySystems
 
             if (component.Activated && !battery.TryUseCharge(component.Wattage * frameTime))
                 TurnOff(uid, false);
-
+            
             UpdateLevel(uid);
         }
 

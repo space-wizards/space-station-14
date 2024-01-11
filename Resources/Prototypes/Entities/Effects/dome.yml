@@ -1,0 +1,133 @@
+- type: entity
+  id: EnergyDomeBase
+  abstract: true
+  components:
+  - type: Physics
+    bodyType: Static
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: AmbientSound
+    volume: 35
+    range: 5
+    sound:
+      path: /Audio/Machines/energyshield_ambient.ogg
+  - type: EnergyDome
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: Reflect
+    reflects:
+    - Energy
+    - NonEnergy
+    reflectProb: 0.2
+
+
+- type: entity
+  id: EnergyDomeCircleBase
+  parent: EnergyDomeBase
+  abstract: true
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.8
+        density: 0
+        mask:
+        - None
+        layer:
+        - BulletImpassable
+        - Opaque
+
+- type: entity
+  id: EnergyDomeDirectedBase
+  parent: EnergyDomeBase
+  abstract: true
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.2,-1,1.2,-1.4"
+        density: 0
+        mask:
+        - None
+        layer:
+        - BulletImpassable
+        - Opaque
+
+
+- type: entity
+  id: EnergyDomeSmallDirectedNT
+  noSpawn: true
+  parent: EnergyDomeDirectedBase
+  components:
+  - type: Sprite
+    drawdepth: Effects
+    sprite: Effects/energydome_directed.rsi
+    offset: 0,-1.2
+    layers:
+    - state: small
+      color: "#64b9de"
+  - type: PointLight
+    enabled: true
+    radius: 2
+    power: 2
+    color: "#64b9de"
+    
+- type: entity
+  id: EnergyDomeSmallDirectedSyndie
+  noSpawn: true
+  parent: EnergyDomeDirectedBase
+  components:
+  - type: Sprite
+    drawdepth: Effects
+    sprite: Effects/energydome_directed.rsi
+    offset: 0,-1.2
+    layers:
+    - state: small
+      color: "#b00000"
+  - type: PointLight
+    enabled: true
+    radius: 2
+    power: 2
+    color: "#b00000"
+    
+- type: entity
+  id: EnergyDomeSmallCircleNT
+  noSpawn: true
+  parent: EnergyDomeCircleBase
+  components:
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    sprite: Effects/energydome.rsi
+    layers:
+    - state: small
+      color: "#64b9de"
+  - type: PointLight
+    enabled: true
+    radius: 5
+    power: 2
+    color: "#64b9de"
+
+- type: entity
+  id: EnergyDomeSmallCircleSyndie
+  noSpawn: true
+  parent: EnergyDomeCircleBase
+  components:
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    sprite: Effects/energydome.rsi
+    layers:
+    - state: small
+      color: "#b00000"
+  - type: PointLight
+    enabled: true
+    radius: 5
+    power: 2
+    color: "#b00000"

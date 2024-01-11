@@ -1,9 +1,11 @@
-using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.EnergyDome;
 
-[RegisterComponent, Access(typeof(EnergyDomeSystem))] //Access add
+/// <summary>
+/// marker component that allows linking the dome generator with the dome itself
+/// </summary>
+
+[RegisterComponent, Access(typeof(EnergyDomeSystem))]
 public sealed partial class EnergyDomeComponent : Component
 {
     /// <summary>
@@ -11,13 +13,4 @@ public sealed partial class EnergyDomeComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? Generator;
-
-    /// <summary>
-    /// How much energy will be spent from the battery per unit of damage taken by the shield.
-    /// </summary>
-    [DataField]
-    public float EnergyLessForDamage = 50f;
-
-    [DataField]
-    public SoundSpecifier ParrySound = new SoundPathSpecifier("/Audio/Machines/energyshield_parry.ogg");
 }

@@ -1,0 +1,86 @@
+- type: entity
+  name: blood red personal shield generator
+  description: A personal shield generator that protects the wearer from lasers and bullets but prevents from using ranged weapons himself. Uses a power cell.
+  id: EnergyDomeGeneratorPersonalSyndie
+  parent: BaseItem
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Sprite
+    sprite: Objects/Tools/energy_dome.rsi
+    layers:
+      - state: syndie
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+        whitelist:
+        tags:
+          - PowerCell
+          - PowerCellSmall
+  - type: EnergyDomeGenerator
+    wattage: 20
+    energyLessForDamage: 10
+    domePrototype: EnergyDomeSmallCircleSyndie
+
+- type: entity
+  name: Heavy directional energy shield generator
+  description: A two-handed and heavy energy barrier capable of absorbing large amounts of damage. Can be placed pointed in a certain direction.
+  id: EnergyDomeDirectionalReinhardt
+  parent: BaseStructureDynamic
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/energy_dome.rsi
+    layers:
+    - state: reinhardt
+  - type: InteractionOutline
+  - type: MultiHandedItem
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Item
+    size: Ginormous
+    inhandVisuals:
+      left:
+      - state: reinhardt-inhand-left
+      right:
+      - state: reinhardt-inhand-right
+  - type: HeldSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+        whitelist:
+        tags:
+          - PowerCell
+          - PowerCellSmall
+  - type: EnergyDomeGenerator
+    wattage: 15
+    energyLessForDamage: 7
+    domePrototype: EnergyDomeSmallDirectedNT
