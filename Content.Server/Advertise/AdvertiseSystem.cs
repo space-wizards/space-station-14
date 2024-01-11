@@ -74,6 +74,17 @@ namespace Content.Server.Advertise
                 _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Advertisements)), InGameICChatType.Speak, true);
         }
 
+        public void SayThankYou(EntityUid uid, AdvertiseComponent? advertise = null)
+        {
+            if (!Resolve(uid, ref advertise))
+                return;
+
+            if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
+            {
+                _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.ThankYous), ("name", Name(uid))), InGameICChatType.Speak, true);
+            }
+        }
+
         public void SetEnabled(EntityUid uid, bool enable, AdvertiseComponent? advertise = null)
         {
             if (!Resolve(uid, ref advertise))

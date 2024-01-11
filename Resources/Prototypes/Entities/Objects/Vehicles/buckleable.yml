@@ -386,9 +386,6 @@
     friction: 0.8
     baseWalkSpeed: 3.5
     baseSprintSpeed: 4.3
-  - type: Tag
-    tags:
-      - DoorBumpOpener
   - type: Destructible
     thresholds:
     - trigger:
@@ -418,7 +415,7 @@
 - type: entity
   id: VehicleWheelchair
   parent: [BaseVehicleRideable, BaseFoldable, BaseItem]
-  name: Wheelchair
+  name: wheelchair
   description: A chair with big wheels. It looks like you can move in these on your own.
   components:
     - type: Vehicle

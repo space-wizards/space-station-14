@@ -136,6 +136,9 @@
     containers:
     - part-container
     - cell_slot
+  - type: Lock
+    locked: true
+  - type: ActivatableUIRequiresLock
   - type: Flashable
   - type: Damageable
     damageContainer: Silicon
@@ -218,9 +221,6 @@
     enabled: false
     groups:
     - AllAccess
-  - type: Lock
-    locked: true
-  - type: ActivatableUIRequiresLock
   - type: AccessReader
     access: [["Command"], ["Research"]]
   - type: ShowSecurityIcons
@@ -230,24 +230,15 @@
   parent: BaseBorgChassis
   abstract: true
   components:
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 200
-          behaviors:
-            - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
-            - !type:EmptyContainersBehaviour
-              containers:
-                - borg_brain
-                - borg_module
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
     - type: NpcFactionMember
       factions:
         - Syndicate
     - type: Access
+      tags:
+       - NuclearOperative
+       - SyndicateAgent
+    - type: AccessReader
+      access: [["SyndicateAgent"], ["NuclearOperative"]]
     - type: SiliconLawProvider
       laws: SyndicateStatic
     - type: IntrinsicRadioTransmitter
@@ -257,5 +248,5 @@
     - type: ActiveRadio
       channels:
         - Syndicate
-    - type: NoSlip
+    - type: ShowSyndicateIcons
     - type: MovementAlwaysTouching
