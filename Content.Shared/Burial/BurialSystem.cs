@@ -52,7 +52,7 @@ public sealed class BurialSystem : EntitySystem
                 BreakOnHandChange = true
             };
 
-            if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.ShovelDiggingDoAfter))
+            if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
                 return;
 
             StartDigging(uid, args.User, args.Used, component);
@@ -87,7 +87,6 @@ public sealed class BurialSystem : EntitySystem
     {
         if (args.Used != null)
         {
-            component.ShovelDiggingDoAfter = null;
             component.ActiveShovelDigging = false;
             component.Stream = _audioSystem.Stop(component.Stream);
         }

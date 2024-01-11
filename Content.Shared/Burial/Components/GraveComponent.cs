@@ -39,12 +39,6 @@ public sealed partial class GraveComponent : Component
     public EntityUid? Stream;
 
     /// <summary>
-    /// Tracks someone digging the grave with a shovel
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public DoAfterId? ShovelDiggingDoAfter;
-
-    /// <summary>
     /// Auto-networked field to track shovel digging.
     /// This makes sure a looping audio Stream isn't opened
     /// on the client-side. (DoAfterId/EntityUid isn't serializable.)
