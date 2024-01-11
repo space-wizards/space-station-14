@@ -10,6 +10,11 @@
   displayName: store-currency-display-stolen-essence
   canWithdraw: false
 
+- type: currency
+  id: EvolutionPoints
+  displayName: store-currency-display-evolution-points
+  canWithdraw: false
+
 #debug
 - type: currency
   id: DebugDollar

@@ -138,5 +138,25 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-thief"),
         };
         args.Verbs.Add(thief);
+
+        Verb changeling = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-changeling"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/armblade.rsi"), "icon"),
+            Act = () =>
+            {
+                if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
+                    return;
+
+                // if its not a human dont make it a changeling
+                var isHuman = HasComp<HumanoidAppearanceComponent>(args.Target);
+                if (!isHuman)
+                    return;
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-changeling"),
+        };
+        args.Verbs.Add(changeling);
     }
 }

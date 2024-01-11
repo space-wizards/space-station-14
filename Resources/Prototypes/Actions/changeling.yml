@@ -1,0 +1,20 @@
+- type: entity
+  id: ActionChangelingEvolutionMenu
+  name: Evolution Menu
+  description: Opens the evolution menu, where you can evolve your body to fit your environment.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/shop.png
+    event: !type:ChangelingEvolutionMenuActionEvent
+
+- type: entity
+  id: ActionArmBlade
+  name: Toggle Arm Blade
+  description: Transforms one of your free arms into a grotesque blade made out of bone and flesh.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: /Textures/Objects/Weapons/Melee/armblade.rsi, state: icon }
+    event: !type:ArmBladeActionEvent
+    useDelay: 2

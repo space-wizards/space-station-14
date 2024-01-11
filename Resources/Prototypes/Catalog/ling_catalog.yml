@@ -1,0 +1,12 @@
+- type: listing
+  id: ChangelingArmBlade
+  name: Arm Blade
+  description: Transform one of your arms into a grotesque blade made out of bone and flesh. Cuts through people as a hot knife through butter. Uses 20 chemicals on toggle.
+  productAction: ActionArmBlade
+  cost:
+    EvolutionPoints: 2
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
