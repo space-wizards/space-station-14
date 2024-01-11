@@ -44,12 +44,22 @@ public sealed class WhistleSystem : EntitySystem
 
     private void MakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
     {
+        StealthComponent? stealth = null;
+
         foreach (var iterator in
             _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), component.Distance))
         {
             //Avoid pinging invisible entities
-            if (HasComp<StealthComponent>(iterator))
-                continue;
+            if (Resolve(iterator, ref stealth, false))
+            {
+                if (stealth.Enabled)
+                {
+                    stealth = null;
+                    continue;
+                }
+
+                stealth = null;
+            }
 
             //We don't want to ping user of whistle
             if (iterator.Owner == owner)
