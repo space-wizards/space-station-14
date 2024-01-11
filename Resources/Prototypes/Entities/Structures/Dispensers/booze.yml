@@ -37,4 +37,4 @@
     storageWhitelist:
       tags:
       - DrinkBottle
-    pack: ""
+    pack: EmptyInventory

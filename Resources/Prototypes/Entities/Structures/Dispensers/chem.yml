@@ -53,7 +53,7 @@
   parent: ChemDispenser
   components:
   - type: ReagentDispenser
-    pack: ""
+    pack: EmptyInventory
 
 - type: entity
   id: ChemDispenserEmptyBottles

@@ -87,3 +87,6 @@
   - Silicon
   - Sodium
   - Sulfur
+
+- type: reagentDispenserInventory
+  id: EmptyInventory
