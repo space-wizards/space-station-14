@@ -136,12 +136,24 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     /// that's done check if the found virtual entity is a copy of our matching entity,
     /// if it is, delete it
     /// </summary>
-    public void DeleteInSlotMatching(EntityUid user, EntityUid matching)
+    /// <param name="slotName">Set this param if you have the name of the slot, it avoids unnecessary queries</param>
+    public void DeleteInSlotMatching(EntityUid user, EntityUid matching, string? slotName = null)
     {
         // Client can't currently predict deleting networked entities so we use this workaround, another
         // problem can popup when the hands leave PVS for example and this avoids that too
         if (_netManager.IsClient)
             return;
+
+        if (slotName != null)
+        {
+            if (!_inventorySystem.TryGetSlotEntity(user, slotName, out var slotEnt))
+                return;
+
+            if (TryComp(slotEnt, out VirtualItemComponent? virt) && virt.BlockingEntity == matching)
+                DeleteVirtualItem((slotEnt.Value, virt), user);
+
+            return;
+        }
 
         if (!_inventorySystem.TryGetSlots(user, out var slotDefinitions))
             return;
@@ -152,9 +164,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
                 continue;
 
             if (TryComp(slotEnt, out VirtualItemComponent? virt) && virt.BlockingEntity == matching)
-            {
                 DeleteVirtualItem((slotEnt.Value, virt), user);
-            }
         }
     }
     #endregion
