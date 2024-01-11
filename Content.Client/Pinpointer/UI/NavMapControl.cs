@@ -207,7 +207,6 @@ public partial class NavMapControl : MapGridControl
 
             // Find closest tracked entity in range
             var closestEntity = NetEntity.Invalid;
-            var closestCoords = new EntityCoordinates();
             var closestDistance = float.PositiveInfinity;
 
             foreach ((var currentEntity, var blip) in TrackedEntities)
@@ -221,7 +220,6 @@ public partial class NavMapControl : MapGridControl
                     continue;
 
                 closestEntity = currentEntity;
-                closestCoords = blip.Coordinates;
                 closestDistance = currentDistance;
             }
 
@@ -234,8 +232,7 @@ public partial class NavMapControl : MapGridControl
         else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
             // Clear current selection with right click
-            if (TrackedEntitySelectedAction != null)
-                TrackedEntitySelectedAction.Invoke(null);
+            TrackedEntitySelectedAction?.Invoke(null);
         }
     }
 
@@ -362,6 +359,8 @@ public partial class NavMapControl : MapGridControl
 
         var airlockBuffer = Vector2.One * (MinimapScale / 2.25f) * 0.75f;
         var airlockLines = new ValueList<Vector2>();
+        var foobarVec = new Vector2(1, -1);
+
         foreach (var airlock in _navMap.Airlocks)
         {
             var position = airlock.Position - offset;
