@@ -173,7 +173,6 @@
     Piercing: 0.8
     Cold: 0.8
     Shock: 1.6
-    
 
 - type: damageModifierSet
   id: Scale # Skin tougher, bones weaker, strong stomachs, cold-blooded (kindof)
