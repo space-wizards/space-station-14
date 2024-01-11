@@ -103,7 +103,7 @@ namespace Content.Server.Kitchen.EntitySystems
         /// </summary>
         /// <param name="component">The microwave that is heating up.</param>
         /// <param name="time">The time on the microwave, in seconds.</param>
-        private void AddTemperature(MicrowaveComponent component, float time, FoodRecipePrototype recipe)
+        private void AddTemperature(MicrowaveComponent component, float time, FoodRecipePrototype? recipe)
         {
             var heatToAdd = time * component.BaseHeatMultiplier;
             foreach (var entity in component.Storage.ContainedEntities)
@@ -494,14 +494,14 @@ namespace Content.Server.Kitchen.EntitySystems
                 active.CookTimeRemaining -= frameTime;
                 if (active.CookTimeRemaining > 0)
                 {
-                    AddTemperature(microwave, frameTime, active?.PortionedRecipe.Item1!);
+                    AddTemperature(microwave, frameTime, active?.PortionedRecipe.Item1);
                     continue;
                 }
 
                 //this means the microwave has finished cooking.
-                AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0), active?.PortionedRecipe.Item1!); //Though there's still a little bit more heat to pump out
+                AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0), active?.PortionedRecipe.Item1); //Though there's still a little bit more heat to pump out
 
-                if (active != null && active.PortionedRecipe.Item1 != null)
+                if (active?.PortionedRecipe.Item1 != null)
                 {
                     var coords = Transform(uid).Coordinates;
                     for (var i = 0; i < active.PortionedRecipe.Item2; i++)
