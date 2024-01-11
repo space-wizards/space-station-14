@@ -29,6 +29,7 @@ wires-board-name-hydroponicstray = HydroponicsTray
 wires-board-name-telecomserver = TelecomServer
 wires-board-name-medicalscanner = MedicalScanner
 wires-board-name-reclaimer = Reclaimer
+wires-board-name-recharger = Recharger
 wires-board-name-minigravitygenerator = MiniGravityGenerator
 wires-board-name-dawinstrument = DawInstrument
 wires-board-name-airlock = Airlock Control
