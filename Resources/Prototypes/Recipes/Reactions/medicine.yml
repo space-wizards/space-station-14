@@ -517,3 +517,34 @@
       amount: 1
   products:
     Diphenhydramine: 3
+
+- type: reaction
+  id: Pyrazine
+  impact: Medium
+  minTemp: 540
+  reactants:
+    Leporazine:
+      amount: 1
+    Dermaline:
+      amount: 1
+    Carbon:
+      amount: 1
+  products:
+    Pyrazine: 3
+
+- type: reaction
+  id: Insuzine
+  impact: Medium
+  minTemp: 433
+  reactants:
+    Leporazine:
+      amount: 1
+    Kelotane:
+      amount: 1
+    Silicon:
+      amount: 1
+    Benzene:
+      amount: 1
+  products:
+    Insuzine: 3
+    Ash: 1
