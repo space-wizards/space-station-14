@@ -1680,6 +1680,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 20.5,2.5
       parent: 407
+- proto: APECircuitboard
+  entities:
+  - uid: 2273
+    components:
+    - type: Transform
+      pos: -4.390625,7.619689
+      parent: 407
 - proto: Ashtray
   entities:
   - uid: 2225
