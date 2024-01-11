@@ -72,5 +72,5 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable
     /// Decides how high of a radiation resistance can be penetrated for canPenetrateStructures.
     /// </summary>
     [DataField]
-    public int PenetrationPower = 5;
+    public int PenetrationPower = 4;
 }
