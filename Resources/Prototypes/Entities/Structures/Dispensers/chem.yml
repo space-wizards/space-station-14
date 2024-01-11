@@ -1,6 +1,7 @@
 - type: entity
   id: ChemDispenser
   name: chemical dispenser
+  suffix: Filled
   parent: ReagentDispenserBase
   description: An industrial grade chemical dispenser.
   components:
@@ -49,7 +50,15 @@
   id: ChemDispenserEmpty
   name: chemical dispenser
   suffix: Empty
-  description: An industrial grade chemical dispenser with an emptied chemical supply.
+  parent: ChemDispenser
+  components:
+  - type: ReagentDispenser
+    pack: ""
+
+- type: entity
+  id: ChemDispenserEmptyBottles
+  name: chemical dispenser
+  suffix: Empty Bottles
   parent: ChemDispenser
   components:
   - type: ReagentDispenser
