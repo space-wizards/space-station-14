@@ -8,7 +8,6 @@ using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Server.Burial.Systems;
@@ -19,7 +18,6 @@ public sealed class BurialSystem : EntitySystem
     [Dependency] private readonly SharedEntityStorageSystem _storageSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
 
     public override void Initialize()
     {
@@ -36,28 +34,26 @@ public sealed class BurialSystem : EntitySystem
         SubscribeLocalEvent<GraveComponent, StorageAfterCloseEvent>(OnAfterClose);
 
         SubscribeLocalEvent<GraveComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
-        SubscribeLocalEvent<ActiveGraveComponent, ComponentShutdown>(OnActiveGraveShutdown);
     }
 
     private void OnInteractUsing(EntityUid uid, GraveComponent component, InteractUsingEvent args)
     {
-        if (args.Handled)
-            return;
-
-        // allows someone to help you dig yourself out
-        if (TryComp<ActiveGraveComponent>(uid, out var active) && !active.DiggingSelfOut)
+        if (args.Handled || component.ActiveShovelDigging)
             return;
 
         if (TryComp<ShovelComponent>(args.Used, out var shovel))
         {
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.DigDelay / shovel.SpeedModifier, new GraveDiggingDoAfterEvent(), uid, target: args.Target, used: uid)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.DigDelay / shovel.SpeedModifier, new GraveDiggingDoAfterEvent(), uid, target: args.Target, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
                 NeedHand = true,
                 BreakOnHandChange = true
-            });
+            };
+
+            if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.ShovelDiggingDoAfter))
+                return;
 
             StartDigging(uid, args.User, args.Used, component);
         }
@@ -65,6 +61,8 @@ public sealed class BurialSystem : EntitySystem
         {
             _popupSystem.PopupClient(Loc.GetString("grave-digging-requires-tool", ("grave", args.Target)), uid, args.User);
         }
+
+        args.Handled = true;
     }
 
     private void OnAfterInteractUsing(EntityUid uid, GraveComponent component, AfterInteractUsingEvent args)
@@ -87,7 +85,16 @@ public sealed class BurialSystem : EntitySystem
 
     private void OnGraveDigging(EntityUid uid, GraveComponent component, GraveDiggingDoAfterEvent args)
     {
-        RemComp<ActiveGraveComponent>(uid);
+        if (args.Used != null)
+        {
+            component.ShovelDiggingDoAfter = null;
+            component.ActiveShovelDigging = false;
+            component.Stream = _audioSystem.Stop(component.Stream);
+        }
+        else
+        {
+            component.HandDiggingDoAfter = null;
+        }
 
         if (args.Cancelled || args.Handled)
             return;
@@ -102,25 +109,19 @@ public sealed class BurialSystem : EntitySystem
 
     private void StartDigging(EntityUid uid, EntityUid user, EntityUid? used, GraveComponent component)
     {
-        ActiveGraveComponent activeComp = EnsureComp<ActiveGraveComponent>(uid);
-
         if (used != null)
         {
             _popupSystem.PopupClient(Loc.GetString("grave-start-digging-user", ("grave", uid), ("tool", used)), user, user);
             _popupSystem.PopupEntity(Loc.GetString("grave-start-digging-others", ("user", user), ("grave", uid), ("tool", used)), user, Filter.PvsExcept(user), true);
-            if (_netManager.IsServer)
-                activeComp.Stream = _audioSystem.PlayPvs(component.DigSound, uid).Value.Entity;
+            if (component.Stream == null)
+                component.Stream = _audioSystem.PlayPredicted(component.DigSound, uid, user)?.Entity;
+            component.ActiveShovelDigging = true;
+            Dirty(uid, component);
         }
         else
         {
-            activeComp.DiggingSelfOut = true;
             _popupSystem.PopupClient(Loc.GetString("grave-start-digging-user-trapped", ("grave", uid)), user, user, PopupType.Medium);
         }
-    }
-
-    private void OnActiveGraveShutdown(EntityUid uid, ActiveGraveComponent component, ComponentShutdown args)
-    {
-        component.Stream = _audioSystem.Stop(component.Stream);
     }
 
     private void OnOpenAttempt(EntityUid uid, GraveComponent component, ref StorageOpenAttemptEvent args)
@@ -151,18 +152,23 @@ public sealed class BurialSystem : EntitySystem
 
     private void OnRelayMovement(EntityUid uid, GraveComponent component, ref ContainerRelayMovementEntityEvent args)
     {
-        if (!HasComp<ActiveGraveComponent>(uid))
-        {
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.Entity, component.DigDelay / component.DigOutByHandModifier, new GraveDiggingDoAfterEvent(), uid, target: uid)
-            {
-                NeedHand = false,
-                BreakOnUserMove = true,
-                BreakOnTargetMove = false,
-                BreakOnHandChange = false,
-                BreakOnDamage = false
-            });
+        // We track a separate doAfter here, as we want someone with a shovel to
+        // be able to come along and help someone trying to claw their way out
+        if (component.HandDiggingDoAfter != null)
+            return;
 
-            StartDigging(uid, args.Entity, null, component);
-        }
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.Entity, component.DigDelay / component.DigOutByHandModifier, new GraveDiggingDoAfterEvent(), uid, target: uid)
+        {
+            NeedHand = false,
+            BreakOnUserMove = true,
+            BreakOnTargetMove = false,
+            BreakOnHandChange = false,
+            BreakOnDamage = false
+        };
+
+        if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.HandDiggingDoAfter))
+            return;
+
+        StartDigging(uid, args.Entity, null, component);
     }
 }

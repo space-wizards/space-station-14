@@ -1,9 +1,10 @@
+using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Burial.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GraveComponent : Component
 {
     /// <summary>
@@ -33,4 +34,27 @@ public sealed partial class GraveComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public bool DiggingComplete = false;
+
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public EntityUid? Stream;
+
+    /// <summary>
+    /// Tracks someone digging the grave with a shovel
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public DoAfterId? ShovelDiggingDoAfter;
+
+    /// <summary>
+    /// Auto-networked field to track shovel digging.
+    /// This makes sure a looping audio Stream isn't opened
+    /// on the client-side. (DoAfterId/EntityUid isn't serializable.)
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    public bool ActiveShovelDigging;
+
+    /// <summary>
+    /// Tracks someone digging themself out of the grave
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public DoAfterId? HandDiggingDoAfter;
 }
