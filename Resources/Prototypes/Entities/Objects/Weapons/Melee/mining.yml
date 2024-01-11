@@ -43,6 +43,7 @@
     capacity: 1
     count: 1
   - type: MeleeWeapon
+    attackRate: 1.5
     wideAnimationRotation: -135
     damage:
       types:
@@ -100,7 +101,7 @@
       groups:
         Brute: -30
   - type: MeleeWeapon
-    attackRate: 1.25
+    attackRate: 1.2
   - type: Tag
     tags:
       - Pickaxe
