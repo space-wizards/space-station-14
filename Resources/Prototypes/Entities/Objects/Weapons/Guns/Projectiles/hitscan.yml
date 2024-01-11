@@ -99,9 +99,6 @@
   damage:
     types:
       Heat: 28
-  maxLength: 10
-  penetrationPower: 1
-  canPenetrateMobs: true
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_beam_heavy
