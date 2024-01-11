@@ -5,10 +5,18 @@ public sealed partial class ChangelingEvolutionMenuActionEvent : InstantActionEv
 {
 }
 
+public sealed partial class LingRegenerateActionEvent : InstantActionEvent
+{
+}
+
 public sealed partial class ArmBladeActionEvent : InstantActionEvent
 {
 }
 
 public sealed partial class LingArmorActionEvent : InstantActionEvent
+{
+}
+
+public sealed partial class LingInvisibleActionEvent : InstantActionEvent
 {
 }

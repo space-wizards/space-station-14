@@ -23,3 +23,16 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: ChangelingChameleonSkin
+  name: Chameleon Skin	
+  description: Your skin pigmentation rapidly changes to suit our current environment, becoming invisible after a few seconds of standing still. Costs 25 chemicals on activation.
+  productAction: ActionLingInvisible
+  cost:
+    EvolutionPoints: 2
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

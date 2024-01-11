@@ -17,4 +17,13 @@ changeling-role-greeting =
 
 # Ling abilities
 changeling-not-enough-chemicals = Not enough chemicals!
+
 changeling-armblade-fail = You have no free hands!
+
+changeling-regenerate-others-success = {CAPITALIZE(THE($user))} rapidly regenerates their body, making a loud, grotesque sound!
+changeling-regenerate-self-success = You feel an itching, both inside and outside as your tissues knit and reknit!
+changeling-regenerate-fail-not-crit = You aren't in a critical condition!
+changeling-regenerate-fail-dead = You're dead!
+
+changeling-chameleon-toggle-on = Your skin shimmers with transparency...
+changeling-chameleon-toggle-off = Your skin reverts back to normal.

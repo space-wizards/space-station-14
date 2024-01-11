@@ -7,6 +7,9 @@ using Content.Shared.Changeling.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 using Content.Server.Traitor.Uplink;
+using Content.Shared.Damage;
+using Content.Server.Body.Systems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.FixedPoint;
 
 namespace Content.Server.Changeling.EntitySystems;
@@ -17,6 +20,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -37,6 +41,9 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string ChangelingEvolutionMenuId = "ActionChangelingEvolutionMenu";
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string ChangelingRegenActionId = "ActionLingRegenerate";
 
     [ValidatePrototypeId<CurrencyPrototype>]
     public const string EvolutionPointsCurrencyPrototype = "EvolutionPoints";
@@ -62,7 +69,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     private bool TryUseAbility(EntityUid uid, ChangelingComponent component, float abilityCost, bool activated = true, float regenCost = 0f)
     {
-        if (component.Chemicals <= Math.Abs(abilityCost))
+        if (component.Chemicals <= Math.Abs(abilityCost) && activated)
         {
             _popup.PopupEntity(Loc.GetString("changeling-not-enough-chemicals"), uid, uid);
             return false;
@@ -71,11 +78,11 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (activated)
         {
             ChangeChemicalsAmount(uid, abilityCost, component, false);
-            component.ChemicalsPerSecond -= regenCost * component.ChemicalsPerSecond;
+            component.ChemicalsPerSecond -= regenCost;
         }
         else
         {
-            component.ChemicalsPerSecond += regenCost * component.ChemicalsPerSecond;
+            component.ChemicalsPerSecond += regenCost;
         }
 
         return true;
@@ -84,6 +91,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     private void OnMapInit(EntityUid uid, ChangelingComponent component, MapInitEvent args)
     {
         _action.AddAction(uid, ref component.ShopAction, ChangelingEvolutionMenuId);
+        _action.AddAction(uid, ref component.RegenAction, ChangelingRegenActionId);
     }
 
     private void OnShop(EntityUid uid, ChangelingComponent component, ChangelingEvolutionMenuActionEvent args)
@@ -105,6 +113,9 @@ public sealed partial class ChangelingSystem : EntitySystem
             if (ling.Accumulator <= 1)
                 continue;
             ling.Accumulator -= 1;
+
+            if (_mobState.IsDead(ling.Owner)) // if ling is dead dont regenerate chemicals
+                return;
 
             if (ling.Chemicals < ling.MaxChemicals)
             {
