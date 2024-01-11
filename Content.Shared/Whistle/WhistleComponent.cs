@@ -14,12 +14,12 @@ public sealed partial class WhistleComponent : Component
     /// <summary>
     /// Entity prototype to spawn
     /// </summary>
-    [DataField("effect", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? Effect = "WhistleExclamation";
+    [DataField]
+    public EntProtoId Effect = "WhistleExclamation";
 
     /// <summary>
     /// Range value.
     /// </summary>
-    [DataField("distance")]
+    [DataField]
     public float Distance = 0;
 }
