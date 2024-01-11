@@ -61,7 +61,6 @@
   components:
   - type: InstantAction
     icon: { sprite: /Textures/Interface/Actions/actions_ling.rsi, state: emp }
-    event: !type:LingEMPActionEvent
     useDelay: 60
   - type: EmpOnTrigger
     range: 2.35
