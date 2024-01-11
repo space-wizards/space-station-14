@@ -82,7 +82,7 @@
     types:
       Heat: 5
       Radiation: 15
-  maxLength: 8
+  maxLength: 10
   canPenetrateMobs: true
   canPenetrateWall: true
   muzzleFlash:
