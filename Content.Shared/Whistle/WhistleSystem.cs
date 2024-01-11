@@ -47,9 +47,11 @@ public sealed class WhistleSystem : EntitySystem
         foreach (var iterator in
             _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), component.Distance))
         {
+            //Avoid pinging invisible entities
             if (HasComp<StealthComponent>(iterator))
                 continue;
 
+            //We don't want to ping user of whistle
             if (iterator.Owner == owner)
                 continue;
 
