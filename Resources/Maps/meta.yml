@@ -13685,22 +13685,12 @@ entities:
     - type: Transform
       pos: 71.5,8.5
       parent: 5350
-- proto: AmePart
+- proto: AmeJar
   entities:
-  - uid: 23810
-    components:
-    - type: Transform
-      pos: 73.35088,8.671538
-      parent: 5350
-  - uid: 23811
-    components:
-    - type: Transform
-      pos: 73.50713,8.562163
-      parent: 5350
   - uid: 23812
     components:
     - type: Transform
-      pos: 73.67901,8.421538
+      pos: 73.53678,8.623411
       parent: 5350
 - proto: AnomalyScanner
   entities:
@@ -60887,6 +60877,13 @@ entities:
     - type: Transform
       pos: -26.498873,-33.888706
       parent: 5350
+- proto: ClothingHeadHatBeretWarden
+  entities:
+  - uid: 23811
+    components:
+    - type: Transform
+      pos: -4.7543283,31.495872
+      parent: 5350
 - proto: ClothingHeadHatBunny
   entities:
   - uid: 12101
@@ -61064,6 +61061,13 @@ entities:
     components:
     - type: Transform
       pos: 35.36405,-25.43441
+      parent: 5350
+- proto: ClothingHeadHatWarden
+  entities:
+  - uid: 1509
+    components:
+    - type: Transform
+      pos: -1.5043283,29.792747
       parent: 5350
 - proto: ClothingHeadHatWelding
   entities:
@@ -63561,13 +63565,6 @@ entities:
       containers:
       - EntityStorageComponent
       - entity_storage
-- proto: CrateMindShieldImplants
-  entities:
-  - uid: 22284
-    components:
-    - type: Transform
-      pos: -6.5,40.5
-      parent: 5350
 - proto: CrateNPCHamlet
   entities:
   - uid: 5346
@@ -63610,6 +63607,13 @@ entities:
     components:
     - type: Transform
       pos: 36.5,-38.5
+      parent: 5350
+- proto: CrateSecurityTrackingMindshieldImplants
+  entities:
+  - uid: 23810
+    components:
+    - type: Transform
+      pos: -6.5,40.5
       parent: 5350
 - proto: CrateServiceJanitorialSupplies
   entities:
@@ -116585,19 +116589,19 @@ entities:
     - type: Transform
       pos: 31.677748,21.795935
       parent: 5350
+- proto: GunSafeDisabler
+  entities:
+  - uid: 22284
+    components:
+    - type: Transform
+      pos: -4.5,40.5
+      parent: 5350
 - proto: GunSafeLaserCarbine
   entities:
   - uid: 24701
     components:
     - type: Transform
       pos: -5.5,38.5
-      parent: 5350
-- proto: GunSafePistolMk58
-  entities:
-  - uid: 1509
-    components:
-    - type: Transform
-      pos: -4.5,40.5
       parent: 5350
 - proto: GunSafeRifleLecter
   entities:
@@ -171515,13 +171519,6 @@ entities:
       parent: 5350
 - proto: WarpPoint
   entities:
-  - uid: 24219
-    components:
-    - type: Transform
-      pos: 10.5,5.5
-      parent: 5350
-    - type: WarpPoint
-      location: Captain's Bedroom
   - uid: 24231
     components:
     - type: Transform

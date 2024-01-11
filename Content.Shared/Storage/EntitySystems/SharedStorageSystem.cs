@@ -107,7 +107,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         args.State = new StorageComponentState()
         {
-            Grid = component.Grid,
+            Grid = new List<Box2i>(component.Grid),
             IsUiOpen = component.IsUiOpen,
             MaxItemSize = component.MaxItemSize,
             StoredItems = storedItems
