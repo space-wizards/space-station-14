@@ -6,7 +6,7 @@
   description: Someone forgot to turn off kettle?
   components:
   - type: Item
-    size: 2
+    size: Tiny
   - type: Clothing
     quickEquip: false
     slots: neck
