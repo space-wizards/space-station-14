@@ -50,6 +50,7 @@ public sealed class FaxSystem : EntitySystem
     /// </summary>
     [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultPaperPrototypeId = "Paper";
+    
     [ValidatePrototypeId<EntityPrototype>]
     private const string OfficePaperPrototypeId = "PaperOffice";
 
@@ -305,8 +306,7 @@ public sealed class FaxSystem : EntitySystem
 
     private void OnFileButtonPressed(EntityUid uid, FaxMachineComponent component, FaxFileMessage args)
     {
-        args.Content = args.Content.Substring(0, Math.Min(args.Content.Length, 10000));
-        args.Name = args.Name.Substring(0, Math.Min(args.Name.Length, 64));
+        args.Content = args.Content.Substring(0, Math.Min(args.Content.Length, FaxFileMessageValidation.MaxContentSize));
         PrintFile(uid, component, args);
     }
 
@@ -403,12 +403,14 @@ public sealed class FaxSystem : EntitySystem
     public void PrintFile(EntityUid uid, FaxMachineComponent component, FaxFileMessage args)
     {
         string prototype;
-        if(args.OfficePaper)
+        if (args.OfficePaper)
             prototype = OfficePaperPrototypeId;
         else
             prototype = DefaultPaperPrototypeId;
 
-        var printout = new FaxPrintout(args.Content, args.Name, prototype);
+        var name  = Loc.GetString("fax-machine-printed-paper-name");
+        
+        var printout = new FaxPrintout(args.Content, name, prototype);
         component.PrintingQueue.Enqueue(printout);
         component.SendTimeoutRemaining += component.SendTimeout;
 

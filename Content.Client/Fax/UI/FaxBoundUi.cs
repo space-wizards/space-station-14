@@ -10,7 +10,6 @@ namespace Content.Client.Fax.UI;
 [UsedImplicitly]
 public sealed class FaxBoundUi : BoundUserInterface
 {
-    
     [Dependency] private readonly IFileDialogManager _fileDialogManager = default!;
 
     [ViewVariables]
@@ -39,23 +38,13 @@ public sealed class FaxBoundUi : BoundUserInterface
 
     private async void OnFileButtonPressed()
     {
-        if(_dialogIsOpen)
+        if (_dialogIsOpen)
             return;
-        _dialogIsOpen = true;
         var filters = new FileDialogFilters(new FileDialogFilters.Group("txt"));
         await using var file = await _fileDialogManager.OpenFile(filters);
+        _dialogIsOpen = true;
 
-        if(_window == null)
-        {
-            _dialogIsOpen = false;
-            return;
-        }
-        if(_window.Disposed)
-        {
-            _dialogIsOpen = false;
-            return;
-        }
-        if(file == null)
+        if (_window == null || _window.Disposed || file == null)
         {
             _dialogIsOpen = false;
             return;
@@ -63,10 +52,7 @@ public sealed class FaxBoundUi : BoundUserInterface
 
         var reader = new StreamReader(file);
         var content = await reader.ReadToEndAsync();
-        SendMessage(new FaxFileMessage(content.Substring(0, Math.Min(content.Length, 10000)), "printed paper", _window.OfficePaper));
-        
-        reader.Close();
-        file.Close();
+        SendMessage(new FaxFileMessage(content.Substring(0, Math.Min(content.Length, FaxFileMessageValidation.MaxContentSize)), _window.OfficePaper));
         
         _dialogIsOpen = false;
     }

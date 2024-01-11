@@ -10,7 +10,6 @@ namespace Content.Client.Fax.UI;
 [GenerateTypedNameReferences]
 public sealed partial class FaxWindow : DefaultWindow
 {
-    
     public event Action? FileButtonPressed;
     public event Action? PaperButtonPressed;
     public event Action? CopyButtonPressed;
