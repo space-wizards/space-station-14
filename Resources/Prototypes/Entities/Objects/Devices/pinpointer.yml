@@ -45,9 +45,6 @@
   parent: PinpointerBase
   components:
   - type: Pinpointer
-    componentNames:
-    - name-pinpointer-component-nuke-disk
-    - name-pinpointer-component-nuke
     components:
     - type: NukeDisk
     - type: Nuke
@@ -78,10 +75,7 @@
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
-    componentNames: #The names listed in the component verb menu, need one for every tracked component
-    - name-pinpointer-component-nuke-disk
-    - name-pinpointer-component-station
-    components: #Must be in the same order as componentNames
+    components:
     - type: NukeDisk
     - type: BecomesStation
       id: station
@@ -113,8 +107,6 @@
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
-    componentNames: #The names listed in the component verb menu, need one for every tracked component
-    - name-pinpointer-component-station
-    components: #Must be in the same order as componentNames
+    components:
     - type: BecomesStation
       id: station

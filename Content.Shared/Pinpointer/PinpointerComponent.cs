@@ -65,13 +65,6 @@ public sealed partial class PinpointerComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool CanRetarget;
 
-    //todo replace
-    /// <summary>
-    /// Localized names to be shown in the "search closest" verb menu
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public List<string> ComponentNames = new();
-
     [ViewVariables]
     public EntityUid? Target = null;
 

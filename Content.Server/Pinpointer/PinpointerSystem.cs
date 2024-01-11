@@ -256,8 +256,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (!args.CanInteract || args.Hands == null)
             return;
 
-        var storedOrder = 0;
-
         //Adds the closest target verb if there is at least 1 stored component, there is no need to show an empty list.
         if (component.Components.Count > 0)
         {
@@ -265,16 +263,16 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             {
                 args.Verbs.Add(new Verb()
                 {
-                    Text = Loc.GetString(component.ComponentNames[storedOrder]),
+                    Text = Loc.GetString( "name-pinpointer-component-" + targetComponent.Key),
                     Act = () => LocateTarget(uid, component, targetComponent.Value.Component,args.User),
                     Priority = 100,
                     Category = VerbCategory.SearchClosest,
                 });
-                storedOrder++;
             }
         }
 
-        storedOrder = 0;
+        var storedOrder1 = 0;
+        var storedOrder10 = 0;
 
         //Adds the target selection verb if there is more than 1 stored target, no need to show a list with only 1 target
         //because it will be targeted by default
@@ -282,9 +280,16 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         {
             foreach (var target in component.StoredTargets)
             {
+                storedOrder1++;
+                if (storedOrder1 == 10)
+                {
+                    storedOrder1 = 0;
+                    storedOrder10++;
+                }
+
                 // Adds a number in front of a name to order the list based on order added
-                var storedPrefix = Loc.GetString("prefix-pinpointer-targets", ("storedOrder", storedOrder));
-                storedOrder++;
+                var storedPrefix = Loc.GetString("prefix-pinpointer-targets",
+                    ("storedOrder10", storedOrder10),("storedOrder1", storedOrder1));
 
                 args.Verbs.Add(new Verb()
                 {
@@ -308,6 +313,5 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                 Priority = 25
             });
         }
-
     }
 }
