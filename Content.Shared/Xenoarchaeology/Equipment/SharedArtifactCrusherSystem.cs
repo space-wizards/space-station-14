@@ -1,3 +1,4 @@
+using Content.Shared.Examine;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -20,6 +21,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
         SubscribeLocalEvent<ArtifactCrusherComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ArtifactCrusherComponent, StorageAfterOpenEvent>(OnStorageAfterOpen);
+        SubscribeLocalEvent<ArtifactCrusherComponent, ExaminedEvent>(OnExamine);
     }
 
     private void OnInit(Entity<ArtifactCrusherComponent> ent, ref ComponentInit args)
@@ -29,8 +31,16 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
     private void OnStorageAfterOpen(Entity<ArtifactCrusherComponent> ent, ref StorageAfterOpenEvent args)
     {
+        if (ent.Comp.AutoLock)
+            return;
+
         StopCrushing(ent);
         ContainerSystem.EmptyContainer(ent.Comp.OutputContainer);
+    }
+
+    private void OnExamine(Entity<ArtifactCrusherComponent> ent, ref ExaminedEvent args)
+    {
+        args.PushMarkup(ent.Comp.AutoLock ? Loc.GetString("artifact-crusher-examine-autolocks") : Loc.GetString("artifact-crusher-examine-no-autolocks"));
     }
 
     public void StopCrushing(Entity<ArtifactCrusherComponent> ent, bool early = true)

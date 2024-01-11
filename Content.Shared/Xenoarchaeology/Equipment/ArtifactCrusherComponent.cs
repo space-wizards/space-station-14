@@ -101,6 +101,12 @@ public sealed partial class ArtifactCrusherComponent : Component
     /// </summary>
     [DataField]
     public (EntityUid, AudioComponent)? CrushingSoundEntity;
+
+    /// <summary>
+    /// When enabled, stops the artifact crusher from being opened when it is being crushed.
+    /// </summary>
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    public bool AutoLock = false;
 }
 
 [Serializable, NetSerializable]
