@@ -128,6 +128,7 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var receiver in receivers)
             {
+                receiver.Comp.Provider = null;
                 RaiseLocalEvent(receiver, new ProviderDisconnectedEvent(provider), broadcast: false);
                 RaiseLocalEvent(provider, new ReceiverDisconnectedEvent(receiver), broadcast: false);
             }
@@ -189,8 +190,8 @@ namespace Content.Server.Power.EntitySystems
 
             if (provider != null)
             {
-                RaiseLocalEvent(provider.Value, new ReceiverDisconnectedEvent(receiver), broadcast: false);
                 provider.Value.Comp.LinkedReceivers.Remove(receiver);
+                RaiseLocalEvent(provider.Value, new ReceiverDisconnectedEvent(receiver), broadcast: false);
             }
 
             receiver.Comp.ReceptionRange = range;
@@ -248,14 +249,14 @@ namespace Content.Server.Power.EntitySystems
         private void Disconnect(Entity<ExtensionCableReceiverComponent> receiver)
         {
             receiver.Comp.Connectable = false;
-            RaiseLocalEvent(receiver, new ProviderDisconnectedEvent(receiver.Comp.Provider), broadcast: false);
-            if (receiver.Comp.Provider != null)
-            {
-                RaiseLocalEvent(receiver.Comp.Provider.Value, new ReceiverDisconnectedEvent(receiver), broadcast: false);
-                receiver.Comp.Provider.Value.Comp.LinkedReceivers.Remove(receiver);
-            }
-
+            var provider = receiver.Comp.Provider;
             receiver.Comp.Provider = null;
+            RaiseLocalEvent(receiver, new ProviderDisconnectedEvent(provider), broadcast: false);
+            if (provider != null)
+            {
+                provider.Value.Comp.LinkedReceivers.Remove(receiver);
+                RaiseLocalEvent(provider.Value, new ReceiverDisconnectedEvent(receiver), broadcast: false);
+            }
         }
 
         private void TryFindAndSetClosestProvider(Entity<ExtensionCableReceiverComponent> receiver, TransformComponent? xform = null)
