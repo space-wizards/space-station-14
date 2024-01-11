@@ -45,15 +45,15 @@ public sealed class WhistleSystem : EntitySystem
     private void MakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
     {
         foreach (var iterator in
-            _entityLookup.GetComponentsInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), component.Distance))
+            _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), component.Distance))
         {
-            if (HasComp<StealthComponent>(iterator.Owner))
+            if (HasComp<StealthComponent>(iterator))
                 continue;
 
             if (iterator.Owner == owner)
                 continue;
 
-            ExclamateTarget(iterator.Owner, component);
+            ExclamateTarget(iterator, component);
         }
     }
 }
