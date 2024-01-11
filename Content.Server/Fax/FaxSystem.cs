@@ -305,6 +305,8 @@ public sealed class FaxSystem : EntitySystem
 
     private void OnFileButtonPressed(EntityUid uid, FaxMachineComponent component, FaxFileMessage args)
     {
+        args.Content = args.Content.Substring(0, Math.Min(args.Content.Length, 10000));
+        args.Name = args.Name.Substring(0, Math.Min(args.Name.Length, 64));
         PrintFile(uid, component, args);
     }
 

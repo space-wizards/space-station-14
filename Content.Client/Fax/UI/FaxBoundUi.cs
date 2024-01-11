@@ -35,48 +35,25 @@ public sealed class FaxBoundUi : BoundUserInterface
         _window.PeerSelected += OnPeerSelected;
     }
 
-    public async Task PrintFile()
+    private async void OnFileButtonPressed()
     {
-        //Open file select dialog
-        Stream? file;
         var filters = new FileDialogFilters(new FileDialogFilters.Group("txt"));
-        try
-        {
-            file = await _fileDialogManager.OpenFile(filters);            
-        }
-        catch(IOException)
-        {
-            return;
-        }
+        await using var file = await _fileDialogManager.OpenFile(filters);
 
-        //If UI gets closed of file is null return.
         if(_window == null)
             return;
-        if (_window.Disposed)
+        if(_window.Disposed)
             return;
         if(file == null)
             return;
 
-        //Read the file contents and raise event.
-        string content;
-        try
-        {
-            StreamReader reader = new StreamReader(file);
-            content = reader.ReadToEnd();
-            reader.Close();
-            file.Close();
-        }
-        catch(IOException)
-        {
-            return;
-        }
-
+        var reader = new StreamReader(file);
+        var content = await reader.ReadToEndAsync();
+        
         SendMessage(new FaxFileMessage(content.Substring(0, Math.Min(content.Length, 10000)), "printed paper", _window.OfficePaper));
-    }
-
-    private void OnFileButtonPressed()
-    {
-        PrintFile();
+        
+        reader.Close();
+        file.Close();
     }
 
     private void OnSendButtonPressed()
