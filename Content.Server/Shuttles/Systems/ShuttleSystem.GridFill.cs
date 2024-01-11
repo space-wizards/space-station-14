@@ -74,6 +74,11 @@ public sealed partial class ShuttleSystem
 
         if (_loader.TryLoad(mapId, component.Path.ToString(), out var ent) && ent.Count > 0)
         {
+            if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
+            {
+                TryFTLProximity(ent[0], shuttle, targetGrid.Value);
+            }
+
             _station.AddGridToStation(uid, ent[0]);
         }
 
