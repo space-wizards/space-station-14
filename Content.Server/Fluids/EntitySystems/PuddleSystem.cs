@@ -74,6 +74,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     // loses & then gains reagents in a single tick.
     private HashSet<EntityUid> _deletionQueue = new();
 
+    private EntityQuery<PuddleComponent> _puddleQuery;
+
     /*
      * TODO: Need some sort of way to do blood slash / vomit solution spill on its own
      * This would then evaporate into the puddle tile below
@@ -83,6 +85,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     public override void Initialize()
     {
         base.Initialize();
+
+        _puddleQuery = GetEntityQuery<PuddleComponent>();
 
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
@@ -108,8 +112,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
             return;
         }
-
-        var puddleQuery = GetEntityQuery<PuddleComponent>();
 
         // For overflows, we never go to a fully evaporative tile just to avoid continuously having to mop it.
 
@@ -143,7 +145,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             // Resolve all our neighbours first, so we can use their properties to decide who to operate on first.
             foreach (var neighbor in args.Neighbors)
             {
-                if (!puddleQuery.TryGetComponent(neighbor, out var puddle) ||
+                if (!_puddleQuery.TryGetComponent(neighbor, out var puddle) ||
                     !_solutionContainerSystem.ResolveSolution(neighbor, puddle.SolutionName, ref puddle.Solution,
                         out var neighborSolution) ||
                     CanFullyEvaporate(neighborSolution))
@@ -158,11 +160,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
             // We want to deal with our neighbours by lowest current volume to highest, as this allows us to fill up our low points quickly.
             resolvedNeighbourSolutions.Sort(
-                (
-                    x,
-                    y
-                ) => x.Item1.Volume.CompareTo(y.Item1.Volume)
-            );
+                (x, y) =>
+                    x.neighborSolution.Volume.CompareTo(y.neighborSolution.Volume));
 
             // Overflow to neighbors with remaining space.
             foreach (var (neighborSolution, puddle, neighbor) in resolvedNeighbourSolutions)
@@ -218,7 +217,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             // Resolve all our neighbours so that we can use their properties to decide who to act on first
             foreach (var neighbor in args.Neighbors)
             {
-                if (!puddleQuery.TryGetComponent(neighbor, out var puddle) ||
+                if (!_puddleQuery.TryGetComponent(neighbor, out var puddle) ||
                     !_solutionContainerSystem.ResolveSolution(neighbor, puddle.SolutionName, ref puddle.Solution,
                         out var neighborSolution) ||
                     CanFullyEvaporate(neighborSolution))
@@ -232,17 +231,15 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
             // We should act on neighbours by their total volume.
             resolvedNeighbourSolutions.Sort(
-                (
-                    x,
-                    y
-                ) => x.Item1.Volume.CompareTo(y.Item1.Volume)
+                (x, y) =>
+                    x.neighborSolution.Volume.CompareTo(y.neighborSolution.Volume)
             );
 
             // Overflow to neighbors with remaining total allowed space (1000u) above the overflow volume (20u).
             foreach (var (neighborSolution, puddle, neighbor) in resolvedNeighbourSolutions)
             {
                 // What the source tiles current volume is.
-                FixedPoint2 sourceCurrentVolume = overflow.Volume + puddle.OverflowVolume;
+                var sourceCurrentVolume = overflow.Volume + puddle.OverflowVolume;
 
                 // Water doesn't flow uphill
                 if (neighborSolution.Volume >= sourceCurrentVolume)
@@ -251,15 +248,16 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 }
 
                 // We're in the low point in this area, let the neighbour tiles have a chance to spread to us first.
-                FixedPoint2 idealAverageVolume =
+                var idealAverageVolume =
                     (totalVolume + overflow.Volume + puddle.OverflowVolume) / (args.Neighbors.Count + 1);
+
                 if (idealAverageVolume > sourceCurrentVolume)
                 {
                     continue;
                 }
 
                 // Work our how far off the ideal average this neighbour is.
-                FixedPoint2 spillThisNeighbor = idealAverageVolume - neighborSolution.Volume;
+                var spillThisNeighbor = idealAverageVolume - neighborSolution.Volume;
 
                 // Skip if we want to spill negative amounts of fluid to this neighbour
                 if (spillThisNeighbor < FixedPoint2.Zero)
