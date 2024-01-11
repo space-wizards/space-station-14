@@ -201,7 +201,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         // clowns zap themselves
         if (HasComp<ClumsyComponent>(user) && user != target)
         {
-            Zap(uid, user, user, component, null, null);
+            Zap(uid, user, user, component);
             return;
         }
 
