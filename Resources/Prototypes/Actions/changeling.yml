@@ -18,3 +18,14 @@
     icon: { sprite: /Textures/Objects/Weapons/Melee/armblade.rsi, state: icon }
     event: !type:ArmBladeActionEvent
     useDelay: 2
+
+- type: entity
+  id: ActionLingArmor
+  name: Toggle Chitinous Armor
+  description: Inflates your body into an all-consuming chitinous mass of armor.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: /Textures/Clothing/OuterClothing/Armor/lingarmor.rsi, state: icon }
+    event: !type:LingArmorActionEvent
+    useDelay: 15

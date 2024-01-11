@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -17,6 +18,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
+    [Dependency] private readonly UserInterfaceSystem _userinterface = default!;
 
     public override void Initialize()
     {
@@ -32,7 +34,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, ChangelingComponent component, ComponentStartup args)
     {
-        _uplink.AddUplink(uid, FixedPoint2.New(10), "StorePresetChangeling", uid, EvolutionPointsCurrencyPrototype); // not really an 'uplink', but it's there to add the evolution menu
+        _uplink.AddUplink(uid, FixedPoint2.New(10), ChangelingShopPresetPrototype, uid, EvolutionPointsCurrencyPrototype); // not really an 'uplink', but it's there to add the evolution menu
     }
 
     [ValidatePrototypeId<EntityPrototype>]
@@ -40,6 +42,9 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     [ValidatePrototypeId<CurrencyPrototype>]
     public const string EvolutionPointsCurrencyPrototype = "EvolutionPoints";
+
+    [ValidatePrototypeId<StorePresetPrototype>]
+    public const string ChangelingShopPresetPrototype = "StorePresetChangeling";
 
     public bool ChangeChemicalsAmount(EntityUid uid, float amount, ChangelingComponent? component = null, bool regenCap = true)
     {
@@ -71,12 +76,12 @@ public sealed partial class ChangelingSystem : EntitySystem
     }
     private void OnMapInit(EntityUid uid, ChangelingComponent component, MapInitEvent args)
     {
-        _action.AddAction(uid, ref component.Action, ChangelingEvolutionMenuId);
+        _action.AddAction(uid, ref component.ShopAction, ChangelingEvolutionMenuId);
     }
 
     private void OnShop(EntityUid uid, ChangelingComponent component, ChangelingEvolutionMenuActionEvent args)
     {
-        if (!TryComp<StoreComponent>(uid, out var store))
+        if (!TryComp(uid, out StoreComponent? store))
             return;
         _store.ToggleUi(uid, uid, store);
     }

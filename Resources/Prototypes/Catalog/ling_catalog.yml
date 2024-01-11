@@ -1,10 +1,23 @@
 - type: listing
   id: ChangelingArmBlade
   name: Arm Blade
-  description: Transform one of your arms into a grotesque blade made out of bone and flesh. Cuts through people as a hot knife through butter. Uses 20 chemicals on toggle.
+  description: Transform one of your arms into a grotesque blade made out of bone and flesh. Cuts through people as a hot knife through butter. Uses 20 chemicals on activation.
   productAction: ActionArmBlade
   cost:
     EvolutionPoints: 2
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ChangelingArmor
+  name: Chitinous Armor	
+  description: Inflates your body into an all-consuming chitinous mass of armor. Provides a lot of protection, but slows you down by 35%. Uses 20 chemicals on activation.
+  productAction: ActionLingArmor
+  cost:
+    EvolutionPoints: 1
   categories:
   - ChangelingAbilities
   conditions:

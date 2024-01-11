@@ -8,3 +8,7 @@ public sealed partial class ChangelingEvolutionMenuActionEvent : InstantActionEv
 public sealed partial class ArmBladeActionEvent : InstantActionEvent
 {
 }
+
+public sealed partial class LingArmorActionEvent : InstantActionEvent
+{
+}
