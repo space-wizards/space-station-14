@@ -46,6 +46,12 @@ public sealed partial class ChangelingComponent : Component
     public float LingArmorChemicalsCost = -20f;
 
     /// <summary>
+    /// The percent of how much chemical regeneration is reduced when the ling armor is active.
+    /// </summary>
+    [DataField]
+    public float LingArmorRegenCost = 25f;
+
+    /// <summary>
     /// If the ling has the armor on or not.
     /// </summary>
     [DataField]

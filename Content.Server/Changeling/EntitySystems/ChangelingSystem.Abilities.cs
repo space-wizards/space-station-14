@@ -38,18 +38,17 @@ public sealed partial class ChangelingSystem
         if (handContainer == null)
             return;
 
+        if (!TryUseAbility(uid, component, component.ArmBladeChemicalsCost, !component.ArmBladeActive))
+            return;
+
         if (!component.ArmBladeActive)
         {
-            if (!TryUseAbility(uid, component, component.ArmBladeChemicalsCost))
-                return;
-
             var armblade = Spawn(ArmBladeId, Transform(uid).Coordinates);
             EnsureComp<UnremoveableComponent>(armblade); // armblade is apart of your body.. cant remove it..
 
             if (_handsSystem.TryGetEmptyHand(uid, out var emptyHand, handsComponent))
             {
                 _handsSystem.TryPickup(uid, armblade, emptyHand, false, false, handsComponent);
-                component.ArmBladeActive = true;
             }
             else
             {
@@ -67,15 +66,18 @@ public sealed partial class ChangelingSystem
                     if (result)
                     {
                         QueueDel(handContainer.ContainedEntity.Value);
-                        component.ArmBladeActive = false;
                     }
                 }
             }
         }
+
+        component.ArmBladeActive = !component.ArmBladeActive;
     }
 
     public const string LingHelmetId = "ClothingHeadHelmetLing";
     public const string LingArmorId = "ClothingOuterArmorChangeling";
+    public const string HeadId = "head";
+    public const string OuterClothingId = "outerClothing";
 
     private void OnLingArmorAction(EntityUid uid, ChangelingComponent component, LingArmorActionEvent args)
     {
@@ -87,31 +89,31 @@ public sealed partial class ChangelingSystem
         if (!TryComp(uid, out InventoryComponent? inventory))
             return;
 
+        if (!TryUseAbility(uid, component, component.LingArmorChemicalsCost, !component.LingArmorActive, component.LingArmorRegenCost))
+            return;
+
         if (!component.LingArmorActive)
         {
-            if (!TryUseAbility(uid, component, component.LingArmorChemicalsCost))
-                return;
-
             var helmet = Spawn(LingHelmetId, Transform(uid).Coordinates);
             var armor = Spawn(LingArmorId, Transform(uid).Coordinates);
             EnsureComp<UnremoveableComponent>(helmet); // cant remove the armor
             EnsureComp<UnremoveableComponent>(armor); // cant remove the armor
 
-            _inventorySystem.TryUnequip(uid, "head", true, true, false, inventory);
-            _inventorySystem.TryEquip(uid, helmet, "head", true, true, false, inventory);
-            _inventorySystem.TryUnequip(uid, "outerclothing", true, true, false, inventory);
-            _inventorySystem.TryEquip(uid, armor, "outerclothing", true, true, false, inventory);
-            component.LingArmorActive = true;
+            _inventorySystem.TryUnequip(uid, HeadId, true, true, false, inventory);
+            _inventorySystem.TryEquip(uid, helmet, HeadId, true, true, false, inventory);
+            _inventorySystem.TryUnequip(uid, OuterClothingId, true, true, false, inventory);
+            _inventorySystem.TryEquip(uid, armor, OuterClothingId, true, true, false, inventory);
         }
         else
         {
-            if (_inventorySystem.TryGetSlotEntity(uid, "head", out var headitem) && _inventorySystem.TryGetSlotEntity(uid, "outerclothing", out var outerclothingitem))
+            if (_inventorySystem.TryGetSlotEntity(uid, HeadId, out var headitem) && _inventorySystem.TryGetSlotEntity(uid, OuterClothingId, out var outerclothingitem))
             {
                 if (TryPrototype(headitem.Value, out var headitemproto))
                 {
                     var result = _proto.HasIndex<EntityPrototype>(LingHelmetId);
                     if (result)
                     {
+                        _inventorySystem.TryUnequip(uid, HeadId, true, true, false, inventory);
                         QueueDel(headitem.Value);
                     }
                 }
@@ -121,12 +123,13 @@ public sealed partial class ChangelingSystem
                     var result = _proto.HasIndex<EntityPrototype>(LingArmorId);
                     if (result)
                     {
+                        _inventorySystem.TryUnequip(uid, OuterClothingId, true, true, false, inventory);
                         QueueDel(outerclothingitem.Value);
                     }
                 }
             }
-
-            component.LingArmorActive = false;
         }
+
+        component.LingArmorActive = !component.LingArmorActive;
     }
 }

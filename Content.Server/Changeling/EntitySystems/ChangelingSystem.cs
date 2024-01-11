@@ -8,7 +8,6 @@ using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -18,7 +17,6 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
-    [Dependency] private readonly UserInterfaceSystem _userinterface = default!;
 
     public override void Initialize()
     {
@@ -62,18 +60,27 @@ public sealed partial class ChangelingSystem : EntitySystem
         return true;
     }
 
-    private bool TryUseAbility(EntityUid uid, ChangelingComponent component, float abilityCost)
+    private bool TryUseAbility(EntityUid uid, ChangelingComponent component, float abilityCost, bool activated = true, float regenCost = 0f)
     {
-        if (component.Chemicals <= abilityCost)
+        if (component.Chemicals <= Math.Abs(abilityCost))
         {
             _popup.PopupEntity(Loc.GetString("changeling-not-enough-chemicals"), uid, uid);
             return false;
         }
 
-        ChangeChemicalsAmount(uid, abilityCost, component, false);
+        if (activated)
+        {
+            ChangeChemicalsAmount(uid, abilityCost, component, false);
+            component.ChemicalsPerSecond -= regenCost * component.ChemicalsPerSecond;
+        }
+        else
+        {
+            component.ChemicalsPerSecond += regenCost * component.ChemicalsPerSecond;
+        }
 
         return true;
     }
+
     private void OnMapInit(EntityUid uid, ChangelingComponent component, MapInitEvent args)
     {
         _action.AddAction(uid, ref component.ShopAction, ChangelingEvolutionMenuId);
