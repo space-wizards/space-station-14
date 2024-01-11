@@ -1,5 +1,5 @@
 - type: entity
-  id: ActionToggleFangs
+  id: ActionVampireToggleFangs
   name: Toggle Fangs
   description: Extend or retract your fangs.
   noSpawn: true
@@ -8,6 +8,83 @@
     checkCanInteract: false
     icon:
       sprite: Interface/Actions/actions_vampire.rsi
-      state: drainbloood
-    event: !type:VampireUsePowerEvent
-    Type: ToggleFangs
+      state: drainblood
+    event: 
+      !type:VampireUsePowerEvent
+      type: ToggleFangs
+
+- type: entity
+  id: ActionVampireDeathsEmbrace
+  name: Deaths Embrace
+  description: Return to your coffin
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: deathsembrace
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/explosionsmallfar.ogg
+    event: 
+      !type:VampireUsePowerEvent
+      type: DeathsEmbrace
+    useDelay: 60
+
+- type: entity
+  id: ActionVampireGlare
+  name: Glare
+  description: Strike fear into their souls
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: glare
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/Vampire/glare.ogg
+    event: 
+      !type:VampireUsePowerEvent
+      type: Glare
+    useDelay: 60
+
+- type: entity
+  id: ActionVampireScreech
+  name: Screech
+  description: Crush your enemies willpower
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: screech
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/Vampire/screech_tone.ogg
+    event: 
+      !type:VampireUsePowerEvent
+      type: Screech
+    useDelay: 60
+
+#- type: entity
+#  id: ActionSmite
+#  name: Smite
+#  description: Instantly gibs a target.
+#  noSpawn: true
+#  components:
+#  - type: EntityTargetAction
+#    useDelay: 60
+#    itemIconStyle: BigAction
+#    whitelist:
+#      components:
+#      - Body
+#    canTargetSelf: false
+#    interactOnMiss: false
+#    sound: !type:SoundPathSpecifier
+#      path: /Audio/Magic/disintegrate.ogg
+#    icon:
+#      sprite: Objects/Magic/magicactions.rsi
+#      state: gib
+#    event: !type:SmiteSpellEvent
+#      speech: action-speech-spell-smite

@@ -1013,13 +1013,41 @@
   physicalDesc: reagent-physical-desc-holy
   flavor: holy
   color: "#91C3F7"
+  reactiveEffects:
+    Unholy:
+      methods: [ Touch ]
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Heat: 5
+        - !type:Emote
+          emote: Scream
   metabolisms:
     Medicine:
       effects:
+      #If vampire
+      - !type:HealthChange
+        condition:
+        - !type:OrganType
+          type: Vampire
+        damage:
+          types:
+            Heat: 2
+      - !type:Emote
+        condition:
+        - !type:OrganType
+          type: Vampire
+        emote: Scream
+        probability: 0.3
+      #If not vampire
       - !type:HealthChange
         condition:
         - !type:TotalDamage
           max: 50
+        - !type:OrganType
+          type: Vampire
+          shouldHave: false
         damage:
           types:
             Blunt: -0.2

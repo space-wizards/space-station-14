@@ -64,6 +64,11 @@ namespace Content.Server.Body.Systems
                 component.AccumulatedFrametime = component.UpdateFrequency;
         }
 
+        public void SetMetabolizerTypes(MetabolizerComponent component, HashSet<string>? metabolizerTypes)
+        {
+            component.MetabolizerTypes = metabolizerTypes;
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);

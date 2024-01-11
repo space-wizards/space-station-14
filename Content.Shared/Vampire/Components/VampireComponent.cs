@@ -1,6 +1,7 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using System;
 using System.Collections.Frozen;
@@ -15,13 +16,14 @@ namespace Content.Shared.Vampire.Components;
 [RegisterComponent]
 public sealed partial class VampireComponent : Component
 {
-    public readonly string BloodContainer = "blood@vampire";
-
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool FangsExtended = false;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public DamageSpecifier SpaceDamage = default!;
+    public float AvailableBlood = default!;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float TotalBloodDrank = default!;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan SpaceDamageInterval = TimeSpan.FromSeconds(1);
@@ -31,46 +33,66 @@ public sealed partial class VampireComponent : Component
     public EntityUid? HomeCoffin = default!;
 
     //Abilities
-    public HashSet<VampirePower> UnlockedPowers = new();
+    public Dictionary<VampirePowerKey, EntityUid> UnlockedPowers = new();
 
     //Blood Drinking
-    public TimeSpan BloodDrainDelay = TimeSpan.FromSeconds(2);
-    public readonly SoundSpecifier DrinkSound = new SoundPathSpecifier("/Audio/Items/drink.ogg");
-
-
-    public FrozenDictionary<VampirePower, VampirePowerDef> VampirePowers = new Dictionary<VampirePower, VampirePowerDef>
-    {
-        { VampirePower.ToggleFangs, new("ActionToggleFangs", null, null, 0, 0) },
-        { VampirePower.Glare, new("ActionVampireGlare", null, null, 0, 0) },
-        { VampirePower.DeathsEmbrace, new(null, "Smoke", new SoundPathSpecifier("/Audio/Effects/explosionsmallfar.ogg"), 100, 200) },
-        { VampirePower.DrinkBlood, new(null, null, new SoundPathSpecifier("/Audio/Items/drink.ogg"), 0, -30) } //Activation cost is how much we drain from the victim
-    }.ToFrozenDictionary();
+    public TimeSpan BloodDrainDelay = TimeSpan.FromSeconds(1);
 }
 
-public sealed class VampirePowerDef
+[Prototype("vampirePower")]
+public sealed partial class VampirePowerPrototype : IPrototype
 {
+    [ViewVariables]
+    [IdDataField]
+    public string ID { get; private set; } = default!;
+
+    public VampirePowerKey Key => Enum.Parse<VampirePowerKey>(ID);
+
+    [DataField]
     public readonly string? ActionPrototype;
+
+    [DataField]
     public readonly string? ActivationEffect;
+
+    [DataField]
     public readonly SoundSpecifier? ActivationSound;
-    public readonly int ActivationCost;
-    public readonly int UnlockCost;
+
+    [DataField]
+    public readonly int ActivationCost = 0;
+
+    [DataField]
+    public readonly int UnlockRequirement = 0;
+
+    [DataField]
+    public readonly bool UsableWhileCuffed = true;
+
+    [DataField]
+    public readonly bool UsableWhileStunned = true;
+
+    [DataField]
+    public readonly bool UsableWhileMuffled = true;
+
     public EntityUid? Action;
 
-    public VampirePowerDef(string? actionPrototype, string? activationEffect, SoundSpecifier? activationSound, int unlockCost, int activationCost)
+    /*public VampirePowerPrototype(string? actionPrototype, string? activationEffect, SoundSpecifier? activationSound, int unlockCost, int activationCost, bool usableWhileCuffed, bool usableWhileStunned, bool usableWhileMuffled)
     {
-        this.ActionPrototype = actionPrototype;
-        this.ActivationEffect = activationEffect;
-        this.ActivationSound = activationSound;
-        this.UnlockCost = unlockCost;
-        this.ActivationCost = activationCost;
-    }
+        ActionPrototype = actionPrototype;
+        ActivationEffect = activationEffect;
+        ActivationSound = activationSound;
+        UnlockCost = unlockCost;
+        ActivationCost = activationCost;
+        UsableWhileCuffed = usableWhileCuffed;
+        UsableWhileStunned = usableWhileStunned;
+        UsableWhileMuffled = usableWhileMuffled;
+    }*/
 }
 
 [Serializable, NetSerializable]
-public enum VampirePower : Byte
+public enum VampirePowerKey : byte
 {
     ToggleFangs,
     Glare,
     DeathsEmbrace,
-    DrinkBlood
+    DrinkBlood,
+    Screech
 }

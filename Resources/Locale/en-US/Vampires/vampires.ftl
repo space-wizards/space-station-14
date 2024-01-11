@@ -10,3 +10,6 @@ vampire-blooddrink-rotted = Their body is rotting and their blood tainted
 vampire-startlight-burning = You feel your skin burn in the light of a thousand suns
 
 vampire-not-enough-blood = You dont have enough blood
+vampire-full-stomach = You are bloated with blood
+
+vampire-deathsembrace-bind = Feels like home

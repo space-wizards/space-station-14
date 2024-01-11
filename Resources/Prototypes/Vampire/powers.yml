@@ -1,0 +1,31 @@
+- type: vampirePower
+  id: ToggleFangs
+  actionPrototype: ActionVampireToggleFangs
+  
+- type: vampirePower
+  id: DrinkBlood
+  activationSound:
+    path: /Audio/Items/drink.ogg
+  usableWhileMuffled: false
+  activationCost: 5 #Actually how much we drink from the victim
+
+- type: vampirePower
+  id: Glare
+  actionPrototype: ActionVampireGlare
+  activationSound:
+    path: /Audio/Effects/Vampire/glare.ogg
+
+- type: vampirePower
+  id: DeathsEmbrace
+  actionPrototype: ActionVampireDeathsEmbrace
+  activationSound:
+    path: /Audio/Effects/explosionsmallfar.ogg
+
+- type: vampirePower
+  id: Screech
+  actionPrototype: ActionVampireScreech
+  activationSound:
+    path: /Audio/Effects/Vampire/screech_tone.ogg
+  activationCost: 25
+  unlockRequirement: 50
+  usableWhileMuffled: false

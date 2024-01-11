@@ -5,10 +5,15 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Vampire;
 
-public sealed partial class VampireUsePowerEvent : InstantActionEvent
+public sealed partial class VampireUseAreaPowerEvent : InstantActionEvent
 {
     [DataField("type")]
-    public VampirePower Type;
+    public VampirePowerKey Type;
+};
+public sealed partial class VampireUseTargetedPowerEvent : EntityTargetActionEvent
+{
+    [DataField("type")]
+    public VampirePowerKey Type;
 };
 
 [Serializable, NetSerializable]

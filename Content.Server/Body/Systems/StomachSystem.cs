@@ -3,6 +3,7 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Whitelist;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
@@ -122,6 +123,11 @@ namespace Content.Server.Body.Systems
             }
 
             return true;
+        }
+
+        public void SetSpecialDigestible(StomachComponent component, EntityWhitelist? whitelist)
+        {
+            component.SpecialDigestible = whitelist;
         }
     }
 }
