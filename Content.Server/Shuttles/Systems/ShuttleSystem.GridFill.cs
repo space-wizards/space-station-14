@@ -100,7 +100,7 @@ public sealed partial class ShuttleSystem
                     if (group.Hide)
                     {
                         var iffComp = EnsureComp<IFFComponent>(ent[0]);
-                        iffComp.Flags |= IFFFlags.Hide;
+                        iffComp.Flags |= IFFFlags.HideLabel;
                         Dirty(ent[0], iffComp);
                     }
 
