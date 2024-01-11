@@ -455,6 +455,7 @@
         - Radio
         - Sidearm
         - MagazinePistol
+        - MagazineMagnum
       components:
         - Stunbaton
         - FlashOnTrigger
