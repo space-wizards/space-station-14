@@ -204,14 +204,23 @@ public sealed partial class StoreSystem
             }
         }
 
-        // TODO: Remove old stored action from BoughtEntities and replace with new
-        // TODO: Check if you need to change anything here, was able to successfully upgrade
         if (listing is { ProductUpgradeID: not null, ProductActionEntity: not null })
         {
-            if (!_actionUpgrade.TryUpgradeAction(listing.ProductActionEntity.Value, out var upgradeActionId))
+            if (listing.ProductActionEntity != null && component.BoughtEntities.Contains(listing.ProductActionEntity.Value))
+                component.BoughtEntities.Remove(listing.ProductActionEntity.Value);
+
+            if (!_actionUpgrade.TryUpgradeAction(listing.ProductActionEntity, out var upgradeActionId))
+            {
+                if (listing.ProductActionEntity != null)
+                    component.BoughtEntities.Add(listing.ProductActionEntity.Value);
+
                 return;
+            }
 
             listing.ProductActionEntity = upgradeActionId;
+
+            if (upgradeActionId != null)
+                component.BoughtEntities.Add(upgradeActionId.Value);
         }
 
         //broadcast event
