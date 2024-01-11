@@ -98,7 +98,7 @@
   - type: LeechOnMarker
     leech:
       groups:
-        Brute: -25
+        Brute: -30
   - type: MeleeWeapon
     attackRate: 1.25
   - type: Tag
