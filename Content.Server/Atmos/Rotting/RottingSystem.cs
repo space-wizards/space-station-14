@@ -32,6 +32,7 @@ public sealed class RottingSystem : EntitySystem
         SubscribeLocalEvent<PerishableComponent, MapInitEvent>(OnPerishableMapInit);
         SubscribeLocalEvent<PerishableComponent, EntityUnpausedEvent>(OnPerishableUnpaused);
         SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnPerishableExamined);
 
         SubscribeLocalEvent<RottingComponent, EntityUnpausedEvent>(OnRottingUnpaused);
         SubscribeLocalEvent<RottingComponent, ComponentShutdown>(OnShutdown);
@@ -120,6 +121,31 @@ public sealed class RottingSystem : EntitySystem
         var molsToDump = perishable.MolsPerSecondPerUnitMass * physics.FixturesMass * (float) component.TotalRotTime.TotalSeconds;
         var tileMix = _atmosphere.GetTileMixture(uid, excite: true);
         tileMix?.AdjustMoles(Gas.Ammonia, molsToDump);
+    }
+
+    private void OnPerishableExamined(Entity<PerishableComponent> perishable, ref ExaminedEvent args)
+    {
+        int maxStages = 3;
+        int stage = PerishStage(perishable, maxStages);
+        if (stage < 1 || stage > maxStages)
+        {
+            // We dont push an examined string if it hasen't started "perishing" or it's already rotting
+            return;
+        }
+
+        var description = "perishable-" + stage;
+        args.PushMarkup(Loc.GetString(description));
+    }
+
+    /// <summary>
+    /// Return an integer from 0 to maxStage representing how close to rotting an entity is. Used to
+    /// generate examine messages for items that are starting to rot.
+    /// </summary>
+    public int PerishStage(Entity<PerishableComponent> perishable, int maxStages)
+    {
+        if (perishable.Comp.RotAfter.TotalSeconds == 0 || perishable.Comp.RotAccumulator.TotalSeconds == 0)
+            return 0;
+        return (int)(1 + maxStages * perishable.Comp.RotAccumulator.TotalSeconds / perishable.Comp.RotAfter.TotalSeconds);
     }
 
     private void OnExamined(EntityUid uid, RottingComponent component, ExaminedEvent args)

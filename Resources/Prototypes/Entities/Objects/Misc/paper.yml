@@ -58,6 +58,17 @@
         acts: [ "Destruction" ]
 
 - type: entity
+  name: paper scrap
+  parent: Paper
+  id: PaperScrap
+  description: 'A crumpled up piece of white paper.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: scrap
+
+- type: entity
   name: office paper
   parent: Paper
   id: PaperOffice
@@ -317,7 +328,7 @@
     state: pen_cap
 
 - type: entity
-  name: Centcom pen
+  name: CentCom pen
   parent: CyberPen
   id: PenCentcom
   description: In an attempt to keep up with the "power" of the cybersun bureaucracy, NT made a replica of cyber pen, in their corporate style.
@@ -481,7 +492,7 @@
 
 - type: entity
   id: BoxFolderCentCom
-  name: centcom folder
+  name: CentCom folder
   parent: BoxFolderBase
   suffix: DO NOT MAP
   description: CentCom's miserable little pile of secrets!
@@ -517,7 +528,7 @@
   - type: ItemSlots
     slots:
       pen_slot:
-        name: Pen
+        name: clipboard-slot-component-slot-name-pen
         whitelist:
           tags:
             - Write
@@ -554,7 +565,7 @@
 - type: entity
   id: BoxFolderCentComClipboard
   parent: BoxFolderClipboard
-  name: centcom clipboard
+  name: CentCom clipboard
   description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentCom officials, seldom seen actually used.
   components:
   - type: Sprite
@@ -601,7 +612,7 @@
   - type: ItemSlots
     slots:
       pen_slot:
-        name: Pen
+        name: clipboard-slot-component-slot-name-pen
         whitelist:
           tags:
             - Write

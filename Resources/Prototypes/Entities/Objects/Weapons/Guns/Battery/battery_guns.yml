@@ -678,7 +678,7 @@
       fireCost: 100
 
 - type: entity
-  name: Eye of a behonker
+  name: eye of a behonker
   parent: BaseWeaponBatterySmall
   id: WeaponBehonkerLaser
   description: The eye of a behonker, it fires a laser when squeezed.
