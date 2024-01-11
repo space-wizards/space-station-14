@@ -12748,7 +12748,7 @@ entities:
   - uid: 2150
     components:
     - type: Transform
-      pos: 3.4477897,-7.6741214
+      pos: 2.4632533,-7.742214
       parent: 407
 - proto: TrashBag
   entities:
@@ -12789,6 +12789,13 @@ entities:
       flags: SessionSpecific
     - type: Transform
       pos: -7.5,5.5
+      parent: 407
+- proto: VendingMachineChefvend
+  entities:
+  - uid: 2276
+    components:
+    - type: Transform
+      pos: 3.5,-7.5
       parent: 407
 - proto: VendingMachineChemicals
   entities:
