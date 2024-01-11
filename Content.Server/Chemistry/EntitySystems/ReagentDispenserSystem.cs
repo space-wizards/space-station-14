@@ -178,7 +178,14 @@ namespace Content.Server.Chemistry.EntitySystems
                 && _prototypeManager.TryIndex(component.PackPrototypeId, out ReagentDispenserInventoryPrototype? packPrototype))
             {
                 preLoad.AddRange(packPrototype.Inventory);
-                preLoadLabels.AddRange(packPrototype.Labels);
+
+                // Normally, we get the label from the container name (e.g. "jug"). However, this is not useful for a pre-filled
+                // dispenser, so we apply the labels in the prototype.
+                foreach (var label in packPrototype.Labels)
+                {
+                    var localizedName = _prototypeManager.TryIndex(label, out ReagentPrototype? p) ? p.LocalizedName : label;
+                    preLoadLabels.Add(localizedName);
+                }
             }
 
             // Populate storage slots with base storage slot whitelist
