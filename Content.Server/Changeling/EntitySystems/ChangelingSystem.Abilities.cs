@@ -56,6 +56,7 @@ public sealed partial class ChangelingSystem
         {
             if (!TryUseAbility(uid, component, component.RegenerateChemicalsCost))
                 return;
+
             var damage_brute = new DamageSpecifier(_proto.Index(BruteDamageGroup), component.RegenerateBruteHealAmount);
             var damage_burn = new DamageSpecifier(_proto.Index(BurnDamageGroup), component.RegenerateBurnHealAmount);
             _damageableSystem.TryChangeDamage(uid, damage_brute);
