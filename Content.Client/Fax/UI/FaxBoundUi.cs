@@ -16,6 +16,8 @@ public sealed class FaxBoundUi : BoundUserInterface
     [ViewVariables]
     private FaxWindow? _window;
 
+    private bool _dialogIsOpen = false;
+
     public FaxBoundUi(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
@@ -37,15 +39,27 @@ public sealed class FaxBoundUi : BoundUserInterface
 
     private async void OnFileButtonPressed()
     {
+        if(_dialogIsOpen)
+            return;
+        _dialogIsOpen = true;
         var filters = new FileDialogFilters(new FileDialogFilters.Group("txt"));
         await using var file = await _fileDialogManager.OpenFile(filters);
 
         if(_window == null)
+        {
+            _dialogIsOpen = false;
             return;
+        }
         if(_window.Disposed)
+        {
+            _dialogIsOpen = false;
             return;
+        }
         if(file == null)
+        {
+            _dialogIsOpen = false;
             return;
+        }
 
         var reader = new StreamReader(file);
         var content = await reader.ReadToEndAsync();
@@ -54,6 +68,8 @@ public sealed class FaxBoundUi : BoundUserInterface
         
         reader.Close();
         file.Close();
+        
+        _dialogIsOpen = false;
     }
 
     private void OnSendButtonPressed()
