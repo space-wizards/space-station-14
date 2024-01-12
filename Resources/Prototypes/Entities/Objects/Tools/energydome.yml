@@ -30,67 +30,72 @@
             - PowerCellSmall
   - type: EnergyDomeGenerator
     damageEnergyDraw: 5
-    domePrototype: EnergyDomeSmallCircleSyndie
+    domePrototype: EnergyDomeSmallRed
   - type: PowerCellDraw
     drawRate: 10
     useRate: 0
   - type: UseDelay
     delay: 10.0
-  #- type: DeviceNetwork
-  #  deviceNetId: Wireless
-  #  receiveFrequencyId: BasicDevice
-  #- type: WirelessNetworkConnection
-  #  range: 200
-  #- type: DeviceLinkSink
-  #  ports:
-  #  - Toggle
-  #  - On
-  #  - Off
 
 # frozen
 
-#- type: entity
-#  name: energy shield generator "Reinhardt"
-#  description: A two-handed and heavy directed energy barrier capable of absorbing large amounts of damage. Uses a power cell.
-#  id: EnergyDomeDirectionalReinhardt
-#  parent: BaseItem
-#  components:
-#  - type: Sprite
-#    sprite: Objects/Tools/EnergyDome/reinhardt.rsi
-#    layers:
-#    - state: icon
-#  - type: InteractionOutline
-#  - type: MultiHandedItem
-#  - type: Fixtures
-#    fixtures:
-#      fix1:
-#        shape:
-#          !type:PhysShapeAabb
-#          bounds: "-0.25,-0.25,0.25,0.25"
-#        density: 20
-#        mask:
-#        - ItemMask
-#        restitution: 0.3
-#        friction: 0.2
-#  - type: Item
-#    size: Ginormous
-#  - type: HeldSpeedModifier
-#    walkModifier: 0.7
-#    sprintModifier: 0.7
-#  - type: ContainerContainer
-#    containers:
-#      cell_slot: !type:ContainerSlot
-#  - type: PowerCellSlot
-#    cellSlotId: cell_slot
-#  - type: ItemSlots
-#    slots:
-#      cell_slot:
-#        name: power-cell-slot-component-slot-name-default
-#        whitelist:
-#          tags:
-#            - PowerCell
-#            - PowerCellSmall
-#  - type: EnergyDomeGenerator
-#    wattage: 2
-#    energyLessForDamage: 3
-#    domePrototype: EnergyDomeSmallDirectedNT
+- type: entity
+  name: energy shield generator "Reinhardt"
+  description: A two-handed and heavy energy barrier with extremely low passive energy consumption. Can be tethered with a multitool.
+  id: EnergyDomeDirectionalReinhardt
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/EnergyDome/reinhardt.rsi
+    layers:
+    - state: icon
+  - type: InteractionOutline
+  - type: MultiHandedItem
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Item
+    size: Ginormous
+  - type: HeldSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        whitelist:
+          tags:
+            - PowerCell
+            - PowerCellSmall
+  - type: EnergyDomeGenerator
+    damageEnergyDraw: 7
+    domePrototype: EnergyDomeMediumBlue
+  - type: PowerCellDraw
+    drawRate: 2
+    useRate: 0
+  - type: UseDelay
+    delay: 10.0
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Toggle
+    - On
+    - Off
