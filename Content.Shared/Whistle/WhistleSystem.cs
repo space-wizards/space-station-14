@@ -2,6 +2,7 @@ using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Stealth.Components;
+using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Whistle;
@@ -50,16 +51,8 @@ public sealed class WhistleSystem : EntitySystem
             _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), component.Distance))
         {
             //Avoid pinging invisible entities
-            if (Resolve(iterator, ref stealth, false))
-            {
-                if (stealth.Enabled)
-                {
-                    stealth = null;
-                    continue;
-                }
-
-                stealth = null;
-            }
+            if (TryComp(iterator, out stealth) && stealth.Enabled)
+                continue;
 
             //We don't want to ping user of whistle
             if (iterator.Owner == owner)
