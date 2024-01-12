@@ -72,7 +72,13 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         // like a sensible choice, but we need to mask their name.
 
         // Save the user's existing voicemask if they have one
-        EntityManager.TryGetComponent<VoiceMaskComponent>(user, out var oldMask);
+        bool oldEnabled = true;
+        string oldVoiceName = "ERROR";
+        if (EntityManager.TryGetComponent<VoiceMaskComponent>(user, out var oldMask))
+        {
+            oldEnabled = oldMask.Enabled;
+            oldVoiceName = oldMask.VoiceName;
+        }
 
         // Give the user a temporary voicemask component
         var mask = EntityManager.EnsureComponent<VoiceMaskComponent>(user);
@@ -90,7 +96,10 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         if (oldMask == null)
             EntityManager.RemoveComponent(user, mask);
         else
-            EntityManager.AddComponent(user, oldMask, true);
+        {
+            mask.Enabled = oldEnabled;
+            mask.VoiceName = oldVoiceName;
+        }
     }
 
     private string BuildGibberishString(char[] charOptions, int length)
