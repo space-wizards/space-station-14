@@ -1,3 +1,5 @@
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
@@ -24,24 +26,29 @@ public sealed partial class EnergyDomeSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         //Generator events
+        SubscribeLocalEvent<EnergyDomeGeneratorComponent, ComponentInit>(OnInit);
+
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, ActivateInWorldEvent>(OnActivatedInWorld);
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, AfterInteractEvent>(OnAfterInteract);
-
+        SubscribeLocalEvent<EnergyDomeGeneratorComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, ToggleActionEvent>(OnToggleAction);
+
+        SubscribeLocalEvent<EnergyDomeGeneratorComponent, PowerCellChangedEvent>(OnPowerCellChanged);
+        SubscribeLocalEvent<EnergyDomeGeneratorComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
+
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, EntParentChangedMessage>(OnParentChanged);
 
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, GetVerbsEvent<ActivationVerb>>(AddToggleDomeVerb);
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, ExaminedEvent>(OnExamine);
 
-        SubscribeLocalEvent<EnergyDomeGeneratorComponent, PowerCellChangedEvent>(OnPowerCellChanged);
-        SubscribeLocalEvent<EnergyDomeGeneratorComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
 
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, ComponentRemove>(OnComponentRemove);
 
@@ -49,14 +56,40 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         SubscribeLocalEvent<EnergyDomeComponent, DamageChangedEvent>(OnDomeDamaged);
     }
 
+
+    private void OnInit(Entity<EnergyDomeGeneratorComponent> generator, ref ComponentInit args)
+    {
+        _signalSystem.EnsureSinkPorts(generator, generator.Comp.TogglePort, generator.Comp.OnPort, generator.Comp.OffPort);
+    }
+
+    //different ways of use
+
+    private void OnSignalReceived(Entity<EnergyDomeGeneratorComponent> generator, ref SignalReceivedEvent args)
+    {
+        if (args.Port == generator.Comp.OnPort)
+        {
+            AttemptToggle(generator, true);
+        }
+        if (args.Port == generator.Comp.OffPort)
+        {
+            AttemptToggle(generator, false);
+        }
+        if (args.Port == generator.Comp.TogglePort)
+        {
+            AttemptToggle(generator, !generator.Comp.Enabled);
+        }
+    }
+
     private void OnAfterInteract(Entity<EnergyDomeGeneratorComponent> generator, ref AfterInteractEvent args)
     {
-        AttemptUse(generator, args.User);
+        if (generator.Comp.CanInteractUse)
+            AttemptToggle(generator, !generator.Comp.Enabled);
     }
 
     private void OnActivatedInWorld(Entity<EnergyDomeGeneratorComponent> generator, ref ActivateInWorldEvent args)
     {
-        AttemptUse(generator, args.User);
+        if (generator.Comp.CanInteractUse)
+            AttemptToggle(generator, !generator.Comp.Enabled);
     }
 
     private void OnExamine(Entity<EnergyDomeGeneratorComponent> generator, ref ExaminedEvent args)
@@ -68,17 +101,32 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 
     private void AddToggleDomeVerb(Entity<EnergyDomeGeneratorComponent> generator, ref GetVerbsEvent<ActivationVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !generator.Comp.ToggleOnInteract)
+        if (!args.CanAccess || !args.CanInteract || !generator.Comp.CanInteractUse)
             return;
 
         var @event = args;
         ActivationVerb verb = new()
         {
             Text = Loc.GetString("energy-dome-verb-toggle"),
-            Act = () => AttemptUse(generator, @event.User)
+            Act = () => AttemptToggle(generator, !generator.Comp.Enabled)
         };
 
         args.Verbs.Add(verb);
+    }
+    private void OnGetActions(Entity<EnergyDomeGeneratorComponent> generator, ref GetItemActionsEvent args)
+    {
+        if (generator.Comp.CanInteractUse)
+            args.AddAction(ref generator.Comp.ToggleActionEntity, generator.Comp.ToggleAction);
+    }
+
+    private void OnToggleAction(Entity<EnergyDomeGeneratorComponent> generator, ref ToggleActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        AttemptToggle(generator, !generator.Comp.Enabled);
+
+        args.Handled = true;
     }
 
 
@@ -95,20 +143,6 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         }
     }
 
-    private void OnGetActions(Entity<EnergyDomeGeneratorComponent> generator, ref GetItemActionsEvent args)
-    {
-        args.AddAction(ref generator.Comp.ToggleActionEntity, generator.Comp.ToggleAction);
-    }
-
-    private void OnToggleAction(Entity<EnergyDomeGeneratorComponent> generator, ref ToggleActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        AttemptUse(generator, args.Performer);
-
-        args.Handled = true;
-    }
 
     private void OnDomeDamaged(Entity<EnergyDomeComponent> dome, ref DamageChangedEvent args)
     {
@@ -137,7 +171,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         }
     }
 
-    public bool AttemptUse(Entity<EnergyDomeGeneratorComponent> generator, EntityUid? user)
+    public bool AttemptToggle(Entity<EnergyDomeGeneratorComponent> generator, bool status)
     {
         if (TryComp<UseDelayComponent>(generator, out var useDelay) && _useDelay.IsDelayed(new Entity<UseDelayComponent>(generator, useDelay)))
             return false;
@@ -163,23 +197,19 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             }
         }
 
-        Toggle(generator, user);
+        Toggle(generator, status);
         return true;
     }
 
-    public void Toggle(Entity<EnergyDomeGeneratorComponent> generator, EntityUid? user)
+    public void Toggle(Entity<EnergyDomeGeneratorComponent> generator, bool status)
     {
-        if (generator.Comp.Enabled)
-        {
-            TurnOff(generator, false);
-        }
+        if (status)
+            TurnOn(generator);
         else
-        {
-            TurnOn(generator, user);
-        }
+            TurnOff(generator, false);
     }
 
-    public void TurnOn(Entity<EnergyDomeGeneratorComponent> generator, EntityUid? user)
+    public void TurnOn(Entity<EnergyDomeGeneratorComponent> generator)
     {
         if (generator.Comp.Enabled)
             return;

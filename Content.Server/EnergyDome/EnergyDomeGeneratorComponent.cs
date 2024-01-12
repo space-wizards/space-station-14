@@ -1,3 +1,4 @@
+using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -16,11 +17,11 @@ public sealed partial class EnergyDomeGeneratorComponent : Component
     public float DamageEnergyDraw = 50f;
 
     /// <summary>
-    /// Whether or not the light can be toggled via standard interactions
+    /// Whether or not the dome can be toggled via standard interactions
     /// (alt verbs, using in hand, etc)
     /// </summary>
     [DataField]
-    public bool ToggleOnInteract = true;
+    public bool CanInteractUse = true;
 
     [DataField]
     public bool Enabled = false;
@@ -57,4 +58,13 @@ public sealed partial class EnergyDomeGeneratorComponent : Component
     {
         Params = AudioParams.Default.WithVariation(0.05f)
     };
+
+    [DataField]
+    public ProtoId<SinkPortPrototype> TogglePort = "Toggle";
+
+    [DataField]
+    public ProtoId<SinkPortPrototype> OnPort = "On";
+
+    [DataField]
+    public ProtoId<SinkPortPrototype> OffPort = "Off";
 }

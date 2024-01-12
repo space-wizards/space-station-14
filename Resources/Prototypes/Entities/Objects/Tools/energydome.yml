@@ -36,6 +36,16 @@
     useRate: 0
   - type: UseDelay
     delay: 10.0
+  #- type: DeviceNetwork
+  #  deviceNetId: Wireless
+  #  receiveFrequencyId: BasicDevice
+  #- type: WirelessNetworkConnection
+  #  range: 200
+  #- type: DeviceLinkSink
+  #  ports:
+  #  - Toggle
+  #  - On
+  #  - Off
 
 # frozen
 
