@@ -1,5 +1,6 @@
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
+using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
@@ -43,6 +44,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
+        SubscribeLocalEvent<EnergyDomeGeneratorComponent, ChargeChangedEvent>(OnChargeChanged);
 
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, EntParentChangedMessage>(OnParentChanged);
 
@@ -145,11 +147,14 @@ public sealed partial class EnergyDomeSystem : EntitySystem
     private void OnPowerCellChanged(Entity<EnergyDomeGeneratorComponent> generator, ref PowerCellChangedEvent args)
     {
         if (args.Ejected || !_powerCell.HasDrawCharge(generator))
-        {
             TurnOff(generator, true);
-        }
     }
 
+    private void OnChargeChanged(Entity<EnergyDomeGeneratorComponent> generator, ref ChargeChangedEvent args)
+    {
+        if (args.Charge == 0)
+            TurnOff(generator, true);
+    }
     private void OnDomeDamaged(Entity<EnergyDomeComponent> dome, ref DamageChangedEvent args)
     {
         if (dome.Comp.Generator == null)
@@ -168,12 +173,24 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 
         _audio.PlayPvs(generatorComp.ParrySound, dome);
 
-        if (!_powerCell.TryUseCharge(generatorUid, energyLeak))
+        if (HasComp<PowerCellDrawComponent>(generatorUid))
         {
-            if (_powerCell.TryGetBatteryFromSlot(generatorUid, out var battery))
-                _battery.UseCharge(battery.Owner, energyLeak); //Force set Charge to 0%
+            _powerCell.TryGetBatteryFromSlot(generatorUid, out var cell);
+            if (cell != null)
+            {
+                _battery.UseCharge(cell.Owner, energyLeak);
 
-            TurnOff((generatorUid, generatorComp), true);
+                if (cell.Charge == 0)
+                    TurnOff((generatorUid, generatorComp), true);
+            }
+        }
+
+        //it seems to me it would not work well to hang both a powercell and an internal battery with wire charging on the object....
+        if (TryComp<BatteryComponent>(generatorUid, out var battery)) {
+            _battery.UseCharge(generatorUid, energyLeak);
+
+            if (battery.Charge == 0)
+                TurnOff((generatorUid, generatorComp), true);
         }
     }
 
@@ -197,11 +214,17 @@ public sealed partial class EnergyDomeSystem : EntitySystem
     public bool AttemptToggle(Entity<EnergyDomeGeneratorComponent> generator, bool status)
     {
         if (TryComp<UseDelayComponent>(generator, out var useDelay) && _useDelay.IsDelayed(new Entity<UseDelayComponent>(generator, useDelay)))
+        {
+            _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
+            _popup.PopupEntity(
+                    Loc.GetString("energy-dome-recharging"),
+                    generator);
             return false;
+        }
 
         if (TryComp<PowerCellSlotComponent>(generator, out var powerCellSlot))
         {
-            if (!_powerCell.TryGetBatteryFromSlot(generator, out var battery) && !TryComp(generator, out battery))
+            if (!_powerCell.TryGetBatteryFromSlot(generator, out var cell) && !TryComp(generator, out cell))
             {
                 _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
                 _popup.PopupEntity(
@@ -211,6 +234,18 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             }
 
             if (!_powerCell.HasDrawCharge(generator))
+            {
+                _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
+                _popup.PopupEntity(
+                    Loc.GetString("energy-dome-no-power"),
+                    generator);
+                return false;
+            }
+        }
+
+        if (TryComp<BatteryComponent>(generator, out var battery))
+        {
+            if (battery.Charge == 0)
             {
                 _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
                 _popup.PopupEntity(
@@ -249,6 +284,9 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         }
 
         _powerCell.SetPowerCellDrawEnabled(generator, true);
+        if (TryComp<BatterySelfRechargerComponent>(generator, out var recharger)) {
+            recharger.AutoRecharge = true;
+        }
 
         generator.Comp.SpawnedDome = newDome;
         _audio.PlayPvs(generator.Comp.TurnOnSound, generator);
@@ -264,6 +302,10 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         QueueDel(generator.Comp.SpawnedDome);
 
         _powerCell.SetPowerCellDrawEnabled(generator, false);
+        if (TryComp<BatterySelfRechargerComponent>(generator, out var recharger))
+        {
+            recharger.AutoRecharge = false;
+        }
 
         _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
         if (startReloading)

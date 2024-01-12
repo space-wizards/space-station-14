@@ -65,6 +65,29 @@
     radius: 5
     power: 2
     color: "#b00000"
+    
+- type: entity
+  id: EnergyDomeSmallHoly
+  noSpawn: true
+  parent: EnergyDomeBase
+  components:
+  - type: AmbientSound
+    volume: -10
+    range: 5
+    sound:
+      path: /Audio/Ambience/ambicha4.ogg
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    sprite: Effects/EnergyDome/energydome_small.rsi
+    layers:
+    - state: small
+      color: "#fff7cc"
+  - type: PointLight
+    enabled: true
+    radius: 5
+    power: 2
+    color: "#fff7cc"
 
 - type: entity
   id: EnergyDomeMediumBlue
