@@ -17083,6 +17083,13 @@ entities:
     - type: Transform
       pos: 40.456047,-10.342315
       parent: 60
+- proto: BoxFlare
+  entities:
+  - uid: 16379
+    components:
+    - type: Transform
+      pos: 36.484776,-1.3655467
+      parent: 60
 - proto: BoxFlashbang
   entities:
   - uid: 7793
@@ -109459,17 +109466,22 @@ entities:
           showEnts: False
           occludes: True
           ent: null
-- proto: LockerSalvageSpecialistFilled
+- proto: LockerSalvageSpecialistFilledHardsuit
   entities:
   - uid: 215
     components:
     - type: Transform
-      pos: 36.5,2.5
+      pos: 36.5,1.5
       parent: 60
-  - uid: 10579
+  - uid: 7792
     components:
     - type: Transform
-      pos: 36.5,-1.5
+      pos: 36.5,0.5
+      parent: 60
+  - uid: 11968
+    components:
+    - type: Transform
+      pos: 36.5,-0.5
       parent: 60
 - proto: LockerScienceFilled
   entities:
@@ -111805,15 +111817,15 @@ entities:
       parent: 60
 - proto: Pickaxe
   entities:
-  - uid: 11968
+  - uid: 8521
     components:
     - type: Transform
-      pos: 38.581364,-1.5641279
+      pos: 36.597534,2.49432
       parent: 60
-  - uid: 16379
+  - uid: 10579
     components:
     - type: Transform
-      pos: 38.50324,-1.4391279
+      pos: 36.441284,2.541195
       parent: 60
 - proto: PlantBGoneSpray
   entities:
@@ -118015,6 +118027,11 @@ entities:
     - type: Transform
       pos: -19.5,-37.5
       parent: 60
+  - uid: 8047
+    components:
+    - type: Transform
+      pos: 36.5,2.5
+      parent: 60
   - uid: 8950
     components:
     - type: Transform
@@ -118084,11 +118101,6 @@ entities:
     components:
     - type: Transform
       pos: 1.5,15.5
-      parent: 60
-  - uid: 13146
-    components:
-    - type: Transform
-      pos: 38.5,-1.5
       parent: 60
   - uid: 13485
     components:
@@ -131693,23 +131705,6 @@ entities:
     - type: Transform
       pos: -12.5,-3.5
       parent: 7536
-- proto: SuitStorageSalv
-  entities:
-  - uid: 7792
-    components:
-    - type: Transform
-      pos: 36.5,1.5
-      parent: 60
-  - uid: 8047
-    components:
-    - type: Transform
-      pos: 36.5,0.5
-      parent: 60
-  - uid: 8521
-    components:
-    - type: Transform
-      pos: 36.5,-0.5
-      parent: 60
 - proto: SuitStorageSec
   entities:
   - uid: 9235
@@ -134020,6 +134015,11 @@ entities:
     components:
     - type: Transform
       pos: 44.5,13.5
+      parent: 60
+  - uid: 13146
+    components:
+    - type: Transform
+      pos: 36.5,-1.5
       parent: 60
   - uid: 13204
     components:

@@ -94,7 +94,7 @@ namespace Content.Server.Database
                 .IsUnique();
 
             modelBuilder.Entity<AdminLog>()
-                .HasKey(log => new {log.Id, log.RoundId});
+                .HasKey(log => new {log.RoundId, log.Id});
 
             modelBuilder.Entity<AdminLog>()
                 .Property(log => log.Id);
@@ -112,6 +112,9 @@ namespace Content.Server.Database
                 .HasForeignKey(player => player.PlayerUserId)
                 .HasPrincipalKey(player => player.UserId);
 
+            modelBuilder.Entity<AdminLogPlayer>()
+                .HasIndex(p => p.PlayerUserId);
+
             modelBuilder.Entity<Round>()
                 .HasIndex(round => round.StartDate);
 
@@ -120,7 +123,7 @@ namespace Content.Server.Database
                 .HasDefaultValue(default(DateTime));
 
             modelBuilder.Entity<AdminLogPlayer>()
-                .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
+                .HasKey(logPlayer => new {logPlayer.RoundId, logPlayer.LogId, logPlayer.PlayerUserId});
 
             modelBuilder.Entity<ServerBan>()
                 .HasIndex(p => p.PlayerUserId);
@@ -512,10 +515,11 @@ namespace Content.Server.Database
     [Index(nameof(Type))]
     public class AdminLog
     {
+        [Key, ForeignKey("Round")] public int RoundId { get; set; }
+
         [Key]
         public int Id { get; set; }
 
-        [Key, ForeignKey("Round")] public int RoundId { get; set; }
         public Round Round { get; set; } = default!;
 
         [Required] public LogType Type { get; set; }
@@ -533,12 +537,13 @@ namespace Content.Server.Database
 
     public class AdminLogPlayer
     {
+        [Required, Key] public int RoundId { get; set; }
+        [Required, Key] public int LogId { get; set; }
+
         [Required, Key, ForeignKey("Player")] public Guid PlayerUserId { get; set; }
         public Player Player { get; set; } = default!;
 
-        [Required, Key] public int LogId { get; set; }
-        [Required, Key] public int RoundId { get; set; }
-        [ForeignKey("LogId,RoundId")] public AdminLog Log { get; set; } = default!;
+        [ForeignKey("RoundId,LogId")] public AdminLog Log { get; set; } = default!;
     }
 
     // Used by SS14.Admin
