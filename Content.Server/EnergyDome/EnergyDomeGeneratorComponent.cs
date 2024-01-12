@@ -27,9 +27,12 @@ public sealed partial class EnergyDomeGeneratorComponent : Component
 
     //Dome
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public EntProtoId DomePrototype = "EnergyDomeBase";
+    public EntProtoId DomePrototype = "EnergyDomeSmallCircleSyndie";
     [DataField]
     public EntityUid? SpawnedDome;
+
+    [DataField]
+    public EntityUid? ProtectedEntity;
 
     //Action
     [DataField]
