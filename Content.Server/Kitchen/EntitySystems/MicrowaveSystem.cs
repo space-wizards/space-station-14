@@ -385,21 +385,6 @@ namespace Content.Server.Kitchen.EntitySystems
             return true;
         }
 
-        private void EndCooking(EntityUid uid, MicrowaveComponent microwave, bool destroyed = false)
-        {
-            if (destroyed)
-            {
-                _destruction.BreakEntity(uid);
-            }
-            else
-            {
-                _sharedContainer.EmptyContainer(microwave.Storage);
-                _audio.PlayPvs(microwave.FoodDoneSound, uid, AudioParams.Default.WithVolume(-1));
-                UpdateUserInterfaceState(uid, microwave);
-                EntityManager.RemoveComponentDeferred<ActiveMicrowaveComponent>(uid);
-            }
-        }
-
         /// <summary>
         /// Starts Cooking
         /// </summary>
@@ -537,7 +522,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 {
                     if (!HandleUnsafeItems(uid, microwave))
                     {
-                        EndCooking(uid, microwave, destroyed: true);
+                         _destruction.BreakEntity(uid);
                     }
                     active.ElapsedTime = 0.0f;
                 }
@@ -564,7 +549,10 @@ namespace Content.Server.Kitchen.EntitySystems
                     }
                 }
 
-                EndCooking(uid, microwave, destroyed: false);
+                _sharedContainer.EmptyContainer(microwave.Storage);
+                _audio.PlayPvs(microwave.FoodDoneSound, uid, AudioParams.Default.WithVolume(-1));
+                UpdateUserInterfaceState(uid, microwave);
+                EntityManager.RemoveComponentDeferred<ActiveMicrowaveComponent>(uid);
             }
         }
 
