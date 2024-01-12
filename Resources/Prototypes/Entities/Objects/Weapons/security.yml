@@ -131,8 +131,8 @@
         shader: unshaded
     - type: Flash
     - type: LimitedCharges
-      maxCharges: 5
-      charges: 5
+      maxCharges: 3
+      charges: 3
     - type: MeleeWeapon
       wideAnimationRotation: 180
       damage:
@@ -158,16 +158,6 @@
     - type: GuideHelp
       guides:
       - Security
-
-- type: entity
-  name: flash
-  parent: Flash
-  suffix: 2 charges
-  id: SciFlash
-  components:
-    - type: LimitedCharges
-      maxCharges: 2
-      charges: 2
 
 - type: entity
   name: portable flasher

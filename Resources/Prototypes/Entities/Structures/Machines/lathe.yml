@@ -471,7 +471,6 @@
     staticRecipes:
     - MMI
     - PositronicBrain
-    - SciFlash
     - BorgModuleCable
     - BorgModuleFireExtinguisher
     - BorgModuleGPS
