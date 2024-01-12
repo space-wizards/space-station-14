@@ -61,8 +61,8 @@ namespace Content.Client.MassMedia.Ui
                 return;
 
             var stringName = _menu.NameInput.Text.Trim();
-            var name = stringName[..(SharedNewsSystem.MaxNameLength)];
-            var content = stringContent[..(SharedNewsSystem.MaxArticleLength)];
+            var name = stringName[..Math.Min(stringName.Length, (SharedNewsSystem.MaxNameLength))];
+            var content = stringContent[..Math.Min(stringContent.Length, (SharedNewsSystem.MaxArticleLength))];
             _menu.ContentInput.TextRope = new Rope.Leaf(string.Empty);
             _menu.NameInput.Text = string.Empty;
             SendMessage(new NewsWriteShareMessage(name, content));
