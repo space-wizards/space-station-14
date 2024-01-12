@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Network;
+﻿using System.Threading.Tasks;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Connection.Whitelist;
@@ -29,18 +30,36 @@ public sealed class WhitelistPrototype : IPrototype
 
 public static class WhitelistExtensions
 {
-    public static (bool isWhitelisted, string? denyMessage) IsWhitelisted(this WhitelistPrototype prototype, NetUserData data, ISawmill sawmill)
+    public static async Task<(bool isWhitelisted, string? denyMessage)> IsWhitelisted(this WhitelistPrototype prototype, NetUserData data, ISawmill sawmill)
     {
         foreach (var condition in prototype.Conditions)
         {
-            if (condition.Condition(data))
+            if (await condition.Condition(data))
+            {
+                sawmill.Debug($"User {data.UserName} passed whitelist condition {condition.GetType().Name}");
+                if (condition.BreakIfConditionSuccess)
+                {
+                    sawmill.Debug($"User {data.UserName} passed whitelist condition {condition.GetType().Name} and it's a breaking condition");
+                    return (true, null);
+                }
                 continue;
+            }
 
-            sawmill.Debug($"User {data.UserName} failed whitelist condition {condition.GetType().Name}");
-            return (false, condition.DenyMessage);
+            if (condition.BreakIfConditionFail)
+            {
+                sawmill.Debug($"User {data.UserName} failed whitelist condition {condition.GetType().Name}");
+                return (false, condition.DenyMessage);
+            }
+
+            sawmill.Debug($"User {data.UserName} failed whitelist condition {condition.GetType().Name} but it's not a breaking condition");
         }
 
         sawmill.Debug($"User {data.UserName} passed all whitelist conditions");
         return (true, null);
+    }
+
+    public static bool IsValid(this WhitelistPrototype prototype, int playerCount)
+    {
+        return playerCount >= prototype.MinimumPlayers && playerCount <= prototype.MaximumPlayers;
     }
 }

@@ -237,6 +237,16 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region Blacklist
+
+        Task<bool> GetBlacklistStatusAsync(NetUserId player);
+
+        Task AddToBlacklistAsync(NetUserId player);
+
+        Task RemoveFromBlacklistAsync(NetUserId player);
+
+        #endregion
+
         #region Uploaded Resources Logs
 
         Task AddUploadedResourceLogAsync(NetUserId user, DateTime date, string path, byte[] data);

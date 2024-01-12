@@ -177,14 +177,32 @@ namespace Content.Server.Connection
             if (_cfg.GetCVar(CCVars.WhitelistEnabled))
             {
                 var whitelists = _prototypeManager.EnumeratePrototypes<WhitelistPrototype>();
-                var whitelist = whitelists.First(x => x.ID == _cfg.GetCVar(CCVars.WhitelistPrototype));
+                var whitelistStringList = _cfg.GetCVar(CCVars.WhitelistPrototype);
 
-                var whitelistStatus = whitelist.IsWhitelisted(e.UserData, _sawmill);
-
-                if (!whitelistStatus.isWhitelisted)
+                // The whitelsitStringList is a comma separated list of whitelists to check. I loop through every prototype in the list and check if the user is whitelisted.
+                foreach (var whitelistString in whitelistStringList.Split(','))
                 {
-                    // Not whitelisted.
-                    return (ConnectionDenyReason.Whitelist, Loc.GetString(whitelistStatus.denyMessage!), null);
+                    var whitelist = whitelists.FirstOrDefault(w => w.ID == whitelistString);
+                    if (whitelist is null)
+                    {
+                        _sawmill.Warning($"Whitelist prototype {whitelistString} does not exist.");
+                        continue;
+                    }
+
+                    if (!whitelist.IsValid(_plyMgr.PlayerCount))
+                    {
+                        // Not valid for current player count.
+                        continue;
+                    }
+                    var whitelistStatus = await whitelist.IsWhitelisted(e.UserData, _sawmill);
+
+                    if (!whitelistStatus.isWhitelisted)
+                    {
+                        // Not whitelisted.
+                        return (ConnectionDenyReason.Whitelist, Loc.GetString(whitelistStatus.denyMessage!), null);
+                    }
+                    // Whitelist, don't check any more.
+                    break;
                 }
             }
 

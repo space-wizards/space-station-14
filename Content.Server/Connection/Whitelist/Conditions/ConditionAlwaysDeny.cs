@@ -1,10 +1,11 @@
-﻿using Robust.Shared.Network;
+﻿using System.Threading.Tasks;
+using Robust.Shared.Network;
 
 namespace Content.Server.Connection.Whitelist.Conditions;
 
-public sealed partial class AlwaysDeny : WhitelistCondition
+public sealed partial class ConditionAlwaysDeny : WhitelistCondition
 {
-    public override bool Condition(NetUserData data)
+    public override async Task<bool> Condition(NetUserData data)
     {
         return false;
     }

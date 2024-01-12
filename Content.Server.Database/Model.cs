@@ -27,6 +27,7 @@ namespace Content.Server.Database
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
+        public DbSet<Blacklist> Blacklist { get; set; } = null!;
         public DbSet<ServerBan> Ban { get; set; } = default!;
         public DbSet<ServerUnban> Unban { get; set; } = default!;
         public DbSet<ServerBanExemption> BanExemption { get; set; } = default!;
@@ -437,6 +438,12 @@ namespace Content.Server.Database
 
     [Table("whitelist")]
     public class Whitelist
+    {
+        [Required, Key] public Guid UserId { get; set; }
+    }
+
+    [Table("blacklist")]
+    public class Blacklist
     {
         [Required, Key] public Guid UserId { get; set; }
     }
