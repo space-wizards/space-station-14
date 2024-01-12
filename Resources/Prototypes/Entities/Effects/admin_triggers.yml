@@ -1,11 +1,12 @@
 - type: entity
   id: AdminInstantEffectBase
+  abstract: true
   name: instant effect
   components:
   - type: Sprite
-    sprite: /Textures/Effects/weather.rsi
+    sprite: /Textures/Objects/Fun/goldbikehorn.rsi
     visible: false
-    state: rain
+    state: icon
   - type: TriggerOnSpawn
 
 - type: entity
