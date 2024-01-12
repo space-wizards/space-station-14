@@ -94,9 +94,11 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 
     private void OnExamine(Entity<EnergyDomeGeneratorComponent> generator, ref ExaminedEvent args)
     {
-        args.PushMarkup(generator.Comp.Enabled
-            ? Loc.GetString("energy-dome-on-examine-is-on-message")
-            : Loc.GetString("energy-dome-on-examine-is-off-message"));
+        args.PushMarkup(Loc.GetString(
+            (generator.Comp.Enabled)
+            ? "energy-dome-on-examine-is-on-message"
+            : "energy-dome-on-examine-is-off-message"
+            ));
     }
 
     private void AddToggleDomeVerb(Entity<EnergyDomeGeneratorComponent> generator, ref GetVerbsEvent<ActivationVerb> args)
@@ -167,7 +169,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             if (_powerCell.TryGetBatteryFromSlot(generatorUid, out var battery))
                 _battery.UseCharge(battery.Owner, energyLeak); //Force set Charge to 0%
 
-            TurnOff(new Entity<EnergyDomeGeneratorComponent>(generatorUid, generatorComp), true);
+            TurnOff((generatorUid, generatorComp), true);
         }
     }
 
@@ -255,13 +257,9 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 
     private EntityUid GetProtectedEntity(EntityUid entity)
     {
-        if (_container.TryGetOuterContainer(entity, Transform(entity), out var container))
-        {
-            return container.Owner;
-        } else
-        {
-            return entity;
-        }
+        return (_container.TryGetOuterContainer(entity, Transform(entity), out var container))
+            ? container.Owner
+            : entity;
     }
 
     private void OnParentChanged(Entity<EnergyDomeGeneratorComponent> generator, ref EntParentChangedMessage args)
