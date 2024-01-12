@@ -53,6 +53,9 @@ namespace Content.Shared.Roles
         [DataField("setPreference")]
         public bool SetPreference { get; private set; } = true;
 
+        [DataField("showInIdCardConsole")]
+        public bool ShowInIdCardConsole { get; private set; } = true;
+
         [DataField("canBeAntag")]
         public bool CanBeAntag { get; private set; } = true;
 

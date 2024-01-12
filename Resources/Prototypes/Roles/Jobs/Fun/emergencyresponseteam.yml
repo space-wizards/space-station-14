@@ -9,6 +9,7 @@
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
+  showInIdCardConsole: false
   accessGroups:
   - AllAccess
   access:
@@ -77,6 +78,7 @@
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
+  showInIdCardConsole: false
   accessGroups:
   - AllAccess
   access:
@@ -126,6 +128,7 @@
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
+  showInIdCardConsole: false
   accessGroups:
   - AllAccess
   access:
@@ -194,6 +197,7 @@
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
+  showInIdCardConsole: false
   accessGroups:
   - AllAccess
   access:
@@ -243,6 +247,7 @@
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
+  showInIdCardConsole: false
   accessGroups:
   - AllAccess
   access:
