@@ -19,6 +19,9 @@ using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Robust.Shared.Random;
+using Robust.Shared.Audio;
+using Content.Server.Lightning;
 using Content.Shared.Item;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
@@ -27,7 +30,6 @@ using Content.Shared.Power;
 using Content.Shared.Tag;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -46,8 +48,10 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly RecipeManager _recipeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly LightningSystem _lightning = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly ExplosionSystem _explosion = default!;
         [Dependency] private readonly SharedDestructibleSystem _destruction = default!;
-        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
         [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly TagSystem _tag = default!;
@@ -350,6 +354,53 @@ namespace Content.Server.Kitchen.EntitySystems
         }
 
         /// <summary>
+        /// handles the attempted cooking of unsafe objects
+        /// </summary>
+        /// <remarks>
+        /// returns true if the microwave can continue to cook, false if it can't.
+        /// </remarks>
+        private bool HandleUnsafeItems(EntityUid uid, MicrowaveComponent component)
+        {
+            if (!component.ContainsMetal)
+            {
+                return true;
+            }
+
+            if (component.ContainsMetal)
+            {
+                if (_random.Prob(.1f))
+                {
+                    _explosion.TriggerExplosive(uid);
+                    return false;  // microwave is fucked, stop the cooking.
+                }
+                else
+                {
+                    if (_random.Prob(.75f))
+                    {
+                        _lightning.ShootRandomLightnings(uid, 1.0f, 1, "Spark", isSpark: true);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private void EndCooking(EntityUid uid, MicrowaveComponent microwave, bool destroyed = false)
+        {
+            if (destroyed)
+            {
+                _destruction.BreakEntity(uid);
+            }
+            else
+            {
+                _sharedContainer.EmptyContainer(microwave.Storage);
+                _audio.PlayPvs(microwave.FoodDoneSound, uid, AudioParams.Default.WithVolume(-1));
+                UpdateUserInterfaceState(uid, microwave);
+                EntityManager.RemoveComponentDeferred<ActiveMicrowaveComponent>(uid);
+            }
+        }
+
+        /// <summary>
         /// Starts Cooking
         /// </summary>
         /// <remarks>
@@ -377,27 +428,17 @@ namespace Content.Server.Kitchen.EntitySystems
                     return;
                 }
 
-                // destroy microwave
                 if (_tag.HasTag(item, "MicrowaveMachineUnsafe") || _tag.HasTag(item, "Metal"))
                 {
-                    if (_tag.HasTag(item, "Metal"))
-                    {
-                        _explosionSystem.QueueExplosion(uid, "Default", 10, 0.5f, 1, canCreateVacuum: false);
-                    }
-                    else
-                    {
-                        _audio.PlayPvs(component.ItemBreakSound, uid);
-                    }
-                    _destruction.BreakEntity(uid);
-                    return;
+                    component.ContainsMetal = true;
                 }
 
-                if (_tag.HasTag(item, "MicrowaveSelfUnsafe") || _tag.HasTag(item, "Plastic"))
-                {
-                    var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
-                    _container.Insert(junk, component.Storage);
-                    QueueDel(item);
-                }
+                // if (_tag.HasTag(item, "Plastic"))
+                // {
+                //     var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
+                //     _container.Insert(junk, component.Storage);
+                //     QueueDel(item);
+                // }
 
                 var metaData = MetaData(item); //this simply begs for cooking refactor
                 if (metaData.EntityPrototype == null)
@@ -486,10 +527,24 @@ namespace Content.Server.Kitchen.EntitySystems
             base.Update(frameTime);
 
             var query = EntityQueryEnumerator<ActiveMicrowaveComponent, MicrowaveComponent>();
+
             while (query.MoveNext(out var uid, out var active, out var microwave))
             {
-                //check if there's still cook time left
+
                 active.CookTimeRemaining -= frameTime;
+
+                if (active.ElapsedTime >= microwave.DestructionCooldown)
+                {
+                    if (!HandleUnsafeItems(uid, microwave))
+                    {
+                        EndCooking(uid, microwave, destroyed: true);
+                    }
+                    active.ElapsedTime = 0.0f;
+                }
+
+                active.ElapsedTime += frameTime;
+
+                //check if there's still cook time left
                 if (active.CookTimeRemaining > 0)
                 {
                     AddTemperature(microwave, frameTime);
@@ -509,10 +564,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     }
                 }
 
-                _sharedContainer.EmptyContainer(microwave.Storage);
-                UpdateUserInterfaceState(uid, microwave);
-                EntityManager.RemoveComponentDeferred<ActiveMicrowaveComponent>(uid);
-                _audio.PlayPvs(microwave.FoodDoneSound, uid, AudioParams.Default.WithVolume(-1));
+                EndCooking(uid, microwave, destroyed: false);
             }
         }
 

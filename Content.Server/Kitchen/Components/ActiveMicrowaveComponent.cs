@@ -12,6 +12,9 @@ public sealed partial class ActiveMicrowaveComponent : Component
     public float CookTimeRemaining;
 
     [ViewVariables(VVAccess.ReadWrite)]
+    public float ElapsedTime;
+
+    [ViewVariables(VVAccess.ReadWrite)]
     public float TotalTime;
 
     [ViewVariables]

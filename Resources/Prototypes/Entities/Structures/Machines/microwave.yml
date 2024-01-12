@@ -83,6 +83,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+      - !type:ExplodeBehavior
   - type: ApcPowerReceiver
     powerLoad: 400
   - type: Machine
