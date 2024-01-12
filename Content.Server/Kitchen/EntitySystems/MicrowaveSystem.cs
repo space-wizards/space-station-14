@@ -375,7 +375,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 }
                 else
                 {
-                    if (_random.Prob(.75f))
+                    if (_random.Prob(.5f))
                     {
                         _lightning.ShootRandomLightnings(uid, 1.0f, 1, "Spark", isSpark: true);
                     }
