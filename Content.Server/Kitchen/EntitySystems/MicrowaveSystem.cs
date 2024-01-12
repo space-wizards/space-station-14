@@ -522,7 +522,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 {
                     if (!HandleUnsafeItems(uid, microwave))
                     {
-                         _destruction.BreakEntity(uid);
+                        _destruction.BreakEntity(uid);
                     }
                     active.ElapsedTime = 0.0f;
                 }
