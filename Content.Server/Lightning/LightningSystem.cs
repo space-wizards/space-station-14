@@ -96,7 +96,7 @@ public sealed class LightningSystem : SharedLightningSystem
             ShootLightning(user, targets[count].Owner, lightningPrototype);
             if (arcDepth - targets[count].LightningResistance > 0)
             {
-                ShootRandomLightnings(targets[count].Owner, range, 1, lightningPrototype, arcDepth - targets[count].LightningResistance, isSpark: isSpark);
+                ShootRandomLightnings(targets[count].Owner, range, 1, lightningPrototype, arcDepth - targets[count].LightningResistance);
             }
             shootedCount++;
         }
