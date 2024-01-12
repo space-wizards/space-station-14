@@ -92,7 +92,7 @@
     - type: GasPortable
     - type: GasCanister
       gasTankSlot:
-        name: Gas Tank
+        name: comp-gas-canister-slot-name-gas-tank
         whitelist:
           components:
             - GasTank

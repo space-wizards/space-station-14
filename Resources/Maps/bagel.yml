@@ -9531,7 +9531,6 @@ entities:
     components:
     - type: MetaData
       desc: The letters SB are etched into the side of the guitar.
-      name: acoustic gortar
     - type: Transform
       pos: 31.477634,-79.4623
       parent: 60
@@ -9545,18 +9544,6 @@ entities:
       parent: 19193
     - type: InstantAction
       container: 19193
-- proto: AdvancedCapacitorStockPart
-  entities:
-  - uid: 19183
-    components:
-    - type: Transform
-      pos: 23.618336,21.636284
-      parent: 60
-  - uid: 19184
-    components:
-    - type: Transform
-      pos: 23.743336,21.526909
-      parent: 60
 - proto: AirAlarm
   entities:
   - uid: 249
@@ -12119,11 +12106,25 @@ entities:
     - type: Transform
       pos: 58.5,-16.5
       parent: 60
+    - type: DeviceLinkSink
+      links:
+      - 4596
+    - type: DeviceLinkSource
+      linkedPorts:
+        4596:
+        - DoorStatus: DoorBolt
   - uid: 4596
     components:
     - type: Transform
       pos: 58.5,-20.5
       parent: 60
+    - type: DeviceLinkSink
+      links:
+      - 4595
+    - type: DeviceLinkSource
+      linkedPorts:
+        4595:
+        - DoorStatus: DoorBolt
   - uid: 6673
     components:
     - type: Transform
@@ -12201,11 +12202,25 @@ entities:
     - type: Transform
       pos: 16.5,29.5
       parent: 60
+    - type: DeviceLinkSink
+      links:
+      - 19100
+    - type: DeviceLinkSource
+      linkedPorts:
+        19100:
+        - DoorStatus: DoorBolt
   - uid: 19100
     components:
     - type: Transform
       pos: 16.5,31.5
       parent: 60
+    - type: DeviceLinkSink
+      links:
+      - 19087
+    - type: DeviceLinkSource
+      linkedPorts:
+        19087:
+        - DoorStatus: DoorBolt
   - uid: 21235
     components:
     - type: Transform
@@ -14430,6 +14445,13 @@ entities:
     components:
     - type: Transform
       pos: 5.5,23.5
+      parent: 60
+- proto: AmeJar
+  entities:
+  - uid: 16530
+    components:
+    - type: Transform
+      pos: 8.465609,23.526558
       parent: 60
 - proto: AnalysisComputerCircuitboard
   entities:
@@ -17060,6 +17082,13 @@ entities:
     components:
     - type: Transform
       pos: 40.456047,-10.342315
+      parent: 60
+- proto: BoxFlare
+  entities:
+  - uid: 16379
+    components:
+    - type: Transform
+      pos: 36.484776,-1.3655467
       parent: 60
 - proto: BoxFlashbang
   entities:
@@ -48261,6 +48290,16 @@ entities:
     - type: Transform
       pos: -67.61676,9.687263
       parent: 60
+  - uid: 19183
+    components:
+    - type: Transform
+      pos: 23.618336,21.636284
+      parent: 60
+  - uid: 19184
+    components:
+    - type: Transform
+      pos: 23.743336,21.526909
+      parent: 60
 - proto: CarbonDioxideCanister
   entities:
   - uid: 15245
@@ -59181,10 +59220,10 @@ entities:
       parent: 60
 - proto: ClothingHeadHatBeretWarden
   entities:
-  - uid: 6611
+  - uid: 11556
     components:
     - type: Transform
-      pos: -27.719076,-10.520552
+      pos: -27.758022,-9.545581
       parent: 60
 - proto: ClothingHeadHatBowlerHat
   entities:
@@ -59367,6 +59406,13 @@ entities:
     components:
     - type: Transform
       pos: -39.62937,16.44374
+      parent: 60
+- proto: ClothingHeadHatWarden
+  entities:
+  - uid: 16450
+    components:
+    - type: Transform
+      pos: -27.336147,-11.701831
       parent: 60
 - proto: ClothingHeadHatWelding
   entities:
@@ -60713,10 +60759,11 @@ entities:
       parent: 60
 - proto: ComputerCriminalRecords
   entities:
-  - uid: 1732
+  - uid: 1796
     components:
     - type: Transform
-      pos: -27.5,-8.5
+      rot: 1.5707963267948966 rad
+      pos: -27.5,-10.5
       parent: 60
   - uid: 1868
     components:
@@ -60927,10 +60974,11 @@ entities:
       parent: 60
 - proto: ComputerStationRecords
   entities:
-  - uid: 1796
+  - uid: 6611
     components:
     - type: Transform
-      pos: -25.5,-8.5
+      rot: -1.5707963267948966 rad
+      pos: -25.5,-10.5
       parent: 60
   - uid: 10938
     components:
@@ -61942,13 +61990,6 @@ entities:
       containers:
       - EntityStorageComponent
       - entity_storage
-- proto: CrateMindShieldImplants
-  entities:
-  - uid: 11097
-    components:
-    - type: Transform
-      pos: -25.5,-10.5
-      parent: 60
 - proto: CrateNPCChicken
   entities:
   - uid: 5597
@@ -62040,6 +62081,13 @@ entities:
         - 0
         - 0
         - 0
+- proto: CrateSecurityTrackingMindshieldImplants
+  entities:
+  - uid: 11097
+    components:
+    - type: Transform
+      pos: -27.5,-8.5
+      parent: 60
 - proto: CrateServiceJanitorialSupplies
   entities:
   - uid: 734
@@ -67425,6 +67473,11 @@ entities:
       parent: 60
 - proto: DogBed
   entities:
+  - uid: 1201
+    components:
+    - type: Transform
+      pos: -27.5,-9.5
+      parent: 60
   - uid: 2036
     components:
     - type: MetaData
@@ -67446,11 +67499,6 @@ entities:
     components:
     - type: Transform
       pos: 6.5,-29.5
-      parent: 60
-  - uid: 11556
-    components:
-    - type: Transform
-      pos: -27.5,-10.5
       parent: 60
   - uid: 11557
     components:
@@ -67623,6 +67671,13 @@ entities:
     - type: Transform
       pos: -8.356498,-5.569201
       parent: 60
+- proto: DrinkGildlagerBottleFull
+  entities:
+  - uid: 13012
+    components:
+    - type: Transform
+      pos: 6.371938,-6.0707817
+      parent: 60
 - proto: DrinkGlass
   entities:
   - uid: 23627
@@ -67646,13 +67701,6 @@ entities:
     components:
     - type: Transform
       pos: 6.6877446,-6.3988457
-      parent: 60
-- proto: DrinkGoldschlagerBottleFull
-  entities:
-  - uid: 13012
-    components:
-    - type: Transform
-      pos: 6.371938,-6.0707817
       parent: 60
 - proto: DrinkHotCoffee
   entities:
@@ -107437,6 +107485,13 @@ entities:
     - type: Transform
       pos: 35.629635,-51.39923
       parent: 60
+- proto: GunSafeDisabler
+  entities:
+  - uid: 1732
+    components:
+    - type: Transform
+      pos: -25.5,-8.5
+      parent: 60
 - proto: GunSafeRifleLecter
   entities:
   - uid: 4109
@@ -109411,17 +109466,22 @@ entities:
           showEnts: False
           occludes: True
           ent: null
-- proto: LockerSalvageSpecialistFilled
+- proto: LockerSalvageSpecialistFilledHardsuit
   entities:
   - uid: 215
     components:
     - type: Transform
-      pos: 36.5,2.5
+      pos: 36.5,1.5
       parent: 60
-  - uid: 10579
+  - uid: 7792
     components:
     - type: Transform
-      pos: 36.5,-1.5
+      pos: 36.5,0.5
+      parent: 60
+  - uid: 11968
+    components:
+    - type: Transform
+      pos: 36.5,-0.5
       parent: 60
 - proto: LockerScienceFilled
   entities:
@@ -110278,10 +110338,25 @@ entities:
     - type: Transform
       pos: -45.496006,-9.58335
       parent: 60
+  - uid: 9474
+    components:
+    - type: Transform
+      pos: -66.53229,9.621169
+      parent: 60
   - uid: 13014
     components:
     - type: Transform
       pos: -45.404285,-9.838601
+      parent: 60
+  - uid: 19181
+    components:
+    - type: Transform
+      pos: 23.305836,21.651909
+      parent: 60
+  - uid: 19182
+    components:
+    - type: Transform
+      pos: 23.430836,21.558159
       parent: 60
 - proto: MicrophoneInstrument
   entities:
@@ -110728,23 +110803,6 @@ entities:
     components:
     - type: Transform
       pos: -8.327919,25.771437
-      parent: 60
-- proto: NanoManipulatorStockPart
-  entities:
-  - uid: 9474
-    components:
-    - type: Transform
-      pos: -66.53229,9.621169
-      parent: 60
-  - uid: 19181
-    components:
-    - type: Transform
-      pos: 23.305836,21.651909
-      parent: 60
-  - uid: 19182
-    components:
-    - type: Transform
-      pos: 23.430836,21.558159
       parent: 60
 - proto: NitrogenCanister
   entities:
@@ -111759,15 +111817,15 @@ entities:
       parent: 60
 - proto: Pickaxe
   entities:
-  - uid: 11968
+  - uid: 8521
     components:
     - type: Transform
-      pos: 38.581364,-1.5641279
+      pos: 36.597534,2.49432
       parent: 60
-  - uid: 16379
+  - uid: 10579
     components:
     - type: Transform
-      pos: 38.50324,-1.4391279
+      pos: 36.441284,2.541195
       parent: 60
 - proto: PlantBGoneSpray
   entities:
@@ -117969,6 +118027,11 @@ entities:
     - type: Transform
       pos: -19.5,-37.5
       parent: 60
+  - uid: 8047
+    components:
+    - type: Transform
+      pos: 36.5,2.5
+      parent: 60
   - uid: 8950
     components:
     - type: Transform
@@ -118038,11 +118101,6 @@ entities:
     components:
     - type: Transform
       pos: 1.5,15.5
-      parent: 60
-  - uid: 13146
-    components:
-    - type: Transform
-      pos: 38.5,-1.5
       parent: 60
   - uid: 13485
     components:
@@ -123754,6 +123812,13 @@ entities:
     - type: Transform
       pos: 43.534462,13.459317
       parent: 60
+- proto: SalvageLootSpawner
+  entities:
+  - uid: 5030
+    components:
+    - type: Transform
+      pos: -64.5,9.5
+      parent: 60
 - proto: SalvageMagnet
   entities:
   - uid: 19030
@@ -123761,13 +123826,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 49.5,1.5
-      parent: 60
-- proto: SalvagePartsT2Spawner
-  entities:
-  - uid: 5030
-    components:
-    - type: Transform
-      pos: -64.5,9.5
       parent: 60
 - proto: Saw
   entities:
@@ -124139,6 +124197,11 @@ entities:
     components:
     - type: Transform
       pos: -53.46743,13.76821
+      parent: 60
+  - uid: 16456
+    components:
+    - type: Transform
+      pos: -24.476772,1.5819757
       parent: 60
 - proto: SheetSteel
   entities:
@@ -131642,23 +131705,6 @@ entities:
     - type: Transform
       pos: -12.5,-3.5
       parent: 7536
-- proto: SuitStorageSalv
-  entities:
-  - uid: 7792
-    components:
-    - type: Transform
-      pos: 36.5,1.5
-      parent: 60
-  - uid: 8047
-    components:
-    - type: Transform
-      pos: 36.5,0.5
-      parent: 60
-  - uid: 8521
-    components:
-    - type: Transform
-      pos: 36.5,-0.5
-      parent: 60
 - proto: SuitStorageSec
   entities:
   - uid: 9235
@@ -133969,6 +134015,11 @@ entities:
     components:
     - type: Transform
       pos: 44.5,13.5
+      parent: 60
+  - uid: 13146
+    components:
+    - type: Transform
+      pos: 36.5,-1.5
       parent: 60
   - uid: 13204
     components:
@@ -136444,13 +136495,6 @@ entities:
     - type: Transform
       pos: 10.5,-69.5
       parent: 60
-- proto: TransmitterSubspaceStockPart
-  entities:
-  - uid: 1201
-    components:
-    - type: Transform
-      pos: -63.585518,9.577888
-      parent: 60
 - proto: TrashBag
   entities:
   - uid: 926
@@ -136927,7 +136971,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -61.5,-11.5
       parent: 60
@@ -136942,7 +136985,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 29.5,-22.5
       parent: 60
@@ -136950,7 +136992,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 18.5,-26.5
       parent: 60
@@ -136958,7 +136999,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -24.5,-13.5
       parent: 60
@@ -136966,7 +137006,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 13.5,11.5
       parent: 60
@@ -136974,7 +137013,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -61.5,25.5
       parent: 60
@@ -136982,7 +137020,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -15.5,-48.5
       parent: 60
@@ -136990,7 +137027,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -27.5,9.5
       parent: 60
@@ -136998,7 +137034,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 30.5,26.5
       parent: 60
@@ -137006,7 +137041,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 26.5,-7.5
       parent: 60
@@ -137039,7 +137073,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: 14.5,-11.5
       parent: 60
@@ -137047,7 +137080,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: -3.5,11.5
       parent: 60
@@ -137055,7 +137087,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: 2.5,-44.5
       parent: 60
@@ -137070,7 +137101,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: 56.5,-10.5
       parent: 60
@@ -137078,7 +137108,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: -47.5,-8.5
       parent: 60
@@ -137086,7 +137115,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: 3.5,21.5
       parent: 60
@@ -137383,7 +137411,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: tank dispenser
     - type: Transform
       pos: 51.5,-1.5
       parent: 60

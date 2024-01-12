@@ -129,6 +129,7 @@
       map: ["base"]
     - state: zippo_top
       map: ["top"]
+      visible: false
     - state: zippo_open
       map: ["open"]
       visible: false
@@ -161,6 +162,9 @@
           True: { visible: true }
           False: { visible: false }
         open:
+          True: { visible: true }
+          False: { visible: false }
+        top:
           True: { visible: true }
           False: { visible: false }
         base:
@@ -205,6 +209,7 @@
       map: ["base"]
     - state: zippo_top
       map: ["top"]
+      visible: false
     - state: zippo_engraved_open
       map: ["open"]
       visible: false

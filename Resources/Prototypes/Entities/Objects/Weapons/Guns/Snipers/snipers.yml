@@ -78,7 +78,6 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
   - type: Gun
-    useKey: false
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -101,7 +100,7 @@
     animation: WeaponArcThrust
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
-    
+
 - type: entity
   name: flintlock pistol
   parent: BaseWeaponSniper

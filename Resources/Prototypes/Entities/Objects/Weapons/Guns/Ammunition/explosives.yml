@@ -144,7 +144,7 @@
   components:
   - type: CartridgeAmmo
     proto: PelletGrapeshot
-    count: 15
+    count: 5
     spread: 40
     deleteOnSpawn: true
   - type: Sprite

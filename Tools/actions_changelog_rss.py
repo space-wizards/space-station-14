@@ -112,7 +112,9 @@ def main():
             )
 
         # Copy in the stylesheet
-        template_path = pathlib.Path(__file__, 'changelogs', XSL_FILE)
+        dir_name = os.path.dirname(__file__)
+
+        template_path = pathlib.Path(dir_name, 'changelogs', XSL_FILE)
         with sftp.open(XSL_FILE, "wb") as f, open(template_path) as fh:
             f.write(fh)
 

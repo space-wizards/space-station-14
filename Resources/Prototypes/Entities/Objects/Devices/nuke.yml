@@ -56,7 +56,7 @@
     intensitySlope: 5
     totalIntensity: 5000000
     diskSlot:
-      name: Disk
+      name: nuke-slot-component-slot-name-disk
       insertSound:
         path: /Audio/Machines/terminal_insert_disc.ogg
       ejectSound:
