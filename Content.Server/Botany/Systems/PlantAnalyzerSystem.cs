@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
+using Content.Server.PowerCell;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.PlantAnalyzer;
@@ -8,11 +9,13 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Botany.Systems;
 
 public sealed class PlantAnalyzerSystem : EntitySystem
 {
+    [Dependency] private readonly PowerCellSystem _cell = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -30,7 +33,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, PlantAnalyzerComponent plantAnalyzer, AfterInteractEvent args)
     {
-        if (args.Target == null || !args.CanReach || !HasComp<SeedComponent>(args.Target) && !HasComp<PlantHolderComponent>(args.Target))
+        if (args.Target == null || !args.CanReach || !HasComp<SeedComponent>(args.Target) && !HasComp<PlantHolderComponent>(args.Target) || !_cell.HasActivatableCharge(uid, user: args.User))
             return;
         _audio.PlayPvs(plantAnalyzer.ScanningBeginSound, uid);
 
@@ -44,7 +47,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, PlantAnalyzerComponent component, DoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Args.Target == null)
+        if (args.Handled || args.Cancelled || args.Args.Target == null || !_cell.TryUseActivatableCharge(uid, user: args.User))
             return;
 
         _audio.PlayPvs(component.ScanningEndSound, args.Args.User);
@@ -116,6 +119,8 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         var plantMutations = "";
         var exudeGases = "";
 
+        var plantSpeciation = "";
+
         if (comp.HarvestRepeat == HarvestType.Repeat) plantHarvestType = Loc.GetString("plant-analyzer-harvest-repeat");
         if (comp.HarvestRepeat == HarvestType.NoRepeat) plantHarvestType = Loc.GetString("plant-analyzer-harvest-ephemeral");
         if (comp.HarvestRepeat == HarvestType.SelfHarvest) plantHarvestType = Loc.GetString("plant-analyzer-harvest-autoharvest");
@@ -134,7 +139,17 @@ public sealed class PlantAnalyzerSystem : EntitySystem
             exudeGases = Loc.GetString("plant-analyzer-plant-gasses-No");
         }
         plantMutations = CheckAllMutation(comp, plantMutations);
-        return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName, seedYield.ToString(), seedPotency.ToString(), seedChem, plantHarvestType, exudeGases, plantMutations, false);
+        plantSpeciation += String.Join(", \r\n", comp.MutationPrototypes.Select(item => item.ToString()));
+
+        //int count = comp.MutationPrototypes.Count();
+        //plantMutations = count.ToString();
+        var nutrientConsumption = comp.NutrientConsumption;
+        var waterConsumption = comp.NutrientConsumption;
+        var tolerances = "";
+        tolerances = CheckAllTolerances(comp, tolerances);
+
+        return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName, seedYield.ToString(), seedPotency.ToString(),
+            seedChem, plantHarvestType, exudeGases, plantMutations, false, plantSpeciation, tolerances);
     }
 
     /// <summary>
@@ -150,6 +165,8 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         var plantMutations = "";
         var exudeGases = "";
         var isTray = trayChecker;
+
+        var plantSpeciation = "";
 
         if (comp.HarvestRepeat == HarvestType.Repeat) plantHarvestType = Loc.GetString("plant-analyzer-harvest-repeat");
         if (comp.HarvestRepeat == HarvestType.NoRepeat) plantHarvestType = Loc.GetString("plant-analyzer-harvest-ephemeral");
@@ -168,8 +185,18 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         {
             exudeGases = Loc.GetString("plant-analyzer-plant-gasses-No");
         }
-        //plantMutations = CheckAllMutation(comp, plantMutations);
-        return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName, seedYield.ToString(), seedPotency.ToString(), seedChem, plantHarvestType, exudeGases, plantMutations, trayChecker);
+        plantMutations = CheckAllMutation(comp, plantMutations);
+        plantSpeciation += String.Join(", \r\n", comp.MutationPrototypes.Select(item => item.ToString()));
+
+        //int count = comp.MutationPrototypes.Count();
+        //plantMutations = count.ToString();
+        var nutrientConsumption = comp.NutrientConsumption;
+        var waterConsumption = comp.NutrientConsumption;
+        var tolerances = "";
+        tolerances = CheckAllTolerances(comp, tolerances);
+
+        return new PlantAnalyzerScannedSeedPlantInformation(GetNetEntity(target), seedName, seedYield.ToString(), seedPotency.ToString(),
+            seedChem, plantHarvestType, exudeGases, plantMutations, trayChecker, plantSpeciation, tolerances.ToString());
     }
 
     /// <summary>
@@ -177,8 +204,6 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     /// </summary>
     public string CheckAllMutation(SeedData plant, string plantMutations)
     {
-        //plantSpeciation += String.Join(", \r\n", plant.MutationPrototypes.Select(item => item.ToString()));
-
         if (plant.TurnIntoKudzu) plantMutations += "\r\n   " + $"{Loc.GetString("plant-analyzer-mutation-turnintokudzu")}";
         if (plant.Seedless) plantMutations += "\r\n   " + $"{Loc.GetString("plant-analyzer-mutation-seedless")}";
         if (plant.Slip) plantMutations += "\r\n   " + $"{Loc.GetString("plant-analyzer-mutation-slip")}";
@@ -188,5 +213,45 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         if (plant.CanScream) plantMutations += "\r\n   " + $"{Loc.GetString("plant-analyzer-mutation-canscream")}";
 
         return plantMutations;
+    }
+
+    public string CheckAllTolerances(SeedData plant, string tolerances)
+    {
+        var nutrientConsumption = plant.NutrientConsumption;
+        var waterConsumption = plant.NutrientConsumption;
+        var idealHeat = plant.IdealHeat;
+        var heatTolerance = plant.HeatTolerance;
+        var idealLight = plant.IdealLight;
+        var lightTolerance = plant.LightTolerance;
+        var toxinsTolerance = plant.ToxinsTolerance;
+        var lowPresssureTolerance = plant.LowPressureTolerance;
+        var highPressureTolerance = plant.HighPressureTolerance;
+        var pestTolerance = plant.PestTolerance;
+        var weedTolerance = plant.WeedTolerance;
+
+        var lifespan = plant.Lifespan;
+        var maturation = plant.Maturation;
+        var growthStages = plant.GrowthStages;
+
+        tolerances = nutrientConsumption + ";" + waterConsumption + ";" + idealHeat + ";" + heatTolerance + ";" + idealLight + ";" + lightTolerance + ";"
+                   + toxinsTolerance + ";" + lowPresssureTolerance + ";" + highPressureTolerance + ";" + pestTolerance + ";" + weedTolerance + ";"
+                   + lifespan + ";" + maturation + ";" + growthStages;
+
+        return tolerances;
+    }
+
+    public string CheckAllGeneralTraits(SeedData plant, string generalTraits)
+    {
+
+        var endurance = plant.Endurance;
+        var yield = plant.Yield;
+        var lifespan = plant.Lifespan;
+        var maturation = plant.Maturation;
+        var growthStages = plant.GrowthStages;
+        var potency = plant.Potency;
+
+        generalTraits = lifespan + ";\r\n" + maturation + ";\r\n" + growthStages;
+
+        return generalTraits;
     }
 }

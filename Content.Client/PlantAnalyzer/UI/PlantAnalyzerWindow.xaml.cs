@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
+using Content.Client.UserInterface.ControlExtensions;
 
 namespace Content.Client.PlantAnalyzer.UI;
 
@@ -38,7 +39,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             return;
         }
         NoData.Visible = false;
-        Traits.Visible = false;
+        //Traits.Visible = false;
 
         Title = Loc.GetString("plant-analyzer-interface-title");
 
@@ -62,5 +63,25 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         Gases.Text = Loc.GetString("plant-analyzer-plant-exude-text", ("exudeGases", msg.ExudeGases));
 
         Traits.Text = Loc.GetString("plant-analyzer-plant-mutations-text", ("traits", msg.SeedMutations));
+
+
+        NutrientUsage.Text = "Nutrient usage: " + msg.NutrientConsumption;
+        WaterUsage.Text = "Water usage: " + msg.WaterConsumption;
+        IdealHeat.Text = "Ideal heat: " + msg.IdealHeat;
+        Lifespan.Text = "Lifespan: " + msg.Lifespan;
+        Maturation.Text = "Maturation: " + msg.Maturation;
+        GrowthStages.Text = "GrowthStages: " + msg.GrowthStages;
+
+        IdealLight.Text = "IdealLight: " + msg.IdealLight;
+        LightTolerance.Text = "Lighttolerance: " + msg.LightTolerance;
+        ToxinsTolerance.Text = "ToxinsTolerance: " + msg.ToxinsTolerance;
+        LowPressureTolerance.Text = "LowPressureTolerance: " + msg.LowPresssureTolerance;
+        HighPressureTolerance.Text = "HighPressureTolerance: " + msg.HighPressureTolerance;
+        PestTolerance.Text = "PestTolerance: " + msg.PestTolerance;
+        WeedTolerance.Text = "WeedTolerance: " + msg.WeedTolerance;
+
+
+
+        PlantSpeciation.Text = "Possible subtypes: " + msg.PlantSpeciation;
     }
 }
