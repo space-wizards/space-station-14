@@ -549,35 +549,19 @@
     Insuzine: 3
     Ash: 1
 
-  id: Pyrazine
-  impact: Medium
-  minTemp: 540
-  reactants:
-    Leporazine:
-      amount: 1
-    Dermaline:
-      amount: 1
-    Carbon:
-      amount: 1
-  products:
-    Pyrazine: 3
-
 - type: reaction
-  id: Insuzine
+  id: Necrosol
   impact: Medium
-  minTemp: 433
+  minTemp: 370
   reactants:
-    Leporazine:
+    Blood:
+      amount: 3
+    Omnizine:
       amount: 1
-    Kelotane:
-      amount: 1
-    Silicon:
-      amount: 1
-    Benzene:
-      amount: 1
+    Cryoxadone:
+      amount: 2
   products:
-    Insuzine: 3
-    Ash: 1
+    Necrosol: 2
 
 - type: reaction
   id: Aloxadone
