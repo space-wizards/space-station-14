@@ -1,5 +1,6 @@
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Input;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -237,7 +238,10 @@ public partial class NavMapControl : MapGridControl
         {
             // Clear current selection with right click
             TrackedEntitySelectedAction?.Invoke(null);
+        }
 
+        else if (args.Function == ContentKeyFunctions.ExamineEntity)
+        {
             // Toggle beacon labels
             _beacons.Pressed = !_beacons.Pressed;
         }
