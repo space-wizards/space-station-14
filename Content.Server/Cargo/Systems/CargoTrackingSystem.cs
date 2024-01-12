@@ -16,7 +16,7 @@ public sealed class CargoTrackingSystem : EntitySystem
     [Dependency] private readonly SharedPinpointerSystem _pinpointerSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
-    private Dictionary<int, List<EntityUid>> _orderTracking = new();
+    private Dictionary<int, HashSet<EntityUid>> _orderTracking = new();
 
     public override void Initialize()
     {
@@ -43,15 +43,15 @@ public sealed class CargoTrackingSystem : EntitySystem
         }
         else
         {
-            _orderTracking.Add(orderId, new List<EntityUid>() { tracker });
+            _orderTracking.Add(orderId, new HashSet<EntityUid>() { tracker });
         }
     }
 
     /// <summary>
     /// Used to clean up and remove a pairing of entity and order id, for when an order tracker has stopped tracking a specific order id.
     /// </summary>
-    /// <param name="tracker"></param>
-    /// <param name="orderId"></param>
+    /// <param name="tracker">The entity uid of the order tracker.</param>
+    /// <param name="orderId">The integer id of the order.</param>
     /// <returns>True if the pairing can be successfully deleted, false otherwise.</returns>
     private bool UntrackOrder(EntityUid tracker, int orderId)
     {
@@ -75,7 +75,13 @@ public sealed class CargoTrackingSystem : EntitySystem
         return _orderTracking.Remove(orderId);
     }
 
-    private bool GetAllTracked(int order, [NotNullWhen(true)] out List<EntityUid>? result)
+    /// <summary>
+    /// Get a set of all entities that track a specific order.
+    /// </summary>
+    /// <param name="order">The integer id of the order.</param>
+    /// <param name="result">A set of all entities that are tracking that specific order.</param>
+    /// <returns>True if the set is found, false otherwise.</returns>
+    private bool GetAllTracked(int order, [NotNullWhen(true)] out HashSet<EntityUid>? result)
     {
         if (_orderTracking.TryGetValue(order, out var entry))
         {
@@ -87,18 +93,35 @@ public sealed class CargoTrackingSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Set an order tracker to display waiting visuals.
+    /// </summary>
+    /// <param name="uid">Entity uid of the order tracker.</param>
+    /// <param name="comp">CargoTrackingComponent of the entity.</param>
     private void StartWaiting(EntityUid uid, CargoTrackingComponent comp)
     {
         comp.Waiting = true;
         _appearanceSystem.SetData(uid, PinpointerVisuals.IsWaiting, true);
     }
 
+    /// <summary>
+    /// Set an order tracker to stop displaying waiting visuals.
+    /// </summary>
+    /// <param name="uid">Entity uid of the order tracker.</param>
+    /// <param name="comp">CargoTrackingComponent of the entity.</param>
     private void StopWaiting(EntityUid uid, CargoTrackingComponent comp)
     {
         comp.Waiting = false;
         _appearanceSystem.SetData(uid, PinpointerVisuals.IsWaiting, false);
     }
 
+    /// <summary>
+    /// Set the pinpointer component of an order tracker to start tracking the entity of arrived cargo.
+    /// </summary>
+    /// <param name="tracker">The entity uid of the tracker.</param>
+    /// <param name="order">The integer id of the order.</param>
+    /// <param name="comp">The CargoTrackingComponent of the order.</param>
+    /// <param name="user">The person who has caused the order tracker to start tracking.</param>
     private void StartTrackingArrival(EntityUid tracker, EntityUid order, CargoTrackingComponent comp, EntityUid? user = null)
     {
         _pinpointerSystem.SetTarget(tracker, order);
@@ -110,6 +133,11 @@ public sealed class CargoTrackingSystem : EntitySystem
         StopWaiting(tracker, comp);
     }
 
+    /// <summary>
+    /// Set the pinpointer component of an order tracker back to neutral.
+    /// </summary>
+    /// <param name="tracker">The entity uid of the order tracker.</param>
+    /// <param name="user">The person who has caused the order tracker to stop tracking.</param>
     private void StopTrackingArrival(EntityUid tracker, EntityUid? user = null)
     {
         _pinpointerSystem.SetTarget(tracker, null);
@@ -121,6 +149,9 @@ public sealed class CargoTrackingSystem : EntitySystem
             comp.TrackedOrderId = null;
     }
 
+    /// <summary>
+    /// Show the current state of the order tracker when examined.
+    /// </summary>
     private void OnExamine(EntityUid uid, CargoTrackingComponent comp, ExaminedEvent args)
     {
         if (comp.Waiting)
@@ -142,6 +173,9 @@ public sealed class CargoTrackingSystem : EntitySystem
         args.PushMarkup(Loc.GetString("cargo-tracker-examine-idle"));
     }
 
+    /// <summary>
+    /// Have an order tracker attempt to track an order when it is used on an invoice.
+    /// </summary>
     private void OnAfterInteract(EntityUid uid, CargoTrackingComponent component, AfterInteractEvent args)
     {
         if (!args.CanReach)
@@ -182,6 +216,9 @@ public sealed class CargoTrackingSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("cargo-tracker-order-gone"), uid, args.User);
     }
 
+    /// <summary>
+    /// Reset an order tracker, making it no longer track an order.
+    /// </summary>
     private void OnUseInHand(EntityUid uid, CargoTrackingComponent component, UseInHandEvent args)
     {
         if (component.TrackedOrderId is null)
@@ -192,6 +229,9 @@ public sealed class CargoTrackingSystem : EntitySystem
         StopWaiting(uid, component);
     }
 
+    /// <summary>
+    /// Raise an <see cref="CargoOrderDeletionEvent"/> when a tracked cargo order has been deleted.
+    /// </summary>
     private void OnEntityTerminating(EntityUid uid, CargoTrackedComponent component, EntityTerminatingEvent args)
     {
         var station = _stationSystem.GetOwningStation(uid);
@@ -202,6 +242,9 @@ public sealed class CargoTrackingSystem : EntitySystem
         RaiseLocalEvent(new CargoOrderDeletionEvent(component.OrderId));
     }
 
+    /// <summary>
+    /// React to a <see cref="CargoOrderArrivalEvent"/> by getting any order trackers currently waiting to track this specific order id to start tracking the spawned in entity.
+    /// </summary>
     private void OnCargoOrderArrival(CargoOrderArrivalEvent args)
     {
         if (!GetAllTracked(args.OrderId, out var entities))
@@ -216,6 +259,9 @@ public sealed class CargoTrackingSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// React to a <see cref="CargoOrderArrivalEvent"/> by getting any order trackers currently waiting to track this specific order id to start tracking the spawned in entity.
+    /// </summary>
     private void OnCargoOrderDeletion(CargoOrderDeletionEvent args)
     {
         if (!GetAllTracked(args.OrderId, out var entities))
