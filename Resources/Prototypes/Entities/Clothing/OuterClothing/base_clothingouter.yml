@@ -83,9 +83,17 @@
         Radiation: 0.25
   - type: ToggleableClothing
     slot: head
+  - type: Inject # hardsuit injection
+  - type: ItemSlots # hardsuit injection
+    slots: # hardsuit injection
+      beakerSlot: # hardsuit injection
+        whitelist: # hardsuit injection
+          tags: # hardsuit injection
+          - FitsHardsuit # hardsuit injection
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+      beakerSlot: !type:ContainerSlot # hardsuit injection
   - type: GroupExamine
   - type: Tag
     tags:
