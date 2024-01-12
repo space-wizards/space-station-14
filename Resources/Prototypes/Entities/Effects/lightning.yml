@@ -85,6 +85,7 @@
   name: lightning
   id: Spark
   parent: BaseLightning
+  noSpawn: true
   components:
   - type: Sprite
     sprite: /Textures/Effects/lightning.rsi
