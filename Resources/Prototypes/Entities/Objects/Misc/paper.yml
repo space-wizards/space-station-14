@@ -129,7 +129,6 @@
   name: cargo invoice
   parent: Paper
   id: PaperCargoInvoice
-  abstract: true
   description: 'A single unit of bureaucracy.'
   components:
   - type: Sprite
