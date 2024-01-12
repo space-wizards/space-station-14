@@ -1283,6 +1283,11 @@
     Telecrystal: 10
   categories:
   - UplinkArmor
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
 
 # Misc
 

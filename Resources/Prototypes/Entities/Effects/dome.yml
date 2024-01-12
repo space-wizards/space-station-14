@@ -33,7 +33,7 @@
       - HideContextMenu
 
 - type: entity
-  id: EnergyDomeSmallYellow
+  id: EnergyDomeSmallPink
   noSpawn: true
   parent: EnergyDomeBase
   components:
@@ -41,12 +41,12 @@
     sprite: Effects/EnergyDome/energydome_small.rsi
     layers:
     - state: small
-      color: "#edc882"
+      color: "#f5166b"
   - type: PointLight
     enabled: true
     radius: 5
     power: 2
-    color: "#edc882"
+    color: "#f5166b"
 
 - type: entity
   id: EnergyDomeSmallRed

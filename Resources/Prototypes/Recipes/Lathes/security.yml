@@ -546,10 +546,11 @@
     Plastic: 500
 
 - type: latheRecipe
-  id: EnergyDomeDirectionalReinhardt
-  result: EnergyDomeDirectionalReinhardt
+  id: EnergyDomeDirectionalTurtle
+  result: EnergyDomeDirectionalTurtle
   completetime: 12
   materials:
     Steel: 1000
-    Glass: 300
     Plastic: 500
+    Gold: 250
+    Uranium: 50
