@@ -400,7 +400,7 @@ namespace Content.Server.Kitchen.EntitySystems
             var solidsDict = new Dictionary<string, int>();
             var reagentDict = new Dictionary<string, FixedPoint2>();
             // TODO use lists of Reagent quantities instead of reagent prototype ids.
-
+            component.ContainsMetal = false;
             foreach (var item in component.Storage.ContainedEntities)
             {
                 // special behavior when being microwaved ;)
@@ -418,12 +418,15 @@ namespace Content.Server.Kitchen.EntitySystems
                     component.ContainsMetal = true;
                 }
 
-                // if (_tag.HasTag(item, "Plastic"))
-                // {
-                //     var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
-                //     _container.Insert(junk, component.Storage);
-                //     QueueDel(item);
-                // }
+                if (_tag.HasTag(item, "Plastic"))
+                {
+                    var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
+                    _container.Insert(junk, component.Storage);
+                    QueueDel(item);
+                    _sharedContainer.EmptyContainer(component.Storage);
+                    _audio.PlayPvs(component.FoodDoneSound, uid, AudioParams.Default.WithVolume(-1));
+                    return;
+                }
 
                 var metaData = MetaData(item); //this simply begs for cooking refactor
                 if (metaData.EntityPrototype == null)
