@@ -1,4 +1,19 @@
-﻿- type: whitelist
+﻿- type: whitelist # Deny every player once there is at least one player on the server
   id: denyAll
+  minimumPlayers: 1
   conditions:
-    - !type:TestConditionAlwaysDeny
+    - !type:ConditionAlwaysDeny
+
+- type: whitelist
+  id: allowIfNoNotes
+  conditions:
+    - !type:ConditionManualWhitelist
+      breakIfConditionSuccess: true # Break the condition chain if the player is whitelisted
+      breakIfConditionFail: false # Don't break the condition chain if the player is not whitelisted
+    - !type:ConditionPlaytime
+      minimumPlaytime: 1 # min playtime in minutes
+    - !type:ConditionNoNotes # Fails if there is at least one note with a severity of 2 or higher
+      includeExpired: false # Include expired notes
+      minimumSeverity: 2 # Minimum severity of the note
+      minimumNotes: 1 # Minimum amount of notes before the condition fails
+      range: 1 # Range in days to check for notes
