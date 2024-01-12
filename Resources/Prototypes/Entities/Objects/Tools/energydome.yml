@@ -25,9 +25,9 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellSmall
         whitelist:
-        tags:
-          - PowerCell
-          - PowerCellSmall
+          tags:
+            - PowerCell
+            - PowerCellSmall
   - type: EnergyDomeGenerator
     damageEnergyDraw: 5
     domePrototype: EnergyDomeSmallCircleSyndie
@@ -77,9 +77,9 @@
 #      cell_slot:
 #        name: power-cell-slot-component-slot-name-default
 #        whitelist:
-#        tags:
-#          - PowerCell
-#          - PowerCellSmall
+#          tags:
+#            - PowerCell
+#            - PowerCellSmall
 #  - type: EnergyDomeGenerator
 #    wattage: 2
 #    energyLessForDamage: 3

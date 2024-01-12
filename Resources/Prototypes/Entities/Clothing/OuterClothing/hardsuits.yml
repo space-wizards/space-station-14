@@ -446,9 +446,9 @@
   #      name: power-cell-slot-component-slot-name-default
   #      startingItem: PowerCellMedium
   #      whitelist:
-  #      tags:
-  #        - PowerCell
-  #        - PowerCellSmall
+  #        tags:
+  #          - PowerCell
+  #          - PowerCellSmall
   #- type: EnergyDomeGenerator
   #  damageEnergyDraw: 5
   #  domePrototype: EnergyDomeSmallCircleHoS

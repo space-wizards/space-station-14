@@ -50,5 +50,8 @@ public sealed partial class EnergyDomeGeneratorComponent : Component
     public SoundSpecifier TurnOffSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 
     [DataField]
-    public SoundSpecifier ParrySound = new SoundPathSpecifier("/Audio/Machines/energyshield_parry.ogg");
+    public SoundSpecifier ParrySound = new SoundPathSpecifier("/Audio/Machines/energyshield_parry.ogg")
+    {
+        Params = AudioParams.Default.WithVariation(0.05f)
+    };
 }
