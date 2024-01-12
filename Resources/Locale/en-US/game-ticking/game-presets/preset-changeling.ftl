@@ -27,3 +27,13 @@ changeling-regenerate-fail-dead = You're dead!
 
 changeling-chameleon-toggle-on = Your skin shimmers with transparency...
 changeling-chameleon-toggle-off = Your skin reverts back to normal.
+
+changeling-dna-stage-1 = This creature is compatible. You must hold still...
+changeling-dna-stage-2-self = You extend a proboscis.
+changeling-dna-stage-2-others = {CAPITALIZE(THE($user))} extends a proboscis!
+changeling-dna-stage-3-self = You stab {CAPITALIZE(THE($target))} with the proboscis.
+changeling-dna-stage-3-others = {CAPITALIZE(THE($user))} stabs {CAPITALIZE(THE($target))} with the proboscis!
+changeling-dna-success = You have absorbed {CAPITALIZE(THE($target))}.
+changeling-dna-fail-nohuman = {CAPITALIZE(THE($target))} a humanoid.
+changeling-dna-fail-notdead = {CAPITALIZE(THE($target))} isn't crit or dead.
+changeling-dna-interrupted = You were interrupted while absorbing {CAPITALIZE(THE($target))}.

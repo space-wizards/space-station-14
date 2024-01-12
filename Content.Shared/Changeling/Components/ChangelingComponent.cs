@@ -23,8 +23,31 @@ public sealed partial class ChangelingComponent : Component
     [DataField]
     public float MaxChemicals = 75f;
 
+    #region DNA Absorb Ability
+    /// <summary>
+    /// The time it takes to absorb someone as a changeling per phase, in seconds.
+    /// </summary>
     [DataField]
-    public float Accumulator = 0f;
+    public float AbsorbDuration = 10.0f;
+
+    /// <summary>
+    /// The stage of absorbing that the changeling is on. Maximum of 2 stages.
+    /// </summary>
+    [DataField]
+    public float AbsorbStage = 0.0f;
+
+    /// <summary>
+    /// The amount of blood the target loses when they're absorbed.
+    /// </summary>
+    [DataField]
+    public float AbsorbBloodLossDmg = -1000.0f;
+
+    /// <summary>
+    /// The amount of genetic damage the target gains when they're absorbed.
+    /// </summary>
+    [DataField]
+    public float AbsorbGeneticDmg = 200.0f;
+    #endregion
 
     #region Regenerate Ability
     /// <summary>
@@ -158,4 +181,11 @@ public sealed partial class ChangelingComponent : Component
 
     [DataField]
     public EntityUid? RegenAction;
+
+    [DataField]
+    public EntityUid? AbsorbAction;
+
+
+    [DataField]
+    public float Accumulator = 0f;
 }

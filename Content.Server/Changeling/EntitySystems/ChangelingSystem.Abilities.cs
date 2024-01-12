@@ -14,6 +14,9 @@ using Content.Shared.IdentityManagement;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Stealth.Components;
 using Content.Server.Emp;
+using Content.Shared.DoAfter;
+using Content.Shared.Humanoid;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -27,14 +30,113 @@ public sealed partial class ChangelingSystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     private void InitializeLingAbilities()
     {
+        SubscribeLocalEvent<ChangelingComponent, LingAbsorbActionEvent>(StartAbsorbing);
+        SubscribeLocalEvent<ChangelingComponent, AbsorbDoAfterEvent>(OnAbsorbDoAfter);
+
         SubscribeLocalEvent<ChangelingComponent, LingRegenerateActionEvent>(OnRegenerate);
         SubscribeLocalEvent<ChangelingComponent, ArmBladeActionEvent>(OnArmBladeAction);
         SubscribeLocalEvent<ChangelingComponent, LingArmorActionEvent>(OnLingArmorAction);
         SubscribeLocalEvent<ChangelingComponent, LingInvisibleActionEvent>(OnLingInvisible);
         SubscribeLocalEvent<ChangelingComponent, LingEMPActionEvent>(OnLingEmp);
+    }
+
+    private void StartAbsorbing(EntityUid uid, ChangelingComponent component, LingAbsorbActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+
+        var target = args.Target;
+        if (!HasComp<HumanoidAppearanceComponent>(target))
+        {
+            var selfMessage = Loc.GetString("changeling-dna-fail-nohuman", ("target", Identity.Entity(target, EntityManager)));
+            _popup.PopupEntity(selfMessage, uid, uid);
+            return;
+        }
+
+        if (!_mobState.IsIncapacitated(uid)) // if target isn't crit or dead dont let absorb
+        {
+            var selfMessage = Loc.GetString("changeling-dna-fail-notdead", ("target", Identity.Entity(target, EntityManager)));
+            _popup.PopupEntity(selfMessage, uid, uid);
+            return;
+        }
+
+        _popup.PopupEntity(Loc.GetString("changeling-dna-stage-1"), uid, uid);
+
+        var doAfter = new DoAfterArgs(EntityManager, uid, component.AbsorbDuration, new AbsorbDoAfterEvent(), uid, target: target)
+        {
+            DistanceThreshold = 2,
+            BreakOnUserMove = true,
+            BreakOnTargetMove = true,
+            BreakOnDamage = true,
+            AttemptFrequency = AttemptFrequency.StartAndEnd
+        };
+
+        _doAfter.TryStartDoAfter(doAfter);
+    }
+
+    public ProtoId<DamageGroupPrototype> GeneticDamageGroup = "Genetic";
+    private void OnAbsorbDoAfter(EntityUid uid, ChangelingComponent component, AbsorbDoAfterEvent args)
+    {
+        if (args.Handled || args.Args.Target == null)
+            return;
+
+        args.Handled = true;
+        args.Repeat = RepeatDoAfter(component);
+        var target = args.Args.Target.Value;
+
+        if (args.Cancelled)
+        {
+            var selfMessage = Loc.GetString("changeling-dna-interrupted", ("target", Identity.Entity(target, EntityManager)));
+            _popup.PopupEntity(selfMessage, uid, uid);
+            component.AbsorbStage = 0.0f;
+            return;
+        }
+
+        if (component.AbsorbStage == 0.0)
+        {
+            var othersMessage = Loc.GetString("changeling-dna-stage-2-others", ("user", Identity.Entity(uid, EntityManager)));
+            _popup.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid), true, PopupType.MediumCaution);
+
+            var selfMessage = Loc.GetString("changeling-dna-stage-2-self");
+            _popup.PopupEntity(selfMessage, uid, uid, PopupType.MediumCaution);
+        }
+        else if (component.AbsorbStage == 1.0)
+        {
+            var othersMessage = Loc.GetString("changeling-dna-stage-3-others", ("user", Identity.Entity(uid, EntityManager)), ("target", Identity.Entity(target, EntityManager)));
+            _popup.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid), true, PopupType.LargeCaution);
+
+            var selfMessage = Loc.GetString("changeling-dna-stage-3-self", ("target", Identity.Entity(target, EntityManager)));
+            _popup.PopupEntity(selfMessage, uid, uid, PopupType.LargeCaution);
+        }
+        else if (component.AbsorbStage == 2.0)
+        {
+            var selfMessage = Loc.GetString("changeling-dna-success", ("target", Identity.Entity(target, EntityManager)));
+            _popup.PopupEntity(selfMessage, uid, uid, PopupType.Medium);
+
+            // give them 200 genetic damage and remove all of their blood
+            var dmg = new DamageSpecifier(_proto.Index(GeneticDamageGroup), component.AbsorbGeneticDmg);
+            _damageableSystem.TryChangeDamage(uid, dmg);
+            _bloodstreamSystem.TryModifyBloodLevel(uid, component.AbsorbBloodLossDmg);
+        }
+
+        if (component.AbsorbStage >= 2.0)
+            component.AbsorbStage = 0.0f;
+        else
+            component.AbsorbStage += 1.0f;
+    }
+
+    private static bool RepeatDoAfter(ChangelingComponent component)
+    {
+        if (component.AbsorbStage < 2.0)
+            return true;
+        else
+            return false;
     }
 
     public ProtoId<DamageGroupPrototype> BruteDamageGroup = "Brute";

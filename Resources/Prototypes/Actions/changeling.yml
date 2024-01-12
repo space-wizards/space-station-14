@@ -9,6 +9,18 @@
     event: !type:ChangelingEvolutionMenuActionEvent
 
 - type: entity
+  id: ActionChangelingAbsorb
+  name: Absorb DNA
+  description: Absorbs the DNA of the targeted person. They must be in critical or dead and be a humanoid in order to absorb.
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    icon: { sprite: /Textures/Interface/Actions/actions_ling.rsi, state: absorb_dna }
+    iconOn: { sprite: /Textures/Interface/Actions/actions_ling.rsi, state: absorb_dna }
+    event: !type:LingAbsorbActionEvent
+    useDelay: 35
+
+- type: entity
   id: ActionLingRegenerate
   name: Regenerate
   description: Rapidly regenerate, healing major wounds and restoring blood volume. Costs 10 chemicals and can only be used when in a critical condition.

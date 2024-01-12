@@ -1,6 +1,17 @@
 using Content.Shared.Actions;
+using Content.Shared.DoAfter;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Changeling;
+
+public sealed partial class LingAbsorbActionEvent : EntityTargetActionEvent
+{
+}
+
+[Serializable, NetSerializable]
+public sealed partial class AbsorbDoAfterEvent : SimpleDoAfterEvent
+{
+}
 public sealed partial class ChangelingEvolutionMenuActionEvent : InstantActionEvent
 {
 }

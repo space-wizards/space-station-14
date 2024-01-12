@@ -1,11 +1,12 @@
 using Content.Server.Actions;
-using Content.Shared.Store;
+using Content.Shared.DoAfter;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Changeling;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
+using Content.Shared.Store;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.Damage;
 using Content.Server.Body.Systems;
@@ -21,6 +22,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {
@@ -44,6 +46,9 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string ChangelingRegenActionId = "ActionLingRegenerate";
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string ChangelingAbsorbActionId = "ActionChangelingAbsorb";
 
     [ValidatePrototypeId<CurrencyPrototype>]
     public const string EvolutionPointsCurrencyPrototype = "EvolutionPoints";
@@ -92,6 +97,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         _action.AddAction(uid, ref component.ShopAction, ChangelingEvolutionMenuId);
         _action.AddAction(uid, ref component.RegenAction, ChangelingRegenActionId);
+        _action.AddAction(uid, ref component.AbsorbAction, ChangelingAbsorbActionId);
     }
 
     private void OnShop(EntityUid uid, ChangelingComponent component, ChangelingEvolutionMenuActionEvent args)
