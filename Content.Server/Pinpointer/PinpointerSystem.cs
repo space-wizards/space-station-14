@@ -3,7 +3,6 @@ using Content.Shared.Pinpointer;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Popups;
-using Content.Server.Shuttles.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
@@ -54,7 +53,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// <summary>
     ///     Searches the closest object that has a specific component, this entity is then added to the stored targets.
     /// </summary>
-    private void LocateTarget(EntityUid uid, PinpointerComponent component,  IComponent selectedComponent,EntityUid? user = null)
+    private void LocateTarget(EntityUid uid, PinpointerComponent component, IComponent selectedComponent,EntityUid? user = null)
     {
         var target = FindTargetFromComponent(uid, selectedComponent.GetType());
 
@@ -68,7 +67,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             }
         }
 
-        StoreTarget(target, uid, component);
+        StoreTarget(target, uid, component, user);
         SetTarget(uid, target, component, user);
 
     }
@@ -137,12 +136,14 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             pinpointer.TargetName = Identity.Name(pinpointer.Target.Value, EntityManager);
         }
 
-        if (user != null && pinpointer.TargetName != null)
+        if (user != null && pinpointer.Target != null)
         {
-            _popup.PopupEntity(
-                target == null
-                    ? Loc.GetString("targeting-pinpointer-failed")
-                    : Loc.GetString("targeting-pinpointer-succeeded", ("target", pinpointer.TargetName)), user.Value, user.Value);
+            if (pinpointer.TargetName != null)
+            {
+                _popup.PopupEntity(Loc.GetString("targeting-pinpointer-succeeded",
+                    ("target", pinpointer.TargetName)), user.Value, user.Value);
+            }
+
         }
 
         //Turns on the pinpointer if the target is changed through the verb menu.
@@ -264,7 +265,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                 args.Verbs.Add(new Verb()
                 {
                     Text = Loc.GetString( "name-pinpointer-component-" + targetComponent.Key),
-                    Act = () => LocateTarget(uid, component, targetComponent.Value.Component,args.User),
+                    Act = () => LocateTarget(uid, component, targetComponent.Value.Component, args.User),
                     Priority = 100,
                     Category = VerbCategory.SearchClosest,
                 });

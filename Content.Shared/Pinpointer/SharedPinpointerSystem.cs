@@ -128,7 +128,14 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// </summary>
     public void StoreTarget(EntityUid? target, EntityUid pinpointer, PinpointerComponent component, EntityUid? user = null)
     {
-        if (target == null || component.StoredTargets.Contains(target.Value))
+        if (target == null)
+        {
+            if(user != null && _net.IsServer)
+                _popup.PopupEntity(Loc.GetString("targeting-pinpointer-failed"), user.Value, user.Value);
+            return;
+        }
+
+        if(component.StoredTargets.Contains(target.Value))
             return;
 
         component.StoredTargets.Add(target.Value);
