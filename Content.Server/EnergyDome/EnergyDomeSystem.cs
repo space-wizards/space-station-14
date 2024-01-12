@@ -135,6 +135,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         args.Handled = true;
     }
 
+    // System interactions
 
     private void OnPowerCellSlotEmpty(Entity<EnergyDomeGeneratorComponent> generator, ref PowerCellSlotEmptyEvent args)
     {
@@ -148,7 +149,6 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             TurnOff(generator, true);
         }
     }
-
 
     private void OnDomeDamaged(Entity<EnergyDomeComponent> dome, ref DamageChangedEvent args)
     {
@@ -176,6 +176,23 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             TurnOff((generatorUid, generatorComp), true);
         }
     }
+
+    private void OnParentChanged(Entity<EnergyDomeGeneratorComponent> generator, ref EntParentChangedMessage args)
+    {
+        //To do: taking the active barrier in hand for some reason does not manage to change the parent in this case,
+        //and the barrier is not turned off.
+        //
+        //Laying down works well (-_-)
+        if (GetProtectedEntity(generator) != generator.Comp.ProtectedEntity)
+            TurnOff(generator, false);
+    }
+
+    private void OnComponentRemove(Entity<EnergyDomeGeneratorComponent> generator, ref ComponentRemove args)
+    {
+        TurnOff(generator, false);
+    }
+
+    // Functional
 
     public bool AttemptToggle(Entity<EnergyDomeGeneratorComponent> generator, bool status)
     {
@@ -207,7 +224,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         return true;
     }
 
-    public void Toggle(Entity<EnergyDomeGeneratorComponent> generator, bool status)
+    private void Toggle(Entity<EnergyDomeGeneratorComponent> generator, bool status)
     {
         if (status)
             TurnOn(generator);
@@ -215,7 +232,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             TurnOff(generator, false);
     }
 
-    public void TurnOn(Entity<EnergyDomeGeneratorComponent> generator)
+    private void TurnOn(Entity<EnergyDomeGeneratorComponent> generator)
     {
         if (generator.Comp.Enabled)
             return;
@@ -238,7 +255,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         generator.Comp.Enabled = true;
     }
 
-    public void TurnOff(Entity<EnergyDomeGeneratorComponent> generator, bool startReloading)
+    private void TurnOff(Entity<EnergyDomeGeneratorComponent> generator, bool startReloading)
     {
         if (!generator.Comp.Enabled)
             return;
@@ -259,21 +276,12 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         }
     }
 
+    // Util
+
     private EntityUid GetProtectedEntity(EntityUid entity)
     {
         return (_container.TryGetOuterContainer(entity, Transform(entity), out var container))
             ? container.Owner
             : entity;
-    }
-
-    private void OnParentChanged(Entity<EnergyDomeGeneratorComponent> generator, ref EntParentChangedMessage args)
-    {
-        if (GetProtectedEntity(generator) != generator.Comp.ProtectedEntity)
-            TurnOff(generator, false);
-    }
-
-    private void OnComponentRemove(Entity<EnergyDomeGeneratorComponent> generator, ref ComponentRemove args)
-    {
-        TurnOff(generator, false);
     }
 }

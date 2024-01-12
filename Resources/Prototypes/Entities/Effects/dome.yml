@@ -2,6 +2,9 @@
   id: EnergyDomeBase
   abstract: true
   components:
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -30,22 +33,20 @@
       - HideContextMenu
 
 - type: entity
-  id: EnergyDomeSmallBlack
+  id: EnergyDomeSmallYellow
   noSpawn: true
   parent: EnergyDomeBase
   components:
   - type: Sprite
-    drawdepth: Effects
-    noRot: true
     sprite: Effects/EnergyDome/energydome_small.rsi
     layers:
     - state: small
-      color: "#050505"
+      color: "#edc882"
   - type: PointLight
     enabled: true
     radius: 5
     power: 2
-    color: "#050505"
+    color: "#edc882"
 
 - type: entity
   id: EnergyDomeSmallRed
@@ -83,8 +84,6 @@
         - BulletImpassable
         - Opaque
   - type: Sprite
-    drawdepth: Effects
-    noRot: true
     sprite: Effects/EnergyDome/energydome_medium.rsi
     layers:
     - state: medium
