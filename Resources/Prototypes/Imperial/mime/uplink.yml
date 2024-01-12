@@ -1,0 +1,13 @@
+- type: listing
+  id: uplinkShotgunMimeCane
+  name: uplink-mime-cane-name
+  description: uplink-mime-cane-name-desc
+  productEntity: BriefcaseSyndieMimeFilled
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Mime
