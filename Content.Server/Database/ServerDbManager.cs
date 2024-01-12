@@ -675,6 +675,24 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.RemoveFromWhitelistAsync(player));
         }
 
+        public Task<bool> GetBlacklistStatusAsync(NetUserId player)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetBlacklistStatusAsync(player));
+        }
+
+        public Task AddToBlacklistAsync(NetUserId player)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddToBlacklistAsync(player));
+        }
+
+        public Task RemoveFromBlacklistAsync(NetUserId player)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RemoveFromBlacklistAsync(player));
+        }
+
         public Task AddUploadedResourceLogAsync(NetUserId user, DateTime date, string path, byte[] data)
         {
             DbWriteOpsMetric.Inc();

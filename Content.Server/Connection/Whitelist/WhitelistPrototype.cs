@@ -4,8 +4,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Connection.Whitelist;
 
-[Prototype("whitelist")]
-public sealed class WhitelistPrototype : IPrototype
+[Prototype("PlayerConnectionWhitelist")]
+public sealed class PlayerConnectionWhitelistPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;
@@ -30,7 +30,7 @@ public sealed class WhitelistPrototype : IPrototype
 
 public static class WhitelistExtensions
 {
-    public static async Task<(bool isWhitelisted, string? denyMessage)> IsWhitelisted(this WhitelistPrototype prototype, NetUserData data, ISawmill sawmill)
+    public static async Task<(bool isWhitelisted, string? denyMessage)> IsWhitelisted(this PlayerConnectionWhitelistPrototype prototype, NetUserData data, ISawmill sawmill)
     {
         foreach (var condition in prototype.Conditions)
         {
@@ -58,7 +58,7 @@ public static class WhitelistExtensions
         return (true, null);
     }
 
-    public static bool IsValid(this WhitelistPrototype prototype, int playerCount)
+    public static bool IsValid(this PlayerConnectionWhitelistPrototype prototype, int playerCount)
     {
         return playerCount >= prototype.MinimumPlayers && playerCount <= prototype.MaximumPlayers;
     }

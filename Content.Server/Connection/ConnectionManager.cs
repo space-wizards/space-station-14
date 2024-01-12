@@ -176,7 +176,7 @@ namespace Content.Server.Connection
 
             if (_cfg.GetCVar(CCVars.WhitelistEnabled))
             {
-                var whitelists = _prototypeManager.EnumeratePrototypes<WhitelistPrototype>();
+                var whitelists = _prototypeManager.EnumeratePrototypes<PlayerConnectionWhitelistPrototype>();
                 var whitelistStringList = _cfg.GetCVar(CCVars.WhitelistPrototype);
 
                 // The whitelsitStringList is a comma separated list of whitelists to check. I loop through every prototype in the list and check if the user is whitelisted.

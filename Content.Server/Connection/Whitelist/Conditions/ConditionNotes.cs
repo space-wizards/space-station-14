@@ -6,7 +6,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Connection.Whitelist.Conditions;
 
-public sealed partial class ConditionNoNotes : WhitelistCondition
+public sealed partial class ConditionNotes : WhitelistCondition
 {
     public bool IncludeExpired = false;
 
