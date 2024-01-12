@@ -28,3 +28,8 @@
     - !type:ConditionPlaytime
       minimumPlaytime: 1200 # 20 hours to be whitelisted
     - !type:ConditionAlwaysDeny # Deny all players that don't match the conditions above
+
+- type: PlayerConnectionWhitelist
+  id: basicWhitelist # Basic whitelist using only the ManualWhitelist condition
+  conditions:
+    - !type:ConditionManualWhitelist
