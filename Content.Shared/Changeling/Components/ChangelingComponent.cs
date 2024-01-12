@@ -1,4 +1,5 @@
 using Robust.Shared.Audio;
+using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Changeling.Components;
 
@@ -28,7 +29,7 @@ public sealed partial class ChangelingComponent : Component
     /// The time it takes to absorb someone as a changeling per phase, in seconds.
     /// </summary>
     [DataField]
-    public float AbsorbDuration = 10.0f;
+    public float AbsorbDuration = 15.0f;
 
     /// <summary>
     /// The stage of absorbing that the changeling is on. Maximum of 2 stages.
@@ -40,7 +41,7 @@ public sealed partial class ChangelingComponent : Component
     /// The amount of blood the target loses when they're absorbed.
     /// </summary>
     [DataField]
-    public float AbsorbBloodLossDmg = -1000.0f;
+    public FixedPoint2 AbsorbBloodLossDmg = 1000.0f;
 
     /// <summary>
     /// The amount of genetic damage the target gains when they're absorbed.

@@ -35,5 +35,6 @@ changeling-dna-stage-3-self = You stab {CAPITALIZE(THE($target))} with the probo
 changeling-dna-stage-3-others = {CAPITALIZE(THE($user))} stabs {CAPITALIZE(THE($target))} with the proboscis!
 changeling-dna-success = You have absorbed {CAPITALIZE(THE($target))}.
 changeling-dna-fail-nohuman = {CAPITALIZE(THE($target))} a humanoid.
-changeling-dna-fail-notdead = {CAPITALIZE(THE($target))} isn't crit or dead.
+changeling-dna-fail-notdead = {CAPITALIZE(THE($target))} isn't dead or in critical condition.
 changeling-dna-interrupted = You were interrupted while absorbing {CAPITALIZE(THE($target))}.
+changeling-dna-alreadyabsorbed = {CAPITALIZE(THE($target))}'s DNA has been absorbed already!

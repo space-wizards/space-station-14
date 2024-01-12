@@ -17,6 +17,8 @@ using Content.Server.Emp;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Content.Shared.Mobs.Components;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -59,9 +61,16 @@ public sealed partial class ChangelingSystem
             return;
         }
 
-        if (!_mobState.IsIncapacitated(uid)) // if target isn't crit or dead dont let absorb
+        if (!_mobState.IsIncapacitated(target)) // if target isn't crit or dead dont let absorb
         {
             var selfMessage = Loc.GetString("changeling-dna-fail-notdead", ("target", Identity.Entity(target, EntityManager)));
+            _popup.PopupEntity(selfMessage, uid, uid);
+            return;
+        }
+
+        if (HasComp<AbsorbedComponent>(target))
+        {
+            var selfMessage = Loc.GetString("changeling-dna-alreadyabsorbed", ("target", Identity.Entity(target, EntityManager)));
             _popup.PopupEntity(selfMessage, uid, uid);
             return;
         }
@@ -90,11 +99,12 @@ public sealed partial class ChangelingSystem
         args.Repeat = RepeatDoAfter(component);
         var target = args.Args.Target.Value;
 
-        if (args.Cancelled)
+        if (args.Cancelled || !_mobState.IsIncapacitated(target) || HasComp<AbsorbedComponent>(target))
         {
             var selfMessage = Loc.GetString("changeling-dna-interrupted", ("target", Identity.Entity(target, EntityManager)));
             _popup.PopupEntity(selfMessage, uid, uid);
             component.AbsorbStage = 0.0f;
+            args.Repeat = false;
             return;
         }
 
@@ -121,8 +131,10 @@ public sealed partial class ChangelingSystem
 
             // give them 200 genetic damage and remove all of their blood
             var dmg = new DamageSpecifier(_proto.Index(GeneticDamageGroup), component.AbsorbGeneticDmg);
-            _damageableSystem.TryChangeDamage(uid, dmg);
-            _bloodstreamSystem.TryModifyBloodLevel(uid, component.AbsorbBloodLossDmg);
+            _damageableSystem.TryChangeDamage(target, dmg);
+            _bloodstreamSystem.ChangeBloodReagent(target, "FerrochromicAcid"); // replace target's blood with acid, then spill
+            _bloodstreamSystem.SpillAllSolutions(target); // replace target's blood with acid, then spill
+            EnsureComp<AbsorbedComponent>(target);
         }
 
         if (component.AbsorbStage >= 2.0)

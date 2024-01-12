@@ -18,7 +18,7 @@
     icon: { sprite: /Textures/Interface/Actions/actions_ling.rsi, state: absorb_dna }
     iconOn: { sprite: /Textures/Interface/Actions/actions_ling.rsi, state: absorb_dna }
     event: !type:LingAbsorbActionEvent
-    useDelay: 35
+    useDelay: 5
 
 - type: entity
   id: ActionLingRegenerate
