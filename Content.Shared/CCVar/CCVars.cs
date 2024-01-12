@@ -132,6 +132,12 @@ namespace Content.Shared.CCVar
             GameDummyTicker = CVarDef.Create("game.dummyticker", false, CVar.ARCHIVE | CVar.SERVERONLY);
 
         /// <summary>
+        ///    What the culture (default language) is used for the server, ensure that your language is in /Resources/Locale
+        /// </summary>
+        public static readonly CVarDef<string>
+            Culture = CVarDef.Create("game.culture", "en-US", CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
         ///     Controls if the lobby is enabled. If it is not, and there are no available jobs, you may get stuck on a black screen.
         /// </summary>
         public static readonly CVarDef<bool>
