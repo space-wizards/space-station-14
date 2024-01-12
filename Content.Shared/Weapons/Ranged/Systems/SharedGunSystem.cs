@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -11,7 +10,6 @@ using Content.Shared.Examine;
 using Content.Shared.Gravity;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
@@ -94,7 +92,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
         SubscribeLocalEvent<GunComponent, HandSelectedEvent>(OnGunSelected);
         SubscribeLocalEvent<GunComponent, EntityUnpausedEvent>(OnGunUnpaused);
-        SubscribeLocalEvent<GunComponent, ActivateInWorldEvent>(OnActivateInWorld);
 
 #if DEBUG
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
@@ -124,15 +121,6 @@ public abstract partial class SharedGunSystem : EntitySystem
     private void OnGunUnpaused(EntityUid uid, GunComponent component, ref EntityUnpausedEvent args)
     {
         component.NextFire += args.PausedTime;
-    }
-
-    private void OnActivateInWorld(Entity<GunComponent> gun, ref ActivateInWorldEvent args)
-    {
-        if (!gun.Comp.ActivateInWorldShoot)
-            return;
-
-        var targetPos = new EntityCoordinates(gun, new Vector2(0, -1));
-        AttemptShoot(null, gun, gun, targetPos, false);
     }
 
     private void OnShootRequest(RequestShootEvent msg, EntitySessionEventArgs args)
@@ -218,22 +206,23 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// <summary>
     /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
     /// </summary>
-    public void AttemptShoot(EntityUid? user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates, bool needUser = true)
+    public void AttemptShoot(EntityUid? user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates)
     {
         gun.ShootCoordinates = toCoordinates;
-        AttemptShoot(user, gunUid, gun, needUser);
+        AttemptShoot(user, gunUid, gun);
         gun.ShotCounter = 0;
     }
 
-    private void AttemptShoot(EntityUid? user, EntityUid gunUid, GunComponent gun, bool needUser = true)
+    private void AttemptShoot(EntityUid? user, EntityUid gunUid, GunComponent gun)
     {
+        if (!gun.CanShootWithoutUser && user == null)
+            return;
+
         if (gun.FireRate <= 0f)
             return;
 
-        if (needUser)
+        if (user != null)
         {
-            if (user == null) return;
-
             if (!_actionBlockerSystem.CanUseHeldEntity(user.Value))
                 return;
 

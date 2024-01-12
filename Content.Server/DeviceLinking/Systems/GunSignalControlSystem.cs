@@ -22,14 +22,17 @@ public sealed partial class GunSignalControlSystem : EntitySystem
 
     private void OnInit(Entity<GunSignalControlComponent> gunControl, ref MapInitEvent args)
     {
-        _signalSystem.EnsureSinkPorts(gunControl, gunControl.Comp.TriggerPort, gunControl.Comp.OnPort, gunControl.Comp.OffPort);
+        _signalSystem.EnsureSinkPorts(gunControl, gunControl.Comp.TriggerPort, gunControl.Comp.TogglePort, gunControl.Comp.OnPort, gunControl.Comp.OffPort);
     }
 
     private void OnSignalReceived(Entity<GunSignalControlComponent> gunControl, ref SignalReceivedEvent args)
     {
+        if (!TryComp<GunComponent>(gunControl, out var gun))
+            return;
+
         if (args.Port == gunControl.Comp.TriggerPort)
         {
-            Fire(gunControl);
+            Fire(gunControl, gun);
         }
         if (args.Port == gunControl.Comp.TogglePort)
         {
@@ -44,13 +47,10 @@ public sealed partial class GunSignalControlSystem : EntitySystem
             gunControl.Comp.Enabled = false;
         }
     }
-    private void Fire(EntityUid uid)
+    private void Fire(EntityUid uid, GunComponent gun)
     {
-        if (!TryComp<GunComponent>(uid, out var gun))
-            return;
-
         var targetPos = new EntityCoordinates(uid, new Vector2(0, -1));
-        _gun.AttemptShoot(null, uid, gun, targetPos, false);
+        _gun.AttemptShoot(null, uid, gun, targetPos);
     }
 
     public override void Update(float frameTime)
@@ -66,7 +66,7 @@ public sealed partial class GunSignalControlSystem : EntitySystem
             if (gunControl.NextShootTime > _timing.CurTime)
                 return;
 
-            Fire(uid);
+            Fire(uid, gun);
             gunControl.NextShootTime = _timing.CurTime + TimeSpan.FromSeconds(1 / gun.FireRate);
         }
     }

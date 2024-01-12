@@ -5,7 +5,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -83,16 +82,17 @@ public partial class GunComponent : Component
     #endregion
 
     /// <summary>
+    /// Determines whether the weapon can fire "independently", through various signals or interactions
+    /// that do not involve beings activating the weapon with their hands
+    /// </summary>
+    [DataField]
+    public bool CanShootWithoutUser = false;
+
+    /// <summary>
     /// Whether this gun is shot via the use key or the alt-use key.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("useKey"), AutoNetworkedField]
     public bool UseKey = true;
-
-    /// <summary>
-    /// if true, clicking on an object in the world activates a single shot with user = null. This is necessary to manually activate the ship's cannons, e.g.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    public bool ActivateInWorldShoot = false;
 
     /// <summary>
     /// Where the gun is being requested to shoot.
