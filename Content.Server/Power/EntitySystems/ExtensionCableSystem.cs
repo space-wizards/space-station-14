@@ -45,10 +45,12 @@ namespace Content.Server.Power.EntitySystems
 
         #region Provider
 
-        public void SetProviderTransferRange(Entity<ExtensionCableProviderComponent> provider, int range)
+        public void SetProviderTransferRange(Entity<ExtensionCableProviderComponent?> provider, int range)
         {
+            if (!Resolve(provider, ref provider.Comp))
+                return;
             provider.Comp.TransferRange = range;
-            ResetReceivers(provider);
+            ResetReceivers((provider, provider.Comp));
         }
 
         private void OnProviderStarted(Entity<ExtensionCableProviderComponent> provider, ref ComponentStartup args)
@@ -182,20 +184,22 @@ namespace Content.Server.Power.EntitySystems
 
         #region Receiver
 
-        public void SetReceiverReceptionRange(Entity<ExtensionCableReceiverComponent> receiver, int range)
+        public void SetReceiverReceptionRange(Entity<ExtensionCableReceiverComponent?> receiver, int range)
         {
+            if (!Resolve(receiver, ref receiver.Comp))
+                return;
             var provider = receiver.Comp.Provider;
             receiver.Comp.Provider = null;
             RaiseLocalEvent(receiver, new ProviderDisconnectedEvent(provider), broadcast: false);
 
             if (provider != null)
             {
-                provider.Value.Comp.LinkedReceivers.Remove(receiver);
-                RaiseLocalEvent(provider.Value, new ReceiverDisconnectedEvent(receiver), broadcast: false);
+                provider.Value.Comp.LinkedReceivers.Remove((receiver, receiver.Comp));
+                RaiseLocalEvent(provider.Value, new ReceiverDisconnectedEvent((receiver, receiver.Comp)), broadcast: false);
             }
 
             receiver.Comp.ReceptionRange = range;
-            TryFindAndSetClosestProvider(receiver);
+            TryFindAndSetClosestProvider((receiver, receiver.Comp));
         }
 
         private void OnReceiverStarted(Entity<ExtensionCableReceiverComponent> receiver, ref ComponentStartup args)
