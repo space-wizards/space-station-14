@@ -70,7 +70,7 @@ namespace Content.Shared.Atmos
 
         public bool MoveNext(out GasOverlayData gas)
         {
-            while (_index < _tileData.Length)
+            while (++_index < _tileData.Length)
             {
                 X += 1;
                 if (X >= ChunkSize)
@@ -79,7 +79,6 @@ namespace Content.Shared.Atmos
                     Y += 1;
                 }
 
-                _index += 1;
                 gas = _tileData[_index];
                 if (!gas.Equals(default))
                     return true;
