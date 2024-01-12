@@ -4,8 +4,8 @@ using Content.Server.CartridgeLoader;
 using Content.Server.CartridgeLoader.Cartridges;
 using Content.Server.GameTicking;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Access.Systems;
 using Content.Server.Popups;
-using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CartridgeLoader;
@@ -34,7 +34,7 @@ public sealed class NewsSystem : SharedNewsSystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
+    [Dependency] private readonly IdCardSystem _idCardSystem = default!;
 
     public override void Initialize()
     {
@@ -207,33 +207,13 @@ public sealed class NewsSystem : SharedNewsSystem
         if (!author.HasValue)
             return;
 
-        if (!_accessReader.FindAccessItemsInventory(author.Value, out var items))
-            return;
-
-        if (!_accessReader.FindStationRecordKeys(author.Value, out var stationRecordKeys, items))
+        if (!_accessReader.FindStationRecordKeys(author.Value, out _))
             return;
 
         string? authorName = null;
 
-        // TODO: There is a dedicated helper for this.
-        foreach (var item in items)
-        {
-            // ID
-            if (TryComp(item, out IdCardComponent? id))
-            {
-                authorName = id.FullName;
-                break;
-            }
-
-
-            if (TryComp(item, out PdaComponent? pda)
-                && pda.ContainedId != null
-                && TryComp(pda.ContainedId, out id))
-            {
-                authorName = id.FullName;
-                break;
-            }
-        }
+        if (_idCardSystem.TryFindIdCard(author.Value, out var idCard))
+            authorName = idCard.Comp.FullName;
 
         var name = msg.Name.Trim();
         var content = msg.Content.Trim();
@@ -256,7 +236,6 @@ public sealed class NewsSystem : SharedNewsSystem
 
         articles.Add(article);
 
-        // Eventually replace with device networking to only notify pdas on the same station
         var args = new NewsArticlePublishedEvent(article);
 
         var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();
