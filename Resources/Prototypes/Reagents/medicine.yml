@@ -1027,3 +1027,112 @@
             Heat: -0.2
             Shock: -0.2
             Cold: -0.2
+
+- type: reagent
+  id: Pyrazine
+  name: reagent-name-pyrazine
+  group: Medicine
+  desc: reagent-desc-pyrazine
+  physicalDesc: reagent-physical-desc-thick
+  flavor: syrupy
+  color: "#aa4308"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1 # slow metabolism to not be a godly combat med, its for treating burn victims efficiently
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: -1
+      # od causes massive bleeding
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        damage:
+          types:
+            Slash: 0.5
+            Piercing: 0.5
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+        probability: 0.1
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        emote: Scream
+        probability: 0.2
+
+- type: reagent
+  id: Insuzine
+  name: reagent-name-insuzine
+  group: Medicine
+  desc: reagent-desc-insuzine
+  physicalDesc: reagent-physical-desc-frosty
+  flavor: metallic
+  color: "#8147ff"
+  metabolisms:
+    Medicine:
+      effects:
+      # heals shocks and removes shock chems
+      - !type:HealthChange
+        damage:
+          types:
+            Shock: -4
+      - !type:AdjustReagent
+        reagent: Licoxide
+        amount: -4
+      - !type:AdjustReagent
+        reagent:  Tazinide
+        amount: -4
+      # makes you a little chilly when not oding
+      - !type:AdjustTemperature
+        amount: -5000
+      # od makes you freeze to death
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 12
+        damage:
+          types:
+            Cold: 2
+      - !type:AdjustTemperature
+        conditions:
+        - !type:ReagentThreshold
+          min: 12
+        amount: -30000
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 12
+
+- type: reagent
+  id: Necrosol
+  name: reagent-name-necrosol
+  group: Medicine
+  desc: reagent-desc-necrosol
+  physicalDesc: reagent-physical-desc-necrotic
+  flavor: medicine
+  color: "#86a5bd"
+  worksOnTheDead: true
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: -5
+  - !type:PlantAdjustHealth
+    amount: 5
+  - !type:PlantCryoxadone {}
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            max: 213.0
+          damage:
+            groups:
+              Brute: -4
+              Burn: -5
+            types:
+              Poison: -2

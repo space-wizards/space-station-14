@@ -1,6 +1,9 @@
 ent-CrateFunPlushie = Plushie crate
     .desc = A buncha soft plushies. Throw them around and then wonder how you're gonna explain this purchase to NT.
 
+ent-CrateFunLizardPlushieBulk = Bulk lizard plushie crate
+    .desc = A buncha soft lizard plushies. Throw them around and then wonder how you're gonna explain this purchase to NT.
+
 ent-CrateFunInstrumentsVariety = Variety instrument collection
     .desc = Get your sad station movin' and groovin' with this catch-all variety pack! Contains seven different instruments.
 
