@@ -38,12 +38,6 @@ public sealed partial class ChangelingComponent : Component
     public float AbsorbStage = 0.0f;
 
     /// <summary>
-    /// The amount of blood the target loses when they're absorbed.
-    /// </summary>
-    [DataField]
-    public FixedPoint2 AbsorbBloodLossDmg = 1000.0f;
-
-    /// <summary>
     /// The amount of genetic damage the target gains when they're absorbed.
     /// </summary>
     [DataField]

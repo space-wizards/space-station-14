@@ -12,6 +12,10 @@ using Content.Shared.Damage;
 using Content.Server.Body.Systems;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Humanoid;
+using Content.Server.Humanoid;
+using Content.Server.Forensics;
+using Content.Server.Polymorph.Systems;
 
 namespace Content.Server.Changeling.EntitySystems;
 
