@@ -548,3 +548,17 @@
   products:
     Insuzine: 3
     Ash: 1
+
+- type: reaction
+  id: Necrosol
+  impact: Medium
+  minTemp: 370
+  reactants:
+    Blood:
+      amount: 3
+    Omnizine:
+      amount: 1
+    Cryoxadone:
+      amount: 2
+  products:
+    Necrosol: 2
