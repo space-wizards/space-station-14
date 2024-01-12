@@ -438,6 +438,7 @@
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
+      toggleable-clothing: !type:ContainerSlot
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ItemSlots
@@ -449,6 +450,7 @@
           tags:
             - PowerCell
             - PowerCellSmall
+  - type: DeviceLinkSink
   - type: EnergyDomeGenerator
     damageEnergyDraw: 6
     domePrototype: EnergyDomeSmallBlack
