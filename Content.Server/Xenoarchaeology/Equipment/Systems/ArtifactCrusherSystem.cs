@@ -7,7 +7,6 @@ using Content.Server.Storage.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
-using Content.Shared.Emag.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Xenoarchaeology.Equipment;
 using Robust.Shared.Collections;
@@ -34,7 +33,6 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
 
         SubscribeLocalEvent<ArtifactCrusherComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<ArtifactCrusherComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<ArtifactCrusherComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     private void OnGetVerbs(Entity<ArtifactCrusherComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -62,12 +60,6 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
     {
         if (!args.Powered)
             StopCrushing(ent);
-    }
-
-    private void OnEmagged(Entity<ArtifactCrusherComponent> ent, ref GotEmaggedEvent args)
-    {
-        ent.Comp.AutoLock = true;
-        args.Handled = true;
     }
 
     public void StartCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent)

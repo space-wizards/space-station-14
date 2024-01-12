@@ -2,6 +2,7 @@ using Content.Shared.Examine;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Content.Shared.Emag.Systems;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
@@ -23,6 +24,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
         SubscribeLocalEvent<ArtifactCrusherComponent, StorageAfterOpenEvent>(OnStorageAfterOpen);
         SubscribeLocalEvent<ArtifactCrusherComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
         SubscribeLocalEvent<ArtifactCrusherComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<ArtifactCrusherComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     private void OnInit(Entity<ArtifactCrusherComponent> ent, ref ComponentInit args)
@@ -34,6 +36,12 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
     {
         StopCrushing(ent);
         ContainerSystem.EmptyContainer(ent.Comp.OutputContainer);
+    }
+
+    private void OnEmagged(Entity<ArtifactCrusherComponent> ent, ref GotEmaggedEvent args)
+    {
+        ent.Comp.AutoLock = true;
+        args.Handled = true;
     }
 
     private void OnStorageOpenAttempt(Entity<ArtifactCrusherComponent> ent, ref StorageOpenAttemptEvent args)
