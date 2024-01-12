@@ -59,13 +59,17 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 
     private void OnInit(Entity<EnergyDomeGeneratorComponent> generator, ref ComponentInit args)
     {
-        _signalSystem.EnsureSinkPorts(generator, generator.Comp.TogglePort, generator.Comp.OnPort, generator.Comp.OffPort);
+        if (generator.Comp.CanDeviceNetworkUse)
+            _signalSystem.EnsureSinkPorts(generator, generator.Comp.TogglePort, generator.Comp.OnPort, generator.Comp.OffPort);
     }
 
     //different ways of use
 
     private void OnSignalReceived(Entity<EnergyDomeGeneratorComponent> generator, ref SignalReceivedEvent args)
     {
+        if (!generator.Comp.CanDeviceNetworkUse)
+            return;
+
         if (args.Port == generator.Comp.OnPort)
         {
             AttemptToggle(generator, true);

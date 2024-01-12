@@ -23,6 +23,12 @@ public sealed partial class EnergyDomeGeneratorComponent : Component
     [DataField]
     public bool CanInteractUse = true;
 
+    /// <summary>
+    /// Can the NetworkDevice system activate and deactivate the barrier?
+    /// </summary>
+    [DataField]
+    public bool CanDeviceNetworkUse = false;
+
     [DataField]
     public bool Enabled = false;
 

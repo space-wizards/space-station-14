@@ -31,7 +31,6 @@
   - type: EnergyDomeGenerator
     damageEnergyDraw: 5
     domePrototype: EnergyDomeSmallRed
-  - type: DeviceLinkSink
   - type: PowerCellDraw
     drawRate: 10
     useRate: 0
@@ -85,6 +84,7 @@
   - type: EnergyDomeGenerator
     damageEnergyDraw: 7
     domePrototype: EnergyDomeMediumBlue
+    canDeviceNetworkUse: true
   - type: PowerCellDraw
     drawRate: 2
     useRate: 0

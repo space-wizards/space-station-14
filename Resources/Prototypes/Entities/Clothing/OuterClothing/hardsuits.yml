@@ -450,7 +450,6 @@
           tags:
             - PowerCell
             - PowerCellSmall
-  - type: DeviceLinkSink
   - type: EnergyDomeGenerator
     damageEnergyDraw: 6
     domePrototype: EnergyDomeSmallBlack
