@@ -47,7 +47,7 @@
     animation: WeaponArcPunch
     damage:
       types:
-        Piercing: 5
+        Slash: 5
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
