@@ -1,9 +1,6 @@
-using Robust.Shared.Timing;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
-using Content.Shared.MassMedia.Systems;
 using Content.Shared.MassMedia.Components;
-using Content.Client.GameTicking.Managers;
+using Content.Shared.MassMedia.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Client.MassMedia.Ui
@@ -14,16 +11,11 @@ namespace Content.Client.MassMedia.Ui
         [ViewVariables]
         private NewsWriteMenu? _menu;
 
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        private ClientGameTicker? _gameTicker;
-
         [ViewVariables]
         private string _windowName = Loc.GetString("news-read-ui-default-title");
 
         public NewsWriteBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-
         }
 
         protected override void Open()
@@ -35,8 +27,6 @@ namespace Content.Client.MassMedia.Ui
 
             _menu.ShareButtonPressed += OnShareButtonPressed;
             _menu.DeleteButtonPressed += OnDeleteButtonPressed;
-
-            _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
 
             SendMessage(new NewsWriteArticlesRequestMessage());
         }
@@ -67,19 +57,21 @@ namespace Content.Client.MassMedia.Ui
 
             var stringContent = Rope.Collapse(_menu.ContentInput.TextRope);
 
-            if (stringContent == null || stringContent.Length == 0)
+            if (stringContent.Length == 0)
                 return;
 
-            var stringName = _menu.NameInput.Text;
-            var name = (stringName.Length <= 25 ? stringName.Trim() : $"{stringName.Trim().Substring(0, 25)}...");
+            var stringName = _menu.NameInput.Text.Trim();
+            var name = stringName[..(SharedNewsSystem.MaxNameLength)];
+            var content = stringContent[..(SharedNewsSystem.MaxArticleLength)];
             _menu.ContentInput.TextRope = new Rope.Leaf(string.Empty);
             _menu.NameInput.Text = string.Empty;
-            SendMessage(new NewsWriteShareMessage(name, stringContent));
+            SendMessage(new NewsWriteShareMessage(name, content));
         }
 
         private void OnDeleteButtonPressed(int articleNum)
         {
-            if (_menu == null) return;
+            if (_menu == null)
+                return;
 
             SendMessage(new NewsWriteDeleteMessage(articleNum));
         }
