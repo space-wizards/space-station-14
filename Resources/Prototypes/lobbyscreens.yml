@@ -21,3 +21,7 @@
 - type: lobbyBackground
   id: Susstation
   background: /Textures/LobbyScreens/susstation.png
+
+- type: lobbyBackground
+  id: SkellyVsTheRev
+  background: /Textures/LobbyScreens/skellyvstherev.png
