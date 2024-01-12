@@ -224,8 +224,8 @@ public sealed class CargoTrackingSystem : EntitySystem
         if (component.TrackedOrderId is null)
             return;
 
-        StopTrackingArrival(uid, args.User);
         UntrackOrder(uid, component.TrackedOrderId.Value);
+        StopTrackingArrival(uid, args.User);
         StopWaiting(uid, component);
     }
 
