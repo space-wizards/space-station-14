@@ -314,6 +314,8 @@ namespace Content.Server.Kitchen.EntitySystems
             {
                 SetAppearance(ent, MicrowaveVisualState.Idle, ent.Comp);
                 RemComp<ActiveMicrowaveComponent>(ent);
+                foreach (var solid in ent.Comp.Storage.ContainedEntities)
+                    EntityManager.RemoveComponentDeferred<ActivelyMicrowavedComponent>(solid);
             }
             UpdateUserInterfaceState(ent, ent.Comp);
         }
