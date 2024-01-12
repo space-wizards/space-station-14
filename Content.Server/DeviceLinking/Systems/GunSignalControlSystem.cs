@@ -4,6 +4,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Robust.Shared.Map;
 using System.Numerics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.DeviceLinking.Systems;
 
@@ -11,14 +12,15 @@ public sealed partial class GunSignalControlSystem : EntitySystem
 {
     [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
     [Dependency] private readonly GunSystem _gun = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<GunSignalControlComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<GunSignalControlComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<GunSignalControlComponent, SignalReceivedEvent>(OnSignalReceived);
     }
 
-    private void OnInit(Entity<GunSignalControlComponent> gunControl, ref ComponentInit args)
+    private void OnInit(Entity<GunSignalControlComponent> gunControl, ref MapInitEvent args)
     {
         _signalSystem.EnsureSinkPorts(gunControl, gunControl.Comp.TriggerPort, gunControl.Comp.OnPort, gunControl.Comp.OffPort);
     }
@@ -61,13 +63,11 @@ public sealed partial class GunSignalControlSystem : EntitySystem
             if (!gunControl.Enabled)
                 continue;
 
-            gunControl.AccumulatedFrame += frameTime;
+            if (gunControl.NextShootTime > _timing.CurTime)
+                return;
 
-            if (gunControl.AccumulatedFrame > (1 / gun.FireRate))
-            {
-                Fire(uid);
-                gunControl.AccumulatedFrame = 0f;
-            }
+            Fire(uid);
+            gunControl.NextShootTime = _timing.CurTime + TimeSpan.FromSeconds(1 / gun.FireRate);
         }
     }
 }

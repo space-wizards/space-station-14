@@ -1,6 +1,7 @@
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.DeviceLinking.Components;
 
@@ -16,8 +17,8 @@ public sealed partial class GunSignalControlComponent : Component
     [DataField]
     public bool Enabled = false;
 
-    [DataField]
-    public float AccumulatedFrame = 0f;
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
+    public TimeSpan NextShootTime;
 
     [DataField]
     public ProtoId<SinkPortPrototype> TriggerPort = "Trigger";
