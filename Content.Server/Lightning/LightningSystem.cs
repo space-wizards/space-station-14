@@ -21,6 +21,7 @@ public sealed class LightningSystem : SharedLightningSystem
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     private List<Entity<LightningTargetComponent>> _lookupTargetsList = new();
     private HashSet<Entity<LightningTargetComponent>> _lookupTargets = new();
@@ -65,8 +66,11 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
     public void ShootSpark(EntityUid user, EntityUid target, string lightningPrototype = "Lightning")
     {
-        var spriteState = LightningRandomizer();
-        _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
+        if (_entityManager.EntityExists(user) && _entityManager.EntityExists(target))
+        {
+            var spriteState = LightningRandomizer();
+            _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
+        }
 
         // todo: spark event will go here, we don't want to trigger lightning level events for minor sparks.
     }
