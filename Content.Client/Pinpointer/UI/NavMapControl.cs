@@ -61,8 +61,8 @@ public partial class NavMapControl : MapGridControl
     private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
     public Color _backgroundColor;
     public float _backgroundOpacity = 0.9f;
-
     private int _targetFontsize = 8;
+    private IResourceCache _cache;
 
     // Components
     private NavMapComponent? _navMap;
@@ -99,7 +99,7 @@ public partial class NavMapControl : MapGridControl
     public NavMapControl() : base(MinDisplayedRange, MaxDisplayedRange, DefaultDisplayedRange)
     {
         IoCManager.InjectDependencies(this);
-        var cache = IoCManager.Resolve<IResourceCache>();
+        _cache = IoCManager.Resolve<IResourceCache>();
 
         _transformSystem = _entManager.System<SharedTransformSystem>();
         _backgroundColor = Color.FromSrgb(TileColor.WithAlpha(_backgroundOpacity));
@@ -406,12 +406,10 @@ public partial class NavMapControl : MapGridControl
         if (_beacons.Pressed)
         {
             var rectBuffer = new Vector2(5f, 3f);
-            var cache = IoCManager.Resolve<IResourceCache>();
-            Font font;
 
             // Calculate font size for current zoom level
             var fontSize = (int) Math.Round(1 / WorldRange * DefaultDisplayedRange * UIScale * _targetFontsize , 0);
-            font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), fontSize);
+            var font = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), fontSize);
 
             foreach (var beacon in _navMap.Beacons)
             {
