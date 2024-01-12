@@ -11236,11 +11236,25 @@ entities:
     - type: Transform
       pos: -41.5,-61.5
       parent: 8364
+    - type: DeviceLinkSink
+      links:
+      - 14449
+    - type: DeviceLinkSource
+      linkedPorts:
+        14449:
+        - DoorStatus: DoorBolt
   - uid: 14449
     components:
     - type: Transform
       pos: -39.5,-61.5
       parent: 8364
+    - type: DeviceLinkSink
+      links:
+      - 14448
+    - type: DeviceLinkSource
+      linkedPorts:
+        14448:
+        - DoorStatus: DoorBolt
   - uid: 17059
     components:
     - type: Transform
@@ -11266,6 +11280,13 @@ entities:
     - type: Transform
       pos: -33.5,-65.5
       parent: 8364
+    - type: DeviceLinkSink
+      links:
+      - 15592
+    - type: DeviceLinkSource
+      linkedPorts:
+        15592:
+        - DoorStatus: DoorBolt
   - uid: 9436
     components:
     - type: Transform
@@ -11563,6 +11584,13 @@ entities:
     - type: Transform
       pos: -35.5,-65.5
       parent: 8364
+    - type: DeviceLinkSink
+      links:
+      - 4758
+    - type: DeviceLinkSource
+      linkedPorts:
+        4758:
+        - DoorStatus: DoorBolt
   - uid: 19366
     components:
     - type: MetaData
@@ -153397,7 +153425,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 68.5,-47.5
       parent: 8364
@@ -153405,7 +153432,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 16.5,39.5
       parent: 8364
@@ -153413,7 +153439,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 5.5,-12.5
       parent: 8364
@@ -153421,7 +153446,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -38.5,5.5
       parent: 8364
@@ -153429,7 +153453,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -55.5,-0.5
       parent: 8364
@@ -153437,7 +153460,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -54.5,-8.5
       parent: 8364
@@ -153445,7 +153467,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -38.5,-4.5
       parent: 8364
@@ -153453,7 +153474,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -18.5,-9.5
       parent: 8364
@@ -153486,7 +153506,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: 68.5,-43.5
       parent: 8364
@@ -153494,7 +153513,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: 15.5,19.5
       parent: 8364
@@ -153502,7 +153520,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: 55.5,-10.5
       parent: 8364
@@ -153531,7 +153548,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: -32.5,-72.5
       parent: 8364
@@ -153593,7 +153609,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Donut
     - type: Transform
       pos: 82.5,-1.5
       parent: 8364
@@ -153601,7 +153616,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Donut
     - type: Transform
       pos: 6.5,33.5
       parent: 8364
@@ -153749,7 +153763,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Salvage Equipment
     - type: Transform
       pos: -27.5,-29.5
       parent: 8364
@@ -153859,7 +153872,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: tank dispenser
     - type: Transform
       pos: 55.5,-55.5
       parent: 8364
@@ -153867,7 +153879,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: tank dispenser
     - type: Transform
       pos: 75.5,-43.5
       parent: 8364
@@ -153875,7 +153886,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: tank dispenser
     - type: Transform
       pos: -28.5,-29.5
       parent: 8364
@@ -181477,7 +181487,7 @@ entities:
   - uid: 13542
     components:
     - type: MetaData
-      name: 'Garden '
+      name: Garden
     - type: Transform
       pos: -19.5,3.5
       parent: 8364

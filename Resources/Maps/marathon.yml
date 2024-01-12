@@ -688,6 +688,11 @@ entities:
             2450: -12,-38
             2451: -14,-38
             2736: 39,9
+            3111: -5,-50
+            3112: -12,-56
+            3113: -10,-56
+            3114: -6,-56
+            3115: -4,-56
         - node:
             color: '#FFFFFFFF'
             id: BoxGreyscale
@@ -1954,6 +1959,7 @@ entities:
             2904: -17,-11
             2905: -17,-10
             2906: -17,-9
+            3110: -8,-49
         - node:
             color: '#FFFFFFFF'
             id: DiagonalCheckerAOverlay
@@ -21215,6 +21221,11 @@ entities:
     - type: Transform
       pos: -41.5,-10.5
       parent: 30
+  - uid: 7225
+    components:
+    - type: Transform
+      pos: -10.5,-33.5
+      parent: 30
   - uid: 7236
     components:
     - type: Transform
@@ -22799,6 +22810,11 @@ entities:
     components:
     - type: Transform
       pos: 6.5,2.5
+      parent: 30
+  - uid: 8253
+    components:
+    - type: Transform
+      pos: -11.5,-33.5
       parent: 30
   - uid: 8357
     components:
@@ -67461,15 +67477,7 @@ entities:
   - uid: 7224
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -4.5,-49.5
-      parent: 30
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
-  - uid: 7225
-    components:
-    - type: Transform
-      pos: -4.5,-48.5
+      pos: -3.5,-48.5
       parent: 30
     - type: AtmosPipeColor
       color: '#03FCD3FF'
@@ -67600,13 +67608,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -6.5,-49.5
-      parent: 30
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
-  - uid: 8253
-    components:
-    - type: Transform
-      pos: -5.5,-49.5
       parent: 30
     - type: AtmosPipeColor
       color: '#03FCD3FF'
@@ -74274,6 +74275,14 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#FF1212FF'
+  - uid: 4353
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.5,-48.5
+      parent: 30
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 5006
     components:
     - type: Transform
@@ -75293,14 +75302,6 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#FF1212FF'
-  - uid: 7223
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -3.5,-49.5
-      parent: 30
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
   - uid: 7226
     components:
     - type: Transform
@@ -85399,6 +85400,13 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -45.5,-9.5
       parent: 30
+  - uid: 1938
+    components:
+    - type: Transform
+      pos: -5.5,-49.5
+      parent: 30
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 2431
     components:
     - type: Transform
@@ -86666,6 +86674,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: -22.5,-9.5
       parent: 30
+  - uid: 7223
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-49.5
+      parent: 30
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 7228
     components:
     - type: Transform
@@ -88599,9 +88615,25 @@ entities:
       color: '#FF1212FF'
   - uid: 7222
     components:
+    - type: MetaData
+      name: Emergency Dump Valve
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,-48.5
+      parent: 30
+    - type: GasValve
+      open: False
+    - type: AtmosDevice
+      joinedGrid: 30
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
+  - uid: 8278
+    components:
+    - type: MetaData
+      name: Cold Loop Valve
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.5,-49.5
       parent: 30
     - type: GasValve
       open: False
