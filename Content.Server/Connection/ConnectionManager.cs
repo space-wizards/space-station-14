@@ -1,5 +1,7 @@
 using System.Collections.Immutable;
+using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Connection.Whitelist;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
@@ -9,6 +11,7 @@ using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 
 namespace Content.Server.Connection
@@ -30,11 +33,14 @@ namespace Content.Server.Connection
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly ILocalizationManager _loc = default!;
         [Dependency] private readonly ServerDbEntryManager _serverDbEntry = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+        private ISawmill _sawmill = default!;
         public void Initialize()
         {
             _netMgr.Connecting += NetMgrOnConnecting;
             _netMgr.AssignUserIdCallback = AssignUserIdCallback;
+            _sawmill = Logger.GetSawmill("connmgr");
             // Approval-based IP bans disabled because they don't play well with Happy Eyeballs.
             // _netMgr.HandleApprovalCallback = HandleApproval;
         }
@@ -170,18 +176,15 @@ namespace Content.Server.Connection
 
             if (_cfg.GetCVar(CCVars.WhitelistEnabled))
             {
-                var min = _cfg.GetCVar(CCVars.WhitelistMinPlayers);
-                var max = _cfg.GetCVar(CCVars.WhitelistMaxPlayers);
-                var playerCountValid = _plyMgr.PlayerCount >= min && _plyMgr.PlayerCount < max;
+                var whitelists = _prototypeManager.EnumeratePrototypes<WhitelistPrototype>();
+                var whitelist = whitelists.First(x => x.ID == _cfg.GetCVar(CCVars.WhitelistPrototype));
 
-                if (playerCountValid && await _db.GetWhitelistStatusAsync(userId) == false
-                                     && adminData is null)
+                var whitelistStatus = whitelist.IsWhitelisted(e.UserData, _sawmill);
+
+                if (!whitelistStatus.isWhitelisted)
                 {
-                    var msg = Loc.GetString(_cfg.GetCVar(CCVars.WhitelistReason));
-                    // was the whitelist playercount changed?
-                    if (min > 0 || max < int.MaxValue)
-                        msg += "\n" + Loc.GetString("whitelist-playercount-invalid", ("min", min), ("max", max));
-                    return (ConnectionDenyReason.Whitelist, msg, null);
+                    // Not whitelisted.
+                    return (ConnectionDenyReason.Whitelist, Loc.GetString(whitelistStatus.denyMessage!), null);
                 }
             }
 

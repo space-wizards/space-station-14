@@ -1,0 +1,4 @@
+﻿- type: whitelist
+  id: denyAll
+  conditions:
+    - !type:TestConditionAlwaysDeny
