@@ -54,6 +54,7 @@
   wires:
   - !type:PowerWireAction
   - !type:SpeechWireAction
+  - !type:ListenWireAction
 
 - type: wireLayout
   id: FireAlarm
