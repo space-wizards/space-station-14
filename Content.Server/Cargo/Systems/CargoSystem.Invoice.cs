@@ -34,11 +34,12 @@ public sealed partial class CargoSystem
         }
 
         // set the OrderId of the invoice
-        if (TryComp<CargoInvoiceComponent>(printed, out var invoice))
+        var invoice = new CargoInvoiceComponent()
         {
-            invoice.OrderId = order.OrderId;
-            invoice.OrderName = orderPrototype.Name;
-        }
+            OrderId = order.OrderId,
+            OrderName = orderPrototype.Name
+        };
+        AddComp(printed, invoice);
 
         return printed;
     }
