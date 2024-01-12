@@ -63,3 +63,4 @@ wire-name-bomb-delay = DLAY
 wire-name-bomb-proceed = PRCD
 wire-name-bomb-boom = BOOM
 wire-name-bomb-bolt = BOLT
+wire-name-speech = SPKR
