@@ -84,6 +84,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
             SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
             SubscribeLocalEvent<TriggerWhenEmptyComponent, OnEmptyGunShotEvent>(OnEmptyTriggered);
+            SubscribeLocalEvent<TriggerOnSpawnComponent, ComponentInit>(OnSpawnTriggered);
 
             SubscribeLocalEvent<SpawnOnTriggerComponent, TriggerEvent>(OnSpawnTrigger);
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
@@ -217,6 +218,11 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnEmptyTriggered(EntityUid uid, TriggerWhenEmptyComponent component, ref OnEmptyGunShotEvent args)
         {
             Trigger(uid, args.EmptyGun);
+        }
+
+        private void OnSpawnTriggered(EntityUid uid, TriggerOnSpawnComponent component, ComponentInit args)
+        {
+            Trigger(uid);
         }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)

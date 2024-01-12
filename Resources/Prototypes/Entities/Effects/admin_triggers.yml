@@ -1,0 +1,117 @@
+- type: entity
+  id: AdminInstantEffectBase
+  name: instant effect
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/weather.rsi
+    visible: false
+    state: rain
+  - type: TriggerOnSpawn
+
+- type: entity
+  id: AdminInstantEffectEMP
+  suffix: EMP
+  parent: AdminInstantEffectBase
+  components:
+  - type: EmpOnTrigger
+    range: 4
+    energyConsumption: 50000
+  - type: DeleteOnTrigger
+
+- type: entity
+  id: AdminInstantEffectFlash
+  suffix: Flash
+  parent: AdminInstantEffectBase
+  components:
+  - type: FlashOnTrigger
+    range: 7
+  - type: SpawnOnTrigger 
+    proto: GrenadeFlashEffect
+  - type: DeleteOnTrigger
+  
+- type: entity
+  id: AdminInstantEffectSmoke3
+  suffix: Smoke (03 sec)
+  parent: AdminInstantEffectBase
+  components:
+  - type: SmokeOnTrigger
+    duration: 3
+    spreadAmount: 1
+  - type: SoundOnTrigger
+    sound: /Audio/Effects/smoke.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/Smoke-grenade.ogg
+  - type: DeleteOnTrigger
+  
+- type: entity
+  id: AdminInstantEffectSmoke10
+  suffix: Smoke (10 sec)
+  parent: AdminInstantEffectBase
+  components:
+  - type: SmokeOnTrigger
+    duration: 10
+    spreadAmount: 30
+  - type: SoundOnTrigger
+    sound: /Audio/Effects/smoke.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/Smoke-grenade.ogg
+  - type: DeleteOnTrigger
+  
+- type: entity
+  id: AdminInstantEffectSmoke30
+  suffix: Smoke (30 sec)
+  parent: AdminInstantEffectBase
+  components:
+  - type: SmokeOnTrigger
+    duration: 30
+    spreadAmount: 50
+  - type: SoundOnTrigger
+    sound: /Audio/Effects/smoke.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/Smoke-grenade.ogg
+  - type: DeleteOnTrigger
+
+- type: entity
+  id: AdminInstantEffectTearGas
+  suffix: Tear Gas
+  parent: AdminInstantEffectBase
+  components:
+  - type: SmokeOnTrigger
+    duration: 10
+    spreadAmount: 30
+    solution:
+      reagents:
+      - ReagentId: TearGas
+        Quantity: 50
+  - type: DeleteOnTrigger
+
+- type: entity
+  id: AdminInstantEffectGravityWell
+  suffix: Gravity Well
+  parent: AdminInstantEffectBase
+  components:    
+  - type: TimedDespawn
+    lifetime: 7
+  - type: SoundOnTrigger
+    removeOnTrigger: true
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
+      volume: 5
+  - type: AmbientSound
+    enabled: true
+    volume: -5
+    range: 14
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
+  - type: GravityWell
+    maxRange: 8
+    baseRadialAcceleration: 10
+    baseTangentialAcceleration: 0
+    gravPulsePeriod: 0.01
+  - type: SingularityDistortion
+    intensity: 10
+    falloffPower: 1.5
+      
