@@ -1,10 +1,7 @@
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Nuke;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Network;
@@ -13,7 +10,6 @@ namespace Content.Shared.Pinpointer;
 
 public abstract class SharedPinpointerSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -119,7 +115,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return;
 
         pinpointer.DistanceToTarget = distance;
-        Dirty(pinpointer);
+        Dirty(uid, pinpointer);
     }
 
     /// <summary>
@@ -157,7 +153,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return false;
 
         pinpointer.ArrowAngle = arrowAngle;
-        Dirty(pinpointer);
+        Dirty(uid,pinpointer);
 
         return true;
     }
@@ -173,7 +169,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return;
 
         pinpointer.IsActive = isActive;
-        Dirty(pinpointer);
+        Dirty(uid, pinpointer);
     }
 
 
