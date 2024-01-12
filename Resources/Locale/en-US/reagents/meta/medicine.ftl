@@ -123,3 +123,6 @@ reagent-desc-pyrazine = Efficiently heals burns from the hottest of fires. Cause
 
 reagent-name-insuzine = insuzine
 reagent-desc-insuzine = Rapidly repairs dead tissue caused by electrocution, but cools you slightly. Completely freezes the patient when overdosed.
+
+reagent-name-necrosol = necrosol
+reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses
