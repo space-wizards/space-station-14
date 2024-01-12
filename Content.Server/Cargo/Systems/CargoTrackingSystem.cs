@@ -29,6 +29,11 @@ public sealed class CargoTrackingSystem : EntitySystem
         SubscribeLocalEvent<CargoOrderDeletionEvent>(OnCargoOrderDeletion);
     }
 
+    /// <summary>
+    /// Pair an entity and order id together. Used by <see cref="OnCargoOrderArrival"/> and <see cref="OnCargoOrderDeletion"/> to easily find the entities of order trackers that are tracking a specific order id.
+    /// </summary>
+    /// <param name="tracker">The entity uid of the order tracker.</param>
+    /// <param name="orderId">The integer id of the order.</param>
     private void TrackOrder(EntityUid tracker, int orderId)
     {
         if (_orderTracking.TryGetValue(orderId, out var entry))
@@ -42,6 +47,12 @@ public sealed class CargoTrackingSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Used to clean up and remove a pairing of entity and order id, for when an order tracker has stopped tracking a specific order id.
+    /// </summary>
+    /// <param name="tracker"></param>
+    /// <param name="orderId"></param>
+    /// <returns>True if the pairing can be successfully deleted, false otherwise.</returns>
     private bool UntrackOrder(EntityUid tracker, int orderId)
     {
         if (!_orderTracking.TryGetValue(orderId, out var entry) || !entry.Contains(tracker))
@@ -54,6 +65,11 @@ public sealed class CargoTrackingSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Remove all pairings of entity and order id, of a specific order id.
+    /// </summary>
+    /// <param name="orderId">The id of the orders to untrack.</param>
+    /// <returns>True if they have been removed, false otherwise.</returns>
     private bool UntrackAllOrder(int orderId)
     {
         return _orderTracking.Remove(orderId);
@@ -172,6 +188,7 @@ public sealed class CargoTrackingSystem : EntitySystem
             return;
 
         StopTrackingArrival(uid, args.User);
+        UntrackOrder(uid, component.TrackedOrderId.Value);
         StopWaiting(uid, component);
     }
 
