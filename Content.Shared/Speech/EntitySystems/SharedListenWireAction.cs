@@ -6,4 +6,5 @@ namespace Content.Shared.Speech;
 public enum ListenWireActionKey : byte
 {
     StatusKey,
+    TimeoutKey,
 }

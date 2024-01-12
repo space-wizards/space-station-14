@@ -11,6 +11,8 @@ namespace Content.Server.Speech;
 
 public sealed partial class ListenWireAction : BaseToggleWireAction
 {
+    private WiresSystem _wires = default!;
+
     /// <summary>
     /// Length of the gibberish string sent when pulsing the wire
     /// </summary>
@@ -20,9 +22,26 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
 
     public override object? StatusKey { get; } = ListenWireActionKey.StatusKey;
 
+    public override object? TimeoutKey { get; } = ListenWireActionKey.TimeoutKey;
+
+    public override int Delay { get; } = 10;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _wires = EntityManager.System<WiresSystem>();
+    }
     public override StatusLightState? GetLightState(Wire wire)
     {
-        return GetValue(wire.Owner) ? StatusLightState.On : StatusLightState.Off;
+        if (GetValue(wire.Owner))
+            return StatusLightState.On;
+        else
+        {
+            if (TimeoutKey != null && _wires.HasData(wire.Owner, TimeoutKey))
+                return StatusLightState.BlinkingSlow;
+            return StatusLightState.Off;
+        }
     }
     public override void ToggleValue(EntityUid owner, bool setting)
     {
@@ -44,6 +63,11 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
 
     public override void Pulse(EntityUid user, Wire wire)
     {
+        if (!GetValue(wire.Owner) || !IsPowered(wire.Owner))
+            return;
+
+        base.Pulse(user, wire);
+
         // We have to use a valid euid in the ListenEvent. The user seems
         // like a sensible choice, but we need to mask their name.
 
