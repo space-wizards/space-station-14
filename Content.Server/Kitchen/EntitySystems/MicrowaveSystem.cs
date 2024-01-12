@@ -59,6 +59,8 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<MicrowaveComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<MicrowaveComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<MicrowaveComponent, EntInsertedIntoContainerMessage>(OnContentUpdate);
+            SubscribeLocalEvent<MicrowaveComponent, EntRemovedFromContainerMessage>(OnContentUpdate);
             SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
             SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<MicrowaveComponent, PowerChangedEvent>(OnPowerChanged);
@@ -76,6 +78,10 @@ namespace Content.Server.Kitchen.EntitySystems
 
             SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentStartup>(OnCookStart);
             SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookStop);
+            SubscribeLocalEvent<ActiveMicrowaveComponent, EntInsertedIntoContainerMessage>(OnActiveMicrowaveInsert);
+            SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
+
+            SubscribeLocalEvent<ActivelyMicrowavedComponent, OnConstructionTemperatureEvent>(OnConstructionTemp);
         }
 
         private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
@@ -95,6 +101,22 @@ namespace Content.Server.Kitchen.EntitySystems
             SetAppearance(ent.Owner, MicrowaveVisualState.Idle, microwaveComponent);
 
             microwaveComponent.PlayingStream = _audio.Stop(microwaveComponent.PlayingStream);
+        }
+
+        private void OnActiveMicrowaveInsert(Entity<ActiveMicrowaveComponent> ent, ref EntInsertedIntoContainerMessage args)
+        {
+            AddComp<ActivelyMicrowavedComponent>(args.Entity);
+        }
+
+        private void OnActiveMicrowaveRemove(Entity<ActiveMicrowaveComponent> ent, ref EntRemovedFromContainerMessage args)
+        {
+            EntityManager.RemoveComponentDeferred<ActivelyMicrowavedComponent>(args.Entity);
+        }
+
+        private void OnConstructionTemp(Entity<ActivelyMicrowavedComponent> ent, ref OnConstructionTemperatureEvent args)
+        {
+            args.Result = HandleResult.False;
+            return;
         }
 
         /// <summary>
@@ -237,6 +259,11 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnSolutionChange(Entity<MicrowaveComponent> ent, ref SolutionContainerChangedEvent args)
         {
             UpdateUserInterfaceState(ent, ent.Comp);
+        }
+
+        private void OnContentUpdate(EntityUid uid, MicrowaveComponent component, ContainerModifiedMessage args) // For some reason ContainerModifiedMessage just can't be used at all with Entity<T>. TODO: replace with Entity<T> syntax once that's possible
+        {
+            UpdateUserInterfaceState(uid, component);
         }
 
         private void OnInteractUsing(Entity<MicrowaveComponent> ent, ref InteractUsingEvent args)
@@ -390,6 +417,8 @@ namespace Content.Server.Kitchen.EntitySystems
                     QueueDel(item);
                 }
 
+                AddComp<ActivelyMicrowavedComponent>(item);
+
                 var metaData = MetaData(item); //this simply begs for cooking refactor
                 if (metaData.EntityPrototype == null)
                     continue;
@@ -489,6 +518,9 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 //this means the microwave has finished cooking.
                 AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0)); //Though there's still a little bit more heat to pump out
+
+                foreach (var solid in microwave.Storage.ContainedEntities)
+                    EntityManager.RemoveComponentDeferred<ActivelyMicrowavedComponent>(solid);
 
                 if (active.PortionedRecipe.Item1 != null)
                 {
