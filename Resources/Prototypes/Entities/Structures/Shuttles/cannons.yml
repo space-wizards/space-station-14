@@ -194,7 +194,6 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
   - type: Gun
-    activateInWorldShoot: true
     projectileSpeed: 80
     fireRate: 4
     angleDecay: 45
@@ -311,7 +310,6 @@
     layers:
     - state: base
   - type: Gun
-    activateInWorldShoot: true
     fireRate: 1
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
