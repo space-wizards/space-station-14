@@ -60,6 +60,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<MicrowaveComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<MicrowaveComponent, SolutionContainerChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<MicrowaveComponent, EntInsertedIntoContainerMessage>(OnContentUpdate);
+            SubscribeLocalEvent<MicrowaveComponent, EntRemovedFromContainerMessage>(OnContentUpdate);
             SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
             SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<MicrowaveComponent, PowerChangedEvent>(OnPowerChanged);
