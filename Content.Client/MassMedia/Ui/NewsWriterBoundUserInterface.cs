@@ -14,9 +14,6 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
     [ViewVariables]
     private NewsWriterMenu? _menu;
 
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    private ClientGameTicker? _gameTicker;
-
     public NewsWriterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
 
@@ -31,8 +28,6 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
 
         _menu.ArticleEditorPanel.PublishButtonPressed += OnPublishButtonPressed;
         _menu.DeleteButtonPressed += OnDeleteButtonPressed;
-
-        _gameTicker = EntMan.System<ClientGameTicker>();
 
         SendMessage(new NewsWriterArticlesRequestMessage());
     }
@@ -58,29 +53,31 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
 
     private void OnPublishButtonPressed()
     {
-        var title = _menu?.ArticleEditorPanel.TitleField.Text ?? "";
+        var title = _menu?.ArticleEditorPanel.TitleField.Text.Trim() ?? "";
         if (_menu == null || title.Length == 0)
             return;
 
-        var stringContent = Rope.Collapse(_menu.ArticleEditorPanel.ContentField.TextRope);
+        var stringContent = Rope.Collapse(_menu.ArticleEditorPanel.ContentField.TextRope).Trim();
 
-        if (stringContent.Length == 0 || _gameTicker == null)
+        if (stringContent.Length == 0)
             return;
 
-        var name = title.Length <= 100 ? title.Trim() : $"{title.Trim()[..100]}...";
-        var article = new NewsArticle
-        {
-            Name = name,
-            Content = stringContent,
-            ShareTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan)
-        };
+        var name = title.Length <= SharedNewsSystem.MaxNameLength
+            ? title
+            : $"{title[..(SharedNewsSystem.MaxNameLength - 3)]}...";
 
-        SendMessage(new NewsWriterPublishMessage(article));
+        var content = stringContent.Length <= SharedNewsSystem.MaxArticleLength
+            ? stringContent
+            : $"{stringContent[..(SharedNewsSystem.MaxArticleLength - 3)]}...";
+
+
+        SendMessage(new NewsWriterPublishMessage(name, content));
     }
 
     private void OnDeleteButtonPressed(int articleNum)
     {
-        if (_menu == null) return;
+        if (_menu == null)
+            return;
 
         SendMessage(new NewsWriterDeleteMessage(articleNum));
     }

@@ -23,7 +23,7 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.MassMedia.Systems;
 
-public sealed class NewsSystem : EntitySystem
+public sealed class NewsSystem : SharedNewsSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -201,10 +201,8 @@ public sealed class NewsSystem : EntitySystem
         if (!TryGetArticles(uid, out var articles))
             return;
 
-        var article = msg.Article;
-        var author = msg.Session.AttachedEntity;
 
-        article.Name = article.Name.Length <= 108 ? article.Name : article.Name[..108];
+        var author = msg.Session.AttachedEntity;
 
         if (!author.HasValue)
             return;
@@ -215,10 +213,9 @@ public sealed class NewsSystem : EntitySystem
         if (!_accessReader.FindStationRecordKeys(author.Value, out var stationRecordKeys, items))
             return;
 
-        article.AuthorStationRecordKeyIds = StationRecordsToNetEntities(stationRecordKeys);
-
-
         string? authorName = null;
+
+        // TODO: There is a dedicated helper for this.
         foreach (var item in items)
         {
             // ID
@@ -238,12 +235,25 @@ public sealed class NewsSystem : EntitySystem
             }
         }
 
-        article.Author = authorName;
-        article.ShareTime = _ticker.RoundDuration();
+        var name = msg.Name.Trim();
+        var content = msg.Content.Trim();
+
+        var article = new NewsArticle
+        {
+            Name = name.Length <= MaxNameLength ? name : $"{name[..MaxNameLength]}...",
+            Content = content.Length <= MaxArticleLength ? content : $"{content[..MaxArticleLength]}...",
+            Author = authorName,
+            ShareTime = _ticker.RoundDuration()
+        };
 
         _audio.PlayPvs(component.ConfirmSound, uid);
-        _adminLogger.Add(LogType.Chat, LogImpact.Medium,
-            $"{ToPrettyString(author):actor} created news article {article.Name} by {article.Author}: {article.Content}");
+
+        _adminLogger.Add(
+            LogType.Chat,
+            LogImpact.Medium,
+            $"{ToPrettyString(author):actor} created news article {article.Name} by {article.Author}: {article.Content}"
+            );
+
         articles.Add(article);
 
         // Eventually replace with device networking to only notify pdas on the same station
