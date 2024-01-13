@@ -1,4 +1,6 @@
-﻿default-program-name = Program
+device-pda-slot-component-slot-name-cartridge = Cartridge
+
+default-program-name = Program
 notekeeper-program-name = Notekeeper
 news-read-program-name = Station news
 

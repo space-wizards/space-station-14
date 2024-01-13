@@ -139,7 +139,9 @@
     energy: 1.6
     color: "#c94242"
   - type: Computer
-    board: CargoShuttleConsoleCircuitboard
+    board: CargoShuttleConsoleCircuitboard  
+  - type: StealTarget
+    stealGroup: CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerShuttle
@@ -168,7 +170,9 @@
       color: "#c94242"
     - type: Computer
       board: SalvageShuttleConsoleCircuitboard
-
+    - type: StealTarget
+      stealGroup: SalvageShuttleConsoleCircuitboard
+      
 - type: entity
   parent: BaseComputer
   id: ComputerIFF
@@ -856,7 +860,9 @@
       color: "#b89f25"
     - type: AccessReader
       access: [["Salvage"]]
-
+    - type: StealTarget
+      stealGroup: SalvageExpeditionsComputerCircuitboard
+      
 - type: entity
   parent: BaseComputer
   id: ComputerSurveillanceCameraMonitor

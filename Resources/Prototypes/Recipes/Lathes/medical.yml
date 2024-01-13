@@ -65,6 +65,13 @@
     Plastic: 25
 
 - type: latheRecipe
+  id: Gauze
+  result: Gauze1
+  completetime: 1
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
   id: HandheldCrewMonitor
   result: HandheldCrewMonitorEmpty
   completetime: 2

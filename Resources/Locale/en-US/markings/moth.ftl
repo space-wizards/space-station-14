@@ -52,7 +52,9 @@ marking-MothAntennasWhitefly = Antennae (White Fly)
 marking-MothAntennasWitchwing-witchwing = Antennae
 marking-MothAntennasWitchwing = Antennae (Witch Wing)
 
-
+marking-MothAntennasUnderwing-underwing_primary = Primary
+marking-MothAntennasUnderwing-underwing_secondary = Secondary
+marking-MothAntennasUnderwing = Antennae (Underwing)
 
 
 
@@ -128,6 +130,9 @@ marking-MothWingsWhitefly = Wings (White Fly)
 marking-MothWingsWitchwing-witchwing = Wing
 marking-MothWingsWitchwing = Wings (Witch Wing)
 
+marking-MothWingsUnderwing-underwing_primary = Primary
+marking-MothWingsUnderwing-underwing_secondary = Secondary
+marking-MothWingsUnderwing = Wings (Underwing)
 
 
 

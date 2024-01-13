@@ -38307,6 +38307,48 @@ entities:
     - pos: 64.522316,20.63157
       parent: 2
       type: Transform
+- proto: DresserCaptainFilled
+  entities:
+  - uid: 10279
+    components:
+    - pos: 37.5,40.5
+      parent: 2
+      type: Transform
+- proto: DresserChiefEngineerFilled
+  entities:
+  - uid: 5414
+    components:
+    - pos: 10.5,-36.5
+      parent: 2
+      type: Transform
+- proto: DresserChiefMedicalOfficerFilled
+  entities:
+  - uid: 1179
+    components:
+    - pos: 58.5,-10.5
+      parent: 2
+      type: Transform
+- proto: DresserHeadOfPersonnelFilled
+  entities:
+  - uid: 9438
+    components:
+    - pos: 18.5,-5.5
+      parent: 2
+      type: Transform
+- proto: DresserHeadOfSecurityFilled
+  entities:
+  - uid: 386
+    components:
+    - pos: 45.5,22.5
+      parent: 2
+      type: Transform
+- proto: DresserQuarterMasterFilled
+  entities:
+  - uid: 941
+    components:
+    - pos: 13.5,30.5
+      parent: 2
+      type: Transform
 - proto: DrinkFlask
   entities:
   - uid: 9223
@@ -38853,11 +38895,6 @@ entities:
       type: Transform
 - proto: filingCabinet
   entities:
-  - uid: 12088
-    components:
-    - pos: 45.5,22.5
-      parent: 2
-      type: Transform
   - uid: 12092
     components:
     - pos: 17.5,23.5
@@ -38868,11 +38905,6 @@ entities:
   - uid: 108
     components:
     - pos: -3.5,-12.5
-      parent: 2
-      type: Transform
-  - uid: 386
-    components:
-    - pos: 13.5,30.5
       parent: 2
       type: Transform
   - uid: 9005
@@ -38892,11 +38924,6 @@ entities:
       type: Transform
 - proto: filingCabinetRandom
   entities:
-  - uid: 5158
-    components:
-    - pos: 58.5,-10.5
-      parent: 2
-      type: Transform
   - uid: 7010
     components:
     - pos: 30.5,39.5
@@ -58833,11 +58860,11 @@ entities:
     - pos: 44.5,-10.5
       parent: 2
       type: Transform
-- proto: LockerCaptainFilled
+- proto: LockerCaptainFilledHardsuit
   entities:
-  - uid: 5414
+  - uid: 5158
     components:
-    - pos: 37.5,40.5
+    - pos: 37.5,41.5
       parent: 2
       type: Transform
 - proto: LockerChemistryFilled
@@ -58847,9 +58874,9 @@ entities:
     - pos: 52.5,-8.5
       parent: 2
       type: Transform
-- proto: LockerChiefEngineerFilled
+- proto: LockerChiefEngineerFilledHardsuit
   entities:
-  - uid: 941
+  - uid: 11101
     components:
     - pos: 10.5,-35.5
       parent: 2
@@ -58941,13 +58968,6 @@ entities:
   - uid: 7391
     components:
     - pos: 19.5,39.5
-      parent: 2
-      type: Transform
-- proto: LockerHeadOfPersonnel
-  entities:
-  - uid: 10279
-    components:
-    - pos: 18.5,-5.5
       parent: 2
       type: Transform
 - proto: LockerHeadOfPersonnelFilled
@@ -60003,13 +60023,6 @@ entities:
   - uid: 8255
     components:
     - pos: 9.562899,15.659067
-      parent: 2
-      type: Transform
-- proto: PinpointerNuclear
-  entities:
-  - uid: 11101
-    components:
-    - pos: 31.499657,39.560112
       parent: 2
       type: Transform
 - proto: PlantBGoneSpray
@@ -69156,38 +69169,6 @@ entities:
     - pos: 50.5,-8.5
       parent: 2
       type: Transform
-- proto: SpawnPointAssistant
-  entities:
-  - uid: 1791
-    components:
-    - pos: 32.5,-15.5
-      parent: 2
-      type: Transform
-  - uid: 1792
-    components:
-    - pos: 31.5,-15.5
-      parent: 2
-      type: Transform
-  - uid: 1793
-    components:
-    - pos: 30.5,-15.5
-      parent: 2
-      type: Transform
-  - uid: 1794
-    components:
-    - pos: 30.5,-16.5
-      parent: 2
-      type: Transform
-  - uid: 1795
-    components:
-    - pos: 31.5,-16.5
-      parent: 2
-      type: Transform
-  - uid: 1796
-    components:
-    - pos: 32.5,-16.5
-      parent: 2
-      type: Transform
 - proto: SpawnPointAtmos
   entities:
   - uid: 4577
@@ -69421,6 +69402,38 @@ entities:
   - uid: 8314
     components:
     - pos: 46.5,3.5
+      parent: 2
+      type: Transform
+- proto: SpawnPointPassenger
+  entities:
+  - uid: 1791
+    components:
+    - pos: 32.5,-15.5
+      parent: 2
+      type: Transform
+  - uid: 1792
+    components:
+    - pos: 31.5,-15.5
+      parent: 2
+      type: Transform
+  - uid: 1793
+    components:
+    - pos: 30.5,-15.5
+      parent: 2
+      type: Transform
+  - uid: 1794
+    components:
+    - pos: 30.5,-16.5
+      parent: 2
+      type: Transform
+  - uid: 1795
+    components:
+    - pos: 31.5,-16.5
+      parent: 2
+      type: Transform
+  - uid: 1796
+    components:
+    - pos: 32.5,-16.5
       parent: 2
       type: Transform
 - proto: SpawnPointQuartermaster
@@ -69984,20 +69997,6 @@ entities:
   - uid: 871
     components:
     - pos: 15.5,-31.5
-      parent: 2
-      type: Transform
-- proto: SuitStorageCaptain
-  entities:
-  - uid: 9438
-    components:
-    - pos: 37.5,41.5
-      parent: 2
-      type: Transform
-- proto: SuitStorageCE
-  entities:
-  - uid: 1179
-    components:
-    - pos: 10.5,-36.5
       parent: 2
       type: Transform
 - proto: SuitStorageEngi

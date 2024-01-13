@@ -41,7 +41,7 @@
     loadNode: output
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: static
-    collectionName: SolarPanel   
+    collectionName: SolarPanel
   - type: Anchorable
   - type: Pullable
   - type: Electrified
@@ -157,6 +157,7 @@
   - type: Construction
     graph: SolarPanel
     node: solarassembly
+    defaultTarget: solarpanel
 
 - type: entity
   id: SolarTracker

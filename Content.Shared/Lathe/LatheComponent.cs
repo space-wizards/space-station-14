@@ -68,11 +68,14 @@ namespace Content.Shared.Lathe
     {
         public readonly EntityUid Lathe;
 
+        public bool getUnavailable;
+
         public List<ProtoId<LatheRecipePrototype>> Recipes = new();
 
-        public LatheGetRecipesEvent(EntityUid lathe)
+        public LatheGetRecipesEvent(EntityUid lathe, bool forced)
         {
             Lathe = lathe;
+            getUnavailable = forced;
         }
     }
 
