@@ -75,16 +75,10 @@ namespace Content.Server.Kitchen.Components
         public int Capacity = 10;
 
         /// <summary>
-        ///     cooldown interval for how often the microwave can sustain damage while cooking metal.
+        ///     If the microwave currently contains a metalic object or item that can cause it to explode.
         /// </summary>
-        [DataField("destructionCooldown"), ViewVariables(VVAccess.ReadWrite)]
-        public float DestructionCooldown = 1.0f;
-
-        /// <summary>
-        ///     if the microwave currently contains a metalic object or item that is unsafe for microwave use.
-        /// </summary>
-        [DataField("containsMetal"), ViewVariables(VVAccess.ReadWrite)]
-        public bool ContainsMetal = false;
+        [DataField("canExplode"), ViewVariables(VVAccess.ReadWrite)]
+        public bool CanExplode = false;
 
     }
 

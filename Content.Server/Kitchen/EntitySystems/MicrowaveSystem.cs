@@ -34,6 +34,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Linq;
+using Robust.Shared.Timing;
 using Content.Shared.Access.Components;
 
 namespace Content.Server.Kitchen.EntitySystems
@@ -50,6 +51,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly LightningSystem _lightning = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ExplosionSystem _explosion = default!;
         [Dependency] private readonly SharedDestructibleSystem _destruction = default!;
         [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
@@ -58,7 +60,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly TemperatureSystem _temperature = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
         [Dependency] private readonly HandsSystem _handsSystem = default!;
-
+        private TimeSpan _targetTime = TimeSpan.Zero;
         public override void Initialize()
         {
             base.Initialize();
@@ -361,12 +363,12 @@ namespace Content.Server.Kitchen.EntitySystems
         /// </remarks>
         private bool HandleUnsafeItems(EntityUid uid, MicrowaveComponent component)
         {
-            if (!component.ContainsMetal)
+            if (!component.CanExplode)
             {
                 return true;
             }
 
-            if (component.ContainsMetal)
+            if (component.CanExplode)
             {
                 if (_random.Prob(.1f))
                 {
@@ -375,7 +377,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 }
                 if (_random.Prob(.75f))
                 {
-                    _lightning.ShootRandomLightnings(uid, 1.0f, 1, "Spark");
+                    _lightning.ShootRandomLightnings(uid, 1.0f, 1, "Spark", triggerLightningEvents: false);
                 }
             }
 
@@ -397,7 +399,7 @@ namespace Content.Server.Kitchen.EntitySystems
             var solidsDict = new Dictionary<string, int>();
             var reagentDict = new Dictionary<string, FixedPoint2>();
             // TODO use lists of Reagent quantities instead of reagent prototype ids.
-            component.ContainsMetal = false;
+            component.CanExplode = false;
             foreach (var item in component.Storage.ContainedEntities)
             {
                 // special behavior when being microwaved ;)
@@ -412,7 +414,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 if (_tag.HasTag(item, "MicrowaveMachineUnsafe") || _tag.HasTag(item, "Metal"))
                 {
-                    component.ContainsMetal = true;
+                    component.CanExplode = true;
                 }
 
                 if (_tag.HasTag(item, "Plastic"))
@@ -518,16 +520,14 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 active.CookTimeRemaining -= frameTime;
 
-                if (active.ElapsedTime >= microwave.DestructionCooldown)
+                if (_gameTiming.CurTime >= _targetTime)
                 {
                     if (!HandleUnsafeItems(uid, microwave))
                     {
                         _destruction.BreakEntity(uid);
                     }
-                    active.ElapsedTime = 0.0f;
+                    _targetTime = _gameTiming.CurTime+TimeSpan.FromSeconds(1);
                 }
-
-                active.ElapsedTime += frameTime;
 
                 //check if there's still cook time left
                 if (active.CookTimeRemaining > 0)

@@ -83,7 +83,13 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
-      - !type:ExplodeBehavior
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+    totalIntensity: 10
+    intensitySlope: 5
+    canCreateVacuum: false
+    deleteAfterExplosion: false
   - type: ApcPowerReceiver
     powerLoad: 400
   - type: Machine

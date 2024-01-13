@@ -49,12 +49,13 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="user">Where the lightning fires from</param>
     /// <param name="target">Where the lightning fires to</param>
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
-    public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype = "Lightning")
+    /// <param name="triggerLightningEvents">if the lightnings being fired should trigger lightning events.</param>
+    public void ShootLightning(EntityUid user, EntityUid target, bool triggerLightningEvents, string lightningPrototype = "Lightning")
     {
         var spriteState = LightningRandomizer();
         _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
 
-        if (lightningPrototype != "Spark") // we don't want certain prototypes to trigger lightning level events
+        if (triggerLightningEvents) // we don't want certain prototypes to trigger lightning level events
         {
             var ev = new HitByLightningEvent(user, target);
             RaiseLocalEvent(target, ref ev);
@@ -70,7 +71,8 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="boltCount">Number of lightning bolts</param>
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
     /// <param name="arcDepth">how many times to recursively fire lightning bolts from the target points of the first shot.</param>
-    public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0)
+    /// <param name="triggerLightningEvents">if the lightnings being fired should trigger lightning events.</param>
+    public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0, bool triggerLightningEvents = true)
     {
         //To Do: add support to different priority target tablem for different lightning types
         //To Do: Remove Hardcode LightningTargetComponent (this should be a parameter of the SharedLightningComponent)
@@ -93,10 +95,10 @@ public sealed class LightningSystem : SharedLightningSystem
             if (!_random.Prob(curTarget.HitProbability)) //Chance to ignore target
                 continue;
 
-            ShootLightning(user, targets[count].Owner, lightningPrototype);
+            ShootLightning(user, targets[count].Owner, triggerLightningEvents, lightningPrototype);
             if (arcDepth - targets[count].LightningResistance > 0)
             {
-                ShootRandomLightnings(targets[count].Owner, range, 1, lightningPrototype, arcDepth - targets[count].LightningResistance);
+                ShootRandomLightnings(targets[count].Owner, range, 1, lightningPrototype, arcDepth - targets[count].LightningResistance, triggerLightningEvents);
             }
             shootedCount++;
         }
