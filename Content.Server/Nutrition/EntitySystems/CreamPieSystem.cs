@@ -1,9 +1,13 @@
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
@@ -26,6 +30,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly TriggerSystem _trigger = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
 
         public override void Initialize()
         {
@@ -89,6 +94,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 otherPlayers.RemovePlayer(actor.PlayerSession);
             }
             _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", uid), ("thrower", args.Thrown)), uid, otherPlayers, false);
+
+            // inject the creampie payload (for silly reasons)
+            // i'd do this with SolutionInjectOnCollide but creampiesystem eats the pie before it can inject so uhhhhhhhhhhhhh
+            if (_solutions.TryGetInjectableSolution(args.Thrown, out _, out var injectable) && TryComp<BloodstreamComponent>(args.Target, out var bloodstream))
+                _bloodstream.TryAddToChemicals(args.Target, injectable, bloodstream);
         }
 
         private void OnRejuvenate(Entity<CreamPiedComponent> entity, ref RejuvenateEvent args)

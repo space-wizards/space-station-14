@@ -366,6 +366,84 @@
 # Tastes like pie, mint.
 
 - type: entity
+  name: mimana cream pie
+  parent: FoodPieBase
+  id: FoodPieMimanaCream
+  description: That clown has nothing to say about the flavor of this favorite mime treat.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - creamy
+      - nothing
+  - type: Sprite
+    layers:
+    - state: tin
+    - state: plain
+      color: powderblue
+  - type: CreamPie
+  - type: ContainerContainer
+    containers:
+      payloadSlot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      payloadSlot:
+        whitelist:
+          components:
+          - OnUseTimerTrigger
+        insertSound:
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
+        ejectSound:
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
+  - type: SliceableFood
+    slice: FoodPieMimanaCreamSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents: 
+        - ReagentId: Nutriment
+          Quantity: 11
+        - ReagentId: MuteToxin
+          Quantity: 5
+      creampie:
+        maxVol: 10
+        reagents:
+        - ReagentId: MuteToxin
+          Quantity: 5
+  - type: InjectableSolution
+    solution: creampie
+
+- type: entity
+  name: slice of mimana cream pie
+  parent: FoodPieSliceBase
+  id: FoodPieMimanaCreamSlice
+  description: That clown has nothing to say about the flavor of this favorite mime treat.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - creamy
+      - nothing
+  - type: Sprite
+    state: bananapie-slice
+    color: powderblue
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents: 
+        - ReagentId: Nutriment
+          Quantity: 2.75
+        - ReagentId: MuteToxin
+          Quantity: 1.25
+# Tastes sweet, creamy, and like nothing.
+
+- type: entity
   name: mime tart
   parent: FoodPieBase
   id: FoodTartMime
