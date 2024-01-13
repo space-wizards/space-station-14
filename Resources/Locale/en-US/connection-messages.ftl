@@ -34,6 +34,7 @@ whitelist-notes = You currently have too many admin notes to join this server. Y
 whitelist-manual = You are not whitelisted on this server.
 whitelist-blacklisted = You are blacklisted from this server.
 whitelist-always-deny = You are not allowed to join this server.
+whitelist-fail-prefix = Not whitelisted: {$mgs}
 
 cmd-blacklistadd-desc = Adds the player with the given username to the server blacklist.
 cmd-blacklistadd-help = Usage: blacklistadd <username>

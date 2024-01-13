@@ -200,7 +200,7 @@ namespace Content.Server.Connection
                     if (!whitelistStatus.isWhitelisted)
                     {
                         // Not whitelisted.
-                        return (ConnectionDenyReason.Whitelist, Loc.GetString(whitelistStatus.denyMessage!), null);
+                        return (ConnectionDenyReason.Whitelist, Loc.GetString("whitelist-fail-prefix", ("msg", whitelistStatus.denyMessage!)), null);
                     }
                     // Whitelisted, don't check any more.
                     break;
