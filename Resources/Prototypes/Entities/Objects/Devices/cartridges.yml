@@ -19,7 +19,7 @@
 - type: entity
   parent: BaseItem
   id: NewsReadCartridge
-  name: News Cartridge
+  name: news cartridge
   description: A program for reading news
   components:
   - type: Sprite
@@ -37,7 +37,7 @@
 - type: entity
   parent: BaseItem
   id: CrewManifestCartridge
-  name: Crew Manifest Cartridge
+  name: crew manifest cartridge
   description: A program for listing your fellow crewmembers
   components:
     - type: Sprite

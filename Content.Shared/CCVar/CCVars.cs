@@ -341,6 +341,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> RoundRestartTime =
             CVarDef.Create("game.round_restart_time", 120f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// The prototype to use for secret weights.
+        /// </summary>
+        public static readonly CVarDef<string> SecretWeightPrototype =
+            CVarDef.Create("game.secret_weight_prototype", "Secret", CVar.SERVERONLY);
+
         /*
          * Discord
          */
@@ -503,6 +509,9 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> TipFrequencyInRound =
             CVarDef.Create("tips.in_game_frequency", 60f * 60);
+
+        public static readonly CVarDef<string> LoginTipsDataset =
+            CVarDef.Create("tips.login_dataset", "Tips");
 
         /*
          * Console

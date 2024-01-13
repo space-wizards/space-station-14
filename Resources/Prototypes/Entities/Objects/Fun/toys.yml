@@ -184,6 +184,28 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieArachind
+  name: arachnid plushie
+  description: An adorable stuffed toy that resembles an arachnid. It feels silky..
+  components:
+  - type: Sprite
+    state: plushie_arachnid
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+
+- type: entity
+  parent: BasePlushie
   id: PlushieLizard #Weh!
   name: lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"

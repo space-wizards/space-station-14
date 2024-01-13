@@ -8197,18 +8197,6 @@ entities:
     - type: Transform
       pos: -42.475952,-54.406525
       parent: 5350
-- proto: AdvancedMatterBinStockPart
-  entities:
-  - uid: 22294
-    components:
-    - type: Transform
-      pos: 12.374577,-30.31363
-      parent: 5350
-  - uid: 22295
-    components:
-    - type: Transform
-      pos: 12.655827,-30.204254
-      parent: 5350
 - proto: AirAlarm
   entities:
   - uid: 14304
@@ -13697,22 +13685,12 @@ entities:
     - type: Transform
       pos: 71.5,8.5
       parent: 5350
-- proto: AmePart
+- proto: AmeJar
   entities:
-  - uid: 23810
-    components:
-    - type: Transform
-      pos: 73.35088,8.671538
-      parent: 5350
-  - uid: 23811
-    components:
-    - type: Transform
-      pos: 73.50713,8.562163
-      parent: 5350
   - uid: 23812
     components:
     - type: Transform
-      pos: 73.67901,8.421538
+      pos: 73.53678,8.623411
       parent: 5350
 - proto: AnomalyScanner
   entities:
@@ -43418,6 +43396,76 @@ entities:
     - type: Transform
       pos: 49.5,0.5
       parent: 5350
+  - uid: 24170
+    components:
+    - type: Transform
+      pos: 62.5,-1.5
+      parent: 5350
+  - uid: 24172
+    components:
+    - type: Transform
+      pos: 61.5,-1.5
+      parent: 5350
+  - uid: 24209
+    components:
+    - type: Transform
+      pos: 60.5,-1.5
+      parent: 5350
+  - uid: 24214
+    components:
+    - type: Transform
+      pos: 59.5,-1.5
+      parent: 5350
+  - uid: 24215
+    components:
+    - type: Transform
+      pos: 58.5,-1.5
+      parent: 5350
+  - uid: 24217
+    components:
+    - type: Transform
+      pos: 57.5,-1.5
+      parent: 5350
+  - uid: 24218
+    components:
+    - type: Transform
+      pos: 56.5,-1.5
+      parent: 5350
+  - uid: 24220
+    components:
+    - type: Transform
+      pos: 55.5,-1.5
+      parent: 5350
+  - uid: 24221
+    components:
+    - type: Transform
+      pos: 54.5,-1.5
+      parent: 5350
+  - uid: 24222
+    components:
+    - type: Transform
+      pos: 53.5,-1.5
+      parent: 5350
+  - uid: 24223
+    components:
+    - type: Transform
+      pos: 52.5,-1.5
+      parent: 5350
+  - uid: 24224
+    components:
+    - type: Transform
+      pos: 62.5,-0.5
+      parent: 5350
+  - uid: 24230
+    components:
+    - type: Transform
+      pos: 62.5,0.5
+      parent: 5350
+  - uid: 24233
+    components:
+    - type: Transform
+      pos: 63.5,0.5
+      parent: 5350
   - uid: 25988
     components:
     - type: Transform
@@ -60829,6 +60877,13 @@ entities:
     - type: Transform
       pos: -26.498873,-33.888706
       parent: 5350
+- proto: ClothingHeadHatBeretWarden
+  entities:
+  - uid: 23811
+    components:
+    - type: Transform
+      pos: -4.7543283,31.495872
+      parent: 5350
 - proto: ClothingHeadHatBunny
   entities:
   - uid: 12101
@@ -61006,6 +61061,13 @@ entities:
     components:
     - type: Transform
       pos: 35.36405,-25.43441
+      parent: 5350
+- proto: ClothingHeadHatWarden
+  entities:
+  - uid: 1509
+    components:
+    - type: Transform
+      pos: -1.5043283,29.792747
       parent: 5350
 - proto: ClothingHeadHatWelding
   entities:
@@ -63503,13 +63565,6 @@ entities:
       containers:
       - EntityStorageComponent
       - entity_storage
-- proto: CrateMindShieldImplants
-  entities:
-  - uid: 22284
-    components:
-    - type: Transform
-      pos: -6.5,40.5
-      parent: 5350
 - proto: CrateNPCHamlet
   entities:
   - uid: 5346
@@ -63552,6 +63607,13 @@ entities:
     components:
     - type: Transform
       pos: 36.5,-38.5
+      parent: 5350
+- proto: CrateSecurityTrackingMindshieldImplants
+  entities:
+  - uid: 23810
+    components:
+    - type: Transform
+      pos: -6.5,40.5
       parent: 5350
 - proto: CrateServiceJanitorialSupplies
   entities:
@@ -109170,13 +109232,6 @@ entities:
       joinedGrid: 5350
     - type: AtmosPipeColor
       color: '#FF1212FF'
-- proto: GeneratorBasic15kW
-  entities:
-  - uid: 11183
-    components:
-    - type: Transform
-      pos: 111.5,2.5
-      parent: 5350
 - proto: Girder
   entities:
   - uid: 2065
@@ -116534,19 +116589,19 @@ entities:
     - type: Transform
       pos: 31.677748,21.795935
       parent: 5350
+- proto: GunSafeDisabler
+  entities:
+  - uid: 22284
+    components:
+    - type: Transform
+      pos: -4.5,40.5
+      parent: 5350
 - proto: GunSafeLaserCarbine
   entities:
   - uid: 24701
     components:
     - type: Transform
       pos: -5.5,38.5
-      parent: 5350
-- proto: GunSafePistolMk58
-  entities:
-  - uid: 1509
-    components:
-    - type: Transform
-      pos: -4.5,40.5
       parent: 5350
 - proto: GunSafeRifleLecter
   entities:
@@ -119688,6 +119743,18 @@ entities:
     - type: Transform
       pos: 35.46261,-32.532078
       parent: 5350
+- proto: MatterBinStockPart
+  entities:
+  - uid: 22294
+    components:
+    - type: Transform
+      pos: 12.374577,-30.31363
+      parent: 5350
+  - uid: 22295
+    components:
+    - type: Transform
+      pos: 12.655827,-30.204254
+      parent: 5350
 - proto: MedicalBed
   entities:
   - uid: 3697
@@ -119902,6 +119969,16 @@ entities:
     - type: Transform
       pos: 12.593327,-30.87613
       parent: 5350
+  - uid: 24716
+    components:
+    - type: Transform
+      pos: 40.44346,10.567184
+      parent: 5350
+  - uid: 24717
+    components:
+    - type: Transform
+      pos: 40.56846,10.489059
+      parent: 5350
 - proto: Milkalyzer
   entities:
   - uid: 23030
@@ -119980,13 +120057,6 @@ entities:
     components:
     - type: Transform
       pos: 0.5113306,-55.492146
-      parent: 5350
-- proto: MonkeyCubeBox
-  entities:
-  - uid: 16643
-    components:
-    - type: Transform
-      pos: -46.53311,-52.435802
       parent: 5350
 - proto: MonkeyCubeWrapped
   entities:
@@ -120667,18 +120737,6 @@ entities:
     components:
     - type: Transform
       pos: -7.4754887,-15.527573
-      parent: 5350
-- proto: NanoManipulatorStockPart
-  entities:
-  - uid: 24716
-    components:
-    - type: Transform
-      pos: 40.44346,10.567184
-      parent: 5350
-  - uid: 24717
-    components:
-    - type: Transform
-      pos: 40.56846,10.489059
       parent: 5350
 - proto: NitrogenCanister
   entities:
@@ -122089,6 +122147,11 @@ entities:
     components:
     - type: Transform
       pos: 43.5,20.5
+      parent: 5350
+  - uid: 11183
+    components:
+    - type: Transform
+      pos: 111.5,2.5
       parent: 5350
   - uid: 14054
     components:
@@ -146644,6 +146707,13 @@ entities:
     components:
     - type: Transform
       pos: -54.5,-47.5
+      parent: 5350
+- proto: VariantCubeBox
+  entities:
+  - uid: 16643
+    components:
+    - type: Transform
+      pos: -46.53311,-52.435802
       parent: 5350
 - proto: VehicleKeyATV
   entities:
@@ -171449,13 +171519,6 @@ entities:
       parent: 5350
 - proto: WarpPoint
   entities:
-  - uid: 24219
-    components:
-    - type: Transform
-      pos: 10.5,5.5
-      parent: 5350
-    - type: WarpPoint
-      location: Captain's Bedroom
   - uid: 24231
     components:
     - type: Transform

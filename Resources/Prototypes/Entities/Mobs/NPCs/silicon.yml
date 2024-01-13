@@ -349,7 +349,13 @@
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-
+  - type: ShowHealthBars
+    damageContainers: 
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers: 
+    - Biological
+  
 - type: entity
   parent: MobSiliconBase
   id: MobMimeBot

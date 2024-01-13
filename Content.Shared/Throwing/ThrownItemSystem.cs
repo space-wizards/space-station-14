@@ -4,6 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.Gravity;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -35,7 +36,39 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
             SubscribeLocalEvent<ThrownItemComponent, EntityUnpausedEvent>(OnThrownUnpaused);
+            SubscribeLocalEvent<ThrownItemComponent, ComponentGetState>(OnThrownGetState);
+            SubscribeLocalEvent<ThrownItemComponent, ComponentHandleState>(OnThrownHandleState);
+
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
+        }
+
+        private void OnThrownGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)
+        {
+            // TODO: Throwing needs to handle this properly I just want the bad asserts to stop getting in my way.
+            TryGetNetEntity(component.Thrower, out var nent);
+
+            args.State = new ThrownItemComponentState()
+            {
+                ThrownTime = component.ThrownTime,
+                LandTime = component.LandTime,
+                Thrower = nent,
+                Landed = component.Landed,
+                PlayLandSound = component.PlayLandSound,
+            };
+        }
+
+        private void OnThrownHandleState(EntityUid uid, ThrownItemComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not ThrownItemComponentState state)
+                return;
+
+            TryGetEntity(state.Thrower, out var thrower);
+
+            component.ThrownTime = state.ThrownTime;
+            component.LandTime = state.LandTime;
+            component.Thrower = thrower;
+            component.Landed = state.Landed;
+            component.PlayLandSound = state.PlayLandSound;
         }
 
         private void OnMapInit(EntityUid uid, ThrownItemComponent component, MapInitEvent args)
@@ -86,7 +119,6 @@ namespace Content.Shared.Throwing
 
         private void OnSleep(EntityUid uid, ThrownItemComponent thrownItem, ref PhysicsSleepEvent @event)
         {
-            @event.Cancelled = true;
             StopThrow(uid, thrownItem);
         }
 
@@ -102,7 +134,9 @@ namespace Content.Shared.Throwing
             if (TryComp<PhysicsComponent>(uid, out var physics))
             {
                 _physics.SetBodyStatus(physics, BodyStatus.OnGround);
-                _broadphase.RegenerateContacts(uid, physics);
+
+                if (physics.Awake)
+                    _broadphase.RegenerateContacts(uid, physics);
             }
 
             if (EntityManager.TryGetComponent(uid, out FixturesComponent? manager))
