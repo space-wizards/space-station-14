@@ -204,7 +204,6 @@ public sealed class ActionContainerSystem : EntitySystem
         DebugTools.AssertEqual(action.AttachedEntity, attached);
     }
 
-    // TODO: Re-evaluate if needed
     /// <summary>
     /// Transfers all actions from one container to another, while changing the attached entity.
     /// </summary>
