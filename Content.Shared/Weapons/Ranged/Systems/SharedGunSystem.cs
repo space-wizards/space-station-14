@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -321,9 +322,9 @@ public abstract partial class SharedGunSystem : EntitySystem
             // If they're firing an existing clip then don't play anything.
             if (shots > 0)
             {
-                if (ev.Reason != null)
+                if (ev.Reason != null && Timing.IsFirstTimePredicted)
                 {
-                    PopupSystem.PopupClient(ev.Reason, gunUid, user);
+                    PopupSystem.PopupCursor(ev.Reason);
                 }
 
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
@@ -373,6 +374,26 @@ public abstract partial class SharedGunSystem : EntitySystem
         out bool userImpulse,
         EntityUid? user = null,
         bool throwItems = false);
+
+    public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid gunUid, EntityUid? user = null, float speed = 20f)
+    {
+        var physics = EnsureComp<PhysicsComponent>(uid);
+        Physics.SetBodyStatus(physics, BodyStatus.InAir);
+
+        var targetMapVelocity = gunVelocity + direction.Normalized() * speed;
+        var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
+        var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
+        Physics.SetLinearVelocity(uid, finalLinear, body: physics);
+
+        if (user != null)
+        {
+            var projectile = EnsureComp<ProjectileComponent>(uid);
+            Projectiles.SetShooter(uid, projectile, user.Value);
+            projectile.Weapon = gunUid;
+        }
+
+        TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle());
+    }
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 

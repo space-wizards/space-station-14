@@ -3,30 +3,6 @@
 // affected by the widget layout/position.
 uniform highp vec2 objCoord;
 
-// Magic, well-known 2d random function; makes perlin-like noise
-highp vec2 random(highp vec2 uv){
-    uv = vec2( dot(uv, vec2(127.1,311.7) ),
-               dot(uv, vec2(269.5,183.3) ) );
-    return -1.0 + 2.0 * fract(sin(uv) * 43758.5453123);
-}
-
-highp float noise(highp vec2 uv) {
-    highp vec2 uv_i = floor(uv);
-    highp vec2 uv_f = fract(uv);
-
-    highp vec2 t = smoothstep(0.0, 1.0, uv_f);
-
-    // Sample the random function and run a bilinear filter to smooth it out
-    highp float tl = dot( random(uv_i + vec2(0.0,0.0) ), uv_f - vec2(0.0,0.0) );
-    highp float tr = dot( random(uv_i + vec2(1.0,0.0) ), uv_f - vec2(1.0,0.0) );
-    highp float bl = dot( random(uv_i + vec2(0.0,1.0) ), uv_f - vec2(0.0,1.0) );
-    highp float br = dot( random(uv_i + vec2(1.0,1.0) ), uv_f - vec2(1.0,1.0) );
-
-    highp float tA = mix( tl, tr, t.x );
-    highp float tB = mix( bl, br, t.x );
-    return mix( tA, tB, t.y ) + 0.5;
-}
-
 void fragment() {
     // Stamps have orientation, and the texture sampling is nearest
     // pixel, so run a bilinear filter to smooth out the edges.
@@ -45,8 +21,8 @@ void fragment() {
 
     // Add a bit of noise to mimic imperfect contact with the paper
     {
-        highp float stampNoise = noise((FRAGCOORD.xy - objCoord) * vec2(0.03, 0.03)) *
-                           noise((FRAGCOORD.xy - objCoord) * vec2(0.08, 0.08));
+        highp float stampNoise = zNoise((FRAGCOORD.xy - objCoord) * vec2(0.03, 0.03)) *
+                           zNoise((FRAGCOORD.xy - objCoord) * vec2(0.08, 0.08));
         COLOR.a *= min(0.9, 0.4 + smoothstep(0.05, 0.3, stampNoise));
     }
 }

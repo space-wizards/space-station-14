@@ -11,7 +11,6 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 135
     swingLeft: true
@@ -33,7 +32,6 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/clippers.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 90
     damage:
@@ -53,7 +51,6 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 135
     damage:
@@ -81,7 +78,6 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 135
     swingLeft: true
@@ -105,7 +101,6 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/spade.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: 45
     damage:

@@ -6,54 +6,52 @@ namespace Content.Shared.Eye.Blinding.Systems;
 
 public sealed class BlurryVisionSystem : EntitySystem
 {
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BlindableComponent, EyeDamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<VisionCorrectionComponent, GotEquippedEvent>(OnGlassesEquipped);
         SubscribeLocalEvent<VisionCorrectionComponent, GotUnequippedEvent>(OnGlassesUnequipped);
         SubscribeLocalEvent<VisionCorrectionComponent, InventoryRelayedEvent<GetBlurEvent>>(OnGetBlur);
     }
 
-    private void OnGetBlur(EntityUid uid, VisionCorrectionComponent component, InventoryRelayedEvent<GetBlurEvent> args)
+    private void OnGetBlur(Entity<VisionCorrectionComponent> glasses, ref InventoryRelayedEvent<GetBlurEvent> args)
     {
-        args.Args.Blur += component.VisionBonus;
+        args.Args.Blur += glasses.Comp.VisionBonus;
+        args.Args.CorrectionPower *= glasses.Comp.CorrectionPower;
     }
 
-    private void OnDamageChanged(EntityUid uid, BlindableComponent component, ref EyeDamageChangedEvent args)
+    public void UpdateBlurMagnitude(Entity<BlindableComponent?> ent)
     {
-        UpdateBlurMagnitude(uid, component);
-    }
-
-    private void UpdateBlurMagnitude(EntityUid uid, BlindableComponent? component = null)
-    {
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        var ev = new GetBlurEvent(component.EyeDamage);
-        RaiseLocalEvent(uid, ev);
+        var ev = new GetBlurEvent(ent.Comp.EyeDamage);
+        RaiseLocalEvent(ent, ev);
 
-        var blur = Math.Clamp(0, ev.Blur, BlurryVisionComponent.MaxMagnitude);
+        var blur = Math.Clamp(ev.Blur, 0, BlurryVisionComponent.MaxMagnitude);
         if (blur <= 0)
         {
-            RemCompDeferred<BlurryVisionComponent>(uid);
+            RemCompDeferred<BlurryVisionComponent>(ent);
             return;
         }
 
-        var blurry = EnsureComp<BlurryVisionComponent>(uid);
+        var blurry = EnsureComp<BlurryVisionComponent>(ent);
         blurry.Magnitude = blur;
-        Dirty(blurry);
+        blurry.CorrectionPower = ev.CorrectionPower;
+        Dirty(ent, blurry);
     }
 
-    private void OnGlassesEquipped(EntityUid uid, VisionCorrectionComponent component, GotEquippedEvent args)
+    private void OnGlassesEquipped(Entity<VisionCorrectionComponent> glasses, ref GotEquippedEvent args)
     {
-        UpdateBlurMagnitude(uid);
+        UpdateBlurMagnitude(args.Equipee);
     }
 
-    private void OnGlassesUnequipped(EntityUid uid, VisionCorrectionComponent component, GotUnequippedEvent args)
+    private void OnGlassesUnequipped(Entity<VisionCorrectionComponent> glasses, ref GotUnequippedEvent args)
     {
-        UpdateBlurMagnitude(uid);
+        UpdateBlurMagnitude(args.Equipee);
     }
 }
 
@@ -61,6 +59,7 @@ public sealed class GetBlurEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public readonly float BaseBlur;
     public float Blur;
+    public float CorrectionPower = BlurryVisionComponent.DefaultCorrectionPower;
 
     public GetBlurEvent(float blur)
     {

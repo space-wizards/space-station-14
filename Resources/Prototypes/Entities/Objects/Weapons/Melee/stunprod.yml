@@ -44,7 +44,7 @@
   - type: Battery
     maxCharge: 360
     startingCharge: 360
-  - type: ItemCooldown
+  - type: UseDelay
   - type: Item
     heldPrefix: off
     size: Normal

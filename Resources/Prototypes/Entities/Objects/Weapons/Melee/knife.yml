@@ -10,7 +10,6 @@
   - type: Utensil
     types:
       - Knife
-  - type: ItemCooldown
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:

@@ -502,7 +502,7 @@
 # Its queso! Everyone loves queso... Right?.
 
 - type: entity
-  name: Sashimi
+  name: sashimi
   parent: FoodMealBase
   id: FoodMealSashimi
   description: Its taste can only be described as "Exotic". The poisoning though? That's pretty common.

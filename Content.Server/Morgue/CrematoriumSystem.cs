@@ -47,17 +47,24 @@ public sealed class CrematoriumSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
-        if (_appearance.TryGetData<bool>(uid, CrematoriumVisuals.Burning, out var isBurning, appearance) && isBurning)
+        using (args.PushGroup(nameof(CrematoriumComponent)))
         {
-            args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", uid)));
-        }
-        if (_appearance.TryGetData<bool>(uid, StorageVisuals.HasContents, out var hasContents, appearance) && hasContents)
-        {
-            args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-empty"));
+            if (_appearance.TryGetData<bool>(uid, CrematoriumVisuals.Burning, out var isBurning, appearance) &&
+                isBurning)
+            {
+                args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning",
+                    ("owner", uid)));
+            }
+
+            if (_appearance.TryGetData<bool>(uid, StorageVisuals.HasContents, out var hasContents, appearance) &&
+                hasContents)
+            {
+                args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
+            }
+            else
+            {
+                args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-empty"));
+            }
         }
     }
 

@@ -66,25 +66,28 @@ public sealed class DefusableSystem : SharedDefusableSystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (!comp.Usable)
+        using (args.PushGroup(nameof(DefusableComponent)))
         {
-            args.PushMarkup(Loc.GetString("defusable-examine-defused", ("name", uid)));
-        }
-        else if (comp.Activated && TryComp<ActiveTimerTriggerComponent>(uid, out var activeComp))
-        {
-            if (comp.DisplayTime)
+            if (!comp.Usable)
             {
-                args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid),
-                    ("time", MathF.Floor(activeComp.TimeRemaining))));
+                args.PushMarkup(Loc.GetString("defusable-examine-defused", ("name", uid)));
+            }
+            else if (comp.Activated && TryComp<ActiveTimerTriggerComponent>(uid, out var activeComp))
+            {
+                if (comp.DisplayTime)
+                {
+                    args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid),
+                        ("time", MathF.Floor(activeComp.TimeRemaining))));
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString("defusable-examine-live-display-off", ("name", uid)));
+                }
             }
             else
             {
-                args.PushMarkup(Loc.GetString("defusable-examine-live-display-off", ("name", uid)));
+                args.PushMarkup(Loc.GetString("defusable-examine-inactive", ("name", uid)));
             }
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString("defusable-examine-inactive", ("name", uid)));
         }
 
         args.PushMarkup(Loc.GetString("defusable-examine-bolts", ("down", comp.Bolted)));

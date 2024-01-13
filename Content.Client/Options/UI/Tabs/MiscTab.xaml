@@ -18,6 +18,10 @@
                 <Control MinSize="4 0" />
                 <OptionButton Name="HudLayoutOption" />
             </BoxContainer>
+            <Label Text="{Loc 'ui-options-general-accessibility'}"
+                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                   StyleClasses="LabelKeyText"/>
+            <CheckBox Name="ReducedMotionCheckBox" Text="{Loc 'ui-options-reduced-motion'}" />
             <Label Text="{Loc 'ui-options-general-discord'}"
                    FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
                    StyleClasses="LabelKeyText"/>
