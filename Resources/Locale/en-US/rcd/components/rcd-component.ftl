@@ -7,14 +7,19 @@ rcd-component-examine-build-details = It's currently set to build {MAKEPLURAL($n
 
 ### Interaction Messages
 
+# Mode change
 rcd-component-change-mode = The RCD is now set to '{$mode}' mode.
 rcd-component-change-build-mode = The RCD is now set to build {MAKEPLURAL($name)}.
 
+# Ammo count
 rcd-component-no-ammo-message = The RCD has run out of compressed matter!
 rcd-component-insufficient-ammo-message = The RCD doesn't have enough compressed matter to do that!
 
+# Deconstruction
 rcd-component-tile-indestructible-message = That tile can't be destructed!
 rcd-component-deconstruct-target-not-on-whitelist-message = You can't deconstruct that!
+rcd-component-nothing-to-deconstruct-message = There's nothing to deconstruct!
+rcd-component-tile-obstructed-message = There's something in the way!
 
 rcd-component-cannot-build-on-empty-space-message = You can't build without a foundation!
 rcd-component-cannot-build-as-tile-not-empty-message = You can't build here, the space is occupied!
