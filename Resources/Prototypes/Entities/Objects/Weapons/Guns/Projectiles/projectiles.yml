@@ -210,7 +210,7 @@
         Heat: 5
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
-    soundForce: true
+    forceSound: true
   - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 5
@@ -256,7 +256,7 @@
         Heat: 5
     soundHit:
       path: "/Audio/Weapons/tap.ogg"
-    soundForce: true
+    forceSound: true
 
 - type: entity
   name : disabler bolt practice
@@ -296,7 +296,7 @@
         Heat: 1
     soundHit:
       path: "/Audio/Weapons/tap.ogg"
-    soundForce: true
+    forceSound: true
 
 - type: entity
   name: emitter bolt
@@ -865,7 +865,7 @@
         Heat: 2
     soundHit:
       path: "/Audio/Weapons/tap.ogg"
-    soundForce: true
+    forceSound: true
 
 - type: entity
   name: tesla gun lightning

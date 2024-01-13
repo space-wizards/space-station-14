@@ -9,37 +9,37 @@ namespace Content.Shared.Projectiles;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ProjectileComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("impactEffect", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [ViewVariables(VVAccess.ReadWrite), DataField(customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ImpactEffect;
 
     /// <summary>
     ///     User that shot this projectile.
     /// </summary>
-    [DataField("shooter"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? Shooter;
 
     /// <summary>
     ///     Weapon used to shoot.
     /// </summary>
-    [DataField("weapon"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? Weapon;
 
     /// <summary>
     ///     The projectile spawns inside the shooter most of the time, this prevents entities from shooting themselves.
     /// </summary>
-    [DataField("ignoreShooter"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool IgnoreShooter = true;
 
     /// <summary>
     ///     The amount of damage the projectile will do.
     /// </summary>
-    [DataField("damage", required: true)] [ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true)] [ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = new();
 
     /// <summary>
     ///     If the target should be deleted on collision.
     /// </summary>
-    [DataField("deleteOnCollide")]
+    [DataField]
     public bool DeleteOnCollide = true;
 
     /// <summary>
