@@ -174,7 +174,8 @@ namespace Content.Server.Connection
                 return (ConnectionDenyReason.Ban, message, bans);
             }
 
-            if (_cfg.GetCVar(CCVars.WhitelistEnabled))
+            // Checks for whitelist IF it's enabled AND the user isn't an admin. Admins are always allowed.
+            if (_cfg.GetCVar(CCVars.WhitelistEnabled) && adminData is null)
             {
                 var whitelists = _prototypeManager.EnumeratePrototypes<PlayerConnectionWhitelistPrototype>();
                 var whitelistStringList = _cfg.GetCVar(CCVars.WhitelistPrototype);
