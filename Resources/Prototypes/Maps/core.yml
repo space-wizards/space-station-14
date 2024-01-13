@@ -6,7 +6,7 @@
   maxPlayers: 60
   stations:
     Core:
-      stationProto: CoreNanotrasenStation
+      stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
           mapNameTemplate: '{0} Core {1}'
