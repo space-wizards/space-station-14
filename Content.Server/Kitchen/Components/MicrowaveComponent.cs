@@ -75,7 +75,7 @@ namespace Content.Server.Kitchen.Components
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public int Capacity = 10;
 
-        [DataField("maxItemSize")]
+        [DataField]
         public ProtoId<ItemSizePrototype> MaxItemSize = "Normal";
     }
 
