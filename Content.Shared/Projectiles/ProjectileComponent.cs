@@ -66,7 +66,9 @@ public sealed partial class ProjectileComponent : Component
     [DataField]
     public bool IgnoreResistances = false;
 
-    // Get that juicy FPS hit sound
+    /// <summary>
+    ///     Get that juicy FPS hit sound.
+    /// </summary>
     [DataField]
     public SoundSpecifier? SoundHit;
 
@@ -77,7 +79,7 @@ public sealed partial class ProjectileComponent : Component
     public bool ForceSound = false;
 
     /// <summary>
-    ///     Whether this projectile will only collide with entities if it was shot from a gun (if <see cref="Weapon"/> is not null)
+    ///     Whether this projectile will only collide with entities if it was shot from a gun (if <see cref="Weapon"/> is not null).
     /// </summary>
     [DataField]
     public bool OnlyCollideWhenShot = false;
