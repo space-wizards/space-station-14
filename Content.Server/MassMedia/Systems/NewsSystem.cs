@@ -33,6 +33,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Server.Traits.Assorted;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -48,6 +49,7 @@ public sealed class NewsSystem : SharedNewsSystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
+    [Dependency] private readonly IlliterateSystem _illiterate = default!;
 
     // TODO remove this. Dont store data on systems
     // Honestly NewsSystem just needs someone to rewrite it entirely.
@@ -161,11 +163,20 @@ public sealed class NewsSystem : SharedNewsSystem
         var trimmedName = msg.Name.Trim();
         var trimmedContent = msg.Content.Trim();
 
+        trimmedName = trimmedName.Length <= MaxNameLength ? trimmedName : $"{trimmedName[..MaxNameLength]}...";
+        trimmedContent = trimmedContent.Length <= MaxArticleLength ? trimmedContent : $"{trimmedContent[..MaxArticleLength]}...";
+
+        if (_illiterate.IsIlliterate(author))
+        {
+            trimmedName = _illiterate.ScrambleString(trimmedName);
+            trimmedContent = _illiterate.ScrambleString(trimmedContent);
+        }
+
         var article = new NewsArticle
         {
             Author = authorName,
-            Name = trimmedName.Length <= MaxNameLength ? trimmedName : $"{trimmedName[..MaxNameLength]}...",
-            Content = trimmedContent.Length <= MaxArticleLength ? trimmedContent : $"{trimmedContent[..MaxArticleLength]}...",
+            Name = trimmedName,
+            Content = trimmedContent,
             ShareTime = _ticker.RoundDuration()
         };
 
