@@ -9,8 +9,11 @@ namespace Content.Shared.Projectiles;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ProjectileComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField(customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? ImpactEffect;
+    /// <summary>
+    ///     The effect that appears when a projectile collides with an entity.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId? ImpactEffect;
 
     /// <summary>
     ///     User that shot this projectile.
@@ -64,7 +67,8 @@ public sealed partial class ProjectileComponent : Component
     public bool IgnoreResistances = false;
 
     // Get that juicy FPS hit sound
-    [DataField] public SoundSpecifier? SoundHit;
+    [DataField]
+    public SoundSpecifier? SoundHit;
 
     /// <summary>
     ///     Force the projectiles sound to play rather than potentially playing the entity's sound.
