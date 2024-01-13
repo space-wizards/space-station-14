@@ -9,7 +9,7 @@
     state: buckshot
   - type: Projectile
     deleteOnCollide: false
-    canPenetrate: true
+    canOnlyPenetrateMobs: true
     damage:
       types:
         Blunt: 4
@@ -29,7 +29,7 @@
     state: buckshot
   - type: Projectile
     deleteOnCollide: false
-    canPenetrate: true
+    canOnlyPenetrateMobs: true
     damage:
       types:
         Piercing: 45
@@ -47,7 +47,7 @@
     state: buckshot-flare
   - type: Projectile
     deleteOnCollide: false
-    canPenetrate: true
+    canOnlyPenetrateMobs: true
     damage:
       types:
         Blunt: 1
