@@ -9,8 +9,6 @@ public sealed class DeconvertedEui : BaseEui
     public DeconvertedEui()
     {
         _menu = new DeconvertedMenu();
-
-        _menu.ConfirmButton.OnPressed += _ => _menu.Close();
     }
 
     public override void Opened()
