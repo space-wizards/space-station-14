@@ -1505,6 +1505,8 @@ namespace Content.Client.Preferences.UI
             // Hide Uncategorized tab if it's empty, other tabs already shouldn't exist if they're empty
             if (!uncategorized.Children.Any())
                 _loadoutsTabs.SetTabVisible(0, false);
+
+            UpdateLoadoutPreferences();
         }
 
         private sealed class AntagPreferenceSelector : RequirementsSelector<AntagPrototype>
