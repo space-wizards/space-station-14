@@ -33,6 +33,7 @@
         - ToyAmongPequeno
         - ToyMouse
         - PlushieDiona
+        - PlushieArachind
       chance: 0.5
       offset: 0.2
 
@@ -132,5 +133,6 @@
       - ToyFigurineRatServant
       - ToyFigurineMouse
       - ToyFigurineHamlet
+      - ToyFigurineThief
       chance: 0.90
       offset: 0.2

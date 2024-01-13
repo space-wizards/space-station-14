@@ -1,6 +1,5 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Shuttle.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;

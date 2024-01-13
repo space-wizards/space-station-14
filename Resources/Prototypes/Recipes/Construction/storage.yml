@@ -1,0 +1,51 @@
+#bureaucracy
+- type: construction
+  id: FilingCabinet
+  name: filing cabinet
+  description: A cabinet for all your filing needs.
+  graph: FilingCabinet
+  startNode: start
+  targetNode: filingCabinet
+  category: construction-category-storage
+  icon:
+    sprite: Structures/Storage/cabinets.rsi
+    state: filingcabinet
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TallCabinet
+  name: tall cabinet
+  description: A cabinet for all your filing needs.
+  graph: FilingCabinet
+  startNode: start
+  targetNode: tallCabinet
+  category: construction-category-storage
+  icon:
+    sprite: Structures/Storage/cabinets.rsi
+    state: tallcabinet
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChestDrawer
+  name: chest drawer
+  description: A small drawer for all your filing needs, Now with wheels!
+  graph: FilingCabinet
+  startNode: start
+  targetNode: chestDrawer
+  category: construction-category-storage
+  icon:
+    sprite: Structures/Storage/cabinets.rsi
+    state: chestdrawer
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

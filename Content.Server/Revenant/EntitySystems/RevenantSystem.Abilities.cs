@@ -321,6 +321,12 @@ public sealed partial class RevenantSystem
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
         {
+            if (component.MalfunctionWhitelist?.IsValid(ent, EntityManager) == false)
+                continue;
+
+            if (component.MalfunctionBlacklist?.IsValid(ent, EntityManager) == true)
+                continue;
+
             _emag.DoEmagEffect(uid, ent); //it does not emag itself. adorable.
         }
     }

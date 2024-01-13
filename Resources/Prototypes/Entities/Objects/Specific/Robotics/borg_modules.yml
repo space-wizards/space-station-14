@@ -9,10 +9,13 @@
     sprite: Objects/Specific/Robotics/borgmodule.rsi
   - type: BorgModule
   - type: StaticPrice
-    price: 250
+    price: 100
   - type: Tag
     tags:
     - BorgModuleGeneric
+  - type: GuideHelp
+    guides:
+      - Cyborgs
 
 - type: entity
   id: BaseProviderBorgModule
@@ -78,6 +81,24 @@
   - type: Tag
     tags:
     - BorgModuleService
+
+- type: entity
+  id: BaseBorgModuleSyndicate
+  parent: BaseBorgModule
+  abstract: true
+  components:
+    - type: Tag
+      tags:
+        - BorgModuleSyndicate
+
+- type: entity
+  id: BaseBorgModuleSyndicateAssault
+  parent: BaseBorgModule
+  abstract: true
+  components:
+    - type: Tag
+      tags:
+        - BorgModuleSyndicateAssault
 
 # generic modules
 - type: entity
@@ -152,6 +173,8 @@
     - Wrench
     - Screwdriver
     - Wirecutter
+    - Multitool
+    - Welder
 
 # cargo modules
 - type: entity
@@ -179,7 +202,9 @@
   - type: ItemBorgModule
     items:
     - MiningDrill
+    - Shovel
     - OreBag
+    - Crowbar
 
 - type: entity
   id: BorgModuleGrapplingGun
@@ -193,6 +218,7 @@
   - type: ItemBorgModule
     items:
     - WeaponGrapplingGun
+    - WeaponCrusherDagger
 
 # engineering modules
 - type: entity
@@ -222,6 +248,9 @@
   - type: ItemBorgModule
     items:
     - GasAnalyzer
+    - trayScanner
+    - Crowbar
+    - Wrench
 
 - type: entity
   id: BorgModuleConstruction
@@ -237,6 +266,7 @@
     - SheetSteelLingering0
     - SheetGlassLingering0
     - PartRodMetalLingering0
+    - FloorTileItemSteelLingering0
 
 - type: entity
   id: BorgModuleRCD
@@ -264,6 +294,8 @@
   - type: ItemBorgModule
     items:
     - LightReplacer
+    - Crowbar
+    - Screwdriver
 
 - type: entity
   id: BorgModuleCleaning
@@ -278,20 +310,22 @@
     items:
     - MopItem
     - Bucket
-    - Holoprojector
+    - TrashBag
 
 - type: entity
-  id: BorgModuleTrashCollection
+  id: BorgModuleAdvancedCleaning
   parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
-  name: trash collection cyborg module
+  name: advanced cleaning cyborg module
   components:
   - type: Sprite
     layers:
     - state: janitor
-    - state: icon-trash-bag
+    - state: icon-mop-adv
   - type: ItemBorgModule
     items:
-    - TrashBag
+    - AdvMopItem
+    - HoloprojectorBorg
+    - SprayBottleSpaceCleaner
 
 # medical modules
 - type: entity
@@ -324,6 +358,7 @@
     - Gauze10Lingering
     - Bloodpack10Lingering
     - Syringe
+    - Dropper
 
 - type: entity
   id: BorgModuleDefibrillator
@@ -385,9 +420,9 @@
 
 # service modules
 - type: entity
-  id: BorgModuleLiteracy
+  id: BorgModuleService
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: literacy cyborg module
+  name: service cyborg module
   components:
   - type: Sprite
     layers:
@@ -397,6 +432,10 @@
     items:
     - Pen
     - BooksBag
+    - HandLabeler
+    - Lighter
+    - DrinkShaker
+    - Syringe
 
 - type: entity
   id: BorgModuleMusique
@@ -410,6 +449,8 @@
   - type: ItemBorgModule
     items:
     - SynthesizerInstrument
+    - ElectricGuitarInstrument
+    - SaxophoneInstrument
 
 - type: entity
   id: BorgModuleGardening
@@ -455,3 +496,65 @@
     items:
     - BikeHorn
     - ClownRecorder
+    - BikeHornInstrument
+   
+#syndicate modules
+- type: entity
+  id: BorgModuleSyndicateWeapon
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: weapon cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: icon-syndicate
+  - type: ItemBorgModule
+    items:
+    - WeaponAdvancedLaser
+    - Machete
+
+- type: entity
+  id: BorgModuleOperative
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  name: operative cyborg module
+  description: A module that comes with a crowbar, an Emag and a syndicate pinpointer.
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicate
+        - state: icon-tools
+    - type: ItemBorgModule
+      items:
+        - Crowbar
+        - Emag
+        - PinpointerSyndicateNuclear
+
+- type: entity
+  id: BorgModuleEsword
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  name: energy sword cyborg module
+  description: A module that comes with a double energy sword.
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicate
+        - state: icon-tools
+    - type: ItemBorgModule
+      items:
+        - EnergySwordDouble
+        - PinpointerSyndicateNuclear
+
+- type: entity
+  id: BorgModuleL6C
+  parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule ]
+  name: L6C ROW cyborg module
+  description: A module that comes with a L6C.
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicate
+        - state: icon-tools
+    - type: ItemBorgModule
+      items:
+        - WeaponLightMachineGunL6C
+        - PinpointerSyndicateNuclear

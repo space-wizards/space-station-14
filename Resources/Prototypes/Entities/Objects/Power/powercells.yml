@@ -28,9 +28,13 @@
   - type: Tag
     tags:
       - DroneUsable
+      - PowerCell
   - type: Appearance
   - type: PowerCellVisuals
   - type: Riggable
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLightLaser
+    fireCost: 50
 
 - type: entity
   name: potato battery
@@ -112,7 +116,7 @@
     startingCharge: 720
   - type: MachinePart
     part: PowerCell
-    rating: 2    
+    rating: 2
 
 - type: entity
   id: PowerCellMediumPrinted
@@ -151,7 +155,7 @@
   - type: MachinePart
     part: PowerCell
     rating: 3
-    
+
 - type: entity
   id: PowerCellHighPrinted
   suffix: Empty
@@ -189,7 +193,7 @@
   - type: MachinePart
     part: PowerCell
     rating: 4
-    
+
 - type: entity
   id: PowerCellHyperPrinted
   suffix: Empty

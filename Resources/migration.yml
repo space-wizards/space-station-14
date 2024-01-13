@@ -87,3 +87,71 @@ GeneratorPlasma: PortableGeneratorPacman
 GeneratorUranium: PortableGeneratorSuperPacman
 GeneratorPlasmaMachineCircuitboard: PortableGeneratorPacmanMachineCircuitboard
 GeneratorUraniumMachineCircuitboard: PortableGeneratorSuperPacmanMachineCircuitboard
+
+# 2023-12-10
+SpawnPointSeniorResearcher: null
+SpawnPointSeniorOfficer: null
+SpawnPointSeniorEngineer: null
+SpawnPointSeniorPhysician: null
+
+# 2023-12-12
+#No this is not the CMO hardsuit, their prototype IDs were just confusingly similar
+ClothingOuterHardsuitMedic: ClothingOuterHardsuitSyndieMedic
+
+# 2023-12-13
+VendingMachineSmartFridge: SmartFridge
+
+# 2023-12-18
+ReagentContainerMilk: DrinkMilkCarton
+ReagentContainerMilkSoy: DrinkSoyMilkCarton
+ReagentContainerMilkOat: DrinkOatMilkCarton
+
+# 2023-12-20
+MiasmaCanister: AmmoniaCanister
+
+# 2023-12-28
+WarpPointBeaconBar: null
+WarpPointBeaconCargo: null
+WarpPointBeaconCommand: null
+WarpPointBeaconEngineering: null
+WarpPointBeaconMedical: null
+WarpPointBeaconNeutral: null
+WarpPointBeaconScience: null
+WarpPointBeaconSecurity: null
+WarpPointBeaconService: null
+
+# 2023-12-30
+ClothingEyesGlassesCosmeticSunglasses: ClothingEyesGlassesSunglasses
+SpawnPointAssistant: SpawnPointPassenger
+
+# 2024-01-05
+DrinkGoldschlagerBottleFull: DrinkGildlagerBottleFull
+DrinkGoldschlagerGlass: DrinkGildlagerGlass
+
+# 2024-01-07
+MonkeyCubeBox: VariantCubeBox
+
+# 2024-01-08
+SalvagePartsT4Spawner: SalvageLootSpawner
+SalvagePartsT3Spawner: SalvageLootSpawner
+SalvagePartsT3T4Spawner: SalvageLootSpawner
+SalvagePartsT2Spawner: SalvageLootSpawner
+AdvancedCapacitorStockPart: CapacitorStockPart
+SuperCapacitorStockPart: CapacitorStockPart
+QuadraticCapacitorStockPart: CapacitorStockPart
+NanoManipulatorStockPart: MicroManipulatorStockPart
+PicoManipulatorStockPart: MicroManipulatorStockPart
+FemtoManipulatorStockPart: MicroManipulatorStockPart
+AdvancedMatterBinStockPart: MatterBinStockPart
+SuperMatterBinStockPart: MatterBinStockPart
+BluespaceMatterBinStockPart: MatterBinStockPart
+AnsibleSubspaceStockPart: null
+FilterSubspaceStockPart: null
+AmplifierSubspaceStockPart: null
+TreatmentSubspaceStockPart: null
+AnalyzerSubspaceStockPart: null
+CrystalSubspaceStockPart: null
+TransmitterSubspaceStockPart: null
+
+# 2024-01-10
+ClothingHeadHatHoodRad: null

@@ -1,15 +1,10 @@
 using System.Diagnostics;
-using System.Globalization;
 using System.IO.Compression;
 using Robust.Packaging;
 using Robust.Packaging.AssetProcessing;
 using Robust.Packaging.AssetProcessing.Passes;
 using Robust.Packaging.Utility;
-using Robust.Shared.Audio;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using YamlDotNet.Core;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Packaging;
 
@@ -169,7 +164,7 @@ public static class ServerPackaging
         bool hybridAcz,
         CancellationToken cancel)
     {
-        var graph = new RobustClientAssetGraph();
+        var graph = new RobustServerAssetGraph();
         var passes = graph.AllPasses.ToList();
 
         pass.Dependencies.Add(new AssetPassDependency(graph.Output.Name));
@@ -177,7 +172,8 @@ public static class ServerPackaging
 
         AssetGraph.CalculateGraph(passes, logger);
 
-        var inputPass = graph.Input;
+        var inputPassCore = graph.InputCore;
+        var inputPassResources = graph.InputResources;
         var contentAssemblies = new List<string>(ServerContentAssemblies);
 
         // Additional assemblies that need to be copied such as EFCore.
@@ -200,26 +196,26 @@ public static class ServerPackaging
             Path.Combine("RobustToolbox", "bin", "Server",
             platform.Rid,
             "publish"),
-            inputPass,
+            inputPassCore,
             BinSkipFolders,
             cancel: cancel);
 
         await RobustSharedPackaging.WriteContentAssemblies(
-            inputPass,
+            inputPassResources,
             contentDir,
             "Content.Server",
             contentAssemblies,
-            Path.Combine("Resources", "Assemblies"),
-            cancel);
+            cancel: cancel);
 
-        await RobustServerPackaging.WriteServerResources(contentDir, inputPass, cancel);
+        await RobustServerPackaging.WriteServerResources(contentDir, inputPassResources, cancel);
 
         if (hybridAcz)
         {
-            inputPass.InjectFileFromDisk("Content.Client.zip", Path.Combine("release", "SS14.Client.zip"));
+            inputPassCore.InjectFileFromDisk("Content.Client.zip", Path.Combine("release", "SS14.Client.zip"));
         }
 
-        inputPass.InjectFinished();
+        inputPassCore.InjectFinished();
+        inputPassResources.InjectFinished();
     }
 
     private readonly record struct PlatformReg(string Rid, string TargetOs, bool BuildByDefault);

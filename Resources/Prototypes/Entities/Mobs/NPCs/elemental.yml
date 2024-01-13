@@ -1,5 +1,4 @@
 - type: entity
-  save: false
   abstract: true
   id: MobElementalBase
   components:
@@ -76,27 +75,38 @@
   - type: ZombieImmune
 
 - type: entity
+  abstract: true
+  id: MobOreCrab
+  name: ore crab
   parent: [ MobElementalBase, MobCombat ]
-  id: MobQuartzCrab
-  name: quartz crab
-  description: An ore crab made from quartz.
   components:
   - type: Sprite
     sprite: Mobs/Elemental/orecrab.rsi
-    state: quartzcrab
+    state: uranium_crab
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
   - type: MeleeWeapon
+    hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
-        Piercing: 12
-  - type: CombatMode
+        Blunt: 6
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 2.5
   - type: NpcFactionMember
     factions:
       - SimpleHostile
+
+- type: entity
+  parent: MobOreCrab
+  id: MobQuartzCrab
+  description: An ore crab made from Quartz.
+  components:
+  - type: Sprite
+    state: quartz_crab
   - type: Destructible
     thresholds:
     - trigger:
@@ -115,30 +125,19 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: [ MobElementalBase, MobCombat ]
+  parent: MobOreCrab
   id: MobIronCrab
-  name: ore crab
   description: An ore crab made from iron.
   components:
   - type: Sprite
-    sprite: Mobs/Elemental/orecrab.rsi
-    state: ironcrab
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
+    state: iron_crab
   - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
-        Blunt: 8
-  - type: CombatMode
+        Blunt: 5
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 2
-  - type: NpcFactionMember
-    factions:
-      - SimpleHostile
   - type: Destructible
     thresholds:
     - trigger:
@@ -157,30 +156,16 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: [ MobElementalBase, MobCombat ]
+  parent: MobOreCrab
   id: MobUraniumCrab
-  name: ore crab
   description: An ore crab made from uranium.
   components:
-  - type: Sprite
-    sprite: Mobs/Elemental/orecrab.rsi
-    state: uraniumcrab
-  - type: HTN
-    rootTask:
-      task: IdleCompound
-  - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
-    damage:
-      types:
-        Blunt: 8
-  - type: CombatMode
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2
-    baseSprintSpeed : 2.5
+  - type: FactionException
+  - type: NPCRetaliation
+    attackMemoryLength: 10
   - type: NpcFactionMember
     factions:
-      - SimpleHostile
+      - SimpleNeutral
   - type: RadiationSource
     intensity: 2
     slope: 0.3
@@ -196,14 +181,43 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           UraniumOre1:
-            min: 8
-            max: 10
+            min: 3
+            max: 6
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PointLight
     radius: 2
     energy: 3
     color: "#06DF24"
+
+- type: entity
+  parent: MobOreCrab
+  id: MobSilverCrab
+  name: ore crab
+  description: An ore crab made from silver.
+  components:
+  - type: Sprite
+    state: silver_crab
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 70
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SilverOre1:
+            min: 4
+            max: 6
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   name: Reagent slime

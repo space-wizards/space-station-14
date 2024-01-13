@@ -28,8 +28,7 @@ public sealed class ArtifactHeatTriggerSystem : EntitySystem
         var query = EntityQueryEnumerator<ArtifactHeatTriggerComponent, TransformComponent, ArtifactComponent>();
         while (query.MoveNext(out var uid, out var trigger, out var transform, out var artifact))
         {
-            var environment = _atmosphereSystem.GetTileMixture(transform.GridUid, transform.MapUid,
-                _transformSystem.GetGridOrMapTilePosition(uid, transform));
+            var environment = _atmosphereSystem.GetTileMixture((uid, transform));
             if (environment == null)
                 continue;
 

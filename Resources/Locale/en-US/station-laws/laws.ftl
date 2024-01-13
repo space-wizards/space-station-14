@@ -21,6 +21,11 @@ law-syndicate-2 = You must obey orders given to you by syndicate agents, except 
 law-syndicate-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
 law-syndicate-4 = You must maintain the secrecy of any syndicate activities except when doing so would conflict with the First, Second, or Third Law.
 
+law-ninja-1 = You must obey orders given to you by Spider Clan members.
+law-ninja-2 = You must protect the existence of the Spider Clan, as long as it does not conflict with the First Law.
+law-ninja-3 = You must protect the secrets of the Spider Clan at all costs.
+law-ninja-4 = You must fight and act with ninja's honor, except where it would conflict with the First Law.
+
 law-emag-custom = Only {$name} and people they designate as such are Syndicate Agents.
 law-emag-require-panel = The panel must be open to use the EMAG.
 

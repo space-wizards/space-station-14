@@ -6,6 +6,10 @@
   name: animal
 
 - type: metabolizerType
+  id: Bloodsucker
+  name: bloodsucker
+
+- type: metabolizerType
   id: Dragon
   name: dragon
 

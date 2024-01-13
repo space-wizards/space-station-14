@@ -187,7 +187,7 @@ public sealed class ActionContainerSystem : EntitySystem
 
         DebugTools.AssertOwner(uid, comp);
         comp ??= EnsureComp<ActionsContainerComponent>(uid);
-        if (!comp.Container.Insert(actionId))
+        if (!_container.Insert(actionId, comp.Container))
         {
             Log.Error($"Failed to insert action {ToPrettyString(actionId)} into {ToPrettyString(uid)}");
             return false;
@@ -239,7 +239,7 @@ public sealed class ActionContainerSystem : EntitySystem
         if (_timing.ApplyingState && component.NetSyncEnabled)
             return; // The game state should handle the container removal & action deletion.
 
-        component.Container.Shutdown();
+        _container.ShutdownContainer(component.Container);
     }
 
     private void OnEntityInserted(EntityUid uid, ActionsContainerComponent component, EntInsertedIntoContainerMessage args)

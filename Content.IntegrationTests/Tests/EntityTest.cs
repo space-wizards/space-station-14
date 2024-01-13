@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Humanoid.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Prototypes;
@@ -215,6 +216,7 @@ namespace Content.IntegrationTests.Tests
         {
             var settings = new PoolSettings { Connected = true, Dirty = true };
             await using var pair = await PoolManager.GetServerClient(settings);
+            var mapManager = pair.Server.ResolveDependency<IMapManager>();
             var server = pair.Server;
             var client = pair.Client;
 
@@ -232,6 +234,8 @@ namespace Content.IntegrationTests.Tests
                 "GhostRoleMobSpawner",
                 "NukeOperativeSpawner",
                 "TimedSpawner",
+                // makes an announcement on mapInit.
+                "AnnounceOnSpawn",
             };
 
             Assert.That(server.CfgMan.GetCVar(CVars.NetPVS), Is.False);
@@ -244,16 +248,18 @@ namespace Content.IntegrationTests.Tests
                 .Select(p => p.ID)
                 .ToList();
 
-            MapCoordinates coords = default;
+            protoIds.Sort();
+            var mapId = MapId.Nullspace;
+
             await server.WaitPost(() =>
             {
-                var map = server.MapMan.CreateMap();
-                coords = new MapCoordinates(default, map);
+               mapId = mapManager.CreateMap();
             });
+
+            var coords = new MapCoordinates(Vector2.Zero, mapId);
 
             await pair.RunTicksSync(3);
 
-            List<string> badPrototypes = new();
             foreach (var protoId in protoIds)
             {
                 // TODO fix ninja
@@ -270,27 +276,50 @@ namespace Content.IntegrationTests.Tests
                 // If the entity deleted itself, check that it didn't spawn other entities
                 if (!server.EntMan.EntityExists(uid))
                 {
-                    if (server.EntMan.EntityCount != count || client.EntMan.EntityCount != clientCount)
-                        badPrototypes.Add(protoId);
+                    if (server.EntMan.EntityCount != count)
+                    {
+                        Assert.Fail($"Server prototype {protoId} failed on deleting itself");
+                    }
+
+                    if (client.EntMan.EntityCount != clientCount)
+                    {
+                        Assert.Fail($"Client prototype {protoId} failed on deleting itself\n" +
+                                    $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
+                                    $"Server was {count}.");
+                    }
                     continue;
                 }
 
                 // Check that the number of entities has increased.
-                if (server.EntMan.EntityCount <= count || client.EntMan.EntityCount <= clientCount)
+                if (server.EntMan.EntityCount <= count)
                 {
-                    badPrototypes.Add(protoId);
-                    continue;
+                    Assert.Fail($"Server prototype {protoId} failed on spawning as entity count didn't increase");
+                }
+
+                if (client.EntMan.EntityCount <= clientCount)
+                {
+                    Assert.Fail($"Client prototype {protoId} failed on spawning as entity count didn't increase" +
+                                $"Expected at least {clientCount} and found {client.EntMan.EntityCount}. " +
+                                $"Server was {count}");
                 }
 
                 await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
                 await pair.RunTicksSync(3);
 
                 // Check that the number of entities has gone back to the original value.
-                if (server.EntMan.EntityCount != count || client.EntMan.EntityCount != clientCount)
-                    badPrototypes.Add(protoId);
+                if (server.EntMan.EntityCount != count)
+                {
+                    Assert.Fail($"Server prototype {protoId} failed on deletion count didn't reset properly");
+                }
+
+                if (client.EntMan.EntityCount != clientCount)
+                {
+                    Assert.Fail($"Client prototype {protoId} failed on deletion count didn't reset properly:\n" +
+                                $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
+                                $"Server was {count}.");
+                }
             }
 
-            Assert.That(badPrototypes, Is.Empty);
             await pair.CleanReturnAsync();
         }
 
@@ -303,7 +332,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionExposeData",
                 "DebugExceptionInitialize",
                 "DebugExceptionStartup",
-                "GridFillComponent",
+                "GridFill",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
                 "Broadphase",

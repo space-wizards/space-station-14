@@ -6,16 +6,15 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public sealed partial class FlammableComponent : Component
     {
-        [ViewVariables]
-        public bool Resisting = false;
-
-        [ViewVariables]
-        public readonly List<EntityUid> Collided = new();
+        [DataField]
+        public bool Resisting;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public bool OnFire { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float FireStacks { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]

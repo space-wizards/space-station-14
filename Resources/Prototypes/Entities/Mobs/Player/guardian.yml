@@ -81,13 +81,14 @@
       proto: guardian
     - type: Pullable
     - type: MeleeWeapon
-      hidden: true
-      angle: 30
+      hidden: false
+      altDisarm: false
       animation: WeaponArcFist
-      attackRate: 1.5
+      attackRate: 1.8
       damage:
         types:
           Blunt: 20
+          Structural: 20
     - type: MeleeSpeech
     - type: UserInterface
       interfaces:
@@ -129,9 +130,6 @@
           map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           color: "#40a7d7"
           shader: unshaded
-    - type: NpcFactionMember
-      factions:
-        - Syndicate
     - type: HTN
       rootTask:
         task: SimpleHumanoidHostileCompound

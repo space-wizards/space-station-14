@@ -57,7 +57,9 @@
   - type: Weldable
     time: 10
   - type: Airlock
+  - type: NavMapDoor
   - type: DoorBolt
+  - type: AccessReader
   - type: Appearance
   - type: WiresVisuals
   - type: ApcPowerReceiver
@@ -81,8 +83,8 @@
     fixVacuum: true
   - type: Occluder
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:
