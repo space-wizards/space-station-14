@@ -128,6 +128,19 @@
       - MobCatException
 
 - type: entity
+  name: Chip Spawner
+  id: SpawnMobCatChip
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatChip
+
+- type: entity
   name: Tropico Spawner
   id: SpawnMobCrabAtmos
   parent: MarkerBase
@@ -207,6 +220,7 @@
       - MobCatException
       - MobCatFloppa
       - MobBingus
+      - MobCatChip
 
 - type: entity
   name: Generic Cat Spawner
@@ -778,8 +792,8 @@
   - type: ConditionalSpawner
     prototypes:
     - MobPenguin
-    
-    
+
+
 - type: entity
   name: Hellspawn Spawner
   id: SpawnMobHellspawn
@@ -793,7 +807,7 @@
   - type: ConditionalSpawner
     prototypes:
       - MobHellspawn
-      
+
 - type: entity
   name: ore crab spawner
   id: SpawnMobOreCrab

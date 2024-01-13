@@ -141,6 +141,24 @@
     - VimPilot
 
 - type: entity
+  parent: MobCatKitten
+  id: MobCatChip
+  name: Chip
+  description: Just a little silly!
+  components:
+  - type: NpcFactionMember
+    factions:
+    - PetsNT
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+
+- type: entity
   name: Floppa
   id: MobCatFloppa
   parent: MobCatCaracal
