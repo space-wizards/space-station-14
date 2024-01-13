@@ -85,7 +85,7 @@ def main():
                 {"author": author, "time": time, "changes": changes, "id": new_id, "url": url}
             )
 
-        # os.remove(partpath)
+        os.remove(partpath)
 
     print(f"Have {len(entries_list)} changelog entries")
 
