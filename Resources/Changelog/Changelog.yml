@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - message: Align windoor collision bounds with thindow collision bounds.
-    type: Fix
-  id: 5192
-  time: '2023-11-19T06:44:36.0000000+00:00'
 - author: Slava0135
   changes:
   - message: Disposal traversal damage is disabled for now.
@@ -3720,3 +3714,11 @@ Entries:
   id: 5692
   time: '2024-01-13T15:04:46.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24024
+- author: Dygon
+  changes:
+  - message: Expendable light sources turned on through the verb menu now ignite the
+      surrounding area.
+    type: Fix
+  id: 5693
+  time: '2024-01-13T16:24:40.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24027
