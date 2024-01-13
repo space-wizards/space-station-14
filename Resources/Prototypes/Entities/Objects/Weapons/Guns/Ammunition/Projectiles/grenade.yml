@@ -9,6 +9,7 @@
     state: buckshot
   - type: Projectile
     deleteOnCollide: false
+    damageAfterCollide: true
     canOnlyPenetrateMobs: true
     damage:
       types:
@@ -29,6 +30,7 @@
     state: buckshot
   - type: Projectile
     deleteOnCollide: false
+    damageAfterCollide: true
     canOnlyPenetrateMobs: true
     damage:
       types:
@@ -47,6 +49,7 @@
     state: buckshot-flare
   - type: Projectile
     deleteOnCollide: false
+    damageAfterCollide: true
     canOnlyPenetrateMobs: true
     damage:
       types:
