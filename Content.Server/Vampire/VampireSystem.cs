@@ -434,7 +434,7 @@ public sealed partial class VampireSystem : EntitySystem
 
             _beam.TryCreateBeam(vampire, entity, "Lightning");
 
-            _popup.PopupEntity(Log.GetString("vampire-bloodsteal-other"), entity, entity, Shared.Popups.PopupType.LargeCaution);
+            _popup.PopupEntity(Loc.GetString("vampire-bloodsteal-other"), entity, entity, Shared.Popups.PopupType.LargeCaution);
         }
 
 

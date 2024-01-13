@@ -72,11 +72,11 @@
       types:
         Caustic: 50
     damageOnUnholyUse: ## What an unholy creature takes when picking up the bible
-      groups:
+      types:
         Caustic: 50
     damageUnholy: ## What damage is dealt when a chaplain hits an unholy creature
       groups:
-        Caustic: 20
+        types: 20
     failChance: 0
     locPrefix: "necro"
     healSound: "/Audio/Effects/lightburn.ogg"
