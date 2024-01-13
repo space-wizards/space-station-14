@@ -34,7 +34,8 @@ public static class WhitelistExtensions
     {
         foreach (var condition in prototype.Conditions)
         {
-            if (await condition.Condition(data))
+            var (isConditionSuccess, denyMessage) = await condition.Condition(data);
+            if (isConditionSuccess)
             {
                 sawmill.Debug($"User {data.UserName} passed whitelist condition {condition.GetType().Name}");
                 if (condition.BreakIfConditionSuccess)
@@ -48,7 +49,7 @@ public static class WhitelistExtensions
             if (condition.BreakIfConditionFail)
             {
                 sawmill.Debug($"User {data.UserName} failed whitelist condition {condition.GetType().Name}");
-                return (false, condition.DenyMessage);
+                return (false, denyMessage);
             }
 
             sawmill.Debug($"User {data.UserName} failed whitelist condition {condition.GetType().Name} but it's not a breaking condition");

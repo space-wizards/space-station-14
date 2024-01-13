@@ -2,6 +2,8 @@
   id: mrpWhitelist
   conditions:
     - !type:ConditionManualBlacklist # Blacklisted people are banned from playing MRP but can still play LRP
+      breakIfConditionSuccess: false
+      breakIfConditionFail: true
     - !type:ConditionNotes
       includeExpired: false
       minimumSeverity: 3 # High
