@@ -17,21 +17,7 @@
     },
     {
       "name": "turtle",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     }
   ]
 }

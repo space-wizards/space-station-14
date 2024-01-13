@@ -816,9 +816,6 @@
   components:
   - type: InteractionPopup
     successChance: 0.6
-    interactSuccessString: petting-success-lizard
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
   - type: NpcFactionMember
     factions:
       - PetsNT

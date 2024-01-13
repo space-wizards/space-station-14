@@ -2999,12 +2999,10 @@
     baseWalkSpeed: 2
     baseSprintSpeed: 3
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: turtle
       sprite: Mobs/Animals/turtle.rsi
-  - type: Physics
   - type: HTN
     rootTask:
       task: SimpleRangedHostileCompound
@@ -3060,10 +3058,7 @@
     interactSuccessSpawn: EffectHearts
     #interactSuccessSound:
     #  path: /Audio/Animals/lizard_happy.ogg #Just trust me it does not make sound. https://www.npr.org/2022/10/31/1132951238/what-sound-does-a-turtle-make
-  - type: Bloodstream
-    bloodMaxVolume: 150
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Scale
   - type: Puller
     needsHands: true
