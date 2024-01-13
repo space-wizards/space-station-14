@@ -1,10 +1,4 @@
 Entries:
-- author: Jrpl
-  changes:
-  - message: Borgs no longer take structural damage.
-    type: Tweak
-  id: 5191
-  time: '2023-11-19T06:44:22.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Align windoor collision bounds with thindow collision bounds.
@@ -3717,3 +3711,12 @@ Entries:
   id: 5691
   time: '2024-01-13T07:30:11.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23973
+- author: Errant
+  changes:
+  - message: The empty space around Map UI window edges is no longer resizable.
+    type: Tweak
+  - message: Station Map ui now has proper edges.
+    type: Fix
+  id: 5692
+  time: '2024-01-13T15:04:46.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24024
