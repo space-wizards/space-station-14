@@ -83,7 +83,7 @@
 - type: entity
   parent: DrinkCartonBaseFull
   id: DrinkCreamCarton
-  name: Milk Cream
+  name: milk cream
   description: It's cream. Made from milk. What else did you think you'd find in there?
   components:
   - type: SolutionContainerManager

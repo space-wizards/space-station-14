@@ -185,19 +185,22 @@ public abstract partial class SharedHandsSystem : EntitySystem
         var held = EnumerateHeld(uid, handsComp)
             .Where(x => !HasComp<HandVirtualItemComponent>(x)).ToList();
 
-        if (!held.Any())
+        using (args.PushGroup(nameof(HandsComponent)))
         {
-            args.PushText(Loc.GetString("comp-hands-examine-empty",
-                ("user", Identity.Entity(uid, EntityManager))));
-            return;
+            if (!held.Any())
+            {
+                args.PushText(Loc.GetString("comp-hands-examine-empty",
+                    ("user", Identity.Entity(uid, EntityManager))));
+                return;
+            }
+
+            var heldList = ContentLocalizationManager.FormatList(held
+                .Select(x => Loc.GetString("comp-hands-examine-wrapper",
+                    ("item", Identity.Entity(x, EntityManager)))).ToList());
+
+            args.PushMarkup(Loc.GetString("comp-hands-examine",
+                ("user", Identity.Entity(uid, EntityManager)),
+                ("items", heldList)));
         }
-
-        var heldList = ContentLocalizationManager.FormatList(held
-            .Select(x => Loc.GetString("comp-hands-examine-wrapper",
-                ("item", Identity.Entity(x, EntityManager)))).ToList());
-
-        args.PushMarkup(Loc.GetString("comp-hands-examine",
-            ("user", Identity.Entity(uid, EntityManager)),
-            ("items", heldList)));
     }
 }
