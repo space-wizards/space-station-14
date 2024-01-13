@@ -48,8 +48,6 @@ public sealed partial class ChangelingSystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
-
         var target = args.Target;
         if (!HasComp<HumanoidAppearanceComponent>(target))
         {
@@ -71,6 +69,8 @@ public sealed partial class ChangelingSystem
             _popup.PopupEntity(selfMessage, uid, uid);
             return;
         }
+
+        args.Handled = true;
 
         _popup.PopupEntity(Loc.GetString("changeling-dna-stage-1"), uid, uid);
 
