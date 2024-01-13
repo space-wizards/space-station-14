@@ -288,14 +288,14 @@ public sealed partial class GunSystem : SharedGunSystem
                                 break;
                         }
 
+                        //Deal damage to all targets hit.
                         if (hitList.Count != 0)
                         {
-                            foreach (var laserHit in hitList)
+                            foreach (var hitEntity in hitList)
                             {
-                                if (laserHit == lastUser)
+                                if (hitEntity == lastUser)
                                     continue;
 
-                                var hitEntity = laserHit;
                                 if (hitscan.StaminaDamage > 0f)
                                     _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: user);
 
@@ -331,7 +331,7 @@ public sealed partial class GunSystem : SharedGunSystem
                                             $"{hitName:target} hit by hitscan dealing {dmg.Total:damage} damage");
                                     }
                                 }
-                                if (!hitscan.CanPenetrateMobs && !HasComp<MobStateComponent>(laserHit) && !hitscan.CanPenetrateStructures)
+                                if (!hitscan.CanPenetrateMobs && !HasComp<MobStateComponent>(hitEntity) && !hitscan.CanPenetrateStructures)
                                     break;
                             }
                         }
