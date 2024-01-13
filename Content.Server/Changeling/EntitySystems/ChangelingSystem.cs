@@ -22,6 +22,7 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Actions;
 using Robust.Shared.Serialization.Manager;
 using Content.Shared.Alert;
+using Content.Shared.Stealth.Components;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -259,6 +260,18 @@ public sealed partial class ChangelingSystem : EntitySystem
                 var copiedStoreComponent = (Component) _serialization.CreateCopy(storeComp, notNullableOverride: true);
                 RemComp<StoreComponent>(transformedUid.Value);
                 EntityManager.AddComponent(transformedUid.Value, copiedStoreComponent);
+            }
+
+            if (TryComp(uid, out StealthComponent? stealthComp)) // copy over stealth status
+            {
+                if (TryComp(uid, out StealthOnMoveComponent? stealthOnMoveComp))
+                {
+                    var copiedStealthComponent = (Component) _serialization.CreateCopy(stealthComp, notNullableOverride: true);
+                    EntityManager.AddComponent(transformedUid.Value, copiedStealthComponent);
+
+                    var copiedStealthOnMoveComponent = (Component) _serialization.CreateCopy(stealthOnMoveComp, notNullableOverride: true);
+                    EntityManager.AddComponent(transformedUid.Value, copiedStealthOnMoveComponent);
+                }
             }
 
             _actionContainer.TransferAllActions(uid, transformedUid.Value);
