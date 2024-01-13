@@ -236,6 +236,9 @@
         reagents:
         - ReagentId: Mayo
           Quantity: 50
+  - type: Tag
+    tags:
+      - Mayo        
 
 # - type: entity
 #   parent: ReagentPacketBase
