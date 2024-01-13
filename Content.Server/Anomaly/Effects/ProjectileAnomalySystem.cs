@@ -5,7 +5,6 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Projectiles;
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
