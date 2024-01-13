@@ -69,3 +69,29 @@
         prob: 0.1
       - id: BookInspiration
         prob: 0.1
+      - id: BookSpaceEncyclopedia
+        prob: 0.1
+      - id: BookTheBookOfControl
+        prob: 0.1
+      - id: BookBartendersManual
+        prob: 0.1
+      - id: BookChefGaming
+        prob: 0.1
+      - id: BookLeafLoversSecret
+        prob: 0.1
+      - id: BookEngineersHandbook
+        prob: 0.1
+      - id: BookScientistsGuidebook
+        prob: 0.1
+      - id: BookSecurity
+        prob: 0.1
+      - id: BookHowToKeepStationClean
+        prob: 0.1
+      - id: BookHowToRockAndStone
+        prob: 0.1
+      - id: BookMedicalReferenceBook
+        prob: 0.1
+      - id: BookHowToSurvive
+        prob: 0.1
+      - id: BookChemicalCompendium
+        prob: 0.1
