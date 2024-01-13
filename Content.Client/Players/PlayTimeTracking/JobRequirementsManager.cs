@@ -21,7 +21,7 @@ public sealed class JobRequirementsManager
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
-    private readonly Dictionary<string, TimeSpan> _roles = new();
+    public readonly Dictionary<string, TimeSpan> PlayTimes = new();
     private readonly List<string> _roleBans = new();
 
     private ISawmill _sawmill = default!;
@@ -44,7 +44,7 @@ public sealed class JobRequirementsManager
         if (e.NewLevel == ClientRunLevel.Initialize)
         {
             // Reset on disconnect, just in case.
-            _roles.Clear();
+            PlayTimes.Clear();
         }
     }
 
@@ -62,12 +62,12 @@ public sealed class JobRequirementsManager
 
     private void RxPlayTime(MsgPlayTime message)
     {
-        _roles.Clear();
+        PlayTimes.Clear();
 
         // NOTE: do not assign _roles = message.Trackers due to implicit data sharing in integration tests.
         foreach (var (tracker, time) in message.Trackers)
         {
-            _roles[tracker] = time;
+            PlayTimes[tracker] = time;
         }
 
         /*var sawmill = Logger.GetSawmill("play_time");
@@ -111,7 +111,7 @@ public sealed class JobRequirementsManager
         var reasons = new List<string>();
         foreach (var requirement in requirements)
         {
-            if (JobRequirements.TryRequirementMet(requirement, _roles, out var jobReason, _entManager, _prototypes, localePrefix))
+            if (JobRequirements.TryRequirementMet(requirement, PlayTimes, out var jobReason, _entManager, _prototypes, localePrefix))
                 continue;
 
             reasons.Add(jobReason.ToMarkup());
@@ -123,7 +123,7 @@ public sealed class JobRequirementsManager
 
     public TimeSpan FetchOverallPlaytime()
     {
-        return _roles.TryGetValue("Overall", out var overallPlaytime) ? overallPlaytime : TimeSpan.Zero;
+        return PlayTimes.TryGetValue("Overall", out var overallPlaytime) ? overallPlaytime : TimeSpan.Zero;
     }
 
     public IEnumerable<KeyValuePair<string, TimeSpan>> FetchPlaytimeByRoles()
@@ -132,7 +132,7 @@ public sealed class JobRequirementsManager
 
         foreach (var job in jobsToMap)
         {
-            if (_roles.TryGetValue(job.PlayTimeTracker, out var locJobName))
+            if (PlayTimes.TryGetValue(job.PlayTimeTracker, out var locJobName))
             {
                 yield return new KeyValuePair<string, TimeSpan>(job.Name, locJobName);
             }

@@ -113,7 +113,7 @@ public sealed class LoadoutSystem : EntitySystem
         return failedLoadouts;
     }
 
-    private bool CheckPlaytime(HashSet<JobRequirement> requirements, Dictionary<string, TimeSpan> playTimes)
+    public bool CheckPlaytime(HashSet<JobRequirement> requirements, Dictionary<string, TimeSpan> playTimes)
     {
         foreach (var requirement in requirements)
         {
