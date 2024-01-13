@@ -23,6 +23,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Appearance
+  - type: WiresVisuals
   - type: ContainerFill
     containers:
       board: [ IntercomElectronics ]
@@ -44,6 +45,10 @@
       visible: false
     - state: speaker
       map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
       shader: unshaded
       visible: false
   - type: Transform
@@ -89,6 +94,10 @@
                 volume: -4
   - type: GenericVisualizer
     visuals:
+      enum.WiresVisualLayers.MaintenancePanel:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: true }
+          False: { visible: false }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
