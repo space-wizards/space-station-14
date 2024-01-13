@@ -62,9 +62,6 @@ accent-archaic-replacement-18 = perchance
 accent-archaic-replaced-19 = this
 accent-archaic-replacement-19 = thee
 
-accent-archaic-replaced-20 = nothing
-accent-archaic-replacement-20 = naught
-
 accent-archaic-replaced-21 = yes
 accent-archaic-replacement-21 = aye
 
@@ -259,9 +256,6 @@ accent-archaic-replacement-92 = defile
 
 accent-archaic-replaced-93 = ruined
 accent-archaic-replacement-93 = defiled
-
-accent-archaic-replaced-94 = before
-accent-archaic-replacement-94 = ere
 
 accent-archaic-replaced-95 = pretend
 accent-archaic-replacement-95 = feign
@@ -494,9 +488,6 @@ accent-archaic-replacement-170 = believe
 accent-archaic-replaced-171 = indeed
 accent-archaic-replacement-171 = certainly
 
-accent-archaic-replaced-172 = help
-accent-archaic-replacement-172 = assist
-
 accent-archaic-replaced-173 = now
 accent-archaic-replacement-173 = immediately
 
@@ -661,9 +652,6 @@ accent-archaic-replacement-228 = drink
 
 accent-archaic-replaced-229 = pop
 accent-archaic-replacement-229 = drink
-
-accent-archaic-replaced-230 = how
-accent-archaic-replacement-230 = in what way
 
 accent-archaic-replaced-231 = wants
 accent-archaic-replacement-231 = wishes

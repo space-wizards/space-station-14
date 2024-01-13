@@ -91,7 +91,7 @@
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitVoidParamed
-  name: Paramedic Void Suit
+  name: paramedic void suit
   description: A void suit made for paramedics.
   components:
   - type: Sprite

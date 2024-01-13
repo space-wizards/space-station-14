@@ -5,12 +5,12 @@ using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Rejuvenate;
 using Robust.Server.Containers;
-using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -23,7 +23,6 @@ public sealed class RottingSystem : EntitySystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -32,6 +31,7 @@ public sealed class RottingSystem : EntitySystem
         SubscribeLocalEvent<PerishableComponent, MapInitEvent>(OnPerishableMapInit);
         SubscribeLocalEvent<PerishableComponent, EntityUnpausedEvent>(OnPerishableUnpaused);
         SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnPerishableExamined);
 
         SubscribeLocalEvent<RottingComponent, EntityUnpausedEvent>(OnRottingUnpaused);
         SubscribeLocalEvent<RottingComponent, ComponentShutdown>(OnShutdown);
@@ -55,7 +55,10 @@ public sealed class RottingSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, PerishableComponent component, MobStateChangedEvent args)
     {
-        if (!_mobState.IsDead(uid))
+        if (args.NewMobState != MobState.Dead && args.OldMobState != MobState.Dead)
+            return;
+
+        if (HasComp<RottingComponent>(uid))
             return;
 
         component.RotAccumulator = TimeSpan.Zero;
@@ -101,7 +104,7 @@ public sealed class RottingSystem : EntitySystem
         var ev = new IsRottingEvent();
         RaiseLocalEvent(uid, ref ev);
 
-        return ev.Handled;
+        return !ev.Handled;
     }
 
     public bool IsRotten(EntityUid uid, RottingComponent? rotting = null)
@@ -122,6 +125,31 @@ public sealed class RottingSystem : EntitySystem
         tileMix?.AdjustMoles(Gas.Ammonia, molsToDump);
     }
 
+    private void OnPerishableExamined(Entity<PerishableComponent> perishable, ref ExaminedEvent args)
+    {
+        int maxStages = 3;
+        int stage = PerishStage(perishable, maxStages);
+        if (stage < 1 || stage > maxStages)
+        {
+            // We dont push an examined string if it hasen't started "perishing" or it's already rotting
+            return;
+        }
+
+        var description = "perishable-" + stage;
+        args.PushMarkup(Loc.GetString(description, ("target", Identity.Entity(perishable, EntityManager))));
+    }
+
+    /// <summary>
+    /// Return an integer from 0 to maxStage representing how close to rotting an entity is. Used to
+    /// generate examine messages for items that are starting to rot.
+    /// </summary>
+    public int PerishStage(Entity<PerishableComponent> perishable, int maxStages)
+    {
+        if (perishable.Comp.RotAfter.TotalSeconds == 0 || perishable.Comp.RotAccumulator.TotalSeconds == 0)
+            return 0;
+        return (int)(1 + maxStages * perishable.Comp.RotAccumulator.TotalSeconds / perishable.Comp.RotAfter.TotalSeconds);
+    }
+
     private void OnExamined(EntityUid uid, RottingComponent component, ExaminedEvent args)
     {
         var stage = RotStage(uid, component);
@@ -131,7 +159,7 @@ public sealed class RottingSystem : EntitySystem
             >= 1 => "rotting-bloated",
                _ => "rotting-rotting"
         };
-        args.PushMarkup(Loc.GetString(description));
+        args.PushMarkup(Loc.GetString(description, ("target", Identity.Entity(uid, EntityManager))));
     }
 
     /// <summary>
@@ -154,7 +182,7 @@ public sealed class RottingSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        args.Handled = component.CurrentTemperature > Atmospherics.T0C + 0.85f;
+        args.Handled = component.CurrentTemperature < Atmospherics.T0C + 0.85f;
     }
 
     public override void Update(float frameTime)
