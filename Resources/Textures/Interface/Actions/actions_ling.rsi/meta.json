@@ -27,6 +27,30 @@
     },
     {
       "name": "cycle"
+    },
+    {
+      "name": "biodegrade"
+    },
+    {
+      "name": "sting_extract"
+    },
+    {
+      "name": "sting_blind"
+    },
+    {
+      "name": "sting_fake_armblade"
+    },
+    {
+      "name": "sting_hallucination"
+    },
+    {
+      "name": "sting_mute"
+    },
+    {
+      "name": "sting_transform"
+    },
+    {
+      "name": "sting_cryo"
     }
   ]
 }

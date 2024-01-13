@@ -61,6 +61,12 @@ public sealed partial class ChangelingComponent : Component
     /// </summary>
     [DataField]
     public float AbsorbGeneticDmg = 200.0f;
+
+    /// <summary>
+    /// The amount of evolution points the changeling gains when they absorb another changeling.
+    /// </summary>
+    [DataField]
+    public float AbsorbedChangelingPointsAmount = 5.0f;
     #endregion
 
     #region Transform Ability
@@ -196,6 +202,14 @@ public sealed partial class ChangelingComponent : Component
     /// </summary>
     [DataField]
     public float DissonantShriekEmpDuration = 12f;
+    #endregion
+
+    #region Changeling stings
+    /// <summary>
+    /// The amount of chemicals that is needed to use DNA extract sting.
+    /// </summary>
+    [DataField]
+    public float DNAStingCost = -25f;
     #endregion
 
     [DataField]

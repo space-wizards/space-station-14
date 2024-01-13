@@ -8,6 +8,10 @@ public sealed partial class LingAbsorbActionEvent : EntityTargetActionEvent
 {
 }
 
+public sealed partial class LingStingExtractActionEvent : EntityTargetActionEvent
+{
+}
+
 [Serializable, NetSerializable]
 public sealed partial class AbsorbDoAfterEvent : SimpleDoAfterEvent
 {

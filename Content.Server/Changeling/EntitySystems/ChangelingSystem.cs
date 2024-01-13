@@ -21,6 +21,7 @@ using Content.Server.Forensics;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Actions;
 using Robust.Shared.Serialization.Manager;
+using Content.Shared.Alert;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -35,6 +36,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
 
     public override void Initialize()
     {
@@ -87,8 +89,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (regenCap)
             float.Min(component.Chemicals, component.MaxChemicals);
 
-        if (TryComp<StoreComponent>(uid, out var store))
-            _store.UpdateUserInterface(uid, uid, store);
+        _alerts.ShowAlert(uid, AlertType.Chemicals, (short) Math.Clamp(Math.Round(component.Chemicals / 10f), 0, 7));
 
         return true;
     }
@@ -109,6 +110,21 @@ public sealed partial class ChangelingSystem : EntitySystem
         else
         {
             component.ChemicalsPerSecond += regenCost;
+        }
+
+        return true;
+    }
+
+    private bool TryStingTarget(EntityUid uid, EntityUid target, ChangelingComponent component)
+    {
+        if (HasComp<ChangelingComponent>(target))
+        {
+            var selfMessage = Loc.GetString("changeling-sting-fail-self", ("target", Identity.Entity(target, EntityManager)));
+            _popup.PopupEntity(selfMessage, uid, uid);
+
+            var targetMessage = Loc.GetString("changeling-sting-fail-target");
+            _popup.PopupEntity(targetMessage, target, target);
+            return false;
         }
 
         return true;

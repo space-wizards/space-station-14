@@ -16,6 +16,9 @@ using Content.Shared.Stealth.Components;
 using Content.Server.Emp;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
+using Content.Server.Forensics;
+using Content.Shared.FixedPoint;
+using Content.Server.Store.Components;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -41,6 +44,7 @@ public sealed partial class ChangelingSystem
         SubscribeLocalEvent<ChangelingComponent, LingArmorActionEvent>(OnLingArmorAction);
         SubscribeLocalEvent<ChangelingComponent, LingInvisibleActionEvent>(OnLingInvisible);
         SubscribeLocalEvent<ChangelingComponent, LingEMPActionEvent>(OnLingEmp);
+        SubscribeLocalEvent<ChangelingComponent, LingStingExtractActionEvent>(OnLingDNASting);
     }
 
     private void StartAbsorbing(EntityUid uid, ChangelingComponent component, LingAbsorbActionEvent args)
@@ -130,15 +134,29 @@ public sealed partial class ChangelingSystem
                 return;
             }
 
-            var selfMessage = Loc.GetString("changeling-dna-success", ("target", Identity.Entity(target, EntityManager)));
-            _popup.PopupEntity(selfMessage, uid, uid, PopupType.Medium);
-
             // give them 200 genetic damage and remove all of their blood
             var dmg = new DamageSpecifier(_proto.Index(GeneticDamageGroup), component.AbsorbGeneticDmg);
             _damageableSystem.TryChangeDamage(target, dmg);
             _bloodstreamSystem.ChangeBloodReagent(target, "FerrochromicAcid"); // replace target's blood with acid, then spill
             _bloodstreamSystem.SpillAllSolutions(target); // replace target's blood with acid, then spill
             EnsureComp<AbsorbedComponent>(target);
+
+            if (HasComp<ChangelingComponent>(target)) // they were another changeling, give extra evolution points
+            {
+                var selfMessage = Loc.GetString("changeling-dna-success-ling", ("target", Identity.Entity(target, EntityManager)));
+                _popup.PopupEntity(selfMessage, uid, uid, PopupType.Medium);
+
+                if (TryComp<StoreComponent>(uid, out var store))
+                {
+                    _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { EvolutionPointsCurrencyPrototype, component.AbsorbedChangelingPointsAmount } }, uid, store);
+                    _store.UpdateUserInterface(uid, uid, store);
+                }
+            }
+            else
+            {
+                var selfMessage = Loc.GetString("changeling-dna-success", ("target", Identity.Entity(target, EntityManager)));
+                _popup.PopupEntity(selfMessage, uid, uid, PopupType.Medium);
+            }
         }
 
         if (component.AbsorbStage >= 2.0)
@@ -355,5 +373,48 @@ public sealed partial class ChangelingSystem
 
         var coords = _transform.GetMapCoordinates(uid);
         _emp.EmpPulse(coords, component.DissonantShriekEmpRange, component.DissonantShriekEmpConsumption, component.DissonantShriekEmpDuration);
+    }
+
+    // changeling stings
+    private void OnLingDNASting(EntityUid uid, ChangelingComponent component, LingStingExtractActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var target = args.Target;
+
+        if (!TryStingTarget(uid, target, component))
+            return;
+
+        if (HasComp<AbsorbedComponent>(target))
+        {
+            var selfMessageFailNoDna = Loc.GetString("changeling-dna-sting-fail-nodna", ("target", Identity.Entity(target, EntityManager)));
+            _popup.PopupEntity(selfMessageFailNoDna, uid, uid);
+            return;
+        }
+
+        var dnaCompTarget = EnsureComp<DnaComponent>(target);
+
+        foreach (var storedUid in component.StoredDNA)
+        {
+            var dnaComp = EnsureComp<DnaComponent>(storedUid);
+
+            if (dnaComp.DNA == dnaCompTarget.DNA)
+            {
+                var selfMessageFailAlreadyDna = Loc.GetString("changeling-dna-sting-fail-alreadydna", ("target", Identity.Entity(target, EntityManager)));
+                _popup.PopupEntity(selfMessageFailAlreadyDna, uid, uid);
+                return;
+            }
+        }
+
+        if (!TryUseAbility(uid, component, component.DNAStingCost))
+            return;
+
+        var selfMessageSuccess = Loc.GetString("changeling-dna-sting", ("target", Identity.Entity(target, EntityManager)));
+        _popup.PopupEntity(selfMessageSuccess, uid, uid);
+
+        args.Handled = true;
+
+        StealDNA(uid, target, component);
     }
 }
