@@ -17,8 +17,7 @@
   - type: EmpOnTrigger
     range: 4
     energyConsumption: 50000
-  - type: TimedDespawn # wtf, it broken checks if DeleteOnTrigger
-    lifetime: 3
+  - type: DeleteOnTrigger
 
 - type: entity
   id: AdminInstantEffectFlash
