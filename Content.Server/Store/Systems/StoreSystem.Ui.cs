@@ -171,7 +171,6 @@ public sealed partial class StoreSystem
             component.BoughtEntities.Add(product);
         }
 
-        // TODO: Test actions in mind with Revenant
         //give action
         if (!string.IsNullOrWhiteSpace(listing.ProductAction))
         {

@@ -174,7 +174,6 @@ public sealed class ActionContainerSystem : EntitySystem
         DebugTools.AssertEqual(oldContainer.Container.Count, 0);
     }
 
-    // TODO: Re-evaluate if needed
     /// <summary>
     /// Transfers an actions from one container to another, while changing the attached entity.
     /// </summary>
@@ -200,8 +199,6 @@ public sealed class ActionContainerSystem : EntitySystem
             return;
 
         DebugTools.AssertEqual(action.Container, newContainer);
-        DebugTools.AssertNull(action.AttachedEntity);
-
         _actions.AddActionDirect(newAttached, actionId, action: action);
 
         DebugTools.AssertEqual(action.AttachedEntity, attached);
@@ -341,7 +338,6 @@ public sealed class ActionContainerSystem : EntitySystem
         data.Container = null;
     }
 
-    // TODO: Grant singular action than regranting all actions
     private void OnActionAdded(EntityUid uid, ActionsContainerComponent component, ActionAddedEvent args)
     {
         if (_mind.TryGetMind(uid, out var mind, out _))

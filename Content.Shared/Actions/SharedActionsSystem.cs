@@ -705,13 +705,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
         performer.Comp ??= EnsureComp<ActionsComponent>(performer);
 
-        // TODO: Loop
-
         if (TryGetActionData(actionId, out var action))
             AddActionDirect(performer, actionId, performer.Comp, action);
     }
-
-    // TODO: Remove Granted Action
 
     public IEnumerable<(EntityUid Id, BaseActionComponent Comp)> GetActions(EntityUid holderId, ActionsComponent? actions = null)
     {

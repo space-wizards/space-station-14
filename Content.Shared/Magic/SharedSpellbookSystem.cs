@@ -1,8 +1,9 @@
-﻿﻿using Content.Shared.Actions;
+﻿using Content.Shared.Actions;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Magic.Components;
 using Content.Shared.Mind;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Magic;
 
@@ -12,6 +13,7 @@ public sealed class SharedSpellbookSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
 
     public override void Initialize()
     {
@@ -62,10 +64,19 @@ public sealed class SharedSpellbookSystem : EntitySystem
             return;
         }
 
-        // TODO: Broken
         if (_mind.TryGetMind(args.Args.User, out var mindId, out _))
-            // _actionContainer.TransferAllActions(uid, mindId);
-            _actionContainer.TransferAllActionsWithNewAttached(uid, mindId, args.Args.User);
+        {
+            ActionsContainerComponent? mindActionContainerComp = null;
+            if (!TryComp<ActionsContainerComponent>(mindId, out var mindActionsContainerComponent))
+                mindActionContainerComp = EnsureComp<ActionsContainerComponent>(mindId);
+
+            mindActionContainerComp ??= mindActionsContainerComponent;
+
+            if (_netManager.IsServer)
+            {
+                _actionContainer.TransferAllActionsWithNewAttached(uid, mindId, args.Args.User, newContainer: mindActionContainerComp);
+            }
+        }
         else
         {
             foreach (var (id, charges) in component.SpellActions)
