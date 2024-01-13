@@ -144,7 +144,7 @@
                 <BoxContainer Name="CLoadoutsTab" Orientation="Vertical" Margin="10">
                     <!-- Loadouts -->
                     <!-- PanelContainer for putting the labels over the ProgressBar, since BoxContainer doesn't seem to support doing that -->
-                    <PanelContainer HorizontalAlignment="Stretch" HorizontalExpand="True" Margin="0 0 0 5">
+                    <PanelContainer HorizontalAlignment="Stretch" HorizontalExpand="True">
                         <ProgressBar Name="LoadoutPointsBar" MaxValue="1" Value="1" />
                         <BoxContainer Orientation="Horizontal">
                             <Label Name="LoadoutPointsLabelB" Margin="5 0 0 0" />
@@ -153,7 +153,7 @@
                         </BoxContainer>
                     </PanelContainer>
 
-                    <Button Name="CHideShowUnusableButton" Text="{Loc 'humanoid-profile-editor-loadouts-show-unusable-button'}" ToolTip="{Loc 'humanoid-profile-editor-loadouts-show-unusable-button-tooltip'}" ToggleMode="True" />
+                    <Button Name="CHideShowUnusableButton" Text="{Loc 'humanoid-profile-editor-loadouts-show-unusable-button'}" ToolTip="{Loc 'humanoid-profile-editor-loadouts-show-unusable-button-tooltip'}" ToggleMode="True" StyleClasses="OpenRight" Margin="0 0 0 5" />
 
                     <ScrollContainer VerticalExpand="True">
                         <TabContainer Name="CLoadoutsTabs" VerticalExpand="True" />
