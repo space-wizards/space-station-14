@@ -20,6 +20,7 @@ public sealed class InteractionPopupSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -83,7 +84,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                 sfx = component.InteractSuccessSound;
 
             if (component.InteractSuccessSpawn != null)
-                Spawn(component.InteractSuccessSpawn, Transform(uid).MapPosition);
+                Spawn(component.InteractSuccessSpawn, _transform.GetMapCoordinates(uid));
         }
         else
         {
@@ -94,7 +95,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                 sfx = component.InteractFailureSound;
 
             if (component.InteractFailureSpawn != null)
-                Spawn(component.InteractFailureSpawn, Transform(uid).MapPosition);
+                Spawn(component.InteractFailureSpawn, _transform.GetMapCoordinates(uid));
         }
 
         if (component.MessagePerceivedByOthers != null)
