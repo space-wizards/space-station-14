@@ -102,6 +102,46 @@
     - ClothingUniformJumpskirtParamedic
 
 - type: loadout
+  id: LoadoutMedicalUniformJumpskirtSenior
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - MedicalDoctor
+  playtimeRequirements:
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 21600 # 6 hours
+    - !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 21600 # 6 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 216000 # 60 hours
+  items:
+    - ClothingUniformJumpskirtSeniorPhysician
+
+- type: loadout
+  id: LoadoutMedicalUniformJumpsuitSenior
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - MedicalDoctor
+  playtimeRequirements:
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 21600 # 6 hours
+    - !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 21600 # 6 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 216000 # 60 hours
+  items:
+    - ClothingUniformJumpsuitSeniorPhysician
+
+- type: loadout
   id: LoadoutMedicalHeadNurse
   category: Jobs
   cost: 2
@@ -110,3 +150,23 @@
     - MedicalDoctor
   items:
     - ClothingHeadNurseHat
+
+- type: loadout
+  id: LoadoutMedicalHeadBeretSeniorPhysician
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - MedicalDoctor
+  playtimeRequirements:
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 21600 # 6 hours
+    - !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 21600 # 6 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 216000 # 60 hours
+  items:
+    - ClothingHeadHatBeretSeniorPhysician

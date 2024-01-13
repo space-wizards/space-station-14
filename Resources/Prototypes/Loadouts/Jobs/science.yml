@@ -1,4 +1,32 @@
 - type: loadout
+  id: LoadoutScienceUniformJumpskirtSenior
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Scientist
+  playtimeRequirements:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 216000 # 60 hours
+  items:
+    - ClothingUniformJumpskirtSeniorResearcher
+
+- type: loadout
+  id: LoadoutScienceUniformJumpsuitSenior
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Scientist
+  playtimeRequirements:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 216000 # 60 hours
+  items:
+    - ClothingUniformJumpsuitSeniorResearcher
+
+- type: loadout
   id: LoadoutScienceOuterCoat
   category: Jobs
   cost: 2
@@ -21,15 +49,19 @@
   items:
     - ClothingOuterCoatLab
 
-# - type: loadout
-#   id: LoadoutScienceOuterLabcoatSeniorResearcher
-#   category: Jobs
-#   cost: 2
-#   exclusive: true
-#   jobWhitelist:
-#     - SeniorResearcher
-#   items:
-#     - ClothingOuterCoatLabSeniorResearcher
+- type: loadout
+  id: LoadoutScienceOuterLabcoatSeniorResearcher
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Scientist
+  playtimeRequirements:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 216000 # 60 hours
+  items:
+    - ClothingOuterCoatLabSeniorResearcher
 
 - type: loadout
   id: LoadoutScienceHatBeret

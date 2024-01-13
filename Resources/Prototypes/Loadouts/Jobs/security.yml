@@ -11,6 +11,52 @@
     - ClothingUniformJumpsuitSecGrey
 
 - type: loadout
+  id: LoadoutSecurityUniformJumpskirtSenior
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+  playtimeRequirements:
+    - !type:RoleTimeRequirement
+      role: JobWarden
+      time: 21600 #6 hrs
+    - !type:RoleTimeRequirement
+      role: JobDetective
+      time: 7200 #2 hrs
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 21600 #6 hrs
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 216000 # 60 hrs
+  items:
+    - ClothingUniformJumpskirtSeniorOfficer
+
+- type: loadout
+  id: LoadoutSecurityUniformJumpsuitSenior
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+  playtimeRequirements:
+    - !type:RoleTimeRequirement
+      role: JobWarden
+      time: 21600 #6 hrs
+    - !type:RoleTimeRequirement
+      role: JobDetective
+      time: 7200 #2 hrs
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 21600 #6 hrs
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 216000 # 60 hrs
+  items:
+    - ClothingUniformJumpsuitSeniorOfficer
+
+- type: loadout
   id: LoadoutSecurityMaskGasSwat
   category: Jobs
   cost: 2
