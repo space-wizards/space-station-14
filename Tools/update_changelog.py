@@ -97,9 +97,9 @@ def main():
         entries_list = entries_list[overflow:]
 
     new_data = {"Entries": entries_list}
-    for key in ["Name", "AdminOnly", "Order"]:
-        if key in current_data:
-            new_data[key] = current_data[key]
+    for key, value in current_data.items():
+        if key != "Entries":
+            new_data[key] = value
 
     with open(args.changelog_file, "w", encoding="utf-8-sig") as f:
         yaml.safe_dump(new_data, f)
