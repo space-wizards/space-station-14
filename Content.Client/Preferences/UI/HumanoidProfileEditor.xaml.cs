@@ -1634,7 +1634,7 @@ namespace Content.Client.Preferences.UI
                 tooltip.Append(loadoutSystem.GetLoadoutWhitelistString(loadout));
                 tooltip.Append(loadoutSystem.GetLoadoutBlacklistString(loadout));
                 requirementsManager.CheckRoleTime(loadout.PlaytimeRequirements, out var reason, "loadout-timer-");
-                tooltip.Append($"\n{reason}");
+                if (reason != null) tooltip.Append($"\n{reason}");
 
                 // If the tooltip has any content, add it to the checkbox
                 if (!string.IsNullOrEmpty(tooltip.ToString()))

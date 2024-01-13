@@ -17,7 +17,6 @@ public sealed class LoadoutSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly IEntityManager _entity = default!;
 
     public override void Initialize()
     {
@@ -43,8 +42,9 @@ public sealed class LoadoutSystem : EntitySystem
     /// <param name="uid">The entity to give the loadout items to</param>
     /// <param name="job">The job to use for loadout whitelist/blacklist (should be the job of the entity)</param>
     /// <param name="profile">The profile to get loadout items from (should be the entity's, or at least have the same species as the entity)</param>
+    /// <param name="playTimes">Playtime for the player for use with playtime requirements</param>
     /// <returns>A list of loadout items that couldn't be equipped but passed checks</returns>
-    public List<EntityUid> ApplyCharacterLoadout(EntityUid uid, JobPrototype job, HumanoidCharacterProfile profile)
+    public List<EntityUid> ApplyCharacterLoadout(EntityUid uid, JobPrototype job, HumanoidCharacterProfile profile, Dictionary<string, TimeSpan>? playTimes = null)
     {
         var failedLoadouts = new List<EntityUid>();
 
@@ -56,10 +56,20 @@ public sealed class LoadoutSystem : EntitySystem
             if (!_prototype.TryIndex<LoadoutPrototype>(loadout, out var loadoutProto))
                 continue;
 
+
             // Check whitelists and blacklists for this loadout
             if (!CheckWhitelistValid(loadoutProto, uid, job, profile) ||
                 !CheckBlacklistValid(loadoutProto, uid, job, profile))
                 continue;
+
+            // Check playtime requirements for this loadout
+            if (playTimes != null && loadoutProto.PlaytimeRequirements != null)
+            {
+                // Use a function because I can't use continue on an outer foreach from inside another foreach
+                if (!CheckPlaytime(loadoutProto.PlaytimeRequirements, playTimes))
+                    continue;
+            }
+
 
             // Spawn the loadout items
             var spawned = EntityManager.SpawnEntities(EntityManager.GetComponent<TransformComponent>(uid).Coordinates.ToMap(EntityManager), loadoutProto.Items!);
@@ -101,6 +111,17 @@ public sealed class LoadoutSystem : EntitySystem
         // Return a list of items that couldn't be equipped so the server can handle it if it wants
         // The server has more information about the inventory system than the client does and the client doesn't need to put loadouts in backpacks
         return failedLoadouts;
+    }
+
+    private bool CheckPlaytime(HashSet<JobRequirement> requirements, Dictionary<string, TimeSpan> playTimes)
+    {
+        foreach (var requirement in requirements)
+        {
+            if (!JobRequirements.TryRequirementMet(requirement, playTimes, out _, EntityManager, _prototype))
+                return false;
+        }
+
+        return true;
     }
 
 
