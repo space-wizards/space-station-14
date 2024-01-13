@@ -275,6 +275,37 @@
     tags: []
 
 - type: entity
+  name: space medipen
+  parent: ChemicalMedipen
+  id: SpaceMedipen
+  description: Contains a mix of chemicals that protect you from the deadly effects of space.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Medical/medipen.rsi
+      layers:
+        - state: hypovolemic
+          map: [ "enum.SolutionContainerLayers.Fill" ]
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 1
+      changeColor: false
+      emptySpriteName: hypovolemic_empty
+    - type: Hypospray
+      solutionName: pen
+      transferAmount: 30
+    - type: SolutionContainerManager
+      solutions:
+        pen:
+          maxVol: 30
+          reagents:
+            - ReagentId: Leporazine
+              Quantity: 10
+            - ReagentId: Barozine
+              Quantity: 20
+    - type: Tag
+      tags: []
+
+- type: entity
   name: stimulant injector
   parent: ChemicalMedipen
   id: Stimpack
