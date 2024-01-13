@@ -17,7 +17,7 @@ public sealed partial class ConditionNotes : WhitelistCondition
     /// </summary>
     public int Range = int.MaxValue;
 
-    public override async Task<bool> Condition(NetUserData data)
+    public override async Task<(bool, string)> Condition(NetUserData data)
     {
         var db = IoCManager.Resolve<IServerDbManager>();
         var remarks = await db.GetAllAdminRemarks(data.UserId.UserId);
@@ -37,8 +37,6 @@ public sealed partial class ConditionNotes : WhitelistCondition
         }
 
         notes = notes.Where(n => n.CreatedAt > DateTime.Now.AddDays(-Range)).ToList();
-        return notes.All(n => n.Severity < MinimumSeverity);
+        return (notes.All(n => n.Severity < MinimumSeverity), Loc.GetString("whitelist-notes"));
     }
-
-    public override string DenyMessage { get; } = "whitelist-too-many-notes";
 }

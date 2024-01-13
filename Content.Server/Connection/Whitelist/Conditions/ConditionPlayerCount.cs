@@ -6,15 +6,13 @@ namespace Content.Server.Connection.Whitelist.Conditions;
 
 public sealed partial class ConditionPlayerCount : WhitelistCondition
 {
-    public override Task<bool> Condition(NetUserData data)
+    public override async Task<(bool, string)> Condition(NetUserData data)
     {
         var plyManager = IoCManager.Resolve<IPlayerManager>();
         var count = plyManager.PlayerCount;
-        return Task.FromResult(count >= MinimumPlayers && count <= MaximumPlayers);
+        return (count >= MinimumPlayers && count <= MaximumPlayers, Loc.GetString("whitelist-player-count"));
     }
 
     public int MinimumPlayers  = 0;
     public int MaximumPlayers = int.MaxValue;
-
-    public override string DenyMessage { get; }
 }
