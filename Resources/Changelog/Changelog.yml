@@ -1,10 +1,4 @@
 Entries:
-- author: Kadeo64
-  changes:
-  - message: The Ripley APLU is now Tier 1 Industrial.
-    type: Tweak
-  id: 5196
-  time: '2023-11-20T00:58:07.0000000+00:00'
 - author: Velcroboy
   changes:
   - message: Shuttle walls and windows can now be constructed.
@@ -3726,3 +3720,10 @@ Entries:
   id: 5696
   time: '2024-01-13T20:57:20.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24042
+- author: degradka
+  changes:
+  - message: Prevent oversized items from being placed in the microwave.
+    type: Fix
+  id: 5697
+  time: '2024-01-13T21:11:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24026
