@@ -202,7 +202,7 @@ namespace Content.Server.Connection
                         // Not whitelisted.
                         return (ConnectionDenyReason.Whitelist, Loc.GetString(whitelistStatus.denyMessage!), null);
                     }
-                    // Whitelist, don't check any more.
+                    // Whitelisted, don't check any more.
                     break;
                 }
             }
