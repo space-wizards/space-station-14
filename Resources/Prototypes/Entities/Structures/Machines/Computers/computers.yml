@@ -139,7 +139,9 @@
     energy: 1.6
     color: "#c94242"
   - type: Computer
-    board: CargoShuttleConsoleCircuitboard
+    board: CargoShuttleConsoleCircuitboard  
+  - type: StealTarget
+    stealGroup: CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerShuttle
@@ -168,7 +170,9 @@
       color: "#c94242"
     - type: Computer
       board: SalvageShuttleConsoleCircuitboard
-
+    - type: StealTarget
+      stealGroup: SalvageShuttleConsoleCircuitboard
+      
 - type: entity
   parent: BaseComputer
   id: ComputerIFF
@@ -239,6 +243,7 @@
   - type: Computer
     board: PowerComputerCircuitboard
   - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
   - type: NodeContainer
     examinable: true
     nodes:
@@ -246,6 +251,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: ActivatableUI
+    singleUser: true
     key: enum.PowerMonitoringConsoleUiKey.Key
   - type: UserInterface
     interfaces:
@@ -319,7 +325,7 @@
     board: StationRecordsComputerCircuitboard
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics
 
 - type: entity
   parent: BaseComputer
@@ -854,7 +860,9 @@
       color: "#b89f25"
     - type: AccessReader
       access: [["Salvage"]]
-
+    - type: StealTarget
+      stealGroup: SalvageExpeditionsComputerCircuitboard
+      
 - type: entity
   parent: BaseComputer
   id: ComputerSurveillanceCameraMonitor

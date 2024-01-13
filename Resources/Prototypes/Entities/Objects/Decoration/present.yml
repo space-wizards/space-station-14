@@ -1,6 +1,6 @@
 - type: entity
   id: PresentBase
-  name: Present
+  name: present
   description: A little box with incredible surprises inside.
   abstract: true
   components:
@@ -20,7 +20,7 @@
 - type: entity
   id: PresentRandomUnsafe
   parent: [PresentBase, BaseItem]
-  suffix: Filled Unsafe
+  suffix: Filled, any item
   components:
   - type: RandomGift
     wrapper: PresentTrash
@@ -35,7 +35,7 @@
 - type: entity
   id: PresentRandomInsane
   parent: PresentRandomUnsafe
-  suffix: Filled Insane
+  suffix: Filled, any entity
   components:
     - type: RandomGift
       insaneMode: true
@@ -87,6 +87,8 @@
       - id: ToyAmongPequeno
         orGroup: GiftPool
       - id: PlushieDiona
+        orGroup: GiftPool
+      - id: PlushieArachind
         orGroup: GiftPool
       - id: ClothingNeckCloakMoth
         orGroup: GiftPool
@@ -355,9 +357,6 @@
       - id: ToyRubberDuck
         orGroup: GiftPool
       - id: BalloonSyn
-        orGroup: GiftPool
-      - id: WeaponPulseCarbine
-        prob: .001
         orGroup: GiftPool
       - id: RGBStaff
         orGroup: GiftPool

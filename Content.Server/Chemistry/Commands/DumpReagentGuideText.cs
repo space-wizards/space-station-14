@@ -36,7 +36,7 @@ public sealed class DumpReagentGuideText : IConsoleCommand
             return;
         }
 
-        foreach (var (_, entry) in reagent.Metabolisms)
+        foreach (var entry in reagent.Metabolisms.Values)
         {
             foreach (var effect in entry.Effects)
             {

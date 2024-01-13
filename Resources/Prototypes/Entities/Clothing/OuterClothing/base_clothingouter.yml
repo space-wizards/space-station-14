@@ -133,6 +133,3 @@
   components:
   - type: Item
     size: Huge
-  - type: Clothing
-    slots:
-    - outerClothing

@@ -74,6 +74,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             if (!vehicle.AutoAnimate)
                 continue;
 
+            // Why is this updating appearance data every tick, instead of when it needs to be updated???
+
             if (_mover.GetVelocityInput(mover).Sprinting == Vector2.Zero)
             {
                 UpdateAutoAnimate(uid, false);
@@ -144,6 +146,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
             _joints.ClearJoints(args.BuckledEntity);
 
+            _tagSystem.AddTag(uid, "DoorBumpOpener");
+
             return;
         }
 
@@ -159,6 +163,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         // Entity is no longer riding
         RemComp<RiderComponent>(args.BuckledEntity);
         RemComp<RelayInputMoverComponent>(args.BuckledEntity);
+        _tagSystem.RemoveTag(uid, "DoorBumpOpener");
 
         Appearance.SetData(uid, VehicleVisuals.HideRider, false);
         // Reset component
@@ -203,7 +208,6 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
         // Audiovisual feedback
         _ambientSound.SetAmbience(uid, true);
-        _tagSystem.AddTag(uid, "DoorBumpOpener");
         _modifier.RefreshMovementSpeedModifiers(uid);
     }
 
@@ -218,7 +222,6 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         // Disable vehicle
         component.HasKey = false;
         _ambientSound.SetAmbience(uid, false);
-        _tagSystem.RemoveTag(uid, "DoorBumpOpener");
         _modifier.RefreshMovementSpeedModifiers(uid);
     }
 

@@ -176,3 +176,13 @@
         - id: WeaponRevolverInspector
         - id: SpeedLoaderMagnum
         - id: SpeedLoaderMagnumRubber
+
+- type: entity
+  id: ClothingBeltChefFilled
+  parent: ClothingBeltChef
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodShakerSalt
+    - id: FoodShakerPepper

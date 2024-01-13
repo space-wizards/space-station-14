@@ -7,7 +7,6 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
-using Content.Server.Objectives;
 using Content.Server.Popups;
 using Content.Server.Revolutionary.Components;
 using Content.Server.Roles;
@@ -43,7 +42,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-    [Dependency] private readonly ObjectivesSystem _objectives = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
@@ -104,15 +102,24 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             ev.AddLine(Loc.GetString(Outcomes[index]));
 
             ev.AddLine(Loc.GetString("rev-headrev-count", ("initialCount", headrev.HeadRevs.Count)));
-            foreach (var player in headrev.HeadRevs.Values)
+            foreach (var player in headrev.HeadRevs)
             {
-                var title = _objectives.GetTitle(player);
-                if (title == null)
-                    continue;
-
                 // TODO: when role entities are a thing this has to change
-                var count = CompOrNull<RevolutionaryRoleComponent>(player)?.ConvertedCount ?? 0;
-                ev.AddLine(Loc.GetString("rev-headrev-player", ("title", title), ("count", count)));
+                var count = CompOrNull<RevolutionaryRoleComponent>(player.Value)?.ConvertedCount ?? 0;
+
+                _mind.TryGetSession(player.Value, out var session);
+                var username = session?.Name;
+                if (username != null)
+                {
+                    ev.AddLine(Loc.GetString("rev-headrev-name-user",
+                    ("name", player.Key),
+                    ("username", username), ("count", count)));
+                }
+                else
+                {
+                    ev.AddLine(Loc.GetString("rev-headrev-name",
+                    ("name", player.Key), ("count", count)));
+                }
 
                 // TODO: someone suggested listing all alive? revs maybe implement at some point
             }

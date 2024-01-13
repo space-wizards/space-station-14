@@ -338,10 +338,6 @@ namespace Content.Server.Voting.Managers
             if (voteType != null && _standardVoteTimeout.TryGetValue(voteType.Value, out timeSpan))
                 return false;
 
-            // No, seriously, stop spamming the restart vote!
-            if (voteType == StandardVoteType.Restart && _cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
-                return false;
-
             // If only one Preset available thats not really a vote
             // Still allow vote if availbable one is different from current one
             if (voteType == StandardVoteType.Preset)

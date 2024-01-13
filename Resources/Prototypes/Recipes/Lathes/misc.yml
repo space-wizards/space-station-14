@@ -94,8 +94,8 @@
     Plastic: 50
 
 - type: latheRecipe
-  id: ClothingShoesBootsMag
-  result: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagSci
+  result: ClothingShoesBootsMagSci
   completetime: 10
   materials:
     Steel: 1000
@@ -131,3 +131,17 @@
   completetime: 1
   materials:
     Plastic: 100
+
+- type: latheRecipe
+  id: FloorGreenCircuit
+  result: FloorTileItemGCircuit4
+  completetime: 2
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: FloorBlueCircuit
+  result: FloorTileItemBCircuit4
+  completetime: 2
+  materials:
+    Steel: 100

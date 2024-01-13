@@ -1,12 +1,12 @@
 trait-blindness-name = Blindness
-trait-blindness-desc = You lack vision
+trait-blindness-desc = You are legally blind, and can't see clearly past a few meters in front of you.
 
 trait-narcolepsy-name = Narcolepsy
 trait-narcolepsy-decs = You fall asleep randomly
 
 trait-pacifist-name = Pacifist
 
-permanent-blindness-trait-examined = [color=lightblue]{CAPITALIZE(POSS-ADJ($target))} eyes are glassy and unfocused. It doesn't seem like {SUBJECT($target)} can see you.[/color]
+permanent-blindness-trait-examined = [color=lightblue]{CAPITALIZE(POSS-ADJ($target))} eyes are glassy and unfocused. It doesn't seem like {SUBJECT($target)} can see you well, if at all.[/color]
 
 trait-lightweight-name = Lightweight Drunk
 trait-lightweight-desc = Alcohol has a stronger effect on you

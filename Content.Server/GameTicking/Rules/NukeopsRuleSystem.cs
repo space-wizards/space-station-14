@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Commands;
+using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
@@ -27,6 +28,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
@@ -52,6 +54,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -80,6 +83,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly WarDeclaratorSystem _warDeclarator = default!;
 
 
@@ -713,6 +718,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                     {
                         nukeOp = _random.PickAndTake(medPrefList);
                         everyone.Remove(nukeOp);
+                        prefList.Remove(nukeOp);
                         Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking an agent");
                     }
 
@@ -961,6 +967,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 _mind.SetUserId(newMind, session.UserId);
                 _roles.MindAddRole(newMind, new NukeopsRoleComponent { PrototypeId = spawnDetails.Role });
 
+                // Automatically de-admin players who are being made nukeops
+                if (_cfg.GetCVar(CCVars.AdminDeadminOnJoin) && _adminManager.IsAdmin(session))
+                    _adminManager.DeAdmin(session);
+
                 _mind.TransferTo(newMind, mob);
             }
             else if (addSpawnPoints)
@@ -1023,9 +1033,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         _roles.MindAddRole(mindId, new NukeopsRoleComponent { PrototypeId = NukeopsId }, mind);
         if (mind.CurrentEntity != null)
         {
-            foreach (var (nukeops, gameRule) in EntityQuery<NukeopsRuleComponent, GameRuleComponent>())
+            foreach (var (nukeops, _) in EntityQuery<NukeopsRuleComponent, GameRuleComponent>())
             {
-                nukeops.OperativePlayers.Add(mind.CharacterName!, mind.CurrentEntity.GetValueOrDefault());
+                nukeops.OperativePlayers.Add(mind.CharacterName!, mindId);
             }
         }
 

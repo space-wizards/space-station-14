@@ -59,12 +59,6 @@
   - type: Physics
     canCollide: false
     bodyType: static
-  - type: AmbientSound
-    enabled: false
-    volume: -15
-    range: 2
-    sound:
-      path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: StaticPrice
     price: 11
 

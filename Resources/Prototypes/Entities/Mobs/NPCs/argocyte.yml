@@ -43,7 +43,7 @@
     canResistFire: true
     damage:
       types:
-        Heat: 3
+        Heat: 9
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning

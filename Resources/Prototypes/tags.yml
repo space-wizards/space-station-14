@@ -167,6 +167,12 @@
   id: BorgModuleService
 
 - type: Tag
+  id: BorgModuleSyndicate
+
+- type: Tag
+  id: BorgModuleSyndicateAssault
+
+- type: Tag
   id: BorgServiceHead
 
 - type: Tag
@@ -219,6 +225,9 @@
 
 - type: Tag
   id: BulletFoam
+
+- type: Tag
+  id: BypassDropChecks
 
 - type: Tag
   id: BypassInteractionRangeChecks
@@ -291,6 +300,9 @@
   id: Catwalk
 
 - type: Tag
+  id: CentrifugeCompatible
+
+- type: Tag
   id: Chicken
 
 - type: Tag
@@ -301,6 +313,9 @@
 
 - type: Tag
   id: CigPack
+
+- type: Tag
+  id: Cleaver
 
 - type: Tag
   id: ClothMade
@@ -462,6 +477,9 @@
   id: EmitterBolt
 
 - type: Tag
+  id: Enzyme
+
+- type: Tag
   id: ExplosivePassable
 
 - type: Tag
@@ -478,9 +496,6 @@
 
 - type: Tag
   id: Flesh
-
-- type: Tag
-  id: WhitelistChameleon
 
 - type: Tag
   id: FirelockElectronics
@@ -541,9 +556,18 @@
 
 - type: Tag
   id: Goat
-
+  
+- type: Tag
+  id: GPS
+  
 - type: Tag
   id: Grenade
+
+- type: Tag
+  id: HudMedical
+
+- type: Tag
+  id: HudSecurity
 
 - type: Tag
   id: GuideEmbeded
@@ -672,6 +696,9 @@
   id: KeyedInstrument
 
 - type: Tag
+  id: KitchenKnife
+
+- type: Tag
   id: Knife
 
 - type: Tag
@@ -773,7 +800,13 @@
   id: MicrowaveSelfUnsafe
 
 - type: Tag
+  id: MindShield
+
+- type: Tag
   id: MindTransferTarget
+
+- type: Tag
+  id: ModularReceiver
 
 - type: Tag
   id: MonkeyCube
@@ -793,7 +826,6 @@
 - type: Tag
   id: Multitool
 
-
 - type: Tag
   id: NoBlockAnchoring
 
@@ -810,6 +842,9 @@
   id: Ore
 
 - type: Tag
+  id: Packet
+
+- type: Tag
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
@@ -817,6 +852,12 @@
 
 - type: Tag
   id: Pancake
+
+- type: Tag
+  id: Pen
+
+- type: Tag
+  id: PepperShaker
 
 - type: Tag
   id: PercussionInstrument
@@ -900,6 +941,9 @@
   id: ProximitySensor
 
 - type: Tag
+  id: QuantumSpinInverter
+
+- type: Tag
   id: Radio
 
 - type: Tag
@@ -914,6 +958,9 @@
 
 - type: Tag
   id: ReinforcedGlassShard
+
+- type: Tag
+  id: RifleStock
 
 - type: Tag
   id: RipleyCentralControlModule
@@ -938,6 +985,12 @@
 
 - type: Tag
   id: RollingPaper
+
+- type: Tag
+  id: RollingPin
+
+- type: Tag
+  id: SaltShaker
 
 - type: Tag
   id: SalvageExperiment
@@ -976,6 +1029,9 @@
   id: SkeletonMotorcycleKeys
 
 - type: Tag
+  id: Skewer
+
+- type: Tag
   id: SmallAIChip
 
 - type: Tag
@@ -986,9 +1042,6 @@
 
 - type: Tag
   id: Soap
-
-- type: Tag
-  id: SolarAssemblyPart
 
 - type: Tag
   id: SolarTrackerElectronics
@@ -1096,9 +1149,6 @@
   id: Wall
 
 - type: Tag
-  id: WetFloorSign
-
-- type: Tag
   id: WallmountGeneratorAPUElectronics
 
 - type: Tag
@@ -1112,6 +1162,12 @@
 
 - type: Tag
   id: WeaponShotgunKammerer
+
+- type: Tag
+  id: WetFloorSign
+
+- type: Tag
+  id: WhitelistChameleon
 
 - type: Tag
   id: Window
@@ -1143,14 +1199,4 @@
 - type: Tag
   id: WriteIgnoreStamps
 
-- type: Tag
-  id: RifleStock
-
-- type: Tag
-  id: ModularReceiver
-
-- type: Tag
-  id: MindShield
-
-- type: Tag
-  id:  boots
+# PUT YOUR TAGS IN ALPHABETICAL ORDER

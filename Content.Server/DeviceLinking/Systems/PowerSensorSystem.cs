@@ -1,5 +1,4 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
 using Content.Server.NodeContainer;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
@@ -9,10 +8,9 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
 using Content.Shared.Timing;
-using Content.Shared.Tools;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server.DeviceLinking.Systems;
@@ -21,7 +19,6 @@ public sealed class PowerSensorSystem : EntitySystem
 {
     [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly PowerNetSystem _powerNet = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -76,7 +73,8 @@ public sealed class PowerSensorSystem : EntitySystem
             return;
 
         // no sound spamming
-        if (TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.ActiveDelay(uid, useDelay))
+        if (TryComp<UseDelayComponent>(uid, out var useDelay)
+            && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 
         // switch between input and output mode.
@@ -89,8 +87,6 @@ public sealed class PowerSensorSystem : EntitySystem
         _audio.PlayPvs(comp.SwitchSound, uid);
         var msg = Loc.GetString("power-sensor-switch", ("output", comp.Output));
         _popup.PopupEntity(msg, uid, args.User);
-
-        _useDelay.BeginDelay(uid, useDelay);
     }
 
     private void UpdateOutputs(EntityUid uid, PowerSensorComponent comp)
@@ -107,7 +103,9 @@ public sealed class PowerSensorSystem : EntitySystem
 
         // update state based on the power stats retrieved from the selected power network
         var xform = _xformQuery.GetComponent(uid);
-        _mapManager.TryGetGrid(xform.GridUid, out var grid);
+        if (!TryComp(xform.GridUid, out MapGridComponent? grid))
+            return;
+
         var cables = deviceNode.GetReachableNodes(xform, _nodeQuery, _xformQuery, grid, EntityManager);
         foreach (var node in cables)
         {
