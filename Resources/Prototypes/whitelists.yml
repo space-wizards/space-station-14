@@ -18,7 +18,7 @@
       includeExpired: false
       minimumSeverity: 1 # Low
       minimumNotes: 3
-      range: 14 # 7 Days
+      range: 14 # 14 Days
     - !type:ConditionManualWhitelist
       breakIfConditionSuccess: true
       breakIfConditionFail: false

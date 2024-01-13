@@ -8,13 +8,16 @@ namespace Content.Server.Connection.Whitelist.Conditions;
 
 public sealed partial class ConditionNotes : WhitelistCondition
 {
+    [DataField]
     public bool IncludeExpired = false;
 
+    [DataField]
     public NoteSeverity MinimumSeverity  = NoteSeverity.Minor;
 
     /// <summary>
     /// Range in days to check for notes.
     /// </summary>
+    [DataField]
     public int Range = int.MaxValue;
 
     public override async Task<(bool, string)> Condition(NetUserData data)

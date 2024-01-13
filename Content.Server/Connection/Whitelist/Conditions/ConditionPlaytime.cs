@@ -7,6 +7,7 @@ namespace Content.Server.Connection.Whitelist.Conditions;
 
 public sealed partial class ConditionPlaytime : WhitelistCondition
 {
+    [DataField]
     public int MinimumPlaytime = 0; // In minutes
 
     public override async Task<(bool, string)> Condition(NetUserData data)

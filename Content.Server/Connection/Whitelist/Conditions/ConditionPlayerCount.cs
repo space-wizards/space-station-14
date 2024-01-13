@@ -13,6 +13,8 @@ public sealed partial class ConditionPlayerCount : WhitelistCondition
         return (count >= MinimumPlayers && count <= MaximumPlayers, Loc.GetString("whitelist-player-count"));
     }
 
+    [DataField]
     public int MinimumPlayers  = 0;
+    [DataField]
     public int MaximumPlayers = int.MaxValue;
 }
