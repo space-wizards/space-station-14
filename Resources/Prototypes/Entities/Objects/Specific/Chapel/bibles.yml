@@ -73,12 +73,10 @@
         Caustic: 50
     damageOnUnholyUse: ## What an unholy creature takes when picking up the bible
       groups:
-        Brute: -15
-        Burn: -15
+        Caustic: 50
     damageUnholy: ## What damage is dealt when a chaplain hits an unholy creature
       groups:
-        Brute: -15
-        Burn: -15
+        Caustic: 20
     failChance: 0
     locPrefix: "necro"
     healSound: "/Audio/Effects/lightburn.ogg"
