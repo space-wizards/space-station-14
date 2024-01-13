@@ -367,7 +367,7 @@
 
 - type: entity
   name: mimana cream pie
-  parent: FoodPieBase
+  parent: FoodPieBananaCream
   id: FoodPieMimanaCream
   description: That clown has nothing to say about the flavor of this favorite mime treat.
   components:
@@ -381,24 +381,6 @@
     - state: tin
     - state: plain
       color: powderblue
-  - type: CreamPie
-  - type: ContainerContainer
-    containers:
-      payloadSlot: !type:ContainerSlot
-  - type: ItemSlots
-    slots:
-      payloadSlot:
-        whitelist:
-          components:
-          - OnUseTimerTrigger
-        insertSound:
-          path: /Audio/Weapons/Guns/Empty/empty.ogg
-        ejectSound:
-          path: /Audio/Weapons/Guns/Empty/empty.ogg
-  - type: Tag
-    tags:
-    - Fruit
-    - Pie
   - type: SliceableFood
     slice: FoodPieMimanaCreamSlice
   - type: SolutionContainerManager
@@ -420,7 +402,7 @@
 
 - type: entity
   name: slice of mimana cream pie
-  parent: FoodPieSliceBase
+  parent: FoodPieBananaCreamSlice
   id: FoodPieMimanaCreamSlice
   description: That clown has nothing to say about the flavor of this favorite mime treat.
   components:
