@@ -1,0 +1,15 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltHalfApron
+  name: half-apron
+  description: A half-apron worn around the waist, designed for both servants and bodyguards without exposing which is which.
+  components:
+  - type: Sprite
+    sprite: _CD/Clothing/Belt/halfapron.rsi
+    state: icon
+  - type: Clothing
+    sprite: _CD/Clothing/Belt/halfapron.rsi
+  - type: Item
+    size: 30
+  - type: Storage
+    capacity: 20
