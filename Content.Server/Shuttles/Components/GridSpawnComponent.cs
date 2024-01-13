@@ -24,7 +24,7 @@ public record struct GridSpawnGroup
     public int MaxCount = 1;
 
     /// <summary>
-    /// Hide the IFF of the grid.
+    /// Hide the IFF label of the grid.
     /// </summary>
     public bool Hide = false;
 
@@ -32,6 +32,11 @@ public record struct GridSpawnGroup
     /// Should we set the metadata name of a grid. Useful for admin purposes.
     /// </summary>
     public bool NameGrid = false;
+
+    /// <summary>
+    /// Should we add this to the station's grids (if possible / relevant).
+    /// </summary>
+    public bool StationGrid = true;
 
     public GridSpawnGroup()
     {

@@ -9531,7 +9531,6 @@ entities:
     components:
     - type: MetaData
       desc: The letters SB are etched into the side of the guitar.
-      name: acoustic gortar
     - type: Transform
       pos: 31.477634,-79.4623
       parent: 60
@@ -12107,11 +12106,25 @@ entities:
     - type: Transform
       pos: 58.5,-16.5
       parent: 60
+    - type: DeviceLinkSink
+      links:
+      - 4596
+    - type: DeviceLinkSource
+      linkedPorts:
+        4596:
+        - DoorStatus: DoorBolt
   - uid: 4596
     components:
     - type: Transform
       pos: 58.5,-20.5
       parent: 60
+    - type: DeviceLinkSink
+      links:
+      - 4595
+    - type: DeviceLinkSource
+      linkedPorts:
+        4595:
+        - DoorStatus: DoorBolt
   - uid: 6673
     components:
     - type: Transform
@@ -12189,11 +12202,25 @@ entities:
     - type: Transform
       pos: 16.5,29.5
       parent: 60
+    - type: DeviceLinkSink
+      links:
+      - 19100
+    - type: DeviceLinkSource
+      linkedPorts:
+        19100:
+        - DoorStatus: DoorBolt
   - uid: 19100
     components:
     - type: Transform
       pos: 16.5,31.5
       parent: 60
+    - type: DeviceLinkSink
+      links:
+      - 19087
+    - type: DeviceLinkSource
+      linkedPorts:
+        19087:
+        - DoorStatus: DoorBolt
   - uid: 21235
     components:
     - type: Transform
@@ -17055,6 +17082,13 @@ entities:
     components:
     - type: Transform
       pos: 40.456047,-10.342315
+      parent: 60
+- proto: BoxFlare
+  entities:
+  - uid: 16379
+    components:
+    - type: Transform
+      pos: 36.484776,-1.3655467
       parent: 60
 - proto: BoxFlashbang
   entities:
@@ -109432,17 +109466,22 @@ entities:
           showEnts: False
           occludes: True
           ent: null
-- proto: LockerSalvageSpecialistFilled
+- proto: LockerSalvageSpecialistFilledHardsuit
   entities:
   - uid: 215
     components:
     - type: Transform
-      pos: 36.5,2.5
+      pos: 36.5,1.5
       parent: 60
-  - uid: 10579
+  - uid: 7792
     components:
     - type: Transform
-      pos: 36.5,-1.5
+      pos: 36.5,0.5
+      parent: 60
+  - uid: 11968
+    components:
+    - type: Transform
+      pos: 36.5,-0.5
       parent: 60
 - proto: LockerScienceFilled
   entities:
@@ -111778,15 +111817,15 @@ entities:
       parent: 60
 - proto: Pickaxe
   entities:
-  - uid: 11968
+  - uid: 8521
     components:
     - type: Transform
-      pos: 38.581364,-1.5641279
+      pos: 36.597534,2.49432
       parent: 60
-  - uid: 16379
+  - uid: 10579
     components:
     - type: Transform
-      pos: 38.50324,-1.4391279
+      pos: 36.441284,2.541195
       parent: 60
 - proto: PlantBGoneSpray
   entities:
@@ -117988,6 +118027,11 @@ entities:
     - type: Transform
       pos: -19.5,-37.5
       parent: 60
+  - uid: 8047
+    components:
+    - type: Transform
+      pos: 36.5,2.5
+      parent: 60
   - uid: 8950
     components:
     - type: Transform
@@ -118057,11 +118101,6 @@ entities:
     components:
     - type: Transform
       pos: 1.5,15.5
-      parent: 60
-  - uid: 13146
-    components:
-    - type: Transform
-      pos: 38.5,-1.5
       parent: 60
   - uid: 13485
     components:
@@ -131666,23 +131705,6 @@ entities:
     - type: Transform
       pos: -12.5,-3.5
       parent: 7536
-- proto: SuitStorageSalv
-  entities:
-  - uid: 7792
-    components:
-    - type: Transform
-      pos: 36.5,1.5
-      parent: 60
-  - uid: 8047
-    components:
-    - type: Transform
-      pos: 36.5,0.5
-      parent: 60
-  - uid: 8521
-    components:
-    - type: Transform
-      pos: 36.5,-0.5
-      parent: 60
 - proto: SuitStorageSec
   entities:
   - uid: 9235
@@ -133993,6 +134015,11 @@ entities:
     components:
     - type: Transform
       pos: 44.5,13.5
+      parent: 60
+  - uid: 13146
+    components:
+    - type: Transform
+      pos: 36.5,-1.5
       parent: 60
   - uid: 13204
     components:
@@ -136944,7 +136971,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -61.5,-11.5
       parent: 60
@@ -136959,7 +136985,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 29.5,-22.5
       parent: 60
@@ -136967,7 +136992,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 18.5,-26.5
       parent: 60
@@ -136975,7 +136999,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -24.5,-13.5
       parent: 60
@@ -136983,7 +137006,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 13.5,11.5
       parent: 60
@@ -136991,7 +137013,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -61.5,25.5
       parent: 60
@@ -136999,7 +137020,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -15.5,-48.5
       parent: 60
@@ -137007,7 +137027,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: -27.5,9.5
       parent: 60
@@ -137015,7 +137034,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 30.5,26.5
       parent: 60
@@ -137023,7 +137041,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: cigarette machine
     - type: Transform
       pos: 26.5,-7.5
       parent: 60
@@ -137056,7 +137073,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: 14.5,-11.5
       parent: 60
@@ -137064,7 +137080,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: -3.5,11.5
       parent: 60
@@ -137072,7 +137087,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: 2.5,-44.5
       parent: 60
@@ -137087,7 +137101,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: 56.5,-10.5
       parent: 60
@@ -137095,7 +137108,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: -47.5,-8.5
       parent: 60
@@ -137103,7 +137115,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: Hot drinks machine
     - type: Transform
       pos: 3.5,21.5
       parent: 60
@@ -137400,7 +137411,6 @@ entities:
     components:
     - type: MetaData
       flags: SessionSpecific
-      name: tank dispenser
     - type: Transform
       pos: 51.5,-1.5
       parent: 60
