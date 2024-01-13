@@ -56,7 +56,7 @@
   roles:
   - AtmosphericTechnician
   - ChiefEngineer
-  - SeniorEngineer
+  - SeniorEngineer #CD Role
   - StationEngineer
   - TechnicalAssistant
 
@@ -71,7 +71,7 @@
   - MedicalIntern
   - Psychologist
   - Paramedic
-  - SeniorPhysician
+  - SeniorPhysician #CD Role
 
 - type: department
   id: Security
@@ -82,7 +82,7 @@
   - HeadOfSecurity
   - SecurityCadet
   - SecurityOfficer
-  - SeniorOfficer
+  - SeniorOfficer #CD Role
   - Detective
   - Warden
 
@@ -92,7 +92,7 @@
   color: "#D381C9"
   roles:
   - ResearchDirector
-  - SeniorResearcher
+  - SeniorResearcher #CD Role
   - Scientist
   - ResearchAssistant
 
