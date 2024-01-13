@@ -1672,13 +1672,14 @@ namespace Content.Client.Preferences.UI
                 tooltip.Append(loadoutSystem.GetLoadoutWhitelistString(loadout));
                 tooltip.Append(loadoutSystem.GetLoadoutBlacklistString(loadout));
                 requirementsManager.CheckRoleTime(loadout.PlaytimeRequirements, out var reason, "loadout-timer-");
-                if (reason != null) tooltip.Append($"\n{reason}");
+                if (reason != null) tooltip.Append($"\n{reason.ToMarkup()}");
 
                 // If the tooltip has any content, add it to the checkbox
                 if (!string.IsNullOrEmpty(tooltip.ToString()))
                 {
-                    _checkBox.ToolTip = tooltip.ToString();
-                    _checkBox.TooltipDelay = 0.2f;
+                    var formattedTooltip = new Tooltip();
+                    formattedTooltip.SetMessage(FormattedMessage.FromMarkupPermissive(tooltip.ToString())); // I hate this but want the colors from playtime requirements
+                    _checkBox.TooltipSupplier = _ => formattedTooltip;
                 }
 
 
