@@ -7,6 +7,7 @@ using System.Net;
 using System.Text.Json;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
+using NpgsqlTypes;
 
 namespace Content.Server.Database
 {
@@ -97,7 +98,7 @@ namespace Content.Server.Database
                 .IsUnique();
 
             modelBuilder.Entity<AdminLog>()
-                .HasKey(log => new {log.Id, log.RoundId});
+                .HasKey(log => new {log.RoundId, log.Id});
 
             modelBuilder.Entity<AdminLog>()
                 .Property(log => log.Id);
@@ -115,6 +116,9 @@ namespace Content.Server.Database
                 .HasForeignKey(player => player.PlayerUserId)
                 .HasPrincipalKey(player => player.UserId);
 
+            modelBuilder.Entity<AdminLogPlayer>()
+                .HasIndex(p => p.PlayerUserId);
+
             modelBuilder.Entity<Round>()
                 .HasIndex(round => round.StartDate);
 
@@ -123,7 +127,7 @@ namespace Content.Server.Database
                 .HasDefaultValue(default(DateTime));
 
             modelBuilder.Entity<AdminLogPlayer>()
-                .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
+                .HasKey(logPlayer => new {logPlayer.RoundId, logPlayer.LogId, logPlayer.PlayerUserId});
 
             modelBuilder.Entity<ServerBan>()
                 .HasIndex(p => p.PlayerUserId);
@@ -525,10 +529,11 @@ namespace Content.Server.Database
     [Index(nameof(Type))]
     public class AdminLog
     {
+        [Key, ForeignKey("Round")] public int RoundId { get; set; }
+
         [Key]
         public int Id { get; set; }
 
-        [Key, ForeignKey("Round")] public int RoundId { get; set; }
         public Round Round { get; set; } = default!;
 
         [Required] public LogType Type { get; set; }
@@ -546,12 +551,13 @@ namespace Content.Server.Database
 
     public class AdminLogPlayer
     {
+        [Required, Key] public int RoundId { get; set; }
+        [Required, Key] public int LogId { get; set; }
+
         [Required, Key, ForeignKey("Player")] public Guid PlayerUserId { get; set; }
         public Player Player { get; set; } = default!;
 
-        [Required, Key] public int LogId { get; set; }
-        [Required, Key] public int RoundId { get; set; }
-        [ForeignKey("LogId,RoundId")] public AdminLog Log { get; set; } = default!;
+        [ForeignKey("RoundId,LogId")] public AdminLog Log { get; set; } = default!;
     }
 
     // Used by SS14.Admin
@@ -559,7 +565,7 @@ namespace Content.Server.Database
     {
         int Id { get; set; }
         Guid? PlayerUserId { get; set; }
-        (IPAddress, int)? Address { get; set; }
+        NpgsqlInet? Address { get; set; }
         byte[]? HWId { get; set; }
         DateTime BanTime { get; set; }
         DateTime? ExpirationTime { get; set; }
@@ -627,8 +633,7 @@ namespace Content.Server.Database
         /// <summary>
         /// CIDR IP address range of the ban. The whole range can match the ban.
         /// </summary>
-        [Column(TypeName = "inet")]
-        public (IPAddress, int)? Address { get; set; }
+        public NpgsqlInet? Address { get; set; }
 
         /// <summary>
         /// Hardware ID of the banned player.
@@ -817,7 +822,7 @@ namespace Content.Server.Database
         public Round? Round { get; set; }
         public Guid? PlayerUserId { get; set; }
         [Required] public TimeSpan PlaytimeAtNote { get; set; }
-        [Column(TypeName = "inet")] public (IPAddress, int)? Address { get; set; }
+        public NpgsqlInet? Address { get; set; }
         public byte[]? HWId { get; set; }
 
         public DateTime BanTime { get; set; }

@@ -1,5 +1,16 @@
 - type: entity
   parent: ClothingNeckBase
+  id: ClothingNeckCloakCentcom
+  name: central commander's cloak
+  description: A pompous and elite green cloak with a nice gold trim, tailored specifically to the Central Commander. It's so heavy, the gold trim might be real.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/centcomcloakformal.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak # leaving this here because I suppose it might be interesting?
+    
+- type: entity
+  parent: ClothingNeckBase
   id: ClothingNeckCloakCap
   name: captain's cloak
   description: A pompous and comfy blue cloak with a nice gold trim, while not particularly valuable as your other possessions, it sure is fancy.

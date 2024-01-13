@@ -29,12 +29,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> RulesHeader =
             CVarDef.Create("server.rules_header", "ui-rules-header", CVar.REPLICATED | CVar.SERVER);
 
-        /// <summary>
-        ///     The token used to authenticate with the admin API. Leave empty to disable the admin API. This is a secret! Do not share!
-        /// </summary>
-        public static readonly CVarDef<string> AdminApiToken =
-            CVarDef.Create("server.admin_api_token", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
-
         /*
          * Ambience
          */
