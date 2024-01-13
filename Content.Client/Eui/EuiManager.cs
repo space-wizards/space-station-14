@@ -1,6 +1,12 @@
-﻿using Content.Shared.Eui;
+﻿using System;
+using System.Collections.Generic;
+using Content.Shared.Eui;
+using Robust.Client.GameStates;
+using Robust.Client.State;
+using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Reflection;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Eui
 {
@@ -11,7 +17,6 @@ namespace Content.Client.Eui
         [Dependency] private readonly IDynamicTypeFactory _dtf = default!;
 
         private readonly Dictionary<uint, EuiData> _openUis = new();
-        private readonly Dictionary<uint, EuiStateBase> _queuedStates = new();
 
         public void Initialize()
         {
@@ -28,7 +33,6 @@ namespace Content.Client.Eui
                 openUi.Value.Eui.Closed();
             }
             _openUis.Clear();
-            _queuedStates.Clear();
         }
 
         private void RxMsgMessage(MsgEuiMessage message)
@@ -39,13 +43,8 @@ namespace Content.Client.Eui
 
         private void RxMsgState(MsgEuiState message)
         {
-            if (!_openUis.TryGetValue(message.Id, out var ui))
-            {
-                _queuedStates[message.Id] = message.State;
-                return;
-            }
-
-            ui.Eui.HandleState(message.State);
+            var ui = _openUis[message.Id].Eui;
+            ui.HandleState(message.State);
         }
 
         private void RxMsgCtl(MsgEuiCtl message)
@@ -58,10 +57,7 @@ namespace Content.Client.Eui
             }
 
             if (message.Type != MsgEuiCtl.CtlType.Open)
-            {
-                _queuedStates.Remove(message.Id);
                 return;
-            }
 
             // Will open/re-open the window if the server wants the eui opened.
             var euiType = _refl.LooseGetType(message.OpenType);
@@ -69,9 +65,6 @@ namespace Content.Client.Eui
             instance.Initialize(this, message.Id);
             instance.Opened();
             _openUis.Add(message.Id, new EuiData(instance));
-
-            if (_queuedStates.TryGetValue(message.Id, out var state))
-                instance.HandleState(state);
         }
 
         private sealed class EuiData
