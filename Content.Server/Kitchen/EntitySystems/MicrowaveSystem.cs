@@ -283,8 +283,18 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             }
 
-            if (!HasComp<ItemComponent>(args.Used))
+            if (TryComp<ItemComponent>(args.Used, out var item))
             {
+                // check if size of an item you're trying to put in is too big
+                if (_item.GetSizePrototype(item.Size) > _item.GetSizePrototype(ent.Comp.MaxItemSize))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-item-too-big", ("item", args.Used)), ent, args.User);
+                    return;
+                }
+            }
+            else
+            {
+                // check if thing you're trying to put in isn't an item
                 _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-transfer-fail"), ent, args.User);
                 return;
             }
@@ -293,15 +303,6 @@ namespace Content.Server.Kitchen.EntitySystems
             {
                 _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-full"), ent, args.User);
                 return;
-            }
-
-            if (TryComp<ItemComponent>(args.Used, out var item))
-            {
-                if (_item.GetSizePrototype(item.Size) > _item.GetSizePrototype(ent.Comp.MaxItemSize))
-                {
-                    _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-item-too-big", ("item", args.Used)), ent, args.User);
-                    return;
-                }
             }
 
             args.Handled = true;
