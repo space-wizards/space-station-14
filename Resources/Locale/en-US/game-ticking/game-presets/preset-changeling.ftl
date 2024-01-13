@@ -34,7 +34,12 @@ changeling-dna-stage-2-others = {CAPITALIZE(THE($user))} extends a proboscis!
 changeling-dna-stage-3-self = You stab {CAPITALIZE(THE($target))} with the proboscis.
 changeling-dna-stage-3-others = {CAPITALIZE(THE($user))} stabs {CAPITALIZE(THE($target))} with the proboscis!
 changeling-dna-success = You have absorbed {CAPITALIZE(THE($target))}.
-changeling-dna-fail-nohuman = {CAPITALIZE(THE($target))} a humanoid.
+changeling-dna-fail-nohuman = {CAPITALIZE(THE($target))} isn't a humanoid.
 changeling-dna-fail-notdead = {CAPITALIZE(THE($target))} isn't dead or in critical condition.
 changeling-dna-interrupted = You were interrupted while absorbing {CAPITALIZE(THE($target))}.
 changeling-dna-alreadyabsorbed = {CAPITALIZE(THE($target))}'s DNA has been absorbed already!
+changeling-dna-nodna = {CAPITALIZE(THE($target))} does not have DNA!
+changeling-dna-switchdna = Switched to {CAPITALIZE(THE($target))}'s DNA.
+
+changeling-transform-activate = You transform into {CAPITALIZE(THE($target))}.
+changeling-transform-fail = You're already morphed as {CAPITALIZE(THE($target))}!

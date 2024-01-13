@@ -49,7 +49,7 @@ namespace Content.Server.Inventory
             while (enumerator.NextItem(out var item, out var slot))
             {
                 if (TryUnequip(source, slot.Name, true, true, inventory: source.Comp))
-                    TryEquip(target, item, slot.Name , true, true, inventory: target.Comp);
+                    TryEquip(target, item, slot.Name, true, true, inventory: target.Comp);
             }
         }
     }

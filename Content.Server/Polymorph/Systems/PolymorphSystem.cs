@@ -23,6 +23,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Interaction.Components;
+using System.Threading.Tasks;
 
 namespace Content.Server.Polymorph.Systems
 {
@@ -164,7 +166,7 @@ namespace Content.Server.Polymorph.Systems
         /// </summary>
         /// <param name="target">The entity that will be transformed</param>
         /// <param name="id">The id of the polymorph prototype</param>
-        public EntityUid? PolymorphEntity(EntityUid target, string id)
+        public EntityUid? PolymorphEntity(EntityUid target, string id, EntityUid? targetHumanoidUid = null)
         {
             if (!_proto.TryIndex<PolymorphPrototype>(id, out var proto))
             {
@@ -172,7 +174,7 @@ namespace Content.Server.Polymorph.Systems
                 return null;
             }
 
-            return PolymorphEntity(target, proto);
+            return PolymorphEntity(target, proto, targetHumanoidUid);
         }
 
         /// <summary>
@@ -180,7 +182,7 @@ namespace Content.Server.Polymorph.Systems
         /// </summary>
         /// <param name="uid">The entity that will be transformed</param>
         /// <param name="proto">The polymorph prototype</param>
-        public EntityUid? PolymorphEntity(EntityUid uid, PolymorphPrototype proto)
+        public EntityUid? PolymorphEntity(EntityUid uid, PolymorphPrototype proto, EntityUid? targetHumanoidUid = null)
         {
             // if it's already morphed, don't allow it again with this condition active.
             if (!proto.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(uid))
@@ -200,6 +202,19 @@ namespace Content.Server.Polymorph.Systems
 
             var child = Spawn(proto.Entity, targetTransformComp.Coordinates);
             MakeSentientCommand.MakeSentient(child, EntityManager);
+
+            if (targetHumanoidUid != null)
+            {
+                if (!TryComp<MetaDataComponent>(targetHumanoidUid.Value, out var targetMetaData))
+                    return null;
+                if (!TryPrototype(targetHumanoidUid.Value, out var targetPrototype, targetMetaData))
+                    return null;
+
+                QueueDel(child);
+                child = Spawn(targetPrototype.ID, targetTransformComp.Coordinates);
+
+                _humanoid.CloneAppearance(targetHumanoidUid.Value, child);
+            }
 
             var comp = _compFact.GetComponent<PolymorphedEntityComponent>();
             comp.Parent = uid;

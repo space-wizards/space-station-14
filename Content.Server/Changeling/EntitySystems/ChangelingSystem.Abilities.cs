@@ -16,9 +16,6 @@ using Content.Shared.Stealth.Components;
 using Content.Server.Emp;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Content.Shared.Mobs.Components;
-using Content.Shared.FixedPoint;
 
 namespace Content.Server.Changeling.EntitySystems;
 
@@ -126,6 +123,13 @@ public sealed partial class ChangelingSystem
         }
         else if (component.AbsorbStage == 2.0)
         {
+            if (!StealDNA(uid, target, component))
+            {
+                component.AbsorbStage = 0.0f;
+                args.Repeat = false;
+                return;
+            }
+
             var selfMessage = Loc.GetString("changeling-dna-success", ("target", Identity.Entity(target, EntityManager)));
             _popup.PopupEntity(selfMessage, uid, uid, PopupType.Medium);
 
@@ -158,8 +162,6 @@ public sealed partial class ChangelingSystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
-
         if (_mobState.IsDead(uid))
         {
             _popup.PopupEntity(Loc.GetString("changeling-regenerate-fail-dead"), uid, uid);
@@ -170,6 +172,8 @@ public sealed partial class ChangelingSystem
         {
             if (!TryUseAbility(uid, component, component.RegenerateChemicalsCost))
                 return;
+
+            args.Handled = true;
 
             var damage_brute = new DamageSpecifier(_proto.Index(BruteDamageGroup), component.RegenerateBruteHealAmount);
             var damage_burn = new DamageSpecifier(_proto.Index(BurnDamageGroup), component.RegenerateBurnHealAmount);
@@ -197,8 +201,6 @@ public sealed partial class ChangelingSystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
-
         if (!TryComp(uid, out HandsComponent? handsComponent))
             return;
         if (handsComponent.ActiveHand == null)
@@ -212,15 +214,17 @@ public sealed partial class ChangelingSystem
         if (!TryUseAbility(uid, component, component.ArmBladeChemicalsCost, !component.ArmBladeActive))
             return;
 
+        args.Handled = true;
+
         if (!component.ArmBladeActive)
         {
             var armblade = Spawn(ArmBladeId, Transform(uid).Coordinates);
-            EnsureComp<UnremoveableComponent>(armblade); // armblade is apart of your body.. cant remove it..
+            var unremoveableComp = EnsureComp<UnremoveableComponent>(armblade); // armblade is apart of your body.. cant remove it..
+            unremoveableComp.DeleteOnDrop = false;
 
-            if (_handsSystem.TryGetEmptyHand(uid, out var emptyHand, handsComponent))
+            if (_handsSystem.TryPickupAnyHand(uid, armblade))
             {
                 component.ArmBladeActive = true;
-                _handsSystem.TryPickup(uid, armblade, emptyHand, false, false, handsComponent);
             }
             else
             {
@@ -255,20 +259,22 @@ public sealed partial class ChangelingSystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
-
         if (!TryComp(uid, out InventoryComponent? inventory))
             return;
 
         if (!TryUseAbility(uid, component, component.LingArmorChemicalsCost, !component.LingArmorActive, component.LingArmorRegenCost))
             return;
 
+        args.Handled = true;
+
         if (!component.LingArmorActive)
         {
             var helmet = Spawn(LingHelmetId, Transform(uid).Coordinates);
             var armor = Spawn(LingArmorId, Transform(uid).Coordinates);
-            EnsureComp<UnremoveableComponent>(helmet); // cant remove the armor
-            EnsureComp<UnremoveableComponent>(armor); // cant remove the armor
+            var compHelmet = EnsureComp<UnremoveableComponent>(helmet); // cant remove the armor
+            var compArmor = EnsureComp<UnremoveableComponent>(armor); // cant remove the armor
+            compHelmet.DeleteOnDrop = false;
+            compArmor.DeleteOnDrop = false;
 
             _inventorySystem.TryUnequip(uid, HeadId, true, true, false, inventory);
             _inventorySystem.TryEquip(uid, helmet, HeadId, true, true, false, inventory);
@@ -309,13 +315,13 @@ public sealed partial class ChangelingSystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
-
         if (!TryComp(uid, out InventoryComponent? inventory))
             return;
 
         if (!TryUseAbility(uid, component, component.ChameleonSkinChemicalsCost, !component.ChameleonSkinActive))
             return;
+
+        args.Handled = true;
 
         var stealth = EnsureComp<StealthComponent>(uid); // cant remove the armor
         var stealthonmove = EnsureComp<StealthOnMoveComponent>(uid); // cant remove the armor
@@ -342,10 +348,10 @@ public sealed partial class ChangelingSystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
-
         if (!TryUseAbility(uid, component, component.DissonantShriekChemicalsCost))
             return;
+
+        args.Handled = true;
 
         var coords = _transform.GetMapCoordinates(uid);
         _emp.EmpPulse(coords, component.DissonantShriekEmpRange, component.DissonantShriekEmpConsumption, component.DissonantShriekEmpDuration);

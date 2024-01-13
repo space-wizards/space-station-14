@@ -148,3 +148,15 @@
   revertOnDeath: true
   revertOnCrit: true
   duration: 20
+
+# ling human morph
+- type: polymorph
+  id: ChangelingHumanoidMorph
+  entity: MobHuman
+  forced: true
+  transferName: false
+  transferHumanoidAppearance: false
+  inventory: Transfer
+  revertOnDeath: false
+  revertOnCrit: false
+  allowRepeatedMorphs: true

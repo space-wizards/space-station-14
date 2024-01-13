@@ -16,6 +16,14 @@ public sealed partial class ChangelingEvolutionMenuActionEvent : InstantActionEv
 {
 }
 
+public sealed partial class ChangelingCycleDNAActionEvent : InstantActionEvent
+{
+}
+
+public sealed partial class ChangelingTransformActionEvent : InstantActionEvent
+{
+}
+
 public sealed partial class LingRegenerateActionEvent : InstantActionEvent
 {
 }

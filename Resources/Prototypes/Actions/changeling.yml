@@ -16,8 +16,31 @@
   components:
   - type: EntityTargetAction
     icon: { sprite: /Textures/Interface/Actions/actions_ling.rsi, state: absorb_dna }
-    iconOn: { sprite: /Textures/Interface/Actions/actions_ling.rsi, state: absorb_dna }
+    whitelist: { components: [ HumanoidAppearance ] }
     event: !type:LingAbsorbActionEvent
+    useDelay: 5
+    canTargetSelf: false
+
+- type: entity
+  id: ActionChangelingCycleDNA
+  name: Cycle DNA
+  description: Cycles through your available DNA strands.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: /Textures/Interface/Actions/actions_ling.rsi, state: cycle }
+    event: !type:ChangelingCycleDNAActionEvent
+    useDelay: 1
+
+- type: entity
+  id: ActionChangelingTransform
+  name: Transform
+  description: Transforms your appearance to the selected DNA strand. Costs 5 chemicals.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: /Textures/Interface/Actions/actions_ling.rsi, state: transform }
+    event: !type:ChangelingTransformActionEvent
     useDelay: 5
 
 - type: entity
@@ -67,7 +90,7 @@
 
 - type: entity
   id: ActionLingEMP
-  name: Dissonant Shriek
+  name: Activate Dissonant Shriek
   description: You shift your vocal cords to release a high-frequency sound that overloads nearby electronics. Costs 20 chemicals.
   noSpawn: true
   components:

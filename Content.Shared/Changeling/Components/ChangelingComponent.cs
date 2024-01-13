@@ -1,5 +1,6 @@
 using Robust.Shared.Audio;
-using Content.Shared.FixedPoint;
+using Content.Shared.Polymorph;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Components;
 
@@ -24,9 +25,27 @@ public sealed partial class ChangelingComponent : Component
     [DataField]
     public float MaxChemicals = 75f;
 
+    /// <summary>
+    /// The maximum amount of DNA strands a ling can have at one time
+    /// </summary>
+    [DataField]
+    public int DNAStrandCap = 10;
+
+    /// <summary>
+    /// List of stolen DNA
+    /// </summary>
+    [DataField]
+    public List<EntityUid> StoredDNA = new List<EntityUid>();
+
+    /// <summary>
+    /// The DNA index that the changeling currently has selected
+    /// </summary>
+    [DataField]
+    public int SelectedDNA = 0;
+
     #region DNA Absorb Ability
     /// <summary>
-    /// The time it takes to absorb someone as a changeling per phase, in seconds.
+    /// How long an absorb stage takes, in seconds.
     /// </summary>
     [DataField]
     public float AbsorbDuration = 15.0f;
@@ -42,6 +61,14 @@ public sealed partial class ChangelingComponent : Component
     /// </summary>
     [DataField]
     public float AbsorbGeneticDmg = 200.0f;
+    #endregion
+
+    #region Transform Ability
+    /// <summary>
+    /// The amount of chemicals that is needed to use the transform ability.
+    /// </summary>
+    [DataField]
+    public float TransformChemicalsCost = -5f;
     #endregion
 
     #region Regenerate Ability
@@ -170,16 +197,6 @@ public sealed partial class ChangelingComponent : Component
     [DataField]
     public float DissonantShriekEmpDuration = 12f;
     #endregion
-
-    [DataField]
-    public EntityUid? ShopAction;
-
-    [DataField]
-    public EntityUid? RegenAction;
-
-    [DataField]
-    public EntityUid? AbsorbAction;
-
 
     [DataField]
     public float Accumulator = 0f;
