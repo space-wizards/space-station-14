@@ -89,7 +89,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (regenCap)
             float.Min(component.Chemicals, component.MaxChemicals);
 
-        _alerts.ShowAlert(uid, AlertType.Chemicals, (short) Math.Clamp(Math.Round(component.Chemicals / 10f), 0, 7));
+        _alerts.ShowAlert(uid, AlertType.Chemicals, (short) Math.Clamp(Math.Round(component.Chemicals / 10.7f), 0, 7));
 
         return true;
     }
