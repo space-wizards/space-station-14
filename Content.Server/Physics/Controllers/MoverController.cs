@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Movement.Components;
@@ -9,6 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using DroneConsoleComponent = Content.Server.Shuttles.DroneConsoleComponent;
+using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -551,12 +553,14 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
-        // Copied from "System.Numerics.Vector2.Dot", because it's working unstable on some systems.
-        public float Vector2Dot(Vector2 value1, Vector2 value2)
+        // .NET 8 seem to miscompile usage of Vector2.Dot above. This manual outline fixes it pending an upstream fix.
+        // See PR #24008
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static float Vector2Dot(Vector2 value1, Vector2 value2)
         {
-            return (value1.X * value2.X)
-                 + (value1.Y * value2.Y);
+            return Vector2.Dot(value1, value2);
         }
+
         private bool CanPilot(EntityUid shuttleUid)
         {
             return TryComp<FTLComponent>(shuttleUid, out var ftl)
