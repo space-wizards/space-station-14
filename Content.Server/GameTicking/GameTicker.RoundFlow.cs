@@ -387,8 +387,7 @@ namespace Content.Server.GameTicking
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
 
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
-                listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong,
-                new SoundCollectionSpecifier("RoundEnd").GetSound()));
+                listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong));
         }
 
         private async void SendRoundEndDiscordMessage()
@@ -503,29 +502,9 @@ namespace Content.Server.GameTicking
             RaiseLocalEvent(ev);
 
             // So clients' entity systems can clean up too...
-            RaiseNetworkEvent(ev, Filter.Broadcast());
+            RaiseNetworkEvent(ev);
 
-            // Delete all entities.
-            foreach (var entity in EntityManager.GetEntities().ToArray())
-            {
-#if EXCEPTION_TOLERANCE
-                try
-                {
-#endif
-                // TODO: Maybe something less naive here?
-                // FIXME: Actually, definitely.
-                if (!Deleted(entity) && !Terminating(entity))
-                    EntityManager.DeleteEntity(entity);
-#if EXCEPTION_TOLERANCE
-                }
-                catch (Exception e)
-                {
-                    _sawmill.Error($"Caught exception while trying to delete entity {ToPrettyString(entity)}, this might corrupt the game state...");
-                    _runtimeLog.LogException(e, nameof(GameTicker));
-                    continue;
-                }
-#endif
-            }
+            EntityManager.FlushEntities();
 
             _mapManager.Restart();
 
@@ -543,8 +522,11 @@ namespace Content.Server.GameTicking
             _playerGameStatuses.Clear();
             foreach (var session in _playerManager.Sessions)
             {
-                _playerGameStatuses[session.UserId] = LobbyEnabled ?  PlayerGameStatus.NotReadyToPlay : PlayerGameStatus.ReadyToPlay;
+                _playerGameStatuses[session.UserId] = LobbyEnabled ? PlayerGameStatus.NotReadyToPlay : PlayerGameStatus.ReadyToPlay;
             }
+
+            // Put a bangin' donk on it.
+            _audio.PlayGlobal(_audio.GetSound(new SoundCollectionSpecifier("RoundEnd")), Filter.Broadcast(), true);
         }
 
         public bool DelayStart(TimeSpan time)
@@ -558,7 +540,7 @@ namespace Content.Server.GameTicking
 
             RaiseNetworkEvent(new TickerLobbyCountdownEvent(_roundStartTime, Paused));
 
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("game-ticker-delay-start", ("seconds",time.TotalSeconds)));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("game-ticker-delay-start", ("seconds", time.TotalSeconds)));
 
             return true;
         }

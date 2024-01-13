@@ -105,7 +105,7 @@
 - type: entity
   parent: FoodTinPeaches
   id: FoodTinPeachesMaint
-  name: Maintenance Peaches
+  name: maintenance peaches
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/Tins/maint_peaches.rsi
@@ -128,7 +128,7 @@
 - type: entity
   parent: FoodTinBaseTrash
   id: FoodTinPeachesMaintTrash
-  name: Maintenance Peaches
+  name: maintenance peaches
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/Tins/maint_peaches.rsi

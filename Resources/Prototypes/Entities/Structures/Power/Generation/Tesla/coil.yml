@@ -61,9 +61,11 @@
   - type: BatteryDischarger
     activeSupplyRate: 15000
   - type: TeslaCoil
-    chargeFromLightning: 1000000
+    chargeFromLightning: 500000
   - type: LightningTarget
     priority: 4
+    hitProbability: 0.5
+    lightningResistance: 10
     lightningExplode: false
   - type: PowerNetworkBattery
     maxSupply: 1000000
@@ -73,6 +75,33 @@
   - type: Pullable
   - type: Clickable
   - type: InteractionOutline
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: Repairable
+  - type: DamageVisuals
+    thresholds: [8, 16, 25]
+    damageDivisor: 3.333
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Power/Generation/Tesla/coil_cracks.rsi
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 225
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 2
+                max: 4
   #- type: GuideHelp #   To Do - add Tesla Guide
 
 - type: entity
@@ -123,9 +152,38 @@
     priority: 3
     lightningResistance: 10
     lightningExplode: false
+    damageFromLightning: 0
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
   - type: Clickable
   - type: InteractionOutline
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: Repairable
+  - type: Damageable
+    damageContainer: StructuralInorganic 
+  - type: DamageVisuals
+    thresholds: [8, 16, 25]
+    damageDivisor: 3.333
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Power/Generation/Tesla/groundingrod_cracks.rsi
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:      
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 2
+                max: 4
   #- type: GuideHelp #   To Do - add Tesla Guide
+

@@ -265,16 +265,20 @@ public abstract partial class SharedGunSystem
         var (count, _) = GetChamberMagazineCountCapacity(uid, component);
         string boltState;
 
-        if (component.BoltClosed != null)
+        using (args.PushGroup(nameof(ChamberMagazineAmmoProviderComponent)))
         {
-            if (component.BoltClosed == true)
-                boltState = Loc.GetString("gun-chamber-bolt-open-state");
-            else
-                boltState = Loc.GetString("gun-chamber-bolt-closed-state");
-            args.PushMarkup(Loc.GetString("gun-chamber-bolt", ("bolt", boltState), ("color", component.BoltClosed.Value ? Color.FromHex("#94e1f2") : Color.FromHex("#f29d94"))));
-        }
+            if (component.BoltClosed != null)
+            {
+                if (component.BoltClosed == true)
+                    boltState = Loc.GetString("gun-chamber-bolt-open-state");
+                else
+                    boltState = Loc.GetString("gun-chamber-bolt-closed-state");
+                args.PushMarkup(Loc.GetString("gun-chamber-bolt", ("bolt", boltState),
+                    ("color", component.BoltClosed.Value ? Color.FromHex("#94e1f2") : Color.FromHex("#f29d94"))));
+            }
 
-        args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", count)));
+            args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", count)));
+        }
     }
 
     private bool TryTakeChamberEntity(EntityUid uid, [NotNullWhen(true)] out EntityUid? entity)

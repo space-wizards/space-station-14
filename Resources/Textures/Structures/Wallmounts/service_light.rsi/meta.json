@@ -20,11 +20,11 @@
             "directions": 4
         },
         {
-            "name": "off",
+            "name": "base",
             "directions": 4
         },
         {
-            "name": "on",
+            "name": "glow",
             "directions": 4,
             "delays": [
                 [

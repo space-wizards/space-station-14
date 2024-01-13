@@ -5,6 +5,7 @@ using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Tools.Components;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
 
 namespace Content.Server.Eye.Blinding.EyeProtection
 {
@@ -18,7 +19,7 @@ namespace Content.Server.Eye.Blinding.EyeProtection
         {
             base.Initialize();
             SubscribeLocalEvent<RequiresEyeProtectionComponent, ToolUseAttemptEvent>(OnUseAttempt);
-            SubscribeLocalEvent<RequiresEyeProtectionComponent, ItemToggleDoneEvent>(OnWelderToggled);
+            SubscribeLocalEvent<RequiresEyeProtectionComponent, ItemToggledEvent>(OnWelderToggled);
 
             SubscribeLocalEvent<EyeProtectionComponent, GetEyeProtectionEvent>(OnGetProtection);
             SubscribeLocalEvent<EyeProtectionComponent, InventoryRelayedEvent<GetEyeProtectionEvent>>(OnGetRelayedProtection);
@@ -52,12 +53,12 @@ namespace Content.Server.Eye.Blinding.EyeProtection
 
             // Add permanent eye damage if they had zero protection, also somewhat scale their temporary blindness by
             // how much damage they already accumulated.
-            _blindingSystem.AdjustEyeDamage(args.User, 1, blindable);
+            _blindingSystem.AdjustEyeDamage((args.User, blindable), 1);
             var statusTimeSpan = TimeSpan.FromSeconds(time * MathF.Sqrt(blindable.EyeDamage));
             _statusEffectsSystem.TryAddStatusEffect(args.User, TemporaryBlindnessSystem.BlindingStatusEffect,
                 statusTimeSpan, false, TemporaryBlindnessSystem.BlindingStatusEffect);
         }
-        private void OnWelderToggled(EntityUid uid, RequiresEyeProtectionComponent component, ItemToggleDoneEvent args)
+        private void OnWelderToggled(EntityUid uid, RequiresEyeProtectionComponent component, ItemToggledEvent args)
         {
             component.Toggled = _itemToggle.IsActivated(uid);
         }

@@ -145,18 +145,6 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealCollectionObjective
-  id: EncryptionKeyStealCollectionObjective
-  components:
-  - type: StealCondition
-    stealGroup: EncryptionKey
-    minCollectionSize: 5
-    maxCollectionSize: 15
-  - type: Objective
-    difficulty: 0.7
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealCollectionObjective
   id: CannabisStealCollectionObjective
   components:
   - type: NotJobRequirement

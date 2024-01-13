@@ -96,7 +96,7 @@
     sprite: Structures/Storage/canister.rsi
     state: orange
   product: PlasmaCanister
-  cost: 8500
+  cost: 4000
   category: Atmospherics
   group: market
 
