@@ -1,10 +1,4 @@
 Entries:
-- author: 2013HORSEMEATSCANDAL
-  changes:
-  - message: Cybersun has begun naming their operations to make them easier to remember.
-    type: Add
-  id: 5185
-  time: '2023-11-16T21:04:50.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Tweak biome generation on planets to make floors more varied and add
@@ -3711,3 +3705,10 @@ Entries:
   id: 5685
   time: '2024-01-13T04:52:53.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23993
+- author: degradka
+  changes:
+  - message: The electrical crates now drop plastic instead of steel.
+    type: Fix
+  id: 5686
+  time: '2024-01-13T04:55:47.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23992
