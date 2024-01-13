@@ -1,31 +1,91 @@
-- type: vampirePower
-  id: ToggleFangs
-  actionPrototype: ActionVampireToggleFangs
-  
-- type: vampirePower
-  id: DrinkBlood
-  activationSound:
-    path: /Audio/Items/drink.ogg
-  usableWhileMuffled: false
-  activationCost: 5 #Actually how much we drink from the victim
+- type: vampireAbilityList
+  id: Default
 
-- type: vampirePower
-  id: Glare
-  actionPrototype: ActionVampireGlare
-  activationSound:
-    path: /Audio/Effects/Vampire/glare.ogg
+  spaceDamage:
+    types:
+      Burn: 2.5
 
-- type: vampirePower
-  id: DeathsEmbrace
-  actionPrototype: ActionVampireDeathsEmbrace
-  activationSound:
-    path: /Audio/Effects/explosionsmallfar.ogg
+  meleeDamage:
+    types:
+      Slash: 10
 
-- type: vampirePower
-  id: Screech
-  actionPrototype: ActionVampireScreech
-  activationSound:
-    path: /Audio/Effects/Vampire/screech_tone.ogg
-  activationCost: 25
-  unlockRequirement: 50
-  usableWhileMuffled: false
+  coffinHealing:
+    groups:
+      Brute: 6
+      Toxin: 4
+      Genetic: 2
+    types:
+      Burn: 1
+      Shock: 2
+      Cold: 2
+      Airloss: 2
+      Bloodloss: 2
+
+  # How much blood per mouthfull
+  bloodDrainVolume: 5
+  #How frequenty per mountfull
+  bloodDrainFrequency: 1
+
+  acceptableFoods:
+    tags:
+      - Pill
+
+  abilities:
+    - actionPrototype: ActionVampireToggleFangs
+      bloodUnlockRequirement: 0
+      type: ToggleFangs
+
+    - actionPrototype: ActionVampireGlare
+      bloodUnlockRequirement: 0
+      type: Glare
+      duration: 10
+
+    - actionPrototype: ActionVampireHypnotise
+      bloodUnlockRequirement: 0
+      type: Hypnotise
+      duration: 60
+      delay: 5
+
+    - actionPrototype: ActionVampireBatform
+      bloodUnlockRequirement: 30
+      type: Batform
+      usableWhileStunned: false
+      usableWhileCuffed: false
+      activationCost: 20
+
+    - actionPrototype: ActionVampireBloodSteal
+      bloodUnlockRequirement: 30
+      type: BloodSteal
+      usableWhileStunned: false
+      usableWhileCuffed: false
+      activationCost: 20
+
+    - actionPrototype: ActionVampireScreech
+      bloodUnlockRequirement: 50
+      activationCost: 10
+      type: Screech
+      usableWhileMuffled: false
+      duration: 3
+      damage:
+        types:
+          Blunt: 10
+          Structural: 40
+
+    #Passive ability, heals and returns to coffin on death
+    - type: DeathsEmbrace
+      bloodUnlockRequirement: 150
+      activationCost: 100
+      activationEffect: Smoke
+
+    #Passive ability, burn damage outside station
+    - type: StellarWeakness
+      bloodUnlockRequirement: 0
+      damage:
+        types:
+          Burn: 2.5
+
+    - actionPrototype: ActionVampireCloakOfDarkness
+      bloodUnlockRequirement: 300
+      activationCost: 20
+      type: CloakOfDarkness
+      usableWhileStunned: false

@@ -6,30 +6,16 @@
   components:
   - type: InstantAction
     checkCanInteract: false
+    priority: 1
     icon:
       sprite: Interface/Actions/actions_vampire.rsi
-      state: drainblood
+      state: fangs_retracted
+    iconOn:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: fangs_extended
     event: 
-      !type:VampireUsePowerEvent
+      !type:VampireUseAreaPowerEvent
       type: ToggleFangs
-
-- type: entity
-  id: ActionVampireDeathsEmbrace
-  name: Deaths Embrace
-  description: Return to your coffin
-  noSpawn: true
-  components:
-  - type: InstantAction
-    checkCanInteract: false
-    icon:
-      sprite: Interface/Actions/actions_vampire.rsi
-      state: deathsembrace
-    sound: !type:SoundPathSpecifier
-      path: /Audio/Effects/explosionsmallfar.ogg
-    event: 
-      !type:VampireUsePowerEvent
-      type: DeathsEmbrace
-    useDelay: 60
 
 - type: entity
   id: ActionVampireGlare
@@ -37,54 +23,109 @@
   description: Strike fear into their souls
   noSpawn: true
   components:
-  - type: InstantAction
-    checkCanInteract: false
+  - type: EntityTargetAction
+    priority: 2
     icon:
       sprite: Interface/Actions/actions_vampire.rsi
       state: glare
     sound: !type:SoundPathSpecifier
       path: /Audio/Effects/Vampire/glare.ogg
     event: 
-      !type:VampireUsePowerEvent
+      !type:VampireUseTargetedPowerEvent
       type: Glare
     useDelay: 60
 
 - type: entity
   id: ActionVampireScreech
   name: Screech
-  description: Crush your enemies willpower
+  description: Your enemies shall kneel
   noSpawn: true
   components:
   - type: InstantAction
     checkCanInteract: false
+    priority: 2
     icon:
       sprite: Interface/Actions/actions_vampire.rsi
       state: screech
     sound: !type:SoundPathSpecifier
       path: /Audio/Effects/Vampire/screech_tone.ogg
     event: 
-      !type:VampireUsePowerEvent
+      !type:VampireUseAreaPowerEvent
       type: Screech
     useDelay: 60
 
-#- type: entity
-#  id: ActionSmite
-#  name: Smite
-#  description: Instantly gibs a target.
-#  noSpawn: true
-#  components:
-#  - type: EntityTargetAction
-#    useDelay: 60
-#    itemIconStyle: BigAction
-#    whitelist:
-#      components:
-#      - Body
-#    canTargetSelf: false
-#    interactOnMiss: false
-#    sound: !type:SoundPathSpecifier
-#      path: /Audio/Magic/disintegrate.ogg
-#    icon:
-#      sprite: Objects/Magic/magicactions.rsi
-#      state: gib
-#    event: !type:SmiteSpellEvent
-#      speech: action-speech-spell-smite
+- type: entity
+  id: ActionVampireBloodSteal
+  name: Blood Steal
+  description: It's not theirs, it's yours
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    priority: 2
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: bloodsteal
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/demon_consume.ogg
+    event: 
+      !type:VampireUseAreaPowerEvent
+      type: BloodSteal
+    useDelay: 60
+
+- type: entity
+  id: ActionVampireHypnotise
+  name: Hypnotise
+  description: Come with me, little lamb
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    priority: 2
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: hypnotise
+    event: 
+      !type:VampireUseTargetedPowerEvent
+      type: Hypnotise
+    useDelay: 300
+
+- type: entity
+  id: ActionVampireBatform
+  name: Toggle Bat Form
+  description: Assume your bat form
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    priority: 2
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: batform
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/teleport_arrival.ogg
+    event: 
+      !type:VampireUseAreaPowerEvent
+      type: Batform
+    useDelay: 30
+
+- type: entity
+  id: ActionVampireCloakOfDarkness
+  name: Cloak of Darkness
+  description: Hide yourself from mortal eyes
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    priority: 2
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: cloakofdarkness
+    event: 
+      !type:VampireUseAreaPowerEvent
+      type: CloakOfDarkness
+    useDelay: 10

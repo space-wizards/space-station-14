@@ -8,7 +8,10 @@
   },
   "states": [
     {
-      "name": "drainblood"
+      "name": "fangs_retracted"
+    },
+    {
+      "name": "fangs_extended"
     },
     {
       "name": "deathsembrace"
@@ -18,6 +21,9 @@
     },
     {
       "name": "screech"
+    },
+    {
+      "name": "batform"
     }
   ]
 }

@@ -148,3 +148,10 @@
   revertOnDeath: true
   revertOnCrit: true
   duration: 20
+
+#Vampire
+- type: polymorph
+  id: VampireBat
+  entity: MobBat
+  revertOnDeath: true
+  revertOnCrit: true

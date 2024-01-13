@@ -3,6 +3,9 @@ bible-heal-success-others = {CAPITALIZE(THE($user))} hits {THE($target)} with {T
 bible-heal-success-none-self = You hit {THE($target)} with {THE($bible)}, but they have no wounds you can heal!
 bible-heal-success-none-others = {CAPITALIZE(THE($user))} hits {THE($target)} with {THE($bible)}!
 
+bible-damage-unholy-self = You hit {THE($target)} with {THE($bible)}, and they are burned by a flash of holy fire!
+bible-damage-unholy-others = {CAPITALIZE(THE($user))} hits {THE($target)} with {THE($bible)}, and they are burned by a flash of holy fire!
+
 bible-heal-fail-self = You hit {THE($target)} with {THE($bible)}, and it lands with a sad thwack, dazing {OBJECT($target)}!
 bible-heal-fail-others = {CAPITALIZE(THE($user))} hits {THE($target)} with {THE($bible)}, and it lands with a sad thack, dazing {OBJECT($target)}!
 bible-sizzle = The book sizzles in your hands!
