@@ -339,9 +339,6 @@ public sealed class ActionContainerSystem : EntitySystem
 
     private void OnActionAdded(EntityUid uid, ActionsContainerComponent component, ActionAddedEvent args)
     {
-        if (!HasComp<ActionsContainerComponent>(uid))
-            EnsureComp<ActionsContainerComponent>(uid);
-
         if (_mind.TryGetMind(uid, out var mind, out _))
         {
             if (!HasComp<ActionsContainerComponent>(mind))
