@@ -1454,7 +1454,7 @@ namespace Content.Client.Preferences.UI
             // Fill categories
             foreach (var loadout in loadouts.OrderBy(l => l.ID))
             {
-                var selector = new LoadoutPreferenceSelector(loadout, _entMan, _loadoutSystem);
+                var selector = new LoadoutPreferenceSelector(loadout, _entMan, _loadoutSystem, _requirements);
 
                 // Look for an existing loadout category
                 BoxContainer? match = null;
@@ -1593,7 +1593,7 @@ namespace Content.Client.Preferences.UI
 
             public event Action<bool>? PreferenceChanged;
 
-            public LoadoutPreferenceSelector(LoadoutPrototype loadout, IEntityManager entityManager, LoadoutSystem loadoutSystem)
+            public LoadoutPreferenceSelector(LoadoutPrototype loadout, IEntityManager entityManager, LoadoutSystem loadoutSystem, JobRequirementsManager requirementsManager)
             {
                 Loadout = loadout;
 
@@ -1633,6 +1633,8 @@ namespace Content.Client.Preferences.UI
                 // Add the loadout whitelist and blacklist descriptions to the tooltip if there are any
                 tooltip.Append(loadoutSystem.GetLoadoutWhitelistString(loadout));
                 tooltip.Append(loadoutSystem.GetLoadoutBlacklistString(loadout));
+                requirementsManager.CheckRoleTime(loadout.PlaytimeRequirements, out var reason, "loadout-timer-");
+                tooltip.Append($"\n{reason}");
 
                 // If the tooltip has any content, add it to the checkbox
                 if (!string.IsNullOrEmpty(tooltip.ToString()))

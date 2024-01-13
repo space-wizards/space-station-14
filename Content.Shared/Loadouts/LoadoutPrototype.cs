@@ -78,4 +78,10 @@ public sealed class LoadoutPrototype : IPrototype
     /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<SpeciesPrototype>))]
     public List<string>? SpeciesBlacklist;
+
+    /// <summary>
+    ///     Don't apply this loadout to entities this whitelist IS NOT valid for
+    /// </summary>
+    [DataField]
+    public HashSet<JobRequirement>? PlaytimeRequirements;
 }

@@ -17,6 +17,7 @@ public sealed class LoadoutSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly IEntityManager _entity = default!;
 
     public override void Initialize()
     {
@@ -162,8 +163,8 @@ public sealed class LoadoutSystem : EntitySystem
         {
             foreach (var job in loadout.JobWhitelist)
             {
-                var JobPrototype = _prototype.Index<JobPrototype>(job);
-                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-job", ("job", Loc.GetString(JobPrototype.Name))));
+                var jobPrototype = _prototype.Index<JobPrototype>(job);
+                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-job", ("job", Loc.GetString(jobPrototype.Name))));
             }
         }
 
@@ -214,8 +215,8 @@ public sealed class LoadoutSystem : EntitySystem
         {
             foreach (var job in loadout.JobBlacklist)
             {
-                var JobPrototype = _prototype.Index<JobPrototype>(job);
-                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-job", ("job", Loc.GetString(JobPrototype.Name))));
+                var jobPrototype = _prototype.Index<JobPrototype>(job);
+                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-job", ("job", Loc.GetString(jobPrototype.Name))));
             }
         }
 
