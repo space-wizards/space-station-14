@@ -51,6 +51,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly TemperatureSystem _temperature = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
         [Dependency] private readonly HandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedItemSystem _item = default!;
 
         public override void Initialize()
         {
@@ -292,6 +293,15 @@ namespace Content.Server.Kitchen.EntitySystems
             {
                 _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-full"), ent, args.User);
                 return;
+            }
+
+            if (TryComp<ItemComponent>(args.Used, out var item))
+            {
+                if (_item.GetSizePrototype(item.Size) > _item.GetSizePrototype(ent.Comp.MaxItemSize))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-item-too-big", ("item", args.Used)), ent, args.User);
+                    return;
+                }
             }
 
             args.Handled = true;
