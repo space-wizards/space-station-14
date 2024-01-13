@@ -1214,7 +1214,7 @@ namespace Content.Shared.CCVar
         ///     If a whitelists conditions to be active fail (for example player count), the next whitelist will be used instead. If no whitelist is valid, the player will be allowed to connect.
         /// </summary>
         public static readonly CVarDef<string> WhitelistPrototype =
-            CVarDef.Create("whitelist.prototypeList", string.Empty, CVar.SERVERONLY);
+            CVarDef.Create("whitelist.prototypeList", "basicWhitelist", CVar.SERVERONLY);
 
         /*
          * VOTE
