@@ -1,6 +1,7 @@
 using System.Text;
 
 using Content.Server.Speech.Components;
+using Content.Server.Chat.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.VoiceMask;
 using Content.Server.Wires;
@@ -12,6 +13,7 @@ namespace Content.Server.Speech;
 public sealed partial class ListenWireAction : BaseToggleWireAction
 {
     private WiresSystem _wires = default!;
+    private ChatSystem _chat = default!;
 
     /// <summary>
     /// Length of the gibberish string sent when pulsing the wire
@@ -31,6 +33,7 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         base.Initialize();
 
         _wires = EntityManager.System<WiresSystem>();
+        _chat = EntityManager.System<ChatSystem>();
     }
     public override StatusLightState? GetLightState(Wire wire)
     {
@@ -52,7 +55,7 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         }
         else
         {
-            EntityManager.EnsureComponent<BlockListeningComponent>(owner, out _);
+            EntityManager.EnsureComponent<BlockListeningComponent>(owner);
         }
     }
 
@@ -66,14 +69,12 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         if (!GetValue(wire.Owner) || !IsPowered(wire.Owner))
             return;
 
-        base.Pulse(user, wire);
-
         // We have to use a valid euid in the ListenEvent. The user seems
         // like a sensible choice, but we need to mask their name.
 
         // Save the user's existing voicemask if they have one
-        bool oldEnabled = true;
-        string oldVoiceName = "ERROR";
+        var oldEnabled = true;
+        var oldVoiceName = Loc.GetString("wire-listen-pulse-error-name");
         if (EntityManager.TryGetComponent<VoiceMaskComponent>(user, out var oldMask))
         {
             oldEnabled = oldMask.Enabled;
@@ -86,11 +87,15 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         mask.VoiceName = Loc.GetString("wire-listen-pulse-identifier");
 
         var chars = Loc.GetString("wire-listen-pulse-characters").ToCharArray();
-        var noiseMsg = BuildGibberishString(chars, _noiseLength);
+        var noiseMsg = _chat.BuildGibberishString(chars, _noiseLength);
 
-        // Send as a ListenEvent to bypass getting blocked by ListenAttemptEvent
-        var ev = new ListenEvent(noiseMsg, user);
-        EntityManager.EventBus.RaiseLocalEvent(wire.Owner, ev);
+        var attemptEv = new ListenAttemptEvent(wire.Owner);
+        EntityManager.EventBus.RaiseLocalEvent(wire.Owner, attemptEv);
+        if (!attemptEv.Cancelled)
+        {
+            var ev = new ListenEvent(noiseMsg, user);
+            EntityManager.EventBus.RaiseLocalEvent(wire.Owner, ev);
+        }
 
         // Remove the voicemask component, or set it back to what it was before
         if (oldMask == null)
@@ -100,17 +105,7 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
             mask.Enabled = oldEnabled;
             mask.VoiceName = oldVoiceName;
         }
-    }
 
-    private string BuildGibberishString(char[] charOptions, int length)
-    {
-        var rand = new Random();
-        var sb = new StringBuilder();
-        for (var i = 0; i < length; i++)
-        {
-            var index = rand.Next() % charOptions.Length;
-            sb.Append(charOptions[index]);
-        }
-        return sb.ToString();
+        base.Pulse(user, wire);
     }
 }
