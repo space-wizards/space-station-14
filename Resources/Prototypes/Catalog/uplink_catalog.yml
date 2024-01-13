@@ -1179,6 +1179,23 @@
   categories:
     - UplinkUtility
 
+- type: listing
+  id: UplinkSyndicateToxinKit
+  name: uplink-syndicate-toxin-kit-name
+  description: uplink-syndicate-toxin-kit-desc
+  productEntity: ToxinKit
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Bartender
+    - Chef
+    - Chemist
+    - MedicalDoctor
+
 # Armor
 
 - type: listing

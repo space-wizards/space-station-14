@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: bottle
   parent: BaseItem
   id: BaseChemistryEmptyBottle
@@ -199,20 +199,6 @@
           Quantity: 30
 
 - type: entity
-  id: UnstableMutagenChemistryBottle
-  name: unstable mutagen bottle
-  description: This will cause rapid mutations in your plants.
-  parent: BaseChemistryBottleFilled
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: UnstableMutagen
-          Quantity: 30
-
-- type: entity
   id: NocturineChemistryBottle
   name: nocturine bottle
   description: This will make someone fall down almost immediately. Hard to overdose on.
@@ -279,6 +265,34 @@
               Quantity: 30
 
 - type: entity
+  id: LeadChemistryBottle
+  name: lead bottle
+  parent: BaseChemistryBottleFilled
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Lead
+              Quantity: 30
+
+# toxins
+- type: entity
+  id: UnstableMutagenChemistryBottle
+  name: unstable mutagen bottle
+  description: This will cause rapid mutations in your plants.
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: UnstableMutagen
+          Quantity: 30
+
+- type: entity
   id: MuteToxinChemistryBottle
   name: mute toxin bottle
   parent: BaseChemistryBottleFilled
@@ -292,19 +306,6 @@
               Quantity: 30
 
 - type: entity
-  id: LeadChemistryBottle
-  name: lead bottle
-  parent: BaseChemistryBottleFilled
-  components:
-    - type: SolutionContainerManager
-      solutions:
-        drink:
-          maxVol: 30
-          reagents:
-            - ReagentId: Lead
-              Quantity: 30
-
-- type: entity
   id: ToxinChemistryBottle
   name: toxin bottle
   parent: BaseChemistryBottleFilled
@@ -315,4 +316,173 @@
           maxVol: 30
           reagents:
             - ReagentId: Toxin
+              Quantity: 30
+
+- type: entity
+  id: HonkChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: honk bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Honk
+              Quantity: 30
+
+- type: entity
+  id: HistamineChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: histamine bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Histamine
+              Quantity: 30
+
+- type: entity
+  id: RazoriumChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: razorium bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Razorium
+              Quantity: 30
+
+- type: entity
+  id: VentCrudChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: vent crud bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: VentCrud
+              Quantity: 30
+
+- type: entity
+  id: SulfuricAcidChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: sulfuric acid bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: SulfuricAcid
+              Quantity: 30
+
+- type: entity
+  id: PolytrinicAcidChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: polytrinic acid bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: PolytrinicAcid
+              Quantity: 30
+
+- type: entity
+  id: CarpoToxinChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: carpotoxin bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: CarpoToxin
+              Quantity: 30
+
+- type: entity
+  id: TheobromineChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: theobromine bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Theobromine
+              Quantity: 30
+
+- type: entity
+  id: BuzzochloricBeesChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: buzzochloric bees bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: BuzzochloricBees
+              Quantity: 30
+
+- type: entity
+  id: FerrochromicAcidChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: ferrochromic acid bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: FerrochromicAcid
+              Quantity: 30
+
+- type: entity
+  id: TazinideChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: tazinide bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Tazinide
+              Quantity: 30
+
+- type: entity
+  id: LicoxideChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: licoxide bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Licoxide
+              Quantity: 30
+
+- type: entity
+  id: VestineChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: vestine bottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Vestine
               Quantity: 30

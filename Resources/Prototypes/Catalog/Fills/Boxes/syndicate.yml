@@ -47,3 +47,109 @@
         - id: ClothingEyesGlassesHiddenSecurity
           amount: 1
 
+- type: entity
+  parent: BoxCardboard
+  id: ToxinKit
+  name: toxin kit
+  suffix: Filled
+  components:
+    - type: StorageFill
+      contents: # need to write all 3 times so 3 random bottles in box
+      - id: UnstableMutagenChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: MuteToxinChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: ToxinChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: HonkChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: HistamineChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: RazoriumChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: VentCrudChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: SulfuricAcidChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: PolytrinicAcidChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: CarpoToxinChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: TheobromineChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: BuzzochloricBeesChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: FerrochromicAcidChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: TazinideChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: LicoxideChemistryBottle
+        orGroup: ToxinBottleOne
+      - id: VestineChemistryBottle
+        orGroup: ToxinBottleOne
+      ###
+      - id: UnstableMutagenChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: MuteToxinChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: ToxinChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: HonkChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: HistamineChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: RazoriumChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: VentCrudChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: SulfuricAcidChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: PolytrinicAcidChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: CarpoToxinChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: TheobromineChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: BuzzochloricBeesChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: FerrochromicAcidChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: TazinideChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: LicoxideChemistryBottle
+        orGroup: ToxinBottleTwo
+      - id: VestineChemistryBottle
+        orGroup: ToxinBottleTwo
+      ###
+      - id: UnstableMutagenChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: MuteToxinChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: ToxinChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: HonkChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: HistamineChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: RazoriumChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: VentCrudChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: SulfuricAcidChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: PolytrinicAcidChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: CarpoToxinChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: TheobromineChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: BuzzochloricBeesChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: FerrochromicAcidChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: TazinideChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: LicoxideChemistryBottle
+        orGroup: ToxinBottleThree
+      - id: VestineChemistryBottle
+        orGroup: ToxinBottleThree
