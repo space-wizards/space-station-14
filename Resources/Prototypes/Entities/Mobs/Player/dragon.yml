@@ -110,14 +110,35 @@
       types:
         Piercing: 15
         Slash: 15
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    - Critical
+    damageCap: 500
+    damage:
+      groups:
+        Burn: -0.9
+        Brute: -0.9
+        Toxin: -0.3
+      types:
+        Bloodloss: -0.3
   - type: Devourer
     foodPreference: Humanoid
     shouldStoreDevoured: true
-    chemical: Ichor
-    healSolutionSize: 15.0
-    stomachChemicals:
-    - CarpoToxin
-    - Pax
+    digestibleStates:
+    - Alive
+    - Critical
+    - Dead
+    passiveDevourHealing: #The amount of passive healing added for every devoured entity of the preferred food type
+      groups:
+        Brute: -0.45
+        Burn: -0.45
+        Toxin: -0.15
+      types:
+        Bloodloss: -0.1
+    stomachDamage:
+        types:
+          Caustic: 1
     whitelist:
       components:
       - MobState

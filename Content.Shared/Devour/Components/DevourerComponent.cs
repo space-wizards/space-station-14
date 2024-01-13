@@ -1,4 +1,5 @@
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Damage;
+using Content.Shared.Mobs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -59,32 +60,26 @@ public sealed partial class DevourerComponent : Component
     };
 
     /// <summary>
-    /// The chemical ID injected into the dragon upon devouring
-    /// </summary>
-    [DataField]
-    public ProtoId<ReagentPrototype> Chemical = "Ichor";
-
-    /// <summary>
-    /// The amount of ichor injected per devour
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    public float HealSolutionSize = 15f;
-
-    /// <summary>
-    /// The chemical ID's injected into the victim upon being devoured.
-    /// </summary>
-    [DataField]
-    public List<ProtoId<ReagentPrototype>> StomachChemicals = new();
-
-    /// <summary>
-    /// The amount of stomach chemicals injected into the devoured entity equally spread over each chemical.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    public float StomachSolutionSize = 100f;
-
-    /// <summary>
-    /// The favorite food not only feeds you, but also heals
+    /// The favorite food not only feeds you, but also increases your passive healing.
     /// </summary>
     [DataField]
     public FoodPreference FoodPreference = FoodPreference.All;
+
+    /// <summary>
+    /// Passive healing added for each devoured favourite food.
+    /// </summary>
+    [DataField]
+    public DamageSpecifier? PassiveDevourHealing = new();
+
+    /// <summary>
+    /// The passive damage done to devoured entities.
+    /// </summary>
+    [DataField]
+    public DamageSpecifier? StomachDamage = new();
+
+    /// <summary>
+    /// The MobStates the stomach is allowed to deal damage on.
+    /// </summary>
+    [DataField]
+    public List<MobState> DigestibleStates = new ();
 }

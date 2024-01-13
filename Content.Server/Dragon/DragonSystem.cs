@@ -1,20 +1,20 @@
+using Content.Server.Body.Systems;
+using Content.Server.Devour;
 using Content.Server.GenericAntag;
 using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Shared.Actions;
+using Content.Shared.Devour.Components;
 using Content.Shared.Dragon;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 
 namespace Content.Server.Dragon;
 
@@ -28,6 +28,8 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly DevourSystem _devour = default!;
+    [Dependency] private readonly BodySystem _body = default!;
 
     private EntityQuery<CarpRiftsConditionComponent> _objQuery;
 
@@ -98,7 +100,9 @@ public sealed partial class DragonSystem : EntitySystem
             if (comp.RiftAccumulator >= comp.RiftMaxAccumulator)
             {
                 Roar(uid, comp);
-                QueueDel(uid);
+                if(TryComp<DevourerComponent>(uid, out var devourComponent))
+                    _devour.EmptyStomach(uid, devourComponent);
+                _body.GibBody(uid);
             }
         }
     }

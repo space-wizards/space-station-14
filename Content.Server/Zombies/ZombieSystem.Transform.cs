@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Devour.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
@@ -103,7 +104,7 @@ namespace Content.Server.Zombies
             RemComp<BarotraumaComponent>(target);
             RemComp<HungerComponent>(target);
             RemComp<ThirstComponent>(target);
-            RemComp<ReproductiveComponent>(target); 
+            RemComp<ReproductiveComponent>(target);
             RemComp<ReproductivePartnerComponent>(target);
 
             //funny voice
@@ -116,7 +117,13 @@ namespace Content.Server.Zombies
             //This is needed for stupid entities that fuck up combat mode component
             //in an attempt to make an entity not attack. This is the easiest way to do it.
             var combat = EnsureComp<CombatModeComponent>(target);
-            RemComp<PacifiedComponent>(target);
+
+            //Only remove the pacified component if the target hasn't been devoured.
+            //This is to prevent entities that turn into a zombie while devoured
+            //from attacking the entity that devoured them from the inside.
+            if(!HasComp<DevouredComponent>(target))
+                RemComp<PacifiedComponent>(target);
+
             _combat.SetCanDisarm(target, false, combat);
             _combat.SetInCombatMode(target, true, combat);
 
