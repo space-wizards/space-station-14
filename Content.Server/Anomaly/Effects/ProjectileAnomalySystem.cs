@@ -22,7 +22,7 @@ public sealed class ProjectileAnomalySystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly SharedGunSystem _gunSystem = default!;
+    [Dependency] private readonly GunSystem _gunSystem = default!;
 
     public override void Initialize()
     {

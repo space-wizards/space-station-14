@@ -66,7 +66,6 @@ public sealed partial class StoreComponent : Component
     public List<EntityUid> BoughtEntities = new();
 
     // TODO: Refund button
-    // TODO: Add ability to upgrade actions
 
     #region audio
     /// <summary>
