@@ -291,7 +291,7 @@ public sealed partial class ChangelingSystem
                     if (result)
                     {
                         _inventorySystem.TryUnequip(uid, HeadId, true, true, false, inventory);
-                        QueueDel(headitem.Value);
+                        QueueDel(headitem);
                     }
                 }
 
@@ -301,7 +301,7 @@ public sealed partial class ChangelingSystem
                     if (result)
                     {
                         _inventorySystem.TryUnequip(uid, OuterClothingId, true, true, false, inventory);
-                        QueueDel(outerclothingitem.Value);
+                        QueueDel(outerclothingitem);
                     }
                 }
             }

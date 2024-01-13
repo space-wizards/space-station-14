@@ -213,6 +213,24 @@ namespace Content.Server.Polymorph.Systems
                 QueueDel(child);
                 child = Spawn(targetPrototype.ID, targetTransformComp.Coordinates);
 
+                if (_inventory.TryGetContainerSlotEnumerator(child, out var enumerator)) // remove any items the child spawns with, incase the targetPrototype is something like a syndicate agent which spawns with gear
+                {
+                    while (enumerator.MoveNext(out var slot))
+                    {
+                        if (_inventory.TryGetSlotEntity(child, slot.ID, out var slotEntity))
+                        {
+                            _inventory.TryUnequip(child, slot.ID, true, true);
+                            QueueDel(slotEntity);
+                        }
+                    }
+                }
+
+                foreach (var held in _hands.EnumerateHeld(uid))
+                {
+                    _hands.TryDrop(uid, held);
+                    QueueDel(held);
+                }
+
                 _humanoid.CloneAppearance(targetHumanoidUid.Value, child);
             }
 
