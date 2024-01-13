@@ -298,6 +298,7 @@ namespace Content.Server.VendingMachines
             vendComponent.Ejecting = true;
             vendComponent.NextItemToEject = entry.ID;
             vendComponent.ThrowNextItem = throwItem;
+            vendComponent.ShouldSayThankYou = true;
             entry.Amount--;
             UpdateVendingMachineInterfaceState(uid, vendComponent);
             TryUpdateVisualState(uid, vendComponent);
@@ -404,8 +405,6 @@ namespace Content.Server.VendingMachines
                 var direction = new Vector2(_random.NextFloat(-range, range), _random.NextFloat(-range, range));
                 _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
             }
-
-            vendComponent.ShouldSayThankYou = true;
 
             vendComponent.NextItemToEject = null;
             vendComponent.ThrowNextItem = false;
