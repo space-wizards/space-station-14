@@ -1223,17 +1223,6 @@
   - UplinkArmor
 
 - type: listing
-  id: UplinkHardsuitSyndie
-  name: uplink-hardsuit-syndie-name
-  description: uplink-hardsuit-syndie-desc
-  icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndicate.rsi, state: icon }
-  productEntity: ClothingBackpackDuffelSyndicateHardsuitBundle
-  cost:
-    Telecrystal: 8
-  categories:
-  - UplinkArmor
-
-- type: listing
   id: UplinkClothingShoesBootsMagSyndie
   name: uplink-clothing-shoes-boots-mag-syndie-name
   description: uplink-clothing-shoes-boots-mag-syndie-desc
@@ -1251,6 +1240,27 @@
   productEntity: ClothingBackpackDuffelSyndicateEVABundle
   cost:
     Telecrystal: 2
+  categories:
+  - UplinkArmor
+
+- type: listing
+  id: UplinkHardsuitSyndie
+  name: uplink-hardsuit-syndie-name
+  description: uplink-hardsuit-syndie-desc
+  icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndicate.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateHardsuitBundle
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkArmor
+
+- type: listing
+  id: UplinkHardsuitSyndieElite
+  name: uplink-hardsuit-syndieelite-name
+  description: uplink-hardsuit-syndieelite-desc
+  productEntity: ClothingOuterHardsuitSyndieElite
+  cost:
+    Telecrystal: 10
   categories:
   - UplinkArmor
 
@@ -1439,7 +1449,7 @@
   description: uplink-mobcat-microbomb-desc
   icon: { sprite: /Textures/Mobs/Pets/cat.rsi, state: syndicat }
   productEntity: MobCatSyndy
-  cost: 
+  cost:
     Telecrystal: 10
   categories:
     - UplinkMisc

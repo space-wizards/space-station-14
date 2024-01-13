@@ -1,5 +1,6 @@
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.DeviceLinking;
+using Content.Shared.Item;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -79,6 +80,9 @@ namespace Content.Server.Kitchen.Components
         /// </summary>
         [DataField("canExplode"), ViewVariables(VVAccess.ReadWrite)]
         public bool CanExplode = false;
+
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public ProtoId<ItemSizePrototype> MaxItemSize = "Normal";
 
     }
 
