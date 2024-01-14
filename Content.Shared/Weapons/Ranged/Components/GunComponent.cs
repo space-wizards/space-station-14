@@ -18,7 +18,7 @@ public sealed partial class GunComponent : Component
     [DataField]
     public SoundSpecifier? SoundGunshot = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/smg.ogg");
 
-    [AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? SoundGunshotModified;
 
     [DataField]
@@ -43,7 +43,7 @@ public sealed partial class GunComponent : Component
     [DataField, AutoNetworkedField]
     public float CameraRecoilScalar = 1f;
 
-    [AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float CameraRecoilScalarModified = 1f;
 
     /// <summary>
@@ -69,7 +69,7 @@ public sealed partial class GunComponent : Component
     /// <summary>
     /// How much the spread increases every time the gun fires.
     /// </summary>
-    [AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Angle AngleIncreaseModified;
 
     /// <summary>
@@ -78,7 +78,7 @@ public sealed partial class GunComponent : Component
     [DataField]
     public Angle AngleDecay = Angle.FromDegrees(4);
 
-    [AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Angle AngleDecayModified;
 
     /// <summary>
@@ -88,7 +88,7 @@ public sealed partial class GunComponent : Component
     [AutoNetworkedField]
     public Angle MaxAngle = Angle.FromDegrees(2);
 
-    [AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Angle MaxAngleModified;
 
     /// <summary>
@@ -98,7 +98,7 @@ public sealed partial class GunComponent : Component
     [AutoNetworkedField]
     public Angle MinAngle = Angle.FromDegrees(1);
 
-    [AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Angle MinAngleModified;
 
     #endregion
@@ -121,7 +121,7 @@ public sealed partial class GunComponent : Component
     [DataField, AutoNetworkedField]
     public int ShotsPerBurst = 3;
 
-    [AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public int ShotsPerBurstModified = 3;
 
     /// <summary>
@@ -138,7 +138,7 @@ public sealed partial class GunComponent : Component
     [AutoNetworkedField]
     public float FireRate = 8f;
 
-    [AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float FireRateModified;
 
     /// <summary>
@@ -165,7 +165,7 @@ public sealed partial class GunComponent : Component
     [DataField]
     public float ProjectileSpeed = 25f;
 
-    [AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float ProjectileSpeedModified;
 
     /// <summary>
