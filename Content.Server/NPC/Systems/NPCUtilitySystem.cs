@@ -1,4 +1,4 @@
-using System.Linq;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
@@ -7,7 +7,6 @@ using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Storage.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.Components;
@@ -20,9 +19,9 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Containers;
-using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.NPC.Systems;
 
@@ -492,7 +491,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 foreach (var ent in entities)
                 {
                     if (!_puddleQuery.TryGetComponent(ent, out var puddleComp) ||
-                        !_solutions.TryGetSolution(ent, puddleComp.SolutionName, out var sol) ||
+                        !_solutions.TryGetSolution(ent, puddleComp.SolutionName, out _, out var sol) ||
                         _puddle.CanFullyEvaporate(sol))
                     {
                         _entityList.Add(ent);

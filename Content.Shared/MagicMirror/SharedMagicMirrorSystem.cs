@@ -1,17 +1,18 @@
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid.Markings;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MagicMirror;
 
 [Serializable, NetSerializable]
-public enum MagicMirrorUiKey
+public enum MagicMirrorUiKey : byte
 {
     Key
 }
 
 [Serializable, NetSerializable]
-public enum MagicMirrorCategory
+public enum MagicMirrorCategory : byte
 {
     Hair,
     FacialHair
@@ -85,9 +86,9 @@ public sealed class MagicMirrorAddSlotMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class MagicMirrorUiData : BoundUserInterfaceMessage
+public sealed class MagicMirrorUiState : BoundUserInterfaceState
 {
-    public MagicMirrorUiData(string species, List<Marking> hair, int hairSlotTotal, List<Marking> facialHair, int facialHairSlotTotal)
+    public MagicMirrorUiState(string species, List<Marking> hair, int hairSlotTotal, List<Marking> facialHair, int facialHairSlotTotal)
     {
         Species = species;
         Hair = hair;
@@ -96,60 +97,47 @@ public sealed class MagicMirrorUiData : BoundUserInterfaceMessage
         FacialHairSlotTotal = facialHairSlotTotal;
     }
 
-    public string Species { get; }
+    public NetEntity Target;
 
-    public List<Marking> Hair { get; }
-    public int HairSlotTotal { get; }
+    public string Species;
 
-    public List<Marking> FacialHair { get; }
-    public int FacialHairSlotTotal { get; }
+    public List<Marking> Hair;
+    public int HairSlotTotal;
 
+    public List<Marking> FacialHair;
+    public int FacialHairSlotTotal;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class RemoveSlotDoAfterEvent : DoAfterEvent
+public sealed partial class MagicMirrorRemoveSlotDoAfterEvent : DoAfterEvent
 {
-    public MagicMirrorRemoveSlotMessage Message;
+    public override DoAfterEvent Clone() => this;
+    public MagicMirrorCategory Category;
+    public int Slot;
+}
 
-    public RemoveSlotDoAfterEvent(MagicMirrorRemoveSlotMessage message)
-    {
-        Message = message;
-    }
+[Serializable, NetSerializable]
+public sealed partial class MagicMirrorAddSlotDoAfterEvent : DoAfterEvent
+{
+    public override DoAfterEvent Clone() => this;
+    public MagicMirrorCategory Category;
+}
+
+[Serializable, NetSerializable]
+public sealed partial class MagicMirrorSelectDoAfterEvent : DoAfterEvent
+{
+    public MagicMirrorCategory Category;
+    public int Slot;
+    public string Marking = string.Empty;
+
     public override DoAfterEvent Clone() => this;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AddSlotDoAfterEvent : DoAfterEvent
+public sealed partial class MagicMirrorChangeColorDoAfterEvent : DoAfterEvent
 {
-    public MagicMirrorAddSlotMessage Message;
-
-    public AddSlotDoAfterEvent(MagicMirrorAddSlotMessage message)
-    {
-        Message = message;
-    }
     public override DoAfterEvent Clone() => this;
-}
-
-[Serializable, NetSerializable]
-public sealed partial class SelectDoAfterEvent : DoAfterEvent
-{
-    public MagicMirrorSelectMessage Message;
-
-    public SelectDoAfterEvent(MagicMirrorSelectMessage message)
-    {
-        Message = message;
-    }
-    public override DoAfterEvent Clone() => this;
-}
-
-[Serializable, NetSerializable]
-public sealed partial class ChangeColorDoAfterEvent : DoAfterEvent
-{
-    public MagicMirrorChangeColorMessage Message;
-
-    public ChangeColorDoAfterEvent(MagicMirrorChangeColorMessage message)
-    {
-        Message = message;
-    }
-    public override DoAfterEvent Clone() => this;
+    public MagicMirrorCategory Category;
+    public int Slot;
+    public List<Color> Colors = new List<Color>();
 }

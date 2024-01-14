@@ -26,5 +26,14 @@ materials-web = silk
 materials-bones = bone
 materials-coal = coal
 
+# Ores
+materials-raw-iron = raw iron
+materials-raw-quartz = raw quartz
+materials-raw-gold = raw gold
+materials-raw-silver = raw silver
+materials-raw-plasma = raw plasma
+materials-raw-uranium = raw uranium
+materials-raw-bananium = raw bananium
+
 # Material Reclaimer
 material-reclaimer-upgrade-process-rate = process rate

@@ -36,6 +36,10 @@
       types:
         Slash: 8
         Piercing: 10
+  - type: StaminaDamageOnCollide
+    damage: 45
+  - type: StaminaDamageOnEmbed
+    damage: 10
 
 - type: entity
   parent: ThrowingStar

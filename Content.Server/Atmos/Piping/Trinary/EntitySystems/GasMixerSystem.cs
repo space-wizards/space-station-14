@@ -35,7 +35,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             SubscribeLocalEvent<GasMixerComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GasMixerComponent, AtmosDeviceUpdateEvent>(OnMixerUpdated);
-            SubscribeLocalEvent<GasMixerComponent, InteractHandEvent>(OnMixerInteractHand);
+            SubscribeLocalEvent<GasMixerComponent, ActivateInWorldEvent>(OnMixerActivate);
             SubscribeLocalEvent<GasMixerComponent, GasAnalyzerScanEvent>(OnMixerAnalyzed);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasMixerComponent, GasMixerChangeOutputPressureMessage>(OnOutputPressureChangeMessage);
@@ -147,7 +147,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
         }
 
-        private void OnMixerInteractHand(EntityUid uid, GasMixerComponent mixer, InteractHandEvent args)
+        private void OnMixerActivate(EntityUid uid, GasMixerComponent mixer, ActivateInWorldEvent args)
         {
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;

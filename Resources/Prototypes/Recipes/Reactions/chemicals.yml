@@ -10,6 +10,7 @@
 
 - type: reaction
   id: CelluloseBreakdown
+  source: true
   requiredMixerCategories:
   - Electrolysis
   reactants:
@@ -217,6 +218,7 @@
 
 - type: reaction
   id: TableSaltBreakdown
+  source: true
   requiredMixerCategories:
   - Electrolysis
   reactants:

@@ -4,6 +4,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
@@ -13,7 +14,7 @@ namespace Content.Shared.Ninja.Components;
 /// Component for ninja suit abilities and power consumption.
 /// As an implementation detail, dashing with katana is a suit action which isn't ideal.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedNinjaSuitSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedNinjaSuitSystem)), AutoGenerateComponentState]
 public sealed partial class NinjaSuitComponent : Component
 {
     /// <summary>
@@ -35,11 +36,17 @@ public sealed partial class NinjaSuitComponent : Component
     public SoundSpecifier RevealSound = new SoundPathSpecifier("/Audio/Effects/chime.ogg");
 
     /// <summary>
-    /// How long to disable all abilities for when revealed.
-    /// This adds a UseDelay to the ninja so it should not be set by anything else.
+    /// How long to disable all abilities when revealed.
+    /// Normally, ninjas are revealed when attacking or getting damaged.
     /// </summary>
     [DataField("disableTime")]
     public TimeSpan DisableTime = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Time at which we will be able to use our abilities again
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan DisableCooldown;
 
     /// <summary>
     /// The action id for creating throwing stars.

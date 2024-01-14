@@ -1,132 +1,109 @@
-# So the way things are done as of now is that Salvages are measured by world AABBs in their maps.
-# Remember, first two coordinates should be the minimum X/Y, second two should be maximum.
-# You can also use the salvageruler command to get these, once you're sure the transform's been reset.
-# Ultimately, you should still be keeping the maps centred.
+# Dear god please stop adding ones with thousands of entities, learn how procgen works.
 
 # "Small"-class maps - Max size square: 7x7, indicated size: 3.5
 
 - type: salvageMap
   id: Small1
-  name: "Small / Engineering Storage 1"
   mapPath: /Maps/Salvage/small-1.yml
 
 - type: salvageMap
   id: Small2
-  name: "Small / Gaming Nook 1"
   mapPath: /Maps/Salvage/small-2.yml
 
 - type: salvageMap
-  id: Small-ship-1
-  name: "Small / Ship 1 (Pill)"
+  id: SmallShip1
   mapPath: /Maps/Salvage/small-ship-1.yml
 
 - type: salvageMap
   id: Small3
-  name: "Small / Laundromat 1"
   mapPath: /Maps/Salvage/small-3.yml
 
 - type: salvageMap
   id: SmallAISurveyDrone
-  name: "Small / AI Survey Drone"
   mapPath: /Maps/Salvage/small-ai-survey-drone.yml
 
 - type: salvageMap
   id: Small4
-  name: "Small / Bar Salvage"
   mapPath: /Maps/Salvage/small-4.yml
 
 # Small - Asteroids
 
 - type: salvageMap
   id: SmallA1
-  name: "Small / Asteroid 1 Plasmafire"
   mapPath: /Maps/Salvage/small-a-1.yml
 
 # "Medium"-class maps - Max size square: 15x15, indicated size: 7.5
 
 - type: salvageMap
   id: Medium1
-  name: "Medium / Plasma-Trapped Cache 1"
   mapPath: /Maps/Salvage/medium-1.yml
 
 - type: salvageMap
   id: MediumVault1
-  name: "Medium / Vault 1"
   mapPath: /Maps/Salvage/medium-vault-1.yml
 
 - type: salvageMap
   id: MediumOrchestra
-  name: "Medium / Silent Orchestra"
   mapPath: /Maps/Salvage/medium-silent-orchestra.yml
 
 - type: salvageMap
   id: MediumLibraryWreck
-  name: "Medium / Abandoned Library"
   mapPath: /Maps/Salvage/medium-library.yml
 
 - type: salvageMap
   id: MediumCargoWreck
-  name: "Medium / Cargo Department Wreck"
   mapPath: /Maps/Salvage/cargo-1.yml
 
 - type: salvageMap
   id: MediumPirateWreck
-  name: "Medium / Pirate Barge Fragment"
   mapPath: /Maps/Salvage/medium-pirate.yml
 
 - type: salvageMap
   id: TickColony
-  name: "Space Tick colony"
   mapPath: /Maps/Salvage/tick-colony.yml
 
 - type: salvageMap
   id: CargoDock
-  name: "Asteroid Cargo Dock"
   mapPath: /Maps/Salvage/medium-dock.yml
 
 - type: salvageMap
   id: SpaceWaffleHome
-  name: "Waffle Home"
   mapPath: /Maps/Salvage/wh-salvage.yml
 
 - type: salvageMap
   id: MediumShuttleWreck
-  name: "Medium / Ruined Emergency Shuttle"
   mapPath: /Maps/Salvage/medium-ruined-emergency-shuttle.yml
 
 - type: salvageMap
-  id: mediumPetHospital
-  name: "Medium / Pet and Bear Hospital"
+  id: MediumPetHospital
   mapPath: /Maps/Salvage/medium-pet-hospital.yml
 
 - type: salvageMap
   id: MediumCrashedShuttle
-  name: "Crashed Shuttle"
   mapPath: /Maps/Salvage/medium-crashed-shuttle.yml
+
+- type: salvageMap
+  id: Meatball
+  mapPath: /Maps/Salvage/meatball.yml
 
 # """Large""" maps
 
 - type: salvageMap
   id: StationStation
-  name: "StationStation"
   mapPath: /Maps/Salvage/stationstation.yml
 
 - type: salvageMap
   id: AsteroidBase
-  name: "Asteroid Base"
   mapPath: /Maps/Salvage/asteroid-base.yml
 
 - type: salvageMap
   id: RuinCargoBase
-  name: "Ruined Cargo Storage"
   mapPath: /Maps/Salvage/ruin-cargo-salvage.yml
 
 - type: salvageMap
   id: SecurityChunk
-  name: "Security Department Chunk"
   mapPath: /Maps/Salvage/security-chunk.yml
 
 - type: salvageMap
   id: EngineeringChunk
-  name: "Engineering Department Chunk"
   mapPath: /Maps/Salvage/engineering-chunk.yml

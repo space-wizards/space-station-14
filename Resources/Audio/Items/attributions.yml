@@ -92,3 +92,8 @@
   license: "CC-BY-4.0"
   copyright: "User LoafDV on freesound.org. Converted to ogg end edited by lzk228"
   source: "https://freesound.org/people/LoafDV/sounds/131596/"
+  
+- files: ["shovel_dig.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation, modified by themias (github) for ss14"
+  source: "https://github.com/tgstation/tgstation/tree/85a0925051bb00e7a950ee66cb7f87982cd22439/sound/effects/shovel_dig.ogg"

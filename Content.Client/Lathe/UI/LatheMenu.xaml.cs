@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text;
+using Content.Client.Materials;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -19,16 +20,12 @@ public sealed partial class LatheMenu : DefaultWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private readonly SpriteSystem _spriteSystem;
     private readonly LatheSystem _lathe;
+    private readonly MaterialStorageSystem _materialStorage;
 
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
     public event Action<string, int>? RecipeQueueAction;
-    public event Action<string, int>? OnEjectPressed;
-    public List<ProtoId<LatheRecipePrototype>> Recipes = new();
 
-    /// <summary>
-    /// Default volume for a sheet if the material's entity prototype has no material composition.
-    /// </summary>
-    private const int DEFAULT_SHEET_VOLUME = 100;
+    public List<ProtoId<LatheRecipePrototype>> Recipes = new();
 
     public LatheMenu(LatheBoundUserInterface owner)
     {
@@ -37,6 +34,7 @@ public sealed partial class LatheMenu : DefaultWindow
 
         _spriteSystem = _entityManager.System<SpriteSystem>();
         _lathe = _entityManager.System<LatheSystem>();
+        _materialStorage = _entityManager.System<MaterialStorageSystem>();
 
         Title = _entityManager.GetComponent<MetaDataComponent>(owner.Owner).EntityName;
 
@@ -58,50 +56,10 @@ public sealed partial class LatheMenu : DefaultWindow
                 ServerListButton.Visible = false;
             }
         }
+
+        MaterialsList.SetOwner(owner.Owner);
     }
 
-    public void PopulateMaterials(EntityUid lathe)
-    {
-        if (!_entityManager.TryGetComponent<MaterialStorageComponent>(lathe, out var materials))
-            return;
-
-        MaterialsList.DisposeAllChildren();
-
-        foreach (var (materialId, volume) in materials.Storage)
-        {
-            if (volume <= 0)
-                continue;
-
-            if (!_prototypeManager.TryIndex(materialId, out MaterialPrototype? material))
-                continue;
-
-            var sheetVolume = SheetVolume(material);
-            var sheets = (float) volume / sheetVolume;
-            var maxEjectableSheets = (int) MathF.Floor(sheets);
-
-            var unit = Loc.GetString(material.Unit);
-            var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", sheets), ("unit", unit));
-            var name = Loc.GetString(material.Name);
-            var mat = Loc.GetString("lathe-menu-material-display", ("material", name), ("amount", amountText));
-
-            var row = new LatheMaterialEjector(materialId, OnEjectPressed, sheetVolume, maxEjectableSheets)
-            {
-                Icon = { Texture = _spriteSystem.Frame0(material.Icon) },
-                ProductName = { Text = mat }
-            };
-
-            MaterialsList.AddChild(row);
-        }
-
-        if (MaterialsList.ChildCount == 0)
-        {
-            var noMaterialsMsg = Loc.GetString("lathe-menu-no-materials-message");
-            var noItemRow = new Label();
-            noItemRow.Text = noMaterialsMsg;
-            noItemRow.Align = Label.AlignMode.Center;
-            MaterialsList.AddChild(noItemRow);
-        }
-    }
     /// <summary>
     /// Populates the list of all the recipes
     /// </summary>
@@ -147,7 +105,7 @@ public sealed partial class LatheMenu : DefaultWindow
                     sb.Append('\n');
 
                 var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, component.MaterialUseMultiplier);
-                var sheetVolume = SheetVolume(proto);
+                var sheetVolume = _materialStorage.GetSheetVolume(proto);
 
                 var unit = Loc.GetString(proto.Unit);
                 // rounded in locale not here
@@ -203,18 +161,5 @@ public sealed partial class LatheMenu : DefaultWindow
             ? _spriteSystem.GetPrototypeIcon(recipe.Result).Default
             : _spriteSystem.Frame0(recipe.Icon);
         NameLabel.Text = $"{recipe.Name}";
-    }
-
-    private int SheetVolume(MaterialPrototype material)
-    {
-        if (material.StackEntity == null)
-            return DEFAULT_SHEET_VOLUME;
-
-        var proto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
-
-        if (!proto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
-            return DEFAULT_SHEET_VOLUME;
-
-        return composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == material.ID).Value;
     }
 }

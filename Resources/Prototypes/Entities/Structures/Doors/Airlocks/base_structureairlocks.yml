@@ -64,6 +64,7 @@
   - type: Weldable
     time: 3
   - type: Airlock
+  - type: NavMapDoor
   - type: DoorBolt
   - type: Appearance
   - type: WiresVisuals
@@ -132,6 +133,8 @@
   - type: AccessReader
   - type: StaticPrice
     price: 150
+  - type: LightningTarget
+    priority: 1
   - type: Tag
     tags:
       - Airlock
@@ -139,4 +142,5 @@
   - type: PryUnpowered
   placement:
     mode: SnapgridCenter
+
 

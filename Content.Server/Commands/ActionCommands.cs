@@ -31,13 +31,13 @@ internal sealed class UpgradeActionCommand : IConsoleCommand
         var actionUpgrade = _entMan.EntitySysManager.GetEntitySystem<ActionUpgradeSystem>();
         var id = args[0];
 
-        if (!EntityUid.TryParse(id, out var uid))
+        if (!NetEntity.TryParse(id, out var nuid))
         {
             shell.WriteLine(Loc.GetString("upgradeaction-command-incorrect-entityuid-format"));
             return;
         }
 
-        if (!_entMan.EntityExists(uid))
+        if (!_entMan.TryGetEntity(nuid, out var uid))
         {
             shell.WriteLine(Loc.GetString("upgradeaction-command-entity-does-not-exist"));
             return;

@@ -101,7 +101,7 @@
       spawnGas: CarbonDioxide
 
 - type: entity
-  name: Plasma gas miner
+  name: plasma gas miner
   parent: GasMinerBase
   id: GasMinerPlasma
   placement:
@@ -111,7 +111,7 @@
       spawnGas: Plasma
 
 - type: entity
-  name: Tritium gas miner
+  name: tritium gas miner
   parent: GasMinerBase
   id: GasMinerTritium
   placement:
@@ -121,7 +121,7 @@
       spawnGas: Tritium
 
 - type: entity
-  name: Water Vapor gas miner
+  name: water vapor gas miner
   parent: GasMinerBase
   id: GasMinerWaterVapor
   placement:
@@ -131,7 +131,7 @@
       spawnGas: WaterVapor
 
 - type: entity
-  name: Ammonia gas miner
+  name: ammonia gas miner
   parent: GasMinerBase
   id: GasMinerAmmonia
   placement:
@@ -141,7 +141,7 @@
       spawnGas: Ammonia
 
 - type: entity
-  name: Nitrous Oxide gas miner
+  name: nitrous oxide gas miner
   parent: GasMinerBase
   id: GasMinerNitrousOxide
   placement:
