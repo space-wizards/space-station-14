@@ -8,6 +8,7 @@ namespace Content.Shared.Forensics
         public readonly List<string> Fingerprints = new();
         public readonly List<string> Fibers = new();
         public readonly List<string> DNAs = new();
+        public readonly List<string> Residues = new();
         public readonly string LastScannedName = string.Empty;
         public readonly TimeSpan PrintCooldown = TimeSpan.Zero;
         public readonly TimeSpan PrintReadyAt = TimeSpan.Zero;
@@ -16,6 +17,7 @@ namespace Content.Shared.Forensics
             List<string> fingerprints,
             List<string> fibers,
             List<string> dnas,
+            List<string> residues,
             string lastScannedName,
             TimeSpan printCooldown,
             TimeSpan printReadyAt)
@@ -23,6 +25,7 @@ namespace Content.Shared.Forensics
             Fingerprints = fingerprints;
             Fibers = fibers;
             DNAs = dnas;
+            Residues = residues;
             LastScannedName = lastScannedName;
             PrintCooldown = printCooldown;
             PrintReadyAt = printReadyAt;

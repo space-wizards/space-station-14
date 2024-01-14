@@ -52,7 +52,7 @@ public sealed partial class ArtifactAnalyzerComponent : Component
     public SoundSpecifier ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 
     #region Analysis Data
-    [ViewVariables]
+    [DataField]
     public EntityUid? LastAnalyzedArtifact;
 
     [ViewVariables]

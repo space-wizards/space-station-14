@@ -78,6 +78,14 @@
       - id: MobCorgi
 
 - type: entity
+  id: CrateNPCPuppyCorgi
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+    - id: MobCorgiPuppy
+
+- type: entity
   id: CrateNPCCow
   parent: CrateLivestock
   components:
@@ -117,6 +125,14 @@
   - type: StorageFill
     contents:
       - id: MonkeyCubeBox
+
+- type: entity
+  id: CrateNPCKoboldCube
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: KoboldCubeBox
 
 - type: entity
   id: CrateNPCMouse
@@ -203,3 +219,12 @@
   - type: StorageFill
     contents:
       - id: MobArmadillo
+
+- type: entity
+  id: CrateNPCMothroach
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobMothroach
+        amount: 4

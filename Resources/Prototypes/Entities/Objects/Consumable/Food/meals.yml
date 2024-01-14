@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_meal.yml
 # A bunch of different meals. This stuff doesn't come off their plates because
 # it's assembled on them. Or they just don't have plates.
 
@@ -501,7 +502,7 @@
 # Its queso! Everyone loves queso... Right?.
 
 - type: entity
-  name: Sashimi
+  name: sashimi
   parent: FoodMealBase
   id: FoodMealSashimi
   description: Its taste can only be described as "Exotic". The poisoning though? That's pretty common.
@@ -580,22 +581,6 @@
   - type: Tag
     tags:
     - Fruit
-
-- type: entity
-  name: soft taco
-  parent: FoodMealBase
-  id: FoodMealSoftTaco
-  description: Take a bite!
-  components:
-  - type: FlavorProfile
-    flavors:
-      - cheesy
-      - tomato
-      - meaty
-      - onion
-  - type: Sprite
-    state: softtaco
-
 
 - type: entity
   name: corn in butter

@@ -173,6 +173,9 @@ public sealed class AirlockSystem : SharedAirlockSystem
     {
         if (_power.IsPowered(uid))
             args.PryTimeModifier *= component.PoweredPryModifier;
+
+        if (_bolts.IsBolted(uid))
+            args.PryTimeModifier *= component.BoltedPryModifier;
     }
 
     private void OnBeforePry(EntityUid uid, AirlockComponent component, ref BeforePryEvent args)

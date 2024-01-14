@@ -67,4 +67,10 @@ public sealed partial class FoodComponent : Component
     /// </summary>
     [DataField]
     public float ForceFeedDelay = 3;
+
+    /// <summary>
+    /// For mobs that are food, requires killing them before eating.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool RequireDead = true;
 }

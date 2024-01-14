@@ -2,6 +2,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Damage.Components;
 using Content.Shared.Effects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -37,7 +38,8 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         if (speed < component.MinimumSpeed)
             return;
 
-        if ((_gameTiming.CurTime - component.LastHit).TotalSeconds < component.DamageCooldown)
+        if (component.LastHit != null
+            && (_gameTiming.CurTime - component.LastHit.Value).TotalSeconds < component.DamageCooldown)
             return;
 
         component.LastHit = _gameTiming.CurTime;
@@ -49,7 +51,8 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
 
         _damageable.TryChangeDamage(uid, component.Damage * damageScale);
 
-        _audio.PlayPvs(component.SoundHit, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
+        if (_gameTiming.IsFirstTimePredicted)
+            _audio.PlayPvs(component.SoundHit, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
         _color.RaiseEffect(Color.Red, new List<EntityUid>() { uid }, Filter.Pvs(uid, entityManager: EntityManager));
     }
 

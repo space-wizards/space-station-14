@@ -1,4 +1,5 @@
 # Empty drink containers; different from bottles in that these are intended to be spawned empty
+# When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_soda.yml
 - type: entity
   parent: BaseItem
   id: DrinkBaseCup
@@ -36,7 +37,6 @@
     damage:
       types:
         Blunt: 0
-  - type: ItemCooldown
 
 - type: entity
   parent: DrinkBaseCup
@@ -175,16 +175,32 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkHotCoco
-  name: Hot chocolate
+  name: hot chocolate
   description: A heated drink consisting melted chocolate and heated milk.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: HotCocoa
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coco.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnSolutionEmpty
+    solution: drink
 
 - type: entity
   parent: DrinkBaseCup
   id: DrinkHotCoffee
-  name: Coffee
+  name: coffee
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
   components:
   - type: SolutionContainerManager
@@ -209,7 +225,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkCafeLatte
-  name: Cafe latte
+  name: cafe latte
   description: A nice, strong and tasty beverage while you are reading.
   components:
   - type: SolutionContainerManager
@@ -227,7 +243,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkTeacup
-  name: Teacup
+  name: teacup
   description: A plain white porcelain teacup.
   components:
   - type: SolutionContainerManager
@@ -252,7 +268,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkGreenTea
-  name: Green tea
+  name: green tea
   description: A plain white porcelain teacup.
   components:
   - type: SolutionContainerManager
@@ -277,7 +293,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkLean
-  name: Grape Juice
+  name: grape Juice
   description: Damn, no fun allowed.
   components:
   - type: SolutionContainerManager
@@ -300,12 +316,6 @@
   name: water cup
   description: A paper water cup.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Water
-          Quantity: 20
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
@@ -317,5 +327,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: icon-
+  - type: Tag
+    tags:
+    - Trash
   - type: TrashOnSolutionEmpty
     solution: drink

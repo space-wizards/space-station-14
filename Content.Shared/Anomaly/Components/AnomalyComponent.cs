@@ -127,7 +127,7 @@ public sealed partial class AnomalyComponent : Component
     /// The sound plays when an anomaly goes supercritical
     /// </summary>
     [DataField]
-    public SoundSpecifier? SupercriticalSound = new SoundCollectionSpecifier("explosion");
+    public SoundSpecifier? SupercriticalSound = new SoundCollectionSpecifier("Explosion");
     #endregion
 
     /// <summary>

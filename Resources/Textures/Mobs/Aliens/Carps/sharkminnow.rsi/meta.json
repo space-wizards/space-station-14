@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "size": {
+    "x": 48,
+    "y": 48
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by Nimfar11 (Github) for Space Station 14",
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "mouth",
+      "directions": 4,
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "dead_mouth"
+    },
+    {
+      "name": "dead"
+    },
+    {
+      "name": "alive",
+      "directions": 4,
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    }
+  ]
+}

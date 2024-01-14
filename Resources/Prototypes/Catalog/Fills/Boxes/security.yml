@@ -50,7 +50,8 @@
   description: A box full of zipties.
   components:
   - type: Storage
-    maxTotalWeight: 20
+    grid:
+    - 0,0,4,3
     whitelist:
       components:
       - Handcuff
@@ -69,12 +70,13 @@
   id: BoxForensicPad
   description: A box of forensic pads.
   components:
-  - type: Storage
-    maxTotalWeight: 20
+  - type: Item
+    shape:
+    - 0,0,1,1
   - type: StorageFill
     contents:
-      - id: ForensicPad
-        amount: 10
+    - id: ForensicPad
+      amount: 9
   - type: Sprite
     layers:
       - state: box_security

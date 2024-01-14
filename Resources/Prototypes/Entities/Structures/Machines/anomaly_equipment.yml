@@ -2,7 +2,7 @@
   id: MachineAnomalyVessel
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: anomaly vessel
-  description: A container able to harness a scan of an anomaly and turn it into research points.
+  description: A container able to harness a scan of an anomaly and turn it into research data.
   components:
   - type: Sprite
     noRot: true
@@ -79,12 +79,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:DoActsBehavior
@@ -96,6 +90,32 @@
   - type: GuideHelp
     guides:
     - ScannersAndVessels
+
+- type: entity
+  id: MachineAnomalyVesselExperimental
+  parent: MachineAnomalyVessel
+  name: experimental anomaly vessel
+  description: An advanced anomaly vessel capable of greater research potential at the cost of increased volatility and low-level radioactive decay into the environment.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/Anomaly/adv_anomaly_vessel.rsi
+    offset: 0,0.5
+    drawdepth: Mobs
+  - type: SpriteFade
+  - type: AnomalyVessel
+    pointMultiplier: 2
+  - type: RadiationSource
+    intensity: 0.75
+    slope: 0.1
+    enabled: false
+  - type: Machine
+    board: AnomalyVesselExperimentalCircuitboard
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 50
+    intensitySlope: 7.5
+    totalIntensity: 500
+    canCreateVacuum: true
 
 - type: entity
   id: MachineAPE

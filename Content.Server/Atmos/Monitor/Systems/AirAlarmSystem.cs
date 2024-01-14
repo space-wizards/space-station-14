@@ -569,7 +569,7 @@ public sealed class AirAlarmSystem : EntitySystem
         _ui.TryCloseAll(uid, SharedAirAlarmInterfaceKey.Key);
     }
 
-    private void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, AtmosDeviceUpdateEvent args)
+    private void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, ref AtmosDeviceUpdateEvent args)
     {
         alarm.CurrentModeUpdater?.Update(uid);
     }

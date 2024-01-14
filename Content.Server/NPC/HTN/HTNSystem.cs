@@ -10,7 +10,6 @@ using Content.Shared.Administration;
 using Content.Shared.Mobs;
 using Content.Shared.NPC;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -38,8 +37,7 @@ public sealed class HTNSystem : EntitySystem
         SubscribeLocalEvent<HTNComponent, PlayerDetachedEvent>(_npc.OnPlayerNPCDetach);
         SubscribeLocalEvent<HTNComponent, ComponentShutdown>(OnHTNShutdown);
         SubscribeNetworkEvent<RequestHTNMessage>(OnHTNMessage);
-
-        _prototypeManager.PrototypesReloaded += OnPrototypeLoad;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeLoad);
         OnLoad();
     }
 
@@ -55,12 +53,6 @@ public sealed class HTNSystem : EntitySystem
             return;
 
         _subscribers.Remove(args.SenderSession);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _prototypeManager.PrototypesReloaded -= OnPrototypeLoad;
     }
 
     private void OnLoad()

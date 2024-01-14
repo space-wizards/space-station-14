@@ -16,6 +16,10 @@ namespace Content.Server.Kitchen.Components
         public string MachinePartCookTimeMultiplier = "Capacitor";
         [DataField("cookTimeScalingConstant")]
         public float CookTimeScalingConstant = 0.5f;
+        [DataField("baseHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+        public float BaseHeatMultiplier = 100;
+        [DataField("objectHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+        public float ObjectHeatMultiplier = 100;
 
         [DataField("failureResult", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string BadRecipeEntityId = "FoodBadRecipe";
@@ -30,7 +34,8 @@ namespace Content.Server.Kitchen.Components
         [DataField("ItemBreakSound")]
         public SoundSpecifier ItemBreakSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
-        public IPlayingAudioStream? PlayingStream { get; set; }
+        public EntityUid? PlayingStream;
+
         [DataField("loopingSound")]
         public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
         #endregion
@@ -65,6 +70,9 @@ namespace Content.Server.Kitchen.Components
         public int CurrentCookTimeButtonIndex;
 
         public Container Storage = default!;
+
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public int Capacity = 10;
     }
 
     public sealed class BeingMicrowavedEvent : HandledEntityEventArgs

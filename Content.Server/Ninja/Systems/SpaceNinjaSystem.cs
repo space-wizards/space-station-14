@@ -1,7 +1,5 @@
-using Content.Server.Administration.Commands;
 using Content.Server.Communications;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -15,13 +13,10 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Doors.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Objectives.Components;
@@ -41,13 +36,10 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly GenericAntagSystem _genericAntag = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly RoleSystem _role = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly StealthClothingSystem _stealthClothing = default!;
 
@@ -167,6 +159,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
             PrototypeId = "SpaceNinja"
         };
         _role.MindAddRole(mindId, role, mind);
+        _role.MindPlaySound(mindId, config.GreetingSound, mind);
 
         // choose spider charge detonation point
         var warps = new List<EntityUid>();
@@ -179,9 +172,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         if (warps.Count > 0)
             role.SpiderChargeTarget = _random.Pick(warps);
 
-        var session = mind.Session;
-        _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
-        _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
+        _chatMan.DispatchServerMessage(mind.Session, Loc.GetString("ninja-role-greeting"));
     }
 
     // TODO: PowerCellDraw, modify when cloak enabled

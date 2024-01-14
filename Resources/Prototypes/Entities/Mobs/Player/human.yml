@@ -8,7 +8,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanSyndicateAgent
-  name: Syndicate Agent
+  name: syndicate agent
   suffix: Human
   components:
     - type: Loadout
@@ -74,7 +74,7 @@
     rule: Ninja
   - type: AutoImplant
     implants:
-    - MicroBombImplant
+    - DeathAcidifierImplant
   - type: RandomMetadata
     nameSegments:
     - names_ninja_title

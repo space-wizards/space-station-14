@@ -1,14 +1,22 @@
-using Pidgin;
 using Robust.Shared.Utility;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+using Robust.Shared.Threading;
 using static Content.Server.Power.Pow3r.PowerState;
 
 namespace Content.Server.Power.Pow3r
 {
     public sealed class BatteryRampPegSolver : IPowerSolver
     {
+        private UpdateNetworkJob _networkJob;
+
+        public BatteryRampPegSolver()
+        {
+            _networkJob = new()
+            {
+                Solver = this,
+            };
+        }
+
         private sealed class HeightComparer : Comparer<Network>
         {
             public static HeightComparer Instance { get; } = new();
@@ -21,15 +29,16 @@ namespace Content.Server.Power.Pow3r
             }
         }
 
-        public void Tick(float frameTime, PowerState state, int parallel)
+        public void Tick(float frameTime, PowerState state, IParallelManager parallel)
         {
             ClearLoadsAndSupplies(state);
 
             state.GroupedNets ??= GroupByNetworkDepth(state);
             DebugTools.Assert(state.GroupedNets.Select(x => x.Count).Sum() == state.Networks.Count);
+            _networkJob.State = state;
+            _networkJob.FrameTime = frameTime;
 
             // Each network height layer can be run in parallel without issues.
-            var opts = new ParallelOptions { MaxDegreeOfParallelism = parallel };
             foreach (var group in state.GroupedNets)
             {
                 // Note that many net-layers only have a handful of networks.
@@ -44,7 +53,8 @@ namespace Content.Server.Power.Pow3r
                 // TODO make GroupByNetworkDepth evaluate the TOTAL size of each layer (i.e. loads + chargers +
                 // suppliers + discharger) Then decide based on total layer size whether its worth parallelizing that
                 // layer?
-                Parallel.ForEach(group, opts, net => UpdateNetwork(net, state, frameTime));
+                _networkJob.Networks = group;
+                parallel.ProcessNow(_networkJob, group.Count);
             }
 
             ClearBatteries(state);
@@ -344,5 +354,24 @@ namespace Content.Server.Power.Pow3r
             else
                 groupedNetworks[network.Height].Add(network);
         }
+
+        #region Jobs
+
+        private record struct UpdateNetworkJob : IParallelRobustJob
+        {
+            public int BatchSize => 4;
+
+            public BatteryRampPegSolver Solver;
+            public PowerState State;
+            public float FrameTime;
+            public List<Network> Networks;
+
+            public void Execute(int index)
+            {
+                Solver.UpdateNetwork(Networks[index], State, FrameTime);
+            }
+        }
+
+        #endregion
     }
 }

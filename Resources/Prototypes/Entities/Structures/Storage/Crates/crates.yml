@@ -558,3 +558,14 @@
     sprite: Structures/Storage/Crates/trashcart_jani.rsi
   - type: AccessReader
     access: [["Janitor"]]
+
+- type: entity
+  parent: CrateBaseWeldable
+  id: InvisibleCrate
+  suffix: Stealth
+  components:
+  - type: Stealth
+    hadOutline: true
+  - type: StealthOnMove
+    passiveVisibilityRate: -0.10
+    movementVisibilityRate: 0.10

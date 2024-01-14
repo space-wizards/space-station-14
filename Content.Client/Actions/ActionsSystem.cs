@@ -6,6 +6,7 @@ using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -86,6 +87,8 @@ namespace Content.Client.Actions
             component.Cooldown = state.Cooldown;
             component.UseDelay = state.UseDelay;
             component.Charges = state.Charges;
+            component.MaxCharges = state.MaxCharges;
+            component.RenewCharges = state.RenewCharges;
             component.Container = EnsureEntity<T>(state.Container, uid);
             component.EntityIcon = EnsureEntity<T>(state.EntityIcon, uid);
             component.CheckCanInteract = state.CheckCanInteract;

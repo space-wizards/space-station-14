@@ -1,10 +1,13 @@
-﻿- type: reagent
+- type: reagent
   id: Blood
   name: reagent-name-blood
   group: Biological
   desc: reagent-desc-blood
   flavor: metallic
   color: "#800000"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bloodglass.rsi
+    state: icon
   recognizable: true
   physicalDesc: reagent-physical-desc-ferrous
   slippery: false
@@ -22,9 +25,31 @@
         - !type:AdjustReagent
           reagent: UncookedAnimalProteins
           amount: 0.5
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Brute: -3
+            Burn: -1.25
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: 0.5
+
+- type: reagent
+  parent: Blood
+  id: InsectBlood
+  name: reagent-name-insect-blood
+  group: Biological
+  desc: reagent-desc-insect-blood
+  flavor: horrible
+  color: "#808A51"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-slimy
+  slippery: false
 
 - type: reagent
   id: Slime

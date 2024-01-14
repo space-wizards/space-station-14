@@ -16,8 +16,9 @@
   - type: Item
     size: Ginormous
   - type: Storage
-    maxSlots: 10
     maxItemSize: Normal
+    grid:
+    - 0,0,9,3
     quickInsert: true
     areaInsert: true
     whitelist:

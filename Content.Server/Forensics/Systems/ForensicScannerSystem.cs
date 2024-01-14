@@ -8,6 +8,7 @@ using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -50,6 +51,7 @@ namespace Content.Server.Forensics
                 component.Fingerprints,
                 component.Fibers,
                 component.DNAs,
+                component.Residues,
                 component.LastScannedName,
                 component.PrintCooldown,
                 component.PrintReadyAt);
@@ -73,6 +75,7 @@ namespace Content.Server.Forensics
                     scanner.Fingerprints = new();
                     scanner.Fibers = new();
                     scanner.DNAs = new();
+                    scanner.Residues = new();
                 }
 
                 else
@@ -80,6 +83,7 @@ namespace Content.Server.Forensics
                     scanner.Fingerprints = forensics.Fingerprints.ToList();
                     scanner.Fibers = forensics.Fibers.ToList();
                     scanner.DNAs = forensics.DNAs.ToList();
+                    scanner.Residues = forensics.Residues.ToList();
                 }
 
                 scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
@@ -220,6 +224,12 @@ namespace Content.Server.Forensics
             foreach (var dna in component.DNAs)
             {
                 text.AppendLine(dna);
+            }
+            text.AppendLine();
+            text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
+            foreach (var residue in component.Residues)
+            {
+                text.AppendLine(residue);
             }
 
             _paperSystem.SetContent(printed, text.ToString());

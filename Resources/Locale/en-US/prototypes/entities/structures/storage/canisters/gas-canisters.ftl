@@ -34,8 +34,8 @@ ent-TritiumCanister = Tritium canister
 ent-WaterVaporCanister = Water vapor canister
     .desc = A canister that can contain any type of gas. This one is supposed to contain water vapor. It can be attached to connector ports using a wrench.
 
-ent-MiasmaCanister = Miasma canister
-    .desc = A canister that can contain any type of gas. This one is supposed to contain miasma. It can be attached to connector ports using a wrench.
+ent-AmmoniaCanister = Ammonia canister
+    .desc = A canister that can contain any type of gas. This one is supposed to contain ammonia. It can be attached to connector ports using a wrench.
 
 ent-NitrousOxideCanister = Nitrous oxide canister
     .desc = A canister that can contain any type of gas. This one is supposed to contain nitrous oxide. It can be attached to connector ports using a wrench.
@@ -70,7 +70,7 @@ ent-TritiumCanisterBroken = { ent-GasCanisterBrokenBase }
 ent-WaterVaporCanisterBroken = { ent-GasCanisterBrokenBase }
     .desc = { ent-GasCanisterBrokenBase.desc }
 
-ent-MiasmaCanisterBroken = { ent-GasCanisterBrokenBase }
+ent-AmmoniaCanisterBroken = { ent-GasCanisterBrokenBase }
     .desc = { ent-GasCanisterBrokenBase.desc }
 
 ent-NitrousOxideCanisterBroken = { ent-GasCanisterBrokenBase }

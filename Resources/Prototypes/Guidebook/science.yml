@@ -45,6 +45,8 @@
   id: Robotics
   name: guide-entry-robotics
   text: "/ServerInfo/Guidebook/Science/Robotics.xml"
+  children:
+  - Cyborgs
 
 - type: guideEntry
   id: ArtifactReports
@@ -60,3 +62,8 @@
   id: MachineUpgrading
   name: guide-entry-machine-upgrading
   text: "/ServerInfo/Guidebook/Science/MachineUpgrading.xml"
+
+- type: guideEntry
+  id: Cyborgs
+  name: guide-entry-cyborgs
+  text: "/ServerInfo/Guidebook/Science/Cyborgs.xml"

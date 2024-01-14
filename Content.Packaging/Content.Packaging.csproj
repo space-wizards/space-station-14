@@ -3,11 +3,9 @@
     <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ServerGarbageCollection>True</ServerGarbageCollection>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="NVorbis" Version="0.10.1" PrivateAssets="compile" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RobustToolbox\Robust.Packaging\Robust.Packaging.csproj" />
   </ItemGroup>

@@ -82,3 +82,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from /tg/station"
   source: "https://github.com/tgstation/tgstation/commit/c61c452d78425d89920b41ed5f95fd190e733a3c"
+  
+- files: ["scissors.ogg"]
+  license: "CC0-1.0"
+  copyright: "User Hanbaal on freesound.org. Converted to ogg by TheShuEd"
+  source: "https://freesound.org/people/Hanbaal/sounds/178669/"

@@ -230,6 +230,11 @@
   description: flavor-complex-egg
 
 - type: flavor
+  id: raw-egg
+  flavorType: Complex
+  description: flavor-complex-raw-egg
+
+- type: flavor
   id: bacon
   flavorType: Complex
   description: flavor-complex-bacon
@@ -303,6 +308,11 @@
   id: peas
   flavorType: Complex
   description: flavor-complex-peas
+
+- type: flavor
+  id: lemoon
+  flavorType: Complex
+  description: flavor-complex-lemoon
 
 - type: flavor
   id: pineapple
@@ -523,6 +533,11 @@
   id: water
   flavorType: Complex
   description: flavor-complex-water
+
+- type: flavor
+  id: mopwata
+  flavorType: Complex
+  description: flavor-complex-mopwata
 
 - type: flavor
   id: beer
@@ -858,3 +873,13 @@
   id: punishment
   flavorType: Complex
   description: flavor-complex-punishment
+
+- type: flavor
+  id: holy
+  flavorType: Base
+  description: flavor-base-holy
+
+- type: flavor
+  id: horrible
+  flavorType: Base
+  description: flavor-base-horrible

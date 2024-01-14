@@ -32,6 +32,9 @@
   id: Balloon
 
 - type: Tag
+  id: BananaPeel
+
+- type: Tag
   id: BaseballBat
 
 - type: Tag
@@ -164,6 +167,12 @@
   id: BorgModuleService
 
 - type: Tag
+  id: BorgModuleSyndicate
+
+- type: Tag
+  id: BorgModuleSyndicateAssault
+
+- type: Tag
   id: BorgServiceHead
 
 - type: Tag
@@ -197,6 +206,9 @@
   id: BoxHug
 
 - type: Tag
+  id: Burnt
+
+- type: Tag
   id: BrassInstrument
 
 - type: Tag
@@ -213,6 +225,9 @@
 
 - type: Tag
   id: BulletFoam
+
+- type: Tag
+  id: BypassDropChecks
 
 - type: Tag
   id: BypassInteractionRangeChecks
@@ -234,7 +249,7 @@
 
 - type: Tag
   id: CanPilot
-  
+
 - type: Tag
   id: CannonRestrict
 
@@ -285,6 +300,9 @@
   id: Catwalk
 
 - type: Tag
+  id: CentrifugeCompatible
+
+- type: Tag
   id: Chicken
 
 - type: Tag
@@ -295,6 +313,9 @@
 
 - type: Tag
   id: CigPack
+
+- type: Tag
+  id: Cleaver
 
 - type: Tag
   id: ClothMade
@@ -310,6 +331,9 @@
 
 - type: Tag
   id: ClownShoes
+
+- type: Tag
+  id: ClownSuit
 
 - type: Tag
   id: CluwneHorn
@@ -360,6 +384,24 @@
   id: Cryobeaker
 
 - type: Tag
+  id: CrystalCyan
+
+- type: Tag
+  id: CrystalBlue
+
+- type: Tag
+  id: CrystalPink
+
+- type: Tag
+  id: CrystalGreen
+
+- type: Tag
+  id: CrystalOrange
+
+- type: Tag
+  id: CrystalRed
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -373,6 +415,9 @@
 
 - type: Tag
   id: CubanCarp
+
+- type: Tag
+  id: DeathAcidifier
 
 - type: Tag
   id: Debug
@@ -432,6 +477,9 @@
   id: EmitterBolt
 
 - type: Tag
+  id: Enzyme
+
+- type: Tag
   id: ExplosivePassable
 
 - type: Tag
@@ -448,9 +496,6 @@
 
 - type: Tag
   id: Flesh
-
-- type: Tag
-  id: WhitelistChameleon
 
 - type: Tag
   id: FirelockElectronics
@@ -511,9 +556,18 @@
 
 - type: Tag
   id: Goat
-
+  
+- type: Tag
+  id: GPS
+  
 - type: Tag
   id: Grenade
+
+- type: Tag
+  id: HudMedical
+
+- type: Tag
+  id: HudSecurity
 
 - type: Tag
   id: GuideEmbeded
@@ -606,6 +660,9 @@
   id: Hotsauce
 
 - type: Tag
+  id: Ice
+
+- type: Tag
   id: Igniter
 
 - type: Tag #Drop this innate tool instead of deleting it.
@@ -639,6 +696,9 @@
   id: KeyedInstrument
 
 - type: Tag
+  id: KitchenKnife
+
+- type: Tag
   id: Knife
 
 - type: Tag
@@ -646,6 +706,9 @@
 
 - type: Tag
   id: Lemon
+
+- type: Tag
+  id: LightReplacer
 
 - type: Tag
   id: Lime
@@ -737,7 +800,13 @@
   id: MicrowaveSelfUnsafe
 
 - type: Tag
+  id: MindShield
+
+- type: Tag
   id: MindTransferTarget
+
+- type: Tag
+  id: ModularReceiver
 
 - type: Tag
   id: MonkeyCube
@@ -757,7 +826,6 @@
 - type: Tag
   id: Multitool
 
-
 - type: Tag
   id: NoBlockAnchoring
 
@@ -774,6 +842,9 @@
   id: Ore
 
 - type: Tag
+  id: Packet
+
+- type: Tag
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
@@ -781,6 +852,12 @@
 
 - type: Tag
   id: Pancake
+
+- type: Tag
+  id: Pen
+
+- type: Tag
+  id: PepperShaker
 
 - type: Tag
   id: PercussionInstrument
@@ -849,6 +926,9 @@
   id: PotatoBattery
 
 - type: Tag
+  id: PowerCell
+
+- type: Tag
   id: PowerCellSmall
 
 - type: Tag
@@ -859,6 +939,9 @@
 
 - type: Tag
   id: ProximitySensor
+
+- type: Tag
+  id: QuantumSpinInverter
 
 - type: Tag
   id: Radio
@@ -875,6 +958,9 @@
 
 - type: Tag
   id: ReinforcedGlassShard
+
+- type: Tag
+  id: RifleStock
 
 - type: Tag
   id: RipleyCentralControlModule
@@ -901,6 +987,12 @@
   id: RollingPaper
 
 - type: Tag
+  id: RollingPin
+
+- type: Tag
+  id: SaltShaker
+
+- type: Tag
   id: SalvageExperiment
 
 - type: Tag
@@ -919,6 +1011,9 @@
   id: ShellShotgun
 
 - type: Tag
+  id: PelletShotgunFlare
+
+- type: Tag
   id: Shiv
 
 - type: Tag
@@ -934,6 +1029,9 @@
   id: SkeletonMotorcycleKeys
 
 - type: Tag
+  id: Skewer
+
+- type: Tag
   id: SmallAIChip
 
 - type: Tag
@@ -944,9 +1042,6 @@
 
 - type: Tag
   id: Soap
-
-- type: Tag
-  id: SolarAssemblyPart
 
 - type: Tag
   id: SolarTrackerElectronics
@@ -1054,9 +1149,6 @@
   id: Wall
 
 - type: Tag
-  id: WetFloorSign
-
-- type: Tag
   id: WallmountGeneratorAPUElectronics
 
 - type: Tag
@@ -1067,6 +1159,15 @@
 
 - type: Tag
   id: WeaponPistolCHIMPUpgradeKit
+
+- type: Tag
+  id: WeaponShotgunKammerer
+
+- type: Tag
+  id: WetFloorSign
+
+- type: Tag
+  id: WhitelistChameleon
 
 - type: Tag
   id: Window
@@ -1096,10 +1197,6 @@
   id: Write
 
 - type: Tag
-  id: RifleStock
+  id: WriteIgnoreStamps
 
-- type: Tag
-  id: ModularReceiver
-
-- type: Tag
-  id: MindShield
+# PUT YOUR TAGS IN ALPHABETICAL ORDER

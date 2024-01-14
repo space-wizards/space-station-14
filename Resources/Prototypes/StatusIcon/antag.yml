@@ -20,6 +20,14 @@
     state: HeadRevolutionary
 
 - type: statusIcon
+  id: MindShieldIcon
+  priority: 2
+  locationPreference: Right
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: MindShield
+    
+- type: statusIcon
   id: SyndicateFaction
   priority: 0
   locationPreference: Left 

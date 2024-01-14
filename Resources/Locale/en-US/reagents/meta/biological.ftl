@@ -1,6 +1,9 @@
 reagent-name-blood = blood
 reagent-desc-blood = I hope this is ketchup.
 
+reagent-name-insect-blood = insect blood
+reagent-desc-insect-blood = Okay, this is really gross. It almost looks.. alive?
+
 reagent-name-slime = slime
 reagent-desc-slime = You thought this was gradient blood at first, but you were mistaken.
 
@@ -17,4 +20,4 @@ reagent-name-fat = fat
 reagent-desc-fat = No matter how it was obtained, its application is important.
 
 reagent-name-vomit = vomit
-reagent-desc-vomit = You can see a few chunks of someones last meal in it.
+reagent-desc-vomit = You can see a few chunks of someone's last meal in it.
