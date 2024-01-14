@@ -13,7 +13,6 @@
               amount: 10
               doAfter: 3
 
-
     - node: frame1
       entity: BlastDoorFrame
       actions:
@@ -52,6 +51,7 @@
               icon:
                 sprite: "Objects/Misc/module.rsi"
                 state: "door_electronics"
+              doAfter: 2
         - to: frame1
           completed:
             - !type:SpawnPrototype
@@ -69,6 +69,8 @@
           conditions:
             - !type:EntityAnchored {}
           steps:
+            - tool: Prying
+              doAfter: 3
             - tool: Screwing
               doAfter: 2
 
@@ -76,18 +78,17 @@
       edges:
         - to: BlastDoor
           conditions:
-            - !type:EntityAnchored
-              anchored: true
+            - !type:EntityAnchored {}
           steps:
             - tool: Anchoring
               doAfter: 2
         - to: frame2
+          conditions:
+            - !type:EntityAnchored {}
           completed:
             - !type:EmptyAllContainers
               pickup: true
               emptyAtUser: true
-          conditions:
-            - !type:EntityAnchored {}
           steps:
             - tool: Screwing
               doAfter: 4
