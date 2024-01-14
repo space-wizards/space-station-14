@@ -33,7 +33,7 @@ criminal-records-console-detained = {$name} has been detained {$hasReason ->
     [other] by {$officer} with reason: {$reason}
 }
 
-criminal-records-console-released = {$name} has been released from the detention {$hasReason ->
+criminal-records-console-released = {$name} has been released from detention {$hasReason ->
     *[zero] by {$officer}
     [other] by {$officer} with reason: {$reason}
 }

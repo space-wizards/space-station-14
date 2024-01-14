@@ -1,0 +1,27 @@
+﻿<Document>
+# Criminal Records
+How do you keep track of all the syndies and selfantags turning the station to shit? Criminal records!
+
+Criminal records are accessible in a console in every station's security department.
+
+<Box>
+<GuideEntityEmbed Entity="ComputerCriminalRecords"/>
+</Box>
+
+Select a crewmember's record on the left then you can get to business, if you have security access of course.
+
+There are many things you can do:
+
+- Add a warrant for someone's arrest. Give a reason for all officers on the radio to hear, then selected wanted.
+   They will get set to wanted status which will show up on sechuds. (not currently implemented)
+
+- Once someone has been arrested, click arrest so everyone knows they no longer need to be captured.
+
+- After they've done their time, release them so nobody thinks they are an escaped convict.
+
+- Add their crime and sentence to their history tab.
+   It will automatically insert the shift's time so you don't need to!
+
+Now you can be the desk jockey you've always wanted to be.
+
+</Document>
