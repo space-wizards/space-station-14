@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Bed.Cryostorage;
@@ -14,7 +15,7 @@ public sealed partial class CryostorageContainedComponent : Component
     /// Whether or not this entity is being stored on another map or is just chilling in a container
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool StoredOnMap;
+    public bool StoredWhileDisconnected;
 
     /// <summary>
     /// The time at which the cryostorage grace period ends.
@@ -27,4 +28,7 @@ public sealed partial class CryostorageContainedComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid Cryostorage;
+
+    [DataField]
+    public NetUserId? UserId;
 }

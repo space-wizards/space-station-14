@@ -12,7 +12,9 @@ public sealed partial class DragInsertContainerComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string ContainerId;
 
-    // todo: doafter support
-    // [DataField, ViewVariables(VVAccess.ReadWrite)]
-    // public TimeSpan InsertDelay = TimeSpan.Zero;
+    /// <summary>
+    /// If true, there will also be verbs for inserting / removing objects from this container.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool UseVerbs = true;
 }

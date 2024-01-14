@@ -81,7 +81,5 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
 
         Del(args.Station);
         args.SpawnResult = null;
-
-        //todo implement an event so that people who spawn into cryogenic storage can't get removed before exiting.
     }
 }

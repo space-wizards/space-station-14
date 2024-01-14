@@ -48,28 +48,19 @@ public abstract class SharedCryostorageSystem : EntitySystem
 
     private void OnCvarChanged(bool value)
     {
-        if (CryoSleepRejoiningEnabled == value)
-            return;
-
         CryoSleepRejoiningEnabled = value;
-
-        if (value)
-        {
-            EnsurePausedMap();
-        }
-        else
-        {
-            DeletePausedMap();
-        }
     }
 
-    private void OnInsertedContainer(Entity<CryostorageComponent> ent, ref EntInsertedIntoContainerMessage args)
+    protected virtual void OnInsertedContainer(Entity<CryostorageComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         var (_, comp) = ent;
         if (args.Container.ID != comp.ContainerId)
             return;
 
         _appearance.SetData(ent, CryostorageVisuals.Full, true);
+        if (!Timing.IsFirstTimePredicted)
+            return;
+
         var containedComp = EnsureComp<CryostorageContainedComponent>(args.Entity);
         containedComp.GracePeriodEndTime = Timing.CurTime + comp.GracePeriod;
         containedComp.Cryostorage = ent;
@@ -107,14 +98,15 @@ public abstract class SharedCryostorageSystem : EntitySystem
     private void OnRemovedContained(Entity<CryostorageContainedComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
         var (_, comp) = ent;
-        if (!comp.StoredOnMap)
+        if (!comp.StoredWhileDisconnected)
             RemCompDeferred(ent, comp);
     }
 
     private void OnUnpaused(Entity<CryostorageContainedComponent> ent, ref EntityUnpausedEvent args)
     {
-        if (ent.Comp.GracePeriodEndTime != null)
-            ent.Comp.GracePeriodEndTime += args.PausedTime;
+        var comp = ent.Comp;
+        if (comp.GracePeriodEndTime != null)
+            comp.GracePeriodEndTime = comp.GracePeriodEndTime.Value + args.PausedTime;
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent _)
@@ -131,7 +123,7 @@ public abstract class SharedCryostorageSystem : EntitySystem
         PausedMap = null;
     }
 
-    private void EnsurePausedMap()
+    protected void EnsurePausedMap()
     {
         if (PausedMap != null && Exists(PausedMap))
             return;
