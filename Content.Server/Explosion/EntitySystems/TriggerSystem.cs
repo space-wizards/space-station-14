@@ -78,13 +78,13 @@ namespace Content.Server.Explosion.EntitySystems
             InitializeVoice();
             InitializeMobstate();
 
+            SubscribeLocalEvent<TriggerOnSpawnComponent, MapInitEvent>(OnSpawnTriggered);
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
             SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
             SubscribeLocalEvent<TriggerWhenEmptyComponent, OnEmptyGunShotEvent>(OnEmptyTriggered);
-            SubscribeLocalEvent<TriggerOnSpawnComponent, ComponentInit>(OnSpawnTriggered);
 
             SubscribeLocalEvent<SpawnOnTriggerComponent, TriggerEvent>(OnSpawnTrigger);
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
@@ -194,6 +194,11 @@ namespace Content.Server.Explosion.EntitySystems
                 Trigger(uid);
         }
 
+        private void OnSpawnTriggered(EntityUid uid, TriggerOnSpawnComponent component, MapInitEvent args)
+        {
+            Trigger(uid);
+        }
+
         private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)
         {
             Trigger(uid, args.User);
@@ -218,11 +223,6 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnEmptyTriggered(EntityUid uid, TriggerWhenEmptyComponent component, ref OnEmptyGunShotEvent args)
         {
             Trigger(uid, args.EmptyGun);
-        }
-
-        private void OnSpawnTriggered(EntityUid uid, TriggerOnSpawnComponent component, ComponentInit args)
-        {
-            Trigger(uid);
         }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
