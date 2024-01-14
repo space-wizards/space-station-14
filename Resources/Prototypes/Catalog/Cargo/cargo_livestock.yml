@@ -221,7 +221,7 @@
 - type: cargoProduct
   id: LivestockArmadillo
   icon:
-    sprite: Mobs/Animals/kangaroo.rsi
+    sprite: Mobs/Animals/armadillo.rsi
     state: kangaroo
   product: CrateNPCArmadillo
   cost: 1100
