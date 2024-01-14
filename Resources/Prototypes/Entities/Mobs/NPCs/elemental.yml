@@ -508,9 +508,6 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#D2FFFA"
-  - type: MeleeChemicalInjector
-    solution: bloodstream
-    transferAmount: 5
 
 - type: entity
   id: ReagentSlimeRobustHarvest
