@@ -172,7 +172,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (!TryComp<CanPenetrateComponent>(uid, out var damageAfterCollide))
             return;
 
-        //Delete the projectile if it hits an entity with a CollisionLayer bigger higher than it's PenetrationLayer.
+        //Delete the projectile if it hits an entity with a CollisionLayer that has a higher value than it's PenetrationLayer.
         //This allows a projectile to only penetrate a specific set of entities.
         if (damageAfterCollide.PenetrationLayer != null)
         {
@@ -197,7 +197,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             component.Damage *= damageAfterCollide.DamageModifier.Value;
 
         //Overrides the original DeleteOnCollide if the projectile passes all penetration checks.
-        //This is to prevent having to set DeleteOnCollide to false every time you want to make a projectile penetrate.
+        //This is to prevent having to set DeleteOnCollide to false on every prototype
+        //you want to give the ability to penetrate entities.
         if(component.DeleteOnCollide)
             component.DeleteOnCollide = false;
     }
