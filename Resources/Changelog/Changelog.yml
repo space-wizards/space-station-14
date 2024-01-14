@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Refrigerators are now nearly immune to explosions and even nukes.
-    type: Tweak
-  id: 5205
-  time: '2023-11-27T21:24:43.0000000+00:00'
 - author: lzk228
   changes:
   - message: Moth accent added! Buzzz!!!
@@ -3731,3 +3725,10 @@
   id: 5705
   time: '2024-01-14T05:08:43.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23777
+- author: Ilya246
+  changes:
+  - message: Nuclear operatives may now buy syndicate bombs without waiting 30 minutes.
+    type: Tweak
+  id: 5706
+  time: '2024-01-14T05:25:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24022
