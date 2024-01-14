@@ -615,28 +615,12 @@
     rootTask:
       task: SimpleHostileCompound
   - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 130
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
   - type: DamageStateVisuals
     states:
       Alive:
         Base: shiva
       Dead:
         Base: shiva_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatSpider
-      amount: 2
-  - type: CombatMode
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -650,11 +634,6 @@
       types:
         Piercing: 8
         Poison: 8
-  - type: ReplacementAccent
-    accent: xeno
-  - type: NoSlip
-  - type: Spider
-  - type: IgnoreSpiderWeb
   - type: Grammar
     attributes:
       proper: true
@@ -663,6 +642,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+    - DoorBumpOpener
+    - FootstepSound
   - type: StealTarget
     stealGroup: AnimalShiva
 

@@ -1,7 +1,44 @@
 ﻿- type: entity
+  id: BasePlasticExplosive
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Item
+    size: Small
+  - type: Sticky
+    stickDelay: 5
+    unstickDelay: 5
+    stickPopupStart: comp-sticky-start-stick-bomb
+    stickPopupSuccess: comp-sticky-success-stick-bomb
+    unstickPopupStart: comp-sticky-start-unstick-bomb
+    unstickPopupSuccess: comp-sticky-success-unstick-bomb
+    blacklist: # can't stick it to other items
+      components:
+      - Item
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+  - type: StickyVisualizer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        base:
+          Primed: { state: primed }
+          Unprimed: { state: complete }
+
+- type: entity
   name: composition C-4
   description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
-  parent: BaseItem
+  parent: BasePlasticExplosive
   id: C4
   components:
   - type: Sprite
@@ -10,8 +47,6 @@
     layers:
     - state: icon
       map: ["base"]
-  - type: Item
-    size: Small
   - type: OnUseTimerTrigger
     delay: 10
     delayOptions: [10, 30, 60, 120, 300]
@@ -23,16 +58,6 @@
   - type: DeviceLinkSink
     ports:
       - Trigger
-  - type: Sticky
-    stickDelay: 5
-    unstickDelay: 5
-    stickPopupStart: comp-sticky-start-stick-bomb
-    stickPopupSuccess: comp-sticky-success-stick-bomb
-    unstickPopupStart: comp-sticky-start-unstick-bomb
-    unstickPopupSuccess: comp-sticky-success-unstick-bomb
-    blacklist: # can't stick it to other items
-      components:
-        - Item
   - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
     explosionType: DemolitionCharge
     totalIntensity: 60
@@ -40,19 +65,6 @@
     maxIntensity: 30
     canCreateVacuum: false
   - type: ExplodeOnTrigger
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 50
-        behaviors:
-          - !type:DoActsBehavior
-            acts: ["Destruction"]
-          - !type:ExplodeBehavior
-  - type: StickyVisualizer
-  - type: Appearance
   - type: HolidayVisuals
     holidays:
       festive:
@@ -60,9 +72,37 @@
   - type: HolidayRsiSwap
     sprite:
       festive: Objects/Weapons/Bombs/c4gift.rsi
-  - type: GenericVisualizer
-    visuals:
-      enum.Trigger.TriggerVisuals.VisualState:
-        base:
-          Primed: { state: primed }
-          Unprimed: { state: complete }
+
+- type: entity
+  name: seismic charge
+  description: Concussion based explosive designed to destroy large amounts of rock.
+  parent: BasePlasticExplosive
+  id: SeismicCharge
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Bombs/seismic.rsi
+    state: icon
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: OnUseTimerTrigger
+    delay: 5
+    delayOptions: [5, 10, 15, 20]
+    initialBeepDelay: 0
+    beepSound:
+      path: /Audio/Effects/Cargo/buzz_two.ogg
+      params:
+        volume: -3
+    startOnStick: false
+    canToggleStartOnStick: true
+  - type: TriggerOnSignal
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: Explosive
+    explosionType: Cryo
+    totalIntensity: 120
+    intensitySlope: 2
+    maxIntensity: 30
+    canCreateVacuum: false
+  - type: ExplodeOnTrigger

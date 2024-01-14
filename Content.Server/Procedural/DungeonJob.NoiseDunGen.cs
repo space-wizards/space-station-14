@@ -66,7 +66,7 @@ public sealed partial class DungeonJob
             visited.Add(seedTile);
             frontier.Enqueue(seedTile);
             area = area.UnionTile(seedTile);
-            Box2i roomArea = new Box2i(seedTile, seedTile + Vector2i.One);
+            var roomArea = new Box2i(seedTile, seedTile + Vector2i.One);
 
             // Time to floodfill again
             while (frontier.TryDequeue(out var node) && tileCount < tileCap)

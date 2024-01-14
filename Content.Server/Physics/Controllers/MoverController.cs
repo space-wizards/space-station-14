@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Movement.Components;
@@ -9,6 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using DroneConsoleComponent = Content.Server.Shuttles.DroneConsoleComponent;
+using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -506,7 +508,7 @@ namespace Content.Server.Physics.Controllers
                     var maxWishVelocity = ObtainMaxVel(totalForce, shuttle);
                     var properAccel = (maxWishVelocity - localVel) / forceMul;
 
-                    var finalForce = Vector2.Dot(totalForce, properAccel.Normalized()) * properAccel.Normalized();
+                    var finalForce = Vector2Dot(totalForce, properAccel.Normalized()) * properAccel.Normalized();
 
                     if (localVel.Length() >= maxVelocity.Length() && Vector2.Dot(totalForce, localVel) > 0f)
                         finalForce = Vector2.Zero; // burn would be faster if used as such
@@ -514,7 +516,7 @@ namespace Content.Server.Physics.Controllers
                     if (finalForce.Length() > properAccel.Length())
                         finalForce = properAccel; // don't overshoot
 
-                    //Logger.Info($"shuttle: maxVelocity {maxVelocity} totalForce {totalForce} finalForce {finalForce} forceMul {forceMul} properAccel {properAccel}");
+                    //Log.Info($"shuttle: maxVelocity {maxVelocity} totalForce {totalForce} finalForce {finalForce} forceMul {forceMul} properAccel {properAccel}");
 
                     finalForce = shuttleNorthAngle.RotateVec(finalForce);
 
@@ -549,6 +551,14 @@ namespace Content.Server.Physics.Controllers
                     }
                 }
             }
+        }
+
+        // .NET 8 seem to miscompile usage of Vector2.Dot above. This manual outline fixes it pending an upstream fix.
+        // See PR #24008
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static float Vector2Dot(Vector2 value1, Vector2 value2)
+        {
+            return Vector2.Dot(value1, value2);
         }
 
         private bool CanPilot(EntityUid shuttleUid)

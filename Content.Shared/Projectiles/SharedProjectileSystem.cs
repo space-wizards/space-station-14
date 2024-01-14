@@ -96,22 +96,22 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (!component.EmbedOnThrow)
             return;
 
-        Embed(uid, args.Target, component);
+        Embed(uid, args.Target, null, component);
     }
 
     private void OnEmbedProjectileHit(EntityUid uid, EmbeddableProjectileComponent component, ref ProjectileHitEvent args)
     {
-        Embed(uid, args.Target, component);
+        Embed(uid, args.Target, args.Shooter, component);
 
         // Raise a specific event for projectiles.
-        if (TryComp<ProjectileComponent>(uid, out var projectile))
+        if (TryComp(uid, out ProjectileComponent? projectile))
         {
             var ev = new ProjectileEmbedEvent(projectile.Shooter!.Value, projectile.Weapon!.Value, args.Target);
             RaiseLocalEvent(uid, ref ev);
         }
     }
 
-    private void Embed(EntityUid uid, EntityUid target, EmbeddableProjectileComponent component)
+    private void Embed(EntityUid uid, EntityUid target, EntityUid? user, EmbeddableProjectileComponent component)
     {
         TryComp<PhysicsComponent>(uid, out var physics);
         _physics.SetLinearVelocity(uid, Vector2.Zero, body: physics);
@@ -121,13 +121,13 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         if (component.Offset != Vector2.Zero)
         {
-            _transform.SetLocalPosition(xform, xform.LocalPosition + xform.LocalRotation.RotateVec(component.Offset));
+            _transform.SetLocalPosition(uid, xform.LocalPosition + xform.LocalRotation.RotateVec(component.Offset),
+                xform);
         }
 
-        if (component.Sound != null)
-        {
-            _audio.PlayPredicted(component.Sound, uid, null);
-        }
+        _audio.PlayPredicted(component.Sound, uid, null);
+        var ev = new EmbedEvent(user, target);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
