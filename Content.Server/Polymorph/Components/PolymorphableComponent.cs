@@ -13,6 +13,12 @@ namespace Content.Server.Polymorph.Components
         public Dictionary<string, EntityUid>? PolymorphActions = null;
 
         /// <summary>
+        /// Timestamp for when the most recent polymorph ended.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public TimeSpan? LastPolymorphEnd = null;
+
+        /// <summary>
         /// The polymorphs that the entity starts out being able to do.
         /// </summary>
         [DataField("innatePolymorphs", customTypeSerializer : typeof(PrototypeIdListSerializer<PolymorphPrototype>))]

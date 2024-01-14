@@ -61,6 +61,12 @@ public sealed partial class MeleeWeaponComponent : Component
     public bool Attacking = false;
 
     /// <summary>
+    /// If true, attacks will be repeated automatically without requiring the mouse button to be lifted.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool AutoAttack;
+
+    /// <summary>
     /// Base damage for this weapon. Can be modified via heavy damage or other means.
     /// </summary>
     [DataField(required: true)]

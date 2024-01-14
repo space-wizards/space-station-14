@@ -23,6 +23,9 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     // For rendering the progress bar, updated from BUI state
     private TimeSpan? _startTime;
     private TimeSpan? _totalTime;
+    private TimeSpan? _accumulatedRunTime;
+
+    private bool _paused;
 
     public AnalysisConsoleMenu()
     {
@@ -39,10 +42,15 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     {
         base.FrameUpdate(args);
 
-        if (_startTime is not { } start || _totalTime is not { } total)
+        if (_startTime is not { } start || _totalTime is not { } total || _accumulatedRunTime is not { } accumulated)
             return;
 
-        var remaining = start + total - _timing.CurTime;
+        var remaining = total - accumulated;
+        if (!_paused)
+        {
+            // If the analyzer is running, its remaining time is further discounted by the time it's been running for.
+            remaining += start - _timing.CurTime;
+        }
         var secsText = Math.Max((int) remaining.TotalSeconds, 0);
 
         ProgressLabel.Text = Loc.GetString("analysis-console-progress-text",
@@ -89,7 +97,14 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
         if (state.Scanning)
         {
-            message.AddMarkup(Loc.GetString("analysis-console-info-scanner"));
+            if (state.Paused)
+            {
+                message.AddMarkup(Loc.GetString("analysis-console-info-scanner-paused"));
+            }
+            else
+            {
+                message.AddMarkup(Loc.GetString("analysis-console-info-scanner"));
+            }
             Information.SetMessage(message);
             UpdateArtifactIcon(null); //set it to blank
             return;
@@ -121,6 +136,8 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
         _startTime = state.StartTime;
         _totalTime = state.TotalTime;
+        _accumulatedRunTime = state.AccumulatedRunTime;
+        _paused = state.Paused;
     }
 }
 

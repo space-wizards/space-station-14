@@ -25,7 +25,7 @@
 - type: entity
   parent: BaseItem
   id: SyndieHandyFlag
-  name: Syndicate handheld flag
+  name: syndicate handheld flag
   description: "For truly rebellious patriots. Death to NT!"
   components:
   - type: Sprite
@@ -49,7 +49,7 @@
 - type: entity
   parent: BaseItem
   id: PirateHandyFlag
-  name: Pirate handheld flag
+  name: pirate handheld flag
   description: "Holding it in your hands, show these carp that you're not kidding."
   components:
   - type: Sprite

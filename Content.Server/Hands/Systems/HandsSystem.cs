@@ -17,12 +17,14 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Hands.Systems
 {
     public sealed class HandsSystem : SharedHandsSystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -43,6 +45,7 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, BodyPartRemovedEvent>(HandleBodyPartRemoved);
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
+            SubscribeLocalEvent<HandsComponent, EntityUnpausedEvent>(OnUnpaused);
 
             SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
 
@@ -61,6 +64,11 @@ namespace Content.Server.Hands.Systems
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
             args.State = new HandsComponentState(hands);
+        }
+
+        private void OnUnpaused(Entity<HandsComponent> ent, ref EntityUnpausedEvent args)
+        {
+            ent.Comp.NextThrowTime += args.PausedTime;
         }
 
         private void OnExploded(Entity<HandsComponent> ent, ref BeforeExplodeEvent args)
@@ -172,6 +180,10 @@ namespace Content.Server.Hands.Systems
                 !_actionBlockerSystem.CanThrow(player, throwEnt))
                 return false;
 
+            if (_timing.CurTime < hands.NextThrowTime)
+                return false;
+            hands.NextThrowTime = _timing.CurTime + hands.ThrowCooldown;
+
             if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
                 var splitStack = _stackSystem.Split(throwEnt, 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates, stack);
@@ -201,7 +213,7 @@ namespace Content.Server.Hands.Systems
                 return true;
 
             // This can grief the above event so we raise it afterwards
-            if (!TryDrop(player, throwEnt, handsComp: hands))
+            if (IsHolding(player, throwEnt, out _, hands) && !TryDrop(player, throwEnt, handsComp: hands))
                 return false;
 
             _throwingSystem.TryThrow(ev.ItemUid, ev.Direction, ev.ThrowStrength, ev.PlayerUid);

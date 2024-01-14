@@ -94,6 +94,14 @@ public abstract class SharedBiomeSystem : EntitySystem
             return true;
         }
 
+        return TryGetTile(indices, layers, seed, grid, out tile);
+    }
+
+    /// <summary>
+    /// Gets the underlying biome tile, ignoring any existing tile that may be there.
+    /// </summary>
+    public bool TryGetTile(Vector2i indices, List<IBiomeLayer> layers, int seed, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
+    {
         for (var i = layers.Count - 1; i >= 0; i--)
         {
             var layer = layers[i];

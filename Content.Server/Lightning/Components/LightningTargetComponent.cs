@@ -1,5 +1,6 @@
 using Content.Server.Tesla.EntitySystems;
 using Content.Shared.Explosion;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Lightning.Components;
@@ -11,6 +12,12 @@ namespace Content.Server.Lightning.Components;
 [RegisterComponent, Access(typeof(LightningSystem), typeof(LightningTargetSystem))]
 public sealed partial class LightningTargetComponent : Component
 {
+    /// <summary>
+    /// The probability that this target will not be ignored by a lightning strike. This is necessary for Tesla's balance.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float HitProbability = 1f;
+
     /// <summary>
     /// Priority level for selecting a lightning target. 
     /// </summary>
@@ -56,4 +63,10 @@ public sealed partial class LightningTargetComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MaxTileIntensity = 5f;
+
+    /// <summary>
+    /// how much structural damage the object takes from a lightning strike
+    /// </summary>
+    [DataField]
+    public FixedPoint2 DamageFromLightning = 1;
 }
