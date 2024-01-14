@@ -16,8 +16,9 @@ public sealed class RecordsConsoleSystem : EntitySystem
     public bool IsSkipped(StationRecordsFilter? filter, GeneralStationRecord someRecord)
     {
         // if nothing is being filtered, show everything
-        var empty = filter == null || filter.Value.Length == 0;
-        if (empty)
+        if (filter == null)
+            return false;
+        if (filter.Value.Length == 0)
             return false;
 
         var filterLowerCaseValue = filter.Value.ToLower();

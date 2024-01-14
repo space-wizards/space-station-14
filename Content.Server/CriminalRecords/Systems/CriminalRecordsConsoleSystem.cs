@@ -10,6 +10,7 @@ using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 
@@ -19,6 +20,7 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly RecordsConsoleSystem _recordsConsole = default!;
@@ -93,6 +95,9 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
         if (!_criminalRecords.TryChangeStatus(key.Value, msg.Status, out var status, msg.Reason))
             return;
 
+        if (msg.Reason.Length > ent.Comp.MaxStringLength)
+            return;
+
         (string, object)[] args =
         {
             ("name", msg.Name), ("reason", msg.Reason),
@@ -111,10 +116,12 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
             return;
 
         var line = msg.Line.Trim();
-        if (string.IsNullOrEmpty(line))
+        if (string.IsNullOrEmpty(line) || line.Length > ent.Comp.MaxStringLength)
             return;
 
-        if (!_criminalRecords.TryAddHistory(key.Value, line))
+        var now = _timing.CurTime;
+        var entry = new CrimeHistory(now, line);
+        if (!_criminalRecords.TryAddHistory(key.Value, entry))
             return;
 
         // no radio message since its not crucial to officers patrolling

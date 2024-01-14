@@ -30,4 +30,10 @@ public sealed partial class CriminalRecordsConsoleComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<RadioChannelPrototype> SecurityChannel = "Security";
+
+    /// <summary>
+    /// Max length of arrest and crime history strings.
+    /// </summary>
+    [DataField]
+    public uint MaxStringLength = 256;
 }

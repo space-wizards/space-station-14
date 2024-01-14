@@ -73,10 +73,10 @@ public sealed class CriminalRecordsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Tries to add a line of history to a criminal record.
+    /// Tries to add a history entry to a criminal record.
     /// </summary>
     /// <returns>True if adding succeeded, false if not</returns>
-    public bool TryAddHistory(StationRecordKey key, string line)
+    public bool TryAddHistory(StationRecordKey key, CrimeHistory line)
     {
         if (!_stationRecords.TryGetRecord<CriminalRecord>(key, out var record))
             return false;

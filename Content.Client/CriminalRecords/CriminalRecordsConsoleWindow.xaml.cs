@@ -208,8 +208,10 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             _recordName = state.StationRecord.Name!;
             PopulateRecordContainer(state.StationRecord, state.CriminalRecord);
 
-            foreach (var line in state.CriminalRecord.History)
+            foreach (var entry in state.CriminalRecord.History)
             {
+                var time = entry.AddTime;
+                var line = $"{time.Hours:00}:{time.Minutes:00}:{time.Seconds:00} - {entry.Crime}";
                 History.AddItem(line);
             }
         }
