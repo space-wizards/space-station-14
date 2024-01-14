@@ -221,7 +221,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         {
                             var reflected = false;
 
-                            var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
+                            var ray = new CollisionRay(from.Position, dir, (int) hitscan.CollisionMask);
                             var rayCastResults =
                                 Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
                             if (rayCastResults.Count == 0)
@@ -252,19 +252,20 @@ public sealed partial class GunSystem : SharedGunSystem
 
                                 hitList.Add(target.HitEntity);
 
-                                //Don't penetrate if hitscan can't penetrate at all.
-                                if (!hitscan.CanPenetrateStructures && !hitscan.CanPenetrateMobs)
+                                //Don't penetrate if hitscan can't penetrate at all or if too many targets have been hit.
+                                if (!hitscan.CanPenetrate ||
+                                    hitscan.PenetrationPower < hitList.Count &&
+                                    !hitscan.BlockedByRadiationResistance)
                                 {
                                     result = target.Distance;
                                     break;
                                 }
 
-                                //Don't penetrate if hitscan can't penetrate mobs and hits one,
-                                //or when too many targets have been hit.
-                                if (hitscan.CanPenetrateMobs &&
-                                    !HasComp<MobStateComponent>(target.HitEntity) ||
-                                    !hitscan.CanPenetrateStructures &&
-                                    hitscan.PenetrationPower < hitList.Count)
+                                //Don't penetrate if the target's CollisionLayer is higher than
+                                //the hitscan's PenetrationLayer.
+                                if (TryComp<PhysicsComponent>(target.HitEntity, out var physics) &&
+                                    hitscan.PenetrationLayer != null &&
+                                    physics.CollisionLayer > (int) hitscan.PenetrationLayer)
                                 {
                                     result = target.Distance;
                                     break;
@@ -273,13 +274,11 @@ public sealed partial class GunSystem : SharedGunSystem
                                 //Don't penetrate if the targets radiation resistance is equal to or higher
                                 //than the hitscan's penetration power.
                                 if (TryComp<RadiationBlockerComponent>(target.HitEntity, out var radiation) &&
-                                    hitscan.CanPenetrateStructures)
+                                    hitscan.BlockedByRadiationResistance &&
+                                    radiation.RadResistance >= hitscan.PenetrationPower)
                                 {
-                                    if (radiation.RadResistance >= hitscan.PenetrationPower)
-                                    {
-                                        result = target.Distance;
-                                        break;
-                                    }
+                                    result = target.Distance;
+                                    break;
                                 }
                             }
 
@@ -331,8 +330,6 @@ public sealed partial class GunSystem : SharedGunSystem
                                             $"{hitName:target} hit by hitscan dealing {dmg.Total:damage} damage");
                                     }
                                 }
-                                if (!hitscan.CanPenetrateMobs && !HasComp<MobStateComponent>(hitEntity) && !hitscan.CanPenetrateStructures)
-                                    break;
                             }
                         }
                         else

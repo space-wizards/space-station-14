@@ -30,7 +30,7 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable
     public SpriteSpecifier? ImpactFlash;
 
     [DataField]
-    public int CollisionMask = (int) CollisionGroup.Opaque;
+    public CollisionGroup CollisionMask = CollisionGroup.Opaque;
 
     /// <summary>
     /// What we count as for reflection.
@@ -56,16 +56,28 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable
     public float MaxLength = 20f;
 
     /// <summary>
-    /// Decides if the hitscan can penetrate living entities.
+    /// Is the hitscan allowed to penetrate.
     /// </summary>
     [DataField]
-    public bool CanPenetrateMobs;
+    public bool CanPenetrate;
 
     /// <summary>
-    /// Decides if the hitscan can penetrate walls.
+    /// The CollisionLayer, up to and including, the hitscan is allowed to penetrate.
     /// </summary>
+    /// <remarks>
+    /// The hitscan can penetrate everything if this value is not set.
+    /// </remarks>
     [DataField]
-    public bool CanPenetrateStructures;
+    public CollisionGroup? PenetrationLayer;
+
+    /// <summary>
+    /// Is the hitscan blocked by entities with a radiation resistance.
+    /// </summary>
+    /// <remarks>
+    /// Entities with a radiation resistance higher than the hitscan's PenetrationPower will not be penetrated.
+    /// </remarks>
+    [DataField]
+    public bool BlockedByRadiationResistance;
 
     /// <summary>
     /// Decides how many mobs can be penetrated for canPenetrateMobs.
