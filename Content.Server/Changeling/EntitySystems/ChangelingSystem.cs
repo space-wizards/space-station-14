@@ -56,7 +56,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     private void OnStartup(EntityUid uid, ChangelingComponent component, ComponentStartup args)
     {
         _uplink.AddUplink(uid, FixedPoint2.New(10), ChangelingShopPresetPrototype, uid, EvolutionPointsCurrencyPrototype); // not really an 'uplink', but it's there to add the evolution menu
-        StealDNA(uid, uid, component);
+        StealDNA(uid, component);
     }
 
     [ValidatePrototypeId<EntityPrototype>]
@@ -168,6 +168,26 @@ public sealed partial class ChangelingSystem : EntitySystem
         }
     }
 
+    public void StealDNA(EntityUid uid, ChangelingComponent component)
+    {
+        var newHumanoidData = _polymorph.TryRegisterPolymorphHumanoidData(uid, uid);
+        if (newHumanoidData == null)
+            return;
+
+        if (component.StoredDNA.Count >= component.DNAStrandCap)
+        {
+            var lastHumanoidData = component.StoredDNA.Last();
+            component.StoredDNA.Remove(lastHumanoidData);
+            component.StoredDNA.Add(newHumanoidData.Value);
+        }
+        else
+        {
+            component.StoredDNA.Add(newHumanoidData.Value);
+        }
+
+        return;
+    }
+
     public bool StealDNA(EntityUid uid, EntityUid target, ChangelingComponent component)
     {
         if (!TryComp<MetaDataComponent>(target, out var metaData))
@@ -179,15 +199,19 @@ public sealed partial class ChangelingSystem : EntitySystem
             return false;
         }
 
+        var newHumanoidData = _polymorph.TryRegisterPolymorphHumanoidData(target);
+        if (newHumanoidData == null)
+            return false;
+
         if (component.StoredDNA.Count >= component.DNAStrandCap)
         {
             var lastHumanoidData = component.StoredDNA.Last();
             component.StoredDNA.Remove(lastHumanoidData);
-            component.StoredDNA.Add(target);
+            component.StoredDNA.Add(newHumanoidData.Value);
         }
         else
         {
-            component.StoredDNA.Add(target);
+            component.StoredDNA.Add(newHumanoidData.Value);
         }
 
         return true;
@@ -205,8 +229,11 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (component.StoredDNA.Count >= component.DNAStrandCap || component.SelectedDNA >= component.StoredDNA.Count)
             component.SelectedDNA = 0;
 
-        var selectedHumanoid = component.StoredDNA[component.SelectedDNA];
-        var selfMessage = Loc.GetString("changeling-dna-switchdna", ("target", Identity.Entity(selectedHumanoid, EntityManager)));
+        var selectedHumanoidData = component.StoredDNA[component.SelectedDNA];
+        if (selectedHumanoidData.EntityUid == null)
+            return;
+
+        var selfMessage = Loc.GetString("changeling-dna-switchdna", ("target", Identity.Entity(selectedHumanoidData.EntityUid.Value, EntityManager)));
         _popup.PopupEntity(selfMessage, uid, uid);
     }
 
@@ -215,13 +242,21 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var selectedHumanoid = component.StoredDNA[component.SelectedDNA];
+        var selectedHumanoidData = component.StoredDNA[component.SelectedDNA];
         var dnaComp = EnsureComp<DnaComponent>(uid);
-        var dnaCompSelectedHumanoid = EnsureComp<DnaComponent>(selectedHumanoid);
 
-        if (dnaComp.DNA == dnaCompSelectedHumanoid.DNA)
+        if (selectedHumanoidData.EntityPrototype == null)
+            return;
+        if (selectedHumanoidData.HumanoidAppearanceComponent == null)
+            return;
+        if (selectedHumanoidData.MetaDataComponent == null)
+            return;
+        if (selectedHumanoidData.DNA == null)
+            return;
+
+        if (selectedHumanoidData.DNA == dnaComp.DNA)
         {
-            var selfMessage = Loc.GetString("changeling-transform-fail", ("target", Identity.Entity(selectedHumanoid, EntityManager)));
+            var selfMessage = Loc.GetString("changeling-transform-fail", ("target", Identity.Entity(uid, EntityManager)));
             _popup.PopupEntity(selfMessage, uid, uid);
         }
         else
@@ -231,15 +266,12 @@ public sealed partial class ChangelingSystem : EntitySystem
 
             args.Handled = true;
 
-            var transformedUid = _polymorph.PolymorphEntity(uid, "ChangelingHumanoidMorph", selectedHumanoid);
+            var transformedUid = _polymorph.PolymorphEntityAsHumanoid(uid, selectedHumanoidData);
             if (transformedUid == null)
                 return;
 
-            var selfMessage = Loc.GetString("changeling-transform-activate", ("target", Identity.Entity(selectedHumanoid, EntityManager)));
+            var selfMessage = Loc.GetString("changeling-transform-activate", ("target", Identity.Entity(transformedUid.Value, EntityManager)));
             _popup.PopupEntity(selfMessage, transformedUid.Value, transformedUid.Value);
-
-            var transformedDnaComp = EnsureComp<DnaComponent>(transformedUid.Value);
-            transformedDnaComp.DNA = dnaCompSelectedHumanoid.DNA;
 
             var newLingComponent = EnsureComp<ChangelingComponent>(transformedUid.Value);
             newLingComponent.Chemicals = component.Chemicals;
@@ -249,9 +281,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             newLingComponent.ArmBladeActive = component.ArmBladeActive;
             newLingComponent.LingArmorActive = component.LingArmorActive;
             newLingComponent.ChameleonSkinActive = component.ChameleonSkinActive;
-
-            if (TryComp<MetaDataComponent>(selectedHumanoid, out var targetHumanoidMeta))
-                _metaData.SetEntityName(transformedUid.Value, targetHumanoidMeta.EntityName);
+            RemComp(uid, component);
 
             if (TryComp(uid, out StoreComponent? storeComp))
             {
@@ -266,9 +296,11 @@ public sealed partial class ChangelingSystem : EntitySystem
                 {
                     var copiedStealthComponent = (Component) _serialization.CreateCopy(stealthComp, notNullableOverride: true);
                     EntityManager.AddComponent(transformedUid.Value, copiedStealthComponent);
+                    RemComp(uid, stealthComp);
 
                     var copiedStealthOnMoveComponent = (Component) _serialization.CreateCopy(stealthOnMoveComp, notNullableOverride: true);
                     EntityManager.AddComponent(transformedUid.Value, copiedStealthOnMoveComponent);
+                    RemComp(uid, stealthOnMoveComp);
                 }
             }
 

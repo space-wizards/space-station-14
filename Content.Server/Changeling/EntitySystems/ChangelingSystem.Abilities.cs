@@ -395,11 +395,9 @@ public sealed partial class ChangelingSystem
 
         var dnaCompTarget = EnsureComp<DnaComponent>(target);
 
-        foreach (var storedUid in component.StoredDNA)
+        foreach (var storedData in component.StoredDNA)
         {
-            var dnaComp = EnsureComp<DnaComponent>(storedUid);
-
-            if (dnaComp.DNA == dnaCompTarget.DNA)
+            if (storedData.DNA != null && storedData.DNA == dnaCompTarget.DNA)
             {
                 var selfMessageFailAlreadyDna = Loc.GetString("changeling-dna-sting-fail-alreadydna", ("target", Identity.Entity(target, EntityManager)));
                 _popup.PopupEntity(selfMessageFailAlreadyDna, uid, uid);

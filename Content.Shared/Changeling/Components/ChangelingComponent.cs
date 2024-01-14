@@ -35,7 +35,7 @@ public sealed partial class ChangelingComponent : Component
     /// List of stolen DNA
     /// </summary>
     [DataField]
-    public List<EntityUid> StoredDNA = new List<EntityUid>();
+    public List<PolymorphHumanoidData> StoredDNA = new List<PolymorphHumanoidData>();
 
     /// <summary>
     /// The DNA index that the changeling currently has selected

@@ -114,4 +114,13 @@ namespace Content.Shared.Polymorph
         Drop,
         Transfer,
     }
+
+    public struct PolymorphHumanoidData
+    {
+        public EntityPrototype? EntityPrototype;
+        public MetaDataComponent? MetaDataComponent;
+        public HumanoidAppearanceComponent? HumanoidAppearanceComponent;
+        public string? DNA;
+        public EntityUid? EntityUid;
+    }
 }

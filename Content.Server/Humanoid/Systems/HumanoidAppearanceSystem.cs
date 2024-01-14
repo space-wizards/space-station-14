@@ -36,6 +36,30 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
     // this was done enough times that it only made sense to do it here
 
     /// <summary>
+    /// Changes the properties of the targetHumanoid component to that of the sourceHumanoid.
+    /// </summary>
+    /// <param name="sourceHumanoid">Source entity's humanoid component.</param>
+    /// <param name="targetHumanoid">Target entity's humanoid component.</param>
+    public void SetAppearance(HumanoidAppearanceComponent sourceHumanoid, HumanoidAppearanceComponent targetHumanoid)
+    {
+        targetHumanoid.Species = sourceHumanoid.Species;
+        targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
+        targetHumanoid.EyeColor = sourceHumanoid.EyeColor;
+        targetHumanoid.Age = sourceHumanoid.Age;
+        SetSex(targetHumanoid.Owner, sourceHumanoid.Sex, false, targetHumanoid);
+        targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
+        targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
+
+        targetHumanoid.Gender = sourceHumanoid.Gender;
+        if (TryComp<GrammarComponent>(targetHumanoid.Owner, out var grammar))
+        {
+            grammar.Gender = sourceHumanoid.Gender;
+        }
+
+        Dirty(targetHumanoid);
+    }
+
+    /// <summary>
     ///     Clones a humanoid's appearance to a target mob, provided they both have humanoid components.
     /// </summary>
     /// <param name="source">Source entity to fetch the original appearance from.</param>
@@ -50,21 +74,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
             return;
         }
 
-        targetHumanoid.Species = sourceHumanoid.Species;
-        targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
-        targetHumanoid.EyeColor = sourceHumanoid.EyeColor;
-        targetHumanoid.Age = sourceHumanoid.Age;
-        SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
-        targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
-        targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
-
-        targetHumanoid.Gender = sourceHumanoid.Gender;
-        if (TryComp<GrammarComponent>(target, out var grammar))
-        {
-            grammar.Gender = sourceHumanoid.Gender;
-        }
-
-        Dirty(targetHumanoid);
+        SetAppearance(sourceHumanoid, targetHumanoid);
     }
 
     /// <summary>
