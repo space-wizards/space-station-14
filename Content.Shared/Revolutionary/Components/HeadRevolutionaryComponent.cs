@@ -21,4 +21,10 @@ public sealed partial class HeadRevolutionaryComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan StunTime = TimeSpan.FromSeconds(3);
+
+    /// <summary>
+    /// Which entity tags that indicate if an item can flash and convert another player.
+    /// </summary>
+    [DataField("tags")]
+    public string[] ConvertItemTags = { "ConvertItem" };
 }
