@@ -153,8 +153,11 @@ public sealed partial class GunSystem : SharedGunSystem
                         }
                         if (cartridge.Count > 1)
                         {
-                            var angles = LinearSpread(mapAngle - cartridge.Spread / 2,
-                                mapAngle + cartridge.Spread / 2, cartridge.Count);
+                            var ev = new GunGetAmmoSpreadEvent(cartridge.Spread);
+                            RaiseLocalEvent(gunUid, ref ev);
+
+                            var angles = LinearSpread(mapAngle - ev.Spread / 2,
+                                mapAngle + ev.Spread / 2, cartridge.Count);
 
                             for (var i = 0; i < cartridge.Count; i++)
                             {
