@@ -719,7 +719,7 @@
   id: BlastDoor
   graph: BlastDoor
   startNode: start
-  targetNode: BlastDoor
+  targetNode: blastdoor
   category: construction-category-structures
   description: This one says 'BLAST DONGER'.
   icon:

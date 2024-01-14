@@ -69,14 +69,14 @@
           conditions:
             - !type:EntityAnchored {}
           steps:
-            - tool: Prying
-              doAfter: 3
             - tool: Screwing
               doAfter: 2
+            - tool: Prying
+              doAfter: 3
 
     - node: frame4
       edges:
-        - to: BlastDoor
+        - to: blastdoor
           conditions:
             - !type:EntityAnchored {}
           steps:
@@ -97,7 +97,7 @@
             - tool: Prying
               doAfter: 3
 
-    - node: BlastDoor
+    - node: blastdoor
       entity: BlastDoorOpen
       edges:
         - to: frame4

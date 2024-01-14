@@ -32,7 +32,7 @@
       board: [ DoorElectronics ]
   - type: Construction
     graph: BlastDoor
-    node: BlastDoor
+    node: blastdoor
     containers:
     - board
   - type: StaticPrice
