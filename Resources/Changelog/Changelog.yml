@@ -1,16 +1,4 @@
-Entries:
-- author: Velcroboy
-  changes:
-  - message: Shuttle walls and windows can now be constructed.
-    type: Tweak
-  id: 5197
-  time: '2023-11-21T01:20:24.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix being unable to FTL dock to planets.
-    type: Fix
-  id: 5198
-  time: '2023-11-22T01:02:02.0000000+00:00'
+﻿Entries:
 - author: Feluk6174
   changes:
   - message: Bananadine is now a psychedelic that can be obtained by grinding baked
@@ -3727,3 +3715,18 @@ Entries:
   id: 5697
   time: '2024-01-13T21:11:10.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24026
+- author: Bhijn and Myr
+  changes:
+  - message: The QM's uniform has received a redesign, making it more visually distinguishable
+      for those with colorblindness.
+    type: Tweak
+  id: 5698
+  time: '2024-01-14T02:45:06.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24055
+- author: lzk228
+  changes:
+  - message: Removed archaic accent.
+    type: Remove
+  id: 5699
+  time: '2024-01-14T02:45:54.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24052
