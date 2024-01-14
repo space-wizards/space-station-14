@@ -13,13 +13,13 @@
         map: [ "unshaded" ]
     - type: Projectile
       deleteOnCollide: false
-      damageAfterCollide: true
       impactEffect: null
       soundHit:
         path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
       damage:
         types:
           Radiation: 25
+    - type: CanPenetrate
     - type: Physics
     - type: Fixtures
       fixtures:
@@ -69,7 +69,6 @@
     - Energy
   - type: Projectile
     deleteOnCollide: false
-    damageAfterCollide: true
     impactEffect: null
     soundHit:
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg

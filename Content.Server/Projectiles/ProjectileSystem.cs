@@ -5,9 +5,7 @@ using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Projectiles;
-using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Events;
-using Content.Shared.Mobs.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.Projectiles;
@@ -71,20 +69,11 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         component.DamagedEntity = true;
 
+        var afterProjectileHitEvent = new AfterProjectileHitEvent(component.Damage, target, args.OtherFixture);
+        RaiseLocalEvent(uid, ref afterProjectileHitEvent);
+
         if (component.DeleteOnCollide)
             QueueDel(uid);
-
-        if (component.DamageAfterCollide)
-        {
-            component.DamagedEntity = false;
-
-            if (component.CanOnlyPenetrateMobs)
-            {
-                if (!HasComp<MobStateComponent>(target))
-                    QueueDel(uid);
-            }
-        }
-
 
         if (component.ImpactEffect != null && TryComp<TransformComponent>(uid, out var xform))
         {

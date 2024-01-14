@@ -2,7 +2,6 @@ using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Projectiles;
 
@@ -40,25 +39,10 @@ public sealed partial class ProjectileComponent : Component
     public DamageSpecifier Damage = new();
 
     /// <summary>
-    ///     If the target should be deleted on collision.
+    ///     If the projectile should be deleted on collision.
     /// </summary>
     [DataField]
     public bool DeleteOnCollide = true;
-
-    /// <summary>
-    ///     If the projectile should keep the ability to deal damage after colliding.
-    /// </summary>
-    [DataField]
-    public bool DamageAfterCollide = false;
-
-    /// <summary>
-    ///     Penetrate the target only if it has the MobStateComponent.
-    /// </summary>
-    /// <remarks>
-    ///     DeleteOnCollide needs to be false for this to work.
-    /// </remarks>
-    [DataField]
-    public bool CanOnlyPenetrateMobs = false;
 
     /// <summary>
     ///     Ignore all damage resistances the target has.
