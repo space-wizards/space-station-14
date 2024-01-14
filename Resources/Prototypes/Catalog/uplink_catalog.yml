@@ -1193,7 +1193,6 @@
     whitelist:
     - Bartender
     - Chef
-    - Chemist
     - MedicalDoctor
 
 # Armor
