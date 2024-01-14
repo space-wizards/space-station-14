@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Rainfey
-  changes:
-  - message: Chameleon functionality to Agent and Nukie ID cards
-    type: Add
-  id: 5208
-  time: '2023-11-27T21:34:30.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Revenants can no longer emag evac to instantly launch the shuttle.
@@ -3735,3 +3729,10 @@
   id: 5708
   time: '2024-01-14T10:19:36.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24028
+- author: Psychpsyo
+  changes:
+  - message: Plates and money now go into inventories sideways, as they should.
+    type: Tweak
+  id: 5709
+  time: '2024-01-14T16:44:17.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24075
