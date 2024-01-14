@@ -37,12 +37,15 @@ public sealed partial class GunComponent : Component
     // These values are very small for now until we get a debug overlay and fine tune it
 
     /// <summary>
-    /// A scalar value applied to the vector governing camera recoil.
-    /// If 0, there will be no camera recoil.
+    /// The base scalar value applied to the vector governing camera recoil.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float CameraRecoilScalar = 1f;
 
+    /// <summary>
+    /// A scalar value applied to the vector governing camera recoil.
+    /// If 0, there will be no camera recoil.
+    /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float CameraRecoilScalarModified = 1f;
 
@@ -61,7 +64,7 @@ public sealed partial class GunComponent : Component
     public Angle CurrentAngle;
 
     /// <summary>
-    /// How much the spread increases every time the gun fires.
+    /// The base value for how much the spread increases every time the gun fires.
     /// </summary>
     [DataField]
     public Angle AngleIncrease = Angle.FromDegrees(0.5);
@@ -73,31 +76,40 @@ public sealed partial class GunComponent : Component
     public Angle AngleIncreaseModified;
 
     /// <summary>
-    /// How much the <see cref="CurrentAngle"/> decreases per second.
+    /// The base value for how much the <see cref="CurrentAngle"/> decreases per second.
     /// </summary>
     [DataField]
     public Angle AngleDecay = Angle.FromDegrees(4);
 
+    /// <summary>
+    /// How much the <see cref="CurrentAngle"/> decreases per second.
+    /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Angle AngleDecayModified;
 
     /// <summary>
-    /// The maximum angle allowed for <see cref="CurrentAngle"/>
+    /// The base value for the maximum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
     [DataField]
     [AutoNetworkedField]
     public Angle MaxAngle = Angle.FromDegrees(2);
 
+    /// <summary>
+    /// The maximum angle allowed for <see cref="CurrentAngle"/>
+    /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Angle MaxAngleModified;
 
     /// <summary>
-    /// The minimum angle allowed for <see cref="CurrentAngle"/>
+    /// The base value for the minimum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
     [DataField]
     [AutoNetworkedField]
     public Angle MinAngle = Angle.FromDegrees(1);
 
+    /// <summary>
+    ///  The minimum angle allowed for <see cref="CurrentAngle"/>.
+    /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Angle MinAngleModified;
 
@@ -116,11 +128,14 @@ public sealed partial class GunComponent : Component
     public EntityCoordinates? ShootCoordinates = null;
 
     /// <summary>
-    ///     How many shots to fire per burst.
+    ///     The base value for how many shots to fire per burst.
     /// </summary>
     [DataField, AutoNetworkedField]
     public int ShotsPerBurst = 3;
 
+    /// <summary>
+    ///     How many shots to fire per burst.
+    /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public int ShotsPerBurstModified = 3;
 
@@ -132,12 +147,15 @@ public sealed partial class GunComponent : Component
     public int ShotCounter = 0;
 
     /// <summary>
-    /// How many times it shoots per second.
+    /// The base value for how many times it shoots per second.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
     public float FireRate = 8f;
 
+    /// <summary>
+    /// How many times it shoots per second.
+    /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float FireRateModified;
 
@@ -160,11 +178,14 @@ public sealed partial class GunComponent : Component
     public DamageSpecifier? DamageOnWrongAmmo = null;
 
     /// <summary>
-    /// How fast the projectile moves.
+    /// The base value for how fast the projectile moves.
     /// </summary>
     [DataField]
     public float ProjectileSpeed = 25f;
 
+    /// <summary>
+    /// How fast the projectile moves.
+    /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float ProjectileSpeedModified;
 
