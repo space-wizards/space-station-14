@@ -16,34 +16,27 @@ public sealed partial class BZFormationReaction : IGasReactionEffect
         var initPlasma = mixture.GetMoles(Gas.Plasma);
         var pressure = mixture.Pressure;
         var volume = mixture.Volume;
+
         var environmentEfficiency = volume / pressure; // more volume and less pressure gives better rates
         var ratioEfficiency = Math.Min(initN2O / initPlasma, 1); // less n2o than plasma gives lower rates
-        var n2oDecomposeFactor = Math.Max((initPlasma / initN2O + initPlasma - .75f) * 4, 0); // n2o decomposes when there are more than 3 plasma parts per n2o
 
-        var n2oRemoved = initN2O * (1 / .4f);
-        var plasmaRemoved = initPlasma * (1 / (.8f * (1 - n2oDecomposeFactor)));
-        var bzFormed = Math.Min(Math.Min((ratioEfficiency * environmentEfficiency) / 100, n2oRemoved), plasmaRemoved) / Atmospherics.BZFormationRate;
+        var totalRate = environmentEfficiency * ratioEfficiency / Atmospherics.BZFormationRate;
 
-        /* If n2o-plasma ratio is less than 1:3 start decomposing n2o.
-	     * Rate of decomposition vs BZ production increases as n2o concentration gets lower
-	     * Plasma acts as a catalyst on decomposition, so it doesn't get consumed in the process.
-	     * N2O decomposes with its normal decomposition energy */
-        if (n2oDecomposeFactor > 0)
-        {
-            var amountDecomposed = bzFormed * n2oDecomposeFactor * .4f;
-            mixture.AdjustMoles(Gas.Nitrogen, -amountDecomposed);
-            mixture.AdjustMoles(Gas.Oxygen, -amountDecomposed / 2);
-            mixture.AdjustMoles(Gas.NitrousOxide, amountDecomposed * 1.5f);
-        }
+        var n2oRemoved = totalRate * 2f;
+        var plasmaRemoved = totalRate * 4f;
+        var bzFormed = totalRate * 5f;
 
-        mixture.AdjustMoles(Gas.BZ, bzFormed * (1 - n2oDecomposeFactor));
-        mixture.AdjustMoles(Gas.NitrousOxide, -(bzFormed * .4f));
-        mixture.AdjustMoles(Gas.Plasma, -(bzFormed * (1 - n2oDecomposeFactor) * .8f));
+        if (n2oRemoved > initN2O || plasmaRemoved > initPlasma)
+            return ReactionResult.NoReaction;
 
-        var energyReleased = bzFormed * (Atmospherics.BZFormationEnergy + n2oDecomposeFactor * (/*Atmospherics.N2ODecompositionEnergy*/200e3 - Atmospherics.BZFormationEnergy));
+        mixture.AdjustMoles(Gas.NitrousOxide, -n2oRemoved);
+        mixture.AdjustMoles(Gas.Plasma, -plasmaRemoved);
+        mixture.AdjustMoles(Gas.BZ, bzFormed);
+
+        var energyReleased = bzFormed * Atmospherics.BZFormationEnergy;
         var heatCap = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (heatCap > Atmospherics.MinimumHeatCapacity)
-            mixture.Temperature = Math.Max((float) (mixture.Temperature * heatCap + energyReleased) / heatCap, Atmospherics.TCMB);
+            mixture.Temperature = Math.Max((mixture.Temperature * heatCap + energyReleased) / heatCap, Atmospherics.TCMB);
 
         return ReactionResult.Reacting;
     }

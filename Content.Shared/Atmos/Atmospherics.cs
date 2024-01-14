@@ -263,17 +263,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Some number taken from the air to keep BZ from instantly converting everything.
         /// </summary>
-        public const float BZFormationRate = 50f;
-
-        /// <summary>
-        ///     The maximum portion of the N2O that can decompose each reaction tick. (50%)
-        /// </summary>
-        public const float N2ODecompositionRate = 2f;
-
-        /// <summary>
-        ///     Divisor for Ammonia Oxygen reaction so that it doesn't happen instantaneously.
-        /// </summary>
-        public const float AmmoniaOxygenReactionRate = 10f;
+        public const float BZFormationRate = 5f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
