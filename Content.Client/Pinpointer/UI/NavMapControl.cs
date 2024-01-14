@@ -1,5 +1,6 @@
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Input;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -48,16 +49,21 @@ public partial class NavMapControl : MapGridControl
     protected float MaxSelectableDistance = 10f;
     protected float RecenterMinimum = 0.05f;
     protected float MinDragDistance = 5f;
+    protected static float MinDisplayedRange = 8f;
+    protected static float MaxDisplayedRange = 128f;
+    protected static float DefaultDisplayedRange = 48f;
 
     // Local variables
     private Vector2 _offset;
     private bool _draggin;
     private Vector2 _startDragPosition = default!;
     private bool _recentering = false;
-    private readonly Font _font;
     private float _updateTimer = 0.25f;
     private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
-    private Color _beaconColor;
+    public Color _backgroundColor;
+    public float _backgroundOpacity = 0.9f;
+    private int _targetFontsize = 8;
+    private IResourceCache _cache;
 
     // Components
     private NavMapComponent? _navMap;
@@ -91,14 +97,13 @@ public partial class NavMapControl : MapGridControl
         Pressed = false,
     };
 
-    public NavMapControl() : base(8f, 128f, 48f)
+    public NavMapControl() : base(MinDisplayedRange, MaxDisplayedRange, DefaultDisplayedRange)
     {
         IoCManager.InjectDependencies(this);
-        var cache = IoCManager.Resolve<IResourceCache>();
+        _cache = IoCManager.Resolve<IResourceCache>();
 
         _transformSystem = _entManager.System<SharedTransformSystem>();
-        _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 12);
-        _beaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
+        _backgroundColor = Color.FromSrgb(TileColor.WithAlpha(_backgroundOpacity));
 
         RectClipContent = true;
         HorizontalExpand = true;
@@ -185,11 +190,11 @@ public partial class NavMapControl : MapGridControl
         if (args.Function == EngineKeyFunctions.Use)
             _draggin = false;
 
-        if (TrackedEntitySelectedAction == null)
-            return;
-
-        if (args.Function == EngineKeyFunctions.Use)
+        if (args.Function == EngineKeyFunctions.UIClick)
         {
+            if (TrackedEntitySelectedAction == null)
+                return;
+
             if (_xform == null || _physics == null || TrackedEntities.Count == 0)
                 return;
 
@@ -233,6 +238,12 @@ public partial class NavMapControl : MapGridControl
         {
             // Clear current selection with right click
             TrackedEntitySelectedAction?.Invoke(null);
+        }
+
+        else if (args.Function == ContentKeyFunctions.ExamineEntity)
+        {
+            // Toggle beacon labels
+            _beacons.Pressed = !_beacons.Pressed;
         }
     }
 
@@ -282,7 +293,7 @@ public partial class NavMapControl : MapGridControl
             }
         }
 
-        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(WorldRange / WorldMaxRange * 100f):0.00}"));
+        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(DefaultDisplayedRange / WorldRange ):0.0}"));
 
         if (_navMap == null || _xform == null)
             return;
@@ -400,14 +411,18 @@ public partial class NavMapControl : MapGridControl
         {
             var rectBuffer = new Vector2(5f, 3f);
 
+            // Calculate font size for current zoom level
+            var fontSize = (int) Math.Round(1 / WorldRange * DefaultDisplayedRange * UIScale * _targetFontsize , 0);
+            var font = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), fontSize);
+
             foreach (var beacon in _navMap.Beacons)
             {
                 var position = beacon.Position - offset;
                 position = Scale(position with { Y = -position.Y });
 
-                var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
-                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), _beaconColor);
-                handle.DrawString(_font, position - textDimensions / 2, beacon.Text, beacon.Color);
+                var textDimensions = handle.GetDimensions(font, beacon.Text, 1f);
+                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), _backgroundColor);
+                handle.DrawString(font, position - textDimensions / 2, beacon.Text, beacon.Color);
             }
         }
 

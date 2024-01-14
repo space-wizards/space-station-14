@@ -96,7 +96,6 @@
   components:
   - type: Tag
     tags:
-    - Shovel
     - BotanyShovel
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/spade.rsi
@@ -109,6 +108,8 @@
         Piercing: 5 # I guess you can stab it into them?
   - type: Item
     sprite: Objects/Tools/Hydroponics/spade.rsi
+  - type: Shovel
+    speedModifier: 0.75 # slower at digging than a full-sized shovel
 
 - type: entity
   name: plant bag
