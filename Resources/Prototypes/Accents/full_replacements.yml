@@ -153,3 +153,16 @@
   - accent-words-crab-4
   - accent-words-crab-5
   - accent-words-crab-6
+
+- type: accent
+  id: kobold
+  fullReplacements:
+  - accent-words-kobold-1
+  - accent-words-kobold-2
+  - accent-words-kobold-3
+  - accent-words-kobold-4
+  - accent-words-kobold-5
+  - accent-words-kobold-6
+  - accent-words-kobold-7
+  - accent-words-kobold-8
+  - accent-words-kobold-9

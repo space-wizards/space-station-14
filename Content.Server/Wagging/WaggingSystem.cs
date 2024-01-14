@@ -16,13 +16,9 @@ public sealed class WaggingSystem : EntitySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-    private ISawmill _sawmill = default!;
-
     public override void Initialize()
     {
         base.Initialize();
-
-        _sawmill = Logger.GetSawmill("wag");
 
         SubscribeLocalEvent<WaggingComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<WaggingComponent, EmoteEvent>(OnEmote);
@@ -58,13 +54,32 @@ public sealed class WaggingSystem : EntitySystem
             return false;
 
         wagging.Wagging = !wagging.Wagging;
+
         for (var idx = 0; idx < markings.Count; idx++) // Animate all possible tails
         {
             var currentMarkingId = markings[idx].MarkingId;
-            var newMarkingId = wagging.Wagging ? $"{currentMarkingId}Animated" : currentMarkingId.Replace("Animated", ""); // Ok while tails is marking
+            string newMarkingId;
+
+            if (wagging.Wagging)
+            {
+                newMarkingId = $"{currentMarkingId}{wagging.Suffix}";
+            }
+            else
+            {
+                if (currentMarkingId.EndsWith(wagging.Suffix))
+                {
+                    newMarkingId = currentMarkingId[..^wagging.Suffix.Length];
+                }
+                else
+                {
+                    newMarkingId = currentMarkingId;
+                    Log.Warning($"Unable to revert wagging for {currentMarkingId}");
+                }
+            }
+
             if (!_prototype.HasIndex<MarkingPrototype>(newMarkingId))
             {
-                _sawmill.Warning($"{ToPrettyString(uid)} tried toggle wagging but {newMarkingId} marking not exist");
+                Log.Warning($"{ToPrettyString(uid)} tried toggling wagging but {newMarkingId} marking doesn't exist");
                 continue;
             }
 

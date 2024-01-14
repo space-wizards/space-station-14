@@ -124,22 +124,28 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private bool InteractUI(EntityUid user, EntityUid uiEntity, ActivatableUIComponent aui)
     {
-        if (!_blockerSystem.CanInteract(user, uiEntity) && (!aui.AllowSpectator || !HasComp<GhostComponent>(user)))
-            return false;
-
-        if (aui.RequireHands && !HasComp<HandsComponent>(user))
-            return false;
-
-        if (!EntityManager.TryGetComponent(user, out ActorComponent? actor))
-            return false;
-
-        if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession))
+        if (!TryComp(user, out ActorComponent? actor))
             return false;
 
         if (aui.Key == null)
             return false;
 
         if (!_uiSystem.TryGetUi(uiEntity, aui.Key, out var ui))
+            return false;
+
+        if (ui.SubscribedSessions.Contains(actor.PlayerSession))
+        {
+            _uiSystem.CloseUi(ui, actor.PlayerSession);
+            return true;
+        }
+
+        if (!_blockerSystem.CanInteract(user, uiEntity) && (!aui.AllowSpectator || !HasComp<GhostComponent>(user)))
+            return false;
+
+        if (aui.RequireHands && !HasComp<HandsComponent>(user))
+            return false;
+
+        if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession))
             return false;
 
         if (aui.SingleUser && (aui.CurrentSingleUser != null) && (actor.PlayerSession != aui.CurrentSingleUser))
@@ -169,7 +175,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         RaiseLocalEvent(uiEntity, bae);
 
         SetCurrentSingleUser(uiEntity, actor.PlayerSession, aui);
-        _uiSystem.ToggleUi(ui, actor.PlayerSession);
+        _uiSystem.OpenUi(ui, actor.PlayerSession);
 
         //Let the component know a user opened it so it can do whatever it needs to do
         var aae = new AfterActivatableUIOpenEvent(user, actor.PlayerSession);
