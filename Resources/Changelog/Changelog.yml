@@ -1,25 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Audio rework got re-merged, the changelog has been re-posted here for
-      brevity.
-    type: Add
-  - message: Grid audio will now attenuate properly over distance and won't be ear
-      rupturingly loud.
-    type: Fix
-  - message: FTL sound should no longer persist as it's attached to the shuttle instead
-      of being global.
-    type: Fix
-  - message: Audio can now start at an offset so if an audio source comes into range
-      so it won't play from the start.
-    type: Fix
-  - message: Changed audio attenuation from InverseDistanceClamped to LinearDistanceClamped
-      so it's smoother. You may need to adjust your master audio volume.
-    type: Tweak
-  id: 5203
-  time: '2023-11-27T11:21:23.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - message: Fix ahelp audio.
     type: Fix
   id: 5204
@@ -3737,3 +3718,10 @@
   id: 5703
   time: '2024-01-14T04:05:45.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24056
+- author: degradka
+  changes:
+  - message: The HOS's dresser now contains a neck gaiter.
+    type: Add
+  id: 5704
+  time: '2024-01-14T04:12:37.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24003
