@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Gotimanga
-  changes:
-  - message: The reagent "egg" is now known as "cooked egg"
-    type: Tweak
-  id: 5200
-  time: '2023-11-22T04:32:35.0000000+00:00'
 - author: themias
   changes:
   - message: You must now unlock a cyborg's panel to access it
@@ -3730,3 +3724,13 @@
   id: 5700
   time: '2024-01-14T02:47:19.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24017
+- author: Aexxie
+  changes:
+  - message: Lizards' punch animation now matches their damage type
+    type: Fix
+  - message: Spiders now deal piercing damage instead of slash damage when unarmed,
+      as intended. Their animation has been changed to the biting animation as well.
+    type: Fix
+  id: 5701
+  time: '2024-01-14T03:08:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24019
