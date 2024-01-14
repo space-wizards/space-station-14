@@ -179,7 +179,7 @@
         - SmokeOnTrigger
         - Flash
         - Handcuff
-        - RangedMagazine
+        - BallisticAmmoProvider
         - Ammo
   - type: ItemMapper
     mapLayers:
