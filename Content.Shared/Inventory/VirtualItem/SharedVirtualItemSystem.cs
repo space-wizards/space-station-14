@@ -6,6 +6,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Inventory.VirtualItem;
 
@@ -28,6 +29,9 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string VirtualItem = "VirtualItem";
 
     public override void Initialize()
     {
@@ -183,7 +187,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
         }
 
         var pos = Transform(user).Coordinates;
-        virtualItem = Spawn("VirtualItem", pos);
+        virtualItem = Spawn(VirtualItem, pos);
         var virtualItemComp = Comp<VirtualItemComponent>(virtualItem.Value);
         virtualItemComp.BlockingEntity = blockingEnt;
         Dirty(virtualItem.Value, virtualItemComp);

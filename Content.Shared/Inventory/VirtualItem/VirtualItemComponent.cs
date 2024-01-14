@@ -9,7 +9,7 @@ namespace Content.Shared.Inventory.VirtualItem;
 public sealed partial class VirtualItemComponent : Component
 {
     /// <summary>
-    /// The entity blocking this hand.
+    /// The entity blocking this slot.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid BlockingEntity;
