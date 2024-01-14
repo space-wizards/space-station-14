@@ -39,12 +39,12 @@
     bloodReagent: CopperBlood
   # Damage (Others)
   - type: MeleeWeapon
-    animation: WeaponArcClaw
+    animation: WeaponArcBite
     soundHit:
       collection: AlienClaw
     damage:
       types:
-        Slash: 5
+        Pierce: 5
   # Visual & Audio
   - type: DamageVisuals
     damageOverlayGroups:

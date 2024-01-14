@@ -72,8 +72,27 @@
   components:
   - type: Sprite
     sprite: Structures/Power/cell_recharger.rsi
+    layers:
+    - map: ["enum.PowerChargerVisualLayers.Base"]
+      state: "empty"
+    - map: ["enum.PowerChargerVisualLayers.Light"]
+      state: "light-off"
+      shader: "unshaded"
+    - state: open
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
   - type: Machine
     board: CellRechargerCircuitboard
+  - type: Wires
+    boardName: wires-board-name-recharger
+    layoutId: Recharger
+  - type: WiresPanel
+  - type: GenericVisualizer
+    visuals:
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: true }
+          False: { visible: false }
   - type: PowerCellSlot
     cellSlotId: charger_slot
     # fitsInCharger is true i dont think this will ever affect anything negatively but it lets it function
@@ -81,7 +100,7 @@
     slots:
       charger_slot:
         ejectOnInteract: true
-        name: Power cell
+        name: power-cell-slot-component-slot-name-default
         whitelist:
           components:
           - PowerCell
@@ -108,6 +127,32 @@
           - HitscanBatteryAmmoProvider
           - ProjectileBatteryAmmoProvider
           - Stunbaton
+
+- type: entity
+  parent: BaseItemRecharger
+  id: TurboItemRecharger
+  name: turbo recharger
+  description: An overclocked recharger that's been adapted with a global port.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/turbo_recharger.rsi
+  - type: Machine
+    board: TurboItemRechargerCircuitboard
+  - type: Charger
+    chargeRate: 100
+  - type: ItemSlots
+    slots:
+      charger_slot:
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - HitscanBatteryAmmoProvider
+          - ProjectileBatteryAmmoProvider
+          - Stunbaton
+          - PowerCell
+        blacklist:
+          tags:
+          - PotatoBattery
 
 - type: entity
   parent: BaseItemRecharger
@@ -157,7 +202,7 @@
         map: ["enum.WiresVisualLayers.MaintenancePanel"]
         visible: false
   - type: Charger
-    baseChargeRate: 30
+    chargeRate: 30
     slotId: entity_storage
     whitelist:
       components:

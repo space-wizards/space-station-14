@@ -13,15 +13,17 @@
         map: [ "unshaded" ]
     - type: Projectile
       deleteOnCollide: false
+      canPenetrate: true
+      impactEffect: null
       soundHit:
         path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
       damage:
         types:
-          Radiation: 10
+          Radiation: 25
     - type: Physics
     - type: Fixtures
       fixtures:
-        fix1:
+        projectile:
           shape:
             !type:PhysShapeAabb
             bounds: "-0.48,-0.48,0.48,0.48"

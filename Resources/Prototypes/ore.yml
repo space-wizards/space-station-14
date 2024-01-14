@@ -9,52 +9,68 @@
 - type: ore
   id: OreSteel
   oreEntity: SteelOre1
+  minOreYield: 1
+  maxOreYield: 5
 
 - type: ore
   id: OreSpaceQuartz
   oreEntity: SpaceQuartz1
+  minOreYield: 1
+  maxOreYield: 5
 
 - type: ore
   id: OreCoal
   oreEntity: Coal1
+  minOreYield: 1
+  maxOreYield: 5
 
 # Medium yields
 - type: ore
   id: OreGold
   oreEntity: GoldOre1
+  minOreYield: 1
+  maxOreYield: 3
 
 - type: ore
   id: OreSilver
   oreEntity: SilverOre1
+  minOreYield: 1
+  maxOreYield: 3
 
 # Low yields
 - type: ore
   id: OrePlasma
   oreEntity: PlasmaOre1
+  minOreYield: 1
+  maxOreYield: 2
 
 - type: ore
   id: OreUranium
   oreEntity: UraniumOre1
+  minOreYield: 1
+  maxOreYield: 2
 
 - type: ore
   id: OreBananium
   oreEntity: BananiumOre1
+  minOreYield: 1
+  maxOreYield: 3
 
 - type: ore
   id: OreQuartzCrab
-  oreEntity: MobQuartzCrab
+  oreEntity: MobSpawnCrabQuartz
 
 - type: ore
   id: OreIronCrab
-  oreEntity: MobIronCrab
+  oreEntity: MobSpawnCrabIron
 
 - type: ore
   id: OreSilverCrab
-  oreEntity: MobSilverCrab
+  oreEntity: MobSpawnCrabSilver
 
 - type: ore
   id: OreUraniumCrab
-  oreEntity: MobUraniumCrab
+  oreEntity: MobSpawnCrabUranium
 
 - type: ore
   id: OreArtifactFragment
