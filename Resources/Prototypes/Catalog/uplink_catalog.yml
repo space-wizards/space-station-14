@@ -1357,6 +1357,17 @@
   categories:
   - UplinkMisc
 
+  
+- type: listing
+  id: UplinkTravelCamera
+  name: uplink-travel-camera-name
+  description: uplink-travel-camera-desc
+  productEntity: TravelCamera
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkMisc
+
 # - type: listing
 #   id: UplinkGigacancerScanner
 #   name: Ultragigacancer Health Analyzer
