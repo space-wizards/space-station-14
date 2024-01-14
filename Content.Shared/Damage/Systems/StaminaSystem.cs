@@ -117,7 +117,7 @@ public sealed partial class StaminaSystem : EntitySystem
         component.StaminaDamage = 0;
         RemComp<ActiveStaminaComponent>(uid);
         SetStaminaAlert(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnDisarmed(EntityUid uid, StaminaComponent component, DisarmedEvent args)
