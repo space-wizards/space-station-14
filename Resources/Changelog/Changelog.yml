@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: BurninDreamer
-  changes:
-  - message: The Captain's Carapace no longer has a 10% movement speed penalty.
-    type: Tweak
-  id: 5207
-  time: '2023-11-27T21:29:30.0000000+00:00'
 - author: Rainfey
   changes:
   - message: Chameleon functionality to Agent and Nukie ID cards
@@ -3734,3 +3728,10 @@
   id: 5707
   time: '2024-01-14T05:37:28.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23984
+- author: Whisper
+  changes:
+  - message: Cerberus now has hostile AI
+    type: Add
+  id: 5708
+  time: '2024-01-14T10:19:36.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24028
