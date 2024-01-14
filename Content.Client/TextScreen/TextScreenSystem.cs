@@ -99,10 +99,35 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     ///     Called by <see cref="SharedAppearanceSystem.SetData"/> to handle text updates,
     ///     and spawn a <see cref="TextScreenTimerComponent"/> if necessary
     /// </summary>
+    /// <remarks>
+    ///     The appearance updates are batched; order matters for both sender and receiver.
+    /// </remarks>
     protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (!Resolve(uid, ref args.Sprite))
             return;
+
+        if (args.AppearanceData.TryGetValue(TextScreenVisuals.Color, out var color) && color is Color)
+            component.Color = (Color) color;
+
+        // DefaultText: broadcast updates from comms consoles
+        // ScreenText: the text accompanying shuttle timers e.g. "ETA"
+        if (args.AppearanceData.TryGetValue(TextScreenVisuals.DefaultText, out var newDefault) && newDefault is string)
+        {
+            string?[] defaultText = SegmentText((string) newDefault, component);
+            component.Text = defaultText;
+            component.TextToDraw = defaultText;
+            ResetText(uid, component);
+            BuildTextLayers(uid, component, args.Sprite);
+            DrawLayers(uid, component.LayerStatesToDraw);
+        }
+        if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenText, out var text) && text is string)
+        {
+            component.TextToDraw = SegmentText((string) text, component);
+            ResetText(uid, component);
+            BuildTextLayers(uid, component, args.Sprite);
+            DrawLayers(uid, component.LayerStatesToDraw);
+        }
 
         if (args.AppearanceData.TryGetValue(TextScreenVisuals.TargetTime, out var time) && time is TimeSpan)
         {
@@ -119,17 +144,6 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
                 OnTimerFinish(uid, component);
             }
         }
-
-        if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenText, out var text) && text is string?[])
-        {
-            component.TextToDraw = (string?[]) text;
-            ResetText(uid, component);
-            BuildTextLayers(uid, component, args.Sprite);
-            DrawLayers(uid, component.LayerStatesToDraw);
-        }
-
-        if (args.AppearanceData.TryGetValue(TextScreenVisuals.Color, out var color) && color is Color)
-            component.Color = (Color) color;
     }
 
     /// <summary>
@@ -154,9 +168,27 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     }
 
     /// <summary>
+    ///     Converts string to string?[] based on
+    ///     <see cref="TextScreenVisualsComponent.RowLength"/> and <see cref="TextScreenVisualsComponent.Rows"/>.
+    /// </summary>
+    private string?[] SegmentText(string text, TextScreenVisualsComponent component)
+    {
+        int segment = component.RowLength;
+        var segmented = new string?[Math.Min(component.Rows, (text.Length - 1) / segment + 1)];
+
+        // populate segmented with a string sliding window using Substring.
+        // (Substring(5, 5) will return the 5 characters starting from 5th index)
+        // the Mins are for the very short string case, the very long string case, and to not OOB the end of the string.
+        for (int i = 0; i < Math.Min(text.Length, segment * component.Rows); i += segment)
+            segmented[i / segment] = text.Substring(i, Math.Min(text.Length - i, segment)).Trim();
+
+        return segmented;
+    }
+
+    /// <summary>
     ///     Clears <see cref="TextScreenVisualsComponent.LayerStatesToDraw"/>, and instantiates new blank defaults.
     /// </summary>
-    public void ResetText(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
+    private void ResetText(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite))
             return;
@@ -169,11 +201,12 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         for (var row = 0; row < component.Rows; row++)
             for (var i = 0; i < component.RowLength; i++)
             {
-                sprite.LayerMapReserveBlank(TextMapKey + row + i);
-                component.LayerStatesToDraw.Add(TextMapKey + row + i, null);
-                sprite.LayerSetRSI(TextMapKey + row + i, new ResPath(TextPath));
-                sprite.LayerSetColor(TextMapKey + row + i, component.Color);
-                sprite.LayerSetState(TextMapKey + row + i, DefaultState);
+                var key = TextMapKey + row + i;
+                sprite.LayerMapReserveBlank(key);
+                component.LayerStatesToDraw.Add(key, null);
+                sprite.LayerSetRSI(key, new ResPath(TextPath));
+                sprite.LayerSetColor(key, component.Color);
+                sprite.LayerSetState(key, DefaultState);
             }
     }
 
@@ -184,7 +217,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     /// <remarks>
     ///     Remember to set <see cref="TextScreenVisualsComponent.TextToDraw"/> to a string?[] first.
     /// </remarks>
-    public void BuildTextLayers(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
+    private void BuildTextLayers(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite))
             return;
@@ -213,7 +246,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     /// <summary>
     ///     Populates timer.LayerStatesToDraw & the sprite component's layer dict with calculated offsets.
     /// </summary>
-    public void BuildTimerLayers(EntityUid uid, TextScreenTimerComponent timer, TextScreenVisualsComponent screen)
+    private void BuildTimerLayers(EntityUid uid, TextScreenTimerComponent timer, TextScreenVisualsComponent screen)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;

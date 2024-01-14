@@ -236,7 +236,7 @@ namespace Content.Server.RoundEnd
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
 
-            // remove all active shuttle timers
+            // remove active clientside evac shuttle timers by zeroing the target time
             var zero = TimeSpan.Zero;
             var shuttle = _shuttle.GetShuttle();
             if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle, out var net))
@@ -249,7 +249,6 @@ namespace Content.Server.RoundEnd
                     [ShuttleTimerMasks.ShuttleTime] = zero,
                     [ShuttleTimerMasks.SourceTime] = zero,
                     [ShuttleTimerMasks.DestTime] = zero,
-                    [ScreenMasks.Text] = new string?[] { string.Empty, string.Empty }
                 };
                 _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }

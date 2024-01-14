@@ -240,13 +240,13 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
             // by popular request
             // https://discord.com/channels/310555209753690112/770682801607278632/1189989482234126356
-            if (new Random().Next(1000) == 0)
+            if (_random.Next(1000) == 0)
             {
-                payload.Add(ScreenMasks.Text, new string?[] { ShuttleTimerMasks.Kill });
-                payload.Add(ScreenMasks.Color, Color.DarkRed);
+                payload.Add(ScreenMasks.Text, ShuttleTimerMasks.Kill);
+                payload.Add(ScreenMasks.Color, Color.Red);
             }
             else
-                payload.Add(ScreenMasks.Text, new string?[] { ShuttleTimerMasks.Bye });
+                payload.Add(ScreenMasks.Text, ShuttleTimerMasks.Bye);
 
             _deviceNetworkSystem.QueuePacket(shuttle, null, payload, net.TransmitFrequency);
         }

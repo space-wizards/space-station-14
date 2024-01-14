@@ -7,19 +7,16 @@ public sealed partial class ScreenComponent : Component
 }
 
 /// <summary>
-///     Awkward hashable string consts because NetworkPayload requires string keys
-///     TODO: Refactor NetworkPayload to accept bytes from enums?
+///     Player-facing hashable string consts for NetworkPayload
 /// </summary>
 public sealed class ScreenMasks
 {
     public static readonly string Text = "Text";
-    public static readonly string CommsMap = "CommsMap";
     public static readonly string Color = "Color";
 }
 
 /// <summary>
-///     Awkward hashable string consts because NetworkPayload requires string keys
-///     TODO: Refactor NetworkPayload to accept bytes from enums?
+///     Player-facing hashable string consts for NetworkPayload
 /// </summary>
 public sealed class ShuttleTimerMasks
 {

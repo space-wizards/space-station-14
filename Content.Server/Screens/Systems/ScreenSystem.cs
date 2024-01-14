@@ -1,5 +1,6 @@
 using Content.Shared.TextScreen;
 using Content.Server.Screens.Components;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Robust.Shared.Timing;
 
@@ -45,21 +46,26 @@ public sealed class ScreenSystem : EntitySystem
             return;
 
         var screenMap = Transform(uid).MapUid;
+        var argsMap = Transform(args.Sender).MapUid;
 
         if (screenMap != null
-            && args.Data.TryGetValue(ScreenMasks.CommsMap, out EntityUid? commsMap)
-            && screenMap == commsMap
-            && args.Data.TryGetValue(ScreenMasks.Text, out string?[]? text)
+            && argsMap != null
+            && screenMap == argsMap
+            && args.Data.TryGetValue(ScreenMasks.Text, out string? text)
             && text != null
             )
-            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, text);
+        {
+            _appearanceSystem.SetData(uid, TextScreenVisuals.DefaultText, text);
+        }
     }
 
     /// <summary>
-    /// Determines if/how a timer broadcast packet affects this screen.
+    /// Determines if/how a timer packet affects this screen.
     /// Currently there are 2 broadcast domains: Arrivals, and every other screen.
-    /// All timer packets are broadcast in their domain. Subdomains are the shuttle, source, and dest.
-    /// Subdomains are linked by MapUid. Source/dest change each jump.
+    /// Domain is determined by the <see cref="DeviceNetworkComponent.TransmitFrequencyId"/> on each timer.
+    /// Each broadcast domain is divided into subnets. Screen MapUid determines subnet.
+    /// Subnets are the shuttle, source, and dest. Source/dest change each jump.
+    /// This is required to send different timers to the shuttle/terminal/station.
     /// </summary>
     private void ShuttleTimer(EntityUid uid, ScreenComponent component, DeviceNetworkPacketEvent args)
     {
@@ -74,7 +80,7 @@ public sealed class ScreenSystem : EntitySystem
         args.Data.TryGetValue(ShuttleTimerMasks.SourceMap, out EntityUid? source);
         args.Data.TryGetValue(ShuttleTimerMasks.DestMap, out EntityUid? dest);
         args.Data.TryGetValue(ShuttleTimerMasks.Docked, out bool docked);
-        string?[] text = new string?[] { docked ? ShuttleTimerMasks.ETD : ShuttleTimerMasks.ETA };
+        string text = docked ? ShuttleTimerMasks.ETD : ShuttleTimerMasks.ETA;
 
         switch (timerXform.MapUid)
         {
@@ -87,7 +93,7 @@ public sealed class ScreenSystem : EntitySystem
                 break;
             case var remote when remote == dest:
                 key = ShuttleTimerMasks.DestTime;
-                text = new string?[] { ShuttleTimerMasks.ETA };
+                text = ShuttleTimerMasks.ETA;
                 break;
             default:
                 return;
@@ -96,11 +102,11 @@ public sealed class ScreenSystem : EntitySystem
         if (!args.Data.TryGetValue(key, out TimeSpan duration))
             return;
 
-        if (args.Data.TryGetValue(ScreenMasks.Text, out string?[]? label) && label != null)
+        if (args.Data.TryGetValue(ScreenMasks.Text, out string? label) && label != null)
             text = label;
 
-        _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, _gameTiming.CurTime + duration);
         _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, text);
+        _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, _gameTiming.CurTime + duration);
 
         if (args.Data.TryGetValue(ScreenMasks.Color, out Color color))
             _appearanceSystem.SetData(uid, TextScreenVisuals.Color, color);
