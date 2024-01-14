@@ -92,6 +92,17 @@ public sealed partial class StoreSystem : EntitySystem
     }
 
     /// <summary>
+    /// Toggles the shop UI if the given entityuid has a shop component.
+    /// Used for things such as revenants or changelings.
+    /// </summary>
+    public void OnInternalShop(EntityUid uid)
+    {
+        if (!TryComp(uid, out StoreComponent? store))
+            return;
+        ToggleUi(uid, uid, store);
+    }
+
+    /// <summary>
     /// Gets the value from an entity's currency component.
     /// Scales with stacks.
     /// </summary>

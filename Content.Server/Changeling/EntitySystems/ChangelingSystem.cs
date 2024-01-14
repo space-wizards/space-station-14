@@ -142,9 +142,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     private void OnShop(EntityUid uid, ChangelingComponent component, ChangelingEvolutionMenuActionEvent args)
     {
-        if (!TryComp(uid, out StoreComponent? store))
-            return;
-        _store.ToggleUi(uid, uid, store);
+        _store.OnInternalShop(uid);
     }
 
     public override void Update(float frameTime)
