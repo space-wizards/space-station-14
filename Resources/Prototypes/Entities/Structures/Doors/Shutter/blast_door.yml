@@ -27,6 +27,9 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StrongMetallic
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
   - type: Construction
     graph: BlastDoor
     node: BlastDoor
@@ -68,7 +71,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 300
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
