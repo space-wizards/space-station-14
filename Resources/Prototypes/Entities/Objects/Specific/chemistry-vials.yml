@@ -9,6 +9,7 @@
   - type: Tag
     tags:
     - Trash
+    - CentrifugeCompatible
   - type: PhysicalComposition
     materialComposition:
       Glass: 25

@@ -1,6 +1,5 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      Title="{Loc 'salvage-expedition-window-title'}"
                       MinSize="800 360">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal" Name="ProgressionBox" Visible="False">

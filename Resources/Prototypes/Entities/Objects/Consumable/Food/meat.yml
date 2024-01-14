@@ -377,12 +377,12 @@
       food:
         reagents:
         - ReagentId: Ichor
-          Quantity: 2
+          Quantity: 10
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: Ichor
-        Quantity: 2
+        Quantity: 10
 
 - type: entity
   name: raw rat meat

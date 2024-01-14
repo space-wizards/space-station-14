@@ -25,7 +25,7 @@ public sealed class UseDelaySystem : EntitySystem
         if (ent.Comp.Delay == delay)
             return;
 
-        ent.Comp.Delay += delay;
+        ent.Comp.Delay = delay;
         Dirty(ent);
     }
 

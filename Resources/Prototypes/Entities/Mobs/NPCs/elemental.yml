@@ -118,9 +118,9 @@
           collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          SpaceQuartz:
-            min: 4
-            max: 6
+          SpaceQuartz1:
+            min: 2
+            max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -150,8 +150,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SteelOre1:
-            min: 4
-            max: 6
+            min: 2
+            max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -181,8 +181,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           UraniumOre1:
-            min: 3
-            max: 6
+            min: 1
+            max: 3
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PointLight
@@ -214,8 +214,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SilverOre1:
-            min: 4
-            max: 6
+            min: 1
+            max: 3
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 

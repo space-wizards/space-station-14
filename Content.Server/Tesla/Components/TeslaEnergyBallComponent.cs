@@ -29,6 +29,18 @@ public sealed partial class TeslaEnergyBallComponent : Component
     public float NeedEnergyToSpawn = 100f;
 
     /// <summary>
+    /// The amount of energy to which the tesla must reach in order to be destroyed.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float EnergyToDespawn = -100f;
+
+    /// <summary>
+    /// Played when energy reaches the lower limit (and entity destroyed)
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? SoundCollapse;
+
+    /// <summary>
     /// Entities that spawn when the energy limit is reached
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
