@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Revenants can no longer emag evac to instantly launch the shuttle.
-    type: Fix
-  id: 5209
-  time: '2023-11-27T21:39:30.0000000+00:00'
 - author: Flareguy
   changes:
   - message: Disabled space wind & atmos tile ripping.
@@ -3736,3 +3730,12 @@
   id: 5709
   time: '2024-01-14T16:44:17.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24075
+- author: themias
+  changes:
+  - message: Graves require a shovel or spade (trowel) to dig
+    type: Tweak
+  - message: Graves decay bodies faster
+    type: Tweak
+  id: 5710
+  time: '2024-01-14T16:47:32.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23646
