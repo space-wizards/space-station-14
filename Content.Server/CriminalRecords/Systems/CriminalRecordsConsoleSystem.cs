@@ -28,16 +28,18 @@ public sealed class CriminalRecordsConsoleSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<CriminalRecordsConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
 
-        SubscribeLocalEvent<CriminalRecordsConsoleComponent, SelectStationRecord>(OnKeySelected);
-        SubscribeLocalEvent<CriminalRecordsConsoleComponent, SetStationRecordFilter>(OnFiltersChanged);
-        SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalRecordArrestButtonPressed>(OnButtonPressed);
-        SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalStatusOptionButtonSelected>(OnStatusSelected);
-        SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalRecordAddHistory>(OnAddHistory);
-        SubscribeLocalEvent<CriminalRecordsConsoleComponent, CriminalRecordDeleteHistory>(OnDeleteHistory);
+        Subs.BuiEvents<CriminalRecordsConsoleComponent>(CriminalRecordsConsoleKey.Key, subs => {
+            subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
+            subs.Event<SelectStationRecord>(OnKeySelected);
+            subs.Event<SetStationRecordFilter>(OnFiltersChanged);
+            subs.Event<CriminalRecordArrestButtonPressed>(OnButtonPressed);
+            subs.Event<CriminalStatusOptionButtonSelected>(OnStatusSelected);
+            subs.Event<CriminalRecordAddHistory>(OnAddHistory);
+            subs.Event<CriminalRecordDeleteHistory>(OnDeleteHistory);
+        });
     }
 
     private void UpdateUserInterface<T>(Entity<CriminalRecordsConsoleComponent> ent, ref T args)

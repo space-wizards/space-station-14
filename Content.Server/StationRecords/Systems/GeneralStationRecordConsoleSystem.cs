@@ -15,13 +15,16 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, RecordRemovedEvent>(UpdateUserInterface);
 
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, SelectStationRecord>(OnKeySelected);
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, SetStationRecordFilter>(OnFiltersChanged);
+        Subs.BuiEvents<GeneralStationRecordConsoleComponent>(GeneralStationRecordConsoleKey.Key, subs =>
+        {
+            subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
+            subs.Event<SelectStationRecord>(OnKeySelected);
+            subs.Event<SetStationRecordFilter>(OnFiltersChanged);
+        });
     }
 
     private void UpdateUserInterface<T>(Entity<GeneralStationRecordConsoleComponent> ent, ref T args)
