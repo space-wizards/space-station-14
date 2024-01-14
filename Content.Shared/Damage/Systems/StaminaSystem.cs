@@ -55,9 +55,11 @@ public sealed partial class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
 
-        SubscribeLocalEvent<StaminaDamageOnEmbedComponent, ProjectileEmbedEvent>(OnProjectileEmbed);
+        SubscribeLocalEvent<StaminaDamageOnEmbedComponent, EmbedEvent>(OnProjectileEmbed);
+
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
+
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
     }
 
@@ -193,7 +195,7 @@ public sealed partial class StaminaSystem : EntitySystem
         OnCollide(uid, component, args.Target);
     }
 
-    private void OnProjectileEmbed(EntityUid uid, StaminaDamageOnEmbedComponent component, ref ProjectileEmbedEvent args)
+    private void OnProjectileEmbed(EntityUid uid, StaminaDamageOnEmbedComponent component, ref EmbedEvent args)
     {
         if (!TryComp<StaminaComponent>(args.Embedded, out var stamina))
             return;
