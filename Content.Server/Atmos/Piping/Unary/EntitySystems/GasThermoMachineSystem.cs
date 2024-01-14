@@ -31,7 +31,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
-
         public override void Initialize()
         {
             base.Initialize();
