@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Disabled space wind & atmos tile ripping.
-    type: Remove
-  id: 5210
-  time: '2023-11-27T21:42:29.0000000+00:00'
 - author: Vasilis
   changes:
   - message: Gibbed mothroaches wont drop all normal moth species parts, just animal
@@ -3739,3 +3733,11 @@
   id: 5710
   time: '2024-01-14T16:47:32.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23646
+- author: Nairodian
+  changes:
+  - message: Added four new reagent slimes, Mute Toxin, Norepinephric Acid, Ephedrine,
+      and Robust Harvest.
+    type: Add
+  id: 5711
+  time: '2024-01-14T22:14:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24087
