@@ -1,6 +1,8 @@
 The part YAML takes the following format:
 
 author: Your_Name_Here
+category: Admin # if left out, falls under the main changelog
 changes:
   - type: Fix # One of the following: Add, Remove, Tweak, Fix
     message: Your change here!
+
