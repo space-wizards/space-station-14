@@ -41,7 +41,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         while (servers.MoveNext(out var id, out var server))
         {
             if (!_singletonServerSystem.IsActiveServer(id))
-                return;
+                continue;
 
             UpdateTimeout(id);
             BroadcastSensorStatus(id, server);
