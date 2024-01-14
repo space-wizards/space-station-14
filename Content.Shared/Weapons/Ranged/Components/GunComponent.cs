@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Tag;
+using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -15,9 +16,16 @@ public sealed partial class GunComponent : Component
 {
     #region Sound
 
+    /// <summary>
+    /// The base sound to use when the gun is fired.
+    /// </summary>
     [DataField]
     public SoundSpecifier? SoundGunshot = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/smg.ogg");
 
+    /// <summary>
+    /// The sound to use when the gun is fired.
+    /// <seealso cref="GunRefreshModifiersEvent"/>
+    /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? SoundGunshotModified;
 
@@ -45,6 +53,7 @@ public sealed partial class GunComponent : Component
     /// <summary>
     /// A scalar value applied to the vector governing camera recoil.
     /// If 0, there will be no camera recoil.
+    /// <seealso cref="GunRefreshModifiersEvent"/>
     /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float CameraRecoilScalarModified = 1f;
@@ -71,6 +80,7 @@ public sealed partial class GunComponent : Component
 
     /// <summary>
     /// How much the spread increases every time the gun fires.
+    /// <seealso cref="GunRefreshModifiersEvent"/>
     /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Angle AngleIncreaseModified;
@@ -83,6 +93,7 @@ public sealed partial class GunComponent : Component
 
     /// <summary>
     /// How much the <see cref="CurrentAngle"/> decreases per second.
+    /// <seealso cref="GunRefreshModifiersEvent"/>
     /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Angle AngleDecayModified;
@@ -96,6 +107,7 @@ public sealed partial class GunComponent : Component
 
     /// <summary>
     /// The maximum angle allowed for <see cref="CurrentAngle"/>
+    /// <seealso cref="GunRefreshModifiersEvent"/>
     /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Angle MaxAngleModified;
@@ -109,6 +121,7 @@ public sealed partial class GunComponent : Component
 
     /// <summary>
     ///  The minimum angle allowed for <see cref="CurrentAngle"/>.
+    /// <seealso cref="GunRefreshModifiersEvent"/>
     /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Angle MinAngleModified;
@@ -135,6 +148,7 @@ public sealed partial class GunComponent : Component
 
     /// <summary>
     ///     How many shots to fire per burst.
+    /// <seealso cref="GunRefreshModifiersEvent"/>
     /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public int ShotsPerBurstModified = 3;
@@ -155,6 +169,7 @@ public sealed partial class GunComponent : Component
 
     /// <summary>
     /// How many times it shoots per second.
+    /// <seealso cref="GunRefreshModifiersEvent"/>
     /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float FireRateModified;
@@ -185,6 +200,7 @@ public sealed partial class GunComponent : Component
 
     /// <summary>
     /// How fast the projectile moves.
+    /// <seealso cref="GunRefreshModifiersEvent"/>
     /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float ProjectileSpeedModified;
