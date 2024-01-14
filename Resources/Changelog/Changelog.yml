@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Moth accent added! Buzzz!!!
-    type: Add
-  id: 5206
-  time: '2023-11-27T21:28:43.0000000+00:00'
 - author: BurninDreamer
   changes:
   - message: The Captain's Carapace no longer has a 10% movement speed penalty.
@@ -3732,3 +3726,11 @@
   id: 5706
   time: '2024-01-14T05:25:19.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24022
+- author: Tayrtahn
+  changes:
+  - message: Nanotrasen has started installing intercoms with unscrewable panels for
+      wire maintenance.
+    type: Add
+  id: 5707
+  time: '2024-01-14T05:37:28.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23984
