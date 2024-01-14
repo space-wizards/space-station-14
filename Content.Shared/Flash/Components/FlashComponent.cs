@@ -1,8 +1,9 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Flash.Components
+namespace Content.Shared.Flash.Components
 {
-    [RegisterComponent, Access(typeof(FlashSystem))]
+    [RegisterComponent, NetworkedComponent, Access(typeof(SharedFlashSystem))]
     public sealed partial class FlashComponent : Component
     {
 
