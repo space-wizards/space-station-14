@@ -127,11 +127,24 @@ public sealed partial class ChangelingSystem
         }
         else if (component.AbsorbStage == 2.0)
         {
-            if (!StealDNA(uid, target, component))
+            var doStealDNA = true;
+            if (TryComp(target, out DnaComponent? dnaCompTarget))
             {
-                component.AbsorbStage = 0.0f;
-                args.Repeat = false;
-                return;
+                foreach (var storedData in component.StoredDNA)
+                {
+                    if (storedData.DNA != null && storedData.DNA == dnaCompTarget.DNA)
+                        doStealDNA = false;
+                }
+            }
+
+            if (doStealDNA)
+            {
+                if (!StealDNA(uid, target, component))
+                {
+                    component.AbsorbStage = 0.0f;
+                    args.Repeat = false;
+                    return;
+                }
             }
 
             // give them 200 genetic damage and remove all of their blood
