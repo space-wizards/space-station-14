@@ -23,9 +23,6 @@ trait-uncloneable-desc = Cannot be cloned
 trait-pirate-accent-name = Pirate Accent
 trait-pirate-accent-desc = You can't stop speaking like a pirate!
 
-trait-archaic-accent-name = Archaic Accent
-trait-archaic-accent-desc = You speak in a way that many others find outdated
-
 trait-accentless-name = Accentless
 trait-accentless-desc = You don't have the accent that your species would usually have
 

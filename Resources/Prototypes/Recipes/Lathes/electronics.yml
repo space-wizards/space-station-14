@@ -39,6 +39,15 @@
     Plastic: 50
 
 - type: latheRecipe
+  id: TurboItemRechargerCircuitboard
+  result: TurboItemRechargerCircuitboard
+  completetime: 2
+  materials:
+    Steel: 500
+    Plastic: 500
+    Gold: 100
+
+- type: latheRecipe
   id: DoorElectronics
   result: DoorElectronics
   completetime: 2

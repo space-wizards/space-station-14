@@ -278,7 +278,7 @@
 #Magic/Cult Shields (give these to wizard for now)
 
 - type: entity
-  name: Clockwork Shield
+  name: clockwork shield
   parent: BaseShield
   id: ClockworkShield
   description: Ratvar oyrffrf lbh jvgu uvf cebgrpgvba.
@@ -307,7 +307,7 @@
       #Have it break into brass when clock cult is in
 
 - type: entity
-  name: Mirror Shield
+  name: mirror shield
   parent: BaseShield
   id: MirrorShield
   description: Eerily glows red... you hear the geometer whispering
