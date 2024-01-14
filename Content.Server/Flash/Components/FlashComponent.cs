@@ -22,6 +22,12 @@ namespace Content.Server.Flash.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float SlowTo { get; set; } = 0.5f;
 
+        /// <summary>
+        /// If set, the flash will also knock down and stun the target.
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public float? StunTime = null;
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound")]
         public SoundSpecifier Sound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/flash.ogg")
