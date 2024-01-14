@@ -664,3 +664,13 @@
     maxSpawns: 1
     spawns:
     - id: Singularity
+
+- type: artifactEffect
+  id: EffectTesla
+  targetDepth: 10
+  effectHint: artifact-effect-hint-destruction
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 1
+    spawns:
+    - id: TeslaEnergyBall

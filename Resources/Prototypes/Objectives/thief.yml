@@ -202,16 +202,6 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
-  id: AmmoTechFabCircuitboardStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: AmmoTechFabCircuitboard
-  - type: Objective
-    difficulty: 1.5
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealObjective
   id: ClothingHeadHatWardenStealObjective
   components:
   - type: StealCondition
