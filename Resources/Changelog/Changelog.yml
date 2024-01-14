@@ -1,84 +1,4 @@
-Entries:
-- author: Slava0135
-  changes:
-  - message: Disposal traversal damage is disabled for now.
-    type: Tweak
-  id: 5193
-  time: '2023-11-19T10:25:02.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Fixed explosions deleting bodyparts and organs inside of people.
-    type: Fix
-  id: 5194
-  time: '2023-11-19T17:44:42.0000000+00:00'
-- author: nikthechampiongr
-  changes:
-  - message: Zombified mice and other small animals no longer spread zombification.
-    type: Tweak
-  id: 5195
-  time: '2023-11-19T22:28:05.0000000+00:00'
-- author: Kadeo64
-  changes:
-  - message: The Ripley APLU is now Tier 1 Industrial.
-    type: Tweak
-  id: 5196
-  time: '2023-11-20T00:58:07.0000000+00:00'
-- author: Velcroboy
-  changes:
-  - message: Shuttle walls and windows can now be constructed.
-    type: Tweak
-  id: 5197
-  time: '2023-11-21T01:20:24.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix being unable to FTL dock to planets.
-    type: Fix
-  id: 5198
-  time: '2023-11-22T01:02:02.0000000+00:00'
-- author: Feluk6174
-  changes:
-  - message: Bananadine is now a psychedelic that can be obtained by grinding baked
-      banana peels, which can be obtained by microwaving banana peels.
-    type: Add
-  id: 5199
-  time: '2023-11-22T01:08:53.0000000+00:00'
-- author: Gotimanga
-  changes:
-  - message: The reagent "egg" is now known as "cooked egg"
-    type: Tweak
-  id: 5200
-  time: '2023-11-22T04:32:35.0000000+00:00'
-- author: themias
-  changes:
-  - message: You must now unlock a cyborg's panel to access it
-    type: Fix
-  id: 5201
-  time: '2023-11-22T17:16:03.0000000+00:00'
-- author: Nyranu
-  changes:
-  - message: The ability to put a cakecat on your head.
-    type: Add
-  id: 5202
-  time: '2023-11-23T00:41:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Audio rework got re-merged, the changelog has been re-posted here for
-      brevity.
-    type: Add
-  - message: Grid audio will now attenuate properly over distance and won't be ear
-      rupturingly loud.
-    type: Fix
-  - message: FTL sound should no longer persist as it's attached to the shuttle instead
-      of being global.
-    type: Fix
-  - message: Audio can now start at an offset so if an audio source comes into range
-      so it won't play from the start.
-    type: Fix
-  - message: Changed audio attenuation from InverseDistanceClamped to LinearDistanceClamped
-      so it's smoother. You may need to adjust your master audio volume.
-    type: Tweak
-  id: 5203
-  time: '2023-11-27T11:21:23.0000000+00:00'
+﻿Entries:
 - author: metalgearsloth
   changes:
   - message: Fix ahelp audio.
@@ -3722,3 +3642,86 @@ Entries:
   id: 5693
   time: '2024-01-13T16:24:40.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24027
+- author: VasilisThePikachu
+  changes:
+  - message: Due to Nanotrashen's budget cuts, Space pens are no longer supplied on
+      the station.
+    type: Remove
+  id: 5694
+  time: '2024-01-13T20:20:11.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23970
+- author: SlamBamActionman
+  changes:
+  - message: Ammo Techfab Circuitboard has been removed from Thief objectives.
+    type: Remove
+  id: 5695
+  time: '2024-01-13T20:55:03.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24037
+- author: Varen
+  changes:
+  - message: Eggs can be drawn from with a syringe.
+    type: Tweak
+  id: 5696
+  time: '2024-01-13T20:57:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24042
+- author: degradka
+  changes:
+  - message: Prevent oversized items from being placed in the microwave.
+    type: Fix
+  id: 5697
+  time: '2024-01-13T21:11:10.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24026
+- author: Bhijn and Myr
+  changes:
+  - message: The QM's uniform has received a redesign, making it more visually distinguishable
+      for those with colorblindness.
+    type: Tweak
+  id: 5698
+  time: '2024-01-14T02:45:06.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24055
+- author: lzk228
+  changes:
+  - message: Removed archaic accent.
+    type: Remove
+  id: 5699
+  time: '2024-01-14T02:45:54.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24052
+- author: 21Melkuu
+  changes:
+  - message: Added Mayo to the Chefvend.
+    type: Add
+  id: 5700
+  time: '2024-01-14T02:47:19.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24017
+- author: Aexxie
+  changes:
+  - message: Lizards' punch animation now matches their damage type
+    type: Fix
+  - message: Spiders now deal piercing damage instead of slash damage when unarmed,
+      as intended. Their animation has been changed to the biting animation as well.
+    type: Fix
+  id: 5701
+  time: '2024-01-14T03:08:20.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24019
+- author: deltanedas
+  changes:
+  - message: Revolutionaries that are deconverted by headrevs dying get a window shown
+      explaining that they are no longer revs, to help with tunnel vision.
+    type: Tweak
+  id: 5702
+  time: '2024-01-14T03:20:35.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23315
+- author: tday
+  changes:
+  - message: Add admin logs for thermomachines.
+    type: Add
+  id: 5703
+  time: '2024-01-14T04:05:45.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24056
+- author: degradka
+  changes:
+  - message: The HOS's dresser now contains a neck gaiter.
+    type: Add
+  id: 5704
+  time: '2024-01-14T04:12:37.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24003
