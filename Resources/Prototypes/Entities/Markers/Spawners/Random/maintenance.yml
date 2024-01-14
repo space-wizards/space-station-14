@@ -145,6 +145,7 @@
         - WelderIndustrial
         - SheetPlasteel10
         - ClothingMaskGasExplorer
+        - TravelCamera
       rareChance: 0.08
       prototypes:
         - FlashlightLantern
