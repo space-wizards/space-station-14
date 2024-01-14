@@ -1,10 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: You must now unlock a cyborg's panel to access it
-    type: Fix
-  id: 5201
-  time: '2023-11-22T17:16:03.0000000+00:00'
 - author: Nyranu
   changes:
   - message: The ability to put a cakecat on your head.
@@ -3734,3 +3728,11 @@
   id: 5701
   time: '2024-01-14T03:08:20.0000000+00:00'
   url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24019
+- author: deltanedas
+  changes:
+  - message: Revolutionaries that are deconverted by headrevs dying get a window shown
+      explaining that they are no longer revs, to help with tunnel vision.
+    type: Tweak
+  id: 5702
+  time: '2024-01-14T03:20:35.0000000+00:00'
+  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23315
